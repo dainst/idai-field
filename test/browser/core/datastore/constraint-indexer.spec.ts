@@ -281,6 +281,36 @@ export function main() {
         });
 
 
+        it('use two indices of different types for one path', () => {
+
+            const docs = [
+                doc('1'),
+                doc('2'),
+                doc('3'),
+                doc('4')
+            ];
+            docs[0].resource.relations['depicts'] = [];
+            docs[1].resource.relations['depicts'] = [];
+            docs[2].resource.relations['depicts'] = ['1'];
+            docs[3].resource.relations['depicts'] = ['2'];
+
+            ci = new ConstraintIndexer({
+                'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
+                'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
+            });
+
+            ci.put(docs[0]);
+            ci.put(docs[1]);
+            ci.put(docs[2]);
+            ci.put(docs[3]);
+
+            expect(ci.get('depicts:exist', 'KNOWN')).toEqual([item('3'), item('4')]);
+            expect(ci.get('depicts:exist', 'UNKNOWN')).toEqual([item('1'), item('2')]);
+            expect(ci.get('depicts:contain', '1')).toEqual([item('3')]);
+            expect(ci.get('depicts:contain', '2')).toEqual([item('4')]);
+        });
+
+
         // TODO update docs where doc is new
 
         // TODO remove before update

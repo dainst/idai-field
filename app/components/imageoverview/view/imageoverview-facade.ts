@@ -145,7 +145,7 @@ export class ImageOverviewFacade {
 
         return {
             q: '',
-            types: this.imageTypeUtility.getProjectImageTypeNames()
+            types: this.imageTypeUtility.getImageTypeNames()
         };
     }
 

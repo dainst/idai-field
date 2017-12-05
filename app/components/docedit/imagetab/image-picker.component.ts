@@ -94,7 +94,7 @@ export class ImagePickerComponent implements OnInit {
         this.query = query;
         if (!this.query) this.query = {};
 
-        this.query.types = this.imageTypeUtility.getProjectImageTypeNames();
+        this.query.types = this.imageTypeUtility.getImageTypeNames();
         this.query.limit = ImagePickerComponent.documentLimit;
 
         return this.datastore.find(this.query)

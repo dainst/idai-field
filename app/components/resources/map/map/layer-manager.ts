@@ -42,7 +42,7 @@ export class LayerManager {
             return {
                 layers: (await this.datastore.find({
                     q: '',
-                    types: this.imageTypeUtility.getProjectImageTypeNames(),
+                    types: this.imageTypeUtility.getImageTypeNames(),
                     constraints: { 'georeference:exists': 'KNOWN' }
                 })).documents,
                 activeLayersChange: this.fetchActiveLayersFromResourcesState(mainTypeDocument)

@@ -37,7 +37,7 @@ export class MainTypeDocumentsManager {
         if (!this.viewManager.getViewName()) return Promise.resolve();
 
         this.documents = await this.fetchDocuments(
-            MainTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getViewType()));;
+            MainTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getViewType()));
 
         if (this.documents.length == 0) {
             this.selectedDocument = undefined;

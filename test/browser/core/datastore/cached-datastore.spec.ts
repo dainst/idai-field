@@ -9,7 +9,7 @@ import {IdaiFieldDocumentConverter} from '../../../../app/core/datastore/idai-fi
 /**
  * @author Daniel de Oliveira
  */
-export function main() { // TODO add specs for the distinction IdaiFieldDocument / IdaiFieldImageDocument
+export function main() {
 
     describe('CachedDatastore', () => {
 
@@ -66,9 +66,9 @@ export function main() { // TODO add specs for the distinction IdaiFieldDocument
                 );
 
             const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
-                ['isImageType']);
+                ['isImageType', 'validateTypes', 'getNonImageTypeNames']);
             mockImageTypeUtility.isImageType.and.returnValue(false);
-
+            mockImageTypeUtility.getNonImageTypeNames.and.returnValue(['Find']);
 
             datastore = new IdaiFieldDocumentDatastore(
                 mockdb,

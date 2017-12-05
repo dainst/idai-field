@@ -13,7 +13,8 @@
     </div>
 
     <div *ngIf="image.document" class="col-md-3 px-0 document-info">
-        <document-view [document]="image.document" (onDeselect)="deselect()">
+        <document-view [document]="image.document" (onDeselect)="deselect()"
+                       (onSolveConflicts)="startEdit(image.document, 'conflicts')">
             <ngb-tabset activeId="document-view-{{activeTab}}-tab">
                 <ngb-tab id="document-view-fields-tab">
                     <ng-template ngbTabTitle>

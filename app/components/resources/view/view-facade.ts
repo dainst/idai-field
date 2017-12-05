@@ -162,7 +162,9 @@ export class ViewFacade {
 
     public getActiveLayersIds(mainTypeDocumentResourceId: string): string[] {
 
-        return this.viewManager.getActiveLayersIds(mainTypeDocumentResourceId);
+        const ids: string[] = this.viewManager.getActiveLayersIds(mainTypeDocumentResourceId);
+
+        return ids ? ids : [];
     }
 
 

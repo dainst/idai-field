@@ -19,39 +19,25 @@ export class IdaiFieldDocumentConverter extends DocumentConverter {
 
     public validateTypes(types: string[]|undefined, typeClass: string): string[]|undefined {
 
-        if (typeClass == 'IdaiFieldImageDocument') {
-
-            if (!types) {
-                types = this.imageTypeUtility.getImageTypeNames();
-            } else {
-                types.forEach(type => {
-                    if (!this.imageTypeUtility.isImageType(type))
-                        throw "Wrong type: not all specified types are image types"
-                });
-            }
-            return types;
-
-        } else if (typeClass == 'IdaiFieldDocument') {
-
-            if (!types) {
+        if (types) {
+            types.forEach(type => this.proveIsCorrectType(type, typeClass));
+        } else {
+            if (typeClass == 'IdaiFieldImageDocument') {
+                types = this.imageTypeUtility.getImageTypeNames()
+            } else if (typeClass == 'IdaiFieldDocument') {
                 types = this.imageTypeUtility.getNonImageTypeNames();
-            } else {
-                types.forEach(type => {
-                    if (this.imageTypeUtility.isImageType(type))
-                        throw "Wrong type: image types not allowed in query"
-                });
             }
-            return types;
         }
+        return types;
     }
 
 
-    public proveIsCorrectType(doc: Document, typeClass: string): void {
+    public proveIsCorrectType(type: string, typeClass: string): void {
 
         if (typeClass == 'IdaiFieldImageDocument') {
-            if (!this.imageTypeUtility.isImageType(doc.resource.type)) throw "Wrong type class: must be IdaiFieldImageDocument";
+            if (!this.imageTypeUtility.isImageType(type)) throw "Wrong type class: must be IdaiFieldImageDocument";
         } else if (typeClass == 'IdaiFieldDocument') {
-            if (this.imageTypeUtility.isImageType(doc.resource.type)) throw "Wrong type class: must not be IdaiFieldImageDocument";
+            if (this.imageTypeUtility.isImageType(type)) throw "Wrong type class: must not be IdaiFieldImageDocument";
         }
     }
 

@@ -9,5 +9,5 @@ export abstract class DocumentConverter {
 
     public abstract convertToIdaiFieldDocument<T>(doc: Document): T;
 
-    public abstract proveIsCorrectType(doc: Document, typeClass: string): void;
+    public abstract proveIsCorrectType(type: string, typeClass: string): void;
 }

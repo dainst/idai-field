@@ -86,7 +86,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         }
 
         const document = await this.datastore.fetch(id);
-        this.documentConverter.proveIsCorrectType(document, this.typeClass);
+        this.documentConverter.proveIsCorrectType(document.resource.type, this.typeClass);
 
         return this.documentCache.set(this.documentConverter.
             convertToIdaiFieldDocument<T>(document));

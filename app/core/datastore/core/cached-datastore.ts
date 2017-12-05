@@ -46,7 +46,7 @@ export abstract class CachedDatastore<T extends Document>
      */
     public async create(document: Document): Promise<Document> { // TODO return T and check if it is checked in every execution path, write test
 
-        this.documentConverter.proveIsCorrectType(document, this.typeClass);
+        this.documentConverter.proveIsCorrectType(document.resource.type, this.typeClass);
 
         const createdDocument = await this.datastore.create(document);
         return this.documentCache.set(this.documentConverter.
@@ -60,7 +60,7 @@ export abstract class CachedDatastore<T extends Document>
      */
     public async update(document: Document): Promise<Document> { // TODO return T and check if it is checked in every execution path, write test
 
-        this.documentConverter.proveIsCorrectType(document, this.typeClass);
+        this.documentConverter.proveIsCorrectType(document.resource.type, this.typeClass);
 
         const updatedDocument = await this.datastore.update(document);
 
@@ -80,7 +80,7 @@ export abstract class CachedDatastore<T extends Document>
      */
     public remove(document: Document): Promise<any> { // TODO return promise undefined
 
-        this.documentConverter.proveIsCorrectType(document, this.typeClass);
+        this.documentConverter.proveIsCorrectType(document.resource.type, this.typeClass);
 
         return this.datastore.remove(document)
             .then(() => this.documentCache.remove(document.resource.id));

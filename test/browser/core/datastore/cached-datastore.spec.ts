@@ -66,7 +66,7 @@ export function main() {
                 );
 
             const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
-                ['isImageType', 'validateTypes', 'getNonImageTypeNames']);
+                ['isImageType', 'validate', 'getNonImageTypeNames']);
             mockImageTypeUtility.isImageType.and.returnValue(false);
             mockImageTypeUtility.getNonImageTypeNames.and.returnValue(['Find']);
 

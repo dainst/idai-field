@@ -17,7 +17,7 @@ export class IdaiFieldDocumentConverter extends DocumentConverter {
     }
 
 
-    public validateTypes(types: string[]|undefined, typeClass: string): string[]|undefined {
+    public validate(types: string[]|undefined, typeClass: string): string[]|undefined {
 
         if (types) {
             types.forEach(type => this.proveIsCorrectType(type, typeClass));
@@ -29,16 +29,6 @@ export class IdaiFieldDocumentConverter extends DocumentConverter {
             }
         }
         return types;
-    }
-
-
-    public proveIsCorrectType(type: string, typeClass: string): void {
-
-        if (typeClass == 'IdaiFieldImageDocument') {
-            if (!this.imageTypeUtility.isImageType(type)) throw "Wrong type class: must be IdaiFieldImageDocument";
-        } else if (typeClass == 'IdaiFieldDocument') {
-            if (this.imageTypeUtility.isImageType(type)) throw "Wrong type class: must not be IdaiFieldImageDocument";
-        }
     }
 
 
@@ -56,5 +46,15 @@ export class IdaiFieldDocumentConverter extends DocumentConverter {
         }
 
         return doc as T;
+    }
+
+
+    private proveIsCorrectType(type: string, typeClass: string): void {
+
+        if (typeClass == 'IdaiFieldImageDocument') {
+            if (!this.imageTypeUtility.isImageType(type)) throw "Wrong type class: must be IdaiFieldImageDocument";
+        } else if (typeClass == 'IdaiFieldDocument') {
+            if (this.imageTypeUtility.isImageType(type)) throw "Wrong type class: must not be IdaiFieldImageDocument";
+        }
     }
 }

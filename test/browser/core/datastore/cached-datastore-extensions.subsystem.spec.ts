@@ -47,20 +47,19 @@ export function main() {
 
             spyOn(console, 'debug'); // suppress console.debug
 
-                converter = new IdaiFieldDocumentConverter(new ImageTypeUtility(projectConfiguration));
-                const result = Static.createPouchdbDatastore('testdb');
-                datastore = result.datastore;
-                documentCache = result.documentCache;
+            converter = new IdaiFieldDocumentConverter(new ImageTypeUtility(projectConfiguration));
+            const result = Static.createPouchdbDatastore('testdb');
+            datastore = result.datastore;
+            documentCache = result.documentCache;
 
-                await new IdaiFieldImageDocumentDatastore(
-                    datastore, documentCache, converter).
-                        create(Static.doc('Image','Image','Image','image0'));
-                await new IdaiFieldDocumentDatastore(
-                    datastore, documentCache, converter).
-                        create(Static.doc('Trench','Trench','Trench','trench0'));
-                done();
-            }
-        );
+            await new IdaiFieldImageDocumentDatastore(
+                datastore, documentCache, converter).
+                    create(Static.doc('Image','Image','Image','image0'));
+            await new IdaiFieldDocumentDatastore(
+                datastore, documentCache, converter).
+                    create(Static.doc('Trench','Trench','Trench','trench0'));
+            done();
+        });
 
 
         afterEach(async done => {

@@ -13,6 +13,7 @@ import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../../m';
 import {RoutingService} from '../routing-service';
 import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/idai-field-image-document-read-datastore';
+import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
 
 
 @Component({
@@ -23,7 +24,6 @@ import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/idai-fie
  * @author Daniel de Oliveira
  */
 export class ImageViewComponent implements OnInit {
-
 
     protected image: ImageContainer = {};
     protected activeTab: string;
@@ -67,7 +67,7 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public async startEdit(doc: IdaiFieldDocument, tabName: string) {
+    public async startEdit(doc: IdaiFieldImageDocument, tabName: string = 'fields') {
 
         this.doceditActiveTabService.setActiveTab(tabName);
 
@@ -100,7 +100,7 @@ export class ImageViewComponent implements OnInit {
 
         if (!this.imagestore.getPath()) this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH_READ]);
 
-        this.getRouteParams(async (id: string) => {
+        this.getRouteParams(async (id: string, menu: string, tab?: string) => {
 
             try {
                 const doc = await this.datastore.get(id);
@@ -117,6 +117,12 @@ export class ImageViewComponent implements OnInit {
                     // read thumb
                     url = await this.imagestore.read(doc.resource.id, false, true);
                     this.image.thumbSrc = url;
+
+                    if (menu == 'edit') {
+                        await this.startEdit(doc, tab);
+                    } else if (tab) {
+                        this.activeTab = tab;
+                    }
                 } catch(e) {
                     this.image.imgSrc = BlobMaker.blackImg;
                     this.messages.add([M.IMAGES_ONE_NOT_FOUND]);
@@ -140,8 +146,7 @@ export class ImageViewComponent implements OnInit {
     private getRouteParams(callback: Function) {
 
         this.route.params.forEach((params: Params) => {
-            this.activeTab = params['tab'];
-            callback(params['id']);
+            callback(params['id'], params['menu'], params['tab']);
         });
     }
 }

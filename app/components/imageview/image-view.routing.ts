@@ -4,11 +4,11 @@ import {ImageViewComponent} from './image-view.component';
 
 const routes: Routes = [
     {
-        path: 'images/:id/show',
+        path: 'images/:id/:menu',
         component: ImageViewComponent
     },
     {
-        path: 'images/:id/show/:tab',
+        path: 'images/:id/:menu/:tab',
         component: ImageViewComponent
     }
 ];

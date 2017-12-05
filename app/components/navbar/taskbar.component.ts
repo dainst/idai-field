@@ -5,6 +5,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {ViewFacade} from '../resources/view/view-facade';
 import {RoutingService} from '../routing-service';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
+import {ImageTypeUtility} from '../../common/image-type-utility';
 
 @Component({
     moduleId: module.id,
@@ -33,7 +34,8 @@ export class TaskbarComponent {
                 private viewFacade: ViewFacade,
                 private elementRef: ElementRef,
                 private renderer: Renderer,
-                private routingService: RoutingService
+                private routingService: RoutingService,
+                private imageTypeUtility: ImageTypeUtility
     ) {
 
         this.fetchConflicts();
@@ -62,16 +64,14 @@ export class TaskbarComponent {
 
     public openConflictResolver(document: Document) { // TODO move to routing helper
 
-        let viewName: string;
+        if (this.imageTypeUtility.isImageType(document.resource.type)) {
+            return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
+        }
 
         this.routingService.getMainTypeNameForDocument(document).then(mainTypeName =>
             this.viewFacade.getMainTypeHomeViewName(mainTypeName)
-        ).then(name => {
-            viewName = name as any;
-            return this.router.navigate(['resources', viewName]);
-        }).then(() => {
-            this.router.navigate(['resources', viewName,
-                document.resource.id, 'edit', 'conflicts']);
+        ).then(viewName => {
+            this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
         });
     }
 

@@ -3,20 +3,30 @@ import {ImageOverviewPage} from './image-overview.page';
 import {NavbarPage} from "../navbar.page";
 const request = require('request');
 
-const path = require('path');
-
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
 describe('images/image-overview/delete --', () => {
 
+    beforeAll(() => {
+
+        ImageOverviewPage.getAndWaitForImageCells();
+        browser.sleep(delays.shortRest * 3);
+    });
+
+    let i = 0;
+
     beforeEach(() => {
-        NavbarPage.performNavigateToSettings();
-        request.post('http://localhost:3003/reset', {});
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToImages();
-        ImageOverviewPage.waitForCells();
-        browser.sleep(delays.shortRest * 20);
+
+        if (i > 0) {
+            NavbarPage.performNavigateToSettings();
+            request.post('http://localhost:3003/reset', {});
+            browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToImages();
+            ImageOverviewPage.waitForCells();
+            browser.sleep(delays.shortRest * 10);
+        }
+        i++;
     });
 
     it('delete an image in the grid view', () => {

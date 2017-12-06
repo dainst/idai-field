@@ -1,7 +1,7 @@
 import {PouchdbDatastore} from './core/pouchdb-datastore';
 import {DocumentCache} from './core/document-cache';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {DocumentConverter} from './core/document-converter';
+import {TypeConverter} from './core/type-converter';
 import {CachedDatastore} from './core/cached-datastore';
 import {IdaiFieldFindResult} from './core/cached-read-datastore';
 
@@ -14,7 +14,7 @@ export class IdaiFieldImageDocumentDatastore
     constructor(
         datastore: PouchdbDatastore,
         documentCache: DocumentCache<IdaiFieldImageDocument>,
-        documentConverter: DocumentConverter) {
+        documentConverter: TypeConverter) {
 
         super(datastore, documentCache, documentConverter, 'IdaiFieldImageDocument');
     }

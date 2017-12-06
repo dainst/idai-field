@@ -15,13 +15,13 @@ import {IdaiFieldDocumentReadDatastore} from "./idai-field-document-read-datasto
 import {IdaiFieldImageDocumentDatastore} from "./idai-field-image-document-datastore";
 import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
 import {IdaiFieldImageDocumentReadDatastore} from "./idai-field-image-document-read-datastore";
-import {DocumentConverter} from "./core/document-converter";
+import {TypeConverter} from "./core/type-converter";
 import {IdaiFieldSampleDataLoader} from "./idai-field-sample-data-loader";
 import {SampleDataLoader} from "./core/sample-data-loader";
 import {IdaiFieldConflictResolver} from "../model/idai-field-conflict-resolver";
 import {DocumentDatastore} from "./document-datastore";
 import {DocumentReadDatastore} from "./document-read-datastore";
-import {IdaiFieldDocumentConverter} from "./idai-field-document-converter";
+import {IdaiFieldTypeConverter} from "./idai-field-type-converter";
 import {ReadDatastore, Datastore} from "idai-components-2/datastore";
 
 /**
@@ -49,7 +49,7 @@ import {ReadDatastore, Datastore} from "idai-components-2/datastore";
         },
 
         { provide: ConflictResolver, useClass: IdaiFieldConflictResolver },
-        { provide: DocumentConverter, useClass: IdaiFieldDocumentConverter },
+        { provide: TypeConverter, useClass: IdaiFieldTypeConverter },
         ConflictResolvingExtension,
 
 
@@ -110,11 +110,11 @@ import {ReadDatastore, Datastore} from "idai-components-2/datastore";
             provide: DocumentDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  documentCache: DocumentCache<Document>,
-                                 documentConverter: DocumentConverter,
+                                 documentConverter: TypeConverter,
             ): DocumentDatastore {
                 return new DocumentDatastore(pouchdbDatastore, documentCache, documentConverter);
             },
-            deps: [PouchdbDatastore, DocumentCache, DocumentConverter]
+            deps: [PouchdbDatastore, DocumentCache, TypeConverter]
         },
         { provide: DocumentReadDatastore, useExisting: DocumentDatastore },
         { provide: Datastore, useExisting: DocumentDatastore },     // used by components-2 lib
@@ -129,11 +129,11 @@ import {ReadDatastore, Datastore} from "idai-components-2/datastore";
             provide: IdaiFieldDocumentDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  documentCache: DocumentCache<IdaiFieldDocument>,
-                                 documentConverter: DocumentConverter
+                                 documentConverter: TypeConverter
             ): IdaiFieldDocumentDatastore {
                 return new IdaiFieldDocumentDatastore(pouchdbDatastore, documentCache, documentConverter);
             },
-            deps: [PouchdbDatastore, DocumentCache, DocumentConverter]
+            deps: [PouchdbDatastore, DocumentCache, TypeConverter]
         },
         { provide: IdaiFieldDocumentReadDatastore, useExisting: IdaiFieldDocumentDatastore }, // read-only version of it
 
@@ -146,11 +146,11 @@ import {ReadDatastore, Datastore} from "idai-components-2/datastore";
             provide: IdaiFieldImageDocumentDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  documentCache: DocumentCache<IdaiFieldImageDocument>,
-                                 documentConverter: DocumentConverter,
+                                 documentConverter: TypeConverter,
             ): IdaiFieldImageDocumentDatastore {
                 return new IdaiFieldImageDocumentDatastore(pouchdbDatastore, documentCache, documentConverter);
                 },
-            deps: [PouchdbDatastore, DocumentCache, DocumentConverter]
+            deps: [PouchdbDatastore, DocumentCache, TypeConverter]
         },
         { provide: IdaiFieldImageDocumentReadDatastore, useExisting: IdaiFieldImageDocumentDatastore }, // read-only version of it
     ]

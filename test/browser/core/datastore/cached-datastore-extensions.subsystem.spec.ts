@@ -1,7 +1,7 @@
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Static} from '../../static';
 import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
-import {IdaiFieldDocumentConverter} from '../../../../app/core/datastore/idai-field-document-converter';
+import {IdaiFieldTypeConverter} from '../../../../app/core/datastore/idai-field-type-converter';
 import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
 import {IdaiFieldImageDocumentDatastore} from '../../../../app/core/datastore/idai-field-image-document-datastore';
 import {DocumentDatastore} from '../../../../app/core/datastore/document-datastore';
@@ -66,7 +66,7 @@ export function main() {
             const result = Static.createPouchdbDatastore('testdb');
             const datastore = result.datastore;
             documentCache = result.documentCache;
-            converter = new IdaiFieldDocumentConverter(new ImageTypeUtility(projectConfiguration));
+            converter = new IdaiFieldTypeConverter(new ImageTypeUtility(projectConfiguration));
 
             image0 = Static.doc('Image','Image','Image','image0');
             trench0 = Static.doc('Trench','Trench','Trench','trench0');

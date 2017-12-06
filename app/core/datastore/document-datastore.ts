@@ -3,7 +3,7 @@ import {FindResult} from 'idai-components-2/datastore';
 import {CachedDatastore} from './core/cached-datastore';
 import {PouchdbDatastore} from './core/pouchdb-datastore';
 import {DocumentCache} from './core/document-cache';
-import {DocumentConverter} from './core/document-converter';
+import {TypeConverter} from './core/type-converter';
 
 /**
  * @author Daniel de Oliveira
@@ -14,7 +14,7 @@ export class DocumentDatastore
     constructor(
         datastore: PouchdbDatastore,
         documentCache: DocumentCache<Document>,
-        documentConverter: DocumentConverter) {
+        documentConverter: TypeConverter) {
 
         super(datastore, documentCache, documentConverter, 'Document');
     }

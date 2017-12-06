@@ -4,7 +4,7 @@ import {Query, ReadDatastore, FindResult} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
-import {DocumentConverter} from './document-converter';
+import {TypeConverter} from './type-converter';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -40,7 +40,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     constructor(
         protected datastore: PouchdbDatastore,
         protected documentCache: DocumentCache<T>,
-        protected documentConverter: DocumentConverter,
+        protected typeConverter: TypeConverter,
         protected typeClass: string) {
 
         this.datastore.remoteChangesNotifications().subscribe(document => {
@@ -49,7 +49,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             if (!document || !document.resource || !this.documentCache.get(document.resource.id as any)) return;
 
             // explicitly assign by value in order for changes to be detected by angular
-            this.reassign(this.documentConverter.
+            this.reassign(this.typeConverter.
                 convertToIdaiFieldDocument<T>(document));
         });
     }
@@ -83,9 +83,9 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         }
 
         const document = await this.datastore.fetch(id);
-        this.documentConverter.validate([document.resource.type], this.typeClass);
+        this.typeConverter.validate([document.resource.type], this.typeClass);
 
-        return this.documentCache.set(this.documentConverter.
+        return this.documentCache.set(this.typeConverter.
             convertToIdaiFieldDocument<T>(document));
     }
 
@@ -105,7 +105,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     public async find(query: Query): Promise<IdaiFieldFindResult<T>> {
 
-        query.types = this.documentConverter.validate(query.types, this.typeClass);
+        query.types = this.typeConverter.validate(query.types, this.typeClass);
 
         const ids: string[] = await this.datastore.findIds(query);
         const documents: Array<T> = await this.getDocumentsForIds(ids, query.limit);
@@ -129,7 +129,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     public async getRevision(docId: string, revisionId: string): Promise<T> {
 
-        return this.documentConverter.convertToIdaiFieldDocument<T>(
+        return this.typeConverter.convertToIdaiFieldDocument<T>(
             await this.datastore.fetchRevision(docId, revisionId));
     }
 

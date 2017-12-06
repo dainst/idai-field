@@ -4,7 +4,7 @@ import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Static} from '../../static';
 import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
 import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
-import {IdaiFieldDocumentConverter} from '../../../../app/core/datastore/idai-field-document-converter';
+import {IdaiFieldTypeConverter} from '../../../../app/core/datastore/idai-field-type-converter';
 import {PersistenceManager} from '../../../../app/core/persist/persistence-manager';
 import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
 
@@ -65,7 +65,7 @@ export function main() {
                 const result = Static.createPouchdbDatastore('testdb');
                 datastore = new IdaiFieldDocumentDatastore(
                     result.datastore, result.documentCache,
-                    new IdaiFieldDocumentConverter(new ImageTypeUtility(projectConfiguration)));
+                    new IdaiFieldTypeConverter(new ImageTypeUtility(projectConfiguration)));
 
                 result.appState.setCurrentUser('anonymous');
 

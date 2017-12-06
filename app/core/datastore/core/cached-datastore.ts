@@ -4,7 +4,7 @@ import {Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CachedReadDatastore} from './cached-read-datastore';
-import {DocumentConverter} from './document-converter';
+import {TypeConverter} from './type-converter';
 
 
 @Injectable()
@@ -24,10 +24,10 @@ export abstract class CachedDatastore<T extends Document>
     constructor(
         datastore: PouchdbDatastore,
         documentCache: DocumentCache<T>,
-        documentConverter: DocumentConverter,
+        typeConverter: TypeConverter,
         typeClass: string) {
 
-        super(datastore, documentCache, documentConverter, typeClass);
+        super(datastore, documentCache, typeConverter, typeClass);
     }
 
 
@@ -39,10 +39,10 @@ export abstract class CachedDatastore<T extends Document>
      */
     public async create(document: Document): Promise<T> {
 
-        this.documentConverter.validate([document.resource.type], this.typeClass);
+        this.typeConverter.validate([document.resource.type], this.typeClass);
 
         const createdDocument = await this.datastore.create(document);
-        return this.documentCache.set(this.documentConverter.
+        return this.documentCache.set(this.typeConverter.
             convertToIdaiFieldDocument<T>(createdDocument));
     }
 
@@ -54,15 +54,15 @@ export abstract class CachedDatastore<T extends Document>
      */
     public async update(document: Document): Promise<T> {
 
-        this.documentConverter.validate([document.resource.type], this.typeClass);
+        this.typeConverter.validate([document.resource.type], this.typeClass);
 
         const updatedDocument = await this.datastore.update(document);
 
         if (!this.documentCache.get(document.resource.id as any)) {
-            return this.documentCache.set(this.documentConverter.
+            return this.documentCache.set(this.typeConverter.
                 convertToIdaiFieldDocument<T>(updatedDocument));
         } else {
-            this.reassign(this.documentConverter.
+            this.reassign(this.typeConverter.
                 convertToIdaiFieldDocument<T>(updatedDocument));
             return this.documentCache.get(document.resource.id as any);
         }
@@ -74,7 +74,7 @@ export abstract class CachedDatastore<T extends Document>
      */
     public remove(document: Document): Promise<any> { // TODO return promise undefined
 
-        this.documentConverter.validate([document.resource.type], this.typeClass);
+        this.typeConverter.validate([document.resource.type], this.typeClass);
 
         return this.datastore.remove(document)
             .then(() => this.documentCache.remove(document.resource.id));

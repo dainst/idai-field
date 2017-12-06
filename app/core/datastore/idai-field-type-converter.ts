@@ -1,4 +1,4 @@
-import {DocumentConverter} from "./core/document-converter";
+import {TypeConverter} from "./core/type-converter";
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ImageTypeUtility} from '../../common/image-type-utility';
@@ -9,7 +9,7 @@ import {Injectable} from "@angular/core";
 /**
  * @author Daniel de Oliveira
  */
-export class IdaiFieldDocumentConverter extends DocumentConverter {
+export class IdaiFieldTypeConverter extends TypeConverter {
 
     constructor(private imageTypeUtility: ImageTypeUtility) {
 

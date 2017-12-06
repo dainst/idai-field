@@ -7,5 +7,5 @@ export abstract class TypeConverter {
 
     public abstract validate(types: string[]|undefined, typeClass: string): string[]|undefined;
 
-    public abstract convertToIdaiFieldDocument<T>(doc: Document): T;
+    public abstract convert<T>(doc: Document): T;
 }

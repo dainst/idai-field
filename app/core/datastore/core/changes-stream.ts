@@ -28,7 +28,7 @@ export class ChangesStream {
             if (!document || !document.resource || !this.documentCache.get(document.resource.id as any)) return;
 
             // explicitly assign by value in order for changes to be detected by angular
-            this.reassign(this.typeConverter.convertToIdaiFieldDocument<Document>(document));
+            this.reassign(this.typeConverter.convert<Document>(document));
 
             this.observers.forEach(observer => observer.next(document));
         });

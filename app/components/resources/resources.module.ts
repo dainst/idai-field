@@ -27,6 +27,7 @@ import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-docume
 import {LayerManager} from './map/map/layer-manager';
 import {LayerImageProvider} from './map/map/layer-image-provider';
 import {LayerMenuComponent} from './map/map/layer-menu.component';
+import {ChangesStream} from '../../core/datastore/core/changes-stream';
 
 @NgModule({
     imports: [
@@ -63,6 +64,7 @@ import {LayerMenuComponent} from './map/map/layer-menu.component';
             useFactory: function(
                 projectConfiguration: ProjectConfiguration,
                 datastore: IdaiFieldDocumentDatastore,
+                changesStream: ChangesStream,
                 settingsService: SettingsService,
                 resourcesState: ResourcesState
             ) {
@@ -75,12 +77,18 @@ import {LayerMenuComponent} from './map/map/layer-menu.component';
 
                 return new ViewFacade(
                     datastore,
+                    changesStream,
                     settingsService,
                     resourcesState,
                     views
                 );
             },
-            deps: [ProjectConfiguration, IdaiFieldDocumentDatastore, SettingsService, ResourcesState]
+            deps: [
+                ProjectConfiguration,
+                IdaiFieldDocumentDatastore,
+                ChangesStream,
+                SettingsService,
+                ResourcesState]
         },
     ],
     exports: [

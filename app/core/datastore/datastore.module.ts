@@ -23,6 +23,7 @@ import {DocumentDatastore} from "./document-datastore";
 import {DocumentReadDatastore} from "./document-read-datastore";
 import {IdaiFieldTypeConverter} from "./idai-field-type-converter";
 import {ReadDatastore, Datastore} from "idai-components-2/datastore";
+import {ChangesStream} from "./core/changes-stream";
 
 /**
  * There is the top level package, in which everything idai-field specific resides,
@@ -32,6 +33,9 @@ import {ReadDatastore, Datastore} from "idai-components-2/datastore";
  */
 @NgModule({
     providers: [
+        ChangesStream,
+
+
         // TODO place app state here, its a direct dependency of this package
         { provide: SampleDataLoader, useClass: IdaiFieldSampleDataLoader },
 

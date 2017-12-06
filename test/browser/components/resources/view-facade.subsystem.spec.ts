@@ -84,8 +84,15 @@ export function main() {
             stateSerializer.load.and.returnValue(Promise.resolve({}));
             stateSerializer.store.and.returnValue(Promise.resolve());
 
+            const changesStream = jasmine.createSpyObj('changesStream', ['remoteChangesNotifications']);
+            changesStream.remoteChangesNotifications.and.returnValue({
+                subscribe: () => {}
+            });
+
+
             viewFacade = new ViewFacade(
                 datastore,
+                changesStream,
                 settingsService,
                 new ResourcesState(stateSerializer),
                 viewsList

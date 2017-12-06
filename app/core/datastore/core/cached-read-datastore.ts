@@ -34,6 +34,10 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
  */
 export abstract class CachedReadDatastore<T extends Document> implements ReadDatastore {
 
+    remoteChangesNotifications(): Observable<Document> {
+        throw new Error("Method not implemented.");
+    }
+
     private autoCacheUpdate: boolean = true;
 
 
@@ -41,31 +45,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         protected datastore: PouchdbDatastore,
         protected documentCache: DocumentCache<T>,
         protected typeConverter: TypeConverter,
-        protected typeClass: string) {
-
-        this.datastore.remoteChangesNotifications().subscribe(document => {
-
-            if (!this.autoCacheUpdate) return;
-            if (!document || !document.resource || !this.documentCache.get(document.resource.id as any)) return;
-
-            // explicitly assign by value in order for changes to be detected by angular
-            this.reassign(this.typeConverter.
-                convertToIdaiFieldDocument<T>(document));
-        });
-    }
-
-
-    public allChangesAndDeletionsNotifications(): Observable<void> {
-
-        return this.datastore.allChangesAndDeletionsNotifications();
-    }
-
-
-    // TODO we must not delegate the call but instead return a new Observable. Then we notify from within the subscription made in the constructors. This is necessary in order to make sure clients always get fully checked instances of IdaiFieldDocuments. Add unit test for it.
-    public remoteChangesNotifications(): Observable<Document> {
-
-        return this.datastore.remoteChangesNotifications();
-    }
+        protected typeClass: string) { }
 
 
     /**
@@ -137,13 +117,6 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     public setAutoCacheUpdate(autoCacheUpdate: boolean) {
 
         this.autoCacheUpdate = autoCacheUpdate;
-    }
-
-
-    protected reassign(doc: T) {
-
-        if (!(doc as any)['_conflicts']) delete (this.documentCache.get(doc.resource.id as any)as any)['_conflicts'];
-        Object.assign(this.documentCache.get(doc.resource.id as any), doc);
     }
 
 

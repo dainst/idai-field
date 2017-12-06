@@ -3,6 +3,7 @@ import {Document} from 'idai-components-2/core';
 import {SettingsService} from '../../core/settings/settings-service';
 import {RoutingService} from '../routing-service';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
+import {ChangesStream} from '../../core/datastore/core/changes-stream';
 
 @Component({
     moduleId: module.id,
@@ -25,6 +26,7 @@ export class TaskbarComponent {
 
 
     constructor(private datastore: DocumentReadDatastore,
+                private changesStream: ChangesStream,
                 private settings: SettingsService,
                 private elementRef: ElementRef,
                 private renderer: Renderer,
@@ -59,7 +61,7 @@ export class TaskbarComponent {
 
     private subscribeForChanges(): void {
 
-        this.datastore.allChangesAndDeletionsNotifications().subscribe(() => {
+        this.changesStream.allChangesAndDeletionsNotifications().subscribe(() => {
             this.fetchConflicts();
         });
     }

@@ -7,6 +7,7 @@ import {OperationViews} from './operation-views';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldDocumentReadDatastore} from "../../../core/datastore/idai-field-document-read-datastore";
+import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 
 /**
  * Manages an overview of operation type resources
@@ -33,6 +34,7 @@ export class ViewFacade {
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
+        private changesStream: ChangesStream,
         private settingsService: SettingsService,
         private resourcesState: ResourcesState,
         private viewsList: any
@@ -48,6 +50,7 @@ export class ViewFacade {
         );
         this.documentsManager = new DocumentsManager(
             datastore,
+            changesStream,
             settingsService,
             this.viewManager,
             this.mainTypeDocumentsManager

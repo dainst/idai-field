@@ -5,6 +5,7 @@ import {ViewManager} from './view-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
+import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 
 /**
  * @author Thomas Kleinke
@@ -21,14 +22,14 @@ export class DocumentsManager {
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
+        private changesStream: ChangesStream,
         private settingsService: SettingsService,
         private viewManager: ViewManager,
         private operationTypeDocumentsManager: MainTypeDocumentsManager
     ) {
 
-        datastore.remoteChangesNotifications().subscribe(changedDocument => {
-            this.handleChange(changedDocument);
-        });
+        changesStream.remoteChangesNotifications().
+            subscribe(changedDocument => this.handleChange(changedDocument));
     }
 
 
@@ -63,8 +64,7 @@ export class DocumentsManager {
             this.deselect();
         }
 
-        return this.populateDocumentList()
-            .then(() => Promise.resolve(result));
+        return this.populateDocumentList().then(() => Promise.resolve(result));
     }
 
 

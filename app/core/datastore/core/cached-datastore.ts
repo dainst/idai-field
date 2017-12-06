@@ -69,6 +69,14 @@ export abstract class CachedDatastore<T extends Document>
     }
 
 
+    // TODO remove duplicate code 
+    protected reassign(doc: T) {
+
+        if (!(doc as any)['_conflicts']) delete (this.documentCache.get(doc.resource.id as any)as any)['_conflicts'];
+        Object.assign(this.documentCache.get(doc.resource.id as any), doc);
+    }
+
+
     /**
      * @throws if document is not of type T, determined by resource.type
      */

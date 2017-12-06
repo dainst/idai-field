@@ -42,7 +42,7 @@ export function main() {
             spyOn(console, 'debug'); // suppress console.debug
 
             mockdb = jasmine.createSpyObj('mockdb',
-                    ['findIds', 'remoteChangesNotifications', 'create', 'update', 'fetch', 'fetchRevision']);
+                    ['findIds', 'create', 'update', 'fetch', 'fetchRevision']);
 
             mockdb.update.and.callFake(function(dd) {
                 // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
@@ -60,10 +60,6 @@ export function main() {
                 dd.resource.id = '1';
                 return Promise.resolve(dd);
             });
-            // mockdb.remoteChangesNotifications.and.callFake(function() {return {subscribe: function(){}}});
-            mockdb.remoteChangesNotifications.and.returnValues({subscribe: (cb) =>
-                    remoteChangesNotificationsCallback = cb}
-                );
 
             const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
                 ['isImageType', 'validate', 'getNonImageTypeNames']);
@@ -205,24 +201,24 @@ export function main() {
         });
 
 
-        it('should add missing fields on remoteChangesNotifications with reassign', async (done) => {
+        xit('should add missing fields on remoteChangesNotifications with reassign', async (done) => {
 
-            await datastore.create({resource: { // trigger caching of document
-                id: '1',
-                val: 'a',
-                relations: {}
-            }} as any);
-            remoteChangesNotificationsCallback(
-                {resource: { // trigger reassigning of document
-                    id: '1',
-                    val: 'b',
-                    relations: {}
-                }} as any);
-
-            const document = await datastore.get('1'); // fetch from cache
-            expect(document.resource['val']).toEqual('b');
-            verifyIsIdaiFieldDocument(document);
-            done();
+            // await datastore.create({resource: { // trigger caching of document
+            //     id: '1',
+            //     val: 'a',
+            //     relations: {}
+            // }} as any);
+            // remoteChangesNotificationsCallback(
+            //     {resource: { // trigger reassigning of document
+            //         id: '1',
+            //         val: 'b',
+            //         relations: {}
+            //     }} as any);
+            //
+            // const document = await datastore.get('1'); // fetch from cache
+            // expect(document.resource['val']).toEqual('b');
+            // verifyIsIdaiFieldDocument(document);
+            // done();
         });
 
 

@@ -10,21 +10,16 @@ exports.config = {
     seleniumAddress: 'http://localhost:9515/wd/hub',
     baseUrl: fileUrl(path.resolve(__dirname, '../../..') + '/index.html'),
 
-    suites: {
-        default: [
-            '../settings/*.spec.js',
-            '../syncing/*.spec.js',
-            '../images/*.spec.js',
-            '../list/*.spec.js',
-            '../resources/*.spec.js',
-            '../map/*.spec.js',
-            '../widgets/*.spec.js',
-            '../import/*.spec.js'
-        ],
-        flaky: [
-            '../flaky/*.spec.js'
-        ]
-    },
+    specs: [
+        '../settings/*.spec.js',
+        '../syncing/*.spec.js',
+        '../images/*.spec.js',
+        '../list/*.spec.js',
+        '../resources/*.spec.js',
+        '../map/*.spec.js',
+        '../widgets/*.spec.js',
+        '../import/*.spec.js'
+    ],
 
     allScriptsTimeout: 110000,
     getPageTimeout: 100000,

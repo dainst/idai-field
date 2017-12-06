@@ -145,11 +145,8 @@ describe('resources/filter --', () => {
 
             ResourcesPage.isListMode().then(function(isListMode) {
                 if (isListMode) {
-                    console.log("LISTMODE");
                     ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);
                 } else {
-                    console.log("NOT LISTMODE");
-
                     DoceditPage.typeInInputField('identifier', identifier);
                     ResourcesPage.scrollUp();
                     DoceditPage.clickSaveDocument();

@@ -44,10 +44,17 @@ export function main() {
         let documentDatastore: DocumentDatastore;
 
 
-        function failOnWrongErr(err) {
+        function expectErr1(err) {
 
             if (!err) fail("Wrong Err - undefined");
             if (err.indexOf('Wrong') === -1) fail('Wrong Err' + err);
+        }
+
+
+        function expectErr2(err) {
+
+            if (!err) fail("Wrong Err - undefined");
+            if (err.indexOf('Unknown type') === -1) fail('Wrong Err' + err);
         }
 
 
@@ -92,7 +99,7 @@ export function main() {
                 await idaiFieldDocumentDatastore.create(image0);
                 fail();
             } catch (expected) {
-                failOnWrongErr(expected);
+                expectErr1(expected);
             }
             done();
         });
@@ -104,7 +111,7 @@ export function main() {
                 await idaiFieldImageDocumentDatastore.create(trench0);
                 fail();
             } catch (expected) {
-                failOnWrongErr(expected);
+                expectErr1(expected);
             }
             done();
         });
@@ -136,6 +143,20 @@ export function main() {
         });
 
 
+        it('create - unknown type', async done => {
+
+            try {
+                expect((await idaiFieldDocumentDatastore.
+                    create(Static.doc('Trench','Trench','Unknown','trench1'))).
+                        resource.relations.isRecordedIn).toEqual([]);
+                fail();
+            } catch (err) {
+                expectErr2(err);
+            }
+            done();
+        });
+
+
         // update
 
         it('IdaiFieldDocumentDatastore - throw when updating an image type', async done => {
@@ -144,7 +165,7 @@ export function main() {
                 await idaiFieldDocumentDatastore.update(image0);
                 fail();
             } catch (expected) {
-                failOnWrongErr(expected);
+                expectErr1(expected);
             }
             done();
         });
@@ -156,7 +177,7 @@ export function main() {
                 await idaiFieldImageDocumentDatastore.update(trench0);
                 fail();
             } catch (expected) {
-                failOnWrongErr(expected);
+                expectErr1(expected);
             }
             done();
         });
@@ -196,7 +217,7 @@ export function main() {
                 await idaiFieldDocumentDatastore.remove(image0);
                 fail();
             } catch (expected) {
-                failOnWrongErr(expected);
+                expectErr1(expected);
             }
             done();
         });
@@ -208,7 +229,7 @@ export function main() {
                 await idaiFieldImageDocumentDatastore.remove(trench0);
                 fail();
             } catch (expected) {
-                failOnWrongErr(expected);
+                expectErr1(expected);
             }
             done();
         });
@@ -222,7 +243,7 @@ export function main() {
                 await idaiFieldDocumentDatastore.get('image0', { skip_cache: true });
                 fail();
             } catch (expected) {
-                failOnWrongErr(expected);
+                expectErr1(expected);
             }
             done();
         });
@@ -234,7 +255,7 @@ export function main() {
                 await idaiFieldImageDocumentDatastore.get('trench0', { skip_cache: true });
                 fail();
             } catch (expected) {
-                failOnWrongErr(expected);
+                expectErr1(expected);
             }
             done();
         });
@@ -284,7 +305,7 @@ export function main() {
                 await idaiFieldDocumentDatastore.find({types: ['Image']});
                 fail();
             } catch (expected) {
-                failOnWrongErr(expected);
+                expectErr1(expected);
             }
             done();
         });
@@ -296,7 +317,7 @@ export function main() {
                 await idaiFieldImageDocumentDatastore.find({types: ['Trench']});
                 fail();
             } catch (expected) {
-                failOnWrongErr(expected);
+                expectErr1(expected);
             }
             done();
         });

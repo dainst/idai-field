@@ -42,7 +42,9 @@ export abstract class CachedDatastore<T extends Document>
 
     /**
      * Implements {@link Datastore#create}
+     *
      * @throws if document is not of type T, determined by resource.type
+     * @throws if resource.type is unknown
      */
     public async create(document: Document): Promise<T> {
 
@@ -56,7 +58,9 @@ export abstract class CachedDatastore<T extends Document>
 
     /**
      * Implements {@link Datastore#update}
+     *
      * @throws if document is not of type T, determined by resource.type
+     * TODO since we throw on create if resource.type is unknown, we could check that the type can be modified only to sub and supertypes
      */
     public async update(document: Document): Promise<T> {
 

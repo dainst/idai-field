@@ -61,7 +61,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
         return this.documentCache.set(this.typeConverter.
-            convertToIdaiFieldDocument<T>(document));
+            convert<T>(document));
     }
 
 
@@ -104,7 +104,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     public async getRevision(docId: string, revisionId: string): Promise<T> {
 
-        return this.typeConverter.convertToIdaiFieldDocument<T>(
+        return this.typeConverter.convert<T>(
             await this.datastore.fetchRevision(docId, revisionId));
     }
 

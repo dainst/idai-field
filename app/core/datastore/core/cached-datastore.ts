@@ -43,7 +43,7 @@ export abstract class CachedDatastore<T extends Document>
 
         const createdDocument = await this.datastore.create(document);
         return this.documentCache.set(this.typeConverter.
-            convertToIdaiFieldDocument<T>(createdDocument));
+            convert<T>(createdDocument));
     }
 
 
@@ -60,16 +60,16 @@ export abstract class CachedDatastore<T extends Document>
 
         if (!this.documentCache.get(document.resource.id as any)) {
             return this.documentCache.set(this.typeConverter.
-                convertToIdaiFieldDocument<T>(updatedDocument));
+                convert<T>(updatedDocument));
         } else {
             this.reassign(this.typeConverter.
-                convertToIdaiFieldDocument<T>(updatedDocument));
+                convert<T>(updatedDocument));
             return this.documentCache.get(document.resource.id as any);
         }
     }
 
 
-    // TODO remove duplicate code 
+    // TODO remove duplicate code
     protected reassign(doc: T) {
 
         if (!(doc as any)['_conflicts']) delete (this.documentCache.get(doc.resource.id as any)as any)['_conflicts'];
@@ -80,7 +80,7 @@ export abstract class CachedDatastore<T extends Document>
     /**
      * @throws if document is not of type T, determined by resource.type
      */
-    public remove(document: Document): Promise<any> { // TODO return promise undefined
+    public remove(document: Document): Promise<void> {
 
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
@@ -89,7 +89,7 @@ export abstract class CachedDatastore<T extends Document>
     }
 
 
-    public removeRevision(docId: string, revisionId: string): Promise<any> { // TODO remove promise undefined
+    public removeRevision(docId: string, revisionId: string): Promise<void> {
 
         return this.datastore.removeRevision(docId, revisionId);
     }

@@ -32,8 +32,7 @@ export class IdaiFieldTypeConverter extends TypeConverter {
     }
 
 
-    public convertToIdaiFieldDocument<T extends Document>(
-            doc: Document): T {
+    public convert<T extends Document>(doc: Document): T {
 
         if (this.imageTypeUtility.isImageType(doc.resource.type)) {
             const d = doc as IdaiFieldImageDocument;

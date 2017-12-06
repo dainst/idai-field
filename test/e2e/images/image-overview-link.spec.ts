@@ -51,14 +51,19 @@ describe('images/image-overview/link --', function() {
         browser.sleep(delays.shortRest * 3);
     });
 
+    let i = 0;
 
     beforeEach(() => {
-        NavbarPage.performNavigateToSettings();
-        request.post('http://localhost:3003/reset', {});
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToImages();
-        ImageOverviewPage.waitForCells();
-        browser.sleep(delays.shortRest);
+
+        if (i > 0) {
+            NavbarPage.performNavigateToSettings();
+            request.post('http://localhost:3003/reset', {});
+            browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToImages();
+            ImageOverviewPage.waitForCells();
+            browser.sleep(delays.shortRest);
+        }
+        i++;
     });
 
     it('link an image to a resource', () => {

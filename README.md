@@ -50,12 +50,10 @@ For troubleshooting information see [here](docs/unit-test-troubleshooting.md).
 To execute **e2e tests**, run 
 
 ```
-$ npm run e2e [noff|ff] [default|flaky]
+$ npm run e2e [noff|ff]
 ```
 
-The optional fail fast parameter specifies if test execution stops on the first error (`ff`) or continues until all tests are finished (`noff`). If not specified, the default mode is `noff`. The parameter is non optional, if the test suite parameter is used.
-
-There is are two test suites, called `default` and `flaky`. Unless specified explicitely with `flaky`, the `default` suite gets executed. 
+The optional fail fast parameter specifies if test execution stops on the first error (`ff`) or continues until all tests are finished (`noff`). If not specified, the default mode is `noff`. 
 
 ## Packaging
 

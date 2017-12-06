@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {Query, ReadDatastore, FindResult} from 'idai-components-2/datastore';
+import {FindResult, Query, ReadDatastore} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
@@ -33,10 +32,6 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
  * @author Thomas Kleinke
  */
 export abstract class CachedReadDatastore<T extends Document> implements ReadDatastore {
-
-    remoteChangesNotifications(): Observable<Document> {
-        throw new Error("Method not implemented.");
-    }
 
     private autoCacheUpdate: boolean = true;
 

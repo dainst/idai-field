@@ -4,9 +4,7 @@ const rimraf = require('rimraf');
 const fs = require('fs');
 
 const failFast = (process.argv.length > 2 && process.argv[2] == 'ff') ? 'ff' : 'noff';
-const suite = (process.argv.length > 3 && process.argv[3] == 'flaky') ? 'flaky' : 'default';
 
-console.log('Running test suite:', suite);
 console.log('Fail fast mode:', failFast);
 console.log('\n');
 
@@ -37,15 +35,13 @@ app.start().then(() => app.client.sessions()).then(sessions => {
             protractor = spawn('cmd', ['/s', '/c', 'protractor',
                 'test/e2e/config/protractor-spectron.conf.js',
                 '--seleniumSessionId=' + sessionId,
-                '--params=' + failFast,
-                '--suite=' + suite
+                '--params=' + failFast
             ]);
         } else {
             protractor = spawn('protractor', [
                 'test/e2e/config/protractor-spectron.conf.js',
                 '--seleniumSessionId=' + sessionId,
-                '--params=' + failFast,
-                '--suite=' + suite
+                '--params=' + failFast
             ]);
         }
         protractor.stdout.setEncoding('utf8');

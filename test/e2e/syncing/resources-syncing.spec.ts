@@ -125,31 +125,7 @@ describe('resources/syncing --', function() {
     });
 
 
-
-    // old version, if new one is stable for some time, remove it
-    //
-    // function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
-    //
-    //     const testDocument = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
-    //
-    //     if (additionalFieldName && additionalFieldValue) {
-    //         testDocument.resource[additionalFieldName] = additionalFieldValue;
-    //     }
-    //
-    //     return db.put(testDocument).then(result => {
-    //         testDocument['_rev'] = result.rev;
-    //         return browser.sleep(delays.shortRest * 10);
-    //     })
-    //         .then(() => NavbarPage.clickNavigateToExcavation())
-    //         .then(() => browser.sleep(delays.shortRest * 10))
-    //         .then(() => {
-    //             return Promise.resolve(testDocument);
-    //         });
-    // }
-
-    // new version
-    async function createOneDocument(nr: string, additionalFieldName?: string,
-                                     additionalFieldValue?: string): Promise<any> {
+    function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
 
         const testDocument = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
 
@@ -157,31 +133,15 @@ describe('resources/syncing --', function() {
             testDocument.resource[additionalFieldName] = additionalFieldValue;
         }
 
-        const result = await db.put(testDocument);
-        testDocument['_rev'] = result.rev;
-
-        NavbarPage.clickNavigateToExcavation();
-        return new Promise<any>((resolve, reject) => {
-
-            let retries = 0;
-            const waitForItem = () => {
-
-                ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
-                    if (text.indexOf('Testfund' + nr) !== -1) {
-                        return resolve(testDocument);
-                    } else {
-                        return reject('missing text');
-                    }
-                }, () => {
-                    if (retries == 20) return reject('20 retries and no result');
-
-                    browser.sleep(delays.shortRest);
-                    retries++;
-                    waitForItem();
-                })
-            };
-            waitForItem();
-        });
+        return db.put(testDocument).then(result => {
+            testDocument['_rev'] = result.rev;
+            return browser.sleep(delays.shortRest * 10);
+        })
+            .then(() => NavbarPage.clickNavigateToExcavation())
+            .then(() => browser.sleep(delays.shortRest * 10))
+            .then(() => {
+                return Promise.resolve(testDocument);
+            });
     }
 
 
@@ -339,6 +299,88 @@ describe('resources/syncing --', function() {
 
             db.get('tf' + nr).then(doc => {
                 expect(['Testfund' + nr, 'Testfund' + nr + '_alternative']).toContain(doc.resource.shortDescription);
+                done();
+            });
+
+        }).catch(err => {
+            console.error('Failure while creating test doc', err);
+            fail(); done();
+        });
+    });
+
+
+
+
+    // FLAKY
+
+    xit('resolve a save conflict automatically', done => {
+
+        const nr = '6';
+        let testDocument;
+
+        return createOneDocument(nr).then(document => {
+            testDocument = document;
+            ResourcesPage.clickSelectResource('testf' + nr);
+            return DocumentViewPage.performEditDocument();
+        }).then(() => {
+            testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative';
+            return updateTestDoc(testDocument);
+        }).then(() => {
+            DoceditPage.clickSaveDocument();
+            expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
+                .not.toContain('conflicted');
+            return DocumentViewPage.getShortDescription();
+        }).then(shortDescription => {
+            expect(shortDescription).toEqual('Testfund' + nr + '_alternative');
+            done();
+        }).catch(err => { fail(err); done(); });
+    });
+
+    xit('detect an eventual conflict and mark the corresponding resource list item', done => {
+
+        const nr = '7';
+
+        return createOneDocument(nr)
+            .then(() => {
+                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
+                return createAlternateDocument(nr);
+            })
+            .then(() => {
+                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).toContain('conflicted');
+                done();
+            });
+    });
+
+    function createAlternateDocumentForAutoResolving(nr, additionalFieldName, additionalFieldValue) {
+        const testDocumentAlternative = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
+        testDocumentAlternative['_rev'] = '1-dca7c53e7c0e47278b2c09744cc94b21';
+        testDocumentAlternative.resource[additionalFieldName] = additionalFieldValue;
+
+        return db.put(testDocumentAlternative, { force: true })
+            .then(() => {
+                NavbarPage.performNavigateToSettings();
+                NavbarPage.clickNavigateToExcavation();
+                return browser.sleep(delays.shortRest * 10);
+            });
+    }
+
+    function createEventualConflictForAutoResolving(nr) {
+
+        return createOneDocument(nr, 'weight', '100')
+            .then(() => createAlternateDocumentForAutoResolving(nr, 'height', '50'));
+    }
+
+    xit('resolve an eventual conflict automatically', done => {
+        const nr = '11';
+
+        createEventualConflictForAutoResolving(nr).then(() => {
+            browser.sleep(delays.shortRest * 10);
+            expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
+
+            db.get('tf' + nr).then(doc => {
+                expect(doc.resource.shortDescription).toEqual('Testfund' + nr);
+                expect(doc.resource.weight).toEqual('100');
+                expect(doc.resource.height).toEqual('50');
                 done();
             });
 

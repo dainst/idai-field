@@ -389,7 +389,11 @@ export class PouchdbDatastore {
 
                         this.constraintIndexer.put(document);
                         this.fulltextIndexer.put(document);
-                        this.notifyRemoteChangesObservers(document);
+                        try {
+                            this.notifyRemoteChangesObservers(document);
+                        } catch (e) {
+                            console.error('Error while notify observer');
+                        }
                         this.notifyAllChangesAndDeletionsObservers();
                     }
                 }).catch(err => {

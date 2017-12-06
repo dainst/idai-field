@@ -9,18 +9,10 @@ import {DocumentConverter} from './document-converter';
 
 @Injectable()
 /**
- * This datastore provides everything necessary
- * to power a idai-field application:
- *
- * 1) A PouchDB based datastore layer, with gives us synchronization.
- *
- * 1) A document cache for faster access and also to allow
- *    for clients to work with references to documents.
- *
- * 2) Returns fully checked instances of
- *    IdaiFieldDocument and IdaiFieldImageDocument respectively,
- *    so that the rest of the app can rely that the declared
- *    fields are present.
+ * Returns fully checked instances of
+ * IdaiFieldDocument and IdaiFieldImageDocument respectively,
+ * so that the rest of the app can rely that the declared
+ * fields are present.
  *
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
@@ -28,8 +20,7 @@ import {DocumentConverter} from './document-converter';
  */
 export abstract class CachedDatastore<T extends Document>
     extends CachedReadDatastore<T> {
-
-
+    
     constructor(
         datastore: PouchdbDatastore,
         documentCache: DocumentCache<T>,
@@ -60,7 +51,6 @@ export abstract class CachedDatastore<T extends Document>
      * Implements {@link Datastore#update}
      *
      * @throws if document is not of type T, determined by resource.type
-     * TODO since we throw on create if resource.type is unknown, we could check that the type can be modified only to sub and supertypes
      */
     public async update(document: Document): Promise<T> {
 

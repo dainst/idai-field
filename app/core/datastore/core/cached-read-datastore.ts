@@ -34,10 +34,6 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
  */
 export abstract class CachedReadDatastore<T extends Document> implements ReadDatastore {
 
-    remoteChangesNotifications(): Observable<Document> {
-        throw new Error("Method not implemented.");
-    }
-
     private autoCacheUpdate: boolean = true;
 
 

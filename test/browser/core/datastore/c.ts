@@ -29,16 +29,12 @@ export class C {
 
         spyOn(console, 'debug'); // suppress console.debug
 
-        let converter;
-        let documentCache;
-
-        const result = Static.createPouchdbDatastore('testdb');
-        const datastore = result.datastore;
-        documentCache = result.documentCache;
-        converter = new IdaiFieldTypeConverter(new ImageTypeUtility(this.projectConfiguration));
+        const {datastore, documentCache} = Static.createPouchdbDatastore('testdb');
+        const converter = new IdaiFieldTypeConverter(
+            new ImageTypeUtility(this.projectConfiguration));
 
         this.idaiFieldImageDocumentDatastore = new IdaiFieldImageDocumentDatastore(
-            datastore, documentCache, converter);
+            datastore, documentCache as any, converter);
         this.idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
             datastore, documentCache, converter);
         this.documentDatastore = new DocumentDatastore(

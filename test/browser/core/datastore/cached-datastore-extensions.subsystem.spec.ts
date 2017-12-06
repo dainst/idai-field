@@ -5,6 +5,9 @@ import {IdaiFieldDocumentConverter} from '../../../../app/core/datastore/idai-fi
 import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
 import {IdaiFieldImageDocumentDatastore} from '../../../../app/core/datastore/idai-field-image-document-datastore';
 import {DocumentDatastore} from '../../../../app/core/datastore/document-datastore';
+import {Document} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldImageDocument} from '../../../../app/core/model/idai-field-image-document';
 
 /**
  * This test suite focuses on the differences between the Data Access Objects.
@@ -39,9 +42,9 @@ export function main() {
         let documentCache;
         let image0;
         let trench0;
-        let idaiFieldImageDocumentDatastore;
-        let idaiFieldDocumentDatastore;
-        let documentDatastore;
+        let idaiFieldImageDocumentDatastore: IdaiFieldImageDocumentDatastore;
+        let idaiFieldDocumentDatastore: IdaiFieldDocumentDatastore;
+        let documentDatastore: DocumentDatastore;
 
 
         function failOnWrongErr(err) {
@@ -105,6 +108,32 @@ export function main() {
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
+            }
+            done();
+        });
+
+
+        it('create - add relations with IdaiFieldImageDocumentDatastore', async done => {
+
+            try {
+                expect((await idaiFieldImageDocumentDatastore.
+                create(Static.doc('Image','Image','Image','image1'))).
+                    resource.relations.depicts).toEqual([]);
+            } catch (err) {
+                fail();
+            }
+            done();
+        });
+
+
+        it('create - add relations with IdaiFieldDocumentDatastore', async done => {
+
+            try {
+                expect((await idaiFieldDocumentDatastore.
+                create(Static.doc('Trench','Trench','Trench','trench1'))).
+                    resource.relations.isRecordedIn).toEqual([]);
+            } catch (err) {
+                fail();
             }
             done();
         });
@@ -188,6 +217,42 @@ export function main() {
         });
 
 
+        it('get - add relations for IdaiFieldDocument', async done => {
+
+            try {
+                expect((await idaiFieldDocumentDatastore.get('trench0', { skip_cache: true })).
+                    resource.relations.isRecordedIn).toEqual([]);
+                expect((await idaiFieldDocumentDatastore.get('trench0', { skip_cache: false })).
+                    resource.relations.isRecordedIn).toEqual([]);
+                expect((await documentDatastore.get('trench0', { skip_cache: true })).
+                    resource.relations.isRecordedIn).toEqual([]);
+                expect((await documentDatastore.get('trench0', { skip_cache: false })).
+                    resource.relations.isRecordedIn).toEqual([]);
+            } catch (err) {
+                fail();
+            }
+            done();
+        });
+
+
+        it('get - add relations for IdaiFieldImageDocument', async done => {
+
+            try {
+                expect((await idaiFieldImageDocumentDatastore.get('image0', { skip_cache: true })).
+                    resource.relations.depicts).toEqual([]);
+                expect((await idaiFieldImageDocumentDatastore.get('image0', { skip_cache: false })).
+                    resource.relations.depicts).toEqual([]);
+                expect((await documentDatastore.get('image0', { skip_cache: true })).
+                    resource.relations.depicts).toEqual([]);
+                expect((await documentDatastore.get('image0', { skip_cache: false })).
+                    resource.relations.depicts).toEqual([]);
+            } catch (err) {
+                fail();
+            }
+            done();
+        });
+
+
         // find
 
         it('IdaiFieldDocumentDatastore - throw when find called with image type ', async done => {
@@ -258,6 +323,20 @@ export function main() {
                 expect(result.documents.length).toBe(1);
                 expect(result.documents[0].resource.id).toEqual('trench0');
             } catch (expected) {
+                fail();
+            }
+            done();
+        });
+
+
+        it('find - add relations for IdaiFieldDocument', async done => {
+
+            try {
+                expect((await idaiFieldDocumentDatastore.find({})). // result coming from cache
+                    documents[0].resource.relations.isRecordedIn).toEqual([]);
+                expect((await idaiFieldImageDocumentDatastore.find({})). // result coming from cache
+                    documents[0].resource.relations.depicts).toEqual([]);
+            } catch (err) {
                 fail();
             }
             done();

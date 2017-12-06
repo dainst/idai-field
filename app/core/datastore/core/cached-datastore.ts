@@ -44,7 +44,7 @@ export abstract class CachedDatastore<T extends Document>
      * Implements {@link Datastore#create}
      * @throws if document is not of type T, determined by resource.type
      */
-    public async create(document: Document): Promise<Document> { // TODO return T and check if it is checked in every execution path, write test
+    public async create(document: Document): Promise<Document> { // TODO return T
 
         this.documentConverter.validate([document.resource.type], this.typeClass);
 
@@ -58,7 +58,7 @@ export abstract class CachedDatastore<T extends Document>
      * Implements {@link Datastore#update}
      * @throws if document is not of type T, determined by resource.type
      */
-    public async update(document: Document): Promise<Document> { // TODO return T and check if it is checked in every execution path, write test
+    public async update(document: Document): Promise<Document> {
 
         this.documentConverter.validate([document.resource.type], this.typeClass);
 

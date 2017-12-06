@@ -75,9 +75,6 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      * not specified in ReadDatastore:  { skip_cache: boolean }
      *
      * @throws if fetched doc is not of type T, determined by resource.type
-     * @param {string} id
-     * @param {{skip_cache: boolean}} options
-     * @returns {Promise<T extends Document>}
      */
     public async get(id: string, options?: { skip_cache: boolean }): Promise<T> {
 
@@ -104,7 +101,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      * If two documents have the exact same lastModified, there is no second sort criterium
      * so the order between them is unspecified.
      *
-     * @throws if query contains types incopatible with T
+     * @throws if query contains types incompatible with T
      */
     public async find(query: Query): Promise<IdaiFieldFindResult<T>> {
 

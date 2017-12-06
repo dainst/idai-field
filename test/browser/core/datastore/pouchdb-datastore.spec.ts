@@ -1,8 +1,7 @@
-import {PouchdbDatastore} from '../../../../app/core/datastore/core/pouchdb-datastore';
-import {DatastoreErrors} from 'idai-components-2/datastore';
-import {Query} from 'idai-components-2/src/app/datastore/query';
-import {Static} from '../../static';
 import {Document} from 'idai-components-2/core';
+import {DatastoreErrors, Query} from 'idai-components-2/datastore';
+import {PouchdbDatastore} from '../../../../app/core/datastore/core/pouchdb-datastore';
+import {Static} from '../../static';
 
 
 /**
@@ -16,27 +15,27 @@ export function main() {
 
         let datastore: PouchdbDatastore;
 
-        beforeEach(
-            () => {
-                spyOn(console, 'debug'); // to suppress console.debug output
-                spyOn(console, 'error'); // to suppress console.error output
-                spyOn(console, 'warn');
+        
+        beforeEach(() => {
+            spyOn(console, 'debug'); // to suppress console.debug output
+            spyOn(console, 'error'); // to suppress console.error output
+            spyOn(console, 'warn');
 
-                let result = Static.createPouchdbDatastore('testdb');
-                datastore = result.datastore;
-            }
-        );
+            let result = Static.createPouchdbDatastore('testdb');
+            datastore = result.datastore;
+        });
 
-        afterEach(
-            (done) => {
-                new PouchDB('testdb').destroy()
-                    .then(() => new PouchDB('testdb2').destroy())
-                    .then(() => done());
-            }, 5000
-        );
+        
+        afterEach(done => {
+
+            new PouchDB('testdb').destroy()
+                .then(() => new PouchDB('testdb2').destroy())
+                .then(() => done());
+        }, 5000);
         
 
-        const expectErr = function(promise,expectedMsgWithParams,done) {
+        const expectErr = function(promise, expectedMsgWithParams, done) {
+
             promise().then(
                 result => {
                     fail('rejection with '+ expectedMsgWithParams
@@ -50,190 +49,186 @@ export function main() {
             );
         };
 
+        
         // create
 
-        it('should create a document and create a resource.id',
-            function (done) {
+        it('should create a document and create a resource.id', done => {
 
-                datastore.create(Static.doc('sd1'))
-                    .then(
-                        _createdDoc => {
-                            const createdDoc = _createdDoc as Document;
-                            expect(createdDoc.resource.id).not.toBe(undefined);
-                            done();
-                        },
-                        () => {
-                            fail();
-                            done();
-                        }
-                    );
-            }
-        );
+            datastore.create(Static.doc('sd1'))
+                .then(
+                    _createdDoc => {
+                        const createdDoc = _createdDoc as Document;
+                        expect(createdDoc.resource.id).not.toBe(undefined);
+                        done();
+                    },
+                    () => {
+                        fail();
+                        done();
+                    }
+                );
+        });
 
-        it('should create a document and take the existing resource.id',
-            function (done) {
+        
+        it('should create a document and take the existing resource.id', done => {
 
-                const docToCreate: Document = Static.doc('sd1');
-                docToCreate.resource.id = 'a1';
+            const docToCreate: Document = Static.doc('sd1');
+            docToCreate.resource.id = 'a1';
 
-                datastore.create(docToCreate)
-                // this step was added to adress a problem where a document
-                // with an existing resource.id was stored but could not
-                // get refreshed later
-                    .then(() => datastore.fetch(docToCreate.resource.id))
-                    // and the same may occur on get
-                    .then(() => datastore.fetch(docToCreate.resource.id))
-                    .then(
-                        _createdDoc => {
-                            let createdDoc = _createdDoc as Document;
-                            expect(createdDoc.resource.id).toBe('a1');
-                            done();
-                        },
-                        () => {
-                            fail();
-                            done();
-                        }
-                    );
-            }
-        );
+            datastore.create(docToCreate)
+            // this step was added to adress a problem where a document
+            // with an existing resource.id was stored but could not
+            // get refreshed later
+                .then(() => datastore.fetch(docToCreate.resource.id))
+                // and the same may occur on get
+                .then(() => datastore.fetch(docToCreate.resource.id))
+                .then(
+                    _createdDoc => {
+                        let createdDoc = _createdDoc as Document;
+                        expect(createdDoc.resource.id).toBe('a1');
+                        done();
+                    },
+                    () => {
+                        fail();
+                        done();
+                    }
+                );
+        });
+        
 
         it('should not create a document with the resource.id of an alredy existing doc',
-            function (done) {
+            done => {
 
-                const docToCreate1: Document = Static.doc('sd1');
-                docToCreate1.resource.id = 'a1';
-                const docToCreate2: Document = Static.doc('sd1');
-                docToCreate2.resource.id = 'a1';
+            const docToCreate1: Document = Static.doc('sd1');
+            docToCreate1.resource.id = 'a1';
+            const docToCreate2: Document = Static.doc('sd1');
+            docToCreate2.resource.id = 'a1';
 
-                expectErr(()=>{return datastore.create(docToCreate1)
-                        .then(() => datastore.create(docToCreate2))},
-                    [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS],done);
-            }
-        );
+            expectErr(()=>{return datastore.create(docToCreate1)
+                    .then(() => datastore.create(docToCreate2))
+                }, [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS],done);
+        });
+        
 
         // update
 
-        it('should update an existing document with no identifier conflict',
-            function (done) {
+        it('should update an existing document with no identifier conflict', done => {
 
-                const doc2 = Static.doc('id2');
+            const doc2 = Static.doc('id2');
 
-                datastore.create(Static.doc('id1'))
-                    .then(() => datastore.create(doc2))
-                    .then(() => {
-                        return datastore.update(doc2);
-                    }).then(
-                    () => {
-                        done();
-                    },
-                    () => {
-                        fail();
-                        done();
-                    }
-                );
-            }
-        );
+            datastore.create(Static.doc('id1'))
+                .then(() => datastore.create(doc2))
+                .then(() => {
+                    return datastore.update(doc2);
+                }).then(
+                () => {
+                    done();
+                },
+                () => {
+                    fail();
+                    done();
+                }
+            );
+        });
+        
 
-        it('should not update if resource id not present',
-            function (done) {
+        it('should not update if resource id not present', done => {
 
-                datastore.update(Static.doc('sd1')).then(
-                    () => {
-                        fail();
-                        done();
-                    },
-                    expectedErr=>{
-                        expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
-                        done();
-                    }
-                );
-            }
-        );
+            datastore.update(Static.doc('sd1')).then(
+                () => {
+                    fail();
+                    done();
+                },
+                expectedErr => {
+                    expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
+                    done();
+                }
+            );
+        });
 
-        it('should not update if not existent',
-            function(done) {
+        it('should not update if not existent', done => {
 
-                datastore.update(Static.doc('sd1', 'identifier1', 'Find', 'id1')).then(
-                    () => {
-                        fail();
-                        done();
-                    },
-                    expectedErr => {
-                        expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NOT_FOUND);
-                        done();
-                    }
-                );
-            }
-        );
+            datastore.update(Static.doc('sd1', 'identifier1', 'Find', 'id1')).then(
+                () => {
+                    fail();
+                    done();
+                },
+                expectedErr => {
+                    expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NOT_FOUND);
+                    done();
+                }
+            );
+        });
+        
 
         // get
 
-        it('should get if existent',
-            function(done) {
-                const d = Static.doc('sd1');
-                datastore.create(d)
-                    .then(() => datastore.fetch(d['resource']['id']))
-                    .then(doc => {
-                        expect(doc['resource']['shortDescription']).toBe('sd1');
-                        done();
-                    });
+        it('should get if existent', done => {
 
-            }
-        );
+            const d = Static.doc('sd1');
+            datastore.create(d)
+                .then(() => datastore.fetch(d['resource']['id']))
+                .then(doc => {
+                    expect(doc['resource']['shortDescription']).toBe('sd1');
+                    done();
+                });
+        });
+        
 
         it('should reject with keyOfM in when trying to get a non existing document',
-            function(done) {
-                expectErr(()=>{return datastore.create(Static.doc('sd1'))
-                        .then(() => datastore.fetch('nonexisting'))}
-                    ,[DatastoreErrors.DOCUMENT_NOT_FOUND],done);
-            }
-        );
+            done => {
 
+            expectErr(() => {
+                return datastore.create(Static.doc('sd1'))
+                    .then(() => datastore.fetch('nonexisting'))
+                }, [DatastoreErrors.DOCUMENT_NOT_FOUND], done);
+        });
+
+        
         // refresh
 
         it('should reject with keyOfM in when trying to refresh a non existing document',
-            function(done) {
+            done => {
 
-                expectErr(()=>{
-                    return datastore.create(Static.doc('id1'))
-                        .then(() => datastore.fetch('nonexistingid'))},[DatastoreErrors.DOCUMENT_NOT_FOUND],done);
-            }
-        );
+            expectErr(() => {
+                return datastore.create(Static.doc('id1'))
+                    .then(() => datastore.fetch('nonexistingid'))
+                }, [DatastoreErrors.DOCUMENT_NOT_FOUND],done);
+        });
+        
 
         // remove
 
-        it('should remove if existent',
-            function(done) {
-                const d = Static.doc('sd1');
-                expectErr(()=>{
-                    return datastore.create(d)
-                        .then(() => datastore.remove(d))
-                        .then(() => datastore.fetch(d['resource']['id']))
-                    },
-                    [DatastoreErrors.DOCUMENT_NOT_FOUND],done);
+        it('should remove if existent', done => {
 
-            }
-        );
+            const d = Static.doc('sd1');
+            expectErr(() => {
+                return datastore.create(d)
+                    .then(() => datastore.remove(d))
+                    .then(() => datastore.fetch(d['resource']['id']))
+            }, [DatastoreErrors.DOCUMENT_NOT_FOUND], done);
+        });
+        
 
-        it('should throw error when no resource id', (done) => {
+        it('should throw error when no resource id', done => {
 
-                expectErr(()=>{return datastore.remove(Static.doc('sd2'))}
-                    ,[DatastoreErrors.DOCUMENT_NO_RESOURCE_ID], done);
-            }
-        );
+            expectErr(() => { return datastore.remove(Static.doc('sd2')) },
+                [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID], done);
+        });
+        
 
-        it('should throw error when trying to remove and not existent', (done) => {
+        it('should throw error when trying to remove and not existent', done => {
 
-                const d = Static.doc('sd1');
-                d['resource']['id'] = 'hoax';
-                expectErr(()=>{return datastore.remove(d)}
-                    ,[DatastoreErrors.DOCUMENT_NOT_FOUND], done);
-            }
-        );
+            const d = Static.doc('sd1');
+            d['resource']['id'] = 'hoax';
+            expectErr(() => { return datastore.remove(d)}, [DatastoreErrors.DOCUMENT_NOT_FOUND], done);
+
+        });
+        
 
         // find
 
-        it('should find with filterSet undefined', function(done) {
+        it('should find with filterSet undefined', done => {
+
             const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
 
             datastore.create(doc1)
@@ -249,8 +244,10 @@ export function main() {
                     }
                 );
         });
+        
 
-        it('should not find with query undefined', function(done) {
+        it('should not find with query undefined', done => {
+
             const doc1 = Static.doc('sd1');
 
             datastore.create(doc1)
@@ -266,8 +263,10 @@ export function main() {
                     }
                 );
         });
+        
 
-        it('should find with prefix query undefined', function(done) {
+        it('should find with prefix query undefined', done => {
+
             const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
 
             datastore.create(doc1)
@@ -283,8 +282,10 @@ export function main() {
                     }
                 );
         });
+        
 
-        it('should find with omitted q', function(done) {
+        it('should find with omitted q', done => {
+
             const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
 
             datastore.create(doc1)
@@ -300,8 +301,10 @@ export function main() {
                     }
                 );
         });
+        
 
-        it('should find with omitted q and ommitted prefix', function(done) {
+        it('should find with omitted q and ommitted prefix', done => {
+
             const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
 
             datastore.create(doc1)
@@ -317,8 +320,10 @@ export function main() {
                     }
                 );
         });
+        
 
-        it('should match all fields', function(done) {
+        it('should match all fields', done => {
+
             const doc1 = Static.doc('bla', 'blub');
             const doc2 = Static.doc('blub', 'bla');
 
@@ -336,8 +341,10 @@ export function main() {
                     }
                 );
         });
+        
 
-        it('should filter by one type in find', function(done) {
+        it('should filter by one type in find', done => {
+
             const doc1 = Static.doc('bla1', 'blub', 'type1');
             const doc2 = Static.doc('bla2', 'blub', 'type2');
             const doc3 = Static.doc('bla3', 'blub', 'type3', 'id3');
@@ -358,8 +365,10 @@ export function main() {
                     }
                 );
         });
+        
 
-        it('should find by prefix query and filter', function(done) {
+        it('should find by prefix query and filter', done => {
+
             const doc1 = Static.doc('bla1', 'blub1', 'type1');
             const doc2 = Static.doc('bla2', 'blub2', 'type2');
             const doc3 = Static.doc('bla3', 'blub3', 'type2');
@@ -385,7 +394,9 @@ export function main() {
                 );
         });
 
-        it('should filter with constraint', function(done) {
+        
+        it('should filter with constraint', done => {
+
             const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
 
             const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
@@ -421,7 +432,9 @@ export function main() {
                 );
         });
 
-        it('should filter with multiple constraints', function(done) {
+        
+        it('should filter with multiple constraints', done => {
+
             const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
 
             const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
@@ -456,7 +469,7 @@ export function main() {
         });
 
 
-        it('should filter with a subtract constraint', function(done) {
+        it('should filter with a subtract constraint', done => {
 
             const doc1 = Static.doc('Document 1', 'doc1', 'type1','id1');
             const doc2 = Static.doc('Document 2', 'doc2', 'type1','id2');
@@ -491,8 +504,8 @@ export function main() {
         });
 
 
+        it('should filter with unknown constraint', done => {
 
-        it('should filter with unknown constraint', function(done) {
             const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
             const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
 
@@ -521,7 +534,9 @@ export function main() {
                 );
         });
 
-        it('should filter with one known and one unknown constraint ', function(done) {
+        
+        it('should filter with one known and one unknown constraint ', done => {
+
             const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
             const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
             doc2.resource.relations['liesWithin'] = ['id1'];
@@ -551,7 +566,9 @@ export function main() {
                 );
         });
 
-        it('should sort by last modified descending', function(done) {
+        
+        it('should sort by last modified descending', done => {
+
             const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
             const doc3 = Static.doc('bla3', 'blub3', 'type3','id3');
             doc3.resource.relations['isRecordedIn'] = ['id1'];
@@ -587,9 +604,10 @@ export function main() {
 
             },100)
         });
+        
 
         // TODO remove or rewrite
-        xit('should find conflicted documents sorted by lastModified', function(done) {
+        xit('should find conflicted documents sorted by lastModified', done => {
 
             let db1 = new PouchDB('testdb');
             let db2 = new PouchDB('testdb2');

@@ -422,6 +422,7 @@ export class PouchdbDatastore {
     }
 
 
+    // TODO Move to query interface (make query a class if necessary)
     private static convertToConstraint(constraint: Constraint|string): Constraint {
 
         if (typeof(constraint) == 'string') {

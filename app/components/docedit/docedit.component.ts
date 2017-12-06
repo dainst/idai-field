@@ -100,8 +100,7 @@ export class DoceditComponent {
 
         this.persistenceManager.setOldVersions([this.document]);
 
-        this.datastore.find({ q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any)
-            .then(result => this.isRecordedInResourcesCount = result.documents ? result.documents.length : 0);
+        this.fetchIsRecordedInCount(document);
     }
 
 
@@ -118,6 +117,18 @@ export class DoceditComponent {
         this.documentEditChangeMonitor.setChanged();
         this.showTypeChangeFieldsWarning();
         this.showTypeChangeRelationsWarning();
+    }
+
+
+    private fetchIsRecordedInCount(document: IdaiFieldDocument) {
+
+        if (!document.resource.id) {
+            this.isRecordedInResourcesCount = 0;
+            return;
+        }
+
+        this.datastore.find({ q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any)
+            .then(result => this.isRecordedInResourcesCount = result.documents ? result.documents.length : 0);
     }
 
 

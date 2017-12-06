@@ -6,6 +6,8 @@ import {ResourcesState} from "../../../../app/components/resources/view/resource
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldDocumentDatastore} from "../../../../app/core/datastore/idai-field-document-datastore";
 import {IdaiFieldTypeConverter} from "../../../../app/core/datastore/idai-field-type-converter";
+import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
+import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration'
 
 /**
  * This is a subsystem test.
@@ -15,6 +17,7 @@ import {IdaiFieldTypeConverter} from "../../../../app/core/datastore/idai-field-
  * @author Daniel de Oliveira
  */
 export function main() {
+
     describe('ViewFacade/Subsystem', () => {
 
         const viewsList = [
@@ -26,27 +29,32 @@ export function main() {
             }
         ];
 
+        const pc = {
+            types: [
+                { 'type': 'Trench', 'fields': [] },
+                { 'type': 'Image', 'fields': [] },
+                { 'type': 'Find', 'fields': [] },
+                { 'type': 'Project', 'fields': [] }
+            ]
+        };
+
         let viewFacade: ViewFacade;
         let operationTypeDocument1: Document;
         let operationTypeDocument2: Document;
         let document1: Document;
         let document2: Document;
         let document3: Document;
-        let datastore: CachedDatastore<IdaiFieldDocument>;
+        let idaiFieldDocumentDatastore: CachedDatastore<IdaiFieldDocument>;
 
 
         beforeEach(async done => {
 
             spyOn(console, 'debug'); // suppress console.debug
 
-            const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
-                ['isImageType', 'getNonImageTypeNames']);
-            mockImageTypeUtility.isImageType.and.returnValue(false);
-            mockImageTypeUtility.getNonImageTypeNames.and.returnValue(['Trench','Find']);
-
-            const result = Static.createPouchdbDatastore('testdb');
-            datastore = new IdaiFieldDocumentDatastore(
-                result.datastore, result.documentCache, new IdaiFieldTypeConverter(mockImageTypeUtility));
+            const {datastore, documentCache} = Static.createPouchdbDatastore('testdb');
+            idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
+                datastore, documentCache,
+                new IdaiFieldTypeConverter(new ImageTypeUtility(new ProjectConfiguration(pc))));
 
             const projectDocument = Static.doc('testdb','testdb','Project','testdb');
             operationTypeDocument1 = Static.doc('trench1','trench1','Trench','t1');
@@ -61,12 +69,12 @@ export function main() {
             document3 = Static.doc('find3','find3','Find');
             document3.resource.relations['isRecordedIn'] = [operationTypeDocument2.resource.id];
 
-            await datastore.create(projectDocument);
-            await datastore.create(operationTypeDocument1);
-            await datastore.create(operationTypeDocument2);
-            await datastore.create(document1);
-            await datastore.create(document2);
-            await datastore.create(document3);
+            await idaiFieldDocumentDatastore.create(projectDocument);
+            await idaiFieldDocumentDatastore.create(operationTypeDocument1);
+            await idaiFieldDocumentDatastore.create(operationTypeDocument2);
+            await idaiFieldDocumentDatastore.create(document1);
+            await idaiFieldDocumentDatastore.create(document2);
+            await idaiFieldDocumentDatastore.create(document3);
             done();
         });
 
@@ -87,9 +95,8 @@ export function main() {
                 subscribe: () => {}
             });
 
-
             viewFacade = new ViewFacade(
-                datastore,
+                idaiFieldDocumentDatastore,
                 changesStream,
                 settingsService,
                 new ResourcesState(stateSerializer),

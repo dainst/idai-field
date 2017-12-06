@@ -1,4 +1,4 @@
-import {Query, DatastoreErrors} from 'idai-components-2/datastore';
+import {Query, Constraint, DatastoreErrors} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
@@ -240,7 +240,7 @@ export class PouchdbDatastore {
     private generateOrderedResultList(resultSets: ResultSets): Array<any> {
 
         return resultSets.intersect((e: any) => e.id)
-            .sort((a: any,b: any) => SortUtil.alnumCompare(a['identifier'], b['identifier']))
+            .sort((a: any, b: any) => SortUtil.alnumCompare(a['identifier'], b['identifier']))
             .map((e: any) => e['id']);
     }
 
@@ -249,16 +249,22 @@ export class PouchdbDatastore {
      * @param constraints
      * @returns {any} undefined if there is no usable constraint
      */
-    private performThem(constraints: any): ResultSets|undefined {
+    private performThem(constraints: { [name: string]: Constraint|string }|undefined): ResultSets|undefined {
 
         if (!constraints) return undefined;
 
         const resultSets: ResultSets = new ResultSets();
         let usableConstraints = 0;
-        for (let constraint of Object.keys(constraints)) {
-            let result = this.constraintIndexer.get(constraint, constraints[constraint]);
+        for (let name of Object.keys(constraints)) {
+            const constraint = PouchdbDatastore.convertToConstraint(constraints[name]);
+
+            let result = this.constraintIndexer.get(name, constraint.value);
             if (result) {
-                resultSets.add(result);
+                if (constraint.type == 'add') {
+                    resultSets.add(result);
+                } else if (constraint.type == 'subtract') {
+                    resultSets.subtract(result);
+                }
                 usableConstraints++;
             }
         }
@@ -413,5 +419,15 @@ export class PouchdbDatastore {
     private static isEmpty(query: Query) {
 
         return ((!query.q || query.q == '') && !query.types);
+    }
+
+
+    private static convertToConstraint(constraint: Constraint|string): Constraint {
+
+        if (typeof(constraint) == 'string') {
+            return { value: constraint, type: 'add' };
+        } else {
+            return constraint;
+        }
     }
 }

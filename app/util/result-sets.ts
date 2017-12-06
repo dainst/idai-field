@@ -5,41 +5,65 @@
 export class ResultSets {
 
 
-    private sets: Array<  // multiple result sets
+    private addSets: Array<  // multiple result sets
         Array<            // a single result set
             Object // an element of a result set
         >> = [];
 
+    private subtractSets: Array<Array<Object>> = [];
+
 
     public add(set: Array<Object>) {
-        this.sets.push(set);
+
+        this.addSets.push(set);
     }
 
+
+    public subtract(set: Array<Object>) {
+
+        this.subtractSets.push(set);
+    }
+
+
     /**
-     * Finds the elements that are common to all sets.
+     * Finds the elements that are common to all sets. Elements from subtract sets are removed from the result.
      *
-     * Assuming, one adds the two sets
+     * Assuming, one adds the two add sets
      *
      *   [{id:'1'}, {id:'2'}, {id:'3'}]
      *   [{id:'2'}, {id:'3'}]
      *
+     *   and the subtract set
+     *
+     *   [{id:'3'}]
+     *
      * intersect would return
      *
-     *   [{id:'3'},{id:'2'}] with f = a => a.id
+     *   [{id:'2'}] with f = a => a.id
      *
      * @param f gets applied to elements to get the field on which the comparison is performed
      */
-    public intersect(f: any) {
+    public intersect(f: Function): Array<Object> {
 
-        return this.sets.reduce((p, c) =>
-            p.filter(e =>
-                c.map(r => f(r)).indexOf(f(e)) !=- 1
-            )
-        );
+        let result: Array<Object> = this.addSets[0];
+
+        for (let i = 1; i < this.addSets.length; i++) {
+            result = result.filter(e => this.addSets[i].map(obj => f(obj)).indexOf(f(e)) != -1);
+        }
+
+        for (let set of this.subtractSets) {
+            for (let object of set) {
+                const index = result.map(obj =>f(obj)).indexOf(f(object));
+                if (index > -1) result.splice(index, 1);
+            }
+        }
+
+        return result;
     }
 
+
     /**
-     * Returns a single result set which contains the objects of all result sets
+     * Returns a single result set which contains the objects of all add sets
      *
      *  Assuming, one adds the two sets
      *
@@ -52,13 +76,13 @@ export class ResultSets {
      *
      * @param f gets applied to elements to get the field on which the comparison is performed
      */
-    public unify(f: any): Array<Object> {
+    public unify(f: Function): Array<Object> {
 
-        const result = {};
+        const result: any = {};
 
-        for (let resultSet of this.sets) {
+        for (let resultSet of this.addSets) {
             for (let item of resultSet) {
-                (result as any)[f(item)] = item;
+                result[f(item)] = item;
             }
         }
 

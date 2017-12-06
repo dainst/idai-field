@@ -39,9 +39,7 @@ export class ImagePickerComponent implements OnInit {
         private datastore: IdaiFieldImageDocumentReadDatastore,
         private el: ElementRef,
         private imageTypeUtility: ImageTypeUtility
-    ) {
-        this.fetchDocuments(this.query);
-    }
+    ) {}
 
 
     public ngOnInit() {
@@ -58,6 +56,7 @@ export class ImagePickerComponent implements OnInit {
     public setDocument(document: IdaiFieldDocument) {
 
         this.document = document;
+        this.fetchDocuments(this.query);
     }
 
 
@@ -95,13 +94,14 @@ export class ImagePickerComponent implements OnInit {
         if (!this.query) this.query = {};
 
         this.query.types = this.imageTypeUtility.getImageTypeNames();
+        this.query.constraints = {
+            'depicts:contain': { value: this.document.resource.id as string, type: 'subtract' }
+        };
         this.query.limit = ImagePickerComponent.documentLimit;
 
         return this.datastore.find(this.query)
             // .catch(msgWithParams => this.messages.add(msgWithParams)
-            .then(result => {
-                this.documents = this.filterOutAlreadyLinkedImageDocuments(result.documents);
-            })
+            .then(result => this.documents = result.documents)
             .catch(errWithParams => {
                 console.error('error in find with query', this.query);
                 if (errWithParams.length == 2) {
@@ -110,24 +110,4 @@ export class ImagePickerComponent implements OnInit {
                 this.messages.add([M.ALL_FIND_ERROR]);
             });
     }
-
-
-    private filterOutAlreadyLinkedImageDocuments(imageDocuments: Array<IdaiFieldImageDocument>)
-            : Array<IdaiFieldImageDocument> {
-
-        let relationTargets = this.document.resource.relations['isDepictedIn'];
-        if (!relationTargets) return imageDocuments;
-
-        let resultDocuments: Array<IdaiFieldImageDocument> = [];
-
-        for (let imageDocument of imageDocuments) {
-
-            if (relationTargets.indexOf(imageDocument.resource.id as any) == -1) {
-                resultDocuments.push(imageDocument);
-            }
-        }
-
-        return resultDocuments;
-    }
-
 }

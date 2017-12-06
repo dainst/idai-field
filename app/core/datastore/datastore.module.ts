@@ -64,6 +64,7 @@ import {ChangesStream} from "./core/changes-stream";
                 return new ConstraintIndexer({
                     'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
                     'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
+                    'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' },
                     'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
                     'identifier:match': { path: 'resource.identifier', type: 'match' },
                     'georeference:exist': { path: 'resource.georeference', type: 'exist' },

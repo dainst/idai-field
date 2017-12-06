@@ -23,7 +23,7 @@ const common = require('../common');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-xdescribe('resources/syncing --', function() {
+describe('resources/syncing --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;
@@ -125,31 +125,7 @@ xdescribe('resources/syncing --', function() {
     });
 
 
-
-    // old version, if new one is stable for some time, remove it
-    //
-    // function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
-    //
-    //     const testDocument = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
-    //
-    //     if (additionalFieldName && additionalFieldValue) {
-    //         testDocument.resource[additionalFieldName] = additionalFieldValue;
-    //     }
-    //
-    //     return db.put(testDocument).then(result => {
-    //         testDocument['_rev'] = result.rev;
-    //         return browser.sleep(delays.shortRest * 10);
-    //     })
-    //         .then(() => NavbarPage.clickNavigateToExcavation())
-    //         .then(() => browser.sleep(delays.shortRest * 10))
-    //         .then(() => {
-    //             return Promise.resolve(testDocument);
-    //         });
-    // }
-
-    // new version
-    async function createOneDocument(nr: string, additionalFieldName?: string,
-                                     additionalFieldValue?: string): Promise<any> {
+    function createOneDocument(nr, additionalFieldName?, additionalFieldValue?) {
 
         const testDocument = makeDoc('tf' + nr, 'testf' + nr, 'Testfund' + nr);
 
@@ -157,31 +133,15 @@ xdescribe('resources/syncing --', function() {
             testDocument.resource[additionalFieldName] = additionalFieldValue;
         }
 
-        const result = await db.put(testDocument);
-        testDocument['_rev'] = result.rev;
-
-        NavbarPage.clickNavigateToExcavation();
-        return new Promise<any>((resolve, reject) => {
-
-            let retries = 0;
-            const waitForItem = () => {
-
-                ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
-                    if (text.indexOf('Testfund' + nr) !== -1) {
-                        return resolve(testDocument);
-                    } else {
-                        return reject('missing text');
-                    }
-                }, () => {
-                    if (retries == 20) return reject('20 retries and no result');
-
-                    browser.sleep(delays.shortRest);
-                    retries++;
-                    waitForItem();
-                })
-            };
-            waitForItem();
-        });
+        return db.put(testDocument).then(result => {
+            testDocument['_rev'] = result.rev;
+            return browser.sleep(delays.shortRest * 10);
+        })
+            .then(() => NavbarPage.clickNavigateToExcavation())
+            .then(() => browser.sleep(delays.shortRest * 10))
+            .then(() => {
+                return Promise.resolve(testDocument);
+            });
     }
 
 

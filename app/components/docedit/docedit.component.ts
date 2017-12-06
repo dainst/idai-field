@@ -120,6 +120,62 @@ export class DoceditComponent {
     }
 
 
+    public showModal() {
+
+        this.dialog = this.modalService.open(this.modalTemplate);
+    }
+
+
+    public openDeleteModal(modal: any) {
+
+        this.modalService.open(modal).result.then(decision => {
+            if (decision == 'delete') this.deleteDoc();
+        });
+    }
+
+
+    public getRelationDefinitions() {
+
+        if (!this.projectConfiguration) return undefined;
+
+        return this.projectConfiguration.getRelationDefinitions(this.clonedDocument.resource.type, false, 'editable');
+    }
+
+
+    public cancel() {
+
+        if (this.documentEditChangeMonitor.isChanged()) {
+            this.showModal();
+        } else {
+            this.activeModal.dismiss('cancel');
+        }
+    }
+
+
+    /**
+     * @param viaSaveButton if true, it is assumed the call for save came directly
+     *   via a user interaction.
+     */
+    public save(viaSaveButton: boolean = false) {
+
+        this.removeInvalidFields();
+        this.removeInvalidRelations();
+
+        const documentBeforeSave: IdaiFieldDocument =
+            <IdaiFieldDocument> ObjectUtil.cloneObject(this.clonedDocument);
+
+        this.validator.validate(<IdaiFieldDocument> this.clonedDocument)
+            .then(
+                () => this.persistenceManager.persist(this.clonedDocument, this.settingsService.getUsername())
+                    .then(
+                        () => this.handleSaveSuccess(documentBeforeSave, viaSaveButton),
+                        errorWithParams => this.handleSaveError(errorWithParams)
+                    )
+            )
+            .catch(msgWithParams => this.messages.add(msgWithParams))
+    }
+
+
     private fetchIsRecordedInCount(document: IdaiFieldDocument) {
 
         if (!document.resource.id) {
@@ -167,30 +223,6 @@ export class DoceditComponent {
 
 
     /**
-     * @param viaSaveButton if true, it is assumed the call for save came directly
-     *   via a user interaction.
-     */
-    public save(viaSaveButton: boolean = false) {
-
-        this.removeInvalidFields();
-        this.removeInvalidRelations();
-
-        const documentBeforeSave: IdaiFieldDocument =
-            <IdaiFieldDocument> ObjectUtil.cloneObject(this.clonedDocument);
-
-        this.validator.validate(<IdaiFieldDocument> this.clonedDocument)
-            .then(
-                () => this.persistenceManager.persist(this.clonedDocument, this.settingsService.getUsername())
-                    .then(
-                        () => this.handleSaveSuccess(documentBeforeSave, viaSaveButton),
-                        errorWithParams => this.handleSaveError(errorWithParams)
-                    )
-            )
-            .catch(msgWithParams => this.messages.add(msgWithParams))
-    }
-
-
-    /**
      * Removes fields that have become invalid after a type change.
      */
     private removeInvalidFields() {
@@ -218,38 +250,6 @@ export class DoceditComponent {
 
         for (let relationFieldName of invalidRelationFields) {
             delete this.clonedDocument.resource.relations[relationFieldName];
-        }
-    }
-
-
-    public showModal() {
-
-        this.dialog = this.modalService.open(this.modalTemplate);
-    }
-
-
-    public openDeleteModal(modal: any) {
-
-        this.modalService.open(modal).result.then(decision => {
-            if (decision == 'delete') this.deleteDoc();
-        });
-    }
-
-
-    public getRelationDefinitions() {
-
-        if (!this.projectConfiguration) return undefined;
-
-        return this.projectConfiguration.getRelationDefinitions(this.clonedDocument.resource.type, false, 'editable');
-    }
-
-
-    public cancel() {
-
-        if (this.documentEditChangeMonitor.isChanged()) {
-            this.showModal();
-        } else {
-            this.activeModal.dismiss('cancel');
         }
     }
 

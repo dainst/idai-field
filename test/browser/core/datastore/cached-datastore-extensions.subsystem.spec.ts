@@ -4,8 +4,16 @@ import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-fi
 import {IdaiFieldDocumentConverter} from '../../../../app/core/datastore/idai-field-document-converter';
 import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
 import {IdaiFieldImageDocumentDatastore} from '../../../../app/core/datastore/idai-field-image-document-datastore';
+import {DocumentDatastore} from '../../../../app/core/datastore/document-datastore';
 
 /**
+ * This test suite focuses on the differences between the Data Access Objects.
+ * They are designed to only deliver the right types of documents from the underlying
+ * database. Also they make guarantees that the documents are well formed, so the
+ * rest of the application can rely on it, which, together with the typescript
+ * typing information, helps elimiate a lot of extra checks for otherwise possibly
+ * missing properties elsewhere.
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -33,6 +41,7 @@ export function main() {
         let trench0;
         let idaiFieldImageDocumentDatastore;
         let idaiFieldDocumentDatastore;
+        let documentDatastore;
 
 
         function failOnWrongErr(err) {
@@ -59,6 +68,8 @@ export function main() {
                 datastore, documentCache, converter);
             idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
                 datastore, documentCache, converter);
+            documentDatastore = new DocumentDatastore(
+                datastore, documentCache, converter);
 
             await idaiFieldImageDocumentDatastore.create(image0);
             await idaiFieldDocumentDatastore.create(trench0);
@@ -72,6 +83,8 @@ export function main() {
             done();
         }, 5000);
 
+
+        // create
 
         it('IdaiFieldDocumentDatastore - throw when creating an image type', async done => {
 
@@ -97,6 +110,8 @@ export function main() {
         });
 
 
+        // update
+
         it('IdaiFieldDocumentDatastore - throw when updating an image type', async done => {
 
             try {
@@ -120,6 +135,8 @@ export function main() {
             done();
         });
 
+
+        // remove
 
         it('IdaiFieldDocumentDatastore - throw when deleting an image type', async done => {
 
@@ -145,6 +162,8 @@ export function main() {
         });
 
 
+        // get
+
         it('IdaiFieldDocumentDatastore - throw when getting an image type', async done => {
 
             try {
@@ -169,7 +188,7 @@ export function main() {
         });
 
 
-        // ----------------
+        // find
 
         it('IdaiFieldDocumentDatastore - throw when find called with image type ', async done => {
 
@@ -190,6 +209,30 @@ export function main() {
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
+            }
+            done();
+        });
+
+
+        it('DocumentDatastore - do not throw and return everything with all types', async done => {
+
+            try {
+                const result = await documentDatastore.find({types: ['Trench', 'Image']});
+                expect(result.documents.length).toBe(2);
+            } catch (err) {
+                fail(err);
+            }
+            done();
+        });
+
+
+        it('DocumentDatastore - return everything when called without types', async done => {
+
+            try {
+                const result = await documentDatastore.find({});
+                expect(result.documents.length).toBe(2);
+            } catch (err) {
+                fail(err);
             }
             done();
         });

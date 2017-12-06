@@ -5,9 +5,6 @@ import {IdaiFieldDocumentConverter} from '../../../../app/core/datastore/idai-fi
 import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
 import {IdaiFieldImageDocumentDatastore} from '../../../../app/core/datastore/idai-field-image-document-datastore';
 import {DocumentDatastore} from '../../../../app/core/datastore/document-datastore';
-import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {IdaiFieldImageDocument} from '../../../../app/core/model/idai-field-image-document';
 
 /**
  * This test suite focuses on the differences between the Data Access Objects.
@@ -120,7 +117,7 @@ export function main() {
                 create(Static.doc('Image','Image','Image','image1'))).
                     resource.relations.depicts).toEqual([]);
             } catch (err) {
-                fail();
+                fail(err);
             }
             done();
         });
@@ -133,7 +130,7 @@ export function main() {
                 create(Static.doc('Trench','Trench','Trench','trench1'))).
                     resource.relations.isRecordedIn).toEqual([]);
             } catch (err) {
-                fail();
+                fail(err);
             }
             done();
         });
@@ -160,6 +157,32 @@ export function main() {
                 fail();
             } catch (expected) {
                 failOnWrongErr(expected);
+            }
+            done();
+        });
+
+
+        it('update - add relations with IdaiFieldImageDocumentDatastore', async done => {
+
+            try {
+                delete image0.resource.relations.depicts;
+                expect((await idaiFieldImageDocumentDatastore.
+                    update(image0)).resource.relations.depicts).toEqual([]);
+            } catch (err) {
+                fail(err);
+            }
+            done();
+        });
+
+
+        it('update - add relations with IdaiFieldDocumentDatastore', async done => {
+
+            try {
+                delete trench0.resource.relations.isRecordedIn;
+                expect((await idaiFieldDocumentDatastore.
+                    update(trench0)).resource.relations.isRecordedIn).toEqual([]);
+            } catch (err) {
+                fail(err);
             }
             done();
         });

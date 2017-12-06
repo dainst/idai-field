@@ -149,13 +149,8 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
     protected getDocumentsForIds(ids: string[], limit?: number): Promise<Array<T>> {
 
-        const promises: Array<Promise<T>> = [];
-
-        for (let id of ids) {
-            promises.push(this.get(id));
-            if (limit && promises.length == limit) break;
-        }
-
-        return Promise.all(promises);
+        const _ids = limit? ids.slice(0, limit) : ids;
+        
+        return Promise.all(_ids.map(id => this.get(id)));
     }
 }

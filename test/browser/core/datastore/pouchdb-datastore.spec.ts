@@ -8,6 +8,7 @@ import {Document} from 'idai-components-2/core';
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 export function main() {
 
@@ -454,6 +455,43 @@ export function main() {
                 );
         });
 
+
+        it('should filter with a subtract constraint', function(done) {
+
+            const doc1 = Static.doc('Document 1', 'doc1', 'type1','id1');
+            const doc2 = Static.doc('Document 2', 'doc2', 'type1','id2');
+            const doc3 = Static.doc('Document 3', 'doc3', 'type2','id3');
+            doc3.resource.relations['isRecordedIn'] = ['id1'];
+            const doc4 = Static.doc('Document 4', 'doc4', 'type2','id4');
+            doc4.resource.relations['isRecordedIn'] = ['id2'];
+
+            const q: Query = {
+                q: 'doc',
+                constraints: {
+                    'isRecordedIn:contain' : { value: 'id2', type: 'subtract' }
+                }
+            };
+
+            datastore.create(doc1)
+                .then(() => datastore.create(doc2))
+                .then(() => datastore.create(doc3))
+                .then(() => datastore.create(doc4))
+                .then(() => datastore.findIds(q))
+                .then(
+                    results => {
+                        expect(results.length).toBe(3);
+                        expect(results).toEqual(['id1', 'id2', 'id3']);
+                        done();
+                    },
+                    err => {
+                        fail(err);
+                        done();
+                    }
+                );
+        });
+
+
+
         it('should filter with unknown constraint', function(done) {
             const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
             const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
@@ -576,6 +614,6 @@ export function main() {
                     }
                 );
         }, 2000);
-
     });
+
 }

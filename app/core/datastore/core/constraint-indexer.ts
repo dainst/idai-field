@@ -29,18 +29,22 @@ export class ConstraintIndexer {
 
     private matchIndex: {
         [path: string]: {
-            [resourceId: string]: {
-                date: Date,
-                identifier: string
+            [searchTerm: string]: {
+                [resourceId: string]: {
+                    date: Date,
+                    identifier: string
+                }
             }
         }
     };
 
     private existIndex: {
         [path: string]: {
-            [resourceId: string]: {
-                date: Date,
-                identifier: string
+            [existence: string]: { // KNOWN | UNKNOWN
+                [resourceId: string]: {
+                    date: Date,
+                    identifier: string
+                }
             }
         }
     };
@@ -114,45 +118,28 @@ export class ConstraintIndexer {
         switch(indexDefinition.type) {
             case 'exist':
                 if (!elForPath || (elForPath instanceof Array && (!elForPath.length || elForPath.length === 0))) {
-                    return this.addToIndex(this.existIndex, doc, indexDefinition.path, 'UNKNOWN');
+                    return ConstraintIndexer.addToIndex(this.existIndex, doc, indexDefinition.path, 'UNKNOWN');
                 }
 
                 // TODO remove as soon as auto conflict resolving is properly implemented. this is a hack to make sure the project document is never listed as conflicted
                 if (doc.resource.type == 'Project') {
-                    this.addToIndex(this.existIndex, doc, indexDefinition.path, 'UNKNOWN');
+                    ConstraintIndexer.addToIndex(this.existIndex, doc, indexDefinition.path, 'UNKNOWN');
                 } else {
-                    this.addToIndex(this.existIndex, doc, indexDefinition.path, 'KNOWN');
+                    ConstraintIndexer.addToIndex(this.existIndex, doc, indexDefinition.path, 'KNOWN');
                 }
                 break;
 
             case 'match':
-                this.addToIndex(this.matchIndex, doc, indexDefinition.path, elForPath);
+                ConstraintIndexer.addToIndex(this.matchIndex, doc, indexDefinition.path, elForPath);
                 break;
 
             case 'contain':
                 if (!elForPath) break;
                 for (let target of elForPath) {
-                    this.addToIndex(this.containIndex, doc, indexDefinition.path, target);
+                    ConstraintIndexer.addToIndex(this.containIndex, doc, indexDefinition.path, target);
                 }
                 break;
         }
-    }
-
-
-    private addToIndex(index: any, doc: Document, path: string, target: string) {
-
-        const lastModified: Action = ChangeHistoryUtil.getLastModified(doc);
-        if (!lastModified) {
-            console.warn('ConstraintIndexer: Failed to index document. ' +
-                'The document does not contain a created/modified action.', doc);
-            return;
-        }
-
-        if (!index[path][target]) index[path][target] = {};
-        index[path][target][doc.resource.id as any] = {
-            date: lastModified.date,
-            identifier: doc.resource['identifier']
-        };
     }
 
 
@@ -164,6 +151,19 @@ export class ConstraintIndexer {
 
         for (let indexDefinition of ObjectUtil.getValues(this.indexDefinitions)) {
             this.getIndex(indexDefinition)[indexDefinition.path] = {};
+        }
+    }
+
+
+    private getIndex(indexDefinition: IndexDefinition): any {
+
+        switch (indexDefinition.type) {
+            case 'contain':
+                return this.containIndex;
+            case 'match':
+                return this.matchIndex;
+            case 'exist':
+                return this.existIndex;
         }
     }
 
@@ -181,15 +181,19 @@ export class ConstraintIndexer {
     }
 
 
-    private getIndex(indexDefinition: IndexDefinition): any {
+    private static addToIndex(index: any, doc: Document, path: string, target: string) {
 
-        switch (indexDefinition.type) {
-            case 'contain':
-                return this.containIndex;
-            case 'match':
-                return this.matchIndex;
-            case 'exist':
-                return this.existIndex;
+        const lastModified: Action = ChangeHistoryUtil.getLastModified(doc);
+        if (!lastModified) {
+            console.warn('ConstraintIndexer: Failed to index document. ' +
+                'The document does not contain a created/modified action.', doc);
+            return;
         }
+
+        if (!index[path][target]) index[path][target] = {};
+        index[path][target][doc.resource.id as any] = {
+            date: lastModified.date,
+            identifier: doc.resource['identifier']
+        };
     }
 }

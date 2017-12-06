@@ -20,7 +20,7 @@ import {DocumentConverter} from './document-converter';
  */
 export abstract class CachedDatastore<T extends Document>
     extends CachedReadDatastore<T> {
-    
+
     constructor(
         datastore: PouchdbDatastore,
         documentCache: DocumentCache<T>,
@@ -81,11 +81,6 @@ export abstract class CachedDatastore<T extends Document>
     }
 
 
-    /**
-     * @param docId
-     * @param revisionId
-     * @returns {Promise<any>}
-     */
     public removeRevision(docId: string, revisionId: string): Promise<any> { // TODO remove promise undefined
 
         return this.datastore.removeRevision(docId, revisionId);

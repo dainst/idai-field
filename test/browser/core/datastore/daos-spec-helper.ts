@@ -6,7 +6,10 @@ import {IdaiFieldTypeConverter} from "../../../../app/core/datastore/idai-field-
 import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
 import {Static} from '../../static';
 
-export class C {
+/**
+ * @author Daniel de Oliveira
+ */
+export class DAOsSpecHelper {
 
     public idaiFieldImageDocumentDatastore: IdaiFieldImageDocumentDatastore;
     public idaiFieldDocumentDatastore: IdaiFieldDocumentDatastore;

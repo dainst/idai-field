@@ -7,8 +7,11 @@ var document_datastore_1 = require("../../../../app/core/datastore/document-data
 var idai_field_type_converter_1 = require("../../../../app/core/datastore/idai-field-type-converter");
 var image_type_utility_1 = require("../../../../app/common/image-type-utility");
 var static_1 = require("../../static");
-var C = (function () {
-    function C() {
+/**
+ * @author Daniel de Oliveira
+ */
+var DAOsSpecHelper = (function () {
+    function DAOsSpecHelper() {
         this.projectConfiguration = new configuration_1.ProjectConfiguration({
             'types': [
                 {
@@ -28,7 +31,7 @@ var C = (function () {
         this.idaiFieldDocumentDatastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(datastore, documentCache, converter);
         this.documentDatastore = new document_datastore_1.DocumentDatastore(datastore, documentCache, converter);
     }
-    return C;
+    return DAOsSpecHelper;
 }());
-exports.C = C;
-//# sourceMappingURL=c.js.map
+exports.DAOsSpecHelper = DAOsSpecHelper;
+//# sourceMappingURL=daos-spec-helper.js.map

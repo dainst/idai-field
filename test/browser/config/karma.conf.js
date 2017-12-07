@@ -31,7 +31,7 @@ module.exports = function(config) {
             { pattern: 'test/browser/**/*.spec.js', included: false, watched: true },
             { pattern: 'test/browser/**/*.spec.js', included: false, watched: true },
             { pattern: 'test/browser/static.js', included: false, watched: true },
-            { pattern: 'test/browser/core/datastore/c.js', included: false, watched: true },
+            { pattern: 'test/browser/core/datastore/daos-spec-helper.js', included: false, watched: true },
             'systemjs-base.config.js',
             'test/browser/config/main.js',
             'test/browser/config/require-conf.js'

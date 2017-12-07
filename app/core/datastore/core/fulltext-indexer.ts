@@ -43,14 +43,14 @@ export class FulltextIndexer {
         }
         this.index[doc.resource.type]['*'][doc.resource.id as any] = indexItem;
 
-        for (let field of this.fieldsToIndex) {
-            if (!doc.resource[field] || doc.resource[field] == '') continue;
-
-            for (let token of doc.resource[field].split(' ')) {
-                this.indexToken(doc.resource.id as any, token,
-                    doc.resource.type, indexItem);
-            }
-        }
+        this.fieldsToIndex.
+            filter(field => doc.resource[field] && doc.resource[field] !== '').
+            forEach(field =>
+                doc.resource[field].split(' ').forEach((token: string) =>
+                    this.indexToken(doc.resource.id as any, token,
+                        doc.resource.type, indexItem)
+                )
+            );
     }
 
 

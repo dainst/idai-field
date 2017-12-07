@@ -148,12 +148,15 @@ export class PouchdbDatastore {
      *   if two or more documents have the same last modifed date, their sort order is unspecified.
      *   the modified date is taken from document.modified[document.modified.length-1].date
      */
-    public findIds(query: Query): Promise<string[]> {
+    public async findIds(query: Query): Promise<string[]> {
 
-        if (!query) return Promise.resolve([]);
+        if (!query) return [];
 
-        return this.perform(query)
-            .catch(err => Promise.reject([DatastoreErrors.GENERIC_ERROR, err]))
+        try {
+            return this.perform(query);
+        } catch (err) {
+            throw [DatastoreErrors.GENERIC_ERROR, err];
+        }
     }
 
     public fetch(resourceId: string,
@@ -172,13 +175,13 @@ export class PouchdbDatastore {
     }
 
 
-    public findConflicted(): Promise<Document[]> {
+    public async findConflicted(): Promise<Document[]> {
 
-        return this.db.query('conflicted', {
+        return (await this.db.query('conflicted', {
             include_docs: true,
             conflicts: true,
             descending: true
-        }).then((result: any) => result.rows.map((result: any) => result.doc))
+        })).rows.map((result: any) => result.doc);
     }
 
 

@@ -5,6 +5,8 @@ import {TypeConverter} from './core/type-converter';
 import {CachedDatastore} from './core/cached-datastore';
 
 /**
+ * Data Access Object
+ *
  * @author Daniel de Oliveira
  */
 export class IdaiFieldDocumentDatastore

@@ -96,61 +96,10 @@ export class FulltextIndexer {
             filter(token => token.length > 0).
             reduce((_resultSets, token) =>
                 ResultSets.add(_resultSets,
-                    this.getForToken(token, types ? types : Object.keys(this.index))),
+                    FulltextIndexer.getForToken(this.index, token, types ? types : Object.keys(this.index))),
             ResultSets.make());
 
         return ResultSets.intersect(resultSets, (item: any) => item.id);
-    }
-
-
-    private getForToken(token: string, types: string[]): Array<any> {
-
-        const resultSets: ResultSets = types.reduce((_resultSets, type) =>
-            this._get(_resultSets, token.toLowerCase(), type), ResultSets.make());
-
-        return ResultSets.unify(resultSets, (item: any) => item.id);
-    }
-
-
-    private _get(resultSets: ResultSets, s: string, type: string): ResultSets {
-
-        const {hasPlaceholder, tokens} = FulltextIndexer.extractReplacementTokens(s);
-        if (hasPlaceholder) {
-            return this.getWithPlaceholder(resultSets, s, type, tokens);
-        }
-
-        return this.addKeyToResultSets(resultSets, type, s);
-    }
-
-
-    private getWithPlaceholder(resultSets: any, s: string, type: string, tokens: string): ResultSets {
-
-        let results = ResultSets.copy(resultSets);
-        for(let i=0; i<tokens.length; i++) {
-
-            let nextChar = tokens.charAt(i);
-            const replaced = s.replace('['+tokens+']',nextChar);
-
-            results = this.addKeyToResultSets(results, type, replaced);
-        }
-        return results;
-    }
-
-
-    private addKeyToResultSets(resultSets: any, type: string, s: string): ResultSets {
-
-        if (!this.index[type] || !this.index[type][s]) return ResultSets.copy(resultSets);
-
-        return ResultSets.add(ResultSets.copy(resultSets),
-            Object.keys(this.index[type][s]).map(id => {
-                const indexItem: IndexItem = {
-                    date: this.index[type][s][id].date,
-                    identifier: this.index[type][s][id].identifier
-                };
-                (indexItem as any)['id'] = id;
-                return indexItem;
-            })
-        );
     }
 
 
@@ -170,5 +119,51 @@ export class FulltextIndexer {
         } else {
             return {hasPlaceholder: false, tokens: ''};
         }
+    }
+
+
+    private static getForToken(index: any, token: string, types: string[]): Array<any> {
+
+        const resultSets: ResultSets = types.reduce((_resultSets, type) =>
+            this._get(index, _resultSets, token.toLowerCase(), type), ResultSets.make());
+
+        return ResultSets.unify(resultSets, (item: any) => item.id);
+    }
+
+
+    private static _get(index: any, resultSets: ResultSets, s: string, type: string): ResultSets {
+
+        const {hasPlaceholder, tokens} = FulltextIndexer.extractReplacementTokens(s);
+        if (hasPlaceholder) {
+            return this.getWithPlaceholder(index, resultSets, s, type, tokens);
+        }
+
+        return this.addKeyToResultSets(index, resultSets, type, s);
+    }
+
+
+    private static getWithPlaceholder(index: any, resultSets: any, s: string, type: string, tokens: string): ResultSets {
+
+        return tokens.split('').reduce((_resultSets, nextChar: string) =>
+                FulltextIndexer.addKeyToResultSets(index,
+                    _resultSets, type, s.replace('['+tokens+']',nextChar))
+            , ResultSets.copy(resultSets));
+    }
+
+
+    private static addKeyToResultSets(index: any, resultSets: any, type: string, s: string): ResultSets {
+
+        if (!index[type] || !index[type][s]) return ResultSets.copy(resultSets);
+
+        return ResultSets.add(ResultSets.copy(resultSets),
+            Object.keys(index[type][s]).map(id => {
+                const indexItem: IndexItem = {
+                    date: index[type][s][id].date,
+                    identifier: index[type][s][id].identifier
+                };
+                (indexItem as any)['id'] = id;
+                return indexItem;
+            })
+        );
     }
 }

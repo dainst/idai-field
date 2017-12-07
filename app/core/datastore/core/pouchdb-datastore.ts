@@ -348,7 +348,7 @@ export class PouchdbDatastore {
                     document = fetchedDoc;
                     // return this.conflictResolvingExtension.autoResolve(<any> document, this.appState.getCurrentUser());
                 }).then(() => {
-                    if (!ModelUtil.hasNecessaryFields(document)) {
+                    if (!ModelUtil.hasNecessaryFields(document)) { // TODO this should not be necessary anymore since index item gets checked in indexers
                         console.warn('Failed to index document from remote. One or more necessary fields are missing.',
                             document);
                     } else {
@@ -393,6 +393,8 @@ export class PouchdbDatastore {
 
 
     /**
+     * TODO this should be replaced (at least partially) with validation via Document.isValid
+     *
      * Creates a typed Document from an untyped PouchDB result.
      * Thereby converts dates in created in modified that are given as strings
      * in JSON to Date objects.

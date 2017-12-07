@@ -1,6 +1,7 @@
-import {Document, Action} from 'idai-components-2/core';
+import {Action, Document} from 'idai-components-2/core';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
 import {ResultSets} from '../../../util/result-sets';
+import {IndexItem} from './index-item';
 
 /**
  * @author Daniel de Oliveira
@@ -8,16 +9,12 @@ import {ResultSets} from '../../../util/result-sets';
  */
 export class FulltextIndexer {
 
-
     private fieldsToIndex = ['identifier', 'shortDescription'];
 
     private index: {
         [resourceType: string]: {
             [term: string]: {
-                [resourceId: string]: {
-                    date: Date,
-                    identifier: string
-                }
+                [resourceId: string]: IndexItem
             }
         }
     };
@@ -37,45 +34,34 @@ export class FulltextIndexer {
 
     public put(doc: Document, skipRemoval: boolean = false) {
 
-        const lastModified: Action = ChangeHistoryUtil.getLastModified(doc);
-        if (!lastModified) {
-            console.warn('FulltextIndexer: Failed to index document. ' +
-                'The document does not contain a created/modified action.', doc);
-            return;
-        }
+        const indexItem = IndexItem.from(doc);
+        if (!indexItem) return;
 
         if (!skipRemoval) this.remove(doc);
         if (!this.index[doc.resource.type]) {
             this.index[doc.resource.type] = {'*' : { } };
         }
-        this.index[doc.resource.type]['*'][doc.resource.id as any] = {
-            date: ChangeHistoryUtil.getLastModified(doc).date,
-            identifier: doc.resource['identifier']
-        } as any;
+        this.index[doc.resource.type]['*'][doc.resource.id as any] = indexItem;
 
         for (let field of this.fieldsToIndex) {
             if (!doc.resource[field] || doc.resource[field] == '') continue;
 
             for (let token of doc.resource[field].split(' ')) {
                 this.indexToken(doc.resource.id as any, token,
-                    doc.resource.type, doc);
+                    doc.resource.type, indexItem);
             }
         }
     }
 
 
-    private indexToken(id: string, token: string, type: string, doc: Document) {
+    private indexToken(id: string, token: string, type: string, indexItem: IndexItem) {
+
 
         let accumulator = '';
         for (let letter of token.toLowerCase()) {
             accumulator += letter;
-            if (!this.index[type][accumulator]) {
-                this.index[type][accumulator] = { };
-            }
-            this.index[type][accumulator][id] = {
-                date: ChangeHistoryUtil.getLastModified(doc).date,
-                identifier: doc.resource['identifier']
-            } as any;
+            if (!this.index[type][accumulator]) this.index[type][accumulator] = {};
+            this.index[type][accumulator][id] = indexItem;
         }
     }
 
@@ -159,10 +145,12 @@ export class FulltextIndexer {
 
         resultSets.add(
             Object.keys(this.index[type][s]).map(id => {
-                return { id: id,
+                const indexItem: IndexItem = {
                     date: this.index[type][s][id].date,
                     identifier: this.index[type][s][id].identifier
                 };
+                (indexItem as any)['id'] = id;
+                return indexItem;
             })
         );
     }

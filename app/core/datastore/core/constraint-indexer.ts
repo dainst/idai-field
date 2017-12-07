@@ -1,6 +1,6 @@
-import {Document, Action} from 'idai-components-2/core';
+import {Document} from 'idai-components-2/core';
 import {ObjectUtil} from '../../../util/object-util';
-import {ChangeHistoryUtil} from '../../model/change-history-util';
+import {IndexItem} from './index-item';
 
 
 export interface IndexDefinition {
@@ -19,10 +19,7 @@ export class ConstraintIndexer {
     private containIndex: {
         [path: string]: {
             [resourceId: string]: {
-                [resourceId: string]: {
-                    date: Date,
-                    identifier: string
-                }
+                [resourceId: string]: IndexItem
             }
         }
     };
@@ -30,10 +27,7 @@ export class ConstraintIndexer {
     private matchIndex: {
         [path: string]: {
             [searchTerm: string]: {
-                [resourceId: string]: {
-                    date: Date,
-                    identifier: string
-                }
+                [resourceId: string]: IndexItem
             }
         }
     };
@@ -41,10 +35,7 @@ export class ConstraintIndexer {
     private existIndex: {
         [path: string]: {
             [existence: string]: { // KNOWN | UNKNOWN
-                [resourceId: string]: {
-                    date: Date,
-                    identifier: string
-                }
+                [resourceId: string]: IndexItem
             }
         }
     };
@@ -183,17 +174,10 @@ export class ConstraintIndexer {
 
     private static addToIndex(index: any, doc: Document, path: string, target: string) {
 
-        const lastModified: Action = ChangeHistoryUtil.getLastModified(doc);
-        if (!lastModified) {
-            console.warn('ConstraintIndexer: Failed to index document. ' +
-                'The document does not contain a created/modified action.', doc);
-            return;
-        }
+        const indexItem = IndexItem.from(doc);
+        if (!indexItem) return;
 
         if (!index[path][target]) index[path][target] = {};
-        index[path][target][doc.resource.id as any] = {
-            date: lastModified.date,
-            identifier: doc.resource['identifier']
-        };
+        index[path][target][doc.resource.id as any] = indexItem;
     }
 }

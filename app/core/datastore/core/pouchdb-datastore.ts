@@ -207,15 +207,16 @@ export class PouchdbDatastore {
     }
 
 
-    private perform(query: Query): Promise<any> {
+    private async perform(query: Query): Promise<any> {
 
-        return this.db.ready()
-            .then(() => {
-                const resultSets: ResultSets|undefined = this.performThem(query.constraints);
-                if (PouchdbDatastore.isEmpty(query) && resultSets) return resultSets;
-                else return this.performFulltext(query, resultSets ? resultSets : new ResultSets());
-            })
-            .then((resultSets: any) => this.generateOrderedResultList(resultSets));
+        await this.db.ready();
+
+        let resultSets: ResultSets|undefined = this.performThem(query.constraints);
+
+        resultSets = (PouchdbDatastore.isEmpty(query) && resultSets) ? resultSets :
+            this.performFulltext(query, resultSets ? resultSets : new ResultSets());
+
+        return this.generateOrderedResultList(resultSets);
     }
 
 

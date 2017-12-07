@@ -1,5 +1,4 @@
-import {Action, Document} from 'idai-components-2/core';
-import {ChangeHistoryUtil} from '../../model/change-history-util';
+import {Document} from 'idai-components-2/core';
 import {ResultSets} from '../../../util/result-sets';
 import {IndexItem} from './index-item';
 
@@ -109,12 +108,9 @@ export class FulltextIndexer {
 
         const positionOpen = s.indexOf('[');
         const positionClose = s.indexOf(']');
-        if (positionOpen !== -1 && positionClose !== -1 && positionOpen < positionClose) {
-            const str = s.substr(positionOpen+1, positionClose-positionOpen-1);
-            return {hasPlaceholder: true, tokens: str};
-        } else {
-            return {hasPlaceholder: false, tokens: ''};
-        }
+        return positionOpen !== -1 && positionClose !== -1 && positionOpen < positionClose ?
+            {hasPlaceholder: true, tokens: s.substr(positionOpen+1, positionClose-positionOpen-1)} :
+            {hasPlaceholder: false, tokens: ''};
     }
 
 
@@ -146,17 +142,17 @@ export class FulltextIndexer {
 
     private static addKeyToResultSets(index: any, resultSets: any, type: string, s: string): ResultSets {
 
-        if (!index[type] || !index[type][s]) return ResultSets.copy(resultSets);
-
-        return ResultSets.add(ResultSets.copy(resultSets),
-            Object.keys(index[type][s]).map(id => {
-                const indexItem: IndexItem = {
-                    date: index[type][s][id].date,
-                    identifier: index[type][s][id].identifier
-                };
-                (indexItem as any)['id'] = id;
-                return indexItem;
-            })
+        return (!index[type] || !index[type][s]) ?
+            ResultSets.copy(resultSets) :
+            ResultSets.add(ResultSets.copy(resultSets),
+                Object.keys(index[type][s]).map(id => {
+                    const indexItem: IndexItem = {
+                        date: index[type][s][id].date,
+                        identifier: index[type][s][id].identifier
+                    };
+                    (indexItem as any)['id'] = id;
+                    return indexItem;
+                })
         );
     }
 }

@@ -66,6 +66,7 @@ export class ResultSets {
      *
      *   [{id:'2'}] with f = a => a.id
      *
+     * @param resultSets
      * @param f gets applied to elements to get the field on which the comparison is performed
      */
     public static intersect(resultSets: ResultSets, f: Function): Array<Object> {
@@ -99,6 +100,7 @@ export class ResultSets {
      *
      *   [{id:'1'}, {id:'2'}, {id:'3'}] with f = a => a.id
      *
+     * @param resultSets
      * @param f gets applied to elements to get the field on which the comparison is performed
      */
     public static unify(resultSets: ResultSets, f: Function): Array<Object> {

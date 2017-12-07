@@ -155,7 +155,7 @@ export class PouchdbDatastore {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
         return this.db.get(resourceId, options)
-            .then((result: any) => this.createDocFromResult(result) )
+            .then((result: any) => PouchdbDatastore.createDocFromResult(result) )
             .catch((err: any) => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]));
     }
 
@@ -196,23 +196,6 @@ export class PouchdbDatastore {
     protected setupServer() {
 
         return Promise.resolve();
-    }
-
-
-    /**
-     * Creates a typed Document from an untyped PouchDB result.
-     * Thereby converts dates in created in modified that are given as strings
-     * in JSON to Date objects.
-     * @param result the result as returned from PouchDB
-     * @returns {Document} the typed Document
-     */
-    private createDocFromResult(result: any): Document {
-
-        if (result.created) result.created.date = new Date(result.created.date);
-        if (result.modified) for (let modified of result.modified) {
-            modified.date = new Date(modified.date);
-        }
-        return result;
     }
 
 
@@ -283,43 +266,6 @@ export class PouchdbDatastore {
             return this.fetch(doc.resource.id)
                 .then(result => Promise.reject([DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS]), () => Promise.resolve())
         } else return Promise.resolve();
-    }
-
-
-    private notifyAllChangesAndDeletionsObservers() {
-
-        if (!this.allChangesAndDeletionsObservers) return;
-
-        this.removeClosedObservers(this.allChangesAndDeletionsObservers);
-
-        this.allChangesAndDeletionsObservers.forEach((observer: any) => {
-            if (observer && (observer.next != undefined)) observer.next();
-        });
-    }
-
-
-    private notifyRemoteChangesObservers(document: Document) {
-
-        if (!this.remoteChangesObservers) return;
-
-        this.removeClosedObservers(this.remoteChangesObservers);
-
-        this.remoteChangesObservers.forEach((observer: any) => {
-            if (observer && (observer.next != undefined)) observer.next(document);
-        });
-    }
-
-
-    private removeClosedObservers(observers: Array<any>) {
-
-        const observersToDelete: any[] = [];
-        for (let i = 0; i < observers.length; i++) {
-            if ((observers[i] as any).closed) observersToDelete.push(observers[i]);
-        }
-        for (let observerToDelete of observersToDelete) {
-            let i = observers.indexOf(observerToDelete as never);
-            observers.splice(i, 1);
-        }
     }
 
 
@@ -412,6 +358,60 @@ export class PouchdbDatastore {
                 console.error('changes stream errored', err);
             });
         });
+    }
+
+
+    private notifyAllChangesAndDeletionsObservers() {
+
+        if (!this.allChangesAndDeletionsObservers) return;
+
+        PouchdbDatastore.removeClosedObservers(this.allChangesAndDeletionsObservers);
+
+        this.allChangesAndDeletionsObservers.forEach((observer: any) => {
+            if (observer && (observer.next != undefined)) observer.next();
+        });
+    }
+
+
+    private notifyRemoteChangesObservers(document: Document) {
+
+        if (!this.remoteChangesObservers) return;
+
+        PouchdbDatastore.removeClosedObservers(this.remoteChangesObservers);
+
+        this.remoteChangesObservers.forEach((observer: any) => {
+            if (observer && (observer.next != undefined)) observer.next(document);
+        });
+    }
+
+
+    private static removeClosedObservers(observers: Array<any>) {
+
+        const observersToDelete: any[] = [];
+        for (let i = 0; i < observers.length; i++) {
+            if ((observers[i] as any).closed) observersToDelete.push(observers[i]);
+        }
+        for (let observerToDelete of observersToDelete) {
+            let i = observers.indexOf(observerToDelete as never);
+            observers.splice(i, 1);
+        }
+    }
+
+
+    /**
+     * Creates a typed Document from an untyped PouchDB result.
+     * Thereby converts dates in created in modified that are given as strings
+     * in JSON to Date objects.
+     * @param result the result as returned from PouchDB
+     * @returns {Document} the typed Document
+     */
+    private static createDocFromResult(result: any): Document {
+
+        if (result.created) result.created.date = new Date(result.created.date);
+        if (result.modified) for (let modified of result.modified) {
+            modified.date = new Date(modified.date);
+        }
+        return result;
     }
 
 

@@ -107,7 +107,6 @@ export class LayerMapComponent extends MapComponent {
         if (!layerDocument) return;
 
         const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
-        console.log('got image container', imageContainer);
 
         const georeference = layerDocument.resource.georeference;
         this.imageOverlays[resourceId] = L.imageOverlay(imageContainer.imgSrc,

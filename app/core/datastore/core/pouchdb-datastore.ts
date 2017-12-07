@@ -52,48 +52,47 @@ export class PouchdbDatastore {
 
 
     /**
-     * @param document
      * @returns {Promise<Document>} newest revision of the document fetched from db
      */
-    public create(document: Document): Promise<Document> {
+    public async create(document: Document): Promise<Document> {
 
         const resetFun = this.resetDocOnErr(document);
 
-        return this.proveThatDoesNotExist(document)
-            .then(() => {
-                if (!document.resource.id) {
-                    document.resource.id = IdGenerator.generateId();
-                }
-                (document as any)['_id'] = document.resource.id;
-            })
-            .then(() => this.performPut(document, resetFun, (err: any) =>
-                Promise.reject([DatastoreErrors.GENERIC_ERROR, err])
-            ));
+        await this.proveThatDoesNotExist(document);
+
+        if (!document.resource.id) document.resource.id = IdGenerator.generateId();
+        (document as any)['_id'] = document.resource.id;
+
+        return this.performPut(document, resetFun, (err: any) =>
+            Promise.reject([DatastoreErrors.GENERIC_ERROR, err])
+        );
     }
 
 
     /**
-     * @param document
      * @returns {Promise<Document>} newest revision of the document fetched from db
      */
-    public update(document: Document): Promise<Document> {
+    public async update(document: Document): Promise<Document> {
 
-        if (!document.resource.id) {
-            return Promise.reject([DatastoreErrors.DOCUMENT_NO_RESOURCE_ID]);
-        }
+        if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
 
         const resetFun = this.resetDocOnErr(document);
 
-        return this.fetch(document.resource.id).then(() => {
-            (document as any)['_id'] = document.resource.id;
-        }).catch(() => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
-            .then(() => this.performPut(document, resetFun, (err: any) => {
-                if (err.name && err.name == 'conflict') {
-                    return Promise.reject([DatastoreErrors.SAVE_CONFLICT]);
-                } else {
-                    return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
-                }
-            }));
+        try {
+            await this.fetch(document.resource.id);
+        } catch (notfound) {
+            throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
+        }
+
+        (document as any)['_id'] = document.resource.id;
+
+        return this.performPut(document, resetFun, (err: any) => {
+            if (err.name && err.name == 'conflict') {
+                throw [DatastoreErrors.SAVE_CONFLICT];
+            } else {
+                throw [DatastoreErrors.GENERIC_ERROR, err];
+            }
+        })
     }
 
 

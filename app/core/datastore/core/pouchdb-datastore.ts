@@ -100,7 +100,7 @@ export class PouchdbDatastore {
      * @param doc
      * @returns {Promise<undefined>}
      */
-    public remove(doc: Document): Promise<undefined> {
+    public async remove(doc: Document): Promise<undefined> {
 
         if (doc.resource.id == null) {
             return <any> Promise.reject([DatastoreErrors.DOCUMENT_NO_RESOURCE_ID]);
@@ -116,20 +116,27 @@ export class PouchdbDatastore {
         this.constraintIndexer.remove(doc);
         this.fulltextIndexer.remove(doc);
 
-        return this.fetch(doc.resource.id).then(
-            docFromGet => this.db.remove(docFromGet)
-                .catch((err: any) => Promise.reject([DatastoreErrors.GENERIC_ERROR, err])),
-            () => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND])
-        );
+        let docFromGet;
+        try {
+            docFromGet = await this.fetch(doc.resource.id);
+        } catch (notfound) {
+            throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
+        }
+        try {
+            await this.db.remove(docFromGet)
+        } catch (genericerror) {
+            throw [DatastoreErrors.GENERIC_ERROR, genericerror];
+        }
     }
 
 
-    public removeRevision(docId: string, revisionId: string): Promise<any> {
+    public async removeRevision(docId: string, revisionId: string): Promise<any> {
 
-        return this.db.remove(docId, revisionId)
-            .catch((err: any) => {
-                return Promise.reject([DatastoreErrors.GENERIC_ERROR, err]);
-            });
+        try {
+            this.db.remove(docId, revisionId)
+        } catch (genericerr) {
+            throw [DatastoreErrors.GENERIC_ERROR, genericerr];
+        }
     }
 
 
@@ -171,8 +178,7 @@ export class PouchdbDatastore {
             include_docs: true,
             conflicts: true,
             descending: true
-        })
-            .then((result: any) => result.rows.map((result: any) => result.doc))
+        }).then((result: any) => result.rows.map((result: any) => result.doc))
     }
 
 

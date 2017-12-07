@@ -96,7 +96,21 @@ export function main() {
                     .then(() => datastore.create(docToCreate2))
                 }, [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS],done);
         });
-        
+
+
+        it('should not create if created not present', async done => {
+
+            const doc = Static.doc('sd1');
+            delete doc.created;
+
+            try {
+                await datastore.create(doc);
+                fail();
+            } catch (expected) {
+                expect(expected[0]).toBe(DatastoreErrors.INVALID_DOCUMENT);
+            }
+            done();
+        });
 
         // update
 
@@ -121,7 +135,7 @@ export function main() {
                 await datastore.update(Static.doc('sd1'));
                 fail();
             } catch (expected) {
-                expect(expected[0]).toBe(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
+                expect(expected[0]).toBe(DatastoreErrors.INVALID_DOCUMENT);
             }
             done();
         });

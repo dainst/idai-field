@@ -56,6 +56,8 @@ export class PouchdbDatastore {
      */
     public async create(document: Document): Promise<Document> {
 
+        if (!Document.isValid(document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
+
         const resetFun = this.resetDocOnErr(document);
 
         await this.proveThatDoesNotExist(document);
@@ -74,12 +76,12 @@ export class PouchdbDatastore {
      */
     public async update(document: Document): Promise<Document> {
 
-        if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
+        if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
 
         const resetFun = this.resetDocOnErr(document);
 
         try {
-            await this.fetch(document.resource.id);
+            await this.fetch((document.resource as any).id);
         } catch (notfound) {
             throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
         }
@@ -159,6 +161,7 @@ export class PouchdbDatastore {
         }
     }
 
+    
     public fetch(resourceId: string,
                  options: any = { conflicts: true }): Promise<Document> {
         // Beware that for this to work we need to make sure

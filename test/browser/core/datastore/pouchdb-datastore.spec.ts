@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {DatastoreErrors, Query} from 'idai-components-2/datastore';
+import {DatastoreErrors} from 'idai-components-2/datastore';
 import {PouchdbDatastore} from '../../../../app/core/datastore/core/pouchdb-datastore';
 import {Static} from '../../static';
 
@@ -26,11 +26,11 @@ export function main() {
         });
 
         
-        afterEach(done => {
+        afterEach(async done => {
 
-            new PouchDB('testdb').destroy()
-                .then(() => new PouchDB('testdb2').destroy())
-                .then(() => done());
+            await new PouchDB('testdb').destroy();
+            await new PouchDB('testdb2').destroy();
+            done();
         }, 5000);
         
 
@@ -52,51 +52,40 @@ export function main() {
         
         // create
 
-        it('should create a document and create a resource.id', done => {
+        it('should create a document and create a resource.id', async done => {
 
-            datastore.create(Static.doc('sd1'))
-                .then(
-                    _createdDoc => {
-                        const createdDoc = _createdDoc as Document;
-                        expect(createdDoc.resource.id).not.toBe(undefined);
-                        done();
-                    },
-                    () => {
-                        fail();
-                        done();
-                    }
-                );
+            try {
+                const createdDoc = await datastore.create(Static.doc('sd1')) as Document;
+                expect(createdDoc.resource.id).not.toBe(undefined);
+            } catch (e) {
+                fail(e);
+            }
+            done();
         });
 
         
-        it('should create a document and take the existing resource.id', done => {
+        it('should create a document and take the existing resource.id', async done => {
 
             const docToCreate: Document = Static.doc('sd1');
             docToCreate.resource.id = 'a1';
 
-            datastore.create(docToCreate)
+            await datastore.create(docToCreate);
             // this step was added to adress a problem where a document
             // with an existing resource.id was stored but could not
             // get refreshed later
-                .then(() => datastore.fetch(docToCreate.resource.id))
-                // and the same may occur on get
-                .then(() => datastore.fetch(docToCreate.resource.id))
-                .then(
-                    _createdDoc => {
-                        let createdDoc = _createdDoc as Document;
-                        expect(createdDoc.resource.id).toBe('a1');
-                        done();
-                    },
-                    () => {
-                        fail();
-                        done();
-                    }
-                );
+            await datastore.fetch(docToCreate.resource.id);
+            // and the same may occur on get
+            try {
+                const createdDoc = await datastore.fetch(docToCreate.resource.id) as Document;
+                expect(createdDoc.resource.id).toBe('a1');
+            } catch (e) {
+                fail(e);
+            }
+            done();
         });
         
 
-        it('should not create a document with the resource.id of an alredy existing doc',
-            done => {
+        it('should not create a document with the resource.id of an alredy existing doc', done => {
 
             const docToCreate1: Document = Static.doc('sd1');
             docToCreate1.resource.id = 'a1';
@@ -111,39 +100,32 @@ export function main() {
 
         // update
 
-        it('should update an existing document with no identifier conflict', done => {
+        it('should update an existing document with no identifier conflict', async done => {
 
             const doc2 = Static.doc('id2');
 
-            datastore.create(Static.doc('id1'))
-                .then(() => datastore.create(doc2))
-                .then(() => {
-                    return datastore.update(doc2);
-                }).then(
-                () => {
-                    done();
-                },
-                () => {
-                    fail();
-                    done();
-                }
-            );
+            await datastore.create(Static.doc('id1'));
+            await datastore.create(doc2);
+            try {
+                await datastore.update(doc2);
+            } catch (e) {
+                fail(e);
+            }
+            done();
         });
         
 
-        it('should not update if resource id not present', done => {
+        it('should not update if resource id not present', async done => {
 
-            datastore.update(Static.doc('sd1')).then(
-                () => {
-                    fail();
-                    done();
-                },
-                expectedErr => {
-                    expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
-                    done();
-                }
-            );
+            try {
+                await datastore.update(Static.doc('sd1'));
+                fail();
+            } catch (expected) {
+                expect(expected[0]).toBe(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
+            }
+            done();
         });
+
 
         it('should not update if not existent', done => {
 

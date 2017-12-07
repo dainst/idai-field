@@ -30,8 +30,8 @@ export class LayerImageProvider {
     public reset() {
 
         for (let resourceId of Object.keys(this.imageContainers)) {
-            // TODO check if thumbnail
-            this.imagestore.revoke(resourceId, false);
+            const thumb: boolean = this.imageContainers[resourceId].imgSrc ? false : true;
+            this.imagestore.revoke(resourceId, thumb);
         }
 
         this.imageContainers = {};
@@ -45,12 +45,12 @@ export class LayerImageProvider {
                 if (url != '') {
                     return Promise.resolve({ imgSrc: url });
                 } else {
-                    this.imagestore.read(resourceId, true, true).then(thumbnailUrl => {
-                        // TODO Save this in imgContainer.thumbSrc?
-                        return Promise.resolve({ imgSrc: thumbnailUrl });
-                    }).catch(() => {
-                        return Promise.resolve({ imgSrc: BlobMaker.blackImg });
-                    });
+                    return this.imagestore.read(resourceId, true, true)
+                        .then(thumbnailUrl => {
+                            return Promise.resolve({ thumbSrc: thumbnailUrl });
+                        }).catch(() => {
+                            return Promise.resolve({ imgSrc: BlobMaker.blackImg });
+                        });
                 }
             }, () => {
                 console.error('Error while creating image container. Original image not found in imagestore for ' +

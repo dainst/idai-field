@@ -68,14 +68,10 @@ export class FulltextIndexer {
 
     public remove(doc: any) {
 
-        if (Object.keys(this.index).length == 0) return;
-        for (let type of Object.keys(this.index)) {
-            for (let term of Object.keys(this.index[type])) {
-                if (this.index[type][term][doc.resource.id]) {
-                    delete this.index[type][term][doc.resource.id];
-                }
-            }
-        }
+        Object.keys(this.index).forEach(type =>
+            Object.keys(this.index[type]).
+                filter(term => this.index[type][term][doc.resource.id]).
+                forEach(term => delete this.index[type][term][doc.resource.id]))
     }
 
 
@@ -124,20 +120,17 @@ export class FulltextIndexer {
 
     private static getForToken(index: any, token: string, types: string[]): Array<any> {
 
-        const resultSets: ResultSets = types.reduce((_resultSets, type) =>
-            this._get(index, _resultSets, token.toLowerCase(), type), ResultSets.make());
-
-        return ResultSets.unify(resultSets, (item: any) => item.id);
+        return ResultSets.unify(
+            types.reduce((_resultSets, type) =>
+                this._get(index, _resultSets, token.toLowerCase(), type), ResultSets.make()),
+            (item: any) => item.id);
     }
 
 
     private static _get(index: any, resultSets: ResultSets, s: string, type: string): ResultSets {
 
         const {hasPlaceholder, tokens} = FulltextIndexer.extractReplacementTokens(s);
-        if (hasPlaceholder) {
-            return this.getWithPlaceholder(index, resultSets, s, type, tokens);
-        }
-
+        if (hasPlaceholder) return this.getWithPlaceholder(index, resultSets, s, type, tokens);
         return this.addKeyToResultSets(index, resultSets, type, s);
     }
 

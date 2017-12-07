@@ -56,12 +56,13 @@ export class FulltextIndexer {
 
     private indexToken(id: string, token: string, type: string, indexItem: IndexItem) {
 
-        let accumulator = '';
-        for (let letter of token.toLowerCase()) {
-            accumulator += letter;
-            if (!this.index[type][accumulator]) this.index[type][accumulator] = {};
-            this.index[type][accumulator][id] = indexItem;
-        }
+        Array.from(token.toLowerCase()).
+            reduce((accumulator: string, letter: string) => {
+                accumulator += letter;
+                if (!this.index[type][accumulator]) this.index[type][accumulator] = {};
+                this.index[type][accumulator][id] = indexItem;
+                return accumulator;
+            }, '');
     }
 
 

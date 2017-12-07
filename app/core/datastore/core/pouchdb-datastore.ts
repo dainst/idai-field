@@ -229,6 +229,7 @@ export class PouchdbDatastore {
     }
 
 
+    // TODO this might be the wrong place for the method and also potentially buggy since we cannot guarantee there are resource.identifiers here
     private generateOrderedResultList(resultSets: ResultSets): Array<any> {
 
         return resultSets.intersect((e: any) => e.id)

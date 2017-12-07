@@ -8,12 +8,6 @@ import {Document} from 'idai-components-2/core';
  */
 export class DocumentCache<T extends Document> {
 
-
-    constructor() {
-
-        console.debug("constructing document cache");
-    }
-
     protected _: { [resourceId: string]: T } = { };
 
 
@@ -32,6 +26,14 @@ export class DocumentCache<T extends Document> {
     public remove(resourceId: any) {
 
         delete this._[resourceId];
+    }
+
+
+    public reassign(doc: T) {
+
+        if (!(doc as any)['_conflicts'])
+            delete (this.get(doc.resource.id as any)as any)['_conflicts'];
+        Object.assign(this.get(doc.resource.id as any), doc);
     }
 
 

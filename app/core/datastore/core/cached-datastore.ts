@@ -62,18 +62,10 @@ export abstract class CachedDatastore<T extends Document>
             return this.documentCache.set(this.typeConverter.
                 convert<T>(updatedDocument));
         } else {
-            this.reassign(this.typeConverter.
+            this.documentCache.reassign(this.typeConverter.
                 convert<T>(updatedDocument));
             return this.documentCache.get(document.resource.id as any);
         }
-    }
-
-
-    // TODO remove duplicate code
-    protected reassign(doc: T) {
-
-        if (!(doc as any)['_conflicts']) delete (this.documentCache.get(doc.resource.id as any)as any)['_conflicts'];
-        Object.assign(this.documentCache.get(doc.resource.id as any), doc);
     }
 
 

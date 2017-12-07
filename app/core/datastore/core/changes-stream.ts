@@ -25,10 +25,12 @@ export class ChangesStream {
         datastore.remoteChangesNotifications().subscribe(document => {
 
             if (!this.autoCacheUpdate) return;
-            if (!document || !document.resource || !this.documentCache.get(document.resource.id as any)) return;
+            if (!document || !document.resource ||
+                !this.documentCache.get(document.resource.id as any)) return;
 
             // explicitly assign by value in order for changes to be detected by angular
-            this.reassign(this.typeConverter.convert<Document>(document));
+            this.documentCache.reassign(
+                this.typeConverter.convert<Document>(document));
 
             this.observers.forEach(observer => observer.next(document));
         });
@@ -46,12 +48,5 @@ export class ChangesStream {
     public allChangesAndDeletionsNotifications(): Observable<void> {
 
         return this.datastore.allChangesAndDeletionsNotifications();
-    }
-
-
-    private reassign(doc: Document) {
-
-        if (!(doc as any)['_conflicts']) delete (this.documentCache.get(doc.resource.id as any)as any)['_conflicts'];
-        Object.assign(this.documentCache.get(doc.resource.id as any), doc);
     }
 }

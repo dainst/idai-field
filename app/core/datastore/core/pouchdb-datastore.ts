@@ -76,7 +76,8 @@ export class PouchdbDatastore {
      */
     public async update(document: Document): Promise<Document> {
 
-        if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
+        if (!Document.isValid(document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
+        if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
 
         const resetFun = this.resetDocOnErr(document);
 

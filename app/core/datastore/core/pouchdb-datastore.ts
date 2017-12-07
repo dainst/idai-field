@@ -274,12 +274,17 @@ export class PouchdbDatastore {
      * @param doc
      * @return resolve when document with the given resource id does not exist already, reject otherwise
      */
-    private proveThatDoesNotExist(doc: Document): Promise<any> {
+    private async proveThatDoesNotExist(doc: Document): Promise<any> {
 
-        if (doc.resource.id) {
-            return this.fetch(doc.resource.id)
-                .then(result => Promise.reject([DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS]), () => Promise.resolve())
-        } else return Promise.resolve();
+        if (!doc.resource.id) return undefined;
+
+        try {
+            await this.fetch(doc.resource.id);
+            throw 'exists'
+        } catch (e) {
+            if (e == 'exists') throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
+            // else swallow
+        }
     }
 
 

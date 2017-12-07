@@ -218,7 +218,7 @@ export class PouchdbDatastore {
         let resultSets: ResultSets|undefined = this.performThem(query.constraints);
 
         resultSets = (Query.isEmpty(query) && resultSets) ? resultSets :
-            this.performFulltext(query, resultSets ? resultSets : new ResultSets());
+            this.performFulltext(query, resultSets ? resultSets : ResultSets.make());
 
         return this.generateOrderedResultList(resultSets);
     }
@@ -228,15 +228,14 @@ export class PouchdbDatastore {
 
         const q: string = (!query.q || query.q.trim() == '') ? '*' : query.q;
         const types: string[]|undefined = query.types ? query.types : undefined;
-        resultSets.add(this.fulltextIndexer.get(q, types as any));
-        return resultSets;
+        return ResultSets.add(resultSets, this.fulltextIndexer.get(q, types as any));
     }
 
 
     // TODO this might be the wrong place for the method and also potentially buggy since we cannot guarantee there are resource.identifiers here
     private generateOrderedResultList(resultSets: ResultSets): Array<any> {
 
-        return resultSets.intersect((e: any) => e.id)
+        return ResultSets.intersect(resultSets, (e: any) => e.id)
             .sort((a: any, b: any) => SortUtil.alnumCompare(a['identifier'], b['identifier']))
             .map((e: any) => e['id']);
     }
@@ -250,7 +249,7 @@ export class PouchdbDatastore {
 
         if (!constraints) return undefined;
 
-        const resultSets: ResultSets = new ResultSets();
+        let resultSets: ResultSets = ResultSets.make();
         let usableConstraints = 0;
         for (let name of Object.keys(constraints)) {
             const constraint = Constraint.convertTo(constraints[name]);
@@ -258,9 +257,9 @@ export class PouchdbDatastore {
             let result = this.constraintIndexer.get(name, constraint.value);
             if (result) {
                 if (constraint.type == 'add') {
-                    resultSets.add(result);
+                    resultSets = ResultSets.add(resultSets, result);
                 } else if (constraint.type == 'subtract') {
-                    resultSets.subtract(result);
+                    resultSets = ResultSets.subtract(resultSets, result);
                 }
                 usableConstraints++;
             }

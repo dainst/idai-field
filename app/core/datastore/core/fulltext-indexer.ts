@@ -56,7 +56,6 @@ export class FulltextIndexer {
 
     private indexToken(id: string, token: string, type: string, indexItem: IndexItem) {
 
-
         let accumulator = '';
         for (let letter of token.toLowerCase()) {
             accumulator += letter;
@@ -92,58 +91,58 @@ export class FulltextIndexer {
 
         if (Object.keys(this.index).length == 0) return [];
 
-        const resultSets: ResultSets = new ResultSets();
+        let resultSets: ResultSets = ResultSets.make();
         for (let token of s.split(' ')) {
             if (token.length > 0) {
-                resultSets.add(
+                resultSets = ResultSets.add(resultSets,
                     this.getForToken(token, types ? types : Object.keys(this.index))
                 )
             }
         }
-        return resultSets.intersect((item: any) => item.id);
+        return ResultSets.intersect(resultSets, (item: any) => item.id);
     }
 
 
     private getForToken(token: string, types: string[]): Array<any> {
 
-        const resultSets: ResultSets = new ResultSets();
+        const resultSets: ResultSets = types.reduce((_resultSets, type) =>
+            this._get(_resultSets, token.toLowerCase(), type), ResultSets.make());
 
-        for (let type of types) {
-            this._get(resultSets, token.toLowerCase(), type);
-        }
-
-        return resultSets.unify((item: any) => item.id);
+        return ResultSets.unify(resultSets, (item: any) => item.id);
     }
 
 
-    private _get(resultSets: ResultSets, s: string, type: string) {
+    private _get(resultSets: ResultSets, s: string, type: string): ResultSets {
 
         const {hasPlaceholder, tokens} = FulltextIndexer.extractReplacementTokens(s);
         if (hasPlaceholder) {
             return this.getWithPlaceholder(resultSets, s, type, tokens);
         }
 
-        this.addKeyToResultSets(resultSets, type, s);
+        return this.addKeyToResultSets(resultSets, type, s);
     }
 
 
-    private getWithPlaceholder(resultSets: any, s: string, type: string, tokens: string) {
+    private getWithPlaceholder(resultSets: any, s: string, type: string, tokens: string): ResultSets {
 
-        for(let i=0; i<tokens.length; i++)
-        {
+        let results = ResultSets.copy(resultSets);
+        for(let i=0; i<tokens.length; i++) {
+
             let nextChar = tokens.charAt(i);
             const replaced = s.replace('['+tokens+']',nextChar);
 
-            this.addKeyToResultSets(resultSets, type, replaced);
+            results = this.addKeyToResultSets(results, type, replaced);
         }
+        return results;
     }
 
 
-    private addKeyToResultSets(resultSets: any, type: string, s: string) {
+    private addKeyToResultSets(resultSets: any, type: string, s: string): ResultSets {
 
-        if (!this.index[type] || !this.index[type][s]) return;
+        if (!this.index[type] || !this.index[type][s]) return ResultSets.copy(resultSets);
 
-        resultSets.add(
+        const r = ResultSets.copy(resultSets);
+        return ResultSets.add(r,
             Object.keys(this.index[type][s]).map(id => {
                 const indexItem: IndexItem = {
                     date: this.index[type][s][id].date,

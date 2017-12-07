@@ -1,27 +1,52 @@
+export interface ResultSets {
+
+    addSets: Array<  // multiple result sets
+        Array<            // a single result set
+            Object // an element of a result set
+            >>,
+
+    subtractSets: Array<Array<Object>>;
+}
+
 /**
+ * Companion object
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export class ResultSets {
 
-
-    private addSets: Array<  // multiple result sets
-        Array<            // a single result set
-            Object // an element of a result set
-        >> = [];
-
-    private subtractSets: Array<Array<Object>> = [];
+    private constructor() {} // hide on purpose to force usage of make or copy
 
 
-    public add(set: Array<Object>) {
+    public static make(): ResultSets {
 
-        this.addSets.push(set);
+        return {
+            addSets: [],
+            subtractSets: []
+        }
     }
 
 
-    public subtract(set: Array<Object>) {
+    public static copy(resultSets: ResultSets): ResultSets {
 
-        this.subtractSets.push(set);
+        return JSON.parse(JSON.stringify(resultSets));
+    }
+
+
+    public static add(resultSets: ResultSets, set: Array<Object>): ResultSets {
+
+        const copy = ResultSets.copy(resultSets);
+        copy.addSets.push(set);
+        return copy;
+    }
+
+
+    public static subtract(resultSets: ResultSets, set: Array<Object>): ResultSets {
+
+        const copy = ResultSets.copy(resultSets);
+        copy.subtractSets.push(set);
+        return copy;
     }
 
 
@@ -43,15 +68,15 @@ export class ResultSets {
      *
      * @param f gets applied to elements to get the field on which the comparison is performed
      */
-    public intersect(f: Function): Array<Object> {
+    public static intersect(resultSets: ResultSets, f: Function): Array<Object> {
 
-        let result: Array<Object> = this.addSets[0];
+        let result: Array<Object> = resultSets.addSets[0];
 
-        for (let i = 1; i < this.addSets.length; i++) {
-            result = result.filter(e => this.addSets[i].map(obj => f(obj)).indexOf(f(e)) != -1);
+        for (let i = 1; i < resultSets.addSets.length; i++) {
+            result = result.filter(e => resultSets.addSets[i].map(obj => f(obj)).indexOf(f(e)) != -1);
         }
 
-        for (let set of this.subtractSets) {
+        for (let set of resultSets.subtractSets) {
             for (let object of set) {
                 const index = result.map(obj =>f(obj)).indexOf(f(object));
                 if (index > -1) result.splice(index, 1);
@@ -76,11 +101,11 @@ export class ResultSets {
      *
      * @param f gets applied to elements to get the field on which the comparison is performed
      */
-    public unify(f: Function): Array<Object> {
+    public static unify(resultSets: ResultSets, f: Function): Array<Object> {
 
         const result: any = {};
 
-        for (let resultSet of this.addSets) {
+        for (let resultSet of resultSets.addSets) {
             for (let item of resultSet) {
                 result[f(item)] = item;
             }

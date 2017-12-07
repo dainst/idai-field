@@ -54,7 +54,7 @@ export class LayerMapComponent extends MapComponent {
      */
     protected async updateMap(changes: SimpleChanges): Promise<any> {
 
-        if (changes['documents'] && changes['documents'].currentValue) this.layersUpdate = true;
+        if (LayerMapComponent.isLayersUpdateNecessary(changes)) this.layersUpdate = true;
 
         if (!this.update) return Promise.resolve();
 
@@ -107,6 +107,7 @@ export class LayerMapComponent extends MapComponent {
         if (!layerDocument) return;
 
         const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
+        console.log('got image container', imageContainer);
 
         const georeference = layerDocument.resource.georeference;
         this.imageOverlays[resourceId] = L.imageOverlay(imageContainer.imgSrc,
@@ -139,5 +140,31 @@ export class LayerMapComponent extends MapComponent {
         bounds.push(L.latLng(georeference.bottomLeftCoordinates));
 
         this.map.fitBounds(bounds);
+    }
+
+
+    /**
+     * Makes sure that layers are updated only once after switching to another view or main type document.
+     * Triggering the update method more than once can lead to errors caused by resetting the layer image
+     * provider while the images are still loading.
+     */
+    private static isLayersUpdateNecessary(changes: SimpleChanges): boolean {
+
+        // Update layers after switching main type document.
+        // Update layers after switching to another view with an existing main type document or coming from
+        // a view with an existing main type document.
+        if (changes['mainTypeDocument']
+            && (changes['mainTypeDocument'].currentValue || changes['mainTypeDocument'].previousValue)) {
+            return true;
+        }
+
+        // Update layers after switching from a view without main type documents to another view without
+        // main type documents.
+        if (changes['documents'] && changes['documents'].currentValue
+            && changes['documents'].currentValue.length == 0) {
+            return true;
+        }
+
+        return false;
     }
 }

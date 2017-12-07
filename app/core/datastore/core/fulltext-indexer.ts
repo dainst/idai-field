@@ -91,14 +91,13 @@ export class FulltextIndexer {
 
         if (Object.keys(this.index).length == 0) return [];
 
-        let resultSets: ResultSets = ResultSets.make();
-        for (let token of s.split(' ')) {
-            if (token.length > 0) {
-                resultSets = ResultSets.add(resultSets,
-                    this.getForToken(token, types ? types : Object.keys(this.index))
-                )
-            }
-        }
+        const resultSets: ResultSets = s.split(' ').
+            filter(token => token.length > 0).
+            reduce((_resultSets, token) =>
+                ResultSets.add(_resultSets,
+                    this.getForToken(token, types ? types : Object.keys(this.index))),
+            ResultSets.make());
+
         return ResultSets.intersect(resultSets, (item: any) => item.id);
     }
 

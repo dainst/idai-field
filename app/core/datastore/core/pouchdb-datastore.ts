@@ -278,14 +278,15 @@ export class PouchdbDatastore {
     }
 
 
-    private performPut(document: any, resetFun: any, errFun: any) {
+    private async performPut(document: any, resetFun: any, errFun: any) {
 
-        return this.db.put(document, { force: true })
-            .then((result: any) => this.processPutResult(document, result))
-            .catch((err: any) => {
-                resetFun(document);
-                return errFun(err);
-            })
+        try {
+            return this.processPutResult(document,
+                (await this.db.put(document, { force: true })))
+        } catch (err) {
+            resetFun(document);
+            return errFun(err);
+        }
     }
 
 

@@ -32,6 +32,7 @@ export class ChangesStream {
             this.documentCache.reassign(
                 this.typeConverter.convert<Document>(document));
 
+            ChangesStream.removeClosedObservers(this.observers);
             this.observers.forEach(observer => observer.next(document));
         });
     }
@@ -48,5 +49,18 @@ export class ChangesStream {
     public allChangesAndDeletionsNotifications(): Observable<void> {
 
         return this.datastore.allChangesAndDeletionsNotifications();
+    }
+
+
+    private static removeClosedObservers(observers: Array<any>) {
+
+        const observersToDelete: any[] = [];
+        for (let i = 0; i < observers.length; i++) {
+            if ((observers[i] as any).closed) observersToDelete.push(observers[i]);
+        }
+        for (let observerToDelete of observersToDelete) {
+            let i = observers.indexOf(observerToDelete as never);
+            observers.splice(i, 1);
+        }
     }
 }

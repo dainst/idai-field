@@ -364,37 +364,16 @@ export class PouchdbDatastore {
     private notifyAllChangesAndDeletionsObservers() {
 
         if (!this.allChangesAndDeletionsObservers) return;
-
-        PouchdbDatastore.removeClosedObservers(this.allChangesAndDeletionsObservers);
-
-        this.allChangesAndDeletionsObservers.forEach((observer: any) => {
-            if (observer && (observer.next != undefined)) observer.next();
-        });
+        this.allChangesAndDeletionsObservers.forEach(
+            (observer: any) => observer.next())
     }
 
 
     private notifyRemoteChangesObservers(document: Document) {
 
         if (!this.remoteChangesObservers) return;
-
-        PouchdbDatastore.removeClosedObservers(this.remoteChangesObservers);
-
-        this.remoteChangesObservers.forEach((observer: any) => {
-            if (observer && (observer.next != undefined)) observer.next(document);
-        });
-    }
-
-
-    private static removeClosedObservers(observers: Array<any>) {
-
-        const observersToDelete: any[] = [];
-        for (let i = 0; i < observers.length; i++) {
-            if ((observers[i] as any).closed) observersToDelete.push(observers[i]);
-        }
-        for (let observerToDelete of observersToDelete) {
-            let i = observers.indexOf(observerToDelete as never);
-            observers.splice(i, 1);
-        }
+        this.remoteChangesObservers.forEach(
+            (observer: Observer<Document>) => observer.next(document));
     }
 
 

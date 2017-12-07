@@ -378,17 +378,15 @@ export class PouchdbDatastore {
 
     private notifyAllChangesAndDeletionsObservers() {
 
-        if (!this.allChangesAndDeletionsObservers) return;
-        this.allChangesAndDeletionsObservers.forEach(
-            (observer: any) => observer.next())
+        if (this.allChangesAndDeletionsObservers) this.allChangesAndDeletionsObservers.
+            forEach((observer: any) => observer.next())
     }
 
 
     private notifyRemoteChangesObservers(document: Document) {
 
-        if (!this.remoteChangesObservers) return;
-        this.remoteChangesObservers.forEach(
-            (observer: Observer<Document>) => observer.next(document));
+        if (this.remoteChangesObservers) this.remoteChangesObservers.
+            forEach((observer: Observer<Document>) => observer.next(document));
     }
 
 

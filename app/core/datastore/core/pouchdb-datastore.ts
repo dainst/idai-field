@@ -213,7 +213,7 @@ export class PouchdbDatastore {
 
         let resultSets: ResultSets|undefined = this.performThem(query.constraints);
 
-        resultSets = (PouchdbDatastore.isEmpty(query) && resultSets) ? resultSets :
+        resultSets = (Query.isEmpty(query) && resultSets) ? resultSets :
             this.performFulltext(query, resultSets ? resultSets : new ResultSets());
 
         return this.generateOrderedResultList(resultSets);
@@ -249,7 +249,7 @@ export class PouchdbDatastore {
         const resultSets: ResultSets = new ResultSets();
         let usableConstraints = 0;
         for (let name of Object.keys(constraints)) {
-            const constraint = PouchdbDatastore.convertToConstraint(constraints[name]);
+            const constraint = Constraint.convertTo(constraints[name]);
 
             let result = this.constraintIndexer.get(name, constraint.value);
             if (result) {
@@ -402,23 +402,5 @@ export class PouchdbDatastore {
             modified.date = new Date(modified.date);
         }
         return result;
-    }
-
-
-    // TODO Move to query interface (make query a class if necessary)
-    private static isEmpty(query: Query) {
-
-        return ((!query.q || query.q == '') && !query.types);
-    }
-
-
-    // TODO Move to query interface (make query a class if necessary)
-    private static convertToConstraint(constraint: Constraint|string): Constraint {
-
-        if (typeof(constraint) == 'string') {
-            return { value: constraint, type: 'add' };
-        } else {
-            return constraint;
-        }
     }
 }

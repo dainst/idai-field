@@ -16,12 +16,8 @@ export class ModelUtil {
 
     public static hasNecessaryFields(document: Document): boolean {
 
-        if (!document.resource) return false;
-        if (!document.resource.id) return false;
+        if (!Document.isValid(document)) return false;
         if (!document.resource.identifier) return false;
-        if (!document.resource.relations) return false;
-        if (!document.created) return false;
-
         return true;
     }
 }

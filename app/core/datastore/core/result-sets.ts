@@ -51,7 +51,7 @@ export class ResultSets {
 
         const copy = ResultSets.copy(resultSets);
         if (!set) return copy;
-        if (mode == 'add' || mode != 'subtract') copy.addSets.push(set);
+        if (mode !== 'subtract') copy.addSets.push(set);
         else copy.subtractSets.push(set);
         return copy;
     }

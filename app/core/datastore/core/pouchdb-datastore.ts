@@ -51,15 +51,20 @@ export class PouchdbDatastore {
 
     /**
      * @returns {Promise<Document>} newest revision of the document fetched from db
+     * @throws [INVALID_DOCUMENT] - in case either the document given as param or
+     *   the document fetched directly after db.put is not valid
      */
     public async create(document: Document): Promise<Document> {
 
         if (!Document.isValid(document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
+        if (document.resource.id) try {
+            await this.fetchPlain(document.resource.id);
+            throw 'exists';
+        } catch (expected) {
+            if (expected === 'exists') throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS]
+        }
 
         const resetFun = this.resetDocOnErr(document);
-
-        await this.proveThatDoesNotExist(document);
-
         if (!document.resource.id) document.resource.id = IdGenerator.generateId();
         (document as any)['_id'] = document.resource.id;
 
@@ -71,20 +76,20 @@ export class PouchdbDatastore {
 
     /**
      * @returns {Promise<Document>} newest revision of the document fetched from db
+     * @throws [INVALID_DOCUMENT] - in case either the document given as param or
+     *   the document fetched directly after db.put is not valid
      */
     public async update(document: Document): Promise<Document> {
 
         if (!Document.isValid(document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
-
-        const resetFun = this.resetDocOnErr(document);
-
         try {
-            await this.fetch((document.resource as any).id);
-        } catch (notfound) {
+            await this.db.get(document.resource.id);
+        } catch (e) {
             throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
         }
 
+        const resetFun = this.resetDocOnErr(document);
         (document as any)['_id'] = document.resource.id;
 
         return this.performPut(document, resetFun, (err: any) => {
@@ -97,6 +102,9 @@ export class PouchdbDatastore {
     }
 
 
+    /**
+     * @throws [DOCUMENT_NOT_FOUND]
+     */
     public async remove(doc: Document): Promise<void> {
 
         if (!doc.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
@@ -111,7 +119,12 @@ export class PouchdbDatastore {
         this.constraintIndexer.remove(doc);
         this.fulltextIndexer.remove(doc);
 
-        const docFromGet = await this.fetch(doc.resource.id); // propagate err instead of catch
+        let docFromGet;
+        try {
+            docFromGet = await this.fetchPlain(doc.resource.id); // propagate err instead of catch
+        } catch (e) {
+            throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
+        }
         try {
             await this.db.remove(docFromGet)
         } catch (genericerror) {
@@ -120,6 +133,7 @@ export class PouchdbDatastore {
     }
 
 
+    // TODO improve error handling, consider using PouchdbDatastore#remove
     public async removeRevision(docId: string, revisionId: string): Promise<any> {
 
         try {
@@ -149,18 +163,41 @@ export class PouchdbDatastore {
         }
     }
 
-    
+
+    private async fetchPlain(resourceId: string): Promise<void> {
+
+        try {
+            return this.db.get(resourceId);
+        } catch (e) {
+            return undefined;
+        }
+    }
+
+
+    /**
+     * @throws [DOCUMENT_NOT_FOUND]
+     * @throws [INVALID_DOCUMENT]
+     */
     public fetch(resourceId: string,
                  options: any = { conflicts: true }): Promise<Document> {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
         return this.db.get(resourceId, options)
-            .then((result: any) => PouchdbDatastore.createDocFromResult(result) )
-            .catch((err: any) => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]));
+            .then(
+                (result: any) => {
+                    PouchdbDatastore.convertDates(result);
+                    if (!Document.isValid(result)) return Promise.reject([DatastoreErrors.INVALID_DOCUMENT]);
+                    return result as Document;
+                },
+                (err: any) => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
     }
 
 
-    public fetchRevision(resourceId: string, revisionId: string) {
+    /**
+     * @throws [DOCUMENT_NOT_FOUND]
+     * @throws [INVALID_DOCUMENT]
+     */
+    public fetchRevision(resourceId: string, revisionId: string): Promise<Document> {
 
         return this.fetch(resourceId, { rev: revisionId });
     }
@@ -238,24 +275,6 @@ export class PouchdbDatastore {
     }
 
 
-    /**
-     * @param doc
-     * @return resolve when document with the given resource id does not exist already, reject otherwise
-     */
-    private async proveThatDoesNotExist(doc: Document): Promise<any> {
-
-        if (!doc.resource.id) return undefined;
-
-        try {
-            await this.fetch(doc.resource.id);
-            throw 'exists'
-        } catch (e) {
-            if (e == 'exists') throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
-            // else swallow
-        }
-    }
-
-
     private async performPut(document: any, resetFun: any, errFun: any) {
 
         try {
@@ -317,7 +336,7 @@ export class PouchdbDatastore {
                 }
 
                 let document: Document;
-                this.fetch(change.id).then(fetchedDoc => {
+                this.fetch(change.id).then(fetchedDoc => { // TODO review use of fetch here
                     document = fetchedDoc;
                     // return this.conflictResolvingExtension.autoResolve(<any> document, this.appState.getCurrentUser());
                 }).then(() => {
@@ -361,16 +380,7 @@ export class PouchdbDatastore {
     }
 
 
-    /**
-     * TODO this should be replaced (at least partially) with validation via Document.isValid
-     *
-     * Creates a typed Document from an untyped PouchDB result.
-     * Thereby converts dates in created in modified that are given as strings
-     * in JSON to Date objects.
-     * @param result the result as returned from PouchDB
-     * @returns {Document} the typed Document
-     */
-    private static createDocFromResult(result: any): Document {
+    private static convertDates(result: any): Document {
 
         if (result.created) result.created.date = new Date(result.created.date);
         if (result.modified) for (let modified of result.modified) {

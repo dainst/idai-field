@@ -156,41 +156,35 @@ export function main() {
         });
 
 
-        it('should not update if not existent', done => {
+        it('should not update if not existent', async done => {
 
-            datastore.update(Static.doc('sd1', 'identifier1', 'Find', 'id1')).then(
-                () => {
-                    fail();
-                    done();
-                },
-                expectedErr => {
-                    expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NOT_FOUND);
-                    done();
-                }
-            );
+            try {
+                await datastore.update(Static.doc('sd1', 'identifier1', 'Find', 'id1'));
+                fail();
+            } catch (expectedErr) {
+                expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NOT_FOUND);
+            }
+            done();
         });
         
 
-        // get
+        // fetch
 
-        it('should get if existent', done => {
+        it('should get if existent', async done => {
 
             const d = Static.doc('sd1');
-            datastore.create(d)
-                .then(() => datastore.fetch(d['resource']['id']))
-                .then(doc => {
-                    expect(doc['resource']['shortDescription']).toBe('sd1');
-                    done();
-                });
+            await datastore.create(d);
+            expect((await datastore.fetch(d.resource.id))
+                ['resource']['shortDescription']).toBe('sd1');
+            done();
         });
         
 
-        it('should reject with keyOfM in when trying to get a non existing document',
-            done => {
+        it('should reject with keyOfM in when trying to get a non existing document', done => {
 
-            expectErr(() => {
-                return datastore.create(Static.doc('sd1'))
-                    .then(() => datastore.fetch('nonexisting'))
+            expectErr(async () => {
+                    await datastore.create(Static.doc('sd1'));
+                    await datastore.fetch('nonexisting');
                 }, [DatastoreErrors.DOCUMENT_NOT_FOUND], done);
         });
 

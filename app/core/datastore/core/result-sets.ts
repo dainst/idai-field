@@ -83,9 +83,9 @@ export class ResultSets {
     public static intersect(resultSets: ResultSets): Array<IndexItem> {
 
         const result: Array<IndexItem> =
-            resultSets.addSets.reduce((accumulatedSet, addSet) =>
-                accumulatedSet.filter(e => addSet.map(obj =>
-                    ResultSets.f(obj)).indexOf(ResultSets.f(e)) != -1)
+            resultSets.addSets.reduce((accumulatedSet, comparisonSet) =>
+                accumulatedSet.filter(accumulatedSetIndexItem => comparisonSet.map(addSetIndexItem =>
+                    ResultSets.f(addSetIndexItem)).indexOf(ResultSets.f(accumulatedSetIndexItem)) != -1)
             , resultSets.addSets[0]);
         
         

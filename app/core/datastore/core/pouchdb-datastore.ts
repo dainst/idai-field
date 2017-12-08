@@ -58,7 +58,7 @@ export class PouchdbDatastore {
 
         if (!Document.isValid(document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
         if (document.resource.id) try {
-            await this.fetchPlain(document.resource.id);
+            await this.db.get(document.resource.id);
             throw 'exists';
         } catch (expected) {
             if (expected === 'exists') throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS]
@@ -121,7 +121,7 @@ export class PouchdbDatastore {
 
         let docFromGet;
         try {
-            docFromGet = await this.fetchPlain(doc.resource.id); // propagate err instead of catch
+            docFromGet = await this.db.get(doc.resource.id);
         } catch (e) {
             throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
         }
@@ -160,16 +160,6 @@ export class PouchdbDatastore {
             return this.perform(query);
         } catch (err) {
             throw [DatastoreErrors.GENERIC_ERROR, err];
-        }
-    }
-
-
-    private async fetchPlain(resourceId: string): Promise<void> {
-
-        try {
-            return this.db.get(resourceId);
-        } catch (e) {
-            return undefined;
         }
     }
 

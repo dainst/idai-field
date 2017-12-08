@@ -15,6 +15,9 @@ export interface IndexItem {
  */
 export class IndexItem {
 
+    private constructor() {} // hide on purpose, use from instead
+
+
     public static from(document: Document): IndexItem|undefined {
 
         if (!document.resource['identifier']) {

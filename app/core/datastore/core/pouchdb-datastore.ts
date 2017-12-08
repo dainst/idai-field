@@ -4,7 +4,7 @@ import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import {PouchdbManager} from './pouchdb-manager';
-import {ResultSets} from '../../../util/result-sets';
+import {ResultSets} from './result-sets';
 import {SortUtil} from '../../../util/sort-util';
 import {ConstraintIndexer} from './constraint-indexer';
 import {FulltextIndexer} from './fulltext-indexer';
@@ -220,7 +220,7 @@ export class PouchdbDatastore {
         resultSets = (Query.isEmpty(query) && resultSets) ? resultSets :
             this.performFulltext(query, resultSets ? resultSets : ResultSets.make());
 
-        return this.generateOrderedResultList(resultSets);
+        return ResultSets.generateOrderedResultList(resultSets);
     }
 
 
@@ -229,15 +229,6 @@ export class PouchdbDatastore {
         const q: string = (!query.q || query.q.trim() == '') ? '*' : query.q;
         const types: string[]|undefined = query.types ? query.types : undefined;
         return ResultSets.add(resultSets, this.fulltextIndexer.get(q, types as any));
-    }
-
-
-    // TODO this might be the wrong place for the method and also potentially buggy since we cannot guarantee there are resource.identifiers here
-    private generateOrderedResultList(resultSets: ResultSets): Array<any> {
-
-        return ResultSets.intersect(resultSets, (e: any) => e.id)
-            .sort((a: any, b: any) => SortUtil.alnumCompare(a['identifier'], b['identifier']))
-            .map((e: any) => e['id']);
     }
 
 

@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {ResultSets} from '../../../util/result-sets';
+import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
 
 /**
@@ -94,7 +94,7 @@ export class FulltextIndexer {
                     FulltextIndexer.getForToken(this.index, token, types ? types : Object.keys(this.index))),
             ResultSets.make());
 
-        return ResultSets.intersect(resultSets, (item: any) => item.id);
+        return ResultSets.intersect(resultSets);
     }
 
 
@@ -118,8 +118,7 @@ export class FulltextIndexer {
 
         return ResultSets.unify(
             types.reduce((_resultSets, type) =>
-                this._get(index, _resultSets, token.toLowerCase(), type), ResultSets.make()),
-            (item: any) => item.id);
+                this._get(index, _resultSets, token.toLowerCase(), type), ResultSets.make()));
     }
 
 

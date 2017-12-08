@@ -1,11 +1,14 @@
+import {IndexItem} from "./index-item";
+import {SortUtil} from '../../../util/sort-util';
+
 export interface ResultSets {
 
     addSets: Array<  // multiple result sets
         Array<            // a single result set
-            Object // an element of a result set
+            IndexItem
             >>,
 
-    subtractSets: Array<Array<Object>>;
+    subtractSets: Array<Array<IndexItem>>;
 }
 
 /**
@@ -34,7 +37,7 @@ export class ResultSets {
     }
 
 
-    public static add(resultSets: ResultSets, set: Array<Object>): ResultSets {
+    public static add(resultSets: ResultSets, set: Array<IndexItem>): ResultSets {
 
         const copy = ResultSets.copy(resultSets);
         copy.addSets.push(set);
@@ -42,11 +45,21 @@ export class ResultSets {
     }
 
 
-    public static subtract(resultSets: ResultSets, set: Array<Object>): ResultSets {
+    public static subtract(resultSets: ResultSets, set: Array<IndexItem>): ResultSets {
 
         const copy = ResultSets.copy(resultSets);
         copy.subtractSets.push(set);
         return copy;
+    }
+
+
+    public static generateOrderedResultList(resultSets: ResultSets): Array<any> {
+
+        return ResultSets.intersect(resultSets)
+            .sort((a: any, b: any) =>
+                // we know that an IndexItem created with from has the identifier field
+                SortUtil.alnumCompare(a['identifier'], b['identifier']))
+            .map((e: any) => e['id']);
     }
 
 
@@ -65,13 +78,11 @@ export class ResultSets {
      * intersect would return
      *
      *   [{id:'2'}] with f = a => a.id
-     *
-     * @param resultSets
-     * @param f gets applied to elements to get the field on which the comparison is performed
      */
-    public static intersect(resultSets: ResultSets, f: Function): Array<Object> {
+    public static intersect(resultSets: ResultSets): Array<IndexItem> {
 
-        let result: Array<Object> = resultSets.addSets[0];
+        const f = (a: IndexItem): string => (a as any)['id']; // TODO add id to indexItem
+        let result: Array<IndexItem> = resultSets.addSets[0];
 
         for (let i = 1; i < resultSets.addSets.length; i++) {
             result = result.filter(e => resultSets.addSets[i].map(obj => f(obj)).indexOf(f(e)) != -1);
@@ -99,12 +110,10 @@ export class ResultSets {
      * unify would return
      *
      *   [{id:'1'}, {id:'2'}, {id:'3'}] with f = a => a.id
-     *
-     * @param resultSets
-     * @param f gets applied to elements to get the field on which the comparison is performed
      */
-    public static unify(resultSets: ResultSets, f: Function): Array<Object> {
+    public static unify(resultSets: ResultSets): Array<Object> {
 
+        const f = (a: IndexItem): string => (a as any)['id']; // TODO add id to indexItem
         const result: any = {};
 
         for (let resultSet of resultSets.addSets) {

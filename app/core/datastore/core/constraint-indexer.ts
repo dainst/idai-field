@@ -90,15 +90,13 @@ export class ConstraintIndexer {
         }
 
         const result = this.getIndex(indexDefinition)[indexDefinition.path][matchTerm];
-        if (result) {
-            return Object.keys(result).map(id => new Object({
-                id: id,
-                date: result[id].date,
-                identifier: result[id].identifier
-            }));
-        } else {
-            return [];
-        }
+        if (!result) return [];
+
+        return Object.keys(result).map(id => new Object({
+            id: id,
+            date: result[id].date,
+            identifier: result[id].identifier
+        }));
     }
 
 

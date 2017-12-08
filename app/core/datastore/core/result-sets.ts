@@ -19,8 +19,9 @@ export interface ResultSets {
  */
 export class ResultSets {
 
-    private constructor() {} // hide on purpose to force usage of make or copy
+    private static f = (a: IndexItem): string => a.id;
 
+    private constructor() {} // hide on purpose to force usage of make or copy
 
     public static make(): ResultSets {
 
@@ -77,20 +78,20 @@ export class ResultSets {
      *
      * intersect would return
      *
-     *   [{id:'2'}] with f = a => a.id
+     *   [{id:'2'}]
      */
     public static intersect(resultSets: ResultSets): Array<IndexItem> {
 
-        const f = (a: IndexItem): string => (a as any)['id']; // TODO add id to indexItem
         let result: Array<IndexItem> = resultSets.addSets[0];
 
         for (let i = 1; i < resultSets.addSets.length; i++) {
-            result = result.filter(e => resultSets.addSets[i].map(obj => f(obj)).indexOf(f(e)) != -1);
+            result = result.filter(e => resultSets.addSets[i].map(obj =>
+                ResultSets.f(obj)).indexOf(ResultSets.f(e)) != -1);
         }
 
         for (let set of resultSets.subtractSets) {
             for (let object of set) {
-                const index = result.map(obj =>f(obj)).indexOf(f(object));
+                const index = result.map(obj =>ResultSets.f(obj)).indexOf(ResultSets.f(object));
                 if (index > -1) result.splice(index, 1);
             }
         }
@@ -109,16 +110,15 @@ export class ResultSets {
      *
      * unify would return
      *
-     *   [{id:'1'}, {id:'2'}, {id:'3'}] with f = a => a.id
+     *   [{id:'1'}, {id:'2'}, {id:'3'}]
      */
     public static unify(resultSets: ResultSets): Array<Object> {
 
-        const f = (a: IndexItem): string => (a as any)['id']; // TODO add id to indexItem
         const result: any = {};
 
         for (let resultSet of resultSets.addSets) {
             for (let item of resultSet) {
-                result[f(item)] = item;
+                result[ResultSets.f(item)] = item;
             }
         }
 

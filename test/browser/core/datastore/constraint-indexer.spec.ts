@@ -1,4 +1,5 @@
 import {ConstraintIndexer} from "../../../../app/core/datastore/core/constraint-indexer";
+import {IndexItem} from '../../../../app/core/datastore/core/index-item';
 
 /**
  * @author Daniel de Oliveira
@@ -29,10 +30,10 @@ export function main() {
         }
 
 
-        function item(id, identifier?) {
+        function indexItem(id, identifier?): IndexItem {
 
             if (!identifier) identifier = 'identifier' + id;
-            return {id: id, date: '2018-01-01', identifier: identifier};
+            return {id: id, date: '2018-01-01' as any, identifier: identifier};
         }
 
 
@@ -58,7 +59,7 @@ export function main() {
             ci.put(docs[0]);
             ci.put(docs[1]);
 
-            expect(ci.get('isRecordedIn:contain', '1')).toEqual([item('2'), item('3')]);
+            expect(ci.get('isRecordedIn:contain', '1')).toEqual([indexItem('2'), indexItem('3')]);
         });
 
 
@@ -82,8 +83,8 @@ export function main() {
 
             docWithMultipleConstraintTargets();
 
-            expect(ci.get('isRecordedIn:contain', '2')).toEqual([item('1')]);
-            expect(ci.get('isRecordedIn:contain', '3')).toEqual([item('1')]);
+            expect(ci.get('isRecordedIn:contain', '2')).toEqual([indexItem('1')]);
+            expect(ci.get('isRecordedIn:contain', '3')).toEqual([indexItem('1')]);
         });
 
 
@@ -110,8 +111,8 @@ export function main() {
 
             docWithMultipleConstraints();
 
-            expect(ci.get('liesWithin:contain', '3')).toEqual([item('1')]);
-            expect(ci.get('isRecordedIn:contain', '2')).toEqual([item('1')]);
+            expect(ci.get('liesWithin:contain', '3')).toEqual([indexItem('1')]);
+            expect(ci.get('isRecordedIn:contain', '2')).toEqual([indexItem('1')]);
         });
 
 
@@ -137,7 +138,7 @@ export function main() {
                 'identifier:match': { path: 'resource.identifier', type: 'match' }
             });
             ci.put(doc('1'));
-            expect(ci.get('identifier:match', 'identifier1')).toEqual([item('1')]);
+            expect(ci.get('identifier:match', 'identifier1')).toEqual([indexItem('1')]);
         });
 
 
@@ -240,11 +241,11 @@ export function main() {
             expect(ci.get('liesWithin:contain', '3')).toEqual([ ]);
 
             expect(ci.get('identifier:match', 'identifier2'))
-                .toEqual([item('1','identifier2')]);
+                .toEqual([indexItem('1','identifier2')]);
             expect(ci.get('isRecordedIn:contain', '4'))
-                .toEqual([item('1','identifier2')]);
+                .toEqual([indexItem('1','identifier2')]);
             expect(ci.get('liesWithin:contain', '5'))
-                .toEqual([item('1','identifier2')]);
+                .toEqual([indexItem('1','identifier2')]);
         });
 
 
@@ -263,8 +264,8 @@ export function main() {
             ci.put(docs[0]);
             ci.put(docs[1]);
 
-            expect(ci.get('conflicts:exist', 'KNOWN')).toEqual([item('1')]);
-            expect(ci.get('conflicts:exist', 'UNKNOWN')).toEqual([item('2')]);
+            expect(ci.get('conflicts:exist', 'KNOWN')).toEqual([indexItem('1')]);
+            expect(ci.get('conflicts:exist', 'UNKNOWN')).toEqual([indexItem('2')]);
         });
 
         
@@ -292,8 +293,8 @@ export function main() {
             ci.put(docs[0]);
             ci.put(docs[1]);
 
-            expect(ci.get('depicts:exist', 'KNOWN')).toEqual([item('2')]);
-            expect(ci.get('depicts:exist', 'UNKNOWN')).toEqual([item('1')]);
+            expect(ci.get('depicts:exist', 'KNOWN')).toEqual([indexItem('2')]);
+            expect(ci.get('depicts:exist', 'UNKNOWN')).toEqual([indexItem('1')]);
         });
 
 
@@ -320,10 +321,10 @@ export function main() {
             ci.put(docs[2]);
             ci.put(docs[3]);
 
-            expect(ci.get('depicts:exist', 'KNOWN')).toEqual([item('3'), item('4')]);
-            expect(ci.get('depicts:exist', 'UNKNOWN')).toEqual([item('1'), item('2')]);
-            expect(ci.get('depicts:contain', '1')).toEqual([item('3')]);
-            expect(ci.get('depicts:contain', '2')).toEqual([item('4')]);
+            expect(ci.get('depicts:exist', 'KNOWN')).toEqual([indexItem('3'), indexItem('4')]);
+            expect(ci.get('depicts:exist', 'UNKNOWN')).toEqual([indexItem('1'), indexItem('2')]);
+            expect(ci.get('depicts:contain', '1')).toEqual([indexItem('3')]);
+            expect(ci.get('depicts:contain', '2')).toEqual([indexItem('4')]);
         });
 
 

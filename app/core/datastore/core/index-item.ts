@@ -2,6 +2,8 @@ import {Document, Action} from 'idai-components-2/core';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
 
 export interface IndexItem {
+
+    id: string;
     date: Date,
     identifier: string
 }
@@ -15,11 +17,15 @@ export interface IndexItem {
  */
 export class IndexItem {
 
-    private constructor() {} // hide on purpose, use from instead
+    private constructor() {} // hide on purpose, use from or copy instead
 
 
     public static from(document: Document): IndexItem|undefined {
 
+        if (!document.resource.id) {
+            console.warn('no resourceId, will not index');
+            return undefined;
+        }
         if (!document.resource['identifier']) {
             console.warn("no identifier, will not index");
             return undefined;
@@ -31,8 +37,15 @@ export class IndexItem {
         }
 
         return {
-            date: lastModified.date,
+            id: document.resource.id,
+            date: lastModified.date as Date,
             identifier: document.resource['identifier']
-        } as IndexItem;
+        };
+    }
+
+
+    public static copy(indexItem: IndexItem): IndexItem {
+
+        return JSON.parse(JSON.stringify(indexItem));
     }
 }

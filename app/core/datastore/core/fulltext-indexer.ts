@@ -144,14 +144,6 @@ export class FulltextIndexer {
         return (!index[type] || !index[type][s]) ?
             ResultSets.copy(resultSets) :
             ResultSets.add(ResultSets.copy(resultSets),
-                Object.keys(index[type][s]).map(id => {
-                    const indexItem: IndexItem = {
-                        date: index[type][s][id].date,
-                        identifier: index[type][s][id].identifier
-                    };
-                    (indexItem as any)['id'] = id;
-                    return indexItem;
-                })
-        );
+                Object.keys(index[type][s]).map(id => IndexItem.copy(index[type][s][id])));
     }
 }

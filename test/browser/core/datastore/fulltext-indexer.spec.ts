@@ -24,12 +24,11 @@ export function main() {
         function indexItem(id, identifier?): IndexItem {
 
             if (!identifier) identifier = 'identifier' + id;
-            const indexItem: IndexItem = {
+            return {
+                id: id,
                 date: ('2018-01-01' as any),
                 identifier: identifier
             };
-            indexItem['id'] = id;
-            return indexItem;
         }
 
 

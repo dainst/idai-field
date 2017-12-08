@@ -175,8 +175,8 @@ export class PouchdbDatastore {
         return this.db.get(resourceId, options)
             .then(
                 (result: any) => {
-                    PouchdbDatastore.convertDates(result);
                     if (!Document.isValid(result)) return Promise.reject([DatastoreErrors.INVALID_DOCUMENT]);
+                    PouchdbDatastore.convertDates(result);
                     return result as Document;
                 },
                 (err: any) => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
@@ -372,8 +372,8 @@ export class PouchdbDatastore {
 
     private static convertDates(result: any): Document {
 
-        if (result.created) result.created.date = new Date(result.created.date);
-        if (result.modified) for (let modified of result.modified) {
+        result.created.date = new Date(result.created.date);
+        for (let modified of result.modified) {
             modified.date = new Date(modified.date);
         }
         return result;

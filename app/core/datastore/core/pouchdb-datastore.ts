@@ -202,20 +202,21 @@ export class PouchdbDatastore {
 
         await this.db.ready();
 
-        let resultSets: ResultSets = this.performThem(query.constraints);
+        const resultSets: ResultSets = this.performThem(query.constraints);
 
-        resultSets = (Query.isEmpty(query) && !ResultSets.isEmpty(resultSets)) ? resultSets :
-            this.performFulltext(query, resultSets);
-
-        return ResultSets.generateOrderedResultList(resultSets);
+        return ResultSets.generateOrderedResultList(
+            Query.isEmpty(query) && !ResultSets.isEmpty(resultSets) ?
+                resultSets :
+                this.performFulltext(query, resultSets));
     }
 
 
     private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
 
-        const q: string = (!query.q || query.q.trim() == '') ? '*' : query.q;
-        const types: string[]|undefined = query.types ? query.types : undefined;
-        return ResultSets.add(resultSets, this.fulltextIndexer.get(q, types as any));
+        return ResultSets.add(resultSets,
+            this.fulltextIndexer.get(
+                !query.q || query.q.trim() == '' ? '*' : query.q,
+                query.types));
     }
 
 

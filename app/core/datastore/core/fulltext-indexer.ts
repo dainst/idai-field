@@ -83,7 +83,7 @@ export class FulltextIndexer {
      *   indexed under the specified types will be included in the results.
      * @returns {any} array of items
      */
-    public get(s: string, types: string[]): Array<any> {
+    public get(s: string, types: string[]|undefined): Array<any> {
 
         if (Object.keys(this.index).length == 0) return [];
 

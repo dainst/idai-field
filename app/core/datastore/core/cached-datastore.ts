@@ -41,9 +41,8 @@ export abstract class CachedDatastore<T extends Document>
 
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
-        const createdDocument = await this.datastore.create(document);
         return this.documentCache.set(this.typeConverter.
-            convert<T>(createdDocument));
+            convert<T>(await this.datastore.create(document)));
     }
 
 
@@ -56,14 +55,13 @@ export abstract class CachedDatastore<T extends Document>
 
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
-        const updatedDocument = await this.datastore.update(document);
+        const updatedDocument = this.typeConverter.
+            convert<T>(await this.datastore.update(document));
 
         if (!this.documentCache.get(document.resource.id as any)) {
-            return this.documentCache.set(this.typeConverter.
-                convert<T>(updatedDocument));
+            return this.documentCache.set(updatedDocument);
         } else {
-            this.documentCache.reassign(this.typeConverter.
-                convert<T>(updatedDocument));
+            this.documentCache.reassign(updatedDocument);
             return this.documentCache.get(document.resource.id as any);
         }
     }

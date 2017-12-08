@@ -1,11 +1,11 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ConstraintIndexer} from '../../app/core/datastore/core/constraint-indexer';
-import {FulltextIndexer} from '../../app/core/datastore/core/fulltext-indexer';
-import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
-import {DocumentCache} from '../../app/core/datastore/core/document-cache';
-import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
-import {AppState} from '../../app/core/settings/app-state';
+import {ConstraintIndexer} from '../../../app/core/datastore/core/constraint-indexer';
+import {FulltextIndexer} from '../../../app/core/datastore/core/fulltext-indexer';
+import {PouchdbManager} from '../../../app/core/datastore/core/pouchdb-manager';
+import {DocumentCache} from '../../../app/core/datastore/core/document-cache';
+import {PouchdbDatastore} from '../../../app/core/datastore/core/pouchdb-datastore';
+import {AppState} from '../../../app/core/settings/app-state';
 
 
 /**

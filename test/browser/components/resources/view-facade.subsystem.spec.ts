@@ -1,4 +1,4 @@
-import {Static} from '../../static';
+import {Static} from '../../helper/static';
 import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
 import {ViewFacade} from '../../../../app/components/resources/view/view-facade';
 import {Document} from 'idai-components-2/core';

@@ -1,5 +1,5 @@
 import {FulltextIndexer} from '../../../../app/core/datastore/core/fulltext-indexer';
-import {Static} from '../../static';
+import {Static} from '../../helper/static';
 import {IndexItem} from '../../../../app/core/datastore/core/index-item';
 
 /**

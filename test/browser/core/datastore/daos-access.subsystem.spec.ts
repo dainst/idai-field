@@ -1,5 +1,5 @@
-import {Static} from '../../static';
-import {DAOsSpecHelper} from './daos-spec-helper';
+import {Static} from '../../helper/static';
+import {DAOsSpecHelper} from '../../helper/daos-spec-helper';
 
 /**
  * This test suite focuses on the differences between the Data Access Objects.

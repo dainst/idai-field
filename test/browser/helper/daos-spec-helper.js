@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var configuration_1 = require("idai-components-2/configuration");
-var idai_field_image_document_datastore_1 = require("../../../../app/core/datastore/idai-field-image-document-datastore");
-var idai_field_document_datastore_1 = require("../../../../app/core/datastore/idai-field-document-datastore");
-var document_datastore_1 = require("../../../../app/core/datastore/document-datastore");
-var idai_field_type_converter_1 = require("../../../../app/core/datastore/idai-field-type-converter");
-var image_type_utility_1 = require("../../../../app/common/image-type-utility");
-var static_1 = require("../../static");
+var idai_field_image_document_datastore_1 = require("../../../app/core/datastore/idai-field-image-document-datastore");
+var idai_field_document_datastore_1 = require("../../../app/core/datastore/idai-field-document-datastore");
+var document_datastore_1 = require("../../../app/core/datastore/document-datastore");
+var idai_field_type_converter_1 = require("../../../app/core/datastore/idai-field-type-converter");
+var image_type_utility_1 = require("../../../app/common/image-type-utility");
+var static_1 = require("./static");
 /**
  * @author Daniel de Oliveira
  */

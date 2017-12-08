@@ -1,10 +1,10 @@
 import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {IdaiFieldImageDocumentDatastore} from "../../../../app/core/datastore/idai-field-image-document-datastore";
-import {IdaiFieldDocumentDatastore} from "../../../../app/core/datastore/idai-field-document-datastore";
-import {DocumentDatastore} from '../../../../app/core/datastore/document-datastore';
-import {IdaiFieldTypeConverter} from "../../../../app/core/datastore/idai-field-type-converter";
-import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
-import {Static} from '../../static';
+import {IdaiFieldImageDocumentDatastore} from "../../../app/core/datastore/idai-field-image-document-datastore";
+import {IdaiFieldDocumentDatastore} from "../../../app/core/datastore/idai-field-document-datastore";
+import {DocumentDatastore} from '../../../app/core/datastore/document-datastore';
+import {IdaiFieldTypeConverter} from "../../../app/core/datastore/idai-field-type-converter";
+import {ImageTypeUtility} from '../../../app/common/image-type-utility';
+import {Static} from './static';
 
 /**
  * @author Daniel de Oliveira

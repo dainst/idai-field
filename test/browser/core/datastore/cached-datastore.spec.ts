@@ -73,7 +73,9 @@ export function main() {
         });
 
 
-        it('should add missing fields on get, bypassing cache', async (done) => {
+        // get
+
+        it('should add missing fields on get, bypassing cache', async done => {
 
             mockdb.fetch.and.returnValues(Promise.resolve({
                 resource: {
@@ -88,7 +90,9 @@ export function main() {
         });
 
 
-        it('should add missing fields on getRevision (bypassing cache)', async (done) => {
+        // getRevision
+
+        it('should add missing fields on getRevision (bypassing cache)', async done => {
 
             mockdb.fetchRevision.and.returnValues(Promise.resolve({
                 resource: {
@@ -103,7 +107,9 @@ export function main() {
         });
 
 
-        it('should add missing fields on find, bypassing cache', async (done) => {
+        // find
+
+        it('should add missing fields on find, bypassing cache', async done => {
 
             mockdb.findIds.and.returnValues(Promise.resolve(['1']));
             mockdb.fetch.and.returnValues(Promise.resolve({
@@ -120,7 +126,7 @@ export function main() {
         });
 
 
-        it('should add missing fields on find', async (done) => {
+        it('should add missing fields on find', async done => {
 
             await datastore.create({resource: { // trigger caching of document
                 id: '1',
@@ -135,7 +141,7 @@ export function main() {
         });
 
 
-        it('should limit the number of documents returned on find', async (done) => {
+        it('should limit the number of documents returned on find', async done => {
 
             await datastore.create({resource: {
                 id: '1',
@@ -157,20 +163,9 @@ export function main() {
         });
 
 
+        // update
 
-        it('should add missing fields on create', async (done) => {
-
-            await datastore.create({resource: { // trigger caching of document
-                id: '1',
-                relations: {}
-            }} as any);
-            const document = await datastore.get('1'); // fetch from cache
-            verifyIsIdaiFieldDocument(document);
-            done();
-        });
-
-
-        it('should add missing fields on update', async (done) => {
+        it('should add missing fields on update', async done => {
 
             await datastore.update({resource: { // trigger caching of document
                 id: '1',
@@ -182,7 +177,7 @@ export function main() {
         });
 
 
-        it('should add missing fields on update with reassign', async (done) => {
+        it('should add missing fields on update with reassign', async done => {
 
             await datastore.update({resource: { // trigger caching of document
                 id: '1',
@@ -201,28 +196,21 @@ export function main() {
         });
 
 
-        xit('should add missing fields on remoteChangesNotifications with reassign', async (done) => {
+        // create
 
-            // await datastore.create({resource: { // trigger caching of document
-            //     id: '1',
-            //     val: 'a',
-            //     relations: {}
-            // }} as any);
-            // remoteChangesNotificationsCallback(
-            //     {resource: { // trigger reassigning of document
-            //         id: '1',
-            //         val: 'b',
-            //         relations: {}
-            //     }} as any);
-            //
-            // const document = await datastore.get('1'); // fetch from cache
-            // expect(document.resource['val']).toEqual('b');
-            // verifyIsIdaiFieldDocument(document);
-            // done();
+        it('should add missing fields on create', async done => {
+
+            await datastore.create({resource: { // trigger caching of document
+                id: '1',
+                relations: {}
+            }} as any);
+            const document = await datastore.get('1'); // fetch from cache
+            verifyIsIdaiFieldDocument(document);
+            done();
         });
 
 
-        it('should return the cached instance on create', async (done) => {
+        it('should return the cached instance on create', async done => {
 
             let doc1 = doc('sd1', 'identifier1');
 
@@ -232,13 +220,14 @@ export function main() {
                 expect((documents[0]).resource['identifier']).toBe('identifier1');
                 doc1.resource['shortDescription'] = 's4';
                 expect((documents[0]).resource['shortDescription']).toBe('s4');
-                done();
             } catch (error) {
                 fail(error);
-                done();
             }
+            done();
         });
 
+
+        // xitted
 
         xit('should return cached instance on update', done => {
 
@@ -262,6 +251,27 @@ export function main() {
                fail(err);
                done();
             });
+        });
+
+
+        xit('should add missing fields on remoteChangesNotifications with reassign', async (done) => {
+
+            // await datastore.create({resource: { // trigger caching of document
+            //     id: '1',
+            //     val: 'a',
+            //     relations: {}
+            // }} as any);
+            // remoteChangesNotificationsCallback(
+            //     {resource: { // trigger reassigning of document
+            //         id: '1',
+            //         val: 'b',
+            //         relations: {}
+            //     }} as any);
+            //
+            // const document = await datastore.get('1'); // fetch from cache
+            // expect(document.resource['val']).toEqual('b');
+            // verifyIsIdaiFieldDocument(document);
+            // done();
         });
     });
 }

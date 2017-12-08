@@ -32,6 +32,12 @@ export class ResultSets {
     }
 
 
+    public static isEmpty(resultSets: ResultSets): boolean {
+
+        return resultSets.addSets.length == 0 && resultSets.subtractSets.length == 0;
+    }
+
+
     public static copy(resultSets: ResultSets): ResultSets {
 
         return JSON.parse(JSON.stringify(resultSets));

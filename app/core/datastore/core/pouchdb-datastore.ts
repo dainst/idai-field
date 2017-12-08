@@ -1,17 +1,15 @@
-import {Query, Constraint, DatastoreErrors} from 'idai-components-2/datastore';
+import {Constraint, DatastoreErrors, Query} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import {PouchdbManager} from './pouchdb-manager';
 import {ResultSets} from './result-sets';
-import {SortUtil} from '../../../util/sort-util';
 import {ConstraintIndexer} from './constraint-indexer';
 import {FulltextIndexer} from './fulltext-indexer';
 import {AppState} from '../../settings/app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
 import {ConflictResolver} from './conflict-resolver';
-import {ModelUtil} from '../../model/model-util';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
 
 /**
@@ -215,10 +213,10 @@ export class PouchdbDatastore {
 
         await this.db.ready();
 
-        let resultSets: ResultSets|undefined = this.performThem(query.constraints);
+        let resultSets: ResultSets = this.performThem(query.constraints);
 
-        resultSets = (Query.isEmpty(query) && resultSets) ? resultSets :
-            this.performFulltext(query, resultSets ? resultSets : ResultSets.make());
+        resultSets = (Query.isEmpty(query) && !ResultSets.isEmpty(resultSets)) ? resultSets :
+            this.performFulltext(query, resultSets);
 
         return ResultSets.generateOrderedResultList(resultSets);
     }
@@ -236,27 +234,22 @@ export class PouchdbDatastore {
      * @param constraints
      * @returns {any} undefined if there is no usable constraint
      */
-    private performThem(constraints: { [name: string]: Constraint|string }|undefined): ResultSets|undefined {
+    private performThem(constraints: { [name: string]: Constraint|string }|undefined): ResultSets {
 
-        if (!constraints) return undefined;
+        if (!constraints) return ResultSets.make();
 
-        let resultSets: ResultSets = ResultSets.make();
-        let usableConstraints = 0;
-        for (let name of Object.keys(constraints)) {
-            const constraint = Constraint.convertTo(constraints[name]);
+        return Object.keys(constraints).reduce((setsAcc: ResultSets, name: string) => {
 
-            let result = this.constraintIndexer.get(name, constraint.value);
-            if (result) {
-                if (constraint.type == 'add') {
-                    resultSets = ResultSets.add(resultSets, result);
-                } else if (constraint.type == 'subtract') {
-                    resultSets = ResultSets.subtract(resultSets, result);
-                }
-                usableConstraints++;
-            }
-        }
-        if (usableConstraints == 0) return undefined;
-        return resultSets;
+                const constraint = Constraint.convertTo(constraints[name]);
+
+                const result = this.constraintIndexer.get(name, constraint.value);
+                if (!result) return ResultSets.copy(setsAcc);
+
+                return (constraint.type == 'subtract') ?
+                    ResultSets.subtract(setsAcc, result) :
+                    ResultSets.add(setsAcc, result);
+
+            }, ResultSets.make());
     }
 
 

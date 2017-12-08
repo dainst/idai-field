@@ -325,34 +325,38 @@ export class PouchdbDatastore {
                     return;
                 }
 
-                let document: Document;
-                this.fetch(change.id).then(fetchedDoc => { // TODO review use of fetch here
-                    document = fetchedDoc;
-                    // return this.conflictResolvingExtension.autoResolve(<any> document, this.appState.getCurrentUser());
-                }).then(() => {
+                this.handleNonDeletionChange(change.id);
 
-                    if (!ChangeHistoryUtil.isRemoteChange(
-                        document, this.appState.getCurrentUser())) return;
-
-                    this.constraintIndexer.put(document);
-                    this.fulltextIndexer.put(document);
-                    try {
-                        this.notifyRemoteChangesObservers(document);
-                    } catch (e) {
-                        console.error('Error while notify observer');
-                    }
-                    this.notifyAllChangesAndDeletionsObservers();
-
-                }).catch(err => {
-                    console.error('Error while trying to index changed document with id ' + change.id +
-                        ' from remote', err);
-                });
             }).on('complete', (info: any) => {
                 // console.debug('changes stream was canceled', info);
             }).on('error', (err: any) => {
                 console.error('changes stream errored', err);
             });
         });
+    }
+
+
+    private async handleNonDeletionChange(changeId: string): Promise<void> {
+
+        let document;
+        try {
+            document = await this.fetch(changeId);
+        } catch (e) {
+            console.warn('doc from remote change not found or not valid',changeId);
+            throw e;
+        }
+
+        if (!ChangeHistoryUtil.isRemoteChange(
+                document, this.appState.getCurrentUser())) return;
+
+        this.constraintIndexer.put(document);
+        this.fulltextIndexer.put(document);
+        try {
+            this.notifyRemoteChangesObservers(document);
+        } catch (e) {
+            console.error('Error while notify observer');
+        }
+        this.notifyAllChangesAndDeletionsObservers();
     }
 
 

@@ -70,12 +70,12 @@ export abstract class CachedDatastore<T extends Document>
     /**
      * @throws if document is not of type T, determined by resource.type
      */
-    public remove(document: Document): Promise<void> {
+    public async remove(document: Document): Promise<void> {
 
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
-        return this.datastore.remove(document)
-            .then(() => this.documentCache.remove(document.resource.id));
+        await this.datastore.remove(document);
+        this.documentCache.remove(document.resource.id);
     }
 
 

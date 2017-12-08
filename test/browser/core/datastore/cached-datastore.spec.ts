@@ -1,9 +1,9 @@
-import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
 import {DocumentCache} from '../../../../app/core/datastore/core/document-cache';
 import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
 import {IdaiFieldTypeConverter} from '../../../../app/core/datastore/idai-field-type-converter';
+import {Static} from '../../helper/static';
 
 
 /**
@@ -13,20 +13,21 @@ export function main() {
 
     describe('CachedDatastore', () => {
 
-        let datastore: IdaiFieldDocumentDatastore;
+        let ds: IdaiFieldDocumentDatastore;
         let mockdb: any;
-        let remoteChangesNotificationsCallback;
 
-        function doc(sd, identifier?): Document {
+        function createMockedDatastore(mockdb: any) {
 
-            return { resource: {
-                    shortDescription: sd,
-                    identifier: identifier,
-                    title: 'title',
-                    type: 'Find',
-                    relations: {}
-                }
-            }
+            const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
+                ['isImageType', 'validate', 'getNonImageTypeNames']);
+            mockImageTypeUtility.isImageType.and.returnValue(false);
+            mockImageTypeUtility.getNonImageTypeNames.and.returnValue(['Find']);
+
+            const documentCache = new DocumentCache<IdaiFieldDocument>();
+            return new IdaiFieldDocumentDatastore(
+                    mockdb,
+                    documentCache,
+                    new IdaiFieldTypeConverter(mockImageTypeUtility));
         }
 
 
@@ -39,7 +40,8 @@ export function main() {
 
         beforeEach(() => {
 
-            spyOn(console, 'debug'); // suppress console.debug
+            spyOn(console, 'debug'); // suppress
+            spyOn(console, 'error'); // suppress
 
             mockdb = jasmine.createSpyObj('mockdb',
                     ['findIds', 'create', 'update', 'fetch', 'fetchRevision']);
@@ -51,7 +53,7 @@ export function main() {
                 return Promise.resolve(dd);
             });
             mockdb.findIds.and.callFake(function() {
-                const d = doc('sd1');
+                const d = Static.doc('sd1');
                 d.resource.id = '1';
                 return Promise.resolve(['1']);
             });
@@ -61,15 +63,7 @@ export function main() {
                 return Promise.resolve(dd);
             });
 
-            const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
-                ['isImageType', 'validate', 'getNonImageTypeNames']);
-            mockImageTypeUtility.isImageType.and.returnValue(false);
-            mockImageTypeUtility.getNonImageTypeNames.and.returnValue(['Find']);
-
-            datastore = new IdaiFieldDocumentDatastore(
-                mockdb,
-                new DocumentCache<IdaiFieldDocument>(),
-                new IdaiFieldTypeConverter(mockImageTypeUtility));
+            ds = createMockedDatastore(mockdb);
         });
 
 
@@ -84,7 +78,7 @@ export function main() {
                 }
             }));
 
-            const document = await datastore.get('1'); // fetch from mockdb
+            const document = await ds.get('1'); // fetch from mockdb
             verifyIsIdaiFieldDocument(document);
             done();
         });
@@ -101,7 +95,7 @@ export function main() {
                 }
             }));
 
-            const document = await datastore.getRevision('1', '1'); // fetch from mockdb
+            const document = await ds.getRevision('1', '1'); // fetch from mockdb
             verifyIsIdaiFieldDocument(document);
             done();
         });
@@ -119,7 +113,7 @@ export function main() {
                 }
             }));
 
-            const documents = (await datastore.find({})).documents; // fetch from mockdb
+            const documents = (await ds.find({})).documents; // fetch from mockdb
             expect(documents.length).toBe(1);
             verifyIsIdaiFieldDocument(documents[0]);
             done();
@@ -128,13 +122,13 @@ export function main() {
 
         it('should add missing fields on find', async done => {
 
-            await datastore.create({resource: { // trigger caching of document
+            await ds.create({resource: { // trigger caching of document
                 id: '1',
                 relations: {}
             }} as any);
             mockdb.findIds.and.returnValues(Promise.resolve(['1']));
 
-            const documents = (await datastore.find({})).documents; // fetch from cache
+            const documents = (await ds.find({})).documents; // fetch from cache
             expect(documents.length).toBe(1);
             verifyIsIdaiFieldDocument(documents[0]);
             done();
@@ -143,22 +137,53 @@ export function main() {
 
         it('should limit the number of documents returned on find', async done => {
 
-            await datastore.create({resource: {
+            await ds.create({resource: {
                 id: '1',
                 relations: {}
             }} as any);
 
-            await datastore.create({resource: {
+            await ds.create({resource: {
                 id: '2',
                 relations: {}
             }} as any);
 
             mockdb.findIds.and.returnValues(Promise.resolve(['1', '2']));
 
-            const { documents, totalCount } = await datastore.find({ 'limit': 1 });
+            const { documents, totalCount } = await ds.find({ 'limit': 1 });
             expect(documents.length).toBe(1);
             expect(totalCount).toBe(2);
             verifyIsIdaiFieldDocument(documents[0]);
+            done();
+        });
+
+
+        it('cant find one and only document', async done => {
+
+            mockdb.findIds.and.returnValues(Promise.resolve(['1']));
+            mockdb.fetch.and.returnValue(Promise.reject("e"));
+
+            const { documents, totalCount } = await ds.find({});
+            expect(documents.length).toBe(0);
+            expect(totalCount).toBe(0);
+            done();
+        });
+
+
+        it('cant find second document', async done => {
+
+            mockdb.findIds.and.returnValues(Promise.resolve(['1', '2']));
+            mockdb.fetch.and.returnValues(
+                Promise.resolve({
+                    resource: {
+                        id: '1',
+                        relations: {}
+                    }
+                }),
+                Promise.reject("e"));
+
+            const { documents, totalCount } = await ds.find({});
+            expect(documents.length).toBe(1);
+            expect(totalCount).toBe(1);
             done();
         });
 
@@ -167,11 +192,11 @@ export function main() {
 
         it('should add missing fields on update', async done => {
 
-            await datastore.update({resource: { // trigger caching of document
+            await ds.update({resource: { // trigger caching of document
                 id: '1',
                 relations: {}
             }} as any);
-            const document = await datastore.get('1'); // fetch from cache
+            const document = await ds.get('1'); // fetch from cache
             verifyIsIdaiFieldDocument(document);
             done();
         });
@@ -179,17 +204,17 @@ export function main() {
 
         it('should add missing fields on update with reassign', async done => {
 
-            await datastore.update({resource: { // trigger caching of document
+            await ds.update({resource: { // trigger caching of document
                 id: '1',
                 val: 'a',
                 relations: {}
             }} as any);
-            await datastore.update({resource: { // trigger caching and reassigning of document
+            await ds.update({resource: { // trigger caching and reassigning of document
                 id: '1',
                 val: 'b',
                 relations: {}
             }} as any);
-            const document = await datastore.get('1'); // fetch from cache
+            const document = await ds.get('1'); // fetch from cache
             expect(document.resource['val']).toEqual('b');
             verifyIsIdaiFieldDocument(document);
             done();
@@ -200,11 +225,11 @@ export function main() {
 
         it('should add missing fields on create', async done => {
 
-            await datastore.create({resource: { // trigger caching of document
+            await ds.create({resource: { // trigger caching of document
                 id: '1',
                 relations: {}
             }} as any);
-            const document = await datastore.get('1'); // fetch from cache
+            const document = await ds.get('1'); // fetch from cache
             verifyIsIdaiFieldDocument(document);
             done();
         });
@@ -212,11 +237,11 @@ export function main() {
 
         it('should return the cached instance on create', async done => {
 
-            let doc1 = doc('sd1', 'identifier1');
+            let doc1 = Static.doc('sd1', 'identifier1');
 
-            await datastore.create(doc1);
+            await ds.create(doc1);
             try {
-                const documents = (await datastore.find({ q: 'sd1' })).documents; // mockdb returns other instance
+                const documents = (await ds.find({ q: 'sd1' })).documents; // mockdb returns other instance
                 expect((documents[0]).resource['identifier']).toBe('identifier1');
                 doc1.resource['shortDescription'] = 's4';
                 expect((documents[0]).resource['shortDescription']).toBe('s4');
@@ -231,16 +256,16 @@ export function main() {
 
         xit('should return cached instance on update', done => {
 
-            let doc1 = doc('sd1', 'identifier1');
+            let doc1 = Static.doc('sd1', 'identifier1');
             let doc2;
 
-            datastore.create(doc1)
+            ds.create(doc1)
                .then(() => {
-                    doc2 = doc('sd1', 'identifier_');
+                    doc2 = Static.doc('sd1', 'identifier_');
                     doc2.resource.id = '1';
-                    return datastore.update(doc2);
+                    return ds.update(doc2);
                })
-               .then(() => datastore.find({q: 'sd1'})) // mockdb returns other instance
+               .then(() => ds.find({q: 'sd1'})) // mockdb returns other instance
                .then(result => {
                    expect((result.documents[0])['_rev']).toBe('2');
                    expect((result.documents[0]).resource['identifier']).toBe('identifier_');

@@ -46,9 +46,9 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     /**
      * Implements {@link ReadDatastore#get}
      *
-     * It supports the following options
-     * not specified in ReadDatastore:  { skip_cache: boolean }
+     * Additional specs:
      *
+     * @param options.skip_cache: boolean
      * @throws if fetched doc is not of type T, determined by resource.type
      */
     public async get(id: string, options?: { skip_cache: boolean }): Promise<T> {
@@ -60,21 +60,17 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         const document = await this.datastore.fetch(id);
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
-        return this.documentCache.set(this.typeConverter.
-            convert<T>(document));
+        return this.documentCache.set(this.typeConverter.convert<T>(document));
     }
 
 
     /**
-     * find(query: Query):Promise<T[]>;
+     * Implements {@link ReadDatastore#find}
      *
-     * In addition to {@link ReadDatastore#find}, {@link CachedReadDatastore#find}
-     * has some extra specifications:
+     * Additional specs:
      *
-     * find returns the documents in order.
-     * It sorts the objects by lastModified (as per the modified array) descending.
-     * If two documents have the exact same lastModified, there is no second sort criterium
-     * so the order between them is unspecified.
+     * Find returns the documents in order.
+     * It sorts the objects by identifier ascending.
      *
      * @throws if query contains types incompatible with T
      */
@@ -83,11 +79,11 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         query.types = this.typeConverter.validate(query.types, this.typeClass);
 
         const ids: string[] = await this.datastore.findIds(query);
-        const documents: Array<T> = await this.getDocumentsForIds(ids, query.limit);
 
+        const {docs, failures} = await this.getDocumentsForIds(ids, query.limit);
         return {
-            documents: documents,
-            totalCount: ids.length
+            documents: docs,
+            totalCount: ids.length - failures
         };
     }
 
@@ -115,10 +111,26 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     }
 
 
-    protected getDocumentsForIds(ids: string[], limit?: number): Promise<Array<T>> {
+    private async getDocumentsForIds(ids: string[], limit?: number):
+        Promise<{docs:Array<T>, failures: number}> {
 
-        const _ids = limit? ids.slice(0, limit) : ids;
-        
-        return Promise.all(_ids.map(id => this.get(id)));
+        const docs: Array<T> = [];
+        let failures = 0;
+        let i = 0;
+        for (let id of ids) {
+            try {
+                docs.push(await this.get(id));
+                i++;
+                if ((limit) && (limit == i)) break;
+            } catch (e) {
+                failures++;
+                console.error('tried to fetch indexed document, ' +
+                    'but document is either non existent or invalid. id: '+id);
+            }
+        }
+        return {
+            docs: docs,
+            failures: failures
+        };
     }
 }

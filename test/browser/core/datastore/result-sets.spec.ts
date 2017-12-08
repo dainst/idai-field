@@ -12,9 +12,9 @@ export function main() {
 
             let r: ResultSets = ResultSets.make();
 
-            r = ResultSets.add(r, [{id:'1'},{id:'2'}] as any);
-            r = ResultSets.add(r, [{id:'2'},{id:'2'}] as any);
-            r = ResultSets.add(r, [{id:'2'},{id:'3'}] as any);
+            r = ResultSets.combine(r, [{id:'1'},{id:'2'}] as any);
+            r = ResultSets.combine(r, [{id:'2'},{id:'2'}] as any);
+            r = ResultSets.combine(r, [{id:'2'},{id:'3'}] as any);
 
             expect(ResultSets.intersect(r)).toEqual([{id:'2'}] as any);
         });
@@ -24,8 +24,8 @@ export function main() {
 
             let r: ResultSets = ResultSets.make();
 
-            r = ResultSets.add(r, [{id:'1'},{id:'2'}] as any);
-            r = ResultSets.add(r, [{id:'3'},{id:'4'}] as any);
+            r = ResultSets.combine(r, [{id:'1'},{id:'2'}] as any);
+            r = ResultSets.combine(r, [{id:'3'},{id:'4'}] as any);
 
             expect(ResultSets.intersect(r)).toEqual([]);
         });
@@ -35,9 +35,9 @@ export function main() {
 
             let r: ResultSets = ResultSets.make();
 
-            r = ResultSets.add(r, [{id:'1'},{id:'2'}] as any);
-            r = ResultSets.add(r, [{id:'2'},{id:'3'}] as any);
-            r = ResultSets.add(r, [{id:'4'},{id:'5'}] as any);
+            r = ResultSets.combine(r, [{id:'1'},{id:'2'}] as any);
+            r = ResultSets.combine(r, [{id:'2'},{id:'3'}] as any);
+            r = ResultSets.combine(r, [{id:'4'},{id:'5'}] as any);
 
             expect(ResultSets.intersect(r)).toEqual([]);
         });
@@ -47,8 +47,8 @@ export function main() {
 
             let r: ResultSets = ResultSets.make();
 
-            r = ResultSets.add(r, [{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }] as any);
-            r = ResultSets.subtract(r, [{ id: '3' }, { id: '4' }] as any);
+            r = ResultSets.combine(r, [{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }] as any);
+            r = ResultSets.combine(r, [{ id: '3' }, { id: '4' }] as any, 'subtract');
 
             expect(ResultSets.intersect(r)).toEqual([{ id: '1' }, { id: '2' }] as any);
         });
@@ -58,10 +58,10 @@ export function main() {
 
             let r: ResultSets = ResultSets.make();
 
-            r = ResultSets.add(r, [{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }] as any);
-            r = ResultSets.add(r, [{ id: '2' }, { id: '3' }, { id: '4' }, { id: '5' }] as any);
-            r = ResultSets.subtract(r, [{ id: '3' }] as any);
-            r = ResultSets.subtract(r, [{ id: '4' }] as any);
+            r = ResultSets.combine(r, [{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }] as any);
+            r = ResultSets.combine(r, [{ id: '2' }, { id: '3' }, { id: '4' }, { id: '5' }] as any);
+            r = ResultSets.combine(r, [{ id: '3' }] as any, 'subtract');
+            r = ResultSets.combine(r, [{ id: '4' }] as any, 'subtract');
 
             expect(ResultSets.intersect(r)).toEqual([{ id: '2' }] as any);
         });

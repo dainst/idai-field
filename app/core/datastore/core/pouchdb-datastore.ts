@@ -202,7 +202,9 @@ export class PouchdbDatastore {
 
         await this.db.ready();
 
-        const resultSets: ResultSets = this.performThem(query.constraints);
+        const resultSets = query.constraints ?
+            this.performThem(query.constraints) :
+            ResultSets.make();
 
         return ResultSets.generateOrderedResultList(
             Query.isEmpty(query) && !ResultSets.isEmpty(resultSets) ?
@@ -213,7 +215,7 @@ export class PouchdbDatastore {
 
     private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
 
-        return ResultSets.add(resultSets,
+        return ResultSets.combine(resultSets,
             this.fulltextIndexer.get(
                 !query.q || query.q.trim() == '' ? '*' : query.q,
                 query.types));
@@ -224,17 +226,13 @@ export class PouchdbDatastore {
      * @param constraints
      * @returns {any} undefined if there is no usable constraint
      */
-    private performThem(constraints: { [name: string]: Constraint|string }|undefined): ResultSets {
-
-        if (!constraints) return ResultSets.make();
+    private performThem(constraints: { [name: string]: Constraint|string }): ResultSets {
 
         return Object.keys(constraints).reduce((setsAcc: ResultSets, name: string) => {
 
                 const {type, value} = Constraint.convertTo(constraints[name]);
-
-                return (type == 'subtract') ?
-                    ResultSets.subtract(setsAcc, this.constraintIndexer.get(name, value)) :
-                    ResultSets.add(setsAcc, this.constraintIndexer.get(name, value));
+                return ResultSets.combine(
+                    setsAcc, this.constraintIndexer.get(name, value), type);
 
             }, ResultSets.make());
     }

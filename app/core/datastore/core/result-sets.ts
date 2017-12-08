@@ -44,20 +44,15 @@ export class ResultSets {
     }
 
 
-    public static add(resultSets: ResultSets, set: Array<IndexItem>|undefined): ResultSets {
+    public static combine(
+        resultSets: ResultSets,
+        set: Array<IndexItem>|undefined,
+        mode: string = 'add'): ResultSets {
 
         const copy = ResultSets.copy(resultSets);
         if (!set) return copy;
-        copy.addSets.push(set);
-        return copy;
-    }
-
-
-    public static subtract(resultSets: ResultSets, set: Array<IndexItem>|undefined): ResultSets {
-
-        const copy = ResultSets.copy(resultSets);
-        if (!set) return copy;
-        copy.subtractSets.push(set);
+        if (mode == 'add' || mode != 'subtract') copy.addSets.push(set);
+        else copy.subtractSets.push(set);
         return copy;
     }
 

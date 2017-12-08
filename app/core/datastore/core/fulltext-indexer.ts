@@ -90,7 +90,7 @@ export class FulltextIndexer {
         const resultSets: ResultSets = s.split(' ').
             filter(token => token.length > 0).
             reduce((_resultSets, token) =>
-                ResultSets.add(_resultSets,
+                ResultSets.combine(_resultSets,
                     FulltextIndexer.getForToken(this.index, token, types ? types : Object.keys(this.index))),
             ResultSets.make());
 
@@ -143,7 +143,7 @@ export class FulltextIndexer {
 
         return (!index[type] || !index[type][s]) ?
             ResultSets.copy(resultSets) :
-            ResultSets.add(ResultSets.copy(resultSets),
+            ResultSets.combine(ResultSets.copy(resultSets),
                 Object.keys(index[type][s]).map(id => IndexItem.copy(index[type][s][id])));
     }
 }

@@ -230,14 +230,11 @@ export class PouchdbDatastore {
 
         return Object.keys(constraints).reduce((setsAcc: ResultSets, name: string) => {
 
-                const constraint = Constraint.convertTo(constraints[name]);
+                const {type, value} = Constraint.convertTo(constraints[name]);
 
-                const result = this.constraintIndexer.get(name, constraint.value);
-                if (!result) return ResultSets.copy(setsAcc);
-
-                return (constraint.type == 'subtract') ?
-                    ResultSets.subtract(setsAcc, result) :
-                    ResultSets.add(setsAcc, result);
+                return (type == 'subtract') ?
+                    ResultSets.subtract(setsAcc, this.constraintIndexer.get(name, value)) :
+                    ResultSets.add(setsAcc, this.constraintIndexer.get(name, value));
 
             }, ResultSets.make());
     }

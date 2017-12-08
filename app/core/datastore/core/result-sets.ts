@@ -44,17 +44,19 @@ export class ResultSets {
     }
 
 
-    public static add(resultSets: ResultSets, set: Array<IndexItem>): ResultSets {
+    public static add(resultSets: ResultSets, set: Array<IndexItem>|undefined): ResultSets {
 
         const copy = ResultSets.copy(resultSets);
+        if (!set) return copy;
         copy.addSets.push(set);
         return copy;
     }
 
 
-    public static subtract(resultSets: ResultSets, set: Array<IndexItem>): ResultSets {
+    public static subtract(resultSets: ResultSets, set: Array<IndexItem>|undefined): ResultSets {
 
         const copy = ResultSets.copy(resultSets);
+        if (!set) return copy;
         copy.subtractSets.push(set);
         return copy;
     }

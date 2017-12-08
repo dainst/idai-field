@@ -82,13 +82,13 @@ export class ResultSets {
      */
     public static intersect(resultSets: ResultSets): Array<IndexItem> {
 
-        let result: Array<IndexItem> = resultSets.addSets[0];
-
-        for (let i = 1; i < resultSets.addSets.length; i++) {
-            result = result.filter(e => resultSets.addSets[i].map(obj =>
-                ResultSets.f(obj)).indexOf(ResultSets.f(e)) != -1);
-        }
-
+        const result: Array<IndexItem> =
+            resultSets.addSets.reduce((accumulatedSet, addSet) =>
+                accumulatedSet.filter(e => addSet.map(obj =>
+                    ResultSets.f(obj)).indexOf(ResultSets.f(e)) != -1)
+            , resultSets.addSets[0]);
+        
+        
         for (let set of resultSets.subtractSets) {
             for (let object of set) {
                 const index = result.map(obj =>ResultSets.f(obj)).indexOf(ResultSets.f(object));

@@ -352,21 +352,19 @@ export class PouchdbDatastore {
                     document = fetchedDoc;
                     // return this.conflictResolvingExtension.autoResolve(<any> document, this.appState.getCurrentUser());
                 }).then(() => {
-                    if (!ModelUtil.hasNecessaryFields(document)) { // TODO this should not be necessary anymore since index item gets checked in indexers
-                        console.warn('Failed to index document from remote. One or more necessary fields are missing.',
-                            document);
-                    } else {
-                        if (!ChangeHistoryUtil.isRemoteChange(document, this.appState.getCurrentUser())) return;
 
-                        this.constraintIndexer.put(document);
-                        this.fulltextIndexer.put(document);
-                        try {
-                            this.notifyRemoteChangesObservers(document);
-                        } catch (e) {
-                            console.error('Error while notify observer');
-                        }
-                        this.notifyAllChangesAndDeletionsObservers();
+                    if (!ChangeHistoryUtil.isRemoteChange(
+                        document, this.appState.getCurrentUser())) return;
+
+                    this.constraintIndexer.put(document);
+                    this.fulltextIndexer.put(document);
+                    try {
+                        this.notifyRemoteChangesObservers(document);
+                    } catch (e) {
+                        console.error('Error while notify observer');
                     }
+                    this.notifyAllChangesAndDeletionsObservers();
+
                 }).catch(err => {
                     console.error('Error while trying to index changed document with id ' + change.id +
                         ' from remote', err);

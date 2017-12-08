@@ -30,12 +30,14 @@ export function main() {
 
 
         function item(id, identifier?) {
+
             if (!identifier) identifier = 'identifier' + id;
             return {id: id, date: '2018-01-01', identifier: identifier};
         }
 
 
         beforeEach(() => {
+
             spyOn(console, 'warn');
         });
 
@@ -61,6 +63,7 @@ export function main() {
 
 
         function docWithMultipleConstraintTargets() {
+
             const docs = [
                 doc('1')
             ];
@@ -128,35 +131,48 @@ export function main() {
         });
 
 
-        function docWithIdentifier() {
-
-            const docs = [
-                doc('1')
-            ];
+        it('work with non arrays', () => {
 
             ci = new ConstraintIndexer({
                 'identifier:match': { path: 'resource.identifier', type: 'match' }
             });
-
-            ci.put(docs[0]);
-            return docs;
-        }
-
-
-        it('work with non arrays', () => {
-
-            docWithIdentifier();
-
+            ci.put(doc('1'));
             expect(ci.get('identifier:match', 'identifier1')).toEqual([item('1')]);
+        });
+
+
+        it('do not index if no identifier', () => { // tests interaction with IndexItem
+
+            ci = new ConstraintIndexer({
+                'identifier:match': { path: 'resource.identifier', type: 'match' }
+            });
+            const doc0 = doc('1');
+            delete doc0.resource.identifier;
+            ci.put(doc0);
+            expect(ci.get('identifier:match', 'identifier1')).toEqual([]);
+        });
+
+
+        it('do not index if no created and modified', () => { // tests interaction with IndexItem
+
+            ci = new ConstraintIndexer({
+                'identifier:match': { path: 'resource.identifier', type: 'match' }
+            });
+            const doc0 = doc('1');
+            delete doc0.created;
+            delete doc0.modified;
+            ci.put(doc0);
+            expect(ci.get('identifier:match', 'identifier1')).toEqual([]);
         });
 
 
         it('clear index', () => {
 
-            docWithIdentifier();
-
+            ci = new ConstraintIndexer({
+                'identifier:match': { path: 'resource.identifier', type: 'match' }
+            });
+            ci.put(doc('1'));
             ci.clear();
-
             expect(ci.get('identifier:match', 'identifier1')).toEqual([ ]);
         });
 

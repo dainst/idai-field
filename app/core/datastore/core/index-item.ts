@@ -23,8 +23,7 @@ export class IndexItem {
         }
         const lastModified: Action = ChangeHistoryUtil.getLastModified(document);
         if (!lastModified) {
-            console.warn('Failed to index document. ' +
-                'The document does not contain a created/modified action.', document);
+            console.warn('no created/modified action, will not index', document);
             return undefined;
         }
 

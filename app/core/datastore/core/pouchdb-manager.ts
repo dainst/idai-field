@@ -169,11 +169,6 @@ export class PouchdbManager {
 
                 if (PouchdbManager.isDesignDoc(row)) continue;
 
-                if (!ModelUtil.hasNecessaryFields(row.doc)) {
-                    console.warn('Failed to index document. One or more necessary fields are missing.', row.doc);
-                    continue;
-                }
-
                 this.constraintIndexer.put(row.doc, true);
                 this.fulltextIndexer.put(row.doc, true);
             }

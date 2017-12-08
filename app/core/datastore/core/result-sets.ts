@@ -82,19 +82,15 @@ export class ResultSets {
      */
     public static intersect(resultSets: ResultSets): Array<IndexItem> {
 
-        const result: Array<IndexItem> =
-            resultSets.addSets.reduce((accumulatedSet, comparisonSet) =>
-                accumulatedSet.filter(accumulatedSetIndexItem => comparisonSet.map(addSetIndexItem =>
-                    ResultSets.f(addSetIndexItem)).indexOf(ResultSets.f(accumulatedSetIndexItem)) != -1)
-            , resultSets.addSets[0]);
-        
-        
-        for (let set of resultSets.subtractSets) {
-            for (let object of set) {
-                const index = result.map(obj =>ResultSets.f(obj)).indexOf(ResultSets.f(object));
-                if (index > -1) result.splice(index, 1);
-            }
-        }
+        const result = ResultSets.accumulateAdditively(resultSets.addSets);
+
+        resultSets.subtractSets.forEach(set =>
+                set.map(object =>
+                    result.map(obj =>
+                        ResultSets.f(obj)).indexOf(ResultSets.f(object)))
+            .filter(i => i > -1)
+            .reverse()
+            .forEach(i => result.splice(i, 1)));
 
         return result;
     }
@@ -123,5 +119,14 @@ export class ResultSets {
         }
 
         return Object.keys(result).map(key => (result as any)[key]);
+    }
+
+
+    private static accumulateAdditively(sets: Array<Array<IndexItem>>): Array<IndexItem> {
+
+        return sets.reduce((accumulatedSet, comparisonSet) =>
+                accumulatedSet.filter(accumulatedSetIndexItem => comparisonSet.map(addSetIndexItem =>
+                    ResultSets.f(addSetIndexItem)).indexOf(ResultSets.f(accumulatedSetIndexItem)) != -1)
+            , sets[0]);
     }
 }

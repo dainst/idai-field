@@ -113,13 +113,12 @@ export class ResultSets {
      */
     public static unify(resultSets: ResultSets): Array<Object> {
 
-        const result: any = {};
+        const result = resultSets.addSets.reduce((result: any, resultSet) => {
 
-        for (let resultSet of resultSets.addSets) {
-            for (let item of resultSet) {
-                result[ResultSets.f(item)] = item;
-            }
-        }
+                resultSet.forEach(item => result[ResultSets.f(item)] = item);
+                return result;
+
+            }, {});
 
         return Object.keys(result).map(key => (result as any)[key]);
     }

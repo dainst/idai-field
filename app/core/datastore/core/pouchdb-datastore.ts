@@ -111,12 +111,7 @@ export class PouchdbDatastore {
         this.constraintIndexer.remove(doc);
         this.fulltextIndexer.remove(doc);
 
-        let docFromGet;
-        try {
-            docFromGet = await this.fetch(doc.resource.id);
-        } catch (notfound) {
-            throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
-        }
+        const docFromGet = await this.fetch(doc.resource.id); // propagate err instead of catch
         try {
             await this.db.remove(docFromGet)
         } catch (genericerror) {

@@ -40,7 +40,7 @@ export class IdaiFieldTypeConverter extends TypeConverter {
         } else {
             ObjectUtil.takeOrMake(doc,'resource.identifier','');
             ObjectUtil.takeOrMake(doc,'resource.relations.isRecordedIn', []);
-        }g
+        }
 
         return doc as T;
     }

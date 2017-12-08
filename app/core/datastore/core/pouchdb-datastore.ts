@@ -97,15 +97,9 @@ export class PouchdbDatastore {
     }
 
 
-    /**
-     * @param doc
-     * @returns {Promise<undefined>}
-     */
-    public async remove(doc: Document): Promise<undefined> {
+    public async remove(doc: Document): Promise<void> {
 
-        if (doc.resource.id == null) {
-            return <any> Promise.reject([DatastoreErrors.DOCUMENT_NO_RESOURCE_ID]);
-        }
+        if (!doc.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
 
         this.deletedOnes.push(doc.resource.id as never);
         // we want the doc removed from the indices asap,

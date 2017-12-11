@@ -49,6 +49,19 @@ export class LayerMapComponent extends MapComponent {
     }
 
 
+    public focusLayer(layer: IdaiFieldImageDocument) {
+
+        const georeference = layer.resource.georeference;
+        const bounds = [];
+
+        bounds.push(L.latLng(georeference.topLeftCoordinates));
+        bounds.push(L.latLng(georeference.topRightCoordinates));
+        bounds.push(L.latLng(georeference.bottomLeftCoordinates));
+
+        this.map.fitBounds(bounds);
+    }
+
+
     /**
      * Called by MapComponent.ngOnChange
      */
@@ -127,19 +140,6 @@ export class LayerMapComponent extends MapComponent {
         }
 
         this.map.removeLayer(imageOverlay);
-    }
-
-
-    public focusLayer(layer: IdaiFieldImageDocument) {
-
-        let georeference = layer.resource.georeference;
-        let bounds = [];
-
-        bounds.push(L.latLng(georeference.topLeftCoordinates));
-        bounds.push(L.latLng(georeference.topRightCoordinates));
-        bounds.push(L.latLng(georeference.bottomLeftCoordinates));
-
-        this.map.fitBounds(bounds);
     }
 
 

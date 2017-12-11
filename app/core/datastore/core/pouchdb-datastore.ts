@@ -271,7 +271,7 @@ export class PouchdbDatastore {
     private async performPut(document: any, resetFun: any, errFun: any) {
 
         try {
-            document['_rev'] = await this.db.put(document, { force: true }).rev;
+            document['_rev'] = (await this.db.put(document, { force: true })).rev;
             return this.reindex(document.resource.id);
         } catch (err) {
             resetFun(document);

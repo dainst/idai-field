@@ -30,9 +30,9 @@ export class ImageGridBuilder {
         this.documents = documents;
         if (!this.documents) return [];
 
-        const rows = [];
+        const rows = [] as any;
         for (let i = 0; i < this.nrOfRows(nrOfColumns); i++) {
-            rows.push(this.calcRow(i, this.calculatedHeight(i, nrOfColumns, gridWidth), nrOfColumns));
+            rows.push(this.calcRow(i, this.calculatedHeight(i, nrOfColumns, gridWidth), nrOfColumns) as never);
         }
 
         return rows;
@@ -44,7 +44,7 @@ export class ImageGridBuilder {
      */
     private calcRow(rowIndex: any, calculatedHeight: any, nrOfColumns: any) {
 
-        const row = [];
+        const row = [] as any;
 
         for (let i = 0; i < nrOfColumns; i++) {
 
@@ -54,7 +54,7 @@ export class ImageGridBuilder {
             const cell = ImageGridBuilder.newCell(document, calculatedHeight);
             if ((document as any)['id'] !== 'droparea') cell.imgSrc = BlobMaker.blackImg;
 
-            row.push(cell);
+            row.push(cell as never);
         }
 
         return row;

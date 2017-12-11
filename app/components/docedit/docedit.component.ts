@@ -191,7 +191,7 @@ export class DoceditComponent {
     private showTypeChangeFieldsWarning() {
 
         const invalidFields: string[]
-            = Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
+            = Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration) as any;
 
         if (invalidFields && invalidFields.length > 0) {
             let invalidFieldsLabels: string[] = [];
@@ -208,7 +208,7 @@ export class DoceditComponent {
     private showTypeChangeRelationsWarning() {
 
         const invalidRelationFields: string[]
-            = Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
+            = Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration) as any;
 
         if (invalidRelationFields && invalidRelationFields.length > 0) {
             let invalidRelationFieldsLabels: string[] = [];
@@ -228,7 +228,7 @@ export class DoceditComponent {
     private removeInvalidFields() {
 
         const invalidFields: string[]
-            = Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
+            = Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration) as any;
 
         if (!invalidFields) return;
 
@@ -244,7 +244,7 @@ export class DoceditComponent {
     private removeInvalidRelations() {
 
         const invalidRelationFields: string[]
-            = Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
+            = Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration) as any;
 
         if (!invalidRelationFields) return;
 
@@ -304,9 +304,9 @@ export class DoceditComponent {
      */
     private removeInspectedRevisions(resourceId: string): Promise<IdaiFieldDocument> {
 
-        let promises = [];
+        let promises = [] as any;
         for (let revisionId of this.inspectedRevisionsIds) {
-            promises.push(this.datastore.removeRevision(resourceId, revisionId));
+            promises.push(this.datastore.removeRevision(resourceId, revisionId) as never);
         }
         this.inspectedRevisionsIds = [];
 

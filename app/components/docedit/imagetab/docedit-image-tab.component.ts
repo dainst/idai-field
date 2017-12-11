@@ -62,13 +62,15 @@ export class DoceditImageTabComponent {
     public removeLinks() {
 
         const isDepictedIn = this.document.resource.relations['isDepictedIn'];
-        const targetsToRemove = [];
+        const targetsToRemove = [] as any;
 
         for (let target of isDepictedIn) {
             for (let sel of this.selected) {
-                if (sel.resource.id == target) targetsToRemove.push(target);
+                if (sel.resource.id == target) targetsToRemove.push(target as never);
             }
         }
+
+        if (!targetsToRemove) return;
 
         for (let targetToRemove of targetsToRemove) {
             isDepictedIn.splice(isDepictedIn.indexOf(targetToRemove), 1);

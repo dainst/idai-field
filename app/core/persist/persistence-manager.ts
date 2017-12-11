@@ -195,14 +195,14 @@ export class PersistenceManager {
 
     private extractRelatedObjectIDs(resource: Resource): Array<string> {
 
-        const relatedObjectIDs = [];
+        const relatedObjectIDs = [] as any;
 
         for (let prop in resource.relations) {
             if (!resource.relations.hasOwnProperty(prop)) continue;
             if (!(this.projectConfiguration as any).isRelationProperty(prop)) continue;
 
             for (let id of resource.relations[prop]) {
-                relatedObjectIDs.push(id);
+                relatedObjectIDs.push(id as never);
             }
         }
 
@@ -215,7 +215,7 @@ export class PersistenceManager {
         const query: Query = {
             q: '',
             constraints: { 'isRecordedIn:contain': document.resource.id }
-        };
+        } as any;
 
         return this.datastore.find(query)
             .then(result => result.documents);

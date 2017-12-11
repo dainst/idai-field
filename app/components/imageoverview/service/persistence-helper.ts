@@ -93,7 +93,7 @@ export class PersistenceHelper {
 
             promises.push(this.persistenceManager.persist(
                 document, this.settingsService.getUsername(),
-                oldVersion));
+                oldVersion) as never);
         }
         return Promise.all(promises);
     }

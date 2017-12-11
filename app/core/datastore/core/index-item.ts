@@ -22,6 +22,10 @@ export class IndexItem {
 
     public static from(document: Document): IndexItem|undefined {
 
+        if (!document.resource) {
+            console.warn('no resource, will not index');
+            return undefined;
+        }
         if (!document.resource.id) {
             console.warn('no resourceId, will not index');
             return undefined;

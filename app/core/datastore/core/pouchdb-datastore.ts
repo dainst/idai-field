@@ -119,6 +119,8 @@ export class PouchdbDatastore {
         this.constraintIndexer.remove(doc);
         this.fulltextIndexer.remove(doc);
 
+        this.notifyAllChangesAndDeletionsObservers();
+
         let docFromGet;
         try {
             docFromGet = await this.db.get(doc.resource.id);
@@ -137,7 +139,8 @@ export class PouchdbDatastore {
     public async removeRevision(docId: string, revisionId: string): Promise<any> {
 
         try {
-            this.db.remove(docId, revisionId)
+            await this.db.remove(docId, revisionId);
+            await this.reindex(docId);
         } catch (genericerr) {
             throw [DatastoreErrors.GENERIC_ERROR, genericerr];
         }
@@ -268,8 +271,8 @@ export class PouchdbDatastore {
     private async performPut(document: any, resetFun: any, errFun: any) {
 
         try {
-            return this.processPutResult(document,
-                (await this.db.put(document, { force: true })))
+            await this.db.put(document, { force: true });
+            return this.reindex(document.resource.id);
         } catch (err) {
             resetFun(document);
             return errFun(err);
@@ -277,13 +280,16 @@ export class PouchdbDatastore {
     }
 
 
-    private processPutResult(document: any, result: any): Promise<Document> {
+    private async reindex(resourceId: string): Promise<Document> {
 
-        this.constraintIndexer.put(document);
-        this.fulltextIndexer.put(document);
-        document['_rev'] = result['rev'];
+        const newestRevision: Document = await this.fetch(resourceId);
 
-        return this.fetch(document.resource.id);
+        this.constraintIndexer.put(newestRevision);
+        this.fulltextIndexer.put(newestRevision);
+
+        this.notifyAllChangesAndDeletionsObservers();
+
+        return newestRevision;
     }
 
 
@@ -346,24 +352,26 @@ export class PouchdbDatastore {
             throw e;
         }
 
-        if (!ChangeHistoryUtil.isRemoteChange(
-                document, this.appState.getCurrentUser())) return;
+        if (!ChangeHistoryUtil.isRemoteChange(document, this.appState.getCurrentUser())) return;
 
         this.constraintIndexer.put(document);
         this.fulltextIndexer.put(document);
+
         try {
             this.notifyRemoteChangesObservers(document);
         } catch (e) {
             console.error('Error while notify observer');
         }
+
         this.notifyAllChangesAndDeletionsObservers();
     }
 
 
     private notifyAllChangesAndDeletionsObservers() {
 
-        if (this.allChangesAndDeletionsObservers) this.allChangesAndDeletionsObservers.
-            forEach((observer: any) => observer.next())
+        if (this.allChangesAndDeletionsObservers) {
+            this.allChangesAndDeletionsObservers.forEach((observer: any) => observer.next());
+        }
     }
 
 

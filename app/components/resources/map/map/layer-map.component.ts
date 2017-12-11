@@ -160,11 +160,7 @@ export class LayerMapComponent extends MapComponent {
 
         // Update layers after switching from a view without main type documents to another view without
         // main type documents.
-        if (changes['documents'] && changes['documents'].currentValue
-            && changes['documents'].currentValue.length == 0) {
-            return true;
-        }
-
-        return false;
+        return (changes['documents'] && changes['documents'].currentValue
+            && changes['documents'].currentValue.length == 0);
     }
 }

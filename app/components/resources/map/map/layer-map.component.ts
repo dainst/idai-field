@@ -102,14 +102,18 @@ export class LayerMapComponent extends MapComponent {
 
     private initializePanes() {
 
-        let zIndex = 0;
         this.layers
             .filter(layer => !this.panes[layer.resource.id])
-            .forEach(layer => {
-                const pane = this.map.createPane(layer.resource.id);
-                pane.style.zIndex = String(zIndex++);
-                this.panes[layer.resource.id] = pane;
-            });
+            .reduce((zIndex, layer) => this.createPane(zIndex, layer), 1);
+    }
+
+
+    private createPane(zIndex, layer) {
+
+        const pane = this.map.createPane(layer.resource.id);
+        pane.style.zIndex = String(zIndex);
+        this.panes[layer.resource.id] = pane;
+        return zIndex + 1;
     }
 
 

@@ -53,7 +53,7 @@ export class TypeSwitcherButtonComponent implements OnChanges{
 
     private initializeTypes(): Promise<any> {
 
-        return this.configLoader.getProjectConfiguration().then(projectConfiguration => {
+        return (this.configLoader.getProjectConfiguration() as any).then((projectConfiguration: any) => {
             const typeObject: IdaiType = projectConfiguration.getTypesMap()[this.type];
             if (typeObject.parentType && !typeObject.parentType.isAbstract) {
                 this.typesTreeList = [typeObject.parentType];

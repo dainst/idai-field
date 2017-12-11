@@ -52,13 +52,13 @@ export class LayerMapComponent extends MapComponent {
     public focusLayer(layer: IdaiFieldImageDocument) {
 
         const georeference = layer.resource.georeference;
-        const bounds = [];
+        const bounds = [] as any;
 
-        bounds.push(L.latLng((georeference as any).topLeftCoordinates));
-        bounds.push(L.latLng((georeference as any).topRightCoordinates));
-        bounds.push(L.latLng((georeference as any).bottomLeftCoordinates));
+        bounds.push(L.latLng((georeference as any).topLeftCoordinates) as never);
+        bounds.push(L.latLng((georeference as any).topRightCoordinates) as never);
+        bounds.push(L.latLng((georeference as any).bottomLeftCoordinates) as never);
 
-        this.map.fitBounds(bounds as any);
+        this.map.fitBounds(bounds);
     }
 
 

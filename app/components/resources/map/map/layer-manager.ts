@@ -50,6 +50,8 @@ export class LayerManager {
         } catch(e) {
             console.error('error with datastore.find', e);
         }
+
+        return Promise.reject(undefined);
     }
 
 
@@ -71,14 +73,14 @@ export class LayerManager {
             ListUtil.remove(this.activeLayerIds, resourceId) :
             ListUtil.add(this.activeLayerIds, resourceId);
 
-        if (mainTypeDocument) this.viewFacade.setActiveLayersIds(mainTypeDocument.resource.id, this.activeLayerIds);
+        if (mainTypeDocument) this.viewFacade.setActiveLayersIds(mainTypeDocument.resource.id as any, this.activeLayerIds);
     }
 
 
     private fetchActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument | undefined): ListDiffResult {
 
         const newActiveLayerIds = mainTypeDocument ?
-            this.viewFacade.getActiveLayersIds(mainTypeDocument.resource.id) : [];
+            this.viewFacade.getActiveLayersIds(mainTypeDocument.resource.id as any) : [];
         const oldActiveLayerIds = this.activeLayerIds.slice(0);
         this.activeLayerIds = newActiveLayerIds;
 

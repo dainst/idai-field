@@ -31,12 +31,12 @@ export class IdaiFieldSampleDataLoader implements SampleDataLoader {
 
     private loadSampleObjects(db: any, config: any): Promise<any> {
 
-        let promises = [];
+        let promises = [] as any;
         for (let doc of DOCS) {
             doc.created = { user: 'sample_data', date: new Date() };
             doc.modified = [{ user: 'sample_data', date: new Date() }];
             (doc as any)['_id'] = doc.resource.id;
-            promises.push(db.put(doc, { force: true }));
+            promises.push(db.put(doc, { force: true }) as never);
             setTimeout(() => {}, 15);
         }
 

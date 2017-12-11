@@ -3,22 +3,10 @@ import {LayerMapComponent} from './layer-map.component';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {GeometryHelper} from './geometry-helper';
 
-declare global {
-    namespace L {
-        namespace PM {
-            namespace Draw {
-                interface Line {
-                    _finishShape(): void
-                    _layer: any
-                }
-            }
-
-            interface Draw {
-                Line: L.PM.Draw.Line
-            }
-        }
-    }
-}
+// declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
+//                     _layer: any } }
+//     interface Draw { Line: L.PM.Draw.Line } } }
+// }
 
 
 @Component({
@@ -39,10 +27,12 @@ export class EditableMapComponent extends LayerMapComponent {
     @Input() update: boolean;
     @Input() isEditing: boolean;
 
-    @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
-    @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
+    @Output() onSelectDocument: EventEmitter<IdaiFieldDocument|undefined|null> =
+        new EventEmitter<IdaiFieldDocument|undefined|null>();
+    @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> =
+        new EventEmitter<IdaiFieldGeometry>();
 
-    public mousePositionCoordinates: string[];
+    public mousePositionCoordinates: string[]|undefined;
 
     private editableMarker: L.Marker|undefined;
 
@@ -55,11 +45,238 @@ export class EditableMapComponent extends LayerMapComponent {
     private drawMode: string = 'None';
 
 
+    private startPointEditing() {
+
+        this.editableMarker = this.markers[this.selectedDocument.resource.id as any];
+        if (!this.editableMarker) return;
+
+        this.editableMarker.unbindTooltip();
+        let color = this.typeColors[this.selectedDocument.resource.type as any];
+        this.editableMarker.setIcon(this.generateMarkerIcon(color, 'active'));
+        (this.editableMarker.dragging as any).enable();
+        this.editableMarker.setZIndexOffset(1000);
+    }
+
+
+    private addPolyLayer(drawMode: string) {
+
+        if (this.drawMode != 'None') this.finishDrawing();
+
+        let className = drawMode == 'Poly' ? 'polygon' : 'polyline';
+        className += ' active';
+
+        const drawOptions = {
+            templineStyle: { className: 'templine' },
+            hintlineStyle: { className: 'hintline' },
+            pathOptions: { className: className, color: this.typeColors[this.selectedDocument.resource.type] }
+        };
+
+        this.map.pm.enableDraw(drawMode, drawOptions);
+        this.drawMode = drawMode;
+    }
+
+
+
+    public finishEditing() {
+
+        if (this.drawMode != 'None') this.finishDrawing();
+
+        let geometry: IdaiFieldGeometry|undefined|null = { type: '', coordinates: [] };
+
+        if (this.editablePolygons.length == 1) {
+            geometry.type = 'Polygon';
+            geometry.coordinates = GeometryHelper.getCoordinatesFromPolygon(this.editablePolygons[0]);
+        } else if (this.editablePolygons.length > 1) {
+            geometry.type = 'MultiPolygon';
+            geometry.coordinates = GeometryHelper.getCoordinatesFromPolygons(this.editablePolygons);
+        } else if (this.editablePolylines.length == 1) {
+            geometry.type = 'LineString';
+            geometry.coordinates = GeometryHelper.getCoordinatesFromPolyline(this.editablePolylines[0]);
+        } else if (this.editablePolylines.length > 1) {
+            geometry.type = 'MultiLineString';
+            geometry.coordinates = GeometryHelper.getCoordinatesFromPolylines(this.editablePolylines);
+        } else if (this.editableMarker) {
+            geometry.type = 'Point';
+            geometry.coordinates = [this.editableMarker.getLatLng().lng, this.editableMarker.getLatLng().lat];
+        } else {
+            geometry = null;
+        }
+
+        this.fadeInMapElements();
+        this.resetEditing();
+
+        this.onQuitEditing.emit(geometry as any);
+    }
+
+
+    private finishDrawing() {
+
+        if (this.drawMode == 'Line' && (this.map.pm.Draw as any).Line._layer.getLatLngs().length >= 2) {
+            ((this.map.pm.Draw as any).Line as any)._finishShape();
+        } else if (this.drawMode != 'None') {
+            this.map.pm.disableDraw(this.drawMode);
+        }
+
+        this.drawMode = 'None';
+    }
+
+
+    private createEditableMarker(position: L.LatLng) {
+
+        let color = this.typeColors[this.selectedDocument.resource.type];
+        this.editableMarker = L.marker(position, {
+            icon: this.generateMarkerIcon(color, 'active'),
+            draggable: true,
+            zIndexOffset: 1000
+        });
+        this.editableMarker.addTo(this.map);
+    }
+
+
+    private setEditableMarkerPosition(position: L.LatLng) {
+
+        if (!this.editableMarker) {
+            this.createEditableMarker(position);
+        } else {
+            this.editableMarker.setLatLng(position);
+        }
+    }
+
+
+    public addPolygon() {
+
+        this.addPolyLayer('Poly');
+    }
+
+
+    public addPolyline() {
+
+        this.addPolyLayer('Line');
+    }
+
+
+    public getEditorType(): string|undefined {
+
+        if (!this.isEditing || !this.selectedDocument || !this.selectedDocument.resource
+            || !this.selectedDocument.resource.geometry) {
+            return 'none';
+        }
+
+        if (this.selectedDocument.resource.geometry.type == 'Polygon'
+            || this.selectedDocument.resource.geometry.type == 'MultiPolygon') {
+            return 'polygon';
+        }
+
+        if (this.selectedDocument.resource.geometry.type == 'LineString'
+            || this.selectedDocument.resource.geometry.type == 'MultiLineString') {
+            return 'polyline';
+        }
+
+        if (this.selectedDocument.resource.geometry.type == 'Point') {
+            return 'point';
+        }
+    }
+
+
+    public deleteGeometry() {
+
+        if (this.getEditorType() == 'polygon' && this.selectedPolygon) {
+            this.removePolygon(this.selectedPolygon);
+            if (this.editablePolygons.length > 0) {
+                this.setSelectedPolygon(this.editablePolygons[0]);
+            } else {
+                this.selectedPolygon = undefined as any;
+                this.addPolygon();
+            }
+        } else if (this.getEditorType() == 'polyline' && this.selectedPolyline) {
+            this.removePolyline(this.selectedPolyline);
+            if (this.editablePolylines.length > 0) {
+                this.setSelectedPolyline(this.editablePolylines[0]);
+            } else {
+                this.selectedPolyline = undefined as any;
+                this.addPolyline();
+            }
+        } else if (this.getEditorType() == 'point' && this.editableMarker) {
+            this.resetEditing();
+        }
+    }
+
+
+    private resetEditing() {
+
+        if (this.editablePolygons) {
+            for (let polygon of this.editablePolygons) {
+                polygon.pm.disable();
+                this.map.removeLayer(polygon);
+            }
+        }
+
+        if (this.editablePolylines) {
+            for (let polyline of this.editablePolylines) {
+                polyline.pm.disable();
+                this.map.removeLayer(polyline);
+            }
+        }
+
+        if (this.editableMarker) {
+            this.map.removeLayer(this.editableMarker);
+        }
+
+        this.editablePolygons = [] as any;
+        this.editablePolylines = [] as any;
+        this.editableMarker = undefined;
+
+        if (this.drawMode != 'None') (this.map.pm as any).disableDraw(this.drawMode);
+        this.drawMode = 'None';
+
+        (this.map as any).off('pm:create');
+        this.hideMousePositionCoordinates();
+    }
+
+
+    private fadeOutMapElements() {
+
+        if (this.polygons)
+            for (let i in this.polygons) {
+                for (let polygon of this.polygons[i]) {
+                    if (!polygon.document) continue;
+                    if (!this.selectedDocument) continue;
+
+                    if (polygon.document.resource.id != this.selectedDocument.resource.id) {
+                        polygon.setStyle({opacity: 0.25, fillOpacity: 0.1});
+                    }
+                }
+            }
+
+        if (this.polylines)
+            for (let i in this.polylines) {
+                for (let polyline of this.polylines[i]) {
+                    if (!polyline.document) continue;
+                    if (!this.selectedDocument) continue;
+
+                    if (polyline.document.resource.id != this.selectedDocument.resource.id) {
+                        polyline.setStyle({opacity: 0.25});
+                    }
+                }
+            }
+
+        if (this.markers)
+            for (let i in this.markers) {
+                if (!this.markers[i].document) continue;
+                if (!this.selectedDocument) continue;
+
+                if ((this.markers[i].document as any).resource.id != this.selectedDocument.resource.id) {
+                    (this.markers[i] as any).setOpacity(0.5);
+                }
+            }
+    }
+
+
     protected updateMap(changes: SimpleChanges): Promise<any> {
 
         if (!this.update) return Promise.resolve();
 
-        return super.updateMap(changes).then(() => {
+        super.updateMap(changes).then(() => {
             this.resetEditing();
 
             if (this.isEditing) {
@@ -90,6 +307,7 @@ export class EditableMapComponent extends LayerMapComponent {
                 this.hideMousePositionCoordinates();
             }
         });
+        return Promise.resolve();
     }
 
 
@@ -97,6 +315,29 @@ export class EditableMapComponent extends LayerMapComponent {
     public handleKeyEvent(event: KeyboardEvent) {
 
         if (event.key == 'Escape') this.finishDrawing();
+    }
+
+
+    private fadeInMapElements() {
+
+        if (this.polygons)
+            for (let i in this.polygons) {
+                for (let polygon of this.polygons[i]) {
+                    (polygon as any).setStyle({opacity: 0.5, fillOpacity: 0.2});
+                }
+            }
+
+        if (this.polylines)
+            for (let i in this.polylines) {
+                for (let polyline of this.polylines[i]) {
+                    polyline.setStyle({opacity: 0.5});
+                }
+            }
+
+        if (this.markers)
+            for (let i in this.markers) {
+                this.markers[i].setOpacity(1);
+            }
     }
 
 
@@ -127,7 +368,9 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.setupPolygonCreation();
 
-        this.editablePolygons = this.polygons[this.selectedDocument.resource.id];
+        this.editablePolygons = this.polygons[this.selectedDocument.resource.id as any];
+
+        if (!this.editablePolygons) return;
 
         for (let polygon of this.editablePolygons) { 
             polygon.unbindTooltip();
@@ -199,7 +442,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.setupPolylineCreation();
 
-        this.editablePolylines = this.polylines[this.selectedDocument.resource.id];
+        this.editablePolylines = this.polylines[this.selectedDocument.resource.id as any];
 
         for (let polyline of this.editablePolylines) {
             polyline.unbindTooltip();
@@ -249,7 +492,7 @@ export class EditableMapComponent extends LayerMapComponent {
         polyline.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
 
         const mapComponent = this;
-        polyline.on('pm:edit', function() {
+        polyline.on('pm:edit', function() {;
             if (this.getLatLngs().length <= 1) mapComponent.deleteGeometry();
         });
         this.selectedPolyline = polyline;
@@ -270,223 +513,12 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private startPointEditing() {
-
-        this.editableMarker = this.markers[this.selectedDocument.resource.id];
-        if (!this.editableMarker) return;
-
-        this.editableMarker.unbindTooltip();
-        let color = this.typeColors[this.selectedDocument.resource.type];
-        this.editableMarker.setIcon(this.generateMarkerIcon(color, 'active'));
-        this.editableMarker.dragging.enable();
-        this.editableMarker.setZIndexOffset(1000);
-    }
-
-
-    private createEditableMarker(position: L.LatLng) {
-
-        let color = this.typeColors[this.selectedDocument.resource.type];
-        this.editableMarker = L.marker(position, {
-            icon: this.generateMarkerIcon(color, 'active'),
-            draggable: true,
-            zIndexOffset: 1000
-        });
-        this.editableMarker.addTo(this.map);
-    }
-
-
-    private setEditableMarkerPosition(position: L.LatLng) {
-
-        if (!this.editableMarker) {
-            this.createEditableMarker(position);
-        } else {
-            this.editableMarker.setLatLng(position);
-        }
-    }
-
-
-    public addPolygon() {
-
-        this.addPolyLayer('Poly');
-    }
-
-
-    public addPolyline() {
-
-        this.addPolyLayer('Line');
-    }
-
-
-    private addPolyLayer(drawMode: string) {
-
-        if (this.drawMode != 'None') this.finishDrawing();
-
-        let className = drawMode == 'Poly' ? 'polygon' : 'polyline';
-        className += ' active';
-
-        const drawOptions = {
-            templineStyle: { className: 'templine' },
-            hintlineStyle: { className: 'hintline' },
-            pathOptions: { className: className, color: this.typeColors[this.selectedDocument.resource.type] }
-        };
-
-        this.map.pm.enableDraw(drawMode, drawOptions);
-        this.drawMode = drawMode;
-    }
-
-
-    private finishDrawing() {
-
-        if (this.drawMode == 'Line' && this.map.pm.Draw.Line._layer.getLatLngs().length >= 2) {
-            this.map.pm.Draw.Line._finishShape();
-        } else if (this.drawMode != 'None') {
-            this.map.pm.disableDraw(this.drawMode);
-        }
-
-        this.drawMode = 'None';
-    }
-
-
-    public deleteGeometry() {
-
-        if (this.getEditorType() == 'polygon' && this.selectedPolygon) {
-            this.removePolygon(this.selectedPolygon);
-            if (this.editablePolygons.length > 0) {
-                this.setSelectedPolygon(this.editablePolygons[0]);
-            } else {
-                this.selectedPolygon = undefined;
-                this.addPolygon();
-            }
-        } else if (this.getEditorType() == 'polyline' && this.selectedPolyline) {
-            this.removePolyline(this.selectedPolyline);
-            if (this.editablePolylines.length > 0) {
-                this.setSelectedPolyline(this.editablePolylines[0]);
-            } else {
-                this.selectedPolyline = undefined;
-                this.addPolyline();
-            }
-        } else if (this.getEditorType() == 'point' && this.editableMarker) {
-            this.resetEditing();
-        }
-    }
-
-
-    public finishEditing() {
-
-        if (this.drawMode != 'None') this.finishDrawing();
-
-        let geometry: IdaiFieldGeometry|undefined = { type: '', coordinates: [] };
-
-        if (this.editablePolygons.length == 1) {
-            geometry.type = 'Polygon';
-            geometry.coordinates = GeometryHelper.getCoordinatesFromPolygon(this.editablePolygons[0]);
-        } else if (this.editablePolygons.length > 1) {
-            geometry.type = 'MultiPolygon';
-            geometry.coordinates = GeometryHelper.getCoordinatesFromPolygons(this.editablePolygons);
-        } else if (this.editablePolylines.length == 1) {
-            geometry.type = 'LineString';
-            geometry.coordinates = GeometryHelper.getCoordinatesFromPolyline(this.editablePolylines[0]);
-        } else if (this.editablePolylines.length > 1) {
-            geometry.type = 'MultiLineString';
-            geometry.coordinates = GeometryHelper.getCoordinatesFromPolylines(this.editablePolylines);
-        } else if (this.editableMarker) {
-            geometry.type = 'Point';
-            geometry.coordinates = [this.editableMarker.getLatLng().lng, this.editableMarker.getLatLng().lat];
-        } else {
-            geometry = undefined;
-        }
-
-        this.fadeInMapElements();
-        this.resetEditing();
-
-        this.onQuitEditing.emit(geometry);
-    }
-
-
     public abortEditing() {
 
         this.fadeInMapElements();
         this.resetEditing();
 
-        this.onQuitEditing.emit(undefined);
-    }
-
-
-    private resetEditing() {
-
-        if (this.editablePolygons) {
-            for (let polygon of this.editablePolygons) {
-                polygon.pm.disable();
-                this.map.removeLayer(polygon);
-            }
-        }
-
-        if (this.editablePolylines) {
-            for (let polyline of this.editablePolylines) {
-                polyline.pm.disable();
-                this.map.removeLayer(polyline);
-            }
-        }
-
-        if (this.editableMarker) {
-            this.map.removeLayer(this.editableMarker);
-        }
-
-        this.editablePolygons = [];
-        this.editablePolylines = [];
-        this.editableMarker = undefined;
-
-        if (this.drawMode != 'None') this.map.pm.disableDraw(this.drawMode);
-        this.drawMode = 'None';
-
-        this.map.off('pm:create');
-        this.hideMousePositionCoordinates();
-    }
-
-
-    private fadeOutMapElements() {
-
-        for (let i in this.polygons) {
-            for (let polygon of this.polygons[i]) {
-                if (polygon.document.resource.id != this.selectedDocument.resource.id) {
-                    polygon.setStyle({opacity: 0.25, fillOpacity: 0.1});
-                }
-            }
-        }
-
-        for (let i in this.polylines) {
-            for (let polyline of this.polylines[i]) {
-                if (polyline.document.resource.id != this.selectedDocument.resource.id) {
-                    polyline.setStyle({opacity: 0.25});
-                }
-            }
-        }
-
-        for (let i in this.markers) {
-            if (this.markers[i].document.resource.id != this.selectedDocument.resource.id) {
-                this.markers[i].setOpacity(0.5);
-            }
-        }
-    }
-
-
-    private fadeInMapElements() {
-
-        for (let i in this.polygons) {
-            for (let polygon of this.polygons[i]) {
-                polygon.setStyle({opacity: 0.5, fillOpacity: 0.2});
-            }
-        }
-
-        for (let i in this.polylines) {
-            for (let polyline of this.polylines[i]) {
-                polyline.setStyle({opacity: 0.5});
-            }
-        }
-
-        for (let i in this.markers) {
-            this.markers[i].setOpacity(1);
-        }
+        this.onQuitEditing.emit(undefined as any);
     }
 
 
@@ -524,39 +556,6 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private removeElement(element: any, list: Array<any>) {
-
-        for (let listElement of list) {
-            if (element == listElement) {
-                list.splice(list.indexOf(element), 1);
-            }
-        }
-    }
-
-
-    public getEditorType(): string|undefined {
-
-        if (!this.isEditing || !this.selectedDocument || !this.selectedDocument.resource
-                || !this.selectedDocument.resource.geometry) {
-            return 'none';
-        }
-
-        if (this.selectedDocument.resource.geometry.type == 'Polygon'
-                || this.selectedDocument.resource.geometry.type == 'MultiPolygon') {
-            return 'polygon';
-        }
-
-        if (this.selectedDocument.resource.geometry.type == 'LineString'
-                || this.selectedDocument.resource.geometry.type == 'MultiLineString') {
-            return 'polyline';
-        }
-
-        if (this.selectedDocument.resource.geometry.type == 'Point') {
-            return 'point';
-        }
-    }
-
-
     private showMousePositionCoordinates() {
 
         this.map.addEventListener('mousemove', event => this.updateMousePositionCoordinates(event['latlng']));
@@ -575,5 +574,15 @@ export class EditableMapComponent extends LayerMapComponent {
     private updateMousePositionCoordinates(latLng: L.LatLng) {
 
         this.mousePositionCoordinates = [latLng.lng.toFixed(7), latLng.lat.toFixed(7)];
+    }
+
+
+    private removeElement(element: any, list: Array<any>) {
+
+        for (let listElement of list) {
+            if (element == listElement) {
+                list.splice(list.indexOf(element), 1);
+            }
+        }
     }
 }

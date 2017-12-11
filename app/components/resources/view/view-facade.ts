@@ -188,7 +188,7 @@ export class ViewFacade {
     public async getAllOperationSubtypeWithViewDocuments() {
 
         const viewMainTypes = this.views.getOperationViews()
-            .map(view => {return view.operationSubtype});
+            .map((view: any) => {return view.operationSubtype});
 
         let mainTypeDocuments: Array<Document> = [];
 

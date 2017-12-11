@@ -36,7 +36,7 @@ export class ConnectedDocsResolver {
 
     private compare(targetDocuments: Array<Document>, copyOfTargetDocuments: Array<Document>): Array<Document> {
         
-        const docsToUpdate = [];
+        const docsToUpdate = [] as any;
 
         for (let i in targetDocuments) {
             let same = true;
@@ -53,7 +53,7 @@ export class ConnectedDocsResolver {
                 same = false;
             }
 
-            if (!same) docsToUpdate.push(targetDocuments[i]);
+            if (!same) docsToUpdate.push(targetDocuments[i] as never);
         }
 
         return docsToUpdate;

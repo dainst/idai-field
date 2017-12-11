@@ -16,10 +16,10 @@ export class OperationViews {
 
         if (!this._) return [];
 
-        let views = [];
+        let views = [] as any;
         for (let view of this._) {
 
-            views.push(view);
+            views.push(view as never);
         }
         if (views.length < 1) return [];
         return views;

@@ -28,7 +28,7 @@ export class LayerMenuComponent {
     public close = () => this.opened = false;
     public isOpened = (): boolean => this.opened;
 
-    public isActiveLayer = (layer: IdaiFieldImageDocument) => this.layerManager.isActiveLayer(layer.resource.id);
+    public isActiveLayer = (layer: IdaiFieldImageDocument) => this.layerManager.isActiveLayer(layer.resource.id as any);
 
     public toggleLayer = (layer: IdaiFieldImageDocument) => this.onToggleLayer.emit(layer);
     public focusLayer = (layer: IdaiFieldImageDocument) => this.onFocusLayer.emit(layer);

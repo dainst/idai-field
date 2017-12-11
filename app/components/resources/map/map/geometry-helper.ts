@@ -23,7 +23,9 @@ export class GeometryHelper {
         for (let i in latLngs) {
             coordinates.push([]);
             for (let j in latLngs[i]) {
-                coordinates[i].push([ latLngs[i][j].lng , latLngs[i][j].lat ]);
+                coordinates[i].push([
+                    (latLngs[i] as any)[j].lng as any,
+                    (latLngs[i] as any)[j].lat as any] as never);
             }
         }
 

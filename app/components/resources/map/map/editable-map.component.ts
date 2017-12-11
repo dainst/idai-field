@@ -44,7 +44,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public mousePositionCoordinates: string[];
 
-    private editableMarker: L.Marker;
+    private editableMarker: L.Marker|undefined;
 
     private editablePolylines: Array<L.Polyline>;
     private selectedPolyline: L.Polyline;
@@ -59,14 +59,14 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (!this.update) return Promise.resolve();
 
-        super.updateMap(changes).then(() => {
+        return super.updateMap(changes).then(() => {
             this.resetEditing();
 
             if (this.isEditing) {
                 this.map.doubleClickZoom.disable();
                 this.showMousePositionCoordinates();
 
-                if (this.selectedDocument.resource.geometry.coordinates) {
+                if ((this.selectedDocument.resource.geometry as any).coordinates) {
                     this.fadeOutMapElements();
                     this.editExistingGeometry();
                 } else {
@@ -249,7 +249,7 @@ export class EditableMapComponent extends LayerMapComponent {
         polyline.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
 
         const mapComponent = this;
-        polyline.on('pm:edit', function() {;
+        polyline.on('pm:edit', function() {
             if (this.getLatLngs().length <= 1) mapComponent.deleteGeometry();
         });
         this.selectedPolyline = polyline;
@@ -273,6 +273,8 @@ export class EditableMapComponent extends LayerMapComponent {
     private startPointEditing() {
 
         this.editableMarker = this.markers[this.selectedDocument.resource.id];
+        if (!this.editableMarker) return;
+
         this.editableMarker.unbindTooltip();
         let color = this.typeColors[this.selectedDocument.resource.type];
         this.editableMarker.setIcon(this.generateMarkerIcon(color, 'active'));
@@ -373,7 +375,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.drawMode != 'None') this.finishDrawing();
 
-        let geometry: IdaiFieldGeometry = { type: '', coordinates: [] };
+        let geometry: IdaiFieldGeometry|undefined = { type: '', coordinates: [] };
 
         if (this.editablePolygons.length == 1) {
             geometry.type = 'Polygon';
@@ -391,7 +393,7 @@ export class EditableMapComponent extends LayerMapComponent {
             geometry.type = 'Point';
             geometry.coordinates = [this.editableMarker.getLatLng().lng, this.editableMarker.getLatLng().lat];
         } else {
-            geometry = null;
+            geometry = undefined;
         }
 
         this.fadeInMapElements();
@@ -532,7 +534,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    public getEditorType(): string {
+    public getEditorType(): string|undefined {
 
         if (!this.isEditing || !this.selectedDocument || !this.selectedDocument.resource
                 || !this.selectedDocument.resource.geometry) {

@@ -39,12 +39,12 @@ export class LayerMapComponent extends MapComponent {
 
     public async toggleLayer(layer: IdaiFieldImageDocument) {
 
-        this.layerManager.toggleLayer(layer.resource.id, this.mainTypeDocument);
+        this.layerManager.toggleLayer(layer.resource.id as any, this.mainTypeDocument);
 
-        if (this.layerManager.isActiveLayer(layer.resource.id)) {
-            await this.addLayerToMap(layer.resource.id);
+        if (this.layerManager.isActiveLayer(layer.resource.id as any)) {
+            await this.addLayerToMap(layer.resource.id as any);
         } else {
-            this.removeLayerFromMap(layer.resource.id);
+            this.removeLayerFromMap(layer.resource.id as any);
         }
     }
 
@@ -54,11 +54,11 @@ export class LayerMapComponent extends MapComponent {
         const georeference = layer.resource.georeference;
         const bounds = [];
 
-        bounds.push(L.latLng(georeference.topLeftCoordinates));
-        bounds.push(L.latLng(georeference.topRightCoordinates));
-        bounds.push(L.latLng(georeference.bottomLeftCoordinates));
+        bounds.push(L.latLng((georeference as any).topLeftCoordinates));
+        bounds.push(L.latLng((georeference as any).topRightCoordinates));
+        bounds.push(L.latLng((georeference as any).bottomLeftCoordinates));
 
-        this.map.fitBounds(bounds);
+        this.map.fitBounds(bounds as any);
     }
 
 
@@ -103,12 +103,12 @@ export class LayerMapComponent extends MapComponent {
     private initializePanes() {
 
         this.layers
-            .filter(layer => !this.panes[layer.resource.id])
+            .filter(layer => !this.panes[layer.resource.id as any])
             .reduce((zIndex, layer) => this.createPane(zIndex, layer), 1);
     }
 
 
-    private createPane(zIndex, layer) {
+    private createPane(zIndex: any, layer: any) {
 
         const pane = this.map.createPane(layer.resource.id);
         pane.style.zIndex = String(zIndex);
@@ -119,7 +119,7 @@ export class LayerMapComponent extends MapComponent {
 
     private async addLayerToMap(resourceId: string) {
 
-        const layerDocument: IdaiFieldImageDocument
+        const layerDocument: IdaiFieldImageDocument|undefined
             = this.layers.find(layer => layer.resource.id == resourceId);
         if (!layerDocument) return;
 
@@ -127,10 +127,10 @@ export class LayerMapComponent extends MapComponent {
 
         const georeference = layerDocument.resource.georeference;
         this.imageOverlays[resourceId] = L.imageOverlay(
-            imageContainer.imgSrc ? imageContainer.imgSrc : imageContainer.thumbSrc,
-            [georeference.topLeftCoordinates,
-             georeference.topRightCoordinates,
-             georeference.bottomLeftCoordinates],
+            imageContainer.imgSrc ? imageContainer.imgSrc : imageContainer.thumbSrc as any,
+            [(georeference as any).topLeftCoordinates,
+            (georeference as any).topRightCoordinates,
+            (georeference as any).bottomLeftCoordinates],
             { pane: layerDocument.resource.id }).addTo(this.map);
     }
 

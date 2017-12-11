@@ -3,21 +3,9 @@ import {LayerMapComponent} from './layer-map.component';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {GeometryHelper} from './geometry-helper';
 
-declare global {
-    namespace L {
-        namespace PM {
-            namespace Draw {
-                interface Line {
-                    _finishShape(): void
-                    _layer: any
-                }
-            }
-
-            interface Draw {
-                Line: L.PM.Draw.Line
-            }
-        }
-    }
+declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
+                    _layer: any } }
+    interface Draw { Line: L.PM.Draw.Line } } }
 }
 
 
@@ -39,10 +27,12 @@ export class EditableMapComponent extends LayerMapComponent {
     @Input() update: boolean;
     @Input() isEditing: boolean;
 
-    @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
-    @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> = new EventEmitter<IdaiFieldGeometry>();
+    @Output() onSelectDocument: EventEmitter<IdaiFieldDocument|undefined|null> =
+        new EventEmitter<IdaiFieldDocument|undefined|null>();
+    @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> =
+        new EventEmitter<IdaiFieldGeometry>();
 
-    public mousePositionCoordinates: string[];
+    public mousePositionCoordinates: string[]|undefined;
 
     private editableMarker: L.Marker|undefined;
 
@@ -59,7 +49,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (!this.update) return Promise.resolve();
 
-        return super.updateMap(changes).then(() => {
+        super.updateMap(changes).then(() => {
             this.resetEditing();
 
             if (this.isEditing) {
@@ -90,6 +80,7 @@ export class EditableMapComponent extends LayerMapComponent {
                 this.hideMousePositionCoordinates();
             }
         });
+        return Promise.resolve();
     }
 
 
@@ -249,7 +240,7 @@ export class EditableMapComponent extends LayerMapComponent {
         polyline.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
 
         const mapComponent = this;
-        polyline.on('pm:edit', function() {
+        polyline.on('pm:edit', function() {;
             if (this.getLatLngs().length <= 1) mapComponent.deleteGeometry();
         });
         this.selectedPolyline = polyline;
@@ -317,6 +308,29 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
+    public getEditorType(): string|undefined {
+
+        if (!this.isEditing || !this.selectedDocument || !this.selectedDocument.resource
+            || !this.selectedDocument.resource.geometry) {
+            return 'none';
+        }
+
+        if (this.selectedDocument.resource.geometry.type == 'Polygon'
+            || this.selectedDocument.resource.geometry.type == 'MultiPolygon') {
+            return 'polygon';
+        }
+
+        if (this.selectedDocument.resource.geometry.type == 'LineString'
+            || this.selectedDocument.resource.geometry.type == 'MultiLineString') {
+            return 'polyline';
+        }
+
+        if (this.selectedDocument.resource.geometry.type == 'Point') {
+            return 'point';
+        }
+    }
+
+
     private addPolyLayer(drawMode: string) {
 
         if (this.drawMode != 'None') this.finishDrawing();
@@ -375,7 +389,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.drawMode != 'None') this.finishDrawing();
 
-        let geometry: IdaiFieldGeometry|undefined = { type: '', coordinates: [] };
+        let geometry: IdaiFieldGeometry|undefined|null = { type: '', coordinates: [] };
 
         if (this.editablePolygons.length == 1) {
             geometry.type = 'Polygon';
@@ -393,7 +407,7 @@ export class EditableMapComponent extends LayerMapComponent {
             geometry.type = 'Point';
             geometry.coordinates = [this.editableMarker.getLatLng().lng, this.editableMarker.getLatLng().lat];
         } else {
-            geometry = undefined;
+            geometry = null;
         }
 
         this.fadeInMapElements();
@@ -524,39 +538,6 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private removeElement(element: any, list: Array<any>) {
-
-        for (let listElement of list) {
-            if (element == listElement) {
-                list.splice(list.indexOf(element), 1);
-            }
-        }
-    }
-
-
-    public getEditorType(): string|undefined {
-
-        if (!this.isEditing || !this.selectedDocument || !this.selectedDocument.resource
-                || !this.selectedDocument.resource.geometry) {
-            return 'none';
-        }
-
-        if (this.selectedDocument.resource.geometry.type == 'Polygon'
-                || this.selectedDocument.resource.geometry.type == 'MultiPolygon') {
-            return 'polygon';
-        }
-
-        if (this.selectedDocument.resource.geometry.type == 'LineString'
-                || this.selectedDocument.resource.geometry.type == 'MultiLineString') {
-            return 'polyline';
-        }
-
-        if (this.selectedDocument.resource.geometry.type == 'Point') {
-            return 'point';
-        }
-    }
-
-
     private showMousePositionCoordinates() {
 
         this.map.addEventListener('mousemove', event => this.updateMousePositionCoordinates(event['latlng']));
@@ -575,5 +556,15 @@ export class EditableMapComponent extends LayerMapComponent {
     private updateMousePositionCoordinates(latLng: L.LatLng) {
 
         this.mousePositionCoordinates = [latLng.lng.toFixed(7), latLng.lat.toFixed(7)];
+    }
+
+
+    private removeElement(element: any, list: Array<any>) {
+
+        for (let listElement of list) {
+            if (element == listElement) {
+                list.splice(list.indexOf(element), 1);
+            }
+        }
     }
 }

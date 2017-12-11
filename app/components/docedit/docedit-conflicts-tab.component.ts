@@ -7,8 +7,8 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiFieldDiffUtility} from '../../core/model/idai-field-diff-utility';
 import {ChangeHistoryUtil} from '../../core/model/change-history-util';
 import {M} from '../../m';
-import {IdaiFieldDocumentReadDatastore} from "../../core/datastore/idai-field-document-read-datastore";
-import {PersistenceManager} from "../../core/persist/persistence-manager";
+import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/idai-field-document-read-datastore';
+import {PersistenceManager} from '../../core/persist/persistence-manager';
 
 const moment = require('moment');
 
@@ -126,6 +126,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
             return Promise.resolve(differingFields);
         });
     }
+
     
     public solveConflict() {
 
@@ -161,6 +162,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         this.documentEditChangeMonitor.setChanged();
     }
 
+
     private markRevisionAsInspected(revision: IdaiFieldDocument) {
 
         let index = this.conflictedRevisions.indexOf(revision);
@@ -168,6 +170,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
         this.inspectedRevisionsIds.push((revision as any)['_rev']);
     }
+
 
     private fetchRelationTargets() {
 
@@ -274,7 +277,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         const date: Date = new Date(latestAction.date as any);
         moment.locale('de');
 
-        return latestAction.user + " - " + moment(date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
+        return latestAction.user + ' - ' + moment(date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
     }
 
 

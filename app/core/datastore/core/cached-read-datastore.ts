@@ -69,8 +69,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      *
      * Additional specs:
      *
-     * Find returns the documents in order.
-     * It sorts the objects by identifier ascending.
+     * Find sorts the documents by identifier ascending
      *
      * @throws if query contains types incompatible with T
      */
@@ -92,11 +91,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      * Fetches a specific revision directly from the underlying datastore layer.
      * Bypasses the cache and alway returns a new instance.
      *
-     * @param docId
-     * @param revisionId
-     * @returns
-     *   Rejects with
-     *     [DOCUMENT_NOT_FOUND] - in case of error
+     * @throws [DOCUMENT_NOT_FOUND] - in case of error
      */
     public async getRevision(docId: string, revisionId: string): Promise<T> {
 

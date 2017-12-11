@@ -87,7 +87,7 @@ export class ProjectsComponent implements OnInit {
 
     public editProject() {
 
-        (this.pouchdbManager.getDb() as any).get(this.selectedProject).then(document => {
+        (this.pouchdbManager.getDb() as any).get(this.selectedProject).then((document: any) => {
             const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
             doceditRef.componentInstance.setDocument(document);
         });

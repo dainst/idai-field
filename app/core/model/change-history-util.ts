@@ -115,6 +115,10 @@ export class ChangeHistoryUtil {
 
     private static isSameAction(action1: Action, action2: Action): boolean {
 
-        return action1.date == action2.date && action1.user == action2.user;
+        // TODO Datastore should make sure every date is an instance of Date
+        const date1: Date = action1.date instanceof Date ? action1.date : new Date((action1 as any).date);
+        const date2: Date = action2.date instanceof Date ? action2.date : new Date((action2 as any).date);
+
+        return date1.getTime() == date2.getTime() && action1.user == action2.user;
     }
 }

@@ -25,15 +25,17 @@ export class ChangesStream {
         datastore.remoteChangesNotifications().subscribe(document => {
 
             if (!this.autoCacheUpdate) return;
-            if (!document || !document.resource ||
-                !this.documentCache.get(document.resource.id as any)) return;
+            if (!document || !document.resource) return;
+
+            const convertedDocument: Document = this.typeConverter.convert<Document>(document);
 
             // explicitly assign by value in order for changes to be detected by angular
-            this.documentCache.reassign(
-                this.typeConverter.convert<Document>(document));
+            if (this.documentCache.get(convertedDocument.resource.id as string)) {
+                this.documentCache.reassign(convertedDocument);
+            }
 
             ChangesStream.removeClosedObservers(this.observers);
-            this.observers.forEach(observer => observer.next(document));
+            this.observers.forEach(observer => observer.next(convertedDocument));
         });
     }
 

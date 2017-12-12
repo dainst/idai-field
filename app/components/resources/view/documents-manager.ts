@@ -156,14 +156,8 @@ export class DocumentsManager {
         await this.populateDocumentList();
 
         for (let document of this.documents) {
-            const conflictedRevisions: Array<Document> = [];
-            if ((document as any)['_conflicts']) {
-                for (let revisionId of (document as any)['_conflicts']) {
-                    conflictedRevisions.push(
-                        await this.datastore.getRevision(document.resource.id as string, revisionId)
-                    );
-                }
-            }
+            const conflictedRevisions: Array<Document>
+                = await this.datastore.getConflictedRevisions(document.resource.id as string);
 
             if (oldDocuments.indexOf(document) == -1 && ChangeHistoryUtil.isRemoteChange(document, conflictedRevisions,
                     this.settingsService.getUsername())) {

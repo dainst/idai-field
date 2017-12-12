@@ -100,6 +100,13 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     }
 
 
+    public async getConflictedRevisions(docId: string): Promise<Array<T>> {
+
+        return (await this.datastore.fetchConflictedRevisions(docId))
+            .map(document => this.typeConverter.convert<T>(document));
+    }
+
+
     public setAutoCacheUpdate(autoCacheUpdate: boolean) {
 
         this.autoCacheUpdate = autoCacheUpdate;

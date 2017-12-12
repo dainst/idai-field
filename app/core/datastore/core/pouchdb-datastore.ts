@@ -196,6 +196,22 @@ export class PouchdbDatastore {
     }
 
 
+    public async fetchConflictedRevisions(resourceId: string): Promise<Array<Document>> {
+
+        const conflictedRevisions: Array<Document> = [];
+
+        const document: Document = await this.fetch(resourceId);
+
+        if ((document as any)['_conflicts']) {
+            for (let revisionId of (document as any)['_conflicts']) {
+                conflictedRevisions.push(await this.fetchRevision(document.resource.id as string, revisionId));
+            }
+        }
+
+        return Promise.resolve(conflictedRevisions);
+    }
+
+
     public async findConflicted(): Promise<Document[]> {
 
         return (await this.db.query('conflicted', {
@@ -344,19 +360,20 @@ export class PouchdbDatastore {
 
     private async handleNonDeletionChange(changeId: string): Promise<void> {
 
-        let document;
+        let document: Document;
         try {
             document = await this.fetch(changeId);
         } catch (e) {
-            console.warn('doc from remote change not found or not valid',changeId);
+            console.warn('Document from remote change not found or not valid', changeId);
             throw e;
         }
 
-        const conflictedRevisions: Array<Document> = [];
-        if ((document as any)['_conflicts']) {
-            for (let revisionId of (document as any)['_conflicts']) {
-                conflictedRevisions.push(await this.fetchRevision(document.resource.id as string, revisionId));
-            }
+        let conflictedRevisions: Array<Document>;
+        try {
+            conflictedRevisions = await this.fetchConflictedRevisions(changeId);
+        } catch (e) {
+            console.warn('Failed to fetch conflicted revisions for document', changeId);
+            throw e;
         }
 
         if (!ChangeHistoryUtil.isRemoteChange(document, conflictedRevisions, this.appState.getCurrentUser())) {

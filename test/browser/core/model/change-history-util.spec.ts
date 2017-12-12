@@ -28,6 +28,9 @@ export function main() {
                 modified: [
                     {
                         user: 'user1',
+                        date: '2018-01-01T01:00:00.00Z'
+                    }, {
+                        user: 'user1',
                         date: '2018-01-02T07:00:00.00Z'
                     }, {
                         user: 'user1',
@@ -47,6 +50,9 @@ export function main() {
                 },
                 modified: [
                     {
+                        user: 'user1',
+                        date: '2018-01-01T01:00:00.00Z'
+                    }, {
                         user: 'user1',
                         date: '2018-01-02T07:00:00.00Z'
                     }, {
@@ -70,6 +76,9 @@ export function main() {
                 },
                 modified: [
                     {
+                        user: 'user1',
+                        date: '2018-01-01T01:00:00.00Z'
+                    }, {
                         user: 'user3',
                         date: '2018-01-02T09:00:00.00Z'
                     }
@@ -85,7 +94,12 @@ export function main() {
                     user: 'user1',
                     date: '2018-01-01T02:00:00.00Z'
                 },
-                modified: []
+                modified: [
+                    {
+                        user: 'user1',
+                        date: '2018-01-01T02:00:00.00Z'
+                    }
+                ]
             };
 
             document2Revision2 = {
@@ -97,7 +111,12 @@ export function main() {
                     user: 'user2',
                     date: '2018-01-01T01:00:00.00Z'
                 },
-                modified: []
+                modified: [
+                    {
+                        user: 'user2',
+                        date: '2018-01-01T01:00:00.00Z'
+                    }
+                ]
             };
         });
 

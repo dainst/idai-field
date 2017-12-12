@@ -558,7 +558,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private showMousePositionCoordinates() {
 
-        this.map.addEventListener('mousemove', event => this.updateMousePositionCoordinates(event['latlng']));
+        this.map.addEventListener('mousemove', (event: any) => this.updateMousePositionCoordinates(event['latlng']));
         this.map.addEventListener('mouseout', () => this.mousePositionCoordinates = undefined);
     }
 

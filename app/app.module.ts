@@ -43,7 +43,7 @@ import {DocumentDatastore} from './core/datastore/document-datastore';
 
 const remote = require('electron').remote;
 
-let pconf = undefined;
+let pconf: any = undefined;
 
 @NgModule({
     imports: [
@@ -81,11 +81,10 @@ let pconf = undefined;
                     const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
                     appConfigurator.go(PROJECT_CONFIGURATION_PATH);
 
-                    return (configLoader.getProjectConfiguration() as any).then(pc => {
+                    return (configLoader.getProjectConfiguration() as any).then((pc: any) => {
                         pconf = pc as any;
-                    }).catch(msgsWithParams => {
-
-                        msgsWithParams.forEach(msg => {
+                    }).catch((msgsWithParams: any) => {
+                        msgsWithParams.forEach((msg: any) => {
                             console.error('err in project configuration', msg)
                         });
                         if (msgsWithParams.length > 1) {

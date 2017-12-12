@@ -85,7 +85,7 @@ export class PersistenceHelper {
 
     public removeRelationsOnSelectedDocuments() {
 
-        const promises = [];
+        const promises = [] as any;
         for (let document of this.imageOverviewFacade.getSelected()) {
 
             const oldVersion = JSON.parse(JSON.stringify(document));

@@ -157,8 +157,8 @@ export class DocumentsManager {
 
         for (let document of this.documents) {
             const conflictedRevisions: Array<Document> = [];
-            if (document['_conflicts']) {
-                for (let revisionId of document['_conflicts']) {
+            if ((document as any)['_conflicts']) {
+                for (let revisionId of (document as any)['_conflicts']) {
                     conflictedRevisions.push(
                         await this.datastore.getRevision(document.resource.id as string, revisionId)
                     );

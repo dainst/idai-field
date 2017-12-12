@@ -360,6 +360,8 @@ export class PouchdbDatastore {
 
     private async handleNonDeletionChange(changeId: string): Promise<void> {
 
+        console.log('non deletion change');
+
         let document: Document;
         try {
             document = await this.fetch(changeId);
@@ -367,6 +369,8 @@ export class PouchdbDatastore {
             console.warn('Document from remote change not found or not valid', changeId);
             throw e;
         }
+
+        console.log('change document', document);
 
         let conflictedRevisions: Array<Document>;
         try {
@@ -380,6 +384,8 @@ export class PouchdbDatastore {
             return;
         }
 
+        console.log('is remote change');
+
         this.constraintIndexer.put(document);
         this.fulltextIndexer.put(document);
 
@@ -388,6 +394,8 @@ export class PouchdbDatastore {
         } catch (e) {
             console.error('Error while notify observer');
         }
+
+        console.log('notify observers');
 
         this.notifyAllChangesAndDeletionsObservers();
     }

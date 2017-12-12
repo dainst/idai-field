@@ -14,6 +14,8 @@ export class ChangeHistoryUtil {
      */
     public static mergeChangeHistories(mainDocument: Document, secondDocument: Document) {
 
+        console.log('merge change histories');
+
         // TODO Return cloned instance
 
         const changeHistory: Array<Action> = ChangeHistoryUtil.getCombinedChangeHistory([mainDocument, secondDocument]);
@@ -41,6 +43,10 @@ export class ChangeHistoryUtil {
     public static isRemoteChange(document: Document, conflictedRevisions: Array<Document>,
                                  username: string): boolean {
 
+        console.log('remote change document', document);
+        console.log('remote change conflicted revisions', conflictedRevisions);
+        console.log('remote change username', username);
+
         let latestAction: Action = ChangeHistoryUtil.getLastModified(document);
 
         for (let revision of conflictedRevisions) {
@@ -49,6 +55,8 @@ export class ChangeHistoryUtil {
                 latestAction = latestRevisionAction;
             }
         }
+
+        console.log('latest action', latestAction);
 
         return latestAction && latestAction.user != username;
     }

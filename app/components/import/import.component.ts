@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Http} from '@angular/http';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
 import {Validator} from 'idai-components-2/persist';
@@ -24,11 +25,10 @@ import {DefaultRollbackStrategy} from '../../core/importer/default-rollback-stra
 import {NoRollbackStrategy} from '../../core/importer/no-rollback-strategy';
 import {RelationsCompleter} from '../../core/importer/relations-completer';
 import {SettingsService} from '../../core/settings/settings-service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
-import {DocumentDatastore} from "../../core/datastore/document-datastore";
+import {DocumentDatastore} from '../../core/datastore/document-datastore';
 
 
 @Component({
@@ -74,6 +74,7 @@ export class ImportComponent {
         );
     }
 
+    
     public startImport() {
 
         const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.file as any, this.url as any, this.http);
@@ -113,6 +114,7 @@ export class ImportComponent {
                 return (this.url != undefined);
         }
     }
+    
 
     public reset(): void {
 
@@ -121,6 +123,7 @@ export class ImportComponent {
         this.file = undefined;
         this.url = undefined;
     }
+    
 
     private static createImportStrategy(format: string, validator: Validator, datastore: DocumentDatastore,
                                         settingsService: SettingsService, configLoader: ConfigLoader,
@@ -137,6 +140,7 @@ export class ImportComponent {
         }
     }
 
+    
     private static createRelationsStrategy(format: string, relationsCompleter: RelationsCompleter): RelationsStrategy|undefined {
 
         switch (format) {
@@ -148,6 +152,7 @@ export class ImportComponent {
                 return new NoRelationsStrategy();
         }
     }
+    
 
     private static createRollbackStrategy(format: string, datastore: DocumentDatastore): RollbackStrategy|undefined {
 

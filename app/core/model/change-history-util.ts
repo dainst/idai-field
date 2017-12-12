@@ -38,9 +38,17 @@ export class ChangeHistoryUtil {
     }
 
 
-    public static isRemoteChange(document: Document, username: string): boolean {
+    public static isRemoteChange(document: Document, conflictedRevisions: Array<Document>,
+                                 username: string): boolean {
 
-        const latestAction: Action = ChangeHistoryUtil.getLastModified(document);
+        let latestAction: Action = ChangeHistoryUtil.getLastModified(document);
+
+        for (let revision of conflictedRevisions) {
+            const latestRevisionAction: Action = ChangeHistoryUtil.getLastModified(revision);
+            if (new Date(latestRevisionAction.date as any) > new Date(latestAction.date as any)) {
+                latestAction = latestRevisionAction;
+            }
+        }
 
         return latestAction && latestAction.user != username;
     }

@@ -352,7 +352,16 @@ export class PouchdbDatastore {
             throw e;
         }
 
-        if (!ChangeHistoryUtil.isRemoteChange(document, this.appState.getCurrentUser())) return;
+        const conflictedRevisions: Array<Document> = [];
+        if (document['_conflicts']) {
+            for (let revisionId of document['_conflicts']) {
+                conflictedRevisions.push(await this.fetchRevision(document.resource.id as string, revisionId));
+            }
+        }
+
+        if (!ChangeHistoryUtil.isRemoteChange(document, conflictedRevisions, this.appState.getCurrentUser())) {
+            return;
+        }
 
         this.constraintIndexer.put(document);
         this.fulltextIndexer.put(document);

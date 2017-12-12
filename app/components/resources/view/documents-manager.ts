@@ -143,7 +143,7 @@ export class DocumentsManager {
     }
 
 
-    private handleChange(changedDocument: Document) {
+    private async handleChange(changedDocument: Document) {
 
         if (!changedDocument || !this.documents) return;
         if (DocumentsManager.isExistingDoc(changedDocument, this.documents)) return;
@@ -153,14 +153,23 @@ export class DocumentsManager {
         }
 
         let oldDocuments = this.documents;
-        this.populateDocumentList().then(() => {
-            for (let doc of this.documents) {
-                if (oldDocuments.indexOf(doc) == -1 &&
-                    ChangeHistoryUtil.isRemoteChange(doc, this.settingsService.getUsername())) {
-                    this.newDocumentsFromRemote.push(doc);
+        await this.populateDocumentList();
+
+        for (let document of this.documents) {
+            const conflictedRevisions: Array<Document> = [];
+            if (document['_conflicts']) {
+                for (let revisionId of document['_conflicts']) {
+                    conflictedRevisions.push(
+                        await this.datastore.getRevision(document.resource.id as string, revisionId)
+                    );
                 }
             }
-        });
+
+            if (oldDocuments.indexOf(document) == -1 && ChangeHistoryUtil.isRemoteChange(document, conflictedRevisions,
+                    this.settingsService.getUsername())) {
+                this.newDocumentsFromRemote.push(document);
+            }
+        }
     }
 
 

@@ -1,13 +1,13 @@
+import {Document} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/configuration'
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Static} from '../../helper/static';
 import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
 import {ViewFacade} from '../../../../app/components/resources/view/view-facade';
-import {Document} from 'idai-components-2/core';
-import {ResourcesState} from "../../../../app/components/resources/view/resources-state";
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {IdaiFieldDocumentDatastore} from "../../../../app/core/datastore/idai-field-document-datastore";
-import {IdaiFieldTypeConverter} from "../../../../app/core/datastore/idai-field-type-converter";
+import {ResourcesState} from '../../../../app/components/resources/view/resources-state';
+import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
+import {IdaiFieldTypeConverter} from '../../../../app/core/datastore/idai-field-type-converter';
 import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
-import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration'
 
 /**
  * This is a subsystem test.
@@ -22,10 +22,10 @@ export function main() {
 
         const viewsList = [
             {
-                "mainTypeLabel": "Schnitt",
-                "label": "Ausgrabung",
-                "operationSubtype": "Trench",
-                "name": "excavation"
+                'mainTypeLabel': 'Schnitt',
+                'label': 'Ausgrabung',
+                'operationSubtype': 'Trench',
+                'name': 'excavation'
             }
         ];
 

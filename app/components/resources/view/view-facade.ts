@@ -6,7 +6,7 @@ import {ResourcesState} from './resources-state';
 import {OperationViews} from './operation-views';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {IdaiFieldDocumentReadDatastore} from "../../../core/datastore/idai-field-document-read-datastore";
+import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 
 /**
@@ -354,6 +354,6 @@ export class ViewFacade {
     private static err(fnName: string, notAllowedWhenIsInOverview = true) {
         
         const notMarker = notAllowedWhenIsInOverview ? '' : '! ';
-        return "calling "+fnName+" is forbidden when " + notMarker + "isInOverview";
+        return 'Calling ' + fnName + ' is forbidden when ' + notMarker + 'isInOverview';
     }
 }

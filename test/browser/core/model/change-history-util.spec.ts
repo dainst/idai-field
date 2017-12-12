@@ -1,3 +1,4 @@
+import {Document} from 'idai-components-2/core';
 import {ChangeHistoryUtil} from '../../../../app/core/model/change-history-util';
 
 /**
@@ -7,11 +8,11 @@ export function main() {
 
     describe('ChangeHistoryUtil', () => {
 
-        let document1Revision1: any;
-        let document1Revision2: any;
-        let document1Revision3: any;
-        let document2Revision1: any;
-        let document2Revision2: any;
+        let document1Revision1: Document;
+        let document1Revision2: Document;
+        let document1Revision3: Document;
+        let document2Revision1: Document;
+        let document2Revision2: Document;
 
 
         beforeEach(() => {
@@ -19,7 +20,8 @@ export function main() {
             document1Revision1 = {
                 resource: {
                     id: 'id1',
-                    identifier: 'identifier1'
+                    type: 'Object',
+                    relations: {}
                 },
                 created: {
                     user: 'user1',
@@ -42,7 +44,8 @@ export function main() {
             document1Revision2 = {
                 resource: {
                     id: 'id1',
-                    identifier: 'identifier1'
+                    type: 'Object',
+                    relations: {}
                 },
                 created: {
                     user: 'user1',
@@ -68,7 +71,8 @@ export function main() {
             document1Revision3 = {
                 resource: {
                     id: 'id1',
-                    identifier: 'identifier1'
+                    type: 'Object',
+                    relations: {}
                 },
                 created: {
                     user: 'user1',
@@ -88,7 +92,8 @@ export function main() {
             document2Revision1 = {
                 resource: {
                     id: 'id2',
-                    identifier: 'identifier2'
+                    type: 'Object',
+                    relations: {}
                 },
                 created: {
                     user: 'user1',
@@ -105,7 +110,8 @@ export function main() {
             document2Revision2 = {
                 resource: {
                     id: 'id2',
-                    identifier: 'identifier2'
+                    type: 'Object',
+                    relations: {}
                 },
                 created: {
                     user: 'user2',

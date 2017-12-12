@@ -29,6 +29,7 @@ import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
+import {ChangesStream} from '../../core/datastore/core/changes-stream';
 
 
 @Component({
@@ -60,6 +61,7 @@ export class ImportComponent {
         private messages: Messages,
         private importer: Importer,
         private datastore: DocumentDatastore,
+        private changesStream: ChangesStream,
         private validator: Validator,
         private http: Http,
         private relationsCompleter: RelationsCompleter,
@@ -77,10 +79,11 @@ export class ImportComponent {
     
     public startImport() {
 
-        const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.file as any, this.url as any, this.http);
+        const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.file as any,
+            this.url as any, this.http);
         const parser: Parser|undefined = ImportComponent.createParser(this.format);
-        const importStrategy: ImportStrategy|undefined = ImportComponent.createImportStrategy(this.format, this.validator,
-            this.datastore, this.settingsService, this.configLoader, this.mainTypeDocumentId);
+        const importStrategy: ImportStrategy|undefined = ImportComponent.createImportStrategy(this.format,
+            this.validator, this.datastore, this.settingsService, this.configLoader, this.mainTypeDocumentId);
         const relationsStrategy: RelationsStrategy|undefined
             = ImportComponent.createRelationsStrategy(this.format, this.relationsCompleter);
         const rollbackStrategy: RollbackStrategy|undefined
@@ -94,9 +97,11 @@ export class ImportComponent {
         let uploadModalRef: any = undefined;
         let uploadReady = false;
         setTimeout(() => {
-            if (!uploadReady) uploadModalRef = this.modalService.open(UploadModalComponent, { backdrop: 'static', keyboard: false });
+            if (!uploadReady) uploadModalRef = this.modalService.open(UploadModalComponent,
+                { backdrop: 'static', keyboard: false });
         }, 200);
-        this.importer.importResources(reader, parser, importStrategy, relationsStrategy as any, rollbackStrategy, this.datastore)
+        this.importer.importResources(reader, parser, importStrategy, relationsStrategy as any, rollbackStrategy,
+            this.datastore, this.changesStream)
             .then(importReport => {
                 uploadReady = true;
                 if(uploadModalRef) uploadModalRef.close();

@@ -33,9 +33,6 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
  */
 export abstract class CachedReadDatastore<T extends Document> implements ReadDatastore {
 
-    private autoCacheUpdate: boolean = true;
-
-
     constructor(
         protected datastore: PouchdbDatastore,
         protected documentCache: DocumentCache<T>,
@@ -104,12 +101,6 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         return (await this.datastore.fetchConflictedRevisions(docId))
             .map(document => this.typeConverter.convert<T>(document));
-    }
-
-
-    public setAutoCacheUpdate(autoCacheUpdate: boolean) {
-
-        this.autoCacheUpdate = autoCacheUpdate;
     }
 
 

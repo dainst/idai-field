@@ -15,7 +15,7 @@ export function main() {
         let mockImportStrategy;
         let mockRelationsStrategy;
         let mockRollbackStrategy;
-        let mockDatastore;
+        let mockChangesStream;
 
         beforeEach(() => {
             mockReader = jasmine.createSpyObj('reader', ['go']);
@@ -23,10 +23,10 @@ export function main() {
             mockParser = jasmine.createSpyObj('parser', ['parse']);
 
             mockImportStrategy = jasmine.createSpyObj('importStrategy', ['importDoc']);
-            mockRelationsStrategy = jasmine.createSpyObj('relationsStrategy', ['completeInverseRelations',
-                'resetInverseRelations']);
+            mockRelationsStrategy = jasmine.createSpyObj('relationsStrategy',
+                ['completeInverseRelations', 'resetInverseRelations']);
             mockRollbackStrategy = jasmine.createSpyObj('rollbackStrategy', ['rollback']);
-            mockDatastore = jasmine.createSpyObj('datastore', ['setAutoCacheUpdate']);
+            mockChangesStream = jasmine.createSpyObj('changesStream', ['setAutoCacheUpdate']);
             importer = new Importer();
         });
 
@@ -40,7 +40,7 @@ export function main() {
                 mockImportStrategy.importDoc.and.returnValue(Promise.reject(['constraintviolation']));
                 mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
                 importer.importResources(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
-                        mockRollbackStrategy, mockDatastore)
+                        mockRollbackStrategy, null, mockChangesStream)
                     .then(importReport=>{
                         expect(importReport['errors'][0][0]).toBe('constraintviolation');
                         done();
@@ -66,7 +66,7 @@ export function main() {
                 mockRelationsStrategy.resetInverseRelations.and.returnValue(Promise.resolve(undefined));
                 mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
                 importer.importResources(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
-                        mockRollbackStrategy, mockDatastore)
+                        mockRollbackStrategy, null, mockChangesStream)
                     .then(importReport => {
                         expect(mockImportStrategy.importDoc).toHaveBeenCalledTimes(2);
                         expect(importReport.importedResourcesIds.length).toBe(1);

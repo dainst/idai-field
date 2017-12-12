@@ -1,9 +1,8 @@
-import {TypeConverter} from "./core/type-converter";
+import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {TypeConverter} from './core/type-converter';
 import {ImageTypeUtility} from '../../common/image-type-utility';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {Injectable} from "@angular/core";
 import {ObjectUtil} from '../../util/object-util';
 
 @Injectable()
@@ -27,7 +26,6 @@ export class IdaiFieldTypeConverter extends TypeConverter {
         } else if (typeClass == 'IdaiFieldDocument') {
             return this.imageTypeUtility.getNonImageTypeNames();
         }
-
     }
 
 
@@ -49,10 +47,11 @@ export class IdaiFieldTypeConverter extends TypeConverter {
     private proveIsCorrectType(type: string, typeClass: string): string {
 
         if (typeClass == 'IdaiFieldImageDocument') {
-            if (!this.imageTypeUtility.isImageType(type)) throw "Wrong type class: must be IdaiFieldImageDocument";
+            if (!this.imageTypeUtility.isImageType(type)) throw 'Wrong type class: must be IdaiFieldImageDocument';
         } else if (typeClass == 'IdaiFieldDocument') {
-            if (this.imageTypeUtility.isImageType(type)) throw "Wrong type class: must not be IdaiFieldImageDocument";
+            if (this.imageTypeUtility.isImageType(type)) throw 'Wrong type class: must not be IdaiFieldImageDocument';
         }
+
         return type;
     }
 }

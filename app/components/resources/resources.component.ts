@@ -46,7 +46,7 @@ export class ResourcesComponent implements AfterViewChecked {
             loading.stop();
 
             this.isEditingGeometry = false;
-            this.viewFacade.setSelectedDocument(undefined as any);
+            this.viewFacade.deselect();
 
             if (params['id']) {
                 // The timeout is needed to prevent buggy map behavior after following a relation link from

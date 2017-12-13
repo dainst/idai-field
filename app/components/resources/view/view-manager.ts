@@ -1,10 +1,8 @@
 import {Resource} from 'idai-components-2/core';
-import {ViewDefinition} from 'idai-components-2/configuration';
 import {Query} from 'idai-components-2/datastore';
+import {Document} from 'idai-components-2/core';
 import {OperationViews} from './operation-views';
 import {ResourcesState} from './resources-state';
-import {Document} from 'idai-components-2/core';
-import {query} from '@angular/core/src/animation/dsl';
 
 /**
  * Holds and provides acces to the current view, which is one of the views from this.views,

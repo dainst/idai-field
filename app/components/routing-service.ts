@@ -88,26 +88,10 @@ export class RoutingService {
     public getMainTypeNameForDocument(document: Document): Promise<string> {
 
         const relations = document.resource.relations['isRecordedIn'];
-        if (relations && relations.length > 0) {
-            return this.datastore.get(relations[0]).then(mainTypeDocument => mainTypeDocument.resource.type);
-        } else return Promise.resolve()
-            .then(() => { // TODO exract method and rename to what it does accordingly and add doc why this special treatment is needed
-
-                const relationDefinitions: Array<RelationDefinition>|undefined
-                    = this.projectConfiguration.getRelationDefinitions(document.resource.type);
-                let mainTypeName: string = '';
-
-                if (relationDefinitions) {
-                    for (let relationDefinition of relationDefinitions) {
-                        if (relationDefinition.name == 'isRecordedIn') {
-                            mainTypeName = relationDefinition.range[0];
-                            break;
-                        }
-                    }
-                }
-
-                return Promise.resolve(mainTypeName);
-            }).catch(() => {});
+        return (relations && relations.length > 0) ?
+            this.datastore.get(relations[0]).then(mainTypeDocument => mainTypeDocument.resource.type) :
+            RoutingService.handleNoRelationdInGetMainTypeNameForDocument(
+                this.projectConfiguration.getRelationDefinitions(document.resource.type));
     }
 
 
@@ -168,5 +152,26 @@ export class RoutingService {
                     'got msgWithParams in GeneralRoutingService#setRoute: ', msgWithParams);
             }
         });
+    }
+
+
+    private static async handleNoRelationdInGetMainTypeNameForDocument(
+        relationDefinitions: Array<RelationDefinition>|undefined) {
+
+        try {
+            let mainTypeName: string = '';
+
+            if (relationDefinitions) {
+                
+                for (let relationDefinition of relationDefinitions) {
+                    if (relationDefinition.name == 'isRecordedIn') {
+                        mainTypeName = relationDefinition.range[0];
+                        break;
+                    }
+                }
+            }
+            return Promise.resolve(mainTypeName);
+
+        } catch (e) {}
     }
 }

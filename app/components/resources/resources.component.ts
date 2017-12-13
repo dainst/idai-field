@@ -170,7 +170,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private async selectDocumentFromParams(id: string, menu: string, tab: string) {
 
-        await this.viewFacade.setSelectedDocumentById(id); // <- TODO move this to routing helper
+        await this.viewFacade.setSelectedDocumentById(id);
         try {
             if (menu == 'edit') this.editDocument(this.viewFacade.getSelectedDocument(), tab);
             else await this.viewFacade.setActiveDocumentViewTab(tab)

@@ -29,7 +29,8 @@ export class DoceditLauncher {
 
         if (activeTabName) this.doceditActiveTabService.setActiveTab(activeTabName);
 
-        const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
+        const doceditRef = this.modalService.open(DoceditComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false });
         doceditRef.componentInstance.setDocument(document);
 
         const result: any = {};

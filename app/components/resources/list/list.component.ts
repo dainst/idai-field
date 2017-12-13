@@ -25,6 +25,7 @@ export class ListComponent implements OnChanges {
     public typesMap: { [type: string]: IdaiType };
 
     public listTree: ListTree;
+    public docRefTree: DocumentReference[] = [];
 
     constructor(
         private datastore: IdaiFieldDocumentDatastore,
@@ -44,11 +45,11 @@ export class ListComponent implements OnChanges {
         this.loading.start();
 
         // The timeout is necessary to make the loading icon appear
-        setTimeout(() => {
+        setTimeout(async () => {
             if (this.viewFacade.getDocuments() && this.viewFacade.getDocuments().length > 0) {
 
                 if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve(); 
-                this.listTree.buildTreeFrom(this.viewFacade.getDocuments() as IdaiFieldDocument[], true);
+                this.docRefTree = await this.listTree.buildTreeFrom(this.viewFacade.getDocuments() as IdaiFieldDocument[], true);
             }
             this.loading.stop();
         }, 1);
@@ -66,7 +67,7 @@ export class ListComponent implements OnChanges {
     }
 
 
-    public createNewDocument(newDoc: IdaiFieldDocument) {
+    public async createNewDocument(newDoc: IdaiFieldDocument) {
 
         const docs: Array<IdaiFieldDocument> = this.viewFacade.getDocuments() as IdaiFieldDocument[];
         
@@ -84,6 +85,6 @@ export class ListComponent implements OnChanges {
             if (parentDocId && this.listTree.childrenShownForIds.indexOf(parentDocId) == -1) this.listTree.childrenShownForIds.push(parentDocId);
         }
         
-        this.listTree.buildTreeFrom(docs, true);  
+        this.docRefTree = await this.listTree.buildTreeFrom(docs, true);
     }
 }

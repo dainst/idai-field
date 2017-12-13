@@ -19,9 +19,9 @@ export function main() {
             const mockDatastore = jasmine.createSpyObj('datastore', ['find']);
 
             const listTree = new ListTree(mockDatastore);
-            await listTree.buildTreeFrom(documents);
+            const docRefTree = await listTree.buildTreeFrom(documents);
 
-            expect(listTree.docRefTree.length).toBe(2);
+            expect(docRefTree.length).toBe(2);
             done();
         });
     })

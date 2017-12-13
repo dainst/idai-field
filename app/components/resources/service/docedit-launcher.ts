@@ -43,7 +43,7 @@ export class DoceditLauncher {
     }
 
 
-    private handleSaveResult(document: any, result: any, res: any) {
+    private async handleSaveResult(document: any, result: any, res: any) {
 
         result['document'] = res['document'];
 
@@ -58,9 +58,8 @@ export class DoceditLauncher {
         }
 
         this.viewFacade.deselect();
-        return this.viewFacade.selectMainTypeDocument(result['document'] as IdaiFieldDocument).then(() =>
-            this.viewFacade.populateMainTypeDocuments()
-        )
+        await this.viewFacade.selectMainTypeDocument(result['document'] as IdaiFieldDocument);
+        await this.viewFacade.populateMainTypeDocuments()
     }
 
 

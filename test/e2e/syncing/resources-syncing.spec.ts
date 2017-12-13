@@ -233,7 +233,7 @@ describe('resources/syncing --', function() {
     });
 
 
-    it('resolve a save conflict via conflict resolver', async (done) => {
+    it('resolve a save conflict via conflict resolver', async done => {
 
         const nr = '5';
         let testDocument = await createOneDocument(nr);
@@ -254,16 +254,15 @@ describe('resources/syncing --', function() {
     });
 
 
-    it('open conflict resolver via taskbar', done => {
+    it('open conflict resolver via taskbar', async done => {
 
         const nr = '8';
 
-        createEventualConflict(nr).then(() => {
-
-            NavbarPage.clickConflictsButton();
-            NavbarPage.clickConflictResolverLink('testf' + nr);
-            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
-        });
+        await createEventualConflict(nr);
+        await NavbarPage.clickConflictsButton();
+        NavbarPage.clickConflictResolverLink('testf' + nr);
+        await browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
+        done();
     });
 
 

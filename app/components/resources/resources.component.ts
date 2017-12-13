@@ -172,7 +172,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
         await this.viewFacade.setSelectedDocumentById(id); // <- TODO move this to routing helper
         try {
-            await this.viewFacade.setActiveDocumentViewTab(tab)
+            if (menu == 'edit') this.editDocument(this.viewFacade.getSelectedDocument(), tab);
+            else await this.viewFacade.setActiveDocumentViewTab(tab)
         } catch (e) {
             this.messages.add([M.DATASTORE_NOT_FOUND]);
         }

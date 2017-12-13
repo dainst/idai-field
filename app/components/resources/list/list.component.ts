@@ -22,6 +22,8 @@ export class ListComponent implements OnChanges {
     @Input() ready: boolean;
     @Input() documents: IdaiFieldDocument[];
 
+    private docs: IdaiFieldDocument[] = [];
+
     public typesMap: { [type: string]: IdaiType };
 
     public listTree: ListTree;
@@ -48,11 +50,18 @@ export class ListComponent implements OnChanges {
         setTimeout(async () => {
             if (this.viewFacade.getDocuments() && this.viewFacade.getDocuments().length > 0) {
 
-                if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve(); 
+                if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve();
+                this.docs = this.viewFacade.getDocuments() as IdaiFieldDocument[];
                 this.docRefTree = await this.listTree.buildTreeFrom(this.viewFacade.getDocuments() as IdaiFieldDocument[], true);
             }
             this.loading.stop();
         }, 1);
+    }
+
+
+    public documentsInclude(doc: IdaiFieldDocument): boolean {
+
+        return this.docs.some(d => d.resource.id == doc.resource.id );
     }
 
 
@@ -84,7 +93,8 @@ export class ListComponent implements OnChanges {
             const parentDocId = newDoc.resource.relations['liesWithin'][0];
             if (parentDocId && this.listTree.childrenShownForIds.indexOf(parentDocId) == -1) this.listTree.childrenShownForIds.push(parentDocId);
         }
-        
+
+        this.docs = docs;
         this.docRefTree = await this.listTree.buildTreeFrom(docs, true);
     }
 }

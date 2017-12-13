@@ -7,23 +7,14 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
  */
 export class ListTree {
 
-	private documents: IdaiFieldDocument[] = [];
     public childrenShownForIds: string[] = [];
 
     constructor(private datastore: IdaiFieldDocumentDatastore) {}
 
 
-    public documentsInclude(doc: IdaiFieldDocument): boolean {
-
-        return this.documents.some(d => d.resource.id == doc.resource.id );
-    }
-
-
 	public async buildTreeFrom(
 	    documents: Array<IdaiFieldDocument>,
         keepShownChildren?: boolean): Promise<DocumentReference[]> {
-
-		this.documents = documents;
 
         if (!keepShownChildren) this.childrenShownForIds = [];
 

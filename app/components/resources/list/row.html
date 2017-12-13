@@ -1,7 +1,7 @@
 <div 
         id="{{docRef.doc.resource.id ? 'resource-'+docRef.doc.resource.identifier : 'new-resource'}}" (dblclick)="resourcesComponent.editDocument(docRef.doc)"
         class="row py-3 list-row" [class.bg-light]="depth == 0"
-        [class.no-search-result]="!listComponent.listTree.documentsInclude(docRef.doc)">
+        [class.no-search-result]="!listComponent.documentsInclude(docRef.doc)">
     <div class="col-md-3 list-row-left" [style.padding-left]="(1+depth*2) + 'rem'"
          [class.font-weight-bold]="depth == 0">
         <div class="plus-button-wrapper">

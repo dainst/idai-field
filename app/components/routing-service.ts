@@ -22,7 +22,7 @@ import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
  */
 export class RoutingService {
 
-    private currentRoute: any; // TODO get rid of this
+    private currentRoute: any;
 
 
     constructor(private router: Router,

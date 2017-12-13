@@ -75,7 +75,10 @@ export class DoceditLauncher {
 
         if (closeReason == 'deleted') {
             this.viewFacade.deselect();
-            if (document == this.viewFacade.getSelectedMainTypeDocument()) {
+
+            if (!this.viewFacade.isInOverview() &&
+                this.viewFacade.getSelectedMainTypeDocument() == document) {
+
                 return this.viewFacade.handleMainTypeDocumentOnDeleted();
             }
         }

@@ -16,7 +16,13 @@ export class ListTree {
     constructor(private datastore: IdaiFieldDocumentDatastore) {}
 
 
-	public buildTreeFrom(documents: Array<IdaiFieldDocument>, keepShownChildren?: boolean) {
+    public documentsInclude(doc: IdaiFieldDocument): boolean {
+
+        return this.documents.some(d => d.resource.id == doc.resource.id );
+    }
+
+
+	public async buildTreeFrom(documents: Array<IdaiFieldDocument>, keepShownChildren?: boolean) {
 
 		this.documents = documents;
 
@@ -24,27 +30,24 @@ export class ListTree {
 
         if (!keepShownChildren) this.childrenShownForIds = [];
 
-        this.docRefMap = {};
 
         // initialize docRefMap to make sure it is fully populated before building the tree
+        this.docRefMap = {};
         for (let doc of documents) {
             this.docRefMap[doc.resource.id as any] = { doc: doc, children: [] };
         }
 
-        this.getMissingParents().then(() =>
-            this.buildTreeFromLiesWithinRelations()
-        );
+        await this.getMissingParents();
+        this.buildTreeFromLiesWithinRelations();
     }
 
 
     public toggleChildrenForId(id: string) {
 
         const index = this.childrenShownForIds.indexOf(id);
-        if (index != -1) {
-            this.childrenShownForIds.splice(index, 1);
-        } else {
+        index != -1 ?
+            this.childrenShownForIds.splice(index, 1) :
             this.childrenShownForIds.push(id);
-        }
     }
 
 
@@ -94,11 +97,5 @@ export class ListTree {
                 }
             }
         }
-    }
-
-
-    private documentsInclude(doc: IdaiFieldDocument): boolean {
-
-        return this.documents.some(d => d.resource.id == doc.resource.id );
     }
 }

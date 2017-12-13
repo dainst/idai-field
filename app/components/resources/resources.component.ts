@@ -89,28 +89,6 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    private selectDocumentFromParams(id: string, menu?: string, tab?: string) {
-
-        return this.viewFacade.setSelectedDocumentById(id).then( // <- TODO move this to routing helper
-            () => {
-                    if (menu == 'edit') this.editDocument(this.viewFacade.getSelectedDocument(), tab);
-                    else {
-                        this.viewFacade.setActiveDocumentViewTab(tab);
-                    }
-                }).catch(() => this.messages.add([M.DATASTORE_NOT_FOUND]));
-    }
-
-
-    private initializeClickEventListener() {
-
-        this.renderer.listenGlobal('document', 'click', (event: any) => {
-            for (let clickEventObserver of this.clickEventObservers) {
-                clickEventObserver.next(event);
-            }
-        });
-    }
-
-
     public listenToClickEvents(): Observable<Event> {
 
         return Observable.create((observer: any) => {
@@ -146,13 +124,13 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public async editDocument(document: Document|undefined = this.viewFacade.getSelectedDocument(),
-                        activeTabName?: string) {
+    public async editDocument(document: Document|undefined, activeTabName?: string) {
+
+        if (!document) throw "Called edit document with undefined document";
 
         this.isEditingGeometry = false;
 
-        const result = await this.doceditProxy.editDocument(document as any, activeTabName);
-
+        const result = await this.doceditProxy.editDocument(document, activeTabName);
         if (result['tab']) this.viewFacade.setActiveDocumentViewTab(result['tab']);
         if (result['updateScrollTarget']) this.scrollTarget = result['document'];
     }
@@ -187,6 +165,24 @@ export class ResourcesComponent implements AfterViewChecked {
             this.isEditingGeometry = false;
             this.loading.stop();
         }, 1);
+    }
+
+
+    private async selectDocumentFromParams(id: string, menu: string, tab: string) {
+
+        await this.viewFacade.setSelectedDocumentById(id); // <- TODO move this to routing helper
+        try {
+            await this.viewFacade.setActiveDocumentViewTab(tab)
+        } catch (e) {
+            this.messages.add([M.DATASTORE_NOT_FOUND]);
+        }
+    }
+
+
+    private initializeClickEventListener() {
+
+        this.renderer.listenGlobal('document', 'click', (event: any) =>
+            this.clickEventObservers.forEach(observer => observer.next(event)));
     }
 
 

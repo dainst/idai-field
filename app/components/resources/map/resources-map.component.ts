@@ -59,7 +59,8 @@ export class ResourcesMapComponent {
 
         if (this.selectedDocumentIsNew()) {
             if (geometry !== undefined) {
-                this.resourcesComponent.editDocument();
+                const selectedDoc = this.viewFacade.getSelectedDocument();
+                if (selectedDoc) this.resourcesComponent.editDocument(selectedDoc);
             } else {
                 this.resourcesComponent.isEditingGeometry = false;
                 this.viewFacade.remove(selectedDoc);

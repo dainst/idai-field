@@ -2,12 +2,14 @@ import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} fro
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
+import {IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from "idai-components-2/idai-field-map";
 
 declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
                      _layer: any } }
      interface Draw { Line: L.PM.Draw.Line } } }
 }
 
+type CB<T> = (arg: T) => void;
 
 @Component({
     moduleId: module.id,
@@ -239,27 +241,29 @@ export class EditableMapComponent extends LayerMapComponent {
         if (!this.selectedDocument) return;
 
         if (this.polygons) {
-            Object.values(this.polygons)
-                .forEach(multiPolygon => multiPolygon
-                    .filter(polygon => polygon.document
-                        && polygon.document.resource.id != this.selectedDocument.resource.id)
-                    .forEach(polygon => polygon.setStyle({opacity: 0.25, fillOpacity: 0.1})));
+            Object.values(this.polygons).forEach(multiPolygon =>
+                this.getUnselected<IdaiFieldPolygon>(
+                    multiPolygon, polygon => polygon.setStyle({opacity: 0.25, fillOpacity: 0.1})));
         }
 
         if (this.polylines) {
-            Object.values(this.polylines)
-                .forEach(multiPolyline => multiPolyline
-                    .filter(polyline => polyline.document
-                        && polyline.document.resource.id != this.selectedDocument.resource.id)
-                    .forEach(polyline => polyline.setStyle({opacity: 0.25})));
+            Object.values(this.polylines).forEach(multiPolyline =>
+                this.getUnselected<IdaiFieldPolyline>(
+                    multiPolyline, polyline => polyline.setStyle({opacity: 0.25})));
         }
 
         if (this.markers) {
-            Object.values(this.markers)
-                .filter(marker => marker.document
-                        && marker.document.resource.id != this.selectedDocument.resource.id)
-                .forEach(marker => marker.setOpacity(0.5));
+            this.getUnselected<IdaiFieldMarker>(
+                Object.values(this.markers), marker => marker.setOpacity(0.5));
         }
+    }
+
+
+    private getUnselected<T>(mapElements: Array<T>, cb: CB<T>) {
+
+        mapElements.filter((item: any) => item.document
+            && item.document.resource.id != this.selectedDocument.resource.id)
+                .forEach((item: any) => cb(item));
     }
 
 

@@ -55,7 +55,7 @@ export class ResultSets {
         const copy = ResultSets.copy(resultSets);
         if (!set) return copy;
 
-        ResultSets.putToMap(set, copy.map);
+        ResultSets.putToMap(copy.map, set);
 
         if (mode !== 'subtract') copy.addSets.push(set.map(item => item.id));
         else copy.subtractSets.push(set.map(item => item.id));
@@ -123,8 +123,8 @@ export class ResultSets {
     }
 
 
-    private static putToMap(set: Array<IndexItem>,
-                            map: {[id: string]: IndexItem}): {[id: string]: IndexItem} {
+    private static putToMap(map: {[id: string]: IndexItem},
+                            set: Array<IndexItem>): {[id: string]: IndexItem} {
 
         return set.reduce((acc: any, item) => {
             acc[ResultSets.f(item)] = item;

@@ -1,14 +1,16 @@
 import {IndexItem} from "./index-item";
 import {SortUtil} from '../../../util/sort-util';
+import {ListUtil} from '../../../util/list-util';
 
 export interface ResultSets {
 
     addSets: Array<  // multiple result sets
         Array<            // a single result set
-            IndexItem
+            string
             >>,
 
-    subtractSets: Array<Array<IndexItem>>;
+    subtractSets: Array<Array<string>>;
+    map: {[id: string]: IndexItem};
 }
 
 /**
@@ -27,7 +29,8 @@ export class ResultSets {
 
         return {
             addSets: [],
-            subtractSets: []
+            subtractSets: [],
+            map: {}
         }
     }
 
@@ -51,8 +54,11 @@ export class ResultSets {
 
         const copy = ResultSets.copy(resultSets);
         if (!set) return copy;
-        if (mode !== 'subtract') copy.addSets.push(set);
-        else copy.subtractSets.push(set);
+
+        ResultSets.putToMap(set, copy.map);
+
+        if (mode !== 'subtract') copy.addSets.push(set.map(item => item.id));
+        else copy.subtractSets.push(set.map(item => item.id));
         return copy;
     }
 
@@ -85,17 +91,15 @@ export class ResultSets {
      */
     public static intersect(resultSets: ResultSets): Array<IndexItem> {
 
-        const result = ResultSets.accumulateAdditively(resultSets.addSets);
+        return ResultSets.pickFromMap(resultSets.map,
 
-        resultSets.subtractSets.forEach(set =>
-                set.map(object =>
-                    result.map(obj =>
-                        ResultSets.f(obj)).indexOf(ResultSets.f(object)))
-            .filter(i => i > -1)
-            .reverse()
-            .forEach(i => result.splice(i, 1)));
-
-        return result;
+            ListUtil.subtractTwo(
+                resultSets.subtractSets,
+                ListUtil.intersect(
+                    resultSets.addSets
+                )
+            )
+        );
     }
 
 
@@ -111,24 +115,29 @@ export class ResultSets {
      *
      *   [{id:'1'}, {id:'2'}, {id:'3'}]
      */
-    public static unify(resultSets: ResultSets): Array<Object> {
+    public static unify(resultSets: ResultSets): Array<IndexItem> {
 
-        const result = resultSets.addSets.reduce((result: any, resultSet) => {
+        return ResultSets.pickFromMap(resultSets.map,
 
-                resultSet.forEach(item => result[ResultSets.f(item)] = item);
-                return result;
-
-            }, {});
-
-        return Object.keys(result).map(key => (result as any)[key]);
+            ListUtil.union(resultSets.addSets));
     }
 
 
-    private static accumulateAdditively(sets: Array<Array<IndexItem>>): Array<IndexItem> {
+    private static putToMap(set: Array<IndexItem>,
+                            map: {[id: string]: IndexItem}): {[id: string]: IndexItem} {
 
-        return sets.reduce((accumulatedSet, comparisonSet) =>
-                accumulatedSet.filter(accumulatedSetIndexItem => comparisonSet.map(addSetIndexItem =>
-                    ResultSets.f(addSetIndexItem)).indexOf(ResultSets.f(accumulatedSetIndexItem)) != -1)
-            , sets[0]);
+        return set.reduce((acc: any, item) => {
+            acc[ResultSets.f(item)] = item;
+            return acc;
+        }, map);
+    }
+
+
+    private static pickFromMap(map: {[id: string]: IndexItem}, indices: Array<string>): Array<IndexItem> {
+
+        return indices.reduce((acc, index: string) => {
+            acc.push(map[index] as never);
+            return acc;
+        }, []);
     }
 }

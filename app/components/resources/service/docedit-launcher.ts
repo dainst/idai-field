@@ -29,7 +29,8 @@ export class DoceditLauncher {
 
         if (activeTabName) this.doceditActiveTabService.setActiveTab(activeTabName);
 
-        const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
+        const doceditRef = this.modalService.open(DoceditComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false });
         doceditRef.componentInstance.setDocument(document);
 
         const result: any = {};
@@ -43,7 +44,7 @@ export class DoceditLauncher {
     }
 
 
-    private handleSaveResult(document: any, result: any, res: any) {
+    private async handleSaveResult(document: any, result: any, res: any) {
 
         result['document'] = res['document'];
 
@@ -58,9 +59,8 @@ export class DoceditLauncher {
         }
 
         this.viewFacade.deselect();
-        return this.viewFacade.selectMainTypeDocument(result['document'] as IdaiFieldDocument).then(() =>
-            this.viewFacade.populateMainTypeDocuments()
-        )
+        await this.viewFacade.selectMainTypeDocument(result['document'] as IdaiFieldDocument);
+        await this.viewFacade.populateMainTypeDocuments()
     }
 
 
@@ -76,7 +76,10 @@ export class DoceditLauncher {
 
         if (closeReason == 'deleted') {
             this.viewFacade.deselect();
-            if (document == this.viewFacade.getSelectedMainTypeDocument()) {
+
+            if (!this.viewFacade.isInOverview() &&
+                this.viewFacade.getSelectedMainTypeDocument() == document) {
+
                 return this.viewFacade.handleMainTypeDocumentOnDeleted();
             }
         }

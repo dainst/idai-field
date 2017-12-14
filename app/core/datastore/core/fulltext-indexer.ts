@@ -90,11 +90,11 @@ export class FulltextIndexer {
         const resultSets: ResultSets = s.split(' ').
             filter(token => token.length > 0).
             reduce((_resultSets, token) =>
-                ResultSets.combine(_resultSets,
+                _resultSets.combine(
                     FulltextIndexer.getForToken(this.index, token, types ? types : Object.keys(this.index))),
             ResultSets.make());
 
-        return ResultSets.intersect(resultSets);
+        return resultSets.intersect();
     }
 
 
@@ -116,9 +116,9 @@ export class FulltextIndexer {
 
     private static getForToken(index: any, token: string, types: string[]): Array<any> {
 
-        return ResultSets.unify(
+        return (
             types.reduce((_resultSets, type) =>
-                this._get(index, _resultSets, token.toLowerCase(), type), ResultSets.make()));
+                this._get(index, _resultSets, token.toLowerCase(), type), ResultSets.make())).unify();
     }
 
 
@@ -135,15 +135,15 @@ export class FulltextIndexer {
         return tokens.split('').reduce((_resultSets, nextChar: string) =>
                 FulltextIndexer.addKeyToResultSets(index,
                     _resultSets, type, s.replace('['+tokens+']',nextChar))
-            , ResultSets.copy(resultSets));
+            , resultSets.copy());
     }
 
 
     private static addKeyToResultSets(index: any, resultSets: any, type: string, s: string): ResultSets {
 
         return (!index[type] || !index[type][s]) ?
-            ResultSets.copy(resultSets) :
-            ResultSets.combine(ResultSets.copy(resultSets),
+            resultSets.copy() :
+            resultSets.copy().combine(
                 Object.keys(index[type][s]).map(id => IndexItem.copy(index[type][s][id])));
     }
 }

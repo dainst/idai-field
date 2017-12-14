@@ -2,16 +2,6 @@ import {IndexItem} from "./index-item";
 import {SortUtil} from '../../../util/sort-util';
 import {ListUtil} from '../../../util/list-util';
 
-export interface ResultSets {
-
-    addSets: Array<  // multiple result sets
-        Array<            // a single result set
-            string
-            >>,
-
-    subtractSets: Array<Array<string>>;
-    map: {[id: string]: IndexItem};
-}
 
 /**
  * Companion object
@@ -21,55 +11,52 @@ export interface ResultSets {
  */
 export class ResultSets {
 
-    private static f = (a: IndexItem): string => a.id;
+    private constructor(
+        private addSets: Array<  // multiple result sets
+            Array<            // a single result set
+                string
+                >>,
+        private subtractSets: Array<Array<string>>,
+        private map: {[id: string]: IndexItem}
+    ) {} // hide on purpose to force usage of make or copy
 
-    private constructor() {} // hide on purpose to force usage of make or copy
 
     public static make(): ResultSets {
 
-        return {
-            addSets: [],
-            subtractSets: [],
-            map: {}
-        }
+        return new ResultSets ([], [], {})
     }
 
 
-    public static isEmpty(resultSets: ResultSets): boolean {
+    public copy(): ResultSets {
 
-        return resultSets.addSets.length == 0 && resultSets.subtractSets.length == 0;
+        return new ResultSets(
+            JSON.parse(JSON.stringify(this.addSets)),
+            JSON.parse(JSON.stringify(this.subtractSets)),
+            JSON.parse(JSON.stringify(this.map))
+        );
     }
 
 
-    public static copy(resultSets: ResultSets): ResultSets {
+    public isEmpty(): boolean {
 
-        return JSON.parse(JSON.stringify(resultSets));
+        return this.addSets.length == 0 && this.subtractSets.length == 0;
     }
 
 
-    public static combine(
-        resultSets: ResultSets,
+
+    public combine(
         set: Array<IndexItem>|undefined,
         mode: string = 'add'): ResultSets {
 
-        const copy = ResultSets.copy(resultSets);
+        const copy = this.copy();
         if (!set) return copy;
 
         ResultSets.putToMap(copy.map, set);
 
         if (mode !== 'subtract') copy.addSets.push(set.map(item => item.id));
         else copy.subtractSets.push(set.map(item => item.id));
+
         return copy;
-    }
-
-
-    public static generateOrderedResultList(resultSets: ResultSets): Array<any> {
-
-        return ResultSets.intersect(resultSets)
-            .sort((a: any, b: any) =>
-                // we know that an IndexItem created with from has the identifier field
-                SortUtil.alnumCompare(a['identifier'], b['identifier']))
-            .map((e: any) => e['id']);
     }
 
 
@@ -89,14 +76,14 @@ export class ResultSets {
      *
      *   [{id:'2'}]
      */
-    public static intersect(resultSets: ResultSets): Array<IndexItem> {
+    public intersect(): Array<IndexItem> {
 
-        return ResultSets.pickFromMap(resultSets.map,
+        return ResultSets.pickFromMap(this.map,
 
             ListUtil.subtractTwo(
-                resultSets.subtractSets,
+                this.subtractSets,
                 ListUtil.intersect(
-                    resultSets.addSets
+                    this.addSets
                 )
             )
         );
@@ -115,19 +102,28 @@ export class ResultSets {
      *
      *   [{id:'1'}, {id:'2'}, {id:'3'}]
      */
-    public static unify(resultSets: ResultSets): Array<IndexItem> {
+    public unify(): Array<IndexItem> {
 
-        return ResultSets.pickFromMap(resultSets.map,
+        return ResultSets.pickFromMap(this.map,
 
-            ListUtil.union(resultSets.addSets));
+            ListUtil.union(this.addSets));
     }
 
 
-    private static putToMap(map: {[id: string]: IndexItem},
-                            set: Array<IndexItem>): {[id: string]: IndexItem} {
+    public static generateOrderedResultList(resultSets: ResultSets): Array<any> {
 
-        return set.reduce((acc: any, item) => {
-            acc[ResultSets.f(item)] = item;
+        return resultSets.intersect()
+            .sort((a: any, b: any) =>
+                // we know that an IndexItem created with from has the identifier field
+                SortUtil.alnumCompare(a['identifier'], b['identifier']))
+            .map((e: any) => e['id']);
+    }
+
+
+    private static putToMap(map: {[id: string]: IndexItem}, set: Array<IndexItem>): void {
+
+        set.reduce((acc: any, item) => {
+            acc[item.id] = item;
             return acc;
         }, map);
     }

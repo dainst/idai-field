@@ -253,7 +253,7 @@ export class PouchdbDatastore {
             ResultSets.make();
 
         return ResultSets.generateOrderedResultList(
-            Query.isEmpty(query) && !ResultSets.isEmpty(resultSets) ?
+            Query.isEmpty(query) && !resultSets.isEmpty() ?
                 resultSets :
                 this.performFulltext(query, resultSets));
     }
@@ -261,7 +261,7 @@ export class PouchdbDatastore {
 
     private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
 
-        return ResultSets.combine(resultSets,
+        return resultSets.combine(
             this.fulltextIndexer.get(
                 !query.q || query.q.trim() == '' ? '*' : query.q,
                 query.types));
@@ -277,8 +277,8 @@ export class PouchdbDatastore {
         return Object.keys(constraints).reduce((setsAcc: ResultSets, name: string) => {
 
                 const {type, value} = Constraint.convertTo(constraints[name]);
-                return ResultSets.combine(
-                    setsAcc, this.constraintIndexer.get(name, value), type);
+                return setsAcc.combine(
+                    this.constraintIndexer.get(name, value), type);
 
             }, ResultSets.make());
     }

@@ -68,9 +68,8 @@
                     <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn'] || viewFacade.getSelectedDocument().resource.relations['isDepictedIn'].length == 0" class="empty-tab-info">
                         Keine Bilder vorhanden.
                         <br><br>
-                        Ziehe Bilder per Drag'n'Drop hier auf die Schrift
-                        (oder bereits vorhandene Bilder), um neue Bilder hinzuzufügen, oder klicke auf
-                        den Stift, um bereits vorhandene Bilder zu verknüpfen.
+                        Ziehen Sie Bilder per Drag'n'Drop in diesen Reiter, um sie hinzuzufügen, oder klicken
+                        Sie auf den Stift, um bereits vorhandene Bilder zu verknüpfen.
                         <br><br><br><br><br><br><br><br><br>
                     </div>
                     <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"

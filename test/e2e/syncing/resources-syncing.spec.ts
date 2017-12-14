@@ -308,18 +308,14 @@ describe('resources/syncing --', function() {
 
     // FLAKY
 
-    xit('detect an eventual conflict and mark the corresponding resource list item', done => {
+    it('detect an eventual conflict and mark the corresponding resource list item', async done => {
 
         const nr = '7';
 
-        return createOneDocument(nr)
-            .then(() => {
-                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
-                return createAlternateDocument(nr);
-            })
-            .then(() => {
-                expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).toContain('conflicted');
-                done();
-            });
+        await createOneDocument(nr);
+        expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
+        await createAlternateDocument(nr);
+        expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).toContain('conflicted');
+        done();
     });
 });

@@ -9,8 +9,6 @@ declare global { namespace L { namespace PM { namespace Draw { interface Line { 
      interface Draw { Line: L.PM.Draw.Line } } }
 }
 
-type CB<T> = (arg: T) => void;
-
 @Component({
     moduleId: module.id,
     selector: 'editable-map',
@@ -259,7 +257,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private getUnselected<T>(mapElements: Array<T>, cb: CB<T>) {
+    private getUnselected<T>(mapElements: Array<T>, cb: (arg: T) => void) {
 
         mapElements.filter((item: any) => item.document
             && item.document.resource.id != this.selectedDocument.resource.id)

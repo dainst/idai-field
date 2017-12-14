@@ -1,12 +1,12 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} from '@angular/core';
-import {LayerMapComponent} from './layer-map.component';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
 
-// declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
-//                     _layer: any } }
-//     interface Draw { Line: L.PM.Draw.Line } } }
-// }
+declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
+                     _layer: any } }
+     interface Draw { Line: L.PM.Draw.Line } } }
+}
 
 
 @Component({
@@ -47,11 +47,11 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private startPointEditing() {
 
-        this.editableMarker = this.markers[this.selectedDocument.resource.id as any];
+        this.editableMarker = this.markers[this.selectedDocument.resource.id as string];
         if (!this.editableMarker) return;
 
         this.editableMarker.unbindTooltip();
-        let color = this.typeColors[this.selectedDocument.resource.type as any];
+        let color = this.typeColors[this.selectedDocument.resource.type];
         this.editableMarker.setIcon(this.generateMarkerIcon(color, 'active'));
         (this.editableMarker.dragging as any).enable();
         this.editableMarker.setZIndexOffset(1000);
@@ -111,8 +111,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private finishDrawing() {
 
-        if (this.drawMode == 'Line' && (this.map.pm.Draw as any).Line._layer.getLatLngs().length >= 2) {
-            ((this.map.pm.Draw as any).Line as any)._finishShape();
+        if (this.drawMode == 'Line' && (this.map.pm.Draw).Line._layer.getLatLngs().length >= 2) {
+            ((this.map.pm.Draw).Line)._finishShape();
         } else if (this.drawMode != 'None') {
             this.map.pm.disableDraw(this.drawMode);
         }
@@ -222,53 +222,44 @@ export class EditableMapComponent extends LayerMapComponent {
             this.map.removeLayer(this.editableMarker);
         }
 
-        this.editablePolygons = [] as any;
-        this.editablePolylines = [] as any;
+        this.editablePolygons = [];
+        this.editablePolylines = [];
         this.editableMarker = undefined;
 
-        if (this.drawMode != 'None') (this.map.pm as any).disableDraw(this.drawMode);
+        if (this.drawMode != 'None') this.map.pm.disableDraw(this.drawMode);
         this.drawMode = 'None';
 
-        (this.map as any).off('pm:create');
+        this.map.off('pm:create');
         this.hideMousePositionCoordinates();
     }
 
 
     private fadeOutMapElements() {
 
-        if (this.polygons)
-            for (let i in this.polygons) {
-                for (let polygon of this.polygons[i]) {
-                    if (!polygon.document) continue;
-                    if (!this.selectedDocument) continue;
+        if (!this.selectedDocument) return;
 
-                    if (polygon.document.resource.id != this.selectedDocument.resource.id) {
-                        polygon.setStyle({opacity: 0.25, fillOpacity: 0.1});
-                    }
-                }
-            }
+        if (this.polygons) {
+            Object.values(this.polygons)
+                .forEach(multiPolygon => multiPolygon
+                    .filter(polygon => polygon.document
+                        && polygon.document.resource.id != this.selectedDocument.resource.id)
+                    .forEach(polygon => polygon.setStyle({opacity: 0.25, fillOpacity: 0.1})));
+        }
 
-        if (this.polylines)
-            for (let i in this.polylines) {
-                for (let polyline of this.polylines[i]) {
-                    if (!polyline.document) continue;
-                    if (!this.selectedDocument) continue;
+        if (this.polylines) {
+            Object.values(this.polylines)
+                .forEach(multiPolyline => multiPolyline
+                    .filter(polyline => polyline.document
+                        && polyline.document.resource.id != this.selectedDocument.resource.id)
+                    .forEach(polyline => polyline.setStyle({opacity: 0.25})));
+        }
 
-                    if (polyline.document.resource.id != this.selectedDocument.resource.id) {
-                        polyline.setStyle({opacity: 0.25});
-                    }
-                }
-            }
-
-        if (this.markers)
-            for (let i in this.markers) {
-                if (!this.markers[i].document) continue;
-                if (!this.selectedDocument) continue;
-
-                if ((this.markers[i].document as any).resource.id != this.selectedDocument.resource.id) {
-                    (this.markers[i] as any).setOpacity(0.5);
-                }
-            }
+        if (this.markers) {
+            Object.values(this.markers)
+                .filter(marker => marker.document
+                        && marker.document.resource.id != this.selectedDocument.resource.id)
+                .forEach(marker => marker.setOpacity(0.5));
+        }
     }
 
 

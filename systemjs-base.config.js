@@ -15,11 +15,6 @@ config.packages['rxjs'] = {
     defaultExtension: 'js'
 };
 
-config.packages.lodash = {
-    main: 'index.js',
-    defaultExtension: 'js'
-};
-
 config.packages.node_modules = {
     defaultExtension: 'js'
 };
@@ -70,8 +65,7 @@ config.map = {
     'moment': 'node_modules/moment/min/moment-with-locales.js',
     'ip': 'node_modules/ip/lib/ip.js',
     'os': '@node/os',
-    'buffer': '@node/buffer',
-    'lodash': 'node_modules/lodash'
+    'buffer': '@node/buffer'
 };
 
 config.meta=  {

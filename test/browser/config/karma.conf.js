@@ -21,7 +21,6 @@ module.exports = function(config) {
             'node_modules/pouchdb/dist/pouchdb.js',
             { pattern: 'node_modules/@angular/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
-            { pattern: 'node_modules/lodash/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/angular2-uuid/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false },
 

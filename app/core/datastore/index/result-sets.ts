@@ -49,7 +49,7 @@ export class ResultSets {
         const copy = this.copy();
         if (!indexItems) return copy;
 
-        ResultSets.putToMap(copy.map, indexItems);
+        ResultSets.putTo(copy.map, indexItems);
 
         if (mode !== 'subtract') copy.addSets.push(indexItems.map(item => item.id));
         else copy.subtractSets.push(indexItems.map(item => item.id));
@@ -77,7 +77,7 @@ export class ResultSets {
      */
     public collapse(): Array<SimpleIndexItem> {
 
-        return ResultSets.pickFromMap(this.map,
+        return ResultSets.pickFrom(this.map,
 
             ListUtil.subtractTwo(
                 this.subtractSets,
@@ -103,13 +103,13 @@ export class ResultSets {
      */
     public unify(): Array<SimpleIndexItem> {
 
-        return ResultSets.pickFromMap(this.map,
+        return ResultSets.pickFrom(this.map,
 
             ListUtil.union(this.addSets));
     }
 
 
-    private static putToMap(map: IndexItemMap, set: Array<SimpleIndexItem>): void {
+    private static putTo(map: IndexItemMap, set: Array<SimpleIndexItem>): void {
 
         set.reduce((acc: any, item) => {
             acc[item.id] = item;
@@ -118,7 +118,7 @@ export class ResultSets {
     }
 
 
-    private static pickFromMap(map: IndexItemMap, indices: Array<string>):
+    private static pickFrom(map: IndexItemMap, indices: Array<string>):
         Array<SimpleIndexItem> {
 
         return indices.reduce((acc, index: string) => {

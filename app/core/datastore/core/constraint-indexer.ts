@@ -44,7 +44,7 @@ export class ConstraintIndexer {
     constructor(private indexDefinitions: { [name: string]: IndexDefinition }) {
 
         const validationError
-            = ConstraintIndexer.validateIndexDefinitions(ObjectUtil.getValues(this.indexDefinitions));
+            = ConstraintIndexer.validateIndexDefinitions(Object.values(this.indexDefinitions));
         if (validationError) throw validationError;
 
         this.setUp();
@@ -60,7 +60,7 @@ export class ConstraintIndexer {
     public put(doc: Document, skipRemoval: boolean = false) {
 
         if (!skipRemoval) this.remove(doc);
-        for (let indexDefinition of ObjectUtil.getValues(this.indexDefinitions)) {
+        for (let indexDefinition of Object.values(this.indexDefinitions)) {
             this.putFor(indexDefinition, doc);
         }
     }
@@ -68,7 +68,7 @@ export class ConstraintIndexer {
 
     public remove(doc: Document) {
 
-        for (let indexDefinition of ObjectUtil.getValues(this.indexDefinitions)) {
+        for (let indexDefinition of Object.values(this.indexDefinitions)) {
             const index: any = this.getIndex(indexDefinition);
 
             for (let key of Object.keys(index[indexDefinition.path])) {
@@ -138,7 +138,7 @@ export class ConstraintIndexer {
         this.matchIndex = {};
         this.existIndex = {};
 
-        for (let indexDefinition of ObjectUtil.getValues(this.indexDefinitions)) {
+        for (let indexDefinition of Object.values(this.indexDefinitions)) {
             this.getIndex(indexDefinition)[indexDefinition.path] = {};
         }
     }

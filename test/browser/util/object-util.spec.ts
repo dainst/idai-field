@@ -63,7 +63,7 @@ export function main() {
         });
 
 
-        fit('clone any clones array of array of strings', () => {
+        it('clone any clones array of array of strings', () => {
 
             expect(ObjectUtil.cloneAny([["a"],["b"]])).toEqual([["a"],["b"]]);
         })

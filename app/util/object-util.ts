@@ -49,18 +49,6 @@ export class ObjectUtil {
     }
 
 
-    public static getValues<T>(map: { [key: string]: T }): Array<T> {
-
-        const result: Array<T> = [];
-
-        for (let i in map) {
-            if (map.hasOwnProperty(i)) result.push(map[i]);
-        }
-
-        return result;
-    }
-
-
     public static getDuplicateValues(array: any[]): any[] {
 
         const temp: any[] = [];

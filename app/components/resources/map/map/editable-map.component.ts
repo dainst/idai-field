@@ -256,6 +256,26 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
+    private fadeInMapElements() {
+
+        if (this.polygons) {
+            Object.values(this.polygons).forEach(
+                this.forAll(this.applyStyle({opacity: 0.5, fillOpacity: 0.2})));
+        }
+
+        if (this.polylines)  {
+            Object.values(this.polylines).forEach(
+                this.forAll(this.applyStyle({opacity: 0.5})));
+        }
+
+        if (this.markers) {
+            this.forAll(this.applyOpacity(1))(
+                Object.values(this.markers)
+            );
+        }
+    }
+
+
     private applyStyle = (style: {opacity: number, fillOpacity?: number}) =>
         (elem: IdaiFieldPolygon|IdaiFieldPolyline) => elem.setStyle(style);
 
@@ -264,16 +284,30 @@ export class EditableMapComponent extends LayerMapComponent {
         (elem: IdaiFieldMarker) => elem.setOpacity(style);
 
 
+
+    private forAll<T>(f: (arg: T) => void) {
+
+        return this.forFiltered(f, (_) => true);
+    }
+
+
     /**
      * Returns a function that takes mapElements
      * and applies f on those which are unselected.
      */
     private forUnselected<T>(f: (arg: T) => void) {
 
+        return this.forFiltered(f, (elem: any) => elem.document
+            && elem.document.resource.id != this.selectedDocument.resource.id)
+    }
+
+
+    private forFiltered<T>(f: (arg: T) => void, filter: (arg: T) => boolean) {
+
         return (mapElements: Array<T>) =>
-            mapElements.filter((elem: any) => elem.document
-                && elem.document.resource.id != this.selectedDocument.resource.id)
-                    .forEach((item: any) => f(item));
+            mapElements
+                .filter(filter)
+                .forEach((item: any) => f(item));
     }
 
 
@@ -320,29 +354,6 @@ export class EditableMapComponent extends LayerMapComponent {
     public handleKeyEvent(event: KeyboardEvent) {
 
         if (event.key == 'Escape') this.finishDrawing();
-    }
-
-
-    private fadeInMapElements() {
-
-        if (this.polygons)
-            for (let i in this.polygons) {
-                for (let polygon of this.polygons[i]) {
-                    (polygon as any).setStyle({opacity: 0.5, fillOpacity: 0.2});
-                }
-            }
-
-        if (this.polylines)
-            for (let i in this.polylines) {
-                for (let polyline of this.polylines[i]) {
-                    polyline.setStyle({opacity: 0.5});
-                }
-            }
-
-        if (this.markers)
-            for (let i in this.markers) {
-                this.markers[i].setOpacity(1);
-            }
     }
 
 

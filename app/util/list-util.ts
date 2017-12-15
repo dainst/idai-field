@@ -1,3 +1,6 @@
+export type NestedArray<T> = Array<Array<T>>;
+
+
 /**
  * @author Daniel de Oliveira
  */
@@ -24,7 +27,7 @@ export class ListUtil {
     }
 
 
-    public static subtractTwo(sets: Array<Array<any>>, other: Array<any>): Array<any> {
+    public static subtractTwo(sets: NestedArray<any>, other: Array<any>): Array<any> {
 
         const result = JSON.parse(JSON.stringify(other));
 
@@ -40,7 +43,7 @@ export class ListUtil {
     }
 
 
-    public static intersect(a: Array<Array<any>>): Array<any> {
+    public static intersect(a: NestedArray<any>): Array<any> {
 
         return a.reduce((p, c) =>
             p.filter(e =>
@@ -50,7 +53,7 @@ export class ListUtil {
     }
 
 
-    public static union(sets: Array<Array<any>>) {
+    public static union(sets: NestedArray<any>) {
 
         return Object.keys(sets.reduce((result: any, set) => {
             set.forEach(item => result[item] = item);

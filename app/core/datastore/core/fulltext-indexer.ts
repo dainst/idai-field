@@ -95,7 +95,7 @@ export class FulltextIndexer {
                     FulltextIndexer.getForToken(this.index, token, types ? types : Object.keys(this.index))),
             ResultSets.make());
 
-        return resultSets.intersect();
+        return resultSets.collapse();
     }
 
 

@@ -1,24 +1,22 @@
-import {ListUtil} from '../../../util/list-util';
+import {ListUtil, NestedArray} from '../../../util/list-util';
 import {SimpleIndexItem} from './index-item';
 import {ObjectUtil} from "../../../util/object-util";
 
 
+type IndexItemMap = {[id: string]: SimpleIndexItem};
+
 /**
- * Companion object
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export class ResultSets {
 
-    private constructor(
-        private addSets: Array<  // multiple result sets
-            Array<            // a single result set
-                string
-                >>,
-        private subtractSets: Array<Array<string>>,
-        private map: {[id: string]: SimpleIndexItem}
-    ) {} // hide on purpose to force usage of make or copy
+    private constructor( // hide on purpose to force usage of make or copy
+
+        private addSets: NestedArray<string>,
+        private subtractSets: NestedArray<string>,
+        private map: IndexItemMap
+    ) {}
 
 
     public static make(): ResultSets {
@@ -45,23 +43,24 @@ export class ResultSets {
 
 
     public combine(
-        set: Array<SimpleIndexItem>|undefined,
+        indexItems: Array<SimpleIndexItem>|undefined,
         mode: string = 'add'): ResultSets {
 
         const copy = this.copy();
-        if (!set) return copy;
+        if (!indexItems) return copy;
 
-        ResultSets.putToMap(copy.map, set);
+        ResultSets.putToMap(copy.map, indexItems);
 
-        if (mode !== 'subtract') copy.addSets.push(set.map(item => item.id));
-        else copy.subtractSets.push(set.map(item => item.id));
+        if (mode !== 'subtract') copy.addSets.push(indexItems.map(item => item.id));
+        else copy.subtractSets.push(indexItems.map(item => item.id));
 
         return copy;
     }
 
 
     /**
-     * Finds the elements that are common to all sets. Elements from subtract sets are removed from the result.
+     * Finds the elements that are common to all sets.
+     * Elements from subtract sets are removed from the result.
      *
      * Assuming, one adds the two add sets
      *
@@ -72,11 +71,11 @@ export class ResultSets {
      *
      *   [{id:'3'}]
      *
-     * intersect would return
+     * collapse would return
      *
      *   [{id:'2'}]
      */
-    public intersect(): Array<SimpleIndexItem> {
+    public collapse(): Array<SimpleIndexItem> {
 
         return ResultSets.pickFromMap(this.map,
 
@@ -110,7 +109,7 @@ export class ResultSets {
     }
 
 
-    private static putToMap(map: {[id: string]: SimpleIndexItem}, set: Array<SimpleIndexItem>): void {
+    private static putToMap(map: IndexItemMap, set: Array<SimpleIndexItem>): void {
 
         set.reduce((acc: any, item) => {
             acc[item.id] = item;
@@ -119,7 +118,8 @@ export class ResultSets {
     }
 
 
-    private static pickFromMap(map: {[id: string]: SimpleIndexItem}, indices: Array<string>): Array<SimpleIndexItem> {
+    private static pickFromMap(map: IndexItemMap, indices: Array<string>):
+        Array<SimpleIndexItem> {
 
         return indices.reduce((acc, index: string) => {
             acc.push(map[index] as never);

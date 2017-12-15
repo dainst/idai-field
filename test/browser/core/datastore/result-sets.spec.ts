@@ -16,7 +16,7 @@ export function main() {
             r = r.combine([{id:'2'},{id:'2'}]);
             r = r.combine([{id:'2'},{id:'3'}]);
 
-            expect(r.intersect()).toEqual([{id:'2'}]);
+            expect(r.collapse()).toEqual([{id:'2'}]);
         });
 
 
@@ -27,7 +27,7 @@ export function main() {
             r = r.combine([{id:'1'},{id:'2'}]);
             r = r.combine([{id:'3'},{id:'4'}]);
 
-            expect(r.intersect()).toEqual([]);
+            expect(r.collapse()).toEqual([]);
         });
 
 
@@ -39,7 +39,7 @@ export function main() {
             r = r.combine([{id:'2'},{id:'3'}]);
             r = r.combine([{id:'4'},{id:'5'}]);
 
-            expect(r.intersect()).toEqual([]);
+            expect(r.collapse()).toEqual([]);
         });
 
 
@@ -50,7 +50,7 @@ export function main() {
             r = r.combine([{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }]);
             r = r.combine([{ id: '3' }, { id: '4' }], 'subtract');
 
-            expect(r.intersect()).toEqual([{ id: '1' }, { id: '2' }]);
+            expect(r.collapse()).toEqual([{ id: '1' }, { id: '2' }]);
         });
 
 
@@ -63,7 +63,7 @@ export function main() {
             r = r.combine([{ id: '3' }], 'subtract');
             r = r.combine([{ id: '4' }], 'subtract');
 
-            expect(r.intersect()).toEqual([{ id: '2' }]);
+            expect(r.collapse()).toEqual([{ id: '2' }]);
         });
     });
 }

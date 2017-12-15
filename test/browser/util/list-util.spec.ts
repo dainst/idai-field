@@ -1,4 +1,4 @@
-import {ListUtil} from '../../../app/util/list-util';
+import {ListUtil, NestedArray} from '../../../app/util/list-util';
 
 /**
  * @author Daniel de Oliveira

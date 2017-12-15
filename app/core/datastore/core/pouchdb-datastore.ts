@@ -257,7 +257,7 @@ export class PouchdbDatastore {
             (Query.isEmpty(query) && !resultSets.isEmpty() ?
                 resultSets :
                 this.performFulltext(query, resultSets))
-            .intersect() as Array<IndexItem>);
+            .collapse() as Array<IndexItem>);
     }
 
 

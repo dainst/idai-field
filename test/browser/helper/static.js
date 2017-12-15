@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var constraint_indexer_1 = require("../../../app/core/datastore/core/constraint-indexer");
-var fulltext_indexer_1 = require("../../../app/core/datastore/core/fulltext-indexer");
+var constraint_indexer_1 = require("../../../app/core/datastore/index/constraint-indexer");
+var fulltext_indexer_1 = require("../../../app/core/datastore/index/fulltext-indexer");
 var pouchdb_manager_1 = require("../../../app/core/datastore/core/pouchdb-manager");
 var document_cache_1 = require("../../../app/core/datastore/core/document-cache");
 var pouchdb_datastore_1 = require("../../../app/core/datastore/core/pouchdb-datastore");

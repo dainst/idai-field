@@ -80,7 +80,7 @@ export class ConstraintIndexer {
     }
 
 
-    public get(indexName: string, matchTerm: string): any {
+    public get(indexName: string, matchTerm: string): Array<IndexItem>|undefined {
 
         const indexDefinition: IndexDefinition = this.indexDefinitions[indexName];
 
@@ -92,11 +92,11 @@ export class ConstraintIndexer {
         const result = this.getIndex(indexDefinition)[indexDefinition.path][matchTerm];
         if (!result) return [];
 
-        return Object.keys(result).map(id => new Object({
+        return Object.keys(result).map(id => { return {
             id: id,
             date: result[id].date,
             identifier: result[id].identifier
-        }));
+        }});
     }
 
 

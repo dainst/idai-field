@@ -1,4 +1,4 @@
-import {ResultSets} from '../../../../app/core/datastore/core/result-sets';
+import {ResultSets} from '../../../../app/core/datastore/index/result-sets';
 
 /**
  * @author Daniel de Oliveira

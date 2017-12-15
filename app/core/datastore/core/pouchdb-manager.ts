@@ -4,8 +4,8 @@ import {Injectable} from "@angular/core";
 import {SampleDataLoader} from "./sample-data-loader";
 import {SyncState} from './sync-state';
 import {Observable} from 'rxjs/Observable';
-import {ConstraintIndexer} from "./constraint-indexer";
-import {FulltextIndexer} from "./fulltext-indexer";
+import {ConstraintIndexer} from "../index/constraint-indexer";
+import {FulltextIndexer} from "../index/fulltext-indexer";
 import {ModelUtil} from '../../model/model-util';
 
 const remote = require('electron').remote;

@@ -56,8 +56,8 @@ export class FulltextIndexer {
 
     private indexToken(id: string, token: string, type: string, indexItem: IndexItem) {
 
-        Array.from(token.toLowerCase()).
-            reduce((accumulator: string, letter: string) => {
+        Array.from(token.toLowerCase())
+            .reduce((accumulator: string, letter: string) => {
                 accumulator += letter;
                 if (!this.index[type][accumulator]) this.index[type][accumulator] = {};
                 this.index[type][accumulator][id] = indexItem;
@@ -84,7 +84,7 @@ export class FulltextIndexer {
      *   indexed under the specified types will be included in the results.
      * @returns {any} array of items
      */
-    public get(s: string, types: string[]|undefined): Array<any> {
+    public get(s: string, types: string[]|undefined): Array<IndexItem> {
 
         if (Object.keys(this.index).length == 0) return [];
 
@@ -95,7 +95,7 @@ export class FulltextIndexer {
                     FulltextIndexer.getForToken(this.index, token, types ? types : Object.keys(this.index))),
             ResultSets.make());
 
-        return resultSets.collapse();
+        return resultSets.collapse() as Array<IndexItem>;
     }
 
 

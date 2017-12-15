@@ -1,5 +1,5 @@
-import {ConstraintIndexer} from "../../../../app/core/datastore/core/constraint-indexer";
-import {IndexItem} from '../../../../app/core/datastore/core/index-item';
+import {ConstraintIndexer} from "../../../../app/core/datastore/index/constraint-indexer";
+import {IndexItem} from '../../../../app/core/datastore/index/index-item';
 
 /**
  * @author Daniel de Oliveira

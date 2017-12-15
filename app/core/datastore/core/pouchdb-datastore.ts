@@ -4,14 +4,14 @@ import {IdGenerator} from './id-generator';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import {PouchdbManager} from './pouchdb-manager';
-import {ResultSets} from './result-sets';
-import {ConstraintIndexer} from './constraint-indexer';
-import {FulltextIndexer} from './fulltext-indexer';
+import {ResultSets} from '../index/result-sets';
+import {ConstraintIndexer} from '../index/constraint-indexer';
+import {FulltextIndexer} from '../index/fulltext-indexer';
 import {AppState} from '../../settings/app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
 import {ConflictResolver} from './conflict-resolver';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
-import {IndexItem} from "./index-item";
+import {IndexItem} from "../index/index-item";
 
 /**
  * @author Sebastian Cuy

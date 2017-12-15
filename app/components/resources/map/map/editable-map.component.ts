@@ -287,8 +287,12 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private forAll<T>(f: (arg: T) => void) {
 
-        return this.forFiltered(f, (_) => true);
+        return this.forFiltered(f, () => true);
     }
+
+
+    private notSelected = (elem: any) =>
+        elem.document && elem.document.resource.id != this.selectedDocument.resource.id;
 
 
     /**
@@ -297,8 +301,7 @@ export class EditableMapComponent extends LayerMapComponent {
      */
     private forUnselected<T>(f: (arg: T) => void) {
 
-        return this.forFiltered(f, (elem: any) => elem.document
-            && elem.document.resource.id != this.selectedDocument.resource.id)
+        return this.forFiltered(f, this.notSelected);
     }
 
 

@@ -256,11 +256,11 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private applyStyle = (style: any) =>
+    private applyStyle = (style: {opacity: number, fillOpacity?: number}) =>
         (elem: IdaiFieldPolygon|IdaiFieldPolyline) => elem.setStyle(style);
 
 
-    private applyOpacity = (style: any) =>
+    private applyOpacity = (style: number) =>
         (elem: IdaiFieldMarker) => elem.setOpacity(style);
 
 

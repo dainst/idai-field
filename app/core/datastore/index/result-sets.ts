@@ -108,16 +108,14 @@ export class ResultSets {
 
         return ResultSets.pickFrom(this.map,
 
-            ListUtil.union(this.addSets));
+            ListUtil.union(this.addSets)
+        );
     }
 
 
     private static putTo(map: IndexItemMap, set: Array<SimpleIndexItem>): void {
 
-        set.reduce((acc: any, item) => {
-            acc[item.id] = item;
-            return acc;
-        }, map);
+        set.forEach(item => map[item.id] = item);
     }
 
 
@@ -125,8 +123,8 @@ export class ResultSets {
         Array<SimpleIndexItem> {
 
         return indices.reduce((acc, index: string) => {
-            acc.push(map[index] as never);
-            return acc;
-        }, []);
+                acc.push(map[index] as never);
+                return acc;
+            }, []);
     }
 }

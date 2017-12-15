@@ -1,5 +1,6 @@
 import {ListUtil} from '../../../util/list-util';
 import {SimpleIndexItem} from './index-item';
+import {ObjectUtil} from "../../../util/object-util";
 
 
 /**
@@ -29,9 +30,9 @@ export class ResultSets {
     public copy(): ResultSets {
 
         return new ResultSets(
-            JSON.parse(JSON.stringify(this.addSets)),
-            JSON.parse(JSON.stringify(this.subtractSets)),
-            JSON.parse(JSON.stringify(this.map))
+            ObjectUtil.cloneAny(this.addSets),
+            ObjectUtil.cloneAny(this.subtractSets),
+            ObjectUtil.cloneAny(this.map)
         );
     }
 

@@ -1,6 +1,7 @@
 import {Document} from 'idai-components-2/core';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
+import {ObjectUtil} from '../../../util/object-util';
 
 /**
  * @author Daniel de Oliveira
@@ -144,6 +145,6 @@ export class FulltextIndexer {
         return (!index[type] || !index[type][s]) ?
             resultSets.copy() :
             resultSets.copy().combine(
-                Object.keys(index[type][s]).map(id => IndexItem.copy(index[type][s][id])));
+                Object.keys(index[type][s]).map(id => ObjectUtil.cloneObject(index[type][s][id])));
     }
 }

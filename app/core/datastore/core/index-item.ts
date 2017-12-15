@@ -62,10 +62,4 @@ export class IndexItem {
                 SortUtil.alnumCompare(a['identifier'], b['identifier']))
             .map((e: any) => e['id']);
     }
-
-
-    public static copy(indexItem: IndexItem): IndexItem {
-
-        return JSON.parse(JSON.stringify(indexItem));
-    }
 }

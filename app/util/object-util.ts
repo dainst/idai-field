@@ -37,6 +37,12 @@ export class ObjectUtil {
     }
 
 
+    public static cloneAny(object: any): any {
+
+        return JSON.parse(JSON.stringify(object));
+    }
+
+
     public static isEmpty(object: Object): boolean {
 
         return Object.keys(object).length == 0;

@@ -1,6 +1,5 @@
-import {IndexItem} from "./index-item";
-import {SortUtil} from '../../../util/sort-util';
 import {ListUtil} from '../../../util/list-util';
+import {SimpleIndexItem} from './index-item';
 
 
 /**
@@ -17,7 +16,7 @@ export class ResultSets {
                 string
                 >>,
         private subtractSets: Array<Array<string>>,
-        private map: {[id: string]: IndexItem}
+        private map: {[id: string]: SimpleIndexItem}
     ) {} // hide on purpose to force usage of make or copy
 
 
@@ -45,7 +44,7 @@ export class ResultSets {
 
 
     public combine(
-        set: Array<IndexItem>|undefined,
+        set: Array<SimpleIndexItem>|undefined,
         mode: string = 'add'): ResultSets {
 
         const copy = this.copy();
@@ -76,7 +75,7 @@ export class ResultSets {
      *
      *   [{id:'2'}]
      */
-    public intersect(): Array<IndexItem> {
+    public intersect(): Array<SimpleIndexItem> {
 
         return ResultSets.pickFromMap(this.map,
 
@@ -102,7 +101,7 @@ export class ResultSets {
      *
      *   [{id:'1'}, {id:'2'}, {id:'3'}]
      */
-    public unify(): Array<IndexItem> {
+    public unify(): Array<SimpleIndexItem> {
 
         return ResultSets.pickFromMap(this.map,
 
@@ -110,17 +109,7 @@ export class ResultSets {
     }
 
 
-    public static generateOrderedResultList(resultSets: ResultSets): Array<any> {
-
-        return resultSets.intersect()
-            .sort((a: any, b: any) =>
-                // we know that an IndexItem created with from has the identifier field
-                SortUtil.alnumCompare(a['identifier'], b['identifier']))
-            .map((e: any) => e['id']);
-    }
-
-
-    private static putToMap(map: {[id: string]: IndexItem}, set: Array<IndexItem>): void {
+    private static putToMap(map: {[id: string]: SimpleIndexItem}, set: Array<SimpleIndexItem>): void {
 
         set.reduce((acc: any, item) => {
             acc[item.id] = item;
@@ -129,7 +118,7 @@ export class ResultSets {
     }
 
 
-    private static pickFromMap(map: {[id: string]: IndexItem}, indices: Array<string>): Array<IndexItem> {
+    private static pickFromMap(map: {[id: string]: SimpleIndexItem}, indices: Array<string>): Array<SimpleIndexItem> {
 
         return indices.reduce((acc, index: string) => {
             acc.push(map[index] as never);

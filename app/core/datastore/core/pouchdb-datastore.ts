@@ -11,6 +11,7 @@ import {AppState} from '../../settings/app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
 import {ConflictResolver} from './conflict-resolver';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
+import {IndexItem} from "./index-item";
 
 /**
  * @author Sebastian Cuy
@@ -252,10 +253,11 @@ export class PouchdbDatastore {
             this.performThem(query.constraints) :
             ResultSets.make();
 
-        return ResultSets.generateOrderedResultList(
-            Query.isEmpty(query) && !resultSets.isEmpty() ?
+        return IndexItem.generateOrderedResultList(
+            (Query.isEmpty(query) && !resultSets.isEmpty() ?
                 resultSets :
-                this.performFulltext(query, resultSets));
+                this.performFulltext(query, resultSets))
+            .intersect() as Array<IndexItem>);
     }
 
 

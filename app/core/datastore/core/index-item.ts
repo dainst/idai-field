@@ -1,9 +1,15 @@
 import {Document, Action} from 'idai-components-2/core';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
+import {SortUtil} from '../../../util/sort-util';
 
-export interface IndexItem {
+
+export interface SimpleIndexItem {
 
     id: string;
+}
+
+export interface IndexItem extends SimpleIndexItem {
+
     date: Date,
     identifier: string
 }
@@ -45,6 +51,16 @@ export class IndexItem {
             date: lastModified.date as Date,
             identifier: document.resource['identifier']
         };
+    }
+
+
+    public static generateOrderedResultList(items: Array<IndexItem>): Array<any> {
+
+        return items
+            .sort((a: any, b: any) =>
+                // we know that an IndexItem created with from has the identifier field
+                SortUtil.alnumCompare(a['identifier'], b['identifier']))
+            .map((e: any) => e['id']);
     }
 
 

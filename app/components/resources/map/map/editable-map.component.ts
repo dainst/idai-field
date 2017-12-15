@@ -238,15 +238,11 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (!this.selectedDocument) return;
 
-        if (this.polygons) {
-            Object.values(this.polygons).forEach(
-                this.forUnselected(this.applyStyle({opacity: 0.25, fillOpacity: 0.1})));
-        }
+        Object.values(this.polygons || []).forEach(
+            this.forUnselected(this.applyStyle({opacity: 0.25, fillOpacity: 0.1})));
 
-        if (this.polylines) {
-            Object.values(this.polylines).forEach(
-                this.forUnselected(this.applyStyle({opacity: 0.25})));
-        }
+        Object.values(this.polylines || []).forEach(
+            this.forUnselected(this.applyStyle({opacity: 0.25})));
 
         if (this.markers) {
             this.forUnselected(this.applyOpacity(0.5))(
@@ -258,15 +254,11 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private fadeInMapElements() {
 
-        if (this.polygons) {
-            Object.values(this.polygons).forEach(
-                this.forAll(this.applyStyle({opacity: 0.5, fillOpacity: 0.2})));
-        }
+        Object.values(this.polygons || []).forEach(
+            this.forAll(this.applyStyle({opacity: 0.5, fillOpacity: 0.2})));
 
-        if (this.polylines)  {
-            Object.values(this.polylines).forEach(
-                this.forAll(this.applyStyle({opacity: 0.5})));
-        }
+        Object.values(this.polylines || []).forEach(
+            this.forAll(this.applyStyle({opacity: 0.5})));
 
         if (this.markers) {
             this.forAll(this.applyOpacity(1))(

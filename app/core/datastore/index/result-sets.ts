@@ -11,7 +11,10 @@ type IndexItemMap = {[id: string]: SimpleIndexItem};
  */
 export class ResultSets {
 
-    private constructor( // hide on purpose to force usage of make or copy
+    // Hide constructor on purpose to force usage of make or copy.
+    // This way one can not modify the sets directly. One can
+    // only start with make or copy and then modify via combine.
+    private constructor(
 
         private addSets: NestedArray<string>,
         private subtractSets: NestedArray<string>,

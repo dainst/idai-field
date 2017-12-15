@@ -239,29 +239,35 @@ export class EditableMapComponent extends LayerMapComponent {
         if (!this.selectedDocument) return;
 
         if (this.polygons) {
-            Object.values(this.polygons).forEach(multiPolygon =>
-                this.getUnselected<IdaiFieldPolygon>(
-                    multiPolygon, polygon => polygon.setStyle({opacity: 0.25, fillOpacity: 0.1})));
+            Object.values(this.polygons).forEach(
+                this.forUnselected<IdaiFieldPolygon>(
+                    polygon => polygon.setStyle({opacity: 0.25, fillOpacity: 0.1})));
         }
 
         if (this.polylines) {
-            Object.values(this.polylines).forEach(multiPolyline =>
-                this.getUnselected<IdaiFieldPolyline>(
-                    multiPolyline, polyline => polyline.setStyle({opacity: 0.25})));
+            Object.values(this.polylines).forEach(
+                this.forUnselected<IdaiFieldPolyline>(
+                    polyline => polyline.setStyle({opacity: 0.25})));
         }
 
         if (this.markers) {
-            this.getUnselected<IdaiFieldMarker>(
-                Object.values(this.markers), marker => marker.setOpacity(0.5));
+            this.forUnselected<IdaiFieldMarker>(marker => marker.setOpacity(0.5))(
+                Object.values(this.markers)
+            );
         }
     }
 
 
-    private getUnselected<T>(mapElements: Array<T>, cb: (arg: T) => void) {
+    /**
+     * Returns a function that takes mapElements
+     * and applies f on those which are unselected.
+     */
+    private forUnselected<T>(f: (arg: T) => void) {
 
-        mapElements.filter((item: any) => item.document
-            && item.document.resource.id != this.selectedDocument.resource.id)
-                .forEach((item: any) => cb(item));
+        return (mapElements: Array<T>) =>
+            mapElements.filter((elem: any) => elem.document
+                && elem.document.resource.id != this.selectedDocument.resource.id)
+                    .forEach((item: any) => f(item));
     }
 
 

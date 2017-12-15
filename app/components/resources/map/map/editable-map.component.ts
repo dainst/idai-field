@@ -240,22 +240,28 @@ export class EditableMapComponent extends LayerMapComponent {
 
         if (this.polygons) {
             Object.values(this.polygons).forEach(
-                this.forUnselected<IdaiFieldPolygon>(
-                    polygon => polygon.setStyle({opacity: 0.25, fillOpacity: 0.1})));
+                this.forUnselected(this.applyStyle({opacity: 0.25, fillOpacity: 0.1})));
         }
 
         if (this.polylines) {
             Object.values(this.polylines).forEach(
-                this.forUnselected<IdaiFieldPolyline>(
-                    polyline => polyline.setStyle({opacity: 0.25})));
+                this.forUnselected(this.applyStyle({opacity: 0.25})));
         }
 
         if (this.markers) {
-            this.forUnselected<IdaiFieldMarker>(marker => marker.setOpacity(0.5))(
+            this.forUnselected(this.applyOpacity(0.5))(
                 Object.values(this.markers)
             );
         }
     }
+
+
+    private applyStyle = (style: any) =>
+        (elem: IdaiFieldPolygon|IdaiFieldPolyline) => elem.setStyle(style);
+
+
+    private applyOpacity = (style: any) =>
+        (elem: IdaiFieldMarker) => elem.setOpacity(style);
 
 
     /**

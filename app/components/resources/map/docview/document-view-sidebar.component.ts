@@ -1,15 +1,15 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {Messages} from 'idai-components-2/messages';
 import {ResourcesComponent} from '../../resources.component';
 import {ObjectUtil} from '../../../../util/object-util';
 import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../view/view-facade';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ImageUploader} from "../../../imageupload/image-uploader";
-import {M} from "../../../../m";
-import {Messages} from 'idai-components-2/messages';
+import {ImageUploader} from '../../../imageupload/image-uploader';
+import {M} from '../../../../m';
 
 
 @Component({
@@ -27,7 +27,8 @@ export class DocumentViewSidebarComponent {
     @ViewChild('tabs') tabs: NgbTabset;
 
     // for clean and refactor safe template, and to help find usages
-    public jumpToRelationTarget = (documentToSelect: Document) => this.routingService.jumpToRelationTarget(documentToSelect, 'relations');
+    public jumpToRelationTarget= (documentToSelect: Document) => this.routingService.jumpToRelationTarget(
+        documentToSelect, 'relations');
 
 
     constructor(

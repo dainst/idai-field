@@ -48,8 +48,7 @@ export class ListComponent implements OnChanges {
 
         // The timeout is necessary to make the loading icon appear
         setTimeout(async () => {
-            if (this.viewFacade.getDocuments() && this.viewFacade.getDocuments().length > 0) {
-
+            if (this.viewFacade.getDocuments()) {
                 if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve();
                 this.docs = this.viewFacade.getDocuments() as IdaiFieldDocument[];
                 this.docRefTree = await this.listTree.buildTreeFrom(this.viewFacade.getDocuments() as IdaiFieldDocument[], true);

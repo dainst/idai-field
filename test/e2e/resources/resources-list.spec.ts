@@ -1,4 +1,4 @@
-import {browser, protractor, element, by} from 'protractor';
+import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from './resources.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
@@ -28,7 +28,6 @@ describe('resources/list --', () => {
         }
         index++;
     });
-
 
 
     it('show newly created resource in list view', () => {
@@ -77,6 +76,10 @@ describe('resources/list --', () => {
         SearchBarPage.typeInSearchField('testf1');
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
+
+        SearchBarPage.typeInSearchField('abc');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
     });
 
 
@@ -85,5 +88,9 @@ describe('resources/list --', () => {
         SearchBarPage.clickChooseTypeFilter('find');
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
+
+        SearchBarPage.clickChooseTypeFilter('processunit');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
     });
 });

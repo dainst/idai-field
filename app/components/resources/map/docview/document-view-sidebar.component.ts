@@ -27,7 +27,7 @@ export class DocumentViewSidebarComponent {
     @ViewChild('tabs') tabs: NgbTabset;
 
     // for clean and refactor safe template, and to help find usages
-    public jumpToRelationTarget= (documentToSelect: Document) => this.routingService.jumpToRelationTarget(
+    public jumpToRelationTarget = (documentToSelect: Document) => this.routingService.jumpToRelationTarget(
         documentToSelect, 'relations');
 
 

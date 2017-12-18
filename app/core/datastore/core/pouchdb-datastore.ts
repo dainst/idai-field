@@ -1,8 +1,8 @@
+import {Observable} from 'rxjs/Observable';
+import {Observer} from 'rxjs/Observer';
 import {Constraint, DatastoreErrors, Query} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
-import {Observable} from 'rxjs/Observable';
-import {Observer} from 'rxjs/Observer';
 import {PouchdbManager} from './pouchdb-manager';
 import {ResultSets} from '../index/result-sets';
 import {ConstraintIndexer} from '../index/constraint-indexer';
@@ -388,7 +388,7 @@ export class PouchdbDatastore {
         try {
             this.notifyRemoteChangesObservers(document);
         } catch (e) {
-            console.error('Error while notify observer');
+            console.error('Error while notifying observers');
         }
 
         this.notifyAllChangesAndDeletionsObservers();
@@ -413,9 +413,11 @@ export class PouchdbDatastore {
     private static convertDates(result: any): Document {
 
         result.created.date = new Date(result.created.date);
+
         for (let modified of result.modified) {
             modified.date = new Date(modified.date);
         }
+
         return result;
     }
 }

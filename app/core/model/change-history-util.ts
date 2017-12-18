@@ -33,7 +33,7 @@ export class ChangeHistoryUtil {
         if (document.modified && document.modified.length > 0) {
             return document.modified[document.modified.length - 1];
         } else {
-            return document.created as any;
+            return document.created as Action;
         }
     }
 

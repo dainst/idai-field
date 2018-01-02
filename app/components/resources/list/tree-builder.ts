@@ -19,7 +19,7 @@ export class TreeBuilder {
 
         return TreeBuilder.buildTreeFromLiesWithinRelations(
             await this.addMissingParentsTo(
-                TreeBuilder.buildDocRefMap(documents))
+                TreeBuilder.buildNodesMap(documents))
         );
     }
 
@@ -81,8 +81,8 @@ export class TreeBuilder {
     }
 
 
-    private static buildDocRefMap(documents: Array<IdaiFieldDocument>):
-        {[type: string]: Node} {
+    private static buildNodesMap(documents: Array<IdaiFieldDocument>):
+        {[resourceId: string]: Node} {
 
         return documents.reduce((docRefMap: any, doc) => {
                 docRefMap[doc.resource.id as any] =

@@ -1,26 +1,26 @@
-import {DocumentReference} from './document-reference';
+import {Node} from './node';
 import {IdaiFieldDocumentDatastore} from '../../../core/datastore/idai-field-document-datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
 /**
  *
  */
-export class ListTree {
+export class TreeBuilder {
 
     public childrenShownForIds: string[] = [];
 
     constructor(private datastore: IdaiFieldDocumentDatastore) {}
 
 
-	public async buildTreeFrom(
+	public async from(
 	    documents: Array<IdaiFieldDocument>,
-        keepShownChildren?: boolean): Promise<DocumentReference[]> {
+        keepShownChildren?: boolean): Promise<Node[]> {
 
         if (!keepShownChildren) this.childrenShownForIds = [];
 
-        return ListTree.buildTreeFromLiesWithinRelations(
+        return TreeBuilder.buildTreeFromLiesWithinRelations(
             await this.addMissingParentsTo(
-                ListTree.buildDocRefMap(documents),
+                TreeBuilder.buildDocRefMap(documents),
                 this.childrenShownForIds)
         );
     }
@@ -48,7 +48,7 @@ export class ListTree {
 
 
     private async addMissingParentsTo(
-        docRefMap: {[type: string]: DocumentReference},
+        docRefMap: {[type: string]: Node},
         childrenShownForIds: any): Promise<any> {
 
         const promises: Array<Promise<any>> = [];
@@ -78,9 +78,9 @@ export class ListTree {
 
 
     private static buildTreeFromLiesWithinRelations(
-        docRefMap: {[type: string]: DocumentReference}): DocumentReference[] {
+        docRefMap: {[type: string]: Node}): Node[] {
 
-        const docRefTree: DocumentReference[] = [];
+        const docRefTree: Node[] = [];
 
         for (let docId in docRefMap) {
 
@@ -102,7 +102,7 @@ export class ListTree {
 
 
     private static buildDocRefMap(documents: Array<IdaiFieldDocument>):
-        {[type: string]: DocumentReference} {
+        {[type: string]: Node} {
 
         return documents.reduce((docRefMap: any, doc) => {
                 docRefMap[doc.resource.id as any] =

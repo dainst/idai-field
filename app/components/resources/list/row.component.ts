@@ -8,7 +8,7 @@ import {M} from '../../../m';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
 import {ListComponent} from "./list.component";
-import {DocumentReference} from "./document-reference";
+import {Node} from "./node";
 import {ViewFacade} from '../view/view-facade';
 import {IdaiFieldDocumentDatastore} from "../../../core/datastore/idai-field-document-datastore";
 import {PersistenceManager} from "../../../core/persist/persistence-manager";
@@ -24,7 +24,7 @@ import {PersistenceManager} from "../../../core/persist/persistence-manager";
  */
 export class RowComponent {
 
-    @Input() docRef: DocumentReference;
+    @Input() docRef: Node;
     @Input() depth: number;
     @Input() typesMap: { [type: string]: IdaiType };
 

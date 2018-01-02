@@ -2,11 +2,11 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {ResourcesComponent} from '../resources.component';
-import {DocumentReference} from './document-reference';
+import {Node} from './node';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
 import {IdaiFieldDocumentDatastore} from '../../../core/datastore/idai-field-document-datastore';
-import {ListTree} from './list-tree';
+import {TreeBuilder} from './tree-builder';
 
 @Component({
     selector: 'list',
@@ -14,6 +14,8 @@ import {ListTree} from './list-tree';
     templateUrl: './list.html'
 })
 /**
+ * A hierarchical view of resources
+ *
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
@@ -26,8 +28,8 @@ export class ListComponent implements OnChanges {
 
     public typesMap: { [type: string]: IdaiType };
 
-    public listTree: ListTree;
-    public docRefTree: DocumentReference[] = [];
+    public listTree: TreeBuilder;
+    public docRefTree: Node[] = [];
 
     constructor(
         private datastore: IdaiFieldDocumentDatastore,
@@ -37,7 +39,7 @@ export class ListComponent implements OnChanges {
         public viewFacade: ViewFacade
     ) {
         this.typesMap = projectConfiguration.getTypesMap();
-        this.listTree = new ListTree(datastore);
+        this.listTree = new TreeBuilder(datastore);
     }
 
 
@@ -51,7 +53,7 @@ export class ListComponent implements OnChanges {
             if (this.viewFacade.getDocuments()) {
                 if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve();
                 this.docs = this.viewFacade.getDocuments() as IdaiFieldDocument[];
-                this.docRefTree = await this.listTree.buildTreeFrom(this.viewFacade.getDocuments() as IdaiFieldDocument[], true);
+                this.docRefTree = await this.listTree.from(this.viewFacade.getDocuments() as IdaiFieldDocument[], true);
             }
             this.loading.stop();
         }, 1);
@@ -94,6 +96,6 @@ export class ListComponent implements OnChanges {
         }
 
         this.docs = docs;
-        this.docRefTree = await this.listTree.buildTreeFrom(docs, true);
+        this.docRefTree = await this.listTree.from(docs, true);
     }
 }

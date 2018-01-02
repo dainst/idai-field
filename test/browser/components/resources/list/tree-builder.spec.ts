@@ -1,6 +1,6 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Static} from "../../../helper/static";
-import {ListTree} from '../../../../../app/components/resources/list/list-tree';
+import {TreeBuilder} from '../../../../../app/components/resources/list/tree-builder';
 
 
 /**
@@ -8,7 +8,7 @@ import {ListTree} from '../../../../../app/components/resources/list/list-tree';
  */
 export function main() {
 
-    describe('ListTree', () => {
+    describe('TreeBuilder', () => {
 
         let mockDatastore;
 
@@ -23,8 +23,8 @@ export function main() {
             const doc2 = Static.doc('sd2', 'ident2', 'Find', 'id2');
             const documents = [doc1, doc2] as Array<IdaiFieldDocument>;
 
-            const listTree = new ListTree(mockDatastore);
-            const docRefTree = await listTree.buildTreeFrom(documents);
+            const listTree = new TreeBuilder(mockDatastore);
+            const docRefTree = await listTree.from(documents);
 
             expect(docRefTree.length).toBe(2);
             done();
@@ -38,8 +38,8 @@ export function main() {
             doc2.resource.relations['liesWithin'] = ['id1'];
             const documents = [doc1, doc2] as Array<IdaiFieldDocument>;
 
-            const listTree = new ListTree(mockDatastore);
-            const docRefTree = await listTree.buildTreeFrom(documents);
+            const listTree = new TreeBuilder(mockDatastore);
+            const docRefTree = await listTree.from(documents);
 
             expect(docRefTree.length).toBe(1);
             expect(docRefTree[0].children.length).toBe(1);
@@ -56,8 +56,8 @@ export function main() {
             doc2.resource.relations['liesWithin'] = ['id1'];
             const documents = [doc2] as Array<IdaiFieldDocument>;
 
-            const listTree = new ListTree(mockDatastore);
-            const docRefTree = await listTree.buildTreeFrom(documents);
+            const listTree = new TreeBuilder(mockDatastore);
+            const docRefTree = await listTree.from(documents);
 
             expect(docRefTree.length).toBe(1);
             expect(docRefTree[0].children.length).toBe(1);

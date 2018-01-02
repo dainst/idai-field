@@ -6,8 +6,8 @@
         <div class="col-md-2">Optionen</div>
     </div>
     <div id="list-body">
-        <div *ngFor="let docRef of docRefTree">
-            <row [docRef]="docRef" [depth]=0 [typesMap]="typesMap"></row>
+        <div *ngFor="let docRef of tree">
+            <row [node]="docRef" [depth]=0 [typesMap]="typesMap"></row>
         </div>
     </div>
     <plus-button *ngIf="showPlusButton()"

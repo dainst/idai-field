@@ -1,43 +1,53 @@
 import {Node} from './node';
 import {IdaiFieldDocumentDatastore} from '../../../core/datastore/idai-field-document-datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {FoldState} from './fold-state';
 
 /**
  *
  */
 export class TreeBuilder {
 
-    public childrenShownForIds: string[] = [];
-
-    constructor(private datastore: IdaiFieldDocumentDatastore) {}
+    constructor(
+        private datastore: IdaiFieldDocumentDatastore,
+        private foldStatus: FoldState
+    ) {}
 
 
 	public async from(
-	    documents: Array<IdaiFieldDocument>,
-        keepShownChildren?: boolean): Promise<Node[]> {
-
-        if (!keepShownChildren) this.childrenShownForIds = [];
+	    documents: Array<IdaiFieldDocument>): Promise<Node[]> {
 
         return TreeBuilder.buildTreeFromLiesWithinRelations(
             await this.addMissingParentsTo(
-                TreeBuilder.buildDocRefMap(documents),
-                this.childrenShownForIds)
+                TreeBuilder.buildDocRefMap(documents))
         );
     }
 
 
-    public toggleChildrenForId(id: string) {
+    private async addMissingParentsTo(
+        nodesMap: {[resourceId: string]: Node}): Promise<any> {
 
-        const index = this.childrenShownForIds.indexOf(id);
-        index != -1 ?
-            this.childrenShownForIds.splice(index, 1) :
-            this.childrenShownForIds.push(id);
-    }
+        const promises: Array<Promise<any>> = [];
 
+        for (let docId in nodesMap) {
+            let doc = nodesMap[docId].doc;
 
-    public childrenHiddenFor(id: string): boolean {
+            if (!doc.resource.relations['liesWithin'] || doc.resource.relations['liesWithin'].length < 1) continue; 
+            for (let parentId of doc.resource.relations['liesWithin']) {
+                if (!nodesMap[parentId]) {
+                    promises.push(this.getBy(parentId).then((pdoc: any) => {
+                        nodesMap[parentId] = { doc: pdoc, children: [] };
+                        this.foldStatus.add(parentId);
+                        if (pdoc.resource.relations['liesWithin'] && pdoc.resource.relations['liesWithin'].length > 0) {
+                            promises.push(this.addMissingParentsTo(nodesMap));
+                        }
+                    }));
+                }
+            }
+        }
 
-        return this.childrenShownForIds.indexOf(id) == -1
+        await Promise.all(promises);
+        return nodesMap;
     }
 
 
@@ -47,52 +57,22 @@ export class TreeBuilder {
     }
 
 
-    private async addMissingParentsTo(
-        docRefMap: {[type: string]: Node},
-        childrenShownForIds: any): Promise<any> {
-
-        const promises: Array<Promise<any>> = [];
-
-        for (let docId in docRefMap) {
-            let doc = docRefMap[docId].doc;
-
-            if (!doc.resource.relations['liesWithin'] || doc.resource.relations['liesWithin'].length < 1) continue; 
-            for (let parentId of doc.resource.relations['liesWithin']) {
-                if (!docRefMap[parentId]) {
-                    promises.push(this.getBy(parentId).then((pdoc: any) => {
-                        docRefMap[parentId] = { doc: pdoc, children: [] };
-                        childrenShownForIds.push(parentId);
-                        if (pdoc.resource.relations['liesWithin'] && pdoc.resource.relations['liesWithin'].length > 0)
-                            promises.push(
-                                this.addMissingParentsTo(
-                                    docRefMap,
-                                    childrenShownForIds));
-                    }));
-                }
-            }
-        }
-
-        await Promise.all(promises);
-        return docRefMap;
-    }
-
-
     private static buildTreeFromLiesWithinRelations(
-        docRefMap: {[type: string]: Node}): Node[] {
+        nodesMap: {[resourceId: string]: Node}): Node[] {
 
         const docRefTree: Node[] = [];
 
-        for (let docId in docRefMap) {
+        for (let docId in nodesMap) {
 
-            const doc = docRefMap[docId].doc;
-            const docRef = docRefMap[doc.resource.id as any];
+            const doc = nodesMap[docId].doc;
+            const docRef = nodesMap[doc.resource.id as any];
 
             if (!doc.resource.relations['liesWithin']) {
                 docRefTree.push(docRef);
             } else {
                 for (let parentId of doc.resource.relations['liesWithin']) {
-                    docRefMap[parentId].children.push(docRef);
-                    docRef.parent = docRefMap[parentId];
+                    nodesMap[parentId].children.push(docRef);
+                    docRef.parent = nodesMap[parentId];
                 }
             }
         }

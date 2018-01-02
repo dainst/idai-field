@@ -1,51 +1,50 @@
-<div 
-        id="{{docRef.doc.resource.id ? 'resource-'+docRef.doc.resource.identifier : 'new-resource'}}" (dblclick)="resourcesComponent.editDocument(docRef.doc)"
-        class="row py-3 list-row" [class.bg-light]="depth == 0"
-        [class.no-search-result]="!listComponent.documentsInclude(docRef.doc)">
+<div id="{{node.doc.resource.id ? 'resource-'+node.doc.resource.identifier : 'new-resource'}}" (dblclick)="resourcesComponent.editDocument(node.doc)"
+     class="row py-3 list-row" [class.bg-light]="depth == 0"
+     [class.no-search-result]="!listComponent.documentsInclude(node.doc)">
     <div class="col-md-3 list-row-left" [style.padding-left]="(1+depth*2) + 'rem'"
          [class.font-weight-bold]="depth == 0">
         <div class="plus-button-wrapper">
-            <plus-button *ngIf="docRef.doc.resource.id && listComponent.documentsInclude(docRef.doc)"
+            <plus-button *ngIf="node.doc.resource.id && listComponent.documentsInclude(node.doc)"
                          [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()" 
-                         [liesWithin]="docRef.doc"
+                         [liesWithin]="node.doc"
                          [preselectedGeometryType]="'none'"
                          (dblclick)="$event.stopPropagation();"
                          [skipFormAndReturnNewDocument]="true"
                          (documentRequested)="listComponent.createNewDocument($event)"></plus-button>
         </div>
 
-        <span class="list-type-label" [class.text-info]="!docRef.doc.resource.id">{{typesMap[docRef.doc.resource.type].label}}</span><br>
-        <span *ngIf="docRef.children.length > 0"
-                (click)="listComponent.listTree.toggleChildrenForId(docRef.doc.resource.id)"
+        <span class="list-type-label" [class.text-info]="!node.doc.resource.id">{{typesMap[node.doc.resource.type].label}}</span><br>
+        <span *ngIf="node.children.length > 0"
+                (click)="foldState.toggleChildrenForId(node.doc.resource.id)"
                 class="btn btn-sm btn-link p-0">
-             <span class="mdi h5" [class.mdi-chevron-down]="!listComponent.listTree.childrenHiddenFor(docRef.doc.resource.id)"
-                   [class.mdi-chevron-right]="listComponent.listTree.childrenHiddenFor(docRef.doc.resource.id)"></span>
+             <span class="mdi h5" [class.mdi-chevron-down]="!foldState.childrenHiddenFor(node.doc.resource.id)"
+                   [class.mdi-chevron-right]="foldState.childrenHiddenFor(node.doc.resource.id)"></span>
         </span>
-        <small class="text-muted" *ngIf="docRef.children.length > 0">
-            {{docRef.children.length}}
+        <small class="text-muted" *ngIf="node.children.length > 0">
+            {{node.children.length}}
         </small>
 
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="docRef.doc.resource.identifier" (blur)="save(docRef.doc)" (keyup)="markAsChanged($event)"
+        <input [(ngModel)]="node.doc.resource.identifier" (blur)="save(node.doc)" (keyup)="markAsChanged($event)"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
 
     </div>
     <div class="col-md-4">
-        <input [(ngModel)]="docRef.doc.resource.shortDescription" (blur)="save(docRef.doc)" *ngIf="docRef.doc.resource.id"
+        <input [(ngModel)]="node.doc.resource.shortDescription" (blur)="save(node.doc)" *ngIf="node.doc.resource.id"
                (keyup)="markAsChanged($event)" (dblclick)="$event.stopPropagation();" class="form-control form-control-sm">
     </div>
     <div class="col-md-2">
         
         <small>
-            <button (click)="resourcesComponent.editDocument(docRef.doc)" class="btn btn-sm btn-link">
+            <button (click)="resourcesComponent.editDocument(node.doc)" class="btn btn-sm btn-link">
                 Bearbeiten
             </button>
         </small>
     </div>
 </div>
 
-<div *ngFor="let childDoc of docRef['children']"
-     [hidden]="listComponent.listTree.childrenHiddenFor(docRef.doc.resource.id)">
-    <row [docRef]="childDoc" [depth]=depth+1 [typesMap]="typesMap"></row>
+<div *ngFor="let childDoc of node['children']"
+     [hidden]="foldState.childrenHiddenFor(node.doc.resource.id)">
+    <row [node]="childDoc" [depth]=depth+1 [typesMap]="typesMap"></row>
 </div>

@@ -11,9 +11,13 @@ export function main() {
     describe('TreeBuilder', () => {
 
         let mockDatastore;
+        let treeBuilder;
+
 
         beforeEach(() => {
             mockDatastore = jasmine.createSpyObj('datastore', ['get']);
+            const mockFoldState = jasmine.createSpyObj('foldState', ['add']);
+            treeBuilder = new TreeBuilder(mockDatastore, mockFoldState);
         });
 
 
@@ -23,8 +27,7 @@ export function main() {
             const doc2 = Static.doc('sd2', 'ident2', 'Find', 'id2');
             const documents = [doc1, doc2] as Array<IdaiFieldDocument>;
 
-            const listTree = new TreeBuilder(mockDatastore);
-            const docRefTree = await listTree.from(documents);
+            const docRefTree = await treeBuilder.from(documents);
 
             expect(docRefTree.length).toBe(2);
             done();
@@ -38,8 +41,7 @@ export function main() {
             doc2.resource.relations['liesWithin'] = ['id1'];
             const documents = [doc1, doc2] as Array<IdaiFieldDocument>;
 
-            const listTree = new TreeBuilder(mockDatastore);
-            const docRefTree = await listTree.from(documents);
+            const docRefTree = await treeBuilder.from(documents);
 
             expect(docRefTree.length).toBe(1);
             expect(docRefTree[0].children.length).toBe(1);
@@ -56,8 +58,7 @@ export function main() {
             doc2.resource.relations['liesWithin'] = ['id1'];
             const documents = [doc2] as Array<IdaiFieldDocument>;
 
-            const listTree = new TreeBuilder(mockDatastore);
-            const docRefTree = await listTree.from(documents);
+            const docRefTree = await treeBuilder.from(documents);
 
             expect(docRefTree.length).toBe(1);
             expect(docRefTree[0].children.length).toBe(1);

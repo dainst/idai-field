@@ -12,6 +12,7 @@ import {Node} from "./node";
 import {ViewFacade} from '../view/view-facade';
 import {IdaiFieldDocumentDatastore} from "../../../core/datastore/idai-field-document-datastore";
 import {PersistenceManager} from "../../../core/persist/persistence-manager";
+import {FoldState} from "./fold-state";
 
 @Component({
     selector: 'row',
@@ -24,9 +25,10 @@ import {PersistenceManager} from "../../../core/persist/persistence-manager";
  */
 export class RowComponent {
 
-    @Input() docRef: Node;
+    @Input() node: Node;
     @Input() depth: number;
     @Input() typesMap: { [type: string]: IdaiType };
+
 
     constructor(
         private messages: Messages,
@@ -37,7 +39,8 @@ export class RowComponent {
         private datastore: IdaiFieldDocumentDatastore,
         public resourcesComponent: ResourcesComponent,
         public listComponent: ListComponent,
-        public viewFacade: ViewFacade
+        public viewFacade: ViewFacade,
+        public foldState: FoldState
     ) {  }
 
 
@@ -52,13 +55,16 @@ export class RowComponent {
             .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 
+
     public markAsChanged(event: any) {
+
         if (event.keyCode == 13) {
-            this.save(this.docRef.doc as IdaiFieldDocument);
+            this.save(this.node.doc as IdaiFieldDocument);
         } else {
             this.documentEditChangeMonitor.setChanged();
         }
     }
+
 
     public save(document: IdaiFieldDocument) {
 

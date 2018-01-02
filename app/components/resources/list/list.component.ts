@@ -7,6 +7,7 @@ import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
 import {IdaiFieldDocumentDatastore} from '../../../core/datastore/idai-field-document-datastore';
 import {TreeBuilder} from './tree-builder';
+import {FoldState} from './fold-state';
 
 @Component({
     selector: 'list',
@@ -28,18 +29,19 @@ export class ListComponent implements OnChanges {
 
     public typesMap: { [type: string]: IdaiType };
 
-    public listTree: TreeBuilder;
-    public docRefTree: Node[] = [];
+    public treeBuilder: TreeBuilder;
+    public tree: Node[] = [];
 
     constructor(
         private datastore: IdaiFieldDocumentDatastore,
         public resourcesComponent: ResourcesComponent,
         private loading: Loading,
         projectConfiguration: ProjectConfiguration,
-        public viewFacade: ViewFacade
+        public viewFacade: ViewFacade,
+        private foldState: FoldState
     ) {
         this.typesMap = projectConfiguration.getTypesMap();
-        this.listTree = new TreeBuilder(datastore);
+        this.treeBuilder = new TreeBuilder(datastore, foldState);
     }
 
 
@@ -53,7 +55,7 @@ export class ListComponent implements OnChanges {
             if (this.viewFacade.getDocuments()) {
                 if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve();
                 this.docs = this.viewFacade.getDocuments() as IdaiFieldDocument[];
-                this.docRefTree = await this.listTree.from(this.viewFacade.getDocuments() as IdaiFieldDocument[], true);
+                this.tree = await this.treeBuilder.from(this.viewFacade.getDocuments() as IdaiFieldDocument[]);
             }
             this.loading.stop();
         }, 1);
@@ -92,10 +94,12 @@ export class ListComponent implements OnChanges {
         // if newDoc as parent, ensure that it's children are shown 
         if (newDoc.resource.relations['liesWithin']) {
             const parentDocId = newDoc.resource.relations['liesWithin'][0];
-            if (parentDocId && this.listTree.childrenShownForIds.indexOf(parentDocId) == -1) this.listTree.childrenShownForIds.push(parentDocId);
+            if (parentDocId && this.foldState.childrenShownForIds.indexOf(parentDocId) == -1) {
+                this.foldState.childrenShownForIds.push(parentDocId);
+            }
         }
 
         this.docs = docs;
-        this.docRefTree = await this.listTree.from(docs, true);
+        this.tree = await this.treeBuilder.from(docs);
     }
 }

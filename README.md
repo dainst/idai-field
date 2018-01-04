@@ -3,7 +3,7 @@
 
 # iDAI.field 2 Client  
 
-See also [idai-components-2](https://github.com/dainst/idai-components-2).
+See also [idai-components-2](https://github.com/dainst/idai-components-2). 
 
 ## Documentation
 

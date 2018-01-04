@@ -12,12 +12,7 @@ export function main() {
 
 
         const projectConfiguration = new ProjectConfiguration({
-            'types': [
-                {
-                    'type': 'object',
-                    'fields': []
-                }
-            ],
+            'types': [],
             'relations': [
                 {
                     'name': 'BelongsTo',
@@ -30,8 +25,7 @@ export function main() {
                     'label': 'Enthält'
                 },
                 {
-                    'name': 'OneWay',
-                    'inverse': 'NO-INVERSE',
+                    'name': 'isRecordedIn',
                     'label': 'Einweg'
                 }
             ]
@@ -69,7 +63,7 @@ export function main() {
 
             doc.resource.relations['BelongsTo'] = ['2'];
 
-            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc], true);
+            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc]);
 
             expect(docsToUpdate).toEqual([relatedDoc]);
         });
@@ -79,7 +73,7 @@ export function main() {
 
             relatedDoc.resource.relations['Contains'] = ['1'];
 
-            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc], true);
+            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc]);
 
             expect(docsToUpdate).toEqual([relatedDoc]);
             expect(relatedDoc.resource.relations['Contains']).toEqual(undefined);
@@ -92,7 +86,7 @@ export function main() {
             relatedDoc.resource.relations['Contains'] = ['1'];
 
             const docsToUpdate
-                = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc, anotherRelatedDoc], true);
+                = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc, anotherRelatedDoc]);
 
             expect(docsToUpdate).toEqual([relatedDoc, anotherRelatedDoc]);
             expect(relatedDoc.resource.relations['Contains']).toEqual(undefined);
@@ -105,7 +99,7 @@ export function main() {
             doc.resource.relations['BelongsTo'] = ['2'];
             relatedDoc.resource.relations['Contains'] = ['4'];
 
-            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc], true);
+            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc]);
 
             expect(docsToUpdate).toEqual([relatedDoc]);
             expect(relatedDoc.resource.relations['Contains']).toEqual(['1','4']);
@@ -116,7 +110,7 @@ export function main() {
 
             relatedDoc.resource.relations['Contains'] = ['1','4'];
 
-            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc], true);
+            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc]);
 
             expect(docsToUpdate).toEqual([relatedDoc]);
             expect(relatedDoc.resource.relations['Contains']).toEqual(['4']);
@@ -128,7 +122,7 @@ export function main() {
             doc.resource.relations['BelongsTo'] = ['2'];
             relatedDoc.resource.relations['Contains'] = ['1','4'];
 
-            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc], true);
+            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc]);
 
             expect(docsToUpdate).toEqual([]);
             expect(relatedDoc.resource.relations['Contains']).toEqual(['1','4']);
@@ -140,7 +134,7 @@ export function main() {
             doc.resource.relations['BelongsTo'] = ['2'];
             relatedDoc.resource.relations['Contains'] = ['1'];
 
-            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc], true);
+            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc]);
 
             expect(docsToUpdate).toEqual([]);
             expect(relatedDoc.resource.relations['Contains']).toEqual(['1']);
@@ -181,31 +175,43 @@ export function main() {
         });
 
 
-        it('dont remove one-way relations of related documents', () => {
+        // isRecordedIn specific behaviour
+
+        it('dont remove isRecordedIn relations of related documents', () => {
 
             doc.resource.relations['Contains'] = ['2'];
-            relatedDoc.resource.relations['OneWay'] = ['1'];
+            relatedDoc.resource.relations['isRecordedIn'] = ['1'];
             relatedDoc.resource.relations['BelongsTo'] = ['1'];
 
-            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc], true);
+            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc]);
 
             expect(docsToUpdate).toEqual([]);
-            expect(relatedDoc.resource.relations['OneWay']).toEqual(['1']);
+            expect(relatedDoc.resource.relations['isRecordedIn']).toEqual(['1']);
             expect(relatedDoc.resource.relations['BelongsTo']).toEqual(['1']);
         });
 
 
-        it('remove one-way relations of related documents on remove only', () => {
+        it('remove isRecordedIn relations of related documents on remove only', () => {
 
             doc.resource.relations['Contains'] = ['2'];
-            relatedDoc.resource.relations['OneWay'] = ['1'];
+            relatedDoc.resource.relations['isRecordedIn'] = ['1'];
             relatedDoc.resource.relations['BelongsTo'] = ['1'];
 
             const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc], false);
 
             expect(docsToUpdate).toEqual([relatedDoc]);
-            expect(relatedDoc.resource.relations['OneWay']).toEqual(undefined);
+            expect(relatedDoc.resource.relations['isRecordedIn']).toEqual(undefined);
             expect(relatedDoc.resource.relations['BelongsTo']).toEqual(undefined);
+        });
+
+
+        it('do not add isRecordedInRelation', () => {
+
+            doc.resource.relations['isRecordedIn'] = ['2'];
+
+            const docsToUpdate = connectedDocsResolver.determineDocsToUpdate(doc, [relatedDoc]);
+            expect(docsToUpdate).toEqual([]);
+            expect(Object.keys(relatedDoc.resource.relations).length).toEqual(0);
         });
     });
 }

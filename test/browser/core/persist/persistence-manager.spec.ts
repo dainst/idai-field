@@ -25,23 +25,7 @@ export function main() {
 
         const projectConfiguration = new ProjectConfiguration({
             'types': [
-                {
-                    'type': 'FirstLevelType',
-                    'fields': [
-                        {
-                            'field': 'fieldA'
-                        }
-                    ]
-                },
-                {
-                    'type': 'SecondLevelType',
-                    'parent': 'FirstLevelType',
-                    'fields': [
-                        {
-                            'field': 'fieldB'
-                        }
-                    ]
-                }
+
             ],
             'relations': [
                 {
@@ -55,13 +39,7 @@ export function main() {
                     'label': 'Enthält'
                 },
                 {
-                    'name': 'OneWay',
-                    'inverse': 'NO-INVERSE',
-                    'label': 'Einweg'
-                },
-                {
                     'name': 'isRecordedIn',
-                    'inverse': 'NO-INVERSE',
                     'label': 'Gehört zu'
                 }
             ]
@@ -168,7 +146,7 @@ export function main() {
 
         it('should save an object with a one way relation', done => {
 
-            doc.resource.relations['OneWay'] = ['2'];
+            doc.resource.relations['isRecordedIn'] = ['2'];
 
             persistenceManager.persist(doc).then(() => {
 
@@ -196,7 +174,7 @@ export function main() {
 
         it('should remove a document with a one way relation', done => {
 
-            doc.resource.relations['OneWay'] = ['2'];
+            doc.resource.relations['isRecordedIn'] = ['2'];
 
             persistenceManager.remove(doc).then(() => {
 

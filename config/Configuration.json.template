@@ -32,7 +32,6 @@
                 "Wall_surface"
             ],
             "editable": false,
-            "inverse": "NO-INVERSE",
             "label": "Gehört zu",
             "name": "isRecordedIn",
             "range": [
@@ -48,7 +47,6 @@
                 "Room"
             ],
             "editable": false,
-            "inverse": "NO-INVERSE",
             "label": "Gehört zu",
             "name": "isRecordedIn",
             "range": [

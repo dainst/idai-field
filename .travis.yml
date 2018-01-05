@@ -40,7 +40,7 @@ deploy:
   on:
     tags: true
     all_branches: true
-    repo: dainst/idai-field-client
+    repo: dainst/idai-field
 notifications:
   slack:
     on_success: never

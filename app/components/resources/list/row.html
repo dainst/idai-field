@@ -28,13 +28,18 @@
 
     </div>
     <div class="col-md-3">
-        <input [(ngModel)]="node.doc.resource.identifier" (blur)="save(node.doc)" (keyup)="markAsChanged($event)"
+        <input [(ngModel)]="node.doc.resource.identifier" (focus)="startEditing(node.doc.resource.identifier)"
+               (blur)="stopEditing(node.doc, node.doc.resource.identifier)"
+               (keyup)="onKeyup($event, node.doc, node.doc.resource.identifier)"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
 
     </div>
     <div class="col-md-4">
-        <input [(ngModel)]="node.doc.resource.shortDescription" (blur)="save(node.doc)" *ngIf="node.doc.resource.id"
-               (keyup)="markAsChanged($event)" (dblclick)="$event.stopPropagation();"
+        <input *ngIf="node.doc.resource.id" [(ngModel)]="node.doc.resource.shortDescription"
+               (focus)="startEditing(node.doc.resource.shortDescription)"
+               (blur)="stopEditing(node.doc, node.doc.resource.shortDescription)"
+               (keyup)="onKeyup($event, node.doc, node.doc.resource.shortDescription)"
+               (dblclick)="$event.stopPropagation();"
                class="form-control form-control-sm">
     </div>
     <div class="col-md-2">

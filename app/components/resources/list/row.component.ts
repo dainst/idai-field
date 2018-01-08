@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Validator} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
-import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiType} from 'idai-components-2/configuration';
 import {M} from '../../../m';
 import {SettingsService} from '../../../core/settings/settings-service';
@@ -22,6 +21,7 @@ import {FoldState} from './fold-state';
 
 /**
  * @author Fabian Z.
+ * @autor Thomas Kleinke
  */
 export class RowComponent {
 
@@ -29,12 +29,13 @@ export class RowComponent {
     @Input() depth: number;
     @Input() typesMap: { [type: string]: IdaiType };
 
+    private initialValueOfCurrentlyEditedField: string|undefined;
+
 
     constructor(
         private messages: Messages,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
-        private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private validator: Validator,
         private datastore: IdaiFieldDocumentDatastore,
         public resourcesComponent: ResourcesComponent,
@@ -56,21 +57,28 @@ export class RowComponent {
     }
 
 
-    public markAsChanged(event: any) {
+    public startEditing(fieldValue: string) {
+
+        this.initialValueOfCurrentlyEditedField = fieldValue;
+    }
+
+
+    public stopEditing(document: IdaiFieldDocument, fieldValue: string) {
+
+        if (this.initialValueOfCurrentlyEditedField != fieldValue) this.save(document);
+        this.initialValueOfCurrentlyEditedField = fieldValue;
+    }
+
+
+    public onKeyup(event: KeyboardEvent, document: IdaiFieldDocument, fieldValue: string) {
 
         if (event.keyCode == 13) { // Return key
-            this.save(this.node.doc as IdaiFieldDocument);
-        } else if (event.keyCode != 9) { // Tab key
-            this.documentEditChangeMonitor.setChanged();
+            this.stopEditing(document, fieldValue);
         }
     }
 
 
     public save(document: IdaiFieldDocument) {
-
-        if (!this.documentEditChangeMonitor.isChanged()) return;
-
-        this.documentEditChangeMonitor.reset();
 
         const oldVersion = JSON.parse(JSON.stringify(document));
 

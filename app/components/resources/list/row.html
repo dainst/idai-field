@@ -13,9 +13,11 @@
                          (documentRequested)="listComponent.createNewDocument($event)"></plus-button>
         </div>
 
-        <span class="list-type-label" [class.text-info]="!node.doc.resource.id">{{typesMap[node.doc.resource.type].label}}</span><br>
+        <span class="list-type-label" [class.text-info]="!node.doc.resource.id">
+            {{typesMap[node.doc.resource.type].label}}
+        </span><br>
         <span *ngIf="node.children.length > 0"
-                (click)="foldState.toggleChildrenForId(node.doc.resource.id)"
+                (click)="foldState.toggleChildrenForId(node.doc.resource.id)" (dblclick)="$event.stopPropagation();"
                 class="btn btn-sm btn-link p-0">
              <span class="mdi h5" [class.mdi-chevron-down]="!foldState.childrenHiddenFor(node.doc.resource.id)"
                    [class.mdi-chevron-right]="foldState.childrenHiddenFor(node.doc.resource.id)"></span>
@@ -32,7 +34,8 @@
     </div>
     <div class="col-md-4">
         <input [(ngModel)]="node.doc.resource.shortDescription" (blur)="save(node.doc)" *ngIf="node.doc.resource.id"
-               (keyup)="markAsChanged($event)" (dblclick)="$event.stopPropagation();" class="form-control form-control-sm">
+               (keyup)="markAsChanged($event)" (dblclick)="$event.stopPropagation();"
+               class="form-control form-control-sm">
     </div>
     <div class="col-md-2">
         

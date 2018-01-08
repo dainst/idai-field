@@ -33,28 +33,16 @@ export class RowComponent {
 
 
     constructor(
+        public resourcesComponent: ResourcesComponent,
+        public listComponent: ListComponent,
+        public viewFacade: ViewFacade,
+        public foldState: FoldState,
         private messages: Messages,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private validator: Validator,
-        private datastore: IdaiFieldDocumentDatastore,
-        public resourcesComponent: ResourcesComponent,
-        public listComponent: ListComponent,
-        public viewFacade: ViewFacade,
-        public foldState: FoldState
+        private datastore: IdaiFieldDocumentDatastore
     ) {  }
-
-
-    private restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
-
-        return this.datastore.get(document.resource.id as any, { skip_cache: true })
-            .then(
-                latestRevision => {
-                    document.resource.identifier = latestRevision.resource.identifier;
-                }
-            )
-            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
-    }
 
 
     public startEditing(fieldValue: string) {
@@ -83,7 +71,8 @@ export class RowComponent {
         const oldVersion = JSON.parse(JSON.stringify(document));
 
         this.validator.validate(document)
-            .then(() => this.persistenceManager.persist(document, this.settingsService.getUsername(), [oldVersion]))
+            .then(() => this.persistenceManager.persist(document, this.settingsService.getUsername(),
+                [oldVersion]))
             .then(() => {
                 this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
                 // new document 
@@ -95,5 +84,17 @@ export class RowComponent {
                 this.messages.add(msgWithParams);
                 return this.restoreIdentifier(document);
             }).catch(msgWithParams => this.messages.add(msgWithParams));
+    }
+
+
+    private restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
+
+        return this.datastore.get(document.resource.id as any, { skip_cache: true })
+            .then(
+                latestRevision => {
+                    document.resource.identifier = latestRevision.resource.identifier;
+                }
+            )
+            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
     }
 }

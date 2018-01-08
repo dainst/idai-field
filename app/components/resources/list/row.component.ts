@@ -7,12 +7,12 @@ import {IdaiType} from 'idai-components-2/configuration';
 import {M} from '../../../m';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
-import {ListComponent} from "./list.component";
-import {Node} from "./node";
+import {ListComponent} from './list.component';
+import {Node} from './node';
 import {ViewFacade} from '../view/view-facade';
-import {IdaiFieldDocumentDatastore} from "../../../core/datastore/idai-field-document-datastore";
-import {PersistenceManager} from "../../../core/persist/persistence-manager";
-import {FoldState} from "./fold-state";
+import {IdaiFieldDocumentDatastore} from '../../../core/datastore/idai-field-document-datastore';
+import {PersistenceManager} from '../../../core/persist/persistence-manager';
+import {FoldState} from './fold-state';
 
 @Component({
     selector: 'row',
@@ -58,9 +58,9 @@ export class RowComponent {
 
     public markAsChanged(event: any) {
 
-        if (event.keyCode == 13) {
+        if (event.keyCode == 13) { // Return key
             this.save(this.node.doc as IdaiFieldDocument);
-        } else {
+        } else if (event.keyCode != 9) { // Tab key
             this.documentEditChangeMonitor.setChanged();
         }
     }

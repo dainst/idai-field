@@ -200,29 +200,12 @@ describe('resources --', () => {
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
     });
 
-    /**
-     * There has been a bug where clicking the new button without doing anything
-     * led to leftovers of 'Neues Objekt' for every time the button was pressed.
-     */
-    xit('remove a new object from the list if it has not been saved', () => {
+    it('hide the new resource button while creating a new resource', () => {
 
-        ResourcesPage.performCreateResource('1');
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();
         ResourcesPage.clickSelectGeometryType('point');
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType();
-        ResourcesPage.clickSelectGeometryType('point');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemMarkedNewEl()), delays.ECWaitTime);
-        ResourcesPage.scrollUp();
         ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(1));
-        ResourcesPage.clickSelectResource('1');
-        browser.wait(EC.presenceOf(element(by.id('document-view'))), delays.ECWaitTime);
-        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
-        ResourcesPage.clickCreateResource();
-        ResourcesPage.clickSelectResourceType();
-        ResourcesPage.clickSelectGeometryType();
-        DoceditPage.clickCloseEdit();
-        ResourcesPage.getListItemMarkedNewEls().then(els => expect(els.length).toBe(0));
+        browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButton()), delays.ECWaitTime);
     });
 });

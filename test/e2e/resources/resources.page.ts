@@ -19,7 +19,7 @@ export class ResourcesPage {
 
     public static clickCreateResource() {
 
-        common.click(element(by.css('#create-document-button .circular-button')));
+        common.click(ResourcesPage.getCreateDocumentButton());
     };
 
     public static clickCreateMainTypeResource() {
@@ -134,7 +134,12 @@ export class ResourcesPage {
     public static getListModeInputFieldValue(identifier, index) {
 
         return ResourcesPage.getListModeInputField(identifier, index).getAttribute('value');
-    };
+    }
+
+    public static getCreateDocumentButton() {
+
+        return element(by.css('#create-document-button .circular-button'));
+    }
 
     public static getCreateDocumentButtonTypeCharacter() {
 

@@ -11,7 +11,9 @@ export class FoldState {
 
     public add(resourceId: string) {
 
-        this.childrenShownForIds.push(resourceId);
+        if (this.childrenShownForIds.indexOf(resourceId) == -1) {
+            this.childrenShownForIds.push(resourceId);
+        }
     }
 
 

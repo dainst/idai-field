@@ -77,6 +77,8 @@ export class RelationsCompleter {
                         let promise: Promise<any> = new Promise<any>((res) => res());
 
                         for (let relationName in document.resource.relations) {
+                            if (relationName == 'isRecordedIn') continue;
+
                             if (projectConfiguration.isRelationProperty(relationName)) {
                                 for (let targetId of document.resource.relations[relationName]) {
                                     promise = promise.then(
@@ -142,8 +144,6 @@ export class RelationsCompleter {
     private createRelation(resource: Resource, targetDocument: Document, relationName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
-
-            if (relationName == 'NO-INVERSE') return resolve();
 
             let relations = targetDocument.resource.relations[relationName];
             if (!relations) relations = [];

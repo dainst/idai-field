@@ -25,12 +25,15 @@ export class ListComponent implements OnChanges {
     @Input() ready: boolean;
     @Input() documents: IdaiFieldDocument[];
 
-    private docs: IdaiFieldDocument[] = [];
-
     public typesMap: { [type: string]: IdaiType };
 
     public treeBuilder: TreeBuilder;
     public tree: Node[] = [];
+
+    private docs: IdaiFieldDocument[] = [];
+
+    private newResourceCreated: boolean = false;
+
 
     constructor(
         private datastore: IdaiFieldDocumentDatastore,
@@ -52,6 +55,8 @@ export class ListComponent implements OnChanges {
 
         // The timeout is necessary to make the loading icon appear
         setTimeout(async () => {
+            this.clearFoldStateIfNecessary();
+
             if (this.viewFacade.getDocuments()) {
                 if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve();
                 this.docs = this.viewFacade.getDocuments() as IdaiFieldDocument[];
@@ -100,6 +105,17 @@ export class ListComponent implements OnChanges {
         }
 
         this.docs = docs;
+        this.newResourceCreated = true;
         this.tree = await this.treeBuilder.from(docs);
+    }
+
+
+    private clearFoldStateIfNecessary() {
+
+        if (!this.newResourceCreated) {
+            this.foldState.clear();
+        } else {
+            this.newResourceCreated = false;
+        }
     }
 }

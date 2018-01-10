@@ -4,13 +4,6 @@
 # iDAI.field 2 Client  
 
 See also [idai-components-2](https://github.com/dainst/idai-components-2). 
-
-## Documentation
-
-A **user manual** with documented workflows and usage is available 
-[here](https://github.com/dainst/idai-field-documentation).
-
-Admin documentation is can be found [here](docs/README.md).
    
 ## Prerequisites
 

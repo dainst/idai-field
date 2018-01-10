@@ -23,7 +23,6 @@ before_install:
 install:
 - nvm install 8
 - npm install --force
-- npm add electron-builder@next --dev
 - npm add jquery
 - npm add popper.js
 script:

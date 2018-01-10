@@ -1,58 +1,67 @@
-import {browser, protractor, element, by} from 'protractor';
-
 'use strict';
+
+import {browser, protractor, element, by} from 'protractor';
+import {DoceditPage} from '../docedit/docedit.page';
+import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
+
 let common = require('../common.js');
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
-import {DoceditPage} from '../docedit/docedit.page';
-import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 
 
 export class ResourcesPage {
 
-    public static get = function() {
+    public static get() {
 
         return browser.get('#/resources/excavation');
-    };
+    }
+
 
     // click
 
     public static clickCreateResource() {
 
         common.click(ResourcesPage.getCreateDocumentButton());
-    };
+    }
+
 
     public static clickCreateMainTypeResource() {
 
         common.click(element(by.css('#create-main-type-document-button .circular-button')));
-    };
+    }
+
 
     public static clickEditMainTypeResource() {
 
         common.click(element(by.id('edit-main-type-document-button')));
-    };
+    }
+
 
     public static clickSaveInModal() {
 
         common.click(element(by.id('overview-save-confirmation-modal-save-button')));
-    };
+    }
+
 
     public static clickCancelInModal() {
 
         common.click(element(by.id('overview-save-confirmation-modal-cancel-button')));
-    };
+    }
+
 
     public static clickDiscardInModal() {
 
         common.click(element(by.id('overview-save-confirmation-modal-discard-button')));
-    };
+    }
+
 
     public static clickSelectGeometryType(type?) {
 
         let geom = 'none';
         if (type) geom = type;
         return common.click(element(by.id('choose-geometry-option-' + geom)));
-    };
+    }
+
 
     /**
      * @deprecated use selectObjectByIdentifier instead
@@ -60,39 +69,46 @@ export class ResourcesPage {
     public static clickSelectObjectByIndex(listIndex) {
 
         return common.click(element(by.id('objectList')).all(by.tagName('li')).get(listIndex));
-    };
+    }
+
 
     public static clickGoToMainTypeViewByIdentifier(identifier) {
 
         return common.click(element(by.css('#resource-'+identifier + ' .selectInMainTypeViewBtn')));
     }
 
+
     public static clickSelectResource(identifier) {
 
         return common.click(element(by.id('resource-' + identifier)));
-    };
+    }
+
 
     public static clickMapModeButton() {
 
         common.click(element(by.id('map-mode-button')));
-    };
+    }
+
 
     public static clickListModeButton() {
 
         common.click(element(by.id('list-mode-button')));
-    };
+    }
+
 
     public static clickSelectResourceType(typeName?) {
 
         if (!typeName) typeName = "feature-architecture";
         return common.click(element(by.id('choose-type-option-' + typeName)));
-    };
+    }
+
 
     public static clickSelectMainTypeDocument(optionIndex) {
 
         browser.wait(EC.presenceOf(element(by.id('mainTypeSelectBox'))), delays.ECWaitTime);
         element.all(by.css('#mainTypeSelectBox option')).get(optionIndex).click();
-    };
+    }
+
 
     public static openEditByDoubleClickResource(identifier) {
 
@@ -101,7 +117,8 @@ export class ResourcesPage {
                 + identifier + '"]'))), delays.ECWaitTime);
         return browser.actions().doubleClick(element(by.xpath('//*[@id="objectList"]//div[@class="title" and ' +
             'normalize-space(text())="' + identifier + '"]'))).perform();
-    };
+    }
+
 
     // get text
 
@@ -110,36 +127,42 @@ export class ResourcesPage {
         browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item:nth-child('
             + (itemNr + 1) + ') .title'))), delays.ECWaitTime);
         return element(by.css('#objectList .list-group-item:nth-child(' + (itemNr + 1) + ') .title')).getText();
-    };
+    }
+
 
     public static getSelectedListItemIdentifierText() {
 
         browser.wait(EC.visibilityOf(element(by.css('#objectList .list-group-item.selected .title'))),
             delays.ECWaitTime);
         return element(by.css('#objectList .list-group-item.selected .title')).getText();
-    };
+    }
+
 
     public static getSelectedMainTypeDocumentOption() {
 
         browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox option:checked'))), delays.ECWaitTime);
         return element.all(by.css('#mainTypeSelectBox option:checked')).getText();
-    };
+    }
+
 
     public static getMainTypeDocumentOption() {
 
         browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox'))), delays.ECWaitTime);
         return element.all(by.css('#mainTypeSelectBox')).getText();
-    };
+    }
+
 
     public static getListModeInputFieldValue(identifier, index) {
 
         return ResourcesPage.getListModeInputField(identifier, index).getAttribute('value');
     }
 
+
     public static getCreateDocumentButton() {
 
         return element(by.css('#create-document-button .circular-button'));
     }
+
 
     public static getCreateDocumentButtonTypeCharacter() {
 
@@ -149,6 +172,7 @@ export class ResourcesPage {
         return element(by.css('#create-document-button div.type-icon')).getText();
     }
 
+
     public static getListModeTypeLabel(identifier) {
 
         browser.wait(EC.visibilityOf(
@@ -157,34 +181,40 @@ export class ResourcesPage {
         return element(by.css('#resource-' + identifier + ' .list-type-label')).getText();
     }
 
+
     // elements
 
     public static getListItemEl(identifier) {
 
         return element(by.id('resource-' + identifier));
-    };
+    }
+
 
     public static getListItemEls() {
 
         return element.all(by.css('.list-group-item'));
-    };
+    }
+
 
     public static getListItemMarkedNewEl() {
 
         return element(by.css('#objectList .list-group-item .new'));
-    };
+    }
+
 
     public static getListItemMarkedNewEls() {
 
         return element.all(by.css('#objectList .list-group-item .new'));
-    };
+    }
+
 
     public static getListModeInputField (identifier, index) {
 
         browser.wait(EC.visibilityOf(element.all(by.css('#resource-' + identifier + ' input')).get(index)),
             delays.ECWaitTime);
         return element.all(by.css('#resource-' + identifier + ' input')).get(index);
-    };
+    }
+
 
     public static isListMode() {
 
@@ -192,30 +222,33 @@ export class ResourcesPage {
         return listBtn.isPresent();
     }
 
+
     public static getResourceTypeOption(typeName: string) {
 
         return element(by.id('choose-type-option-' + typeName));
     }
+
 
     public static getCreateDocumentButtonTypeIcon() {
 
         return element(by.css('#create-document-button .type-icon'));
     }
 
+
     // type in
 
     public static typeInListModeInputField(identifier, index, inputText) {
 
         return common.typeIn(this.getListModeInputField(identifier, index), inputText);
-    };
+    }
+
 
     public static typeInNewResourceAndHitEnterInList (inputText) {
   
         browser.wait(EC.visibilityOf(element(by.css('#new-resource input'))), delays.ECWaitTime);
         common.typeIn(element(by.css('#new-resource input')), inputText);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
-    };
-
+    }
 
 
     // sequences
@@ -233,13 +266,15 @@ export class ResourcesPage {
         }
         ResourcesPage.scrollUp();
         DoceditPage.clickSaveDocument(clickMsgAway);
-    };
+    }
+
 
     public static performCreateResourceInList(identifier: string, typeName: string) {
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType(typeName);
         ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);
     }
+
 
     public static performCreateMainTypeResource(identifier: string) {
 
@@ -249,7 +284,8 @@ export class ResourcesPage {
         ResourcesPage.scrollUp();
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
-    };
+    }
+
 
     public static performCreateRelation(identifier: string, targetIdentifier: string,
                                                    relationGroupIndex: number) {
@@ -261,25 +297,28 @@ export class ResourcesPage {
         DoceditRelationsTabPage.clickChooseRelationSuggestion(relationGroupIndex, 0, 0);
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
-    };
+    }
+
 
     public static performCreateLink() {
 
         ResourcesPage.performCreateResource('1', "feature-architecture");
         ResourcesPage.performCreateResource('2', "feature-architecture");
         ResourcesPage.performCreateRelation('2', '1', 1);
-    };
+    }
+
 
     // script
 
     public static scrollDown() {
 
         return browser.executeScript('window.scrollTo(0,200);');
-    };
+    }
+
 
     public static scrollUp() {
 
         return browser.executeScript('window.scrollTo(0,0);');
-    };
+    }
 
 }

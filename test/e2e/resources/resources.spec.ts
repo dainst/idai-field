@@ -125,6 +125,7 @@ describe('resources --', () => {
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
 
+
     it('should refresh the resources list when switching main type documents', () => {
 
         ResourcesPage.performCreateMainTypeResource('newTrench');
@@ -135,6 +136,7 @@ describe('resources --', () => {
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
 
+
     it('should edit a main type resource', () => {
 
         ResourcesPage.clickEditMainTypeResource();
@@ -142,6 +144,7 @@ describe('resources --', () => {
         DoceditPage.clickSaveDocument();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('newIdentifier'));
     });
+
 
     it('should change the type of a resource to a child type', () => {
 
@@ -154,6 +157,7 @@ describe('resources --', () => {
         DoceditPage.clickSaveDocument();
         DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('A'));
     });
+
 
     it('should delete invalid fields when changing the type of a resource to its parent type', () => {
 
@@ -175,6 +179,7 @@ describe('resources --', () => {
         DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('S'));
         browser.wait(EC.stalenessOf(DocumentViewPage.getFieldElement(0)));
     });
+
 
     it('should delete invalid relations when changing the type of a resource to a sibling type', () => {
 
@@ -199,6 +204,7 @@ describe('resources --', () => {
         ResourcesPage.clickSelectResource('2');
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
     });
+
 
     it('hide the new resource button while creating a new resource', () => {
 

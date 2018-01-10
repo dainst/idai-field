@@ -16,6 +16,8 @@ init:
 install:
   - ps: Install-Product node 7 x64
   - yarn install
+  - yarn add jquery
+  - yarn add popper.js
 
 build_script:
   - yarn run build

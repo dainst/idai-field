@@ -1,6 +1,6 @@
 import {Node} from './node';
-import {IdaiFieldDocumentDatastore} from '../../../core/datastore/idai-field-document-datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocumentDatastore} from '../../../core/datastore/idai-field-document-datastore';
 import {FoldState} from './fold-state';
 
 /**
@@ -10,22 +10,19 @@ export class TreeBuilder {
 
     constructor(
         private datastore: IdaiFieldDocumentDatastore,
-        private foldStatus: FoldState
+        private foldState: FoldState
     ) {}
 
 
-	public async from(
-	    documents: Array<IdaiFieldDocument>): Promise<Node[]> {
+	public async from(documents: Array<IdaiFieldDocument>): Promise<Node[]> {
 
         return TreeBuilder.buildTreeFromLiesWithinRelations(
-            await this.addMissingParentsTo(
-                TreeBuilder.buildNodesMap(documents))
+            await this.addMissingParentsTo(TreeBuilder.buildNodesMap(documents))
         );
     }
 
 
-    private async addMissingParentsTo(
-        nodesMap: {[resourceId: string]: Node}): Promise<any> {
+    private async addMissingParentsTo(nodesMap: {[resourceId: string]: Node}): Promise<any> {
 
         const promises: Array<Promise<any>> = [];
 
@@ -37,7 +34,7 @@ export class TreeBuilder {
                 if (!nodesMap[parentId]) {
                     promises.push(this.getBy(parentId).then((pdoc: any) => {
                         nodesMap[parentId] = { doc: pdoc, children: [] };
-                        this.foldStatus.add(parentId);
+                        this.foldState.add(parentId);
                         if (pdoc.resource.relations['liesWithin'] && pdoc.resource.relations['liesWithin'].length > 0) {
                             promises.push(this.addMissingParentsTo(nodesMap));
                         }
@@ -57,8 +54,7 @@ export class TreeBuilder {
     }
 
 
-    private static buildTreeFromLiesWithinRelations(
-        nodesMap: {[resourceId: string]: Node}): Node[] {
+    private static buildTreeFromLiesWithinRelations(nodesMap: {[resourceId: string]: Node}): Node[] {
 
         const docRefTree: Node[] = [];
 
@@ -81,13 +77,11 @@ export class TreeBuilder {
     }
 
 
-    private static buildNodesMap(documents: Array<IdaiFieldDocument>):
-        {[resourceId: string]: Node} {
+    private static buildNodesMap(documents: Array<IdaiFieldDocument>): {[resourceId: string]: Node} {
 
         return documents.reduce((docRefMap: any, doc) => {
-                docRefMap[doc.resource.id as any] =
-                    { doc: doc, children: [] };
-                return docRefMap
-            }, {});
+            docRefMap[doc.resource.id as any] = { doc: doc, children: [] };
+            return docRefMap;
+        }, {});
     }
 }

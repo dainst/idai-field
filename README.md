@@ -1,4 +1,4 @@
-# iDAI.field 2 Client  
+# iDAI.field 2.x
 
 See also [idai-components-2](https://github.com/dainst/idai-components-2). 
    

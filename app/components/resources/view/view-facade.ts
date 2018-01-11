@@ -300,12 +300,12 @@ export class ViewFacade {
     }
 
 
-    public async addToQueryLiesWithinPath(newEntry: string) {
+    public async addToQueryLiesWithinPath(resourceId: string) {
 
         let liesWithinPath = this.getQueryLiesWithinPath();
         if (!liesWithinPath) liesWithinPath = [];
 
-        liesWithinPath.push(newEntry);
+        liesWithinPath.push(resourceId);
 
         await this.setQueryLiesWithinPath(liesWithinPath);
     }

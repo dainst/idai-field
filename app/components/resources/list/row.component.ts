@@ -84,6 +84,12 @@ export class RowComponent {
     }
 
 
+    public showChildren(document: IdaiFieldDocument) {
+
+        this.viewFacade.setQueryLiesWithinConstraint(document.resource.id as string);
+    }
+
+
     private async restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
 
         try {

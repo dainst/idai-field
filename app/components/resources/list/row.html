@@ -1,10 +1,13 @@
 <div id="{{document.resource.id ? 'resource-' + document.resource.identifier : 'new-resource'}}"
      (dblclick)="resourcesComponent.editDocument(document)" class="row py-3 list-row">
     <div class="col-md-3 list-row-left" [style.padding-left]="(1 + depth * 2) + 'rem'">
-
         <span class="list-type-label" [class.text-info]="!document.resource.id">
             {{typesMap[document.resource.type].label}}
         </span><br>
+
+        <span class="mdi mdi-arrow-right-drop-circle text-muted mt-2 mr-2 float-right"
+              (click)="showChildren(document)">
+            </span>
     </div>
     <div class="col-md-3">
         <input [(ngModel)]="document.resource.identifier" (focus)="startEditing(document.resource.identifier)"

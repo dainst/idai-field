@@ -1,13 +1,10 @@
-[![Mac build](https://img.shields.io/travis/dainst/idai-field-client/master.svg?label=mac%20build)](https://travis-ci.org/dainst/idai-field-client)
-[![Windows build](https://img.shields.io/appveyor/ci/dainst/idai-field-client/master.svg?label=windows%20build)](https://ci.appveyor.com/project/dainst/idai-field-client)
-
-# iDAI.field 2 Client  
+# iDAI.field 2
 
 See also [idai-components-2](https://github.com/dainst/idai-components-2). 
    
 ## Prerequisites
 
-The iDAI.field2 development stack runs under MacOS, Windows, Linux. 
+The iDAI.field development stack runs under MacOS, Windows, Linux. 
 To set it up, you need to install
 
 * [NodeJS](https://nodejs.org/en/) > 7.0.0

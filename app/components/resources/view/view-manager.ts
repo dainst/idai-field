@@ -151,21 +151,22 @@ export class ViewManager {
     }
 
 
-    public fetchQueryLiesWithinConstraintFromResourcesState(): string|undefined {
+    public fetchQueryLiesWithinPathFromResourcesState(mainTypeDocumentResourceId: string): string[]|undefined {
 
-        // TODO Fetch from resources state
-        return undefined;
+        return this.resourcesState.getLiesWithinPath(this.viewName, mainTypeDocumentResourceId);
     }
 
 
-    public setQueryLiesWithinConstraint(targetResourceId: string|undefined) {
+    public setQueryLiesWithinPath(mainTypeDocumentResourceId: string, liesWithinPath: string[]|undefined) {
 
         if (!this.query.constraints) this.query.constraints = {};
 
-        if (targetResourceId) {
-            this.query.constraints['liesWithin:contain'] = targetResourceId;
+        if (liesWithinPath) {
+            this.resourcesState.setLiesWithinPath(this.viewName, mainTypeDocumentResourceId, liesWithinPath);
+            this.query.constraints['liesWithin:contain'] = liesWithinPath[liesWithinPath.length - 1];
             delete this.query.constraints['liesWithin:exist'];
         } else {
+            this.resourcesState.removeLiesWithinPath(this.viewName, mainTypeDocumentResourceId);
             this.query.constraints['liesWithin:exist'] = 'UNKNOWN';
             delete this.query.constraints['liesWithin:contain'];
         }
@@ -241,6 +242,16 @@ export class ViewManager {
     }
 
 
+    public setupLiesWithinPath(mainTypeDocument: Document|undefined) {
+
+        if (!mainTypeDocument || !mainTypeDocument.resource.id) return;
+
+        const liesWithinPath: string[]|undefined
+            = this.fetchQueryLiesWithinPathFromResourcesState(mainTypeDocument.resource.id);
+        this.setQueryLiesWithinPath(mainTypeDocument.resource.id, liesWithinPath);
+    }
+
+
     private initializeView(viewName: string): Promise<any> {
 
         return Promise.resolve().then(
@@ -278,8 +289,6 @@ export class ViewManager {
 
         const filterTypes = this.getFilterTypes();
         if (filterTypes && filterTypes.length > 0) this.query.types = this.getFilterTypes();
-
-        this.setQueryLiesWithinConstraint(this.fetchQueryLiesWithinConstraintFromResourcesState());
     }
 
 

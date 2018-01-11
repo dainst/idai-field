@@ -2,14 +2,15 @@ import {Injectable} from '@angular/core';
 import {ResourcesViewState} from './resources-view-state';
 import {StateSerializer} from '../../../common/state-serializer';
 
-@Injectable()
 
+@Injectable()
 /**
  * @author Thomas Kleinke
  */
 export class ResourcesState {
 
     private _: { [viewName: string]: ResourcesViewState };
+
 
     constructor(private serializer: StateSerializer) {}
 
@@ -119,6 +120,42 @@ export class ResourcesState {
         if (!layerIds) return;
 
         delete layerIds[mainTypeDocumentId];
+        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
+    }
+
+
+    public setLiesWithinPath(viewName: string, mainTypeDocumentId: string, liesWithinPath: string[]) {
+
+        if (!this._[viewName]) this._[viewName] = {};
+        if (!this._[viewName].liesWithinPaths) this._[viewName].liesWithinPaths = {};
+
+        const liesWithinPaths = this._[viewName].liesWithinPaths;
+        if (!liesWithinPaths) return;
+
+        liesWithinPaths[mainTypeDocumentId] = liesWithinPath.slice(0);
+        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
+    }
+
+
+    public getLiesWithinPath(viewName: string, mainTypeDocumentId: string): string[]|undefined {
+
+        if (!this._[viewName] || !this._[viewName].liesWithinPaths) return undefined;
+
+        const liesWithinPaths = this._[viewName].liesWithinPaths;
+        if (!liesWithinPaths) return undefined;
+
+        return liesWithinPaths[mainTypeDocumentId];
+    }
+
+
+    public removeLiesWithinPath(viewName: string, mainTypeDocumentId: string) {
+
+        if (!this._[viewName] || !this._[viewName].liesWithinPaths) return;
+
+        const liesWithinPaths = this._[viewName].liesWithinPaths;
+        if (!liesWithinPaths) return;
+
+        delete liesWithinPaths[mainTypeDocumentId];
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 }

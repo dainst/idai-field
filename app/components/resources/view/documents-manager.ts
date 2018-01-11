@@ -83,9 +83,9 @@ export class DocumentsManager {
     }
 
 
-    public async setQueryLiesWithinConstraint(targetResourceId: string|undefined) {
+    public async setQueryLiesWithinPath(mainTypeDocumentResourceId: string, path: string[]|undefined) {
 
-        this.viewManager.setQueryLiesWithinConstraint(targetResourceId);
+        this.viewManager.setQueryLiesWithinPath(mainTypeDocumentResourceId, path);
 
         // TODO Deselect document if it is not part of the new document list
 

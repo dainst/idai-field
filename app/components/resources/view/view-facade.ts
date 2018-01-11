@@ -283,11 +283,14 @@ export class ViewFacade {
     }
 
 
-    public async setQueryLiesWithinConstraint(targetResourceId: string|undefined) {
+    public async setQueryLiesWithinPath(path: string[]|undefined) {
 
         if (this.isInOverview()) throw ViewFacade.err('setQueryLiesWithinConstraint');
 
-        await this.documentsManager.setQueryLiesWithinConstraint(targetResourceId);
+        const selectedMainTypeDocument: Document|undefined = this.getSelectedMainTypeDocument();
+        if (!selectedMainTypeDocument || !selectedMainTypeDocument.resource.id) return;
+
+        await this.documentsManager.setQueryLiesWithinPath(selectedMainTypeDocument.resource.id, path);
     }
 
 
@@ -344,7 +347,11 @@ export class ViewFacade {
         await this.viewManager.setupView(viewName, defaultMode);
         await this.documentsManager.populateProjectDocument();
 
-        if (!this.isInOverview()) await this.populateMainTypeDocuments();
+        if (!this.isInOverview()) {
+            await this.populateMainTypeDocuments();
+            this.viewManager.setupLiesWithinPath(this.getSelectedMainTypeDocument());
+        }
+
         await this.populateDocumentList();
     }
 

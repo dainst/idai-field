@@ -86,7 +86,7 @@ export class RowComponent {
 
     public async showChildren(document: IdaiFieldDocument) {
 
-        await this.viewFacade.setQueryLiesWithinPath([document.resource.id as string]);
+        await this.viewFacade.addToQueryLiesWithinPath(document.resource.id as string);
     }
 
 

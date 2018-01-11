@@ -283,6 +283,12 @@ export class ViewFacade {
     }
 
 
+    public getQueryLiesWithinPath(): string[]|undefined {
+
+        return this.viewManager.getQueryLiesWithinPath();
+    }
+
+
     public async setQueryLiesWithinPath(path: string[]|undefined) {
 
         if (this.isInOverview()) throw ViewFacade.err('setQueryLiesWithinConstraint');
@@ -291,6 +297,17 @@ export class ViewFacade {
         if (!selectedMainTypeDocument || !selectedMainTypeDocument.resource.id) return;
 
         await this.documentsManager.setQueryLiesWithinPath(selectedMainTypeDocument.resource.id, path);
+    }
+
+
+    public async addToQueryLiesWithinPath(newEntry: string) {
+
+        let liesWithinPath = this.getQueryLiesWithinPath();
+        if (!liesWithinPath) liesWithinPath = [];
+
+        liesWithinPath.push(newEntry);
+
+        await this.setQueryLiesWithinPath(liesWithinPath);
     }
 
 

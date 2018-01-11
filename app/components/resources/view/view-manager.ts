@@ -18,6 +18,7 @@ export class ViewManager {
     private query: Query;
     private mainTypeLabel: string;
     private activeDocumentViewTab: string|undefined;
+    private liesWithinPath: string[]|undefined;
 
     private viewName: string;
 
@@ -157,7 +158,15 @@ export class ViewManager {
     }
 
 
+    public getQueryLiesWithinPath(): string[]|undefined {
+
+        return this.liesWithinPath;
+    }
+
+
     public setQueryLiesWithinPath(mainTypeDocumentResourceId: string, liesWithinPath: string[]|undefined) {
+
+        this.liesWithinPath = liesWithinPath;
 
         if (!this.query.constraints) this.query.constraints = {};
 

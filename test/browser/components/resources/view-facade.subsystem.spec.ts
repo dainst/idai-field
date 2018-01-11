@@ -34,6 +34,7 @@ export function main() {
                 { 'type': 'Trench', 'fields': [] },
                 { 'type': 'Image', 'fields': [] },
                 { 'type': 'Find', 'fields': [] },
+                { 'type': 'Feature', 'fields': [] },
                 { 'type': 'Project', 'fields': [] }
             ]
         };
@@ -70,10 +71,11 @@ export function main() {
             findDocument3 = Static.doc('Find 3','find3','Find', 'find3');
             findDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];
 
-            featureDocument = Static.doc('Feature 1','feature1','Feature', 'feature1');
+            featureDocument = Static.doc('Feature','feature','Feature', 'feature');
             featureDocument.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-            featureDocument.resource.relations['includes'] = [findDocument1.resource.id];
+            featureDocument.resource.relations['includes'] = [findDocument1.resource.id, findDocument2.resource.id];
             findDocument1.resource.relations['liesWithin'] = [featureDocument.resource.id];
+            findDocument2.resource.relations['liesWithin'] = [featureDocument.resource.id];
 
             await idaiFieldDocumentDatastore.create(projectDocument);
             await idaiFieldDocumentDatastore.create(trenchDocument1);
@@ -81,6 +83,7 @@ export function main() {
             await idaiFieldDocumentDatastore.create(findDocument1);
             await idaiFieldDocumentDatastore.create(findDocument2);
             await idaiFieldDocumentDatastore.create(findDocument3);
+            await idaiFieldDocumentDatastore.create(featureDocument);
             done();
         });
 
@@ -138,10 +141,11 @@ export function main() {
         it('operations view: populate document list', async done => {
 
             await viewFacade.setupView('excavation', undefined);
-            expect(viewFacade.getDocuments().length).toBe(2);
+            expect(viewFacade.getDocuments().length).toBe(3);
             const identifiers = viewFacade.getDocuments().map(document => document.resource.identifier);
             expect(identifiers).toContain('find1');
             expect(identifiers).toContain('find2');
+            expect(identifiers).toContain('feature');
             done();
         });
 
@@ -172,7 +176,7 @@ export function main() {
             await viewFacade.setQueryString('find1');
             await viewFacade.setSelectedDocument(findDocument2);
             expect(viewFacade.getQueryString()).toEqual('');
-            expect(viewFacade.getDocuments().length).toBe(2);
+            expect(viewFacade.getDocuments().length).toBe(3);
             done();
         });
 
@@ -213,8 +217,20 @@ export function main() {
             await viewFacade.setupView('excavation', undefined);
             await viewFacade.setQueryLiesWithinConstraint(featureDocument.resource.id);
             const documents = await viewFacade.getDocuments();
-            expect(documents.length).toBe(1);
+            expect(documents.length).toBe(2);
             expect(documents[0].resource.id).toEqual(findDocument1.resource.id);
+            expect(documents[1].resource.id).toEqual(findDocument2.resource.id);
+            done();
+        });
+
+
+        it('operations view: show documents on first hierarchy level', async done => {
+
+            await viewFacade.setupView('excavation', undefined);
+            await viewFacade.setQueryLiesWithinConstraint(undefined);
+            const documents = await viewFacade.getDocuments();
+            expect(documents.length).toBe(1);
+            expect(documents[0].resource.id).toEqual(featureDocument.resource.id);
             done();
         });
     })

@@ -151,10 +151,17 @@ export class ViewManager {
     }
 
 
-    public setQueryLiesWithinConstraint(targetResourceId: string) {
+    public setQueryLiesWithinConstraint(targetResourceId: string|undefined) {
 
         if (!this.query.constraints) this.query.constraints = {};
-        this.query.constraints['liesWithin:contain'] = targetResourceId;
+
+        if (targetResourceId) {
+            this.query.constraints['liesWithin:contain'] = targetResourceId;
+            delete this.query.constraints['liesWithin:exist'];
+        } else {
+            this.query.constraints['liesWithin:exist'] = 'UNKNOWN';
+            delete this.query.constraints['liesWithin:contain'];
+        }
     }
 
 

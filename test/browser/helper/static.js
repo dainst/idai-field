@@ -17,6 +17,7 @@ var Static = (function () {
         var constraintIndexer = new constraint_indexer_1.ConstraintIndexer({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
+            'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
             'identifier:match': { path: 'resource.identifier', type: 'match' }
         });
         var fulltextIndexer = new fulltext_indexer_1.FulltextIndexer();

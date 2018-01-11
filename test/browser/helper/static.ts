@@ -19,6 +19,7 @@ export class Static {
         const constraintIndexer = new ConstraintIndexer({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
+            'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
             'identifier:match': { path: 'resource.identifier', type: 'match' }
         });
         const fulltextIndexer = new FulltextIndexer();

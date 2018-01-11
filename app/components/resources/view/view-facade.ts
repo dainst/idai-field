@@ -283,11 +283,11 @@ export class ViewFacade {
     }
 
 
-    public setQueryLiesWithinConstraint(targetResourceId: string) {
+    public async setQueryLiesWithinConstraint(targetResourceId: string|undefined) {
 
         if (this.isInOverview()) throw ViewFacade.err('setQueryLiesWithinConstraint');
 
-        return this.documentsManager.setQueryLiesWithinConstraint(targetResourceId);
+        await this.documentsManager.setQueryLiesWithinConstraint(targetResourceId);
     }
 
 

@@ -83,7 +83,7 @@ export class DocumentsManager {
     }
 
 
-    public async setQueryLiesWithinConstraint(targetResourceId: string) {
+    public async setQueryLiesWithinConstraint(targetResourceId: string|undefined) {
 
         this.viewManager.setQueryLiesWithinConstraint(targetResourceId);
 

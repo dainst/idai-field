@@ -2,17 +2,10 @@
 
 See also [idai-components-2](https://github.com/dainst/idai-components-2). 
    
-## Prerequisites
-
-The iDAI.field development stack runs under MacOS, Windows, Linux. 
-To set it up, you need to install
-
-* [NodeJS](https://nodejs.org/en/) > 7.0.0
-* Node Package Manager ([NPM](https://www.npmjs.com/)) 
-
 ## Quickstart
 
-Clone this repository locally and run
+Development of iDAI.field works under MacOS, Windows and Linux. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) > 7.0.0 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
+Then clone this repository locally and run
 
 ```
 $ npm install
@@ -25,7 +18,7 @@ $ npm start
  workflow it is recommended to set up your IDE to compile the typescript files continuously while you are 
  working on the sources. That way you can just hit reload to see changes made to the *.ts* or *.html* files.
 
-## Testing
+## Tests
 
 The app must have been build (`npm run build`) before running the tests.
 

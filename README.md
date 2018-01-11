@@ -45,7 +45,7 @@ To create binaries run
 $ npm run package[-mac|-win]
 ```
 
-Without using one of the specified suffixed, this will create packages for both MacOs and Windows 32/64 bit.
+Without using one of the specified suffixed, this will create packages for both **MacOS** and **Windows** 32/64 bit.
 If used with one of the suffixed, only packages for the selected target platform get created. When the command has finished execution, you find packages of the application for different operating systems in the `release`-directory.
 
 Please note that when using **Windows**, that due to nested node_modules and the 

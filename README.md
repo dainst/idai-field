@@ -54,6 +54,6 @@ to extract the package. In that case, please use a different archiver, for examp
 
 When using **MacOS**, you need [Wine](http://www.davidbaumgold.com/tutorials/wine-mac/) to build windows [packages](https://github.com/dainst/idai-field-client/blob/master/README.md#packacking).
 
-Not that creating Linux packages should be possible with electron, but here this is yet untested and not enabled.
+Not that creating **Linux** packages should be possible with electron, but here this is yet untested and not enabled.
 
 

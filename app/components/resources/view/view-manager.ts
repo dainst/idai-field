@@ -151,6 +151,13 @@ export class ViewManager {
     }
 
 
+    public fetchQueryLiesWithinConstraintFromResourcesState(): string|undefined {
+
+        // TODO Fetch from resources state
+        return undefined;
+    }
+
+
     public setQueryLiesWithinConstraint(targetResourceId: string|undefined) {
 
         if (!this.query.constraints) this.query.constraints = {};
@@ -270,10 +277,9 @@ export class ViewManager {
         this.query = { q: this.getQueryString() };
 
         const filterTypes = this.getFilterTypes();
-        if (!filterTypes) return;
+        if (filterTypes && filterTypes.length > 0) this.query.types = this.getFilterTypes();
 
-        if (filterTypes.length > 0)
-            this.query.types = this.getFilterTypes();
+        this.setQueryLiesWithinConstraint(this.fetchQueryLiesWithinConstraintFromResourcesState());
     }
 
 

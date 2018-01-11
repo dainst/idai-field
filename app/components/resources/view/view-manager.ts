@@ -128,9 +128,21 @@ export class ViewManager {
     }
 
 
+    // TODO remove redundancy with getQueryTypes
     public getFilterTypes() {
 
         return this.resourcesState.getLastSelectedTypeFilters(this.viewName);
+    }
+
+
+    public setFilterTypes(filterTypes: any) {
+
+        filterTypes && filterTypes.length > 0 ?
+            this.setQueryTypes(filterTypes) :
+            this.deleteQueryTypes();
+
+        if (filterTypes && filterTypes.length == 0) delete this.query.types;
+        this.resourcesState.setLastSelectedTypeFilters(this.viewName, filterTypes);
     }
 
 
@@ -153,17 +165,6 @@ export class ViewManager {
         }
 
         return true;
-    }
-
-
-    public setFilterTypes(filterTypes: any) {
-
-        filterTypes && filterTypes.length > 0 ?
-            this.setQueryTypes(filterTypes) :
-            this.deleteQueryTypes();
-
-        if (filterTypes && filterTypes.length == 0) delete this.query.types;
-        this.resourcesState.setLastSelectedTypeFilters(this.viewName, filterTypes);
     }
 
 

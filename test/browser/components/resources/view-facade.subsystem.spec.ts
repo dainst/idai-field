@@ -219,7 +219,7 @@ export function main() {
         it('operations view: show only documents with liesWithin relation to a specific resource', async done => {
 
             await viewFacade.setupView('excavation', undefined);
-            await viewFacade.setQueryLiesWithinPath([featureDocument1.resource.id]);
+            await viewFacade.addToQueryLiesWithinPath(featureDocument1.resource.id);
             let documents = await viewFacade.getDocuments();
             expect(documents.length).toBe(2);
             expect(documents[0].resource.id).toEqual(findDocument1.resource.id);

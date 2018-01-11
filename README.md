@@ -4,7 +4,7 @@ See also [idai-components-2](https://github.com/dainst/idai-components-2).
    
 ## Quickstart
 
-Development of iDAI.field works under MacOS, Windows and Linux. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) > 7.0.0 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
+Development of iDAI.field works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) > 7.0.0 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
 Then clone this repository locally and run
 
 ```

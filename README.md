@@ -4,7 +4,7 @@ See also [idai-components-2](https://github.com/dainst/idai-components-2).
    
 ## Prerequisites
 
-The iDAI.field2 development stack runs under MacOS, Windows, Linux. 
+The iDAI.field development stack runs under MacOS, Windows, Linux. 
 To set it up, you need to install
 
 * [NodeJS](https://nodejs.org/en/) > 7.0.0

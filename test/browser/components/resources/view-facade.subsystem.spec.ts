@@ -108,18 +108,6 @@ export function main() {
         afterEach((done) => new PouchDB('testdb').destroy().then(() => {done()}), 5000);
 
 
-
-        it('populate document list in operations view', async done => {
-
-            await viewFacade.setupView('excavation', undefined);
-            expect(viewFacade.getDocuments().length).toBe(2);
-            const identifiers = viewFacade.getDocuments().map(document => document.resource.identifier);
-            expect(identifiers).toContain('find1');
-            expect(identifiers).toContain('find2');
-            done();
-        });
-
-
         it('operations overview: populate document list', async done => {
 
             await viewFacade.setupView('project', undefined);
@@ -127,6 +115,27 @@ export function main() {
             const identifiers = viewFacade.getDocuments().map(document => document.resource.identifier);
             expect(identifiers).toContain('trench1');
             expect(identifiers).toContain('trench2');
+            done();
+        });
+
+
+        it('operations overview: search', async done => {
+
+            await viewFacade.setupView('project', undefined);
+            await viewFacade.setQueryString('trench2');
+            expect(viewFacade.getDocuments().length).toBe(1);
+            expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('trench2');
+            done();
+        });
+
+
+        it('operations view: populate document list', async done => {
+
+            await viewFacade.setupView('excavation', undefined);
+            expect(viewFacade.getDocuments().length).toBe(2);
+            const identifiers = viewFacade.getDocuments().map(document => document.resource.identifier);
+            expect(identifiers).toContain('find1');
+            expect(identifiers).toContain('find2');
             done();
         });
 
@@ -147,16 +156,6 @@ export function main() {
             await viewFacade.setQueryString('find2');
             expect(viewFacade.getDocuments().length).toBe(1);
             expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find2');
-            done();
-        });
-
-
-        it('operations overview: search', async done => {
-
-            await viewFacade.setupView('project', undefined);
-            await viewFacade.setQueryString('trench2');
-            expect(viewFacade.getDocuments().length).toBe(1);
-            expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('trench2');
             done();
         });
 

@@ -61,35 +61,36 @@ export class RowComponent {
     }
 
 
-    public save(document: IdaiFieldDocument) {
+    public async save(document: IdaiFieldDocument) {
 
         const oldVersion = JSON.parse(JSON.stringify(document));
 
-        this.validator.validate(document)
-            .then(() => this.persistenceManager.persist(document, this.settingsService.getUsername(),
-                [oldVersion]))
-            .then(() => {
-                this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
-                // new document 
-                if (!oldVersion.resource.id) {
-                    this.viewFacade.populateDocumentList();
-                }
-            })
-            .catch(msgWithParams => {
-                this.messages.add(msgWithParams);
-                return this.restoreIdentifier(document);
-            }).catch(msgWithParams => this.messages.add(msgWithParams));
+        try {
+            await this.validator.validate(document);
+        } catch(msgWithParams) {
+            this.messages.add(msgWithParams);
+            return this.restoreIdentifier(document);
+        }
+
+        try {
+            await this.persistenceManager.persist(document, this.settingsService.getUsername(),
+                [oldVersion]);
+            this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
+        } catch(msgWithParams) {
+            return this.messages.add(msgWithParams);
+        }
+
+        if (!oldVersion.resource.id) await this.viewFacade.populateDocumentList();
     }
 
 
-    private restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
+    private async restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
 
-        return this.datastore.get(document.resource.id as any, { skip_cache: true })
-            .then(
-                latestRevision => {
-                    document.resource.identifier = latestRevision.resource.identifier;
-                }
-            )
-            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
+        try {
+            const latestRevision = await this.datastore.get(document.resource.id as any, {skip_cache: true});
+            document.resource.identifier = latestRevision.resource.identifier;
+        } catch(_) {
+            return [M.DATASTORE_NOT_FOUND];
+        }
     }
 }

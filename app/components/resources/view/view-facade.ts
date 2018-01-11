@@ -283,6 +283,14 @@ export class ViewFacade {
     }
 
 
+    public setQueryLiesWithinConstraint(targetResourceId: string) {
+
+        if (this.isInOverview()) throw ViewFacade.err('setQueryLiesWithinConstraint');
+
+        return this.documentsManager.setQueryLiesWithinConstraint(targetResourceId);
+    }
+
+
     public getCurrentFilterType() {
 
         return this.viewManager.getCurrentFilterType();

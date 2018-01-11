@@ -83,6 +83,16 @@ export class DocumentsManager {
     }
 
 
+    public async setQueryLiesWithinConstraint(targetResourceId: string) {
+
+        this.viewManager.setQueryLiesWithinConstraint(targetResourceId);
+
+        // TODO Deselect document if it is not part of the new document list
+
+        await this.populateDocumentList();
+    }
+
+
     private removeFromListOfNewDocumentsFromRemote(document: Document) { // TODO make generic static method
 
         let index = this.newDocumentsFromRemote.indexOf(document);
@@ -189,8 +199,7 @@ export class DocumentsManager {
         if (!isRecordedInTarget.resource.id) return Promise.reject('no id in populate doc list');
 
         return this.fetchDocuments(DocumentsManager.makeDocsQuery(
-            {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},
-                isRecordedInTarget.resource.id))
+            this.viewManager.getQuery(), isRecordedInTarget.resource.id))
             .then(documents => this.documents = documents)
             .then(() => this.removeEmptyDocuments());
     }
@@ -270,7 +279,10 @@ export class DocumentsManager {
     private static makeDocsQuery(query: Query, mainTypeDocumentResourceId: string): Query {
 
         const clonedQuery = JSON.parse(JSON.stringify(query));
-        clonedQuery.constraints = { 'isRecordedIn:contain': mainTypeDocumentResourceId };
+
+        if (!clonedQuery.constraints) clonedQuery.constraints = {};
+        clonedQuery.constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;
+
         return clonedQuery;
     }
 }

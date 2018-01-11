@@ -12,6 +12,7 @@ export class OperationViews {
     ) {}
 
 
+    // TODO Refactor
     public getOperationViews() {
 
         if (!this._) return [];

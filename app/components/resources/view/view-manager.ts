@@ -16,7 +16,6 @@ export class ViewManager {
 
     private mode: string|undefined; // 'map' or 'list' or undefined
     private query: Query;
-    // public view: ViewDefinition;
     private mainTypeLabel: string;
     private activeDocumentViewTab: string|undefined;
 
@@ -108,6 +107,12 @@ export class ViewManager {
     }
 
 
+    public getQuery(): Query {
+
+        return this.query;
+    }
+
+
     public getQueryString() {
 
         return this.resourcesState.getLastQueryString(this.viewName);
@@ -143,6 +148,13 @@ export class ViewManager {
 
         if (filterTypes && filterTypes.length == 0) delete this.query.types;
         this.resourcesState.setLastSelectedTypeFilters(this.viewName, filterTypes);
+    }
+
+
+    public setQueryLiesWithinConstraint(targetResourceId: string) {
+
+        if (!this.query.constraints) this.query.constraints = {};
+        this.query.constraints['liesWithin:contain'] = targetResourceId;
     }
 
 

@@ -28,7 +28,6 @@ import {LayerManager} from './map/map/layer-manager';
 import {LayerImageProvider} from './map/map/layer-image-provider';
 import {LayerMenuComponent} from './map/map/layer-menu.component';
 import {ChangesStream} from '../../core/datastore/core/changes-stream';
-import {FoldState} from './list/fold-state';
 
 @NgModule({
     imports: [
@@ -55,7 +54,6 @@ import {FoldState} from './list/fold-state';
         SidebarListComponent
     ],
     providers: [
-        FoldState,
         ResourcesState,
         RoutingService,
         DoceditLauncher,

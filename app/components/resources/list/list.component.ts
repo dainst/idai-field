@@ -1,13 +1,10 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {ResourcesComponent} from '../resources.component';
-import {Node} from './node';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
-import {IdaiFieldDocumentDatastore} from '../../../core/datastore/idai-field-document-datastore';
-import {TreeBuilder} from './tree-builder';
-import {FoldState} from './fold-state';
+
 
 @Component({
     selector: 'list',
@@ -20,56 +17,23 @@ import {FoldState} from './fold-state';
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export class ListComponent implements OnChanges {
+export class ListComponent {
 
     @Input() ready: boolean;
     @Input() documents: IdaiFieldDocument[];
 
     public typesMap: { [type: string]: IdaiType };
 
-    public treeBuilder: TreeBuilder;
-    public tree: Node[] = [];
-
-    private docs: IdaiFieldDocument[] = [];
-
     private newResourceCreated: boolean = false;
 
 
     constructor(
-        private datastore: IdaiFieldDocumentDatastore,
         public resourcesComponent: ResourcesComponent,
         private loading: Loading,
         projectConfiguration: ProjectConfiguration,
-        public viewFacade: ViewFacade,
-        private foldState: FoldState
+        public viewFacade: ViewFacade
     ) {
         this.typesMap = projectConfiguration.getTypesMap();
-        this.treeBuilder = new TreeBuilder(datastore, foldState);
-    }
-
-
-    ngOnChanges() {
-
-        if (!this.ready) return;
-        this.loading.start();
-
-        // The timeout is necessary to make the loading icon appear
-        setTimeout(async () => {
-            this.clearFoldStateIfNecessary();
-
-            if (this.viewFacade.getDocuments()) {
-                if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve();
-                this.docs = this.viewFacade.getDocuments() as IdaiFieldDocument[];
-                this.tree = await this.treeBuilder.from(this.viewFacade.getDocuments() as IdaiFieldDocument[]);
-            }
-            this.loading.stop();
-        }, 1);
-    }
-
-
-    public documentsInclude(doc: IdaiFieldDocument): boolean {
-
-        return this.docs.some(d => d.resource.id == doc.resource.id );
     }
 
 
@@ -88,34 +52,15 @@ export class ListComponent implements OnChanges {
 
         const docs: Array<IdaiFieldDocument> = this.viewFacade.getDocuments() as IdaiFieldDocument[];
         
-        for (let doc of docs) {
+        for (let doc of this.documents) {
             if (!doc.resource.id) {
-                docs.splice(docs.indexOf(doc),1);
+                this.documents.splice(docs.indexOf(doc),1);
                 break;
             }
         }
-        docs.push(newDoc);
 
-        // if newDoc as parent, ensure that it's children are shown 
-        if (newDoc.resource.relations['liesWithin']) {
-            const parentDocId = newDoc.resource.relations['liesWithin'][0];
-            if (parentDocId && this.foldState.childrenShownForIds.indexOf(parentDocId) == -1) {
-                this.foldState.childrenShownForIds.push(parentDocId);
-            }
-        }
-
-        this.docs = docs;
+        this.documents.push(newDoc);
         this.newResourceCreated = true;
-        this.tree = await this.treeBuilder.from(docs);
     }
 
-
-    private clearFoldStateIfNecessary() {
-
-        if (!this.newResourceCreated) {
-            this.foldState.clear();
-        } else {
-            this.newResourceCreated = false;
-        }
-    }
 }

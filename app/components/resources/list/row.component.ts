@@ -6,12 +6,10 @@ import {IdaiType} from 'idai-components-2/configuration';
 import {M} from '../../../m';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
-import {ListComponent} from './list.component';
-import {Node} from './node';
 import {ViewFacade} from '../view/view-facade';
-import {IdaiFieldDocumentDatastore} from '../../../core/datastore/idai-field-document-datastore';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
-import {FoldState} from './fold-state';
+import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
+
 
 @Component({
     selector: 'row',
@@ -25,8 +23,7 @@ import {FoldState} from './fold-state';
  */
 export class RowComponent {
 
-    @Input() node: Node;
-    @Input() depth: number;
+    @Input() document: IdaiFieldDocument;
     @Input() typesMap: { [type: string]: IdaiType };
 
     private initialValueOfCurrentlyEditedField: string|undefined;
@@ -34,14 +31,12 @@ export class RowComponent {
 
     constructor(
         public resourcesComponent: ResourcesComponent,
-        public listComponent: ListComponent,
         public viewFacade: ViewFacade,
-        public foldState: FoldState,
         private messages: Messages,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private validator: Validator,
-        private datastore: IdaiFieldDocumentDatastore
+        private datastore: IdaiFieldDocumentReadDatastore
     ) {  }
 
 

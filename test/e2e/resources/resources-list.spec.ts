@@ -71,11 +71,11 @@ describe('resources/list --', () => {
 
         SearchBarPage.typeInSearchField('context');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('no-search-result');
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         SearchBarPage.typeInSearchField('testf1');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
 
         SearchBarPage.typeInSearchField('abc');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
@@ -86,8 +86,8 @@ describe('resources/list --', () => {
     it('perform a type filter search', () => {
 
         SearchBarPage.clickChooseTypeFilter('find');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
 
         SearchBarPage.clickChooseTypeFilter('processunit');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);

@@ -1,4 +1,4 @@
-# iDAI.field 2.x
+# iDAI.field 2
 
 See also [idai-components-2](https://github.com/dainst/idai-components-2). 
    

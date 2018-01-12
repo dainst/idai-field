@@ -304,7 +304,7 @@ export class ResourcesPage {
 
         ResourcesPage.performCreateResource('1', "feature-architecture");
         ResourcesPage.performCreateResource('2', "feature-architecture");
-        ResourcesPage.performCreateRelation('2', '1', 1);
+        ResourcesPage.performCreateRelation('2', '1', 4);
     }
 
 

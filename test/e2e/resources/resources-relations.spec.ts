@@ -17,6 +17,7 @@ describe('resources/relations --', () => {
         browser.sleep(delays.shortRest);
     });
 
+
     beforeEach(() => {
         if (index > 0) {
             NavbarPage.performNavigateToSettings();
@@ -29,6 +30,7 @@ describe('resources/relations --', () => {
         index++;
     });
 
+
     it('create links for relations', () => {
 
         ResourcesPage.performCreateLink();
@@ -38,18 +40,20 @@ describe('resources/relations --', () => {
         DocumentViewPage.getRelationValue(1).then(relVal => expect(relVal).toEqual('1'));
     });
 
+
     it('create a new relation and the corresponding inverse relation', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        expect(DoceditRelationsTabPage.getRelationButtonText(1, 0, 0)).toEqual('1');
+        expect(DoceditRelationsTabPage.getRelationButtonText(4, 0, 0)).toEqual('1');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.performEditDocument();
-        expect(DoceditRelationsTabPage.getRelationButtonText(0, 0, 0)).toEqual('2');
+        expect(DoceditRelationsTabPage.getRelationButtonText(5, 0, 0)).toEqual('2');
         DoceditPage.clickCloseEdit();
 
     });
+
 
     it('edit a resource that contains a relation', () => {
 
@@ -62,6 +66,7 @@ describe('resources/relations --', () => {
         // expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
+
     it('delete a relation and the corresponding inverse relation', () => {
 
         ResourcesPage.performCreateLink();
@@ -71,12 +76,13 @@ describe('resources/relations --', () => {
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         DocumentViewPage.performEditDocument();
         DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(4, 0, 0);
         DoceditPage.clickSaveDocument();
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
     });
+
 
     it('delete inverse relations when deleting a resource', () => {
 
@@ -88,5 +94,4 @@ describe('resources/relations --', () => {
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
     });
-
 });

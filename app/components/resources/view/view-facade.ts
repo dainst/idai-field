@@ -297,7 +297,7 @@ export class ViewFacade {
     }
 
 
-    public async getBreadcrumb(): Promise<string[]|undefined> {
+    public async getBreadcrumb(): Promise<any[]|undefined> {
 
         if (this.isInOverview()) return undefined;
         if (!this.getSelectedMainTypeDocument()) return undefined;
@@ -308,10 +308,28 @@ export class ViewFacade {
         if (rootDocumentResourceId.length < 1) return undefined;
 
 
-        const segments = [(this.getSelectedMainTypeDocument() as any).resource.identifier];
+        const segments = [{
+            id: undefined, // TODO remove this hack, it is used to call setRootDocument with undefined, but could be the mainTypeDocument
+            identifier: (this.mainTypeDocumentsManager.getSelectedDocument() as any).resource.identifier as any
+        }];
 
-        const segment = await this.datastore.get(rootDocumentResourceId);
-        segments.push(segment.resource.identifier);
+
+        let currentResourceId = rootDocumentResourceId;
+        while (true) {
+
+            const segment = await this.datastore.get(currentResourceId);
+            segments.push({
+                id: (segment as any).resource.id,
+                identifier: (segment as any).resource.identifier
+            });
+
+            if (!segment.resource.relations['liesWithin']
+                || segment.resource.relations['liesWithin'].length < 1) break;
+
+            currentResourceId = segment.resource.relations['liesWithin']
+                [0]; // TODO we need to handle cases where more relation targets are present
+
+        }
 
         return segments;
     }

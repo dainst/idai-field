@@ -32,7 +32,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private clickEventObservers: Array<any> = [];
 
-    public breadcrumb: string[]|undefined;
+    public breadcrumb: any[]|undefined;
 
 
     constructor(route: ActivatedRoute,
@@ -68,10 +68,10 @@ export class ResourcesComponent implements AfterViewChecked {
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
 
-    public async showChildren(document: IdaiFieldDocument) {
+    public async setRootDocument(resourceId: string) {
 
-        await this.viewFacade.setRootDocument(document.resource.id as string);
-        this.breadcrumb = (await this.viewFacade.getBreadcrumb() as any).join(' / ');
+        await this.viewFacade.setRootDocument(resourceId as string);
+        this.breadcrumb = await this.viewFacade.getBreadcrumb();
     }
 
 

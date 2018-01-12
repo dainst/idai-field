@@ -40,8 +40,8 @@ export class RowComponent {
     ) {  }
 
 
-    public showChildren = async (document: IdaiFieldDocument) =>
-        this.resourcesComponent.showChildren(document);
+    public setRootDocument = async (document: IdaiFieldDocument) =>
+        this.resourcesComponent.setRootDocument(document.resource.id as any);
 
 
     public startEditing(fieldValue: string) {

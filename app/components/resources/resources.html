@@ -72,7 +72,7 @@
 </div>
 <div class="row" style="padding-left:28px; color: rgba(85, 114, 161, 1); margin-top: 60px">
     <div *ngIf="breadcrumb">
-        {{breadcrumb}}
+        <span *ngFor="let seg of breadcrumb" (click)="setRootDocument(seg.id)">{{seg.identifier}}&nbsp;&nbsp;</span>
     </div>
 </div>
 <div style="padding-top: 1px;"

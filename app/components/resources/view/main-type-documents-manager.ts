@@ -61,7 +61,7 @@ export class MainTypeDocumentsManager {
 
         if (!this.documents || this.documents.length == 0) return false;
 
-        let operationTypeDocument = MainTypeDocumentsManager.getMainTypeDocumentForDocument(
+        const operationTypeDocument = MainTypeDocumentsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
 
         if (operationTypeDocument && operationTypeDocument != this.selectedDocument) {

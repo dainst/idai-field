@@ -18,7 +18,6 @@ export class ViewManager {
     private query: Query;
     private mainTypeLabel: string;
     private activeDocumentViewTab: string|undefined;
-    private rootDocumentResourceId: string|undefined;
 
     private currentView: string;
 
@@ -237,10 +236,12 @@ export class ViewManager {
     public setupView(viewName: string, defaultMode: string): Promise<any> {
 
         return ((!this.currentView || viewName != this.currentView)
-            ? this.initializeView(viewName) : Promise.resolve()).then(() => {
+            ? this.initializeView(viewName)
 
-            return this.initialize(defaultMode ? 'map' : undefined);
-        });
+            // TODO simplify this branch
+            : Promise.resolve()).then(() => {
+                return this.initialize(defaultMode ? 'map' : undefined);
+            });
     }
 
 

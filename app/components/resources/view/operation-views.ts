@@ -27,24 +27,6 @@ export class OperationViews {
     }
 
 
-    public getViewName(viewName: string) {
-
-        for (let view of this._) {
-            if (view.name == viewName) return view;
-        }
-        return undefined;
-    }
-
-
-    public getView(viewName: string) {
-
-        for (let view of this._) {
-            if (view.name == viewName) return view;
-        }
-        return undefined;
-    }
-
-
     public getLabelForName(name: any) {
 
         for (let view of this._) {

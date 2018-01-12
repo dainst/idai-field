@@ -69,28 +69,32 @@ describe('resources/list --', () => {
 
     it('perform a fulltext search', () => {
 
-        SearchBarPage.typeInSearchField('context');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        ResourcesPage.performCreateResourceInList('context2', 'feature');
+
+        SearchBarPage.typeInSearchField('context1');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
-        SearchBarPage.typeInSearchField('testf1');
+        SearchBarPage.typeInSearchField('context2');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
 
         SearchBarPage.typeInSearchField('abc');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
     });
 
 
     it('perform a type filter search', () => {
 
+        ResourcesPage.performCreateResourceInList('testf2', 'find');
+
         SearchBarPage.clickChooseTypeFilter('find');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf2')), delays.ECWaitTime);
 
         SearchBarPage.clickChooseTypeFilter('processunit');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf2')), delays.ECWaitTime);
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
     });
 });

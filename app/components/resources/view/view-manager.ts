@@ -289,7 +289,7 @@ export class ViewManager {
         this.query = { q: this.getQueryString() };
 
         const filterTypes = this.getFilterTypes();
-        if (filterTypes && filterTypes.length > 0) this.query.types = this.getFilterTypes();
+        if (filterTypes && filterTypes.length > 0) this.query.types = filterTypes;
     }
 
 

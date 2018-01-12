@@ -20,7 +20,9 @@ describe('widgets/document-view', function() {
         browser.sleep(750);
     });
 
+
     beforeEach(() => {
+
         NavbarPage.performNavigateToSettings();
         require('request').post('http://localhost:3003/reset', {});
         browser.sleep(delays.shortRest * 5);
@@ -32,7 +34,8 @@ describe('widgets/document-view', function() {
     /**
      * Addresses an issue where relations were shown double.
      */
-    it('show only relations present in the object', function() {
+    it('show only relations present in the object', () => {
+
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(function(relations) {
@@ -40,18 +43,22 @@ describe('widgets/document-view', function() {
         });
     });
 
-    it('show the relations present in the object', function() {
+
+    it('show the relations present in the object', () => {
+
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelationName(1).then(value => {
-            expect(value).toBe('Liegt in'); // with the correct relation label
+            expect(value).toBe('Wird geschnitten von'); // with the correct relation label
         });
         DocumentViewPage.getRelationValue(1).then(value => {
             expect(value).toBe('2');
         });
     });
 
-    it('show the fields present in the object', function() {
+
+    it('show the fields present in the object', () => {
+
         ResourcesPage.performCreateResource('1', 'feature-architecture', 'hasArea', '100');
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getFieldName(0).then(value => {
@@ -62,10 +69,12 @@ describe('widgets/document-view', function() {
         });
     });
 
+
     /**
      * Addresses an issue where fields were shown double.
      */
-    it('show only the fields present in the object', function() {
+    it('show only the fields present in the object', () => {
+
         ResourcesPage.performCreateResource('1', 'feature-architecture', 'hasArea', '100');
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getFields().then(function(items) {
@@ -73,11 +82,13 @@ describe('widgets/document-view', function() {
         });
     });
 
+
     /**
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    it('show no relations after cancelling edit', function() {
+    it('show no relations after cancelling edit', () => {
+
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-architecture');
         ResourcesPage.clickSelectResource('1');

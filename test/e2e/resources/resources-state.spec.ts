@@ -42,6 +42,7 @@ describe('resources/state --', function() {
 
 
     beforeAll(() => {
+
        removeResourcesStateFile();
     });
 
@@ -52,11 +53,13 @@ describe('resources/state --', function() {
         common.resetConfigJson().then(done);
     });
 
+
     function removeResourcesStateFile() {
 
         const filePath = appDataPath + '/resources-state-' + 'abc.json';
         if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
     }
+
 
     function createDepictsRelation() {
 
@@ -65,11 +68,13 @@ describe('resources/state --', function() {
         ImageOverviewPage.createDepictsRelation('trench1');
     }
 
+
     function clickDepictsRelationLink() {
 
         ImageOverviewPage.doubleClickCell(0);
         DocumentViewPage.clickRelation(0);
     }
+
 
     it('basic stuff', () => {
 
@@ -90,6 +95,7 @@ describe('resources/state --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('trench1'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench2'));
     });
+
 
     it('restore resources state after restarting client', () => {
 
@@ -176,6 +182,7 @@ describe('resources/state --', function() {
 
 
     it('switch views after click on arrow in project-view list for jumping to mainType-view', () => {
+
         ResourcesPage.performCreateResource('building1', 'building');
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.performCreateResource('architecture1', 'feature-architecture');
@@ -315,50 +322,50 @@ describe('resources/state --', function() {
     it('keep query string in search bar input field on switching view modes', () => {
 
         NavbarPage.clickNavigateToExcavation();
-        SearchBarPage.typeInSearchField('testf1');
+        SearchBarPage.typeInSearchField('context_');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
         ResourcesPage.clickListModeButton();
-        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('testf1'));
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('context_'));
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
         ResourcesPage.clickMapModeButton();
-        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('testf1'));
+        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('context_'));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
 
         SearchBarPage.typeInSearchField(' ');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         ResourcesPage.clickListModeButton();
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(' '));
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
     });
 
 
     it('keep type filter on switching view modes', () => {
 
         NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.performCreateResource('find2', 'find');
+
         SearchBarPage.clickChooseTypeFilter('feature');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('find2')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         ResourcesPage.clickListModeButton();
         SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('S'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('find2')), delays.ECWaitTime);
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         ResourcesPage.clickMapModeButton();
         SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('S'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('find2')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         SearchBarPage.clickChooseTypeFilter('all');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('find2')), delays.ECWaitTime);
 
         ResourcesPage.clickListModeButton();
         browser.wait(EC.stalenessOf(SearchBarPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('find2')), delays.ECWaitTime);
     });
 });

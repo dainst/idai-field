@@ -20,22 +20,24 @@ export class OperationViews {
     }
 
 
-    public getLabelForName(name: any) {
+    public getLabelForName(name: string) {
 
-        for (let view of this._) {
-            if (view.name == name) return view.mainTypeLabel;
-        }
-        return undefined;
+        const view = this.namedView(name);
+        return (view) ? view.mainTypeLabel : undefined;
     }
 
 
-    public getTypeForName(name: any) {
+    public getTypeForName(name: string) {
 
-        for (let view of this._) {
-            if (view.name == name) return view.operationSubtype;
-        }
-        return undefined;
+        const view = this.namedView(name);
+        return (view) ? view.operationSubtype : undefined;
     }
+
+
+    private namedView = (name: string) => this._.find(this.sameViewName(name));
+
+
+    private sameViewName = (name: string) => (view: any) => name == view.name;
 
 
     public getViewNameForOperationSubtype(operationSubtypeName: string): string|undefined {

@@ -40,7 +40,7 @@ describe('resources/images --', function() {
 
         NavbarPage.clickNavigateToImages();
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.openEditByDoubleClickResource('testf1');
+        ResourcesPage.openEditByDoubleClickResource('context1');
         DoceditPage.clickImagesTab();
 
     }

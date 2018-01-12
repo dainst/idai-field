@@ -9,21 +9,14 @@ export class OperationViews {
 
     constructor(
         private _: any
-    ) {}
+    ) {
+        if (!_) _ = [];
+    }
 
 
-    // TODO Refactor
-    public getOperationViews() {
+    public get() {
 
-        if (!this._) return [];
-
-        let views = [] as any;
-        for (let view of this._) {
-
-            views.push(view as never);
-        }
-        if (views.length < 1) return [];
-        return views;
+        return this._;
     }
 
 

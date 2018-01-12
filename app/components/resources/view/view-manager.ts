@@ -20,7 +20,7 @@ export class ViewManager {
     private activeDocumentViewTab: string|undefined;
     private liesWithinPath: string[]|undefined;
 
-    private viewName: string;
+    private currentView: string;
 
     constructor(
         private views: OperationViews,
@@ -30,13 +30,13 @@ export class ViewManager {
 
     public isInOverview() {
 
-        return this.viewName == 'project';
+        return this.currentView == 'project';
     }
 
 
     public getViewName() {
 
-        return this.viewName;
+        return this.currentView;
     }
 
 
@@ -84,19 +84,19 @@ export class ViewManager {
     public getViewType() {
 
         if (this.isInOverview()) return 'Project';
-        return this.views.getTypeForName(this.viewName);
+        return this.views.getTypeForName(this.currentView);
     }
 
 
     public getActiveLayersIds(mainTypeDocumentResourceId: string): string[] {
 
-        return this.resourcesState.getActiveLayersIds(this.viewName, mainTypeDocumentResourceId);
+        return this.resourcesState.getActiveLayersIds(this.currentView, mainTypeDocumentResourceId);
     }
 
 
     public setActiveLayersIds(mainTypeDocumentResourceId: string, activeLayersIds: string[]) {
 
-        this.resourcesState.setActiveLayersIds(this.viewName, mainTypeDocumentResourceId,
+        this.resourcesState.setActiveLayersIds(this.currentView, mainTypeDocumentResourceId,
             activeLayersIds);
     }
 
@@ -104,7 +104,7 @@ export class ViewManager {
     public removeActiveLayersIds(mainTypeDocumentId: string|undefined) {
 
         if (mainTypeDocumentId)
-            this.resourcesState.removeActiveLayersIds(this.viewName, mainTypeDocumentId);
+            this.resourcesState.removeActiveLayersIds(this.currentView, mainTypeDocumentId);
     }
 
 
@@ -116,14 +116,14 @@ export class ViewManager {
 
     public getQueryString() {
 
-        return this.resourcesState.getLastQueryString(this.viewName);
+        return this.resourcesState.getLastQueryString(this.currentView);
     }
 
 
     public setQueryString(q: string) {
 
         this.query.q = q;
-        this.resourcesState.setLastQueryString(this.viewName, q);
+        this.resourcesState.setLastQueryString(this.currentView, q);
     }
 
 
@@ -137,7 +137,7 @@ export class ViewManager {
     // TODO remove redundancy with getQueryTypes
     public getFilterTypes() {
 
-        return this.resourcesState.getLastSelectedTypeFilters(this.viewName);
+        return this.resourcesState.getLastSelectedTypeFilters(this.currentView);
     }
 
 
@@ -148,13 +148,13 @@ export class ViewManager {
             this.deleteQueryTypes();
 
         if (filterTypes && filterTypes.length == 0) delete this.query.types;
-        this.resourcesState.setLastSelectedTypeFilters(this.viewName, filterTypes);
+        this.resourcesState.setLastSelectedTypeFilters(this.currentView, filterTypes);
     }
 
 
     public fetchQueryLiesWithinPathFromResourcesState(mainTypeDocumentResourceId: string): string[]|undefined {
 
-        return this.resourcesState.getLiesWithinPath(this.viewName, mainTypeDocumentResourceId);
+        return this.resourcesState.getLiesWithinPath(this.currentView, mainTypeDocumentResourceId);
     }
 
 
@@ -171,11 +171,11 @@ export class ViewManager {
         if (!this.query.constraints) this.query.constraints = {};
 
         if (liesWithinPath) {
-            this.resourcesState.setLiesWithinPath(this.viewName, mainTypeDocumentResourceId, liesWithinPath);
+            this.resourcesState.setLiesWithinPath(this.currentView, mainTypeDocumentResourceId, liesWithinPath);
             this.query.constraints['liesWithin:contain'] = liesWithinPath[liesWithinPath.length - 1];
             delete this.query.constraints['liesWithin:exist'];
         } else {
-            this.resourcesState.removeLiesWithinPath(this.viewName, mainTypeDocumentResourceId);
+            this.resourcesState.removeLiesWithinPath(this.currentView, mainTypeDocumentResourceId);
             this.query.constraints['liesWithin:exist'] = 'UNKNOWN';
             delete this.query.constraints['liesWithin:contain'];
         }
@@ -218,14 +218,14 @@ export class ViewManager {
 
         if (!selectedMainTypeDocumentResourceId) return;
 
-        this.resourcesState.setLastSelectedOperationTypeDocumentId(this.viewName,
+        this.resourcesState.setLastSelectedOperationTypeDocumentId(this.currentView,
             selectedMainTypeDocumentResourceId);
     }
 
 
     public getLastSelectedOperationTypeDocumentId() {
 
-        return this.resourcesState.getLastSelectedOperationTypeDocumentId(this.viewName);
+        return this.resourcesState.getLastSelectedOperationTypeDocumentId(this.currentView);
     }
 
 
@@ -243,7 +243,7 @@ export class ViewManager {
 
     public setupView(viewName: string, defaultMode: string): Promise<any> {
 
-        return ((!this.viewName || viewName != this.viewName)
+        return ((!this.currentView || viewName != this.currentView)
             ? this.initializeView(viewName) : Promise.resolve()).then(() => {
 
             return this.initialize(defaultMode ? 'map' : undefined);
@@ -265,12 +265,12 @@ export class ViewManager {
 
         return Promise.resolve().then(
             () => {
-                this.viewName = viewName;
+                this.currentView = viewName;
 
                 if (viewName == 'project') {
                     this.mainTypeLabel = 'Projekt';
                 } else {
-                    this.mainTypeLabel = this.views.getLabelForName(this.viewName);
+                    this.mainTypeLabel = this.views.getLabelForName(this.currentView);
                 }
 
             }
@@ -313,13 +313,13 @@ export class ViewManager {
     private setLastSelectedMode(mode: string) {
 
         this.mode = mode;
-        this.resourcesState.setLastSelectedMode(this.viewName, mode);
+        this.resourcesState.setLastSelectedMode(this.currentView, mode);
     }
 
 
     private restoreLastSelectedMode(): boolean {
 
-        const mode = this.resourcesState.getLastSelectedMode(this.viewName);
+        const mode = this.resourcesState.getLastSelectedMode(this.currentView);
         if (mode) {
             this.mode = mode;
             return true; // to indicate success

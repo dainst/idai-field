@@ -32,6 +32,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private clickEventObservers: Array<any> = [];
 
+    public breadcrumb: string[]|undefined;
+
 
     constructor(route: ActivatedRoute,
                 private viewFacade: ViewFacade,
@@ -47,6 +49,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
             this.isEditingGeometry = false;
             this.viewFacade.deselect();
+            this.breadcrumb = undefined;
 
             if (params['id']) {
                 // The timeout is needed to prevent buggy map behavior after following a relation link from
@@ -63,6 +66,13 @@ export class ResourcesComponent implements AfterViewChecked {
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
+
+
+    public async showChildren(document: IdaiFieldDocument) {
+
+        await this.viewFacade.addToQueryLiesWithinPath(document.resource.id as string);
+        this.breadcrumb = (await this.viewFacade.getBreadcrumb() as any).join(' / ');
+    }
 
 
     public getIsRecordedInTarget() {

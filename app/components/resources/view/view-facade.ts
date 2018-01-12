@@ -171,7 +171,7 @@ export class ViewFacade {
     }
 
 
-    public getSelectedMainTypeDocument() {
+    public getSelectedMainTypeDocument(): IdaiFieldDocument|undefined {
 
         if (this.isInOverview()) throw ViewFacade.err('getSelectedMainTypeDocument');
         return this.mainTypeDocumentsManager.getSelectedDocument();
@@ -283,12 +283,6 @@ export class ViewFacade {
     }
 
 
-    public getQueryLiesWithinPath(): string[]|undefined {
-
-        return this.viewManager.getQueryLiesWithinPath();
-    }
-
-
     public async setQueryLiesWithinPath(path: string[]|undefined) {
 
         if (this.isInOverview()) throw ViewFacade.err('setQueryLiesWithinConstraint');
@@ -308,6 +302,26 @@ export class ViewFacade {
         liesWithinPath.push(resourceId);
 
         await this.setQueryLiesWithinPath(liesWithinPath);
+    }
+
+
+    public async getBreadcrumb(): Promise<string[]|undefined> {
+
+        if (this.isInOverview()) return undefined;
+        if (!this.getSelectedMainTypeDocument()) return undefined;
+
+        const currentLiesWithinPath = this.getQueryLiesWithinPath();
+        if (!currentLiesWithinPath) return undefined;
+        if (currentLiesWithinPath.length < 1) return undefined;
+
+        const segments = [(this.getSelectedMainTypeDocument() as any).resource.identifier];
+
+        for (let resourceId of currentLiesWithinPath) {
+            const segment = await this.datastore.get(resourceId);
+            segments.push(segment.resource.identifier);
+        }
+
+        return segments;
     }
 
 
@@ -370,6 +384,12 @@ export class ViewFacade {
         }
 
         await this.populateDocumentList();
+    }
+
+
+    private getQueryLiesWithinPath(): string[]|undefined {
+
+        return this.viewManager.getQueryLiesWithinPath();
     }
 
 

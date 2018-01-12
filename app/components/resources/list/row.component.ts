@@ -40,6 +40,10 @@ export class RowComponent {
     ) {  }
 
 
+    public showChildren = async (document: IdaiFieldDocument) =>
+        this.resourcesComponent.showChildren(document);
+
+
     public startEditing(fieldValue: string) {
 
         this.initialValueOfCurrentlyEditedField = fieldValue;
@@ -81,12 +85,6 @@ export class RowComponent {
         }
 
         if (!oldVersion.resource.id) await this.viewFacade.populateDocumentList();
-    }
-
-
-    public async showChildren(document: IdaiFieldDocument) {
-
-        await this.viewFacade.addToQueryLiesWithinPath(document.resource.id as string);
     }
 
 

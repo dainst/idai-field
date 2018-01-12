@@ -70,7 +70,12 @@
         </div>
     </div>
 </div>
-<div style="padding-top: 56px;"
+<div class="row" style="padding-left:28px; color: rgba(85, 114, 161, 1); margin-top: 60px">
+    <div *ngIf="breadcrumb">
+        {{breadcrumb}}
+    </div>
+</div>
+<div style="padding-top: 1px;"
      class="row"
      (dragover)="false"
      (dragleave)="false"

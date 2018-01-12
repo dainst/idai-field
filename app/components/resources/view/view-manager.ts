@@ -281,12 +281,9 @@ export class ViewManager {
     private initializeMode(defaultMode?: string) {
 
         if (defaultMode) {
-            this.mode = defaultMode;
-            this.setLastSelectedMode(defaultMode);
-        } else if (this.getLastSelectedMode()) {
-            this.mode = this.getLastSelectedMode();
-        } else {
-            this.mode = 'map';
+            return this.setLastSelectedMode(defaultMode);
+        }
+        if (!this.restoreLastSelectedMode()) {
             this.setLastSelectedMode('map');
         }
     }
@@ -313,14 +310,21 @@ export class ViewManager {
     }
 
 
-    private setLastSelectedMode(defaultMode: string) {
+    private setLastSelectedMode(mode: string) {
 
-        this.resourcesState.setLastSelectedMode(this.viewName, defaultMode);
+        this.mode = mode;
+        this.resourcesState.setLastSelectedMode(this.viewName, mode);
     }
 
 
-    private getLastSelectedMode() {
+    private restoreLastSelectedMode(): boolean {
 
-        return this.resourcesState.getLastSelectedMode(this.viewName);
+        const mode = this.resourcesState.getLastSelectedMode(this.viewName);
+        if (mode) {
+            this.mode = mode;
+            return true; // to indicate success
+        } else {
+            return false;
+        }
     }
 }

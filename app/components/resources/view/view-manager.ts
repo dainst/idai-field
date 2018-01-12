@@ -261,20 +261,15 @@ export class ViewManager {
     }
 
 
-    private initializeView(viewName: string): Promise<any> {
+    private async initializeView(viewName: string): Promise<any> {
 
-        return Promise.resolve().then(
-            () => {
-                this.currentView = viewName;
+        this.currentView = viewName;
 
-                if (viewName == 'project') {
-                    this.mainTypeLabel = 'Projekt';
-                } else {
-                    this.mainTypeLabel = this.views.getLabelForName(this.currentView);
-                }
-
-            }
-        ).catch(() => Promise.reject(null));
+        if (viewName == 'project') {
+            this.mainTypeLabel = 'Projekt';
+        } else {
+            this.mainTypeLabel = this.views.getLabelForName(this.currentView);
+        }
     }
 
 

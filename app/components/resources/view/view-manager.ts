@@ -264,12 +264,8 @@ export class ViewManager {
     private async initializeView(viewName: string): Promise<any> {
 
         this.currentView = viewName;
-
-        if (viewName == 'project') {
-            this.mainTypeLabel = 'Projekt';
-        } else {
-            this.mainTypeLabel = this.views.getLabelForName(this.currentView);
-        }
+        this.mainTypeLabel = (viewName == 'project')
+            ? 'Projekt' : this.views.getLabelForName(this.currentView);
     }
 
 

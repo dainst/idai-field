@@ -57,13 +57,13 @@ describe('import --', function() {
 
         ResourcesPage.clickSelectResource('obob1');
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
-        DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toContain('testf1'));
+        DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toContain('context1'));
         DocumentViewPage.getRelationName(0).then(relationName => expect(relationName).toEqual('Zeitlich vor'));
 
-        ResourcesPage.clickSelectResource('testf1');
+        ResourcesPage.clickSelectResource('context1');
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(3));
-        DocumentViewPage.getRelationValue(2).then(relationValue => expect(relationValue).toContain('obob1'));
-        DocumentViewPage.getRelationName(2).then(relationName => expect(relationName).toEqual('Zeitlich nach'));
+        DocumentViewPage.getRelationValue(1).then(relationValue => expect(relationValue).toContain('obob1'));
+        DocumentViewPage.getRelationName(1).then(relationName => expect(relationName).toEqual('Zeitlich nach'));
 
         NavbarPage.clickNavigateToProject();
 
@@ -80,7 +80,7 @@ describe('import --', function() {
         element(by.css('.alert button')).click();
         NavbarPage.clickNavigateToExcavation();
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob1'));
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob2'));
@@ -131,12 +131,12 @@ describe('import --', function() {
         NavbarPage.clickCloseMessage();
         NavbarPage.clickNavigateToExcavation();
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob1'));
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob2'));
 
-        ResourcesPage.clickSelectResource('testf1');
+        ResourcesPage.clickSelectResource('context1');
         DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(2);
         });

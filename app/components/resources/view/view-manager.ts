@@ -5,7 +5,7 @@ import {OperationViews} from './operation-views';
 import {ResourcesState} from './resources-state';
 
 /**
- * Holds and provides acces to the current view, which is one of the views from this.views,
+ * Holds and provides access to the current view, which is one of the views from this.views,
  * as well as serializes all of its state so it can be restored later.
  *
  * @author Daniel de Oliveira

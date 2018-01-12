@@ -18,9 +18,10 @@ export class ViewManager {
     private query: Query;
     private mainTypeLabel: string;
     private activeDocumentViewTab: string|undefined;
-    private liesWithinPath: string[]|undefined;
+    private rootDocumentResourceId: string|undefined;
 
     private currentView: string;
+
 
     constructor(
         private views: OperationViews,
@@ -152,27 +153,19 @@ export class ViewManager {
     }
 
 
-    public fetchQueryLiesWithinPathFromResourcesState(mainTypeDocumentResourceId: string): string[]|undefined {
+    public fetchQueryLiesWithinPathFromResourcesState(mainTypeDocumentResourceId: string): string|undefined {
 
         return this.resourcesState.getLiesWithinPath(this.currentView, mainTypeDocumentResourceId);
     }
 
 
-    public getQueryLiesWithinPath(): string[]|undefined {
-
-        return this.liesWithinPath;
-    }
-
-
-    public setQueryLiesWithinPath(mainTypeDocumentResourceId: string, liesWithinPath: string[]|undefined) {
-
-        this.liesWithinPath = liesWithinPath;
+    public setRootDocumentBy(mainTypeDocumentResourceId: string, rootDocumentResourceId: string|undefined) {
 
         if (!this.query.constraints) this.query.constraints = {};
 
-        if (liesWithinPath) {
-            this.resourcesState.setLiesWithinPath(this.currentView, mainTypeDocumentResourceId, liesWithinPath);
-            this.query.constraints['liesWithin:contain'] = liesWithinPath[liesWithinPath.length - 1];
+        if (rootDocumentResourceId) {
+            this.resourcesState.setLiesWithinPath(this.currentView, mainTypeDocumentResourceId, rootDocumentResourceId);
+            this.query.constraints['liesWithin:contain'] = rootDocumentResourceId;
             delete this.query.constraints['liesWithin:exist'];
         } else {
             this.resourcesState.removeLiesWithinPath(this.currentView, mainTypeDocumentResourceId);
@@ -255,9 +248,9 @@ export class ViewManager {
 
         if (!mainTypeDocument || !mainTypeDocument.resource.id) return;
 
-        const liesWithinPath: string[]|undefined
+        const rootDocument: string|undefined
             = this.fetchQueryLiesWithinPathFromResourcesState(mainTypeDocument.resource.id);
-        this.setQueryLiesWithinPath(mainTypeDocument.resource.id, liesWithinPath);
+        this.setRootDocumentBy(mainTypeDocument.resource.id, rootDocument);
     }
 
 

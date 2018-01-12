@@ -124,7 +124,7 @@ export class ResourcesState {
     }
 
 
-    public setLiesWithinPath(viewName: string, mainTypeDocumentId: string, liesWithinPath: string[]) {
+    public setLiesWithinPath(viewName: string, mainTypeDocumentId: string, liesWithinPath: string) {
 
         if (!this._[viewName]) this._[viewName] = {};
         if (!this._[viewName].liesWithinPaths) this._[viewName].liesWithinPaths = {};
@@ -132,12 +132,12 @@ export class ResourcesState {
         const liesWithinPaths = this._[viewName].liesWithinPaths;
         if (!liesWithinPaths) return;
 
-        liesWithinPaths[mainTypeDocumentId] = liesWithinPath.slice(0);
+        liesWithinPaths[mainTypeDocumentId] = liesWithinPath;
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
 
-    public getLiesWithinPath(viewName: string, mainTypeDocumentId: string): string[]|undefined {
+    public getLiesWithinPath(viewName: string, mainTypeDocumentId: string): string|undefined {
 
         if (!this._[viewName] || !this._[viewName].liesWithinPaths) return undefined;
 

@@ -136,7 +136,7 @@ export function main() {
         it('operations overview: search', async done => {
 
             await viewFacade.setupView('project', undefined);
-            await viewFacade.setQueryString('trench2');
+            await viewFacade.setSearchString('trench2');
             expect(viewFacade.getDocuments().length).toBe(1);
             expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('trench2');
             done();
@@ -167,7 +167,7 @@ export function main() {
         it('operations view: search', async done => {
 
             await viewFacade.setupView('excavation', undefined);
-            await viewFacade.setQueryString('feature2');
+            await viewFacade.setSearchString('feature2');
             expect(viewFacade.getDocuments().length).toBe(1);
             expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('feature2');
             done();
@@ -177,7 +177,7 @@ export function main() {
         it('operations view: set selected, query invalidated', async done => {
 
             await viewFacade.setupView('excavation', undefined);
-            await viewFacade.setQueryString('feature1');
+            await viewFacade.setSearchString('feature1');
             await viewFacade.setSelectedDocument(featureDocument2);
             expect(viewFacade.getQueryString()).toEqual('');
             expect(viewFacade.getDocuments().length).toBe(2);
@@ -188,7 +188,7 @@ export function main() {
         it('operations view: set selected in operations view, query not invalidated', async done => {
 
             await viewFacade.setupView('excavation', undefined);
-            await viewFacade.setQueryString('feature1');
+            await viewFacade.setSearchString('feature1');
             await viewFacade.setSelectedDocument(featureDocument1);
             expect(viewFacade.getQueryString()).toEqual('feature1');
             expect(viewFacade.getDocuments().length).toBe(1);
@@ -200,7 +200,7 @@ export function main() {
 
             await viewFacade.setupView('excavation', undefined);
             await viewFacade.setSelectedDocument(findDocument1);
-            expect(await viewFacade.setQueryString('find1')).toEqual(true);
+            expect(await viewFacade.setSearchString('find1')).toEqual(true);
             expect(viewFacade.getSelectedDocument()).toBe(findDocument1);
             done();
         });
@@ -210,7 +210,7 @@ export function main() {
 
             await viewFacade.setupView('excavation', undefined);
             await viewFacade.setSelectedDocument(findDocument1);
-            expect(await viewFacade.setQueryString('find2')).toEqual(false);
+            expect(await viewFacade.setSearchString('find2')).toEqual(false);
             expect(viewFacade.getSelectedDocument()).toBe(undefined);
             done();
         });
@@ -219,13 +219,13 @@ export function main() {
         it('operations view: show only documents with liesWithin relation to a specific resource', async done => {
 
             await viewFacade.setupView('excavation', undefined);
-            await viewFacade.addToQueryLiesWithinPath(featureDocument1.resource.id);
+            await viewFacade.setRootDocument(featureDocument1.resource.id);
             let documents = await viewFacade.getDocuments();
             expect(documents.length).toBe(2);
             expect(documents[0].resource.id).toEqual(findDocument1.resource.id);
             expect(documents[1].resource.id).toEqual(findDocument2.resource.id);
 
-            await viewFacade.setQueryLiesWithinPath(undefined);
+            await viewFacade.setRootDocument(undefined);
             documents = await viewFacade.getDocuments();
             expect(documents.length).toBe(2);
             expect(documents[0].resource.id).toEqual(featureDocument1.resource.id);

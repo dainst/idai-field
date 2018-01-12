@@ -25,7 +25,7 @@ export class DocumentsManager {
         private changesStream: ChangesStream,
         private settingsService: SettingsService,
         private viewManager: ViewManager,
-        private operationTypeDocumentsManager: MainTypeDocumentsManager
+        private mainTypeDocumentsManager: MainTypeDocumentsManager
     ) {
 
         changesStream.remoteChangesNotifications().
@@ -83,12 +83,14 @@ export class DocumentsManager {
     }
 
 
-    public async setQueryLiesWithinPath(mainTypeDocumentResourceId: string, path: string[]|undefined) {
+    public async setRootDocument(path: string|undefined) {
 
-        this.viewManager.setQueryLiesWithinPath(mainTypeDocumentResourceId, path);
+        const selectedMainTypeDocument: Document|undefined = this.mainTypeDocumentsManager.getSelectedDocument();
+        if (!selectedMainTypeDocument || !selectedMainTypeDocument.resource.id) return;
+
+        this.viewManager.setRootDocumentBy(selectedMainTypeDocument.resource.id, path);
 
         // TODO Deselect document if it is not part of the new document list
-
         await this.populateDocumentList();
     }
 
@@ -121,7 +123,7 @@ export class DocumentsManager {
     public setSelected(documentToSelect: Document): Promise<any|undefined> {
 
         if (!this.viewManager.isInOverview() &&
-                documentToSelect == this.operationTypeDocumentsManager.getSelectedDocument()) {
+                documentToSelect == this.mainTypeDocumentsManager.getSelectedDocument()) {
             return Promise.resolve(undefined);
         }
 
@@ -142,7 +144,7 @@ export class DocumentsManager {
             this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
         }
 
-        const res1 = this.operationTypeDocumentsManager.
+        const res1 = this.mainTypeDocumentsManager.
             selectLinkedOperationTypeDocumentForSelectedDocument(this.selectedDocument);
         const res2 = this.invalidateQuerySettingsIfNecessary();
 
@@ -159,7 +161,7 @@ export class DocumentsManager {
         if (DocumentsManager.isExistingDoc(changedDocument, this.documents)) return;
 
         if (changedDocument.resource.type == this.viewManager.getViewType()) {
-            return this.operationTypeDocumentsManager.populate();
+            return this.mainTypeDocumentsManager.populate();
         }
 
         let oldDocuments = this.documents;
@@ -190,17 +192,19 @@ export class DocumentsManager {
         if (this.viewManager.isInOverview()) {
             isRecordedInTarget = this.projectDocument;
         } else {
-            if (!this.operationTypeDocumentsManager.getSelectedDocument()) {
+            if (!this.mainTypeDocumentsManager.getSelectedDocument()) {
                 return Promise.resolve();
             }
-            isRecordedInTarget = this.operationTypeDocumentsManager.getSelectedDocument();
+            isRecordedInTarget = this.mainTypeDocumentsManager.getSelectedDocument();
         }
         if (!isRecordedInTarget) return Promise.reject('no isRecordedInTarget in populate doc list');
         if (!isRecordedInTarget.resource.id) return Promise.reject('no id in populate doc list');
 
         return this.fetchDocuments(DocumentsManager.makeDocsQuery(
             this.viewManager.getQuery(), isRecordedInTarget.resource.id))
-            .then(documents => this.documents = documents)
+            .then(documents => {
+                this.documents = documents
+            })
             .then(() => this.removeEmptyDocuments());
     }
 

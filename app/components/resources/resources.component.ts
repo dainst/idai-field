@@ -44,12 +44,12 @@ export class ResourcesComponent implements AfterViewChecked {
                 private loading: Loading
     ) {
         loading.start();
-        routingService.routeParams(route).subscribe((params: any) => {
+        routingService.routeParams(route).subscribe(async (params: any) => {
             loading.stop();
 
             this.isEditingGeometry = false;
             this.viewFacade.deselect();
-            this.breadcrumb = undefined;
+            this.breadcrumb = await this.viewFacade.getBreadcrumb();
 
             if (params['id']) {
                 // The timeout is needed to prevent buggy map behavior after following a relation link from
@@ -70,7 +70,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public async showChildren(document: IdaiFieldDocument) {
 
-        await this.viewFacade.addToQueryLiesWithinPath(document.resource.id as string);
+        await this.viewFacade.setRootDocument(document.resource.id as string);
         this.breadcrumb = (await this.viewFacade.getBreadcrumb() as any).join(' / ');
     }
 
@@ -96,6 +96,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
         const isMatched = this.viewFacade.selectMainTypeDocument(document);
         if (!isMatched) this.viewFacade.setActiveDocumentViewTab(undefined);
+
+        if (!this.viewFacade.isInOverview()) this.breadcrumb = await this.viewFacade.getBreadcrumb();
     }
 
 
@@ -109,14 +111,14 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public async setQueryString(q: string) {
 
-        const isMatched = this.viewFacade.setQueryString(q);
+        const isMatched = this.viewFacade.setSearchString(q);
         if (!isMatched) this.isEditingGeometry = false;
     }
 
 
     public setQueryTypes(types: string[]) {
 
-        if (!this.viewFacade.setQueryTypes(types)) this.isEditingGeometry = false;
+        if (!this.viewFacade.setTypesToFilterBy(types)) this.isEditingGeometry = false;
     }
 
 

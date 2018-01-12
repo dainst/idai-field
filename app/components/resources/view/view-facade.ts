@@ -157,12 +157,14 @@ export class ViewFacade {
     }
 
 
+    // TODO it should not be necessary to specify mainTypeDocumentResourceId, it simply should be the currently selected mainTypeDocument
     public setActiveLayersIds(mainTypeDocumentResourceId: string, activeLayersIds: string[]) {
 
         return this.viewManager.setActiveLayersIds(mainTypeDocumentResourceId, activeLayersIds);
     }
 
 
+    // TODO it should not be necessary to specify mainTypeDocumentResourceId, it simply should be the currently selected mainTypeDocument
     public getActiveLayersIds(mainTypeDocumentResourceId: string): string[] {
 
         const ids: string[] = this.viewManager.getActiveLayersIds(mainTypeDocumentResourceId);
@@ -271,37 +273,27 @@ export class ViewFacade {
     }
 
 
-    public setQueryString(q: string): Promise<boolean> {
+    public setSearchString(q: string): Promise<boolean> {
 
         return this.documentsManager.setQueryString(q);
     }
 
 
-    public setQueryTypes(types: string[]) { // TODO make it return a promise, like setQueryString
+    public setTypesToFilterBy(types: string[]) { // TODO make it return a promise, like setSearchString
 
         return this.documentsManager.setQueryTypes(types);
     }
 
 
-    public async setQueryLiesWithinPath(path: string[]|undefined) {
+    /**
+     * Sets the document whose children are shown, when getDocuments() is called.
+     * If resourceId is undefined, then all top level elements of the currently
+     * selected mainTypeDocument are shown.
+     */
+    public async setRootDocument(resourceId: string|undefined) {
 
         if (this.isInOverview()) throw ViewFacade.err('setQueryLiesWithinConstraint');
-
-        const selectedMainTypeDocument: Document|undefined = this.getSelectedMainTypeDocument();
-        if (!selectedMainTypeDocument || !selectedMainTypeDocument.resource.id) return;
-
-        await this.documentsManager.setQueryLiesWithinPath(selectedMainTypeDocument.resource.id, path);
-    }
-
-
-    public async addToQueryLiesWithinPath(resourceId: string) {
-
-        let liesWithinPath = this.getQueryLiesWithinPath();
-        if (!liesWithinPath) liesWithinPath = [];
-
-        liesWithinPath.push(resourceId);
-
-        await this.setQueryLiesWithinPath(liesWithinPath);
+        await this.documentsManager.setRootDocument(resourceId);
     }
 
 
@@ -310,16 +302,16 @@ export class ViewFacade {
         if (this.isInOverview()) return undefined;
         if (!this.getSelectedMainTypeDocument()) return undefined;
 
-        const currentLiesWithinPath = this.getQueryLiesWithinPath();
-        if (!currentLiesWithinPath) return undefined;
-        if (currentLiesWithinPath.length < 1) return undefined;
+        const rootDocumentResourceId = this.viewManager.fetchQueryLiesWithinPathFromResourcesState(
+            (this.mainTypeDocumentsManager.getSelectedDocument() as any).resource.id as any);
+        if (!rootDocumentResourceId) return undefined;
+        if (rootDocumentResourceId.length < 1) return undefined;
+
 
         const segments = [(this.getSelectedMainTypeDocument() as any).resource.identifier];
 
-        for (let resourceId of currentLiesWithinPath) {
-            const segment = await this.datastore.get(resourceId);
-            segments.push(segment.resource.identifier);
-        }
+        const segment = await this.datastore.get(rootDocumentResourceId);
+        segments.push(segment.resource.identifier);
 
         return segments;
     }
@@ -345,7 +337,7 @@ export class ViewFacade {
         if (!this.isSelectedDocumentRecordedInSelectedMainTypeDocument()) {
             this.documentsManager.deselect();
             return false;
-        } {
+        } else {
             return true;
         }
     }
@@ -384,12 +376,6 @@ export class ViewFacade {
         }
 
         await this.populateDocumentList();
-    }
-
-
-    private getQueryLiesWithinPath(): string[]|undefined {
-
-        return this.viewManager.getQueryLiesWithinPath();
     }
 
 

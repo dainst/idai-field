@@ -16,11 +16,13 @@ describe('resources/images --', function() {
 
     let index = 0;
 
+
     beforeAll(() => {
 
         ResourcesPage.get();
         browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
     });
+
 
     beforeEach(() => {
 
@@ -29,7 +31,7 @@ describe('resources/images --', function() {
             require('request').post('http://localhost:3003/reset', {});
             browser.sleep(delays.shortRest * 4);
             NavbarPage.clickNavigateToExcavation();
-            browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
+            browser.wait(EC.visibilityOf(element(by.id('operation-document-selector'))), delays.ECWaitTime);
             browser.sleep(delays.shortRest);
         }
         index++;
@@ -45,6 +47,7 @@ describe('resources/images --', function() {
 
     }
 
+
     function addTwoImages() {
 
         gotoImageTab();
@@ -56,6 +59,7 @@ describe('resources/images --', function() {
         browser.sleep(delays.shortSleep * 80);
     }
 
+
     it('create links for images', done => {
 
         addTwoImages();
@@ -64,6 +68,7 @@ describe('resources/images --', function() {
             done();
         });
     });
+
 
     it('delete links to one image', done => {
 
@@ -81,6 +86,7 @@ describe('resources/images --', function() {
             done();
         });
     });
+
 
     it('delete links to two images', done => {
 

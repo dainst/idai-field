@@ -32,7 +32,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private clickEventObservers: Array<any> = [];
 
-    public breadcrumb: any[]|undefined;
+    public breadcrumb: Array<IdaiFieldDocument>;
 
 
     constructor(route: ActivatedRoute,
@@ -177,6 +177,16 @@ export class ResourcesComponent implements AfterViewChecked {
             this.isEditingGeometry = false;
             this.loading.stop();
         }, 1);
+    }
+
+
+    public getFirstBreadcrumbDocument(): IdaiFieldDocument|undefined {
+
+        if (this.viewFacade.isInOverview()) {
+            return this.viewFacade.getProjectDocument() as IdaiFieldDocument;
+        } else {
+            return this.viewFacade.getSelectedMainTypeDocument();
+        }
     }
 
 

@@ -290,48 +290,41 @@ export class ViewFacade {
      * If resourceId is undefined, then all top level elements of the currently
      * selected mainTypeDocument are shown.
      */
-    public async setRootDocument(resourceId: string|undefined) {
+    public async setRootDocument(resourceId: string) {
 
         if (this.isInOverview()) throw ViewFacade.err('setQueryLiesWithinConstraint');
+
         await this.documentsManager.setRootDocument(resourceId);
     }
 
 
-    public async getBreadcrumb(): Promise<any[]|undefined> {
+    public async getBreadcrumb(): Promise<Array<IdaiFieldDocument>> {
 
-        if (this.isInOverview()) return undefined;
-        if (!this.getSelectedMainTypeDocument()) return undefined;
+        if (this.isInOverview()) return [];
+
+        const selectedMainTypeDocument = this.getSelectedMainTypeDocument();
+        if (!selectedMainTypeDocument) return [];
 
         const rootDocumentResourceId = this.viewManager.fetchQueryLiesWithinPathFromResourcesState(
-            (this.mainTypeDocumentsManager.getSelectedDocument() as any).resource.id as any);
-        if (!rootDocumentResourceId) return undefined;
-        if (rootDocumentResourceId.length < 1) return undefined;
+            selectedMainTypeDocument.resource.id as string);
+        if (!rootDocumentResourceId || rootDocumentResourceId.length < 1) return [];
 
-
-        const segments = [{
-            id: undefined, // TODO remove this hack, it is used to call setRootDocument with undefined, but could be the mainTypeDocument
-            identifier: (this.mainTypeDocumentsManager.getSelectedDocument() as any).resource.identifier as any
-        }];
-
+        const pathToRootDocument: Array<IdaiFieldDocument> = [];
 
         let currentResourceId = rootDocumentResourceId;
         while (true) {
 
-            const segment = await this.datastore.get(currentResourceId);
-            segments.push({
-                id: (segment as any).resource.id,
-                identifier: (segment as any).resource.identifier
-            });
+            const document: IdaiFieldDocument = await this.datastore.get(currentResourceId);
+            pathToRootDocument.unshift(document);
 
-            if (!segment.resource.relations['liesWithin']
-                || segment.resource.relations['liesWithin'].length < 1) break;
+            if (!document.resource.relations['liesWithin']
+                || document.resource.relations['liesWithin'].length < 1) break;
 
-            currentResourceId = segment.resource.relations['liesWithin']
+            currentResourceId = document.resource.relations['liesWithin']
                 [0]; // TODO we need to handle cases where more relation targets are present
-
         }
 
-        return segments;
+        return pathToRootDocument;
     }
 
 

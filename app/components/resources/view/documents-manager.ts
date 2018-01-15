@@ -83,12 +83,12 @@ export class DocumentsManager {
     }
 
 
-    public async setRootDocument(path: string|undefined) {
+    public async setRootDocument(resourceId: string|undefined) {
 
         const selectedMainTypeDocument: Document|undefined = this.mainTypeDocumentsManager.getSelectedDocument();
         if (!selectedMainTypeDocument || !selectedMainTypeDocument.resource.id) return;
 
-        this.viewManager.setRootDocumentBy(selectedMainTypeDocument.resource.id, path);
+        this.viewManager.setRootDocumentBy(selectedMainTypeDocument.resource.id, resourceId);
 
         // TODO Deselect document if it is not part of the new document list
         await this.populateDocumentList();

@@ -292,20 +292,20 @@ export class ViewFacade {
      */
     public async setRootDocument(resourceId: string) {
 
-        if (this.isInOverview()) throw ViewFacade.err('setQueryLiesWithinConstraint');
+        //if (this.isInOverview()) throw ViewFacade.err('setQueryLiesWithinConstraint');
 
         await this.documentsManager.setRootDocument(resourceId);
     }
 
 
-    public async getBreadcrumb(): Promise<Array<IdaiFieldDocument>> {
+    public async getPathToRootDocument(): Promise<Array<IdaiFieldDocument>> {
 
         if (this.isInOverview()) return [];
 
         const selectedMainTypeDocument = this.getSelectedMainTypeDocument();
         if (!selectedMainTypeDocument) return [];
 
-        const rootDocumentResourceId = this.viewManager.fetchQueryLiesWithinPathFromResourcesState(
+        const rootDocumentResourceId = this.viewManager.fetchPathToRootDocumentFromResourcesState(
             selectedMainTypeDocument.resource.id as string);
         if (!rootDocumentResourceId || rootDocumentResourceId.length < 1) return [];
 
@@ -383,7 +383,7 @@ export class ViewFacade {
 
         if (!this.isInOverview()) {
             await this.populateMainTypeDocuments();
-            this.viewManager.setupLiesWithinPath(this.getSelectedMainTypeDocument());
+            this.viewManager.setupPathToRootDocument(this.getSelectedMainTypeDocument());
         }
 
         await this.populateDocumentList();

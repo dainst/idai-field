@@ -8,5 +8,5 @@ export interface ResourcesViewState {
     q?: string;
     mode?: string;
     layerIds?: {[mainTypeDocumentId: string]: string[]};
-    liesWithinPaths?: {[mainTypeDocumentId: string]: string};
+    rootDocumentResourceIds?: {[mainTypeDocumentId: string]: string};
 }

@@ -124,38 +124,38 @@ export class ResourcesState {
     }
 
 
-    public setLiesWithinPath(viewName: string, mainTypeDocumentId: string, liesWithinPath: string) {
+    public setRootDocumentResourceId(viewName: string, mainTypeDocumentId: string, rootDocumentResourceId: string) {
 
         if (!this._[viewName]) this._[viewName] = {};
-        if (!this._[viewName].liesWithinPaths) this._[viewName].liesWithinPaths = {};
+        if (!this._[viewName].rootDocumentResourceIds) this._[viewName].rootDocumentResourceIds = {};
 
-        const liesWithinPaths = this._[viewName].liesWithinPaths;
-        if (!liesWithinPaths) return;
+        const rootDocumentResourceIds = this._[viewName].rootDocumentResourceIds;
+        if (!rootDocumentResourceIds) return;
 
-        liesWithinPaths[mainTypeDocumentId] = liesWithinPath;
+        rootDocumentResourceIds[mainTypeDocumentId] = rootDocumentResourceId;
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
 
-    public getLiesWithinPath(viewName: string, mainTypeDocumentId: string): string|undefined {
+    public getRootDocumentResourceId(viewName: string, mainTypeDocumentId: string): string|undefined {
 
-        if (!this._[viewName] || !this._[viewName].liesWithinPaths) return undefined;
+        if (!this._[viewName] || !this._[viewName].rootDocumentResourceIds) return undefined;
 
-        const liesWithinPaths = this._[viewName].liesWithinPaths;
-        if (!liesWithinPaths) return undefined;
+        const rootDocumentResourceIds = this._[viewName].rootDocumentResourceIds;
+        if (!rootDocumentResourceIds) return undefined;
 
-        return liesWithinPaths[mainTypeDocumentId];
+        return rootDocumentResourceIds[mainTypeDocumentId];
     }
 
 
-    public removeLiesWithinPath(viewName: string, mainTypeDocumentId: string) {
+    public removeRootDocumentResourceId(viewName: string, mainTypeDocumentId: string) {
 
-        if (!this._[viewName] || !this._[viewName].liesWithinPaths) return;
+        if (!this._[viewName] || !this._[viewName].rootDocumentResourceIds) return;
 
-        const liesWithinPaths = this._[viewName].liesWithinPaths;
-        if (!liesWithinPaths) return;
+        const rootDocumentResourceIds = this._[viewName].rootDocumentResourceIds;
+        if (!rootDocumentResourceIds) return;
 
-        delete liesWithinPaths[mainTypeDocumentId];
+        delete rootDocumentResourceIds[mainTypeDocumentId];
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 }

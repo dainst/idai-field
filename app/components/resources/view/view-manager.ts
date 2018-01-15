@@ -152,9 +152,9 @@ export class ViewManager {
     }
 
 
-    public fetchQueryLiesWithinPathFromResourcesState(mainTypeDocumentResourceId: string): string|undefined {
+    public fetchPathToRootDocumentFromResourcesState(mainTypeDocumentResourceId: string): string|undefined {
 
-        return this.resourcesState.getLiesWithinPath(this.currentView, mainTypeDocumentResourceId);
+        return this.resourcesState.getRootDocumentResourceId(this.currentView, mainTypeDocumentResourceId);
     }
 
 
@@ -163,11 +163,11 @@ export class ViewManager {
         if (!this.query.constraints) this.query.constraints = {};
 
         if (rootDocumentResourceId) {
-            this.resourcesState.setLiesWithinPath(this.currentView, mainTypeDocumentResourceId, rootDocumentResourceId);
+            this.resourcesState.setRootDocumentResourceId(this.currentView, mainTypeDocumentResourceId, rootDocumentResourceId);
             this.query.constraints['liesWithin:contain'] = rootDocumentResourceId;
             delete this.query.constraints['liesWithin:exist'];
         } else {
-            this.resourcesState.removeLiesWithinPath(this.currentView, mainTypeDocumentResourceId);
+            this.resourcesState.removeRootDocumentResourceId(this.currentView, mainTypeDocumentResourceId);
             this.query.constraints['liesWithin:exist'] = 'UNKNOWN';
             delete this.query.constraints['liesWithin:contain'];
         }
@@ -245,13 +245,13 @@ export class ViewManager {
     }
 
 
-    public setupLiesWithinPath(mainTypeDocument: Document|undefined) {
+    public setupPathToRootDocument(mainTypeDocument: Document|undefined) {
 
         if (!mainTypeDocument || !mainTypeDocument.resource.id) return;
 
-        const rootDocument: string|undefined
-            = this.fetchQueryLiesWithinPathFromResourcesState(mainTypeDocument.resource.id);
-        this.setRootDocumentBy(mainTypeDocument.resource.id, rootDocument);
+        const rootDocumentResourceId: string|undefined
+            = this.fetchPathToRootDocumentFromResourcesState(mainTypeDocument.resource.id);
+        this.setRootDocumentBy(mainTypeDocument.resource.id, rootDocumentResourceId);
     }
 
 

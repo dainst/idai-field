@@ -32,7 +32,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private clickEventObservers: Array<any> = [];
 
-    public breadcrumb: Array<IdaiFieldDocument>;
+    public pathToRootDocument: Array<IdaiFieldDocument>;
 
 
     constructor(route: ActivatedRoute,
@@ -49,7 +49,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
             this.isEditingGeometry = false;
             this.viewFacade.deselect();
-            this.breadcrumb = await this.viewFacade.getBreadcrumb();
+            this.pathToRootDocument = await this.viewFacade.getPathToRootDocument();
 
             if (params['id']) {
                 // The timeout is needed to prevent buggy map behavior after following a relation link from
@@ -71,7 +71,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public async setRootDocument(resourceId: string) {
 
         await this.viewFacade.setRootDocument(resourceId as string);
-        this.breadcrumb = await this.viewFacade.getBreadcrumb();
+        this.pathToRootDocument = await this.viewFacade.getPathToRootDocument();
     }
 
 
@@ -97,7 +97,7 @@ export class ResourcesComponent implements AfterViewChecked {
         const isMatched = this.viewFacade.selectMainTypeDocument(document);
         if (!isMatched) this.viewFacade.setActiveDocumentViewTab(undefined);
 
-        if (!this.viewFacade.isInOverview()) this.breadcrumb = await this.viewFacade.getBreadcrumb();
+        if (!this.viewFacade.isInOverview()) this.pathToRootDocument = await this.viewFacade.getPathToRootDocument();
     }
 
 
@@ -180,13 +180,11 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public getFirstBreadcrumbDocument(): IdaiFieldDocument|undefined {
+    public getFirstDocumentOfPathToRootDocument(): IdaiFieldDocument|undefined {
 
-        if (this.viewFacade.isInOverview()) {
-            return this.viewFacade.getProjectDocument() as IdaiFieldDocument;
-        } else {
-            return this.viewFacade.getSelectedMainTypeDocument();
-        }
+        return this.viewFacade.isInOverview() ?
+            this.viewFacade.getProjectDocument() as IdaiFieldDocument :
+            this.viewFacade.getSelectedMainTypeDocument();
     }
 
 

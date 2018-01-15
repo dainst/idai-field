@@ -40,8 +40,10 @@ export class RowComponent {
     ) {  }
 
 
-    public setRootDocument = async (document: IdaiFieldDocument) =>
-        this.resourcesComponent.setRootDocument(document.resource.id as any);
+    public async setRootDocument(document: IdaiFieldDocument) {
+
+        await this.viewFacade.setRootDocument(document.resource.id as string);
+    };
 
 
     public startEditing(fieldValue: string) {

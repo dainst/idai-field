@@ -8,6 +8,8 @@ import {SettingsService} from '../../../core/settings/settings-service';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
+import {Observable} from 'rxjs/Observable';
+import {Observer} from 'rxjs/Observer';
 
 /**
  * Manages an overview of operation type resources
@@ -25,11 +27,11 @@ import {ChangesStream} from '../../../core/datastore/core/changes-stream';
  */
 export class ViewFacade {
 
-
     private views: OperationViews;
     private viewManager: ViewManager;
     private mainTypeDocumentsManager: MainTypeDocumentsManager;
     private documentsManager: DocumentsManager;
+    private pathToRootDocumentObservers: Array<Observer<Array<IdaiFieldDocument>>> = [];
 
 
     constructor(
@@ -295,10 +297,30 @@ export class ViewFacade {
         //if (this.isInOverview()) throw ViewFacade.err('setQueryLiesWithinConstraint');
 
         await this.documentsManager.setRootDocument(resourceId);
+        await this.notifyPathToRootDocumentObservers();
     }
 
 
-    public async getPathToRootDocument(): Promise<Array<IdaiFieldDocument>> {
+    public pathToRootDocumentNotifications(): Observable<Array<IdaiFieldDocument>> {
+
+        return Observable.create((observer: Observer<Array<IdaiFieldDocument>>) => {
+            this.pathToRootDocumentObservers.push(observer as never);
+        });
+    }
+
+
+    private async notifyPathToRootDocumentObservers() {
+
+        if (this.pathToRootDocumentObservers) {
+            const pathToRootDocument = await this.getPathToRootDocument();
+            this.pathToRootDocumentObservers.forEach(
+                (observer: Observer<Array<IdaiFieldDocument>>) => observer.next(pathToRootDocument)
+            );
+        }
+    }
+
+
+    private async getPathToRootDocument(): Promise<Array<IdaiFieldDocument>> {
 
         if (this.isInOverview()) return [];
 
@@ -344,6 +366,7 @@ export class ViewFacade {
         this.mainTypeDocumentsManager.select(mainTypeDoc as IdaiFieldDocument);
 
         await this.populateDocumentList();
+        await this.notifyPathToRootDocumentObservers();
 
         if (!this.isSelectedDocumentRecordedInSelectedMainTypeDocument()) {
             this.documentsManager.deselect();
@@ -387,6 +410,7 @@ export class ViewFacade {
         }
 
         await this.populateDocumentList();
+        await this.notifyPathToRootDocumentObservers();
     }
 
 

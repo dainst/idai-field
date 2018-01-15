@@ -28,6 +28,7 @@ import {LayerManager} from './map/map/layer-manager';
 import {LayerImageProvider} from './map/map/layer-image-provider';
 import {LayerMenuComponent} from './map/map/layer-menu.component';
 import {ChangesStream} from '../../core/datastore/core/changes-stream';
+import {NavigationComponent} from './navigation.component';
 
 @NgModule({
     imports: [
@@ -51,7 +52,8 @@ import {ChangesStream} from '../../core/datastore/core/changes-stream';
         PlusButtonComponent,
         ThumbnailViewComponent,
         DocumentViewSidebarComponent,
-        SidebarListComponent
+        SidebarListComponent,
+        NavigationComponent
     ],
     providers: [
         ResourcesState,

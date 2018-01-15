@@ -1,0 +1,27 @@
+<div *ngIf="!viewFacade.isInOverview()">
+    <select id="mainTypeSelectBox" *ngIf="viewFacade.getSelectedMainTypeDocument()"
+            class="form-control" [ngModel]="viewFacade.getSelectedMainTypeDocument()"
+            (ngModelChange)="chooseOperationTypeDocumentOption($event)">
+        <option *ngFor="let document of viewFacade.getMainTypeDocuments()" [ngValue]="document">
+            {{getDocumentLabel(document)}}
+        </option>
+    </select>
+    <select id="mainTypeSelectBoxSubstitute"
+            *ngIf="!viewFacade.isInOverview() && !viewFacade.getSelectedMainTypeDocument()"
+            class="form-control" disabled>
+        <option>
+            {{viewFacade.getMainTypeLabel()}} anlegen ➔
+        </option>
+    </select>
+</div>
+
+<div class="row" style="padding-left:28px; color: rgba(85, 114, 161, 1); margin-top: 60px">
+    <div *ngIf="getFirstDocumentOfPathToRootDocument()">
+        <span (click)="setRootDocument(undefined)">
+            {{getFirstDocumentOfPathToRootDocument().resource.identifier}}&nbsp;&nbsp;
+        </span>
+        <span *ngFor="let document of pathToRootDocument" (click)="setRootDocument(document.resource.id)">
+            {{document.resource.identifier}}&nbsp;&nbsp;
+        </span>
+    </div>
+</div>

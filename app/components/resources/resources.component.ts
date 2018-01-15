@@ -9,7 +9,6 @@ import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {M} from '../../m';
 import {ViewFacade} from './view/view-facade';
-import {ModelUtil} from '../../core/model/model-util';
 
 
 @Component({
@@ -32,8 +31,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private clickEventObservers: Array<any> = [];
 
-    public pathToRootDocument: Array<IdaiFieldDocument>;
-
 
     constructor(route: ActivatedRoute,
                 private viewFacade: ViewFacade,
@@ -49,7 +46,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
             this.isEditingGeometry = false;
             this.viewFacade.deselect();
-            this.pathToRootDocument = await this.viewFacade.getPathToRootDocument();
 
             if (params['id']) {
                 // The timeout is needed to prevent buggy map behavior after following a relation link from
@@ -62,16 +58,6 @@ export class ResourcesComponent implements AfterViewChecked {
             }
         });
         this.initializeClickEventListener();
-    }
-
-
-    public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
-
-
-    public async setRootDocument(resourceId: string) {
-
-        await this.viewFacade.setRootDocument(resourceId as string);
-        this.pathToRootDocument = await this.viewFacade.getPathToRootDocument();
     }
 
 
@@ -89,15 +75,6 @@ export class ResourcesComponent implements AfterViewChecked {
                 this.scrollTarget = undefined;
             }
         }
-    }
-
-
-    public async chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {
-
-        const isMatched = this.viewFacade.selectMainTypeDocument(document);
-        if (!isMatched) this.viewFacade.setActiveDocumentViewTab(undefined);
-
-        if (!this.viewFacade.isInOverview()) this.pathToRootDocument = await this.viewFacade.getPathToRootDocument();
     }
 
 
@@ -177,14 +154,6 @@ export class ResourcesComponent implements AfterViewChecked {
             this.isEditingGeometry = false;
             this.loading.stop();
         }, 1);
-    }
-
-
-    public getFirstDocumentOfPathToRootDocument(): IdaiFieldDocument|undefined {
-
-        return this.viewFacade.isInOverview() ?
-            this.viewFacade.getProjectDocument() as IdaiFieldDocument :
-            this.viewFacade.getSelectedMainTypeDocument();
     }
 
 

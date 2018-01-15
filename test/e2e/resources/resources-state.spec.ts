@@ -121,7 +121,7 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('excavation2'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('excavation2'));
     });
 
 
@@ -173,11 +173,11 @@ describe('resources/state --', function() {
 
         DocumentViewPage.clickRelation(1);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
 
         DocumentViewPage.clickRelation(1);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
     });
 
 
@@ -193,18 +193,18 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToProject();
         ResourcesPage.clickGoToMainTypeViewByIdentifier('building1');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
         
         NavbarPage.clickNavigateToProject();
         ResourcesPage.clickGoToMainTypeViewByIdentifier('trench1');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
 
         NavbarPage.clickNavigateToProject();
         ResourcesPage.performCreateResource('trench2', 'trench');
         ResourcesPage.clickGoToMainTypeViewByIdentifier('trench2');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench2'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench2'));
     });
 
 
@@ -222,11 +222,11 @@ describe('resources/state --', function() {
 
         DocumentViewPage.clickRelation(1);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('architecture1'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
 
         DocumentViewPage.clickRelation(1);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('floor1'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building2'));
     });
 
 
@@ -237,20 +237,20 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('building2', 'building');
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
         ResourcesPage.performSelectOperation(1);
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench2'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench2'));
 
         NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
         ResourcesPage.performSelectOperation(1);
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building2'));
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench2'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench2'));
 
         NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building2'));
     });
 
 

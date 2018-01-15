@@ -3,6 +3,7 @@
 import {browser, protractor, element, by} from 'protractor';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
+import {NavbarPage} from '../navbar.page';
 
 let common = require('../common.js');
 let EC = protractor.ExpectedConditions;
@@ -103,13 +104,6 @@ export class ResourcesPage {
     }
 
 
-    public static clickSelectMainTypeDocument(optionIndex) {
-
-        browser.wait(EC.presenceOf(element(by.id('mainTypeSelectBox'))), delays.ECWaitTime);
-        element.all(by.css('#mainTypeSelectBox option')).get(optionIndex).click();
-    }
-
-
     public static openEditByDoubleClickResource(identifier) {
 
         browser.wait(EC.visibilityOf(
@@ -140,8 +134,8 @@ export class ResourcesPage {
 
     public static getSelectedMainTypeDocumentOption() {
 
-        browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox option:checked'))), delays.ECWaitTime);
-        return element.all(by.css('#mainTypeSelectBox option:checked')).getText();
+        browser.wait(EC.presenceOf(element(by.id('selected-operation-type-document'))), delays.ECWaitTime);
+        return element(by.id('selected-operation-type-document')).getText();
     }
 
 
@@ -276,14 +270,27 @@ export class ResourcesPage {
     }
 
 
+    public static performSelectOperation(index) {
+
+        browser.wait(EC.presenceOf(element(by.id('operation-document-selector'))), delays.ECWaitTime);
+        element.all(by.css('#operation-document-selector .dropdown-toggle-split')).click();
+        browser.wait(EC.presenceOf(element(by.css('#operation-document-selector .dropdown-menu'))), delays.ECWaitTime);
+        element.all(by.css('#operation-document-selector .dropdown-menu button')).get(index).click();
+    }
+
+
     public static performCreateMainTypeResource(identifier: string) {
 
-        ResourcesPage.clickCreateMainTypeResource();
-        ResourcesPage.clickSelectGeometryType();
-        DoceditPage.typeInInputField('identifier', identifier);
-        ResourcesPage.scrollUp();
-        DoceditPage.clickSaveDocument();
-        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToProject();
+        this.performCreateResource(identifier, 'trench');
+        this.clickGoToMainTypeViewByIdentifier(identifier);
+
+        // ResourcesPage.clickCreateMainTypeResource();
+        // ResourcesPage.clickSelectGeometryType();
+        // DoceditPage.typeInInputField('identifier', identifier);
+        // ResourcesPage.scrollUp();
+        // DoceditPage.clickSaveDocument();
+        // browser.sleep(delays.shortRest);
     }
 
 

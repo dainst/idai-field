@@ -1,7 +1,7 @@
 <div class="row" style="padding-left: 10px; color: rgba(85, 114, 161, 1); margin-top: 4px;">
-    
+
     <div *ngIf="!this.viewFacade.isInOverview() && viewFacade.getSelectedMainTypeDocument()" class="btn-group">
-        <div class="btn-group" ngbDropdown placement="bottom-left" role="group">
+        <div class="btn-group" ngbDropdown placement="bottom-left" role="group" id="operation-document-selector">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
             <div class="dropdown-menu" ngbDropdownMenu>
                 <button *ngFor="let document of viewFacade.getMainTypeDocuments()" class="dropdown-item"
@@ -10,9 +10,15 @@
                 </button>
             </div>
         </div>
-        <button type="button" class="btn btn-outline-primary" style="text-align: left;" (click)="setRootDocument(undefined)">
+
+        <button id="selected-operation-type-document"
+                type="button" class="btn btn-outline-primary"
+                style="text-align: left;"
+                (click)="setRootDocument(undefined)">
+
             {{viewFacade.getSelectedMainTypeDocument().resource.identifier}}
         </button>
+
         <div *ngFor="let document of pathToRootDocument" class="btn btn-outline-primary"
              (click)="setRootDocument(document.resource.id)">
             {{document.resource.identifier}}

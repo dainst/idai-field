@@ -84,11 +84,11 @@ describe('resources/state --', function() {
 
         ResourcesPage.performCreateResource('befund1', 'feature-architecture');
 
-        ResourcesPage.clickSelectMainTypeDocument(1);
+        ResourcesPage.performSelectOperation(1);
         // TODO comment in
         // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
         //
-        ResourcesPage.clickSelectMainTypeDocument(0); // trench2
+        ResourcesPage.performSelectOperation(0); // trench2
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 
         NavbarPage.clickNavigateToProject();
@@ -112,7 +112,7 @@ describe('resources/state --', function() {
         SearchBarPage.clickChooseTypeFilter('building');
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.clickSelectMainTypeDocument(1);
+        ResourcesPage.performSelectOperation(1);
         ResourcesPage.clickListModeButton();
 
         ProjectPage.get();
@@ -214,9 +214,9 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('building2', 'building');
 
         NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.clickSelectMainTypeDocument(0); // building2
+        ResourcesPage.performSelectOperation(0); // building2
         ResourcesPage.performCreateResource('architecture1', 'feature-architecture');
-        ResourcesPage.clickSelectMainTypeDocument(1); // building1
+        ResourcesPage.performSelectOperation(1); // building1
         ResourcesPage.performCreateResource('floor1', 'feature-floor');
         ResourcesPage.performCreateRelation('floor1', 'architecture1', 6);
 
@@ -238,12 +238,12 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
-        ResourcesPage.clickSelectMainTypeDocument(1);
+        ResourcesPage.performSelectOperation(1);
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench2'));
 
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building1'));
-        ResourcesPage.clickSelectMainTypeDocument(1);
+        ResourcesPage.performSelectOperation(1);
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('building2'));
 
         NavbarPage.clickNavigateToExcavation();

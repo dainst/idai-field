@@ -15,12 +15,25 @@ let delays = require('../config/delays');
  */
 describe('resources --', () => {
 
-    beforeEach(() => {
-        NavbarPage.performNavigateToSettings();
-        require('request').post('http://localhost:3003/reset', {});
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToExcavation();
-        browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
+    let i = 0;
+
+
+    beforeAll(() => {
+
+        ResourcesPage.get();
+        browser.sleep(delays.shortRest * 3);
+    });
+
+
+    beforeEach(async () => {
+        if (i > 0) {
+            NavbarPage.performNavigateToSettings();
+            require('request').post('http://localhost:3003/reset', {});
+            browser.sleep(delays.shortRest * 10);
+            NavbarPage.clickNavigateToExcavation();
+            browser.wait(EC.visibilityOf(element(by.id('operation-document-selector'))), delays.ECWaitTime);
+        }
+        i++;
     });
 
 
@@ -28,19 +41,27 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateMainTypeResource('newTrench');
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
-        ResourcesPage.clickEditMainTypeResource();
+        NavbarPage.clickNavigateToProject();
+        ResourcesPage.openEditByDoubleClickResource('newTrench');
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('newTrench');
         DoceditPage.clickConfirmDeleteInModal();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('trench1'));
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBeGreaterThan(0));
-        ResourcesPage.clickEditMainTypeResource();
+
+        NavbarPage.clickNavigateToProject();
+        ResourcesPage.openEditByDoubleClickResource('trench1');
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('trench1');
         DoceditPage.clickConfirmDeleteInModal();
 
-        browser.wait(EC.stalenessOf(element(by.css('#mainTypeSelectBox'))), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBoxSubstitute'))), delays.ECWaitTime);
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToExcavation();
+
+        browser.sleep(delays.shortRest);
+        browser.wait(EC.presenceOf(element(by.css('.no-main-type-resource-alert'))), delays.ECWaitTime);
 
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
@@ -121,7 +142,7 @@ describe('resources --', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
         ResourcesPage.performCreateMainTypeResource('newTrench');
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('newTrench'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('newTrench'));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
@@ -130,20 +151,25 @@ describe('resources --', () => {
     it('should refresh the resources list when switching main type documents', () => {
 
         ResourcesPage.performCreateMainTypeResource('newTrench');
+        NavbarPage.clickNavigateToExcavation();
+
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
-        ResourcesPage.clickSelectMainTypeDocument(1);
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBeGreaterThan(0));
-        ResourcesPage.clickSelectMainTypeDocument(0);
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
+        ResourcesPage.performSelectOperation(1);
+        // ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBeGreaterThan(0));
+        // ResourcesPage.performSelectOperation(0);
+        // ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
 
 
-    it('should edit a main type resource', () => {
+    it('should edit a main type resource', () => { // TODO is this test still necessary?
 
-        ResourcesPage.clickEditMainTypeResource();
+        NavbarPage.clickNavigateToProject();
+        ResourcesPage.openEditByDoubleClickResource('trench1');
         DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value[0]).toContain('newIdentifier'));
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('newIdentifier'));
     });
 
 

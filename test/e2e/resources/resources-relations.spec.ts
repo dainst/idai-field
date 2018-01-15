@@ -10,7 +10,8 @@ const delays = require('../config/delays');
 
 describe('resources/relations --', () => {
 
-    let index = 0;
+    let i = 0;
+
 
     beforeAll(function() {
         ResourcesPage.get();
@@ -19,15 +20,15 @@ describe('resources/relations --', () => {
 
 
     beforeEach(() => {
-        if (index > 0) {
+        if (i > 0) {
             NavbarPage.performNavigateToSettings();
             require('request').post('http://localhost:3003/reset', {});
             browser.sleep(delays.shortRest);
             NavbarPage.clickNavigateToExcavation();
-            browser.wait(EC.visibilityOf(element(by.id('create-main-type-document-button'))), delays.ECWaitTime);
+            browser.wait(EC.visibilityOf(element(by.id('operation-document-selector'))), delays.ECWaitTime);
             browser.sleep(delays.shortRest);
         }
-        index++;
+        i++;
     });
 
 

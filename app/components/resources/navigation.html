@@ -1,8 +1,5 @@
 <div class="row" style="padding-left: 10px; color: rgba(85, 114, 161, 1); margin-top: 4px;">
-    <span *ngIf="this.viewFacade.isInOverview()" (click)="setRootDocument(undefined)">
-        {{viewFacade.getProjectDocument().resource.identifier}}&nbsp;&nbsp;
-    </span>
-
+    
     <div *ngIf="!this.viewFacade.isInOverview() && viewFacade.getSelectedMainTypeDocument()" class="btn-group">
         <div class="btn-group" ngbDropdown placement="bottom-left" role="group">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>

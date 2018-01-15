@@ -19,16 +19,22 @@ export class SidebarListComponent {
 
     @Input() activeTab: string;
 
-    // for clean and refactor safe template, and to help find usages
-    public jumpToMainTypeHomeView = (document: IdaiFieldDocument) => this.routingService.jumpToMainTypeHomeView(document);
-
-
     constructor(
         public resourcesComponent: ResourcesComponent,
         public viewFacade: ViewFacade,
         private routingService: RoutingService,
         private loading: Loading
     ) { }
+
+
+    public jumpToMainTypeHomeView(document: IdaiFieldDocument) {
+
+        if (this.viewFacade.isInOverview()) {
+            this.routingService.jumpToMainTypeHomeView(document);
+        } else {
+            this.viewFacade.setRootDocument(document.resource.id as string);
+        }
+    }
 
 
     public select(document: IdaiFieldDocument, autoScroll: boolean = false) {

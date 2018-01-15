@@ -1,40 +1,18 @@
 <div id="resources" style="position: fixed; width: 100%; z-index: 1001;"
      class="row bg-light py-2">
 
-    <div class="col-md-3">
+    <div class="col-md-6">
         <navigation></navigation>
     </div>
 
-    <div class="col-md-1">
-        <div *ngIf="!viewFacade.isInOverview()" class="row">
-            <div *ngIf="!isEditingGeometry && viewFacade.getSelectedMainTypeDocument()" class="col-md-6">
-                <div id="edit-main-type-document-button" class="circular-button type-button"
-                     (click)="editDocument(viewFacade.getSelectedMainTypeDocument())">
-                    <span class="mdi mdi-pencil mdi-18px"></span>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <plus-button *ngIf="!isEditingGeometry && ready && this.viewFacade.getQueryString() == '' && !viewFacade.isInOverview()
-                                        && viewFacade.getMode() == 'map'"
-                             id="create-main-type-document-button" [preselectedType]="viewFacade.getCurrentViewMainType()"
-                             [isRecordedIn]="viewFacade.getProjectDocument()"></plus-button>
-                <plus-button *ngIf="!isEditingGeometry && ready && this.viewFacade.getQueryString() == '' && !viewFacade.isInOverview()
-                                        && viewFacade.getMode() == 'list'"
-                             id="create-main-type-document-button" [preselectedType]="viewFacade.getCurrentViewMainType()"
-                             [preselectedGeometryType]="'none'" [isRecordedIn]="viewFacade.getProjectDocument()"></plus-button>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 mr-md-auto">
+    <div class="col-md-4 mr-md-auto" align="right">
         <search-bar *ngIf="viewFacade.getQuery()" [q]="viewFacade.getQueryString()" [types]="viewFacade.getFilterTypes()" [relationName]="'isRecordedIn'"
                     [relationRangeType]="viewFacade.getCurrentViewMainType()"
                     (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
         </search-bar>
     </div>
 
-    <div class="col-md-3" align="right">
+    <div class="col-md-2" align="right">
         <div *ngIf="ready" class="btn-group resources-mode-buttons">
             <button id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"
                     [class.active]="viewFacade.getMode() == 'map'">

@@ -75,6 +75,33 @@ body {
   border-color: saturate(rgba(85, 114, 161, 1), 10%);
 }
 
+.btn-outline-primary {
+  border-color: rgba(85, 114, 161, 1);
+  color: rgba(85, 114, 161, 1);
+  background-color: white;
+}
+
+.btn-outline-primary:hover {
+  border-color: lighten(rgba(85, 114, 161, 1), 10%);
+  color: lighten(rgba(85, 114, 161, 1), 10%);
+  background-color: white;
+}
+
+.btn-outline-primary:disabled, .btn-outline-primary.disabled {
+  border-color: darken(rgba(85, 114, 161, 1), 10%);
+  color: darken(rgba(85, 114, 161, 1), 10%);
+  cursor: not-allowed;
+  background-color: white;
+
+}
+
+.btn-outline-primary:active, .btn-outline-primary.active {
+  border-color: saturate(rgba(85, 114, 161, 1), 10%);
+  color: saturate(rgba(85, 114, 161, 1), 10%);
+  background-color: white;
+}
+
+
 .btn-secondary {
   color: #fff;
   background-color: #727b84;

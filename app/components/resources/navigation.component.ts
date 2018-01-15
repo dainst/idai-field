@@ -40,12 +40,4 @@ export class NavigationComponent {
         const isMatched = this.viewFacade.selectMainTypeDocument(document);
         if (!isMatched) this.viewFacade.setActiveDocumentViewTab(undefined);
     }
-
-
-    public getFirstDocumentOfPathToRootDocument(): IdaiFieldDocument|undefined {
-
-        return this.viewFacade.isInOverview() ?
-            this.viewFacade.getProjectDocument() as IdaiFieldDocument :
-            this.viewFacade.getSelectedMainTypeDocument();
-    }
 }

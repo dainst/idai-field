@@ -4,6 +4,7 @@ import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
 import {RoutingService} from '../../routing-service';
+import {ProjectConfiguration, RelationDefinition} from "idai-components-2/configuration";
 
 @Component({
     selector: 'sidebar-list',
@@ -23,10 +24,12 @@ export class SidebarListComponent {
         public resourcesComponent: ResourcesComponent,
         public viewFacade: ViewFacade,
         private routingService: RoutingService,
-        private loading: Loading
+        private loading: Loading,
+        private projectConfiguration: ProjectConfiguration
     ) { }
 
 
+    // TODO rename, probably move all this code to RoutingService, since it is also used from the ListComponent
     public jumpToMainTypeHomeView(document: IdaiFieldDocument) {
 
         if (this.viewFacade.isInOverview()) {
@@ -35,6 +38,19 @@ export class SidebarListComponent {
             this.viewFacade.setRootDocument(document.resource.id as string);
         }
     }
+
+
+    // TODO probably move all this code to RoutingService, since it is also used from the ListComponent, and RoutingService has already the ProjectConfiguration dependency
+    public showMoveIntoOption(document: IdaiFieldDocument): boolean {
+
+        if (this.viewFacade.isInOverview()) return true;
+
+        const relationNames = (this.projectConfiguration.getRelationDefinitions(document.resource.type, true) as any) // TODO make that it does never return undefined
+            .map((rd: RelationDefinition) => rd.name);
+        
+        return (relationNames.indexOf('liesWithin') !== -1);
+    }
+
 
 
     public select(document: IdaiFieldDocument, autoScroll: boolean = false) {

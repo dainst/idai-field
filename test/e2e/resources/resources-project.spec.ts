@@ -52,7 +52,7 @@ describe('resources/project --', function() {
     }
 
 
-    it('create & switch project', () => {
+    xit('create & switch project', () => {
 
         performCreateProject();
 

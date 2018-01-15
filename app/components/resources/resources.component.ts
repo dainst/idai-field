@@ -61,6 +61,9 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
+    public currentModeIs = (mode: string) => (this.viewFacade.getMode() === mode);
+
+
     public getIsRecordedInTarget() {
 
         if (this.viewFacade.isInOverview()) return this.viewFacade.getProjectDocument();
@@ -144,7 +147,9 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public setMode(mode: string) {
+    public switchMode(mode: string) {
+
+        if (!this.ready) return;
 
         this.loading.start();
         // The timeout is necessary to make the loading icon appear

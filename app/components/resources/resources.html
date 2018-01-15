@@ -5,33 +5,41 @@
         <navigation></navigation>
     </div>
 
-    <div class="col-md-4 mr-md-auto" align="right">
-        <search-bar *ngIf="viewFacade.getQuery()" [q]="viewFacade.getQueryString()" [types]="viewFacade.getFilterTypes()" [relationName]="'isRecordedIn'"
-                    [relationRangeType]="viewFacade.getCurrentViewMainType()"
-                    (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
-        </search-bar>
+    <div class="col-md-6 mr-md-auto" align="right">
+        <div class="row">
+
+            <div class="col-md-8" style="padding-right: 8px">
+                <search-bar style="width:100px" *ngIf="viewFacade.getQuery()" [q]="viewFacade.getQueryString()" [types]="viewFacade.getFilterTypes()" [relationName]="'isRecordedIn'"
+                            [relationRangeType]="viewFacade.getCurrentViewMainType()"
+                            (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
+                </search-bar>
+            </div>
+
+            <div class="col-md-4" style="padding-left: 0; padding-right: 8px">
+                <div *ngIf="ready" class="btn-group resources-mode-buttons" style="width:100% !important">
+                    <button style="width:50% !important" id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"
+                            [class.active]="viewFacade.getMode() == 'map'">
+                        <span class="mdi mdi-map"></span> Karte
+                    </button>
+                    <button style="width:50% !important" id="list-mode-button" (click)="setMode('list')"
+                            class="btn btn-primary m-0" [class.active]="viewFacade.getMode() == 'list'">
+                        <span class="mdi mdi-table"></span> Liste
+                    </button>
+                </div>
+                <div *ngIf="!ready" class="btn-group resources-mode-buttons">
+                    <button style="width:50% !important" class="btn btn-primary m-0" [class.active]="viewFacade.getMode() == 'map'">
+                        <span class="mdi mdi-map"></span> Karte
+                    </button>
+                    <button style="width:50% !important" class="btn btn-primary m-0" [class.active]="viewFacade.getMode() == 'list'">
+                        <span class="mdi mdi-table"></span> Liste
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
-    <div class="col-md-2" align="right">
-        <div *ngIf="ready" class="btn-group resources-mode-buttons">
-            <button id="map-mode-button" (click)="setMode('map')" class="btn btn-primary m-0"
-                    [class.active]="viewFacade.getMode() == 'map'">
-                <span class="mdi mdi-map"></span> Karte
-            </button>
-            <button id="list-mode-button" (click)="setMode('list')"
-                    class="btn btn-primary m-0" [class.active]="viewFacade.getMode() == 'list'">
-                <span class="mdi mdi-table"></span> Liste
-            </button>
-        </div>
-        <div *ngIf="!ready" class="btn-group resources-mode-buttons">
-            <button class="btn btn-primary m-0" [class.active]="viewFacade.getMode() == 'map'">
-                <span class="mdi mdi-map"></span> Karte
-            </button>
-            <button class="btn btn-primary m-0" [class.active]="viewFacade.getMode() == 'list'">
-                <span class="mdi mdi-table"></span> Liste
-            </button>
-        </div>
-    </div>
 </div>
 <div style="padding-top: 56px;"
      class="row"

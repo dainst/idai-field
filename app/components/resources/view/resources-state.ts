@@ -34,7 +34,7 @@ export class ResourcesState {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].mainTypeDocumentId = id;
-        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
+        this.serialize();
     }
 
 
@@ -48,7 +48,7 @@ export class ResourcesState {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].mode = mode;
-        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
+        this.serialize();
     }
 
 
@@ -62,7 +62,7 @@ export class ResourcesState {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].q = q;
-        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
+        this.serialize();
     }
 
 
@@ -77,7 +77,7 @@ export class ResourcesState {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].types = types;
-        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
+        this.serialize();
     }
 
 
@@ -97,7 +97,7 @@ export class ResourcesState {
         if (!layerIds) return;
 
         layerIds[mainTypeDocumentId] = activeLayersIds.slice(0);
-        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
+        this.serialize();
     }
 
 
@@ -120,7 +120,7 @@ export class ResourcesState {
         if (!layerIds) return;
 
         delete layerIds[mainTypeDocumentId];
-        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
+        this.serialize();
     }
 
 
@@ -133,7 +133,6 @@ export class ResourcesState {
         if (!rootDocumentResourceIds) return;
 
         rootDocumentResourceIds[mainTypeDocumentId] = rootDocumentResourceId;
-        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
 
 
@@ -156,6 +155,30 @@ export class ResourcesState {
         if (!rootDocumentResourceIds) return;
 
         delete rootDocumentResourceIds[mainTypeDocumentId];
-        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
+    }
+
+
+    private serialize() {
+
+        this.serializer.store(StateSerializer.RESOURCES_STATE, this.createObjectToSerialize());
+    }
+
+
+    private createObjectToSerialize() : { [viewName: string]: ResourcesViewState } {
+
+        const objectToSerialize: { [viewName: string]: ResourcesViewState } = {};
+
+        for (let viewName of Object.keys(this._)) {
+            objectToSerialize[viewName] = {};
+            if (this._[viewName].mainTypeDocumentId) {
+                objectToSerialize[viewName].mainTypeDocumentId = this._[viewName].mainTypeDocumentId;
+            }
+            if (this._[viewName].types) objectToSerialize[viewName].types = this._[viewName].types;
+            if (this._[viewName].q) objectToSerialize[viewName].q = this._[viewName].q;
+            if (this._[viewName].mode) objectToSerialize[viewName].mode = this._[viewName].mode;
+            if (this._[viewName].layerIds) objectToSerialize[viewName].layerIds = this._[viewName].layerIds;
+        }
+
+        return objectToSerialize;
     }
 }

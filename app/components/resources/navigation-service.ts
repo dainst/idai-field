@@ -1,12 +1,15 @@
 import {Injectable} from '@angular/core';
-import {RoutingService} from '../routing-service';
 import {ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {RoutingService} from '../routing-service';
 import {ViewFacade} from './view/view-facade';
+import {NavigationPath} from './navigation-path';
+
 
 @Injectable()
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class NavigationService {
 
@@ -42,12 +45,33 @@ export class NavigationService {
         const navigationPath = this.viewFacade.getNavigationPath();
 
         if (document) {
-            if (navigationPath.elements.indexOf(document) == -1) navigationPath.elements.push(document);
+            this.rebuildNavigationPath(navigationPath, document);
             navigationPath.rootDocument = document;
         } else {
             delete navigationPath.rootDocument;
         }
 
         this.viewFacade.setNavigationPath(navigationPath);
+    }
+
+
+    private rebuildNavigationPath(navigationPath: NavigationPath, newRootDocument: IdaiFieldDocument) {
+
+        if (navigationPath.elements.indexOf(newRootDocument) != -1) return;
+
+        if (!navigationPath.rootDocument) {
+            navigationPath.elements = [newRootDocument];
+            return;
+        }
+
+        const elements: Array<IdaiFieldDocument> = [];
+
+        for (let document of navigationPath.elements) {
+            elements.push(document);
+            if (document == navigationPath.rootDocument) break;
+        }
+
+        elements.push(newRootDocument);
+        navigationPath.elements = elements;
     }
 }

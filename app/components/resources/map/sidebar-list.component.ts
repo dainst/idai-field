@@ -23,7 +23,7 @@ export class SidebarListComponent {
 
     @Input() activeTab: string;
 
-    public navigationPath: NavigationPath;
+    public navigationPath: NavigationPath = { elements: [] };
 
     constructor(
         public resourcesComponent: ResourcesComponent,

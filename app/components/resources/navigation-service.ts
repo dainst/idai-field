@@ -21,7 +21,7 @@ export class NavigationService {
         if (this.viewFacade.isInOverview()) {
             this.routingService.jumpToMainTypeHomeView(document);
         } else {
-            this.viewFacade.setRootDocument(document.resource.id as string);
+            this.setRootDocument(document);
         }
     }
 
@@ -34,5 +34,20 @@ export class NavigationService {
             .getRelationDefinitions(document.resource.type, true) as any) // TODO make that it does never return undefined
             .map((rd: RelationDefinition) => rd.name)
             .indexOf('liesWithin') !== -1);
+    }
+
+
+    private setRootDocument(document: IdaiFieldDocument) {
+
+        const navigationPath = this.viewFacade.getNavigationPath();
+
+        if (document) {
+            if (navigationPath.elements.indexOf(document) == -1) navigationPath.elements.push(document);
+            navigationPath.rootDocument = document;
+        } else {
+            delete navigationPath.rootDocument;
+        }
+
+        this.viewFacade.setNavigationPath(navigationPath);
     }
 }

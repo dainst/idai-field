@@ -120,13 +120,10 @@ export class RoutingService {
         if (comingFromOutsideOverviewComponent ||
             viewName != this.viewFacade.getCurrentViewName()) {
 
-            if (tab) {
-                return this.router.navigate(['resources', viewName,
-                    documentToSelect.resource.id, 'view', tab]);
-            } else {
-                return this.router.navigate(['resources', viewName,
-                    documentToSelect.resource.id]);
-            }
+            this.router.navigate(
+                     (tab) ? ['resources', viewName, documentToSelect.resource.id, 'view', tab]
+                         : ['resources', viewName, documentToSelect.resource.id]);
+
         } else {
 
             this.viewFacade.setSelectedDocument(documentToSelect)

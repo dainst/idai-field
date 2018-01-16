@@ -9,6 +9,7 @@ import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../view/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
+import {NavigationService} from '../navigation-service';
 
 
 @Component({
@@ -36,25 +37,15 @@ export class RowComponent {
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private validator: Validator,
-        private datastore: IdaiFieldDocumentReadDatastore
+        private datastore: IdaiFieldDocumentReadDatastore,
+        private navigationService: NavigationService
     ) {  }
 
 
-    public async setRootDocument(document: IdaiFieldDocument) {
+    // TODO consider factoring out component for moveInto button, and put this and showMoveIntoOption into it
+    public moveInto = (document: IdaiFieldDocument) => this.navigationService.moveInto(document);
 
-        // TODO move to navigation service...
-
-        const navigationPath = this.viewFacade.getNavigationPath();
-
-        if (document) {
-            if (navigationPath.elements.indexOf(document) == -1) navigationPath.elements.push(document);
-            navigationPath.rootDocument = document;
-        } else {
-            delete navigationPath.rootDocument;
-        }
-
-        await this.viewFacade.setNavigationPath(navigationPath);
-    };
+    public showMoveIntoOption = (document: IdaiFieldDocument) => this.navigationService.showMoveIntoOption(document);
 
 
     public startEditing(fieldValue: string) {

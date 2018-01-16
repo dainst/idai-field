@@ -31,8 +31,10 @@ export class PlusButtonComponent implements OnChanges {
 
     @ViewChild('popover') private popover: any;
 
+
     private typesTreeList: Array<IdaiType>;
     private type: string|undefined;
+
 
     constructor(
         private elementRef: ElementRef,
@@ -45,6 +47,7 @@ export class PlusButtonComponent implements OnChanges {
         });
     }
 
+
     ngOnChanges() {
 
         const pconf = this.configLoader.getProjectConfiguration();
@@ -54,6 +57,7 @@ export class PlusButtonComponent implements OnChanges {
             .then(projectConfiguration => this.initializeTypesTreeList(projectConfiguration))
             .catch(() => {});
     }
+
 
     public startDocumentCreation(geometryType: string = this.preselectedGeometryType) {
 
@@ -69,6 +73,7 @@ export class PlusButtonComponent implements OnChanges {
         else this.resourcesComponent.startEditNewDocument(newDocument, geometryType);
     }
 
+
     public reset() {
 
         if (this.getButtonType() == 'singleType') {
@@ -77,6 +82,7 @@ export class PlusButtonComponent implements OnChanges {
             this.type = undefined;
         }
     }
+
 
     public getButtonType(): string {
 
@@ -90,11 +96,13 @@ export class PlusButtonComponent implements OnChanges {
         return 'multipleTypes';
     }
 
+
     public chooseType(type: IdaiType) {
 
         this.type = type.name;
         if (this.preselectedGeometryType) this.startDocumentCreation();
     }
+
 
     private handleClick(event: any) {
 
@@ -118,6 +126,7 @@ export class PlusButtonComponent implements OnChanges {
         }
     }
 
+
     private initializeTypesTreeList(projectConfiguration: ProjectConfiguration) {
 
         this.typesTreeList = [];
@@ -136,6 +145,7 @@ export class PlusButtonComponent implements OnChanges {
         }
     }
 
+
     private createRelations(): Relations {
 
         let relations: Relations = {};
@@ -145,6 +155,7 @@ export class PlusButtonComponent implements OnChanges {
 
         return relations;
     }
+
 
     private isAllowedType(type: IdaiType, projectConfiguration: ProjectConfiguration): boolean {
 
@@ -160,6 +171,7 @@ export class PlusButtonComponent implements OnChanges {
             }
         }
 
+        // TODO simplify return statement
         if (this.liesWithin && !projectConfiguration.isAllowedRelationDomainType(type.name,
                 this.liesWithin.resource.type, 'liesWithin')) {
             return false;

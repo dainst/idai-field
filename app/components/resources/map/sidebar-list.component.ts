@@ -3,8 +3,9 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
-import {RoutingService} from '../../routing-service';
-import {ProjectConfiguration, RelationDefinition} from "idai-components-2/configuration";
+import {NavigationService} from '../navigation-service';
+import {NavigationPath} from '../navigation-path';
+
 
 @Component({
     selector: 'sidebar-list',
@@ -16,52 +17,31 @@ import {ProjectConfiguration, RelationDefinition} from "idai-components-2/config
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
+
+// TODO export class SidebarListComponent extends BaseList
 export class SidebarListComponent {
 
     @Input() activeTab: string;
 
+    public navigationPath: NavigationPath;
+
     constructor(
         public resourcesComponent: ResourcesComponent,
         public viewFacade: ViewFacade,
-        private routingService: RoutingService,
         private loading: Loading,
-        private projectConfiguration: ProjectConfiguration
-    ) { }
-
-
-    // TODO rename, probably move all this code to RoutingService, since it is also used from the ListComponent
-    public jumpToMainTypeHomeView(document: IdaiFieldDocument) {
-
-        if (this.viewFacade.isInOverview()) {
-            this.routingService.jumpToMainTypeHomeView(document);
-        } else {
-
-            // TODO move to navigation service...
-            const navigationPath = this.viewFacade.getNavigationPath();
-
-            if (document) {
-                if (navigationPath.elements.indexOf(document) == -1) navigationPath.elements.push(document);
-                navigationPath.rootDocument = document;
-            } else {
-                delete navigationPath.rootDocument;
-            }
-
-            this.viewFacade.setNavigationPath(navigationPath);
-        }
+        private navigationService: NavigationService
+    ) {
+        // super(viewFacade)
+        this.viewFacade.pathToRootDocumentNotifications().subscribe(path => {
+            this.navigationPath = path;
+        });
     }
 
 
-    // TODO probably move all this code to RoutingService, since it is also used from the ListComponent, and RoutingService has already the ProjectConfiguration dependency
-    public showMoveIntoOption(document: IdaiFieldDocument): boolean {
+    public moveInto = (document: IdaiFieldDocument) => this.navigationService.moveInto(document);
 
-        if (this.viewFacade.isInOverview()) return true;
 
-        const relationNames = (this.projectConfiguration.getRelationDefinitions(document.resource.type, true) as any) // TODO make that it does never return undefined
-            .map((rd: RelationDefinition) => rd.name);
-        
-        return (relationNames.indexOf('liesWithin') !== -1);
-    }
-
+    public showMoveIntoOption = (document: IdaiFieldDocument) => this.navigationService.showMoveIntoOption(document);
 
 
     public select(document: IdaiFieldDocument, autoScroll: boolean = false) {
@@ -77,7 +57,8 @@ export class SidebarListComponent {
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
     }
 
-
+    
+    // TODO Move to BaseList
     public showPlusButton() { // TODO check if this is a duplication with the one from resources component
 
         return (!this.resourcesComponent.isEditingGeometry && this.resourcesComponent.ready

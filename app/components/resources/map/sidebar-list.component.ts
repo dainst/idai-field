@@ -3,9 +3,9 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
-import {RoutingService} from '../../routing-service';
-import {ProjectConfiguration, RelationDefinition} from "idai-components-2/configuration";
-import {Navigation} from 'selenium-webdriver';
+import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {NavigationService} from '../navigation-service';
+
 
 @Component({
     selector: 'sidebar-list',
@@ -26,9 +26,8 @@ export class SidebarListComponent {
     constructor(
         public resourcesComponent: ResourcesComponent,
         public viewFacade: ViewFacade,
-        private routingService: RoutingService,
         private loading: Loading,
-        private projectConfiguration: ProjectConfiguration,
+        private navigationService: NavigationService
     ) {
         this.viewFacade.pathToRootDocumentNotifications().subscribe(path => {
             this.pathToRootDocument = path;
@@ -36,28 +35,10 @@ export class SidebarListComponent {
     }
 
 
-    // TODO rename, probably move all this code to RoutingService, since it is also used from the ListComponent
-    public jumpToMainTypeHomeView(document: IdaiFieldDocument) {
-
-        if (this.viewFacade.isInOverview()) {
-            this.routingService.jumpToMainTypeHomeView(document);
-        } else {
-            this.viewFacade.setRootDocument(document.resource.id as string);
-        }
-    }
+    public moveInto = (document: IdaiFieldDocument) => this.navigationService.moveInto(document);
 
 
-    // TODO probably move all this code to RoutingService, since it is also used from the ListComponent, and RoutingService has already the ProjectConfiguration dependency
-    public showMoveIntoOption(document: IdaiFieldDocument): boolean {
-
-        if (this.viewFacade.isInOverview()) return true;
-
-        const relationNames = (this.projectConfiguration.getRelationDefinitions(document.resource.type, true) as any) // TODO make that it does never return undefined
-            .map((rd: RelationDefinition) => rd.name);
-        
-        return (relationNames.indexOf('liesWithin') !== -1);
-    }
-
+    public showMoveIntoOption = (document: IdaiFieldDocument) => this.navigationService.showMoveIntoOption(document);
 
 
     public select(document: IdaiFieldDocument, autoScroll: boolean = false) {

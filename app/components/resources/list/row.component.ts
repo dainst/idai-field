@@ -42,7 +42,18 @@ export class RowComponent {
 
     public async setRootDocument(document: IdaiFieldDocument) {
 
-        await this.viewFacade.setRootDocument(document.resource.id as string);
+        // TODO move to navigation service...
+
+        const navigationPath = this.viewFacade.getNavigationPath();
+
+        if (document) {
+            if (navigationPath.elements.indexOf(document) == -1) navigationPath.elements.push(document);
+            navigationPath.rootDocument = document;
+        } else {
+            delete navigationPath.rootDocument;
+        }
+
+        await this.viewFacade.setNavigationPath(navigationPath);
     };
 
 

@@ -1,15 +1,16 @@
+import {Observable} from 'rxjs/Observable';
+import {Observer} from 'rxjs/Observer';
 import {Document} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
 import {OperationViews} from './operation-views';
 import {SettingsService} from '../../../core/settings/settings-service';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
-import {Observable} from 'rxjs/Observable';
-import {Observer} from 'rxjs/Observer';
+import {NavigationPath} from '../navigation-path';
 
 /**
  * Manages an overview of operation type resources
@@ -31,7 +32,7 @@ export class ViewFacade {
     private viewManager: ViewManager;
     private mainTypeDocumentsManager: MainTypeDocumentsManager;
     private documentsManager: DocumentsManager;
-    private pathToRootDocumentObservers: Array<Observer<Array<IdaiFieldDocument>>> = [];
+    private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
 
     constructor(
@@ -287,66 +288,40 @@ export class ViewFacade {
     }
 
 
-    /**
-     * Sets the document whose children are shown, when getDocuments() is called.
-     * If resourceId is undefined, then all top level elements of the currently
-     * selected mainTypeDocument are shown.
-     */
-    public async setRootDocument(resourceId: string) {
+    public async setNavigationPath(navigationPath: NavigationPath) {
 
-        //if (this.isInOverview()) throw ViewFacade.err('setQueryLiesWithinConstraint');
-
-        await this.documentsManager.setRootDocument(resourceId);
+        await this.documentsManager.setNavigationPath(navigationPath);
         await this.notifyPathToRootDocumentObservers();
     }
 
 
-    public pathToRootDocumentNotifications(): Observable<Array<IdaiFieldDocument>> {
+    public pathToRootDocumentNotifications(): Observable<NavigationPath> {
 
-        return Observable.create((observer: Observer<Array<IdaiFieldDocument>>) => {
-            this.pathToRootDocumentObservers.push(observer as never);
+        return Observable.create((observer: Observer<NavigationPath>) => {
+            this.navigationPathObservers.push(observer as never);
         });
     }
 
 
     private async notifyPathToRootDocumentObservers() {
 
-        if (this.pathToRootDocumentObservers) {
-            const pathToRootDocument = await this.getPathToRootDocument();
-            this.pathToRootDocumentObservers.forEach(
-                (observer: Observer<Array<IdaiFieldDocument>>) => observer.next(pathToRootDocument)
+        if (this.navigationPathObservers) {
+            const navigationPath: NavigationPath = await this.getNavigationPath();
+            this.navigationPathObservers.forEach(
+                (observer: Observer<NavigationPath>) => observer.next(navigationPath)
             );
         }
     }
 
 
-    private async getPathToRootDocument(): Promise<Array<IdaiFieldDocument>> {
+    public getNavigationPath(): NavigationPath {
 
-        if (this.isInOverview()) return [];
+        if (this.isInOverview()) return { elements: [] };
 
         const selectedMainTypeDocument = this.getSelectedMainTypeDocument();
-        if (!selectedMainTypeDocument) return [];
+        if (!selectedMainTypeDocument) return { elements: [] };
 
-        const rootDocumentResourceId = this.viewManager.fetchPathToRootDocumentFromResourcesState(
-            selectedMainTypeDocument.resource.id as string);
-        if (!rootDocumentResourceId || rootDocumentResourceId.length < 1) return [];
-
-        const pathToRootDocument: Array<IdaiFieldDocument> = [];
-
-        let currentResourceId = rootDocumentResourceId;
-        while (true) {
-
-            const document: IdaiFieldDocument = await this.datastore.get(currentResourceId);
-            pathToRootDocument.unshift(document);
-
-            if (!document.resource.relations['liesWithin']
-                || document.resource.relations['liesWithin'].length < 1) break;
-
-            currentResourceId = document.resource.relations['liesWithin']
-                [0]; // TODO we need to handle cases where more relation targets are present
-        }
-
-        return pathToRootDocument;
+        return this.viewManager.getNavigationPath(selectedMainTypeDocument.resource.id as string);
     }
 
 
@@ -406,7 +381,10 @@ export class ViewFacade {
 
         if (!this.isInOverview()) {
             await this.populateMainTypeDocuments();
-            this.viewManager.setupPathToRootDocument(this.getSelectedMainTypeDocument());
+            const selectedMainTypeDocument: IdaiFieldDocument|undefined = this.getSelectedMainTypeDocument();
+            if (selectedMainTypeDocument) {
+                this.viewManager.setupNavigationPath(selectedMainTypeDocument.resource.id as string);
+            }
         }
 
         await this.populateDocumentList();

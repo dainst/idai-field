@@ -2,7 +2,7 @@ import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
 import {ViewManager} from './view-manager';
-import {IdaiFieldDocumentReadDatastore} from "../../../core/datastore/idai-field-document-read-datastore";
+import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 
 /**
  * @author Thomas Kleinke
@@ -13,6 +13,7 @@ export class MainTypeDocumentsManager {
 
     private documents: Array<IdaiFieldDocument>;
     private selectedDocument: IdaiFieldDocument|undefined;
+
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
@@ -106,7 +107,7 @@ export class MainTypeDocumentsManager {
             if (this.documents && this.documents.length > 0) {
                 this.selectedDocument = this.documents[0];
             } else {
-                console.warn("cannot set selectedMainTypeDocument because mainTypeDocuments is empty")
+                console.warn('cannot set selectedMainTypeDocument because mainTypeDocuments is empty')
             }
         };
 

@@ -19,8 +19,8 @@
             {{viewFacade.getSelectedMainTypeDocument().resource.identifier}}
         </button>
 
-        <div *ngFor="let document of pathToRootDocument" class="btn btn-outline-primary"
-             (click)="setRootDocument(document.resource.id)">
+        <div *ngFor="let document of navigationPath.elements" class="btn btn-outline-primary"
+             (click)="setRootDocument(document)">
             {{document.resource.identifier}}
         </div>
     </div>

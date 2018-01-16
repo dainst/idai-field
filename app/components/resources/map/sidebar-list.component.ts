@@ -35,7 +35,18 @@ export class SidebarListComponent {
         if (this.viewFacade.isInOverview()) {
             this.routingService.jumpToMainTypeHomeView(document);
         } else {
-            this.viewFacade.setRootDocument(document.resource.id as string);
+
+            // TODO move to navigation service...
+            const navigationPath = this.viewFacade.getNavigationPath();
+
+            if (document) {
+                if (navigationPath.elements.indexOf(document) == -1) navigationPath.elements.push(document);
+                navigationPath.rootDocument = document;
+            } else {
+                delete navigationPath.rootDocument;
+            }
+
+            this.viewFacade.setNavigationPath(navigationPath);
         }
     }
 

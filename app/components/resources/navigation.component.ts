@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ViewFacade} from './view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
+import {NavigationPath} from './navigation-path';
 
 
 @Component({
@@ -15,13 +16,13 @@ import {ModelUtil} from '../../core/model/model-util';
  */
 export class NavigationComponent {
 
-    public pathToRootDocument: Array<IdaiFieldDocument>;
+    public navigationPath: NavigationPath = { elements: [] };
 
 
     constructor(public viewFacade: ViewFacade) {
 
         this.viewFacade.pathToRootDocumentNotifications().subscribe(path => {
-            this.pathToRootDocument = path;
+            this.navigationPath = path;
         })
     }
 
@@ -29,9 +30,18 @@ export class NavigationComponent {
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
 
-    public async setRootDocument(resourceId: string) {
+    public async setRootDocument(document: IdaiFieldDocument|undefined) {
 
-        await this.viewFacade.setRootDocument(resourceId as string);
+        // TODO move to navigation service...
+
+        if (document) {
+            if (this.navigationPath.elements.indexOf(document) == -1) this.navigationPath.elements.push(document);
+            this.navigationPath.rootDocument = document;
+        } else {
+            delete this.navigationPath.rootDocument;
+        }
+
+        await this.viewFacade.setNavigationPath(this.navigationPath);
     }
 
 

@@ -3,6 +3,7 @@ import {Query} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {OperationViews} from './operation-views';
 import {ResourcesState} from './resources-state';
+import {NavigationPath} from '../navigation-path';
 
 /**
  * Holds and provides access to the current view, which is one of the views from this.views,
@@ -152,25 +153,17 @@ export class ViewManager {
     }
 
 
-    public fetchPathToRootDocumentFromResourcesState(mainTypeDocumentResourceId: string): string|undefined {
+    public getNavigationPath(mainTypeDocumentId: string): NavigationPath {
 
-        return this.resourcesState.getRootDocumentResourceId(this.currentView, mainTypeDocumentResourceId);
+        const navigationPath = this.resourcesState.getNavigationPath(this.currentView, mainTypeDocumentId);
+        return navigationPath ? navigationPath : { elements: [] };
     }
 
 
-    public setRootDocumentBy(mainTypeDocumentResourceId: string, rootDocumentResourceId: string|undefined) {
+    public setNavigationPath(mainTypeDocumentId: string, navigationPath: NavigationPath) {
 
-        if (!this.query.constraints) this.query.constraints = {};
-
-        if (rootDocumentResourceId) {
-            this.resourcesState.setRootDocumentResourceId(this.currentView, mainTypeDocumentResourceId, rootDocumentResourceId);
-            this.query.constraints['liesWithin:contain'] = rootDocumentResourceId;
-            delete this.query.constraints['liesWithin:exist'];
-        } else {
-            this.resourcesState.removeRootDocumentResourceId(this.currentView, mainTypeDocumentResourceId);
-            this.query.constraints['liesWithin:exist'] = 'UNKNOWN';
-            delete this.query.constraints['liesWithin:contain'];
-        }
+        this.resourcesState.setNavigationPath(this.currentView, mainTypeDocumentId, navigationPath);
+        this.setRootDocument(navigationPath.rootDocument ? navigationPath.rootDocument.resource.id : undefined);
     }
 
 
@@ -245,13 +238,30 @@ export class ViewManager {
     }
 
 
-    public setupPathToRootDocument(mainTypeDocument: Document|undefined) {
+    public setupNavigationPath(mainTypeDocumentId: string) {
 
-        if (!mainTypeDocument || !mainTypeDocument.resource.id) return;
+        const navigationPath: NavigationPath|undefined
+            = this.resourcesState.getNavigationPath(this.getViewName(), mainTypeDocumentId);
 
-        const rootDocumentResourceId: string|undefined
-            = this.fetchPathToRootDocumentFromResourcesState(mainTypeDocument.resource.id);
-        this.setRootDocumentBy(mainTypeDocument.resource.id, rootDocumentResourceId);
+        if (navigationPath && navigationPath.rootDocument) {
+            this.setRootDocument(navigationPath.rootDocument.resource.id);
+        } else {
+            this.setRootDocument(undefined);
+        }
+    }
+
+
+    private setRootDocument(rootDocumentResourceId: string|undefined) {
+
+        if (!this.query.constraints) this.query.constraints = {};
+
+        if (rootDocumentResourceId) {
+            this.query.constraints['liesWithin:contain'] = rootDocumentResourceId;
+            delete this.query.constraints['liesWithin:exist'];
+        } else {
+            this.query.constraints['liesWithin:exist'] = 'UNKNOWN';
+            delete this.query.constraints['liesWithin:contain'];
+        }
     }
 
 

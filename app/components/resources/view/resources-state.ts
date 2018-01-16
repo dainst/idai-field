@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ResourcesViewState} from './resources-view-state';
 import {StateSerializer} from '../../../common/state-serializer';
+import {NavigationPath} from '../navigation-path';
 
 
 @Injectable()
@@ -124,37 +125,37 @@ export class ResourcesState {
     }
 
 
-    public setRootDocumentResourceId(viewName: string, mainTypeDocumentId: string, rootDocumentResourceId: string) {
+    public setNavigationPath(viewName: string, mainTypeDocumentId: string, navigationPath: NavigationPath) {
 
         if (!this._[viewName]) this._[viewName] = {};
-        if (!this._[viewName].rootDocumentResourceIds) this._[viewName].rootDocumentResourceIds = {};
+        if (!this._[viewName].navigationPaths) this._[viewName].navigationPaths = {};
 
-        const rootDocumentResourceIds = this._[viewName].rootDocumentResourceIds;
-        if (!rootDocumentResourceIds) return;
+        const navigationPaths = this._[viewName].navigationPaths;
+        if (!navigationPaths) return;
 
-        rootDocumentResourceIds[mainTypeDocumentId] = rootDocumentResourceId;
+        navigationPaths[mainTypeDocumentId] = navigationPath;
     }
 
 
-    public getRootDocumentResourceId(viewName: string, mainTypeDocumentId: string): string|undefined {
+    public getNavigationPath(viewName: string, mainTypeDocumentId: string): NavigationPath|undefined {
 
-        if (!this._[viewName] || !this._[viewName].rootDocumentResourceIds) return undefined;
+        if (!this._[viewName] || !this._[viewName].navigationPaths) return undefined;
 
-        const rootDocumentResourceIds = this._[viewName].rootDocumentResourceIds;
-        if (!rootDocumentResourceIds) return undefined;
+        const navigationPaths = this._[viewName].navigationPaths;
+        if (!navigationPaths) return undefined;
 
-        return rootDocumentResourceIds[mainTypeDocumentId];
+        return navigationPaths[mainTypeDocumentId];
     }
 
 
-    public removeRootDocumentResourceId(viewName: string, mainTypeDocumentId: string) {
+    public removeNavigationPath(viewName: string, mainTypeDocumentId: string) {
 
-        if (!this._[viewName] || !this._[viewName].rootDocumentResourceIds) return;
+        if (!this._[viewName] || !this._[viewName].navigationPaths) return;
 
-        const rootDocumentResourceIds = this._[viewName].rootDocumentResourceIds;
-        if (!rootDocumentResourceIds) return;
+        const navigationPaths = this._[viewName].navigationPaths;
+        if (!navigationPaths) return;
 
-        delete rootDocumentResourceIds[mainTypeDocumentId];
+        delete navigationPaths[mainTypeDocumentId];
     }
 
 

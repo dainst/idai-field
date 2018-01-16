@@ -1,3 +1,6 @@
+import {NavigationPath} from '../navigation-path';
+
+
 /**
  * @author Thomas Kleinke
  */
@@ -8,5 +11,5 @@ export interface ResourcesViewState {
     q?: string;
     mode?: string;
     layerIds?: {[mainTypeDocumentId: string]: string[]};
-    rootDocumentResourceIds?: {[mainTypeDocumentId: string]: string};
+    navigationPaths?: {[mainTypeDocumentId: string]: NavigationPath};
 }

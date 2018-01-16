@@ -6,6 +6,7 @@ import {SettingsService} from '../../../core/settings/settings-service';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
+import {NavigationPath} from '../navigation-path';
 
 /**
  * @author Thomas Kleinke
@@ -83,12 +84,12 @@ export class DocumentsManager {
     }
 
 
-    public async setRootDocument(resourceId: string|undefined) {
+    public async setNavigationPath(navigationPath: NavigationPath) {
 
         const selectedMainTypeDocument: Document|undefined = this.mainTypeDocumentsManager.getSelectedDocument();
         if (!selectedMainTypeDocument || !selectedMainTypeDocument.resource.id) return;
 
-        this.viewManager.setRootDocumentBy(selectedMainTypeDocument.resource.id, resourceId);
+        this.viewManager.setNavigationPath(selectedMainTypeDocument.resource.id, navigationPath);
 
         // TODO Deselect document if it is not part of the new document list
         await this.populateDocumentList();

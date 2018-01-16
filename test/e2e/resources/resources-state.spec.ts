@@ -97,7 +97,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('restore resources state after restarting client', () => {
+    xit('restore resources state after restarting client', () => {
 
         ProjectPage.performCreateProject();
 

@@ -17,6 +17,8 @@ import {NavigationService} from '../navigation-service';
  * @author Thomas Kleinke
  * @author Sebastian Cuy
  */
+
+// TODO export class SidebarListComponent extends BaseList
 export class SidebarListComponent {
 
     @Input() activeTab: string;
@@ -29,6 +31,7 @@ export class SidebarListComponent {
         private loading: Loading,
         private navigationService: NavigationService
     ) {
+        // super(viewFacade)
         this.viewFacade.pathToRootDocumentNotifications().subscribe(path => {
             this.pathToRootDocument = path;
         })
@@ -55,12 +58,14 @@ export class SidebarListComponent {
     }
 
 
+    // TODO Move to BaseList
     public getLastInPathToRootDocument() {
 
-        if (this.pathToRootDocument.length > 0) return this.pathToRootDocument[this.pathToRootDocument.length-1];
+        if (this.pathToRootDocument.length > 0) return this.pathToRootDocument[this.pathToRootDocument.length - 1];
     }
 
-
+    
+    // TODO Move to BaseList
     public showPlusButton() { // TODO check if this is a duplication with the one from resources component
 
         return (!this.resourcesComponent.isEditingGeometry && this.resourcesComponent.ready

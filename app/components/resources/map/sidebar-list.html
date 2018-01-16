@@ -21,5 +21,6 @@
     <plus-button *ngIf="showPlusButton()"
                  id="create-document-button" [placement]="'top'"
                  [preselectedType]="viewFacade.getCurrentFilterType()"
+                 [liesWithin]="this.getLastInPathToRootDocument()"
                  [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()"></plus-button>
     <loading-icon></loading-icon>

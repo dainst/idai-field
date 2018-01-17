@@ -1,5 +1,4 @@
 import {Observable} from 'rxjs/Observable';
-import {Observer} from 'rxjs/Observer';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
@@ -369,13 +368,18 @@ export class ViewFacade {
         await this.viewManager.setupView(viewName, defaultMode);
         await this.documentsManager.populateProjectDocument();
 
+        let mainTypeResourceId: string|undefined;
+
         if (!this.isInOverview()) {
             await this.populateMainTypeDocuments();
             const selectedMainTypeDocument: IdaiFieldDocument|undefined = this.getSelectedMainTypeDocument();
-            if (selectedMainTypeDocument) {
-                this.viewManager.setupNavigationPath(selectedMainTypeDocument.resource.id as string);
-            }
+            if (selectedMainTypeDocument) mainTypeResourceId = selectedMainTypeDocument.resource.id;
+        } else {
+            // TODO Check if there is another way to notify resources component about navigation path change when entering overview
+            mainTypeResourceId = this.getProjectDocument().resource.id;
         }
+
+        if (mainTypeResourceId) this.viewManager.setupNavigationPath(mainTypeResourceId);
 
         await this.populateDocumentList();
     }

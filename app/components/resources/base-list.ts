@@ -24,11 +24,11 @@ export class BaseList {
     }
 
 
-    public showPlusButton() {
+    public showPlusButton(): boolean {
 
         return (!this.resourcesComponent.isEditingGeometry && this.resourcesComponent.ready
             && !this.loading.showIcons && this.viewFacade.getQuery().q == ''
-            && (this.viewFacade.isInOverview() || this.viewFacade.getSelectedMainTypeDocument()));
+            && (this.viewFacade.isInOverview() || this.viewFacade.getSelectedMainTypeDocument() != undefined));
     }
 
 }

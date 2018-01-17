@@ -36,10 +36,6 @@ export class FPUtil {
 }
 
 
-// Generic predicates
-export class _ {
-
-    public static is = <A>(l:A) => (r:A) => l == r;
-}
+export const is = <A>(l:A) => (r:A) => l == r;
 
 

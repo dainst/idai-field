@@ -2,32 +2,32 @@
  * @author Daniel de Oliveira
  */
 
-// implementation based on an idea taken from http://sufflavus.github.io/JS-Tips-Take-While
-export const takeWhile = <A>(predicate: (_: A) => boolean) => (source: A[]): A[] => {
+// implementation of takeWhile using some based on the idea taken from http://sufflavus.github.io/JS-Tips-Take-While
+export const takeWhile = <A>(f: (_: A) => boolean) => (arr: A[]): A[] => {
 
-    let stopIndex = source.length;
+    let stopIndex = arr.length;
 
-    source.some((el: A, index: number) => {
-        if (predicate(el)) return false;
+    arr.some((el: A, index: number) => {
+        if (f(el)) return false;
         stopIndex = index;
         return true;
     });
 
-    return source.slice(0, stopIndex);
+    return arr.slice(0, stopIndex);
 };
 
 
-export const takeUntil = <A>(predicate: (_: A) => boolean) => (source: A[]): A[] => {
+export const takeUntil = <A>(f: (_: A) => boolean) => (arr: A[]): A[] => {
 
-    let stopIndex = source.length;
+    let stopIndex = arr.length;
 
-    source.some((el: A, index: number) => {
-        if (!predicate(el)) return false;
+    arr.some((el: A, index: number) => {
+        if (!f(el)) return false;
         stopIndex = index;
         return true;
     });
 
-    return source.slice(0, stopIndex + 1);
+    return arr.slice(0, stopIndex + 1);
 };
 
 

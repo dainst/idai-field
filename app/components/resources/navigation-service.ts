@@ -36,7 +36,7 @@ export class NavigationService {
 
         return ((this.projectConfiguration
             .getRelationDefinitions(document.resource.type, true) as any) // TODO make that it does never return undefined
-            .map((rd: RelationDefinition) => rd.name)
+            .map((_: RelationDefinition) => _.name)
             .indexOf('liesWithin') !== -1);
     }
 

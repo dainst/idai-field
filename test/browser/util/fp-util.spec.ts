@@ -7,53 +7,52 @@ export function main() {
 
     describe('FPUtil', () => {
 
-        it('take five',() => {
+        it('take five', () =>
 
-            expect(FPUtil.takeWhile([7,9,10,13,17,20],
-                (el: number) => el < 20)).toEqual([7, 9, 10, 13, 17]);
+            expect(FPUtil.takeWhile(
+                (_: number) => _ < 20)([7, 9, 10, 13, 17, 20])).toEqual([7, 9, 10, 13, 17])
+        );
+
+
+        it('take none', () =>
+
+            expect(FPUtil.takeWhile(
+                (_: number) => _ > 23)([7, 9, 10, 13, 17, 20])).toEqual([])
+        );
+
+
+        it('take all', () =>
+
+            expect(FPUtil.takeWhile(
+                (_: number) => _ > 1)([7, 9])).toEqual([7, 9])
+        );
+
+
+        it('empty', () =>
+
+            expect(FPUtil.takeWhile(
+                (_: number) => _ > 23)([])).toEqual([])
+        );
+
+
+        it('until: take two', () => {
+
+            expect(FPUtil.takeUntil(
+                (_: number) => _ > 7)([7, 9, 11])).toEqual([7, 9]);
         });
 
 
-        it('take none',() => {
+        it('until: take all', () =>
 
-            expect(FPUtil.takeWhile([7,9,10,13,17,20],
-                (el: number) => el > 23)).toEqual([]);
-        });
-
-
-        it('take all',() => {
-
-            expect(FPUtil.takeWhile([7,9],
-                (el: number) => el > 1)).toEqual([7, 9]);
-        });
+            expect(FPUtil.takeUntil(
+                (_: number) => _ > 13)([7, 9, 11])).toEqual([7, 9, 11])
+        );
 
 
-        it('empty',() => {
+        it('until: empty', () =>
 
-            expect(FPUtil.takeWhile([],
-                (el: number) => el > 23)).toEqual([]);
-        });
-
-
-
-        it('until: take two',() => {
-
-            expect(FPUtil.takeUntil([7,9,11],
-                (el: number) => el > 7)).toEqual([7, 9]);
-        });
-
-
-        it('until: take all',() => {
-
-            expect(FPUtil.takeUntil([7,9,11],
-                (el: number) => el > 13)).toEqual([7, 9, 11]);
-        });
-
-
-        it('until: empty',() => {
-
-            expect(FPUtil.takeUntil([],
-                (el: number) => el > 13)).toEqual([]);
-        });
+            expect(FPUtil.takeUntil(
+                (_: number) => _ > 13)([])).toEqual([])
+        );
     });
 }

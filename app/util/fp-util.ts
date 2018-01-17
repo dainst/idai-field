@@ -4,7 +4,7 @@
 export class FPUtil {
 
     // implementation based on an idea taken from http://sufflavus.github.io/JS-Tips-Take-While
-    public static takeWhile<A>(source: A[], predicate: (_: A) => boolean): A[] {
+    public static takeWhile = <A>(predicate: (_: A) => boolean) => (source: A[]): A[] => {
 
         let stopIndex = source.length;
 
@@ -15,10 +15,10 @@ export class FPUtil {
         });
 
         return source.slice(0, stopIndex);
-    }
+    };
 
 
-    public static takeUntil<A>(source: A[], predicate: (_: A) => boolean): A[] {
+    public static takeUntil = <A>(predicate: (_: A) => boolean) => (source: A[]): A[] => {
 
         let stopIndex = source.length;
 

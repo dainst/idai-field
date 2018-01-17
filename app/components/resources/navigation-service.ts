@@ -73,8 +73,12 @@ export class NavigationService {
         if (oldElements.indexOf(newRoot) !== -1) return oldElements;
 
         return ((oldRoot)
-                    ? FPUtil.takeUntil(oldElements, _ => _ == oldRoot)
+                    ? FPUtil.takeUntil(is(oldRoot))(oldElements)
                     : []
                 ).concat([newRoot]);
     }
+
+
 }
+
+const is = <A>(l:A) => (r:A) => l == r;

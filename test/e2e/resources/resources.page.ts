@@ -176,6 +176,13 @@ export class ResourcesPage {
     }
 
 
+    public static getDocumentTeaserTypeCharacter() {
+
+        browser.wait(EC.visibilityOf(element(by.css('.document-teaser div.type-icon'))), delays.ECWaitTime);
+        return element(by.css('.document-teaser div.type-icon')).getText();
+    }
+
+
     // elements
 
     public static getListItemEl(identifier) {

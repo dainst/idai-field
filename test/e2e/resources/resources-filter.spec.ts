@@ -163,6 +163,6 @@ describe('resources/filter --', () => {
         ResourcesPage.clickListModeButton();
         checkTypeIcon();
         createResourceWithPresetType('2', false);
-        ResourcesPage.getListModeTypeLabel('2').then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
+        ResourcesPage.getDocumentTeaserTypeCharacter().then(character => expect(character).toEqual('E'));
     });
 });

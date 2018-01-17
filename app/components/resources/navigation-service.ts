@@ -25,7 +25,7 @@ export class NavigationService {
         if (this.viewFacade.isInOverview()) {
             this.routingService.jumpToMainTypeHomeView(document);
         } else {
-            this.setRootDocument(document);
+            this.setRoot(document);
         }
     }
 
@@ -41,13 +41,15 @@ export class NavigationService {
     }
 
 
-    private setRootDocument(document: IdaiFieldDocument) {
+    private setRoot(document: IdaiFieldDocument) {
 
         this.viewFacade.setNavigationPath(
             (document)
                 ? {
                     elements: NavigationService.rebuildElements(
-                        this.viewFacade.getNavigationPath(), document),
+                        this.viewFacade.getNavigationPath().elements,
+                        this.viewFacade.getNavigationPath().rootDocument,
+                        document),
                     rootDocument: document
                 }
                 : {
@@ -57,13 +59,17 @@ export class NavigationService {
     }
 
 
-    private static rebuildElements(path: NavigationPath, newRoot: IdaiFieldDocument) {
+    private static rebuildElements(
+        oldElements: Array<IdaiFieldDocument>,
+        oldRoot: IdaiFieldDocument|undefined,
+        newRoot: IdaiFieldDocument) {
 
-        if (path.elements.indexOf(newRoot) !== -1) return path.elements;
+        if (oldElements.indexOf(newRoot) !== -1) return oldElements;
 
-        return ((path.rootDocument)
-                    ? FPUtil.takeUntil(path.elements, _ => _ == path.rootDocument)
+        return ((oldRoot)
+                    ? FPUtil.takeUntil(oldElements, _ => _ == oldRoot)
                     : []
                 ).concat([newRoot]);
     }
+
 }

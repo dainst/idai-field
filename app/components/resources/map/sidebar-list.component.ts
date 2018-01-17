@@ -5,6 +5,7 @@ import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
 import {NavigationService} from '../navigation-service';
 import {NavigationPath} from '../navigation-path';
+import {BaseList} from '../base-list';
 
 
 @Component({
@@ -18,23 +19,17 @@ import {NavigationPath} from '../navigation-path';
  * @author Sebastian Cuy
  */
 
-// TODO export class SidebarListComponent extends BaseList
-export class SidebarListComponent {
+export class SidebarListComponent extends BaseList {
 
     @Input() activeTab: string;
-
-    public navigationPath: NavigationPath = { elements: [] };
 
     constructor(
         public resourcesComponent: ResourcesComponent,
         public viewFacade: ViewFacade,
-        private loading: Loading,
+        public loading: Loading,
         private navigationService: NavigationService
     ) {
-        // super(viewFacade)
-        this.viewFacade.pathToRootDocumentNotifications().subscribe(path => {
-            this.navigationPath = path;
-        });
+        super(resourcesComponent, viewFacade, loading)
     }
 
 
@@ -57,12 +52,4 @@ export class SidebarListComponent {
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
     }
 
-    
-    // TODO Move to BaseList
-    public showPlusButton() { // TODO check if this is a duplication with the one from resources component
-
-        return (!this.resourcesComponent.isEditingGeometry && this.resourcesComponent.ready
-            && !this.loading.showIcons && this.viewFacade.getQuery().q == ''
-            && (this.viewFacade.isInOverview() || this.viewFacade.getSelectedMainTypeDocument()));
-    }
 }

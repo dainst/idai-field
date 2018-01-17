@@ -54,6 +54,7 @@ export class NavigationService {
                 }
                 : {
                     elements: this.viewFacade.getNavigationPath().elements
+                    // rootDocument <- undefined, because no document
                 }
         );
     }

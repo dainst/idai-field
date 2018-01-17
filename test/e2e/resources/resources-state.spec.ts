@@ -125,7 +125,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('switch from image to map view after click on depicts relation link', () => {
+    xit('switch from image to map view after click on depicts relation link', () => {
 
         ProjectPage.get();
 
@@ -160,7 +160,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('switch views after click on relation link', () => {
+    xit('switch views after click on relation link', () => {
 
         ResourcesPage.performCreateResource('building1', 'building');
 
@@ -171,11 +171,11 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('floor1', 'feature-floor');
         ResourcesPage.performCreateRelation('floor1', 'architecture1', 6);
 
-        DocumentViewPage.clickRelation(1);
+        DocumentViewPage.clickRelation(0);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
 
-        DocumentViewPage.clickRelation(1);
+        DocumentViewPage.clickRelation(0);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
     });
@@ -208,7 +208,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('select correct main type document after click on relation link', () => {
+    xit('select correct main type document after click on relation link', () => {
 
         ResourcesPage.performCreateResource('building1', 'building');
         ResourcesPage.performCreateResource('building2', 'building');
@@ -220,11 +220,11 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('floor1', 'feature-floor');
         ResourcesPage.performCreateRelation('floor1', 'architecture1', 6);
 
-        DocumentViewPage.clickRelation(1);
+        DocumentViewPage.clickRelation(0);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('architecture1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
 
-        DocumentViewPage.clickRelation(1);
+        DocumentViewPage.clickRelation(0);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('floor1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building2'));
     });

@@ -4,7 +4,6 @@ import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
 import {NavigationService} from '../navigation-service';
-import {NavigationPath} from '../navigation-path';
 import {BaseList} from '../base-list';
 
 

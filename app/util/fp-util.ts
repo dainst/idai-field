@@ -34,3 +34,9 @@ export const takeUntil = <A>(predicate: (_: A) => boolean) => (source: A[]): A[]
 export const is = <A>(l:A) => (r:A) => l == r;
 
 
+export const smaller = <A>(l:A) => (r:A) => l > r;
+
+
+export const bigger = <A>(l:A) => (r:A) => l < r;
+
+

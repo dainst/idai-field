@@ -1,58 +1,58 @@
-import {takeUntil, takeWhile} from "../../../app/util/fp-util";
+import {takeUntil, takeWhile, smaller, bigger} from "../../../app/util/fp-util";
 
 /**
  * @author Daniel de Oliveira
  */
 export function main() {
 
-    describe('_', () => {
+    describe('FPUtil', () => {
 
         it('take five', () =>
 
-            expect(takeWhile(
-                (_: number) => _ < 20)([7, 9, 10, 13, 17, 20])).toEqual([7, 9, 10, 13, 17])
+            expect(takeWhile(smaller(20))
+                ([7, 9, 10, 13, 17, 20])).toEqual([7, 9, 10, 13, 17])
         );
 
 
         it('take none', () =>
 
-            expect(takeWhile(
-                (_: number) => _ > 23)([7, 9, 10, 13, 17, 20])).toEqual([])
+            expect(takeWhile(bigger(23))
+                ([7, 9, 10, 13, 17, 20])).toEqual([])
         );
 
 
         it('take all', () =>
 
-            expect(takeWhile(
-                (_: number) => _ > 1)([7, 9])).toEqual([7, 9])
+            expect(takeWhile(bigger(1))
+                ([7, 9])).toEqual([7, 9])
         );
 
 
         it('empty', () =>
 
-            expect(takeWhile(
-                (_: number) => _ > 23)([])).toEqual([])
+            expect(takeWhile(bigger(23))
+                ([])).toEqual([])
         );
 
 
         it('until: take two', () => {
 
-            expect(takeUntil(
-                (_: number) => _ > 7)([7, 9, 11])).toEqual([7, 9]);
+            expect(takeUntil(bigger(7))
+                ([7, 9, 11])).toEqual([7, 9]);
         });
 
 
         it('until: take all', () =>
 
-            expect(takeUntil(
-                (_: number) => _ > 13)([7, 9, 11])).toEqual([7, 9, 11])
+            expect(takeUntil(bigger(13))
+                ([7, 9, 11])).toEqual([7, 9, 11])
         );
 
 
         it('until: empty', () =>
 
-            expect(takeUntil(
-                (_: number) => _ > 13)([])).toEqual([])
+            expect(takeUntil(bigger(13))
+                ([])).toEqual([])
         );
     });
 }

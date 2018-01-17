@@ -346,6 +346,20 @@ describe('resources/map --', function() {
     });
 
 
+    it('cancel creating a geometry by deselecting the resource', () => {
+
+        ResourcesPage.performCreateResource('doc1');
+        ResourcesPage.performCreateResource('doc2');
+        DocumentViewPage.clickCreateGeometry('point');
+        MapPage.setMarker(100, 100);
+        ResourcesPage.clickSelectResource('doc1');
+        ResourcesPage.clickSelectResource('doc2');
+        DocumentViewPage.getSelectedGeometryTypeText().then(text => {
+            expect(text).toEqual('Keine');
+        });
+    });
+
+
     it('cancel deleting a point geometry', () => {
 
         createDocThenReedit('doc', 'point', function() { return MapPage.setMarker(100, 100); });

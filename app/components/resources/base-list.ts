@@ -18,7 +18,7 @@ export class BaseList {
         public viewFacade: ViewFacade,
         private loading: Loading
     ) {
-        this.viewFacade.pathToRootDocumentNotifications().subscribe(path => {
+        this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
         });
     }

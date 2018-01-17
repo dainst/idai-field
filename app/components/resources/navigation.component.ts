@@ -21,7 +21,7 @@ export class NavigationComponent {
 
     constructor(public viewFacade: ViewFacade) {
 
-        this.viewFacade.pathToRootDocumentNotifications().subscribe(path => {
+        this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
         })
     }

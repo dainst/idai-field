@@ -292,11 +292,11 @@ export class ViewFacade {
     public async setNavigationPath(navigationPath: NavigationPath) {
 
         await this.documentsManager.setNavigationPath(navigationPath);
-        await this.notifyPathToRootDocumentObservers();
+        await this.notifyNavigationPathObservers();
     }
 
 
-    public pathToRootDocumentNotifications(): Observable<NavigationPath> {
+    public navigationPathNotifications(): Observable<NavigationPath> {
 
         return Observable.create((observer: Observer<NavigationPath>) => {
             this.navigationPathObservers.push(observer);
@@ -310,7 +310,7 @@ export class ViewFacade {
     }
 
 
-    private async notifyPathToRootDocumentObservers() {
+    private async notifyNavigationPathObservers() {
 
         if (this.navigationPathObservers) {
             const navigationPath: NavigationPath = await this.getNavigationPath();
@@ -348,7 +348,7 @@ export class ViewFacade {
         this.mainTypeDocumentsManager.select(mainTypeDoc as IdaiFieldDocument);
 
         await this.populateDocumentList();
-        await this.notifyPathToRootDocumentObservers();
+        await this.notifyNavigationPathObservers();
 
         if (!this.isSelectedDocumentRecordedInSelectedMainTypeDocument()) {
             this.documentsManager.deselect();
@@ -395,7 +395,7 @@ export class ViewFacade {
         }
 
         await this.populateDocumentList();
-        await this.notifyPathToRootDocumentObservers();
+        await this.notifyNavigationPathObservers();
     }
 
 

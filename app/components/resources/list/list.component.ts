@@ -4,6 +4,7 @@ import {IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
+import {BaseList} from '../base-list';
 
 
 @Component({
@@ -17,7 +18,7 @@ import {ViewFacade} from '../view/view-facade';
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export class ListComponent {
+export class ListComponent extends BaseList {
 
     @Input() ready: boolean;
     @Input() documents: IdaiFieldDocument[];
@@ -29,22 +30,12 @@ export class ListComponent {
 
     constructor(
         public resourcesComponent: ResourcesComponent,
-        private loading: Loading,
+        public loading: Loading,
         projectConfiguration: ProjectConfiguration,
         public viewFacade: ViewFacade
     ) {
-        this.typesMap = projectConfiguration.getTypesMap();
-    }
-
-
-    public showPlusButton() {
-
-        if (this.resourcesComponent.ready && !this.loading.showIcons && this.viewFacade.getQuery().q == '') {
-            if (this.viewFacade.isInOverview()) return true;
-            if (this.viewFacade.getSelectedMainTypeDocument()) return true;
-        }
-
-        return false;
+        super(resourcesComponent, viewFacade, loading);
+        this.typesMap = projectConfiguration.getTypesMap()
     }
 
 

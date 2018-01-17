@@ -23,9 +23,9 @@ export class SidebarListComponent extends BaseList {
     @Input() activeTab: string;
 
     constructor(
-        public resourcesComponent: ResourcesComponent,
-        public viewFacade: ViewFacade,
-        public loading: Loading,
+        resourcesComponent: ResourcesComponent,
+        viewFacade: ViewFacade,
+        loading: Loading,
         private navigationService: NavigationService
     ) {
         super(resourcesComponent, viewFacade, loading)

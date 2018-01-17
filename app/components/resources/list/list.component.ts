@@ -29,10 +29,10 @@ export class ListComponent extends BaseList {
 
 
     constructor(
-        public resourcesComponent: ResourcesComponent,
-        public loading: Loading,
-        projectConfiguration: ProjectConfiguration,
-        public viewFacade: ViewFacade
+        resourcesComponent: ResourcesComponent,
+        viewFacade: ViewFacade,
+        loading: Loading,
+        projectConfiguration: ProjectConfiguration
     ) {
         super(resourcesComponent, viewFacade, loading);
         this.typesMap = projectConfiguration.getTypesMap()

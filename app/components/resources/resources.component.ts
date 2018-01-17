@@ -44,7 +44,7 @@ export class ResourcesComponent implements AfterViewChecked {
         routingService.routeParams(route).subscribe(async (params: any) => {
             loading.stop();
 
-            this.isEditingGeometry = false;
+            this.quitGeometryEditing();
             this.viewFacade.deselect();
 
             if (params['id']) {
@@ -57,7 +57,10 @@ export class ResourcesComponent implements AfterViewChecked {
                 }, 100);
             }
         });
+
         this.initializeClickEventListener();
+
+        this.viewFacade.deselectionNotifications().subscribe(() => this.quitGeometryEditing());
     }
 
 
@@ -91,14 +94,13 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public async setQueryString(q: string) {
 
-        const isMatched = this.viewFacade.setSearchString(q);
-        if (!isMatched) this.isEditingGeometry = false;
+        await this.viewFacade.setSearchString(q);
     }
 
 
-    public setQueryTypes(types: string[]) {
+    public async setQueryTypes(types: string[]) {
 
-        if (!this.viewFacade.setTypesToFilterBy(types)) this.isEditingGeometry = false;
+        await this.viewFacade.setTypesToFilterBy(types);
     }
 
 
@@ -110,7 +112,7 @@ export class ResourcesComponent implements AfterViewChecked {
             newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
 
             this.viewFacade.setSelectedDocument(newDocument);
-            this.isEditingGeometry = true;
+            this.startGeometryEditing();
             this.viewFacade.setMode('map');
         }
     }
@@ -120,7 +122,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (!document) throw "Called edit document with undefined document";
 
-        this.isEditingGeometry = false;
+        this.quitGeometryEditing();
 
         const result = await this.doceditProxy.editDocument(document, activeTabName);
         if (result['tab']) this.viewFacade.setActiveDocumentViewTab(result['tab']);
@@ -131,7 +133,7 @@ export class ResourcesComponent implements AfterViewChecked {
     public createGeometry(geometryType: string) {
 
         (this.viewFacade.getSelectedDocument() as any).resource['geometry'] = { 'type': geometryType };
-        this.isEditingGeometry = true;
+        this.startGeometryEditing();
     }
 
 
@@ -156,7 +158,7 @@ export class ResourcesComponent implements AfterViewChecked {
         setTimeout(() => {
             this.viewFacade.deselect();
             this.viewFacade.setMode(mode);
-            this.isEditingGeometry = false;
+            this.quitGeometryEditing();
             this.loading.stop();
         }, 1);
     }
@@ -189,5 +191,17 @@ export class ResourcesComponent implements AfterViewChecked {
             return true;
         }
         return false;
+    }
+
+
+    private startGeometryEditing() {
+
+        this.isEditingGeometry = true;
+    }
+
+
+    private quitGeometryEditing() {
+
+        this.isEditingGeometry = false;
     }
 }

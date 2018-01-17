@@ -200,7 +200,7 @@ export function main() {
 
             await viewFacade.setupView('excavation', undefined);
             await viewFacade.setSelectedDocument(findDocument1);
-            expect(await viewFacade.setSearchString('find1')).toEqual(true);
+            await viewFacade.setSearchString('find1');
             expect(viewFacade.getSelectedDocument()).toBe(findDocument1);
             done();
         });
@@ -210,7 +210,7 @@ export function main() {
 
             await viewFacade.setupView('excavation', undefined);
             await viewFacade.setSelectedDocument(findDocument1);
-            expect(await viewFacade.setSearchString('find2')).toEqual(false);
+            await viewFacade.setSearchString('find2');
             expect(viewFacade.getSelectedDocument()).toBe(undefined);
             done();
         });

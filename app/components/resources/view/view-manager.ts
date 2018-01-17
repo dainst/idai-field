@@ -167,38 +167,6 @@ export class ViewManager {
     }
 
 
-    // TODO this is bad. it replicates the mechanisum of contraintIndexer. see #6709
-    public isSelectedDocumentMatchedByQueryString(selectedDocument: Document|undefined): boolean {
-
-        const queryString = this.getQueryString();
-        if (!queryString) return true;
-        if (!selectedDocument || queryString == '') return true;
-
-        const tokens: Array<string> = queryString.split(' ');
-        const resource: Resource = selectedDocument.resource;
-
-        for (let token of tokens) {
-            if (resource.identifier && resource.identifier.toLowerCase().startsWith(token.toLowerCase())) continue;
-            if (resource.shortDescription && resource.shortDescription.toLowerCase()
-                    .startsWith(token.toLowerCase())) continue;
-
-            return false;
-        }
-
-        return true;
-    }
-
-
-    public isSelectedDocumentTypeInTypeFilters(selectedDocument: Document|undefined): boolean {
-
-        if (!selectedDocument) return true;
-        const queryTypes = this.getQueryTypes();
-        if (!queryTypes) return true;
-
-        return (queryTypes.indexOf(selectedDocument.resource.type) != -1);
-    }
-
-
     public setLastSelectedOperationTypeDocumentId(selectedMainTypeDocumentResourceId: string|undefined) {
 
         if (!selectedMainTypeDocumentResourceId) return;

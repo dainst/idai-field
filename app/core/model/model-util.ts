@@ -13,4 +13,11 @@ export class ModelUtil {
             return document.resource.identifier;
         }
     }
+
+
+    public static isInList(document: Document, documents: Array<Document>): boolean {
+
+        return documents.map(document => document.resource.id)
+            .indexOf(document.resource.id) > -1;
+    }
 }

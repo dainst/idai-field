@@ -276,15 +276,15 @@ export class ViewFacade {
     }
 
 
-    public setSearchString(q: string): Promise<boolean> {
+    public async setSearchString(q: string) {
 
-        return this.documentsManager.setQueryString(q);
+        await this.documentsManager.setQueryString(q);
     }
 
 
-    public setTypesToFilterBy(types: string[]) { // TODO make it return a promise, like setSearchString
+    public async setTypesToFilterBy(types: string[]) {
 
-        return this.documentsManager.setQueryTypes(types);
+        await this.documentsManager.setQueryTypes(types);
     }
 
 
@@ -298,8 +298,14 @@ export class ViewFacade {
     public pathToRootDocumentNotifications(): Observable<NavigationPath> {
 
         return Observable.create((observer: Observer<NavigationPath>) => {
-            this.navigationPathObservers.push(observer as never);
+            this.navigationPathObservers.push(observer);
         });
+    }
+
+
+    public deselectionNotifications(): Observable<void> {
+
+        return this.documentsManager.deselectionNotifications();
     }
 
 

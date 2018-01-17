@@ -1,3 +1,5 @@
+import {Observer} from 'rxjs/Observer';
+import {Observable} from 'rxjs/Observable';
 import {Query} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
@@ -7,6 +9,7 @@ import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {NavigationPath} from '../navigation-path';
+import {ModelUtil} from '../../../core/model/model-util';
 
 /**
  * @author Thomas Kleinke
@@ -19,6 +22,8 @@ export class DocumentsManager {
     private selectedDocument: Document|undefined;
     private documents: Array<Document>;
     private newDocumentsFromRemote: Array<Document> = [];
+
+    private deselectionObservers: Array<Observer<void>> = [];
 
 
     constructor(
@@ -55,32 +60,21 @@ export class DocumentsManager {
     }
 
 
-    public setQueryString(q: string): Promise<boolean> {
+    public async setQueryString(q: string) {
 
         this.viewManager.setQueryString(q);
 
-        let result = true;
-        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedDocument)) {
-            result = false;
-            this.deselect();
-        }
-
-        return this.populateDocumentList().then(() => Promise.resolve(result));
+        await this.populateDocumentList();
+        this.deselectIfNotInList();
     }
 
 
-    public setQueryTypes(types: string[]): boolean {
+    public async setQueryTypes(types: string[]) {
 
         this.viewManager.setFilterTypes(types);
 
-        let result = true;
-        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedDocument)) {
-            result = false;
-            this.deselect();
-        }
-
-        this.populateDocumentList();
-        return result;
+        await this.populateDocumentList();
+        this.deselectIfNotInList();
     }
 
 
@@ -91,8 +85,8 @@ export class DocumentsManager {
 
         this.viewManager.setNavigationPath(selectedMainTypeDocument.resource.id, navigationPath);
 
-        // TODO Deselect document if it is not part of the new document list
         await this.populateDocumentList();
+        this.deselectIfNotInList();
     }
 
 
@@ -108,6 +102,7 @@ export class DocumentsManager {
         this.selectedDocument = undefined;
         this.removeEmptyDocuments();
         this.viewManager.setActiveDocumentViewTab(undefined);
+        this.notifyDeselectionObservers();
     }
 
 
@@ -153,6 +148,24 @@ export class DocumentsManager {
         if (res1 || res2) promise = this.populateDocumentList();
 
         return promise;
+    }
+
+
+    public deselectionNotifications(): Observable<void> {
+
+        return Observable.create((observer: Observer<void>) => {
+            this.deselectionObservers.push(observer);
+        })
+    }
+
+
+    private notifyDeselectionObservers() {
+
+        if (this.deselectionObservers) {
+            this.deselectionObservers.forEach(
+                (observer: Observer<void>) => observer.next(undefined)
+            );
+        }
     }
 
 
@@ -239,18 +252,23 @@ export class DocumentsManager {
      */
     public invalidateQuerySettingsIfNecessary(): boolean {
 
-        let result = false;
-        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(
-                this.selectedDocument)) {
+        if (!this.selectedDocument) return false;
+
+        if (!ModelUtil.isInList(this.selectedDocument, this.documents)) {
             this.viewManager.setQueryString('');
-            result = true;
-        }
-        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(
-                this.selectedDocument)) {
             this.viewManager.setFilterTypes([]);
-            result = true;
+            return true;
         }
-        return result;
+
+        return false;
+    }
+
+
+    private deselectIfNotInList() {
+
+        if (this.selectedDocument && !ModelUtil.isInList(this.selectedDocument, this.documents)) {
+            this.deselect();
+        }
     }
 
 

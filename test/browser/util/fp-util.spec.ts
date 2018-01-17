@@ -5,7 +5,7 @@ import {FPUtil} from "../../../app/util/fp-util";
  */
 export function main() {
 
-    describe('FPUtil', () => {
+    describe('_', () => {
 
         it('take five', () =>
 

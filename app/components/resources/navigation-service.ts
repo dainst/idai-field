@@ -4,7 +4,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {RoutingService} from '../routing-service';
 import {ViewFacade} from './view/view-facade';
 import {NavigationPath} from './navigation-path';
-import {FPUtil} from "../../util/fp-util";
+import {FPUtil,_} from "../../util/fp-util";
 
 
 @Injectable()
@@ -73,12 +73,10 @@ export class NavigationService {
         if (oldElements.indexOf(newRoot) !== -1) return oldElements;
 
         return ((oldRoot)
-                    ? FPUtil.takeUntil(is(oldRoot))(oldElements)
+                    ? FPUtil.takeUntil(_.is(oldRoot))(oldElements)
                     : []
                 ).concat([newRoot]);
     }
-
-
 }
 
-const is = <A>(l:A) => (r:A) => l == r;
+

@@ -29,5 +29,17 @@ export class FPUtil {
         });
 
         return source.slice(0, stopIndex + 1);
-    }
+    };
+
+
+
 }
+
+
+// Generic predicates
+export class _ {
+
+    public static is = <A>(l:A) => (r:A) => l == r;
+}
+
+

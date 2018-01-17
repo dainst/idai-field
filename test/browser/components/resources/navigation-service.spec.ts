@@ -30,15 +30,11 @@ export function main() {
 
             navigationService = new NavigationService(undefined, undefined, viewFacade);
 
-            trenchDocument = Static.doc('Trench','trench','Trench','t') as IdaiFieldDocument;
-            featureDocument1
-                = Static.doc('Feature 1','feature1','Feature','f1') as IdaiFieldDocument;
-            featureDocument2
-                = Static.doc('Feature 2','feature2','Feature','f2') as IdaiFieldDocument;
-            featureDocument3
-                = Static.doc('Feature 3','feature3','Feature','f3') as IdaiFieldDocument;
-            featureDocument4
-                = Static.doc('Feature 4','feature4','Feature','f4') as IdaiFieldDocument;
+            trenchDocument = Static.idfDoc('Trench','trench','Trench','t');
+            featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature','f1');
+            featureDocument2 = Static.idfDoc('Feature 2','feature2','Feature','f2');
+            featureDocument3 = Static.idfDoc('Feature 3','feature3','Feature','f3');
+            featureDocument4 = Static.idfDoc('Feature 4','feature4','Feature','f4');
 
             featureDocument1.resource.relations['isRecordedIn'] = ['t'];
             featureDocument2.resource.relations['isRecordedIn'] = ['t'];

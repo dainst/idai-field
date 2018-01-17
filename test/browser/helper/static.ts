@@ -49,6 +49,9 @@ export class Static {
     }
 
 
+    public static idfDoc = (sd, identifier?, type?, id?) => Static.doc(sd, identifier, type, id) as IdaiFieldDocument;
+
+
     public static doc(sd, identifier?, type?, id?): Document {
 
         if (!identifier) identifier = 'identifer';

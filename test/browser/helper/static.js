@@ -67,5 +67,6 @@ var Static = (function () {
     };
     return Static;
 }());
+Static.idfDoc = function (sd, identifier, type, id) { return Static.doc(sd, identifier, type, id); };
 exports.Static = Static;
 //# sourceMappingURL=static.js.map

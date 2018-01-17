@@ -56,14 +56,14 @@ describe('import --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.clickSelectResource('obob1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toContain('context1'));
         DocumentViewPage.getRelationName(0).then(relationName => expect(relationName).toEqual('Zeitlich vor'));
 
         ResourcesPage.clickSelectResource('context1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(3));
-        DocumentViewPage.getRelationValue(1).then(relationValue => expect(relationValue).toContain('obob1'));
-        DocumentViewPage.getRelationName(1).then(relationName => expect(relationName).toEqual('Zeitlich nach'));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toContain('obob1'));
+        DocumentViewPage.getRelationName(0).then(relationName => expect(relationName).toEqual('Zeitlich nach'));
 
         NavbarPage.clickNavigateToProject();
 
@@ -138,7 +138,7 @@ describe('import --', function() {
 
         ResourcesPage.clickSelectResource('context1');
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(2);
+            expect(relations.length).toBe(0);
         });
     });
 

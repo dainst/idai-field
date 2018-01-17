@@ -39,7 +39,7 @@ describe('widgets/document-view', function() {
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(2);
+            expect(relations.length).toBe(1);
         });
     });
 
@@ -48,10 +48,10 @@ describe('widgets/document-view', function() {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelationName(1).then(value => {
+        DocumentViewPage.getRelationName(0).then(value => {
             expect(value).toBe('Wird geschnitten von'); // with the correct relation label
         });
-        DocumentViewPage.getRelationValue(1).then(value => {
+        DocumentViewPage.getRelationValue(0).then(value => {
             expect(value).toBe('2');
         });
     });
@@ -102,7 +102,7 @@ describe('widgets/document-view', function() {
 
         browser.wait(EC.visibilityOf(element(by.tagName('document-view'))), delays.ECWaitTime);
         DocumentViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(1);
+            expect(relations.length).toBe(0);
         });
     });
 });

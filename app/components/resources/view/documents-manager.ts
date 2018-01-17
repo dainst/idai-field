@@ -2,6 +2,7 @@ import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
 import {Query} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {ViewManager} from './view-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
@@ -120,7 +121,7 @@ export class DocumentsManager {
     }
 
 
-    public setSelected(documentToSelect: Document): Promise<any|undefined> {
+    public async setSelected(documentToSelect: Document): Promise<any|undefined> {
 
         if (!this.viewManager.isInOverview() &&
                 documentToSelect == this.mainTypeDocumentsManager.getSelectedDocument()) {
@@ -146,12 +147,12 @@ export class DocumentsManager {
             this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
         }
 
-        const res1 = this.mainTypeDocumentsManager.
+        const result1 = this.mainTypeDocumentsManager.
             selectLinkedOperationTypeDocumentForSelectedDocument(this.selectedDocument);
-        const res2 = this.invalidateQuerySettingsIfNecessary();
+        const result2 = await this.adjustQuerySettingsIfNecessary();
 
         let promise = Promise.resolve();
-        if (res1 || res2) promise = this.populateDocumentList();
+        if (result1 || result2) promise = this.populateDocumentList();
 
         return promise;
     }
@@ -256,13 +257,14 @@ export class DocumentsManager {
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
      */
-    public invalidateQuerySettingsIfNecessary(): boolean {
+    public async adjustQuerySettingsIfNecessary(): Promise<boolean> {
 
         if (!this.selectedDocument) return false;
 
         if (!ModelUtil.isInList(this.selectedDocument, this.documents)) {
             this.viewManager.setQueryString('');
             this.viewManager.setFilterTypes([]);
+            await this.createNavigationPathForDocument(this.selectedDocument);
             return true;
         }
 
@@ -313,5 +315,15 @@ export class DocumentsManager {
         clonedQuery.constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;
 
         return clonedQuery;
+    }
+
+
+    private async createNavigationPathForDocument(document: Document) {
+
+        const mainTypeDocument: Document|undefined = this.mainTypeDocumentsManager.getSelectedDocument();
+        if (!mainTypeDocument) return;
+
+        await this.viewManager.createNavigationPathForDocument(document as IdaiFieldDocument,
+            mainTypeDocument.resource.id as string);
     }
 }

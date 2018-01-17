@@ -20,4 +20,13 @@ export class ModelUtil {
         return documents.map(document => document.resource.id)
             .indexOf(document.resource.id) > -1;
     }
+
+
+    public static getRelationTargetId(document: Document, relationName: string, index: number): string|undefined {
+
+        return (document.resource.relations[relationName]
+                && document.resource.relations[relationName].length > index) ?
+            document.resource.relations[relationName][index] :
+            undefined;
+    }
 }

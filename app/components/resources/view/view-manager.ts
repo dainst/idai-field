@@ -1,9 +1,10 @@
-import {Resource} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
-import {Document} from 'idai-components-2/core';
 import {OperationViews} from './operation-views';
 import {ResourcesState} from './resources-state';
 import {NavigationPath} from '../navigation-path';
+import {ModelUtil} from '../../../core/model/model-util';
+import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 
 /**
  * Holds and provides access to the current view, which is one of the views from this.views,
@@ -25,7 +26,8 @@ export class ViewManager {
 
     constructor(
         private views: OperationViews,
-        private resourcesState: ResourcesState) {
+        private resourcesState: ResourcesState,
+        private datastore: IdaiFieldDocumentReadDatastore) {
     }
 
 
@@ -216,6 +218,24 @@ export class ViewManager {
         } else {
             this.setRootDocument(undefined);
         }
+    }
+
+
+    public async createNavigationPathForDocument(document: IdaiFieldDocument, mainTypeDocumentId: string) {
+
+        const navigationPath: NavigationPath = { elements: [] };
+
+        let currentResourceId = ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
+
+        while (currentResourceId) {
+            const currentDocument: IdaiFieldDocument = await this.datastore.get(currentResourceId);
+            navigationPath.elements.unshift(currentDocument);
+            if (!navigationPath.rootDocument) navigationPath.rootDocument = currentDocument;
+
+            currentResourceId = ModelUtil.getRelationTargetId(currentDocument, 'liesWithin', 0);
+        }
+
+        this.setNavigationPath(mainTypeDocumentId, navigationPath);
     }
 
 

@@ -46,6 +46,7 @@ export class ViewFacade {
         this.viewManager = new ViewManager(
             this.views,
             resourcesState,
+            datastore
         );
         this.mainTypeDocumentsManager = new MainTypeDocumentsManager(
             datastore,

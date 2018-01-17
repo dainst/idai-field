@@ -2,7 +2,7 @@
  * @author Daniel de Oliveira
  */
 
-// implementation of takeWhile using some based on the idea taken from http://sufflavus.github.io/JS-Tips-Take-While
+// implementation of takeWhile based on the idea taken from http://sufflavus.github.io/JS-Tips-Take-While
 export const takeWhile = <A>(f: (_: A) => boolean) => (arr: A[]): A[] => {
 
     let stopIndex = arr.length;

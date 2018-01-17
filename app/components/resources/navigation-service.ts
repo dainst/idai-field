@@ -4,7 +4,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {RoutingService} from '../routing-service';
 import {ViewFacade} from './view/view-facade';
 import {NavigationPath} from './navigation-path';
-import {is, takeUntil} from "../../util/fp-util";
+import {is, takeUntil} from '../../util/fp-util';
 
 
 @Injectable()
@@ -26,10 +26,7 @@ export class NavigationService {
             this.routingService.jumpToMainTypeHomeView(document);
         } else {
             this.viewFacade.setNavigationPath(
-                NavigationService.makeNewNavigationPath(
-                    this.viewFacade.getNavigationPath(),
-                    document
-                )
+                NavigationService.makeNewNavigationPath(this.viewFacade.getNavigationPath(), document)
             );
         }
     }
@@ -65,17 +62,12 @@ export class NavigationService {
     }
 
 
-    private static rebuildElements(
-        oldElements: Array<IdaiFieldDocument>,
-        oldRoot: IdaiFieldDocument|undefined,
-        newRoot: IdaiFieldDocument) {
+    private static rebuildElements(oldElements: Array<IdaiFieldDocument>, oldRoot: IdaiFieldDocument|undefined,
+                                   newRoot: IdaiFieldDocument) {
 
         if (oldElements.indexOf(newRoot) !== -1) return oldElements;
 
-        return ((oldRoot)
-                    ? takeUntil(is(oldRoot))(oldElements)
-                    : []
-                ).concat([newRoot]);
+        return (oldRoot ? takeUntil(is(oldRoot))(oldElements) : []).concat([newRoot]);
     }
 }
 

@@ -1,3 +1,5 @@
+import {Observer} from 'rxjs/Observer';
+import {Observable} from 'rxjs/Observable';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
 import {OperationViews} from './operation-views';
@@ -22,6 +24,8 @@ export class ViewManager {
     private activeDocumentViewTab: string|undefined;
 
     private currentView: string;
+
+    private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
 
     constructor(
@@ -166,6 +170,8 @@ export class ViewManager {
 
         this.resourcesState.setNavigationPath(this.currentView, mainTypeDocumentId, navigationPath);
         this.setRootDocument(navigationPath.rootDocument ? navigationPath.rootDocument.resource.id : undefined);
+
+        this.notifyNavigationPathObservers(mainTypeDocumentId);
     }
 
 
@@ -175,6 +181,8 @@ export class ViewManager {
 
         this.resourcesState.setLastSelectedOperationTypeDocumentId(this.currentView,
             selectedMainTypeDocumentResourceId);
+
+        this.notifyNavigationPathObservers(selectedMainTypeDocumentResourceId);
     }
 
 
@@ -218,6 +226,8 @@ export class ViewManager {
         } else {
             this.setRootDocument(undefined);
         }
+
+        this.notifyNavigationPathObservers(mainTypeDocumentId);
     }
 
 
@@ -236,6 +246,26 @@ export class ViewManager {
         }
 
         this.setNavigationPath(mainTypeDocumentId, navigationPath);
+        this.notifyNavigationPathObservers(mainTypeDocumentId);
+    }
+
+
+    public navigationPathNotifications(): Observable<NavigationPath> {
+
+        return Observable.create((observer: Observer<NavigationPath>) => {
+            this.navigationPathObservers.push(observer);
+        });
+    }
+
+
+    private notifyNavigationPathObservers(mainTypeDocumentId: string) {
+
+        if (this.navigationPathObservers) {
+            const navigationPath: NavigationPath = this.getNavigationPath(mainTypeDocumentId);
+            this.navigationPathObservers.forEach(
+                (observer: Observer<NavigationPath>) => observer.next(navigationPath)
+            );
+        }
     }
 
 

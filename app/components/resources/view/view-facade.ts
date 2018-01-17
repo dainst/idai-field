@@ -32,7 +32,6 @@ export class ViewFacade {
     private viewManager: ViewManager;
     private mainTypeDocumentsManager: MainTypeDocumentsManager;
     private documentsManager: DocumentsManager;
-    private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
 
     constructor(
@@ -292,32 +291,18 @@ export class ViewFacade {
     public async setNavigationPath(navigationPath: NavigationPath) {
 
         await this.documentsManager.setNavigationPath(navigationPath);
-        await this.notifyNavigationPathObservers();
     }
 
 
     public navigationPathNotifications(): Observable<NavigationPath> {
 
-        return Observable.create((observer: Observer<NavigationPath>) => {
-            this.navigationPathObservers.push(observer);
-        });
+        return this.viewManager.navigationPathNotifications();
     }
 
 
     public deselectionNotifications(): Observable<Document> {
 
         return this.documentsManager.deselectionNotifications();
-    }
-
-
-    private async notifyNavigationPathObservers() {
-
-        if (this.navigationPathObservers) {
-            const navigationPath: NavigationPath = await this.getNavigationPath();
-            this.navigationPathObservers.forEach(
-                (observer: Observer<NavigationPath>) => observer.next(navigationPath)
-            );
-        }
     }
 
 
@@ -339,16 +324,14 @@ export class ViewFacade {
 
 
     /**
-     * @param mainTypeDoc
      * @returns true if isSelectedDocumentRecordedInSelectedMainTypeDocument
      */
-    public async selectMainTypeDocument(mainTypeDoc: Document): Promise<boolean> {
+    public async selectMainTypeDocument(mainTypeDocument: Document): Promise<boolean> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument/1');
-        this.mainTypeDocumentsManager.select(mainTypeDoc as IdaiFieldDocument);
+        this.mainTypeDocumentsManager.select(mainTypeDocument as IdaiFieldDocument);
 
         await this.populateDocumentList();
-        await this.notifyNavigationPathObservers();
 
         if (!this.isSelectedDocumentRecordedInSelectedMainTypeDocument()) {
             this.documentsManager.deselect();
@@ -395,7 +378,6 @@ export class ViewFacade {
         }
 
         await this.populateDocumentList();
-        await this.notifyNavigationPathObservers();
     }
 
 

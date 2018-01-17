@@ -214,11 +214,11 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('2', 'wall_surface');
         ResourcesPage.performCreateRelation('1', '2', 9);
         ResourcesPage.clickSelectResource('2');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
-        DocumentViewPage.getRelationValue(1).then(relationValue => expect(relationValue).toEqual('1'));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('1'));
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
-        DocumentViewPage.getRelationValue(1).then(relationValue => expect(relationValue).toEqual('2'));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('2'));
         DocumentViewPage.performEditDocument();
         DoceditPage.clickTypeSwitcherButton();
         DoceditPage.clickTypeSwitcherOption('feature-layer');
@@ -227,9 +227,9 @@ describe('resources --', () => {
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
         DocumentViewPage.getTypeCharacter().then(typeLabel => expect(typeLabel).toEqual('E'));
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
         ResourcesPage.clickSelectResource('2');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 
 

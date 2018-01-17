@@ -303,7 +303,7 @@ export class ViewFacade {
     }
 
 
-    public deselectionNotifications(): Observable<void> {
+    public deselectionNotifications(): Observable<Document> {
 
         return this.documentsManager.deselectionNotifications();
     }

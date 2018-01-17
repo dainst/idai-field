@@ -43,8 +43,7 @@ export class ResourcesComponent implements AfterViewChecked {
         loading.start();
         routingService.routeParams(route).subscribe(async (params: any) => {
             loading.stop();
-
-            this.quitGeometryEditing();
+            
             this.viewFacade.deselect();
 
             if (params['id']) {
@@ -60,7 +59,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.initializeClickEventListener();
 
-        this.viewFacade.deselectionNotifications().subscribe(() => this.quitGeometryEditing());
+        this.viewFacade.deselectionNotifications().subscribe(deselectedDocument => {
+            this.quitGeometryEditing(deselectedDocument);
+        });
     }
 
 
@@ -120,9 +121,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public async editDocument(document: Document|undefined, activeTabName?: string) {
 
-        if (!document) throw "Called edit document with undefined document";
+        if (!document) throw 'Called edit document with undefined document';
 
-        this.quitGeometryEditing();
+        this.quitGeometryEditing(document);
 
         const result = await this.doceditProxy.editDocument(document, activeTabName);
         if (result['tab']) this.viewFacade.setActiveDocumentViewTab(result['tab']);
@@ -158,7 +159,6 @@ export class ResourcesComponent implements AfterViewChecked {
         setTimeout(() => {
             this.viewFacade.deselect();
             this.viewFacade.setMode(mode);
-            this.quitGeometryEditing();
             this.loading.stop();
         }, 1);
     }
@@ -200,7 +200,11 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    private quitGeometryEditing() {
+    private quitGeometryEditing(deselectedDocument: Document) {
+
+        if (deselectedDocument.resource.geometry && !deselectedDocument.resource.geometry.coordinates) {
+            delete deselectedDocument.resource.geometry;
+        }
 
         this.isEditingGeometry = false;
     }

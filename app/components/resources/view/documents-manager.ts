@@ -23,7 +23,7 @@ export class DocumentsManager {
     private documents: Array<Document>;
     private newDocumentsFromRemote: Array<Document> = [];
 
-    private deselectionObservers: Array<Observer<void>> = [];
+    private deselectionObservers: Array<Observer<Document>> = [];
 
 
     constructor(
@@ -99,10 +99,14 @@ export class DocumentsManager {
 
     public deselect() {
 
+        if (!this.selectedDocument) return;
+
+        const deselectedDocument: Document = this.selectedDocument;
         this.selectedDocument = undefined;
+
         this.removeEmptyDocuments();
         this.viewManager.setActiveDocumentViewTab(undefined);
-        this.notifyDeselectionObservers();
+        this.notifyDeselectionObservers(deselectedDocument);
     }
 
 
@@ -126,6 +130,8 @@ export class DocumentsManager {
         if (documentToSelect == this.selectedDocument) return Promise.resolve(undefined);
 
         if (!documentToSelect) this.viewManager.setActiveDocumentViewTab(undefined);
+
+        if (this.selectedDocument) this.notifyDeselectionObservers(this.selectedDocument);
 
         this.selectedDocument = documentToSelect;
 
@@ -151,19 +157,19 @@ export class DocumentsManager {
     }
 
 
-    public deselectionNotifications(): Observable<void> {
+    public deselectionNotifications(): Observable<Document> {
 
-        return Observable.create((observer: Observer<void>) => {
+        return Observable.create((observer: Observer<Document>) => {
             this.deselectionObservers.push(observer);
         })
     }
 
 
-    private notifyDeselectionObservers() {
+    private notifyDeselectionObservers(deselectedDocument: Document) {
 
         if (this.deselectionObservers) {
             this.deselectionObservers.forEach(
-                (observer: Observer<void>) => observer.next(undefined)
+                (observer: Observer<Document>) => observer.next(deselectedDocument)
             );
         }
     }

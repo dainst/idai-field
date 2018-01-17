@@ -31,6 +31,9 @@ export class DocumentViewSidebarComponent {
         documentToSelect, 'relations');
 
 
+    public relationsToHide = ['liesWithin', 'isRecordedIn', 'includes'];
+
+
     constructor(
         public resourcesComponent: ResourcesComponent,
         private routingService: RoutingService,
@@ -41,27 +44,25 @@ export class DocumentViewSidebarComponent {
     ) { }
 
 
-    public uploadImages(event: Event, document: IdaiFieldDocument) {
+    public async uploadImages(event: Event, document: IdaiFieldDocument) {
 
-        this.imageUploader.startUpload(event, document).then(uploadResult => {
+        const uploadResult = await this.imageUploader.startUpload(event, document);
 
-            if (uploadResult.uploadedImages > 0) {
-                this.viewFacade.setActiveDocumentViewTab('images');
-                this.viewFacade.setSelectedDocument(document);
-            }
+        if (uploadResult.uploadedImages > 0) {
+            this.viewFacade.setActiveDocumentViewTab('images');
+            this.viewFacade.setSelectedDocument(document);
+        }
 
-            for (let msgWithParams of uploadResult.messages) {
-                this.messages.add(msgWithParams);
-            }
+        for (let msgWithParams of uploadResult.messages) {
+            this.messages.add(msgWithParams);
+        }
 
-            if (uploadResult.uploadedImages == 1) {
-                this.messages.add([M.RESOURCES_SUCCESS_IMAGE_UPLOADED, document.resource.identifier]);
-            } else if (uploadResult.uploadedImages > 1) {
-                this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString(),
-                    document.resource.identifier]);
-            }
-        });
-
+        if (uploadResult.uploadedImages == 1) {
+            this.messages.add([M.RESOURCES_SUCCESS_IMAGE_UPLOADED, document.resource.identifier]);
+        } else if (uploadResult.uploadedImages > 1) {
+            this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString(),
+                document.resource.identifier]);
+        }
     }
 
 
@@ -71,7 +72,7 @@ export class DocumentViewSidebarComponent {
     }
 
 
-    public hasRelations() {
+    public hasVisibleRelations() {
 
         const selectedDoc = this.viewFacade.getSelectedDocument();
         if (!selectedDoc) return false;
@@ -79,19 +80,9 @@ export class DocumentViewSidebarComponent {
         const relations: any = selectedDoc.resource.relations;
         if (ObjectUtil.isEmpty(relations)) return false;
 
-        for (let relation of Object.keys(relations)) {
-
-            // invisible relations are not counted
-            if (!this.projectConfiguration.isVisibleRelation(relation,selectedDoc.resource.type)) continue;
-
-            // relations to project document are not counted
-            if (relation == 'isRecordedIn' &&
-                relations[relation].length == 1 &&
-                relations[relation][0] == this.viewFacade.getProjectDocument().resource.id) continue;
-
-            return true;
-        }
-
-        return false;
+        return (Object.keys(relations)
+            .filter(name => this.projectConfiguration.isVisibleRelation(name, selectedDoc.resource.type))
+            .filter(name => this.relationsToHide.indexOf(name) === -1))
+            .length > 0;
     }
 }

@@ -35,7 +35,7 @@
 
         <ngb-tab id="document-view-relations-tab">
             <ng-template ngbTabTitle>
-                <span class="mdi mdi-sitemap" [class.empty-tab]="!hasRelations()"></span>
+                <span class="mdi mdi-sitemap" [class.empty-tab]="!hasVisibleRelations()"></span>
             </ng-template>
             <ng-template ngbTabContent>
 
@@ -45,9 +45,10 @@
                     <span class="mdi mdi-pencil"></span>
                 </button>
 
-                <div *ngIf="!hasRelations()" class="empty-tab-info">Keine Relationen vorhanden.</div>
-                <relations-view *ngIf="hasRelations()" [resource]="viewFacade.getSelectedDocument().resource"
-                                (onRelationTargetClicked)="jumpToRelationTarget($event)">
+                <div *ngIf="!hasVisibleRelations()" class="empty-tab-info">Keine Relationen vorhanden.</div>
+                <relations-view *ngIf="hasVisibleRelations()" [resource]="viewFacade.getSelectedDocument().resource"
+                                (onRelationTargetClicked)="jumpToRelationTarget($event)"
+                                [hideRelations]="relationsToHide">
                 </relations-view>
             </ng-template>
         </ngb-tab>s

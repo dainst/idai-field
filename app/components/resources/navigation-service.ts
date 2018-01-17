@@ -4,6 +4,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {RoutingService} from '../routing-service';
 import {ViewFacade} from './view/view-facade';
 import {NavigationPath} from './navigation-path';
+import {FPUtil} from "../../util/fp-util";
 
 
 @Injectable()
@@ -42,36 +43,34 @@ export class NavigationService {
 
     private setRootDocument(document: IdaiFieldDocument) {
 
-        const navigationPath = this.viewFacade.getNavigationPath();
-
-        if (document) {
-            this.rebuildNavigationPath(navigationPath, document);
-            navigationPath.rootDocument = document;
-        } else {
-            delete navigationPath.rootDocument;
-        }
-
-        this.viewFacade.setNavigationPath(navigationPath);
+        this.viewFacade.setNavigationPath(
+            (document)
+                ? {
+                    elements: NavigationService.rebuildElements(
+                        this.viewFacade.getNavigationPath(), document),
+                    rootDocument: document
+                }
+                : { elements: this.viewFacade.getNavigationPath().elements }
+        );
     }
 
 
-    private rebuildNavigationPath(navigationPath: NavigationPath, newRootDocument: IdaiFieldDocument) {
+    private static rebuildElements(path: NavigationPath, newRoot: IdaiFieldDocument) {
 
-        if (navigationPath.elements.indexOf(newRootDocument) != -1) return;
+        return (path.elements.indexOf(newRoot) !== -1) ?
+            path.elements :
 
-        if (!navigationPath.rootDocument) {
-            navigationPath.elements = [newRootDocument];
-            return;
-        }
+            (!path.rootDocument) ?
+                [newRoot] :
+                this.makeNewElements(path, newRoot);
+    }
 
-        const elements: Array<IdaiFieldDocument> = [];
 
-        for (let document of navigationPath.elements) {
-            elements.push(document);
-            if (document == navigationPath.rootDocument) break;
-        }
+    private static makeNewElements(path: NavigationPath, newRoot: IdaiFieldDocument) {
 
-        elements.push(newRootDocument);
-        navigationPath.elements = elements;
+        return FPUtil.takeUntil(
+                path.elements, _ => _ == path.rootDocument)
+
+            .concat([newRoot])
     }
 }

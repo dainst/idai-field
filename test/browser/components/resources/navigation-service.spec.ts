@@ -6,6 +6,7 @@ import {NavigationPath} from '../../../../app/components/resources/navigation-pa
 
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export function main() {
 
@@ -17,6 +18,7 @@ export function main() {
     let featureDocument2: IdaiFieldDocument;
     let featureDocument3: IdaiFieldDocument;
     let featureDocument4: IdaiFieldDocument;
+
 
     describe('NavigationService', () => {
 
@@ -49,7 +51,7 @@ export function main() {
         });
 
 
-        it('build path while navigating', () => {
+        it('build path while navigating, first element', () => {
 
             const navigationPath: NavigationPath = { elements: [] };
 
@@ -60,25 +62,13 @@ export function main() {
                 elements: [featureDocument1],
                 rootDocument: featureDocument1
             });
-
-            navigationService.moveInto(featureDocument2);
-            expect(viewFacade.setNavigationPath).toHaveBeenCalledWith({
-                elements: [featureDocument1, featureDocument2],
-                rootDocument: featureDocument2
-            });
-
-            navigationService.moveInto(featureDocument3);
-            expect(viewFacade.setNavigationPath).toHaveBeenCalledWith({
-                elements: [featureDocument1, featureDocument2, featureDocument3],
-                rootDocument: featureDocument3
-            });
         });
 
 
-        it('allow switching back to previous path elements without losing path', () => {
+        it('build path while navigating, subsequent element', () => {
 
             const navigationPath: NavigationPath = {
-                elements: [featureDocument1, featureDocument2, featureDocument3],
+                elements: [featureDocument1],
                 rootDocument: featureDocument1
             };
 
@@ -86,9 +76,21 @@ export function main() {
 
             navigationService.moveInto(featureDocument2);
             expect(viewFacade.setNavigationPath).toHaveBeenCalledWith({
-                elements: [featureDocument1, featureDocument2, featureDocument3],
+                elements: [featureDocument1, featureDocument2],
                 rootDocument: featureDocument2
             });
+        });
+
+
+
+        it('allow switching back to previous path elements without losing path', () => {
+
+            const navigationPath: NavigationPath = {
+                elements: [featureDocument1, featureDocument2, featureDocument3],
+                rootDocument: featureDocument2
+            };
+
+            viewFacade.getNavigationPath.and.callFake(() => navigationPath);
 
             navigationService.moveInto(featureDocument1);
             expect(viewFacade.setNavigationPath).toHaveBeenCalledWith({

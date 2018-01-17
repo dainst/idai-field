@@ -18,20 +18,24 @@ export class DocumentViewPage {
         return element.all(by.css('#document-view-relations-tab-panel .relation-target')).get(relationIndex).click();
     };
 
+
     public static clickFieldsTab() {
 
         return common.click(element(by.id('document-view-fields-tab')));
     }
+
 
     public static clickRelationsTab() {
 
         return common.click(element(by.id('document-view-relations-tab')));
     }
 
+
     public static clickGeometryTab() {
 
         return common.click(element(by.id('document-view-geometry-tab')));
     }
+
 
     public static clickCreateGeometry(type) {
 
@@ -39,16 +43,19 @@ export class DocumentViewPage {
         return common.click(element(by.id('document-view-button-create-' + type)));
     };
 
+
     public static clickReeditGeometry() {
 
         this.clickGeometryTab();
         common.click(element(by.id('document-view-button-edit-geometry')));
     };
 
+
     public static clickSolveConflicts() {
 
         common.click(element(by.id('document-view-button-solve-conflicts')));
     };
+
 
     // sequence
 
@@ -58,6 +65,7 @@ export class DocumentViewPage {
         return common.click(element(by.id('document-view-button-edit-document')));
     };
 
+
     // get text
 
     public static getIdentifier() {
@@ -66,17 +74,20 @@ export class DocumentViewPage {
         return element(by.id('document-view-identifier-label')).getText();
     }
 
+
     public static getShortDescription() {
 
         browser.wait(EC.visibilityOf(element(by.id('description-view-short-description'))), delays.ECWaitTime);
         return element(by.id('description-view-short-description')).getText();
     }
 
+
     public static getTypeCharacter() {
 
         browser.wait(EC.visibilityOf(element(by.css('.document-info .card-header div.type-icon'))), delays.ECWaitTime);
         return element(by.css('.document-info .card-header div.type-icon')).getText();
     }
+
 
     /**
      * @param index counting from 0 for the first field
@@ -87,6 +98,7 @@ export class DocumentViewPage {
         browser.wait(EC.visibilityOf(element.all(by.css('relations-view .title')).get(index)), delays.ECWaitTime);
         return element.all(by.css('relations-view .title')).get(index).getText();
     };
+
 
     /**
      * @param index counting from 0 for the first field
@@ -99,6 +111,7 @@ export class DocumentViewPage {
         return element.all(by.css('relations-view .fieldname')).get(index).getText();
     };
 
+
     /**
      * @param index counting from 0 for the first field
      */
@@ -108,6 +121,7 @@ export class DocumentViewPage {
             delays.ECWaitTime);
         return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldvalue')).getText();
     };
+
 
     /**
      * @param index counting from 0 for the first field
@@ -119,11 +133,13 @@ export class DocumentViewPage {
         return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldname')).getText();
     };
 
+
     public static getFields() {
 
         browser.wait(EC.visibilityOf(element(by.css('fields-view > div'))), delays.ECWaitTime);
         return element.all(by.css('fields-view > div'))
     };
+
 
     public static getRelations() {
 
@@ -132,6 +148,7 @@ export class DocumentViewPage {
         return element.all(by.css('relations-view .relation-target'));
     };
 
+
     public static getSelectedGeometryTypeText() {
 
         this.clickGeometryTab();
@@ -139,10 +156,12 @@ export class DocumentViewPage {
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
     };
 
+
     public static getFieldElement(index) {
 
         return element(by.css('fields-view div:nth-child(' + (index + 1) + ') .fieldvalue'));
     }
+
 
     public static getRelationsTab() {
 

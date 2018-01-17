@@ -25,7 +25,12 @@ export class NavigationService {
         if (this.viewFacade.isInOverview()) {
             this.routingService.jumpToMainTypeHomeView(document);
         } else {
-            this.setRoot(document);
+            this.viewFacade.setNavigationPath(
+                NavigationService.makeNewNavigationPath(
+                    this.viewFacade.getNavigationPath(),
+                    document
+                )
+            );
         }
     }
 
@@ -41,22 +46,22 @@ export class NavigationService {
     }
 
 
-    private setRoot(document: IdaiFieldDocument) {
+    private static makeNewNavigationPath(
+        oldNavigationPath: NavigationPath,
+        document: IdaiFieldDocument): NavigationPath {
 
-        this.viewFacade.setNavigationPath(
-            (document)
-                ? {
-                    elements: NavigationService.rebuildElements(
-                        this.viewFacade.getNavigationPath().elements,
-                        this.viewFacade.getNavigationPath().rootDocument,
-                        document),
-                    rootDocument: document
-                }
-                : {
-                    elements: this.viewFacade.getNavigationPath().elements
-                    // rootDocument <- undefined, because no document
-                }
-        );
+        return (document)
+            ? {
+                elements: NavigationService.rebuildElements(
+                    oldNavigationPath.elements,
+                    oldNavigationPath.rootDocument,
+                    document),
+                rootDocument: document
+            }
+            : {
+                elements: oldNavigationPath.elements
+                // rootDocument <- undefined, because no document
+            }
     }
 
 
@@ -72,5 +77,4 @@ export class NavigationService {
                     : []
                 ).concat([newRoot]);
     }
-
 }

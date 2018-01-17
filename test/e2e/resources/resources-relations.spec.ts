@@ -36,9 +36,9 @@ describe('resources/relations --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelationValue(1).then(relVal => expect(relVal).toEqual('2'));
-        DocumentViewPage.clickRelation(1);
-        DocumentViewPage.getRelationValue(1).then(relVal => expect(relVal).toEqual('1'));
+        DocumentViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('2'));
+        DocumentViewPage.clickRelation(0);
+        DocumentViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('1'));
     });
 
 
@@ -72,16 +72,16 @@ describe('resources/relations --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('2');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         DocumentViewPage.performEditDocument();
         DoceditPage.clickRelationsTab();
         DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(4, 0, 0);
         DoceditPage.clickSaveDocument();
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 
 
@@ -93,6 +93,6 @@ describe('resources/relations --', () => {
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('2');
         DoceditPage.clickConfirmDeleteInModal();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 });

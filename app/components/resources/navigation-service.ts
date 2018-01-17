@@ -52,7 +52,7 @@ export class NavigationService {
 
         return (document)
             ? {
-                elements: NavigationService.rebuildElements(
+                elements: this.rebuildElements(
                     oldNavigationPath.elements,
                     oldNavigationPath.rootDocument,
                     document),

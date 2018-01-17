@@ -50,27 +50,20 @@ export class NavigationService {
                         this.viewFacade.getNavigationPath(), document),
                     rootDocument: document
                 }
-                : { elements: this.viewFacade.getNavigationPath().elements }
+                : {
+                    elements: this.viewFacade.getNavigationPath().elements
+                }
         );
     }
 
 
     private static rebuildElements(path: NavigationPath, newRoot: IdaiFieldDocument) {
 
-        return (path.elements.indexOf(newRoot) !== -1) ?
-            path.elements :
+        if (path.elements.indexOf(newRoot) !== -1) return path.elements;
 
-            (!path.rootDocument) ?
-                [newRoot] :
-                this.makeNewElements(path, newRoot);
-    }
-
-
-    private static makeNewElements(path: NavigationPath, newRoot: IdaiFieldDocument) {
-
-        return FPUtil.takeUntil(
-                path.elements, _ => _ == path.rootDocument)
-
-            .concat([newRoot])
+        return ((path.rootDocument)
+                    ? FPUtil.takeUntil(path.elements, _ => _ == path.rootDocument)
+                    : []
+                ).concat([newRoot]);
     }
 }

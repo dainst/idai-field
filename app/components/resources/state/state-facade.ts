@@ -307,15 +307,7 @@ export class StateFacade {
     }
 
 
-    public getNavigationPath(): NavigationPath {
-
-        if (this.isInOverview()) return { elements: [] };
-
-        const selectedMainTypeDocument = this.getSelectedMainTypeDocument();
-        if (!selectedMainTypeDocument) return { elements: [] };
-
-        return this.viewManager.getNavigationPath(selectedMainTypeDocument.resource.id as string);
-    }
+    public getNavigationPath = () => this.resourcesState.getNavigationPath();
 
 
     public getCurrentFilterType()  {

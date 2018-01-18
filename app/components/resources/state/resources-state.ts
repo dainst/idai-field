@@ -250,6 +250,8 @@ export class ResourcesState {
 
     public getNavigationPath(): NavigationPath {
 
+        if (this.isInOverview()) return { elements: [] };
+
         if (!this._[this.view] || !this._[this.view].navigationPaths) return {elements:[]};
 
         const navigationPaths = this._[this.view].navigationPaths;

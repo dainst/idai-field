@@ -22,13 +22,6 @@ export class NavigationPathManager {
     }
 
 
-    public getNavigationPath(mainTypeDocumentId: string): NavigationPath {
-
-        const navigationPath = this.resourcesState.getNavigationPath();
-        return navigationPath ? navigationPath : { elements: [] };
-    }
-
-
     public setNavigationPath(document: IdaiFieldDocument) {
 
         this.resourcesState.moveInto(document);
@@ -82,9 +75,10 @@ export class NavigationPathManager {
         const mainTypeDoc = this.resourcesState.getSelectedOperationTypeDocument();
         if (!mainTypeDoc) return;
 
-        this.navigationPathObservers.forEach(inform(this.getNavigationPath(mainTypeDoc.resource.id as string)));
+        this.navigationPathObservers.forEach(inform(this.resourcesState.getNavigationPath()));
     }
 }
 
 
-const inform = (navigationPath: NavigationPath) => (observer: Observer<NavigationPath>) => observer.next(navigationPath);
+// TODO move to observer util
+const inform = <A>(a: A) => (observer: Observer<A>) => observer.next(a);

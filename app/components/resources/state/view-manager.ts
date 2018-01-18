@@ -14,7 +14,6 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field
  */
 export class ViewManager {
 
-    private mainTypeLabel: string;
     private activeDocumentViewTab: string|undefined;
 
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
@@ -35,12 +34,6 @@ export class ViewManager {
     public getViewName() {
 
         return this.resourcesState.getView();
-    }
-
-
-    public getMainTypeLabel() {
-
-        return this.mainTypeLabel;
     }
 
 
@@ -251,8 +244,6 @@ export class ViewManager {
     private async initializeView(viewName: string): Promise<any> {
 
         this.resourcesState.setView(viewName);
-        this.mainTypeLabel = (viewName == 'project')
-            ? 'Projekt' : this.resourcesState.getLabelForName(viewName);
     }
 
 

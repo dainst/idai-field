@@ -99,10 +99,12 @@ export class StateFacade {
     }
 
 
-    public getMainTypeLabel() {
+    public getMainTypeLabel(): string {
 
         if (this.isInOverview()) throw StateFacade.err('getMainTypeLabel');
-        return this.viewManager.getMainTypeLabel();
+
+        return (this.resourcesState.getView() == 'project')
+            ? 'Projekt' : this.resourcesState.getLabelForName(this.resourcesState.getView());
     }
 
 

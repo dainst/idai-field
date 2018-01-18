@@ -4,7 +4,7 @@ import {Query} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
-import {ViewManager} from './view-manager';
+import {NavigationPathManager} from './navigation-path-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
@@ -31,7 +31,7 @@ export class DocumentsManager {
         private datastore: IdaiFieldDocumentReadDatastore,
         private changesStream: ChangesStream,
         private settingsService: SettingsService,
-        private viewManager: ViewManager,
+        private viewManager: NavigationPathManager,
         private mainTypeDocumentsManager: MainTypeDocumentsManager,
         private resourcesState: ResourcesState
     ) {

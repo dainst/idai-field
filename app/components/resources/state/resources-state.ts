@@ -4,6 +4,7 @@ import {StateSerializer} from '../../../common/state-serializer';
 import {NavigationPath} from '../navigation-path';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {OperationViews} from './operation-views';
+import {is, takeUntil} from "../../../util/fp-util";
 
 
 @Injectable()
@@ -36,8 +37,7 @@ export class ResourcesState {
 
         if (this._) return Promise.resolve();
 
-        const resourcesStateMap = await this.serializer.load(StateSerializer.RESOURCES_STATE);
-        this._ = resourcesStateMap;
+        this._ = await this.serializer.load(StateSerializer.RESOURCES_STATE)
 
         this.initializeMode(defaultMode);
         this.setActiveDocumentViewTab(undefined);
@@ -218,17 +218,33 @@ export class ResourcesState {
     }
 
 
-    public setNavigationPath(navigationPath: NavigationPath) {
+    public moveInto(document: IdaiFieldDocument) {
 
         if (!this._[this.view]) this._[this.view] = {};
         if (!this._[this.view].navigationPaths) this._[this.view].navigationPaths = {};
 
+
+        const navigationPath = ResourcesState.makeNewNavigationPath(
+            this.getNavigationPath(), document);
+
+        const selectedMainTypeDocument = this.getSelectedOperationTypeDocument();
+
         const navigationPaths = this._[this.view].navigationPaths;
         if (!navigationPaths) return;
 
-        if (this._[this.view].mainTypeDocument && (this._[this.view].mainTypeDocument as any).resource.id) {
-            navigationPaths[(this._[this.view].mainTypeDocument as any).resource.id] = navigationPath;
+        if (selectedMainTypeDocument) {
+            navigationPaths[(selectedMainTypeDocument as any).resource.id] = navigationPath;
         }
+    }
+
+
+    public setNavigationPath(navigationPath: NavigationPath) {
+
+        if (!this.getSelectedOperationTypeDocument()) return;
+
+        if (!this._[this.view]) this._[this.view] = {};
+        if (!this._[this.view].navigationPaths) this._[this.view].navigationPaths = {};
+        (this._[this.view].navigationPaths as any)[(this.getSelectedOperationTypeDocument() as any).resource.id as string] = navigationPath;
     }
 
 
@@ -278,5 +294,33 @@ export class ResourcesState {
         }
 
         return objectToSerialize;
+    }
+
+
+    private static makeNewNavigationPath(
+        oldNavigationPath: NavigationPath,
+        document: IdaiFieldDocument): NavigationPath {
+
+        return (document)
+            ? {
+                elements: this.rebuildElements(
+                    oldNavigationPath.elements,
+                    oldNavigationPath.rootDocument,
+                    document),
+                rootDocument: document
+            }
+            : {
+                elements: oldNavigationPath.elements
+                // rootDocument <- undefined, because no document
+            }
+    }
+
+
+    private static rebuildElements(oldElements: Array<IdaiFieldDocument>, oldRoot: IdaiFieldDocument|undefined,
+                                   newRoot: IdaiFieldDocument) {
+
+        if (oldElements.indexOf(newRoot) !== -1) return oldElements;
+
+        return (oldRoot ? takeUntil(is(oldRoot))(oldElements) : []).concat([newRoot]);
     }
 }

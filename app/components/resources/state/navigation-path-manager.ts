@@ -10,10 +10,8 @@ import {is, takeUntil} from '../../../util/fp-util';
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
- * @author Sebastian Cuy
  */
-export class ViewManager {
-
+export class NavigationPathManager {
 
 
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
@@ -34,14 +32,8 @@ export class ViewManager {
 
     public setNavigationPath(document: IdaiFieldDocument) {
 
-        const navigationPath = ViewManager.makeNewNavigationPath(
-            this.resourcesState.getNavigationPath(), document);
-
-        const selectedMainTypeDocument: IdaiFieldDocument|undefined = this.resourcesState.getSelectedOperationTypeDocument();
-        if (!selectedMainTypeDocument || !selectedMainTypeDocument.resource.id) return;
-
-        this.resourcesState.setNavigationPath(navigationPath);
-        this.notifyNavigationPathObservers(selectedMainTypeDocument.resource.id as string);
+        this.resourcesState.moveInto(document);
+        this.notifyNavigationPathObservers((this.resourcesState.getSelectedOperationTypeDocument() as any).resource.id as string);
     }
 
 
@@ -90,6 +82,8 @@ export class ViewManager {
 
     private notifyNavigationPathObservers(mainTypeDocumentId: string) {
 
+        if (!mainTypeDocumentId) return;
+
         if (this.navigationPathObservers) {
             const navigationPath: NavigationPath = this.getNavigationPath(mainTypeDocumentId);
 
@@ -97,33 +91,5 @@ export class ViewManager {
                 (observer: Observer<NavigationPath>) => observer.next(navigationPath)
             );
         }
-    }
-
-
-    private static makeNewNavigationPath(
-        oldNavigationPath: NavigationPath,
-        document: IdaiFieldDocument): NavigationPath {
-
-        return (document)
-            ? {
-                elements: this.rebuildElements(
-                    oldNavigationPath.elements,
-                    oldNavigationPath.rootDocument,
-                    document),
-                rootDocument: document
-            }
-            : {
-                elements: oldNavigationPath.elements
-                // rootDocument <- undefined, because no document
-            }
-    }
-
-
-    private static rebuildElements(oldElements: Array<IdaiFieldDocument>, oldRoot: IdaiFieldDocument|undefined,
-                                   newRoot: IdaiFieldDocument) {
-
-        if (oldElements.indexOf(newRoot) !== -1) return oldElements;
-
-        return (oldRoot ? takeUntil(is(oldRoot))(oldElements) : []).concat([newRoot]);
     }
 }

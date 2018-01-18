@@ -15,7 +15,8 @@
         <input [(ngModel)]="document.resource.identifier" (focus)="startEditing(document.resource.identifier)"
                (blur)="stopEditing(document, document.resource.identifier)"
                (keyup)="onKeyup($event, document, document.resource.identifier)"
-               (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
+               (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input"
+               style="border:0">
 
     </div>
     <div>
@@ -24,7 +25,8 @@
                (blur)="stopEditing(document, document.resource.shortDescription)"
                (keyup)="onKeyup($event, document, document.resource.shortDescription)"
                (dblclick)="$event.stopPropagation();"
-               class="form-control form-control-sm">
+               class="form-control form-control-sm"
+               style="border:0">
     </div>
     <div>
         <button class="btn-small btn-link float-right align-middle" style="padding:0"

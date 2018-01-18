@@ -6,9 +6,11 @@
             <div>Kurzbeschreibung</div>
             <div></div>
         </div>
-        <div id="list-body" class="row-grid">
-            <div *ngFor="let document of documents">
-                <row [document]="document" [typesMap]="typesMap"></row>
+        <div id="list-body">
+            <div class="row-grid">
+                <div *ngFor="let document of documents">
+                    <row [document]="document" [typesMap]="typesMap"></row>
+                </div>
             </div>
         </div>
         <plus-button *ngIf="showPlusButton()"

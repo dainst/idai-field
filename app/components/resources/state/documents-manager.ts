@@ -4,7 +4,7 @@ import {Query} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
-import {NavigationPathManager} from './navigation-path-manager';
+import {ViewManager} from './view-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
@@ -32,7 +32,7 @@ export class DocumentsManager {
         private datastore: IdaiFieldDocumentReadDatastore,
         private changesStream: ChangesStream,
         private settingsService: SettingsService,
-        private viewManager: NavigationPathManager,
+        private viewManager: ViewManager,
         private mainTypeDocumentsManager: MainTypeDocumentsManager,
         private resourcesState: ResourcesState
     ) {
@@ -76,7 +76,7 @@ export class DocumentsManager {
 
     public async setQueryTypes(types: string[]) {
 
-        this.resourcesState.setFilterTypes(types);
+        this.viewManager.setFilterTypes(types);
 
         await this.populateDocumentList();
         this.deselectIfNotInList();
@@ -226,7 +226,7 @@ export class DocumentsManager {
         if (!isRecordedInTarget.resource.id) return Promise.reject('no id in populate doc list');
 
         return this.fetchDocuments(DocumentsManager.makeDocsQuery(
-            this.buildQuery(), isRecordedInTarget.resource.id))
+            this.viewManager.getQuery(), isRecordedInTarget.resource.id))
             .then(documents => {
                 this.documents = documents
             })
@@ -267,7 +267,7 @@ export class DocumentsManager {
 
         if (!ModelUtil.isInList(this.selectedDocument, this.documents)) {
             this.resourcesState.setQueryString('');
-            this.resourcesState.setFilterTypes(undefined);
+            this.viewManager.setFilterTypes(undefined);
             await this.createNavigationPathForDocument(this.selectedDocument);
             return true;
         }
@@ -308,29 +308,6 @@ export class DocumentsManager {
         }
 
         return false;
-    }
-
-
-    public buildQuery(): Query {
-
-        let constraints: any = {};
-
-        if (this.resourcesState.getNavigationPath() &&
-            (this.resourcesState.getNavigationPath() as any).rootDocument
-        ){
-            constraints['liesWithin:contain'] = (this.resourcesState.getNavigationPath() as any).rootDocument.resource.id;
-        } else {
-            constraints['liesWithin:exist'] = 'UNKNOWN';
-        }
-
-        let query: Query = {
-            q: this.resourcesState.getQueryString(),
-            constraints: constraints
-        };
-
-        if (this.resourcesState.getTypeFilters()) query.types = this.resourcesState.getTypeFilters();
-
-        return query
     }
 
 

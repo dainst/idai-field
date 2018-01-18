@@ -52,6 +52,7 @@ export class ResourcesState {
     }
 
 
+
     public getActiveDocumentViewTab(): string|undefined {
 
         return this.activeDocumentViewTab;
@@ -146,17 +147,6 @@ export class ResourcesState {
     }
 
 
-    public setFilterTypes(filterTypes: any) {
-
-        filterTypes && filterTypes.length > 0 ?
-            this.setTypeFilters(filterTypes) :
-            this.removeTypeFilters();
-
-        if (filterTypes && filterTypes.length == 0) this.removeTypeFilters();
-        this.setTypeFilters(filterTypes);
-    }
-
-
     public setTypeFilters(types: string[]) {
 
         if (!this._[this.view]) this._[this.view] = {};
@@ -168,16 +158,6 @@ export class ResourcesState {
     public removeTypeFilters() {
 
         if (this._[this.view])  delete this._[this.view].types;
-    }
-
-
-    public getCurrentFilterType()  {
-
-        const filterTypes = this.getTypeFilters();
-        if (!filterTypes) return undefined;
-
-        return (filterTypes.length > 0 ?
-            filterTypes[0] : undefined);
     }
 
 

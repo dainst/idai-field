@@ -1,6 +1,7 @@
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {Query} from 'idai-components-2/datastore';
 import {ResourcesState} from './resources-state';
 import {NavigationPath} from '../navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
@@ -9,8 +10,9 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
+ * @author Sebastian Cuy
  */
-export class NavigationPathManager {
+export class ViewManager {
 
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
@@ -18,6 +20,50 @@ export class NavigationPathManager {
     constructor(
         private resourcesState: ResourcesState,
         private datastore: IdaiFieldDocumentReadDatastore) {
+    }
+
+
+    public getCurrentFilterType()  {
+
+        const filterTypes = this.resourcesState.getTypeFilters();
+        if (!filterTypes) return undefined;
+
+        return (filterTypes.length > 0 ?
+            filterTypes[0] : undefined);
+    }
+
+
+    public getQuery(): Query {
+
+        let constraints: any = {};
+
+        if (this.resourcesState.getNavigationPath() &&
+            (this.resourcesState.getNavigationPath() as any).rootDocument
+        ){
+            constraints['liesWithin:contain'] = (this.resourcesState.getNavigationPath() as any).rootDocument.resource.id;
+        } else {
+            constraints['liesWithin:exist'] = 'UNKNOWN';
+        }
+
+        let query: Query = {
+            q: this.resourcesState.getQueryString(),
+            constraints: constraints
+        };
+
+        if (this.resourcesState.getTypeFilters()) query.types = this.resourcesState.getTypeFilters();
+
+        return query
+    }
+
+
+    public setFilterTypes(filterTypes: any) {
+
+        filterTypes && filterTypes.length > 0 ?
+            this.resourcesState.setTypeFilters(filterTypes) :
+            this.resourcesState.removeTypeFilters();
+
+        if (filterTypes && filterTypes.length == 0) this.resourcesState.removeTypeFilters();
+        this.resourcesState.setTypeFilters(filterTypes);
     }
 
 

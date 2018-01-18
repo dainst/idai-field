@@ -2,7 +2,7 @@ import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
-import {NavigationPathManager} from './navigation-path-manager';
+import {ViewManager} from './view-manager';
 import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
 import {OperationViews} from './operation-views';
@@ -27,7 +27,7 @@ import {NavigationPath} from '../navigation-path';
  */
 export class StateFacade {
 
-    private viewManager: NavigationPathManager;
+    private viewManager: ViewManager;
     private mainTypeDocumentsManager: MainTypeDocumentsManager;
     private documentsManager: DocumentsManager;
 
@@ -38,7 +38,7 @@ export class StateFacade {
         private settingsService: SettingsService,
         private resourcesState: ResourcesState
     ) {
-        this.viewManager = new NavigationPathManager(
+        this.viewManager = new ViewManager(
             resourcesState,
             datastore
         );
@@ -318,7 +318,7 @@ export class StateFacade {
 
     public getCurrentFilterType() {
 
-        return this.resourcesState.getCurrentFilterType();
+        return this.viewManager.getCurrentFilterType();
     }
 
 

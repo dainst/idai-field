@@ -32,12 +32,15 @@ export class ResourcesState {
     }
 
 
-    public initialize(): Promise<any> {
+    public async initialize(defaultMode?: string): Promise<any> {
 
         if (this._) return Promise.resolve();
 
-        return this.serializer.load(StateSerializer.RESOURCES_STATE)
-            .then(resourcesStateMap => this._ = resourcesStateMap);
+        const resourcesStateMap = await this.serializer.load(StateSerializer.RESOURCES_STATE);
+        this._ = resourcesStateMap;
+
+        this.initializeMode(defaultMode);
+        this.setActiveDocumentViewTab(undefined);
     }
 
 
@@ -231,6 +234,17 @@ export class ResourcesState {
 
         if (this._[this.view].mainTypeDocument && (this._[this.view].mainTypeDocument as any).resource.id) {
             return navigationPaths[(this._[this.view].mainTypeDocument as any).resource.id];
+        }
+    }
+
+
+    private initializeMode(defaultMode?: string) {
+
+        if (defaultMode) {
+            return this.setMode(defaultMode);
+        }
+        if (!this.getMode()) {
+            this.setMode('map');
         }
     }
 

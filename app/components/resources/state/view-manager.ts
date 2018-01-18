@@ -62,12 +62,7 @@ export class ViewManager {
 
     public initialize(defaultMode?: any)  {
 
-        return this.resourcesState.initialize().then(() => {
-
-            this.initializeMode(defaultMode);
-
-            this.resourcesState.setActiveDocumentViewTab(undefined);
-        });
+        return this.resourcesState.initialize(defaultMode);
     }
 
 
@@ -131,23 +126,5 @@ export class ViewManager {
     private async initializeView(viewName: string): Promise<any> {
 
         this.resourcesState.setView(viewName);
-    }
-
-
-    private initializeMode(defaultMode?: string) {
-
-        if (defaultMode) {
-            return this.resourcesState.setMode(defaultMode);
-        }
-        if (!this.restoreLastSelectedMode()) {
-            this.resourcesState.setMode('map');
-        }
-    }
-
-
-    private restoreLastSelectedMode(): boolean {
-
-        const mode = this.resourcesState.getMode();
-        return mode != undefined;
     }
 }

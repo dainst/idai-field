@@ -318,10 +318,15 @@ export class StateFacade {
     }
 
 
-    public getCurrentFilterType() {
+    public getCurrentFilterType()  {
 
-        return this.viewManager.getCurrentFilterType();
+        const filterTypes = this.resourcesState.getTypeFilters();
+        if (!filterTypes) return undefined;
+
+        return (filterTypes.length > 0 ?
+            filterTypes[0] : undefined);
     }
+
 
 
     /**

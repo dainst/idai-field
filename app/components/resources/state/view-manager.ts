@@ -24,17 +24,6 @@ export class ViewManager {
     }
 
 
-    public getCurrentFilterType()  {
-
-        const filterTypes = this.resourcesState.getTypeFilters();
-        if (!filterTypes) return undefined;
-
-        return (filterTypes.length > 0 ?
-            filterTypes[0] : undefined);
-    }
-
-
-
     public getViewType() {
 
         if (this.resourcesState.isInOverview()) return 'Project';

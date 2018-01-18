@@ -31,7 +31,7 @@ export class ResourcesState {
     }
 
 
-    public setLastSelectedOperationTypeDocumentId(viewName: string, id: string) {
+    public setSelectedOperationTypeDocumentId(viewName: string, id: string) {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].mainTypeDocumentId = id;
@@ -39,13 +39,13 @@ export class ResourcesState {
     }
 
 
-    public getLastSelectedOperationTypeDocumentId(viewName: string): string|undefined {
+    public getSelectedOperationTypeDocumentId(viewName: string): string|undefined {
 
         return (!this._[viewName]) ? undefined : this._[viewName].mainTypeDocumentId;
     }
 
 
-    public setLastSelectedMode(viewName: string, mode: string) {
+    public setSelectedMode(viewName: string, mode: string) {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].mode = mode;
@@ -53,13 +53,13 @@ export class ResourcesState {
     }
 
 
-    public getLastSelectedMode(viewName: string): string|undefined {
+    public getSelectedMode(viewName: string): string|undefined {
 
         return (!this._[viewName]) ? undefined : this._[viewName].mode;
     }
 
 
-    public setLastQueryString(viewName: string, q: string) {
+    public setQueryString(viewName: string, q: string) {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].q = q;
@@ -74,7 +74,7 @@ export class ResourcesState {
     }
 
 
-    public setLastSelectedTypeFilters(viewName: string, types: string[]) {
+    public setSelectedTypeFilters(viewName: string, types: string[]) {
 
         if (!this._[viewName]) this._[viewName] = {};
         this._[viewName].types = types;
@@ -82,7 +82,7 @@ export class ResourcesState {
     }
 
 
-    public getLastSelectedTypeFilters(viewName: string): string[]|undefined {
+    public getSelectedTypeFilters(viewName: string): string[]|undefined {
 
         if (!this._) return undefined;
         return (!this._[viewName]) ? undefined : this._[viewName].types;

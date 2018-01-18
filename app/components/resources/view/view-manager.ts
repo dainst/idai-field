@@ -130,7 +130,7 @@ export class ViewManager {
     public setQueryString(q: string) {
 
         this.query.q = q;
-        this.resourcesState.setLastQueryString(this.currentView, q);
+        this.resourcesState.setQueryString(this.currentView, q);
     }
 
 
@@ -144,7 +144,7 @@ export class ViewManager {
     // TODO remove redundancy with getQueryTypes
     public getFilterTypes() {
 
-        return this.resourcesState.getLastSelectedTypeFilters(this.currentView);
+        return this.resourcesState.getSelectedTypeFilters(this.currentView);
     }
 
 
@@ -155,7 +155,7 @@ export class ViewManager {
             this.deleteQueryTypes();
 
         if (filterTypes && filterTypes.length == 0) delete this.query.types;
-        this.resourcesState.setLastSelectedTypeFilters(this.currentView, filterTypes);
+        this.resourcesState.setSelectedTypeFilters(this.currentView, filterTypes);
     }
 
 
@@ -179,7 +179,7 @@ export class ViewManager {
 
         if (!selectedMainTypeDocumentResourceId) return;
 
-        this.resourcesState.setLastSelectedOperationTypeDocumentId(this.currentView,
+        this.resourcesState.setSelectedOperationTypeDocumentId(this.currentView,
             selectedMainTypeDocumentResourceId);
 
         this.notifyNavigationPathObservers(selectedMainTypeDocumentResourceId);
@@ -188,7 +188,7 @@ export class ViewManager {
 
     public getLastSelectedOperationTypeDocumentId() {
 
-        return this.resourcesState.getLastSelectedOperationTypeDocumentId(this.currentView);
+        return this.resourcesState.getSelectedOperationTypeDocumentId(this.currentView);
     }
 
 
@@ -326,13 +326,13 @@ export class ViewManager {
     private setLastSelectedMode(mode: string) {
 
         this.mode = mode;
-        this.resourcesState.setLastSelectedMode(this.currentView, mode);
+        this.resourcesState.setSelectedMode(this.currentView, mode);
     }
 
 
     private restoreLastSelectedMode(): boolean {
 
-        const mode = this.resourcesState.getLastSelectedMode(this.currentView);
+        const mode = this.resourcesState.getSelectedMode(this.currentView);
         if (mode) {
             this.mode = mode;
             return true; // to indicate success

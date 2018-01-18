@@ -82,11 +82,9 @@ export class NavigationPathManager {
         const mainTypeDoc = this.resourcesState.getSelectedOperationTypeDocument();
         if (!mainTypeDoc) return;
 
-        this.navigationPathObservers.forEach(
-            this.inform(this.getNavigationPath(mainTypeDoc.resource.id as string))
-        );
+        this.navigationPathObservers.forEach(inform(this.getNavigationPath(mainTypeDoc.resource.id as string)));
     }
-
-
-    private inform = (navigationPath: NavigationPath) => (observer: Observer<NavigationPath>) => observer.next(navigationPath);
 }
+
+
+const inform = (navigationPath: NavigationPath) => (observer: Observer<NavigationPath>) => observer.next(navigationPath);

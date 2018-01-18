@@ -3,6 +3,7 @@ import {ResourcesViewState} from './resources-view-state';
 import {StateSerializer} from '../../../common/state-serializer';
 import {NavigationPath} from '../navigation-path';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {OperationViews} from './operation-views';
 
 
 @Injectable()
@@ -15,7 +16,10 @@ export class ResourcesState {
     private _: { [viewName: string]: ResourcesViewState };
     private view: string = 'project';
 
-    constructor(private serializer: StateSerializer) {}
+    constructor(
+        private serializer: StateSerializer,
+        private views: OperationViews
+    ) {}
 
 
     public resetForE2E() {
@@ -45,6 +49,18 @@ export class ResourcesState {
     public getView() {
 
         return this.view;
+    }
+
+
+    public getLabelForName(name: string) {
+
+        return this.views.getLabelForName(name);
+    }
+
+
+    public getTypeForName(name: string) {
+
+        return this.views.getTypeForName(name);
     }
 
 

@@ -8,6 +8,7 @@ import {ResourcesState} from '../../../../app/components/resources/state/resourc
 import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
 import {IdaiFieldTypeConverter} from '../../../../app/core/datastore/idai-field-type-converter';
 import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
+import {OperationViews} from '../../../../app/components/resources/state/operation-views';
 
 /**
  * This is a subsystem test.
@@ -113,8 +114,7 @@ export function main() {
                 idaiFieldDocumentDatastore,
                 changesStream,
                 settingsService,
-                new ResourcesState(stateSerializer),
-                viewsList
+                new ResourcesState(stateSerializer, new OperationViews(viewsList))
             );
         });
 

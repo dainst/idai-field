@@ -30,6 +30,8 @@ import {LayerMenuComponent} from './map/map/layer-menu.component';
 import {ChangesStream} from '../../core/datastore/core/changes-stream';
 import {NavigationComponent} from './navigation.component';
 import {NavigationService} from './navigation-service';
+import {StateSerializer} from '../../common/state-serializer';
+import {OperationViews} from './state/operation-views';
 
 @NgModule({
     imports: [
@@ -64,6 +66,20 @@ import {NavigationService} from './navigation-service';
         LayerManager,
         LayerImageProvider,
         {
+            provide: ResourcesState,
+            useFactory: (stateSerializer: StateSerializer, projectConfiguration: ProjectConfiguration) => {
+
+                const views = projectConfiguration.getViewsList();
+                for (let view of views) {
+                    (view as any)['mainTypeLabel'] = // TODO do this with a new idai-field-configuration-preprocessor that extends configuration-preprocessor
+                        projectConfiguration.getLabelForType(view.operationSubtype) as any;
+                }
+
+                return new ResourcesState(stateSerializer, new OperationViews(views));
+            },
+            deps: [StateSerializer, ProjectConfiguration]
+        },
+        {
             provide: StateFacade,
             useFactory: function(
                 projectConfiguration: ProjectConfiguration,
@@ -73,18 +89,11 @@ import {NavigationService} from './navigation-service';
                 resourcesState: ResourcesState
             ) {
 
-                const views = projectConfiguration.getViewsList();
-                for (let view of views) {
-                    (view as any)['mainTypeLabel'] = // TODO do this with a new idai-field-configuration-preprocessor that extends configuration-preprocessor
-                        projectConfiguration.getLabelForType(view.operationSubtype) as any;
-                }
-
                 return new StateFacade(
                     datastore,
                     changesStream,
                     settingsService,
-                    resourcesState,
-                    views
+                    resourcesState
                 );
             },
             deps: [

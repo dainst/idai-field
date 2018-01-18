@@ -2,16 +2,12 @@ import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
-import {OperationViews} from './operation-views';
 import {ResourcesState} from './resources-state';
 import {NavigationPath} from '../navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 
 /**
- * Holds and provides access to the current view, which is one of the views from this.views,
- * as well as serializes all of its state so it can be restored later.
- *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  * @author Sebastian Cuy
@@ -25,7 +21,6 @@ export class ViewManager {
 
 
     constructor(
-        private views: OperationViews,
         private resourcesState: ResourcesState,
         private datastore: IdaiFieldDocumentReadDatastore) {
     }
@@ -86,7 +81,7 @@ export class ViewManager {
     public getViewType() {
 
         if (this.isInOverview()) return 'Project';
-        return this.views.getTypeForName(this.resourcesState.getView());
+        return this.resourcesState.getTypeForName(this.resourcesState.getView());
     }
 
 
@@ -269,7 +264,7 @@ export class ViewManager {
 
         this.resourcesState.setView(viewName);
         this.mainTypeLabel = (viewName == 'project')
-            ? 'Projekt' : this.views.getLabelForName(viewName);
+            ? 'Projekt' : this.resourcesState.getLabelForName(viewName);
     }
 
 

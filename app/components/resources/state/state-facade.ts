@@ -37,12 +37,9 @@ export class StateFacade {
         private datastore: IdaiFieldDocumentReadDatastore,
         private changesStream: ChangesStream,
         private settingsService: SettingsService,
-        private resourcesState: ResourcesState,
-        private viewsList: any
+        private resourcesState: ResourcesState
     ) {
-        this.views = new OperationViews(viewsList);
         this.viewManager = new ViewManager(
-            this.views,
             resourcesState,
             datastore
         );

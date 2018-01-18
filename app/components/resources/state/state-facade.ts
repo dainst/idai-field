@@ -84,10 +84,8 @@ export class StateFacade {
     public getCurrentViewMainType(): string|undefined {
 
         if (this.resourcesState.isInOverview()) return 'Project';
-
         if (!this.resourcesState.getView()) return undefined;
-
-        return this.viewManager.getViewType();
+        return this.resourcesState.getViewType();
     }
 
 
@@ -367,7 +365,7 @@ export class StateFacade {
 
     public async setupView(viewName: string, defaultMode: string) {
 
-        await this.viewManager.setupView(viewName, defaultMode);
+        await this._setupView(viewName, defaultMode);
         await this.documentsManager.populateProjectDocument();
 
         let mainTypeResource: IdaiFieldDocument|undefined;
@@ -383,10 +381,22 @@ export class StateFacade {
 
         if (mainTypeResource) {
             this.viewManager.setLastSelectedOperationTypeDocumentId(mainTypeResource);
-            this.viewManager.setupNavigationPath(mainTypeResource.resource.id as string);
+            this.viewManager.notifyNavigationPathObservers(mainTypeResource.resource.id as string);
         }
 
         await this.populateDocumentList();
+    }
+
+
+    private _setupView(viewName: string, defaultMode: string): Promise<any> {
+
+        return ((!this.resourcesState.getView() || viewName != this.resourcesState.getView())
+            ? this.resourcesState.setView(viewName)
+
+            // TODO simplify this branch
+            : Promise.resolve()).then(() => {
+            return this.resourcesState.initialize(defaultMode ? 'map' : undefined);
+        });
     }
 
 

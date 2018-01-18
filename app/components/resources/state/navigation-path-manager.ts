@@ -5,6 +5,7 @@ import {ResourcesState} from './resources-state';
 import {NavigationPath} from '../navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
+import {inform} from "../../../util/observer-util";
 
 /**
  * @author Daniel de Oliveira
@@ -72,6 +73,3 @@ export class NavigationPathManager {
     }
 }
 
-
-// TODO move to observer util
-const inform = <A>(a: A) => (observer: Observer<A>) => observer.next(a);

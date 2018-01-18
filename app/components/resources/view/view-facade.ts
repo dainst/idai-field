@@ -379,7 +379,10 @@ export class ViewFacade {
             mainTypeResourceId = this.getProjectDocument().resource.id;
         }
 
-        if (mainTypeResourceId) this.viewManager.setupNavigationPath(mainTypeResourceId);
+        if (mainTypeResourceId) {
+            this.viewManager.setLastSelectedOperationTypeDocumentId(mainTypeResourceId);
+            this.viewManager.setupNavigationPath(mainTypeResourceId);
+        }
 
         await this.populateDocumentList();
     }

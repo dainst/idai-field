@@ -263,7 +263,7 @@ export class DocumentsManager {
 
         if (!ModelUtil.isInList(this.selectedDocument, this.documents)) {
             this.viewManager.setQueryString('');
-            this.viewManager.setFilterTypes([]);
+            this.viewManager.setFilterTypes(undefined);
             await this.createNavigationPathForDocument(this.selectedDocument);
             return true;
         }

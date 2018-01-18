@@ -11,7 +11,7 @@ import {NavigationPath} from '../navigation-path';
 export class ResourcesState {
 
     private _: { [viewName: string]: ResourcesViewState };
-
+    private view: string = 'project';
 
     constructor(private serializer: StateSerializer) {}
 
@@ -31,131 +31,157 @@ export class ResourcesState {
     }
 
 
-    public setSelectedOperationTypeDocumentId(viewName: string, id: string) {
+    public setView(name: string) {
 
-        if (!this._[viewName]) this._[viewName] = {};
-        this._[viewName].mainTypeDocumentId = id;
+        if (!name) return;
+        this.view = name;
+        if (!this._) this._ = {};
+        if (!this._[this.view]) this._[this.view] = {};
+    }
+
+
+    public getView() {
+
+        return this.view;
+    }
+
+
+    public setSelectedOperationTypeDocumentId(id: string) {
+
+        if (!this._[this.view]) this._[this.view] = {};
+        this._[this.view].mainTypeDocumentId = id;
         this.serialize();
     }
 
 
-    public getSelectedOperationTypeDocumentId(viewName: string): string|undefined {
+    public getSelectedOperationTypeDocumentId(): string|undefined {
 
-        return (!this._[viewName]) ? undefined : this._[viewName].mainTypeDocumentId;
+        return (!this._[this.view]) ? undefined : this._[this.view].mainTypeDocumentId;
     }
 
 
-    public setSelectedMode(viewName: string, mode: string) {
+    public setMode(mode: string) {
 
-        if (!this._[viewName]) this._[viewName] = {};
-        this._[viewName].mode = mode;
+        if (!this._[this.view]) this._[this.view] = {};
+        this._[this.view].mode = mode;
         this.serialize();
     }
 
 
-    public getSelectedMode(viewName: string): string|undefined {
+    public getMode(): string|undefined {
 
-        return (!this._[viewName]) ? undefined : this._[viewName].mode;
+        return (!this._[this.view]) ? undefined : this._[this.view].mode;
     }
 
 
-    public setQueryString(viewName: string, q: string) {
+    public setQueryString(q: string) {
 
-        if (!this._[viewName]) this._[viewName] = {};
-        this._[viewName].q = q;
+        if (!this._[this.view]) this._[this.view] = {};
+        this._[this.view].q = q;
         this.serialize();
     }
 
 
-    public getQueryString(viewName: string) {
+    public getQueryString() {
 
         if (!this._) return '';
-        return (!this._[viewName] || !this._[viewName].q) ? '' : this._[viewName].q;
+        return (!this._[this.view] || !this._[this.view].q) ? '' : this._[this.view].q;
     }
 
 
-    public setSelectedTypeFilters(viewName: string, types: string[]) {
+    public setTypeFilters(types: string[]) {
 
-        if (!this._[viewName]) this._[viewName] = {};
-        this._[viewName].types = types;
+        if (!this._[this.view]) this._[this.view] = {};
+        this._[this.view].types = types;
         this.serialize();
     }
 
 
-    public getSelectedTypeFilters(viewName: string): string[]|undefined {
+    public removeTypeFilters() {
+
+        if (this._[this.view])  delete this._[this.view].types;
+    }
+
+
+    public getTypeFilters(): string[]|undefined {
 
         if (!this._) return undefined;
-        return (!this._[viewName]) ? undefined : this._[viewName].types;
+        return (!this._[this.view]) ? undefined : this._[this.view].types;
     }
 
 
-    public setActiveLayersIds(viewName: string, mainTypeDocumentResourceId: string, activeLayersIds: string[]) {
+    public setActiveLayersIds(activeLayersIds: string[]) {
 
-        if (!this._[viewName]) this._[viewName] = {};
-        if (!this._[viewName].layerIds) this._[viewName].layerIds = {};
+        if (!this._[this.view]) this._[this.view] = {};
+        if (!this._[this.view].layerIds) this._[this.view].layerIds = {};
 
-        const layerIds = this._[viewName].layerIds;
+        const layerIds = this._[this.view].layerIds;
         if (!layerIds) return;
 
-        layerIds[mainTypeDocumentResourceId] = activeLayersIds.slice(0);
-        this.serialize();
+        withId(this._[this.view].mainTypeDocumentId, id => {
+            layerIds[id] = activeLayersIds.slice(0);
+            this.serialize();
+        })
     }
 
 
-    public getActiveLayersIds(viewName: string, mainTypeDocumentResourceId: string): string[] {
+    public getActiveLayersIds(): string[] {
 
-        if (!this._[viewName] || !this._[viewName].layerIds) return [];
+        if (!this._[this.view] || !this._[this.view].layerIds) return [];
 
-        const layerIds = this._[viewName].layerIds;
+        const layerIds = this._[this.view].layerIds;
         if (!layerIds) return [];
 
-        return layerIds[mainTypeDocumentResourceId];
+        return withId(this._[this.view].mainTypeDocumentId, id => layerIds[id] as any)
     }
 
 
-    public removeActiveLayersIds(viewName: string, mainTypeDocumentResourceId: string) {
+    public removeActiveLayersIds() {
 
-        if (!this._[viewName] || !this._[viewName].layerIds) return;
+        if (!this._[this.view] || !this._[this.view].layerIds) return;
 
-        const layerIds = this._[viewName].layerIds;
+        const layerIds = this._[this.view].layerIds;
         if (!layerIds) return;
 
-        delete layerIds[mainTypeDocumentResourceId];
-        this.serialize();
+        withId(this._[this.view].mainTypeDocumentId, id => {
+            delete layerIds[id];
+            this.serialize();
+        })
     }
 
 
-    public setNavigationPath(viewName: string, mainTypeDocumentResourceId: string, navigationPath: NavigationPath) {
+    public setNavigationPath(navigationPath: NavigationPath) {
 
-        if (!this._[viewName]) this._[viewName] = {};
-        if (!this._[viewName].navigationPaths) this._[viewName].navigationPaths = {};
+        if (!this._[this.view]) this._[this.view] = {};
+        if (!this._[this.view].navigationPaths) this._[this.view].navigationPaths = {};
 
-        const navigationPaths = this._[viewName].navigationPaths;
+        const navigationPaths = this._[this.view].navigationPaths;
         if (!navigationPaths) return;
 
-        navigationPaths[mainTypeDocumentResourceId] = navigationPath;
+        withId(this._[this.view].mainTypeDocumentId, id => navigationPaths[id] = navigationPath);
     }
 
 
-    public getNavigationPath(viewName: string, mainTypeDocumentResourceId: string): NavigationPath|undefined {
+    public getNavigationPath(): NavigationPath|undefined {
 
-        if (!this._[viewName] || !this._[viewName].navigationPaths) return undefined;
+        if (!this._[this.view] || !this._[this.view].navigationPaths) return undefined;
 
-        const navigationPaths = this._[viewName].navigationPaths;
+        const navigationPaths = this._[this.view].navigationPaths;
         if (!navigationPaths) return undefined;
 
-        return navigationPaths[mainTypeDocumentResourceId];
+        return withId(this._[this.view].mainTypeDocumentId, id => navigationPaths[id]);
     }
 
+    // TODO remove
+    public removeNavigationPath() {
 
-    public removeNavigationPath(viewName: string, mainTypeDocumentResourceId: string) {
+        if (!this._[this.view] || !this._[this.view].navigationPaths) return;
 
-        if (!this._[viewName] || !this._[viewName].navigationPaths) return;
-
-        const navigationPaths = this._[viewName].navigationPaths;
+        const navigationPaths = this._[this.view].navigationPaths;
         if (!navigationPaths) return;
 
-        delete navigationPaths[mainTypeDocumentResourceId];
+        const id = this._[this.view].mainTypeDocumentId;
+        if (id) delete navigationPaths[id];
     }
 
 
@@ -181,3 +207,9 @@ export class ResourcesState {
         return objectToSerialize;
     }
 }
+
+
+const withId = <A>(id: string|undefined, f: (id: string) => A|undefined): A|undefined => {
+
+    return (id) ? f(id) : undefined;
+};

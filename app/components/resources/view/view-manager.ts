@@ -18,12 +18,8 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field
  */
 export class ViewManager {
 
-    private mode: string|undefined; // 'map' or 'list' or undefined
-    private query: Query;
     private mainTypeLabel: string;
     private activeDocumentViewTab: string|undefined;
-
-    private currentView: string;
 
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
@@ -37,13 +33,13 @@ export class ViewManager {
 
     public isInOverview() {
 
-        return this.currentView == 'project';
+        return this.resourcesState.getView() == 'project';
     }
 
 
     public getViewName() {
 
-        return this.currentView;
+        return this.resourcesState.getView();
     }
 
 
@@ -59,14 +55,13 @@ export class ViewManager {
 
     public setMode(mode: string) {
 
-        this.mode = mode;
-        this.setLastSelectedMode(mode);
+        this.resourcesState.setMode(mode);
     }
 
 
     public getMode() {
 
-        return this.mode;
+        return this.resourcesState.getMode();
     }
 
 
@@ -91,86 +86,98 @@ export class ViewManager {
     public getViewType() {
 
         if (this.isInOverview()) return 'Project';
-        return this.views.getTypeForName(this.currentView);
+        return this.views.getTypeForName(this.resourcesState.getView());
     }
 
 
     public getActiveLayersIds(mainTypeDocumentResourceId: string): string[] {
 
-        return this.resourcesState.getActiveLayersIds(this.currentView, mainTypeDocumentResourceId);
+        return this.resourcesState.getActiveLayersIds();
     }
 
 
     public setActiveLayersIds(mainTypeDocumentResourceId: string, activeLayersIds: string[]) {
 
-        this.resourcesState.setActiveLayersIds(this.currentView, mainTypeDocumentResourceId,
-            activeLayersIds);
+        this.resourcesState.setActiveLayersIds(activeLayersIds);
     }
 
 
     public removeActiveLayersIds(mainTypeDocumentId: string|undefined) {
 
         if (mainTypeDocumentId)
-            this.resourcesState.removeActiveLayersIds(this.currentView, mainTypeDocumentId);
+            this.resourcesState.removeActiveLayersIds();
     }
 
 
     public getQuery(): Query {
 
-        return this.query;
+        let constraints: any = {};
+
+        if (this.resourcesState.getNavigationPath() &&
+            (this.resourcesState.getNavigationPath() as any).rootDocument
+        ){
+            constraints['liesWithin:contain'] = (this.resourcesState.getNavigationPath() as any).rootDocument.resource.id;
+        } else {
+            constraints['liesWithin:exist'] = 'UNKNOWN';
+        }
+
+        let query: Query = {
+            q: this.resourcesState.getQueryString(),
+            constraints: constraints
+        };
+
+        if (this.resourcesState.getTypeFilters()) query.types = this.resourcesState.getTypeFilters();
+
+        return query
     }
 
 
     public getQueryString() {
 
-        return this.resourcesState.getQueryString(this.currentView);
+        return this.resourcesState.getQueryString();
     }
 
 
     public setQueryString(q: string) {
 
-        this.query.q = q;
-        this.resourcesState.setQueryString(this.currentView, q);
+        this.resourcesState.setQueryString(q);
     }
 
 
     public getQueryTypes() {
 
-        if (!this.query) return undefined;
-        return this.query.types;
+        return this.resourcesState.getTypeFilters();
     }
 
 
     // TODO remove redundancy with getQueryTypes
     public getFilterTypes() {
 
-        return this.resourcesState.getSelectedTypeFilters(this.currentView);
+        return this.resourcesState.getTypeFilters();
     }
 
 
     public setFilterTypes(filterTypes: any) {
 
         filterTypes && filterTypes.length > 0 ?
-            this.setQueryTypes(filterTypes) :
-            this.deleteQueryTypes();
+            this.resourcesState.setTypeFilters(filterTypes) :
+            this.resourcesState.removeTypeFilters();
 
-        if (filterTypes && filterTypes.length == 0) delete this.query.types;
-        this.resourcesState.setSelectedTypeFilters(this.currentView, filterTypes);
+        if (filterTypes && filterTypes.length == 0) this.resourcesState.removeTypeFilters();
+        this.resourcesState.setTypeFilters(filterTypes);
     }
 
 
     public getNavigationPath(mainTypeDocumentId: string): NavigationPath {
 
-        const navigationPath = this.resourcesState.getNavigationPath(this.currentView, mainTypeDocumentId);
+        const navigationPath = this.resourcesState.getNavigationPath();
         return navigationPath ? navigationPath : { elements: [] };
     }
 
 
     public setNavigationPath(mainTypeDocumentId: string, navigationPath: NavigationPath) {
 
-        this.resourcesState.setNavigationPath(this.currentView, mainTypeDocumentId, navigationPath);
-        this.setRootDocument(navigationPath.rootDocument ? navigationPath.rootDocument.resource.id : undefined);
-
+        this.resourcesState.setNavigationPath(navigationPath);
         this.notifyNavigationPathObservers(mainTypeDocumentId);
     }
 
@@ -179,8 +186,7 @@ export class ViewManager {
 
         if (!selectedMainTypeDocumentResourceId) return;
 
-        this.resourcesState.setSelectedOperationTypeDocumentId(this.currentView,
-            selectedMainTypeDocumentResourceId);
+        this.resourcesState.setSelectedOperationTypeDocumentId(selectedMainTypeDocumentResourceId);
 
         this.notifyNavigationPathObservers(selectedMainTypeDocumentResourceId);
     }
@@ -188,7 +194,7 @@ export class ViewManager {
 
     public getLastSelectedOperationTypeDocumentId() {
 
-        return this.resourcesState.getSelectedOperationTypeDocumentId(this.currentView);
+        return this.resourcesState.getSelectedOperationTypeDocumentId();
     }
 
 
@@ -197,7 +203,6 @@ export class ViewManager {
         return this.resourcesState.initialize().then(() => {
 
             this.initializeMode(defaultMode);
-            this.initializeQuery();
 
             this.activeDocumentViewTab = undefined;
         });
@@ -206,7 +211,7 @@ export class ViewManager {
 
     public setupView(viewName: string, defaultMode: string): Promise<any> {
 
-        return ((!this.currentView || viewName != this.currentView)
+        return ((!this.resourcesState.getView() || viewName != this.resourcesState.getView())
             ? this.initializeView(viewName)
 
             // TODO simplify this branch
@@ -217,15 +222,6 @@ export class ViewManager {
 
 
     public setupNavigationPath(mainTypeDocumentId: string) {
-
-        const navigationPath: NavigationPath|undefined
-            = this.resourcesState.getNavigationPath(this.getViewName(), mainTypeDocumentId);
-
-        if (navigationPath && navigationPath.rootDocument) {
-            this.setRootDocument(navigationPath.rootDocument.resource.id);
-        } else {
-            this.setRootDocument(undefined);
-        }
 
         this.notifyNavigationPathObservers(mainTypeDocumentId);
     }
@@ -269,75 +265,28 @@ export class ViewManager {
     }
 
 
-    private setRootDocument(rootDocumentResourceId: string|undefined) {
-
-        if (!this.query.constraints) this.query.constraints = {};
-
-        if (rootDocumentResourceId) {
-            this.query.constraints['liesWithin:contain'] = rootDocumentResourceId;
-            delete this.query.constraints['liesWithin:exist'];
-        } else {
-            this.query.constraints['liesWithin:exist'] = 'UNKNOWN';
-            delete this.query.constraints['liesWithin:contain'];
-        }
-    }
-
-
     private async initializeView(viewName: string): Promise<any> {
 
-        this.currentView = viewName;
+        this.resourcesState.setView(viewName);
         this.mainTypeLabel = (viewName == 'project')
-            ? 'Projekt' : this.views.getLabelForName(this.currentView);
+            ? 'Projekt' : this.views.getLabelForName(viewName);
     }
 
 
     private initializeMode(defaultMode?: string) {
 
         if (defaultMode) {
-            return this.setLastSelectedMode(defaultMode);
+            return this.resourcesState.setMode(defaultMode);
         }
         if (!this.restoreLastSelectedMode()) {
-            this.setLastSelectedMode('map');
+            this.resourcesState.setMode('map');
         }
-    }
-
-
-    private initializeQuery() {
-
-        this.query = { q: this.getQueryString() };
-
-        const filterTypes = this.getFilterTypes();
-        if (filterTypes && filterTypes.length > 0) this.query.types = filterTypes;
-    }
-
-
-    private setQueryTypes(types: any) {
-
-        this.query.types = types;
-    }
-
-
-    private deleteQueryTypes() {
-
-        delete this.query.types;
-    }
-
-
-    private setLastSelectedMode(mode: string) {
-
-        this.mode = mode;
-        this.resourcesState.setSelectedMode(this.currentView, mode);
     }
 
 
     private restoreLastSelectedMode(): boolean {
 
-        const mode = this.resourcesState.getSelectedMode(this.currentView);
-        if (mode) {
-            this.mode = mode;
-            return true; // to indicate success
-        } else {
-            return false;
-        }
+        const mode = this.resourcesState.getMode();
+        return mode != undefined;
     }
 }

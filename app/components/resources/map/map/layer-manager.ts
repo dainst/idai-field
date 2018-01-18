@@ -4,7 +4,7 @@ import {ImageTypeUtility} from '../../../../common/image-type-utility';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
 import {StateFacade} from '../../state/state-facade';
-import {ListUtil} from '../../../../util/list-util';
+import {add, remove, subtract} from "../../../../util/list-util";
 
 
 export interface LayersInitializationResult {
@@ -70,8 +70,8 @@ export class LayerManager {
     public toggleLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument | undefined) {
 
         this.activeLayerIds = this.isActiveLayer(resourceId) ?
-            ListUtil.remove(this.activeLayerIds, resourceId) :
-            ListUtil.add(this.activeLayerIds, resourceId);
+            remove(this.activeLayerIds, resourceId) :
+            add(this.activeLayerIds, resourceId);
 
         if (mainTypeDocument) this.viewFacade.setActiveLayersIds(mainTypeDocument.resource.id as any, this.activeLayerIds);
     }
@@ -85,8 +85,8 @@ export class LayerManager {
         this.activeLayerIds = newActiveLayerIds;
 
         return {
-            removed: ListUtil.subtract(oldActiveLayerIds, newActiveLayerIds),
-            added: ListUtil.subtract(newActiveLayerIds, oldActiveLayerIds),
+            removed: subtract(oldActiveLayerIds, newActiveLayerIds),
+            added: subtract(newActiveLayerIds, oldActiveLayerIds),
         };
     }
 }

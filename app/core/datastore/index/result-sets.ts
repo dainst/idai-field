@@ -1,4 +1,4 @@
-import {ListUtil, NestedArray} from '../../../util/list-util';
+import {intersect, NestedArray, subtractTwo, union} from '../../../util/list-util';
 import {SimpleIndexItem} from './index-item';
 import {ObjectUtil} from "../../../util/object-util";
 
@@ -82,9 +82,9 @@ export class ResultSets {
 
         return ResultSets.pickFrom(this.map,
 
-            ListUtil.subtractTwo(
+            subtractTwo(
                 this.subtractSets,
-                ListUtil.intersect(
+                intersect(
                     this.addSets
                 )
             )
@@ -108,7 +108,7 @@ export class ResultSets {
 
         return ResultSets.pickFrom(this.map,
 
-            ListUtil.union(this.addSets)
+            union(this.addSets)
         );
     }
 

@@ -76,6 +76,8 @@ export function main() {
             featureDocument1 = Static.doc('Feature 1','feature1','Feature', 'feature1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument1.resource.relations['includes'] = [findDocument1.resource.id, findDocument2.resource.id];
+
+            featureDocument1.resource.relations['includes'] = [findDocument2.resource.id];
             findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
             findDocument2.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
@@ -234,5 +236,68 @@ export function main() {
 
             done();
         });
+
+
+        it('build path while navigating, first element, then second', async done => {
+
+            const featureDocument1a = Static.doc('Feature 1a','feature1a','Feature', 'feature1a');
+            featureDocument1a.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+            featureDocument1a.resource.relations['liesWithin'] = [featureDocument1.resource.id];
+            await idaiFieldDocumentDatastore.create(featureDocument1a);
+
+            const featureDocument1b = Static.doc('Feature 1b','feature1b','Feature', 'feature1b');
+            featureDocument1a.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+            featureDocument1a.resource.relations['liesWithin'] = [featureDocument1.resource.id];
+            await idaiFieldDocumentDatastore.create(featureDocument1b);
+
+            await viewFacade.setupView('excavation', undefined);
+
+            // --
+
+            await viewFacade.moveInto(featureDocument1 as any);
+
+            let navigationPath = await viewFacade.getNavigationPath();
+            expect(navigationPath.elements.length).toEqual(1);
+            expect(navigationPath.elements[0]).toEqual(featureDocument1 as IdaiFieldDocument);
+            expect(navigationPath.rootDocument).toEqual(featureDocument1 as IdaiFieldDocument);
+
+            await viewFacade.moveInto(featureDocument1a as any);
+
+            navigationPath = await viewFacade.getNavigationPath();
+            expect(navigationPath.elements.length).toEqual(2);
+            expect(navigationPath.elements[0]).toEqual(featureDocument1 as IdaiFieldDocument);
+            expect(navigationPath.elements[1]).toEqual(featureDocument1a as IdaiFieldDocument);
+            expect(navigationPath.rootDocument).toEqual(featureDocument1a as IdaiFieldDocument);
+
+            await viewFacade.moveInto(featureDocument1 as any);
+
+            navigationPath = await viewFacade.getNavigationPath();
+            expect(navigationPath.elements.length).toEqual(2);
+            expect(navigationPath.elements[0]).toEqual(featureDocument1 as IdaiFieldDocument);
+            expect(navigationPath.elements[1]).toEqual(featureDocument1a as IdaiFieldDocument);
+            expect(navigationPath.rootDocument).toEqual(featureDocument1 as IdaiFieldDocument);
+
+            await viewFacade.moveInto(featureDocument1a as any);
+
+            navigationPath = await viewFacade.getNavigationPath();
+            expect(navigationPath.elements.length).toEqual(2);
+            expect(navigationPath.elements[0]).toEqual(featureDocument1 as IdaiFieldDocument);
+            expect(navigationPath.elements[1]).toEqual(featureDocument1a as IdaiFieldDocument);
+            expect(navigationPath.rootDocument).toEqual(featureDocument1a as IdaiFieldDocument);
+
+            await viewFacade.moveInto(featureDocument1 as any);
+            await viewFacade.moveInto(featureDocument1b as any);
+
+            navigationPath = await viewFacade.getNavigationPath();
+            expect(navigationPath.elements.length).toEqual(2);
+            expect(navigationPath.elements[0]).toEqual(featureDocument1 as IdaiFieldDocument);
+            expect(navigationPath.elements[1]).toEqual(featureDocument1b as IdaiFieldDocument);
+            expect(navigationPath.rootDocument).toEqual(featureDocument1b as IdaiFieldDocument);
+
+            done();
+        });
+
+
+        // TODO build up whole path automatically (in navigationpathmanager) when using selectDocument
     });
 }

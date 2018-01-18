@@ -42,12 +42,14 @@ export class DocumentsManager {
     }
 
 
-    public populateProjectDocument() {
+    public async populateProjectDocument() {
 
-        return this.datastore.get(this.settingsService.getSelectedProject() as any)
-            .then(document => this.projectDocument = document)
-            .catch(() => {console.log('cannot find project document');
-                return Promise.reject(undefined)});
+        try {
+            const document = await this.datastore.get(this.settingsService.getSelectedProject() as any);
+            this.projectDocument = document;
+        } catch (_) {
+            console.log('cannot find project document')
+        }
     }
 
 
@@ -108,7 +110,7 @@ export class DocumentsManager {
         this.selectedDocument = undefined;
 
         this.removeEmptyDocuments();
-        this.viewManager.setActiveDocumentViewTab(undefined);
+        this.resourcesState.setActiveDocumentViewTab(undefined);
         this.notifyDeselectionObservers(deselectedDocument);
     }
 
@@ -132,7 +134,7 @@ export class DocumentsManager {
 
         if (documentToSelect == this.selectedDocument) return Promise.resolve(undefined);
 
-        if (!documentToSelect) this.viewManager.setActiveDocumentViewTab(undefined);
+        if (!documentToSelect) this.resourcesState.setActiveDocumentViewTab(undefined);
 
         if (this.selectedDocument) this.notifyDeselectionObservers(this.selectedDocument);
 

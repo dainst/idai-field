@@ -14,7 +14,11 @@ import {OperationViews} from './operation-views';
 export class ResourcesState {
 
     private _: { [viewName: string]: ResourcesViewState };
+
     private view: string = 'project';
+
+    private activeDocumentViewTab: string|undefined;
+
 
     constructor(
         private serializer: StateSerializer,
@@ -43,6 +47,19 @@ export class ResourcesState {
         this.view = name;
         if (!this._) this._ = {};
         if (!this._[this.view]) this._[this.view] = {};
+    }
+
+
+
+    public getActiveDocumentViewTab(): string|undefined {
+
+        return this.activeDocumentViewTab;
+    }
+
+
+    public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
+
+        this.activeDocumentViewTab = activeDocumentViewTab;
     }
 
 

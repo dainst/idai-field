@@ -14,7 +14,7 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field
  */
 export class ViewManager {
 
-    private activeDocumentViewTab: string|undefined;
+
 
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
@@ -34,17 +34,6 @@ export class ViewManager {
             filterTypes[0] : undefined);
     }
 
-
-    public getActiveDocumentViewTab(): string|undefined {
-
-        return this.activeDocumentViewTab;
-    }
-
-
-    public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
-
-        this.activeDocumentViewTab = activeDocumentViewTab;
-    }
 
 
     public getViewType() {
@@ -123,7 +112,7 @@ export class ViewManager {
 
             this.initializeMode(defaultMode);
 
-            this.activeDocumentViewTab = undefined;
+            this.resourcesState.setActiveDocumentViewTab(undefined);
         });
     }
 

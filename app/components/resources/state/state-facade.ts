@@ -111,13 +111,13 @@ export class StateFacade {
 
     public getActiveDocumentViewTab(): string|undefined {
 
-        return this.viewManager.getActiveDocumentViewTab();
+        return this.resourcesState.getActiveDocumentViewTab();
     }
 
 
     public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
 
-        this.viewManager.setActiveDocumentViewTab(activeDocumentViewTab);
+        this.resourcesState.setActiveDocumentViewTab(activeDocumentViewTab);
     }
 
 

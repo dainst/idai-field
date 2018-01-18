@@ -219,16 +219,14 @@ export function main() {
         it('operations view: show only documents with liesWithin relation to a specific resource', async done => {
 
             await viewFacade.setupView('excavation', undefined);
-            await viewFacade.setNavigationPath({
-                elements: [featureDocument1 as IdaiFieldDocument],
-                rootDocument: featureDocument1 as IdaiFieldDocument
-            });
+            await viewFacade.moveInto(featureDocument1 as any);
+
             let documents = await viewFacade.getDocuments();
             expect(documents.length).toBe(2);
             expect(documents[0].resource.id).toEqual(findDocument1.resource.id);
             expect(documents[1].resource.id).toEqual(findDocument2.resource.id);
 
-            await viewFacade.setNavigationPath({ elements: [] });
+            await viewFacade.moveInto(undefined);
             documents = await viewFacade.getDocuments();
             expect(documents.length).toBe(2);
             expect(documents[0].resource.id).toEqual(featureDocument1.resource.id);

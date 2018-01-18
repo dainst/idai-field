@@ -9,7 +9,6 @@ import {SettingsService} from '../../../core/settings/settings-service';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
-import {NavigationPath} from '../navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {ResourcesState} from './resources-state';
 
@@ -82,12 +81,9 @@ export class DocumentsManager {
     }
 
 
-    public async setNavigationPath(navigationPath: NavigationPath) {
+    public async setNavigationPath(document: IdaiFieldDocument) {
 
-        const selectedMainTypeDocument: Document|undefined = this.resourcesState.getSelectedOperationTypeDocument();
-        if (!selectedMainTypeDocument || !selectedMainTypeDocument.resource.id) return;
-
-        this.viewManager.setNavigationPath(selectedMainTypeDocument.resource.id, navigationPath);
+        this.viewManager.setNavigationPath(document);
 
         await this.populateDocumentList();
         this.deselectIfNotInList();
@@ -267,7 +263,7 @@ export class DocumentsManager {
         if (!ModelUtil.isInList(this.selectedDocument, this.documents)) {
             this.resourcesState.setQueryString('');
             this.resourcesState.setTypeFilters(undefined as any);
-            await this.createNavigationPathForDocument(this.selectedDocument);
+            await this.viewManager.createNavigationPathForDocument(this.selectedDocument as IdaiFieldDocument);
             return true;
         }
 
@@ -341,15 +337,5 @@ export class DocumentsManager {
         clonedQuery.constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;
 
         return clonedQuery;
-    }
-
-
-    private async createNavigationPathForDocument(document: Document) {
-
-        const mainTypeDocument: Document|undefined = this.resourcesState.getSelectedOperationTypeDocument();
-        if (!mainTypeDocument) return;
-
-        await this.viewManager.createNavigationPathForDocument(document as IdaiFieldDocument,
-            mainTypeDocument.resource.id as string);
     }
 }

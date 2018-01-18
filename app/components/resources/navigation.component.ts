@@ -32,16 +32,7 @@ export class NavigationComponent {
 
     public async setRootDocument(document: IdaiFieldDocument|undefined) {
 
-        // TODO move to navigation service...
-
-        if (document) {
-            if (this.navigationPath.elements.indexOf(document) == -1) this.navigationPath.elements.push(document);
-            this.navigationPath.rootDocument = document;
-        } else {
-            delete this.navigationPath.rootDocument;
-        }
-
-        await this.viewFacade.setNavigationPath(this.navigationPath);
+        await this.viewFacade.moveInto(document as any);
     }
 
 

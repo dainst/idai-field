@@ -232,16 +232,18 @@ export class ResourcesState {
     }
 
 
-    public getNavigationPath(): NavigationPath|undefined {
+    public getNavigationPath(): NavigationPath {
 
-        if (!this._[this.view] || !this._[this.view].navigationPaths) return undefined;
+        if (!this._[this.view] || !this._[this.view].navigationPaths) return {elements:[]};
 
         const navigationPaths = this._[this.view].navigationPaths;
-        if (!navigationPaths) return undefined;
+        if (!navigationPaths) return {elements:[]};
 
         if (this._[this.view].mainTypeDocument && (this._[this.view].mainTypeDocument as any).resource.id) {
-            return navigationPaths[(this._[this.view].mainTypeDocument as any).resource.id];
-        }
+
+            const path = navigationPaths[(this._[this.view].mainTypeDocument as any).resource.id];
+            return path ? path : {elements: []}
+        } else return {elements:[]}
     }
 
 

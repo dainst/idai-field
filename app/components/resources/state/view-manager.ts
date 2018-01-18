@@ -5,6 +5,7 @@ import {ResourcesState} from './resources-state';
 import {NavigationPath} from '../navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
+import {is, takeUntil} from '../../../util/fp-util';
 
 /**
  * @author Daniel de Oliveira
@@ -31,10 +32,16 @@ export class ViewManager {
     }
 
 
-    public setNavigationPath(mainTypeDocumentId: string, navigationPath: NavigationPath) {
+    public setNavigationPath(document: IdaiFieldDocument) {
+
+        const navigationPath = ViewManager.makeNewNavigationPath(
+            this.resourcesState.getNavigationPath(), document);
+
+        const selectedMainTypeDocument: IdaiFieldDocument|undefined = this.resourcesState.getSelectedOperationTypeDocument();
+        if (!selectedMainTypeDocument || !selectedMainTypeDocument.resource.id) return;
 
         this.resourcesState.setNavigationPath(navigationPath);
-        this.notifyNavigationPathObservers(mainTypeDocumentId);
+        this.notifyNavigationPathObservers(selectedMainTypeDocument.resource.id as string);
     }
 
 
@@ -53,7 +60,8 @@ export class ViewManager {
     }
 
 
-    public async createNavigationPathForDocument(document: IdaiFieldDocument, mainTypeDocumentId: string) {
+
+    public async createNavigationPathForDocument(document: IdaiFieldDocument) {
 
         const navigationPath: NavigationPath = { elements: [] };
 
@@ -67,8 +75,8 @@ export class ViewManager {
             currentResourceId = ModelUtil.getRelationTargetId(currentDocument, 'liesWithin', 0);
         }
 
-        this.setNavigationPath(mainTypeDocumentId, navigationPath);
-        this.notifyNavigationPathObservers(mainTypeDocumentId);
+        this.resourcesState.setNavigationPath(navigationPath);
+        this.notifyNavigationPathObservers((this.resourcesState.getSelectedOperationTypeDocument() as any).resource.id)
     }
 
 
@@ -89,5 +97,33 @@ export class ViewManager {
                 (observer: Observer<NavigationPath>) => observer.next(navigationPath)
             );
         }
+    }
+
+
+    private static makeNewNavigationPath(
+        oldNavigationPath: NavigationPath,
+        document: IdaiFieldDocument): NavigationPath {
+
+        return (document)
+            ? {
+                elements: this.rebuildElements(
+                    oldNavigationPath.elements,
+                    oldNavigationPath.rootDocument,
+                    document),
+                rootDocument: document
+            }
+            : {
+                elements: oldNavigationPath.elements
+                // rootDocument <- undefined, because no document
+            }
+    }
+
+
+    private static rebuildElements(oldElements: Array<IdaiFieldDocument>, oldRoot: IdaiFieldDocument|undefined,
+                                   newRoot: IdaiFieldDocument) {
+
+        if (oldElements.indexOf(newRoot) !== -1) return oldElements;
+
+        return (oldRoot ? takeUntil(is(oldRoot))(oldElements) : []).concat([newRoot]);
     }
 }

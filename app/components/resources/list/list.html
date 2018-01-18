@@ -1,21 +1,50 @@
-<div id="list" *ngIf="typesMap">
-    <div id="list-header" class="row py-2 font-weight-bold">
-        <div class="col-md-3">Typ</div>
-        <div class="col-md-3">Bezeichner</div>
-        <div class="col-md-5">Kurzbeschreibung</div>
-        <div class="col-md-1"></div>
-    </div>
-    <div id="list-body">
-        <div *ngFor="let document of documents">
-            <row [document]="document" [typesMap]="typesMap"></row>
+<style>
+    .header-grid{
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr 1fr;
+        background-color: #fff;
+        color: #444;
+        font-weight: bold;
+    }
+
+    .header-grid > div{
+        background: #bbb;
+        padding:4px;
+    }
+
+    .row-grid{
+        display: grid;
+        grid-template-columns: 1fr;
+        color: #444;
+        font-weight: bold;
+        grid-gap: 0px;
+        border: solid 1px #bbb;
+    }
+
+    .row-grid > div{
+    }
+</style>
+
+<div id="list">
+    <div *ngIf="typesMap">
+        <div id="list-header" class="header-grid">
+            <div>Typ</div>
+            <div>Bezeichner</div>
+            <div>Kurzbeschreibung</div>
+            <div></div>
         </div>
+        <div id="list-body" class="row-grid">
+            <div *ngFor="let document of documents">
+                <row [document]="document" [typesMap]="typesMap"></row>
+            </div>
+        </div>
+        <plus-button *ngIf="showPlusButton()"
+                     id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
+                     [preselectedType]="viewFacade.getCurrentFilterType()"
+                     [liesWithin]="navigationPath.rootDocument"
+                     [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()"
+                     [skipFormAndReturnNewDocument]="true"
+                     (documentRequested)="createNewDocument($event)"></plus-button>
+        <loading-icon></loading-icon>
     </div>
-    <plus-button *ngIf="showPlusButton()"
-                 id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
-                 [preselectedType]="viewFacade.getCurrentFilterType()"
-                 [liesWithin]="navigationPath.rootDocument"
-                 [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()"
-                 [skipFormAndReturnNewDocument]="true"
-                 (documentRequested)="createNewDocument($event)"></plus-button>
-    <loading-icon></loading-icon>
 </div>

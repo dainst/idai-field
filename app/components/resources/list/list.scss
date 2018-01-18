@@ -9,8 +9,6 @@
 
   #list-body {
     height: calc(100vh - 175px);
-    overflow-y: auto;
-    overflow-x: hidden;
   }
 
   #create-document-button .circular-button {
@@ -22,4 +20,29 @@
   .no-search-result {
     opacity: 0.7;
   }
+}
+
+.header-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr;
+  background-color: #fff;
+  color: #444;
+  font-weight: bold;
+}
+
+.header-grid > div{
+  background: #bbb;
+  padding:4px;
+}
+
+.row-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  color: #444;
+  font-weight: bold;
+  grid-gap: 0px;
+  border: solid 1px #bbb;
+}
+
+.row-grid > div{
 }

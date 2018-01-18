@@ -87,7 +87,7 @@ export class StateFacade {
 
         if (!this.resourcesState.getView()) return undefined;
 
-        return this.viewManager.getViewType();
+        return this.resourcesState.getViewType();
     }
 
 

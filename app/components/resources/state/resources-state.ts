@@ -78,6 +78,13 @@ export class ResourcesState {
     }
 
 
+    public getViewType() {
+
+        if (this.isInOverview()) return 'Project';
+        return this.getTypeForName(this.getView());
+    }
+
+
     public getViews() {
 
         return this.views.get();

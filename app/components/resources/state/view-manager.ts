@@ -24,13 +24,6 @@ export class ViewManager {
     }
 
 
-    public getViewType() {
-
-        if (this.resourcesState.isInOverview()) return 'Project';
-        return this.resourcesState.getTypeForName(this.resourcesState.getView());
-    }
-
-
     public getNavigationPath(mainTypeDocumentId: string): NavigationPath {
 
         const navigationPath = this.resourcesState.getNavigationPath();

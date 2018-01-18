@@ -142,7 +142,7 @@ export class DocumentsManager {
 
         this.removeEmptyDocuments();
         if (documentToSelect && documentToSelect.resource && !documentToSelect.resource.id &&
-            documentToSelect.resource.type != this.viewManager.getViewType()) {
+            documentToSelect.resource.type != this.resourcesState.getViewType()) {
 
             this.documents.unshift(documentToSelect);
         }
@@ -185,7 +185,7 @@ export class DocumentsManager {
         if (!changedDocument || !this.documents) return;
         if (DocumentsManager.isExistingDoc(changedDocument, this.documents)) return;
 
-        if (changedDocument.resource.type == this.viewManager.getViewType()) {
+        if (changedDocument.resource.type == this.resourcesState.getViewType()) {
             return this.mainTypeDocumentsManager.populate();
         }
 

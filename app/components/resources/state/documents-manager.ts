@@ -76,7 +76,7 @@ export class DocumentsManager {
 
     public async setQueryTypes(types: string[]) {
 
-        this.viewManager.setFilterTypes(types);
+        this.resourcesState.setTypeFilters(types);
 
         await this.populateDocumentList();
         this.deselectIfNotInList();
@@ -267,7 +267,7 @@ export class DocumentsManager {
 
         if (!ModelUtil.isInList(this.selectedDocument, this.documents)) {
             this.resourcesState.setQueryString('');
-            this.viewManager.setFilterTypes(undefined);
+            this.resourcesState.setTypeFilters(undefined as any);
             await this.createNavigationPathForDocument(this.selectedDocument);
             return true;
         }

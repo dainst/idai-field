@@ -1,7 +1,6 @@
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Query} from 'idai-components-2/datastore';
 import {ResourcesState} from './resources-state';
 import {NavigationPath} from '../navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
@@ -40,17 +39,6 @@ export class ViewManager {
 
         if (this.resourcesState.isInOverview()) return 'Project';
         return this.resourcesState.getTypeForName(this.resourcesState.getView());
-    }
-
-
-    public setFilterTypes(filterTypes: any) {
-
-        filterTypes && filterTypes.length > 0 ?
-            this.resourcesState.setTypeFilters(filterTypes) :
-            this.resourcesState.removeTypeFilters();
-
-        if (filterTypes && filterTypes.length == 0) this.resourcesState.removeTypeFilters();
-        this.resourcesState.setTypeFilters(filterTypes);
     }
 
 

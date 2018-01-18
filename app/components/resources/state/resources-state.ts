@@ -147,14 +147,12 @@ export class ResourcesState {
     public setTypeFilters(types: string[]) {
 
         if (!this._[this.view]) this._[this.view] = {};
-        this._[this.view].types = types;
-        this.serialize();
-    }
 
-
-    public removeTypeFilters() {
-
-        if (this._[this.view])  delete this._[this.view].types;
+        if (types && types.length > 0) {
+            this._[this.view].types = types;
+        } else {
+            if (this._[this.view])  delete this._[this.view].types;
+        }
     }
 
 

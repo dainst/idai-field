@@ -65,7 +65,7 @@ export class DocumentsManager {
 
     public async setQueryString(q: string) {
 
-        this.viewManager.setQueryString(q);
+        this.resourcesState.setQueryString(q);
 
         await this.populateDocumentList();
         this.deselectIfNotInList();
@@ -83,7 +83,7 @@ export class DocumentsManager {
 
     public async setNavigationPath(navigationPath: NavigationPath) {
 
-        const selectedMainTypeDocument: Document|undefined = this.mainTypeDocumentsManager.getSelectedDocument();
+        const selectedMainTypeDocument: Document|undefined = this.resourcesState.getSelectedOperationTypeDocument();
         if (!selectedMainTypeDocument || !selectedMainTypeDocument.resource.id) return;
 
         this.viewManager.setNavigationPath(selectedMainTypeDocument.resource.id, navigationPath);
@@ -125,8 +125,8 @@ export class DocumentsManager {
 
     public async setSelected(documentToSelect: Document): Promise<any|undefined> {
 
-        if (!this.viewManager.isInOverview() &&
-                documentToSelect == this.mainTypeDocumentsManager.getSelectedDocument()) {
+        if (!this.resourcesState.isInOverview() &&
+                documentToSelect == this.resourcesState.getSelectedOperationTypeDocument()) {
             return Promise.resolve(undefined);
         }
 
@@ -212,13 +212,13 @@ export class DocumentsManager {
         this.documents = [];
 
         let isRecordedInTarget;
-        if (this.viewManager.isInOverview()) {
+        if (this.resourcesState.isInOverview()) {
             isRecordedInTarget = this.projectDocument;
         } else {
-            if (!this.mainTypeDocumentsManager.getSelectedDocument()) {
+            if (!this.resourcesState.getSelectedOperationTypeDocument()) {
                 return Promise.resolve();
             }
-            isRecordedInTarget = this.mainTypeDocumentsManager.getSelectedDocument();
+            isRecordedInTarget = this.resourcesState.getSelectedOperationTypeDocument();
         }
         if (!isRecordedInTarget) return Promise.reject('no isRecordedInTarget in populate doc list');
         if (!isRecordedInTarget.resource.id) return Promise.reject('no id in populate doc list');
@@ -322,7 +322,7 @@ export class DocumentsManager {
 
     private async createNavigationPathForDocument(document: Document) {
 
-        const mainTypeDocument: Document|undefined = this.mainTypeDocumentsManager.getSelectedDocument();
+        const mainTypeDocument: Document|undefined = this.resourcesState.getSelectedOperationTypeDocument();
         if (!mainTypeDocument) return;
 
         await this.viewManager.createNavigationPathForDocument(document as IdaiFieldDocument,

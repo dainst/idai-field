@@ -25,21 +25,9 @@ export class ViewManager {
     }
 
 
-    public isInOverview() {
-
-        return this.resourcesState.getView() == 'project';
-    }
-
-
-    public getViewName() {
-
-        return this.resourcesState.getView();
-    }
-
-
     public getCurrentFilterType()  {
 
-        const filterTypes = this.getFilterTypes();
+        const filterTypes = this.resourcesState.getTypeFilters();
         if (!filterTypes) return undefined;
 
         return (filterTypes.length > 0 ?
@@ -61,27 +49,8 @@ export class ViewManager {
 
     public getViewType() {
 
-        if (this.isInOverview()) return 'Project';
+        if (this.resourcesState.isInOverview()) return 'Project';
         return this.resourcesState.getTypeForName(this.resourcesState.getView());
-    }
-
-
-    public getActiveLayersIds(mainTypeDocumentResourceId: string): string[] {
-
-        return this.resourcesState.getActiveLayersIds();
-    }
-
-
-    public setActiveLayersIds(mainTypeDocumentResourceId: string, activeLayersIds: string[]) {
-
-        this.resourcesState.setActiveLayersIds(activeLayersIds);
-    }
-
-
-    public removeActiveLayersIds(mainTypeDocumentId: string|undefined) {
-
-        if (mainTypeDocumentId)
-            this.resourcesState.removeActiveLayersIds();
     }
 
 
@@ -105,31 +74,6 @@ export class ViewManager {
         if (this.resourcesState.getTypeFilters()) query.types = this.resourcesState.getTypeFilters();
 
         return query
-    }
-
-
-    public getQueryString() {
-
-        return this.resourcesState.getQueryString();
-    }
-
-
-    public setQueryString(q: string) {
-
-        this.resourcesState.setQueryString(q);
-    }
-
-
-    public getQueryTypes() {
-
-        return this.resourcesState.getTypeFilters();
-    }
-
-
-    // TODO remove redundancy with getQueryTypes
-    public getFilterTypes() {
-
-        return this.resourcesState.getTypeFilters();
     }
 
 
@@ -169,7 +113,7 @@ export class ViewManager {
 
     public getLastSelectedOperationTypeDocumentId() {
 
-        return this.resourcesState.getSelectedOperationTypeDocumentId();
+        return this.resourcesState.getSelectedOperationTypeDocument();
     }
 
 

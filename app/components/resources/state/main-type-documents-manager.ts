@@ -27,15 +27,9 @@ export class MainTypeDocumentsManager {
     }
 
 
-    public getSelectedDocument() {
-
-        return this.resourcesState.getSelectedOperationTypeDocumentId();
-    }
-
-
     public async populate(): Promise<any> {
 
-        if (!this.viewManager.getViewName()) return Promise.resolve();
+        if (!this.resourcesState.getView()) return Promise.resolve();
 
         this.documents = await this.fetchDocuments(
             MainTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getViewType()));
@@ -64,7 +58,7 @@ export class MainTypeDocumentsManager {
         const operationTypeDocument = MainTypeDocumentsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
 
-        if (operationTypeDocument && operationTypeDocument != this.resourcesState.getSelectedOperationTypeDocumentId()) {
+        if (operationTypeDocument && operationTypeDocument != this.resourcesState.getSelectedOperationTypeDocument()) {
             this.resourcesState.setSelectedOperationTypeDocumentId(operationTypeDocument);
             return true;
         }
@@ -76,7 +70,7 @@ export class MainTypeDocumentsManager {
     public isRecordedInSelectedOperationTypeDocument(document: Document|undefined): boolean {
 
         if (document) return false;
-        if (!this.resourcesState.getSelectedOperationTypeDocumentId()) return false;
+        if (!this.resourcesState.getSelectedOperationTypeDocument()) return false;
 
         const operationTypeDocumentForDocument
             = MainTypeDocumentsManager.getMainTypeDocumentForDocument(document, this.documents);
@@ -86,7 +80,7 @@ export class MainTypeDocumentsManager {
             return false;
         }
 
-        return (operationTypeDocumentForDocument.resource.id != (this.resourcesState.getSelectedOperationTypeDocumentId() as any).resource.id);
+        return (operationTypeDocumentForDocument.resource.id != (this.resourcesState.getSelectedOperationTypeDocument() as any).resource.id);
     }
 
 
@@ -118,7 +112,7 @@ export class MainTypeDocumentsManager {
             return this.datastore.get(mainTypeDocument.resource.id as string)
                 .then(document => this.resourcesState.setSelectedOperationTypeDocumentId(document))
                 .catch(() => {
-                    this.viewManager.removeActiveLayersIds(mainTypeDocument.resource.id as string);
+                    this.resourcesState.removeActiveLayersIds();
                     this.viewManager.setLastSelectedOperationTypeDocumentId(undefined);
                     selectFirstOperationTypeDocumentFromList();
                     return Promise.resolve();

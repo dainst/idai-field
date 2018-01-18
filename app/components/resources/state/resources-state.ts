@@ -46,6 +46,12 @@ export class ResourcesState {
     }
 
 
+    public isInOverview() {
+
+        return this.getView() == 'project';
+    }
+
+
     public getView() {
 
         return this.view;
@@ -85,7 +91,7 @@ export class ResourcesState {
     }
 
 
-    public getSelectedOperationTypeDocumentId(): IdaiFieldDocument|undefined {
+    public getSelectedOperationTypeDocument(): IdaiFieldDocument|undefined {
 
         return (!this._[this.view]) ? undefined : this._[this.view].mainTypeDocument;
     }

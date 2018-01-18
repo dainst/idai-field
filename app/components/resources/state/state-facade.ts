@@ -60,14 +60,14 @@ export class StateFacade {
 
     public isInOverview() {
 
-        return this.viewManager.isInOverview();
+        return this.resourcesState.isInOverview();
     }
 
     
     public getCurrentViewName() {
 
-        if (!this.viewManager.getViewName()) return;
-        return this.viewManager.getViewName();
+        if (!this.resourcesState.getView()) return;
+        return this.resourcesState.getView();
     }
 
 
@@ -83,8 +83,9 @@ export class StateFacade {
      */
     public getCurrentViewMainType(): string|undefined {
 
-        if (!this.viewManager.getViewName()) return undefined;
-        if (this.viewManager.getViewName() == 'project') return 'Project';
+        if (this.resourcesState.isInOverview()) return 'Project';
+
+        if (!this.resourcesState.getView()) return undefined;
 
         return this.viewManager.getViewType();
     }
@@ -150,11 +151,11 @@ export class StateFacade {
 
     public async handleMainTypeDocumentOnDeleted() {
 
-        const selectedDocument = this.mainTypeDocumentsManager.getSelectedDocument();
+        const selectedDocument = this.resourcesState.getSelectedOperationTypeDocument();
         if (!selectedDocument) return;
         if (!selectedDocument.resource.id) return;
 
-        this.viewManager.removeActiveLayersIds(selectedDocument.resource.id);
+        this.resourcesState.removeActiveLayersIds();
         this.viewManager.setLastSelectedOperationTypeDocumentId(undefined);
         await this.populateMainTypeDocuments();
     }
@@ -163,14 +164,14 @@ export class StateFacade {
     // TODO it should not be necessary to specify mainTypeDocumentResourceId, it simply should be the currently selected mainTypeDocument
     public setActiveLayersIds(mainTypeDocumentResourceId: string, activeLayersIds: string[]) {
 
-        return this.viewManager.setActiveLayersIds(mainTypeDocumentResourceId, activeLayersIds);
+        return this.resourcesState.setActiveLayersIds(activeLayersIds);
     }
 
 
     // TODO it should not be necessary to specify mainTypeDocumentResourceId, it simply should be the currently selected mainTypeDocument
     public getActiveLayersIds(mainTypeDocumentResourceId: string): string[] {
 
-        const ids: string[] = this.viewManager.getActiveLayersIds(mainTypeDocumentResourceId);
+        const ids: string[] = this.resourcesState.getActiveLayersIds();
 
         return ids ? ids : [];
     }
@@ -179,7 +180,7 @@ export class StateFacade {
     public getSelectedMainTypeDocument(): IdaiFieldDocument|undefined {
 
         if (this.isInOverview()) throw StateFacade.err('getSelectedMainTypeDocument');
-        return this.mainTypeDocumentsManager.getSelectedDocument();
+        return this.resourcesState.getSelectedOperationTypeDocument();
     }
 
 
@@ -210,13 +211,13 @@ export class StateFacade {
 
     public getFilterTypes() {
 
-        return this.viewManager.getFilterTypes();
+        return this.resourcesState.getTypeFilters();
     }
 
 
     public getQueryString() {
 
-        return this.viewManager.getQueryString();
+        return this.resourcesState.getQueryString();
     }
 
 

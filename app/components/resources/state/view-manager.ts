@@ -47,12 +47,6 @@ export class ViewManager {
     }
 
 
-    public getLastSelectedOperationTypeDocumentId() {
-
-        return this.resourcesState.getSelectedOperationTypeDocument();
-    }
-
-
     public setupNavigationPath(mainTypeDocumentId: string) {
 
         this.notifyNavigationPathObservers(mainTypeDocumentId);

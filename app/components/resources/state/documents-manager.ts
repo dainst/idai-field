@@ -45,8 +45,7 @@ export class DocumentsManager {
     public async populateProjectDocument() {
 
         try {
-            const document = await this.datastore.get(this.settingsService.getSelectedProject() as any);
-            this.projectDocument = document;
+            this.projectDocument = await this.datastore.get(this.settingsService.getSelectedProject() as any);
         } catch (_) {
             console.log('cannot find project document')
         }

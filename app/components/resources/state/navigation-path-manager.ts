@@ -40,23 +40,16 @@ export class NavigationPathManager {
 
     public async createNavigationPathForDocument(document: IdaiFieldDocument) {
 
-
-        const navigationPath: NavigationPath = { elements: [] };
+        const elements: Array<IdaiFieldDocument> = [];
 
         let currentResourceId = ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
-
-
         while (currentResourceId) {
             const currentDocument: IdaiFieldDocument = await this.datastore.get(currentResourceId);
-            navigationPath.elements.unshift(currentDocument);
-            if (!navigationPath.rootDocument) navigationPath.rootDocument = currentDocument;
-
+            elements.unshift(currentDocument);
             currentResourceId = ModelUtil.getRelationTargetId(currentDocument, 'liesWithin', 0);
         }
 
-        this.resourcesState.setNavigationPath(navigationPath);
-
-
+        elements.forEach(el => this.resourcesState.moveInto(el));
         this.notifyNavigationPathObservers();
     }
 

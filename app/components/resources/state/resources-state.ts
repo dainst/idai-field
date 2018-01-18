@@ -238,16 +238,6 @@ export class ResourcesState {
     }
 
 
-    public setNavigationPath(navigationPath: NavigationPath) {
-
-        if (!this.getSelectedOperationTypeDocument()) return;
-
-        if (!this._[this.view]) this._[this.view] = {};
-        if (!this._[this.view].navigationPaths) this._[this.view].navigationPaths = {};
-        (this._[this.view].navigationPaths as any)[(this.getSelectedOperationTypeDocument() as any).resource.id as string] = navigationPath;
-    }
-
-
     public getNavigationPath(): NavigationPath {
 
         if (this.isInOverview()) return { elements: [] };

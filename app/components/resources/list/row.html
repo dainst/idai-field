@@ -1,18 +1,3 @@
-<style>
-    .row-wrapper{
-        display: grid;
-        grid-template-columns: 1fr 1fr 2fr 1fr;
-        grid-gap: 0px;
-        color: #444;
-    }
-
-    .row-wrapper > div{
-        background-color: white;
-        padding: 2px;
-        border: solid 1px #bbb;
-    }
-</style>
-
 <div id="{{document.resource.id ? 'resource-' + document.resource.identifier : 'new-resource'}}"
      (dblclick)="resourcesComponent.editDocument(document)" class="row-wrapper">
     <div>

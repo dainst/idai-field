@@ -17,6 +17,7 @@ import {BaseList} from '../base-list';
  *
  * @author Fabian Z.
  * @author Thomas Kleinke
+ * @author Philipp Gerth
  */
 export class ListComponent extends BaseList {
 

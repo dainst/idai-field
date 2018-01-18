@@ -9,6 +9,8 @@
 
   #list-body {
     height: calc(100vh - 175px);
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   #create-document-button .circular-button {
@@ -42,7 +44,4 @@
   font-weight: bold;
   grid-gap: 0px;
   border: solid 1px #bbb;
-}
-
-.row-grid > div{
 }

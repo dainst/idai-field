@@ -134,8 +134,8 @@ export class ResourcesState {
 
     public getMode(): string|undefined {
 
-        if (!this._) return undefined;
-        return (!this._[this.view]) ? undefined : this._[this.view].mode;
+        if (!this._) return 'map';
+        return (!this._[this.view] || !this._[this.view].mode) ? 'map' : this._[this.view].mode;
     }
 
 

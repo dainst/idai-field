@@ -104,7 +104,7 @@ export class MainTypeDocumentsManager {
             }
         };
 
-        const mainTypeDocument = this.resourcesState.getSelectedOperationTypeDocument();
+        const mainTypeDocument = this.viewManager.getLastSelectedOperationTypeDocumentId();
         if (!mainTypeDocument) {
             selectFirstOperationTypeDocumentFromList();
             return Promise.resolve();

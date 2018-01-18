@@ -44,12 +44,12 @@ export class ResourcesState {
     }
 
 
-    public setView(name: string) {
+    public async setView(name: string) {
 
         if (!name) return;
         this.view = name;
         if (!this._) this._ = {};
-        if (!this._[this.view]) this._[this.view] = {};
+        if (!this._[this.view]) this._[this.view] = { mode: 'map'};
     }
 
 

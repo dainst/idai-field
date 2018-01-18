@@ -372,7 +372,7 @@ export class StateFacade {
 
     public async setupView(viewName: string, defaultMode: string) {
 
-        await this.viewManager.setupView(viewName, defaultMode);
+        await this._setupView(viewName, defaultMode);
         await this.documentsManager.populateProjectDocument();
 
         let mainTypeResource: IdaiFieldDocument|undefined;
@@ -392,6 +392,16 @@ export class StateFacade {
         }
 
         await this.populateDocumentList();
+    }
+
+
+    public _setupView(viewName: string, defaultMode: string): Promise<any> {
+
+        return ((!this.resourcesState.getView() || viewName != this.resourcesState.getView())
+            ? this.resourcesState.setView(viewName)
+
+            // TODO simplify
+            : Promise.resolve()).then(() => this.resourcesState.initialize(defaultMode ? 'map' : undefined));
     }
 
 

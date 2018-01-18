@@ -60,24 +60,6 @@ export class ViewManager {
     }
 
 
-    public initialize(defaultMode?: any)  {
-
-        return this.resourcesState.initialize(defaultMode);
-    }
-
-
-    public setupView(viewName: string, defaultMode: string): Promise<any> {
-
-        return ((!this.resourcesState.getView() || viewName != this.resourcesState.getView())
-            ? this.initializeView(viewName)
-
-            // TODO simplify this branch
-            : Promise.resolve()).then(() => {
-                return this.initialize(defaultMode ? 'map' : undefined);
-            });
-    }
-
-
     public setupNavigationPath(mainTypeDocumentId: string) {
 
         this.notifyNavigationPathObservers(mainTypeDocumentId);
@@ -120,11 +102,5 @@ export class ViewManager {
                 (observer: Observer<NavigationPath>) => observer.next(navigationPath)
             );
         }
-    }
-
-
-    private async initializeView(viewName: string): Promise<any> {
-
-        this.resourcesState.setView(viewName);
     }
 }

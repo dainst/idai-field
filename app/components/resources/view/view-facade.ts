@@ -48,7 +48,8 @@ export class ViewFacade {
         );
         this.mainTypeDocumentsManager = new MainTypeDocumentsManager(
             datastore,
-            this.viewManager
+            this.viewManager,
+            resourcesState
         );
         this.documentsManager = new DocumentsManager(
             datastore,
@@ -327,7 +328,7 @@ export class ViewFacade {
      */
     public async selectMainTypeDocument(mainTypeDocument: Document): Promise<boolean> {
 
-        if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument/1');
+        if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument');
         this.mainTypeDocumentsManager.select(mainTypeDocument as IdaiFieldDocument);
 
         await this.populateDocumentList();
@@ -368,20 +369,20 @@ export class ViewFacade {
         await this.viewManager.setupView(viewName, defaultMode);
         await this.documentsManager.populateProjectDocument();
 
-        let mainTypeResourceId: string|undefined;
+        let mainTypeResource: IdaiFieldDocument|undefined;
 
         if (!this.isInOverview()) {
             await this.populateMainTypeDocuments();
             const selectedMainTypeDocument: IdaiFieldDocument|undefined = this.getSelectedMainTypeDocument();
-            if (selectedMainTypeDocument) mainTypeResourceId = selectedMainTypeDocument.resource.id;
+            if (selectedMainTypeDocument) mainTypeResource = selectedMainTypeDocument;
         } else {
             // TODO Check if there is another way to notify resources component about navigation path change when entering overview
-            mainTypeResourceId = this.getProjectDocument().resource.id;
+            mainTypeResource = this.getProjectDocument() as any;
         }
 
-        if (mainTypeResourceId) {
-            this.viewManager.setLastSelectedOperationTypeDocumentId(mainTypeResourceId);
-            this.viewManager.setupNavigationPath(mainTypeResourceId);
+        if (mainTypeResource) {
+            this.viewManager.setLastSelectedOperationTypeDocumentId(mainTypeResource);
+            this.viewManager.setupNavigationPath(mainTypeResource.resource.id as string);
         }
 
         await this.populateDocumentList();

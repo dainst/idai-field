@@ -182,13 +182,12 @@ export class ViewManager {
     }
 
 
-    public setLastSelectedOperationTypeDocumentId(selectedMainTypeDocumentResourceId: string|undefined) {
+    public setLastSelectedOperationTypeDocumentId(selectedMainTypeDocumentResource: IdaiFieldDocument|undefined) {
 
-        if (!selectedMainTypeDocumentResourceId) return;
+        if (!selectedMainTypeDocumentResource) return;
+        this.resourcesState.setSelectedOperationTypeDocumentId(selectedMainTypeDocumentResource);
 
-        this.resourcesState.setSelectedOperationTypeDocumentId(selectedMainTypeDocumentResourceId);
-
-        this.notifyNavigationPathObservers(selectedMainTypeDocumentResourceId);
+        this.notifyNavigationPathObservers(selectedMainTypeDocumentResource.resource.id as string);
     }
 
 
@@ -258,6 +257,7 @@ export class ViewManager {
 
         if (this.navigationPathObservers) {
             const navigationPath: NavigationPath = this.getNavigationPath(mainTypeDocumentId);
+
             this.navigationPathObservers.forEach(
                 (observer: Observer<NavigationPath>) => observer.next(navigationPath)
             );

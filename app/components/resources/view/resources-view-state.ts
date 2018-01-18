@@ -1,4 +1,5 @@
 import {NavigationPath} from '../navigation-path';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
 
 /**
@@ -6,7 +7,7 @@ import {NavigationPath} from '../navigation-path';
  */
 export interface ResourcesViewState {
 
-    mainTypeDocumentId?: string;
+    mainTypeDocument?: IdaiFieldDocument;
     types?: string[];
     q?: string;
     mode?: string;

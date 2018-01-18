@@ -3,6 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
 import {ViewManager} from './view-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
+import {ResourcesState} from './resources-state';
 
 /**
  * @author Thomas Kleinke
@@ -12,12 +13,11 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field
 export class MainTypeDocumentsManager {
 
     private documents: Array<IdaiFieldDocument>;
-    private selectedDocument: IdaiFieldDocument|undefined;
-
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
-        private viewManager: ViewManager
+        private viewManager: ViewManager,
+        private resourcesState: ResourcesState
     ) {}
 
 
@@ -29,7 +29,7 @@ export class MainTypeDocumentsManager {
 
     public getSelectedDocument() {
 
-        return this.selectedDocument;
+        return this.resourcesState.getSelectedOperationTypeDocumentId();
     }
 
 
@@ -41,7 +41,7 @@ export class MainTypeDocumentsManager {
             MainTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getViewType()));
 
         if (this.documents.length == 0) {
-            this.selectedDocument = undefined;
+            this.resourcesState.setSelectedOperationTypeDocumentId(undefined);
             return;
         }
         return this.restoreLastSelectedOperationTypeDocument();
@@ -50,8 +50,7 @@ export class MainTypeDocumentsManager {
 
     public select(document: IdaiFieldDocument) {
 
-        this.selectedDocument = document;
-        this.viewManager.setLastSelectedOperationTypeDocumentId(this.selectedDocument.resource.id);
+        this.viewManager.setLastSelectedOperationTypeDocumentId(document);
     }
 
 
@@ -65,8 +64,8 @@ export class MainTypeDocumentsManager {
         const operationTypeDocument = MainTypeDocumentsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
 
-        if (operationTypeDocument && operationTypeDocument != this.selectedDocument) {
-            this.selectedDocument = operationTypeDocument;
+        if (operationTypeDocument && operationTypeDocument != this.resourcesState.getSelectedOperationTypeDocumentId()) {
+            this.resourcesState.setSelectedOperationTypeDocumentId(operationTypeDocument);
             return true;
         }
 
@@ -77,7 +76,7 @@ export class MainTypeDocumentsManager {
     public isRecordedInSelectedOperationTypeDocument(document: Document|undefined): boolean {
 
         if (document) return false;
-        if (!this.selectedDocument) return false;
+        if (!this.resourcesState.getSelectedOperationTypeDocumentId()) return false;
 
         const operationTypeDocumentForDocument
             = MainTypeDocumentsManager.getMainTypeDocumentForDocument(document, this.documents);
@@ -87,7 +86,7 @@ export class MainTypeDocumentsManager {
             return false;
         }
 
-        return (operationTypeDocumentForDocument.resource.id != this.selectedDocument.resource.id);
+        return (operationTypeDocumentForDocument.resource.id != (this.resourcesState.getSelectedOperationTypeDocumentId() as any).resource.id);
     }
 
 
@@ -105,22 +104,21 @@ export class MainTypeDocumentsManager {
 
         const selectFirstOperationTypeDocumentFromList = () => {
             if (this.documents && this.documents.length > 0) {
-                this.selectedDocument = this.documents[0];
+                this.resourcesState.setSelectedOperationTypeDocumentId(this.documents[0]);
             } else {
                 console.warn('cannot set selectedMainTypeDocument because mainTypeDocuments is empty')
             }
         };
 
-        const mainTypeDocumentId = this.viewManager.getLastSelectedOperationTypeDocumentId();
-        if (!mainTypeDocumentId) {
+        const mainTypeDocument = this.viewManager.getLastSelectedOperationTypeDocumentId();
+        if (!mainTypeDocument) {
             selectFirstOperationTypeDocumentFromList();
             return Promise.resolve();
         } else {
-            return this.datastore.get(mainTypeDocumentId)
-                .then(document => this.selectedDocument =
-                    document as IdaiFieldDocument)
+            return this.datastore.get(mainTypeDocument.resource.id as string)
+                .then(document => this.resourcesState.setSelectedOperationTypeDocumentId(document))
                 .catch(() => {
-                    this.viewManager.removeActiveLayersIds(mainTypeDocumentId);
+                    this.viewManager.removeActiveLayersIds(mainTypeDocument.resource.id as string);
                     this.viewManager.setLastSelectedOperationTypeDocumentId(undefined);
                     selectFirstOperationTypeDocumentFromList();
                     return Promise.resolve();

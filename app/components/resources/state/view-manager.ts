@@ -43,29 +43,6 @@ export class ViewManager {
     }
 
 
-    public getQuery(): Query {
-
-        let constraints: any = {};
-
-        if (this.resourcesState.getNavigationPath() &&
-            (this.resourcesState.getNavigationPath() as any).rootDocument
-        ){
-            constraints['liesWithin:contain'] = (this.resourcesState.getNavigationPath() as any).rootDocument.resource.id;
-        } else {
-            constraints['liesWithin:exist'] = 'UNKNOWN';
-        }
-
-        let query: Query = {
-            q: this.resourcesState.getQueryString(),
-            constraints: constraints
-        };
-
-        if (this.resourcesState.getTypeFilters()) query.types = this.resourcesState.getTypeFilters();
-
-        return query
-    }
-
-
     public setFilterTypes(filterTypes: any) {
 
         filterTypes && filterTypes.length > 0 ?

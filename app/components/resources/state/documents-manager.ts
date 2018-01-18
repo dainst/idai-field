@@ -226,7 +226,7 @@ export class DocumentsManager {
         if (!isRecordedInTarget.resource.id) return Promise.reject('no id in populate doc list');
 
         return this.fetchDocuments(DocumentsManager.makeDocsQuery(
-            this.viewManager.getQuery(), isRecordedInTarget.resource.id))
+            this.buildQuery(), isRecordedInTarget.resource.id))
             .then(documents => {
                 this.documents = documents
             })
@@ -296,6 +296,29 @@ export class DocumentsManager {
 
         console.error('Error with find. Query:', query);
         if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
+    }
+
+
+    private buildQuery(): Query {
+
+        let constraints: any = {};
+
+        if (this.resourcesState.getNavigationPath() &&
+            (this.resourcesState.getNavigationPath() as any).rootDocument
+        ){
+            constraints['liesWithin:contain'] = (this.resourcesState.getNavigationPath() as any).rootDocument.resource.id;
+        } else {
+            constraints['liesWithin:exist'] = 'UNKNOWN';
+        }
+
+        let query: Query = {
+            q: this.resourcesState.getQueryString(),
+            constraints: constraints
+        };
+
+        if (this.resourcesState.getTypeFilters()) query.types = this.resourcesState.getTypeFilters();
+
+        return query
     }
 
 

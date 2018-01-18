@@ -147,12 +147,9 @@ export class ConstraintIndexer {
     private getIndex(indexDefinition: IndexDefinition): any {
 
         switch (indexDefinition.type) {
-            case 'contain':
-                return this.containIndex;
-            case 'match':
-                return this.matchIndex;
-            case 'exist':
-                return this.existIndex;
+            case 'contain': return this.containIndex;
+            case 'match':   return this.matchIndex;
+            case 'exist':   return this.existIndex;
         }
     }
 

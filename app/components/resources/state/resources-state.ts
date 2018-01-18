@@ -53,7 +53,6 @@ export class ResourcesState {
     }
 
 
-
     public getActiveDocumentViewTab(): string|undefined {
 
         return this.activeDocumentViewTab;

@@ -14,6 +14,8 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field
  */
 export class ViewManager {
 
+
+
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
 
@@ -30,6 +32,14 @@ export class ViewManager {
 
         return (filterTypes.length > 0 ?
             filterTypes[0] : undefined);
+    }
+
+
+
+    public getViewType() {
+
+        if (this.resourcesState.isInOverview()) return 'Project';
+        return this.resourcesState.getTypeForName(this.resourcesState.getView());
     }
 
 
@@ -90,6 +100,24 @@ export class ViewManager {
     }
 
 
+    public setupView(viewName: string, defaultMode: string): Promise<any> {
+
+        return ((!this.resourcesState.getView() || viewName != this.resourcesState.getView())
+            ? this.initializeView(viewName)
+
+            // TODO simplify this branch
+            : Promise.resolve()).then(() => {
+                return this.resourcesState.initialize(defaultMode ? 'map' : undefined);
+            });
+    }
+
+
+    public setupNavigationPath(mainTypeDocumentId: string) {
+
+        this.notifyNavigationPathObservers(mainTypeDocumentId);
+    }
+
+
     public async createNavigationPathForDocument(document: IdaiFieldDocument, mainTypeDocumentId: string) {
 
         const navigationPath: NavigationPath = { elements: [] };
@@ -117,7 +145,7 @@ export class ViewManager {
     }
 
 
-    public notifyNavigationPathObservers(mainTypeDocumentId: string) {
+    private notifyNavigationPathObservers(mainTypeDocumentId: string) {
 
         if (this.navigationPathObservers) {
             const navigationPath: NavigationPath = this.getNavigationPath(mainTypeDocumentId);
@@ -126,5 +154,11 @@ export class ViewManager {
                 (observer: Observer<NavigationPath>) => observer.next(navigationPath)
             );
         }
+    }
+
+
+    private async initializeView(viewName: string): Promise<any> {
+
+        this.resourcesState.setView(viewName);
     }
 }

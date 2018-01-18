@@ -32,7 +32,7 @@ export class MainTypeDocumentsManager {
         if (!this.resourcesState.getView()) return Promise.resolve();
 
         this.documents = await this.fetchDocuments(
-            MainTypeDocumentsManager.makeMainTypeQuery(this.resourcesState.getViewType()));
+            MainTypeDocumentsManager.makeMainTypeQuery(this.viewManager.getViewType()));
 
         if (this.documents.length == 0) {
             this.resourcesState.setSelectedOperationTypeDocumentId(undefined);

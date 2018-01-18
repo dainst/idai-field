@@ -43,7 +43,7 @@ export class ResourcesState {
     }
 
 
-    public async setView(name: string) {
+    public setView(name: string) {
 
         if (!name) return;
         this.view = name;
@@ -95,10 +95,9 @@ export class ResourcesState {
     }
 
 
-    public getViewType() {
+    public getTypeForName(name: string) {
 
-        if (this.getView() == 'project') return 'Project';
-        return this.views.getTypeForName(this.getView());
+        return this.views.getTypeForName(name);
     }
 
 

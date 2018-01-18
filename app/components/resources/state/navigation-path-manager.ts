@@ -30,10 +30,10 @@ export class NavigationPathManager {
     }
 
 
-    public setLastSelectedOperationTypeDocumentId(selectedMainTypeDocumentResource: IdaiFieldDocument|undefined) {
+    public setMainTypeDocument(selectedMainTypeDocumentResource: IdaiFieldDocument|undefined) {
 
         if (!selectedMainTypeDocumentResource) return;
-        this.resourcesState.setSelectedOperationTypeDocumentId(selectedMainTypeDocumentResource);
+        this.resourcesState.setMainTypeDocument(selectedMainTypeDocumentResource);
 
         this.notifyNavigationPathObservers();
     }

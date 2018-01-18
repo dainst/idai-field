@@ -156,7 +156,7 @@ export class StateFacade {
         if (!selectedDocument.resource.id) return;
 
         this.resourcesState.removeActiveLayersIds();
-        this.viewManager.setLastSelectedOperationTypeDocumentId(undefined);
+        this.viewManager.setMainTypeDocument(undefined);
         await this.populateMainTypeDocuments();
     }
 
@@ -379,7 +379,7 @@ export class StateFacade {
         }
 
         if (mainTypeResource) {
-            this.viewManager.setLastSelectedOperationTypeDocumentId(mainTypeResource);
+            this.viewManager.setMainTypeDocument(mainTypeResource);
             this.viewManager.notifyNavigationPathObservers();
         }
 

@@ -108,7 +108,7 @@ export class ResourcesState {
     }
 
 
-    public setSelectedOperationTypeDocumentId(mainTypeDocument: IdaiFieldDocument|undefined) {
+    public setMainTypeDocument(mainTypeDocument: IdaiFieldDocument|undefined) {
 
         if (!this._[this.view]) this._[this.view] = {};
         this._[this.view].mainTypeDocument = mainTypeDocument;

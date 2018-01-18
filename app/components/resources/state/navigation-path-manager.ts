@@ -5,7 +5,6 @@ import {ResourcesState} from './resources-state';
 import {NavigationPath} from '../navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
-import {is, takeUntil} from '../../../util/fp-util';
 
 /**
  * @author Daniel de Oliveira
@@ -33,7 +32,7 @@ export class NavigationPathManager {
     public setNavigationPath(document: IdaiFieldDocument) {
 
         this.resourcesState.moveInto(document);
-        this.notifyNavigationPathObservers((this.resourcesState.getSelectedOperationTypeDocument() as any).resource.id as string);
+        this.notifyNavigationPathObservers();
     }
 
 
@@ -42,22 +41,17 @@ export class NavigationPathManager {
         if (!selectedMainTypeDocumentResource) return;
         this.resourcesState.setSelectedOperationTypeDocumentId(selectedMainTypeDocumentResource);
 
-        this.notifyNavigationPathObservers(selectedMainTypeDocumentResource.resource.id as string);
+        this.notifyNavigationPathObservers();
     }
-
-
-    public setupNavigationPath(mainTypeDocumentId: string) {
-
-        this.notifyNavigationPathObservers(mainTypeDocumentId);
-    }
-
 
 
     public async createNavigationPathForDocument(document: IdaiFieldDocument) {
 
+
         const navigationPath: NavigationPath = { elements: [] };
 
         let currentResourceId = ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
+
 
         while (currentResourceId) {
             const currentDocument: IdaiFieldDocument = await this.datastore.get(currentResourceId);
@@ -68,7 +62,9 @@ export class NavigationPathManager {
         }
 
         this.resourcesState.setNavigationPath(navigationPath);
-        this.notifyNavigationPathObservers((this.resourcesState.getSelectedOperationTypeDocument() as any).resource.id)
+
+
+        this.notifyNavigationPathObservers();
     }
 
 
@@ -80,16 +76,17 @@ export class NavigationPathManager {
     }
 
 
-    private notifyNavigationPathObservers(mainTypeDocumentId: string) {
+    public notifyNavigationPathObservers() {
 
-        if (!mainTypeDocumentId) return;
+        const mainTypeDoc = this.resourcesState.getSelectedOperationTypeDocument();
+        if (!mainTypeDoc) return;
 
-        if (this.navigationPathObservers) {
-            const navigationPath: NavigationPath = this.getNavigationPath(mainTypeDocumentId);
+        if (!this.navigationPathObservers) return;
 
-            this.navigationPathObservers.forEach(
-                (observer: Observer<NavigationPath>) => observer.next(navigationPath)
-            );
-        }
+        const navigationPath: NavigationPath = this.getNavigationPath(mainTypeDoc.resource.id as string);
+
+        this.navigationPathObservers.forEach(
+            (observer: Observer<NavigationPath>) => observer.next(navigationPath)
+        );
     }
 }

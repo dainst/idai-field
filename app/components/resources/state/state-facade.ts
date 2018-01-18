@@ -388,7 +388,7 @@ export class StateFacade {
 
         if (mainTypeResource) {
             this.viewManager.setLastSelectedOperationTypeDocumentId(mainTypeResource);
-            this.viewManager.setupNavigationPath(mainTypeResource.resource.id as string);
+            this.viewManager.notifyNavigationPathObservers();
         }
 
         await this.populateDocumentList();

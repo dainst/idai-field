@@ -60,11 +60,13 @@
             </ng-template>
             <ng-template ngbTabContent>
                 <div (drop)="uploadImages($event, viewFacade.getSelectedDocument())">
-                    <button class="btn btn-link"
-                            id="document-view-button-edit-document"
-                            (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'images')">
-                        <span class="mdi mdi-pencil"></span>
-                    </button>
+                    <small>
+                        <button class="btn btn-link float-right align-middle"
+                                id="document-view-button-edit-document"
+                                (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'images')">
+                            <span class="mdi mdi-pencil"></span>
+                        </button>
+                    </small>
 
                     <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn'] || viewFacade.getSelectedDocument().resource.relations['isDepictedIn'].length == 0" class="empty-tab-info">
                         Keine Bilder vorhanden.

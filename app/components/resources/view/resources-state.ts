@@ -174,8 +174,6 @@ export class ResourcesState {
             if (this._[viewName].mainTypeDocumentId) {
                 objectToSerialize[viewName].mainTypeDocumentId = this._[viewName].mainTypeDocumentId;
             }
-            if (this._[viewName].types) objectToSerialize[viewName].types = this._[viewName].types;
-            if (this._[viewName].q) objectToSerialize[viewName].q = this._[viewName].q;
             if (this._[viewName].mode) objectToSerialize[viewName].mode = this._[viewName].mode;
             if (this._[viewName].layerIds) objectToSerialize[viewName].layerIds = this._[viewName].layerIds;
         }

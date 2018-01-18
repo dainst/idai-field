@@ -27,13 +27,13 @@
 .header-grid{
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr;
-  background-color: #fff;
-  color: #444;
-  font-weight: bold;
+  background-color: white;
+  color: rgb(73,80,87);
+  font-size: 16px;
+  border: solid 1px rgb(221,221,221);
 }
 
 .header-grid > div{
-  background: #bbb;
   padding:4px;
 }
 
@@ -41,7 +41,6 @@
   display: grid;
   grid-template-columns: 1fr;
   color: #444;
-  font-weight: bold;
-  grid-gap: 0px;
-  border: solid 1px #bbb;
+  grid-gap: 1px;
+  // border: solid 1px #DFE2E6;
 }

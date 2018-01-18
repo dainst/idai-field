@@ -18,12 +18,12 @@
 .row-wrapper{
    display: grid;
    grid-template-columns: 1fr 1fr 2fr 1fr;
-   grid-gap: 0px;
+   grid-gap: 1px;
    color: #444;
  }
 
 .row-wrapper > div{
-  background-color: white;
+  background-color: rgb(221,221,221);
   padding: 2px;
-  border: solid 1px #bbb;
+  // border: solid 1px #bbb;
 }

@@ -81,9 +81,9 @@ export class DocumentsManager {
     }
 
 
-    public async setNavigationPath(document: IdaiFieldDocument) {
+    public async moveInto(document: IdaiFieldDocument) {
 
-        this.viewManager.setNavigationPath(document);
+        this.viewManager.moveInto(document);
 
         await this.populateDocumentList();
         this.deselectIfNotInList();

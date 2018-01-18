@@ -221,8 +221,7 @@ export class ResourcesState {
 
         if (!this._[this.view]) this._[this.view] = {};
         if (!this._[this.view].navigationPaths) this._[this.view].navigationPaths = {};
-
-
+        
         const navigationPath = ResourcesState.makeNewNavigationPath(
             this.getNavigationPath(), document);
 

@@ -291,7 +291,7 @@ export class StateFacade {
 
     public async moveInto(document: IdaiFieldDocument) {
 
-        await this.documentsManager.setNavigationPath(document as any);
+        await this.documentsManager.moveInto(document);
     }
 
 

@@ -23,7 +23,7 @@ export class NavigationPathManager {
     }
 
 
-    public setNavigationPath(document: IdaiFieldDocument) {
+    public moveInto(document: IdaiFieldDocument) {
 
         this.resourcesState.moveInto(document);
         this.notifyNavigationPathObservers();

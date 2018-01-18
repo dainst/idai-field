@@ -123,7 +123,7 @@ export class ViewManager {
 
     public getQueryString() {
 
-        return this.resourcesState.getLastQueryString(this.currentView);
+        return this.resourcesState.getQueryString(this.currentView);
     }
 
 

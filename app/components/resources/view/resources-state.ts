@@ -67,7 +67,7 @@ export class ResourcesState {
     }
 
 
-    public getLastQueryString(viewName: string) {
+    public getQueryString(viewName: string) {
 
         if (!this._) return '';
         return (!this._[viewName] || !this._[viewName].q) ? '' : this._[viewName].q;
@@ -89,7 +89,7 @@ export class ResourcesState {
     }
 
 
-    public setActiveLayersIds(viewName: string, mainTypeDocumentId: string, activeLayersIds: string[]) {
+    public setActiveLayersIds(viewName: string, mainTypeDocumentResourceId: string, activeLayersIds: string[]) {
 
         if (!this._[viewName]) this._[viewName] = {};
         if (!this._[viewName].layerIds) this._[viewName].layerIds = {};
@@ -97,35 +97,35 @@ export class ResourcesState {
         const layerIds = this._[viewName].layerIds;
         if (!layerIds) return;
 
-        layerIds[mainTypeDocumentId] = activeLayersIds.slice(0);
+        layerIds[mainTypeDocumentResourceId] = activeLayersIds.slice(0);
         this.serialize();
     }
 
 
-    public getActiveLayersIds(viewName: string, mainTypeDocumentId: string): string[] {
+    public getActiveLayersIds(viewName: string, mainTypeDocumentResourceId: string): string[] {
 
         if (!this._[viewName] || !this._[viewName].layerIds) return [];
 
         const layerIds = this._[viewName].layerIds;
         if (!layerIds) return [];
 
-        return layerIds[mainTypeDocumentId];
+        return layerIds[mainTypeDocumentResourceId];
     }
 
 
-    public removeActiveLayersIds(viewName: string, mainTypeDocumentId: string) {
+    public removeActiveLayersIds(viewName: string, mainTypeDocumentResourceId: string) {
 
         if (!this._[viewName] || !this._[viewName].layerIds) return;
 
         const layerIds = this._[viewName].layerIds;
         if (!layerIds) return;
 
-        delete layerIds[mainTypeDocumentId];
+        delete layerIds[mainTypeDocumentResourceId];
         this.serialize();
     }
 
 
-    public setNavigationPath(viewName: string, mainTypeDocumentId: string, navigationPath: NavigationPath) {
+    public setNavigationPath(viewName: string, mainTypeDocumentResourceId: string, navigationPath: NavigationPath) {
 
         if (!this._[viewName]) this._[viewName] = {};
         if (!this._[viewName].navigationPaths) this._[viewName].navigationPaths = {};
@@ -133,29 +133,29 @@ export class ResourcesState {
         const navigationPaths = this._[viewName].navigationPaths;
         if (!navigationPaths) return;
 
-        navigationPaths[mainTypeDocumentId] = navigationPath;
+        navigationPaths[mainTypeDocumentResourceId] = navigationPath;
     }
 
 
-    public getNavigationPath(viewName: string, mainTypeDocumentId: string): NavigationPath|undefined {
+    public getNavigationPath(viewName: string, mainTypeDocumentResourceId: string): NavigationPath|undefined {
 
         if (!this._[viewName] || !this._[viewName].navigationPaths) return undefined;
 
         const navigationPaths = this._[viewName].navigationPaths;
         if (!navigationPaths) return undefined;
 
-        return navigationPaths[mainTypeDocumentId];
+        return navigationPaths[mainTypeDocumentResourceId];
     }
 
 
-    public removeNavigationPath(viewName: string, mainTypeDocumentId: string) {
+    public removeNavigationPath(viewName: string, mainTypeDocumentResourceId: string) {
 
         if (!this._[viewName] || !this._[viewName].navigationPaths) return;
 
         const navigationPaths = this._[viewName].navigationPaths;
         if (!navigationPaths) return;
 
-        delete navigationPaths[mainTypeDocumentId];
+        delete navigationPaths[mainTypeDocumentResourceId];
     }
 
 

@@ -25,7 +25,7 @@ import {NavigationPath} from '../navigation-path';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ViewFacade {
+export class StateFacade {
 
     private views: OperationViews;
     private viewManager: ViewManager;
@@ -104,7 +104,7 @@ export class ViewFacade {
 
     public getMainTypeLabel() {
 
-        if (this.isInOverview()) throw ViewFacade.err('getMainTypeLabel');
+        if (this.isInOverview()) throw StateFacade.err('getMainTypeLabel');
         return this.viewManager.getMainTypeLabel();
     }
 
@@ -178,14 +178,14 @@ export class ViewFacade {
 
     public getSelectedMainTypeDocument(): IdaiFieldDocument|undefined {
 
-        if (this.isInOverview()) throw ViewFacade.err('getSelectedMainTypeDocument');
+        if (this.isInOverview()) throw StateFacade.err('getSelectedMainTypeDocument');
         return this.mainTypeDocumentsManager.getSelectedDocument();
     }
 
 
     public getMainTypeDocuments() {
 
-        if (this.isInOverview()) throw ViewFacade.err('getMainTypeDocuments');
+        if (this.isInOverview()) throw StateFacade.err('getMainTypeDocuments');
         return this.mainTypeDocumentsManager.getDocuments();
     }
 
@@ -328,7 +328,7 @@ export class ViewFacade {
      */
     public async selectMainTypeDocument(mainTypeDocument: Document): Promise<boolean> {
 
-        if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument');
+        if (this.isInOverview()) throw StateFacade.err('selectMainTypeDocument');
         this.mainTypeDocumentsManager.select(mainTypeDocument as IdaiFieldDocument);
 
         await this.populateDocumentList();
@@ -359,7 +359,7 @@ export class ViewFacade {
      */
     public async populateMainTypeDocuments() {
 
-        if (this.isInOverview()) throw ViewFacade.err('populateMainTypeDocuments');
+        if (this.isInOverview()) throw StateFacade.err('populateMainTypeDocuments');
         await this.mainTypeDocumentsManager.populate();
     }
 

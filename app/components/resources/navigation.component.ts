@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ViewFacade} from './view/view-facade';
+import {StateFacade} from './state/state-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {NavigationPath} from './navigation-path';
 
@@ -19,7 +19,7 @@ export class NavigationComponent {
     public navigationPath: NavigationPath = { elements: [] };
 
 
-    constructor(public viewFacade: ViewFacade) {
+    constructor(public viewFacade: StateFacade) {
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;

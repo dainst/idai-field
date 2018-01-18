@@ -4,7 +4,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Messages} from 'idai-components-2/messages';
 import {LinkModalComponent} from './link-modal.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
-import {ViewFacade} from '../resources/view/view-facade';
+import {StateFacade} from '../resources/state/state-facade';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
 
@@ -27,7 +27,7 @@ export class ImageOverviewTaskbarComponent {
     public clearSelection = () => this.imageOverviewFacade.clearSelection();
 
     constructor(
-        public viewFacade: ViewFacade,
+        public viewFacade: StateFacade,
         private modalService: NgbModal,
         private messages: Messages,
         private imageOverviewFacade: ImageOverviewFacade,

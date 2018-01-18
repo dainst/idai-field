@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ViewDefinition} from 'idai-components-2/configuration';
-import {ViewFacade} from '../resources/view/view-facade';
+import {StateFacade} from '../resources/state/state-facade';
 
 @Component({
     moduleId: module.id,
@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
     public activeRoute: string;
 
 
-    constructor(private viewFacade: ViewFacade,
+    constructor(private viewFacade: StateFacade,
                 router: Router) {
 
         router.events.subscribe(() => this.activeRoute = router.url);

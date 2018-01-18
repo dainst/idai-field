@@ -13,13 +13,13 @@ import {RowComponent} from './list/row.component';
 import {PlusButtonComponent} from './plus-button.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {DoceditModule} from '../docedit/docedit.module';
-import {ResourcesState} from './view/resources-state';
+import {ResourcesState} from './state/resources-state';
 import {ThumbnailViewComponent} from './map/docview/thumbnail-view.component';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {DocumentViewSidebarComponent} from './map/docview/document-view-sidebar.component';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
-import {ViewFacade} from './view/view-facade';
+import {StateFacade} from './state/state-facade';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {SettingsService} from '../../core/settings/settings-service';
 import {SidebarListComponent} from './map/sidebar-list.component';
@@ -64,7 +64,7 @@ import {NavigationService} from './navigation-service';
         LayerManager,
         LayerImageProvider,
         {
-            provide: ViewFacade,
+            provide: StateFacade,
             useFactory: function(
                 projectConfiguration: ProjectConfiguration,
                 datastore: IdaiFieldDocumentDatastore,
@@ -79,7 +79,7 @@ import {NavigationService} from './navigation-service';
                         projectConfiguration.getLabelForType(view.operationSubtype) as any;
                 }
 
-                return new ViewFacade(
+                return new StateFacade(
                     datastore,
                     changesStream,
                     settingsService,

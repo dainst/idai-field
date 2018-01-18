@@ -26,7 +26,7 @@ import {NoRollbackStrategy} from '../../core/importer/no-rollback-strategy';
 import {RelationsCompleter} from '../../core/importer/relations-completer';
 import {SettingsService} from '../../core/settings/settings-service';
 import {UploadModalComponent} from './upload-modal.component';
-import {ViewFacade} from '../resources/view/view-facade';
+import {StateFacade} from '../resources/state/state-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ChangesStream} from '../../core/datastore/core/changes-stream';
@@ -67,7 +67,7 @@ export class ImportComponent {
         private relationsCompleter: RelationsCompleter,
         private settingsService: SettingsService,
         private configLoader: ConfigLoader,
-        private viewFacade: ViewFacade,
+        private viewFacade: StateFacade,
         private modalService: NgbModal
     ) {
         this.viewFacade.getAllOperationSubtypeWithViewDocuments().then(

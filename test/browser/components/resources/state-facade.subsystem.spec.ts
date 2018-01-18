@@ -3,8 +3,8 @@ import {ProjectConfiguration} from 'idai-components-2/configuration'
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Static} from '../../helper/static';
 import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
-import {ViewFacade} from '../../../../app/components/resources/view/view-facade';
-import {ResourcesState} from '../../../../app/components/resources/view/resources-state';
+import {StateFacade} from '../../../../app/components/resources/state/state-facade';
+import {ResourcesState} from '../../../../app/components/resources/state/resources-state';
 import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
 import {IdaiFieldTypeConverter} from '../../../../app/core/datastore/idai-field-type-converter';
 import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
@@ -12,13 +12,13 @@ import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
 /**
  * This is a subsystem test.
  * The use of mocks is intentionally reduced.
- * The subsystem gets assembled in the ViewFacade's constructor.
+ * The subsystem gets assembled in the StateFacade's constructor.
  *
  * @author Daniel de Oliveira
  */
 export function main() {
 
-    describe('ViewFacade/Subsystem', () => {
+    describe('StateFacade/Subsystem', () => {
 
         const viewsList = [
             {
@@ -39,7 +39,7 @@ export function main() {
             ]
         };
 
-        let viewFacade: ViewFacade;
+        let viewFacade: StateFacade;
         let trenchDocument1: Document;
         let trenchDocument2: Document;
         let findDocument1: Document;
@@ -109,7 +109,7 @@ export function main() {
                 subscribe: () => {}
             });
 
-            viewFacade = new ViewFacade(
+            viewFacade = new StateFacade(
                 idaiFieldDocumentDatastore,
                 changesStream,
                 settingsService,

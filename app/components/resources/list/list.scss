@@ -5,12 +5,14 @@
     height: 35px;
     user-select: none;
     cursor: default;
+    margin-top: 2px;
   }
 
   #list-body {
     height: calc(100vh - 175px);
     overflow-y: auto;
     overflow-x: hidden;
+    border: solid 1px rgb(221,221,221);
   }
 
   #create-document-button .circular-button {
@@ -27,14 +29,17 @@
 .header-grid{
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr;
-  background-color: white;
   color: rgb(73,80,87);
   font-size: 16px;
   border: solid 1px rgb(221,221,221);
+  grid-gap: 1px;
+  background: rgb(221,221,221);
+  font-weight: 500;
 }
 
 .header-grid > div{
   padding:4px;
+  background: white;
 }
 
 .row-grid{
@@ -42,5 +47,6 @@
   grid-template-columns: 1fr;
   color: #444;
   grid-gap: 1px;
-  // border: solid 1px #DFE2E6;
+  background: rgb(221,221,221);
+  border-bottom: solid 1px rgb(221,221,221);
 }

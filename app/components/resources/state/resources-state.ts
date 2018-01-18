@@ -32,12 +32,14 @@ export class ResourcesState {
     }
 
 
-    public initialize(): Promise<any> {
+    public async initialize(defaultMode?: any): Promise<any> {
 
         if (this._) return Promise.resolve();
 
-        return this.serializer.load(StateSerializer.RESOURCES_STATE)
-            .then(resourcesStateMap => this._ = resourcesStateMap);
+        this._ = await this.serializer.load(StateSerializer.RESOURCES_STATE);
+
+        this.initializeMode(defaultMode);
+        this.setActiveDocumentViewTab(undefined);
     }
 
 
@@ -257,5 +259,23 @@ export class ResourcesState {
         }
 
         return objectToSerialize;
+    }
+
+
+    private initializeMode(defaultMode?: string) {
+
+        if (defaultMode) {
+            return this.setMode(defaultMode);
+        }
+        if (!this.restoreLastSelectedMode()) {
+            this.setMode('map');
+        }
+    }
+
+
+    private restoreLastSelectedMode(): boolean {
+
+        const mode = this.getMode();
+        return mode != undefined;
     }
 }

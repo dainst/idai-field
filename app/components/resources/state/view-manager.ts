@@ -100,23 +100,6 @@ export class ViewManager {
     }
 
 
-    public getLastSelectedOperationTypeDocumentId() {
-
-        return this.resourcesState.getSelectedOperationTypeDocument();
-    }
-
-
-    public initialize(defaultMode?: any)  {
-
-        return this.resourcesState.initialize().then(() => {
-
-            this.initializeMode(defaultMode);
-
-            this.resourcesState.setActiveDocumentViewTab(undefined);
-        });
-    }
-
-
     public setupView(viewName: string, defaultMode: string): Promise<any> {
 
         return ((!this.resourcesState.getView() || viewName != this.resourcesState.getView())
@@ -124,7 +107,7 @@ export class ViewManager {
 
             // TODO simplify this branch
             : Promise.resolve()).then(() => {
-                return this.initialize(defaultMode ? 'map' : undefined);
+                return this.resourcesState.initialize(defaultMode ? 'map' : undefined);
             });
     }
 
@@ -177,23 +160,5 @@ export class ViewManager {
     private async initializeView(viewName: string): Promise<any> {
 
         this.resourcesState.setView(viewName);
-    }
-
-
-    private initializeMode(defaultMode?: string) {
-
-        if (defaultMode) {
-            return this.resourcesState.setMode(defaultMode);
-        }
-        if (!this.restoreLastSelectedMode()) {
-            this.resourcesState.setMode('map');
-        }
-    }
-
-
-    private restoreLastSelectedMode(): boolean {
-
-        const mode = this.resourcesState.getMode();
-        return mode != undefined;
     }
 }

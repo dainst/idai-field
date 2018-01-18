@@ -27,7 +27,6 @@ import {NavigationPath} from '../navigation-path';
  */
 export class StateFacade {
 
-    private views: OperationViews;
     private viewManager: ViewManager;
     private mainTypeDocumentsManager: MainTypeDocumentsManager;
     private documentsManager: DocumentsManager;
@@ -53,7 +52,8 @@ export class StateFacade {
             changesStream,
             settingsService,
             this.viewManager,
-            this.mainTypeDocumentsManager
+            this.mainTypeDocumentsManager,
+            resourcesState
         );
     }
 
@@ -73,7 +73,7 @@ export class StateFacade {
 
     public getOperationSubtypeViews() {
 
-        return this.views.get();
+        return this.resourcesState.getViews();
     }
 
 
@@ -95,7 +95,7 @@ export class StateFacade {
         if (!mainTypeName) return undefined;
         if (mainTypeName == 'Project') return 'project';
 
-        return this.views.getViewNameForOperationSubtype(mainTypeName);
+        return this.resourcesState.getViewNameForOperationSubtype(mainTypeName);
     }
 
 
@@ -126,15 +126,16 @@ export class StateFacade {
 
     public getMode() {
 
-        return this.viewManager.getMode();
+        return this.resourcesState.getMode();
     }
 
 
+    // TODO remove
     public getQuery() {
 
         return {
-            q: this.viewManager.getQueryString(),
-            types: this.viewManager.getQueryTypes()
+            q: this.resourcesState.getQueryString(),
+            types: this.resourcesState.getTypeFilters()
         }
     }
 
@@ -189,7 +190,7 @@ export class StateFacade {
 
     public async getAllOperationSubtypeWithViewDocuments() {
 
-        const viewMainTypes = this.views.get()
+        const viewMainTypes = this.resourcesState.getViews()
             .map((view: any) => {return view.operationSubtype});
 
         let mainTypeDocuments: Array<Document> = [];
@@ -219,7 +220,7 @@ export class StateFacade {
 
     public setMode(mode: string) {
 
-        this.viewManager.setMode(mode);
+        this.resourcesState.setMode(mode);
     }
 
 

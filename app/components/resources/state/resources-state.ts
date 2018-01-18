@@ -52,6 +52,18 @@ export class ResourcesState {
     }
 
 
+    public getViews() {
+
+        return this.views.get();
+    }
+
+
+    public getViewNameForOperationSubtype(name: string) {
+
+        return this.views.getViewNameForOperationSubtype(name);
+    }
+
+
     public getLabelForName(name: string) {
 
         return this.views.getLabelForName(name);

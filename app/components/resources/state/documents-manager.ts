@@ -11,6 +11,7 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {NavigationPath} from '../navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
+import {ResourcesState} from './resources-state';
 
 /**
  * @author Thomas Kleinke
@@ -32,7 +33,8 @@ export class DocumentsManager {
         private changesStream: ChangesStream,
         private settingsService: SettingsService,
         private viewManager: ViewManager,
-        private mainTypeDocumentsManager: MainTypeDocumentsManager
+        private mainTypeDocumentsManager: MainTypeDocumentsManager,
+        private resourcesState: ResourcesState
     ) {
 
         changesStream.remoteChangesNotifications().
@@ -262,7 +264,7 @@ export class DocumentsManager {
         if (!this.selectedDocument) return false;
 
         if (!ModelUtil.isInList(this.selectedDocument, this.documents)) {
-            this.viewManager.setQueryString('');
+            this.resourcesState.setQueryString('');
             this.viewManager.setFilterTypes(undefined);
             await this.createNavigationPathForDocument(this.selectedDocument);
             return true;

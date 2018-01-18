@@ -38,6 +38,12 @@ export class ViewManager {
     }
 
 
+    public getMainTypeLabel() {
+
+        return this.mainTypeLabel;
+    }
+
+
     public getCurrentFilterType()  {
 
         const filterTypes = this.getFilterTypes();
@@ -45,24 +51,6 @@ export class ViewManager {
 
         return (filterTypes.length > 0 ?
             filterTypes[0] : undefined);
-    }
-
-
-    public setMode(mode: string) {
-
-        this.resourcesState.setMode(mode);
-    }
-
-
-    public getMode() {
-
-        return this.resourcesState.getMode();
-    }
-
-
-    public getMainTypeLabel() {
-
-        return this.mainTypeLabel;
     }
 
 

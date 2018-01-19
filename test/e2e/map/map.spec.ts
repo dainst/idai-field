@@ -139,8 +139,9 @@ describe('resources/map --', function() {
             NavbarPage.performNavigateToSettings();
             request.post('http://localhost:3003/reset', {form:{key:'value'}});
             browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToProject();
+            browser.sleep(delays.shortRest * 4);
             NavbarPage.clickNavigateToExcavation();
-            browser.sleep(delays.shortRest);
         }
         index++;
     });

@@ -9,7 +9,7 @@ export type NestedArray<T> = Array<Array<T>>;
  * Generate a new list with elements which are contained in l but not in r
  */
 export const subtract = <A>(l: Array<A>, r: Array<A>): Array<A> =>
-    l.filter(notIncludedIn(r));
+    l.filter(not(includedIn(r)));
 
 
 export const add = <A>(as: Array<A>, item: A): Array<A> =>
@@ -57,7 +57,7 @@ export const union = (sets: NestedArray<any>) =>
 export const includedIn =  <A>(l: Array<A>) => (element: A) => l.indexOf(element) != -1;
 
 
-export const notIncludedIn =  <A>(l: Array<A>) => (element: A) => l.indexOf(element) === -1;
+export const not = <A>(f: (_: A) => boolean) => (a: A) => inverse(f(a));
 
 
 export const takeWhile = <A>(f: (_: A) => boolean) => take(identical, f, 0);

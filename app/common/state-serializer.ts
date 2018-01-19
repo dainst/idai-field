@@ -11,7 +11,6 @@ const fs = remote.require('fs');
 export class StateSerializer {
 
     public static RESOURCES_STATE: string = 'resources-state';
-    public static IMAGES_STATE: string = 'images-state';
 
     constructor(private settingsService: SettingsService) {}
 

@@ -15,7 +15,7 @@ export class ImagesState {
     private initialized: boolean = false;
 
 
-    constructor(private serializer: StateSerializer) {}
+    constructor() {}
 
 
     public resetForE2E() {
@@ -24,18 +24,10 @@ export class ImagesState {
     }
 
 
-    public initialize(): Promise<any> {
+    public async initialize(): Promise<any> {
 
-        if (this.initialized) return Promise.resolve();
-
-        return this.serializer.load(StateSerializer.IMAGES_STATE)
-            .then(result => {
-                if (result.query) this.query = result.query;
-                if (result.mainTypeDocumentFilterOption) this.mainTypeDocumentFilterOption
-                    = result.mainTypeDocumentFilterOption;
-                if (result.gridSize) this.gridSize = result.gridSize;
-                this.initialized = true;
-            });
+        if (this.initialized) return;
+        this.initialized = true;
     }
 
 
@@ -48,7 +40,6 @@ export class ImagesState {
     public setQuery(query: Query) {
 
         this.query = query;
-        this.serializer.store(StateSerializer.IMAGES_STATE, this.getSerializableObject());
     }
 
 
@@ -67,7 +58,6 @@ export class ImagesState {
     public setMainTypeDocumentFilterOption(mainTypeDocumentFilterOption: string) {
 
         this.mainTypeDocumentFilterOption = mainTypeDocumentFilterOption;
-        this.serializer.store(StateSerializer.IMAGES_STATE, this.getSerializableObject());
     }
 
 
@@ -80,16 +70,5 @@ export class ImagesState {
     public setGridSize(value: number) {
 
         this.gridSize = value;
-        this.serializer.store(StateSerializer.IMAGES_STATE, this.getSerializableObject());
-    }
-
-
-    private getSerializableObject(): any {
-
-        return {
-            query: this.query,
-            mainTypeDocumentFilterOption: this.mainTypeDocumentFilterOption,
-            gridSize: this.gridSize
-        };
     }
 }

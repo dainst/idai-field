@@ -24,9 +24,9 @@ describe('resources/relations --', () => {
             NavbarPage.performNavigateToSettings();
             require('request').post('http://localhost:3003/reset', {});
             browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToProject();
+            browser.sleep(delays.shortRest * 4);
             NavbarPage.clickNavigateToExcavation();
-            browser.wait(EC.visibilityOf(element(by.id('operation-document-selector'))), delays.ECWaitTime);
-            browser.sleep(delays.shortRest);
         }
         i++;
     });

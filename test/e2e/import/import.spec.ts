@@ -32,7 +32,7 @@ describe('import --', function() {
             browser.sleep(delays.shortRest);
             NavbarPage.clickNavigateToProject();
             browser.sleep(delays.shortRest * 4);
-            NavbarPage.clickNavigateToExcavation();
+            NavbarPage.performNavigateToImport();
         }
         index++;
     });

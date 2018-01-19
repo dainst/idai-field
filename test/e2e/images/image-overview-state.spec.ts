@@ -2,8 +2,6 @@ import {ImageOverviewPage} from './image-overview.page';
 import {NavbarPage} from '../navbar.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 
-const fs = require('fs');
-const delays = require('../config/delays');
 const common = require('../common');
 
 /**

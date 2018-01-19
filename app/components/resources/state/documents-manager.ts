@@ -194,33 +194,33 @@ export class DocumentsManager {
     }
 
 
-    /**
-     * Populates the document list with all documents from
-     * the datastore which match a <code>query</code>
-     */
-    public populateDocumentList() {
+    public async populateDocumentList() {
 
         this.newDocumentsFromRemote = [];
         this.documents = [];
+
+        const isRecordedInTarget = await this.makeIsRecordedInTarget();
+        if (!isRecordedInTarget) return;
+
+        this.documents = await this.fetchDocuments(DocumentsManager.makeDocsQuery(
+            this.buildQuery(), isRecordedInTarget.resource.id as string));
+        this.removeEmptyDocuments();
+    }
+
+
+    private async makeIsRecordedInTarget() {
 
         let isRecordedInTarget;
         if (this.resourcesState.isInOverview()) {
             isRecordedInTarget = this.projectDocument;
         } else {
-            if (!this.resourcesState.getSelectedOperationTypeDocument()) {
-                return Promise.resolve();
-            }
+            if (!this.resourcesState.getSelectedOperationTypeDocument()) return; // TODO get rid of this line and use ternary operator
             isRecordedInTarget = this.resourcesState.getSelectedOperationTypeDocument();
         }
-        if (!isRecordedInTarget) return Promise.reject('no isRecordedInTarget in populate doc list');
-        if (!isRecordedInTarget.resource.id) return Promise.reject('no id in populate doc list');
+        if (!isRecordedInTarget) throw 'no isRecordedInTarget in populate doc list';
+        if (!isRecordedInTarget.resource.id) throw 'no id in populate doc list';
 
-        return this.fetchDocuments(DocumentsManager.makeDocsQuery(
-            this.buildQuery(), isRecordedInTarget.resource.id))
-            .then(documents => {
-                this.documents = documents
-            })
-            .then(() => this.removeEmptyDocuments());
+        return isRecordedInTarget;
     }
 
 

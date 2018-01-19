@@ -5,8 +5,8 @@ import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
 import {NavbarPage} from '../navbar.page';
 
-let EC = protractor.ExpectedConditions;
-let delays = require('../config/delays');
+const EC = protractor.ExpectedConditions;
+const delays = require('../config/delays');
 
 
 /**
@@ -29,9 +29,10 @@ describe('resources --', () => {
         if (i > 0) {
             NavbarPage.performNavigateToSettings();
             require('request').post('http://localhost:3003/reset', {});
-            browser.sleep(delays.shortRest * 10);
+            browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToProject();
+            browser.sleep(delays.shortRest * 4);
             NavbarPage.clickNavigateToExcavation();
-            browser.wait(EC.visibilityOf(element(by.id('operation-document-selector'))), delays.ECWaitTime);
         }
         i++;
     });

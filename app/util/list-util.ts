@@ -12,13 +12,13 @@ export const subtract = <A>(l: Array<A>, r: Array<A>): Array<A> =>
     l.filter(not(includedIn(r)));
 
 
-export const add = <A>(as: Array<A>, item: A): Array<A> =>
-    (as.indexOf(item) > -1) ? as : as.concat([item]);
+export const add = <A>(as: Array<A>, a: A): Array<A> =>
+    (as.indexOf(a) > -1) ? as : as.concat([a]);
 
 
 
-export const remove = <A>(as: Array<A>, item: A): Array<A> =>
-    as.filter(different);
+export const remove = <A>(as: Array<A>, a: A): Array<A> =>
+    as.filter(different(a));
 
 
 
@@ -38,8 +38,8 @@ export const subtractTwo = <A>(sets: NestedArray<A>, other: Array<A>): Array<A> 
 };
 
 
-export const intersect = <A>(as: NestedArray<A>): Array<A> =>
-    as.reduce((p, c) =>
+export const intersect = <A>(aas: NestedArray<A>): Array<A> =>
+    aas.reduce((p, c) =>
         p.filter(
             includedIn(c.map(identical))
         )

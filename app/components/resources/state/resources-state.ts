@@ -4,9 +4,8 @@ import {StateSerializer} from '../../../common/state-serializer';
 import {NavigationPath} from './navigation-path';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {OperationViews} from './operation-views';
-import {is, takeUntil} from "../../../util/fp-util";
 import {NavigationPathInternal, NavigationPathSegment} from './navigation-path-internal';
-import {contains} from "../../../util/list-util";
+import {contains, takeUntil} from "../../../util/list-util";
 
 
 @Injectable()

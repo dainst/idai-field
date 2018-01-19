@@ -30,5 +30,4 @@ export class BaseList {
             && !this.loading.showIcons && this.viewFacade.getQuery().q == ''
             && (this.viewFacade.isInOverview() || this.viewFacade.getSelectedMainTypeDocument() != undefined));
     }
-
 }

@@ -3,8 +3,6 @@ import {ProjectConfiguration, RelationDefinition} from 'idai-components-2/config
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {RoutingService} from '../routing-service';
 import {StateFacade} from './state/state-facade';
-import {NavigationPath} from './navigation-path';
-import {is, takeUntil} from '../../util/fp-util';
 
 
 @Injectable()
@@ -22,11 +20,9 @@ export class NavigationService {
 
     public moveInto(document: IdaiFieldDocument) {
 
-        if (this.viewFacade.isInOverview()) {
-            this.routingService.jumpToMainTypeHomeView(document);
-        } else {
-            this.viewFacade.moveInto(document);
-        }
+        this.viewFacade.isInOverview()
+            ? this.routingService.jumpToMainTypeHomeView(document)
+            : this.viewFacade.moveInto(document);
     }
 
 

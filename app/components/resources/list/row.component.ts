@@ -17,7 +17,6 @@ import {NavigationService} from '../navigation-service';
     moduleId: module.id,
     templateUrl: './row.html'
 })
-
 /**
  * @author Fabian Z.
  * @autor Thomas Kleinke
@@ -44,6 +43,7 @@ export class RowComponent {
 
     // TODO consider factoring out component for moveInto button, and put this and showMoveIntoOption into it
     public moveInto = (document: IdaiFieldDocument) => this.navigationService.moveInto(document);
+
 
     public showMoveIntoOption = (document: IdaiFieldDocument) => this.navigationService.showMoveIntoOption(document);
 
@@ -95,8 +95,9 @@ export class RowComponent {
     private async restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
 
         try {
-            const latestRevision = await this.datastore.get(document.resource.id as any, {skip_cache: true});
-            document.resource.identifier = latestRevision.resource.identifier;
+            document.resource.identifier =
+                (await this.datastore.get(document.resource.id as any, {skip_cache: true})
+                ).resource.identifier;
         } catch(_) {
             return [M.DATASTORE_NOT_FOUND];
         }

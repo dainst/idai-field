@@ -5,7 +5,7 @@ import {NavigationPath} from './navigation-path';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {OperationViews} from './operation-views';
 import {NavigationPathInternal, NavigationPathSegment} from './navigation-path-internal';
-import {contains, takeUntil} from "../../../util/list-util";
+import {includedIn, takeUntil} from "../../../util/list-util";
 
 
 @Injectable()
@@ -330,7 +330,7 @@ export class ResourcesState {
     private static rebuildElements(oldElements: Array<NavigationPathSegment>, oldRoot: IdaiFieldDocument|undefined,
                                    newRoot: IdaiFieldDocument) {
 
-        if (contains(newRoot)(oldElements.map(toDocument))) return oldElements;
+        if (includedIn(oldElements.map(toDocument))(newRoot)) return oldElements;
 
         return (oldRoot ? takeUntil(isSameSegment(oldRoot))(oldElements) : []).concat([{document: newRoot}]);
     }

@@ -151,7 +151,7 @@ export class ViewFacade {
 
     public async handleMainTypeDocumentOnDeleted() {
 
-        const selectedDocument = this.resourcesState.getSelectedOperationTypeDocument();
+        const selectedDocument = this.resourcesState.getMainTypeDocument();
         if (!selectedDocument) return;
         if (!selectedDocument.resource.id) return;
 
@@ -180,7 +180,7 @@ export class ViewFacade {
     public getSelectedMainTypeDocument(): IdaiFieldDocument|undefined {
 
         if (this.isInOverview()) throw ViewFacade.err('getSelectedMainTypeDocument');
-        return this.resourcesState.getSelectedOperationTypeDocument();
+        return this.resourcesState.getMainTypeDocument();
     }
 
 

@@ -118,7 +118,7 @@ export class DocumentsManager {
     public async setSelected(documentToSelect: Document): Promise<any|undefined> {
 
         if (!this.resourcesState.isInOverview() &&
-                documentToSelect == this.resourcesState.getSelectedOperationTypeDocument()) {
+                documentToSelect == this.resourcesState.getMainTypeDocument()) {
             return Promise.resolve(undefined);
         }
 
@@ -214,8 +214,8 @@ export class DocumentsManager {
         if (this.resourcesState.isInOverview()) {
             isRecordedInTarget = this.projectDocument;
         } else {
-            if (!this.resourcesState.getSelectedOperationTypeDocument()) return; // TODO get rid of this line and use ternary operator
-            isRecordedInTarget = this.resourcesState.getSelectedOperationTypeDocument();
+            if (!this.resourcesState.getMainTypeDocument()) return; // TODO get rid of this line and use ternary operator
+            isRecordedInTarget = this.resourcesState.getMainTypeDocument();
         }
         if (!isRecordedInTarget) throw 'no isRecordedInTarget in populate doc list';
         if (!isRecordedInTarget.resource.id) throw 'no id in populate doc list';

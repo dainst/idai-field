@@ -58,7 +58,7 @@ export class MainTypeDocumentsManager {
         const operationTypeDocument = MainTypeDocumentsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
 
-        if (operationTypeDocument && operationTypeDocument != this.resourcesState.getSelectedOperationTypeDocument()) {
+        if (operationTypeDocument && operationTypeDocument != this.resourcesState.getMainTypeDocument()) {
             this.resourcesState.setMainTypeDocument(operationTypeDocument);
             return true;
         }
@@ -70,7 +70,7 @@ export class MainTypeDocumentsManager {
     public isRecordedInSelectedOperationTypeDocument(document: Document|undefined): boolean {
 
         if (document) return false;
-        if (!this.resourcesState.getSelectedOperationTypeDocument()) return false;
+        if (!this.resourcesState.getMainTypeDocument()) return false;
 
         const operationTypeDocumentForDocument
             = MainTypeDocumentsManager.getMainTypeDocumentForDocument(document, this.documents);
@@ -80,7 +80,7 @@ export class MainTypeDocumentsManager {
             return false;
         }
 
-        return (operationTypeDocumentForDocument.resource.id != (this.resourcesState.getSelectedOperationTypeDocument() as any).resource.id);
+        return (operationTypeDocumentForDocument.resource.id != (this.resourcesState.getMainTypeDocument() as any).resource.id);
     }
 
 
@@ -106,7 +106,7 @@ export class MainTypeDocumentsManager {
 
     private async restoreLastSelectedOperationTypeDocument(): Promise<any> {
 
-        const mainTypeDocument = this.resourcesState.getSelectedOperationTypeDocument();
+        const mainTypeDocument = this.resourcesState.getMainTypeDocument();
         if (!mainTypeDocument) {
             this.selectFirstOperationTypeDocumentFromList();
         } else {

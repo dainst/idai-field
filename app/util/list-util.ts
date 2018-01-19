@@ -1,3 +1,4 @@
+import {element} from 'protractor';
 export type NestedArray<T> = Array<Array<T>>;
 
 /**
@@ -59,3 +60,6 @@ export const union = (sets: NestedArray<any>) => {
         return result;
     }, {}));
 };
+
+
+export const contains = <A>(element: A) =>  (l: Array<A>) => l.indexOf(element) != -1;

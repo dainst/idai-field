@@ -5,6 +5,8 @@ import {NavigationPath} from '../navigation-path';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {OperationViews} from './operation-views';
 import {is, takeUntil} from "../../../util/fp-util";
+import {NavigationPathInternal, NavigationPathSegment} from './navigation-path-internal';
+import {contains} from "../../../util/list-util";
 
 
 @Injectable()
@@ -108,18 +110,25 @@ export class ResourcesState {
     }
 
 
-    public setMainTypeDocument(mainTypeDocument: IdaiFieldDocument|undefined) {
+    public setMainTypeDocument(document: IdaiFieldDocument|undefined) {
 
-        if (!this._[this.view]) this._[this.view] = {};
-        this._[this.view].mainTypeDocument = mainTypeDocument;
+        if (!this.view) return;
+        if (!this._) return;
+        if (!this._[this.view]) return;
 
-        this.serialize();
+        this._[this.view].mainTypeDocument = document;
+        if (document) this.moveInto(document);
     }
 
 
-    public getSelectedOperationTypeDocument(): IdaiFieldDocument|undefined {
+    public getMainTypeDocument(): IdaiFieldDocument|undefined {
 
-        return (!this._[this.view]) ? undefined : this._[this.view].mainTypeDocument;
+        if (!this.view) return undefined;
+        if (!this._) return undefined;
+        if (!this._[this.view]) return undefined;
+        if (!this._[this.view].mainTypeDocument) return undefined;
+
+        return this._[this.view].mainTypeDocument;
     }
 
 
@@ -222,34 +231,52 @@ export class ResourcesState {
         if (!this._[this.view]) this._[this.view] = {};
         if (!this._[this.view].navigationPaths) this._[this.view].navigationPaths = {};
 
-        const navigationPath = ResourcesState.makeNewNavigationPath(
-            this.getNavigationPath(), document);
+        const operationTypeDocument = this.getMainTypeDocument();
+        if (operationTypeDocument) {
 
-        const selectedMainTypeDocument = this.getSelectedOperationTypeDocument();
+            const navigationPath = ResourcesState.makeNewNavigationPath(
+                this.getNavigationPathInternal(operationTypeDocument), document);
 
-        const navigationPaths = this._[this.view].navigationPaths;
-        if (!navigationPaths) return;
+            const navigationPaths = this._[this.view].navigationPaths;
+            if (!navigationPaths) return;
 
-        if (selectedMainTypeDocument) {
-            navigationPaths[(selectedMainTypeDocument as any).resource.id] = navigationPath;
+            navigationPaths[(operationTypeDocument as any).resource.id] = navigationPath;
         }
     }
 
 
     public getNavigationPath(): NavigationPath {
 
-        if (this.isInOverview()) return { elements: [] };
+        if (this.isInOverview()) return NavigationPathInternal.empty();
+        if (!this._[this.view] || !this._[this.view].navigationPaths) return NavigationPathInternal.empty();
 
-        if (!this._[this.view] || !this._[this.view].navigationPaths) return {elements:[]};
+        const operationTypeDocument = this.getMainTypeDocument();
+        if (!operationTypeDocument) return NavigationPathInternal.empty();
+
+        const navigationPath: NavigationPath = { elements: [] };
+        const navigationPathInternal = this.getNavigationPathInternal(operationTypeDocument);
+        if (navigationPathInternal.rootDocument) navigationPath.rootDocument = navigationPathInternal.rootDocument;
+
+        navigationPathInternal.elements
+            .forEach(segment => navigationPath.elements.push(segment.document));
+
+        if (navigationPath.elements.length > 0 && navigationPath.elements[0] == navigationPath.rootDocument) {
+            navigationPath.rootDocument = undefined;
+        }
+        navigationPath.elements.shift();
+        return navigationPath;
+    }
+
+
+    private getNavigationPathInternal(operationTypeDocument: IdaiFieldDocument): NavigationPathInternal {
 
         const navigationPaths = this._[this.view].navigationPaths;
-        if (!navigationPaths) return {elements:[]};
+        const path = (navigationPaths as any)[operationTypeDocument.resource.id as string];
 
-        if (this._[this.view].mainTypeDocument && (this._[this.view].mainTypeDocument as any).resource.id) {
-
-            const path = navigationPaths[(this._[this.view].mainTypeDocument as any).resource.id];
-            return path ? path : {elements: []}
-        } else return {elements:[]}
+        return path ? path : {
+            elements: [{ document: operationTypeDocument }],
+            rootDocument: operationTypeDocument
+        }
     }
 
 
@@ -279,7 +306,7 @@ export class ResourcesState {
             // if (this._[viewName].mainTypeDocumentId) { // TODO comment in and also make sure loading works properly
             //     objectToSerialize[viewName].mainTypeDocumentId = this._[viewName].mainTypeDocumentId;
             // }
-            if (this._[viewName].mode) objectToSerialize[viewName].mode = this._[viewName].mode;
+            //if (this._[viewName].mode) objectToSerialize[viewName].mode = this._[viewName].mode;
             if (this._[viewName].layerIds) objectToSerialize[viewName].layerIds = this._[viewName].layerIds;
         }
 
@@ -288,8 +315,8 @@ export class ResourcesState {
 
 
     private static makeNewNavigationPath(
-        oldNavigationPath: NavigationPath,
-        document: IdaiFieldDocument): NavigationPath {
+        oldNavigationPath: NavigationPathInternal,
+        document: IdaiFieldDocument): NavigationPathInternal {
 
         return (document)
             ? {
@@ -306,11 +333,16 @@ export class ResourcesState {
     }
 
 
-    private static rebuildElements(oldElements: Array<IdaiFieldDocument>, oldRoot: IdaiFieldDocument|undefined,
+    private static rebuildElements(oldElements: Array<NavigationPathSegment>, oldRoot: IdaiFieldDocument|undefined,
                                    newRoot: IdaiFieldDocument) {
 
-        if (oldElements.indexOf(newRoot) !== -1) return oldElements;
+        if (contains(newRoot)(oldElements.map(toDocument))) return oldElements;
 
-        return (oldRoot ? takeUntil(is(oldRoot))(oldElements) : []).concat([newRoot]);
+        return (oldRoot ? takeUntil(isSameSegment(oldRoot))(oldElements) : []).concat([{document: newRoot}]);
     }
 }
+
+const toDocument = (segment: NavigationPathSegment) => segment.document;
+
+
+const isSameSegment = (document: IdaiFieldDocument) => (segment: NavigationPathSegment) => document == segment.document;

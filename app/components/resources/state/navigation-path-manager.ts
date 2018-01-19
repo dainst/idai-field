@@ -66,7 +66,7 @@ export class NavigationPathManager {
     public notifyNavigationPathObservers() {
 
         if (!this.navigationPathObservers) return;
-        const mainTypeDoc = this.resourcesState.getSelectedOperationTypeDocument();
+        const mainTypeDoc = this.resourcesState.getMainTypeDocument();
         if (!mainTypeDoc) return;
 
         this.navigationPathObservers.forEach(inform(this.resourcesState.getNavigationPath()));

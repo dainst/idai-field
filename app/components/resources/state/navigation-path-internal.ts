@@ -9,6 +9,8 @@ export interface NavigationPathInternal {
 
     elements: Array<NavigationPathSegment>; // contains elements starting with an operation type document containing segment
     rootDocument?: IdaiFieldDocument;
+    q?: string; // top level query string
+    types?: string[]; // top level query types
 }
 
 

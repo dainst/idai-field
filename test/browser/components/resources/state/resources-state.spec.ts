@@ -30,7 +30,7 @@ export function main() {
         });
 
 
-        it('do',() => {
+        it('step into',() => {
 
             const trenchDocument1 = Static.idfDoc('trench1','trench1','Trench','t1');
             const featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature', 'feature1');
@@ -42,7 +42,25 @@ export function main() {
 
             resourcesState.moveInto(featureDocument1);
 
-            // expect(resourcesState.getNavigationPath().rootDocument).toEqual(featureDocument1);
+            expect(resourcesState.getNavigationPath().rootDocument).toEqual(featureDocument1);
+            expect(resourcesState.getNavigationPath().elements.length).toEqual(1);
+            expect(resourcesState.getNavigationPath().elements[0]).toEqual(featureDocument1);
+        });
+
+
+        it('step out',() => {
+
+            const trenchDocument1 = Static.idfDoc('trench1','trench1','Trench','t1');
+            const featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature', 'feature1');
+            featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+
+            resourcesState.setView('excavation');
+            resourcesState.setMainTypeDocument(trenchDocument1);
+
+            resourcesState.moveInto(featureDocument1);
+            resourcesState.moveInto(undefined);
+
+            expect(resourcesState.getNavigationPath().rootDocument).toEqual(undefined);
             expect(resourcesState.getNavigationPath().elements.length).toEqual(1);
             expect(resourcesState.getNavigationPath().elements[0]).toEqual(featureDocument1);
         });

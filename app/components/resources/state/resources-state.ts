@@ -117,7 +117,6 @@ export class ResourcesState {
         if (!this._[this.view]) return;
 
         this._[this.view].mainTypeDocument = document;
-        if (document) this.moveInto(document);
     }
 
 
@@ -226,7 +225,10 @@ export class ResourcesState {
     }
 
 
-    public moveInto(document: IdaiFieldDocument) {
+    /**
+     * @param document set undefined to make rootElement of navigation path undefined
+     */
+    public moveInto(document: IdaiFieldDocument|undefined) {
 
         if (!this._[this.view]) this._[this.view] = {};
         if (!this._[this.view].navigationPaths) this._[this.view].navigationPaths = {};
@@ -260,10 +262,6 @@ export class ResourcesState {
         navigationPathInternal.elements
             .forEach(segment => navigationPath.elements.push(segment.document));
 
-        if (navigationPath.elements.length > 0 && navigationPath.elements[0] == navigationPath.rootDocument) {
-            navigationPath.rootDocument = undefined;
-        }
-        navigationPath.elements.shift();
         return navigationPath;
     }
 
@@ -273,10 +271,7 @@ export class ResourcesState {
         const navigationPaths = this._[this.view].navigationPaths;
         const path = (navigationPaths as any)[operationTypeDocument.resource.id as string];
 
-        return path ? path : {
-            elements: [{ document: operationTypeDocument }],
-            rootDocument: operationTypeDocument
-        }
+        return path ? path : NavigationPathInternal.empty();
     }
 
 
@@ -316,7 +311,7 @@ export class ResourcesState {
 
     private static makeNewNavigationPath(
         oldNavigationPath: NavigationPathInternal,
-        document: IdaiFieldDocument): NavigationPathInternal {
+        document: IdaiFieldDocument|undefined): NavigationPathInternal {
 
         return (document)
             ? {

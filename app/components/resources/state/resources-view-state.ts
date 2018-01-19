@@ -8,8 +8,8 @@ import {NavigationPathInternal} from './navigation-path-internal';
 export interface ResourcesViewState {
 
     mainTypeDocument?: IdaiFieldDocument;
-    types?: string[];
-    q?: string;
+    types?: string[]; // query types in overview
+    q?: string; // query string in overview
     mode?: string;
     layerIds?: {[mainTypeDocumentId: string]: string[]};
     navigationPaths?: {[mainTypeDocumentId: string]: NavigationPathInternal};

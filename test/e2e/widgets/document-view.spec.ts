@@ -25,9 +25,10 @@ describe('widgets/document-view', function() {
 
         NavbarPage.performNavigateToSettings();
         require('request').post('http://localhost:3003/reset', {});
-        browser.sleep(delays.shortRest * 5);
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToProject();
+        browser.sleep(delays.shortRest * 4);
         NavbarPage.clickNavigateToExcavation();
-        browser.sleep(delays.shortRest * 2);
     });
 
 

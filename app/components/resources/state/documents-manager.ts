@@ -51,16 +51,11 @@ export class DocumentsManager {
     }
 
 
-    public getDocuments() {
-
-        return this.documents;
-    }
+    public getDocuments = () => this.documents;
 
 
-    public getSelectedDocument() {
+    public getSelectedDocument = () => this.selectedDocument;
 
-        return this.selectedDocument;
-    }
 
 
     public async setQueryString(q: string) {
@@ -273,9 +268,8 @@ export class DocumentsManager {
 
     private deselectIfNotInList() {
 
-        if (this.selectedDocument && !ModelUtil.isInList(this.selectedDocument, this.documents)) {
-            this.deselect();
-        }
+        if (!this.selectedDocument) return;
+        if (!ModelUtil.isInList(this.selectedDocument, this.documents)) this.deselect();
     }
 
 
@@ -296,30 +290,31 @@ export class DocumentsManager {
 
     private buildQuery(): Query {
 
-        let constraints: any = {};
-
-        if (this.resourcesState.getNavigationPath() &&
-            (this.resourcesState.getNavigationPath() as any).rootDocument
-        ){
-            constraints['liesWithin:contain'] = (this.resourcesState.getNavigationPath() as any).rootDocument.resource.id;
-        } else {
-            constraints['liesWithin:exist'] = 'UNKNOWN';
-        }
-
-        let query: Query = {
+        const query: Query = {
             q: this.resourcesState.getQueryString(),
-            constraints: constraints
+            constraints: this.buildConstraints()
         };
 
-        if (this.resourcesState.getTypeFilters()) query.types = this.resourcesState.getTypeFilters();
+        if (this.resourcesState.getTypeFilters()) {
+            query.types = this.resourcesState.getTypeFilters();
+        }
 
-        return query
+        return query;
+    }
+
+
+    private buildConstraints(): { [name: string]: string}  {
+
+        const rootDoc = this.resourcesState.getNavigationPath().rootDocument;
+        return rootDoc
+            ? { 'liesWithin:contain': rootDoc.resource.id as string }
+            : { 'liesWithin:exist': 'UNKNOWN' }
     }
 
 
     private static isExistingDoc(changedDocument: Document, documents: Array<Document>): boolean {
 
-        for (let doc of documents) {
+        for (let doc of documents) { // TODO rewrite with some
             if (!doc.resource || !changedDocument.resource) continue;
             if (!doc.resource.id || !changedDocument.resource.id) continue;
             if (doc.resource.id == changedDocument.resource.id) return true;

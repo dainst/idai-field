@@ -22,9 +22,10 @@ describe('resources/list --', () => {
             NavbarPage.performNavigateToSettings();
             require('request').post('http://localhost:3003/reset', {});
             browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToProject();
+            browser.sleep(delays.shortRest * 4);
             NavbarPage.clickNavigateToExcavation();
             ResourcesPage.clickListModeButton();
-            browser.sleep(delays.shortRest);
         }
         index++;
     });

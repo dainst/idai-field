@@ -1,4 +1,3 @@
-import {browser} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 import {NavbarPage} from '../navbar.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
@@ -12,33 +11,11 @@ const common = require('../common');
  */
 describe('images/image-overview/state --', () => {
 
-    const appDataPath = browser.params.appDataPath;
+
+    beforeEach(() => ImageOverviewPage.getAndWaitForImageCells());
 
 
-    beforeAll(() => {
-
-        removeImagesStateFile();
-    });
-
-
-    beforeEach(() => {
-
-        return ImageOverviewPage.getAndWaitForImageCells();
-    });
-
-
-    afterEach(done => {
-
-        removeImagesStateFile();
-        common.resetConfigJson().then(done);
-    });
-
-
-    function removeImagesStateFile() {
-
-        const filePath = appDataPath + '/images-state-' + 'abc.json';
-        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-    }
+    afterEach(done => common.resetConfigJson().then(done));
 
 
     it('autoselect last selected type filter after returning to images overview', () => {

@@ -4,7 +4,7 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
-import {StateFacade} from '../state/state-facade';
+import {ViewFacade} from '../state/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
 
 
@@ -25,7 +25,7 @@ export class ResourcesMapComponent {
 
     constructor(
         public loading: Loading,
-        public viewFacade: StateFacade,
+        public viewFacade: ViewFacade,
         public resourcesComponent: ResourcesComponent,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,

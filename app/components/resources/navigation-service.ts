@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {RoutingService} from '../routing-service';
-import {StateFacade} from './state/state-facade';
+import {ViewFacade} from './state/view-facade';
 
 
 @Injectable()
@@ -14,7 +14,7 @@ export class NavigationService {
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private routingService: RoutingService,
-                private viewFacade: StateFacade) {
+                private viewFacade: ViewFacade) {
     }
 
 

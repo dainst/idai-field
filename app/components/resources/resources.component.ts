@@ -8,7 +8,7 @@ import {Loading} from '../../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {M} from '../../m';
-import {StateFacade} from './state/state-facade';
+import {ViewFacade} from './state/view-facade';
 
 
 @Component({
@@ -33,7 +33,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
 
     constructor(route: ActivatedRoute,
-                private viewFacade: StateFacade,
+                private viewFacade: ViewFacade,
                 private routingService: RoutingService,
                 private doceditProxy: DoceditLauncher,
                 private renderer: Renderer,

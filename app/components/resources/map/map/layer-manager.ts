@@ -3,7 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ImageTypeUtility} from '../../../../common/image-type-utility';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
-import {StateFacade} from '../../state/state-facade';
+import {ViewFacade} from '../../state/view-facade';
 import {add, remove, subtract} from "../../../../util/list-util";
 
 
@@ -32,7 +32,7 @@ export class LayerManager {
     constructor(
         private datastore: IdaiFieldImageDocumentReadDatastore,
         private imageTypeUtility: ImageTypeUtility,
-        private viewFacade: StateFacade) {}
+        private viewFacade: ViewFacade) {}
 
 
     public async initializeLayers(mainTypeDocument: IdaiFieldDocument | undefined)

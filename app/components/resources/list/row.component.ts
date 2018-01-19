@@ -6,7 +6,7 @@ import {IdaiType} from 'idai-components-2/configuration';
 import {M} from '../../../m';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
-import {StateFacade} from '../state/state-facade';
+import {ViewFacade} from '../state/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {NavigationService} from '../navigation-service';
@@ -31,7 +31,7 @@ export class RowComponent {
 
     constructor(
         public resourcesComponent: ResourcesComponent,
-        public viewFacade: StateFacade,
+        public viewFacade: ViewFacade,
         private messages: Messages,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,

@@ -25,7 +25,7 @@ import {NavigationPath} from '../navigation-path';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class StateFacade {
+export class ViewFacade {
 
     private viewManager: NavigationPathManager;
     private mainTypeDocumentsManager: MainTypeDocumentsManager;
@@ -102,7 +102,7 @@ export class StateFacade {
 
     public getMainTypeLabel(): string {
 
-        if (this.isInOverview()) throw StateFacade.err('getMainTypeLabel');
+        if (this.isInOverview()) throw ViewFacade.err('getMainTypeLabel');
 
         return (this.resourcesState.getView() == 'project')
             ? 'Projekt' : this.resourcesState.getLabelForName(this.resourcesState.getView());
@@ -179,14 +179,14 @@ export class StateFacade {
 
     public getSelectedMainTypeDocument(): IdaiFieldDocument|undefined {
 
-        if (this.isInOverview()) throw StateFacade.err('getSelectedMainTypeDocument');
+        if (this.isInOverview()) throw ViewFacade.err('getSelectedMainTypeDocument');
         return this.resourcesState.getSelectedOperationTypeDocument();
     }
 
 
     public getMainTypeDocuments() {
 
-        if (this.isInOverview()) throw StateFacade.err('getMainTypeDocuments');
+        if (this.isInOverview()) throw ViewFacade.err('getMainTypeDocuments');
         return this.mainTypeDocumentsManager.getDocuments();
     }
 
@@ -326,7 +326,7 @@ export class StateFacade {
      */
     public async selectMainTypeDocument(mainTypeDocument: Document): Promise<boolean> {
 
-        if (this.isInOverview()) throw StateFacade.err('selectMainTypeDocument');
+        if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument');
         this.mainTypeDocumentsManager.select(mainTypeDocument as IdaiFieldDocument);
 
         await this.populateDocumentList();
@@ -357,7 +357,7 @@ export class StateFacade {
      */
     public async populateMainTypeDocuments() {
 
-        if (this.isInOverview()) throw StateFacade.err('populateMainTypeDocuments');
+        if (this.isInOverview()) throw ViewFacade.err('populateMainTypeDocuments');
         await this.mainTypeDocumentsManager.populate();
     }
 

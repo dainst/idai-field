@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
-import {StateFacade} from '../resources/state/state-facade';
+import {ViewFacade} from '../resources/state/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {RoutingService} from '../routing-service';
@@ -45,7 +45,7 @@ export class ImageOverviewComponent implements OnInit {
 
 
     constructor(
-        public viewFacade: StateFacade,
+        public viewFacade: ViewFacade,
         private imageOverviewFacade: ImageOverviewFacade,
         private routingService: RoutingService
     ) {

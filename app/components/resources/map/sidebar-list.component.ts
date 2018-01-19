@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
-import {StateFacade} from '../state/state-facade';
+import {ViewFacade} from '../state/view-facade';
 import {NavigationService} from '../navigation-service';
 import {BaseList} from '../base-list';
 
@@ -24,7 +24,7 @@ export class SidebarListComponent extends BaseList {
 
     constructor(
         resourcesComponent: ResourcesComponent,
-        viewFacade: StateFacade,
+        viewFacade: ViewFacade,
         loading: Loading,
         private navigationService: NavigationService
     ) {

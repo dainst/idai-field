@@ -7,7 +7,7 @@ import {Messages} from 'idai-components-2/messages';
 import {ResourcesComponent} from '../../resources.component';
 import {ObjectUtil} from '../../../../util/object-util';
 import {RoutingService} from '../../../routing-service';
-import {StateFacade} from '../../state/state-facade';
+import {ViewFacade} from '../../state/view-facade';
 import {ImageUploader} from '../../../imageupload/image-uploader';
 import {M} from '../../../../m';
 
@@ -38,7 +38,7 @@ export class DocumentViewSidebarComponent {
         public resourcesComponent: ResourcesComponent,
         private routingService: RoutingService,
         private projectConfiguration: ProjectConfiguration,
-        private viewFacade: StateFacade,
+        private viewFacade: ViewFacade,
         private imageUploader: ImageUploader,
         private messages: Messages
     ) { }

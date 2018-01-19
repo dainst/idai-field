@@ -3,7 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
-import {StateFacade} from '../state/state-facade';
+import {ViewFacade} from '../state/view-facade';
 import {BaseList} from '../base-list';
 
 
@@ -31,7 +31,7 @@ export class ListComponent extends BaseList {
 
     constructor(
         resourcesComponent: ResourcesComponent,
-        viewFacade: StateFacade,
+        viewFacade: ViewFacade,
         loading: Loading,
         projectConfiguration: ProjectConfiguration
     ) {

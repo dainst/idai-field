@@ -6,7 +6,7 @@ import {Observer} from 'rxjs/Observer';
 import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
 import {ImageTypeUtility} from '../common/image-type-utility';
-import {StateFacade} from './resources/state/state-facade';
+import {ViewFacade} from './resources/state/view-facade';
 import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 
 
@@ -14,7 +14,7 @@ import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 /**
  * Centralizes access to the Router.
  * Has knowledge about how to route into as well as route within
- * bigger components like ResourcesComponent (via StateFacade).
+ * bigger components like ResourcesComponent (via ViewFacade).
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -26,7 +26,7 @@ export class RoutingService {
 
 
     constructor(private router: Router,
-                private viewFacade: StateFacade,
+                private viewFacade: ViewFacade,
                 private location: Location,
                 private imageTypeUtility: ImageTypeUtility,
                 private projectConfiguration: ProjectConfiguration,

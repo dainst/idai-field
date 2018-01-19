@@ -1,5 +1,5 @@
 import {ResourcesComponent} from './resources.component';
-import {StateFacade} from './state/state-facade';
+import {ViewFacade} from './state/view-facade';
 import {Loading} from '../../widgets/loading';
 import {NavigationPath} from './navigation-path';
 
@@ -15,7 +15,7 @@ export class BaseList {
 
     constructor(
         public resourcesComponent: ResourcesComponent,
-        public viewFacade: StateFacade,
+        public viewFacade: ViewFacade,
         private loading: Loading
     ) {
         this.viewFacade.navigationPathNotifications().subscribe(path => {

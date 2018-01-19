@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ResourcesViewState} from './resources-view-state';
 import {StateSerializer} from '../../../common/state-serializer';
-import {NavigationPath} from '../navigation-path';
+import {NavigationPath} from './navigation-path';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {OperationViews} from './operation-views';
 import {is, takeUntil} from "../../../util/fp-util";
@@ -249,11 +249,11 @@ export class ResourcesState {
 
     public getNavigationPath(): NavigationPath {
 
-        if (this.isInOverview()) return NavigationPathInternal.empty();
-        if (!this._[this.view] || !this._[this.view].navigationPaths) return NavigationPathInternal.empty();
+        if (this.isInOverview()) return NavigationPath.empty();
+        if (!this._[this.view] || !this._[this.view].navigationPaths) return NavigationPath.empty();
 
         const operationTypeDocument = this.getMainTypeDocument();
-        if (!operationTypeDocument) return NavigationPathInternal.empty();
+        if (!operationTypeDocument) return NavigationPath.empty();
 
         const navigationPath: NavigationPath = { elements: [] };
         const navigationPathInternal = this.getNavigationPathInternal(operationTypeDocument);
@@ -271,7 +271,7 @@ export class ResourcesState {
         const navigationPaths = this._[this.view].navigationPaths;
         const path = (navigationPaths as any)[operationTypeDocument.resource.id as string];
 
-        return path ? path : NavigationPathInternal.empty();
+        return path ? path : NavigationPath.empty();
     }
 
 

@@ -2,7 +2,7 @@ import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ResourcesState} from './resources-state';
-import {NavigationPath} from '../navigation-path';
+import {NavigationPath} from './navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {inform} from "../../../util/observer-util";

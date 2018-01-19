@@ -9,7 +9,7 @@ import {OperationViews} from './operation-views';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
-import {NavigationPath} from '../navigation-path';
+import {NavigationPath} from './navigation-path';
 
 /**
  * Manages an overview of operation type resources

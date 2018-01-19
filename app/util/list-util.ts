@@ -39,11 +39,7 @@ export const subtractTwo = <A>(sets: NestedArray<A>, other: Array<A>): Array<A> 
 
 
 export const intersect = <A>(aas: NestedArray<A>): Array<A> =>
-    aas.reduce((p, c) =>
-        p.filter(
-            includedIn(c.map(identical))
-        )
-    );
+    aas.reduce((p, c) => p.filter(includedIn(c)));
 
 
 export const union = (sets: NestedArray<any>) =>

@@ -10,7 +10,7 @@ export interface ResourcesViewState {
     mainTypeDocument?: IdaiFieldDocument;
     types?: string[]; // query types in overview
     q?: string; // query string in overview
-    mode?: string;
+    mode: string;
     layerIds?: {[mainTypeDocumentId: string]: string[]};
-    navigationPaths?: {[mainTypeDocumentId: string]: NavigationPathInternal};
+    navigationPaths: {[mainTypeDocumentId: string]: NavigationPathInternal};
 }

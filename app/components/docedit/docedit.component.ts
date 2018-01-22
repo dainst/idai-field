@@ -13,8 +13,8 @@ import {Imagestore} from '../../core/imagestore/imagestore';
 import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
-import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
+import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';
 
 
 @Component({
@@ -72,7 +72,7 @@ export class DoceditComponent {
         private validator: Validator,
         private settingsService: SettingsService,
         private modalService: NgbModal,
-        private datastore: DocumentDatastore,
+        private datastore: IdaiFieldDocumentDatastore,
         private imagestore: Imagestore,
         private imageTypeUtility: ImageTypeUtility,
         private activeTabService: DoceditActiveTabService,

@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {SettingsService} from '../../../core/settings/settings-service';
@@ -22,6 +23,8 @@ export class ResourcesMapComponent {
 
     @Input() activeTab: string;
 
+    private parentDocument: Document|undefined;
+
 
     constructor(
         public loading: Loading,
@@ -30,7 +33,13 @@ export class ResourcesMapComponent {
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private messages: Messages
-    ) { }
+    ) {
+        this.viewFacade.navigationPathNotifications().subscribe(path => {
+            this.parentDocument = path.rootDocument ?
+                path.rootDocument :
+                this.resourcesComponent.getIsRecordedInTarget();
+        })
+    }
 
 
     public select(document: IdaiFieldDocument) {

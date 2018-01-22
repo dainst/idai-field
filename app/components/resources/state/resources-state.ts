@@ -5,7 +5,7 @@ import {NavigationPath} from './navigation-path';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {OperationViews} from './operation-views';
 import {NavigationPathInternal, NavigationPathSegment} from './navigation-path-internal';
-import {includedIn, takeUntil} from "../../../util/list-util";
+import {includedIn, takeUntil} from '../../../util/list-util';
 
 
 @Injectable()
@@ -15,7 +15,7 @@ import {includedIn, takeUntil} from "../../../util/list-util";
  */
 export class ResourcesState {
 
-    private _: { [viewName: string]: ResourcesViewState };
+    private viewStates: { [viewName: string]: ResourcesViewState };
 
     private view: string = 'project';
 
@@ -30,15 +30,15 @@ export class ResourcesState {
 
     public resetForE2E() {
 
-        this._ = { };
+        this.viewStates = { };
     }
 
 
     public async initialize(defaultMode?: string): Promise<any> {
 
-        if (this._) return Promise.resolve();
+        if (this.viewStates) return Promise.resolve();
 
-        this._ = await this.serializer.load(StateSerializer.RESOURCES_STATE)
+        this.viewStates = await this.serializer.load(StateSerializer.RESOURCES_STATE);
 
         this.initializeMode(defaultMode);
         this.setActiveDocumentViewTab(undefined);
@@ -49,8 +49,8 @@ export class ResourcesState {
 
         if (!name) return;
         this.view = name;
-        if (!this._) this._ = {};
-        if (!this._[this.view]) this._[this.view] = { mode: 'map'};
+        if (!this.viewStates) this.viewStates = {};
+        if (!this.viewStates[this.view]) this.viewStates[this.view] = { mode: 'map' };
     }
 
 
@@ -112,84 +112,84 @@ export class ResourcesState {
     public setMainTypeDocument(document: IdaiFieldDocument|undefined) {
 
         if (!this.view) return;
-        if (!this._) return;
-        if (!this._[this.view]) return;
+        if (!this.viewStates) return;
+        if (!this.viewStates[this.view]) return;
 
-        this._[this.view].mainTypeDocument = document;
+        this.viewStates[this.view].mainTypeDocument = document;
     }
 
 
     public getMainTypeDocument(): IdaiFieldDocument|undefined {
 
         if (!this.view) return undefined;
-        if (!this._) return undefined;
-        if (!this._[this.view]) return undefined;
-        if (!this._[this.view].mainTypeDocument) return undefined;
+        if (!this.viewStates) return undefined;
+        if (!this.viewStates[this.view]) return undefined;
+        if (!this.viewStates[this.view].mainTypeDocument) return undefined;
 
-        return this._[this.view].mainTypeDocument;
+        return this.viewStates[this.view].mainTypeDocument;
     }
 
 
     public setMode(mode: string) {
 
-        if (!this._[this.view]) this._[this.view] = {};
-        this._[this.view].mode = mode;
+        if (!this.viewStates[this.view]) this.viewStates[this.view] = {};
+        this.viewStates[this.view].mode = mode;
         this.serialize();
     }
 
 
     public getMode(): string|undefined {
 
-        if (!this._) return 'map';
-        return (!this._[this.view] || !this._[this.view].mode) ? 'map' : this._[this.view].mode;
+        if (!this.viewStates) return 'map';
+        return (!this.viewStates[this.view] || !this.viewStates[this.view].mode) ? 'map' : this.viewStates[this.view].mode;
     }
 
 
     public setQueryString(q: string) {
 
-        if (!this._[this.view]) this._[this.view] = {};
-        this._[this.view].q = q;
+        if (!this.viewStates[this.view]) this.viewStates[this.view] = {};
+        this.viewStates[this.view].q = q;
         this.serialize();
     }
 
 
     public getQueryString() {
 
-        if (!this._) return '';
-        return (!this._[this.view] || !this._[this.view].q) ? '' : this._[this.view].q;
+        if (!this.viewStates) return '';
+        return (!this.viewStates[this.view] || !this.viewStates[this.view].q) ? '' : this.viewStates[this.view].q;
     }
 
 
     public setTypeFilters(types: string[]) {
 
-        if (!this._[this.view]) this._[this.view] = {};
+        if (!this.viewStates[this.view]) this.viewStates[this.view] = {};
 
         if (types && types.length > 0) {
-            this._[this.view].types = types;
+            this.viewStates[this.view].types = types;
         } else {
-            if (this._[this.view])  delete this._[this.view].types;
+            if (this.viewStates[this.view])  delete this.viewStates[this.view].types;
         }
     }
 
 
     public getTypeFilters(): string[]|undefined {
 
-        if (!this._) return undefined;
-        return (!this._[this.view]) ? undefined : this._[this.view].types;
+        if (!this.viewStates) return undefined;
+        return (!this.viewStates[this.view]) ? undefined : this.viewStates[this.view].types;
     }
 
 
     public setActiveLayersIds(activeLayersIds: string[]) {
 
-        if (!this._[this.view]) this._[this.view] = {};
-        if (!this._[this.view].layerIds) this._[this.view].layerIds = {};
+        if (!this.viewStates[this.view]) this.viewStates[this.view] = {};
+        if (!this.viewStates[this.view].layerIds) this.viewStates[this.view].layerIds = {};
 
-        const layerIds = this._[this.view].layerIds;
+        const layerIds = this.viewStates[this.view].layerIds;
         if (!layerIds) return;
 
-        if (this._[this.view].mainTypeDocument && (this._[this.view].mainTypeDocument as any).resource.id) {
+        if (this.viewStates[this.view].mainTypeDocument && (this.viewStates[this.view].mainTypeDocument as any).resource.id) {
 
-            layerIds[(this._[this.view].mainTypeDocument as any).resource.id] = activeLayersIds.slice(0);
+            layerIds[(this.viewStates[this.view].mainTypeDocument as any).resource.id] = activeLayersIds.slice(0);
             this.serialize();
         }
     }
@@ -197,13 +197,13 @@ export class ResourcesState {
 
     public getActiveLayersIds(): string[] {
 
-        if (!this._[this.view] || !this._[this.view].layerIds) return [];
+        if (!this.viewStates[this.view] || !this.viewStates[this.view].layerIds) return [];
 
-        const layerIds = this._[this.view].layerIds;
+        const layerIds = this.viewStates[this.view].layerIds;
         if (!layerIds) return [];
 
-        if (this._[this.view].mainTypeDocument && (this._[this.view].mainTypeDocument as any).resource.id) {
-            return layerIds[(this._[this.view].mainTypeDocument as any)];
+        if (this.viewStates[this.view].mainTypeDocument && (this.viewStates[this.view].mainTypeDocument as any).resource.id) {
+            return layerIds[(this.viewStates[this.view].mainTypeDocument as any)];
         } else {
             return [];
         }
@@ -212,13 +212,13 @@ export class ResourcesState {
 
     public removeActiveLayersIds() {
 
-        if (!this._[this.view] || !this._[this.view].layerIds) return;
+        if (!this.viewStates[this.view] || !this.viewStates[this.view].layerIds) return;
 
-        const layerIds = this._[this.view].layerIds;
+        const layerIds = this.viewStates[this.view].layerIds;
         if (!layerIds) return;
 
-        if (this._[this.view].mainTypeDocument && (this._[this.view].mainTypeDocument as any).resource.id) {
-            delete layerIds[(this._[this.view].mainTypeDocument as any)];
+        if (this.viewStates[this.view].mainTypeDocument && (this.viewStates[this.view].mainTypeDocument as any).resource.id) {
+            delete layerIds[(this.viewStates[this.view].mainTypeDocument as any)];
             this.serialize();
         }
     }
@@ -229,8 +229,8 @@ export class ResourcesState {
      */
     public moveInto(document: IdaiFieldDocument|undefined) {
 
-        if (!this._[this.view]) this._[this.view] = {};
-        if (!this._[this.view].navigationPaths) this._[this.view].navigationPaths = {};
+        if (!this.viewStates[this.view]) this.viewStates[this.view] = {};
+        if (!this.viewStates[this.view].navigationPaths) this.viewStates[this.view].navigationPaths = {};
 
         const operationTypeDocument = this.getMainTypeDocument();
         if (operationTypeDocument) {
@@ -238,7 +238,7 @@ export class ResourcesState {
             const navigationPath = ResourcesState.makeNewNavigationPath(
                 this.getNavigationPathInternal(operationTypeDocument), document);
 
-            const navigationPaths = this._[this.view].navigationPaths;
+            const navigationPaths = this.viewStates[this.view].navigationPaths;
             if (!navigationPaths) return;
 
             navigationPaths[(operationTypeDocument as any).resource.id] = navigationPath;
@@ -249,7 +249,7 @@ export class ResourcesState {
     public getNavigationPath(): NavigationPath {
 
         if (this.isInOverview()) return NavigationPath.empty();
-        if (!this._[this.view] || !this._[this.view].navigationPaths) return NavigationPath.empty();
+        if (!this.viewStates[this.view] || !this.viewStates[this.view].navigationPaths) return NavigationPath.empty();
 
         const operationTypeDocument = this.getMainTypeDocument();
         if (!operationTypeDocument) return NavigationPath.empty();
@@ -267,7 +267,7 @@ export class ResourcesState {
 
     private getNavigationPathInternal(operationTypeDocument: IdaiFieldDocument): NavigationPathInternal {
 
-        const navigationPaths = this._[this.view].navigationPaths;
+        const navigationPaths = this.viewStates[this.view].navigationPaths;
         const path = (navigationPaths as any)[operationTypeDocument.resource.id as string];
 
         return path ? path : NavigationPath.empty();
@@ -295,13 +295,13 @@ export class ResourcesState {
 
         const objectToSerialize: { [viewName: string]: ResourcesViewState } = {};
 
-        for (let viewName of Object.keys(this._)) {
+        for (let viewName of Object.keys(this.viewStates)) {
             objectToSerialize[viewName] = {};
             // if (this._[viewName].mainTypeDocumentId) { // TODO comment in and also make sure loading works properly
             //     objectToSerialize[viewName].mainTypeDocumentId = this._[viewName].mainTypeDocumentId;
             // }
             //if (this._[viewName].mode) objectToSerialize[viewName].mode = this._[viewName].mode;
-            if (this._[viewName].layerIds) objectToSerialize[viewName].layerIds = this._[viewName].layerIds;
+            if (this.viewStates[viewName].layerIds) objectToSerialize[viewName].layerIds = this.viewStates[viewName].layerIds;
         }
 
         return objectToSerialize;

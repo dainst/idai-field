@@ -8,7 +8,8 @@
          class="px-0">
         <editable-map [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
-                      [mainTypeDocument]="parentDocument"
+                      [parentDocument]="parentDocument"
+                      [mainTypeDocument]="resourcesComponent.getIsRecordedInTarget()"
                       [isEditing]="resourcesComponent.isEditingGeometry"
                       [projectDocument]="resourcesComponent.projectDocument"
                       [update]="resourcesComponent.ready"

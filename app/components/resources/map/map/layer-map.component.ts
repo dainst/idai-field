@@ -1,4 +1,5 @@
-import {Component, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {MapComponent} from 'idai-components-2/idai-field-map';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
@@ -18,6 +19,14 @@ import {LayerImageProvider} from './layer-image-provider';
  * @author Daniel de Oliveira
  */
 export class LayerMapComponent extends MapComponent {
+
+    @Input() documents: Array<IdaiFieldDocument>;
+    @Input() selectedDocument: IdaiFieldDocument;
+    @Input() parentDocument: IdaiFieldDocument;
+    @Input() mainTypeDocument: IdaiFieldDocument;
+    @Input() projectDocument: IdaiFieldDocument;
+    @Input() update: boolean;
+
 
     public layers: Array<IdaiFieldImageDocument> = [];
 

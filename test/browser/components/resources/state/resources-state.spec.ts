@@ -20,7 +20,7 @@ export function main() {
         ];
 
 
-        let resourcesState;
+        let resourcesState: ResourcesState;
 
 
         beforeEach(() => {
@@ -66,30 +66,32 @@ export function main() {
         });
 
 
-        it('set type filters',() => {
+        it('set type filters and q',() => {
 
             const trenchDocument1 = Static.idfDoc('trench1','trench1','Trench','t1');
             const featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature', 'feature1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-            const findDocument1 = Static.idfDoc('Find 1','find1','Find', 'find1');
-            findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
             resourcesState.setView('excavation');
             resourcesState.setMainTypeDocument(trenchDocument1);
 
             resourcesState.moveInto(featureDocument1);
             resourcesState.setTypeFilters(['Find']);
+            resourcesState.setQueryString('abc');
             resourcesState.moveInto(undefined);
             expect(resourcesState.getTypeFilters()).toEqual(undefined);
+            expect(resourcesState.getQueryString()).toEqual(undefined);
             resourcesState.setView('survey');
             expect(resourcesState.getTypeFilters()).toEqual(undefined);
+            expect(resourcesState.getQueryString()).toEqual(undefined);
             resourcesState.setView('excavation');
             resourcesState.moveInto(featureDocument1);
             expect(resourcesState.getTypeFilters()).toEqual(['Find']);
+            expect(resourcesState.getQueryString()).toEqual('abc');
         });
 
 
-        it('delete type filter of segment',() => {
+        it('delete type filter and q of segment',() => {
 
             const trenchDocument1 = Static.idfDoc('trench1','trench1','Trench','t1');
             const featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature', 'feature1');
@@ -99,12 +101,15 @@ export function main() {
 
             resourcesState.moveInto(featureDocument1);
             resourcesState.setTypeFilters(['Find']);
+            resourcesState.setQueryString('abc');
             resourcesState.setTypeFilters(undefined);
+            resourcesState.setQueryString(undefined);
             expect(resourcesState.getTypeFilters()).toEqual(undefined);
+            expect(resourcesState.getQueryString()).toEqual('');
         });
 
 
-        it('delete type filter of non segment',() => {
+        it('delete type filter and q of non segment',() => {
 
             const trenchDocument1 = Static.idfDoc('trench1','trench1','Trench','t1');
             const featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature', 'feature1');
@@ -114,7 +119,9 @@ export function main() {
 
             resourcesState.moveInto(featureDocument1);
             resourcesState.setTypeFilters(['Find']);
+            resourcesState.setQueryString('abc');
             resourcesState.setTypeFilters(undefined);
+            resourcesState.setQueryString(undefined);
             expect(resourcesState.getTypeFilters()).toEqual(undefined);
         });
     });

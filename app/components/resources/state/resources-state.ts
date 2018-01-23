@@ -92,9 +92,6 @@ export class ResourcesState {
     public getMode = () => this.viewStates[this.view].mode;
 
 
-    public getQueryString = () => this.viewStates[this.view].q;
-
-
     public setMode(mode: string) {
 
         this.viewStates[this.view].mode = mode;
@@ -114,8 +111,15 @@ export class ResourcesState {
 
     public setQueryString(q: string) {
 
-        this.viewStates[this.view].q = q;
-        this.serialize();
+        this.doWithNavPath(
+            (navPath) => {
+                if (!q) this.getRootSegment(navPath).q = '';
+                else this.getRootSegment(navPath).q = q;
+            },
+            (navPath) => {
+                if (!q) navPath.q = '';
+                else navPath.q = q;
+            });
     }
 
 
@@ -124,22 +128,26 @@ export class ResourcesState {
      */
     public setTypeFilters(types: string[]|undefined) {
 
+        this.doWithNavPath(
+            (navPath) => {
+                if (!types) delete this.getRootSegment(navPath).types;
+                else this.getRootSegment(navPath).types = types;
+            },
+            (navPath) => {
+                if (!types) delete navPath.types;
+                else navPath.types = types;
+            });
+    }
+
+
+    public getQueryString(): string|undefined {
+
         const navigationPath = this.getCurrentNavigationPath();
         if (!navigationPath) return;
 
-        if (navigationPath.rootDocument) {
-            if (!types) {
-                delete this.getRootSegment(navigationPath).types;
-            } else {
-                this.getRootSegment(navigationPath).types = types;
-            }
-        } else {
-            if (!types) {
-                delete navigationPath.types;
-            } else {
-                navigationPath.types = types;
-            }
-        }
+        return (navigationPath.rootDocument)
+            ? this.getRootSegment(navigationPath).q
+            : navigationPath.q;
     }
 
 
@@ -258,6 +266,17 @@ export class ResourcesState {
         }
 
         return objectToSerialize;
+    }
+
+
+    private doWithNavPath(doWhenRootExists: (n: NavigationPathInternal) => void,
+                          doWhenRootNotExists: (n: NavigationPathInternal) => void) {
+
+        const navigationPath = this.getCurrentNavigationPath();
+        if (!navigationPath) return;
+
+        if (navigationPath.rootDocument) doWhenRootExists(navigationPath);
+        else doWhenRootNotExists(navigationPath);
     }
 
 

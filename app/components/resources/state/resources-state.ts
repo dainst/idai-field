@@ -175,7 +175,8 @@ export class ResourcesState {
         const mainTypeDocument = this.getMainTypeDocument();
         if (!mainTypeDocument) return [];
 
-        return this.viewStates[this.view].layerIds[mainTypeDocument.resource.id as string];
+        const layersIds = this.viewStates[this.view].layerIds[mainTypeDocument.resource.id as string];
+        return layersIds ? layersIds : [];
     }
 
 

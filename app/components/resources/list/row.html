@@ -1,9 +1,9 @@
 <div id="{{document.resource.id ? 'resource-' + document.resource.identifier : 'new-resource'}}"
      class="row-wrapper">
     <div>
-        <span [class.text-info]="!document.resource.id">
+        <div [class.text-info]="!document.resource.id">
             {{typesMap[document.resource.type].label}}
-       </span>
+       </div>
 
         <button class="btn-small btn-link float-right align-middle" style="padding:0"
                 (click)="moveInto(document)">

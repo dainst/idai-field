@@ -261,14 +261,10 @@ export class ResourcesState {
         const operationTypeDocument = this.getMainTypeDocument();
         if (!operationTypeDocument) return NavigationPath.empty();
 
-        const navigationPath: NavigationPath = { elements: [] };
-        const navigationPathInternal = this.getNavigationPathInternal(operationTypeDocument);
-        if (navigationPathInternal.rootDocument) navigationPath.rootDocument = navigationPathInternal.rootDocument;
-
-        navigationPathInternal.elements
-            .forEach(segment => navigationPath.elements.push(segment.document));
-
-        return navigationPath;
+        return {
+            elements: this.getNavigationPathInternal(operationTypeDocument).elements.map(toDocument),
+            rootDocument: this.getNavigationPathInternal(operationTypeDocument).rootDocument
+        }
     }
 
 

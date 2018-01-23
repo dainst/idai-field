@@ -126,12 +126,6 @@ export class ViewFacade {
     }
 
 
-    public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
-
-        this.resourcesState.setActiveDocumentViewTab(activeDocumentViewTab);
-    }
-
-
     // TODO remove
     public getQuery() {
 
@@ -151,12 +145,6 @@ export class ViewFacade {
         this.resourcesState.removeActiveLayersIds();
         this.viewManager.setMainTypeDocument(undefined);
         await this.populateMainTypeDocuments();
-    }
-
-
-    public setActiveLayersIds(activeLayersIds: string[]) {
-
-        return this.resourcesState.setActiveLayersIds(activeLayersIds);
     }
 
 
@@ -192,28 +180,46 @@ export class ViewFacade {
     }
 
 
-    public setMode(mode: string) {
+    public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
 
-        this.resourcesState.setMode(mode);
+        this.resourcesState.setActiveDocumentViewTab(activeDocumentViewTab);
     }
 
 
-    public setSelectedDocumentById(id: string) {
-
-        return this.documentsManager.setSelectedById(id);
-    }
+    public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesState.setActiveLayersIds(activeLayersIds);
 
 
-    public isNewDocumentFromRemote(document: Document) {
-
-        return this.documentsManager.isNewDocumentFromRemote(document);
-    }
+    public setMode = (mode: string) => this.resourcesState.setMode(mode);
 
 
-    public remove(document: Document) {
+    public setSelectedDocumentById = (id: string) => this.documentsManager.setSelectedById(id);
 
-        return this.documentsManager.remove(document);
-    }
+
+    public isNewDocumentFromRemote = (document: Document) => this.documentsManager.isNewDocumentFromRemote(document);
+
+
+    public remove = (document: Document) => this.documentsManager.remove(document);
+
+
+    public setSearchString = (q: string) => this.documentsManager.setQueryString(q);
+
+
+    public setTypesToFilterBy = (types: string[]) => this.documentsManager.setQueryTypes(types);
+
+
+    public moveInto = (document: IdaiFieldDocument) => this.documentsManager.moveInto(document);
+
+
+    public navigationPathNotifications = () => this.viewManager.navigationPathNotifications();
+
+
+    public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
+
+
+    public getNavigationPath = () => this.resourcesState.getNavigationPath();
+
+
+    public populateDocumentList = () => this.documentsManager.populateDocumentList();
 
 
     /**
@@ -234,39 +240,6 @@ export class ViewFacade {
 
         return this.documentsManager.setSelected(document);
     }
-
-
-    public async setSearchString(q: string) {
-
-        await this.documentsManager.setQueryString(q);
-    }
-
-
-    public async setTypesToFilterBy(types: string[]) {
-
-        await this.documentsManager.setQueryTypes(types);
-    }
-
-
-    public async moveInto(document: IdaiFieldDocument) {
-
-        await this.documentsManager.moveInto(document);
-    }
-
-
-    public navigationPathNotifications(): Observable<NavigationPath> {
-
-        return this.viewManager.navigationPathNotifications();
-    }
-
-
-    public deselectionNotifications(): Observable<Document> {
-
-        return this.documentsManager.deselectionNotifications();
-    }
-
-
-    public getNavigationPath = () => this.resourcesState.getNavigationPath();
 
 
     public getCurrentFilterType()  {
@@ -295,12 +268,6 @@ export class ViewFacade {
         } else {
             return true;
         }
-    }
-
-
-    public populateDocumentList() {
-
-        return this.documentsManager.populateDocumentList();
     }
 
 

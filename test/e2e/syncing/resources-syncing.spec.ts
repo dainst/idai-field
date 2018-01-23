@@ -174,7 +174,7 @@ describe('resources/syncing --', function() {
     }
 
 
-    it('resource created in client should be synced to other db', done => {
+    xit('resource created in client should be synced to other db', done => {
 
         NavbarPage.clickNavigateToExcavation()
             .then(() => {

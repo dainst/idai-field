@@ -11,12 +11,17 @@ export interface ResourcesViewState {
     types?: string[]; // query types in overview
     q: string; // query string in overview
     mode: string;
-    layerIds?: {[mainTypeDocumentId: string]: string[]};
+    layerIds: {[mainTypeDocumentId: string]: string[]};
     navigationPaths: {[mainTypeDocumentId: string]: NavigationPathInternal};
 }
 
 
 export class ResourcesViewState {
 
-    public static default = () => { return { q: '', mode: 'map', navigationPaths: {} }; }
+    public static default = () => { return {
+        q: '',
+        mode: 'map',
+        navigationPaths: {},
+        layerIds: {}
+    }; }
 }

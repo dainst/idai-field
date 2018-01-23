@@ -192,14 +192,8 @@ export class ResourcesState {
 
     public setActiveLayersIds(activeLayersIds: string[]) {
 
-        if (!this.viewStates[this.view].layerIds) this.viewStates[this.view].layerIds = {};
-
-        const layerIds = this.viewStates[this.view].layerIds;
-        if (!layerIds) return;
-
         if (this.viewStates[this.view].mainTypeDocument && (this.viewStates[this.view].mainTypeDocument as any).resource.id) {
-
-            layerIds[(this.viewStates[this.view].mainTypeDocument as any).resource.id] = activeLayersIds.slice(0);
+            this.viewStates[this.view].layerIds[(this.viewStates[this.view].mainTypeDocument as any).resource.id] = activeLayersIds.slice(0);
             this.serialize();
         }
     }
@@ -207,13 +201,8 @@ export class ResourcesState {
 
     public getActiveLayersIds(): string[] {
 
-        if (!this.viewStates[this.view] || !this.viewStates[this.view].layerIds) return [];
-
-        const layerIds = this.viewStates[this.view].layerIds;
-        if (!layerIds) return [];
-
         if (this.viewStates[this.view].mainTypeDocument && (this.viewStates[this.view].mainTypeDocument as any).resource.id) {
-            return layerIds[(this.viewStates[this.view].mainTypeDocument as any)];
+            return this.viewStates[this.view].layerIds[(this.viewStates[this.view].mainTypeDocument as any)];
         } else {
             return [];
         }
@@ -222,13 +211,8 @@ export class ResourcesState {
 
     public removeActiveLayersIds() {
 
-        if (!this.viewStates[this.view] || !this.viewStates[this.view].layerIds) return;
-
-        const layerIds = this.viewStates[this.view].layerIds;
-        if (!layerIds) return;
-
         if (this.viewStates[this.view].mainTypeDocument && (this.viewStates[this.view].mainTypeDocument as any).resource.id) {
-            delete layerIds[(this.viewStates[this.view].mainTypeDocument as any)];
+            delete this.viewStates[this.view].layerIds[(this.viewStates[this.view].mainTypeDocument as any)];
             this.serialize();
         }
     }

@@ -134,10 +134,7 @@ export class ResourcesState {
     }
 
 
-    public getMode(): string|undefined {
-
-        return (!this.viewStates[this.view].mode) ? 'map' : this.viewStates[this.view].mode;
-    }
+    public getMode = () => this.viewStates[this.view].mode;
 
 
     public setQueryString(q: string) {
@@ -147,10 +144,7 @@ export class ResourcesState {
     }
 
 
-    public getQueryString() {
-
-        return (!this.viewStates[this.view].q) ? '' : this.viewStates[this.view].q;
-    }
+    public getQueryString = () => this.viewStates[this.view].q;
 
 
     /**

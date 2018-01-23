@@ -162,15 +162,12 @@ export class ResourcesState {
         if (!navigationPath) return;
 
         if (navigationPath.rootDocument) {
-            const element: NavigationPathSegment
-                = navigationPath.elements.find(element =>
-                element.document.resource.id == (navigationPath.rootDocument as IdaiFieldDocument).resource.id) as NavigationPathSegment;
             if (!types) {
-                delete element.types;
+                delete this.getRootSegment(navigationPath).types;
             } else {
-                element.types = types;
+                this.getRootSegment(navigationPath).types = types;
             }
-        } else { // mainTypeDocument selected
+        } else {
             if (!types) {
                 delete navigationPath.types;
             } else {
@@ -180,16 +177,21 @@ export class ResourcesState {
     }
 
 
+    private getRootSegment(navigationPath: NavigationPathInternal) {
+
+        return navigationPath.elements.find(element =>
+            element.document.resource.id ==
+                (navigationPath.rootDocument as IdaiFieldDocument).resource.id)as NavigationPathSegment;
+    }
+
+
     public getTypeFilters(): string[]|undefined {
 
         const navigationPath = this.getCurrentNavigationPath();
         if (!navigationPath) return;
 
         if (navigationPath.rootDocument) {
-            const element: NavigationPathSegment
-                = navigationPath.elements.find(element =>
-                element.document.resource.id == (navigationPath.rootDocument as IdaiFieldDocument).resource.id) as NavigationPathSegment;
-            return element.types;
+            return this.getRootSegment(navigationPath).types;
         } else {
             return navigationPath.types;
         }

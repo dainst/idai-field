@@ -244,16 +244,13 @@ export class ResourcesState {
      * @param document set undefined to make rootElement of navigation path undefined
      */
     public moveInto(document: IdaiFieldDocument|undefined) {
-        
+
         const operationTypeDocument = this.getMainTypeDocument();
         if (!operationTypeDocument) return;
 
-        const navigationPath = ResourcesState.makeNewNavigationPath(
-            this.getNavigationPathInternal(operationTypeDocument), document);
-
-        const navigationPaths = this.viewStates[this.view].navigationPaths;
-
-        navigationPaths[(operationTypeDocument as any).resource.id] = navigationPath;
+        this.viewStates[this.view].navigationPaths[
+            operationTypeDocument.resource.id as string] = ResourcesState.makeNewNavigationPath(
+                this.getNavigationPathInternal(operationTypeDocument), document);
     }
 
 

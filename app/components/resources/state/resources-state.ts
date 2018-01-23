@@ -162,29 +162,30 @@ export class ResourcesState {
 
     public setActiveLayersIds(activeLayersIds: string[]) {
 
-        if (this.viewStates[this.view].mainTypeDocument && (this.viewStates[this.view].mainTypeDocument as any).resource.id) {
-            this.viewStates[this.view].layerIds[(this.viewStates[this.view].mainTypeDocument as any).resource.id] = activeLayersIds.slice(0);
-            this.serialize();
-        }
+        const mainTypeDocument = this.getMainTypeDocument();
+        if (!mainTypeDocument) return;
+
+        this.viewStates[this.view].layerIds[mainTypeDocument.resource.id as string] = activeLayersIds.slice(0);
+        this.serialize();
     }
 
 
     public getActiveLayersIds(): string[] {
 
-        if (this.viewStates[this.view].mainTypeDocument && (this.viewStates[this.view].mainTypeDocument as any).resource.id) {
-            return this.viewStates[this.view].layerIds[(this.viewStates[this.view].mainTypeDocument as any)];
-        } else {
-            return [];
-        }
+        const mainTypeDocument = this.getMainTypeDocument();
+        if (!mainTypeDocument) return [];
+
+        return this.viewStates[this.view].layerIds[mainTypeDocument.resource.id as string];
     }
 
 
     public removeActiveLayersIds() {
 
-        if (this.viewStates[this.view].mainTypeDocument && (this.viewStates[this.view].mainTypeDocument as any).resource.id) {
-            delete this.viewStates[this.view].layerIds[(this.viewStates[this.view].mainTypeDocument as any)];
-            this.serialize();
-        }
+        const mainTypeDocument = this.getMainTypeDocument();
+        if (!mainTypeDocument) return;
+
+        delete this.viewStates[this.view].layerIds[mainTypeDocument.resource.id as string];
+        this.serialize();
     }
 
 
@@ -193,12 +194,12 @@ export class ResourcesState {
      */
     public moveInto(document: IdaiFieldDocument|undefined) {
 
-        const operationTypeDocument = this.getMainTypeDocument();
-        if (!operationTypeDocument) return;
+        const mainTypeDocument = this.getMainTypeDocument();
+        if (!mainTypeDocument) return;
 
         this.viewStates[this.view].navigationPaths[
-            operationTypeDocument.resource.id as string] = ResourcesState.makeNewNavigationPath(
-                this.getNavigationPathInternal(operationTypeDocument), document);
+            mainTypeDocument.resource.id as string] = ResourcesState.makeNewNavigationPath(
+                this.getNavigationPathInternal(mainTypeDocument), document);
     }
 
 
@@ -206,12 +207,12 @@ export class ResourcesState {
 
         if (this.isInOverview()) return NavigationPath.empty();
 
-        const operationTypeDocument = this.getMainTypeDocument();
-        if (!operationTypeDocument) return NavigationPath.empty();
+        const mainTypeDocument = this.getMainTypeDocument();
+        if (!mainTypeDocument) return NavigationPath.empty();
 
         return {
-            elements: this.getNavigationPathInternal(operationTypeDocument).elements.map(toDocument),
-            rootDocument: this.getNavigationPathInternal(operationTypeDocument).rootDocument
+            elements: this.getNavigationPathInternal(mainTypeDocument).elements.map(toDocument),
+            rootDocument: this.getNavigationPathInternal(mainTypeDocument).rootDocument
         }
     }
 
@@ -227,11 +228,11 @@ export class ResourcesState {
 
     private getCurrentNavigationPath(): NavigationPathInternal|undefined {
 
-        const resourcesViewState = this.viewStates[this.view];
-        if (!resourcesViewState.mainTypeDocument) return;
+        const mainTypeDocument = this.getMainTypeDocument();
+        if (!mainTypeDocument) return NavigationPath.empty();
 
-        return resourcesViewState.navigationPaths[
-                resourcesViewState.mainTypeDocument.resource.id as string
+        return this.viewStates[this.view].navigationPaths[
+                mainTypeDocument.resource.id as string
             ];
     }
 

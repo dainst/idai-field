@@ -55,16 +55,10 @@ export class LayerManager {
     }
 
 
-    public reset() {
-
-        this.activeLayerIds = [];
-    }
+    public reset = () => this.activeLayerIds = [];
 
 
-    public isActiveLayer(resourceId: string): boolean {
-
-        return this.activeLayerIds.indexOf(resourceId) > -1;
-    }
+    public isActiveLayer = (resourceId: string) => this.activeLayerIds.indexOf(resourceId) > -1;
 
 
     public toggleLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument | undefined) {
@@ -73,14 +67,14 @@ export class LayerManager {
             remove(this.activeLayerIds, resourceId) :
             add(this.activeLayerIds, resourceId);
 
-        if (mainTypeDocument) this.viewFacade.setActiveLayersIds(mainTypeDocument.resource.id as any, this.activeLayerIds);
+        if (mainTypeDocument) this.viewFacade.setActiveLayersIds(this.activeLayerIds);
     }
 
 
     private fetchActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument | undefined): ListDiffResult {
 
         const newActiveLayerIds = mainTypeDocument ?
-            this.viewFacade.getActiveLayersIds(mainTypeDocument.resource.id as any) : [];
+            this.viewFacade.getActiveLayersIds() : [];
         const oldActiveLayerIds = this.activeLayerIds.slice(0);
         this.activeLayerIds = newActiveLayerIds;
 

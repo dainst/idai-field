@@ -88,6 +88,12 @@ export class ViewFacade {
     public getActiveDocumentViewTab = () => this.resourcesState.getActiveDocumentViewTab();
 
 
+    public getActiveLayersIds = () => this.resourcesState.getActiveLayersIds();
+
+
+    public deselect = () => this.documentsManager.deselect();
+
+
     /**
      * @returns the main type of the currently selected view.
      * This is either 'Project' or one of the operation types names.
@@ -126,12 +132,6 @@ export class ViewFacade {
     }
 
 
-    public deselect() {
-
-        return this.documentsManager.deselect();
-    }
-
-
     // TODO remove
     public getQuery() {
 
@@ -154,19 +154,9 @@ export class ViewFacade {
     }
 
 
-    // TODO it should not be necessary to specify mainTypeDocumentResourceId, it simply should be the currently selected mainTypeDocument
-    public setActiveLayersIds(mainTypeDocumentResourceId: string, activeLayersIds: string[]) {
+    public setActiveLayersIds(activeLayersIds: string[]) {
 
         return this.resourcesState.setActiveLayersIds(activeLayersIds);
-    }
-
-
-    // TODO it should not be necessary to specify mainTypeDocumentResourceId, it simply should be the currently selected mainTypeDocument
-    public getActiveLayersIds(mainTypeDocumentResourceId: string): string[] {
-
-        const ids: string[] = this.resourcesState.getActiveLayersIds();
-
-        return ids ? ids : [];
     }
 
 

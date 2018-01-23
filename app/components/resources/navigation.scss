@@ -6,4 +6,12 @@
   #selected-operation-type-document {
     text-align: left;
   }
+
+  .navigation-button {
+      color: #5572A1;
+  }
+
+  .root-document ~ .navigation-button {
+    color: lighten(#5572A1, 30%);
+  }
 }

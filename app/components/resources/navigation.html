@@ -11,14 +11,14 @@
             </div>
         </div>
 
-        <button id="selected-operation-type-document" type="button" class="btn btn-outline-primary"
-                [class.active]="!navigationPath.rootDocument"
+        <button id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
+                [class.root-document]="!navigationPath.rootDocument"
                 (click)="setRootDocument(undefined)">
             {{viewFacade.getSelectedMainTypeDocument().resource.identifier}}
         </button>
 
-        <div *ngFor="let document of navigationPath.elements" class="btn btn-outline-primary"
-             [class.active]="document == navigationPath.rootDocument" (click)="setRootDocument(document)">
+        <div *ngFor="let document of navigationPath.elements" class="btn btn-outline-primary navigation-button"
+             [class.root-document]="document == navigationPath.rootDocument" (click)="setRootDocument(document)">
             {{document.resource.identifier}}
         </div>
     </div>

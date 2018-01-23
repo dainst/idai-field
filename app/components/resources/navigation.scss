@@ -1,3 +1,7 @@
+/**
+ * @author Thomas Kleinke
+ */
+
 #navigation {
   padding-left: 8px;
   color: rgba(85, 114, 161, 1);
@@ -26,7 +30,7 @@
   .btn-outline-primary:active {
     box-shadow: inset 5px 5px 9px -7px rgba(0, 0, 0, 0.7);
     color: #5572A1;
-    background-color: white;
+    background-color: #fff;
   }
 
   .navigation-button:not(:last-child):before, .navigation-button:not(:last-child):after {
@@ -48,7 +52,7 @@
   }
 
   .navigation-button:not(:last-child):after {
-    border-left-color: #ffffff;
+    border-left-color: #fff;
     border-width: 5px;
     margin-top: -5px;
   }
@@ -69,7 +73,7 @@
 
     .dropdown-item:active {
       background-color: darken($list-item-hover-color, 5%);
-      color: black;
+      color: #000;
       outline: 0;
     }
   }
@@ -77,6 +81,6 @@
   .show > .btn-outline-primary.dropdown-toggle {
     background-color: #5572A1;
     border-color: #5572A1;
-    color: white;
+    color: #fff;
   }
 }

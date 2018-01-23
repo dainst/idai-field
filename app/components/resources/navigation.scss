@@ -22,11 +22,11 @@
     }
 
     .dropdown-item:hover {
-      background-color: $list-item-hover-colour;
+      background-color: $list-item-hover-color;
     }
 
     .dropdown-item:active {
-      background-color: darken($list-item-hover-colour, 5%);
+      background-color: darken($list-item-hover-color, 5%);
       color: black;
       outline: 0;
     }

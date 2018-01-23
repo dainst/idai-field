@@ -8,12 +8,9 @@
 #import {
 
   padding: 0 !important;
-  background-color: #eee;
 
   header {
-    background-color: #eee;
-    padding: 7px;
-    color: #fff;
+    padding: 8px;
     border-bottom: 1px solid #ccc;
   }
 
@@ -21,16 +18,15 @@
     display: inline-block;
     font-size: 1.1em;
     color: #fff;
-    background-color: #294b83;
-    padding: 10px 10px 10px 11px;
     margin-right: 5px;
+    color: #657faa;
   }
 
   header h1 {
     font-size: 1.5em;
-    padding: 0;
+    padding-top: 8px;
     margin: 0;
-    background-color: #657faa;
+    color: #657faa;
   }
 
   main {

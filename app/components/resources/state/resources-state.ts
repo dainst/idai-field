@@ -190,11 +190,9 @@ export class ResourcesState {
         const navigationPath = this.getCurrentNavigationPath();
         if (!navigationPath) return;
 
-        if (navigationPath.rootDocument) {
-            return this.getRootSegment(navigationPath).types;
-        } else {
-            return navigationPath.types;
-        }
+        return (navigationPath.rootDocument)
+            ? this.getRootSegment(navigationPath).types
+            : navigationPath.types;
     }
 
 

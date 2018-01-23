@@ -15,6 +15,34 @@
     color: lighten(#5572A1, 35%);
   }
 
+  .btn-outline-primary:active {
+    box-shadow: inset 5px 5px 9px -7px rgba(0, 0, 0, 0.7);
+  }
+
+  .navigation-button:not(:last-child):before, .navigation-button:not(:last-child):after {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: 0;
+    height: 0;
+    border: solid transparent;
+    content: '';
+    pointer-events: none;
+    z-index: 10000;
+  }
+
+  .navigation-button:not(:last-child):before {
+    border-left-color: #526e9c;
+    border-width: 6px;
+    margin-top: -6px;
+  }
+
+  .navigation-button:not(:last-child):after {
+    border-left-color: #ffffff;
+    border-width: 5px;
+    margin-top: -5px;
+  }
+
   #operation-document-selector {
 
     .dropdown-item {

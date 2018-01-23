@@ -7,6 +7,7 @@ import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../state/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
+import {NavigationPath} from '../state/navigation-path';
 
 
 @Component({
@@ -34,10 +35,10 @@ export class ResourcesMapComponent {
         private settingsService: SettingsService,
         private messages: Messages
     ) {
+        this.parentDocument = this.getParentDocument(this.viewFacade.getNavigationPath());
+
         this.viewFacade.navigationPathNotifications().subscribe(path => {
-            this.parentDocument = path.rootDocument ?
-                path.rootDocument :
-                this.resourcesComponent.getIsRecordedInTarget();
+            this.parentDocument = this.getParentDocument(path);
         });
     }
 
@@ -98,5 +99,13 @@ export class ResourcesMapComponent {
         if (!selectedDoc) return false;
 
         return !selectedDoc.resource.id;
+    }
+
+
+    private getParentDocument(navigationPath: NavigationPath): Document|undefined {
+
+        return navigationPath.rootDocument ?
+            navigationPath.rootDocument :
+            this.resourcesComponent.getIsRecordedInTarget();
     }
 }

@@ -51,7 +51,7 @@ export class RoutingService {
         if (viewName == this.viewFacade.getCurrentViewName()) return;
 
         await this.router.navigate(['resources', viewName, document.resource.id]);
-        this.viewFacade.selectMainTypeDocument(document);
+        await this.viewFacade.selectMainTypeDocument(document);
     }
 
 

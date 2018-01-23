@@ -1,5 +1,5 @@
 <div id="{{document.resource.id ? 'resource-' + document.resource.identifier : 'new-resource'}}"
-     (dblclick)="resourcesComponent.editDocument(document)" class="row-wrapper">
+     class="row-wrapper">
     <div>
         <span [class.text-info]="!document.resource.id">
             {{typesMap[document.resource.type].label}}

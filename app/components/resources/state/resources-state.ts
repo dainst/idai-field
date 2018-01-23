@@ -261,8 +261,8 @@ export class ResourcesState {
     }
 
 
-    private withNavPath(doWhenRootExists: (n: NavigationPathInternal) => void,
-                        doWhenRootNotExists: (n: NavigationPathInternal) => void) {
+    private withNavPath(doWhenRootExists: (n: NavigationPathInternal) => any,
+                        doWhenRootNotExists: (n: NavigationPathInternal) => any) {
 
         const navigationPath = this.getCurrentNavigationPath();
         if (!navigationPath) return;

@@ -32,7 +32,7 @@ export class ResourcesState {
 
     public resetForE2E() {
 
-        this.viewStates = { };
+        this.viewStates = { [this.view]: { mode: 'map', navigationPaths: {} } };
     }
 
 

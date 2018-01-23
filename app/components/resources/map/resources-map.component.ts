@@ -38,7 +38,7 @@ export class ResourcesMapComponent {
             this.parentDocument = path.rootDocument ?
                 path.rootDocument :
                 this.resourcesComponent.getIsRecordedInTarget();
-        })
+        });
     }
 
 

@@ -1,9 +1,9 @@
-import {browser, protractor, element, by} from 'protractor';
+import {browser, protractor} from 'protractor';
 import {ResourcesPage} from './resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
-import {NavbarPage} from "../navbar.page";
+import {NavbarPage} from '../navbar.page';
 
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');

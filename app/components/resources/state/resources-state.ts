@@ -104,11 +104,13 @@ export class ResourcesState {
 
     public setMainTypeDocument(document: IdaiFieldDocument|undefined) {
 
+        if (this.isInOverview()) return;
+
+        this.viewStates[this.view].mainTypeDocument = document;
+
         if (document && !this.viewStates[this.view].navigationPaths[document.resource.id as string]) {
             this.viewStates[this.view].navigationPaths[document.resource.id as string] = NavigationPath.empty();
         }
-
-        this.viewStates[this.view].mainTypeDocument = document;
     }
 
 

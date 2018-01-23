@@ -244,9 +244,7 @@ export class ResourcesState {
      * @param document set undefined to make rootElement of navigation path undefined
      */
     public moveInto(document: IdaiFieldDocument|undefined) {
-
-        if (!this.viewStates[this.view].navigationPaths) this.viewStates[this.view].navigationPaths = {};
-
+        
         const operationTypeDocument = this.getMainTypeDocument();
         if (!operationTypeDocument) return;
 
@@ -262,7 +260,6 @@ export class ResourcesState {
     public getNavigationPath(): NavigationPath {
 
         if (this.isInOverview()) return NavigationPath.empty();
-        if (!this.viewStates[this.view] || !this.viewStates[this.view].navigationPaths) return NavigationPath.empty();
 
         const operationTypeDocument = this.getMainTypeDocument();
         if (!operationTypeDocument) return NavigationPath.empty();

@@ -164,26 +164,25 @@ export class ResourcesState {
     }
 
 
-    public setTypeFilters(types: string[]) {
+    /**
+     * @param types set undefined to erase types for current element
+     */
+    public setTypeFilters(types: string[]|undefined) {
 
-        const viewState: ResourcesViewState = this.viewStates[this.view];
-
-        if (!viewState.mainTypeDocument) return;
-
-        const navigationPath: NavigationPathInternal
-            = viewState.navigationPaths[viewState.mainTypeDocument.resource.id as string];
+        const navigationPath = this.getCurrentNavigationPath();
+        if (!navigationPath) return;
 
         if (navigationPath.rootDocument) {
             const element: NavigationPathSegment
                 = navigationPath.elements.find(element =>
                 element.document.resource.id == (navigationPath.rootDocument as IdaiFieldDocument).resource.id) as NavigationPathSegment;
-            if (!types || types.length == 0) {
+            if (!types) {
                 delete element.types;
             } else {
                 element.types = types;
             }
-        } else {
-            if (!types || types.length == 0) {
+        } else { // mainTypeDocument selected
+            if (!types) {
                 delete navigationPath.types;
             } else {
                 navigationPath.types = types;
@@ -192,14 +191,21 @@ export class ResourcesState {
     }
 
 
+    private getCurrentNavigationPath(): NavigationPathInternal|undefined {
+
+        const resourcesViewState = this.viewStates[this.view];
+        if (!resourcesViewState.mainTypeDocument) return;
+
+        return resourcesViewState.navigationPaths[
+                resourcesViewState.mainTypeDocument.resource.id as string
+            ];
+    }
+
+
     public getTypeFilters(): string[]|undefined {
 
-        const viewState: ResourcesViewState = this.viewStates[this.view];
-
-        if (!viewState.mainTypeDocument) return;
-
-        const navigationPath: NavigationPathInternal
-            = viewState.navigationPaths[viewState.mainTypeDocument.resource.id as string];
+        const navigationPath = this.getCurrentNavigationPath();
+        if (!navigationPath) return;
 
         if (navigationPath.rootDocument) {
             const element: NavigationPathSegment

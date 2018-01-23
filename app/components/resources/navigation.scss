@@ -7,7 +7,8 @@
     text-align: left;
   }
 
-  .root-document ~ .navigation-button {
+  .root-document ~ .navigation-button,
+  .root-document ~ .navigation-button:active {
     color: lighten(#5572A1, 30%);
     border-color: lighten(#5572A1, 30%);
   }
@@ -24,6 +25,8 @@
 
   .btn-outline-primary:active {
     box-shadow: inset 5px 5px 9px -7px rgba(0, 0, 0, 0.7);
+    color: #5572A1;
+    background-color: white;
   }
 
   .navigation-button:not(:last-child):before, .navigation-button:not(:last-child):after {

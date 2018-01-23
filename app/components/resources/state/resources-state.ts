@@ -271,9 +271,6 @@ export class ResourcesState {
         if (defaultMode) {
             return this.setMode(defaultMode);
         }
-        if (!this.getMode()) {
-            this.setMode('map');
-        }
     }
 
 

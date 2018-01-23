@@ -266,7 +266,7 @@ export class ResourcesState {
         const navigationPath = this.getCurrentNavigationPath();
         if (!navigationPath) return;
 
-        return (navigationPath.rootDocument)
+        return navigationPath.rootDocument
             ? doWhenRootExists(navigationPath)
             : doWhenRootNotExists(navigationPath);
     }

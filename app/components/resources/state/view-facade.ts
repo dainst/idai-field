@@ -320,7 +320,6 @@ export class ViewFacade {
     }
 
 
-
     /**
      * @returns true if isSelectedDocumentRecordedInSelectedMainTypeDocument
      */
@@ -378,10 +377,8 @@ export class ViewFacade {
             mainTypeResource = this.getProjectDocument() as any;
         }
 
-        if (mainTypeResource) {
-            this.viewManager.setMainTypeDocument(mainTypeResource);
-            this.viewManager.notifyNavigationPathObservers();
-        }
+        if (mainTypeResource) this.viewManager.setMainTypeDocument(mainTypeResource);
+        this.viewManager.notifyNavigationPathObservers();
 
         await this.populateDocumentList();
     }

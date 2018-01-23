@@ -5,14 +5,13 @@ import {ResourcesState} from './resources-state';
 import {NavigationPath} from './navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
-import {inform} from "../../../util/observer-util";
+import {inform} from '../../../util/observer-util';
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export class NavigationPathManager {
-
 
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
@@ -66,8 +65,6 @@ export class NavigationPathManager {
     public notifyNavigationPathObservers() {
 
         if (!this.navigationPathObservers) return;
-        const mainTypeDoc = this.resourcesState.getMainTypeDocument();
-        if (!mainTypeDoc) return;
 
         this.navigationPathObservers.forEach(inform(this.resourcesState.getNavigationPath()));
     }

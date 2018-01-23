@@ -39,7 +39,7 @@
   }
 
   .navigation-button:not(:last-child):before {
-    border-left-color: #526e9c;
+    border-left-color: darken(#5572A1, 5%);
     border-width: 6px;
     margin-top: -6px;
   }
@@ -51,7 +51,7 @@
   }
 
   .root-document ~ .navigation-button:not(:last-child):before {
-    border-left-color: lighten(#526e9c, 30%);
+    border-left-color: lighten(#5572A1, 30%);
   }
 
   #operation-document-selector {

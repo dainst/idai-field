@@ -56,20 +56,16 @@ export class ResourcesState {
     }
 
 
-    public getActiveDocumentViewTab = (): string|undefined => this.activeDocumentViewTab;
-
-
     public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
 
         this.activeDocumentViewTab = activeDocumentViewTab;
     }
 
 
-    public getViewType() {
+    public getActiveDocumentViewTab = (): string|undefined => this.activeDocumentViewTab;
 
-        if (this.isInOverview()) return 'Project';
-        return this.getTypeForName(this.getView());
-    }
+
+    public getViewType = () => this.isInOverview() ? 'Project' : this.getTypeForName(this.getView());
 
 
     public isInOverview = () => this.getView() == 'project';

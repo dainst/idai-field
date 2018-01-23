@@ -123,8 +123,6 @@ export class ResourcesState {
 
     public getMainTypeDocument(): IdaiFieldDocument|undefined {
 
-        if (!this.viewStates[this.view].mainTypeDocument) return undefined;
-
         return this.viewStates[this.view].mainTypeDocument;
     }
 
@@ -138,7 +136,7 @@ export class ResourcesState {
 
     public getMode(): string|undefined {
 
-        return (!this.viewStates[this.view] || !this.viewStates[this.view].mode) ? 'map' : this.viewStates[this.view].mode;
+        return (!this.viewStates[this.view].mode) ? 'map' : this.viewStates[this.view].mode;
     }
 
 
@@ -151,7 +149,7 @@ export class ResourcesState {
 
     public getQueryString() {
 
-        return (!this.viewStates[this.view] || !this.viewStates[this.view].q) ? '' : this.viewStates[this.view].q;
+        return (!this.viewStates[this.view].q) ? '' : this.viewStates[this.view].q;
     }
 
 
@@ -179,17 +177,6 @@ export class ResourcesState {
                 navigationPath.types = types;
             }
         }
-    }
-
-
-    private getCurrentNavigationPath(): NavigationPathInternal|undefined {
-
-        const resourcesViewState = this.viewStates[this.view];
-        if (!resourcesViewState.mainTypeDocument) return;
-
-        return resourcesViewState.navigationPaths[
-                resourcesViewState.mainTypeDocument.resource.id as string
-            ];
     }
 
 
@@ -297,6 +284,17 @@ export class ResourcesState {
         const path = (navigationPaths as any)[operationTypeDocument.resource.id as string];
 
         return path ? path : NavigationPath.empty();
+    }
+
+
+    private getCurrentNavigationPath(): NavigationPathInternal|undefined {
+
+        const resourcesViewState = this.viewStates[this.view];
+        if (!resourcesViewState.mainTypeDocument) return;
+
+        return resourcesViewState.navigationPaths[
+                resourcesViewState.mainTypeDocument.resource.id as string
+            ];
     }
 
 

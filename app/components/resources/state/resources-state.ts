@@ -111,15 +111,12 @@ export class ResourcesState {
 
     public setQueryString(q: string) {
 
-        this.doWithNavPath(
-            (navPath) => {
-                if (!q) this.getRootSegment(navPath).q = '';
-                else this.getRootSegment(navPath).q = q;
-            },
-            (navPath) => {
-                if (!q) navPath.q = '';
-                else navPath.q = q;
-            });
+        this.withNavPath(
+                navPath => !q ? this.getRootSegment(navPath).q = ''
+                    : this.getRootSegment(navPath).q = q,
+                navPath => !q ? navPath.q = ''
+                    : navPath.q = q
+            );
     }
 
 
@@ -128,26 +125,21 @@ export class ResourcesState {
      */
     public setTypeFilters(types: string[]|undefined) {
 
-        this.doWithNavPath(
-            (navPath) => {
-                if (!types) delete this.getRootSegment(navPath).types;
-                else this.getRootSegment(navPath).types = types;
-            },
-            (navPath) => {
-                if (!types) delete navPath.types;
-                else navPath.types = types;
-            });
+        this.withNavPath(
+                navPath => !types ? delete this.getRootSegment(navPath).types
+                        : this.getRootSegment(navPath).types = types,
+                navPath => !types ? delete navPath.types
+                        : navPath.types = types
+            );
     }
 
 
     public getQueryString(): string|undefined {
 
-        const navigationPath = this.getCurrentNavigationPath();
-        if (!navigationPath) return;
-
-        return (navigationPath.rootDocument)
-            ? this.getRootSegment(navigationPath).q
-            : navigationPath.q;
+        return this.withNavPath(
+                navPath => this.getRootSegment(navPath).q,
+                navPath => navPath.q
+            ) as string|undefined;
     }
 
 
@@ -161,12 +153,10 @@ export class ResourcesState {
 
     public getTypeFilters(): string[]|undefined {
 
-        const navigationPath = this.getCurrentNavigationPath();
-        if (!navigationPath) return;
-
-        return (navigationPath.rootDocument)
-            ? this.getRootSegment(navigationPath).types
-            : navigationPath.types;
+        return this.withNavPath(
+                navPath => this.getRootSegment(navPath).types,
+                navPath => navPath.types
+            ) as string[]|undefined;
     }
 
 
@@ -269,14 +259,15 @@ export class ResourcesState {
     }
 
 
-    private doWithNavPath(doWhenRootExists: (n: NavigationPathInternal) => void,
-                          doWhenRootNotExists: (n: NavigationPathInternal) => void) {
+    private withNavPath(doWhenRootExists: (n: NavigationPathInternal) => void,
+                        doWhenRootNotExists: (n: NavigationPathInternal) => void) {
 
         const navigationPath = this.getCurrentNavigationPath();
         if (!navigationPath) return;
 
-        if (navigationPath.rootDocument) doWhenRootExists(navigationPath);
-        else doWhenRootNotExists(navigationPath);
+        return (navigationPath.rootDocument)
+            ? doWhenRootExists(navigationPath)
+            : doWhenRootNotExists(navigationPath);
     }
 
 

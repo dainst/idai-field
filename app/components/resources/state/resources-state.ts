@@ -42,7 +42,7 @@ export class ResourcesState {
 
         this.viewStates = await this.serializer.load(StateSerializer.RESOURCES_STATE);
 
-        this.initializeMode(defaultMode);
+        if (defaultMode) this.setMode(defaultMode);
         this.setActiveDocumentViewTab(undefined);
     }
 
@@ -263,14 +263,6 @@ export class ResourcesState {
         return resourcesViewState.navigationPaths[
                 resourcesViewState.mainTypeDocument.resource.id as string
             ];
-    }
-
-
-    private initializeMode(defaultMode?: string) {
-
-        if (defaultMode) {
-            return this.setMode(defaultMode);
-        }
     }
 
 

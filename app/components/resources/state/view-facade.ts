@@ -390,7 +390,7 @@ export class ViewFacade {
             ? this.resourcesState.setView(viewName)
 
             // TODO simplify
-            : Promise.resolve()).then(() => this.resourcesState.initialize(defaultMode ? 'map' : undefined));
+            : Promise.resolve()).then(() => this.resourcesState.initialize(defaultMode));
     }
 
 

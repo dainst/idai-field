@@ -58,23 +58,34 @@ export class ViewFacade {
     }
 
 
-    public isInOverview() {
-
-        return this.resourcesState.isInOverview();
-    }
-
-    
-    public getCurrentViewName() {
-
-        if (!this.resourcesState.getView()) return;
-        return this.resourcesState.getView();
-    }
+    public getCurrentViewName = () => this.resourcesState.getView();
 
 
-    public getOperationSubtypeViews() {
+    public isInOverview = () => this.resourcesState.isInOverview();
 
-        return this.resourcesState.getViews();
-    }
+
+    public getOperationSubtypeViews = () => this.resourcesState.getViews();
+
+
+    public getMode = () => this.resourcesState.getMode();
+
+
+    public getProjectDocument = () => this.documentsManager.projectDocument;
+
+
+    public getFilterTypes = () => this.resourcesState.getTypeFilters();
+
+
+    public getQueryString = () => this.resourcesState.getQueryString();
+
+
+    public getSelectedDocument = () => this.documentsManager.getSelectedDocument();
+
+
+    public getDocuments = () => this.documentsManager.getDocuments();
+
+
+    public getActiveDocumentViewTab = () => this.resourcesState.getActiveDocumentViewTab();
 
 
     /**
@@ -109,12 +120,6 @@ export class ViewFacade {
     }
 
 
-    public getActiveDocumentViewTab(): string|undefined {
-
-        return this.resourcesState.getActiveDocumentViewTab();
-    }
-
-
     public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
 
         this.resourcesState.setActiveDocumentViewTab(activeDocumentViewTab);
@@ -127,12 +132,6 @@ export class ViewFacade {
     }
 
 
-    public getMode() {
-
-        return this.resourcesState.getMode();
-    }
-
-
     // TODO remove
     public getQuery() {
 
@@ -140,12 +139,6 @@ export class ViewFacade {
             q: this.resourcesState.getQueryString(),
             types: this.resourcesState.getTypeFilters()
         }
-    }
-
-
-    public getProjectDocument() {
-
-        return this.documentsManager.projectDocument;
     }
 
 
@@ -209,18 +202,6 @@ export class ViewFacade {
     }
 
 
-    public getFilterTypes() {
-
-        return this.resourcesState.getTypeFilters();
-    }
-
-
-    public getQueryString() {
-
-        return this.resourcesState.getQueryString();
-    }
-
-
     public setMode(mode: string) {
 
         this.resourcesState.setMode(mode);
@@ -245,12 +226,6 @@ export class ViewFacade {
     }
 
 
-    public getSelectedDocument() {
-
-        return this.documentsManager.getSelectedDocument();
-    }
-
-
     /**
      * Sets the this.documentsManager.selectedDocument
      * and if necessary, also
@@ -268,12 +243,6 @@ export class ViewFacade {
     public setSelectedDocument(document: Document) {
 
         return this.documentsManager.setSelected(document);
-    }
-
-
-    public getDocuments() {
-
-        return this.documentsManager.getDocuments();
     }
 
 

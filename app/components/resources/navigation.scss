@@ -9,10 +9,17 @@
 
   .root-document ~ .navigation-button {
     color: lighten(#5572A1, 30%);
+    border-color: lighten(#5572A1, 30%);
   }
 
   .root-document ~ .navigation-button:hover {
     color: lighten(#5572A1, 35%);
+    border-color: lighten(#5572A1, 35%);
+  }
+
+  .root-document + .navigation-button,
+  .root-document + .navigation-button:hover {
+    border-left-color: #5572A1;
   }
 
   .btn-outline-primary:active {
@@ -41,6 +48,10 @@
     border-left-color: #ffffff;
     border-width: 5px;
     margin-top: -5px;
+  }
+
+  .root-document ~ .navigation-button:not(:last-child):before {
+    border-left-color: lighten(#526e9c, 30%);
   }
 
   #operation-document-selector {

@@ -1,4 +1,9 @@
 #list {
+  background: white;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: -7px;
+  margin-right: -7px;
 
   #list-header {
     position: static;
@@ -13,12 +18,6 @@
     overflow-y: auto;
     overflow-x: hidden;
     border: solid 1px rgb(221,221,221);
-  }
-
-  #create-document-button .circular-button {
-    left: calc(50% - 20px);
-    margin: -20px auto auto auto;
-    z-index: 100;
   }
 
   .no-search-result {
@@ -49,4 +48,13 @@
   grid-gap: 1px;
   background: rgb(221,221,221);
   border-bottom: solid 1px rgb(221,221,221);
+}
+
+.bg-light {
+
+  #create-document-button .circular-button {
+    left: calc(50% - 20px);
+    margin: -20px auto auto auto;
+    z-index: 100;
+  }
 }

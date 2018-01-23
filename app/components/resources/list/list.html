@@ -13,13 +13,15 @@
                 </div>
             </div>
         </div>
-        <plus-button *ngIf="showPlusButton()"
-                     id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
-                     [preselectedType]="viewFacade.getCurrentFilterType()"
-                     [liesWithin]="navigationPath.rootDocument"
-                     [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()"
-                     [skipFormAndReturnNewDocument]="true"
-                     (documentRequested)="createNewDocument($event)"></plus-button>
-        <loading-icon></loading-icon>
     </div>
+</div>
+<div class="bg-light" style="height: 24px">
+    <plus-button *ngIf="showPlusButton()"
+                 id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
+                 [preselectedType]="viewFacade.getCurrentFilterType()"
+                 [liesWithin]="navigationPath.rootDocument"
+                 [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()"
+                 [skipFormAndReturnNewDocument]="true"
+                 (documentRequested)="createNewDocument($event)"></plus-button>
+    <loading-icon></loading-icon>
 </div>

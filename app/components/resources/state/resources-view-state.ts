@@ -14,3 +14,9 @@ export interface ResourcesViewState {
     layerIds?: {[mainTypeDocumentId: string]: string[]};
     navigationPaths: {[mainTypeDocumentId: string]: NavigationPathInternal};
 }
+
+
+export class ResourcesViewState {
+
+    public static default = () => { return { mode: 'map', navigationPaths: {} }; }
+}

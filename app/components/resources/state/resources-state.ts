@@ -32,7 +32,7 @@ export class ResourcesState {
 
     public resetForE2E() {
 
-        this.viewStates = { [this.view]: { mode: 'map', navigationPaths: {} } };
+        this.viewStates = { [this.view]: ResourcesViewState.default() };
     }
 
 
@@ -52,10 +52,7 @@ export class ResourcesState {
         if (!name) return;
         this.view = name;
         if (!this.viewStates) this.viewStates = {};
-        if (!this.viewStates[this.view]) this.viewStates[this.view] = {
-            mode: 'map',
-            navigationPaths: {}
-        };
+        if (!this.viewStates[this.view]) this.viewStates[this.view] = ResourcesViewState.default();
     }
 
 
@@ -372,7 +369,7 @@ export class ResourcesState {
     }
 }
 
-const toDocument = (segment: NavigationPathSegment) => segment.document;
 
+const toDocument = (segment: NavigationPathSegment) => segment.document;
 
 const isSameSegment = (document: IdaiFieldDocument) => (segment: NavigationPathSegment) => document == segment.document;

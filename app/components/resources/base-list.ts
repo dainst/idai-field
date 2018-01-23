@@ -27,7 +27,7 @@ export class BaseList {
     public showPlusButton(): boolean {
 
         return (!this.resourcesComponent.isEditingGeometry && this.resourcesComponent.ready
-            && !this.loading.showIcons && this.viewFacade.getQuery().q == ''
+            && !this.loading.showIcons && (this.viewFacade.getQuery().q == '' || !this.viewFacade.getQuery().q)
             && (this.viewFacade.isInOverview() || this.viewFacade.getSelectedMainTypeDocument() != undefined));
     }
 }

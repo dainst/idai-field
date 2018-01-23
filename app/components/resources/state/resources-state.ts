@@ -56,27 +56,12 @@ export class ResourcesState {
     }
 
 
-    public getActiveDocumentViewTab(): string|undefined {
-
-        return this.activeDocumentViewTab;
-    }
+    public getActiveDocumentViewTab = (): string|undefined => this.activeDocumentViewTab;
 
 
     public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
 
         this.activeDocumentViewTab = activeDocumentViewTab;
-    }
-
-
-    public isInOverview() {
-
-        return this.getView() == 'project';
-    }
-
-
-    public getView() {
-
-        return this.view;
     }
 
 
@@ -87,27 +72,37 @@ export class ResourcesState {
     }
 
 
-    public getViews() {
-
-        return this.views.get();
-    }
+    public isInOverview = () => this.getView() == 'project';
 
 
-    public getViewNameForOperationSubtype(name: string) {
-
-        return this.views.getViewNameForOperationSubtype(name);
-    }
+    public getView = () => this.view;
 
 
-    public getLabelForName(name: string) {
-
-        return this.views.getLabelForName(name);
-    }
+    public getViews = () => this.views.get();
 
 
-    public getTypeForName(name: string) {
+    public getViewNameForOperationSubtype = (name: string) => this.views.getViewNameForOperationSubtype(name);
 
-        return this.views.getTypeForName(name);
+
+    public getLabelForName = (name: string) => this.views.getLabelForName(name);
+
+
+    public getTypeForName = (name: string) => this.views.getTypeForName(name);
+
+
+    public getMainTypeDocument = (): IdaiFieldDocument|undefined => this.viewStates[this.view].mainTypeDocument;
+
+
+    public getMode = () => this.viewStates[this.view].mode;
+
+
+    public getQueryString = () => this.viewStates[this.view].q;
+
+
+    public setMode(mode: string) {
+
+        this.viewStates[this.view].mode = mode;
+        this.serialize();
     }
 
 
@@ -121,30 +116,11 @@ export class ResourcesState {
     }
 
 
-    public getMainTypeDocument(): IdaiFieldDocument|undefined {
-
-        return this.viewStates[this.view].mainTypeDocument;
-    }
-
-
-    public setMode(mode: string) {
-
-        this.viewStates[this.view].mode = mode;
-        this.serialize();
-    }
-
-
-    public getMode = () => this.viewStates[this.view].mode;
-
-
     public setQueryString(q: string) {
 
         this.viewStates[this.view].q = q;
         this.serialize();
     }
-
-
-    public getQueryString = () => this.viewStates[this.view].q;
 
 
     /**

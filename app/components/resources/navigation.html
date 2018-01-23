@@ -1,4 +1,4 @@
-<div class="row" style="padding-left: 8px; color: rgba(85, 114, 161, 1); margin-top: 4px;">
+<div id="navigation" class="row">
 
     <div *ngIf="!this.viewFacade.isInOverview() && viewFacade.getSelectedMainTypeDocument()" class="btn-group">
         <div class="btn-group" ngbDropdown placement="bottom-left" role="group" id="operation-document-selector">
@@ -12,7 +12,7 @@
         </div>
 
         <button id="selected-operation-type-document" type="button" class="btn btn-outline-primary"
-                style="text-align: left;" [class.active]="!navigationPath.rootDocument"
+                [class.active]="!navigationPath.rootDocument"
                 (click)="setRootDocument(undefined)">
             {{viewFacade.getSelectedMainTypeDocument().resource.identifier}}
         </button>

@@ -113,10 +113,6 @@ export class ResourcesState {
 
     public setMainTypeDocument(document: IdaiFieldDocument|undefined) {
 
-        if (!this.view) return;
-        if (!this.viewStates) return;
-        if (!this.viewStates[this.view]) return;
-
         if (document && !this.viewStates[this.view].navigationPaths[document.resource.id as string]) {
             this.viewStates[this.view].navigationPaths[document.resource.id as string] = NavigationPath.empty();
         }
@@ -127,9 +123,6 @@ export class ResourcesState {
 
     public getMainTypeDocument(): IdaiFieldDocument|undefined {
 
-        if (!this.view) return undefined;
-        if (!this.viewStates) return undefined;
-        if (!this.viewStates[this.view]) return undefined;
         if (!this.viewStates[this.view].mainTypeDocument) return undefined;
 
         return this.viewStates[this.view].mainTypeDocument;
@@ -145,7 +138,6 @@ export class ResourcesState {
 
     public getMode(): string|undefined {
 
-        if (!this.viewStates) return 'map';
         return (!this.viewStates[this.view] || !this.viewStates[this.view].mode) ? 'map' : this.viewStates[this.view].mode;
     }
 
@@ -159,7 +151,6 @@ export class ResourcesState {
 
     public getQueryString() {
 
-        if (!this.viewStates) return '';
         return (!this.viewStates[this.view] || !this.viewStates[this.view].q) ? '' : this.viewStates[this.view].q;
     }
 

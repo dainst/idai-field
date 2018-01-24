@@ -68,6 +68,19 @@ export class ResourcesComponent implements AfterViewChecked {
     public currentModeIs = (mode: string) => (this.viewFacade.getMode() === mode);
 
 
+    public setQueryString = (q: string) => this.viewFacade.setSearchString(q);
+
+
+    public setTypeFilters = (types: string[]) => this.viewFacade.setTypeFilters(types);
+
+
+    public getQueryString = () => this.viewFacade.getQueryString();
+
+
+    public getTypeFilters = () => this.viewFacade.getFilterTypes();
+
+
+
     public getIsRecordedInTarget() {
 
         if (this.viewFacade.isInOverview()) return this.viewFacade.getProjectDocument();
@@ -90,18 +103,6 @@ export class ResourcesComponent implements AfterViewChecked {
         return Observable.create((observer: any) => {
             this.clickEventObservers.push(observer);
         });
-    }
-
-
-    public async setQueryString(q: string) {
-
-        await this.viewFacade.setSearchString(q);
-    }
-
-
-    public async setQueryTypes(types: string[]) {
-
-        await this.viewFacade.setTypesToFilterBy(types);
     }
 
 

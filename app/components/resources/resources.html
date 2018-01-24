@@ -9,9 +9,9 @@
         <div class="row">
 
             <div class="col-md-8" style="padding-right: 8px">
-                <search-bar style="width:100px" *ngIf="viewFacade.getQuery()" [q]="viewFacade.getQueryString()" [types]="viewFacade.getFilterTypes()" [relationName]="'isRecordedIn'"
+                <search-bar style="width:100px" [q]="getQueryString()" [types]="getTypeFilters()" [relationName]="'isRecordedIn'"
                             [relationRangeType]="viewFacade.getCurrentViewMainType()"
-                            (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
+                            (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setTypeFilters($event)">
                 </search-bar>
             </div>
 

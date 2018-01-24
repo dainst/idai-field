@@ -9,7 +9,7 @@
             <div *ngIf="!getSelected().length" class="col-sm-7 py-2">
                 <search-bar *ngIf="getQuery()" [q]="getQuery().q"
                             [types]="getQuery().types" [parentType]="'Image'" [hidden]="getSelected().length"
-                            (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
+                            (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setTypeFilters($event)">
                 </search-bar>
             </div>
 

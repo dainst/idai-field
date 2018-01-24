@@ -67,7 +67,7 @@ export class DocumentsManager {
     }
 
 
-    public async setQueryTypes(types: string[]) {
+    public async setTypeFilters(types: string[]) {
 
         this.resourcesState.setTypeFilters(types);
 

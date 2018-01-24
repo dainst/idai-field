@@ -76,9 +76,6 @@ export class ViewFacade {
     public getFilterTypes = () => this.resourcesState.getTypeFilters();
 
 
-    public getQueryString = () => this.resourcesState.getQueryString();
-
-
     public getSelectedDocument = () => this.documentsManager.getSelectedDocument();
 
 
@@ -92,6 +89,45 @@ export class ViewFacade {
 
 
     public deselect = () => this.documentsManager.deselect();
+
+
+    public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesState.setActiveLayersIds(activeLayersIds);
+
+
+    public setMode = (mode: string) => this.resourcesState.setMode(mode);
+
+
+    public setSelectedDocumentById = (id: string) => this.documentsManager.setSelectedById(id);
+
+
+    public isNewDocumentFromRemote = (document: Document) => this.documentsManager.isNewDocumentFromRemote(document);
+
+
+    public remove = (document: Document) => this.documentsManager.remove(document);
+
+
+    public getQueryString = () => this.resourcesState.getQueryString();
+
+
+    public setSearchString = (q: string) => this.documentsManager.setQueryString(q);
+
+
+    public setTypeFilters = (types: string[]) => this.documentsManager.setTypeFilters(types);
+
+
+    public moveInto = (document: IdaiFieldDocument) => this.documentsManager.moveInto(document);
+
+
+    public navigationPathNotifications = () => this.viewManager.navigationPathNotifications();
+
+
+    public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
+
+
+    public getNavigationPath = () => this.resourcesState.getNavigationPath();
+
+
+    public populateDocumentList = () => this.documentsManager.populateDocumentList();
 
 
     /**
@@ -123,16 +159,6 @@ export class ViewFacade {
 
         return (this.resourcesState.getView() == 'project')
             ? 'Projekt' : this.resourcesState.getLabelForName(this.resourcesState.getView());
-    }
-
-
-    // TODO remove
-    public getQuery() {
-
-        return {
-            q: this.resourcesState.getQueryString(),
-            types: this.resourcesState.getTypeFilters()
-        }
     }
 
 
@@ -184,42 +210,6 @@ export class ViewFacade {
 
         this.resourcesState.setActiveDocumentViewTab(activeDocumentViewTab);
     }
-
-
-    public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesState.setActiveLayersIds(activeLayersIds);
-
-
-    public setMode = (mode: string) => this.resourcesState.setMode(mode);
-
-
-    public setSelectedDocumentById = (id: string) => this.documentsManager.setSelectedById(id);
-
-
-    public isNewDocumentFromRemote = (document: Document) => this.documentsManager.isNewDocumentFromRemote(document);
-
-
-    public remove = (document: Document) => this.documentsManager.remove(document);
-
-
-    public setSearchString = (q: string) => this.documentsManager.setQueryString(q);
-
-
-    public setTypesToFilterBy = (types: string[]) => this.documentsManager.setQueryTypes(types);
-
-
-    public moveInto = (document: IdaiFieldDocument) => this.documentsManager.moveInto(document);
-
-
-    public navigationPathNotifications = () => this.viewManager.navigationPathNotifications();
-
-
-    public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
-
-
-    public getNavigationPath = () => this.resourcesState.getNavigationPath();
-
-
-    public populateDocumentList = () => this.documentsManager.populateDocumentList();
 
 
     /**

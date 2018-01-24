@@ -52,7 +52,7 @@ describe('resources/project --', function() {
     }
 
 
-    xit('create & switch project', () => {
+    fit('create & switch project', () => {
 
         performCreateProject();
 
@@ -60,6 +60,8 @@ describe('resources/project --', function() {
         // this is a workaround. normally we would like to start on the ProjectPage directly.
         // but then it was shown that for some unkown reasons protractor cannot click to select a resource type
         ResourcesPage.get();
+        NavbarPage.clickNavigateToImages();
+        browser.sleep(200);
         NavbarPage.clickNavigateToProject();
         //
 

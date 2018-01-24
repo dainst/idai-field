@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ViewFacade} from './state/view-facade';
-import {ModelUtil} from '../../core/model/model-util';
-import {NavigationPath} from './state/navigation-path';
+import {ViewFacade} from '../state/view-facade';
+import {ModelUtil} from '../../../core/model/model-util';
+import {NavigationPath} from '../state/navigation-path';
 
 
 @Component({

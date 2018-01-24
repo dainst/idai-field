@@ -9,7 +9,7 @@ import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../state/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
-import {NavigationService} from '../navigation-service';
+import {NavigationService} from '../navigation/navigation-service';
 
 
 @Component({

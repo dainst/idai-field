@@ -3,7 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../state/view-facade';
-import {NavigationService} from '../navigation-service';
+import {NavigationService} from '../navigation/navigation-service';
 import {BaseList} from '../base-list';
 
 

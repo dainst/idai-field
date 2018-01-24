@@ -6,34 +6,20 @@
 #settings {
 
   padding: 0 !important;
-  background-color: #eee;
 
   header {
-    background-color: #eee;
-    padding: 7px;
-    color: #fff;
-    border-bottom: 1px solid #ccc;
-  }
-
-  header .mdi-settings {
-    display: inline-block;
-    font-size: 1.1em;
-    color: #fff;
-    background-color: #294b83;
-    padding: 10px 10px 10px 11px;
-    margin-right: 5px;
-  }
-
-  header h1 {
-    font-size: 1.5em;
-    padding: 0;
-    margin: 0;
-    background-color: #657faa;
+    padding: 8px;
+    position: fixed;
+    width: 100%;
+    z-index: 1001;
+    margin-left: -15px;
+    top: 57px;
+    height: 58px;
   }
 
   main {
     padding: 7px;
-    margin-top: 25px;
+    margin-top: 50px;
   }
 
   #save-settings-button:active,
@@ -42,11 +28,9 @@
   }
 
   #save-settings-button {
-    margin-right: 7px;
-    margin-top: 7px;
-    border: 0;
-    border-radius: 2px;
-    color: #fff;
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
   }
 
   .settings-info {

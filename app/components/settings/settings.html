@@ -3,26 +3,15 @@
      (dragleave)="false"
      (drop)="false">
 
-    <header>
-        <h1>
-            <span class="mdi mdi-settings"></span>
-            Einstellungen
+    <header class="bg-light">
 
-            <div style="float: right;">
+            <button id="save-settings-button" class="btn btn-primary"
+                    [ngClass]="{ 'disabled': saving }"
+                    (click)="saving || save()">
+                <span class="mdi mdi-settings" style="color: white"></span>
+                Einstellungen übernehmen
+            </button>
 
-                <button id="save-settings-button" class="btn-success btn"
-                        style="text-align:right;"
-                        [ngClass]="{ 'disabled': saving }"
-                        (click)="saving || save()">
-                    <span class="mdi mdi-content-save"></span>
-                    <span class="button-label">
-                        Einstellungen übernehmen
-                    </span>
-
-                </button>
-            </div>
-
-        </h1>
     </header>
 
     <main>

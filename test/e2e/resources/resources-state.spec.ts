@@ -102,7 +102,7 @@ describe('resources/state --', function() {
     // }
 
 
-    xit('switch from image to map view after click on depicts relation link', () => {
+    it('switch from image to map view after click on depicts relation link', () => {
 
         ProjectPage.get();
 

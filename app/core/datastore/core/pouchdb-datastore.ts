@@ -213,16 +213,6 @@ export class PouchdbDatastore {
     }
 
 
-    public async findConflicted(): Promise<Document[]> {
-
-        return (await this.db.query('conflicted', {
-            include_docs: true,
-            conflicts: true,
-            descending: true
-        })).rows.map((result: any) => result.doc);
-    }
-
-
     public allChangesAndDeletionsNotifications(): Observable<void> {
 
         return Observable.create((observer: Observer<void>) => {

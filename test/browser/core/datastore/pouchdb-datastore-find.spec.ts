@@ -410,34 +410,5 @@ export function main() {
 
             },100)
         });
-
-
-        // TODO remove or rewrite
-        xit('should find conflicted documents sorted by lastModified', done => {
-
-            let db1 = new PouchDB('testdb');
-            let db2 = new PouchDB('testdb2');
-
-            db1.put(Static.doc('bluba', 'bla1', 'type1', '1'))
-                .then(() => db2.put(Static.doc('blubb', 'bla1', 'type1', '1')))
-                .then(() => db1.put(Static.doc('bluba', 'bla2', 'type2', '2')))
-                .then(() => db2.put(Static.doc('blubb', 'bla2', 'type2', '2')))
-                .then(() => db1.put(Static.doc('blub', 'bla1.1', 'type1.1', '3')))
-                .then(() => new Promise(resolve => db2.replicate.to(db1).on('complete', resolve)))
-                .then(() => datastore.findConflicted())
-                .then(
-                    result => {
-                        expect(result.length).toBe(2);
-                        expect(result[0].resource['identifier']).toBe('bla2');
-                        expect(result[1].resource['identifier']).toBe('bla1');
-                        done();
-                    },
-                    err => {
-                        fail(err);
-                        done();
-                    }
-                );
-        }, 2000);
     });
-
 }

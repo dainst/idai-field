@@ -263,7 +263,7 @@ export function main() {
             doc2 = Static.doc('sd1', 'identifier_');
             doc2.resource.id = '1';
             await ds.update(doc2);
-            
+
             const result = await ds.find({q: 'sd1'}); // mockdb returns other instance
             expect((result.documents[0])['_rev']).toBe('2');
             expect((result.documents[0]).resource['identifier']).toBe('identifier_');

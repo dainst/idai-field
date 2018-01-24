@@ -90,7 +90,7 @@ describe('resources/state --', function() {
     });
 
 
-    // fit('restore layers after restarting client', () => {
+    // it('restore layers after restarting client', () => {
 
         // ProjectPage.performCreateProject();
 

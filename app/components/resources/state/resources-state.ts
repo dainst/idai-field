@@ -134,12 +134,13 @@ export class ResourcesState {
     }
 
 
-    public getQueryString(): string|undefined {
+    public getQueryString(): string {
 
-        return this.withNavPath(
+        const q = this.withNavPath(
                 navPath => this.getRootSegment(navPath).q,
                 navPath => navPath.q
-            ) as string|undefined;
+            );
+        return q ? q : '';
     }
 
 

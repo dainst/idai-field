@@ -137,7 +137,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('switch views after click on relation link', () => {
+    it('switch views after click on relation link', () => {
 
         ResourcesPage.performCreateResource('building1', 'building');
 

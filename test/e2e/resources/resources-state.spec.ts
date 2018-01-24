@@ -185,7 +185,7 @@ describe('resources/state --', function() {
     });
 
 
-    fit('select correct main type document after click on relation link', () => {
+    it('select correct main type document after click on relation link', () => {
 
         ResourcesPage.performCreateResource('building1', 'building');
         ResourcesPage.performCreateResource('building2', 'building');

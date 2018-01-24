@@ -6,29 +6,21 @@
 #export {
 
   padding: 0 !important;
-  background-color: #eee;
 
   header {
-    background-color: #eee;
-    padding: 7px;
-    color: #fff;
-    border-bottom: 1px solid #ccc;
+    padding: 8px;
+    position: fixed;
+    width: 100%;
+    z-index: 1001;
+    margin-left: -15px;
+    top: 57px;
+    height: 58px;
   }
 
-  header .mdi {
-    display: inline-block;
-    font-size: 1.1em;
-    color: #fff;
-    background-color: #294b83;
-    padding: 10px 10px 10px 11px;
-    margin-right: 5px;
-  }
-
-  header h1 {
-    font-size: 1.5em;
-    padding: 0;
-    margin: 0;
-    background-color: #657faa;
+  header button {
+    position: absolute;
+    right: 12px;
+    bottom: 8px;
   }
 
   main {

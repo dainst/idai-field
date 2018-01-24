@@ -1,10 +1,13 @@
 <div id="export">
 
-    <header>
-        <h1>
-            <span class="mdi mdi-file-export"></span>
-            Export
-        </h1>
+    <header class="bg-light">
+        <button *ngIf="!running" id="exportStartButton"
+                class="btn btn-primary"
+                [ngClass]="{ 'disabled': running }"
+                (click)="running || startExport()">
+            <span class="mdi mdi-file-export" style="color: white"></span>
+            Export starten
+        </button>
     </header>
 
     <main>
@@ -24,12 +27,6 @@
 
                 </div>
 
-                <button *ngIf="!running" id="exportStartButton"
-                        class="btn btn-primary"
-                        [ngClass]="{ 'disabled': running }"
-                        (click)="running || startExport()">
-                    Export starten
-                </button>
                 <div style="display: inline-block;" *ngIf="running" class="spinner"></div>
 
             </div>

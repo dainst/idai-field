@@ -95,7 +95,7 @@ describe('images/image-overview/link --', function() {
         expectLinkBadgePresence(false, 2);
     });
 
-    xit('use main type document filter', () => {
+    it('use main type document filter', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
 

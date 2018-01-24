@@ -80,10 +80,10 @@ export function main() {
             resourcesState.setQueryString('abc');
             resourcesState.moveInto(undefined);
             expect(resourcesState.getTypeFilters()).toEqual(undefined);
-            expect(resourcesState.getQueryString()).toEqual(undefined);
+            expect(resourcesState.getQueryString()).toEqual('');
             resourcesState.setView('survey');
             expect(resourcesState.getTypeFilters()).toEqual(undefined);
-            expect(resourcesState.getQueryString()).toEqual(undefined);
+            expect(resourcesState.getQueryString()).toEqual('');
             resourcesState.setView('excavation');
             resourcesState.moveInto(featureDocument1);
             expect(resourcesState.getTypeFilters()).toEqual(['Find']);

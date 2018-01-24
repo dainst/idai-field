@@ -26,19 +26,6 @@ export class ImageOverviewComponent implements OnInit {
     public maxGridSize: number = 12;
     public minGridSize: number = 2;
 
-
-    // provide access to static function
-    public getDocumentLabel = (document: Document) => ModelUtil.getDocumentLabel(document);
-
-    // for clean and refactor safe template, and to help find usages
-    public getDocuments = () => this.imageOverviewFacade.getDocuments();
-    public getSelected = () => this.imageOverviewFacade.getSelected();
-    public getTotalDocumentCount = () => this.imageOverviewFacade.getTotalDocumentCount();
-    public select = (document: Document) => this.imageOverviewFacade.select(document as IdaiFieldImageDocument);
-    public getGridSize = () => this.imageOverviewFacade.getGridSize();
-    public getQuery = () => this.imageOverviewFacade.getQuery();
-    public getMainTypeDocumentFilterOption = () => this.imageOverviewFacade.getMainTypeDocumentFilterOption();
-
     public jumpToRelationTarget
         = (documentToSelect: IdaiFieldImageDocument) => this.routingService.jumpToRelationTarget(documentToSelect,
             undefined, true);
@@ -51,6 +38,33 @@ export class ImageOverviewComponent implements OnInit {
     ) {
         this.imageOverviewFacade.initialize();
     }
+
+
+    public getDocumentLabel = (document: Document) => ModelUtil.getDocumentLabel(document);
+
+    public getDocuments = () => this.imageOverviewFacade.getDocuments();
+
+    public getSelected = () => this.imageOverviewFacade.getSelected();
+
+    public getTotalDocumentCount = () => this.imageOverviewFacade.getTotalDocumentCount();
+
+    public select = (document: Document) => this.imageOverviewFacade.select(document as IdaiFieldImageDocument);
+
+    public getGridSize = () => this.imageOverviewFacade.getGridSize();
+
+    public getQuery = () => this.imageOverviewFacade.getQuery();
+
+    public getMainTypeDocumentFilterOption = () => this.imageOverviewFacade.getMainTypeDocumentFilterOption();
+
+    public setQueryString = (q: string) => this.imageOverviewFacade.setQueryString(q);
+
+    public setTypeFilters = (types: string[]) => this.imageOverviewFacade.setTypeFilters(types);
+
+    public onResize = () => this.imageGrid.calcGrid();
+
+    public refreshGrid = () => this.imageOverviewFacade.fetchDocuments();
+
+    public resetSearch = () => this.imageOverviewFacade.resetSearch();
 
 
     public ngOnInit() {
@@ -68,36 +82,6 @@ export class ImageOverviewComponent implements OnInit {
             this.imageGrid.nrOfColumns = _size;
             this.refreshGrid();
         }
-    }
-
-
-    public onResize() {
-
-        this.imageGrid.calcGrid();
-    }
-
-
-    public refreshGrid() {
-
-        this.imageOverviewFacade.fetchDocuments();
-    }
-
-
-    public setQueryString(q: string) {
-
-        this.imageOverviewFacade.setQueryString(q);
-    }
-
-
-    public setQueryTypes(types: string[]) {
-
-        this.imageOverviewFacade.setQueryTypes(types);
-    }
-
-
-    public resetSearch() {
-
-        this.imageOverviewFacade.resetSearch();
     }
 
 

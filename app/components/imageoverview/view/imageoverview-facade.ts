@@ -80,7 +80,7 @@ export class ImageOverviewFacade {
     }
 
 
-    public setQueryTypes(types: string[]) {
+    public setTypeFilters(types: string[]) {
 
         const query: Query = this.imagesState.getQuery();
         query.types = types;

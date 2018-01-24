@@ -7,7 +7,7 @@
 
         <div class="row bg-light image-overview-nav">
             <div *ngIf="!getSelected().length" class="col-sm-7 py-2">
-                <search-bar *ngIf="getQuery()" [q]="getQuery().q"
+                <search-bar [q]="getQuery().q"
                             [types]="getQuery().types" [parentType]="'Image'" [hidden]="getSelected().length"
                             (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setTypeFilters($event)">
                 </search-bar>

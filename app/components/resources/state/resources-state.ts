@@ -61,33 +61,23 @@ export class ResourcesState {
         this.activeDocumentViewTab = activeDocumentViewTab;
     }
 
-
     public getActiveDocumentViewTab = (): string|undefined => this.activeDocumentViewTab;
-
 
     public getViewType = () => this.isInOverview() ? 'Project' : this.getTypeForName(this.getView());
 
-
     public isInOverview = () => this.getView() == 'project';
-
 
     public getView = () => this.view;
 
-
     public getViews = () => this.views.get();
-
 
     public getViewNameForOperationSubtype = (name: string) => this.views.getViewNameForOperationSubtype(name);
 
-
     public getLabelForName = (name: string) => this.views.getLabelForName(name);
-
 
     public getTypeForName = (name: string) => this.views.getTypeForName(name);
 
-
     public getMainTypeDocument = (): IdaiFieldDocument|undefined => this.viewStates[this.view].mainTypeDocument;
-
 
     public getMode = () => this.viewStates[this.view].mode;
 

@@ -60,72 +60,49 @@ export class ViewFacade {
 
     public getCurrentViewName = () => this.resourcesState.getView();
 
-
     public isInOverview = () => this.resourcesState.isInOverview();
-
 
     public getOperationSubtypeViews = () => this.resourcesState.getViews();
 
-
     public getMode = () => this.resourcesState.getMode();
-
 
     public getProjectDocument = () => this.documentsManager.projectDocument;
 
-
     public getFilterTypes = () => this.resourcesState.getTypeFilters();
-
 
     public getSelectedDocument = () => this.documentsManager.getSelectedDocument();
 
-
     public getDocuments = () => this.documentsManager.getDocuments();
-
 
     public getActiveDocumentViewTab = () => this.resourcesState.getActiveDocumentViewTab();
 
-
     public getActiveLayersIds = () => this.resourcesState.getActiveLayersIds();
-
 
     public deselect = () => this.documentsManager.deselect();
 
-
     public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesState.setActiveLayersIds(activeLayersIds);
-
 
     public setMode = (mode: string) => this.resourcesState.setMode(mode);
 
-
     public setSelectedDocumentById = (id: string) => this.documentsManager.setSelectedById(id);
-
 
     public isNewDocumentFromRemote = (document: Document) => this.documentsManager.isNewDocumentFromRemote(document);
 
-
     public remove = (document: Document) => this.documentsManager.remove(document);
-
 
     public getQueryString = () => this.resourcesState.getQueryString();
 
-
     public setSearchString = (q: string) => this.documentsManager.setQueryString(q);
-
 
     public setTypeFilters = (types: string[]) => this.documentsManager.setTypeFilters(types);
 
-
     public moveInto = (document: IdaiFieldDocument) => this.documentsManager.moveInto(document);
-
 
     public navigationPathNotifications = () => this.viewManager.navigationPathNotifications();
 
-
     public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
 
-
     public getNavigationPath = () => this.resourcesState.getNavigationPath();
-
 
     public populateDocumentList = () => this.documentsManager.populateDocumentList();
 

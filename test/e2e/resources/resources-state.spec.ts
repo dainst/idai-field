@@ -22,10 +22,9 @@ describe('resources/state --', function() {
 
     let index = 0;
 
+    beforeAll(() => ProjectPage.get());
 
-    beforeAll(() => {
-        ProjectPage.get();
-    });
+    beforeAll(() => removeResourcesStateFile());
 
 
     beforeEach(() => {
@@ -38,12 +37,6 @@ describe('resources/state --', function() {
             browser.sleep(delays.shortRest * 1.5);
         }
         index++;
-    });
-
-
-    beforeAll(() => {
-
-       removeResourcesStateFile();
     });
 
 
@@ -97,32 +90,16 @@ describe('resources/state --', function() {
     });
 
 
-    xit('restore resources state after restarting client', () => {
+    // fit('restore layers after restarting client', () => {
 
-        ProjectPage.performCreateProject();
+        // ProjectPage.performCreateProject();
 
-        // this is a workaround. normally we would like to start on the ProjectPage directly.
-        // but then it was shown that for some unkown reasons protractor cannot click to select a resource type
-        ResourcesPage.get();
-        NavbarPage.clickNavigateToProject();
+        // // this is a workaround. normally we would like to start on the ProjectPage directly.
+        // // but then it was shown that for some unkown reasons protractor cannot click to select a resource type
+        // ResourcesPage.get();
+        // NavbarPage.clickNavigateToProject();
         //
-
-        ResourcesPage.performCreateResource('excavation1', 'trench');
-        ResourcesPage.performCreateResource('excavation2', 'trench');
-        SearchBarPage.clickChooseTypeFilter('building');
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performSelectOperation(1);
-        ResourcesPage.clickListModeButton();
-
-        ProjectPage.get();
-        browser.wait(EC.presenceOf(MapPage.getMapContainer()), delays.ECWaitTime);
-        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('B'));
-
-        NavbarPage.clickNavigateToExcavation();
-        browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('excavation2'));
-    });
+    // }
 
 
     xit('switch from image to map view after click on depicts relation link', () => {

@@ -3,12 +3,16 @@
      (dragleave)="false"
      (drop)="false">
 
-    <header class="bg-light" style="position: fixed; width: 100%; z-index: 1001; margin-left: -15px; top: 57px;
-    height: 58px; border-bottom-width: 0px;">
-        <h1>
-            <span class="mdi mdi-file-import"></span>
-            Import
-        </h1>
+    <header class="bg-light">
+
+        <button id="importStartButton"
+                class="btn btn-primary"
+                [ngClass]="{ 'disabled': !isReady() }"
+                (click)="!isReady() || startImport()">
+            <span class="mdi mdi-file-import" style="color: white"></span>
+            Import starten
+        </button>
+
     </header>
 
     <main>
@@ -80,15 +84,6 @@
                     werden.
                 </div>
 
-                <div class="form-group">
-
-                    <button id="importStartButton"
-                            class="btn btn-primary"
-                            [ngClass]="{ 'disabled': !isReady() }"
-                            (click)="!isReady() || startImport()">
-                        Import starten
-                    </button>
-                </div>
             </div>
         </div>
     </main>

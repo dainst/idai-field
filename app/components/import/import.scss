@@ -11,13 +11,23 @@
 
   header {
     padding: 8px;
-    border-bottom: 1px solid #ccc;
+    position: fixed;
+    width: 100%;
+    z-index: 1001;
+    margin-left: -15px;
+    top: 57px;
+    height: 58px;
+  }
+
+  header button {
+    position: absolute;
+    right: 12px;
+    bottom: 8px;
   }
 
   header .mdi {
     display: inline-block;
     font-size: 1.1em;
-    color: #fff;
     margin-right: 5px;
     color: #657faa;
   }

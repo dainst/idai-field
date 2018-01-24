@@ -254,28 +254,22 @@ export function main() {
 
         // xitted
 
-        xit('should return cached instance on update', done => {
+        it('should return cached instance on update', async done => {
 
             let doc1 = Static.doc('sd1', 'identifier1');
             let doc2;
 
-            ds.create(doc1)
-               .then(() => {
-                    doc2 = Static.doc('sd1', 'identifier_');
-                    doc2.resource.id = '1';
-                    return ds.update(doc2);
-               })
-               .then(() => ds.find({q: 'sd1'})) // mockdb returns other instance
-               .then(result => {
-                   expect((result.documents[0])['_rev']).toBe('2');
-                   expect((result.documents[0]).resource['identifier']).toBe('identifier_');
-                   doc2.resource['shortDescription'] = 's4';
-                   expect((result.documents[0]).resource['shortDescription']).toBe('s4');
-                   done();
-               }).catch(err => {
-               fail(err);
-               done();
-            });
+            await ds.create(doc1);
+            doc2 = Static.doc('sd1', 'identifier_');
+            doc2.resource.id = '1';
+            await ds.update(doc2);
+            
+            const result = await ds.find({q: 'sd1'}); // mockdb returns other instance
+            expect((result.documents[0])['_rev']).toBe('2');
+            expect((result.documents[0]).resource['identifier']).toBe('identifier_');
+            doc2.resource['shortDescription'] = 's4';
+            expect((result.documents[0]).resource['shortDescription']).toBe('s4');
+            done();
         });
 
 

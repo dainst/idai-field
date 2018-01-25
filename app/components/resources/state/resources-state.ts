@@ -15,7 +15,7 @@ import {includedIn, takeUntil} from '../../../util/list-util';
  */
 export class ResourcesState {
 
-    private viewStates: { [viewName: string]: ResourcesViewState };
+    private viewStates: { [viewName: string]: ResourcesViewState } = {};
     private view: string;
     private loaded = false;
     private activeDocumentViewTab: string|undefined;
@@ -41,14 +41,9 @@ export class ResourcesState {
     public async initialize(viewName: string, defaultMode?: string): Promise<any> {
 
         if (this.loaded) return Promise.reject(undefined);
+
         this.viewStates = await this.serializer.load(StateSerializer.RESOURCES_STATE);
-        Object.keys(this.viewStates)
-            .forEach(viewState => {
-                if (!this.viewStates[viewState].navigationPaths) this.viewStates[viewState].navigationPaths = {};
-                if (!this.viewStates[viewState].layerIds) this.viewStates[viewState].layerIds = {};
-                if (!this.viewStates[viewState].q) this.viewStates[viewState].q = '';
-                if (!this.viewStates[viewState].mode) this.viewStates[viewState].mode = 'map';
-            });
+        this.complete(this.viewStates);
 
         this.setView(viewName);
         // if (defaultMode) this.setMode(defaultMode);
@@ -61,7 +56,6 @@ export class ResourcesState {
 
         if (!name) return;
         this.view = name;
-        if (!this.viewStates) this.viewStates = {};
         if (!this.viewStates[this.view]) this.viewStates[this.view] = ResourcesViewState.default();
     }
 
@@ -244,6 +238,18 @@ export class ResourcesState {
             elements: this.getNavigationPathInternal(mainTypeDocument).elements.map(toDocument),
             rootDocument: this.getNavigationPathInternal(mainTypeDocument).rootDocument
         }
+    }
+
+
+    private complete(viewStates: { [viewName: string]: ResourcesViewState }) {
+
+        Object.keys(this.viewStates)
+            .forEach(viewState => {
+                if (!this.viewStates[viewState].navigationPaths) this.viewStates[viewState].navigationPaths = {};
+                if (!this.viewStates[viewState].layerIds) this.viewStates[viewState].layerIds = {};
+                if (!this.viewStates[viewState].q) this.viewStates[viewState].q = '';
+                if (!this.viewStates[viewState].mode) this.viewStates[viewState].mode = 'map';
+            });
     }
 
 

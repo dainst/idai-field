@@ -91,12 +91,7 @@ export class ResourcesState {
 
     public getMode = () => this.viewStates[this.view].mode;
 
-
-    public setMode(mode: string) {
-
-        this.viewStates[this.view].mode = mode;
-        this.serialize();
-    }
+    public setMode = (mode: string) => this.viewStates[this.view].mode = mode;
 
 
     public setMainTypeDocument(document: IdaiFieldDocument|undefined) {
@@ -284,10 +279,6 @@ export class ResourcesState {
 
         for (let viewName of Object.keys(this.viewStates)) {
             objectToSerialize[viewName] = {} as any;
-            // if (this._[viewName].mainTypeDocumentId) { // TODO comment in and also make sure loading works properly
-            //     objectToSerialize[viewName].mainTypeDocumentId = this._[viewName].mainTypeDocumentId;
-            // }
-            //if (this._[viewName].mode) objectToSerialize[viewName].mode = this._[viewName].mode;
             if (this.viewStates[viewName].layerIds) objectToSerialize[viewName].layerIds = this.viewStates[viewName].layerIds;
         }
 

@@ -27,7 +27,7 @@ import {NavigationPath} from './navigation-path';
  */
 export class ViewFacade {
 
-    private viewManager: NavigationPathManager;
+    private navigationPathManager: NavigationPathManager;
     private mainTypeDocumentsManager: MainTypeDocumentsManager;
     private documentsManager: DocumentsManager;
 
@@ -38,20 +38,20 @@ export class ViewFacade {
         private settingsService: SettingsService,
         private resourcesState: ResourcesState
     ) {
-        this.viewManager = new NavigationPathManager(
+        this.navigationPathManager = new NavigationPathManager(
             resourcesState,
             datastore
         );
         this.mainTypeDocumentsManager = new MainTypeDocumentsManager(
             datastore,
-            this.viewManager,
+            this.navigationPathManager,
             resourcesState
         );
         this.documentsManager = new DocumentsManager(
             datastore,
             changesStream,
             settingsService,
-            this.viewManager,
+            this.navigationPathManager,
             this.mainTypeDocumentsManager,
             resourcesState
         );
@@ -98,7 +98,7 @@ export class ViewFacade {
 
     public moveInto = (document: IdaiFieldDocument) => this.documentsManager.moveInto(document);
 
-    public navigationPathNotifications = () => this.viewManager.navigationPathNotifications();
+    public navigationPathNotifications = () => this.navigationPathManager.navigationPathNotifications();
 
     public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
 
@@ -146,7 +146,7 @@ export class ViewFacade {
         if (!selectedDocument.resource.id) return;
 
         this.resourcesState.removeActiveLayersIds();
-        this.viewManager.setMainTypeDocument(undefined);
+        this.navigationPathManager.setMainTypeDocument(undefined);
         await this.populateMainTypeDocuments();
     }
 
@@ -270,8 +270,8 @@ export class ViewFacade {
             mainTypeResource = this.getProjectDocument() as any;
         }
 
-        if (mainTypeResource) this.viewManager.setMainTypeDocument(mainTypeResource);
-        this.viewManager.notifyNavigationPathObservers();
+        if (mainTypeResource) this.navigationPathManager.setMainTypeDocument(mainTypeResource);
+        this.navigationPathManager.notifyNavigationPathObservers();
 
         await this.populateDocumentList();
     }

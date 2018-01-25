@@ -35,7 +35,7 @@ export class DoceditLauncher {
 
         await doceditRef.result.then(
             res => this.handleSaveResult(result, res),
-            closeReason => this.handleClosed(document, closeReason)
+            closeReason => this.handleClosed(closeReason)
         );
 
         return result;
@@ -58,18 +58,13 @@ export class DoceditLauncher {
     }
 
 
-    private handleClosed(document: Document, closeReason: string) {
+    private async handleClosed(closeReason: string) {
 
         this.documentEditChangeMonitor.reset();
 
         if (closeReason == 'deleted') {
             this.viewFacade.deselect();
-
-            if (!this.viewFacade.isInOverview() &&
-                this.viewFacade.getSelectedMainTypeDocument() == document) {
-
-                return this.viewFacade.handleMainTypeDocumentOnDeleted();
-            }
+            await this.viewFacade.populateDocumentList();
         }
     }
 }

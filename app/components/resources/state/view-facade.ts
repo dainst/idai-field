@@ -257,6 +257,7 @@ export class ViewFacade {
     public async setupView(viewName: string, defaultMode: string) {
 
         await this._setupView(viewName, defaultMode);
+        this.documentsManager.deselect();
         await this.documentsManager.populateProjectDocument();
 
         let mainTypeResource: IdaiFieldDocument|undefined;

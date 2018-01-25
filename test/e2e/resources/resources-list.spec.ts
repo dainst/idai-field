@@ -51,6 +51,18 @@ describe('resources/list --', () => {
     });
 
 
+    it('navigate to child item view in list mode and create a new child object', () => {
+
+        ResourcesPage.performCreateResourceInList('5', 'feature-architecture');
+        ResourcesPage.clickMoveIntoButton('5');
+        ResourcesPage.performCreateResourceInList('child1', 'find');
+        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToExcavation();
+
+        ResourcesPage.getListModeInputFieldValue('child1', 0).then(inputValue => expect(inputValue).toEqual('child1'));
+    });
+
+
     it('restore identifier from database if a duplicate identifier is typed in', () => {
 
         ResourcesPage.performCreateResourceInList('1', 'feature-architecture');

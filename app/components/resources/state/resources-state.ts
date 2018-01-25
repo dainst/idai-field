@@ -199,6 +199,39 @@ export class ResourcesState {
     }
 
 
+    public setNavigationPath(newNavigationPath: NavigationPath) {
+
+        const mainTypeDocument: IdaiFieldDocument|undefined = this.getMainTypeDocument();
+        if (!mainTypeDocument) return;
+
+        const currentNavigationPath: NavigationPathInternal = this.getNavigationPathInternal(mainTypeDocument);
+        const currentNavigationPathResourceIds: Array<string> = currentNavigationPath.elements
+            .map(element => element.document.resource.id as string);
+
+        const result: NavigationPathInternal = {
+            elements: [],
+            rootDocument: newNavigationPath.rootDocument,
+            q: currentNavigationPath.q,
+            types: currentNavigationPath.types
+        };
+
+        if (!newNavigationPath.rootDocument ||
+                currentNavigationPathResourceIds.indexOf(newNavigationPath.rootDocument.resource.id as string) > -1) {
+            result.elements = currentNavigationPath.elements;
+        } else {
+            for (let document of newNavigationPath.elements) {
+                const index: number = currentNavigationPathResourceIds.indexOf(document.resource.id as string);
+                result.elements.push(index > -1 ?
+                    currentNavigationPath.elements[index] :
+                    {document: document}
+                );
+            }
+        }
+
+        this.viewStates[this.view].navigationPaths[mainTypeDocument.resource.id as string] = result;
+    }
+
+
     public getNavigationPath(): NavigationPath {
 
         if (this.isInOverview()) return NavigationPath.empty();

@@ -97,7 +97,7 @@ export class NavigationPathManager {
         if (elements.length == 0) {
             this.resourcesState.moveInto(undefined);
         } else {
-            elements.forEach(el => this.resourcesState.moveInto(el));
+            this.resourcesState.setNavigationPath({ elements: elements, rootDocument: elements[elements.length - 1]});
         }
 
         this.notifyNavigationPathObservers();

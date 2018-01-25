@@ -209,7 +209,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('show correct navigation path after click on relation link', () => {
+    it('show correct navigation path after click on relation link', () => {
 
         NavbarPage.clickNavigateToExcavation();
 
@@ -229,7 +229,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('update navigation path after changing liesWithin relation', () => {
+    it('update navigation path after changing liesWithin relation', () => {
 
         NavbarPage.clickNavigateToExcavation();
 

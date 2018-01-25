@@ -97,6 +97,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickGoToChildObjectListButton(identifier) {
+
+        common.click(element(by.css('#resource-' + identifier + ' .mdi')))
+    }
+
+
     public static clickSelectResourceType(typeName?) {
 
         if (!typeName) typeName = "feature-architecture";

@@ -26,7 +26,9 @@ export class AppController {
     }
 
     public setupServer(): Promise<any> {
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
+
+            if (!remote.getGlobal('switches').provide_reset) return resolve();
 
             const control = express();
             control.post('/reset', (req: any, res: any) => {

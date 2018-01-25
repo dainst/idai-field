@@ -55,7 +55,8 @@ global.switches = {
     prevent_reload: false,
     destroy_before_create: false,
     messages_timeout: 3500,
-    suppress_map_load_for_test: false
+    suppress_map_load_for_test: false,
+    provide_reset: false
 };
 
 if (env && env.indexOf('test') !== -1) { // is environment 'test'
@@ -63,6 +64,7 @@ if (env && env.indexOf('test') !== -1) { // is environment 'test'
     global.switches.prevent_reload = true;
     global.switches.destroy_before_create = true;
     global.switches.suppress_map_load_for_test = true;
+    global.switches.provide_reset = true;
 }
 
 

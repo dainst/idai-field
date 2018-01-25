@@ -56,7 +56,7 @@ export class MainTypeDocumentsManager {
             selectedDocument, this.documents);
 
         if (operationTypeDocument && operationTypeDocument != this.resourcesState.getMainTypeDocument()) {
-            this.resourcesState.setMainTypeDocument(operationTypeDocument);
+            this.select(operationTypeDocument);
         }
     }
 

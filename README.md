@@ -1,6 +1,6 @@
 # iDAI.field 2
 
-![idai-field](readme-front.png) 
+![idai-field](readme-front-1.png) 
    
 ## Quickstart
 

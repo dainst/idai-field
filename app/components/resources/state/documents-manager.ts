@@ -114,21 +114,17 @@ export class DocumentsManager {
     }
 
 
-    public async setSelected(documentToSelect: Document): Promise<any|undefined> {
-
-        if (!documentToSelect) return this.deselect();
-
-        if (!this.resourcesState.isInOverview() && documentToSelect == this.resourcesState.getMainTypeDocument()) {
-            return;
-        }
+    public async setSelected(documentToSelect: Document): Promise<any> {
 
         if (documentToSelect == this.selectedDocument) return;
+        if (!documentToSelect) return this.deselect();
 
         if (this.selectedDocument) this.notifyDeselectionObservers(this.selectedDocument);
 
         this.selectedDocument = documentToSelect;
 
         this.removeEmpty(this.documents);
+
         if (documentToSelect && documentToSelect.resource && !documentToSelect.resource.id) {
             this.documents.unshift(documentToSelect);
             return;
@@ -138,9 +134,9 @@ export class DocumentsManager {
             this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
         }
 
-        if (!ModelUtil.isInList(documentToSelect, this.documents)) {
+        if (!ModelUtil.isInList(documentToSelect, await this.createUpdatedDocumentList())) {
             await this.makeSureSelectedDocumentAppearsInList();
-            return this.populateDocumentList();
+            await this.populateDocumentList();
         }
     }
 
@@ -191,15 +187,14 @@ export class DocumentsManager {
 
         this.newDocumentsFromRemote = [];
 
-        const documents: Array<Document>|undefined = await this.createUpdatedDocumentList();
-        if (documents) this.documents = documents;
+        this.documents = await this.createUpdatedDocumentList();
     }
 
 
-    public async createUpdatedDocumentList(): Promise<Array<Document>|undefined> {
+    public async createUpdatedDocumentList(): Promise<Array<Document>> {
 
         const isRecordedInTarget: Document|undefined = await this.makeIsRecordedInTarget();
-        if (!isRecordedInTarget) return;
+        if (!isRecordedInTarget) return [];
 
         const documents: Array<Document> = await this.fetchDocuments(
             DocumentsManager.makeDocsQuery(this.buildQuery(), isRecordedInTarget.resource.id as string)
@@ -261,16 +256,11 @@ export class DocumentsManager {
     }
 
 
-    /**
-     * @returns {boolean} true if list needs to be reloaded afterwards
-     */
     private async adjustQuerySettingsIfNecessary() {
 
-        const documents: Array<Document>|undefined = await this.createUpdatedDocumentList();
+        const documents: Array<Document> = await this.createUpdatedDocumentList();
 
-        if (!this.selectedDocument || !documents) return;
-
-        if (!ModelUtil.isInList(this.selectedDocument, documents)) {
+        if (!ModelUtil.isInList(this.selectedDocument as IdaiFieldDocument, documents)) {
             this.resourcesState.setQueryString('');
             this.resourcesState.setTypeFilters(undefined as any);
         }

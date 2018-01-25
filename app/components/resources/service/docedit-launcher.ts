@@ -15,14 +15,12 @@ import {ViewFacade} from '../state/view-facade';
  */
 export class DoceditLauncher {
 
-
     constructor(
             private modalService: NgbModal,
             private doceditActiveTabService: DoceditActiveTabService,
             private documentEditChangeMonitor: DocumentEditChangeMonitor,
             private viewFacade: ViewFacade
-    ) {
-    }
+    ) {}
 
 
     public async editDocument(document: Document, activeTabName?: string): Promise<any> {
@@ -36,15 +34,15 @@ export class DoceditLauncher {
         const result: any = {};
 
         await doceditRef.result.then(
-            res => this.handleSaveResult(document, result, res),
+            res => this.handleSaveResult(result, res),
             closeReason => this.handleClosed(document, closeReason)
         );
-        await this.viewFacade.populateDocumentList(); // do this in every case, since this is also the trigger for the map to get repainted with updated documents
+
         return result;
     }
 
 
-    private async handleSaveResult(document: any, result: any, res: any) {
+    private async handleSaveResult(result: any, res: any) {
 
         result['document'] = res['document'];
 
@@ -53,24 +51,14 @@ export class DoceditLauncher {
             result['tab'] = nextActiveTab;
         }
 
-        if (this.isDocumentListItem(document)) {
-            result['updateScrollTarget'] = true;
-            return this.viewFacade.setSelectedDocument(result['document'] as IdaiFieldDocument);
-        }
+        result['updateScrollTarget'] = true;
 
-        this.viewFacade.deselect();
-        await this.viewFacade.selectMainTypeDocument(result['document'] as IdaiFieldDocument);
-        await this.viewFacade.populateMainTypeDocuments()
+        await this.viewFacade.setSelectedDocument(result['document'] as IdaiFieldDocument);
+        await this.viewFacade.populateDocumentList();
     }
 
 
-    private isDocumentListItem(document: Document) {
-
-        return document.resource.type != this.viewFacade.getCurrentViewMainType();
-    }
-
-
-    private handleClosed(document: any, closeReason: any) {
+    private handleClosed(document: Document, closeReason: string) {
 
         this.documentEditChangeMonitor.reset();
 

@@ -16,7 +16,7 @@ export class MainTypeDocumentsManager {
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
-        private viewManager: NavigationPathManager,
+        private navigationPathManager: NavigationPathManager,
         private resourcesState: ResourcesState
     ) {}
 
@@ -44,7 +44,7 @@ export class MainTypeDocumentsManager {
 
     public select(document: IdaiFieldDocument) {
 
-        this.viewManager.setMainTypeDocument(document);
+        this.navigationPathManager.setMainTypeDocument(document);
     }
 
 
@@ -115,7 +115,7 @@ export class MainTypeDocumentsManager {
                 this.resourcesState.setMainTypeDocument(document);
             } catch(e) {
                 this.resourcesState.removeActiveLayersIds();
-                this.viewManager.setMainTypeDocument(undefined);
+                this.navigationPathManager.setMainTypeDocument(undefined);
                 this.selectFirstOperationTypeDocumentFromList();
             }
         }

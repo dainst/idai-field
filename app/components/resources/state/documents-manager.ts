@@ -31,7 +31,7 @@ export class DocumentsManager {
         private datastore: IdaiFieldDocumentReadDatastore,
         private changesStream: ChangesStream,
         private settingsService: SettingsService,
-        private viewManager: NavigationPathManager,
+        private navigationPathManager: NavigationPathManager,
         private mainTypeDocumentsManager: MainTypeDocumentsManager,
         private resourcesState: ResourcesState
     ) {
@@ -78,7 +78,7 @@ export class DocumentsManager {
 
     public async moveInto(document: IdaiFieldDocument) {
 
-        this.viewManager.moveInto(document);
+        this.navigationPathManager.moveInto(document);
 
         await this.populateDocumentList();
         this.deselectIfNotInList();
@@ -258,7 +258,7 @@ export class DocumentsManager {
         if (!ModelUtil.isInList(this.selectedDocument, this.documents)) {
             this.resourcesState.setQueryString('');
             this.resourcesState.setTypeFilters(undefined as any);
-            await this.viewManager.createNavigationPathForDocument(this.selectedDocument as IdaiFieldDocument);
+            await this.navigationPathManager.createNavigationPathForDocument(this.selectedDocument as IdaiFieldDocument);
             return true;
         }
 

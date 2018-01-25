@@ -124,6 +124,18 @@ export function main() {
         afterEach((done) => new PouchDB('testdb').destroy().then(() => {done()}), 5000);
 
 
+        it('deselect on switching views', async done => {
+
+            await viewFacade.setupView('project', undefined);
+            await viewFacade.setSelectedDocument(trenchDocument1);
+            expect(viewFacade.getSelectedDocument()).toEqual(trenchDocument1);
+
+            await viewFacade.setupView('excavation', undefined);
+            expect(viewFacade.getSelectedDocument()).toEqual(undefined);
+            done();
+        });
+
+
         it('operations overview: populate document list', async done => {
 
             await viewFacade.setupView('project', undefined);

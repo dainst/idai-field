@@ -57,7 +57,6 @@ export class DocumentsManager {
     public getSelectedDocument = () => this.selectedDocument;
 
 
-
     public async setQueryString(q: string) {
 
         this.resourcesState.setQueryString(q);
@@ -132,8 +131,7 @@ export class DocumentsManager {
 
         this.removeEmptyDocuments();
         if (documentToSelect && documentToSelect.resource && !documentToSelect.resource.id &&
-            documentToSelect.resource.type != this.resourcesState.getViewType()) {
-
+                documentToSelect.resource.type != this.resourcesState.getViewType()) {
             this.documents.unshift(documentToSelect);
         }
 

@@ -49,7 +49,11 @@ export class NavigationPathManager {
             currentResourceId = ModelUtil.getRelationTargetId(currentDocument, 'liesWithin', 0);
         }
 
-        elements.forEach(el => this.resourcesState.moveInto(el));
+        if (elements.length == 0) {
+            this.resourcesState.moveInto(undefined);
+        } else {
+            elements.forEach(el => this.resourcesState.moveInto(el));
+        }
         this.notifyNavigationPathObservers();
     }
 

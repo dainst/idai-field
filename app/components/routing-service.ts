@@ -117,15 +117,11 @@ export class RoutingService {
         const viewName = await this.viewFacade.getMainTypeHomeViewName(
             await this.getMainTypeNameForDocument(documentToSelect));
 
-        if (comingFromOutsideOverviewComponent ||
-            viewName != this.viewFacade.getCurrentViewName()) {
-
-            this.router.navigate(
-                     (tab) ? ['resources', viewName, documentToSelect.resource.id, 'view', tab]
-                         : ['resources', viewName, documentToSelect.resource.id]);
-
+        if (comingFromOutsideOverviewComponent || viewName != this.viewFacade.getCurrentViewName()) {
+            this.router.navigate(tab ?
+                ['resources', viewName, documentToSelect.resource.id, 'view', tab] :
+                ['resources', viewName, documentToSelect.resource.id]);
         } else {
-
             this.viewFacade.setSelectedDocument(documentToSelect)
         }
     }

@@ -50,12 +50,14 @@ describe('resources/list --', () => {
         NavbarPage.clickCloseAllMessages();
     });
 
+
     it('navigate to child item view in list mode and create a new child object', () => {
 
         ResourcesPage.performCreateResourceInList('5', 'feature-architecture');
-        ResourcesPage.clickGoToChildObjectListButton('5');
+        ResourcesPage.clickMoveIntoButton('5');
         ResourcesPage.performCreateResourceInList('child1', 'find');
-        ResourcesPage.performCreateResourceInList('child2', 'find');
+        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.getListModeInputFieldValue('child1', 0).then(inputValue => expect(inputValue).toEqual('child1'));
     });

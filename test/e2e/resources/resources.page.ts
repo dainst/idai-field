@@ -97,7 +97,7 @@ export class ResourcesPage {
     }
 
 
-    public static clickGoToChildObjectListButton(identifier) {
+    public static clickMoveIntoButton(identifier) {
 
         common.click(element(by.css('#resource-' + identifier + ' .mdi')))
     }

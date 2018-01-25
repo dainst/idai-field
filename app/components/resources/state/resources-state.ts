@@ -27,10 +27,7 @@ export class ResourcesState {
     ) {}
 
 
-    /**
-     * @throws if already initialized
-     */
-    public async initialize(viewName: string, defaultMode?: string): Promise<any> {
+    public async initialize(viewName: string): Promise<any> {
 
         if (!this.loaded) {
             this.viewStates = ResourcesViewState.complete(
@@ -39,12 +36,11 @@ export class ResourcesState {
         this.view = viewName;
         if (!this.viewStates[this.view]) this.viewStates[this.view] = ResourcesViewState.default();
 
-        // if (defaultMode) this.setMode(defaultMode);
-        // this.setActiveDocumentViewTab(undefined);
+        this.setActiveDocumentViewTab(undefined);
         this.loaded = true;
     }
 
-    
+
     public resetForE2E = () => this.viewStates = { [this.view]: ResourcesViewState.default() };
 
     public getActiveDocumentViewTab = () => this.activeDocumentViewTab;

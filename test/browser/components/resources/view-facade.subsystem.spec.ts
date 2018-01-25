@@ -126,11 +126,11 @@ export function main() {
 
         it('deselect on switching views', async done => {
 
-            await viewFacade.selectView('project', undefined);
+            await viewFacade.selectView('project');
             await viewFacade.setSelectedDocument(trenchDocument1);
             expect(viewFacade.getSelectedDocument()).toEqual(trenchDocument1);
 
-            await viewFacade.selectView('excavation', undefined);
+            await viewFacade.selectView('excavation');
             expect(viewFacade.getSelectedDocument()).toEqual(undefined);
             done();
         });
@@ -138,7 +138,7 @@ export function main() {
 
         it('operations overview: populate document list', async done => {
 
-            await viewFacade.selectView('project', undefined);
+            await viewFacade.selectView('project');
             expect(viewFacade.getDocuments().length).toBe(2);
             const identifiers = viewFacade.getDocuments().map(document => document.resource.identifier);
             expect(identifiers).toContain('trench1');
@@ -149,7 +149,7 @@ export function main() {
 
         it('operations overview: search', async done => {
 
-            await viewFacade.selectView('project', undefined);
+            await viewFacade.selectView('project');
             await viewFacade.setSearchString('trench2');
             expect(viewFacade.getDocuments().length).toBe(1);
             expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('trench2');
@@ -159,7 +159,7 @@ export function main() {
 
         it('operations view: populate document list', async done => {
 
-            await viewFacade.selectView('excavation', undefined);
+            await viewFacade.selectView('excavation');
             const documents: Array<Document> = viewFacade.getDocuments();
             expect(documents.length).toBe(2);
             expect(documents[0].resource.id).toEqual(featureDocument1.resource.id);
@@ -170,7 +170,7 @@ export function main() {
 
         it('operations view: select operations type document', async done => {
 
-            await viewFacade.selectView('excavation', undefined);
+            await viewFacade.selectView('excavation');
             await viewFacade.selectMainTypeDocument(trenchDocument2);
             expect(viewFacade.getDocuments().length).toBe(1);
             expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find3');
@@ -180,7 +180,7 @@ export function main() {
 
         it('operations view: search', async done => {
 
-            await viewFacade.selectView('excavation', undefined);
+            await viewFacade.selectView('excavation');
             await viewFacade.setSearchString('feature2');
             expect(viewFacade.getDocuments().length).toBe(1);
             expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('feature2');
@@ -190,7 +190,7 @@ export function main() {
 
         it('operations view: set selected, query invalidated', async done => {
 
-            await viewFacade.selectView('excavation', undefined);
+            await viewFacade.selectView('excavation');
             await viewFacade.setSearchString('feature1');
             await viewFacade.setSelectedDocument(featureDocument2);
             expect(viewFacade.getQueryString()).toEqual('');
@@ -201,7 +201,7 @@ export function main() {
 
         it('operations view: set selected in operations view, query not invalidated', async done => {
 
-            await viewFacade.selectView('excavation', undefined);
+            await viewFacade.selectView('excavation');
             await viewFacade.setSearchString('feature1');
             await viewFacade.setSelectedDocument(featureDocument1);
             expect(viewFacade.getQueryString()).toEqual('feature1');
@@ -212,7 +212,7 @@ export function main() {
 
         it('operations view: query matches selection', async done => {
 
-            await viewFacade.selectView('excavation', undefined);
+            await viewFacade.selectView('excavation');
             await viewFacade.setSelectedDocument(findDocument1);
             await viewFacade.setSearchString('find1');
             expect(viewFacade.getSelectedDocument()).toBe(findDocument1);
@@ -222,7 +222,7 @@ export function main() {
 
         it('operations view: query does not match selection, deselect', async done => {
 
-            await viewFacade.selectView('excavation', undefined);
+            await viewFacade.selectView('excavation');
             await viewFacade.setSelectedDocument(findDocument1);
             await viewFacade.setSearchString('find2');
             expect(viewFacade.getSelectedDocument()).toBe(undefined);
@@ -232,7 +232,7 @@ export function main() {
 
         it('operations view: show only documents with liesWithin relation to a specific resource', async done => {
 
-            await viewFacade.selectView('excavation', undefined);
+            await viewFacade.selectView('excavation');
             await viewFacade.moveInto(featureDocument1 as any);
 
             let documents = await viewFacade.getDocuments();
@@ -262,7 +262,7 @@ export function main() {
             featureDocument1a.resource.relations['liesWithin'] = [featureDocument1.resource.id];
             await idaiFieldDocumentDatastore.create(featureDocument1b);
 
-            await viewFacade.selectView('excavation', undefined);
+            await viewFacade.selectView('excavation');
 
             // --
 

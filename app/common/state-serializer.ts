@@ -18,11 +18,24 @@ export class StateSerializer {
     /**
      * @param stateType can be either RESOURCES_STATE or IMAGES_STATE
      */
-    public load(stateType: string): Promise<any> {
+    public async load(stateType: string): Promise<any> {
+
+        if (this.settingsService.getSelectedProject() == 'test') {
+            return {
+                project: {
+                    navigationPaths: {},
+                    layerIds: {'test' : ['o25']},
+                    mode: 'map'
+                },
+                excavation : {
+                    navigationPaths: {'t1':{elements:[]}},
+                    layerIds: {'t1' : ['o25']},
+                    mode: 'map'
+                }
+            };
+        }
 
         return new Promise(resolve => {
-
-            if (this.settingsService.getSelectedProject() == 'test') return resolve({});
 
             fs.readFile(this.getFilePath(stateType), 'utf-8', (err: any, content: any) => {
                 if (err) {

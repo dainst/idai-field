@@ -16,9 +16,8 @@ import {includedIn, takeUntil} from '../../../util/list-util';
 export class ResourcesState {
 
     private viewStates: { [viewName: string]: ResourcesViewState };
-
     private view: string;
-
+    private loaded = false;
     private activeDocumentViewTab: string|undefined;
 
 
@@ -37,17 +36,16 @@ export class ResourcesState {
 
 
     /**
-     * @param defaultMode
      * @throws if already initialized
      */
-    public async initialize(defaultMode?: string): Promise<any> {
+    public async initialize(viewName: string, defaultMode?: string): Promise<any> {
 
-        if (this.viewStates) return Promise.reject(undefined);
-
+        if (this.loaded) return Promise.reject(undefined);
         this.viewStates = await this.serializer.load(StateSerializer.RESOURCES_STATE);
-
-        if (defaultMode) this.setMode(defaultMode);
-        this.setActiveDocumentViewTab(undefined);
+        this.setView(viewName);
+        // if (defaultMode) this.setMode(defaultMode);
+        // this.setActiveDocumentViewTab(undefined);
+        this.loaded = true;
     }
 
 

@@ -259,7 +259,7 @@ export class ViewFacade {
     private async setupView(viewName: string, defaultMode: string): Promise<any> {
 
         try {
-            await this.resourcesState.initialize(defaultMode)
+            await this.resourcesState.initialize(viewName, defaultMode)
         } catch (e) {
             this.resourcesState.setView(viewName)
         }

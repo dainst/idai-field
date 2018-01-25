@@ -1,6 +1,6 @@
 # iDAI.field 2
 
-See also [idai-components-2](https://github.com/dainst/idai-components-2). 
+![idai-field](readme-front.png) 
    
 ## Quickstart
 
@@ -16,6 +16,8 @@ $ npm start
 
 `npm install` fetches the necessary dependencies. `npm run build` compiles the typescript files, creates [configuration](config/README.md) files, gathers the necessary fonts and converts scss files. `npm start` starts the electron app. For a fast development workflow it is recommended to set up your IDE to compile the typescript files continuously while you are 
  working on the sources. That way you can just hit reload to see changes made to the *.ts* or *.html* files.
+
+See also [idai-components-2](https://github.com/dainst/idai-components-2).
 
 ## Tests
 

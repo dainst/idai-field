@@ -42,6 +42,14 @@ export class ResourcesState {
 
         if (this.loaded) return Promise.reject(undefined);
         this.viewStates = await this.serializer.load(StateSerializer.RESOURCES_STATE);
+        Object.keys(this.viewStates)
+            .forEach(viewState => {
+                if (!this.viewStates[viewState].navigationPaths) this.viewStates[viewState].navigationPaths = {};
+                if (!this.viewStates[viewState].layerIds) this.viewStates[viewState].layerIds = {};
+                if (!this.viewStates[viewState].q) this.viewStates[viewState].q = '';
+                if (!this.viewStates[viewState].mode) this.viewStates[viewState].mode = 'map';
+            });
+
         this.setView(viewName);
         // if (defaultMode) this.setMode(defaultMode);
         // this.setActiveDocumentViewTab(undefined);

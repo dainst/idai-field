@@ -23,14 +23,11 @@ export class StateSerializer {
         if (this.settingsService.getSelectedProject() == 'test') {
             return {
                 project: {
-                    navigationPaths: {},
-                    layerIds: {'test' : ['o25']},
-                    mode: 'map'
+                    layerIds: {'test' : ['o25']}
                 },
                 excavation : {
                     navigationPaths: {'t1':{elements:[]}},
-                    layerIds: {'t1' : ['o25']},
-                    mode: 'map'
+                    layerIds: {'t1' : ['o25']}
                 }
             };
         }

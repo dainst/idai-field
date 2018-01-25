@@ -92,7 +92,7 @@ export class NavbarPage {
     public static performNavigateToSettings() {
 
         common.click(element(by.id('taskbar-dropdown')));
-        common.click(element(by.id('settings-button')));
+        return common.click(element(by.id('settings-button')));
     };
 
 

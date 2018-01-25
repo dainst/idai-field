@@ -32,11 +32,12 @@ describe('resources/state --', function() {
     beforeEach(() => {
 
         if (index > 0) {
-            NavbarPage.performNavigateToSettings();
-            require('request').post('http://localhost:3003/reset', {});
-            browser.sleep(delays.shortRest * 1.5);
+            NavbarPage.performNavigateToSettings().then(() => {
+                require('request').post('http://localhost:3003/reset', {});
+            });
+            browser.sleep(delays.shortRest * 3);
             NavbarPage.clickNavigateToProject();
-            browser.sleep(delays.shortRest * 1.5);
+            browser.sleep(delays.shortRest * 3);
         }
         index++;
     });

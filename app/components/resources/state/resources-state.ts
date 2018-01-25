@@ -32,16 +32,24 @@ export class ResourcesState {
         if (!this.loaded) {
             this.viewStates = ResourcesViewState.complete(
                 await this.serializer.load(StateSerializer.RESOURCES_STATE));
+            this.loaded = true;
         }
+
         this.view = viewName;
         if (!this.viewStates[this.view]) this.viewStates[this.view] = ResourcesViewState.default();
 
         this.setActiveDocumentViewTab(undefined);
-        this.loaded = true;
     }
 
 
-    public resetForE2E = () => this.viewStates = { [this.view]: ResourcesViewState.default() };
+    public resetForE2E = () => {
+
+        this.viewStates = {
+            excavation: ResourcesViewState.default(),
+            project: ResourcesViewState.default()
+        };
+    };
+
 
     public getActiveDocumentViewTab = () => this.activeDocumentViewTab;
 

@@ -37,27 +37,6 @@ export class NavigationPathManager {
     }
 
 
-    public async createNavigationPathForDocument(document: IdaiFieldDocument) {
-
-        const elements: Array<IdaiFieldDocument> = [];
-
-        let currentResourceId = ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
-        while (currentResourceId) {
-            const currentDocument: IdaiFieldDocument = await this.datastore.get(currentResourceId);
-            elements.unshift(currentDocument);
-            currentResourceId = ModelUtil.getRelationTargetId(currentDocument, 'liesWithin', 0);
-        }
-
-        if (elements.length == 0) {
-            this.resourcesState.moveInto(undefined);
-        } else {
-            elements.forEach(el => this.resourcesState.moveInto(el));
-        }
-
-        this.notifyNavigationPathObservers();
-    }
-
-
     public async updateNavigationPathForDocument(document: IdaiFieldDocument) {
 
         if (!this.isCorrectNavigationPathFor(document)) {
@@ -101,6 +80,27 @@ export class NavigationPathManager {
         }
 
         return false;
+    }
+
+
+    private async createNavigationPathForDocument(document: IdaiFieldDocument) {
+
+        const elements: Array<IdaiFieldDocument> = [];
+
+        let currentResourceId = ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
+        while (currentResourceId) {
+            const currentDocument: IdaiFieldDocument = await this.datastore.get(currentResourceId);
+            elements.unshift(currentDocument);
+            currentResourceId = ModelUtil.getRelationTargetId(currentDocument, 'liesWithin', 0);
+        }
+
+        if (elements.length == 0) {
+            this.resourcesState.moveInto(undefined);
+        } else {
+            elements.forEach(el => this.resourcesState.moveInto(el));
+        }
+
+        this.notifyNavigationPathObservers();
     }
 }
 

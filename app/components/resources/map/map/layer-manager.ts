@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ImageTypeUtility} from '../../../../common/image-type-utility';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../state/view-facade';
-import {add, remove, subtract} from "../../../../util/list-util";
+import {add, remove, subtract} from '../../../../util/list-util';
 
 
 export interface LayersInitializationResult {
@@ -35,52 +34,60 @@ export class LayerManager {
         private viewFacade: ViewFacade) {}
 
 
-    public async initializeLayers(mainTypeDocument: IdaiFieldDocument | undefined)
-            : Promise<LayersInitializationResult> {
-
-        try {
-            return {
-                layers: (await this.datastore.find({
-                    q: '',
-                    types: this.imageTypeUtility.getImageTypeNames(),
-                    constraints: { 'georeference:exist': 'KNOWN' }
-                })).documents,
-                activeLayersChange: this.fetchActiveLayersFromResourcesState(mainTypeDocument)
-            };
-        } catch(e) {
-            console.error('error with datastore.find', e);
-        }
-
-        return Promise.reject(undefined);
-    }
-
-
     public reset = () => this.activeLayerIds = [];
-
 
     public isActiveLayer = (resourceId: string) => this.activeLayerIds.indexOf(resourceId) > -1;
 
 
-    public toggleLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument | undefined) {
+    public async initializeLayers()
+            : Promise<LayersInitializationResult> {
+
+        const activeLayersChange = LayerManager.computeActiveLayersChange(
+            this.viewFacade.getActiveLayersIds(),
+            this.activeLayerIds);
+
+        this.activeLayerIds = this.viewFacade.getActiveLayersIds();
+
+
+        try {
+            return {
+                layers: await this.fetchLayers(),
+                activeLayersChange: activeLayersChange
+            };
+        } catch(e) {
+            console.error('error with datastore.find', e);
+            throw undefined;
+        }
+    }
+
+
+    public toggleLayer(resourceId: string) {
 
         this.activeLayerIds = this.isActiveLayer(resourceId) ?
             remove(this.activeLayerIds, resourceId) :
             add(this.activeLayerIds, resourceId);
 
-        if (mainTypeDocument) this.viewFacade.setActiveLayersIds(this.activeLayerIds);
+        this.viewFacade.setActiveLayersIds(this.activeLayerIds);
     }
 
 
-    private fetchActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument | undefined): ListDiffResult {
+    private async fetchLayers() {
 
-        const newActiveLayerIds = mainTypeDocument ?
-            this.viewFacade.getActiveLayersIds() : [];
-        const oldActiveLayerIds = this.activeLayerIds.slice(0);
-        this.activeLayerIds = newActiveLayerIds;
+        return (await this.datastore.find({
+                q: '',
+                types: this.imageTypeUtility.getImageTypeNames(),
+                constraints: { 'georeference:exist': 'KNOWN' }
+            })).documents;
+    }
+
+
+    private static computeActiveLayersChange(
+        newActiveLayerIds: Array<string>,
+        oldActiveLayerIds: Array<string>): ListDiffResult {
 
         return {
             removed: subtract(oldActiveLayerIds, newActiveLayerIds),
-            added: subtract(newActiveLayerIds, oldActiveLayerIds),
+            added: subtract(newActiveLayerIds, oldActiveLayerIds)
         };
     }
 }

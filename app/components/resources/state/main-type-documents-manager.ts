@@ -20,11 +20,10 @@ export class MainTypeDocumentsManager {
         private resourcesState: ResourcesState
     ) {}
 
+    
+    public getDocuments = () => this.documents;
 
-    public getDocuments() {
-
-        return this.documents;
-    }
+    public select = (document: IdaiFieldDocument) => this.navigationPathManager.setMainTypeDocument(document);
 
 
     public async populate(): Promise<any> {
@@ -39,12 +38,6 @@ export class MainTypeDocumentsManager {
             return;
         }
         return this.restoreLastSelectedOperationTypeDocument();
-    }
-
-
-    public select(document: IdaiFieldDocument) {
-
-        this.navigationPathManager.setMainTypeDocument(document);
     }
 
 

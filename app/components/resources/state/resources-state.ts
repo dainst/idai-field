@@ -36,9 +36,13 @@ export class ResourcesState {
     }
 
 
+    /**
+     * @param defaultMode
+     * @throws if already initialized
+     */
     public async initialize(defaultMode?: string): Promise<any> {
 
-        if (this.viewStates) return Promise.resolve();
+        if (this.viewStates) return Promise.reject(undefined);
 
         this.viewStates = await this.serializer.load(StateSerializer.RESOURCES_STATE);
 
@@ -47,7 +51,7 @@ export class ResourcesState {
     }
 
 
-    public async setView(name: string) {
+    public setView(name: string) {
 
         if (!name) return;
         this.view = name;

@@ -256,9 +256,26 @@ export class ViewFacade {
 
     public async selectView(viewName: string, defaultMode: string) {
 
-        await this._setupView(viewName, defaultMode);
+        await this.setupView(viewName, defaultMode);
+        await this.setupMainTypeDocument();
+        await this.populateDocumentList();
+    }
+
+
+    private async setupView(viewName: string, defaultMode: string): Promise<any> {
+
+        try {
+            await this.resourcesState.initialize(defaultMode)
+        } catch (e) {
+            this.resourcesState.setView(viewName)
+        }
+
         this.documentsManager.deselect();
-        await this.documentsManager.populateProjectDocument();
+        await this.documentsManager.populateProjectDocument()
+    }
+
+
+    private async setupMainTypeDocument() {
 
         let mainTypeResource: IdaiFieldDocument|undefined;
 
@@ -273,19 +290,8 @@ export class ViewFacade {
 
         if (mainTypeResource) this.navigationPathManager.setMainTypeDocument(mainTypeResource);
         this.navigationPathManager.notifyNavigationPathObservers();
-
-        await this.populateDocumentList();
     }
 
-
-    public _setupView(viewName: string, defaultMode: string): Promise<any> {
-
-        return ((!this.resourcesState.getView() || viewName != this.resourcesState.getView())
-            ? this.resourcesState.setView(viewName)
-
-            // TODO simplify
-            : Promise.resolve()).then(() => this.resourcesState.initialize(defaultMode));
-    }
 
 
     private isSelectedDocumentRecordedInSelectedMainTypeDocument(): boolean {

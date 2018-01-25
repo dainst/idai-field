@@ -10,8 +10,8 @@ import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../../util/extension-util';
 import {UploadStatus} from './upload-status';
 import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
-import {PersistenceManager} from "../../core/persist/persistence-manager";
-import {DocumentReadDatastore} from "../../core/datastore/document-read-datastore";
+import {PersistenceManager} from '../../core/persist/persistence-manager';
+import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 
 export interface ImageUploadResult {
 
@@ -193,8 +193,7 @@ export class ImageUploader {
                         width: img.width,
                         height: img.height,
                         relations: {
-                            depicts: [],
-                            isRecordedIn: []
+                            depicts: []
                         }
                     }
                 };

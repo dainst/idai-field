@@ -96,7 +96,7 @@ export class ViewFacade {
 
     public setTypeFilters = (types: string[]) => this.documentsManager.setTypeFilters(types);
 
-    public moveInto = (document: IdaiFieldDocument) => this.documentsManager.moveInto(document);
+    public moveInto = (document: IdaiFieldDocument|undefined) => this.documentsManager.moveInto(document);
 
     public navigationPathNotifications = () => this.navigationPathManager.navigationPathNotifications();
 

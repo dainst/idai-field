@@ -29,11 +29,7 @@ export class NavigationComponent {
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
-
-    public async setRootDocument(document: IdaiFieldDocument|undefined) {
-
-        await this.viewFacade.moveInto(document as any);
-    }
+    public moveInto = (document: IdaiFieldDocument|undefined) => this.viewFacade.moveInto(document);
 
 
     public async chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {

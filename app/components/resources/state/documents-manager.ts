@@ -75,7 +75,7 @@ export class DocumentsManager {
     }
 
 
-    public async moveInto(document: IdaiFieldDocument) {
+    public async moveInto(document: IdaiFieldDocument|undefined) {
 
         this.navigationPathManager.moveInto(document);
 

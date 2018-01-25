@@ -13,12 +13,12 @@
 
         <div id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
                 [class.root-document]="!navigationPath.rootDocument"
-                (click)="setRootDocument(undefined)">
+                (click)="moveInto(undefined)">
             {{viewFacade.getSelectedMainTypeDocument().resource.identifier}}
         </div>
 
         <div *ngFor="let document of navigationPath.elements" class="btn btn-outline-primary navigation-button"
-             [class.root-document]="document == navigationPath.rootDocument" (click)="setRootDocument(document)">
+             [class.root-document]="document == navigationPath.rootDocument" (click)="moveInto(document)">
             {{document.resource.identifier}}
         </div>
     </div>

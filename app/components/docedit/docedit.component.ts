@@ -63,8 +63,6 @@ export class DoceditComponent {
      */
     private inspectedRevisionsIds: string[];
 
-    private contextDocLabel: string;
-
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -92,7 +90,6 @@ export class DoceditComponent {
     /**
      * @param document
      */
-
     public setDocument(document: IdaiFieldDocument) {
 
         if (!document) return;
@@ -104,17 +101,6 @@ export class DoceditComponent {
         this.persistenceManager.setOldVersions([this.document]);
 
         this.fetchIsRecordedInCount(document);
-        this.getContextDoc(this.clonedDocument.resource.relations);
-    }
-
-
-    public getContextDoc(relation: any) {
-
-        console.log(relation.liesWithin[0]);
-
-        this.datastore.get(relation.liesWithin[0]).then(doc => {
-            this.contextDocLabel = doc.resource.identifier;
-        });
     }
 
 

@@ -130,8 +130,7 @@ export class DocumentsManager {
         this.selectedDocument = documentToSelect;
 
         this.removeEmptyDocuments();
-        if (documentToSelect && documentToSelect.resource && !documentToSelect.resource.id &&
-                documentToSelect.resource.type != this.resourcesState.getViewType()) {
+        if (documentToSelect && documentToSelect.resource && !documentToSelect.resource.id) {
             this.documents.unshift(documentToSelect);
         }
 

@@ -138,7 +138,7 @@ export class RoutingService {
             this.location.replaceState('resources/' + params['view']);
 
             try {
-                await this.viewFacade.setupView(params['view'], params['id']);
+                await this.viewFacade.selectView(params['view'], params['id']);
                 observer.next(params);
             } catch (msgWithParams) {
                 if (msgWithParams) console.error(

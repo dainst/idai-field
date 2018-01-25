@@ -16,9 +16,8 @@ export class NavigationPathManager {
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
 
-    constructor(
-        private resourcesState: ResourcesState,
-        private datastore: IdaiFieldDocumentReadDatastore) {
+    constructor(private resourcesState: ResourcesState,
+                private datastore: IdaiFieldDocumentReadDatastore) {
     }
 
 
@@ -29,7 +28,7 @@ export class NavigationPathManager {
     }
 
 
-    public setMainTypeDocument(selectedMainTypeDocumentResource: IdaiFieldDocument|undefined) {
+    public setMainTypeDocument(selectedMainTypeDocumentResource: IdaiFieldDocument | undefined) {
 
         if (!selectedMainTypeDocumentResource) return;
         this.resourcesState.setMainTypeDocument(selectedMainTypeDocumentResource);
@@ -54,7 +53,16 @@ export class NavigationPathManager {
         } else {
             elements.forEach(el => this.resourcesState.moveInto(el));
         }
+
         this.notifyNavigationPathObservers();
+    }
+
+
+    public async updateNavigationPathForDocument(document: IdaiFieldDocument) {
+
+        if (!this.isCorrectNavigationPathFor(document)) {
+            await this.createNavigationPathForDocument(document);
+        }
     }
 
 
@@ -71,6 +79,28 @@ export class NavigationPathManager {
         if (!this.navigationPathObservers) return;
 
         this.navigationPathObservers.forEach(inform(this.resourcesState.getNavigationPath()));
+    }
+
+
+    private isCorrectNavigationPathFor(document: IdaiFieldDocument): boolean {
+
+        const navigationPath: NavigationPath = this.resourcesState.getNavigationPath();
+
+        if (navigationPath.rootDocument && ModelUtil.hasRelationTarget(document, 'liesWithin',
+                navigationPath.rootDocument.resource.id as string)) {
+            return true;
+        }
+
+        const mainTypeDocument: IdaiFieldDocument | undefined = this.resourcesState.getMainTypeDocument();
+
+        if (!navigationPath.rootDocument && mainTypeDocument
+                && ModelUtil.hasRelationTarget(document, 'isRecordedIn',
+                    mainTypeDocument.resource.id as string)
+                && !ModelUtil.hasRelations(document, 'liesWithin')) {
+            return true;
+        }
+
+        return false;
     }
 }
 

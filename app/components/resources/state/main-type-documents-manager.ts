@@ -48,22 +48,16 @@ export class MainTypeDocumentsManager {
     }
 
 
-    /**
-     * @returns {boolean} true if list needs to be reloaded afterwards
-     */
-    public selectLinkedOperationTypeDocumentForSelectedDocument(selectedDocument: Document): boolean {
+    public selectLinkedOperationTypeDocumentForSelectedDocument(selectedDocument: Document) {
 
-        if (!this.documents || this.documents.length == 0) return false;
+        if (!this.documents || this.documents.length == 0) return;
 
         const operationTypeDocument = MainTypeDocumentsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
 
         if (operationTypeDocument && operationTypeDocument != this.resourcesState.getMainTypeDocument()) {
             this.resourcesState.setMainTypeDocument(operationTypeDocument);
-            return true;
         }
-
-        return false;
     }
 
 

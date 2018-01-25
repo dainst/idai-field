@@ -98,7 +98,7 @@ export class DocumentsManager {
         const deselectedDocument: Document = this.selectedDocument;
         this.selectedDocument = undefined;
 
-        this.removeEmptyDocuments();
+        this.removeEmpty(this.documents);
         this.resourcesState.setActiveDocumentViewTab(undefined);
         this.notifyDeselectionObservers(deselectedDocument);
     }
@@ -116,36 +116,32 @@ export class DocumentsManager {
 
     public async setSelected(documentToSelect: Document): Promise<any|undefined> {
 
-        if (!this.resourcesState.isInOverview() &&
-                documentToSelect == this.resourcesState.getMainTypeDocument()) {
-            return Promise.resolve(undefined);
+        if (!documentToSelect) return this.deselect();
+
+        if (!this.resourcesState.isInOverview() && documentToSelect == this.resourcesState.getMainTypeDocument()) {
+            return;
         }
 
-        if (documentToSelect == this.selectedDocument) return Promise.resolve(undefined);
-
-        if (!documentToSelect) this.resourcesState.setActiveDocumentViewTab(undefined);
+        if (documentToSelect == this.selectedDocument) return;
 
         if (this.selectedDocument) this.notifyDeselectionObservers(this.selectedDocument);
 
         this.selectedDocument = documentToSelect;
 
-        this.removeEmptyDocuments();
+        this.removeEmpty(this.documents);
         if (documentToSelect && documentToSelect.resource && !documentToSelect.resource.id) {
             this.documents.unshift(documentToSelect);
+            return;
         }
 
         if (this.isNewDocumentFromRemote(documentToSelect)) {
             this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
         }
 
-        const result1 = this.mainTypeDocumentsManager.
-            selectLinkedOperationTypeDocumentForSelectedDocument(this.selectedDocument);
-        const result2 = await this.adjustQuerySettingsIfNecessary();
-
-        let promise = Promise.resolve();
-        if (result1 || result2) promise = this.populateDocumentList();
-
-        return promise;
+        if (!ModelUtil.isInList(documentToSelect, this.documents)) {
+            await this.makeSureSelectedDocumentAppearsInList();
+            return this.populateDocumentList();
+        }
     }
 
 
@@ -194,18 +190,28 @@ export class DocumentsManager {
     public async populateDocumentList() {
 
         this.newDocumentsFromRemote = [];
-        this.documents = [];
 
-        const isRecordedInTarget = await this.makeIsRecordedInTarget();
-        if (!isRecordedInTarget) return;
-
-        this.documents = await this.fetchDocuments(DocumentsManager.makeDocsQuery(
-            this.buildQuery(), isRecordedInTarget.resource.id as string));
-        this.removeEmptyDocuments();
+        const documents: Array<Document>|undefined = await this.createUpdatedDocumentList();
+        if (documents) this.documents = documents;
     }
 
 
-    private async makeIsRecordedInTarget() {
+    public async createUpdatedDocumentList(): Promise<Array<Document>|undefined> {
+
+        const isRecordedInTarget: Document|undefined = await this.makeIsRecordedInTarget();
+        if (!isRecordedInTarget) return;
+
+        const documents: Array<Document> = await this.fetchDocuments(
+            DocumentsManager.makeDocsQuery(this.buildQuery(), isRecordedInTarget.resource.id as string)
+        );
+
+        this.removeEmpty(documents);
+
+        return documents;
+    }
+
+
+    private async makeIsRecordedInTarget(): Promise<Document|undefined> {
 
         let isRecordedInTarget;
         if (this.resourcesState.isInOverview()) {
@@ -221,19 +227,17 @@ export class DocumentsManager {
     }
 
 
-    private removeEmptyDocuments() {
+    private removeEmpty(documents: Array<Document>) {
 
-        if (!this.documents) return;
-
-        for (let document of this.documents) {
-            if (!document.resource.id) this.remove(document);
+        for (let document of documents) {
+            if (!document.resource.id) this.remove(document, documents);
         }
     }
 
 
-    public remove(document: Document) {
+    public remove(document: Document, documents: Array<Document> = this.documents) {
 
-        this.documents.splice(this.documents.indexOf(document), 1);
+        documents.splice(documents.indexOf(document), 1);
     }
 
 
@@ -245,21 +249,31 @@ export class DocumentsManager {
     }
 
 
+    private async makeSureSelectedDocumentAppearsInList() {
+
+        this.mainTypeDocumentsManager
+            .selectLinkedOperationTypeDocumentForSelectedDocument(this.selectedDocument as IdaiFieldDocument);
+
+        await this.navigationPathManager
+            .updateNavigationPathForDocument(this.selectedDocument as IdaiFieldDocument);
+
+        await this.adjustQuerySettingsIfNecessary();
+    }
+
+
     /**
      * @returns {boolean} true if list needs to be reloaded afterwards
      */
-    public async adjustQuerySettingsIfNecessary(): Promise<boolean> {
+    private async adjustQuerySettingsIfNecessary() {
 
-        if (!this.selectedDocument) return false;
+        const documents: Array<Document>|undefined = await this.createUpdatedDocumentList();
 
-        if (!ModelUtil.isInList(this.selectedDocument, this.documents)) {
+        if (!this.selectedDocument || !documents) return;
+
+        if (!ModelUtil.isInList(this.selectedDocument, documents)) {
             this.resourcesState.setQueryString('');
             this.resourcesState.setTypeFilters(undefined as any);
-            await this.navigationPathManager.createNavigationPathForDocument(this.selectedDocument as IdaiFieldDocument);
-            return true;
         }
-
-        return false;
     }
 
 

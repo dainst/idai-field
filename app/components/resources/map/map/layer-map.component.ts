@@ -94,7 +94,7 @@ export class LayerMapComponent extends MapComponent {
         this.layerImageProvider.reset();
 
         const { layers, activeLayersChange } =
-            await this.layerManager.initializeLayers(this.mainTypeDocument);
+            await this.layerManager.initializeLayers();
 
         this.layers = layers;
         this.initializePanes();

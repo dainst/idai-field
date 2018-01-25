@@ -44,7 +44,7 @@ export function main() {
 
         it('initialize layers', async done => {
 
-            const { layers, activeLayersChange } = await layerManager.initializeLayers(mainTypeDocument);
+            const { layers, activeLayersChange } = await layerManager.initializeLayers();
 
             expect(layers.length).toBe(2);
             expect(layers[0].resource.id).toEqual('l1');
@@ -61,7 +61,7 @@ export function main() {
 
             mockViewFacade.getActiveLayersIds.and.returnValue([ 'l2' ]);
 
-            const { activeLayersChange } = await layerManager.initializeLayers(mainTypeDocument);
+            const { activeLayersChange } = await layerManager.initializeLayers();
 
             expect(activeLayersChange.added.length).toBe(1);
             expect(activeLayersChange.added[0]).toEqual('l2');
@@ -76,11 +76,11 @@ export function main() {
 
             mockViewFacade.getActiveLayersIds.and.returnValue([ 'l2' ]);
 
-            await layerManager.initializeLayers(mainTypeDocument);
+            await layerManager.initializeLayers();
 
             mockViewFacade.getActiveLayersIds.and.returnValue([ 'l1' ]);
 
-            const { activeLayersChange } = await layerManager.initializeLayers(mainTypeDocument);
+            const { activeLayersChange } = await layerManager.initializeLayers();
 
             expect(activeLayersChange.added.length).toBe(1);
             expect(activeLayersChange.added[0]).toEqual('l1');
@@ -96,8 +96,8 @@ export function main() {
 
                 mockViewFacade.getActiveLayersIds.and.returnValue([ 'l2' ]);
 
-                await layerManager.initializeLayers(mainTypeDocument);
-                const { activeLayersChange } = await layerManager.initializeLayers(mainTypeDocument);
+                await layerManager.initializeLayers();
+                const { activeLayersChange } = await layerManager.initializeLayers();
 
                 expect(activeLayersChange.added.length).toBe(0);
                 expect(activeLayersChange.removed.length).toBe(0);

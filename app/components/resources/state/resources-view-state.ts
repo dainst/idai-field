@@ -24,4 +24,18 @@ export class ResourcesViewState {
         navigationPaths: {},
         layerIds: {}
     }; }
+
+
+    public static complete(viewStates: { [viewName: string]: ResourcesViewState }) {
+
+        Object.keys(viewStates)
+            .forEach(viewState => {
+                if (!viewStates[viewState].navigationPaths) viewStates[viewState].navigationPaths = {};
+                if (!viewStates[viewState].layerIds) viewStates[viewState].layerIds = {};
+                if (!viewStates[viewState].q) viewStates[viewState].q = '';
+                if (!viewStates[viewState].mode) viewStates[viewState].mode = 'map';
+            });
+
+        return viewStates
+    }
 }

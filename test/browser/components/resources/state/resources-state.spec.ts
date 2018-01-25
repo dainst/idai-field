@@ -27,6 +27,7 @@ export function main() {
 
             const mockSerializer = jasmine.createSpyObj('serializer', ['store']);
             resourcesState = new ResourcesState(mockSerializer, new OperationViews(viewsList));
+            resourcesState.loaded = true;
         });
 
 
@@ -37,7 +38,7 @@ export function main() {
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
 
-            resourcesState.setView('excavation');
+            resourcesState.initialize('excavation');
             resourcesState.setMainTypeDocument(trenchDocument1);
 
             resourcesState.moveInto(featureDocument1);
@@ -54,7 +55,7 @@ export function main() {
             const featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature', 'feature1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
-            resourcesState.setView('excavation');
+            resourcesState.initialize('excavation');
             resourcesState.setMainTypeDocument(trenchDocument1);
 
             resourcesState.moveInto(featureDocument1);
@@ -72,7 +73,7 @@ export function main() {
             const featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature', 'feature1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
-            resourcesState.setView('excavation');
+            resourcesState.initialize('excavation');
             resourcesState.setMainTypeDocument(trenchDocument1);
 
             resourcesState.moveInto(featureDocument1);
@@ -81,10 +82,10 @@ export function main() {
             resourcesState.moveInto(undefined);
             expect(resourcesState.getTypeFilters()).toEqual(undefined);
             expect(resourcesState.getQueryString()).toEqual('');
-            resourcesState.setView('survey');
+            resourcesState.initialize('survey');
             expect(resourcesState.getTypeFilters()).toEqual(undefined);
             expect(resourcesState.getQueryString()).toEqual('');
-            resourcesState.setView('excavation');
+            resourcesState.initialize('excavation');
             resourcesState.moveInto(featureDocument1);
             expect(resourcesState.getTypeFilters()).toEqual(['Find']);
             expect(resourcesState.getQueryString()).toEqual('abc');
@@ -96,7 +97,7 @@ export function main() {
             const trenchDocument1 = Static.idfDoc('trench1','trench1','Trench','t1');
             const featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature', 'feature1');
 
-            resourcesState.setView('excavation');
+            resourcesState.initialize('excavation');
             resourcesState.setMainTypeDocument(trenchDocument1);
 
             resourcesState.moveInto(featureDocument1);
@@ -114,7 +115,7 @@ export function main() {
             const trenchDocument1 = Static.idfDoc('trench1','trench1','Trench','t1');
             const featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature', 'feature1');
 
-            resourcesState.setView('excavation');
+            resourcesState.initialize('excavation');
             resourcesState.setMainTypeDocument(trenchDocument1);
 
             resourcesState.moveInto(featureDocument1);

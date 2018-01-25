@@ -44,13 +44,7 @@ export class ResourcesState {
         this.loaded = true;
     }
 
-
-    public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
-
-        this.activeDocumentViewTab = activeDocumentViewTab;
-    }
-
-
+    
     public resetForE2E = () => this.viewStates = { [this.view]: ResourcesViewState.default() };
 
     public getActiveDocumentViewTab = () => this.activeDocumentViewTab;
@@ -74,6 +68,10 @@ export class ResourcesState {
     public getMode = () => this.viewStates[this.view].mode;
 
     public setMode = (mode: string) => this.viewStates[this.view].mode = mode;
+
+    private serialize = () => this.serializer.store(StateSerializer.RESOURCES_STATE, this.createObjectToSerialize());
+
+    public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.activeDocumentViewTab = activeDocumentViewTab;
 
 
     public setMainTypeDocument(document: IdaiFieldDocument|undefined) {
@@ -246,12 +244,6 @@ export class ResourcesState {
         return this.viewStates[this.view].navigationPaths[
                 mainTypeDocument.resource.id as string
             ];
-    }
-
-
-    private serialize() {
-
-        this.serializer.store(StateSerializer.RESOURCES_STATE, this.createObjectToSerialize());
     }
 
 

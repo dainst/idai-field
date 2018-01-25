@@ -242,6 +242,12 @@ export class ResourcesPage {
     }
 
 
+    public static getNavigationButtons() {
+
+        return element.all(by.css('.navigation-button'));
+    }
+
+
     // type in
 
     public static typeInListModeInputField(identifier, index, inputText) {

@@ -207,6 +207,26 @@ describe('resources/state --', function() {
     });
 
 
+    xit('show correct navigation path after click on relation link', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+
+        ResourcesPage.performCreateResource('context2', 'feature');
+        ResourcesPage.clickMoveIntoButton('context2');
+        ResourcesPage.performCreateResource('testf2', 'find');
+        ResourcesPage.performCreateRelation('testf2', 'testf1', 1);
+
+        DocumentViewPage.clickRelation(0);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('testf1'));
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText().toEqual('trench1'));
+            expect(navigationButtons[1].getText().toEqual('context1'));
+        });
+    });
+
+
     it('autoselect last selected main type document on switching views', () => {
 
         ResourcesPage.performCreateResource('trench2', 'trench');

@@ -41,10 +41,10 @@ export function main() {
         };
 
         let viewFacade: ViewFacade;
-        let trenchDocument1: Document;
-        let trenchDocument2: Document;
-        let findDocument1: Document;
-        let findDocument2: Document;
+        let trenchDocument1: IdaiFieldDocument;
+        let trenchDocument2: IdaiFieldDocument;
+        let findDocument1: IdaiFieldDocument;
+        let findDocument2: IdaiFieldDocument;
         let findDocument3: Document;
         let featureDocument1: Document;
         let featureDocument2: Document;
@@ -61,14 +61,14 @@ export function main() {
                 new IdaiFieldTypeConverter(new ImageTypeUtility(new ProjectConfiguration(pc))));
 
             const projectDocument = Static.doc('testdb','testdb','Project','testdb');
-            trenchDocument1 = Static.doc('trench1','trench1','Trench','t1');
+            trenchDocument1 = Static.idfDoc('trench1','trench1','Trench','t1');
             trenchDocument1.resource.relations['isRecordedIn'] = ['testdb'];
-            trenchDocument2 = Static.doc('trench2','trench2','Trench','t2');
+            trenchDocument2 = Static.idfDoc('trench2','trench2','Trench','t2');
             trenchDocument2.resource.relations['isRecordedIn'] = ['testdb'];
 
-            findDocument1 = Static.doc('Find 1','find1','Find', 'find1');
+            findDocument1 = Static.idfDoc('Find 1','find1','Find', 'find1');
             findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-            findDocument2 = Static.doc('Find 2','find2','Find', 'find2');
+            findDocument2 = Static.idfDoc('Find 2','find2','Find', 'find2');
             findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             findDocument3 = Static.doc('Find 3','find3','Find', 'find3');
             findDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];

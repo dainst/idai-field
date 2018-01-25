@@ -21,15 +21,23 @@ export class StateSerializer {
     public async load(stateType: string): Promise<any> {
 
         if (this.settingsService.getSelectedProject() == 'test') {
-            return {
-                project: {
-                    layerIds: {'test' : ['o25']}
-                },
-                excavation : {
-                    navigationPaths: {'t1':{elements:[]}},
-                    layerIds: {'t1' : ['o25']}
-                }
-            };
+
+            if (remote.getGlobal('switches').suppress_map_load_for_test) {
+                return {
+                    project: {},
+                    excavation: {}
+                };
+            } else {
+                return {
+                    project: {
+                        layerIds: {'test' : ['o25']}
+                    },
+                    excavation : {
+                        navigationPaths: {'t1':{elements:[]}},
+                        layerIds: {'t1' : ['o25']}
+                    }
+                };
+            }
         }
 
         return new Promise(resolve => {

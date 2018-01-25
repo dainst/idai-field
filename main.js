@@ -54,13 +54,15 @@ global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
 global.switches = {
     prevent_reload: false,
     destroy_before_create: false,
-    messages_timeout: 3500
+    messages_timeout: 3500,
+    suppress_map_load_for_test: false
 };
 
 if (env && env.indexOf('test') !== -1) { // is environment 'test'
     global.switches.messages_timeout = undefined;
     global.switches.prevent_reload = true;
     global.switches.destroy_before_create = true;
+    global.switches.suppress_map_load_for_test = true;
 }
 
 

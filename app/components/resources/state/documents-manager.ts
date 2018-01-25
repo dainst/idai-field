@@ -20,7 +20,7 @@ import {ResourcesState} from './resources-state';
 export class DocumentsManager {
 
     public projectDocument: Document;
-    private selectedDocument: Document|undefined;
+    private selectedDocument: IdaiFieldDocument|undefined;
     private documents: Array<Document>;
     private newDocumentsFromRemote: Array<Document> = [];
 
@@ -121,7 +121,7 @@ export class DocumentsManager {
 
         if (this.selectedDocument) this.notifyDeselectionObservers(this.selectedDocument);
 
-        this.selectedDocument = documentToSelect;
+        this.selectedDocument = documentToSelect as IdaiFieldDocument;
 
         this.removeEmpty(this.documents);
 
@@ -247,7 +247,7 @@ export class DocumentsManager {
     private async makeSureSelectedDocumentAppearsInList() {
 
         this.mainTypeDocumentsManager
-            .selectLinkedOperationTypeDocumentForSelectedDocument(this.selectedDocument as IdaiFieldDocument);
+            .selectLinkedOperationTypeDocumentForSelectedDocument(this.selectedDocument);
 
         await this.navigationPathManager
             .updateNavigationPathForDocument(this.selectedDocument as IdaiFieldDocument);

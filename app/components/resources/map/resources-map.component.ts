@@ -59,6 +59,7 @@ export class ResourcesMapComponent {
 
         const selectedDoc = this.viewFacade.getSelectedDocument();
         if (!selectedDoc) return;
+        if (!selectedDoc.resource.geometry) return;
 
         if (geometry) {
             selectedDoc.resource.geometry = geometry;

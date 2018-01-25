@@ -41,7 +41,8 @@ export class MainTypeDocumentsManager {
     }
 
 
-    public selectLinkedOperationTypeDocumentForSelectedDocument(selectedDocument: Document) {
+    public selectLinkedOperationTypeDocumentForSelectedDocument(
+        selectedDocument: IdaiFieldDocument|undefined) {
 
         if (!this.documents || this.documents.length == 0) return;
 
@@ -54,7 +55,7 @@ export class MainTypeDocumentsManager {
     }
 
 
-    public isRecordedInSelectedOperationTypeDocument(document: Document|undefined): boolean {
+    public isRecordedInSelectedOperationTypeDocument(document: IdaiFieldDocument|undefined): boolean {
 
         if (document) return false;
         if (!this.resourcesState.getMainTypeDocument()) return false;
@@ -109,14 +110,13 @@ export class MainTypeDocumentsManager {
     }
 
 
-    private static getMainTypeDocumentForDocument(document: Document|undefined,
-                                                  mainTypeDocuments: Document[]): IdaiFieldDocument|undefined {
+    private static getMainTypeDocumentForDocument(document: IdaiFieldDocument|undefined,
+                                                  mainTypeDocuments: IdaiFieldDocument[]): IdaiFieldDocument|undefined {
 
         if (!mainTypeDocuments) return undefined;
         if (!document) return undefined;
-        if (!document.resource.relations['isRecordedIn']) return undefined;
 
-        for (let documentId of document.resource.relations['isRecordedIn']) {
+        for (let documentId of document.resource.relations.isRecordedIn) {
             for (let mainTypeDocument of mainTypeDocuments) {
                 if (mainTypeDocument.resource.id == documentId) return mainTypeDocument as IdaiFieldDocument;
             }

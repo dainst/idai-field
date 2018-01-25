@@ -6,6 +6,8 @@ import {ResourcesPage} from './resources.page';
 import {ProjectPage} from '../project.page';
 import {MapPage} from '../map/map.page';
 import {ImageOverviewPage} from '../images/image-overview.page';
+import {DoceditPage} from '../docedit/docedit.page';
+import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -221,8 +223,32 @@ describe('resources/state --', function() {
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('testf1'));
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
             expect(navigationButtons.length).toBe(2);
-            expect(navigationButtons[0].getText().toEqual('trench1'));
-            expect(navigationButtons[1].getText().toEqual('context1'));
+            expect(navigationButtons[0].getText()).toEqual('trench1');
+            expect(navigationButtons[1].getText()).toEqual('context1');
+        });
+    });
+
+
+    xit('update navigation path after changing liesWithin relation', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+
+        ResourcesPage.performCreateResource('context2', 'feature');
+        ResourcesPage.clickMoveIntoButton('context1');
+
+        ResourcesPage.openEditByDoubleClickResource('testf1');
+        DoceditPage.clickRelationsTab();
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(0, 0, 0);
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(0);
+        DoceditRelationsTabPage.typeInRelationByIndices(0, 0, 'context2');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(0, 0, 0);
+        DoceditPage.clickSaveDocument();
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(2);
+            expect(navigationButtons[0].getText()).toEqual('trench1');
+            expect(navigationButtons[1].getText()).toEqual('context2');
         });
     });
 

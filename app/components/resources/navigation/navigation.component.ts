@@ -38,7 +38,9 @@ export class NavigationComponent {
 
     public async chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {
 
-        const isMatched = this.viewFacade.selectMainTypeDocument(document);
-        if (!isMatched) this.viewFacade.setActiveDocumentViewTab(undefined);
+        this.viewFacade.selectMainTypeDocument(document);
+        if (!this.viewFacade.getSelectedDocument()) { // if deselection happened during selectMainTypeDocument
+            this.viewFacade.setActiveDocumentViewTab(undefined);
+        }
     }
 }

@@ -219,10 +219,7 @@ export class ViewFacade {
     }
 
 
-    /**
-     * @returns true if isSelectedDocumentRecordedInSelectedMainTypeDocument
-     */
-    public async selectMainTypeDocument(mainTypeDocument: Document): Promise<boolean> {
+    public async selectMainTypeDocument(mainTypeDocument: Document) {
 
         if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument');
         this.mainTypeDocumentsManager.select(mainTypeDocument as IdaiFieldDocument);
@@ -231,9 +228,6 @@ export class ViewFacade {
 
         if (!this.isSelectedDocumentRecordedInSelectedMainTypeDocument()) {
             this.documentsManager.deselect();
-            return false;
-        } else {
-            return true;
         }
     }
 

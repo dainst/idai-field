@@ -105,8 +105,7 @@ export class DocumentsManager {
 
     public async setSelectedById(resourceId: string) {
 
-        const document = await this.datastore.get(resourceId);
-        await this.setSelected(document);
+        await this.setSelected(await this.datastore.get(resourceId));
     }
 
 
@@ -233,8 +232,9 @@ export class DocumentsManager {
 
     public isNewDocumentFromRemote(document: Document): boolean {
 
-        if (!document) return false;
-        return this.newDocumentsFromRemote.indexOf(document) > -1;
+        return (!document)
+            ? false
+            : this.newDocumentsFromRemote.indexOf(document) > -1;
     }
 
 

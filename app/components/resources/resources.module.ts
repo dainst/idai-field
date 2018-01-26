@@ -33,6 +33,8 @@ import {NavigationService} from './navigation/navigation-service';
 import {StateSerializer} from '../../common/state-serializer';
 import {OperationViews} from './state/operation-views';
 
+const remote = require('electron').remote;
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -67,7 +69,9 @@ import {OperationViews} from './state/operation-views';
         LayerImageProvider,
         {
             provide: ResourcesState,
-            useFactory: (stateSerializer: StateSerializer, projectConfiguration: ProjectConfiguration) => {
+            useFactory: (stateSerializer: StateSerializer,
+                         projectConfiguration: ProjectConfiguration,
+                         settingsService: SettingsService) => {
 
                 const views = projectConfiguration.getViewsList();
                 for (let view of views) {
@@ -75,9 +79,17 @@ import {OperationViews} from './state/operation-views';
                         projectConfiguration.getLabelForType(view.operationSubtype) as any;
                 }
 
-                return new ResourcesState(stateSerializer, new OperationViews(views));
+                const project = settingsService.getSelectedProject();
+                if (!project) throw 'project not set';
+
+                return new ResourcesState(
+                    stateSerializer,
+                    new OperationViews(views),
+                    project,
+                    remote.getGlobal('switches').suppress_map_load_for_test
+                );
             },
-            deps: [StateSerializer, ProjectConfiguration]
+            deps: [StateSerializer, ProjectConfiguration, SettingsService]
         },
         {
             provide: ViewFacade,

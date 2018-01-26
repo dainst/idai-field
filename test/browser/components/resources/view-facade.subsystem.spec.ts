@@ -112,11 +112,19 @@ export function main() {
                 subscribe: () => {}
             });
 
+            const resourcesState = new ResourcesState(
+                stateSerializer,
+                new OperationViews(viewsList),
+                undefined,
+                undefined
+            );
+            resourcesState.loaded = true;
+
             viewFacade = new ViewFacade(
                 idaiFieldDocumentDatastore,
                 changesStream,
                 settingsService,
-                new ResourcesState(stateSerializer, new OperationViews(viewsList))
+                resourcesState
             );
         });
 

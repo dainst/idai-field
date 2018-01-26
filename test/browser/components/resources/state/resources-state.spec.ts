@@ -26,7 +26,12 @@ export function main() {
         beforeEach(() => {
 
             const mockSerializer = jasmine.createSpyObj('serializer', ['store']);
-            resourcesState = new ResourcesState(mockSerializer, new OperationViews(viewsList));
+            resourcesState = new ResourcesState(
+                mockSerializer,
+                new OperationViews(viewsList),
+                undefined,
+                undefined
+            );
             resourcesState.loaded = true;
         });
 

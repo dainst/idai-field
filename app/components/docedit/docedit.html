@@ -44,6 +44,7 @@
                   class="docedit-header-label text-truncate">
                 <small>
                     {{projectConfiguration.getLabelForType(this.clonedDocument.resource.type)}}
+                    in {{parentLabel}}
                     <span *ngIf="clonedDocument.resource.id">bearbeiten</span>
                     <span *ngIf="!clonedDocument.resource.id">anlegen</span>
                 </small><br>

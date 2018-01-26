@@ -63,6 +63,8 @@ export class DoceditComponent {
      */
     private inspectedRevisionsIds: string[];
 
+    private parentLabel: string;
+
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -101,6 +103,25 @@ export class DoceditComponent {
         this.persistenceManager.setOldVersions([this.document]);
 
         this.fetchIsRecordedInCount(document);
+
+        this.getParentId(this.clonedDocument);
+    }
+
+
+    public getParentId(document: IdaiFieldDocument) {
+
+        const parentId = document.resource.relations.liesWithin ?
+            document.resource.relations.liesWithin[0] : document.resource.relations.isRecordedIn[0] ;
+
+        this.fetchParentLabel(parentId)
+    }
+
+
+    public fetchParentLabel(id: string) {
+
+        this.datastore.get(id).then(doc => {
+            this.parentLabel = doc.resource.identifier;
+        });
     }
 
 

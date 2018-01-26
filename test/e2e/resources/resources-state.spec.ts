@@ -92,19 +92,7 @@ describe('resources/state --', function() {
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench2'));
     });
 
-
-    // it('restore layers after restarting client', () => {
-
-        // ProjectPage.performCreateProject();
-
-        // // this is a workaround. normally we would like to start on the ProjectPage directly.
-        // // but then it was shown that for some unkown reasons protractor cannot click to select a resource type
-        // ResourcesPage.get();
-        // NavbarPage.clickNavigateToProject();
-        //
-    // }
-
-
+    
     it('switch from image to map view after click on depicts relation link', () => {
 
         ProjectPage.get();

@@ -58,6 +58,23 @@ export class ViewFacade {
     }
 
 
+    /**
+     * Sets the this.documentsManager.selectedDocument
+     * and if necessary, also
+     * a) selects the operation type document,
+     * this.documntsManager.selectedDocument is recorded in, accordingly and
+     * b) invalidates query settings in order to make sure
+     * this.documentsManager.selectedDocument is part of the search hits of the document list.
+     *
+     * @param document exits immediately if this is
+     *   a) the same as this.documentsManager.selectedDocument or
+     *   b) the same as this.mainTypeManager.selectedMainTypeDocument or
+     *   c) undefined
+     * @returns {Document}
+     */
+    public setSelectedDocument = (document: Document) => this.documentsManager.setSelected(document);
+
+
     public getCurrentViewName = () => this.resourcesState.getView();
 
     public isInOverview = () => this.resourcesState.isInOverview();
@@ -106,27 +123,16 @@ export class ViewFacade {
 
     public populateDocumentList = () => this.documentsManager.populateDocumentList();
 
+    public getCurrentViewMainType = () => this.resourcesState.getViewType();
 
-    /**
-     * @returns the main type of the currently selected view.
-     * This is either 'Project' or one of the operation types names.
-     */
-    public getCurrentViewMainType(): string|undefined {
-
-        if (this.resourcesState.isInOverview()) return 'Project';
-
-        if (!this.resourcesState.getView()) return undefined;
-
-        return this.resourcesState.getViewType();
-    }
+    public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesState.setActiveDocumentViewTab(activeDocumentViewTab);
 
 
     public getMainTypeHomeViewName(mainTypeName: string): string|undefined {
 
-        if (!mainTypeName) return undefined;
-        if (mainTypeName == 'Project') return 'project';
-
-        return this.resourcesState.getViewNameForOperationSubtype(mainTypeName);
+        return (mainTypeName == 'Project')
+            ? 'project'
+            : this.resourcesState.getViewNameForOperationSubtype(mainTypeName);
     }
 
 
@@ -135,7 +141,8 @@ export class ViewFacade {
         if (this.isInOverview()) throw ViewFacade.err('getMainTypeLabel');
 
         return (this.resourcesState.getView() == 'project')
-            ? 'Projekt' : this.resourcesState.getLabelForName(this.resourcesState.getView());
+            ? 'Projekt'
+            : this.resourcesState.getLabelForName(this.resourcesState.getView());
     }
 
 
@@ -180,32 +187,6 @@ export class ViewFacade {
         }
 
         return mainTypeDocuments;
-    }
-
-
-    public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
-
-        this.resourcesState.setActiveDocumentViewTab(activeDocumentViewTab);
-    }
-
-
-    /**
-     * Sets the this.documentsManager.selectedDocument
-     * and if necessary, also
-     * a) selects the operation type document,
-     * this.documntsManager.selectedDocument is recorded in, accordingly and
-     * b) invalidates query settings in order to make sure
-     * this.documentsManager.selectedDocument is part of the search hits of the document list.
-     *
-     * @param document exits immediately if this is
-     *   a) the same as this.documentsManager.selectedDocument or
-     *   b) the same as this.mainTypeManager.selectedMainTypeDocument or
-     *   c) undefined
-     * @returns {Document}
-     */
-    public setSelectedDocument(document: Document) {
-
-        return this.documentsManager.setSelected(document);
     }
 
 
@@ -281,8 +262,7 @@ export class ViewFacade {
         if (mainTypeResource) this.navigationPathManager.setMainTypeDocument(mainTypeResource);
         this.navigationPathManager.notifyNavigationPathObservers();
     }
-
-
+    
 
     private isSelectedDocumentRecordedInSelectedMainTypeDocument(): boolean {
 

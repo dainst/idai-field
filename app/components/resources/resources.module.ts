@@ -29,6 +29,7 @@ import {LayerImageProvider} from './map/map/layer-image-provider';
 import {LayerMenuComponent} from './map/map/layer-menu.component';
 import {ChangesStream} from '../../core/datastore/core/changes-stream';
 import {FoldState} from './list/fold-state';
+import {Map3DComponent} from './map/map-3d/map-3d.component';
 
 @NgModule({
     imports: [
@@ -52,7 +53,8 @@ import {FoldState} from './list/fold-state';
         PlusButtonComponent,
         ThumbnailViewComponent,
         DocumentViewSidebarComponent,
-        SidebarListComponent
+        SidebarListComponent,
+        Map3DComponent
     ],
     providers: [
         FoldState,

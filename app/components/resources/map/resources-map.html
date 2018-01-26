@@ -6,7 +6,7 @@
     <div [class.col-sm-9]="!viewFacade.getSelectedDocument() || !viewFacade.getSelectedDocument().resource.id"
          [class.col-sm-6]="viewFacade.getSelectedDocument() && viewFacade.getSelectedDocument().resource.id"
          class="px-0">
-        <editable-map [documents]="viewFacade.getDocuments()"
+        <editable-map *ngIf="mapMode == '2d'" [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
                       [mainTypeDocument]="resourcesComponent.getIsRecordedInTarget()"
                       [isEditing]="resourcesComponent.isEditingGeometry"
@@ -14,6 +14,9 @@
                       [update]="resourcesComponent.ready"
                       (onSelectDocument)="select($event)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>
+        <map-3d *ngIf="mapMode == '3d'" [documents]="viewFacade.getDocuments()"
+                [selectedDocument]="viewFacade.getSelectedDocument()"
+                (onSelectDocument)="select($event)"></map-3d>
     </div>
 
     <div *ngIf="viewFacade.getSelectedDocument() && viewFacade.getSelectedDocument().resource.id"

@@ -73,6 +73,8 @@
     "roboto-fontface": "0.6.0",
     "rxjs": "5.0.1",
     "systemjs": "0.19.31",
+    "three": "0.89.0",
+    "three-collada-loader-2": "1.0.1",
     "zone.js": "0.8.11"
   },
   "devDependencies": {
@@ -84,6 +86,7 @@
     "@types/node": "7.0.3",
     "@types/papaparse": "4.1.28",
     "@types/pouchdb": "~6.1.1",
+    "@types/three": "0.89.2",
     "archiver": "1.1.0",
     "electron": "1.7.9",
     "electron-builder": "19.53.2",

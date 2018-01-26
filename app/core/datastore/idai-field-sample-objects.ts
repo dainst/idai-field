@@ -31,6 +31,18 @@ export const DOCS: IdaiFieldDocument[] = [
     },
     {
         "resource": {
+            "id": "t2",
+            "identifier": "trench2",
+            "shortDescription": "3D-Testschnitt",
+            "relations": {
+                "has3DRepresentation": [ "obj3d" ],
+                "isRecordedIn": [ "test" ]
+            },
+            "type": "Trench"
+        }
+    },
+    {
+        "resource": {
             "id": "c1",
             "identifier": "context1",
             "shortDescription": "Ein Befund",
@@ -96,6 +108,18 @@ export const DOCS: IdaiFieldDocument[] = [
                 "bottomLeftCoordinates": [39.1412810096, 27.1893609283],
                 "topLeftCoordinates": [39.1413672328, 27.1893609283],
                 "topRightCoordinates": [39.1413672328, 27.1894859555]
+            }
+        }
+    },
+    {
+        "resource": {
+            "id": "obj3d",
+            "identifier": "object3d",
+            "shortDescription": "3D-Testobjekt",
+            "type": "Object3D",
+            "relations": {
+                "isRecordedIn": [],
+                "is3DRepresentationOf": ["t2"]
             }
         }
     }

@@ -13,4 +13,5 @@ export interface Settings {
     username: string;
     dbs: Array<string>;
     imagestorePath: string;
+    model3DStorePath: string;
 }

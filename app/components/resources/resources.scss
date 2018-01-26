@@ -7,10 +7,11 @@
 @import 'map/map/map';
 @import 'map/resources-map';
 @import 'map/docview/geometry-view';
-@import 'list/list';
-@import 'list/row';
 @import 'map/docview/thumbnail-view';
 @import 'map/docview/document-view-sidebar';
+@import 'map/map-3d/map-3d';
+@import 'list/list';
+@import 'list/row';
 
 #objectOverview {
   overflow: hidden;

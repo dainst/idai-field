@@ -63,6 +63,27 @@
                     </div>
                 </div>
 
+                <div class="form-group" style="margin-bottom: 0;">
+
+                    <label class="control-label col-form-label"
+                           for="model3dstorepath-input">Pfad zum 3D-Modell-Verzeichnis
+                    </label>
+                    <div class="input-group">
+                        <input id="model3dstorepath-input"
+                               [ngModel]="settings.model3DStorePath"
+                               (ngModelChange)="settings.model3DStorePath = $event"
+                               class="form-control">
+                        <span class="input-group-btn">
+                            <input id="model3dstorepath-file" type="file" webkitdirectory directory
+                                   (change)="settings.model3DStorePath = $event.target.files[0].path + '/'"
+                                   style="display: none">
+                            <label for="model3dstorepath-file" class="btn btn-secondary">
+                                <span class="mdi mdi-folder"></span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+
                 <h5 style="margin-top: 32px;">Synchronisierungseinstellungen</h5>
 
                 <div class="row" style="margin: 15px 0 0;">

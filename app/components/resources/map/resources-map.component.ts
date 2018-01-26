@@ -21,6 +21,7 @@ import {PersistenceManager} from '../../../core/persist/persistence-manager';
 export class ResourcesMapComponent {
 
     @Input() activeTab: string;
+    @Input() mapMode: string;   // '2d' or '3d'
 
 
     constructor(

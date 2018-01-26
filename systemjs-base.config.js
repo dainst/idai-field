@@ -65,9 +65,11 @@ config.map = {
     'moment': 'node_modules/moment/min/moment-with-locales.js',
     'ip': 'node_modules/ip/lib/ip.js',
     'os': '@node/os',
-    'buffer': '@node/buffer'
+    'buffer': '@node/buffer',
+    'three': 'node_modules/three/build/three.js',
+    'three-collada-loader-2': 'node_modules/three-collada-loader-2/index.js'
 };
 
-config.meta=  {
-    'node_modules/papaparse/papaparse.js': { format: 'global', exports: 'Papa' }
+config.meta = {
+    'node_modules/papaparse/papaparse.js': { format: 'global',  exports: 'Papa' }
 };

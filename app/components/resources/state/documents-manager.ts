@@ -41,6 +41,11 @@ export class DocumentsManager {
     }
 
 
+    public getDocuments = () => this.documents;
+
+    public getSelectedDocument = () => this.selectedDocument;
+
+
     public async populateProjectDocument() {
 
         try {
@@ -49,12 +54,6 @@ export class DocumentsManager {
             console.log('cannot find project document')
         }
     }
-
-
-    public getDocuments = () => this.documents;
-
-
-    public getSelectedDocument = () => this.selectedDocument;
 
 
     public async setQueryString(q: string) {
@@ -104,13 +103,10 @@ export class DocumentsManager {
     }
 
 
-    public setSelectedById(resourceId: string) {
+    public async setSelectedById(resourceId: string) {
 
-        return this.datastore.get(resourceId).then(
-            document => {
-                return this.setSelected(document);
-            }
-        );
+        const document = await this.datastore.get(resourceId);
+        await this.setSelected(document);
     }
 
 
@@ -151,11 +147,11 @@ export class DocumentsManager {
 
     private notifyDeselectionObservers(deselectedDocument: Document) {
 
-        if (this.deselectionObservers) {
-            this.deselectionObservers.forEach(
-                (observer: Observer<Document>) => observer.next(deselectedDocument)
-            );
-        }
+        if (!this.deselectionObservers) return;
+
+        this.deselectionObservers.forEach(
+            (observer: Observer<Document>) => observer.next(deselectedDocument)
+        );
     }
 
 
@@ -186,7 +182,6 @@ export class DocumentsManager {
     public async populateDocumentList() {
 
         this.newDocumentsFromRemote = [];
-
         this.documents = await this.createUpdatedDocumentList();
     }
 
@@ -200,9 +195,7 @@ export class DocumentsManager {
             DocumentsManager.makeDocsQuery(this.buildQuery(), isRecordedInTarget.resource.id as string)
         );
 
-        this.removeEmpty(documents);
-
-        return documents;
+        return this.removeEmpty(documents);
     }
 
 
@@ -227,9 +220,11 @@ export class DocumentsManager {
         for (let document of documents) {
             if (!document.resource.id) this.remove(document, documents);
         }
+        return documents;
     }
 
 
+    // TODO replace with call to method from list util
     public remove(document: Document, documents: Array<Document> = this.documents) {
 
         documents.splice(documents.indexOf(document), 1);
@@ -239,7 +234,6 @@ export class DocumentsManager {
     public isNewDocumentFromRemote(document: Document): boolean {
 
         if (!document) return false;
-
         return this.newDocumentsFromRemote.indexOf(document) > -1;
     }
 
@@ -274,11 +268,14 @@ export class DocumentsManager {
     }
 
 
-    private fetchDocuments(query: Query): Promise<any> {
+    private async fetchDocuments(query: Query): Promise<any> {
 
-        return this.datastore.find(query as any)
-            .then(result => result.documents)
-            .catch(errWithParams => DocumentsManager.handleFindErr(errWithParams, query));
+        try {
+            const result = await this.datastore.find(query);
+            return result.documents;
+        } catch (errWithParams) {
+            DocumentsManager.handleFindErr(errWithParams, query);
+        }
     }
 
 

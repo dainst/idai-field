@@ -15,11 +15,10 @@ import {includedIn, takeUntil} from '../../../util/list-util';
  */
 export class ResourcesState {
 
-    private viewStates: { [viewName: string]: ResourcesViewState } = { 'project': ResourcesViewState.default() };
+    private viewStates: { [viewName: string]: ResourcesViewState } = ResourcesState.makeDefaults();
     private view: string = 'project';
     public loaded = false;
     private activeDocumentViewTab: string|undefined;
-
 
     constructor(
         private serializer: StateSerializer,
@@ -45,10 +44,7 @@ export class ResourcesState {
 
     public resetForE2E = () => {
 
-        this.viewStates = {
-            excavation: ResourcesViewState.default(),
-            project: ResourcesViewState.default()
-        };
+        this.viewStates = ResourcesState.makeDefaults();
     };
 
 
@@ -282,18 +278,17 @@ export class ResourcesState {
         let resourcesViewStates;
 
         if (this.project === 'test') {
-            resourcesViewStates = this.suppressLoadMapInTestProject ? {
-                project: ResourcesViewState.default(),
-                excavation: ResourcesViewState.default()
-            } : {
-                project: {
-                    layerIds: {'test': ['o25']}
-                },
-                excavation: {
-                    navigationPaths: {'t1': {elements: []}},
-                    layerIds: {'t1': ['o25']}
-                }
-            };
+            resourcesViewStates = this.suppressLoadMapInTestProject
+                ? ResourcesState.makeDefaults()
+                : {
+                    project: {
+                        layerIds: {'test': ['o25']}
+                    },
+                    excavation: {
+                        navigationPaths: {'t1': {elements: []}},
+                        layerIds: {'t1': ['o25']}
+                    }
+                };
         } else {
             resourcesViewStates = await this.serializer.load(StateSerializer.RESOURCES_STATE);
         }
@@ -330,6 +325,15 @@ export class ResourcesState {
         if (includedIn(oldElements.map(toDocument))(newRoot)) return oldElements;
 
         return (oldRoot ? takeUntil(isSameSegment(oldRoot))(oldElements) : []).concat([{document: newRoot}]);
+    }
+
+
+    private static makeDefaults() {
+
+        return {
+            excavation: ResourcesViewState.default(),
+            project: ResourcesViewState.default()
+        }
     }
 }
 

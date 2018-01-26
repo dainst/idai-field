@@ -42,11 +42,7 @@ export class ResourcesState {
     }
 
 
-    public resetForE2E = () => {
-
-        this.viewStates = ResourcesState.makeDefaults();
-    };
-
+    public resetForE2E = () => this.viewStates = ResourcesState.makeDefaults();
 
     public getActiveDocumentViewTab = () => this.activeDocumentViewTab;
 

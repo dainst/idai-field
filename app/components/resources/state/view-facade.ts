@@ -262,7 +262,7 @@ export class ViewFacade {
         if (mainTypeResource) this.navigationPathManager.setMainTypeDocument(mainTypeResource);
         this.navigationPathManager.notifyNavigationPathObservers();
     }
-    
+
 
     private isSelectedDocumentRecordedInSelectedMainTypeDocument(): boolean {
 

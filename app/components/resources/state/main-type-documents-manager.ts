@@ -1,4 +1,3 @@
-import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
 import {NavigationPathManager} from './navigation-path-manager';
@@ -28,23 +27,19 @@ export class MainTypeDocumentsManager {
 
     public async populate(): Promise<any> {
 
-        if (!this.resourcesState.getView()) return Promise.resolve();
-
         this.documents = await this.fetchDocuments(
             MainTypeDocumentsManager.makeMainTypeQuery(this.resourcesState.getViewType()));
 
-        if (this.documents.length == 0) {
-            this.resourcesState.setMainTypeDocument(undefined);
-            return;
-        }
-        return this.restoreLastSelectedOperationTypeDocument();
+        if (this.documents.length === 0) return this.resourcesState.setMainTypeDocument(undefined);
+
+        await this.restoreLastSelectedOperationTypeDocument();
     }
 
 
     public selectLinkedOperationTypeDocumentForSelectedDocument(
         selectedDocument: IdaiFieldDocument|undefined) {
 
-        if (!this.documents || this.documents.length == 0) return;
+        if (!this.documents || this.documents.length === 0) return;
 
         const operationTypeDocument = MainTypeDocumentsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
@@ -72,13 +67,14 @@ export class MainTypeDocumentsManager {
     }
 
 
-    private fetchDocuments(query: Query): Promise<any> {
+    private async fetchDocuments(query: Query): Promise<any> {
 
-        return this.datastore.find(query as any)
-            .catch(errWithParams => MainTypeDocumentsManager.handleFindErr(errWithParams, query))
-            .then(result => {
-                if (result) return result.documents;
-            });
+        try {
+            const result = await this.datastore.find(query as any);
+            if (result) return result.documents;
+        } catch (errWithParams) {
+            MainTypeDocumentsManager.handleFindErr(errWithParams, query);
+        }
     }
 
 

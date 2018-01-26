@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/configuration'
+import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Static} from '../../helper/static';
 import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
@@ -41,13 +41,17 @@ export function main() {
         };
 
         let viewFacade: ViewFacade;
+        let resourcesState: ResourcesState;
+        let stateSerializer;
+        let changesStream;
+        let settingsService;
+
         let trenchDocument1: IdaiFieldDocument;
         let trenchDocument2: IdaiFieldDocument;
         let findDocument1: IdaiFieldDocument;
         let findDocument2: IdaiFieldDocument;
-        let findDocument3: Document;
-        let featureDocument1: Document;
-        let featureDocument2: Document;
+        let featureDocument1: IdaiFieldDocument;
+        let featureDocument2: IdaiFieldDocument;
         let idaiFieldDocumentDatastore: CachedDatastore<IdaiFieldDocument>;
 
 
@@ -70,10 +74,7 @@ export function main() {
             findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             findDocument2 = Static.idfDoc('Find 2','find2','Find', 'find2');
             findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-            findDocument3 = Static.doc('Find 3','find3','Find', 'find3');
-            findDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];
-
-            featureDocument1 = Static.doc('Feature 1','feature1','Feature', 'feature1');
+            featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature', 'feature1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument1.resource.relations['includes'] = [findDocument1.resource.id, findDocument2.resource.id];
 
@@ -81,7 +82,7 @@ export function main() {
             findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
             findDocument2.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
-            featureDocument2 = Static.doc('Feature 2','feature2','Feature', 'feature2');
+            featureDocument2 = Static.idfDoc('Feature 2','feature2','Feature', 'feature2');
             featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
             await idaiFieldDocumentDatastore.create(projectDocument);
@@ -89,7 +90,6 @@ export function main() {
             await idaiFieldDocumentDatastore.create(trenchDocument2);
             await idaiFieldDocumentDatastore.create(findDocument1);
             await idaiFieldDocumentDatastore.create(findDocument2);
-            await idaiFieldDocumentDatastore.create(findDocument3);
             await idaiFieldDocumentDatastore.create(featureDocument1);
             await idaiFieldDocumentDatastore.create(featureDocument2);
             done();
@@ -98,21 +98,21 @@ export function main() {
 
         beforeEach(() => {
 
-            const settingsService =
+            settingsService =
                 jasmine.createSpyObj('settingsService', ['getUsername', 'getSelectedProject']);
             settingsService.getUsername.and.returnValue('user');
             settingsService.getSelectedProject.and.returnValue('testdb');
 
-            const stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
+            stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
             stateSerializer.load.and.returnValue(Promise.resolve({}));
             stateSerializer.store.and.returnValue(Promise.resolve());
 
-            const changesStream = jasmine.createSpyObj('changesStream', ['remoteChangesNotifications']);
+            changesStream = jasmine.createSpyObj('changesStream', ['remoteChangesNotifications']);
             changesStream.remoteChangesNotifications.and.returnValue({
                 subscribe: () => {}
             });
 
-            const resourcesState = new ResourcesState(
+            resourcesState = new ResourcesState(
                 stateSerializer,
                 new OperationViews(viewsList),
                 undefined,
@@ -130,6 +130,46 @@ export function main() {
 
 
         afterEach((done) => new PouchDB('testdb').destroy().then(() => {done()}), 5000);
+
+
+        it('reload layer ids on startup', async done => {
+
+            resourcesState.loaded = false;
+            stateSerializer.load.and.returnValue({ excavation: {
+                navigationPaths: {'t1': {elements: []}},
+                layerIds: {'t1': ['layerid1']}
+            }});
+            await viewFacade.selectView('excavation');
+            await viewFacade.selectMainTypeDocument(trenchDocument1);
+
+            expect(viewFacade.getActiveLayersIds()).toEqual(['layerid1']);
+            done();
+        });
+
+
+        it('reload predefined layer ids on startup in test/demo project', async done => {
+
+            resourcesState = new ResourcesState(
+                stateSerializer,
+                new OperationViews(viewsList),
+                'test',
+                false
+            );
+            resourcesState.loaded = false;
+
+            viewFacade = new ViewFacade(
+                idaiFieldDocumentDatastore,
+                changesStream,
+                settingsService,
+                resourcesState
+            );
+
+            await viewFacade.selectView('excavation');
+            await viewFacade.selectMainTypeDocument(trenchDocument1);
+
+            expect(viewFacade.getActiveLayersIds()).toEqual(['o25']);
+            done();
+        });
 
 
         it('deselect on switching views', async done => {
@@ -177,6 +217,10 @@ export function main() {
 
 
         it('operations view: select operations type document', async done => {
+
+            const findDocument3 = Static.idfDoc('Find 3','find3','Find', 'find3');
+            findDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];
+            await idaiFieldDocumentDatastore.create(findDocument3);
 
             await viewFacade.selectView('excavation');
             await viewFacade.selectMainTypeDocument(trenchDocument2);
@@ -260,12 +304,12 @@ export function main() {
 
         it('build path while navigating, first element, then second', async done => {
 
-            const featureDocument1a = Static.doc('Feature 1a','feature1a','Feature', 'feature1a');
+            const featureDocument1a = Static.idfDoc('Feature 1a','feature1a','Feature', 'feature1a');
             featureDocument1a.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument1a.resource.relations['liesWithin'] = [featureDocument1.resource.id];
             await idaiFieldDocumentDatastore.create(featureDocument1a);
 
-            const featureDocument1b = Static.doc('Feature 1b','feature1b','Feature', 'feature1b');
+            const featureDocument1b = Static.idfDoc('Feature 1b','feature1b','Feature', 'feature1b');
             featureDocument1a.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument1a.resource.relations['liesWithin'] = [featureDocument1.resource.id];
             await idaiFieldDocumentDatastore.create(featureDocument1b);
@@ -278,41 +322,41 @@ export function main() {
 
             let navigationPath = await viewFacade.getNavigationPath();
             expect(navigationPath.elements.length).toEqual(1);
-            expect(navigationPath.elements[0]).toEqual(featureDocument1 as IdaiFieldDocument);
-            expect(navigationPath.rootDocument).toEqual(featureDocument1 as IdaiFieldDocument);
+            expect(navigationPath.elements[0]).toEqual(featureDocument1);
+            expect(navigationPath.rootDocument).toEqual(featureDocument1);
 
             await viewFacade.moveInto(featureDocument1a as any);
 
             navigationPath = await viewFacade.getNavigationPath();
             expect(navigationPath.elements.length).toEqual(2);
-            expect(navigationPath.elements[0]).toEqual(featureDocument1 as IdaiFieldDocument);
-            expect(navigationPath.elements[1]).toEqual(featureDocument1a as IdaiFieldDocument);
-            expect(navigationPath.rootDocument).toEqual(featureDocument1a as IdaiFieldDocument);
+            expect(navigationPath.elements[0]).toEqual(featureDocument1);
+            expect(navigationPath.elements[1]).toEqual(featureDocument1a);
+            expect(navigationPath.rootDocument).toEqual(featureDocument1a);
 
             await viewFacade.moveInto(featureDocument1 as any);
 
             navigationPath = await viewFacade.getNavigationPath();
             expect(navigationPath.elements.length).toEqual(2);
-            expect(navigationPath.elements[0]).toEqual(featureDocument1 as IdaiFieldDocument);
-            expect(navigationPath.elements[1]).toEqual(featureDocument1a as IdaiFieldDocument);
-            expect(navigationPath.rootDocument).toEqual(featureDocument1 as IdaiFieldDocument);
+            expect(navigationPath.elements[0]).toEqual(featureDocument1);
+            expect(navigationPath.elements[1]).toEqual(featureDocument1a);
+            expect(navigationPath.rootDocument).toEqual(featureDocument1);
 
             await viewFacade.moveInto(featureDocument1a as any);
 
             navigationPath = await viewFacade.getNavigationPath();
             expect(navigationPath.elements.length).toEqual(2);
-            expect(navigationPath.elements[0]).toEqual(featureDocument1 as IdaiFieldDocument);
-            expect(navigationPath.elements[1]).toEqual(featureDocument1a as IdaiFieldDocument);
-            expect(navigationPath.rootDocument).toEqual(featureDocument1a as IdaiFieldDocument);
+            expect(navigationPath.elements[0]).toEqual(featureDocument1);
+            expect(navigationPath.elements[1]).toEqual(featureDocument1a);
+            expect(navigationPath.rootDocument).toEqual(featureDocument1a);
 
             await viewFacade.moveInto(featureDocument1 as any);
             await viewFacade.moveInto(featureDocument1b as any);
 
             navigationPath = await viewFacade.getNavigationPath();
             expect(navigationPath.elements.length).toEqual(2);
-            expect(navigationPath.elements[0]).toEqual(featureDocument1 as IdaiFieldDocument);
-            expect(navigationPath.elements[1]).toEqual(featureDocument1b as IdaiFieldDocument);
-            expect(navigationPath.rootDocument).toEqual(featureDocument1b as IdaiFieldDocument);
+            expect(navigationPath.elements[0]).toEqual(featureDocument1);
+            expect(navigationPath.elements[1]).toEqual(featureDocument1b);
+            expect(navigationPath.rootDocument).toEqual(featureDocument1b);
 
             done();
         });

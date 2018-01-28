@@ -23,6 +23,8 @@ export class ObjectManager {
 
     public async show3DObjectsForDocuments(documents: Array<IdaiFieldDocument>) {
 
+        if (!documents) return;
+
         this.remove3DObjects(this.getObjectsToRemoveFromMap(documents));
         await this.add3DObjectsForDocuments(documents);
     }
@@ -36,7 +38,7 @@ export class ObjectManager {
 
     public get3DObjectByModelId(meshId: string): Object3D|undefined {
 
-        return this.objects.find(object => object.meshId == meshId);
+        return this.objects.find(object => object.mesh.uuid == meshId);
     }
 
 
@@ -92,9 +94,9 @@ export class ObjectManager {
 
         const object: Object3D = {
             resourceId: id,
-            meshId: ModelUtility.getMeshId(scene),
             document: document,
             scene: scene,
+            mesh: ModelUtility.getMesh(scene),
             visible: false
         };
 

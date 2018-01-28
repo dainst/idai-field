@@ -8,8 +8,8 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 export interface Object3D {
 
     resourceId: string;
-    meshId: string;
     document: IdaiFieldDocument;
     scene: THREE.Scene;
+    mesh: THREE.Mesh;
     visible: boolean;
 }

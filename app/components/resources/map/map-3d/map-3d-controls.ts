@@ -19,6 +19,8 @@ export class Map3DControls {
     private lastYPosition: number;
 
     private selectedDocument: IdaiFieldDocument|undefined;
+    private focusedMesh: THREE.Mesh|undefined;
+    private focusedMeshOriginalRotation: THREE.Quaternion;
 
 
     constructor(private map: Map3D,
@@ -46,7 +48,7 @@ export class Map3DControls {
 
     public onMouseUp(event: MouseEvent): IdaiFieldDocument|undefined {
 
-        if (this.mouseMode == 'drag') this.updateLastSelectedDocument(event.clientX, event.clientY);
+        if (this.mouseMode == 'drag') this.updateSelectedDocument(event.clientX, event.clientY);
 
         this.resetMouseMode();
 
@@ -80,10 +82,14 @@ export class Map3DControls {
     }
 
 
-    public setSelectedDocument(document: IdaiFieldDocument) {
+    public setSelectedDocument(document: IdaiFieldDocument|undefined) {
+
+        if (document == this.selectedDocument) return;
+
+        if (this.selectedDocument) this.quitFocus();
+        if (document) this.focusObjectOfDocument(document);
 
         this.selectedDocument = document;
-        if (document) this.focusObjectOfDocument(document);
     }
 
 
@@ -120,12 +126,17 @@ export class Map3DControls {
 
     private rotate(deltaX: number, deltaY: number) {
 
-        this.map.getCamera().rotation.y += deltaX / 100;
-        this.map.getCamera().rotation.x += deltaY / 100;
+        if (this.focusedMesh) {
+            this.focusedMesh.rotation.x += deltaY / 100;
+            this.focusedMesh.rotation.y += deltaX / 100;
+        } else {
+            this.map.getCamera().rotation.x += deltaY / 100;
+            this.map.getCamera().rotation.y += deltaX / 100;
+        }
     }
 
 
-    private updateLastSelectedDocument(xPosition: number, yPosition: number): IdaiFieldDocument|undefined {
+    private updateSelectedDocument(xPosition: number, yPosition: number): IdaiFieldDocument|undefined {
 
         if (this.noSelection) {
             this.noSelection = false;
@@ -133,7 +144,7 @@ export class Map3DControls {
         }
 
         const clickedObject: Object3D|undefined = this.getClickedObject(xPosition, yPosition);
-        this.selectedDocument = clickedObject ? clickedObject.document : undefined;
+        this.setSelectedDocument(clickedObject ? clickedObject.document : undefined);
     }
 
 
@@ -175,11 +186,24 @@ export class Map3DControls {
     }
 
 
+    private quitFocus() {
+
+        if (!this.focusedMesh) return;
+
+        this.focusedMesh.setRotationFromQuaternion(this.focusedMeshOriginalRotation);
+        this.focusedMesh = undefined;
+    }
+
+
     private focusObject(object: Object3D) {
 
-        const position: THREE.Vector3 = object.scene.children[0].getWorldPosition();
+        const position: THREE.Vector3 = object.mesh.getWorldPosition();
+        const camera: THREE.Camera = this.map.getCamera();
 
-        this.map.getCamera().position.set(position.x, position.y + 3, position.z);
-        this.map.getCamera().lookAt(position);
+        this.focusedMesh = object.mesh;
+        this.focusedMeshOriginalRotation = object.mesh.quaternion.clone();
+
+        camera.position.set(position.x, position.y + 6, position.z);
+        camera.lookAt(position);
     }
 }

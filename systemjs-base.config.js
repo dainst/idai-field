@@ -71,5 +71,5 @@ config.map = {
 };
 
 config.meta = {
-    'node_modules/papaparse/papaparse.js': { format: 'global',  exports: 'Papa' }
+    'node_modules/papaparse/papaparse.js': { format: 'global', exports: 'Papa' }
 };

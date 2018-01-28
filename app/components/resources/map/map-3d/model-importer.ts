@@ -13,6 +13,8 @@ export class ModelImporter {
         const mesh: THREE.Mesh = ModelUtility.getMesh(scene);
 
         mesh.geometry = this.smoothGeometry(mesh.geometry);
+        this.setPositionToCenter(mesh);
+
         scene.children = [mesh];
 
         return scene;
@@ -86,5 +88,16 @@ export class ModelImporter {
         }
 
         return result;
+    }
+
+
+    private static setPositionToCenter(mesh: THREE.Mesh) {
+
+        mesh.geometry.computeBoundingSphere();
+
+        const center: THREE.Vector3 = mesh.geometry.boundingSphere.center;
+
+        mesh.position.set(center.x, center.y, center.z);
+        mesh.geometry.translate(-center.x, -center.y, -center.z);
     }
 }

@@ -62,9 +62,15 @@ export class Map3D {
         this.renderer = new THREE.WebGLRenderer();
         this.containerElement.appendChild(this.renderer.domElement);
 
-        this.addLights();
+        this.addLight();
 
         this.camera = this.createCamera();
+    }
+
+
+    private addLight() {
+
+        this.scene.add(new THREE.HemisphereLight(0xf9edd9, 0x000000, 1));
     }
 
 
@@ -77,12 +83,6 @@ export class Map3D {
         camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         return camera;
-    }
-
-
-    private addLights() {
-
-        this.scene.add(new THREE.HemisphereLight(0xffffbb, 0x080820, 1));
     }
 
 

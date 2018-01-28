@@ -59,7 +59,7 @@ export class Map3D {
     private initialize() {
 
         this.scene = new THREE.Scene();
-        this.renderer = new THREE.WebGLRenderer();
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.containerElement.appendChild(this.renderer.domElement);
 
         this.addLight();

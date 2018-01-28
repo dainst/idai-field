@@ -1,4 +1,10 @@
 <div id="map-3d-container" #sceneContainer
-           (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)"
-           (contextmenu)="$event.preventDefault()" (wheel)="onWheel($event)">
+     [class.drag]="controlState && controlState.action == 'drag'"
+     [class.rotate]="controlState && controlState.action == 'rotate'"
+     [class.hover]="controlState && controlState.hoverDocument"
+     (mousedown)="onMouseDown($event)"
+     (mouseup)="onMouseUp($event)"
+     (mousemove)="onMouseMove($event)"
+     (wheel)="onWheel($event)"
+     (contextmenu)="$event.preventDefault()">
 </div>

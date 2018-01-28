@@ -1,5 +1,22 @@
+/**
+ * @author Thomas Kleinke
+ */
+
 #map-3d-container {
   width: 100%;
   height: calc(100vh - 113px);
   overflow: hidden;
+  cursor: -webkit-grab;
+
+  &.drag {
+    cursor: -webkit-grabbing;
+  }
+
+  &.rotate {
+    cursor: none;
+  }
+
+  &.hover:not(.drag):not(.rotate) {
+    cursor: pointer;
+  }
 }

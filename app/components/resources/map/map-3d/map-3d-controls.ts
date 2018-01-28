@@ -3,22 +3,22 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Map3D} from './map-3d';
 import {Object3D} from './object-3d';
 import {ObjectManager} from './object-manager';
+import {Map3DControlState} from './map-3d-control-state';
 
 
 /**
  * @author Thomas Kleinke
  */
 export class Map3DControls {
-
-    private mouseMode: string = 'none'; // drag, rotate, zoom
+    
+    private state: Map3DControlState = { action: 'none' };
 
     private dragCounter: number;
     private noSelection: boolean = false;
 
     private lastXPosition: number;
     private lastYPosition: number;
-
-    private selectedDocument: IdaiFieldDocument|undefined;
+    
     private focusedMesh: THREE.Mesh|undefined;
     private focusedMeshOriginalRotation: THREE.Quaternion;
 
@@ -27,52 +27,49 @@ export class Map3DControls {
                 private objectManager: ObjectManager) {}
 
 
-    public onMouseDown(event: MouseEvent) {
+    public onMouseDown(event: MouseEvent): Map3DControlState {
 
         this.lastXPosition = event.clientX;
         this.lastYPosition = event.clientY;
 
         switch (event.which) {
             case 1:  // Left mouse button
-                this.enterDragMode();
+                this.beginDragAction();
                 break;
 
             case 3:  // Right mouse button
-                this.enterRotateMode();
+                this.beginRotateAction();
                 break;
         }
 
         event.preventDefault();
+
+        return this.state;
     }
 
 
-    public onMouseUp(event: MouseEvent): IdaiFieldDocument|undefined {
+    public onMouseUp(event: MouseEvent): Map3DControlState {
 
-        if (this.mouseMode == 'drag') this.updateSelectedDocument(event.clientX, event.clientY);
+        if (this.state.action == 'drag') this.updateSelectedDocument(event.clientX, event.clientY);
 
-        this.resetMouseMode();
+        this.resetAction();
 
-        return this.selectedDocument;
+        return this.state;
     }
 
 
-    public onMouseMove(event: MouseEvent) {
+    public onMouseMove(event: MouseEvent): Map3DControlState {
 
         const deltaX = this.lastXPosition - event.clientX;
         const deltaY = this.lastYPosition - event.clientY;
 
-        switch (this.mouseMode) {
-            case 'drag':
-                this.drag(deltaX, deltaY);
-                break;
-
-            case 'rotate':
-                this.rotate(deltaX, deltaY);
-                break;
-        }
+        this.performAction(deltaX, deltaY);
+        this.updateHoverDocument(event.clientX, event.clientY);
 
         this.lastXPosition = event.clientX;
         this.lastYPosition = event.clientY;
+
+        return this.state;
     }
 
 
@@ -84,31 +81,47 @@ export class Map3DControls {
 
     public setSelectedDocument(document: IdaiFieldDocument|undefined) {
 
-        if (document == this.selectedDocument) return;
+        if (document == this.state.selectedDocument) return;
 
-        if (this.selectedDocument) this.quitFocus();
+        if (this.state.selectedDocument) this.quitFocus();
         if (document) this.focusObjectOfDocument(document);
 
-        this.selectedDocument = document;
+        this.state.selectedDocument = document;
+
+        this.updateHoverDocument(this.lastXPosition, this.lastYPosition);
     }
 
 
-    private enterDragMode() {
+    private beginDragAction() {
 
-        this.mouseMode = 'drag';
+        this.state.action = 'drag';
         this.dragCounter = 0;
     }
 
 
-    private enterRotateMode() {
+    private beginRotateAction() {
 
-        this.mouseMode = 'rotate';
+        this.state.action = 'rotate';
     }
 
 
-    private resetMouseMode() {
+    private resetAction() {
 
-        this.mouseMode = 'none';
+        this.state.action = 'none';
+    }
+
+
+    private performAction(deltaX: number, deltaY: number) {
+
+        switch (this.state.action) {
+            case 'drag':
+                this.drag(deltaX, deltaY);
+                break;
+
+            case 'rotate':
+                this.rotate(deltaX, deltaY);
+                break;
+        }
     }
 
 
@@ -136,19 +149,28 @@ export class Map3DControls {
     }
 
 
-    private updateSelectedDocument(xPosition: number, yPosition: number): IdaiFieldDocument|undefined {
+    private updateSelectedDocument(xPosition: number, yPosition: number) {
 
         if (this.noSelection) {
             this.noSelection = false;
-            return this.selectedDocument;
+            return;
         }
 
-        const clickedObject: Object3D|undefined = this.getClickedObject(xPosition, yPosition);
+        const clickedObject: Object3D|undefined = this.getObjectAtMousePosition(xPosition, yPosition);
         this.setSelectedDocument(clickedObject ? clickedObject.document : undefined);
     }
 
 
-    private getClickedObject(xPosition: number, yPosition: number): Object3D|undefined {
+    private updateHoverDocument(xPosition: number, yPosition: number) {
+
+        const hoverObject: Object3D|undefined = this.getObjectAtMousePosition(xPosition, yPosition);
+        this.state.hoverDocument = hoverObject && hoverObject.document != this.state.selectedDocument ?
+            hoverObject.document :
+            undefined;
+    }
+
+
+    private getObjectAtMousePosition(xPosition: number, yPosition: number): Object3D|undefined {
 
         const intersections: Array<THREE.Intersection> = this.getIntersections(xPosition, yPosition);
 

@@ -23,10 +23,9 @@ export const add = <A>(as: Array<A>, a: A): Array<A> =>
     (as.indexOf(a) > -1) ? as : as.concat([a]);
 
 
-
+// TODO remove is a special case of subtract, try to, write either one in terms of the other
 export const remove = <A>(as: Array<A>, a: A): Array<A> =>
     as.filter(differentFrom(a));
-
 
 
 export const subtractTwo = <A>(sets: NestedArray<A>, other: Array<A>): Array<A> => {

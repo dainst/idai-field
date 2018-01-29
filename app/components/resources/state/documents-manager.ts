@@ -11,6 +11,8 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {ModelUtil} from '../../../core/model/model-util';
 import {ResourcesState} from './resources-state';
+import {remove} from '../../../util/list-util';
+
 
 /**
  * @author Thomas Kleinke
@@ -132,8 +134,8 @@ export class DocumentsManager {
 
         this.selectAndNotify(document);
 
-        this.removeEmpty(this.documents);
-        this.removeFromList(document, this.newDocumentsFromRemote); // TODO use list utils method and remove this one
+        this.removeEmpty(this.documents); // TODO work with list util method, that takes a predicate like isEmpty which is defined for document
+        remove(this.newDocumentsFromRemote, document);
 
         // TODO extract method
         if (!ModelUtil.isInList(document, await this.createUpdatedDocumentList())) { // TODO use list util

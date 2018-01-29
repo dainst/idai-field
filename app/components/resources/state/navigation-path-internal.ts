@@ -19,3 +19,10 @@ export interface NavigationPathSegment {
     q?: string;
     types?: Array<string>;
 }
+
+
+export const isSameSegment
+    = (document: IdaiFieldDocument) => (segment: NavigationPathSegment) => document == segment.document;
+
+
+export const toDocument = (segment: NavigationPathSegment) => segment.document;

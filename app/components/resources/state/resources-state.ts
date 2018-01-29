@@ -4,8 +4,7 @@ import {StateSerializer} from '../../../common/state-serializer';
 import {NavigationPath} from './navigation-path';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {OperationViews} from './operation-views';
-import {NavigationPathInternal, NavigationPathSegment} from './navigation-path-internal';
-import {includedIn, takeUntil} from '../../../util/list-util';
+import {NavigationPathInternal, NavigationPathSegment, toDocument} from './navigation-path-internal';
 
 
 @Injectable()
@@ -163,53 +162,6 @@ export class ResourcesState {
     }
 
 
-    /**
-     * @param document set undefined to make rootElement of navigation path undefined
-     */
-    public moveInto(document: IdaiFieldDocument|undefined) {
-
-        const mainTypeDocument = this.getMainTypeDocument();
-        if (!mainTypeDocument) return;
-
-        this.viewStates[this.view].navigationPaths[
-            mainTypeDocument.resource.id as string] = ResourcesState.makeNewNavigationPath(
-                this.getNavigationPathInternal(mainTypeDocument), document);
-    }
-
-
-    public setNavigationPath(newNavigationPath: NavigationPath) {
-
-        const mainTypeDocument: IdaiFieldDocument|undefined = this.getMainTypeDocument();
-        if (!mainTypeDocument) return;
-
-        const currentNavigationPath: NavigationPathInternal = this.getNavigationPathInternal(mainTypeDocument);
-        const currentNavigationPathResourceIds: Array<string> = currentNavigationPath.elements
-            .map(element => element.document.resource.id as string);
-
-        const result: NavigationPathInternal = {
-            elements: [],
-            rootDocument: newNavigationPath.rootDocument,
-            q: currentNavigationPath.q,
-            types: currentNavigationPath.types
-        };
-
-        if (!newNavigationPath.rootDocument ||
-                currentNavigationPathResourceIds.indexOf(newNavigationPath.rootDocument.resource.id as string) > -1) {
-            result.elements = currentNavigationPath.elements;
-        } else {
-            for (let document of newNavigationPath.elements) {
-                const index: number = currentNavigationPathResourceIds.indexOf(document.resource.id as string);
-                result.elements.push(index > -1 ?
-                    currentNavigationPath.elements[index] :
-                    {document: document}
-                );
-            }
-        }
-
-        this.viewStates[this.view].navigationPaths[mainTypeDocument.resource.id as string] = result;
-    }
-
-
     public getNavigationPath(): NavigationPath {
 
         if (this.isInOverview()) return NavigationPath.empty();
@@ -218,29 +170,30 @@ export class ResourcesState {
         if (!mainTypeDocument) return NavigationPath.empty();
 
         return {
-            elements: this.getNavigationPathInternal(mainTypeDocument).elements.map(toDocument),
-            rootDocument: this.getNavigationPathInternal(mainTypeDocument).rootDocument
+            elements: this.getNavigationPathInternal().elements.map(toDocument),
+            rootDocument: this.getNavigationPathInternal().rootDocument
         }
     }
 
 
-    private getNavigationPathInternal(operationTypeDocument: IdaiFieldDocument): NavigationPathInternal {
+    public getNavigationPathInternal(): NavigationPathInternal {
+
+        const mainTypeDocument = this.getMainTypeDocument();
+        if (!mainTypeDocument) return NavigationPath.empty();
 
         const navigationPaths = this.viewStates[this.view].navigationPaths;
-        const path = (navigationPaths as any)[operationTypeDocument.resource.id as string];
+        const path = (navigationPaths as any)[mainTypeDocument.resource.id as string];
 
         return path ? path : NavigationPath.empty();
     }
 
 
-    private getCurrentNavigationPath(): NavigationPathInternal|undefined {
+    public setNavigationPathInternal(navigationPathInternal: NavigationPathInternal) {
 
         const mainTypeDocument = this.getMainTypeDocument();
-        if (!mainTypeDocument) return NavigationPath.empty();
+        if (!mainTypeDocument) return;
 
-        return this.viewStates[this.view].navigationPaths[
-                mainTypeDocument.resource.id as string
-            ];
+        this.viewStates[this.view].navigationPaths[mainTypeDocument.resource.id as string] = navigationPathInternal;
     }
 
 
@@ -260,8 +213,7 @@ export class ResourcesState {
     private withNavPath(doWhenRootExists: (n: NavigationPathInternal) => any,
                         doWhenRootNotExists: (n: NavigationPathInternal) => any) {
 
-        const navigationPath = this.getCurrentNavigationPath();
-        if (!navigationPath) return;
+        const navigationPath = this.getNavigationPathInternal();
 
         return navigationPath.rootDocument
             ? doWhenRootExists(navigationPath)
@@ -292,38 +244,6 @@ export class ResourcesState {
     }
 
 
-    private static makeNewNavigationPath(
-        oldNavigationPath: NavigationPathInternal,
-        newRootDocument: IdaiFieldDocument|undefined): NavigationPathInternal {
-
-        return (newRootDocument)
-            ? {
-                elements: this.rebuildElements(
-                    oldNavigationPath.elements,
-                    oldNavigationPath.rootDocument,
-                    newRootDocument),
-                rootDocument: newRootDocument,
-                q: oldNavigationPath.q,
-                types: oldNavigationPath.types
-            }
-            : {
-                elements: oldNavigationPath.elements,
-                // rootDocument <- undefined, because no document
-                q: oldNavigationPath.q,
-                types: oldNavigationPath.types
-            }
-    }
-
-
-    private static rebuildElements(oldElements: Array<NavigationPathSegment>, oldRoot: IdaiFieldDocument|undefined,
-                                   newRoot: IdaiFieldDocument) {
-
-        if (includedIn(oldElements.map(toDocument))(newRoot)) return oldElements;
-
-        return (oldRoot ? takeUntil(isSameSegment(oldRoot))(oldElements) : []).concat([{document: newRoot}]);
-    }
-
-
     private static makeDefaults() {
 
         return {
@@ -332,8 +252,3 @@ export class ResourcesState {
         }
     }
 }
-
-
-const toDocument = (segment: NavigationPathSegment) => segment.document;
-
-const isSameSegment = (document: IdaiFieldDocument) => (segment: NavigationPathSegment) => document == segment.document;

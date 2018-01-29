@@ -1,14 +1,16 @@
 import {ResourcesState} from "../../../../../app/components/resources/state/resources-state";
 import {OperationViews} from '../../../../../app/components/resources/state/operation-views';
 import {Static} from '../../../helper/static';
+import {NavigationPathManager} from '../../../../../app/components/resources/state/navigation-path-manager';
 
 
 /**
  * @author Daniel de Oliveira
  */
+
 export function main() {
 
-    describe('ResourcesState',() => {
+    describe('ResourcesStateAndNavigationPathManager',() => {
 
         const viewsList = [
             {
@@ -21,6 +23,7 @@ export function main() {
 
 
         let resourcesState: ResourcesState;
+        let navigationPathManager: NavigationPathManager;
 
 
         beforeEach(() => {
@@ -32,21 +35,25 @@ export function main() {
                 undefined,
                 undefined
             );
+
+            const mockDatastore = jasmine.createSpyObj('datastore', ['get']);
+
+            navigationPathManager = new NavigationPathManager(resourcesState, mockDatastore);
+
             resourcesState.loaded = true;
         });
 
 
-        it('step into',() => {
+        it('step into', () => {
 
             const trenchDocument1 = Static.idfDoc('trench1','trench1','Trench','t1');
             const featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature', 'feature1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
-
             resourcesState.initialize('excavation');
             resourcesState.setMainTypeDocument(trenchDocument1);
 
-            resourcesState.moveInto(featureDocument1);
+            navigationPathManager.moveInto(featureDocument1);
 
             expect(resourcesState.getNavigationPath().rootDocument).toEqual(featureDocument1);
             expect(resourcesState.getNavigationPath().elements.length).toEqual(1);
@@ -63,8 +70,8 @@ export function main() {
             resourcesState.initialize('excavation');
             resourcesState.setMainTypeDocument(trenchDocument1);
 
-            resourcesState.moveInto(featureDocument1);
-            resourcesState.moveInto(undefined);
+            navigationPathManager.moveInto(featureDocument1);
+            navigationPathManager.moveInto(undefined);
 
             expect(resourcesState.getNavigationPath().rootDocument).toEqual(undefined);
             expect(resourcesState.getNavigationPath().elements.length).toEqual(1);
@@ -81,17 +88,17 @@ export function main() {
             resourcesState.initialize('excavation');
             resourcesState.setMainTypeDocument(trenchDocument1);
 
-            resourcesState.moveInto(featureDocument1);
+            navigationPathManager.moveInto(featureDocument1);
             resourcesState.setTypeFilters(['Find']);
             resourcesState.setQueryString('abc');
-            resourcesState.moveInto(undefined);
+            navigationPathManager.moveInto(undefined);
             expect(resourcesState.getTypeFilters()).toEqual(undefined);
             expect(resourcesState.getQueryString()).toEqual('');
             resourcesState.initialize('survey');
             expect(resourcesState.getTypeFilters()).toEqual(undefined);
             expect(resourcesState.getQueryString()).toEqual('');
             resourcesState.initialize('excavation');
-            resourcesState.moveInto(featureDocument1);
+            navigationPathManager.moveInto(featureDocument1);
             expect(resourcesState.getTypeFilters()).toEqual(['Find']);
             expect(resourcesState.getQueryString()).toEqual('abc');
         });
@@ -105,7 +112,7 @@ export function main() {
             resourcesState.initialize('excavation');
             resourcesState.setMainTypeDocument(trenchDocument1);
 
-            resourcesState.moveInto(featureDocument1);
+            navigationPathManager.moveInto(featureDocument1);
             resourcesState.setTypeFilters(['Find']);
             resourcesState.setQueryString('abc');
             resourcesState.setTypeFilters(undefined);
@@ -123,7 +130,7 @@ export function main() {
             resourcesState.initialize('excavation');
             resourcesState.setMainTypeDocument(trenchDocument1);
 
-            resourcesState.moveInto(featureDocument1);
+            navigationPathManager.moveInto(featureDocument1);
             resourcesState.setTypeFilters(['Find']);
             resourcesState.setQueryString('abc');
             resourcesState.setTypeFilters(undefined);

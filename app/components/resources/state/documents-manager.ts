@@ -11,7 +11,7 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {ResourcesState} from './resources-state';
-import {remove} from '../../../util/list-util';
+import {includedIn, remove, isNot} from '../../../util/list-util';
 import {inform} from '../../../util/observer-util';
 
 
@@ -178,18 +178,18 @@ export class DocumentsManager {
             return this.mainTypeDocumentsManager.populate();
         }
 
-        let oldDocuments = this.documents;
+        const oldDocuments = this.documents;
         await this.populateDocumentList();
 
-        for (let document of this.documents) {
-            const conflictedRevisions: Array<Document>
-                = await this.datastore.getConflictedRevisions(document.resource.id as string);
-
-            if (oldDocuments.indexOf(document) == -1 && ChangeHistoryUtil.isRemoteChange(document, conflictedRevisions,
-                    this.settingsService.getUsername())) {
-                this.newDocumentsFromRemote.push(document);
-            }
-        }
+        this.documents
+            .filter(isNot(includedIn(oldDocuments)))
+            .filter(async document =>
+                ChangeHistoryUtil.isRemoteChange(
+                    document,
+                    await this.datastore.getConflictedRevisions(document.resource.id as string),
+                    this.settingsService.getUsername())
+                )
+            .forEach(document => this.newDocumentsFromRemote.push(document)); // TODO check if we can hide passing document explicitely
     }
 
 

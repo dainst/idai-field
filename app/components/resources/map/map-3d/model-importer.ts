@@ -12,8 +12,9 @@ export class ModelImporter {
         const scene: THREE.Scene = colladaModel.scene;
         const mesh: THREE.Mesh = ModelUtility.getMesh(scene);
 
-        mesh.geometry = this.smoothGeometry(mesh.geometry);
+        this.smoothGeometry(mesh);
         this.setPositionToCenter(mesh);
+        this.makeMaterialDoubleSided(mesh);
 
         scene.children = [mesh];
 
@@ -21,19 +22,32 @@ export class ModelImporter {
     }
 
 
-    private static smoothGeometry(geometry: THREE.Geometry|THREE.BufferGeometry): THREE.BufferGeometry {
+    private static smoothGeometry(mesh: THREE.Mesh) {
 
-        if (geometry instanceof THREE.BufferGeometry) geometry = this.makeGeometry(geometry);
+        const geometry: THREE.Geometry = mesh.geometry instanceof THREE.BufferGeometry ?
+            this.makeGeometryFromBufferGeometry(mesh.geometry) :
+            mesh.geometry;
 
         geometry.computeFaceNormals();
         geometry.mergeVertices();
         geometry.computeVertexNormals();
 
-        return new THREE.BufferGeometry().fromGeometry(geometry);
+        mesh.geometry = new THREE.BufferGeometry().fromGeometry(geometry);
     }
 
 
-    private static makeGeometry(bufferGeometry: THREE.BufferGeometry): THREE.Geometry {
+    private static makeMaterialDoubleSided(mesh: THREE.Mesh) {
+
+        if (mesh.material instanceof Array) {
+            console.warn('Material arrays are not supported.');
+            return;
+        }
+
+        mesh.material.side = THREE.DoubleSide;
+    }
+
+
+    private static makeGeometryFromBufferGeometry(bufferGeometry: THREE.BufferGeometry): THREE.Geometry {
 
         const geometry = new THREE.Geometry();
         geometry.vertices = this.getVertices(bufferGeometry);

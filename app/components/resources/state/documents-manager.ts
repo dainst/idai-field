@@ -178,7 +178,7 @@ export class DocumentsManager {
             return this.mainTypeDocumentsManager.populate();
         }
 
-        const oldDocuments = this.documents;
+        const oldDocuments = this.documents; // TODO why do we need the tempvar, we simply could run populateDocumentList as last statement as an alternative, right?
         await this.populateDocumentList();
 
         this.documents

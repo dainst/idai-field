@@ -48,6 +48,8 @@ export class DocumentsManager {
 
     public removeFromDocuments = (document: Document) => this.documents = remove(this.documents, document);
 
+    public isNewDocumentFromRemote = (document: Document) => this.newDocumentsFromRemote.indexOf(document) > -1;
+
 
     public async populateProjectDocument() {
 
@@ -216,15 +218,6 @@ export class DocumentsManager {
         return this.resourcesState.isInOverview()
             ? this.projectDocument
             : this.resourcesState.getMainTypeDocument();
-    }
-
-
-    // TODO refactor using some
-    public isNewDocumentFromRemote(document: Document): boolean {
-
-        return (!document)
-            ? false
-            : this.newDocumentsFromRemote.indexOf(document) > -1;
     }
 
 

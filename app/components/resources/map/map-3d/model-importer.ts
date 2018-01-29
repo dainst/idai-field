@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {ModelUtility} from './model-utility';
+import {Model3DUtility} from './model-3d-utility';
 
 
 /**
@@ -10,7 +10,7 @@ export class ModelImporter {
     public static importColladaModel(colladaModel: THREE.ColladaModel): THREE.Scene {
 
         const scene: THREE.Scene = colladaModel.scene;
-        const mesh: THREE.Mesh = ModelUtility.getMesh(scene);
+        const mesh: THREE.Mesh = Model3DUtility.getMesh(scene);
 
         this.smoothGeometry(mesh);
         this.setPositionToCenter(mesh);

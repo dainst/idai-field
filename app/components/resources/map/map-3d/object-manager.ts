@@ -3,7 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Map3D} from './map-3d';
 import {Object3D} from './object-3d';
 import {ModelImporter} from './model-importer';
-import {ModelUtility} from './model-utility';
+import {Model3DUtility} from './model-3d-utility';
 import {SettingsService} from '../../../../core/settings/settings-service';
 
 const ColladaLoader = require('three-collada-loader-2');
@@ -96,7 +96,7 @@ export class ObjectManager {
             resourceId: id,
             document: document,
             scene: scene,
-            mesh: ModelUtility.getMesh(scene),
+            mesh: Model3DUtility.getMesh(scene),
             visible: false
         };
 

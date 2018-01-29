@@ -4,7 +4,7 @@ import * as THREE from 'three';
 /**
  * @author Thomas Kleinke
  */
-export class ModelUtility {
+export class Model3DUtility {
 
     public static getMesh(scene: THREE.Scene): THREE.Mesh {
 

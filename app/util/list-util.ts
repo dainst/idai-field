@@ -5,12 +5,14 @@
 export type NestedArray<T> = Array<Array<T>>;
 
 
-export const getAtIndex = <A>(array: Array<A>, index: number): A|undefined => getAtIndexOr(array, index);
+export const getAtIndex = <A>(as: Array<A>, i: number): A|undefined => getAtIndexOr(as, i);
 
 
-export const getAtIndexOr = <A>(array: Array<A>, index: number, defaultValue: A|undefined = undefined): A|undefined =>
-    array.length < index ? defaultValue : array[index];
+export const getAtIndexOr = <A>(as: Array<A>, i: number, defaultValue: A|undefined = undefined): A|undefined =>
+    as.length < i ? defaultValue : as[i];
 
+
+export const removeAtIndex = <A>(as: Array<A>) => (i: number) => as.splice(i, 1);
 
 /**
  * Generate a new list with elements which are contained in l but not in r
@@ -19,13 +21,13 @@ export const subtract = <A>(l: Array<A>, r: Array<A>): Array<A> =>
     l.filter(isNot(includedIn(r)));
 
 
-export const add = <A>(as: Array<A>, a: A): Array<A> =>
-    (as.indexOf(a) > -1) ? as : as.concat([a]);
-
-
 // TODO remove is a special case of subtract, try to, write either one in terms of the other
 export const remove = <A>(as: Array<A>, a: A): Array<A> =>
     as.filter(differentFrom(a));
+
+
+export const add = <A>(as: Array<A>, a: A): Array<A> =>
+    (as.indexOf(a) > -1) ? as : as.concat([a]);
 
 
 export const subtractTwo = <A>(sets: NestedArray<A>, other: Array<A>): Array<A> => {
@@ -37,7 +39,7 @@ export const subtractTwo = <A>(sets: NestedArray<A>, other: Array<A>): Array<A> 
             result.indexOf(object))
             .filter(bigger(-1))
             .reverse()
-            .forEach(removeFrom(result))
+            .forEach(removeAtIndex(result))
     );
 
     return result;
@@ -62,10 +64,10 @@ export const includedIn =  <A>(l: Array<A>) => (element: A) => l.indexOf(element
 export const isNot = <A>(f: (_: A) => boolean) => (a: A) => flip(f(a));
 
 
-export const takeWhile = <A>(f: (_: A) => boolean) => take(identical, f, 0);
+export const takeWhile = <A>(f: (_: A) => boolean) => take(f, identical, 0);
 
 
-export const takeUntil = <A>(f: (_: A) => boolean) => take(flip, f, 1);
+export const takeUntil = <A>(f: (_: A) => boolean) => take(f, flip, 1);
 
 
 export const is = <A>(l:A) =>
@@ -87,19 +89,20 @@ export const differentFrom = <A>(l:A) =>
 // private
 
 
-const removeFrom = <A>(l: Array<A>) => (i: number) => l.splice(i, 1);
-
-
 const identical = <A>(v: A) => v;
 
 
 const flip = (v: boolean) => !v;
 
 
-const take = <A>(n: (v: boolean) => boolean, f: (_: A) => boolean, add: number) =>
-    (arr: Array<A>) => {
+const take = <A>(predicate: (_: A) => boolean,
+                 flipper: (predicateOutcome: boolean) => boolean,
+                 indexOffset: number) => {
+
+    return (arr: Array<A>) => {
         // implementation of takeWhile based on the idea taken from http://sufflavus.github.io/JS-Tips-Take-While
         let stopIndex = arr.length;
-        arr.some((el: A, index: number) => (n(f(el))) ? false : (stopIndex = index, true));
-        return arr.slice(0, stopIndex + add);
-    };
+        arr.some((el: A, index: number) => (flipper(predicate(el))) ? false : (stopIndex = index, true));
+        return arr.slice(0, stopIndex + indexOffset);
+    }
+};

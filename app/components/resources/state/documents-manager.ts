@@ -9,9 +9,10 @@ import {SettingsService} from '../../../core/settings/settings-service';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
-import {hasEqualId, hasId, ModelUtil} from '../../../core/model/model-util';
+import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {ResourcesState} from './resources-state';
 import {remove} from '../../../util/list-util';
+import {inform} from '../../../util/observer-util';
 
 
 /**
@@ -160,11 +161,9 @@ export class DocumentsManager {
 
     private notifyDeselectionObservers(deselectedDocument: Document) {
 
-        if (!this.deselectionObservers) return;
-
-        this.deselectionObservers.forEach(
-            (observer: Observer<Document>) => observer.next(deselectedDocument) // TODO use observer util
-        );
+        if (this.deselectionObservers) {
+            this.deselectionObservers.forEach(inform(deselectedDocument));
+        }
     }
 
 

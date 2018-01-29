@@ -206,17 +206,14 @@ export class DocumentsManager {
         if (!isRecordedInTarget) return [];
 
         return (await this.fetchDocuments(
-                    DocumentsManager.makeDocsQuery(
-                        this.buildQuery(),
-                        isRecordedInTarget.resource.id as string)
-                    )
+                    this.makeDocsQuery(isRecordedInTarget.resource.id as string))
             ).filter(hasId);
     }
 
 
     private makeIsRecordedInTarget(): Document|undefined {
 
-        return (this.resourcesState.isInOverview())
+        return this.resourcesState.isInOverview()
             ? this.projectDocument
             : this.resourcesState.getMainTypeDocument();
     }
@@ -253,18 +250,14 @@ export class DocumentsManager {
     }
 
 
-    private static handleFindErr(errWithParams: Array<string>, query: Query) {
+    private makeDocsQuery(mainTypeDocumentResourceId: string): Query {
 
-        console.error('Error with find. Query:', query);
-        if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
-    }
-
-
-    private buildQuery(): Query {
+        const constraints = this.makeLiesWithinConstraint();
+        constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;
 
         const query: Query = {
             q: this.resourcesState.getQueryString(),
-            constraints: this.buildConstraints()
+            constraints: constraints
         };
 
         if (this.resourcesState.getTypeFilters()) {
@@ -275,7 +268,14 @@ export class DocumentsManager {
     }
 
 
-    private buildConstraints(): { [name: string]: string}  {
+    private static handleFindErr(errWithParams: Array<string>, query: Query) {
+
+        console.error('Error with find. Query:', query);
+        if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
+    }
+
+
+    private makeLiesWithinConstraint(): { [name: string]: string}  {
 
         const rootDoc = this.resourcesState.getNavigationPath().rootDocument;
         return rootDoc
@@ -293,16 +293,5 @@ export class DocumentsManager {
         }
 
         return false;
-    }
-
-
-    private static makeDocsQuery(query: Query, mainTypeDocumentResourceId: string): Query {
-
-        const clonedQuery = JSON.parse(JSON.stringify(query));
-
-        if (!clonedQuery.constraints) clonedQuery.constraints = {};
-        clonedQuery.constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;
-
-        return clonedQuery;
     }
 }

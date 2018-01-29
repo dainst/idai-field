@@ -9,7 +9,7 @@ import {SettingsService} from '../../../core/settings/settings-service';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
-import {hasEqualId, ModelUtil} from '../../../core/model/model-util';
+import {hasEqualId, hasId, ModelUtil} from '../../../core/model/model-util';
 import {ResourcesState} from './resources-state';
 import {remove} from '../../../util/list-util';
 
@@ -96,7 +96,7 @@ export class DocumentsManager {
         const deselectedDocument: Document = this.selectedDocument;
         this.selectedDocument = undefined;
 
-        this.removeEmpty(this.documents);
+        this.documents = this.documents.filter(hasId);
         this.resourcesState.setActiveDocumentViewTab(undefined);
         this.notifyDeselectionObservers(deselectedDocument);
     }
@@ -116,7 +116,7 @@ export class DocumentsManager {
 
         this.selectAndNotify(document);
 
-        this.removeEmpty(this.documents); // TODO work with list util method, that takes a predicate like isEmpty which is defined for document
+        this.documents = this.documents.filter(hasId);
         remove(this.newDocumentsFromRemote, document);
 
         return this.performUpdates(document);
@@ -144,6 +144,17 @@ export class DocumentsManager {
 
             await this.makeSureSelectedDocumentAppearsInList();
             await this.populateDocumentList();
+        }
+    }
+
+
+    private async adjustQuerySettingsIfNecessary() {
+
+        const documents: Array<Document> = await this.createUpdatedDocumentList();
+
+        if (!ModelUtil.isInList(this.selectedDocument as IdaiFieldDocument, documents)) {
+            this.resourcesState.setQueryString('');
+            this.resourcesState.setTypeFilters(undefined as any);
         }
     }
 
@@ -194,11 +205,9 @@ export class DocumentsManager {
         const isRecordedInTarget: Document|undefined = this.makeIsRecordedInTarget();
         if (!isRecordedInTarget) return [];
 
-        const documents: Array<Document> = await this.fetchDocuments(
-            DocumentsManager.makeDocsQuery(this.buildQuery(), isRecordedInTarget.resource.id as string)
-        );
-
-        return this.removeEmpty(documents);
+        return (await this.fetchDocuments(
+                DocumentsManager.makeDocsQuery(this.buildQuery(), isRecordedInTarget.resource.id as string)
+            )).filter(hasId);
     }
 
 
@@ -218,19 +227,10 @@ export class DocumentsManager {
     }
 
 
-    private removeEmpty(documents: Array<Document>) {
-
-        for (let document of documents) {
-            if (!document.resource.id) this.remove(document, documents);
-        }
-        return documents;
-    }
-
-
     // TODO replace with call to method from list util
-    public remove(document: Document, documents: Array<Document> = this.documents) {
+    public remove(document: Document) {
 
-        documents.splice(documents.indexOf(document), 1);
+        this.documents.splice(this.documents.indexOf(document), 1);
     }
 
 
@@ -251,17 +251,6 @@ export class DocumentsManager {
             .updateNavigationPathForDocument(this.selectedDocument as IdaiFieldDocument);
 
         await this.adjustQuerySettingsIfNecessary();
-    }
-
-
-    private async adjustQuerySettingsIfNecessary() {
-
-        const documents: Array<Document> = await this.createUpdatedDocumentList();
-
-        if (!ModelUtil.isInList(this.selectedDocument as IdaiFieldDocument, documents)) {
-            this.resourcesState.setQueryString('');
-            this.resourcesState.setTypeFilters(undefined as any);
-        }
     }
 
 

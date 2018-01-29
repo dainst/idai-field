@@ -202,31 +202,27 @@ export class DocumentsManager {
 
     public async createUpdatedDocumentList(): Promise<Array<Document>> {
 
-        const isRecordedInTarget: Document|undefined = this.makeIsRecordedInTarget();
+        const isRecordedInTarget = this.makeIsRecordedInTarget();
         if (!isRecordedInTarget) return [];
 
         return (await this.fetchDocuments(
-                DocumentsManager.makeDocsQuery(this.buildQuery(), isRecordedInTarget.resource.id as string)
-            )).filter(hasId);
+                    DocumentsManager.makeDocsQuery(
+                        this.buildQuery(),
+                        isRecordedInTarget.resource.id as string)
+                    )
+            ).filter(hasId);
     }
 
 
     private makeIsRecordedInTarget(): Document|undefined {
 
-        let isRecordedInTarget;
-        if (this.resourcesState.isInOverview()) {
-            isRecordedInTarget = this.projectDocument;
-        } else {
-            if (!this.resourcesState.getMainTypeDocument()) return; // TODO get rid of this line and use ternary operator
-            isRecordedInTarget = this.resourcesState.getMainTypeDocument();
-        }
-        if (!isRecordedInTarget) throw 'no isRecordedInTarget in populate doc list';
-        if (!isRecordedInTarget.resource.id) throw 'no id in populate doc list';
-
-        return isRecordedInTarget;
+        return (this.resourcesState.isInOverview())
+            ? this.projectDocument
+            : this.resourcesState.getMainTypeDocument();
     }
 
 
+    // TODO refactor using some
     public isNewDocumentFromRemote(document: Document): boolean {
 
         return (!document)

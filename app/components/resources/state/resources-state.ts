@@ -223,28 +223,32 @@ export class ResourcesState {
 
     private async load() {
 
-        let resourcesViewStates;
+        const resourcesViewStates =
+            this.project === 'test'
+                ? this.suppressLoadMapInTestProject
+                    ? ResourcesState.makeDefaults()
+                    : ResourcesState.makeSampleDefaults()
+                : await this.serializer.load(StateSerializer.RESOURCES_STATE);
 
-        if (this.project === 'test') {
-            resourcesViewStates = this.suppressLoadMapInTestProject
-                ? ResourcesState.makeDefaults()
-                : {
-                    project: {
-                        layerIds: {'test': ['o25']}
-                    },
-                    excavation: {
-                        navigationPaths: {'t1': {elements: []}},
-                        layerIds: {'t1': ['o25']}
-                    }
-                };
-        } else {
-            resourcesViewStates = await this.serializer.load(StateSerializer.RESOURCES_STATE);
-        }
         return ResourcesViewState.complete(resourcesViewStates as { [viewName: string]: ResourcesViewState });
     }
 
 
-    private static makeDefaults() {
+    private static makeSampleDefaults() {
+
+        return {
+            project: {
+                layerIds: {'test': ['o25']}
+            },
+            excavation: {
+                navigationPaths: {'t1': {elements: []}},
+                layerIds: {'t1': ['o25']}
+            }
+        }
+    }
+
+
+    private static makeDefaults(): { [viewName: string]: ResourcesViewState } {
 
         return {
             excavation: ResourcesViewState.default(),

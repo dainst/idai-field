@@ -111,13 +111,6 @@ export class DocumentsManager {
     }
 
 
-    private selectAndNotify(document: IdaiFieldDocument) {
-
-        if (this.selectedDocument) this.notifyDeselectionObservers(this.selectedDocument);
-        this.selectedDocument = document;
-    }
-
-
     public async setSelected(document: IdaiFieldDocument): Promise<any> {
 
         if (!document) return this.deselect(); // TODO make sure clients call deselect
@@ -137,6 +130,13 @@ export class DocumentsManager {
         return Observable.create((observer: Observer<Document>) => {
             this.deselectionObservers.push(observer);
         })
+    }
+
+
+    private selectAndNotify(document: IdaiFieldDocument) {
+
+        if (this.selectedDocument) this.notifyDeselectionObservers(this.selectedDocument);
+        this.selectedDocument = document;
     }
 
 

@@ -83,10 +83,18 @@ export class DocumentsManager {
     }
 
 
-    private removeFromListOfNewDocumentsFromRemote(document: Document) { // TODO make generic static method
+    private removeFromList(document: Document, docs: Array<Document>) {
 
-        let index = this.newDocumentsFromRemote.indexOf(document);
-        if (index > -1) this.newDocumentsFromRemote.splice(index, 1);
+        if (!this.isNewDocumentFromRemote(document)) return;
+
+        let index = docs.indexOf(document);
+        if (index > -1) docs.splice(index, 1);
+    }
+
+
+    public async setSelectedById(resourceId: string) {
+
+        await this.setSelected(await this.datastore.get(resourceId));
     }
 
 
@@ -103,33 +111,38 @@ export class DocumentsManager {
     }
 
 
-    public async setSelectedById(resourceId: string) {
+    public addNewDocument(document: IdaiFieldDocument) {
 
-        await this.setSelected(await this.datastore.get(resourceId));
+        this.documents.unshift(document);
+        this.selectAndNotify(document);
     }
 
 
-    public async setSelected(documentToSelect: Document): Promise<any> {
-
-        if (documentToSelect == this.selectedDocument) return;
-        if (!documentToSelect) return this.deselect();
+    private selectAndNotify(document: IdaiFieldDocument) {
 
         if (this.selectedDocument) this.notifyDeselectionObservers(this.selectedDocument);
+        this.selectedDocument = document;
+    }
 
-        this.selectedDocument = documentToSelect as IdaiFieldDocument;
+
+    private isSelected(document: IdaiFieldDocument) {
+
+        return document == this.selectedDocument;
+    }
+
+
+    public async setSelected(document: IdaiFieldDocument): Promise<any> {
+
+        if (!document) return this.deselect(); // TODO make sure clients call deselect
+        if (this.isSelected(document)) return;
+
+        this.selectAndNotify(document);
 
         this.removeEmpty(this.documents);
+        this.removeFromList(document, this.newDocumentsFromRemote); // TODO use list utils method and remove this one
 
-        if (documentToSelect && documentToSelect.resource && !documentToSelect.resource.id) {
-            this.documents.unshift(documentToSelect);
-            return;
-        }
-
-        if (this.isNewDocumentFromRemote(documentToSelect)) {
-            this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
-        }
-
-        if (!ModelUtil.isInList(documentToSelect, await this.createUpdatedDocumentList())) {
+        // TODO extract method
+        if (!ModelUtil.isInList(document, await this.createUpdatedDocumentList())) { // TODO use list util
             await this.makeSureSelectedDocumentAppearsInList();
             await this.populateDocumentList();
         }

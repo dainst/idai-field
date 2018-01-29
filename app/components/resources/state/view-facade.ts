@@ -72,8 +72,9 @@ export class ViewFacade {
      *   c) undefined
      * @returns {Document}
      */
-    public setSelectedDocument = (document: Document) => this.documentsManager.setSelected(document);
+    public setSelectedDocument = (document: Document) => this.documentsManager.setSelected(document as IdaiFieldDocument);
 
+    public addNewDocument = (document: IdaiFieldDocument) => this.documentsManager.addNewDocument(document);
 
     public getCurrentViewName = () => this.resourcesState.getView();
 

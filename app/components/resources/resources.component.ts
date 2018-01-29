@@ -111,7 +111,7 @@ export class ResourcesComponent implements AfterViewChecked {
         } else {
             newDocument.resource['geometry'] = <IdaiFieldGeometry> { 'type': geometryType };
 
-            this.viewFacade.setSelectedDocument(newDocument);
+            this.viewFacade.addNewDocument(newDocument);
             this.startGeometryEditing();
             this.viewFacade.setMode('map');
         }

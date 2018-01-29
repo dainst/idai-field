@@ -5,6 +5,13 @@
 export type NestedArray<T> = Array<Array<T>>;
 
 
+export const getAtIndex = <A>(array: Array<A>, index: number): A|undefined => getAtIndexOr(array, index);
+
+
+export const getAtIndexOr = <A>(array: Array<A>, index: number, defaultValue: A|undefined = undefined): A|undefined =>
+    array.length < index ? defaultValue : array[index];
+
+
 /**
  * Generate a new list with elements which are contained in l but not in r
  */

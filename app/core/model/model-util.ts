@@ -1,4 +1,5 @@
 import {Document} from 'idai-components-2/core';
+import {getAtIndex} from '../../util/list-util';
 
 /**
  * @author: Thomas Kleinke
@@ -24,10 +25,10 @@ export class ModelUtil {
 
     public static getRelationTargetId(document: Document, relationName: string, index: number): string|undefined {
 
-        return (document.resource.relations[relationName]
-                && document.resource.relations[relationName].length > index) ?
-            document.resource.relations[relationName][index] :
-            undefined;
+        const targetIds: string[]|undefined = document.resource.relations[relationName];
+        if (!targetIds) return undefined;
+
+        return getAtIndex(targetIds, index);
     }
 
 

@@ -46,6 +46,8 @@ export class DocumentsManager {
 
     public getSelectedDocument = () => this.selectedDocument;
 
+    public removeFromDocuments = (document: Document) => this.documents = remove(this.documents, document);
+
 
     public async populateProjectDocument() {
 
@@ -222,13 +224,6 @@ export class DocumentsManager {
         if (!isRecordedInTarget.resource.id) throw 'no id in populate doc list';
 
         return isRecordedInTarget;
-    }
-
-
-    // TODO replace with call to method from list util
-    public remove(document: Document) {
-
-        this.documents.splice(this.documents.indexOf(document), 1);
     }
 
 

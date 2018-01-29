@@ -96,14 +96,12 @@ export class DocumentsManager {
 
     public deselect() {
 
-        if (!this.selectedDocument) return;
+        if (this.selectedDocument) {
 
-        const deselectedDocument: Document = this.selectedDocument;
-        this.selectedDocument = undefined;
-
-        this.documents = this.documents.filter(hasId);
-        this.resourcesState.setActiveDocumentViewTab(undefined);
-        this.notifyDeselectionObservers(deselectedDocument);
+            this.selectAndNotify(undefined);
+            this.documents = this.documents.filter(hasId);
+            this.resourcesState.setActiveDocumentViewTab(undefined);
+        }
     }
 
 
@@ -135,9 +133,11 @@ export class DocumentsManager {
     }
 
 
-    private selectAndNotify(document: IdaiFieldDocument) {
+    private selectAndNotify(document: IdaiFieldDocument|undefined) {
 
-        if (this.selectedDocument) this.notifyDeselectionObservers(this.selectedDocument);
+        if (this.selectedDocument && this.deselectionObservers) {
+            this.deselectionObservers.forEach(inform(this.selectedDocument));
+        }
         this.selectedDocument = document;
     }
 
@@ -158,14 +158,6 @@ export class DocumentsManager {
 
             this.resourcesState.setQueryString('');
             this.resourcesState.setTypeFilters(undefined as any);
-        }
-    }
-
-
-    private notifyDeselectionObservers(deselectedDocument: Document) {
-
-        if (this.deselectionObservers) {
-            this.deselectionObservers.forEach(inform(deselectedDocument));
         }
     }
 

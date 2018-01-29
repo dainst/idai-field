@@ -14,13 +14,6 @@ export class ModelUtil {
     }
 
 
-    public static isInList(document: Document, documents: Array<Document>): boolean {
-
-        return documents.map(document => document.resource.id)
-            .indexOf(document.resource.id) > -1;
-    }
-
-
     public static getRelationTargetId(document: Document, relationName: string, index: number): string|undefined {
 
         const targetIds: string[]|undefined = document.resource.relations[relationName];
@@ -45,6 +38,6 @@ export class ModelUtil {
 }
 
 
-export const hasEqualId = (l: Document) => (r: Document) => l.resource.id == r.resource.id;
+export const hasEqualId = (l: Document|undefined) => (r: Document): boolean => (l != undefined && l.resource.id == r.resource.id);
 
 export const hasId = (doc: Document) => doc.resource.id != undefined;

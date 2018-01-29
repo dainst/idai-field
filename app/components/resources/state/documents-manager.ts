@@ -61,7 +61,7 @@ export class DocumentsManager {
         this.resourcesState.setQueryString(q);
 
         await this.populateDocumentList();
-        this.deselectIfNotInList();
+        if (!this.documents.some(hasEqualId(this.selectedDocument))) this.deselect();
     }
 
 
@@ -70,7 +70,7 @@ export class DocumentsManager {
         this.resourcesState.setTypeFilters(types);
 
         await this.populateDocumentList();
-        this.deselectIfNotInList();
+        if (!this.documents.some(hasEqualId(this.selectedDocument))) this.deselect();
     }
 
 
@@ -79,7 +79,7 @@ export class DocumentsManager {
         this.navigationPathManager.moveInto(document);
 
         await this.populateDocumentList();
-        this.deselectIfNotInList();
+        if (!this.documents.some(hasEqualId(this.selectedDocument))) this.deselect();
     }
 
 
@@ -150,9 +150,8 @@ export class DocumentsManager {
 
     private async adjustQuerySettingsIfNecessary() {
 
-        const documents: Array<Document> = await this.createUpdatedDocumentList();
+        if (!(await this.createUpdatedDocumentList()).some(hasEqualId(this.selectedDocument))) {
 
-        if (!ModelUtil.isInList(this.selectedDocument as IdaiFieldDocument, documents)) {
             this.resourcesState.setQueryString('');
             this.resourcesState.setTypeFilters(undefined as any);
         }
@@ -254,18 +253,10 @@ export class DocumentsManager {
     }
 
 
-    private deselectIfNotInList() {
-
-        if (!this.selectedDocument) return;
-        if (!ModelUtil.isInList(this.selectedDocument, this.documents)) this.deselect();
-    }
-
-
     private async fetchDocuments(query: Query): Promise<any> {
 
         try {
-            const result = await this.datastore.find(query);
-            return result.documents;
+            return (await this.datastore.find(query)).documents;
         } catch (errWithParams) {
             DocumentsManager.handleFindErr(errWithParams, query);
         }

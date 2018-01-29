@@ -116,7 +116,6 @@ export class DocumentsManager {
 
     public async setSelected(document: IdaiFieldDocument): Promise<any> {
 
-        if (!document) return this.deselect(); // TODO make sure clients call deselect
         if (document == this.selectedDocument) return;
 
         this.selectAndNotify(document);

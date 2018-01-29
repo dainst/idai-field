@@ -85,15 +85,6 @@ export class DocumentsManager {
     }
 
 
-    private removeFromList(document: Document, docs: Array<Document>) {
-
-        if (!this.isNewDocumentFromRemote(document)) return;
-
-        let index = docs.indexOf(document);
-        if (index > -1) docs.splice(index, 1);
-    }
-
-
     public async setSelectedById(resourceId: string) {
 
         await this.setSelected(await this.datastore.get(resourceId));
@@ -196,7 +187,7 @@ export class DocumentsManager {
 
     public async createUpdatedDocumentList(): Promise<Array<Document>> {
 
-        const isRecordedInTarget: Document|undefined = await this.makeIsRecordedInTarget();
+        const isRecordedInTarget: Document|undefined = this.makeIsRecordedInTarget();
         if (!isRecordedInTarget) return [];
 
         const documents: Array<Document> = await this.fetchDocuments(
@@ -207,7 +198,7 @@ export class DocumentsManager {
     }
 
 
-    private async makeIsRecordedInTarget(): Promise<Document|undefined> {
+    private makeIsRecordedInTarget(): Document|undefined {
 
         let isRecordedInTarget;
         if (this.resourcesState.isInOverview()) {

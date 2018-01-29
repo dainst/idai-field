@@ -9,7 +9,7 @@ import {SettingsService} from '../../../core/settings/settings-service';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
-import {ModelUtil} from '../../../core/model/model-util';
+import {hasEqualId, ModelUtil} from '../../../core/model/model-util';
 import {ResourcesState} from './resources-state';
 import {remove} from '../../../util/list-util';
 
@@ -128,11 +128,7 @@ export class DocumentsManager {
         this.removeEmpty(this.documents); // TODO work with list util method, that takes a predicate like isEmpty which is defined for document
         remove(this.newDocumentsFromRemote, document);
 
-        // TODO extract method
-        if (!ModelUtil.isInList(document, await this.createUpdatedDocumentList())) { // TODO use list util
-            await this.makeSureSelectedDocumentAppearsInList();
-            await this.populateDocumentList();
-        }
+        return this.performUpdates(document);
     }
 
 
@@ -144,12 +140,22 @@ export class DocumentsManager {
     }
 
 
+    private async performUpdates(document: IdaiFieldDocument) {
+
+        if (!(await this.createUpdatedDocumentList()).some(hasEqualId(document))) {
+
+            await this.makeSureSelectedDocumentAppearsInList();
+            await this.populateDocumentList();
+        }
+    }
+
+
     private notifyDeselectionObservers(deselectedDocument: Document) {
 
         if (!this.deselectionObservers) return;
 
         this.deselectionObservers.forEach(
-            (observer: Observer<Document>) => observer.next(deselectedDocument)
+            (observer: Observer<Document>) => observer.next(deselectedDocument) // TODO use observer util
         );
     }
 

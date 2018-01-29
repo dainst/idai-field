@@ -43,3 +43,6 @@ export class ModelUtil {
         return document.resource.relations[relationName] && document.resource.relations[relationName].length > 0;
     }
 }
+
+
+export const hasEqualId = (l: Document) => (r: Document) => l.resource.id == r.resource.id;

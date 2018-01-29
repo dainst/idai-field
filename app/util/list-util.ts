@@ -57,8 +57,7 @@ export const union = (sets: NestedArray<any>) =>
     }, {}));
 
 
-
-export const includedIn =  <A>(l: Array<A>) => (element: A) => l.indexOf(element) != -1;
+export const includedIn =  <A>(as: Array<A>) => (a: A) => as.indexOf(a) != -1;
 
 
 export const isNot = <A>(f: (_: A) => boolean) => (a: A) => flip(f(a));

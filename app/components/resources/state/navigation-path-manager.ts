@@ -7,7 +7,7 @@ import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {notify} from '../../../util/observer-util';
 import {includedIn, takeUntil} from '../../../util/list-util';
-import {NavigationPathInternal, NavigationPathSegment, isSameSegment, toDocument} from './navigation-path-internal';
+import {NavigationPathInternal, NavigationPathSegment, isSegmentOf, toDocument} from './navigation-path-internal';
 
 
 /**
@@ -151,31 +151,30 @@ export class NavigationPathManager {
         oldNavigationPath: NavigationPathInternal,
         newRootDocument: IdaiFieldDocument|undefined): NavigationPathInternal {
 
-        return (newRootDocument)
-            ? {
-                elements: this.rebuildElements(
+        return {
+            elements: newRootDocument
+                ? this.rebuildElements(
                     oldNavigationPath.elements,
                     oldNavigationPath.rootDocument,
-                    newRootDocument),
-                rootDocument: newRootDocument,
-                q: oldNavigationPath.q,
-                types: oldNavigationPath.types
-            }
-            : {
-                elements: oldNavigationPath.elements,
-                // rootDocument <- undefined, because no document
-                q: oldNavigationPath.q,
-                types: oldNavigationPath.types
-            }
+                    newRootDocument)
+                : oldNavigationPath.elements,
+            rootDocument: newRootDocument,
+            q: oldNavigationPath.q,
+            types: oldNavigationPath.types
+        };
     }
 
 
-    private static rebuildElements(oldElements: Array<NavigationPathSegment>, oldRoot: IdaiFieldDocument|undefined,
-                                   newRoot: IdaiFieldDocument) {
+    private static rebuildElements(oldSegments: Array<NavigationPathSegment>,
+                                   oldRootDocument: IdaiFieldDocument|undefined,
+                                   newRootDocument: IdaiFieldDocument) {
 
-        if (includedIn(oldElements.map(toDocument))(newRoot)) return oldElements;
+        if (includedIn(oldSegments.map(toDocument))(newRootDocument)) return oldSegments;
 
-        return (oldRoot ? takeUntil(isSameSegment(oldRoot))(oldElements) : []).concat([{document: newRoot}]);
+        return (oldRootDocument
+                    ? takeUntil(isSegmentOf(oldRootDocument))(oldSegments)
+                    : []
+                ).concat([{document: newRootDocument}]);
     }
 }
 

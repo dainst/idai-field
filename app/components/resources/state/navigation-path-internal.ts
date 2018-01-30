@@ -21,7 +21,7 @@ export interface NavigationPathSegment {
 }
 
 
-export const isSameSegment
+export const isSegmentOf
     = (document: IdaiFieldDocument) => (segment: NavigationPathSegment) => document == segment.document;
 
 

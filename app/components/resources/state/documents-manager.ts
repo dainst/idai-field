@@ -164,8 +164,8 @@ export class DocumentsManager {
 
     private async handleChange(changedDocument: Document) {
 
-        if (!changedDocument || !this.documents) return;
-        if (DocumentsManager.isExistingDoc(changedDocument, this.documents)) return;
+        if (!this.documents) return;
+        if (this.documents.find(hasEqualId(changedDocument))) return;
 
         if (changedDocument.resource.type == this.resourcesState.getViewType()) {
             return this.mainTypeDocumentsManager.populate();
@@ -265,17 +265,5 @@ export class DocumentsManager {
         return rootDoc
             ? { 'liesWithin:contain': rootDoc.resource.id as string }
             : { 'liesWithin:exist': 'UNKNOWN' }
-    }
-
-
-    private static isExistingDoc(changedDocument: Document, documents: Array<Document>): boolean {
-
-        for (let doc of documents) { // TODO rewrite with some
-            if (!doc.resource || !changedDocument.resource) continue;
-            if (!doc.resource.id || !changedDocument.resource.id) continue;
-            if (doc.resource.id == changedDocument.resource.id) return true;
-        }
-
-        return false;
     }
 }

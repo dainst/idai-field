@@ -162,6 +162,7 @@ export class ResourcesState {
     }
 
 
+    // TODO move to navigation path manager
     public getNavigationPath(): NavigationPath {
 
         if (this.isInOverview()) return NavigationPath.empty();

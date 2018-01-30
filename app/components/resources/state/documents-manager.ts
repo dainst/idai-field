@@ -236,27 +236,15 @@ export class DocumentsManager {
 
     private makeDocsQuery(mainTypeDocumentResourceId: string): Query {
 
-        const query: Query = {
+        return {
             q: this.resourcesState.getQueryString(),
-            constraints: this.makeLiesWithinConstraint(mainTypeDocumentResourceId)
+            constraints: this.makeConstraints(mainTypeDocumentResourceId),
+            types: this.resourcesState.getTypeFilters()
         };
-
-        if (this.resourcesState.getTypeFilters()) {
-            query.types = this.resourcesState.getTypeFilters();
-        }
-
-        return query;
     }
 
 
-    private static handleFindErr(errWithParams: Array<string>, query: Query) {
-
-        console.error('Error with find. Query:', query);
-        if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
-    }
-
-
-    private makeLiesWithinConstraint(mainTypeDocumentResourceId: string): { [name: string]: string}  {
+    private makeConstraints(mainTypeDocumentResourceId: string): { [name: string]: string}  {
 
         const rootDoc = this.resourcesState.getNavigationPath().rootDocument;
 
@@ -267,5 +255,12 @@ export class DocumentsManager {
 
         constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;
         return constraints;
+    }
+
+
+    private static handleFindErr(errWithParams: Array<string>, query: Query) {
+
+        console.error('Error with find. Query:', query);
+        if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
     }
 }

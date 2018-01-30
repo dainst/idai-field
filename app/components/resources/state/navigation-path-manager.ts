@@ -38,39 +38,6 @@ export class NavigationPathManager {
     }
 
 
-    public setNavigationPath(newNavigationPath: NavigationPath) {
-
-        const currentNavigationPath: NavigationPathInternal
-            = this.resourcesState.getNavigationPathInternal();
-        const currentNavigationPathResourceIds: Array<string> = currentNavigationPath.elements
-            .map(element => element.document.resource.id as string);
-
-        const result: NavigationPathInternal = {
-            elements: [],
-            rootDocument: newNavigationPath.rootDocument,
-            q: currentNavigationPath.q,
-            types: currentNavigationPath.types
-        };
-
-        if (!newNavigationPath.rootDocument ||
-            currentNavigationPathResourceIds.indexOf(newNavigationPath.rootDocument.resource.id as string) > -1) {
-            result.elements = currentNavigationPath.elements;
-        } else {
-            for (let document of newNavigationPath.elements) {
-                const index: number = currentNavigationPathResourceIds.indexOf(document.resource.id as string);
-                result.elements.push(index > -1 ?
-                    currentNavigationPath.elements[index] :
-                    {document: document}
-                );
-            }
-        }
-
-        this.resourcesState.setNavigationPathInternal(result);
-
-        notify(this.navigationPathObservers, this.resourcesState.getNavigationPath());
-    }
-
-
     public setMainTypeDocument(selectedMainTypeDocumentResource: IdaiFieldDocument | undefined) {
 
         if (!selectedMainTypeDocumentResource) return;
@@ -130,6 +97,39 @@ export class NavigationPathManager {
         } else {
             this.setNavigationPath({ elements: elements, rootDocument: elements[elements.length - 1]});
         }
+    }
+
+
+    private setNavigationPath(newNavigationPath: NavigationPath) {
+
+        const currentNavigationPath: NavigationPathInternal
+            = this.resourcesState.getNavigationPathInternal();
+        const currentNavigationPathResourceIds: Array<string> = currentNavigationPath.elements
+            .map(element => element.document.resource.id as string);
+
+        const result: NavigationPathInternal = {
+            elements: [],
+            rootDocument: newNavigationPath.rootDocument,
+            q: currentNavigationPath.q,
+            types: currentNavigationPath.types
+        };
+
+        if (!newNavigationPath.rootDocument ||
+            currentNavigationPathResourceIds.indexOf(newNavigationPath.rootDocument.resource.id as string) > -1) {
+            result.elements = currentNavigationPath.elements;
+        } else {
+            for (let document of newNavigationPath.elements) {
+                const index: number = currentNavigationPathResourceIds.indexOf(document.resource.id as string);
+                result.elements.push(index > -1 ?
+                    currentNavigationPath.elements[index] :
+                    {document: document}
+                );
+            }
+        }
+
+        this.resourcesState.setNavigationPathInternal(result);
+
+        notify(this.navigationPathObservers, this.resourcesState.getNavigationPath());
     }
 
 

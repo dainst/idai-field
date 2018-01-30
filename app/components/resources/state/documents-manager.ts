@@ -66,7 +66,7 @@ export class DocumentsManager {
         this.resourcesState.setQueryString(q);
 
         await this.populateDocumentList();
-        if (!this.documents.some(hasEqualId(this.selectedDocument))) this.deselect();
+        if (!this.documents.find(hasEqualId(this.selectedDocument))) this.deselect();
     }
 
 
@@ -75,7 +75,7 @@ export class DocumentsManager {
         this.resourcesState.setTypeFilters(types);
 
         await this.populateDocumentList();
-        if (!this.documents.some(hasEqualId(this.selectedDocument))) this.deselect();
+        if (!this.documents.find(hasEqualId(this.selectedDocument))) this.deselect();
     }
 
 
@@ -84,7 +84,7 @@ export class DocumentsManager {
         this.navigationPathManager.moveInto(document);
 
         await this.populateDocumentList();
-        if (!this.documents.some(hasEqualId(this.selectedDocument))) this.deselect();
+        if (!this.documents.find(hasEqualId(this.selectedDocument))) this.deselect();
     }
 
 
@@ -144,7 +144,7 @@ export class DocumentsManager {
 
     private async performUpdates(document: IdaiFieldDocument) {
 
-        if (!(await this.createUpdatedDocumentList()).some(hasEqualId(document))) {
+        if (!(await this.createUpdatedDocumentList()).find(hasEqualId(document))) {
 
             await this.makeSureSelectedDocumentAppearsInList();
             await this.populateDocumentList();
@@ -154,7 +154,7 @@ export class DocumentsManager {
 
     private async adjustQuerySettingsIfNecessary() {
 
-        if (!(await this.createUpdatedDocumentList()).some(hasEqualId(this.selectedDocument))) {
+        if (!(await this.createUpdatedDocumentList()).find(hasEqualId(this.selectedDocument))) {
 
             this.resourcesState.setQueryString('');
             this.resourcesState.setTypeFilters(undefined as any);

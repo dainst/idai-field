@@ -174,15 +174,22 @@ export class DocumentsManager {
         const oldDocuments = this.documents;
         await this.populateDocumentList();
 
-        this.documents
+        this.newDocumentsFromRemote = this.getNewRemoteDocuments(this.documents, oldDocuments);
+    }
+
+
+    private getNewRemoteDocuments(
+        currentDocuments: Array<Document>,
+        oldDocuments: Array<Document>) {
+
+        return currentDocuments
             .filter(isNot(includedIn(oldDocuments)))
             .filter(async document =>
                 ChangeHistoryUtil.isRemoteChange(
                     document,
                     await this.datastore.getConflictedRevisions(document.resource.id as string),
                     this.settingsService.getUsername())
-                )
-            .forEach(addTo(this.newDocumentsFromRemote));
+            );
     }
 
 

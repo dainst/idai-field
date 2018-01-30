@@ -12,7 +12,7 @@ import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {ResourcesState} from './resources-state';
 import {includedIn, remove, isNot, addTo} from '../../../util/list-util';
-import {notify} from '../../../util/observer-util';
+import {ObserverUtil} from "../../../util/observer-util";
 
 
 /**
@@ -127,15 +127,13 @@ export class DocumentsManager {
 
     public deselectionNotifications(): Observable<Document> {
 
-        return Observable.create((observer: Observer<Document>) => {
-            this.deselectionObservers.push(observer);
-        })
+        return ObserverUtil.register(this.deselectionObservers);
     }
 
 
     private selectAndNotify(document: IdaiFieldDocument|undefined) {
 
-        if (this.selectedDocument) notify(this.deselectionObservers, this.selectedDocument);
+        if (this.selectedDocument) ObserverUtil.notify(this.deselectionObservers, this.selectedDocument);
         this.selectedDocument = document;
     }
 

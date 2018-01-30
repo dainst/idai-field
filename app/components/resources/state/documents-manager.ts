@@ -236,12 +236,9 @@ export class DocumentsManager {
 
     private makeDocsQuery(mainTypeDocumentResourceId: string): Query {
 
-        const constraints = this.makeLiesWithinConstraint();
-        constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;
-
         const query: Query = {
             q: this.resourcesState.getQueryString(),
-            constraints: constraints
+            constraints: this.makeLiesWithinConstraint(mainTypeDocumentResourceId)
         };
 
         if (this.resourcesState.getTypeFilters()) {
@@ -259,11 +256,16 @@ export class DocumentsManager {
     }
 
 
-    private makeLiesWithinConstraint(): { [name: string]: string}  {
+    private makeLiesWithinConstraint(mainTypeDocumentResourceId: string): { [name: string]: string}  {
 
         const rootDoc = this.resourcesState.getNavigationPath().rootDocument;
-        return rootDoc
+
+        const constraints: { [name: string]: string} =
+            rootDoc
             ? { 'liesWithin:contain': rootDoc.resource.id as string }
-            : { 'liesWithin:exist': 'UNKNOWN' }
+            : { 'liesWithin:exist': 'UNKNOWN' };
+
+        constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;
+        return constraints;
     }
 }

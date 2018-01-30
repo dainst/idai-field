@@ -1,0 +1,30 @@
+.popover-content .filtermenu .list-group {
+  max-height: calc(100vh - 350px) !important;
+  width: 270px;
+  overflow: auto;
+}
+
+#searchfilter {
+  z-index: 3;
+  padding: 4px 1em;
+  border: none;
+
+  .mdi-filter {
+    line-height: 30px;
+  }
+}
+
+#search-bar #object-search {
+  width: 100%;
+  padding: 9px;
+}
+
+#search-bar #filter-button {
+  position: absolute;
+  right: 16px;
+}
+
+#search-bar #filter-button img {
+  width: 20px;
+  height: 20px;
+}

@@ -11,7 +11,7 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {ResourcesState} from './resources-state';
-import {includedIn, remove, isNot} from '../../../util/list-util';
+import {includedIn, remove, isNot, addTo} from '../../../util/list-util';
 import {inform} from '../../../util/observer-util';
 
 
@@ -182,7 +182,7 @@ export class DocumentsManager {
                     await this.datastore.getConflictedRevisions(document.resource.id as string),
                     this.settingsService.getUsername())
                 )
-            .forEach(document => this.newDocumentsFromRemote.push(document)); // TODO check if we can hide passing document explicitely
+            .forEach(addTo(this.newDocumentsFromRemote));
     }
 
 

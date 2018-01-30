@@ -26,7 +26,7 @@ export const remove = <A>(as: Array<A>, a: A): Array<A> =>
     as.filter(differentFrom(a));
 
 
-export const add = <A>(as: Array<A>, a: A): Array<A> =>
+export const addTo = <A>(as: Array<A>) => (a: A): Array<A> =>
     (as.indexOf(a) > -1) ? as : as.concat([a]);
 
 

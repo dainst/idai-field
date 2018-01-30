@@ -178,21 +178,6 @@ export class DocumentsManager {
     }
 
 
-    private getNewRemoteDocuments(
-        currentDocuments: Array<Document>,
-        oldDocuments: Array<Document>) {
-
-        return currentDocuments
-            .filter(isNot(includedIn(oldDocuments)))
-            .filter(async document =>
-                ChangeHistoryUtil.isRemoteChange(
-                    document,
-                    await this.datastore.getConflictedRevisions(document.resource.id as string),
-                    this.settingsService.getUsername())
-            );
-    }
-
-
     public async populateDocumentList() {
 
         this.newDocumentsFromRemote = [];
@@ -208,6 +193,21 @@ export class DocumentsManager {
         return (await this.fetchDocuments(
                     this.makeDocsQuery(isRecordedInTarget.resource.id as string))
             ).filter(hasId);
+    }
+
+
+    private getNewRemoteDocuments(
+        currentDocuments: Array<Document>,
+        oldDocuments: Array<Document>) {
+
+        return currentDocuments
+            .filter(isNot(includedIn(oldDocuments)))
+            .filter(async document =>
+                ChangeHistoryUtil.isRemoteChange(
+                    document,
+                    await this.datastore.getConflictedRevisions(document.resource.id as string),
+                    this.settingsService.getUsername())
+            );
     }
 
 

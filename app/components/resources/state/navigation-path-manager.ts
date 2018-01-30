@@ -98,23 +98,19 @@ export class NavigationPathManager {
 
     private isCorrectNavigationPathFor(document: IdaiFieldDocument): boolean {
 
-        const navigationPath: NavigationPath = this.resourcesState.getNavigationPath();
+        const navigationPath = this.resourcesState.getNavigationPath();
 
         if (navigationPath.rootDocument && ModelUtil.hasRelationTarget(document, 'liesWithin',
                 navigationPath.rootDocument.resource.id as string)) {
             return true;
         }
 
-        const mainTypeDocument: IdaiFieldDocument | undefined = this.resourcesState.getMainTypeDocument();
+        const mainTypeDocument = this.resourcesState.getMainTypeDocument();
 
-        if (!navigationPath.rootDocument && mainTypeDocument
+        return (!navigationPath.rootDocument && (mainTypeDocument != undefined)
                 && ModelUtil.hasRelationTarget(document, 'isRecordedIn',
                     mainTypeDocument.resource.id as string)
-                && !ModelUtil.hasRelations(document, 'liesWithin')) {
-            return true;
-        }
-
-        return false;
+                && !ModelUtil.hasRelations(document, 'liesWithin'));
     }
 
 

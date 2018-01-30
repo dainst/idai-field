@@ -117,7 +117,7 @@ export class ViewFacade {
 
     public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
 
-    public getNavigationPath = () => this.resourcesState.getNavigationPath();
+    public getNavigationPath = () => this.navigationPathManager.getNavigationPath();
 
     public populateDocumentList = () => this.documentsManager.populateDocumentList();
 

@@ -251,7 +251,7 @@ export class DocumentsManager {
 
     private makeConstraints(mainTypeDocumentResourceId: string): { [name: string]: string}  {
 
-        const rootDoc = this.resourcesState.getNavigationPath().rootDocument;
+        const rootDoc = this.navigationPathManager.getNavigationPath().rootDocument;
 
         const constraints: { [name: string]: string} =
             rootDoc

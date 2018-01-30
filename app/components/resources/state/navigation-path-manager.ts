@@ -34,7 +34,7 @@ export class NavigationPathManager {
 
         this.resourcesState.setNavigationPathInternal(result);
 
-        notify(this.navigationPathObservers, this.resourcesState.getNavigationPath());
+        notify(this.navigationPathObservers, this.getNavigationPath());
     }
 
 
@@ -43,7 +43,7 @@ export class NavigationPathManager {
         if (!selectedMainTypeDocumentResource) return;
         this.resourcesState.setMainTypeDocument(selectedMainTypeDocumentResource);
 
-        notify(this.navigationPathObservers, this.resourcesState.getNavigationPath());
+        notify(this.navigationPathObservers, this.getNavigationPath());
     }
 
 
@@ -63,9 +63,23 @@ export class NavigationPathManager {
     }
 
 
+    public getNavigationPath(): NavigationPath {
+
+        if (this.resourcesState.isInOverview()) return NavigationPath.empty();
+
+        const mainTypeDocument = this.resourcesState.getMainTypeDocument();
+        if (!mainTypeDocument) return NavigationPath.empty();
+
+        return {
+            elements: this.resourcesState.getNavigationPathInternal().elements.map(toDocument),
+            rootDocument: this.resourcesState.getNavigationPathInternal().rootDocument
+        }
+    }
+
+
     private isCorrectNavigationPathFor(document: IdaiFieldDocument): boolean {
 
-        const navigationPath = this.resourcesState.getNavigationPath();
+        const navigationPath = this.getNavigationPath();
 
         if (navigationPath.rootDocument && ModelUtil.hasRelationTarget(document, 'liesWithin',
                 navigationPath.rootDocument.resource.id as string)) {
@@ -129,7 +143,7 @@ export class NavigationPathManager {
 
         this.resourcesState.setNavigationPathInternal(result);
 
-        notify(this.navigationPathObservers, this.resourcesState.getNavigationPath());
+        notify(this.navigationPathObservers, this.getNavigationPath());
     }
 
 

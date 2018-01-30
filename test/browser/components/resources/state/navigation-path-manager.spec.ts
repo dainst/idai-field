@@ -54,9 +54,9 @@ export function main() {
 
             navigationPathManager.moveInto(featureDocument1);
 
-            expect(resourcesState.getNavigationPath().rootDocument).toEqual(featureDocument1);
-            expect(resourcesState.getNavigationPath().elements.length).toEqual(1);
-            expect(resourcesState.getNavigationPath().elements[0]).toEqual(featureDocument1);
+            expect(navigationPathManager.getNavigationPath().rootDocument).toEqual(featureDocument1);
+            expect(navigationPathManager.getNavigationPath().elements.length).toEqual(1);
+            expect(navigationPathManager.getNavigationPath().elements[0]).toEqual(featureDocument1);
         });
 
 
@@ -72,9 +72,9 @@ export function main() {
             navigationPathManager.moveInto(featureDocument1);
             navigationPathManager.moveInto(undefined);
 
-            expect(resourcesState.getNavigationPath().rootDocument).toEqual(undefined);
-            expect(resourcesState.getNavigationPath().elements.length).toEqual(1);
-            expect(resourcesState.getNavigationPath().elements[0]).toEqual(featureDocument1);
+            expect(navigationPathManager.getNavigationPath().rootDocument).toEqual(undefined);
+            expect(navigationPathManager.getNavigationPath().elements.length).toEqual(1);
+            expect(navigationPathManager.getNavigationPath().elements[0]).toEqual(featureDocument1);
         });
     });
 }

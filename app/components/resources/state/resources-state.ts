@@ -162,21 +162,6 @@ export class ResourcesState {
     }
 
 
-    // TODO move to navigation path manager
-    public getNavigationPath(): NavigationPath {
-
-        if (this.isInOverview()) return NavigationPath.empty();
-
-        const mainTypeDocument = this.getMainTypeDocument();
-        if (!mainTypeDocument) return NavigationPath.empty();
-
-        return {
-            elements: this.getNavigationPathInternal().elements.map(toDocument),
-            rootDocument: this.getNavigationPathInternal().rootDocument
-        }
-    }
-
-
     public getNavigationPathInternal(): NavigationPathInternal {
 
         const mainTypeDocument = this.getMainTypeDocument();

@@ -99,5 +99,16 @@ export function main() {
 
             expect(remove([1,1], 1)).toEqual([])
         );
+
+
+        fit('exp', () => {
+
+            let currentDocs = [1,2,3];
+
+            const oldDocs = currentDocs;
+            currentDocs = [4,4,7];
+
+            expect(oldDocs).toEqual([1,2,3])
+        })
     });
 }

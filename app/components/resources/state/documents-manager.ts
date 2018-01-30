@@ -50,6 +50,8 @@ export class DocumentsManager {
 
     public isNewDocumentFromRemote = (document: Document) => this.newDocumentsFromRemote.indexOf(document) > -1;
 
+    public deselectionNotifications = (): Observable<Document> => ObserverUtil.register(this.deselectionObservers);
+
 
     public async populateProjectDocument() {
 
@@ -122,12 +124,6 @@ export class DocumentsManager {
         remove(this.newDocumentsFromRemote, document);
 
         return this.performUpdates(document);
-    }
-
-
-    public deselectionNotifications(): Observable<Document> {
-
-        return ObserverUtil.register(this.deselectionObservers);
     }
 
 

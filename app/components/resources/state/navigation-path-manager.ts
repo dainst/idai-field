@@ -24,6 +24,9 @@ export class NavigationPathManager {
     }
 
 
+    public navigationPathNotifications = (): Observable<NavigationPath> => ObserverUtil.register(this.navigationPathObservers);
+
+
     /**
      * @param document set undefined to make rootElement of navigation path undefined
      */
@@ -52,12 +55,6 @@ export class NavigationPathManager {
         if (!this.isCorrectNavigationPathFor(document)) {
             await this.createNavigationPathForDocument(document);
         }
-    }
-
-
-    public navigationPathNotifications(): Observable<NavigationPath> {
-
-        return ObserverUtil.register(this.navigationPathObservers);
     }
 
 

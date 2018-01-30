@@ -22,6 +22,7 @@ export const subtract = <A>(l: Array<A>, r: Array<A>): Array<A> =>
 
 
 // TODO remove is a special case of subtract, try to, write either one in terms of the other
+// TODO change signature to match the one of addTo
 export const remove = <A>(as: Array<A>, a: A): Array<A> =>
     as.filter(differentFrom(a));
 

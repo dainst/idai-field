@@ -5,7 +5,7 @@ import {ResourcesState} from './resources-state';
 import {NavigationPath} from './navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
-import {inform} from '../../../util/observer-util';
+import {notify} from '../../../util/observer-util';
 import {includedIn, takeUntil} from '../../../util/list-util';
 import {NavigationPathInternal, NavigationPathSegment, isSameSegment, toDocument} from './navigation-path-internal';
 
@@ -34,7 +34,7 @@ export class NavigationPathManager {
 
         this.resourcesState.setNavigationPathInternal(result);
 
-        this.notifyNavigationPathObservers();
+        notify(this.navigationPathObservers, this.resourcesState.getNavigationPath());
     }
 
 
@@ -67,7 +67,7 @@ export class NavigationPathManager {
 
         this.resourcesState.setNavigationPathInternal(result);
 
-        this.notifyNavigationPathObservers();
+        notify(this.navigationPathObservers, this.resourcesState.getNavigationPath());
     }
 
 
@@ -76,7 +76,7 @@ export class NavigationPathManager {
         if (!selectedMainTypeDocumentResource) return;
         this.resourcesState.setMainTypeDocument(selectedMainTypeDocumentResource);
 
-        this.notifyNavigationPathObservers();
+        notify(this.navigationPathObservers, this.resourcesState.getNavigationPath());
     }
 
 
@@ -93,14 +93,6 @@ export class NavigationPathManager {
         return Observable.create((observer: Observer<NavigationPath>) => {
             this.navigationPathObservers.push(observer);
         });
-    }
-
-
-    public notifyNavigationPathObservers() {
-
-        if (!this.navigationPathObservers) return;
-
-        this.navigationPathObservers.forEach(inform(this.resourcesState.getNavigationPath()));
     }
 
 

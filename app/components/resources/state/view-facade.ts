@@ -257,8 +257,7 @@ export class ViewFacade {
             mainTypeResource = this.getProjectDocument() as any;
         }
 
-        if (mainTypeResource) this.navigationPathManager.setMainTypeDocument(mainTypeResource);
-        this.navigationPathManager.notifyNavigationPathObservers();
+        this.navigationPathManager.setMainTypeDocument(mainTypeResource);
     }
 
 

@@ -1,25 +1,27 @@
 # Features
 
-## Metadata edit
+Here is a short overview of iDAI.fields's key features
+
+## Metadata edititor
 
 ![idai-field](README-FEATURES-1.png) 
 
 Available types and their fields can be defined 
 via a JSON based configuration.
 
-## Geo edit
+## Shape editor
 
 ![idai-field](README-FEATURES-2.png)
  
 Geo information can be imported or created directly in app.
 
-## Batch edit
+## Table view
 
 ![idai-field](README-FEATURES-3.png)
 
 Using the list view, one can batch edit multiple items quickly
 
-## Hiararchical organisation
+## Nesting
 
 ![idai-field](README-FEATURES-4.png)
 

@@ -9,6 +9,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 })
 /**
  * @author Jan G. Wieners
+ * @author Daniel de Oliveira
  */
 export class DescriptionViewComponent {
 

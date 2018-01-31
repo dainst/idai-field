@@ -1,8 +1,18 @@
-<document-view [document]="viewFacade.getSelectedDocument()" (onSolveConflicts)="resourcesComponent.solveConflicts($event)"
-               (onDeselect)="viewFacade.deselect()">
+<document-view [document]="viewFacade.getSelectedDocument()" (onSolveConflicts)="resourcesComponent.solveConflicts($event)">
+
+    <div id="document-view-button-close">
+        <button  class="close-button btn btn-link btn-xs"
+                id="document-view-button-back-to-map"
+                (click)="viewFacade.deselect()">
+            <span class="mdi mdi-close"></span>
+        </button>
+    </div>
+
 
     <ngb-tabset #tabs [activeId]="'document-view-' + viewFacade.getActiveDocumentViewTab() + '-tab'"
                 (tabChange)="onTabChange($event)">
+
+
         <ngb-tab id="document-view-fields-tab">
             <ng-template ngbTabTitle>
                 <span class="mdi mdi-format-list-bulleted"></span>

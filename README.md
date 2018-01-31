@@ -2,6 +2,19 @@
 
 ![idai-field](readme-front-1.png) 
    
+   
+The German Archaeological Institutes’s ([DAI](https://www.dainst.org)) 
+new take on a field research 
+documentation system. Combining features of GIS, photo management, and 
+database management systems in a unique and integrating manner, 
+it aims at facilitating archaeological workflows by reducing the overhead 
+of using multiple systems. Developed in-house by the DAI’s Information 
+technology department, it targets primarily the needs of the institutes 
+excavations, older ones as well as those to come. Yet, due to the nature 
+of its adjustable data model and the fact it is open source software, any 
+interested third party is free to reuse and adjust it to their needs.
+   
+   
 ## Quickstart
 
 Development of iDAI.field works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) > 7.0.0 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  

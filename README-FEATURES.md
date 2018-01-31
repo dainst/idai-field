@@ -19,7 +19,7 @@ Geo information can be imported or created directly in app.
 
 ![idai-field](README-FEATURES-3.png)
 
-Using the list view, one can batch edit multiple items quickly
+Using the list view, one can batch edit multiple items quickly.
 
 ## Nesting
 

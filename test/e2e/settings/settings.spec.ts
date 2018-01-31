@@ -49,6 +49,7 @@ describe('settings --', function() {
             });
     });
 
+
     it('show warnings if an invalid imagestore path is set', () => {
 
         SettingsPage.get();
@@ -67,7 +68,7 @@ describe('settings --', function() {
         ImageOverviewPage.doubleClickCell(0);
         NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
         NavbarPage.clickCloseMessage();
-
+        //
         DocumentViewPage.performEditDocument();
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('mapLayerTest2.png');

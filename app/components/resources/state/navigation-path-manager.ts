@@ -6,7 +6,7 @@ import {NavigationPath} from './navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
-import {includedIn, takeUntil} from '../../../util/list-util';
+import {takeUntil} from '../../../util/list-util';
 import {NavigationPathInternal, NavigationPathSegment, isSegmentOf, toDocument} from './navigation-path-internal';
 
 
@@ -84,7 +84,7 @@ export class NavigationPathManager {
 
         const mainTypeDocument = this.resourcesState.getMainTypeDocument();
 
-        return (!navigationPath.rootDocument && (mainTypeDocument != undefined)
+        return (!navigationPath.rootDocument && mainTypeDocument != undefined
                 && ModelUtil.hasRelationTarget(document, 'isRecordedIn',
                     mainTypeDocument.resource.id as string)
                 && !ModelUtil.hasRelations(document, 'liesWithin'));

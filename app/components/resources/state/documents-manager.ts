@@ -9,10 +9,10 @@ import {SettingsService} from '../../../core/settings/settings-service';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ChangesStream} from '../../../core/datastore/core/changes-stream';
-import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {ResourcesState} from './resources-state';
-import {includedIn, remove, isNot, addTo} from '../../../util/list-util';
-import {ObserverUtil} from "../../../util/observer-util";
+import {ObserverUtil} from '../../../util/observer-util';
+import {hasEqualId, hasId} from '../../../core/model/model-util';
+import {includedIn, remove, isNot} from '../../../util/list-util';
 
 
 /**
@@ -136,11 +136,10 @@ export class DocumentsManager {
 
     private async performUpdates(document: IdaiFieldDocument) {
 
-        if (!(await this.createUpdatedDocumentList()).find(hasEqualId(document))) {
+        if ((await this.createUpdatedDocumentList()).find(hasEqualId(document))) return;
 
-            await this.makeSureSelectedDocumentAppearsInList();
-            await this.populateDocumentList();
-        }
+        await this.makeSureSelectedDocumentAppearsInList();
+        await this.populateDocumentList();
     }
 
 

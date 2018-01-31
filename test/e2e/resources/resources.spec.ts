@@ -183,7 +183,7 @@ describe('resources --', () => {
         DoceditPage.clickTypeSwitcherOption('feature-architecture');
         browser.wait(EC.stalenessOf(element(by.id('message-0'))), delays.ECWaitTime);
         DoceditPage.clickSaveDocument();
-        DocumentViewPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('A'));
+        DocumentViewPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Architektur'));
     });
 
 
@@ -204,7 +204,7 @@ describe('resources --', () => {
             'gehen: Mauertyp');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
-        DocumentViewPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('S'));
+        DocumentViewPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Stratigrafische Einheit'));
         browser.wait(EC.stalenessOf(DocumentViewPage.getFieldElement(0)));
     });
 
@@ -227,7 +227,7 @@ describe('resources --', () => {
             + 'verloren gehen: Trägt');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
-        DocumentViewPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('E'));
+        DocumentViewPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
         ResourcesPage.clickSelectResource('2');
         DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));

@@ -1,96 +1,107 @@
-<document-view [document]="viewFacade.getSelectedDocument()" (onSolveConflicts)="resourcesComponent.solveConflicts($event)">
+<div id="document-view">
+    <div *ngIf="viewFacade.getSelectedDocument()">
+        <div class="card-block">
 
-    <div id="document-view-button-close">
-        <button  class="close-button btn btn-link btn-xs"
-                id="document-view-button-back-to-map"
-                (click)="viewFacade.deselect()">
-            <span class="mdi mdi-close"></span>
-        </button>
-    </div>
+            <button *ngIf="viewFacade.getSelectedDocument()._conflicts" class="btn btn-link btn-xs"
+                    id="document-view-button-solve-conflicts"
+                    (click)="resourcesComponent.solveConflicts($event)">
+                <span class="mdi mdi-alert-outline"></span>
+            </button>
 
-
-    <ngb-tabset #tabs [activeId]="'document-view-' + viewFacade.getActiveDocumentViewTab() + '-tab'"
-                (tabChange)="onTabChange($event)">
-
-
-        <ngb-tab id="document-view-fields-tab">
-            <ng-template ngbTabTitle>
-                <span class="mdi mdi-format-list-bulleted"></span>
-            </ng-template>
-            <ng-template ngbTabContent>
-
-                <button class="btn btn-link"
-                        id="document-view-button-edit-document"
-                        (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'fields')">
-                    <span class="mdi mdi-pencil"></span>
+            <div id="document-view-button-close">
+                <button  class="close-button btn btn-link btn-xs"
+                        id="document-view-button-back-to-map"
+                        (click)="viewFacade.deselect()">
+                    <span class="mdi mdi-close"></span>
                 </button>
+            </div>
 
-                <description-view [document]="viewFacade.getSelectedDocument()"></description-view>
-                <fields-view [resource]="viewFacade.getSelectedDocument().resource"></fields-view>
-            </ng-template>
-        </ngb-tab>
 
-        <ngb-tab id="document-view-geometry-tab">
-            <ng-template ngbTabTitle>
-                <span class="mdi mdi-map" [class.empty-tab]="!viewFacade.getSelectedDocument().resource.geometry"></span>
-            </ng-template>
-            <ng-template ngbTabContent>
+            <ngb-tabset #tabs [activeId]="'document-view-' + viewFacade.getActiveDocumentViewTab() + '-tab'"
+                        (tabChange)="onTabChange($event)">
 
-                <geometry-view [document]="viewFacade.getSelectedDocument()"
-                               (onEditGeometry)="resourcesComponent.isEditingGeometry = true;"
-                               (onCreateGeometry)="resourcesComponent.createGeometry($event)">
-                </geometry-view>
-            </ng-template>
-        </ngb-tab>
 
-        <ngb-tab id="document-view-relations-tab">
-            <ng-template ngbTabTitle>
-                <span class="mdi mdi-sitemap" [class.empty-tab]="!hasVisibleRelations()"></span>
-            </ng-template>
-            <ng-template ngbTabContent>
+                <ngb-tab id="document-view-fields-tab">
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-format-list-bulleted"></span>
+                    </ng-template>
+                    <ng-template ngbTabContent>
 
-                <button class="btn btn-link"
-                        id="document-view-button-edit-document"
-                        (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'relations')">
-                    <span class="mdi mdi-pencil"></span>
-                </button>
-
-                <div *ngIf="!hasVisibleRelations()" class="empty-tab-info">Keine Relationen vorhanden.</div>
-                <relations-view *ngIf="hasVisibleRelations()" [resource]="viewFacade.getSelectedDocument().resource"
-                                (onRelationTargetClicked)="jumpToRelationTarget($event)"
-                                [hideRelations]="relationsToHide">
-                </relations-view>
-            </ng-template>
-        </ngb-tab>s
-
-        <ngb-tab id="document-view-images-tab">
-            <ng-template ngbTabTitle>
-                        <span class="mdi mdi-image"
-                              [class.empty-tab]="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"></span>
-            </ng-template>
-            <ng-template ngbTabContent>
-                <div (drop)="uploadImages($event, viewFacade.getSelectedDocument())">
-                    <small>
-                        <button class="btn btn-link float-right align-middle"
+                        <button class="btn btn-link"
                                 id="document-view-button-edit-document"
-                                (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'images')">
+                                (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'fields')">
                             <span class="mdi mdi-pencil"></span>
                         </button>
-                    </small>
 
-                    <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn'] || viewFacade.getSelectedDocument().resource.relations['isDepictedIn'].length == 0" class="empty-tab-info">
-                        Keine Bilder vorhanden.
-                        <br><br>
-                        Ziehen Sie Bilder per Drag'n'Drop in diesen Reiter, um sie hinzuzufügen, oder klicken
-                        Sie auf den Stift, um bereits vorhandene Bilder zu verknüpfen.
-                        <br><br><br><br><br><br><br><br><br>
-                    </div>
-                    <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
-                                    [imageIds]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
-                                    (onRelationTargetClicked)="jumpToRelationTarget($event)">
-                    </thumbnail-view>
-                </div>
-            </ng-template>
-        </ngb-tab>
-    </ngb-tabset>
-</document-view>
+                        <description-view [document]="viewFacade.getSelectedDocument()"></description-view>
+                        <fields-view [resource]="viewFacade.getSelectedDocument().resource"></fields-view>
+                    </ng-template>
+                </ngb-tab>
+
+                <ngb-tab id="document-view-geometry-tab">
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-map" [class.empty-tab]="!viewFacade.getSelectedDocument().resource.geometry"></span>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+
+                        <geometry-view [document]="viewFacade.getSelectedDocument()"
+                                       (onEditGeometry)="resourcesComponent.isEditingGeometry = true;"
+                                       (onCreateGeometry)="resourcesComponent.createGeometry($event)">
+                        </geometry-view>
+                    </ng-template>
+                </ngb-tab>
+
+                <ngb-tab id="document-view-relations-tab">
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-sitemap" [class.empty-tab]="!hasVisibleRelations()"></span>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+
+                        <button class="btn btn-link"
+                                id="document-view-button-edit-document"
+                                (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'relations')">
+                            <span class="mdi mdi-pencil"></span>
+                        </button>
+
+                        <div *ngIf="!hasVisibleRelations()" class="empty-tab-info">Keine Relationen vorhanden.</div>
+                        <relations-view *ngIf="hasVisibleRelations()" [resource]="viewFacade.getSelectedDocument().resource"
+                                        (onRelationTargetClicked)="jumpToRelationTarget($event)"
+                                        [hideRelations]="relationsToHide">
+                        </relations-view>
+                    </ng-template>
+                </ngb-tab>s
+
+                <ngb-tab id="document-view-images-tab">
+                    <ng-template ngbTabTitle>
+                                <span class="mdi mdi-image"
+                                      [class.empty-tab]="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"></span>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+                        <div (drop)="uploadImages($event, viewFacade.getSelectedDocument())">
+                            <small>
+                                <button class="btn btn-link float-right align-middle"
+                                        id="document-view-button-edit-document"
+                                        (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'images')">
+                                    <span class="mdi mdi-pencil"></span>
+                                </button>
+                            </small>
+
+                            <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn'] || viewFacade.getSelectedDocument().resource.relations['isDepictedIn'].length == 0" class="empty-tab-info">
+                                Keine Bilder vorhanden.
+                                <br><br>
+                                Ziehen Sie Bilder per Drag'n'Drop in diesen Reiter, um sie hinzuzufügen, oder klicken
+                                Sie auf den Stift, um bereits vorhandene Bilder zu verknüpfen.
+                                <br><br><br><br><br><br><br><br><br>
+                            </div>
+                            <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
+                                            [imageIds]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
+                                            (onRelationTargetClicked)="jumpToRelationTarget($event)">
+                            </thumbnail-view>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+
+        </div>
+    </div>
+</div>

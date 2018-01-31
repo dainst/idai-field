@@ -143,7 +143,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public setScrollTarget(doc: IdaiFieldDocument) {
+    public setScrollTarget(doc: IdaiFieldDocument|undefined) {
 
         this.scrollTarget = doc;
     }

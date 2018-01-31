@@ -45,8 +45,9 @@ export class ResourcesMapComponent {
 
     public async select(document: IdaiFieldDocument|undefined) {
 
+        this.resourcesComponent.setScrollTarget(document);
+
         if (document) {
-            this.resourcesComponent.setScrollTarget(document);
             await this.viewFacade.setSelectedDocument(document);
         } else {
             this.viewFacade.deselect();

@@ -62,7 +62,7 @@ export class DocumentViewPage {
     public static performEditDocument() {
 
         this.clickFieldsTab();
-        return common.click(element(by.css('.document-view-sidebar .edit-button')));
+        return common.click(element(by.css('.document-detail-sidebar .edit-button')));
     };
 
 
@@ -167,4 +167,16 @@ export class DocumentViewPage {
 
         return element(by.id('document-view-relations-tab'));
     }
+
+
+    public static clickBackToGridButton = function () {
+
+        return element(by.css('.document-detail-sidebar .close-button')).click();
+    };
+
+
+    public static getDocumentCard = function () {
+
+        return element(by.css('.document-detail-sidebar'));
+    };
 }

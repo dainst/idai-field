@@ -1,6 +1,5 @@
 import {browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
-import {ImageViewPage} from './image-view.page';
 import {DocumentViewPage} from '../widgets/document-view.page';
 import {NavbarPage} from "../navbar.page";
 const request = require('request');
@@ -71,16 +70,17 @@ describe('images/image-overview --', function() {
     });
 
 
-    it('navigate from overview to view, and back to overview', () => {
+    it('navigate from overview to view, and back to overview', async done => {
 
-        ImageOverviewPage.getCellImageName(0).then(imageName => {
-            ImageOverviewPage.doubleClickCell(0);
-            browser.wait(EC.presenceOf(ImageViewPage.getDocumentCard()), delays.ECWaitTime);
-            DocumentViewPage.getIdentifier().then(identifier => expect(identifier).toEqual(imageName));
+        const imageName = await ImageOverviewPage.getCellImageName(0);
 
-            ImageViewPage.clickBackToGridButton();
-            browser.wait(EC.presenceOf(ImageOverviewPage.getCell(0)), delays.ECWaitTime);
-            ImageOverviewPage.getCellImageName(0).then(name => expect(name).toEqual(imageName));
-        });
+        ImageOverviewPage.doubleClickCell(0);
+        browser.wait(EC.presenceOf(DocumentViewPage.getDocumentCard()), delays.ECWaitTime);
+        DocumentViewPage.getIdentifier().then(identifier => expect(identifier).toEqual(imageName));
+
+        DocumentViewPage.clickBackToGridButton();
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCell(0)), delays.ECWaitTime);
+        ImageOverviewPage.getCellImageName(0).then(name => expect(name).toEqual(imageName));
+        done();
     });
 });

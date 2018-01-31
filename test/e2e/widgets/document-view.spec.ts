@@ -101,7 +101,7 @@ describe('widgets/document-view', function() {
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
 
-        browser.wait(EC.visibilityOf(element(by.id('document-view'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.css('.document-detail-sidebar'))), delays.ECWaitTime);
         DocumentViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });

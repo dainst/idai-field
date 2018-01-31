@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {ProjectConfiguration} from "idai-components-2/configuration";
 
 
 @Component({
@@ -14,4 +15,16 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 export class DescriptionViewComponent {
 
     @Input() document: IdaiFieldDocument;
+
+    private typeLabel: string;
+
+    constructor(private projectConfiguration: ProjectConfiguration) {}
+
+
+    ngOnChanges() {
+
+        if (!this.document) return;
+        this.typeLabel = this.projectConfiguration.getLabelForType(
+            this.document.resource.type);
+    }
 }

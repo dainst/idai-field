@@ -27,3 +27,11 @@ Using the list view, one can batch edit multiple items quickly
 
 Nesting resources in resources, as for example finds in contexts, 
 makes navigation and finding resources easy.
+
+## Image management
+
+![idai-field](README-FEATURES-5.png)
+
+Enables you to import fotos and associate 
+them to resources. Also lets you import 
+maps to provide a visual context your resources. 

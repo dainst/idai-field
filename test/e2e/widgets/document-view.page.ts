@@ -62,7 +62,7 @@ export class DocumentViewPage {
     public static performEditDocument() {
 
         this.clickFieldsTab();
-        return common.click(element(by.id('document-view-button-edit-document')));
+        return common.click(element(by.css('.document-view-sidebar .edit-button')));
     };
 
 

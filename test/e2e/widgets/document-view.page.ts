@@ -53,7 +53,7 @@ export class DocumentViewPage {
 
     public static clickSolveConflicts() {
 
-        common.click(element(by.id('document-view-button-solve-conflicts')));
+        common.click(element(by.css('.document-detail-sidebar .solve-button')));
     };
 
 

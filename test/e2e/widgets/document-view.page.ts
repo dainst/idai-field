@@ -82,10 +82,10 @@ export class DocumentViewPage {
     }
 
 
-    public static getTypeCharacter() {
+    public static getTypeFromDocView() {
 
-        browser.wait(EC.visibilityOf(element(by.css('.document-info .card-header div.type-icon'))), delays.ECWaitTime);
-        return element(by.css('.document-info .card-header div.type-icon')).getText();
+        browser.wait(EC.visibilityOf(element(by.css('#description-view .document-view-field-type .fieldvalue'))), delays.ECWaitTime);
+        return element(by.css('#description-view .document-view-field-type .fieldvalue')).getText();
     }
 
 

@@ -159,7 +159,7 @@ describe('resources/filter --', () => {
 
         checkTypeIcon();
         createResourceWithPresetType('1', true);
-        DocumentViewPage.getTypeCharacter().then(character => expect(character).toEqual('E'));
+        DocumentViewPage.getTypeFromDocView().then(character => expect(character).toEqual('Erdbefund'));
 
         ResourcesPage.clickListModeButton();
         checkTypeIcon();

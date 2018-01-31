@@ -70,8 +70,8 @@ export class DocumentViewPage {
 
     public static getIdentifier() {
 
-        browser.wait(EC.visibilityOf(element(by.id('document-view-identifier-label'))), delays.ECWaitTime);
-        return element(by.id('document-view-identifier-label')).getText();
+        browser.wait(EC.visibilityOf(element(by.css('.document-view-field-identifier'))), delays.ECWaitTime);
+        return element(by.css('.document-view-field-identifier')).getText();
     }
 
 

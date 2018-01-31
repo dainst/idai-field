@@ -76,11 +76,13 @@ describe('images/image-overview --', function() {
 
         ImageOverviewPage.doubleClickCell(0);
         browser.wait(EC.presenceOf(DocumentViewPage.getDocumentCard()), delays.ECWaitTime);
-        DocumentViewPage.getIdentifier().then(identifier => expect(identifier).toEqual(imageName));
+        DocumentViewPage.clickFieldsTab();
+        DocumentViewPage.getIdentifier()
+            .then(identifier => expect(identifier).toContain(imageName));
 
         DocumentViewPage.clickBackToGridButton();
         browser.wait(EC.presenceOf(ImageOverviewPage.getCell(0)), delays.ECWaitTime);
-        ImageOverviewPage.getCellImageName(0).then(name => expect(name).toEqual(imageName));
+        ImageOverviewPage.getCellImageName(0).then(name => expect(name).toContain(imageName));
         done();
     });
 });

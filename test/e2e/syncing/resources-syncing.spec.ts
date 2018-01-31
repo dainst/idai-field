@@ -23,7 +23,7 @@ const common = require('../common');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-describe('resources/syncing --', function() {
+xdescribe('resources/syncing --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;
@@ -233,7 +233,7 @@ describe('resources/syncing --', function() {
     });
 
 
-    it('resolve a save conflict via conflict resolver', async done => {
+    xit('resolve a save conflict via conflict resolver', async done => {
 
         const nr = '5';
         let testDocument = await createOneDocument(nr);
@@ -278,7 +278,7 @@ describe('resources/syncing --', function() {
     });
 
 
-    it('resolve an eventual conflict via conflict resolver', done => {
+    xit('resolve an eventual conflict via conflict resolver', done => {
 
         const nr = '10';
 

@@ -1,13 +1,35 @@
-#document-view-button-edit-document {
-  margin-top: -12px;
-  position: absolute;
-  right: 0px;
-  top: 68px
-}
+.document-view-sidebar {
+
+  .card-block {
+    padding-top: 9px !important;
+  }
+
+  .edit-button {
+    font-size: 20px;
+    float: right;
+    color: $buttoncolor !important;
+    margin-top: -12px;
+    position: absolute;
+    right: -8px;
+    top: 68px
+  }
+
+  .edit-button:hover {
+    color: lighten($buttoncolor, 10%) !important;
+  }
+
+  .close-button {
+
+    font-size: 23px;
+    color: $buttoncolor !important;
+    position: absolute;
+    top: 11px;
+    right: -2px;
+    padding: 5px;
+  }
 
 
-#document-view-button-close {
-  position: absolute;
-  top: 16px;
-  right: 8px;
+  .close-button:hover {
+    color: lighten($buttoncolor, 10%) !important;
+  }
 }

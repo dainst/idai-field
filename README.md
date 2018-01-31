@@ -1,6 +1,6 @@
 # iDAI.field 2
 
-![idai-field](readme-front-2.png) 
+![idai-field](readme-front-3.png) 
    
    
 The German Archaeological Institutes’s ([DAI](https://www.dainst.org)) 

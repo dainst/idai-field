@@ -4,7 +4,6 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
-import {DocumentViewComponent} from 'idai-components-2/documents';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {IdaiMessagesModule} from 'idai-components-2/messages';
 import {DocumentPickerComponent} from './document-picker.component';
@@ -33,7 +32,6 @@ import {SearchBarComponent} from './search-bar.component';
         Loading
     ],
     exports: [
-        DocumentViewComponent,
         DocumentPickerComponent,
         DescriptionViewComponent,
         LoadingIconComponent,

@@ -171,12 +171,12 @@ export class DocumentViewPage {
 
     public static clickBackToGridButton = function () {
 
-        return element(by.css('.document-detail-sidebar .close-button')).click();
+        return element(by.css('.detail-sidebar .close-button')).click();
     };
 
 
     public static getDocumentCard = function () {
 
-        return element(by.css('.document-detail-sidebar'));
+        return element(by.css('.detail-sidebar'));
     };
 }

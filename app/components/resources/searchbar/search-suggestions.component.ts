@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
@@ -15,7 +15,7 @@ import {ViewFacade} from '../state/view-facade';
 /**
  * @author Thomas Kleinke
  */
-export class SearchSuggestionsComponent {
+export class SearchSuggestionsComponent implements OnChanges {
 
     @Input() q: string = '';
     @Input() types: string[]|undefined;
@@ -38,6 +38,12 @@ export class SearchSuggestionsComponent {
 
 
     public jumpToDocument = (document: IdaiFieldDocument) => this.routingService.jumpToRelationTarget(document);
+
+
+    async ngOnChanges(changes: SimpleChanges) {
+
+        if (changes['visible']) await this.updateSuggestions(this.viewFacade.getDocuments());
+    }
 
 
     public isSuggestionBoxVisible(): boolean {

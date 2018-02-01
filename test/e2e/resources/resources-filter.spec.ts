@@ -13,7 +13,7 @@ let delays = require('../config/delays');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-fdescribe('resources/filter --', () => {
+describe('resources/filter --', () => {
 
     let index = 0;
 
@@ -41,7 +41,7 @@ fdescribe('resources/filter --', () => {
     });
 
 
-    xit('show only resources of the selected type', () => {
+    fit('show only resources of the selected type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');

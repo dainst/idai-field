@@ -44,6 +44,7 @@ describe('resources/filter --', () => {
     it('show only resources of the selected type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
+        browser.sleep(delays.shortRest * 4);
         ResourcesPage.performCreateResource('2', 'feature-floor');
         SearchBarPage.clickChooseTypeFilter('feature-floor');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);

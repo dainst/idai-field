@@ -1,6 +1,6 @@
 <form id="search-bar" class="form-inline">
 
-    <span style="position: relative; width: 100%;">
+    <span id="input-wrapper">
         <input #searchInput
                [(ngModel)]="q"
                (keyup)="emitQueryString()"

@@ -5,7 +5,7 @@
   position: absolute;
   text-align: left;
   width: 100%;
-  background-color: white;
+  background-color: rgb(238, 238, 238);
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
 
   h6 {
@@ -17,6 +17,8 @@
   .suggestion-container {
     padding: 12px;
     cursor: pointer;
+    background-color: white;
+    margin-bottom: 1px;
   }
 
   .suggestion-container:hover {

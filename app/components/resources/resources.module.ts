@@ -32,6 +32,8 @@ import {NavigationComponent} from './navigation/navigation.component';
 import {NavigationService} from './navigation/navigation-service';
 import {StateSerializer} from '../../common/state-serializer';
 import {OperationViews} from './state/operation-views';
+import {ResourcesSearchBarComponent} from './searchbar/resources-search-bar.component';
+import {SearchSuggestionsComponent} from './searchbar/search-suggestions.component';
 
 const remote = require('electron').remote;
 
@@ -58,7 +60,9 @@ const remote = require('electron').remote;
         ThumbnailViewComponent,
         DocumentViewSidebarComponent,
         SidebarListComponent,
-        NavigationComponent
+        NavigationComponent,
+        ResourcesSearchBarComponent,
+        SearchSuggestionsComponent
     ],
     providers: [
         NavigationService,

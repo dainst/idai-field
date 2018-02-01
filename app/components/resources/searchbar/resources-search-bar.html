@@ -1,0 +1,44 @@
+<form class="form-inline" id="search-bar">
+
+    <span style="position: relative; width: 100%;">
+        <input #searchInput
+               [(ngModel)]="q"
+               (keyup)="emitQueryString()"
+               (focus)="showSuggestions()"
+               name="searchInput"
+               type="text"
+               class="form-control"
+               id="object-search"
+               placeholder="Suchen...">
+        <search-suggestions (click)="hideSuggestions()"
+                            [q]="q"
+                            [types]="types"
+                            [maxSuggestions]="5"
+                            [visible]="suggestionsVisible">
+        </search-suggestions>
+    </span>
+
+    <span class="input-group-btn" id="filter-button" *ngIf="showFiltersMenu">
+        <button class="btn btn-primary"
+                id="searchfilter"
+                type="button"
+                (click)="hideSuggestions()"
+                [ngbPopover]="filterMenu"
+                #p="ngbPopover"
+                placement="bottom">
+            <span *ngIf="!types || types.length == 0" class="mdi mdi-filter"></span>
+            <span *ngIf="types && types.length > 0">
+                <type-icon [type]="types[0]" size="30"></type-icon>
+            </span>
+        </button>
+
+        <ng-template #filterMenu>
+            <div class="filtermenu">
+                <div class="popover-custom-title">Nach Ressourcentyp filtern:</div>
+                <type-picker [typesTreeList]="filterOptions" [allTypesOptionVisible]="!parentType"
+                             [selectedTypes]="types" (onTypePicked)="chooseTypeFilter($event); p.close();">
+                </type-picker>
+            </div>
+        </ng-template>
+    </span>
+</form>

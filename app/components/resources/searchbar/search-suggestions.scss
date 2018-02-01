@@ -1,0 +1,25 @@
+/**
+ * @author Thomas Kleinke
+ */
+#search-suggestions {
+  position: absolute;
+  text-align: left;
+  width: 100%;
+  background-color: white;
+
+  h6 {
+    background-color: #f7f7f7;
+    padding: 10px;
+    margin-bottom: 0;
+  }
+
+  .suggestion-container {
+    padding: 12px;
+    cursor: pointer;
+  }
+
+  .suggestion-container:hover {
+    background-color: darken($list-item-hover-color, 5%);
+    transition: background-color .65s ease;
+  }
+}

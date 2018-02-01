@@ -35,12 +35,13 @@ export class SearchBarComponent implements OnChanges {
     @Output() onTypesChanged = new EventEmitter<string[]>();
     @Output() onQueryStringChanged = new EventEmitter<string>();
 
-    @ViewChild('p') private popover: any;
+    @ViewChild('p') protected popover: any;
 
     private filterOptions: Array<IdaiType> = [];
 
 
     constructor(private configLoader: ConfigLoader) {}
+
 
     public ngOnChanges(changes: SimpleChanges) {
 
@@ -49,6 +50,7 @@ export class SearchBarComponent implements OnChanges {
             this.initializeFilterOptions();
         }
     }
+
 
     public chooseTypeFilter(type: IdaiType) {
 
@@ -67,10 +69,12 @@ export class SearchBarComponent implements OnChanges {
         this.onTypesChanged.emit(this.types);
     }
 
+
     public emitQueryString() {
 
         this.onQueryStringChanged.emit(this.q);
     }
+
 
     private initializeFilterOptions() {
 
@@ -115,6 +119,7 @@ export class SearchBarComponent implements OnChanges {
         });
     }
 
+
     private addFilterOption(type: IdaiType) {
 
         if (this.filterOptions.indexOf(type) == -1) {
@@ -122,11 +127,14 @@ export class SearchBarComponent implements OnChanges {
         }
     }
 
-    private handleClick(event: any) {
+
+    protected handleClick(event: any) {
 
         if (!this.popover) return;
+
         let target = event.target;
-        let inside = false;
+        let inside: boolean = false;
+
         do {
             if (target.id === 'filter-button') {
                 inside = true;
@@ -134,8 +142,7 @@ export class SearchBarComponent implements OnChanges {
             }
             target = target.parentNode;
         } while (target);
-        if (!inside) {
-            this.popover.close();
-        }
+
+        if (!inside) this.popover.close();
     }
 }

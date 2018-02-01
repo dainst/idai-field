@@ -103,6 +103,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickMainTypeDocumentNavigationButton() {
+
+        common.click(element(by.id('selected-operation-type-document')));
+    }
+
+
     public static clickSelectResourceType(typeName?) {
 
         if (!typeName) typeName = "feature-architecture";

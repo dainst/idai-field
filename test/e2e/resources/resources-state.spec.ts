@@ -242,6 +242,27 @@ describe('resources/state --', function() {
     });
 
 
+    it('update navigation path after deleting resource', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+
+        ResourcesPage.clickMoveIntoButton('context1');
+        ResourcesPage.clickMainTypeDocumentNavigationButton();
+
+        ResourcesPage.openEditByDoubleClickResource('context1');
+        DoceditPage.clickDeleteDocument();
+        DoceditPage.typeInIdentifierInConfirmDeletionInputField('context1');
+        DoceditPage.clickConfirmDeleteInModal();
+
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        ResourcesPage.getNavigationButtons().then(navigationButtons => {
+            expect(navigationButtons.length).toBe(1);
+            expect(navigationButtons[0].getText()).toEqual('trench1');
+        });
+    });
+
+
+
     it('autoselect last selected main type document on switching views', () => {
 
         ResourcesPage.performCreateResource('trench2', 'trench');

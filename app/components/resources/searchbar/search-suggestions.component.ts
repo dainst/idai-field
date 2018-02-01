@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Query} from 'idai-components-2/datastore';
@@ -23,6 +23,7 @@ export class SearchSuggestionsComponent implements OnChanges {
     @Input() visible: boolean;
 
     private suggestedDocuments: Array<IdaiFieldDocument> = [];
+    private documents: Array<Document> = [];
 
 
     constructor(private routingService: RoutingService,
@@ -30,7 +31,8 @@ export class SearchSuggestionsComponent implements OnChanges {
                 private viewFacade: ViewFacade) {
 
         this.viewFacade.populateDocumentNotifications().subscribe(async documents => {
-            await this.updateSuggestions(documents);
+            this.documents = documents;
+            await this.updateSuggestions();
         });
     }
 
@@ -40,19 +42,19 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     async ngOnChanges(changes: SimpleChanges) {
 
-        if (changes['visible']) await this.updateSuggestions(this.viewFacade.getDocuments());
+        if (changes['visible']) await this.updateSuggestions();
     }
 
 
     public isSuggestionBoxVisible(): boolean {
 
-        return this.visible && this.suggestedDocuments.length > 0;
+        return this.visible && this.documents.length == 0;
     }
 
 
-    private async updateSuggestions(documents: Array<Document>) {
+    private async updateSuggestions() {
 
-        if (this.q.length == 0 || documents.length > 0) return this.suggestedDocuments = [];
+        if (this.q.length == 0 || this.documents.length > 0) return this.suggestedDocuments = [];
 
         this.suggestedDocuments = (await this.datastore.find(this.makeQuery())).documents;
 

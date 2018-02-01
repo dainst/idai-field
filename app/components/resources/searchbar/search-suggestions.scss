@@ -12,17 +12,24 @@
     background-color: #f7f7f7;
     padding: 10px;
     margin-bottom: 0;
+    cursor: default;
   }
 
   .suggestion-container {
     padding: 12px;
-    cursor: pointer;
     background-color: white;
     margin-bottom: 1px;
+    cursor: pointer;
   }
 
   .suggestion-container:hover {
     background-color: darken($list-item-hover-color, 5%);
     transition: background-color .65s ease;
+  }
+
+  #no-results-info {
+    background-color: white;
+    padding: 12px;
+    cursor: default;
   }
 }

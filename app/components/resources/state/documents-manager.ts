@@ -87,7 +87,7 @@ export class DocumentsManager {
 
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
-        this.navigationPathManager.moveInto(document);
+        await this.navigationPathManager.moveInto(document);
 
         await this.populateDocumentList();
         if (!this.documents.find(hasEqualId(this.selectedDocument))) this.deselect();

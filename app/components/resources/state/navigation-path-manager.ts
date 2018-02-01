@@ -6,7 +6,7 @@ import {NavigationPath} from './navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
-import {takeUntil} from '../../../util/list-util';
+import {takeUntil, takeWhile} from '../../../util/list-util';
 import {NavigationPathInternal, NavigationPathSegment, isSegmentOf, toDocument} from './navigation-path-internal';
 
 
@@ -30,14 +30,20 @@ export class NavigationPathManager {
     /**
      * @param document set undefined to make rootElement of navigation path undefined
      */
-    public moveInto(document: IdaiFieldDocument|undefined) {
+    public async moveInto(document: IdaiFieldDocument|undefined) {
 
         const result: NavigationPathInternal = NavigationPathManager.makeNewNavigationPath(
-            this.resourcesState.getNavigationPathInternal(), document);
+            await this.validateAndRepair(this.resourcesState.getNavigationPathInternal()), document);
 
         this.resourcesState.setNavigationPathInternal(result);
 
         ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath());
+    }
+
+
+    public async rebuildNavigationPath() {
+
+        await this.moveInto(this.getNavigationPath().rootDocument);
     }
 
 
@@ -103,7 +109,7 @@ export class NavigationPathManager {
         }
 
         if (elements.length == 0) {
-            this.moveInto(undefined);
+            await this.moveInto(undefined);
         } else {
             this.setNavigationPath({ elements: elements, rootDocument: elements[elements.length - 1]});
         }
@@ -143,6 +149,70 @@ export class NavigationPathManager {
     }
 
 
+    private async validateAndRepair(navigationPath: NavigationPathInternal): Promise<NavigationPathInternal> {
+
+        const invalidSegment: NavigationPathSegment|undefined = await this.findInvalidSegment(navigationPath);
+
+        if (invalidSegment) {
+            return {
+                elements: takeWhile<NavigationPathSegment>(segment =>
+                    segment != invalidSegment)(navigationPath.elements),
+                rootDocument: navigationPath.rootDocument != invalidSegment.document
+                    ? navigationPath.rootDocument
+                    : undefined,
+                q: navigationPath.q,
+                types: navigationPath.types
+            };
+        } else {
+            return navigationPath;
+        }
+    }
+
+
+    private async findInvalidSegment(navigationPath: NavigationPathInternal): Promise<NavigationPathSegment|undefined> {
+
+        for (let segment of navigationPath.elements) {
+            if (!await this.isValidSegment(segment, navigationPath.elements)) {
+                return segment;
+            }
+        }
+
+        return undefined;
+    }
+
+
+    private async isValidSegment(segment: NavigationPathSegment,
+                                 segments: Array<NavigationPathSegment>): Promise<boolean> {
+
+        return await this.hasExistingDocument(segment)
+            && this.hasValidRelation(segment, segments);
+    }
+
+
+    private async hasExistingDocument(segment: NavigationPathSegment): Promise<boolean> {
+
+        return (await this.datastore.find({
+            q: '',
+            constraints: { 'id:match': segment.document.resource.id as string }
+        })).totalCount != 0;
+    }
+
+
+    private hasValidRelation(segment: NavigationPathSegment, segments: Array<NavigationPathSegment>): boolean {
+
+        const index: number = segments.indexOf(segment);
+
+        if (index == 0) {
+            const mainTypeDocument: IdaiFieldDocument|undefined = this.resourcesState.getMainTypeDocument();
+            return mainTypeDocument != undefined && ModelUtil.hasRelationTarget(segment.document,
+                'isRecordedIn', mainTypeDocument.resource.id as string);
+        } else {
+            return ModelUtil.hasRelationTarget(segment.document,
+                'liesWithin', segments[index - 1].document.resource.id as string);
+        }
+    }
+
+
     private static makeNewNavigationPath(
         oldNavigationPath: NavigationPathInternal,
         newRootDocument: IdaiFieldDocument|undefined): NavigationPathInternal {
@@ -163,7 +233,7 @@ export class NavigationPathManager {
 
     private static rebuildElements(oldSegments: Array<NavigationPathSegment>,
                                    oldRootDocument: IdaiFieldDocument|undefined,
-                                   newRootDocument: IdaiFieldDocument) {
+                                   newRootDocument: IdaiFieldDocument): Array<NavigationPathSegment> {
 
         return oldSegments.map(toDocument).includes(newRootDocument)
             ? oldSegments

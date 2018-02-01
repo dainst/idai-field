@@ -121,6 +121,8 @@ export class ViewFacade {
 
     public getNavigationPath = () => this.navigationPathManager.getNavigationPath();
 
+    public rebuildNavigationPath = () => this.navigationPathManager.rebuildNavigationPath();
+
     public populateDocumentList = () => this.documentsManager.populateDocumentList();
 
     public getCurrentViewMainType = () => this.resourcesState.getViewType();

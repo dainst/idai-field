@@ -18,7 +18,8 @@ var Static = (function () {
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
             'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
-            'identifier:match': { path: 'resource.identifier', type: 'match' }
+            'identifier:match': { path: 'resource.identifier', type: 'match' },
+            'id:match': { path: 'resource.id', type: 'match' }
         });
         var fulltextIndexer = new fulltext_indexer_1.FulltextIndexer();
         var documentCache = new document_cache_1.DocumentCache();

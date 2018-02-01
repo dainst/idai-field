@@ -64,6 +64,7 @@ export class DoceditLauncher {
 
         if (closeReason == 'deleted') {
             this.viewFacade.deselect();
+            await this.viewFacade.rebuildNavigationPath();
             await this.viewFacade.populateDocumentList();
         }
     }

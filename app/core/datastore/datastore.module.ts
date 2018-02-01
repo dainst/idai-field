@@ -68,6 +68,7 @@ import {ChangesStream} from "./core/changes-stream";
                     'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' },
                     'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
                     'identifier:match': { path: 'resource.identifier', type: 'match' },
+                    'id:match': { path: 'resource.id', type: 'match' },
                     'georeference:exist': { path: 'resource.georeference', type: 'exist' },
                     'conflicts:exist': { path: '_conflicts', type: 'exist' }
                 });

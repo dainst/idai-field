@@ -28,28 +28,50 @@
 }
 
 #resources {
-  #search-bar,
-  #mainTypeSelectBox,
-  #mainTypeSelectBoxSubstitute {
-    margin-top: 2px;
-    margin-bottom: -3px;
+  position: fixed;
+  width: 100%;
+  z-index: 1001;
+
+  #search-bar-container {
+    padding-right: 8px;
+
+    #search-bar,
+    #mainTypeSelectBox,
+    #mainTypeSelectBoxSubstitute {
+      margin-top: 2px;
+      margin-bottom: -3px;
+    }
+
+    #search-bar #filter-button {
+      right: 5px;
+    }
   }
 
-  #search-bar #filter-button {
-    right: 5px;
-  }
+  #buttons-container {
+    padding-left: 0;
+    padding-right: 8px;
 
-  .resources-mode-buttons {
-    margin-top: 3px;
-    margin-bottom: -1px;
+    .resources-mode-buttons {
+      margin-top: 3px;
+      margin-bottom: -1px;
+      width: 100% !important;
+
+      button {
+        width: 50% !important;
+      }
+    }
   }
 }
 
-.no-main-type-resource-alert {
-  position: absolute;
-  padding: 10px;
-  margin: 35vh 16.6vw 0;
-  z-index: 900;
-  user-select: none;
-  cursor: default;
+#resources-content {
+  padding-top: 56px;
+
+  .no-main-type-resource-alert {
+    position: absolute;
+    padding: 10px;
+    margin: 35vh 16.6vw 0;
+    z-index: 900;
+    user-select: none;
+    cursor: default;
+  }
 }

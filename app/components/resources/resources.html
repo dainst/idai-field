@@ -1,5 +1,4 @@
-<div id="resources" style="position: fixed; width: 100%; z-index: 1001;"
-     class="row bg-light py-2">
+<div id="resources" class="row bg-light py-2">
 
     <div class="col-md-6">
         <navigation></navigation>
@@ -7,9 +6,8 @@
 
     <div class="col-md-6 mr-md-auto" align="right">
         <div class="row">
-
-            <div class="col-md-8" style="padding-right: 8px">
-                <resources-search-bar style="width:100px" [q]="getQueryString()" [types]="getTypeFilters()"
+            <div id="search-bar-container" class="col-md-8">
+                <resources-search-bar [q]="getQueryString()" [types]="getTypeFilters()"
                                       [relationName]="'isRecordedIn'"
                                       [relationRangeType]="viewFacade.getCurrentViewMainType()"
                                       (onQueryStringChanged)="setQueryString($event)"
@@ -17,39 +15,27 @@
                 </resources-search-bar>
             </div>
 
-            <div class="col-md-4" style="padding-left: 0; padding-right: 8px">
-
-
-                <!-- MODE BUTTONS -->
-                <div *ngIf="ready" class="btn-group resources-mode-buttons" style="width:100% !important">
-
-                    <button style="width:50% !important"
-                            id="map-mode-button"
+            <div id="buttons-container" class="col-md-4">
+                <div *ngIf="ready" class="btn-group resources-mode-buttons">
+                    <button id="map-mode-button"
                             (click)="switchMode('map')"
                             class="btn btn-primary m-0"
                             [class.active]="currentModeIs('map')">
-
                         <span class="mdi mdi-map"></span> Karte
                     </button>
-                    <button style="width:50% !important"
-                            id="list-mode-button"
+                    <button id="list-mode-button"
                             (click)="switchMode('list')"
                             class="btn btn-primary m-0"
                             [class.active]="currentModeIs('list')">
-
                         <span class="mdi mdi-table"></span> Liste
                     </button>
                 </div>
-                <!-- MODE BUTTONS -->
-
             </div>
         </div>
-
-
     </div>
-
 </div>
-<div style="padding-top: 56px;"
+
+<div id="resources-content"
      class="row"
      (dragover)="false"
      (dragleave)="false"

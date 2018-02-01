@@ -10,8 +10,7 @@
                class="form-control"
                id="object-search"
                placeholder="Suchen...">
-        <search-suggestions (click)="hideSuggestions()"
-                            [q]="q"
+        <search-suggestions [q]="q"
                             [types]="types"
                             [maxSuggestions]="5"
                             [visible]="suggestionsVisible">

@@ -2,8 +2,7 @@
     <h6>Suchergebnisse in anderen Kontexten</h6>
 
     <div *ngIf="suggestedDocuments.length == 0" id="no-results-info">Keine Ressourcen gefunden.</div>
-    <div *ngFor="let document of suggestedDocuments" class="suggestion-container"
-         (click)="jumpToDocument(document)">
+    <div *ngFor="let document of suggestedDocuments" class="suggestion-container" (click)="jumpToDocument(document)">
         <document-teaser [document]="document"></document-teaser>
     </div>
 </div>

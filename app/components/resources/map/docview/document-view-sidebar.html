@@ -1,19 +1,19 @@
-<div id="document-view" class="document-view-sidebar">
+<div class="detail-sidebar">
 
     <div *ngIf="viewFacade.getSelectedDocument()" class="card-block">
 
-        <button *ngIf="viewFacade.getSelectedDocument()._conflicts" class="btn btn-link btn-xs"
+        <button *ngIf="viewFacade.getSelectedDocument()._conflicts"
+                class="btn btn-link btn-xs solve-button"
                 id="document-view-button-solve-conflicts"
-                (click)="resourcesComponent.solveConflicts($event)">
+                (click)="resourcesComponent.solveConflicts(viewFacade.getSelectedDocument())">
             <span class="mdi mdi-alert-outline"></span>
         </button>
 
-            <button class="close-button btn btn-link btn-xs"
-                    id="back-to-map"
-                    (click)="viewFacade.deselect()">
-                <span class="mdi mdi-close"></span>
-            </button>
-
+        <button class="close-button btn btn-link btn-xs"
+                id="back-to-map"
+                (click)="viewFacade.deselect()">
+            <span class="mdi mdi-close"></span>
+        </button>
 
         <ngb-tabset #tabs [activeId]="'document-view-' + viewFacade.getActiveDocumentViewTab() + '-tab'"
                     (tabChange)="onTabChange($event)">

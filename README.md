@@ -1,6 +1,19 @@
 # iDAI.field 2
 
-![idai-field](readme-front-1.png) 
+![idai-field](img/README-1.png) 
+   
+   
+The German Archaeological Institutes’s ([DAI](https://www.dainst.org)) 
+new take on a field research 
+documentation system. Combining [features](README-FEATURES.md) of GIS, photo management, and 
+database management systems in a unique and integrating manner, 
+it aims at facilitating archaeological workflows by reducing the overhead 
+of using multiple systems. Developed in-house by the DAI’s Information 
+technology department, it targets primarily the needs of the institutes 
+excavations, older ones as well as those to come. Yet, due to the nature 
+of its adjustable data model and the fact it is open source software, any 
+interested third party is free to reuse and adjust it to their needs.
+   
    
 ## Quickstart
 

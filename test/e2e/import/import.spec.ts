@@ -2,7 +2,7 @@ import {browser, by, element, protractor} from 'protractor';
 import {ImportPage} from './import.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {NavbarPage} from '../navbar.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
+import {RelationsViewPage} from '../widgets/relations-view.page';
 
 const common = require('../common.js');
 const delays = require('../config/delays');
@@ -57,19 +57,19 @@ describe('import --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.clickSelectResource('obob1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toContain('context1'));
-        DocumentViewPage.getRelationName(0).then(relationName => expect(relationName).toEqual('Zeitlich vor'));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        RelationsViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toContain('context1'));
+        RelationsViewPage.getRelationName(0).then(relationName => expect(relationName).toEqual('Zeitlich vor'));
 
         ResourcesPage.clickSelectResource('context1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toContain('obob1'));
-        DocumentViewPage.getRelationName(0).then(relationName => expect(relationName).toEqual('Zeitlich nach'));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        RelationsViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toContain('obob1'));
+        RelationsViewPage.getRelationName(0).then(relationName => expect(relationName).toEqual('Zeitlich nach'));
 
         NavbarPage.clickNavigateToProject();
 
         ResourcesPage.clickSelectResource('trench1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 
 
@@ -138,7 +138,7 @@ describe('import --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob2'));
 
         ResourcesPage.clickSelectResource('context1');
-        DocumentViewPage.getRelations().then(function(relations) {
+        RelationsViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
     });

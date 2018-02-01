@@ -1,6 +1,5 @@
 import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
 import {ProjectPage} from '../project.page';
@@ -8,6 +7,7 @@ import {MapPage} from '../map/map.page';
 import {ImageOverviewPage} from '../images/image-overview.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
+import {RelationsViewPage} from '../widgets/relations-view.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -68,7 +68,7 @@ describe('resources/state --', function() {
     function clickDepictsRelationLink() {
 
         ImageOverviewPage.doubleClickCell(0);
-        DocumentViewPage.clickRelation(0);
+        RelationsViewPage.clickRelation(0);
     }
 
 
@@ -139,11 +139,11 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('floor1', 'feature-floor');
         ResourcesPage.performCreateRelation('floor1', 'architecture1', 6);
 
-        DocumentViewPage.clickRelation(0);
+        RelationsViewPage.clickRelation(0);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
 
-        DocumentViewPage.clickRelation(0);
+        RelationsViewPage.clickRelation(0);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
     });
@@ -188,11 +188,11 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('floor1', 'feature-floor');
         ResourcesPage.performCreateRelation('floor1', 'architecture1', 6);
 
-        DocumentViewPage.clickRelation(0);
+        RelationsViewPage.clickRelation(0);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('architecture1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
 
-        DocumentViewPage.clickRelation(0);
+        RelationsViewPage.clickRelation(0);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('floor1'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building2'));
     });
@@ -207,7 +207,7 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('testf2', 'find');
         ResourcesPage.performCreateRelation('testf2', 'testf1', 1);
 
-        DocumentViewPage.clickRelation(0);
+        RelationsViewPage.clickRelation(0);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('testf1'));
         ResourcesPage.getNavigationButtons().then(navigationButtons => {

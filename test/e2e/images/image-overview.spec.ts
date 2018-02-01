@@ -1,8 +1,8 @@
 import {browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
-import {ImageViewPage} from './image-view.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
 import {NavbarPage} from "../navbar.page";
+import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
+import {FieldsViewPage} from '../widgets/fields-view-page';
 const request = require('request');
 
 const path = require('path');
@@ -71,16 +71,19 @@ describe('images/image-overview --', function() {
     });
 
 
-    it('navigate from overview to view, and back to overview', () => {
+    it('navigate from overview to view, and back to overview', async done => {
 
-        ImageOverviewPage.getCellImageName(0).then(imageName => {
-            ImageOverviewPage.doubleClickCell(0);
-            browser.wait(EC.presenceOf(ImageViewPage.getDocumentCard()), delays.ECWaitTime);
-            DocumentViewPage.getIdentifier().then(identifier => expect(identifier).toEqual(imageName));
+        const imageName = await ImageOverviewPage.getCellImageName(0);
 
-            ImageViewPage.clickBackToGridButton();
-            browser.wait(EC.presenceOf(ImageOverviewPage.getCell(0)), delays.ECWaitTime);
-            ImageOverviewPage.getCellImageName(0).then(name => expect(name).toEqual(imageName));
-        });
+        ImageOverviewPage.doubleClickCell(0);
+        browser.wait(EC.presenceOf(DetailSidebarPage.getDocumentCard()), delays.ECWaitTime);
+        FieldsViewPage.clickFieldsTab();
+        DetailSidebarPage.getIdentifier()
+            .then(identifier => expect(identifier).toContain(imageName));
+
+        DetailSidebarPage.clickBackToGridButton();
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCell(0)), delays.ECWaitTime);
+        ImageOverviewPage.getCellImageName(0).then(name => expect(name).toContain(imageName));
+        done();
     });
 });

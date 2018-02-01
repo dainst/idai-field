@@ -4,7 +4,6 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
-import {DocumentViewComponent} from 'idai-components-2/documents';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {IdaiMessagesModule} from 'idai-components-2/messages';
 import {DocumentPickerComponent} from './document-picker.component';
@@ -12,6 +11,7 @@ import {DescriptionViewComponent} from './description-view.component';
 import {Loading} from './loading';
 import {LoadingIconComponent} from './loading-icon.component';
 import {SearchBarComponent} from './search-bar.component';
+import {TypePickerComponent} from './type-picker.component';
 
 @NgModule({
     imports: [
@@ -27,17 +27,18 @@ import {SearchBarComponent} from './search-bar.component';
         DocumentPickerComponent,
         DescriptionViewComponent,
         LoadingIconComponent,
-        SearchBarComponent
+        SearchBarComponent,
+        TypePickerComponent
     ],
     providers: [
         Loading
     ],
     exports: [
-        DocumentViewComponent,
         DocumentPickerComponent,
         DescriptionViewComponent,
         LoadingIconComponent,
-        SearchBarComponent
+        SearchBarComponent,
+        TypePickerComponent
     ],
     entryComponents: [
     ]

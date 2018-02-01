@@ -13,12 +13,21 @@
     </div>
 
     <div *ngIf="image.document"
-         class="col-md-3 px-0 document-info">
+         class="col-md-3 px-0 document-info detail-sidebar">
 
-        <document-view [document]="image.document"
-                       (onSolveConflicts)="startEdit('conflicts')"
-                       (onDeselect)="deselect()">
+        <div class="card-block">
 
+            <button *ngIf="image.document._conflicts" class="btn btn-link btn-xs"
+                    id="document-view-button-solve-conflicts"
+                    (click)="startEdit('conflicts')">
+                <span class="mdi mdi-alert-outline"></span>
+            </button>
+
+            <button class="close-button btn btn-link btn-xs"
+                    id="back-to-map"
+                    (click)="deselect()">
+                <span class="mdi mdi-close"></span>
+            </button>
 
             <ngb-tabset activeId="document-view-{{activeTab}}-tab">
                 <ngb-tab id="document-view-fields-tab">
@@ -26,7 +35,7 @@
                         <span class="mdi mdi-format-list-bulleted"></span>
                     </ng-template>
                     <ng-template ngbTabContent>
-                        <button class="btn btn-link"
+                        <button class="btn btn-link edit-button"
                                 id="document-view-button-edit-document"
                                 (click)="startEdit()">
                             <span class="mdi mdi-pencil"></span>
@@ -52,7 +61,7 @@
                     </ng-template>
                     <ng-template ngbTabContent>
 
-                        <button class="btn btn-link"
+                        <button class="btn btn-link edit-button"
                                 id="document-view-button-edit-document"
                                 (click)="startEdit('relations')">
                             <span class="mdi mdi-pencil"></span>
@@ -65,7 +74,7 @@
                     </ng-template>
                 </ngb-tab>
             </ngb-tabset>
-        </document-view>
+        </div>
     </div>
 </div>
 

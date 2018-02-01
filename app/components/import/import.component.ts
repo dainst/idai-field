@@ -3,7 +3,6 @@ import {Http} from '@angular/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
-import {Validator} from 'idai-components-2/persist';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {Importer, ImportReport} from '../../core/importer/importer';
 import {Reader} from '../../core/importer/reader';
@@ -30,6 +29,7 @@ import {ViewFacade} from '../resources/state/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {ChangesStream} from '../../core/datastore/core/changes-stream';
+import {Validator} from '../../core/model/validator';
 
 
 @Component({

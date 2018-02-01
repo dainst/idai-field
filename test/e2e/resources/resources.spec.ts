@@ -1,9 +1,11 @@
 import {browser, protractor, element, by} from 'protractor';
 import {DoceditPage} from '../docedit/docedit.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
 import {NavbarPage} from '../navbar.page';
+import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
+import {FieldsViewPage} from '../widgets/fields-view-page';
+import {RelationsViewPage} from '../widgets/relations-view.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -81,7 +83,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('1');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.performEditDocument();
+        DetailSidebarPage.performEditDocument();
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('1');
         DoceditPage.clickConfirmDeleteInModal();
@@ -93,7 +95,7 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1a');
         ResourcesPage.clickSelectResource('1a');
-        DocumentViewPage.performEditDocument();
+        DetailSidebarPage.performEditDocument();
         DoceditPage.typeInInputField('identifier', '1b');
         ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('1a')});
         DoceditPage.clickCloseEdit();
@@ -105,7 +107,7 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.performEditDocument();
+        DetailSidebarPage.performEditDocument();
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
@@ -117,7 +119,7 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.performEditDocument();
+        DetailSidebarPage.performEditDocument();
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
@@ -129,7 +131,7 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.performEditDocument();
+        DetailSidebarPage.performEditDocument();
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickCancelInModal();
@@ -178,12 +180,12 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1', 'feature');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.performEditDocument();
+        DetailSidebarPage.performEditDocument();
         DoceditPage.clickTypeSwitcherButton();
         DoceditPage.clickTypeSwitcherOption('feature-architecture');
         browser.wait(EC.stalenessOf(element(by.id('message-0'))), delays.ECWaitTime);
         DoceditPage.clickSaveDocument();
-        DocumentViewPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('A'));
+        DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Architektur'));
     });
 
 
@@ -191,21 +193,21 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.performEditDocument();
+        DetailSidebarPage.performEditDocument();
 
         DoceditPage.clickSelectOption('hasWallType', 1);
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
-        DocumentViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
-        DocumentViewPage.performEditDocument();
+        FieldsViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));
+        DetailSidebarPage.performEditDocument();
         DoceditPage.clickTypeSwitcherButton();
         DoceditPage.clickTypeSwitcherOption('feature');
         NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren ' +
             'gehen: Mauertyp');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
-        DocumentViewPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('S'));
-        browser.wait(EC.stalenessOf(DocumentViewPage.getFieldElement(0)));
+        DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Stratigrafische Einheit'));
+        browser.wait(EC.stalenessOf(FieldsViewPage.getFieldElement(0)));
     });
 
 
@@ -215,22 +217,22 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('2', 'wall_surface');
         ResourcesPage.performCreateRelation('1', '2', 9);
         ResourcesPage.clickSelectResource('2');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('1'));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        RelationsViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('1'));
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        DocumentViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('2'));
-        DocumentViewPage.performEditDocument();
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        RelationsViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('2'));
+        DetailSidebarPage.performEditDocument();
         DoceditPage.clickTypeSwitcherButton();
         DoceditPage.clickTypeSwitcherOption('feature-layer');
         NavbarPage.awaitAlert('Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern '
             + 'verloren gehen: Trägt');
         NavbarPage.clickCloseMessage();
         DoceditPage.clickSaveDocument();
-        DocumentViewPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('E'));
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
         ResourcesPage.clickSelectResource('2');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 
 

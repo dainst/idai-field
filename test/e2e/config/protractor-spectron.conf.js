@@ -11,9 +11,9 @@ exports.config = {
     baseUrl: fileUrl(path.resolve(__dirname, '../../..') + '/index.html'),
 
     specs: [
-        '../settings/*.spec.js',
         '../syncing/*.spec.js',
         '../resources/*.spec.js',
+        '../settings/*.spec.js',
         '../images/*.spec.js',
         '../list/*.spec.js',
         '../map/*.spec.js',

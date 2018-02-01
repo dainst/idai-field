@@ -20,10 +20,8 @@ describe('resources/filter --', () => {
 
     beforeAll(() => {
 
+        ResourcesPage.get();
         browser.sleep(delays.shortRest);
-        NavbarPage.performNavigateToSettings();
-        NavbarPage.clickNavigateToExcavation();
-        browser.sleep(delays.shortRest * 2);
     });
 
 

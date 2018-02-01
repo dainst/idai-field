@@ -23,7 +23,7 @@ describe('resources/filter --', () => {
         browser.sleep(delays.shortRest);
         NavbarPage.performNavigateToSettings();
         NavbarPage.clickNavigateToExcavation();
-        browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest * 2);
     });
 
 
@@ -41,20 +41,6 @@ describe('resources/filter --', () => {
     });
 
 
-    it('show only resources of the selected type', () => {
-
-        ResourcesPage.performCreateResource('1', 'feature-architecture');
-        browser.sleep(delays.shortRest * 4);
-        ResourcesPage.performCreateResource('2', 'feature-floor');
-        SearchBarPage.clickChooseTypeFilter('feature-floor');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        SearchBarPage.clickChooseTypeFilter('feature-architecture');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-    });
-
-
     it('select all filter', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
@@ -65,6 +51,19 @@ describe('resources/filter --', () => {
         SearchBarPage.clickChooseTypeFilter('all');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+    });
+
+
+    it('show only resources of the selected type', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.performCreateResource('2', 'feature-floor');
+        SearchBarPage.clickChooseTypeFilter('feature-floor');
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+        SearchBarPage.clickChooseTypeFilter('feature-architecture');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
     });
 
 

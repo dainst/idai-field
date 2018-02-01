@@ -13,9 +13,9 @@ exports.config = {
     specs: [
         '../settings/*.spec.js',
         '../syncing/*.spec.js',
+        '../resources/*.spec.js',
         '../images/*.spec.js',
         '../list/*.spec.js',
-        '../resources/*.spec.js',
         '../map/*.spec.js',
         '../widgets/*.spec.js',
         '../import/*.spec.js'

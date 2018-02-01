@@ -41,21 +41,21 @@ export class DetailSidebarPage {
 
     public static getIdentifier() {
 
-        browser.wait(EC.visibilityOf(element(by.css('.document-view-field-identifier'))), delays.ECWaitTime);
-        return element(by.css('.document-view-field-identifier')).getText();
+        browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar .identifier .fieldvalue'))), delays.ECWaitTime);
+        return element(by.css('.detail-sidebar .identifier .fieldvalue')).getText();
     }
 
 
     public static getShortDescription() {
 
-        browser.wait(EC.visibilityOf(element(by.id('description-view-short-description'))), delays.ECWaitTime);
-        return element(by.id('description-view-short-description')).getText();
+        browser.wait(EC.visibilityOf(element(by.id('.detail-sidebar .short-description .fieldvalue'))), delays.ECWaitTime);
+        return element(by.id('.detail-sidebar .short-description .fieldvalue')).getText();
     }
 
 
     public static getTypeFromDocView() {
 
-        browser.wait(EC.visibilityOf(element(by.css('#description-view .document-view-field-type .fieldvalue'))), delays.ECWaitTime);
-        return element(by.css('#description-view .document-view-field-type .fieldvalue')).getText();
+        browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar .type .fieldvalue'))), delays.ECWaitTime);
+        return element(by.css('.detail-sidebar .type .fieldvalue')).getText();
     }
 }

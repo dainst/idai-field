@@ -48,7 +48,7 @@ export class DoceditPage {
                                 if (clickMsgAway)
                                     NavbarPage.clickCloseAllMessages().then(() => resolve());
                                 else resolve();
-                            }, delays.shortRest / 10);
+                            }, delays.shortRest / 5);
                         })
                     }
                 )

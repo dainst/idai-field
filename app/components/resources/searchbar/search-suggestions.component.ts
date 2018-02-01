@@ -22,8 +22,6 @@ export class SearchSuggestionsComponent implements OnChanges {
     @Input() maxSuggestions: number;
     @Input() visible: boolean;
 
-    @ViewChild('suggestionBox') suggestionBox: HTMLElement;
-
     private suggestedDocuments: Array<IdaiFieldDocument> = [];
 
 

@@ -28,6 +28,7 @@ export class DocumentsManager {
     private newDocumentsFromRemote: Array<Document> = [];
 
     private deselectionObservers: Array<Observer<Document>> = [];
+    private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
 
 
     constructor(
@@ -51,6 +52,9 @@ export class DocumentsManager {
     public isNewDocumentFromRemote = (document: Document) => this.newDocumentsFromRemote.indexOf(document) > -1;
 
     public deselectionNotifications = (): Observable<Document> => ObserverUtil.register(this.deselectionObservers);
+
+    public populateDocumentsNotifactions = (): Observable<Array<Document>> =>
+        ObserverUtil.register(this.populateDocumentsObservers);
 
 
     public async populateProjectDocument() {
@@ -173,6 +177,8 @@ export class DocumentsManager {
 
         this.newDocumentsFromRemote = [];
         this.documents = await this.createUpdatedDocumentList();
+
+        ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
     }
 
 

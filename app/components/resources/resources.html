@@ -7,7 +7,8 @@
     <div class="col-md-6 mr-md-auto" align="right">
         <div class="row">
             <div id="search-bar-container" class="col-md-8">
-                <resources-search-bar [q]="getQueryString()" [types]="getTypeFilters()"
+                <resources-search-bar [q]="getQueryString()"
+                                      [types]="getTypeFilters()"
                                       [relationName]="'isRecordedIn'"
                                       [relationRangeType]="viewFacade.getCurrentViewMainType()"
                                       (onQueryStringChanged)="setQueryString($event)"

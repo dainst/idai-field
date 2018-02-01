@@ -4,7 +4,7 @@
 #search-suggestions {
   position: absolute;
   text-align: left;
-  width: 100%;
+  width: calc(100% - 8px);
   background-color: rgb(238, 238, 238);
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
 

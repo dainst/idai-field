@@ -8,6 +8,8 @@
   z-index: 3;
   padding: 4px 1em;
   border: none;
+  width: 50px;
+  height: 40px;
 
   .mdi-filter {
     line-height: 30px;
@@ -15,16 +17,22 @@
 }
 
 #search-bar #object-search {
-  width: 100%;
+  width: calc(100% - 50px);
   padding: 9px;
 }
 
 #search-bar #filter-button {
   position: absolute;
-  right: 16px;
+  right: 16px !important;
 }
 
 #search-bar #filter-button img {
   width: 20px;
   height: 20px;
+}
+
+#search-bar {
+  type-icon {
+    margin-left: -6px;
+  }
 }

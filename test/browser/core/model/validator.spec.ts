@@ -1,7 +1,6 @@
-import {MDInternal} from '../../../src/app/messages/md-internal';
-import {Validator} from '../../../src/app/persist/validator';
-import {ProjectConfiguration} from '../../../src/app/configuration/project-configuration';
-import {ConfigLoader} from '../../../src/app/configuration/config-loader';
+import {ProjectConfiguration, ConfigLoader} from 'idai-components-2/configuration';
+import {Validator} from '../../../../app/core/model/validator';
+import {M} from '../../../../app/m';
 
 /**
  * @author Daniel de Oliveira
@@ -110,7 +109,7 @@ export function main() {
 
             new Validator(<ConfigLoader> configLoader)
                 .validate(doc).then(() => fail(), msgWithParams => {
-                expect(msgWithParams).toEqual([MDInternal.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
+                expect(msgWithParams).toEqual([M.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
                 done();
             });
         });
@@ -128,7 +127,7 @@ export function main() {
 
             new Validator(<ConfigLoader> configLoader)
                 .validate(doc).then(() => fail(), msgWithParams => {
-                    expect(msgWithParams).toEqual([MDInternal.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
+                    expect(msgWithParams).toEqual([M.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
                     done();
                 });
         });
@@ -146,7 +145,7 @@ export function main() {
 
             new Validator(<ConfigLoader> configLoader)
                 .validate(doc).then(() => fail(), msgWithParams => {
-                expect(msgWithParams).toEqual([MDInternal.VALIDATION_ERROR_INVALIDFIELD, 'T', 'a']);
+                expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDFIELD, 'T', 'a']);
                 done();
             });
         });
@@ -166,7 +165,7 @@ export function main() {
 
             new Validator(<ConfigLoader> configLoader)
                 .validate(doc).then(() => fail(), msgWithParams => {
-                expect(msgWithParams).toEqual([MDInternal.VALIDATION_ERROR_INVALIDFIELDS, 'T', 'a, b']);
+                expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDFIELDS, 'T', 'a, b']);
                 done();
             });
         });
@@ -186,7 +185,7 @@ export function main() {
             new Validator(<ConfigLoader> configLoader).validate(doc).then(
                 () => fail(),
                 msgWithParams => {
-                    expect(msgWithParams).toEqual([MDInternal.VALIDATION_ERROR_INVALIDRELATIONFIELD, 'T2',
+                    expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDRELATIONFIELD, 'T2',
                         'isRelatedTo']);
                     done();
                 });
@@ -208,7 +207,7 @@ export function main() {
             new Validator(<ConfigLoader> configLoader).validate(doc).then(
                 () => fail(),
                 msgWithParams => {
-                    expect(msgWithParams).toEqual([MDInternal.VALIDATION_ERROR_INVALIDRELATIONFIELDS, 'T2',
+                    expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDRELATIONFIELDS, 'T2',
                         'isRelatedTo, isDepictedIn']);
                     done();
                 });

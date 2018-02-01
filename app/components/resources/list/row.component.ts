@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Validator} from 'idai-components-2/persist';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiType} from 'idai-components-2/configuration';
 import {M} from '../../../m';
@@ -10,6 +9,7 @@ import {ViewFacade} from '../state/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {NavigationService} from '../navigation/navigation-service';
+import {Validator} from '../../../core/model/validator';
 
 
 @Component({

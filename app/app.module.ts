@@ -5,7 +5,6 @@ import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {IdaiMessagesModule, MD, Messages} from 'idai-components-2/messages';
 import {DocumentEditChangeMonitor, IdaiDocumentsModule} from 'idai-components-2/documents';
-import {Validator} from 'idai-components-2/persist';
 import {IdaiFieldValidator} from './core/model/idai-field-validator';
 import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
 import {routing} from './app.routing';
@@ -39,6 +38,7 @@ import {DatastoreModule} from './core/datastore/datastore.module';
 import {IdaiFieldDocumentDatastore} from './core/datastore/idai-field-document-datastore';
 import {PersistenceManager} from './core/persist/persistence-manager';
 import {DocumentDatastore} from './core/datastore/document-datastore';
+import {Validator} from './core/model/validator';
 
 
 const remote = require('electron').remote;

@@ -1,10 +1,10 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Validator} from 'idai-components-2/persist';
 import {ImportStrategy} from './import-strategy';
 import {SettingsService} from '../settings/settings-service';
 import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";
+import {Validator} from '../model/validator';
 
 /**
  * @author Daniel de Oliveira

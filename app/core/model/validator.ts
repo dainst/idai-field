@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
-import {MDInternal} from '../messages/md-internal';
-import {ConfigLoader} from '../configuration/config-loader';
-import {ProjectConfiguration} from '../configuration/project-configuration';
-import {FieldDefinition} from '../configuration/field-definition';
-import {RelationDefinition} from '../configuration/relation-definition';
-import {Document} from '../model/document';
-import {Resource} from '../model/resource';
+import {ConfigLoader,
+    ProjectConfiguration, FieldDefinition,
+    RelationDefinition} from 'idai-components-2/configuration';
+import {Document, Resource} from 'idai-components-2/core';
+import {M} from '../../m';
 
 
 @Injectable()
@@ -28,19 +26,19 @@ export class Validator {
             let resource = doc.resource;
 
             if (!Validator.validateType(resource, projectConfiguration)) {
-                return Promise.reject([MDInternal.VALIDATION_ERROR_INVALIDTYPE, resource.type]);
+                return Promise.reject([M.VALIDATION_ERROR_INVALIDTYPE, resource.type]);
             }
 
             let missingProperties = Validator.getMissingProperties(resource, projectConfiguration);
             if (missingProperties.length > 0) {
-                return Promise.reject([MDInternal.VALIDATION_ERROR_MISSINGPROPERTY, resource.type]
+                return Promise.reject([M.VALIDATION_ERROR_MISSINGPROPERTY, resource.type]
                     .concat(missingProperties.join((', '))));
             }
 
             let invalidFields;
             if (invalidFields = Validator.validateFields(resource, projectConfiguration)) {
                 let err = [invalidFields.length == 1 ?
-                    MDInternal.VALIDATION_ERROR_INVALIDFIELD : MDInternal.VALIDATION_ERROR_INVALIDFIELDS];
+                    M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS];
                 err.push(resource.type);
                 err.push(invalidFields.join(', '));
                 return Promise.reject(err);
@@ -49,8 +47,8 @@ export class Validator {
             let invalidRelationFields;
             if (invalidRelationFields = Validator.validateRelations(resource, projectConfiguration)) {
                 let err = [invalidRelationFields.length == 1 ?
-                    MDInternal.VALIDATION_ERROR_INVALIDRELATIONFIELD :
-                    MDInternal.VALIDATION_ERROR_INVALIDRELATIONFIELDS];
+                    M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
+                    M.VALIDATION_ERROR_INVALIDRELATIONFIELDS];
                 err.push(resource.type);
                 err.push(invalidRelationFields.join(', '));
                 return Promise.reject(err);
@@ -59,8 +57,8 @@ export class Validator {
             let invalidNumericValues;
             if (invalidNumericValues = Validator.validateNumericValues(resource, projectConfiguration)) {
                 let err = [invalidNumericValues.length == 1 ?
-                    MDInternal.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
-                    MDInternal.VALIDATION_ERROR_INVALID_NUMERIC_VALUES];
+                    M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
+                    M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES];
                 err.push(resource.type);
                 err.push(invalidNumericValues.join(', '));
                 return Promise.reject(err);

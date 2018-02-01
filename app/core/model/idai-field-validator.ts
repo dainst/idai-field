@@ -1,8 +1,8 @@
 import {ConfigLoader} from 'idai-components-2/configuration'
-import {Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {M} from '../../m';
 import {IdaiFieldDocumentDatastore} from "../datastore/idai-field-document-datastore";
+import {Validator} from './validator';
 
 
 /**
@@ -11,7 +11,8 @@ import {IdaiFieldDocumentDatastore} from "../datastore/idai-field-document-datas
  */
 export class IdaiFieldValidator extends Validator {
 
-    constructor(configLoader: ConfigLoader, private datastore: IdaiFieldDocumentDatastore) {
+    constructor(configLoader: ConfigLoader,
+                private datastore: IdaiFieldDocumentDatastore) {
         super(configLoader);
     }
 

@@ -11,6 +11,7 @@ import {DescriptionViewComponent} from './description-view.component';
 import {Loading} from './loading';
 import {LoadingIconComponent} from './loading-icon.component';
 import {SearchBarComponent} from './search-bar.component';
+import {TypePickerComponent} from './type-picker.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import {SearchBarComponent} from './search-bar.component';
         DocumentPickerComponent,
         DescriptionViewComponent,
         LoadingIconComponent,
-        SearchBarComponent
+        SearchBarComponent,
+        TypePickerComponent
     ],
     providers: [
         Loading
@@ -35,7 +37,8 @@ import {SearchBarComponent} from './search-bar.component';
         DocumentPickerComponent,
         DescriptionViewComponent,
         LoadingIconComponent,
-        SearchBarComponent
+        SearchBarComponent,
+        TypePickerComponent
     ],
     entryComponents: [
     ]

@@ -1,9 +1,10 @@
 import {browser, protractor, element, by} from 'protractor';
 import {ResourcesPage} from './resources.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {NavbarPage} from '../navbar.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
+import {RelationsViewPage} from '../widgets/relations-view.page';
+import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -14,12 +15,14 @@ describe('resources/relations --', () => {
 
 
     beforeAll(function() {
+
         ResourcesPage.get();
         browser.sleep(delays.shortRest);
     });
 
 
     beforeEach(() => {
+
         if (i > 0) {
             NavbarPage.performNavigateToSettings();
             require('request').post('http://localhost:3003/reset', {});
@@ -36,9 +39,9 @@ describe('resources/relations --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('2'));
-        DocumentViewPage.clickRelation(0);
-        DocumentViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('1'));
+        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('2'));
+        RelationsViewPage.clickRelation(0);
+        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('1'));
     });
 
 
@@ -49,7 +52,7 @@ describe('resources/relations --', () => {
         expect(DoceditRelationsTabPage.getRelationButtonText(4, 0, 0)).toEqual('1');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.performEditDocument();
+        DetailSidebarPage.performEditDocument();
         expect(DoceditRelationsTabPage.getRelationButtonText(5, 0, 0)).toEqual('2');
         DoceditPage.clickCloseEdit();
 
@@ -72,16 +75,16 @@ describe('resources/relations --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('2');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        DocumentViewPage.performEditDocument();
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        DetailSidebarPage.performEditDocument();
         DoceditPage.clickRelationsTab();
         DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(4, 0, 0);
         DoceditPage.clickSaveDocument();
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 
 
@@ -93,6 +96,6 @@ describe('resources/relations --', () => {
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('2');
         DoceditPage.clickConfirmDeleteInModal();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });
 });

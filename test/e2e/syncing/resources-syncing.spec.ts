@@ -1,10 +1,10 @@
 import {browser, protractor, element, by} from 'protractor';
 import * as PouchDB from 'pouchdb';
 import {ResourcesPage} from '../resources/resources.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {SettingsPage} from '../settings/settings.page';
 import {NavbarPage} from '../navbar.page';
+import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 let EC = protractor.ExpectedConditions;
@@ -239,7 +239,7 @@ describe('resources/syncing --', function() {
         let testDocument = await createOneDocument(nr);
 
         ResourcesPage.clickSelectResource('testf' + nr);
-        await DocumentViewPage.performEditDocument();
+        await DetailSidebarPage.performEditDocument();
         testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
         await updateTestDoc(testDocument);
         DoceditPage.typeInInputField('shortDescription', 'Testfund' + nr + '_alternative2');
@@ -272,7 +272,7 @@ describe('resources/syncing --', function() {
 
         createEventualConflict(nr).then(() => {
             ResourcesPage.clickSelectResource('testf' + nr);
-            DocumentViewPage.clickSolveConflicts();
+            DetailSidebarPage.clickSolveConflicts();
             browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
         });
     });
@@ -286,7 +286,7 @@ describe('resources/syncing --', function() {
 
             ResourcesPage.clickSelectResource('testf' + nr);
             ResourcesPage.clickSelectResource('testf' + nr);
-            DocumentViewPage.performEditDocument();
+            DetailSidebarPage.performEditDocument();
             DoceditPage.clickConflictsTab();
             DoceditPage.clickChooseRightRevision();
             DoceditPage.clickSolveConflictButton();

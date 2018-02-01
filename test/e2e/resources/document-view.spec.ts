@@ -1,10 +1,12 @@
 import {browser, protractor, element, by} from 'protractor';
 import {DoceditPage} from '../docedit/docedit.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
 
-import {ResourcesPage} from '../resources/resources.page';
+import {ResourcesPage} from './resources.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {NavbarPage} from '../navbar.page';
+import {RelationsViewPage} from '../widgets/relations-view.page';
+import {FieldsViewPage} from '../widgets/fields-view-page';
+import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
@@ -12,7 +14,7 @@ const delays = require('../config/delays');
 /**
  * @author Daniel de Oliveira
  */
-describe('widgets/document-view', function() {
+describe('resources/docview', function() {
 
     beforeAll(() => {
 
@@ -39,7 +41,7 @@ describe('widgets/document-view', function() {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelations().then(function(relations) {
+        RelationsViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(1);
         });
     });
@@ -49,10 +51,10 @@ describe('widgets/document-view', function() {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getRelationName(0).then(value => {
+        RelationsViewPage.getRelationName(0).then(value => {
             expect(value).toBe('Wird geschnitten von'); // with the correct relation label
         });
-        DocumentViewPage.getRelationValue(0).then(value => {
+        RelationsViewPage.getRelationValue(0).then(value => {
             expect(value).toBe('2');
         });
     });
@@ -62,10 +64,10 @@ describe('widgets/document-view', function() {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture', 'hasArea', '100');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getFieldName(0).then(value => {
+        FieldsViewPage.getFieldName(0).then(value => {
             expect(value).toBe('Fläche in m2'); // with the correct field label
         });
-        DocumentViewPage.getFieldValue(0).then(value => {
+        FieldsViewPage.getFieldValue(0).then(value => {
             expect(value).toBe('100');
         });
     });
@@ -78,7 +80,7 @@ describe('widgets/document-view', function() {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture', 'hasArea', '100');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.getFields().then(function(items) {
+        FieldsViewPage.getFields().then(function(items) {
             expect(items.length).toBe(1);
         });
     });
@@ -93,7 +95,7 @@ describe('widgets/document-view', function() {
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-architecture');
         ResourcesPage.clickSelectResource('1');
-        DocumentViewPage.performEditDocument();
+        DetailSidebarPage.performEditDocument();
         DoceditPage.clickRelationsTab();
         DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(1);
         DoceditRelationsTabPage.typeInRelationByIndices(1, 0, '2');
@@ -102,7 +104,7 @@ describe('widgets/document-view', function() {
         ResourcesPage.clickDiscardInModal();
 
         browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar'))), delays.ECWaitTime);
-        DocumentViewPage.getRelations().then(function(relations) {
+        RelationsViewPage.getRelations().then(function(relations) {
             expect(relations.length).toBe(0);
         });
     });

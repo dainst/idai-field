@@ -3,8 +3,8 @@ import {NavbarPage} from '../navbar.page';
 import * as PouchDB from 'pouchdb';
 import {SettingsPage} from './settings.page';
 import {ImageOverviewPage} from '../images/image-overview.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
 import {DoceditPage} from '../docedit/docedit.page';
+import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 
@@ -69,7 +69,7 @@ describe('settings --', function() {
         NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
         NavbarPage.clickCloseMessage();
         //
-        DocumentViewPage.performEditDocument();
+        DetailSidebarPage.performEditDocument();
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('mapLayerTest2.png');
         DoceditPage.clickConfirmDeleteInModal();

@@ -1,7 +1,8 @@
 import {browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
 import {NavbarPage} from "../navbar.page";
+import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
+import {FieldsViewPage} from '../widgets/fields-view-page';
 const request = require('request');
 
 const path = require('path');
@@ -75,12 +76,12 @@ describe('images/image-overview --', function() {
         const imageName = await ImageOverviewPage.getCellImageName(0);
 
         ImageOverviewPage.doubleClickCell(0);
-        browser.wait(EC.presenceOf(DocumentViewPage.getDocumentCard()), delays.ECWaitTime);
-        DocumentViewPage.clickFieldsTab();
-        DocumentViewPage.getIdentifier()
+        browser.wait(EC.presenceOf(DetailSidebarPage.getDocumentCard()), delays.ECWaitTime);
+        FieldsViewPage.clickFieldsTab();
+        DetailSidebarPage.getIdentifier()
             .then(identifier => expect(identifier).toContain(imageName));
 
-        DocumentViewPage.clickBackToGridButton();
+        DetailSidebarPage.clickBackToGridButton();
         browser.wait(EC.presenceOf(ImageOverviewPage.getCell(0)), delays.ECWaitTime);
         ImageOverviewPage.getCellImageName(0).then(name => expect(name).toContain(imageName));
         done();

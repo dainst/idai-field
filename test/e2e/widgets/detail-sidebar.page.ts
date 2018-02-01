@@ -2,9 +2,9 @@ import {browser, protractor, element, by} from 'protractor';
 
 'use strict';
 import {FieldsViewPage} from './fields-view-page';
-const common = require('./common.js');
+const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
-const delays = require('./config/delays');
+const delays = require('../config/delays');
 
 /**
  * @author Daniel de Oliveira

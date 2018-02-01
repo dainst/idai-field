@@ -1,4 +1,4 @@
-<form class="form-inline" id="search-bar">
+<form id="search-bar" class="form-inline">
 
     <span style="position: relative; width: 100%;">
         <input #searchInput
@@ -18,9 +18,9 @@
         </search-suggestions>
     </span>
 
-    <span class="input-group-btn" id="filter-button" *ngIf="showFiltersMenu">
-        <button class="btn btn-primary"
-                id="searchfilter"
+    <span *ngIf="showFiltersMenu" id="filter-button" class="input-group-btn">
+        <button id="searchfilter"
+                class="btn btn-primary"
                 type="button"
                 (click)="hideSuggestions()"
                 [ngbPopover]="filterMenu"

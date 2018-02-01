@@ -1,5 +1,5 @@
-<ul class="list-group object-list" id="objectList">
-    <li *ngFor="let document of viewFacade.getDocuments(); let index=index"
+<ul id="objectList" class="list-group object-list">
+    <li *ngFor="let document of viewFacade.getDocuments()"
         (click)="select(document)"
         (dblclick)="resourcesComponent.editDocument(document, 'fields')"
         class="list-group-item"

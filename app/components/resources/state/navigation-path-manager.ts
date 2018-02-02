@@ -37,38 +37,29 @@ export class NavigationPathManager {
      * Moves the 'root' within or adds a 'root' to a navigation path.
      *
      * Let's say document1 corresponds to segment1 etc.
-     * and we have
+     * and we have a navigation path with an optional root (V)
      *
-     * 1.           ROOT
-     *               |
      *               V
      * SEGMENT1, SEGMENT2, SEGMENT3
      *
-     * from 1., moveInto(document4) changes the situation to
+     * moveInto(document4) changes the situation to
+
+     *                             V
+     * NP: SEGMENT1, SEGMENT2, SEGMENT4
      *
-     * 2.                     ROOT
-     *                         |
-     *                         V
-     * SEGMENT1, SEGMENT2, SEGMENT4
+     * from there, moveInto(document5) changes the situation to
      *
-     * from 2., moveInto(document5) changes the situation to
-     *
-     * 3.                               ROOT
-     *                                   |
      *                                   V
      * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
      *
-     * from 3., moveInto(document1) changes the situation to
+     * from there, moveInto(document1) changes the situation to
      *
-     * 4. ROOT
-     *     |
      *     V
      * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
      *
-     * from 4., moveInto(undefined) changes the situation to
+     * from there, moveInto(undefined) changes the situation to
      *
-     * 5. (NO ROOT)
-     *
+     * (NO ROOT)
      * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
      *
      * @param document set undefined to make rootElement of navigation path undefined

@@ -43,7 +43,7 @@ export class NavigationPathManager {
      * SEGMENT1, SEGMENT2, SEGMENT3
      *
      * moveInto(document4) changes the situation to
-
+     * 
      *                             V
      * NP: SEGMENT1, SEGMENT2, SEGMENT4
      *

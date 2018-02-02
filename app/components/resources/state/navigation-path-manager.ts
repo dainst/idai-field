@@ -98,7 +98,6 @@ export class NavigationPathManager {
     }
 
 
-    // TODO write unit test
     public async updateNavigationPathForDocument(document: IdaiFieldDocument) {
 
         if (!this.isCorrectNavigationPathFor(document)) {

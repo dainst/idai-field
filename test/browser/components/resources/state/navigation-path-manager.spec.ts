@@ -26,6 +26,7 @@ export function main() {
 
         let resourcesState: ResourcesState;
         let navigationPathManager: NavigationPathManager;
+        let mockDatastore: any;
 
         let documents: Array<IdaiFieldDocument>;
 
@@ -48,7 +49,7 @@ export function main() {
                 undefined
             );
 
-            const mockDatastore = jasmine.createSpyObj('datastore', ['get', 'find']);
+            mockDatastore = jasmine.createSpyObj('datastore', ['get', 'find']);
             mockDatastore.find.and.callFake(find);
 
             navigationPathManager = new NavigationPathManager(resourcesState, mockDatastore);
@@ -158,6 +159,74 @@ export function main() {
             expect(navigationPathManager.getNavigationPath().rootDocument).toEqual(featureDocument1);
             expect(navigationPathManager.getNavigationPath().elements.length).toEqual(1);
             expect(navigationPathManager.getNavigationPath().elements[0]).toEqual(featureDocument1);
+
+            done();
+        });
+
+
+        it('updateNavigationPathForDocument', async done => {
+
+            const trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
+            const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+            const featureDocument2 = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'feature2');
+            const findDocument1 = Static.idfDoc('Find 1', 'find1', 'Find', 'find1');
+            const findDocument2 = Static.idfDoc('Find 2', 'find2', 'Find', 'find2');
+            featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+            featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+            findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+            findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
+            findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+            findDocument2.resource.relations['liesWithin'] = [featureDocument2.resource.id];
+
+            documents = [trenchDocument1, featureDocument1, findDocument1];
+
+            await resourcesState.initialize('excavation');
+            resourcesState.setMainTypeDocument(trenchDocument1);
+
+            await navigationPathManager.moveInto(featureDocument1);
+            await navigationPathManager.moveInto(findDocument1);
+            await navigationPathManager.moveInto(featureDocument1);
+
+            mockDatastore.get.and.returnValue(Promise.resolve(featureDocument2));
+
+            await navigationPathManager.updateNavigationPathForDocument(findDocument2);
+
+            expect(navigationPathManager.getNavigationPath().rootDocument).toEqual(featureDocument2);
+            expect(navigationPathManager.getNavigationPath().elements.length).toEqual(1);
+            expect(navigationPathManager.getNavigationPath().elements[0]).toEqual(featureDocument2);
+
+            done();
+        });
+
+
+        it('updateNavigationPathForDocument - is correct navigation path', async done => {
+
+            const trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
+            const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+            const featureDocument2 = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'feature2');
+            const findDocument1 = Static.idfDoc('Find 1', 'find1', 'Find', 'find1');
+            const findDocument2 = Static.idfDoc('Find 2', 'find2', 'Find', 'find2');
+            featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+            featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+            findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+            findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
+            findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+            findDocument2.resource.relations['liesWithin'] = [featureDocument2.resource.id];
+
+            documents = [trenchDocument1, featureDocument1, findDocument1];
+
+            await resourcesState.initialize('excavation');
+            resourcesState.setMainTypeDocument(trenchDocument1);
+
+            await navigationPathManager.moveInto(featureDocument1);
+            await navigationPathManager.moveInto(findDocument1);
+
+            await navigationPathManager.updateNavigationPathForDocument(featureDocument1);
+
+            expect(navigationPathManager.getNavigationPath().rootDocument).toEqual(undefined);
+            expect(navigationPathManager.getNavigationPath().elements.length).toEqual(2);
+            expect(navigationPathManager.getNavigationPath().elements[0]).toEqual(featureDocument1);
+            expect(navigationPathManager.getNavigationPath().elements[1]).toEqual(findDocument1);
 
             done();
         });

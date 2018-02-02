@@ -79,7 +79,7 @@ export class NavigationPathManager {
             )
         );
 
-        ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath());
+        this.notify();
     }
 
 
@@ -94,7 +94,7 @@ export class NavigationPathManager {
         if (!selectedMainTypeDocumentResource) return;
         this.resourcesState.setMainTypeDocument(selectedMainTypeDocumentResource);
 
-        ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath());
+        this.notify();
     }
 
 
@@ -115,6 +115,12 @@ export class NavigationPathManager {
             elements: this.resourcesState.getNavigationPathInternal().elements.map(toDocument),
             rootDocument: this.resourcesState.getNavigationPathInternal().rootDocument
         }
+    }
+
+
+    private notify() {
+
+        ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath());
     }
 
 
@@ -151,57 +157,6 @@ export class NavigationPathManager {
             await this.moveInto(undefined);
         } else {
             this.setNavigationPath({ elements: elements, rootDocument: elements[elements.length - 1]});
-        }
-    }
-
-
-    private setNavigationPath(newNavigationPath: NavigationPath) {
-
-        const currentNavigationPath = this.resourcesState.getNavigationPathInternal();
-        const currentNavigationPathResourceIds = currentNavigationPath.elements.map(segmentToDocResourceId);
-
-        const result: NavigationPathInternal = {
-            elements: [],
-            rootDocument: newNavigationPath.rootDocument,
-            q: currentNavigationPath.q,
-            types: currentNavigationPath.types
-        };
-
-        if (!newNavigationPath.rootDocument ||
-            currentNavigationPathResourceIds.indexOf(newNavigationPath.rootDocument.resource.id as string) > -1) {
-
-            result.elements = currentNavigationPath.elements;
-        } else {
-            for (let document of newNavigationPath.elements) {
-                const index: number = currentNavigationPathResourceIds.indexOf(document.resource.id as string);
-                result.elements.push(index > -1 ?
-                    currentNavigationPath.elements[index] :
-                    {document: document}
-                );
-            }
-        }
-
-        this.resourcesState.setNavigationPathInternal(result);
-
-        ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath());
-    }
-
-
-    private async validateAndRepair(navigationPath: NavigationPathInternal): Promise<NavigationPathInternal> {
-
-        const invalidSegment: NavigationPathSegment|undefined = await this.findInvalidSegment(navigationPath);
-
-        if (invalidSegment) {
-            return {
-                elements: takeWhile(differentFrom(invalidSegment))(navigationPath.elements),
-                rootDocument: navigationPath.rootDocument != invalidSegment.document
-                    ? navigationPath.rootDocument
-                    : undefined,
-                q: navigationPath.q,
-                types: navigationPath.types
-            };
-        } else {
-            return navigationPath;
         }
     }
 
@@ -247,6 +202,70 @@ export class NavigationPathManager {
             return ModelUtil.hasRelationTarget(segment.document,
                 'liesWithin', segments[index - 1].document.resource.id as string);
         }
+    }
+
+
+    private setNavigationPath(newNavigationPath: NavigationPath) {
+
+        const currentNavigationPath = this.resourcesState.getNavigationPathInternal();
+
+        this.resourcesState.setNavigationPathInternal({
+
+            elements: this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)
+                ? currentNavigationPath.elements
+                : NavigationPathManager.makeNavigationPathElements(
+                    newNavigationPath,
+                    currentNavigationPath
+                ),
+
+            rootDocument: newNavigationPath.rootDocument,
+            q: currentNavigationPath.q,
+            types: currentNavigationPath.types
+        });
+
+        this.notify();
+    }
+
+
+    private rootDocIncludedInCurrentNavigationPath(newNavigationPath: NavigationPath) {
+
+        return !newNavigationPath.rootDocument ||
+            this.resourcesState.getNavigationPathInternal().elements.map(segmentToDocResourceId)
+                .includes(newNavigationPath.rootDocument.resource.id as string);
+    }
+
+
+    private async validateAndRepair(navigationPath: NavigationPathInternal): Promise<NavigationPathInternal> {
+
+        const invalidSegment = await this.findInvalidSegment(navigationPath);
+
+        return invalidSegment
+            ? {
+                elements: takeWhile(differentFrom(invalidSegment))(navigationPath.elements),
+                rootDocument: navigationPath.rootDocument != invalidSegment.document
+                    ? navigationPath.rootDocument
+                    : undefined,
+                q: navigationPath.q,
+                types: navigationPath.types
+            }
+            : navigationPath;
+    }
+
+
+    private static makeNavigationPathElements(newNavigationPath: NavigationPath,
+                                       currentNavigationPath: NavigationPathInternal) {
+
+        const elements = [];
+
+        for (let document of newNavigationPath.elements) {
+            const index: number = currentNavigationPath.elements.map(segmentToDocResourceId).indexOf(document.resource.id as string);
+            elements.push(index > -1 ?
+                currentNavigationPath.elements[index] :
+                {document: document}
+            );
+        }
+
+        return elements;
     }
 
 

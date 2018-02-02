@@ -41,3 +41,5 @@ export class ModelUtil {
 export const hasEqualId = (l: Document|undefined) => (r: Document): boolean => (l != undefined && l.resource.id == r.resource.id);
 
 export const hasId = (doc: Document) => doc.resource.id != undefined;
+
+export const toResourceId = (doc: Document) => doc.resource.id as string;

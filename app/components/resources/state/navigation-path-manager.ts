@@ -100,7 +100,7 @@ export class NavigationPathManager {
 
     public async updateNavigationPathForDocument(document: IdaiFieldDocument) {
 
-        if (!this.isCorrectNavigationPathFor(document)) {
+        if (!this.isPartOfNavigationPath(document)) {
             await this.createNavigationPathForDocument(document);
         }
     }
@@ -109,9 +109,7 @@ export class NavigationPathManager {
     public getNavigationPath(): NavigationPath {
 
         if (this.resourcesState.isInOverview()) return NavigationPath.empty();
-
-        const mainTypeDocument = this.resourcesState.getMainTypeDocument();
-        if (!mainTypeDocument) return NavigationPath.empty();
+        if (!this.resourcesState.getMainTypeDocument()) return NavigationPath.empty();
 
         return {
             elements: this.resourcesState.getNavigationPathInternal().elements.map(toDocument),
@@ -120,7 +118,7 @@ export class NavigationPathManager {
     }
 
 
-    private isCorrectNavigationPathFor(document: IdaiFieldDocument): boolean {
+    private isPartOfNavigationPath(document: IdaiFieldDocument): boolean {
 
         const navigationPath = this.getNavigationPath();
 
@@ -159,10 +157,8 @@ export class NavigationPathManager {
 
     private setNavigationPath(newNavigationPath: NavigationPath) {
 
-        const currentNavigationPath: NavigationPathInternal
-            = this.resourcesState.getNavigationPathInternal();
-        const currentNavigationPathResourceIds: Array<string> = currentNavigationPath.elements
-            .map(element => element.document.resource.id as string);
+        const currentNavigationPath = this.resourcesState.getNavigationPathInternal();
+        const currentNavigationPathResourceIds = currentNavigationPath.elements.map(segmentToDocResourceId);
 
         const result: NavigationPathInternal = {
             elements: [],
@@ -173,6 +169,7 @@ export class NavigationPathManager {
 
         if (!newNavigationPath.rootDocument ||
             currentNavigationPathResourceIds.indexOf(newNavigationPath.rootDocument.resource.id as string) > -1) {
+
             result.elements = currentNavigationPath.elements;
         } else {
             for (let document of newNavigationPath.elements) {
@@ -285,3 +282,5 @@ export class NavigationPathManager {
     }
 }
 
+
+const segmentToDocResourceId = (seg: NavigationPathSegment) => seg.document.resource.id as string;

@@ -29,6 +29,7 @@ export function main() {
         let mockDatastore: any;
 
         let documents: Array<IdaiFieldDocument>;
+        let trenchDocument1: IdaiFieldDocument;
 
 
         const find = (query: Query) => {
@@ -60,16 +61,20 @@ export function main() {
         });
 
 
+        beforeEach(async () => {
+
+            trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
+            await resourcesState.initialize('excavation');
+            resourcesState.setMainTypeDocument(trenchDocument1);
+        });
+
+
         it('step into', async done => {
 
-            const trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
             const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
             documents = [trenchDocument1, featureDocument1];
-
-            await resourcesState.initialize('excavation');
-            resourcesState.setMainTypeDocument(trenchDocument1);
 
             await navigationPathManager.moveInto(featureDocument1);
 
@@ -83,14 +88,10 @@ export function main() {
 
         it('step out', async done => {
 
-            const trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
             const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
             documents = [trenchDocument1, featureDocument1];
-
-            await resourcesState.initialize('excavation');
-            resourcesState.setMainTypeDocument(trenchDocument1);
 
             await navigationPathManager.moveInto(featureDocument1);
             await navigationPathManager.moveInto(undefined);
@@ -105,7 +106,6 @@ export function main() {
 
         it('repair navigation path if a document is deleted', async done => {
 
-            const trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
             const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
             const findDocument1 = Static.idfDoc('Find 1', 'find1', 'Find', 'find1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
@@ -113,9 +113,6 @@ export function main() {
             findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
             documents = [trenchDocument1, featureDocument1, findDocument1];
-
-            await resourcesState.initialize('excavation');
-            resourcesState.setMainTypeDocument(trenchDocument1);
 
             await navigationPathManager.moveInto(featureDocument1);
             await navigationPathManager.moveInto(findDocument1);
@@ -135,7 +132,6 @@ export function main() {
 
         it('repair navigation path if a relation is changed', async done => {
 
-            const trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
             const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
             const featureDocument2 = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'feature2');
             const findDocument1 = Static.idfDoc('Find 1', 'find1', 'Find', 'find1');
@@ -145,9 +141,6 @@ export function main() {
             findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
             documents = [trenchDocument1, featureDocument1, featureDocument2, findDocument1];
-
-            await resourcesState.initialize('excavation');
-            resourcesState.setMainTypeDocument(trenchDocument1);
 
             await navigationPathManager.moveInto(featureDocument1);
             await navigationPathManager.moveInto(findDocument1);
@@ -166,7 +159,6 @@ export function main() {
 
         it('updateNavigationPathForDocument', async done => {
 
-            const trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
             const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
             const featureDocument2 = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'feature2');
             const findDocument1 = Static.idfDoc('Find 1', 'find1', 'Find', 'find1');
@@ -179,9 +171,6 @@ export function main() {
             findDocument2.resource.relations['liesWithin'] = [featureDocument2.resource.id];
 
             documents = [trenchDocument1, featureDocument1, findDocument1];
-
-            await resourcesState.initialize('excavation');
-            resourcesState.setMainTypeDocument(trenchDocument1);
 
             await navigationPathManager.moveInto(featureDocument1);
             await navigationPathManager.moveInto(findDocument1);
@@ -201,22 +190,15 @@ export function main() {
 
         it('updateNavigationPathForDocument - is correct navigation path', async done => {
 
-            const trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
             const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
             const featureDocument2 = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'feature2');
             const findDocument1 = Static.idfDoc('Find 1', 'find1', 'Find', 'find1');
-            const findDocument2 = Static.idfDoc('Find 2', 'find2', 'Find', 'find2');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
-            findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-            findDocument2.resource.relations['liesWithin'] = [featureDocument2.resource.id];
 
             documents = [trenchDocument1, featureDocument1, findDocument1];
-
-            await resourcesState.initialize('excavation');
-            resourcesState.setMainTypeDocument(trenchDocument1);
 
             await navigationPathManager.moveInto(featureDocument1);
             await navigationPathManager.moveInto(findDocument1);

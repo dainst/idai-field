@@ -70,7 +70,7 @@ export const takeWhile = <A>(f: (_: A) => boolean) => take(f, identical, 0);
 export const takeUntil = <A>(f: (_: A) => boolean) => take(f, flip, 1);
 
 
-export const is = <A>(l:A) =>
+export const sameAs = <A>(l:A) =>
     (r:A) => l == r;
 
 
@@ -82,12 +82,11 @@ export const bigger = <A>(l:A) =>
     (r:A) => l < r;
 
 
-export const differentFrom = <A>(l:A) =>
-    (r:A) => l != r;
+export const differentFrom = <A>(a:A) =>
+    isNot(sameAs(a));
 
 
 // private
-
 
 const identical = <A>(v: A) => v;
 

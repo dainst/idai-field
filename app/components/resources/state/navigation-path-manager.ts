@@ -6,7 +6,7 @@ import {NavigationPath} from './navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
-import {takeUntil, takeWhile} from '../../../util/list-util';
+import {isNot, takeUntil, takeWhile, sameAs, differentFrom} from '../../../util/list-util';
 import {NavigationPathInternal, NavigationPathSegment, isSegmentOf, toDocument} from './navigation-path-internal';
 
 
@@ -193,8 +193,7 @@ export class NavigationPathManager {
 
         if (invalidSegment) {
             return {
-                elements: takeWhile<NavigationPathSegment>(segment =>
-                    segment != invalidSegment)(navigationPath.elements),
+                elements: takeWhile(differentFrom(invalidSegment))(navigationPath.elements),
                 rootDocument: navigationPath.rootDocument != invalidSegment.document
                     ? navigationPath.rootDocument
                     : undefined,

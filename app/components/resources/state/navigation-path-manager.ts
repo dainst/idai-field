@@ -6,9 +6,12 @@ import {NavigationPath} from './navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
-import {isNot, takeUntil, takeWhile, sameAs, differentFrom} from '../../../util/list-util';
+import {differentFrom, takeUntil, takeWhile} from '../../../util/list-util';
 import {
-    NavigationPathInternal, NavigationPathSegment, isSegmentOf, toDocument,
+    isSegmentOf,
+    NavigationPathInternal,
+    NavigationPathSegment,
+    toDocument,
     toResourceId
 } from './navigation-path-internal';
 
@@ -196,15 +199,13 @@ export class NavigationPathManager {
     private hasValidRelation(segment: NavigationPathSegment, segments: Array<NavigationPathSegment>): boolean {
 
         const index: number = segments.indexOf(segment);
+        const mainTypeDocument = this.resourcesState.getMainTypeDocument();
 
-        if (index == 0) {
-            const mainTypeDocument: IdaiFieldDocument|undefined = this.resourcesState.getMainTypeDocument();
-            return mainTypeDocument != undefined && ModelUtil.hasRelationTarget(segment.document,
-                'isRecordedIn', mainTypeDocument.resource.id as string);
-        } else {
-            return ModelUtil.hasRelationTarget(segment.document,
+        return (index == 0)
+            ? mainTypeDocument != undefined && ModelUtil.hasRelationTarget(segment.document,
+                'isRecordedIn', mainTypeDocument.resource.id as string)
+            : ModelUtil.hasRelationTarget(segment.document,
                 'liesWithin', segments[index - 1].document.resource.id as string);
-        }
     }
 
 

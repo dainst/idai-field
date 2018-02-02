@@ -32,10 +32,15 @@ export class NavigationPathManager {
      */
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
-        const result: NavigationPathInternal = NavigationPathManager.makeNewNavigationPath(
-            await this.validateAndRepair(this.resourcesState.getNavigationPathInternal()), document);
+        this.resourcesState.setNavigationPathInternal(
 
-        this.resourcesState.setNavigationPathInternal(result);
+            NavigationPathManager.makeNewNavigationPath(
+                await this.validateAndRepair(
+                    this.resourcesState.getNavigationPathInternal()
+                ),
+                document
+            )
+        );
 
         ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath());
     }

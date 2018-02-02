@@ -20,14 +20,51 @@ export class NavigationPathManager {
 
 
     constructor(private resourcesState: ResourcesState,
-                private datastore: IdaiFieldDocumentReadDatastore) {
-    }
+                private datastore: IdaiFieldDocumentReadDatastore) {}
 
 
-    public navigationPathNotifications = (): Observable<NavigationPath> => ObserverUtil.register(this.navigationPathObservers);
+    public navigationPathNotifications = (): Observable<NavigationPath> =>
+        ObserverUtil.register(this.navigationPathObservers);
 
 
     /**
+     * Moves the 'root' within or adds a 'root' to a navigation path.
+     *
+     * Let's say document1 corresponds to segment1 etc.
+     * and we have
+     *
+     * 1.           ROOT
+     *               |
+     *               V
+     * SEGMENT1, SEGMENT2, SEGMENT3
+     *
+     * from 1., moveInto(document4) changes the situation to
+     *
+     * 2.                     ROOT
+     *                         |
+     *                         V
+     * SEGMENT1, SEGMENT2, SEGMENT4
+     *
+     * from 2., moveInto(document5) changes the situation to
+     *
+     * 3.                               ROOT
+     *                                   |
+     *                                   V
+     * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
+     *
+     * from 3., moveInto(document1) changes the situation to
+     *
+     * 4. ROOT
+     *     |
+     *     V
+     * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
+     *
+     * from 4., moveInto(undefined) changes the situation to
+     *
+     * 5. (NO ROOT)
+     *
+     * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
+     *
      * @param document set undefined to make rootElement of navigation path undefined
      */
     public async moveInto(document: IdaiFieldDocument|undefined) {

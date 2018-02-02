@@ -26,3 +26,6 @@ export const isSegmentOf
 
 
 export const toDocument = (segment: NavigationPathSegment) => segment.document;
+
+
+export const toResourceId = (seg: NavigationPathSegment) => seg.document.resource.id as string;

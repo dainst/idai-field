@@ -7,7 +7,10 @@ import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
 import {isNot, takeUntil, takeWhile, sameAs, differentFrom} from '../../../util/list-util';
-import {NavigationPathInternal, NavigationPathSegment, isSegmentOf, toDocument} from './navigation-path-internal';
+import {
+    NavigationPathInternal, NavigationPathSegment, isSegmentOf, toDocument,
+    toResourceId
+} from './navigation-path-internal';
 
 
 /**
@@ -230,7 +233,7 @@ export class NavigationPathManager {
     private rootDocIncludedInCurrentNavigationPath(newNavigationPath: NavigationPath) {
 
         return !newNavigationPath.rootDocument ||
-            this.resourcesState.getNavigationPathInternal().elements.map(segmentToDocResourceId)
+            this.resourcesState.getNavigationPathInternal().elements.map(toResourceId)
                 .includes(newNavigationPath.rootDocument.resource.id as string);
     }
 
@@ -255,17 +258,18 @@ export class NavigationPathManager {
     private static makeNavigationPathElements(newNavigationPath: NavigationPath,
                                        currentNavigationPath: NavigationPathInternal) {
 
-        const elements = [];
 
-        for (let document of newNavigationPath.elements) {
-            const index: number = currentNavigationPath.elements.map(segmentToDocResourceId).indexOf(document.resource.id as string);
-            elements.push(index > -1 ?
-                currentNavigationPath.elements[index] :
-                {document: document}
-            );
-        }
+        return newNavigationPath.elements.reduce((elements, document) => {
 
-        return elements;
+                const index = currentNavigationPath.elements
+                    .map(toResourceId).indexOf(document.resource.id as string);
+
+                return elements.concat([(index > -1 ?
+                        currentNavigationPath.elements[index] :
+                        {document: document}
+                    )]);
+
+            }, Array<NavigationPathSegment>())
     }
 
 
@@ -299,6 +303,3 @@ export class NavigationPathManager {
                 ).concat([{document: newRootDocument}]);
     }
 }
-
-
-const segmentToDocResourceId = (seg: NavigationPathSegment) => seg.document.resource.id as string;

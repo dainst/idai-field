@@ -1,5 +1,5 @@
 import {
-    bigger, intersect, removeFrom, smaller, subtractTwo, takeUntil,
+    bigger, intersect, removeFrom, smaller, subtractArrays, takeUntil,
     takeWhile, flow, map, times, filter, isNot, sameAs, differentFrom, includedIn, subtract
 } from '../../../app/util/list-util';
 
@@ -46,16 +46,40 @@ export function main() {
         });
 
 
-        it('subtract: no intersection', () => {
+        it('subtract: no intersection', () =>
 
-            expect(subtract([1,2,3],[4,5,6])).toEqual([1,2,3]);
-        });
+            expect(
+
+                subtract([1,2,3],[4,5,6]))
+
+            .toEqual([1,2,3])
+        );
 
 
-        it('subtractTwo',() => {
 
-            expect(subtractTwo([[1,2],[2,2]],[1,2,3,4])).toEqual([3,4]);
-        });
+        it('subtractTwo',() =>
+
+            expect(
+
+                subtractArrays([[1,2],[2,2]])([1,2,3,4])
+
+            ).toEqual([3,4])
+        );
+
+
+
+        it('subtractTwo: usable with flow',() =>
+
+            expect(
+
+                flow(
+                    subtractArrays([[1,2],[2,2]]),
+                    filter(bigger(3))
+                )([1,2,3,4])
+
+            ).toEqual([4])
+        );
+
 
 
         it('take five', () =>

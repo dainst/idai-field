@@ -29,20 +29,10 @@ export const addTo = <A>(as: Array<A>) => (a: A): Array<A> =>
     (as.indexOf(a) > -1) ? as : as.concat([a]);
 
 
-export const subtractTwo = <A>(sets: NestedArray<A>, other: Array<A>): Array<A> => {
-
-    const result = JSON.parse(JSON.stringify(other));
-
-    sets.forEach(set =>
-        set.map(object =>
-            result.indexOf(object))
-            .filter(bigger(-1))
-            .reverse()
-            .forEach(removeAtIndex(result))
-    );
-
-    return result;
-};
+export const subtractArrays = <A>(subtrahends: NestedArray<A>) => (as: Array<A>): Array<A> =>
+    subtrahends.reduce(
+        (acc, val) => subtract(acc, val),
+        as);
 
 
 export const intersect = <A>(aas: NestedArray<A>): Array<A> =>

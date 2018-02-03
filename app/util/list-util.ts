@@ -32,7 +32,6 @@ export const subtractArrays = <A>(subtrahends: NestedArray<A>) =>
             as);
 
 
-
 export const removeFrom = <A>(as: Array<A>) => (a: A): Array<A> =>
     subtract([a])(as);
 

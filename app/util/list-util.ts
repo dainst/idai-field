@@ -18,12 +18,12 @@ export const removeAtIndex = <A>(as: Array<A>) => (i: number) => as.splice(i, 1)
 /**
  * Generate a new list with elements which are contained in l but not in r
  */
-export const subtract = <A>(l: Array<A>, r: Array<A>): Array<A> =>
-    l.filter(isNot(includedIn(r)));
+export const subtract = <A>(subtrahend: Array<A>) => (l: Array<A>): Array<A> =>
+    l.filter(isNot(includedIn(subtrahend)));
 
 
 export const removeFrom = <A>(as: Array<A>) => (a: A): Array<A> =>
-    subtract(as, [a]);
+    subtract([a])(as);
 
 
 export const addUniqueTo = <A>(as: Array<A>) => (a: A): Array<A> =>
@@ -32,7 +32,7 @@ export const addUniqueTo = <A>(as: Array<A>) => (a: A): Array<A> =>
 
 export const subtractArrays = <A>(subtrahends: NestedArray<A>) => (as: Array<A>): Array<A> =>
     subtrahends.reduce(
-        (acc, val) => subtract(acc, val),
+        (acc, val) => subtract(val)(acc),
         as);
 
 

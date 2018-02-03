@@ -86,8 +86,8 @@ export class LayerManager {
         oldActiveLayerIds: Array<string>): ListDiffResult {
 
         return {
-            removed: subtract(oldActiveLayerIds, newActiveLayerIds),
-            added: subtract(newActiveLayerIds, oldActiveLayerIds)
+            removed: subtract(newActiveLayerIds)(oldActiveLayerIds),
+            added: subtract(oldActiveLayerIds)(newActiveLayerIds)
         };
     }
 }

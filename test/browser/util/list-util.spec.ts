@@ -28,21 +28,33 @@ export function main() {
         });
 
 
-        it('subtract', () => {
+        it('subtract', () =>
 
-            expect(subtract([1,2,3],[3,4,5])).toEqual([1,2]);
-        });
+            expect(
+
+                subtract([3,4,5])([1,2,3])
+
+            ).toEqual([1,2])
+        );
 
 
-        it('subtract: from empty list', () => {
+        it('subtract: from empty list', () =>
 
-            expect(subtract([],[3,4,5])).toEqual([]);
-        });
+            expect(
+
+                subtract([3,4,5])([])
+
+            ).toEqual([])
+        );
 
 
         it('subtract: empty list', () => {
 
-            expect(subtract([1,2,3],[])).toEqual([1,2,3]);
+            expect(
+
+                subtract([])([1,2,3])
+
+            ).toEqual([1,2,3]);
         });
 
 
@@ -50,14 +62,26 @@ export function main() {
 
             expect(
 
-                subtract([1,2,3],[4,5,6]))
+                subtract([4,5,6])([1,2,3])
 
-            .toEqual([1,2,3])
+            ).toEqual([1,2,3])
         );
 
 
+        it('subtract: usable with flow',() =>
 
-        it('subtractTwo',() =>
+            expect(
+
+                flow(
+                    subtract([3,4,5]),
+                    filter(smaller(2))
+                )([1,2,3])
+
+            ).toEqual([1])
+        );
+
+
+        it('subtractArrays',() =>
 
             expect(
 
@@ -68,7 +92,7 @@ export function main() {
 
 
 
-        it('subtractTwo: usable with flow',() =>
+        it('subtractArrays: usable with flow',() =>
 
             expect(
 
@@ -79,7 +103,6 @@ export function main() {
 
             ).toEqual([4])
         );
-
 
 
         it('take five', () =>

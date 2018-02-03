@@ -1,7 +1,7 @@
 import {
     bigger, intersect, removeFrom, smaller, subtractArrays, takeUntil,
     takeWhile, flow, map, times, filter, isNot, sameAs, differentFrom, includedIn, subtract,
-    unite, uniteWith,
+    unite, uniteWith, intersectWith,
 } from '../../../app/util/list-util';
 
 /**
@@ -10,6 +10,16 @@ import {
 export function main() {
 
     describe('ListUtil', () => {
+
+        it('intersectWith',() =>
+
+            expect(
+
+                intersectWith([1,2])([2,4])
+
+            ).toEqual([2])
+        );
+
 
         it('intersect',() =>
 

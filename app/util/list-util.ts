@@ -36,9 +36,12 @@ export const subtractArrays = <A>(subtrahends: NestedArray<A>) => (as: Array<A>)
         as);
 
 
-// TODO make intersectWith and implement this method in terms of it
+export const intersectWith = <A>(a1: Array<A>) =>
+    (a2: Array<A>) => a1.filter(includedIn(a2));
+
+
 export const intersect = <A>(aas: NestedArray<A>): Array<A> =>
-    aas.reduce((p, c) => p.filter(includedIn(c)));
+    aas.reduce((acc, val) => intersectWith(acc)(val));
 
 
 /**
@@ -55,16 +58,20 @@ export const unite = <A>(aas: NestedArray<A>): Array<A> =>
         aas.reduce((acc, val) => val ? uniteWith(acc)(val) : acc);
 
 
-export const includedIn =  <A>(as: Array<A>) => (a: A) => as.indexOf(a) != -1;
+export const includedIn =  <A>(as: Array<A>) =>
+    (a: A) => as.indexOf(a) != -1;
 
 
-export const isNot = <A>(f: (_: A) => boolean) => (a: A) => flip(f(a));
+export const isNot = <A>(f: (_: A) => boolean) =>
+    (a: A) => flip(f(a));
 
 
-export const takeWhile = <A>(f: (_: A) => boolean) => take(f, identical, 0);
+export const takeWhile = <A>(f: (_: A) => boolean) =>
+    take(f, identical, 0);
 
 
-export const takeUntil = <A>(f: (_: A) => boolean) => take(f, flip, 1);
+export const takeUntil = <A>(f: (_: A) => boolean) =>
+    take(f, flip, 1);
 
 
 export const sameAs = <A>(l:A) =>

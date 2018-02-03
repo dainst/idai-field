@@ -85,6 +85,14 @@ export const takeUntil = <A>(f: (_: A) => boolean) =>
     };
 
 
+export const dropWhile = <A>(f: (_: A) => boolean) =>
+    (as: Array<A>) => {
+        let go = false;
+        return as.reduce((acc: Array<A>, a) =>
+            go || !f(a) ? (go = true, acc.concat([a])) : acc, []);
+    };
+
+
 export const sameAs = <A>(l:A) =>
     (r:A) => l == r;
 

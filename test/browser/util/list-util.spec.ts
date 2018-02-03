@@ -1,7 +1,7 @@
 import {
     bigger, intersect, removeFrom, smaller, subtractArrays, takeUntil,
     takeWhile, flow, map, times, filter, isNot, sameAs, differentFrom, includedIn, subtract,
-    unite, uniteWith, intersectWith, reverse,
+    unite, uniteWith, intersectWith, reverse, dropWhile,
 } from '../../../app/util/list-util';
 
 /**
@@ -231,6 +231,28 @@ export function main() {
 
             expect(takeUntil(bigger(13))
                 ([])).toEqual([])
+        );
+
+
+        it('dropWhile - drop five', () =>
+
+            expect(
+
+                dropWhile(smaller(20))
+                    ([7, 9, 10, 13, 21, 20])
+
+            ).toEqual([21, 20])
+        );
+
+
+        it('dropWhile - drop none', () =>
+
+            expect(
+
+                dropWhile(smaller(5))
+                    ([7, 9, 10, 13, 21, 20])
+
+            ).toEqual([7, 9, 10, 13, 21, 20])
         );
 
 

@@ -120,8 +120,7 @@ export function main() {
                 flow(
                     dropWhile(smaller(20)),
                     reverse
-                )
-                ([7, 9, 10, 13, 21, 20])
+                )([7, 9, 10, 13, 21, 20])
 
             ).toEqual([20, 21])
         );

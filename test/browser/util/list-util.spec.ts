@@ -1,7 +1,7 @@
 import {
     bigger, intersect, removeFrom, smaller, subtractArrays, takeUntil,
     takeWhile, flow, map, times, filter, isNot, sameAs, differentFrom, includedIn, subtract,
-    unite, uniteWith, intersectWith,
+    unite, uniteWith, intersectWith, reverse,
 } from '../../../app/util/list-util';
 
 /**
@@ -270,6 +270,24 @@ export function main() {
 
             expect(filter(smaller(4))
                 ([2,4,1,5,7,8,2,1,0])).toEqual(([2,1,2,1,0]))
+        );
+
+
+        it('reverse ', () =>
+
+            expect(reverse([1,3])).toEqual(([3,1]))
+        );
+
+
+        it('reverse - usable with flow ', () =>
+
+            expect(
+
+                flow(
+                    reverse
+                )([1,3])
+
+            ).toEqual(([3,1]))
         );
 
 

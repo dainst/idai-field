@@ -76,6 +76,14 @@ export const takeWhile = <A>(f: (_: A) => boolean) =>
     };
 
 
+export const takeRightWhile = <A>(f: (_: A) => boolean) =>
+    (as: Array<A>) => {
+        let go = true;
+        return as.reduceRight((acc: Array<A>, a) =>
+            go && f(a) ? [a].concat(acc) : (go = false, acc), []);
+    };
+
+
 export const takeUntil = <A>(f: (_: A) => boolean) =>
     (as: Array<A>) => {
         const found = as.find(f);

@@ -14,7 +14,8 @@ import {
     takeWhile,
     times,
     unite,
-    uniteWith
+    uniteWith,
+    takeRightWhile,
 } from '../../../app/util/list-util';
 
 /**
@@ -160,6 +161,52 @@ export function main() {
             expect(takeWhile(bigger(23))
                 ([])).toEqual([])
         );
+
+
+        it('takeRightWhile - take five', () =>
+
+            expect(
+
+                takeRightWhile(bigger(13))
+                    ([7, 9, 10, 13, 17, 20])
+
+            ).toEqual([17, 20])
+        );
+
+
+        it('takeRightWhile - take none', () =>
+
+            expect(
+
+                takeRightWhile(bigger(23))
+                    ([7, 9, 10, 13, 17, 20])
+
+            ).toEqual([])
+        );
+
+
+        it('takeRightWhile - take all', () =>
+
+            expect(
+
+                takeRightWhile(bigger(1))
+                    ([7, 9])
+
+            ).toEqual([7, 9])
+        );
+
+
+        it('takeRightWhile - empty', () =>
+
+            expect(
+
+                takeRightWhile(bigger(23))
+                    ([])
+
+            ).toEqual([])
+        );
+
+
 
 
         it('takeUntil - take two', () => {

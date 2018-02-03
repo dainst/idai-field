@@ -10,7 +10,7 @@ import {
     reverse,
     smaller,
     subtract,
-    subtractArrays,
+    subtractArrays, takeRightWhile,
     takeWhile,
     times,
     unite,
@@ -110,6 +110,32 @@ export function main() {
                 )([1,3])
 
             ).toEqual(([3,1]))
+        );
+
+
+        it('takeWhile', () =>
+
+            expect(
+
+                flow(
+                    takeWhile(smaller(20)),
+                    filter(bigger(13))
+                )([13, 17, 20])
+
+            ).toEqual([17])
+        );
+
+
+        it('takeRightWhile', () =>
+
+            expect(
+
+                flow(
+                    takeRightWhile(bigger(20)),
+                    filter(bigger(21))
+                )([13, 22, 21])
+
+            ).toEqual([22])
         );
 
 

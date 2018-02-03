@@ -14,6 +14,7 @@ export const getAtIndexOr = <A>(as: Array<A>, i: number, defaultValue: A|undefin
 
 export const removeAtIndex = <A>(as: Array<A>) => (i: number) => as.splice(i, 1);
 
+
 /**
  * Generate a new list with elements which are contained in l but not in r
  */
@@ -25,8 +26,8 @@ export const removeFrom = <A>(as: Array<A>) => (a: A): Array<A> =>
     subtract(as, [a]);
 
 
-export const addTo = <A>(as: Array<A>) => (a: A): Array<A> =>
-    (as.indexOf(a) > -1) ? as : as.concat([a]);
+export const addUniqueTo = <A>(as: Array<A>) => (a: A): Array<A> =>
+    as.includes(a) ? as : as.concat([a]);
 
 
 export const subtractArrays = <A>(subtrahends: NestedArray<A>) => (as: Array<A>): Array<A> =>

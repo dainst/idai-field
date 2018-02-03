@@ -1,6 +1,6 @@
 import {
     bigger, intersect, remove, smaller, subtractTwo, takeUntil,
-    takeWhile
+    takeWhile, flow, map, times, filter
 } from '../../../app/util/list-util';
 
 /**
@@ -98,6 +98,37 @@ export function main() {
         it('remove: everything', () =>
 
             expect(remove([1,1], 1)).toEqual([])
+        );
+
+
+        it('times', () =>
+
+            expect(times(2)
+                (2)).toEqual(4)
+        );
+
+
+        it('map', () =>
+
+            expect(map(times(2))
+                ([2,4])).toEqual(([4,8]))
+        );
+
+
+        it('filter', () =>
+
+            expect(filter(smaller(4))
+                ([2,4,1,5,7,8,2,1,0])).toEqual(([2,1,2,1,0]))
+        );
+
+
+        it('flow', () =>
+
+            expect(flow(
+                    takeWhile(bigger(5)),
+                    map(times(2)),
+                    filter(smaller(16)))
+                ([7,7,8,5,16,5])).toEqual([14,14])
         );
     });
 }

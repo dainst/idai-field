@@ -1,6 +1,6 @@
 import {
     bigger, intersect, removeFrom, smaller, subtractArrays, takeUntil,
-    takeWhile, flow, map, times, filter, isNot, sameAs, differentFrom, includedIn, subtract
+    takeWhile, flow, map, times, filter, isNot, sameAs, differentFrom, includedIn, subtract, union
 } from '../../../app/util/list-util';
 
 /**
@@ -10,23 +10,58 @@ export function main() {
 
     describe('ListUtil', () => {
 
-        it('intersect - intersection',() => {
+        it('intersect',() =>
 
-            expect(intersect([[1,2],[2,3],[2,4]])).toEqual([2]);
-        });
+            expect(
 
+                intersect([[1,2],[2,3],[2,4]])
 
-        it('intersect - no intersection',() => {
-
-            expect(intersect([[1,2],[3,4],[5,6]])).toEqual([]);
-        });
+            ).toEqual([2])
+        );
 
 
-        it('intersect - no intersection where only partial intersection',() => {
+        it('intersect - no intersection',() =>
 
-            expect(intersect([[1,2],[2,3],[3,4]])).toEqual([]);
-        });
+            expect(
 
+                intersect([[1,2],[3,4],[5,6]])
+
+            ).toEqual([])
+        );
+
+
+        it('intersect - no intersection where only partial intersection',() =>
+
+            expect(
+
+                intersect([[1,2],[2,3],[3,4]])
+
+            ).toEqual([])
+        );
+
+
+        it('intersect - usable with flow',() =>
+
+            expect(
+
+                flow(
+                    intersect,
+                    map(times(2))
+                )([[1,2],[2,3]])
+
+            ).toEqual([4])
+        );
+
+        /*
+        it('union',() =>
+
+            expect(
+
+                union([[1,2],[2,3],[2,4]])
+
+            ).toEqual([1,2,3,4])
+        );
+        */
 
         it('subtract', () =>
 
@@ -38,7 +73,7 @@ export function main() {
         );
 
 
-        it('subtract: from empty list', () =>
+        it('subtract - from empty list', () =>
 
             expect(
 
@@ -48,7 +83,7 @@ export function main() {
         );
 
 
-        it('subtract: empty list', () => {
+        it('subtract - empty list', () => {
 
             expect(
 
@@ -58,7 +93,7 @@ export function main() {
         });
 
 
-        it('subtract: no intersection', () =>
+        it('subtract - no intersection', () =>
 
             expect(
 
@@ -68,7 +103,7 @@ export function main() {
         );
 
 
-        it('subtract: usable with flow',() =>
+        it('subtract - usable with flow',() =>
 
             expect(
 
@@ -91,8 +126,7 @@ export function main() {
         );
 
 
-
-        it('subtractArrays: usable with flow',() =>
+        it('subtractArrays - usable with flow',() =>
 
             expect(
 
@@ -133,21 +167,21 @@ export function main() {
         );
 
 
-        it('until: take two', () => {
+        it('until - take two', () => {
 
             expect(takeUntil(bigger(7))
                 ([7, 9, 11])).toEqual([7, 9]);
         });
 
 
-        it('until: take all', () =>
+        it('until - take all', () =>
 
             expect(takeUntil(bigger(13))
                 ([7, 9, 11])).toEqual([7, 9, 11])
         );
 
 
-        it('until: empty', () =>
+        it('until - empty', () =>
 
             expect(takeUntil(bigger(13))
                 ([])).toEqual([])
@@ -160,13 +194,13 @@ export function main() {
         );
 
 
-        it('removeFrom: nothing', () =>
+        it('removeFrom - nothing', () =>
 
             expect(removeFrom([1,2,7,4])(13)).toEqual([1,2,7,4])
         );
 
 
-        it('removeFrom: everything', () =>
+        it('removeFrom - everything', () =>
 
             expect(removeFrom([1,1])(1)).toEqual([])
         );

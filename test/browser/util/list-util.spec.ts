@@ -1,7 +1,20 @@
 import {
-    bigger, intersect, removeFrom, smaller, subtractArrays, takeUntil,
-    takeWhile, flow, map, times, filter, isNot, sameAs, differentFrom, includedIn, subtract,
-    unite, uniteWith, intersectWith, reverse, dropWhile,
+    bigger,
+    dropWhile,
+    filter,
+    intersect,
+    intersectWith,
+    map,
+    removeFrom,
+    reverse,
+    smaller,
+    subtract,
+    subtractArrays,
+    takeUntil,
+    takeWhile,
+    times,
+    unite,
+    uniteWith
 } from '../../../app/util/list-util';
 
 /**
@@ -51,19 +64,6 @@ export function main() {
         );
 
 
-        it('intersect - usable with flow',() =>
-
-            expect(
-
-                flow(
-                    intersect,
-                    map(times(2))
-                )([[1,2],[2,3]])
-
-            ).toEqual([4])
-        );
-
-
         it('uniteWith',() =>
 
             expect(
@@ -74,19 +74,6 @@ export function main() {
         );
 
 
-        it('uniteWith - use with flow',() =>
-
-            expect(
-
-                flow(
-                    uniteWith([1,2]),
-                    map(times(2))
-                )([2,4])
-
-            ).toEqual([2,4,8])
-        );
-
-
         it('unite ',() =>
 
             expect(
@@ -94,18 +81,6 @@ export function main() {
                 unite([[1,2],[3,4],[2,4]])
 
             ).toEqual([1,2,3,4])
-        );
-
-
-        it('unite - use with flow ',() =>
-
-            expect(
-                flow(
-                    unite,
-                    map(times(2))
-                )([[1,2],[3,4],[2,4]])
-
-            ).toEqual([2,4,6,8])
         );
 
 
@@ -149,19 +124,6 @@ export function main() {
         );
 
 
-        it('subtract - usable with flow',() =>
-
-            expect(
-
-                flow(
-                    subtract([3,4,5]),
-                    filter(smaller(2))
-                )([1,2,3])
-
-            ).toEqual([1])
-        );
-
-
         it('subtractArrays',() =>
 
             expect(
@@ -169,19 +131,6 @@ export function main() {
                 subtractArrays([[1,2],[2,2]])([1,2,3,4])
 
             ).toEqual([3,4])
-        );
-
-
-        it('subtractArrays - usable with flow',() =>
-
-            expect(
-
-                flow(
-                    subtractArrays([[1,2],[2,2]]),
-                    filter(bigger(3))
-                )([1,2,3,4])
-
-            ).toEqual([4])
         );
 
 
@@ -256,6 +205,17 @@ export function main() {
         );
 
 
+        it('dropWhile - empty', () =>
+
+            expect(
+
+                dropWhile(smaller(20))
+                    ([])
+
+            ).toEqual([])
+        );
+
+
         it('removeFrom', () =>
 
             expect(removeFrom([1,2,13,13,4])(13)).toEqual([1,2,4])
@@ -298,31 +258,6 @@ export function main() {
         it('reverse ', () =>
 
             expect(reverse([1,3])).toEqual(([3,1]))
-        );
-
-
-        it('reverse - usable with flow ', () =>
-
-            expect(
-
-                flow(
-                    reverse
-                )([1,3])
-
-            ).toEqual(([3,1]))
-        );
-
-
-        it('flow', () =>
-
-            expect(flow(
-                    takeWhile(bigger(4)),
-                    map(times(2)),
-                    filter(smaller(16)),
-                    filter(differentFrom(12)),
-                    filter(includedIn([14]))
-                )
-                ([5,6,7,8,4,16,5])).toEqual([14])
         );
     });
 }

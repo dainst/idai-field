@@ -1,6 +1,6 @@
 import {
-    bigger, intersect, remove, smaller, subtractTwo, takeUntil,
-    takeWhile, flow, map, times, filter
+    bigger, intersect, removeFrom, smaller, subtractTwo, takeUntil,
+    takeWhile, flow, map, times, filter, isNot, sameAs, differentFrom, includedIn
 } from '../../../app/util/list-util';
 
 /**
@@ -83,21 +83,21 @@ export function main() {
         );
 
 
-        it('remove', () =>
+        it('removeFrom', () =>
 
-            expect(remove([1,2,13,13,4], 13)).toEqual([1,2,4])
+            expect(removeFrom([1,2,13,13,4])(13)).toEqual([1,2,4])
         );
 
 
-        it('remove: nothing', () =>
+        it('removeFrom: nothing', () =>
 
-            expect(remove([1,2,7,4], 13)).toEqual([1,2,7,4])
+            expect(removeFrom([1,2,7,4])(13)).toEqual([1,2,7,4])
         );
 
 
-        it('remove: everything', () =>
+        it('removeFrom: everything', () =>
 
-            expect(remove([1,1], 1)).toEqual([])
+            expect(removeFrom([1,1])(1)).toEqual([])
         );
 
 
@@ -122,13 +122,16 @@ export function main() {
         );
 
 
-        it('flow', () =>
+        fit('flow', () =>
 
             expect(flow(
-                    takeWhile(bigger(5)),
+                    takeWhile(bigger(4)),
                     map(times(2)),
-                    filter(smaller(16)))
-                ([7,7,8,5,16,5])).toEqual([14,14])
+                    filter(smaller(16)),
+                    filter(differentFrom(12)),
+                    filter(includedIn([14]))
+                )
+                ([5,6,7,8,4,16,5])).toEqual([14])
         );
     });
 }

@@ -185,49 +185,49 @@ export function main() {
         );
 
 
-        it('take five', () =>
+        it('takeWhile - take five', () =>
 
             expect(takeWhile(smaller(20))
                 ([7, 9, 10, 13, 17, 20])).toEqual([7, 9, 10, 13, 17])
         );
 
 
-        it('take none', () =>
+        it('takeWhile - take none', () =>
 
             expect(takeWhile(bigger(23))
                 ([7, 9, 10, 13, 17, 20])).toEqual([])
         );
 
 
-        it('take all', () =>
+        it('takeWhile - take all', () =>
 
             expect(takeWhile(bigger(1))
                 ([7, 9])).toEqual([7, 9])
         );
 
 
-        it('empty', () =>
+        it('takeWhile - empty', () =>
 
             expect(takeWhile(bigger(23))
                 ([])).toEqual([])
         );
 
 
-        it('until - take two', () => {
+        it('takeUntil - take two', () => {
 
             expect(takeUntil(bigger(7))
                 ([7, 9, 11])).toEqual([7, 9]);
         });
 
 
-        it('until - take all', () =>
+        it('takeUntil - take all', () =>
 
             expect(takeUntil(bigger(13))
                 ([7, 9, 11])).toEqual([7, 9, 11])
         );
 
 
-        it('until - empty', () =>
+        it('takeUntil - empty', () =>
 
             expect(takeUntil(bigger(13))
                 ([])).toEqual([])

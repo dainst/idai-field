@@ -69,11 +69,20 @@ export const isNot = <A>(f: (_: A) => boolean) =>
 
 
 export const takeWhile = <A>(f: (_: A) => boolean) =>
-    take(f, identical, 0);
+    (as: Array<A>) => {
+        let go = true;
+        return as.reduce((acc: Array<A>, a) =>
+            go && f(a) ? acc.concat([a]) : (go = false, acc), []);
+    };
 
 
 export const takeUntil = <A>(f: (_: A) => boolean) =>
-    take(f, flip, 1);
+    (as: Array<A>) => {
+        const found = as.find(f);
+        return found ?
+            takeWhile(isNot(f))(as).concat([found])
+            : as
+    };
 
 
 export const sameAs = <A>(l:A) =>
@@ -115,16 +124,3 @@ const identical = <A>(v: A) => v;
 
 
 const flip = (v: boolean) => !v;
-
-
-const take = <A>(predicate: (_: A) => boolean,
-                 flipper: (predicateOutcome: boolean) => boolean,
-                 indexOffset: number) => {
-
-    return (arr: Array<A>) => {
-        // implementation of takeWhile based on the idea taken from http://sufflavus.github.io/JS-Tips-Take-While
-        let stopIndex = arr.length;
-        arr.some((el: A, index: number) => (flipper(predicate(el))) ? false : (stopIndex = index, true));
-        return arr.slice(0, stopIndex + indexOffset);
-    }
-};

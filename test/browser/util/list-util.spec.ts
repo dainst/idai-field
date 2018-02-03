@@ -1,6 +1,7 @@
 import {
     bigger, intersect, removeFrom, smaller, subtractArrays, takeUntil,
-    takeWhile, flow, map, times, filter, isNot, sameAs, differentFrom, includedIn, subtract, union
+    takeWhile, flow, map, times, filter, isNot, sameAs, differentFrom, includedIn, subtract,
+    unite, uniteWith,
 } from '../../../app/util/list-util';
 
 /**
@@ -52,16 +53,51 @@ export function main() {
             ).toEqual([4])
         );
 
-        /*
-        it('union',() =>
+
+        it('uniteWith',() =>
 
             expect(
 
-                union([[1,2],[2,3],[2,4]])
+                uniteWith([1,2])([2,4])
+
+            ).toEqual([1,2,4])
+        );
+
+
+        it('uniteWith - use with flow',() =>
+
+            expect(
+
+                flow(
+                    uniteWith([1,2]),
+                    map(times(2))
+                )([2,4])
+
+            ).toEqual([2,4,8])
+        );
+
+
+        it('unite ',() =>
+
+            expect(
+
+                unite([[1,2],[3,4],[2,4]])
 
             ).toEqual([1,2,3,4])
         );
-        */
+
+
+        it('unite - use with flow ',() =>
+
+            expect(
+                flow(
+                    unite,
+                    map(times(2))
+                )([[1,2],[3,4],[2,4]])
+
+            ).toEqual([2,4,6,8])
+        );
+
 
         it('subtract', () =>
 

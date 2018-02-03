@@ -36,15 +36,23 @@ export const subtractArrays = <A>(subtrahends: NestedArray<A>) => (as: Array<A>)
         as);
 
 
+// TODO make intersectWith and implement this method in terms of it
 export const intersect = <A>(aas: NestedArray<A>): Array<A> =>
     aas.reduce((p, c) => p.filter(includedIn(c)));
 
 
-export const union = (sets: NestedArray<any>) =>
-    Object.keys(sets.reduce((result: any, set) => {
-        set.forEach(item => result[item] = item);
-        return result;
-    }, {}));
+/**
+ * @returns the union of a1 and a2
+ */
+export const uniteWith = <A>(a1: Array<A>) =>
+    (a2: Array<A>) =>
+        a1.concat(
+            a2.filter(isNot(includedIn(a1))));
+
+
+export const unite = <A>(aas: NestedArray<A>): Array<A> =>
+    aas.length < 1 ? [] :
+        aas.reduce((acc, val) => val ? uniteWith(acc)(val) : acc);
 
 
 export const includedIn =  <A>(as: Array<A>) => (a: A) => as.indexOf(a) != -1;

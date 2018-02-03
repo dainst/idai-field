@@ -1,6 +1,6 @@
 import {
     bigger, intersect, removeFrom, smaller, subtractTwo, takeUntil,
-    takeWhile, flow, map, times, filter, isNot, sameAs, differentFrom, includedIn
+    takeWhile, flow, map, times, filter, isNot, sameAs, differentFrom, includedIn, subtract
 } from '../../../app/util/list-util';
 
 /**
@@ -25,6 +25,30 @@ export function main() {
         it('intersect - no intersection where only partial intersection',() => {
 
             expect(intersect([[1,2],[2,3],[3,4]])).toEqual([]);
+        });
+
+
+        it('subtract', () => {
+
+            expect(subtract([1,2,3],[3,4,5])).toEqual([1,2]);
+        });
+
+
+        it('subtract: from empty list', () => {
+
+            expect(subtract([],[3,4,5])).toEqual([]);
+        });
+
+
+        it('subtract: empty list', () => {
+
+            expect(subtract([1,2,3],[])).toEqual([1,2,3]);
+        });
+
+
+        it('subtract: no intersection', () => {
+
+            expect(subtract([1,2,3],[4,5,6])).toEqual([1,2,3]);
         });
 
 
@@ -122,7 +146,7 @@ export function main() {
         );
 
 
-        fit('flow', () =>
+        it('flow', () =>
 
             expect(flow(
                     takeWhile(bigger(4)),

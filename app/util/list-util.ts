@@ -23,19 +23,22 @@ export const subtract = <A>(subtrahend: Array<A>) =>
         l.filter(isNot(includedIn(subtrahend)));
 
 
+// TODO offer only one subtract method which accepts varargs for the subtrahends.
+// make the old subtract private and use it to implement the new subtract
+export const subtractArrays = <A>(subtrahends: NestedArray<A>) =>
+    (as: Array<A>): Array<A> =>
+        subtrahends.reduce(
+            (acc, val) => subtract(val)(acc),
+            as);
+
+
+
 export const removeFrom = <A>(as: Array<A>) => (a: A): Array<A> =>
     subtract([a])(as);
 
 
 export const addUniqueTo = <A>(as: Array<A>) => (a: A): Array<A> =>
     as.includes(a) ? as : as.concat([a]);
-
-
-export const subtractArrays = <A>(subtrahends: NestedArray<A>) =>
-    (as: Array<A>): Array<A> =>
-        subtrahends.reduce(
-            (acc, val) => subtract(val)(acc),
-            as);
 
 
 export const intersectWith = <A>(a1: Array<A>) =>

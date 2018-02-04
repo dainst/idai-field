@@ -57,7 +57,7 @@ export const unite = <A>(aas: NestedArray<A>): Array<A> =>
 
 
 export const includedIn =  <A>(as: Array<A>) =>
-    (a: A) => as.indexOf(a) != -1;
+    (a: A) => as.includes(a);
 
 
 export const isNot = <A>(f: (_: A) => boolean) =>

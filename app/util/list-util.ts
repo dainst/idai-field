@@ -6,6 +6,10 @@ import {flow, reverse, map, filter} from './list-util-flow';
 export {flow, reverse, map, filter};
 import {getAtIndex, getAtIndexOr, removeAtIndex} from './list-util-index';
 export {getAtIndex, getAtIndexOr, removeAtIndex};
+import {intersectWith, subtractFrom, uniteWith, addUniqueTo, removeFrom} from './list-util-operations';
+export {intersectWith, subtractFrom, uniteWith, addUniqueTo, removeFrom};
+import {NestedArray, intersect, unite, subtract} from './list-util-nested';
+export {NestedArray, intersect, unite, subtract};
 
 
 /**
@@ -13,53 +17,5 @@ export {getAtIndex, getAtIndexOr, removeAtIndex};
  */
 
 
-export const removeFrom = <A>(as: Array<A>) => (a: A): Array<A> =>
-    subtractFrom(as)([a]);
-
-
-export const addUniqueTo = <A>(as: Array<A>) => (a: A): Array<A> =>
-    as.includes(a) ? as : as.concat([a]);
-
-
-export const intersectWith = <A>(a1: Array<A>) =>
-    (a2: Array<A>) => a1.filter(includedIn(a2));
-
-
-/**
- * Generate a new list with elements which are contained in l but not in subtrahend
- */
-export const subtractFrom = <A>(as: Array<A>) =>
-    (subtrahend: Array<A>): Array<A> =>
-        as.filter(isNot(includedIn(subtrahend)));
-
-
-/**
- * @returns the union of a1 and a2
- */
-export const uniteWith = <A>(a1: Array<A>) =>
-    (a2: Array<A>) =>
-        a1.concat(
-            a2.filter(isNot(includedIn(a1))));
-
-
-/////////// NestedArray
-
-export type NestedArray<A> = Array<Array<A>>;
-
-
-export const subtract = <A>(subtrahends: NestedArray<A>) =>
-    (as: Array<A>): Array<A> =>
-        subtrahends.reduce(
-            (acc, val) => subtractFrom(acc)(val),
-            as);
-
-
-export const intersect = <A>(aas: NestedArray<A>): Array<A> =>
-    aas.reduce((acc, val) => intersectWith(acc)(val));
-
-
-export const unite = <A>(aas: NestedArray<A>): Array<A> =>
-    aas.length < 1 ? [] :
-        aas.reduce((acc, val) => val ? uniteWith(acc)(val) : acc);
 
 

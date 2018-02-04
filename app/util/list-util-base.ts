@@ -3,12 +3,15 @@
  */
 
 
-export const includedIn =  <A>(as: Array<A>) =>
-    (a: A) => as.includes(a);
-
-
 export const times = (l: number) =>
     (r: number) => l * r;
+
+
+export const identical = <A>(v: A) => v;
+
+
+export const includedIn =  <A>(as: Array<A>) =>
+    (a: A) => as.includes(a);
 
 
 export const differentFrom = <A>(a:A) =>
@@ -29,9 +32,6 @@ export const bigger = <A>(l:A) =>
 
 export const isNot = <A>(f: (_: A) => boolean) =>
     (a: A) => flip(f(a));
-
-
-export const identical = <A>(v: A) => v;
 
 
 export const flip = (v: boolean) => !v;

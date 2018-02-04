@@ -27,7 +27,7 @@ export const subtractNested = <A>(subtrahends: NestedArray<A>) =>
 
 
 export const removeFrom = <A>(as: Array<A>) => (a: A): Array<A> =>
-    subtract([a])(as);
+    _subtract([a])(as);
 
 
 export const addUniqueTo = <A>(as: Array<A>) => (a: A): Array<A> =>

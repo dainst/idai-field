@@ -5,34 +5,34 @@ import {isNot} from './list-util-base';
  */
 
 
-export const takeWhile = <A>(f: (_: A) => boolean) =>
+export const takeWhile = <A>(predicate: (_: A) => boolean) =>
     (as: Array<A>) => {
         let go = true;
         return as.reduce((acc: Array<A>, a) =>
-            go && f(a) ? acc.concat([a]) : (go = false, acc), []);
+            go && predicate(a) ? acc.concat([a]) : (go = false, acc), []);
     };
 
 
-export const takeRightWhile = <A>(f: (_: A) => boolean) =>
+export const takeRightWhile = <A>(predicate: (_: A) => boolean) =>
     (as: Array<A>) => {
         let go = true;
         return as.reduceRight((acc: Array<A>, a) =>
-            go && f(a) ? [a].concat(acc) : (go = false, acc), []);
+            go && predicate(a) ? [a].concat(acc) : (go = false, acc), []);
     };
 
 
-export const takeUntil = <A>(f: (_: A) => boolean) =>
+export const takeUntil = <A>(predicate: (_: A) => boolean) =>
     (as: Array<A>) => {
-        const found = as.find(f);
+        const found = as.find(predicate);
         return found ?
-            takeWhile(isNot(f))(as).concat([found])
+            takeWhile(isNot(predicate))(as).concat([found])
             : as
     };
 
 
-export const dropWhile = <A>(f: (_: A) => boolean) =>
+export const dropWhile = <A>(predicate: (_: A) => boolean) =>
     (as: Array<A>) => {
         let go = false;
         return as.reduce((acc: Array<A>, a) =>
-            go || !f(a) ? (go = true, acc.concat([a])) : acc, []);
+            go || !predicate(a) ? (go = true, acc.concat([a])) : acc, []);
     };

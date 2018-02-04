@@ -5,16 +5,16 @@ import {
     filter,
     flow,
     includedIn,
-    intersect,
+    intersection,
     map,
     reverse,
     smaller,
-    subtractFrom,
-    subtract, takeRightWhile,
+    subtract,
+    takeRightWhile,
     takeWhile,
     times,
-    unite,
-    uniteWith
+    union,
+    unite
 } from '../../../app/util/list-util';
 
 /**
@@ -53,7 +53,7 @@ export function main() {
             expect(
 
                 filter(smaller(4))
-                ([2, 4, 1, 5, 7, 8, 2, 1, 0])
+                    ([2, 4, 1, 5, 7, 8, 2, 1, 0])
 
             ).toEqual(([2, 1, 2, 1, 0]))
         );
@@ -74,7 +74,7 @@ export function main() {
             expect(
 
                 flow(
-                    intersect,
+                    intersection,
                     map(times(2))
                 )([[1,2],[2,3]])
 
@@ -87,7 +87,7 @@ export function main() {
             expect(
 
                 flow(
-                    uniteWith([1,2]),
+                    unite([1,2]),
                     map(times(2))
                 )([2,4])
 
@@ -99,7 +99,7 @@ export function main() {
 
             expect(
                 flow(
-                    unite,
+                    union,
                     map(times(2))
                 )([[1,2],[3,4],[2,4]])
 
@@ -112,24 +112,11 @@ export function main() {
             expect(
 
                 flow(
-                    subtractFrom([1, 2, 3]),
+                    subtract([3, 4, 5]),
                     filter(smaller(2))
-                )([3, 4, 5])
+                )([1, 2, 3])
 
             ).toEqual([1])
-        );
-
-
-        it('subtractArrays',() =>
-
-            expect(
-
-                flow(
-                    subtract([[1,2],[2,2]]),
-                    filter(bigger(3))
-                )([1,2,3,4])
-
-            ).toEqual([4])
         );
 
 

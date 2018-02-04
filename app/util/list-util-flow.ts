@@ -12,8 +12,8 @@ export const map = <A>(f: (_: A) => A) =>
     (as: Array<A>) => as.map(f);
 
 
-export const filter = <A>(f: (_: A) => boolean) =>
-    (as: Array<A>) => as.filter(f);
+export const filter = <A>(predicate: (_: A) => boolean) =>
+    (as: Array<A>) => as.filter(predicate);
 
 
 export const reverse = <A>(as: Array<A>) => as.reverse();

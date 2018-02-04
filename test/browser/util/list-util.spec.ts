@@ -1,12 +1,11 @@
 import {
+    intersection,
     intersect,
-    intersectWith,
     removeFrom,
-    subtractFrom,
     subtract,
     times,
-    unite,
-    uniteWith
+    union,
+    unite
 } from '../../../app/util/list-util';
 
 /**
@@ -20,7 +19,7 @@ export function main() {
 
             expect(
 
-                intersectWith([1,2])([2,4])
+                intersect([1,2])([2,4])
 
             ).toEqual([2])
         );
@@ -30,7 +29,7 @@ export function main() {
 
             expect(
 
-                intersect([[1,2],[2,3],[2,4]])
+                intersection([[1,2],[2,3],[2,4]])
 
             ).toEqual([2])
         );
@@ -40,7 +39,7 @@ export function main() {
 
             expect(
 
-                intersect([[1,2],[3,4],[5,6]])
+                intersection([[1,2],[3,4],[5,6]])
 
             ).toEqual([])
         );
@@ -50,7 +49,17 @@ export function main() {
 
             expect(
 
-                intersect([[1,2],[2,3],[3,4]])
+                intersection([[1,2],[2,3],[3,4]])
+
+            ).toEqual([])
+        );
+
+
+        it('intersect - empty array',() =>
+
+            expect(
+
+                intersection([])
 
             ).toEqual([])
         );
@@ -60,7 +69,7 @@ export function main() {
 
             expect(
 
-                uniteWith([1, 2])([2, 4])
+                unite([1, 2])([2, 4])
 
             ).toEqual([1, 2, 4])
         );
@@ -70,7 +79,7 @@ export function main() {
 
             expect(
 
-                unite([[1, 2],[3, 4],[2, 4]])
+                union([[1, 2],[3, 4],[2, 4]])
 
             ).toEqual([1, 2, 3, 4])
         );
@@ -80,7 +89,8 @@ export function main() {
 
             expect(
 
-                subtractFrom([1, 2, 3])([3, 4, 5])
+                subtract([3, 4, 5])
+                    ([1, 2, 3])
 
             ).toEqual([1, 2])
         );
@@ -90,7 +100,8 @@ export function main() {
 
             expect(
 
-                subtractFrom([])([3, 4, 5])
+                subtract([3, 4, 5])
+                    ([])
 
             ).toEqual([])
         );
@@ -100,7 +111,8 @@ export function main() {
 
             expect(
 
-                subtractFrom([1, 2, 3])([])
+                subtract([])
+                    ([1, 2, 3])
 
             ).toEqual([1, 2, 3]);
         });
@@ -110,19 +122,10 @@ export function main() {
 
             expect(
 
-                subtractFrom([1, 2, 3])([4, 5, 6])
+                subtract([4, 5, 6])
+                    ([1, 2, 3])
 
             ).toEqual([1, 2, 3])
-        );
-
-
-        it('subtractNested',() =>
-
-            expect(
-
-                subtract([[1, 2], [2, 2]])([1, 2, 3, 4])
-
-            ).toEqual([3, 4])
         );
 
 

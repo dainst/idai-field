@@ -2,8 +2,8 @@ import {
     intersect,
     intersectWith,
     removeFrom,
+    subtractFrom,
     subtract,
-    subtractNested,
     times,
     unite,
     uniteWith
@@ -80,7 +80,7 @@ export function main() {
 
             expect(
 
-                subtract([3, 4, 5])([1, 2, 3])
+                subtractFrom([1, 2, 3])([3, 4, 5])
 
             ).toEqual([1, 2])
         );
@@ -90,7 +90,7 @@ export function main() {
 
             expect(
 
-                subtract([3, 4, 5])([])
+                subtractFrom([])([3, 4, 5])
 
             ).toEqual([])
         );
@@ -100,7 +100,7 @@ export function main() {
 
             expect(
 
-                subtract([])([1, 2, 3])
+                subtractFrom([1, 2, 3])([])
 
             ).toEqual([1, 2, 3]);
         });
@@ -110,19 +110,9 @@ export function main() {
 
             expect(
 
-                subtract([4, 5, 6])([1, 2, 3])
+                subtractFrom([1, 2, 3])([4, 5, 6])
 
             ).toEqual([1, 2, 3])
-        );
-
-
-        it('subtract - multiple',() =>
-
-            expect(
-
-                subtract([1, 2], [2, 2])([1, 2, 3, 4])
-
-            ).toEqual([3, 4])
         );
 
 
@@ -130,7 +120,7 @@ export function main() {
 
             expect(
 
-                subtractNested([[1, 2], [2, 2]])([1, 2, 3, 4])
+                subtract([[1, 2], [2, 2]])([1, 2, 3, 4])
 
             ).toEqual([3, 4])
         );

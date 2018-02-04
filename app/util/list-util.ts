@@ -11,19 +11,8 @@ export {getAtIndex, getAtIndexOr, removeAtIndex};
  * @author Daniel de Oliveira
  */
 
-export const subtract = <A>(...subtrahends: Array<Array<A>>) =>
-    subtractNested(subtrahends);
-
-
-export const subtractNested = <A>(subtrahends: NestedArray<A>) =>
-    (as: Array<A>): Array<A> =>
-        subtrahends.reduce(
-            (acc, val) => _subtract(val)(acc),
-            as);
-
-
 export const removeFrom = <A>(as: Array<A>) => (a: A): Array<A> =>
-    _subtract([a])(as);
+    subtractFrom(as)([a]);
 
 
 export const addUniqueTo = <A>(as: Array<A>) => (a: A): Array<A> =>
@@ -34,8 +23,12 @@ export const intersectWith = <A>(a1: Array<A>) =>
     (a2: Array<A>) => a1.filter(includedIn(a2));
 
 
-export const intersect = <A>(aas: NestedArray<A>): Array<A> =>
-    aas.reduce((acc, val) => intersectWith(acc)(val));
+/**
+ * Generate a new list with elements which are contained in l but not in subtrahend
+ */
+export const subtractFrom = <A>(as: Array<A>) =>
+    (subtrahend: Array<A>): Array<A> =>
+        as.filter(isNot(includedIn(subtrahend)));
 
 
 /**
@@ -47,16 +40,19 @@ export const uniteWith = <A>(a1: Array<A>) =>
             a2.filter(isNot(includedIn(a1))));
 
 
+export const subtract = <A>(subtrahends: NestedArray<A>) =>
+    (as: Array<A>): Array<A> =>
+        subtrahends.reduce(
+            (acc, val) => subtractFrom(acc)(val),
+            as);
+
+
+export const intersect = <A>(aas: NestedArray<A>): Array<A> =>
+    aas.reduce((acc, val) => intersectWith(acc)(val));
+
+
 export const unite = <A>(aas: NestedArray<A>): Array<A> =>
     aas.length < 1 ? [] :
         aas.reduce((acc, val) => val ? uniteWith(acc)(val) : acc);
 
 
-// private
-
-/**
- * Generate a new list with elements which are contained in l but not in subtrahend
- */
-const _subtract = <A>(subtrahend: Array<A>) =>
-    (l: Array<A>): Array<A> =>
-        l.filter(isNot(includedIn(subtrahend)));

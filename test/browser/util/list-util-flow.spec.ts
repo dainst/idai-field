@@ -9,8 +9,8 @@ import {
     map,
     reverse,
     smaller,
-    subtract,
-    subtractNested, takeRightWhile,
+    subtractFrom,
+    subtract, takeRightWhile,
     takeWhile,
     times,
     unite,
@@ -112,9 +112,9 @@ export function main() {
             expect(
 
                 flow(
-                    subtract([3,4,5]),
+                    subtractFrom([1, 2, 3]),
                     filter(smaller(2))
-                )([1,2,3])
+                )([3, 4, 5])
 
             ).toEqual([1])
         );
@@ -125,7 +125,7 @@ export function main() {
             expect(
 
                 flow(
-                    subtractNested([[1,2],[2,2]]),
+                    subtract([[1,2],[2,2]]),
                     filter(bigger(3))
                 )([1,2,3,4])
 

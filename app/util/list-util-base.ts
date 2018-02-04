@@ -2,8 +2,6 @@
  * @author Daniel de Oliveira
  */
 
-export type NestedArray<A> = Array<Array<A>>;
-
 
 export const includedIn =  <A>(as: Array<A>) =>
     (a: A) => as.includes(a);

@@ -1,5 +1,5 @@
-import {NestedArray, isNot, sameAs, bigger, smaller, includedIn, differentFrom, times} from './list-util-base';
-export {NestedArray, isNot, sameAs, bigger, smaller, includedIn, differentFrom, times};
+import {isNot, sameAs, bigger, smaller, includedIn, differentFrom, times} from './list-util-base';
+export {isNot, sameAs, bigger, smaller, includedIn, differentFrom, times};
 import {takeRightWhile, dropWhile, takeUntil, takeWhile} from './list-util-drop-take';
 export {takeRightWhile, dropWhile, takeUntil, takeWhile};
 import {flow, reverse, map, filter} from './list-util-flow';
@@ -7,9 +7,11 @@ export {flow, reverse, map, filter};
 import {getAtIndex, getAtIndexOr, removeAtIndex} from './list-util-index';
 export {getAtIndex, getAtIndexOr, removeAtIndex};
 
+
 /**
  * @author Daniel de Oliveira
  */
+
 
 export const removeFrom = <A>(as: Array<A>) => (a: A): Array<A> =>
     subtractFrom(as)([a]);
@@ -38,6 +40,11 @@ export const uniteWith = <A>(a1: Array<A>) =>
     (a2: Array<A>) =>
         a1.concat(
             a2.filter(isNot(includedIn(a1))));
+
+
+/////////// NestedArray
+
+export type NestedArray<A> = Array<Array<A>>;
 
 
 export const subtract = <A>(subtrahends: NestedArray<A>) =>

@@ -32,6 +32,6 @@ makes navigation and finding resources easy.
 
 ![idai-field](img/README-FEATURES-5.png)
 
-Enables you to import fotos and associate 
-them to resources. Also lets you import 
-maps to provide a visual context your resources. 
+Enables you to import photos or drawings and associate 
+them with resources. Also lets you import 
+maps to provide a visual context to your resources. 

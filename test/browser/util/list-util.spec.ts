@@ -219,22 +219,34 @@ export function main() {
 
         it('takeUntil - take two', () => {
 
-            expect(takeUntil(bigger(7))
-                ([7, 9, 11])).toEqual([7, 9]);
+            expect(
+
+                takeUntil(bigger(7))
+                    ([7, 9, 11])
+
+            ).toEqual([7, 9]);
         });
 
 
         it('takeUntil - take all', () =>
 
-            expect(takeUntil(bigger(13))
-                ([7, 9, 11])).toEqual([7, 9, 11])
+            expect(
+
+                takeUntil(bigger(13))
+                    ([7, 9, 11])
+
+            ).toEqual([7, 9, 11])
         );
 
 
         it('takeUntil - empty', () =>
 
-            expect(takeUntil(bigger(13))
-                ([])).toEqual([])
+            expect(
+
+                takeUntil(bigger(13))
+                    ([])
+
+            ).toEqual([])
         );
 
 
@@ -273,46 +285,77 @@ export function main() {
 
         it('removeFrom', () =>
 
-            expect(removeFrom([1,2,13,13,4])(13)).toEqual([1,2,4])
+            expect(
+
+                removeFrom([1, 2, 13, 13, 4])
+                    (13)
+
+            ).toEqual([1, 2, 4])
         );
 
 
         it('removeFrom - nothing', () =>
 
-            expect(removeFrom([1,2,7,4])(13)).toEqual([1,2,7,4])
+            expect(
+
+                removeFrom([1, 2, 7, 4])
+                    (13)
+
+            ).toEqual([1, 2, 7, 4])
         );
 
 
         it('removeFrom - everything', () =>
 
-            expect(removeFrom([1,1])(1)).toEqual([])
+            expect(
+
+                removeFrom([1, 1])
+                (1)
+
+            ).toEqual([])
         );
 
 
         it('times', () =>
 
-            expect(times(2)
-                (2)).toEqual(4)
+            expect(
+
+                times(2)
+                    (2)
+
+            ).toEqual(4)
         );
 
 
         it('map', () =>
 
-            expect(map(times(2))
-                ([2,4])).toEqual(([4,8]))
+            expect(
+
+                map(times(2))
+                    ([2, 4])
+
+            ).toEqual(([4, 8]))
         );
 
 
         it('filter', () =>
 
-            expect(filter(smaller(4))
-                ([2,4,1,5,7,8,2,1,0])).toEqual(([2,1,2,1,0]))
+            expect(
+
+                filter(smaller(4))
+                    ([2, 4, 1, 5, 7, 8, 2, 1, 0])
+
+            ).toEqual(([2, 1, 2, 1, 0]))
         );
 
 
         it('reverse ', () =>
 
-            expect(reverse([1,3])).toEqual(([3,1]))
+            expect(
+
+                reverse([1, 3])
+
+            ).toEqual(([3, 1]))
         );
     });
 }

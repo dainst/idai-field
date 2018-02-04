@@ -19,7 +19,7 @@ interested third party is free to reuse and adjust it to their needs.
 
 Development of iDAI.field works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) > 7.0.0 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
 
-Then clone this repository locally and run
+Then clone this repository locally and run the following commands:
 
 ```
 $ npm install
@@ -34,7 +34,7 @@ See also [idai-components-2](https://github.com/dainst/idai-components-2).
 
 ## Tests
 
-The app must have been build (`npm run build`) before running the tests.
+The app must have been built (`npm run build`) before running the tests.
 
 To execute the **unit tests**, run 
 
@@ -54,21 +54,21 @@ The optional fail fast parameter specifies if test execution stops on the first 
 
 ## Packaging
 
-To create binaries run 
+To create binaries run:
 
 ```
 $ npm run package[-mac|-win]
 ```
 
-Without using one of the specified suffixed, this will create packages for both **MacOS** and **Windows** 32/64 bit.
-If used with one of the suffixed, only packages for the selected target platform get created. When the command has finished execution, you find packages of the application for different operating systems in the `release`-directory.
+Without using one of the specified suffixes, this will create packages for both **MacOS** and **Windows** 32/64 bit.
+If used with one of the suffixes, only packages for the selected target platform get created. When the command has finished execution, you find packages of the application for different operating systems in the `release` directory.
 
-Please note that when using **Windows**, that due to nested node_modules and the 
+Please note that when using **Windows**, due to nested node_modules and the 
 windows default maximum path length you might be running into errors while attempting
 to extract the package. In that case, please use a different archiver, for example [7-Zip](http://www.7-zip.org/download.html).
 
-When using **MacOS**, you need [Wine](http://www.davidbaumgold.com/tutorials/wine-mac/) to build windows [packages](https://github.com/dainst/idai-field-client/blob/master/README.md#packacking).
+When using **MacOS**, you need [Wine](http://www.davidbaumgold.com/tutorials/wine-mac/) to build Windows [packages](https://github.com/dainst/idai-field-client/blob/master/README.md#packacking).
 
-Not that creating **Linux** packages should be possible with electron, but here this is yet untested and not enabled.
+Note that creating **Linux** packages should be possible with electron, but this is yet untested and not enabled.
 
 

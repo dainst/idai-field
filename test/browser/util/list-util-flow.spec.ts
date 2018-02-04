@@ -37,6 +37,38 @@ export function main() {
         );
 
 
+        it('map', () =>
+
+            expect(
+
+                map(times(2))
+                ([2, 4])
+
+            ).toEqual(([4, 8]))
+        );
+
+
+        it('filter', () =>
+
+            expect(
+
+                filter(smaller(4))
+                ([2, 4, 1, 5, 7, 8, 2, 1, 0])
+
+            ).toEqual(([2, 1, 2, 1, 0]))
+        );
+
+
+        it('reverse ', () =>
+
+            expect(
+
+                reverse([1, 3])
+
+            ).toEqual(([3, 1]))
+        );
+
+
         it('intersect',() =>
 
             expect(

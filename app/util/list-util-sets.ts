@@ -1,4 +1,4 @@
-import {includedIn, isNot} from './list-util-base';
+import {includedIn, isNot, uncurry2} from './list-util-base';
 
 
 export type NestedArray<A> = Array<Array<A>>;
@@ -6,7 +6,7 @@ export type NestedArray<A> = Array<Array<A>>;
 
 export const intersection = <A>(aas: NestedArray<A>): Array<A> =>
     aas.length < 1 ? [] :
-        aas.reduce((acc, val) => intersect(acc)(val));
+        aas.reduce(uncurry2<A>(intersect));
 
 
 export const union = <A>(aas: NestedArray<A>): Array<A> =>

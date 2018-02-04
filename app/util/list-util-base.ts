@@ -35,3 +35,7 @@ export const isNot = <A>(f: (_: A) => boolean) =>
 
 
 export const flip = (v: boolean) => !v;
+
+
+export const uncurry2 = <A>(f: (_: Array<A>) => (_: Array<A>) => Array<A>) =>
+    (as1: Array<A>, as2: Array<A>): Array<A> => f(as1)(as2);

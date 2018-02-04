@@ -2,7 +2,7 @@
  * @author Daniel de Oliveira
  */
 
-export type NestedArray<T> = Array<Array<T>>;
+export type NestedArray<A> = Array<Array<A>>;
 
 
 export const getAtIndex = <A>(as: Array<A>, i: number): A|undefined => getAtIndexOr(as, i);
@@ -15,20 +15,14 @@ export const getAtIndexOr = <A>(as: Array<A>, i: number, defaultValue: A|undefin
 export const removeAtIndex = <A>(as: Array<A>) => (i: number) => as.splice(i, 1);
 
 
-/**
- * Generate a new list with elements which are contained in l but not in r
- */
-export const subtract = <A>(subtrahend: Array<A>) =>
-    (l: Array<A>): Array<A> =>
-        l.filter(isNot(includedIn(subtrahend)));
+export const subtract = <A>(...subtrahends: Array<Array<A>>) =>
+    subtractNested(subtrahends);
 
 
-// TODO offer only one subtract method which accepts varargs for the subtrahends.
-// make the old subtract private and use it to implement the new subtract
-export const subtractArrays = <A>(subtrahends: NestedArray<A>) =>
+export const subtractNested = <A>(subtrahends: NestedArray<A>) =>
     (as: Array<A>): Array<A> =>
         subtrahends.reduce(
-            (acc, val) => subtract(val)(acc),
+            (acc, val) => _subtract(val)(acc),
             as);
 
 
@@ -141,7 +135,17 @@ export const flow = <A>(...fs: Array<(_: Array<A>) => Array<A>>) =>
 
 // private
 
+/**
+ * Generate a new list with elements which are contained in l but not in subtrahend
+ */
+const _subtract = <A>(subtrahend: Array<A>) =>
+    (l: Array<A>): Array<A> =>
+        l.filter(isNot(includedIn(subtrahend)));
+
+
 const identical = <A>(v: A) => v;
 
 
 const flip = (v: boolean) => !v;
+
+

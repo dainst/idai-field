@@ -10,7 +10,7 @@ import {
     reverse,
     smaller,
     subtract,
-    subtractArrays, takeRightWhile,
+    subtractNested, takeRightWhile,
     takeWhile,
     times,
     unite,
@@ -93,7 +93,7 @@ export function main() {
             expect(
 
                 flow(
-                    subtractArrays([[1,2],[2,2]]),
+                    subtractNested([[1,2],[2,2]]),
                     filter(bigger(3))
                 )([1,2,3,4])
 

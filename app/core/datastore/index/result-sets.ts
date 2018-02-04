@@ -1,6 +1,6 @@
-import {intersect, NestedArray, subtractArrays, uniteWith, unite} from '../../../util/list-util';
+import {intersect, NestedArray, subtractNested, unite} from '../../../util/list-util';
 import {SimpleIndexItem} from './index-item';
-import {ObjectUtil} from "../../../util/object-util";
+import {ObjectUtil} from '../../../util/object-util';
 
 
 type IndexItemMap = {[id: string]: SimpleIndexItem};
@@ -82,7 +82,7 @@ export class ResultSets {
 
         return ResultSets.pickFrom(this.map,
 
-            subtractArrays(this.subtractSets)(intersect(this.addSets))
+            subtractNested(this.subtractSets)(intersect(this.addSets))
         );
     }
 

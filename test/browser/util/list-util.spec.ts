@@ -9,7 +9,7 @@ import {
     reverse,
     smaller,
     subtract,
-    subtractArrays,
+    subtractNested,
     takeUntil,
     takeWhile,
     times,
@@ -69,9 +69,9 @@ export function main() {
 
             expect(
 
-                uniteWith([1,2])([2,4])
+                uniteWith([1, 2])([2, 4])
 
-            ).toEqual([1,2,4])
+            ).toEqual([1, 2, 4])
         );
 
 
@@ -79,9 +79,9 @@ export function main() {
 
             expect(
 
-                unite([[1,2],[3,4],[2,4]])
+                unite([[1, 2],[3, 4],[2, 4]])
 
-            ).toEqual([1,2,3,4])
+            ).toEqual([1, 2, 3, 4])
         );
 
 
@@ -89,9 +89,9 @@ export function main() {
 
             expect(
 
-                subtract([3,4,5])([1,2,3])
+                subtract([3, 4, 5])([1, 2, 3])
 
-            ).toEqual([1,2])
+            ).toEqual([1, 2])
         );
 
 
@@ -99,7 +99,7 @@ export function main() {
 
             expect(
 
-                subtract([3,4,5])([])
+                subtract([3, 4, 5])([])
 
             ).toEqual([])
         );
@@ -109,9 +109,9 @@ export function main() {
 
             expect(
 
-                subtract([])([1,2,3])
+                subtract([])([1, 2, 3])
 
-            ).toEqual([1,2,3]);
+            ).toEqual([1, 2, 3]);
         });
 
 
@@ -119,19 +119,29 @@ export function main() {
 
             expect(
 
-                subtract([4,5,6])([1,2,3])
+                subtract([4, 5, 6])([1, 2, 3])
 
-            ).toEqual([1,2,3])
+            ).toEqual([1, 2, 3])
         );
 
 
-        it('subtractArrays',() =>
+        it('subtract - multiple',() =>
 
             expect(
 
-                subtractArrays([[1,2],[2,2]])([1,2,3,4])
+                subtract([1, 2], [2, 2])([1, 2, 3, 4])
 
-            ).toEqual([3,4])
+            ).toEqual([3, 4])
+        );
+
+
+        it('subtractNested',() =>
+
+            expect(
+
+                subtractNested([[1, 2], [2, 2]])([1, 2, 3, 4])
+
+            ).toEqual([3, 4])
         );
 
 
@@ -205,8 +215,6 @@ export function main() {
 
             ).toEqual([])
         );
-
-
 
 
         it('takeUntil - take two', () => {

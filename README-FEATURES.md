@@ -2,7 +2,7 @@
 
 Here is a short overview of iDAI.field's key features.
 
-## Metadata edititor
+## Metadata editor
 
 ![idai-field](img/README-FEATURES-1.png) 
 

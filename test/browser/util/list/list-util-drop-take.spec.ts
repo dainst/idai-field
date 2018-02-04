@@ -5,14 +5,70 @@ import {
     takeRightWhile,
     takeUntil,
     takeWhile
-} from '../../../app/util/list-util';
+} from '../../../../app/util/list/list-util';
+import {take} from '../../../../app/util/list/list-util-drop-take';
 
 /**
  * @author Daniel de Oliveira
  */
 export function main() {
 
-    describe('ListUtil', () => {
+    describe('ListUtil/DropTake --', () => {
+
+        it('take - 5', () =>
+
+            expect(
+
+                take(5)
+                    ([1,2,7,7,8,9,11])
+
+            ).toEqual([1,2,7,7,8])
+        );
+
+
+        it('take - 0', () =>
+
+            expect(
+
+                take(0)
+                    ([1, 2, 7, 7, 8, 9, 11])
+
+            ).toEqual([])
+        );
+
+
+        it('take - more', () =>
+
+            expect(
+
+                take(3)
+                    ([1, 2])
+
+            ).toEqual([1, 2])
+        );
+
+
+        it('take - from empty', () =>
+
+            expect(
+
+                take(3)
+                    ([])
+
+            ).toEqual([])
+        );
+
+
+        it('take - negative n', () =>
+
+            expect(
+
+                take(-1)
+                    ([1, 2])
+
+            ).toEqual([])
+        );
+
 
         it('takeWhile - take five', () =>
 

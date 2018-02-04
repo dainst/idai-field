@@ -3,7 +3,7 @@ import {ImageTypeUtility} from '../../../../common/image-type-utility';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../state/view-facade';
-import {addUniqueTo, removeFrom, subtract} from '../../../../util/list-util';
+import {addUniqueTo, removeFrom, subtract} from '../../../../util/list/list-util';
 
 
 export interface LayersInitializationResult {

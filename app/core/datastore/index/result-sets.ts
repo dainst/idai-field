@@ -1,4 +1,4 @@
-import {intersection, NestedArray, subtract, union} from '../../../util/list-util';
+import {intersection, NestedArray, subtract, union} from '../../../util/list/list-util';
 import {SimpleIndexItem} from './index-item';
 import {ObjectUtil} from '../../../util/object-util';
 

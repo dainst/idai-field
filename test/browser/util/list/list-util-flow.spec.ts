@@ -15,7 +15,7 @@ import {
     times,
     union,
     unite
-} from '../../../app/util/list-util';
+} from '../../../../app/util/list/list-util';
 
 /**
  * @author Daniel de Oliveira

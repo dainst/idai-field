@@ -12,7 +12,7 @@ import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {ResourcesState} from './resources-state';
 import {ObserverUtil} from '../../../util/observer-util';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
-import {includedIn, removeFrom, isNot} from '../../../util/list-util';
+import {includedIn, removeFrom, isNot} from '../../../util/list/list-util';
 
 
 /**

@@ -1,19 +1,15 @@
+import {NestedArray, isNot, sameAs, bigger, smaller, includedIn, differentFrom, times} from './list-util-base';
+export {NestedArray, isNot, sameAs, bigger, smaller, includedIn, differentFrom, times};
+import {takeRightWhile, dropWhile, takeUntil, takeWhile} from './list-util-drop-take';
+export {takeRightWhile, dropWhile, takeUntil, takeWhile};
+import {flow, reverse, map, filter} from './list-util-flow';
+export {flow, reverse, map, filter};
+import {getAtIndex, getAtIndexOr, removeAtIndex} from './list-util-index';
+export {getAtIndex, getAtIndexOr, removeAtIndex};
+
 /**
  * @author Daniel de Oliveira
  */
-
-export type NestedArray<A> = Array<Array<A>>;
-
-
-export const getAtIndex = <A>(as: Array<A>, i: number): A|undefined => getAtIndexOr(as, i);
-
-
-export const getAtIndexOr = <A>(as: Array<A>, i: number, defaultValue: A|undefined = undefined): A|undefined =>
-    as.length < i ? defaultValue : as[i];
-
-
-export const removeAtIndex = <A>(as: Array<A>) => (i: number) => as.splice(i, 1);
-
 
 export const subtract = <A>(...subtrahends: Array<Array<A>>) =>
     subtractNested(subtrahends);
@@ -56,83 +52,6 @@ export const unite = <A>(aas: NestedArray<A>): Array<A> =>
         aas.reduce((acc, val) => val ? uniteWith(acc)(val) : acc);
 
 
-export const includedIn =  <A>(as: Array<A>) =>
-    (a: A) => as.includes(a);
-
-
-export const isNot = <A>(f: (_: A) => boolean) =>
-    (a: A) => flip(f(a));
-
-
-export const takeWhile = <A>(f: (_: A) => boolean) =>
-    (as: Array<A>) => {
-        let go = true;
-        return as.reduce((acc: Array<A>, a) =>
-            go && f(a) ? acc.concat([a]) : (go = false, acc), []);
-    };
-
-
-export const takeRightWhile = <A>(f: (_: A) => boolean) =>
-    (as: Array<A>) => {
-        let go = true;
-        return as.reduceRight((acc: Array<A>, a) =>
-            go && f(a) ? [a].concat(acc) : (go = false, acc), []);
-    };
-
-
-export const takeUntil = <A>(f: (_: A) => boolean) =>
-    (as: Array<A>) => {
-        const found = as.find(f);
-        return found ?
-            takeWhile(isNot(f))(as).concat([found])
-            : as
-    };
-
-
-export const dropWhile = <A>(f: (_: A) => boolean) =>
-    (as: Array<A>) => {
-        let go = false;
-        return as.reduce((acc: Array<A>, a) =>
-            go || !f(a) ? (go = true, acc.concat([a])) : acc, []);
-    };
-
-
-export const sameAs = <A>(l:A) =>
-    (r:A) => l == r;
-
-
-export const smaller = <A>(l:A) =>
-    (r:A) => l > r;
-
-
-export const bigger = <A>(l:A) =>
-    (r:A) => l < r;
-
-
-export const times = (l: number) =>
-    (r: number) => l * r;
-
-
-export const differentFrom = <A>(a:A) =>
-    isNot(sameAs(a));
-
-
-export const map = <A>(f: (_: A) => A) =>
-    (as: Array<A>) => as.map(f);
-
-
-export const filter = <A>(f: (_: A) => boolean) =>
-    (as: Array<A>) => as.filter(f);
-
-
-export const reverse = <A>(as: Array<A>) => as.reverse();
-
-
-export const flow = <A>(...fs: Array<(_: Array<A>) => Array<A>>) =>
-    (collection: Array<A>): Array<A> =>
-        fs.reduce((acc, f) => f(acc), collection);
-
-
 // private
 
 /**
@@ -141,11 +60,3 @@ export const flow = <A>(...fs: Array<(_: Array<A>) => Array<A>>) =>
 const _subtract = <A>(subtrahend: Array<A>) =>
     (l: Array<A>): Array<A> =>
         l.filter(isNot(includedIn(subtrahend)));
-
-
-const identical = <A>(v: A) => v;
-
-
-const flip = (v: boolean) => !v;
-
-

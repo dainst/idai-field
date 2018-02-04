@@ -1,6 +1,6 @@
 # Features
 
-Here is a short overview of iDAI.fields's key features
+Here is a short overview of iDAI.field's key features.
 
 ## Metadata edititor
 

@@ -14,8 +14,8 @@ export const union = <A>(aas: NestedArray<A>): Array<A> =>
         aas.reduce((acc, val) => val ? unite(acc)(val) : acc);
 
 
-export const intersect = <A>(a1: Array<A>) =>
-    (a2: Array<A>) => a1.filter(includedIn(a2));
+export const intersect = <A>(as1: Array<A>) =>
+    (as2: Array<A>) => as1.filter(includedIn(as2));
 
 
 /**
@@ -29,7 +29,7 @@ export const subtract = <A>(subtrahend: Array<A>) =>
 /**
  * @returns the union of a1 and a2
  */
-export const unite = <A>(a1: Array<A>) =>
-    (a2: Array<A>) =>
-        a1.concat(
-            a2.filter(isNot(includedIn(a1))));
+export const unite = <A>(as1: Array<A>) =>
+    (as2: Array<A>) =>
+        as1.concat(
+            as2.filter(isNot(includedIn(as1))));

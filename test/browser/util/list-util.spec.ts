@@ -310,7 +310,7 @@ export function main() {
             expect(
 
                 removeFrom([1, 1])
-                (1)
+                    (1)
 
             ).toEqual([])
         );

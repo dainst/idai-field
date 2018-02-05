@@ -4,12 +4,11 @@ import {isNot} from './list-util-base';
  * @author Daniel de Oliveira
  */
 
-
 export const take = <A>(n: number) =>
     (as: Array<A>) =>
         n < 0 ? [] :
             as.reduce((acc: Array<A>, val, i) =>
-                i < n ? acc.concat([val]) : acc
+                    i < n ? acc.concat([val]) : acc
                 , []);
 
 

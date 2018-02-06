@@ -89,7 +89,7 @@ export class ImportComponent {
         const rollbackStrategy: RollbackStrategy|undefined
             = ImportComponent.createRollbackStrategy(this.format, this.datastore);
 
-        this.messages.clear();
+        this.messages.removeAllMessages();
         if (!reader || !parser || !importStrategy || !rollbackStrategy) {
             return this.messages.add([M.IMPORT_GENERIC_START_ERROR]);
         }
@@ -123,7 +123,7 @@ export class ImportComponent {
 
     public reset(): void {
 
-        this.messages.clear();
+        this.messages.removeAllMessages();
 
         this.file = undefined;
         this.url = undefined;

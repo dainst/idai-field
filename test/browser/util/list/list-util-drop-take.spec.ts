@@ -20,7 +20,7 @@ export function main() {
             expect(
 
                 take(5)
-                    ([1,2,7,7,8,9,11])
+                ([1,2,7,7,8,9,11])
 
             ).toEqual([1,2,7,7,8])
         );
@@ -31,7 +31,7 @@ export function main() {
             expect(
 
                 take(0)
-                    ([1, 2, 7, 7, 8, 9, 11])
+                ([1, 2, 7, 7, 8, 9, 11])
 
             ).toEqual([])
         );
@@ -42,7 +42,7 @@ export function main() {
             expect(
 
                 take(3)
-                    ([1, 2])
+                ([1, 2])
 
             ).toEqual([1, 2])
         );
@@ -53,7 +53,7 @@ export function main() {
             expect(
 
                 take(3)
-                    ([])
+                ([])
 
             ).toEqual([])
         );
@@ -64,7 +64,7 @@ export function main() {
             expect(
 
                 take(-1)
-                    ([1, 2])
+                ([1, 2])
 
             ).toEqual([])
         );
@@ -75,7 +75,7 @@ export function main() {
             expect(
 
                 takeWhile(smaller(20))
-                    ([7, 9, 10, 13, 17, 20])
+                ([7, 9, 10, 13, 17, 20])
 
             ).toEqual([7, 9, 10, 13, 17])
         );
@@ -86,7 +86,7 @@ export function main() {
             expect(
 
                 takeWhile(bigger(23))
-                    ([7, 9, 10, 13, 17, 20])
+                ([7, 9, 10, 13, 17, 20])
 
             ).toEqual([])
         );
@@ -106,7 +106,7 @@ export function main() {
         it('takeWhile - empty', () =>
 
             expect(takeWhile(bigger(23))
-                ([])).toEqual([])
+            ([])).toEqual([])
         );
 
 
@@ -115,7 +115,7 @@ export function main() {
             expect(
 
                 takeRightWhile(bigger(13))
-                    ([7, 9, 10, 13, 17, 20])
+                ([7, 9, 10, 13, 17, 20])
 
             ).toEqual([17, 20])
         );
@@ -126,7 +126,7 @@ export function main() {
             expect(
 
                 takeRightWhile(bigger(23))
-                    ([7, 9, 10, 13, 17, 20])
+                ([7, 9, 10, 13, 17, 20])
 
             ).toEqual([])
         );
@@ -137,7 +137,7 @@ export function main() {
             expect(
 
                 takeRightWhile(bigger(1))
-                    ([7, 9])
+                ([7, 9])
 
             ).toEqual([7, 9])
         );
@@ -148,7 +148,7 @@ export function main() {
             expect(
 
                 takeRightWhile(bigger(23))
-                    ([])
+                ([])
 
             ).toEqual([])
         );
@@ -159,7 +159,7 @@ export function main() {
             expect(
 
                 takeUntil(bigger(7))
-                    ([7, 9, 11])
+                ([7, 9, 11])
 
             ).toEqual([7, 9]);
         });
@@ -170,7 +170,7 @@ export function main() {
             expect(
 
                 takeUntil(bigger(13))
-                    ([7, 9, 11])
+                ([7, 9, 11])
 
             ).toEqual([7, 9, 11])
         );
@@ -181,7 +181,7 @@ export function main() {
             expect(
 
                 takeUntil(bigger(13))
-                    ([])
+                ([])
 
             ).toEqual([])
         );
@@ -192,7 +192,7 @@ export function main() {
             expect(
 
                 dropWhile(smaller(20))
-                    ([7, 9, 10, 13, 21, 20])
+                ([7, 9, 10, 13, 21, 20])
 
             ).toEqual([21, 20])
         );
@@ -203,7 +203,7 @@ export function main() {
             expect(
 
                 dropWhile(smaller(5))
-                    ([7, 9, 10, 13, 21, 20])
+                ([7, 9, 10, 13, 21, 20])
 
             ).toEqual([7, 9, 10, 13, 21, 20])
         );
@@ -214,7 +214,7 @@ export function main() {
             expect(
 
                 dropWhile(smaller(20))
-                    ([])
+                ([])
 
             ).toEqual([])
         );

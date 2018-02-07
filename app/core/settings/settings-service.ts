@@ -104,6 +104,7 @@ export class SettingsService {
             .then(() => this.storeSettings());
     }
 
+
     /**
      * Retrieve the current settings.
      * Returns a clone of the settings object in order to prevent the settings
@@ -114,6 +115,7 @@ export class SettingsService {
 
         return JSON.parse(JSON.stringify(this.settings)); // deep copy
     }
+
 
     /**
      * Sets project settings
@@ -145,10 +147,12 @@ export class SettingsService {
         return p;
     }
 
+
     public deleteProject(name: string) {
 
         return this.pouchdbManager.destroyDb(name);
     }
+
 
     public startSync(): Promise<any> {
 
@@ -174,6 +178,7 @@ export class SettingsService {
         });
     }
 
+
     public restartSync() {
 
         this.stopSync();
@@ -190,12 +195,14 @@ export class SettingsService {
             });
     }
 
+
     private stopSync() {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         this.pouchdbManager.stopSync();
         this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
     }
+
 
     private makeProjectDoc(name: string) {
 
@@ -213,6 +220,7 @@ export class SettingsService {
         };
     }
 
+
     private static validateAddress(address: any) {
 
         if (address == '') return true;
@@ -220,6 +228,7 @@ export class SettingsService {
         const re = new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$');
         return re.test(address);
     }
+
 
     private makeFirstOfDbsArray(projectName: string) {
 
@@ -229,6 +238,7 @@ export class SettingsService {
             this.settings.dbs.unshift(projectName);
         }
     }
+
 
     /**
      * Observe synchronization status changes. The following states can be
@@ -245,6 +255,7 @@ export class SettingsService {
         });
     }
 
+
     private static makeUrlFromSyncTarget(serverSetting: any) {
 
         let address = serverSetting['address'];
@@ -259,10 +270,12 @@ export class SettingsService {
             serverSetting['username'] + ':' + serverSetting['password'] + '@');
     }
 
+
     private storeSettings(): Promise<any> {
 
         return this.settingsSerializer.store(this.settings);
     }
+
 
     /**
      * initializes settings to default values
@@ -277,14 +290,20 @@ export class SettingsService {
 
         if (!settings.isSyncActive) settings.isSyncActive = false;
 
-        if (settings.imagestorePath) {
-            let path: string = settings.imagestorePath;
-            if (path.substr(-1) != '/') path += '/';
-            settings.imagestorePath = path;
-        } else {
-            settings.imagestorePath = app.getPath('appData') + '/'
-                + app.getName() + '/imagestore/';
-        }
+        settings.imagestorePath = SettingsService.initPath(settings.imagestorePath, 'imagestore');
+        settings.model3DStorePath = SettingsService.initPath(settings.model3DStorePath, 'model3DStore');
+
         return settings;
     }
+
+
+    private static initPath(path: string|undefined, storeName: string): string {
+
+        if (path && path.substr(-1) != '/') path += '/';
+
+        if (!path) path = app.getPath('appData') + '/' + app.getName() + '/' + storeName + '/';
+
+        return path;
+    }
+
 }

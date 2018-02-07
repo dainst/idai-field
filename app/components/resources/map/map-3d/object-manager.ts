@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
-import {Object3D} from './object-3d';
-import {ModelImporter} from './model-importer';
-import {Model3DUtility} from './model-3d-utility';
+import {Object3D} from '../../../../core/3d/object-3d';
+import {ModelImporter} from '../../../../core/3d/model-importer';
+import {Model3DUtility} from '../../../../core/3d/model-3d-utility';
 import {SettingsService} from '../../../../core/settings/settings-service';
 
 const ColladaLoader = require('three-collada-loader-2');

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
-import {Object3D} from './object-3d';
+import {Object3D} from '../../../../core/3d/object-3d';
 import {ObjectManager} from './object-manager';
 import {Map3DControlState} from './map-3d-control-state';
 

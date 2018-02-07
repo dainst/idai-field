@@ -4,7 +4,7 @@ import * as THREE from 'three';
 /**
  * @author Thomas Kleinke
  */
-export class Map3D {
+export class Viewer3D {
 
     private renderer: THREE.WebGLRenderer;
     private scene: THREE.Scene;

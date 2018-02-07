@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Map3D} from './map-3d';
+import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Object3D} from './object-3d';
 import {ModelImporter} from './model-importer';
 import {Model3DUtility} from './model-3d-utility';
@@ -17,7 +17,7 @@ export class ObjectManager {
     private objects: Array<Object3D> = [];
 
 
-    constructor(private map: Map3D,
+    constructor(private viewer: Viewer3D,
                 private settingsService: SettingsService) {}
 
 
@@ -60,7 +60,7 @@ export class ObjectManager {
 
     private remove3DObject(object: Object3D) {
 
-        this.map.remove(object.scene);
+        this.viewer.remove(object.scene);
         object.visible = false;
     }
 
@@ -123,7 +123,7 @@ export class ObjectManager {
     private addObjectToMap(object: Object3D) {
 
         object.visible = true;
-        this.map.add(object.scene);
+        this.viewer.add(object.scene);
     }
 
 

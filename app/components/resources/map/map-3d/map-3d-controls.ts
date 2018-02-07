@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Map3D} from './map-3d';
+import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Object3D} from './object-3d';
 import {ObjectManager} from './object-manager';
 import {Map3DControlState} from './map-3d-control-state';
@@ -23,7 +23,7 @@ export class Map3DControls {
     private focusedMeshOriginalRotation: THREE.Quaternion;
 
 
-    constructor(private map: Map3D,
+    constructor(private viewer: Viewer3D,
                 private objectManager: ObjectManager) {}
 
 
@@ -75,7 +75,7 @@ export class Map3DControls {
 
     public onWheel(event: WheelEvent) {
 
-        this.map.getCamera().translateZ(event.wheelDelta / 100);
+        this.viewer.getCamera().translateZ(event.wheelDelta / 100);
     }
 
 
@@ -127,8 +127,8 @@ export class Map3DControls {
 
     private drag(deltaX: number, deltaY: number) {
 
-        this.map.getCamera().translateX(deltaX / 100);
-        this.map.getCamera().translateY(-deltaY / 100);
+        this.viewer.getCamera().translateX(deltaX / 100);
+        this.viewer.getCamera().translateY(-deltaY / 100);
 
         this.dragCounter++;
         if (this.dragCounter > 10 || deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5) {
@@ -143,8 +143,8 @@ export class Map3DControls {
             this.focusedMesh.rotation.x += deltaY / 100;
             this.focusedMesh.rotation.y += deltaX / 100;
         } else {
-            this.map.getCamera().rotation.x += deltaY / 100;
-            this.map.getCamera().rotation.y += deltaX / 100;
+            this.viewer.getCamera().rotation.x += deltaY / 100;
+            this.viewer.getCamera().rotation.y += deltaX / 100;
         }
     }
 
@@ -182,8 +182,8 @@ export class Map3DControls {
 
     private getIntersections(xPosition: number, yPosition: number): Array<THREE.Intersection> {
 
-        const renderer: THREE.WebGLRenderer = this.map.getRenderer();
-        const scene: THREE.Scene = this.map.getScene();
+        const renderer: THREE.WebGLRenderer = this.viewer.getRenderer();
+        const scene: THREE.Scene = this.viewer.getScene();
 
         const raycaster: THREE.Raycaster = new THREE.Raycaster();
 
@@ -193,7 +193,7 @@ export class Map3DControls {
             / renderer.domElement.getBoundingClientRect().height) * 2 + 1;
         const coordinates: THREE.Vector2 = new THREE.Vector2(x, y);
 
-        raycaster.setFromCamera(coordinates, this.map.getCamera());
+        raycaster.setFromCamera(coordinates, this.viewer.getCamera());
 
         return raycaster.intersectObjects(scene.children, true);
     }
@@ -220,7 +220,7 @@ export class Map3DControls {
     private focusObject(object: Object3D) {
 
         const position: THREE.Vector3 = object.mesh.getWorldPosition();
-        const camera: THREE.Camera = this.map.getCamera();
+        const camera: THREE.Camera = this.viewer.getCamera();
 
         this.focusedMesh = object.mesh;
         this.focusedMeshOriginalRotation = object.mesh.quaternion.clone();

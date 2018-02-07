@@ -207,7 +207,7 @@ export class ResourcesState {
     }
 
 
-    private async load() {
+    private async load(): Promise<{ [viewName: string]: ResourcesViewState }> {
 
         const resourcesViewStates =
             this.project === 'test'
@@ -216,7 +216,8 @@ export class ResourcesState {
                     : ResourcesState.makeSampleDefaults()
                 : await this.serializer.load(StateSerializer.RESOURCES_STATE);
 
-        return ResourcesViewState.complete(resourcesViewStates as { [viewName: string]: ResourcesViewState });
+        ResourcesState.complete(resourcesViewStates);
+        return resourcesViewStates;
     }
 
 
@@ -240,5 +241,12 @@ export class ResourcesState {
             excavation: ResourcesViewState.default(),
             project: ResourcesViewState.default()
         }
+    }
+
+
+    public static complete(viewStates: { [viewName: string]: ResourcesViewState }) {
+
+        Object.keys(viewStates)
+            .forEach(viewName => ResourcesViewState.complete(viewStates[viewName]));
     }
 }

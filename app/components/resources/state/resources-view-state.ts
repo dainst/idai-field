@@ -18,24 +18,22 @@ export interface ResourcesViewState {
 
 export class ResourcesViewState {
 
-    public static default = () => { return {
-        q: '',
-        mode: 'map',
-        navigationPaths: {},
-        layerIds: {}
-    }; }
+    public static default() {
+
+        return {
+            q: '',
+            mode: 'map',
+            navigationPaths: {},
+            layerIds: {}
+        };
+    };
 
 
-    public static complete(viewStates: { [viewName: string]: ResourcesViewState }) {
+    public static complete(viewState: ResourcesViewState) {
 
-        Object.keys(viewStates)
-            .forEach(viewState => {
-                if (!viewStates[viewState].navigationPaths) viewStates[viewState].navigationPaths = {};
-                if (!viewStates[viewState].layerIds) viewStates[viewState].layerIds = {};
-                if (!viewStates[viewState].q) viewStates[viewState].q = '';
-                if (!viewStates[viewState].mode) viewStates[viewState].mode = 'map';
-            });
-
-        return viewStates
+        if (!viewState.layerIds) viewState.layerIds = {};
+        viewState.navigationPaths = {};
+        viewState.q = '';
+        viewState.mode = 'map';
     }
 }

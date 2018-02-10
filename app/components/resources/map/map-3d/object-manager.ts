@@ -112,9 +112,7 @@ export class ObjectManager {
         const index: number
             = this.objects.map(object => object.document.resource.id).indexOf(document.resource.id);
 
-        if (index == -1 || !this.objects[index].visible) return false;
-
-        return true;
+        return index > -1 && this.objects[index].visible;
     }
 
 

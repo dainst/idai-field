@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import {Viewer3D} from '../../core/3d/viewer-3d';
-import {Object3D} from '../../core/3d/object-3d';
 
 
 /**
@@ -13,7 +12,7 @@ export class Object3DViewerControls {
     private lastXPosition: number;
     private lastYPosition: number;
 
-    private object: Object3D;
+    private mesh: THREE.Mesh;
 
     private originalRotation: THREE.Quaternion;
 
@@ -27,16 +26,12 @@ export class Object3DViewerControls {
     }
 
 
-    public focusObject(object: Object3D) {
+    public setMesh(mesh: THREE.Mesh) {
 
-        this.object = object;
-        this.originalRotation = object.mesh.quaternion.clone();
+        this.mesh = mesh;
+        this.originalRotation = mesh.quaternion.clone();
 
-        const position: THREE.Vector3 = object.mesh.getWorldPosition();
-        const camera: THREE.Camera = this.viewer.getCamera();
-
-        camera.position.set(position.x, position.y + 6, position.z);
-        camera.lookAt(position);
+        this.focusMesh(mesh);
     }
 
 
@@ -124,9 +119,31 @@ export class Object3DViewerControls {
 
     private rotate(deltaX: number, deltaY: number) {
 
-        if (!this.object) return;
+        if (!this.mesh) return;
 
-        this.object.mesh.rotation.x += deltaY / 100;
-        this.object.mesh.rotation.y += deltaX / 100;
+        this.mesh.rotation.x += deltaY / 100;
+        this.mesh.rotation.z += deltaX / 100;
+    }
+
+
+    private focusMesh(mesh: THREE.Mesh) {
+
+        const position: THREE.Vector3 = mesh.getWorldPosition();
+        const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
+
+        camera.position.set(
+            position.x,
+            mesh.position.y + Object3DViewerControls.computeDistance(camera, mesh),
+            position.z);
+        camera.lookAt(position);
+    }
+
+
+    private static computeDistance(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
+
+        const fovInRadians: number = camera.fov * (Math.PI / 180);
+        const size = mesh.geometry.boundingSphere.radius;
+
+        return Math.abs(size / Math.sin(fovInRadians / 2));
     }
 }

@@ -1,12 +1,9 @@
-import * as THREE from 'three';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Object3D} from '../../../../core/3d/object-3d';
-import {ModelImporter} from '../../../../core/3d/model-importer';
-import {Model3DUtility} from '../../../../core/3d/model-3d-utility';
+import {Object3DLoader} from '../../../../core/3d/object-3d-loader';
 import {SettingsService} from '../../../../core/settings/settings-service';
 
-const ColladaLoader = require('three-collada-loader-2');
 
 
 /**
@@ -15,10 +12,14 @@ const ColladaLoader = require('three-collada-loader-2');
 export class ObjectManager {
 
     private objects: Array<Object3D> = [];
+    private object3DLoader: Object3DLoader;
 
 
     constructor(private viewer: Viewer3D,
-                private settingsService: SettingsService) {}
+                private settingsService: SettingsService) {
+
+        this.object3DLoader = new Object3DLoader(settingsService);
+    }
 
 
     public async show3DObjectsForDocuments(documents: Array<IdaiFieldDocument>) {
@@ -72,51 +73,23 @@ export class ObjectManager {
         if (!object3DResourceIds || object3DResourceIds.length == 0) return;
 
         for (let id of object3DResourceIds) {
-            const object: Object3D = await this.get3DObject(id, document);
-            this.addObjectToMap(object);
+            this.addObjectToMap(await this.get3DObject(id, document));
         }
     }
 
 
     private async get3DObject(id: string, document: IdaiFieldDocument): Promise<Object3D> {
 
-        let object: Object3D|undefined = this.getObjectMap()[id];
-
-        if (!object) object = await this.load3DObject(id, document);
-
-        return object;
+        return this.getObjectMap()[id] || this.load3DObject(id, document);
     }
 
 
     private async load3DObject(id: string, document: IdaiFieldDocument): Promise<Object3D> {
 
-        const scene: THREE.Scene = await this.loadFile(id);
-
-        const object: Object3D = {
-            resourceId: id,
-            document: document,
-            scene: scene,
-            mesh: Model3DUtility.getMesh(scene),
-            visible: false
-        };
-
+        const object: Object3D = await this.object3DLoader.load(id, document);
         this.objects.push(object);
 
         return object;
-    }
-
-
-    private loadFile(id: string): Promise<THREE.Scene> {
-
-        return new Promise((resolve, reject) => {
-
-            const loader = new ColladaLoader();
-            loader.load(this.getFilePath(id), (colladaModel: THREE.ColladaModel) => {
-                resolve(ModelImporter.importColladaModel(colladaModel));
-            });
-
-            // TODO Error handling
-        });
     }
 
 
@@ -150,14 +123,5 @@ export class ObjectManager {
         return this.objects.reduce(
             (map, object) => { map[object.resourceId] = object; return map; }, {} as { [id: string]: Object3D }
         );
-    }
-
-
-    private getFilePath(id: string) {
-
-        return this.settingsService.getSettings().model3DStorePath
-            + this.settingsService.getSelectedProject() + '/'
-            + id + '/'
-            + id + '.dae';
     }
 }

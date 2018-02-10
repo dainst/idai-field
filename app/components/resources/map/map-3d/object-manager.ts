@@ -45,17 +45,14 @@ export class ObjectManager {
 
     private async add3DObjectsForDocuments(documents: Array<IdaiFieldDocument>) {
 
-        for (let document of documents) {
-            if (!this.isShownOnMap(document)) await this.add3DObjectsForDocument(document);
-        }
+        documents.filter(document => !this.isShownOnMap(document))
+            .forEach(async document => await this.add3DObjectsForDocument(document));
     }
 
 
     private remove3DObjects(objects: Array<Object3D>) {
 
-        for (let object of objects) {
-            this.remove3DObject(object);
-        }
+        objects.forEach(object => this.remove3DObject(object));
     }
 
 
@@ -72,9 +69,7 @@ export class ObjectManager {
 
         if (!object3DResourceIds || object3DResourceIds.length == 0) return;
 
-        for (let id of object3DResourceIds) {
-            this.addObjectToMap(await this.get3DObject(id, document));
-        }
+        object3DResourceIds.forEach(async id => this.addObjectToMap(await this.get3DObject(id, document)));
     }
 
 

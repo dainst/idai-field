@@ -16,6 +16,7 @@ export class Object3DLoader {
     constructor(private settingsService: SettingsService) {}
 
 
+    // TODO Remove document parameter
     public async load(id: string, document: IdaiFieldDocument): Promise<Object3D> {
 
         const scene: THREE.Scene = await this.loadFile(id);

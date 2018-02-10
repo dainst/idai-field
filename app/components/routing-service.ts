@@ -64,6 +64,8 @@ export class RoutingService {
         // TODO we really have two separate public methods instead of this check
         if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
             this.jumpToImageTypeRelationTarget(documentToSelect);
+        } else if (documentToSelect.resource.type == 'Object3D') {
+            this.jumpTo3DTypeRelationTarget(documentToSelect);
         } else {
             this.jumpToResourceTypeRelationTarget(
                 documentToSelect, tab, comingFromOutsideOverviewComponent);
@@ -106,6 +108,22 @@ export class RoutingService {
 
         this.router.navigate(
             ['images', documentToSelect.resource.id, 'show', 'relations'],
+            { queryParams: { from: this.currentRoute } }
+        );
+    }
+
+
+    private async jumpTo3DTypeRelationTarget(documentToSelect: Document) {
+
+        const selectedDocument = this.viewFacade.getSelectedDocument();
+        if (selectedDocument) {
+            if (this.currentRoute && selectedDocument.resource && selectedDocument.resource.id) {
+                this.currentRoute += '/' + selectedDocument.resource.id + '/show/3d';
+            }
+        }
+
+        await this.router.navigate(
+            ['3d', documentToSelect.resource.id, 'show', 'relations'],
             { queryParams: { from: this.currentRoute } }
         );
     }

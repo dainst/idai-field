@@ -23,7 +23,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
-    @ViewChild('sceneContainer') sceneContainer: ElementRef;
+    @ViewChild('container') container: ElementRef;
 
     private viewer: Viewer3D;
     private controls: Map3DControls;
@@ -58,7 +58,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     private initialize() {
 
-        this.viewer = new Viewer3D(this.sceneContainer.nativeElement);
+        this.viewer = new Viewer3D(this.container.nativeElement);
         this.objectManager = new ObjectManager(this.viewer, this.settingsService);
         this.controls = new Map3DControls(this.viewer, this.objectManager);
     }

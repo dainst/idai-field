@@ -33,6 +33,7 @@ import {ImportModule} from './components/import/import-module';
 import {ExportModule} from './components/export/export.module';
 import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-service';
 import {ImageViewModule} from './components/imageview/image-view.module';
+import {View3DModule} from './components/view-3d/view-3d.module';
 import {StateSerializer} from './common/state-serializer';
 import {AppController} from './app-controller';
 import {DatastoreModule} from './core/datastore/datastore.module';
@@ -49,6 +50,7 @@ let pconf: any = undefined;
     imports: [
         ImageOverviewModule,
         ImageViewModule,
+        View3DModule,
         ResourcesModule,
         SettingsModule,
         BrowserModule,

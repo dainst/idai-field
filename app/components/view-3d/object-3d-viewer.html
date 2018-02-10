@@ -1,0 +1,9 @@
+<div id="object-3d-viewer-container" #container
+     [class.drag]="isCurrentAction('drag')"
+     [class.rotate]="isCurrentAction('rotate')"
+     (mousedown)="onMouseDown($event)"
+     (mouseup)="onMouseUp($event)"
+     (mousemove)="onMouseMove($event)"
+     (wheel)="onWheel($event)"
+     (contextmenu)="$event.preventDefault()">
+</div>

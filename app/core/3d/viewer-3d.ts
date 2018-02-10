@@ -56,6 +56,13 @@ export class Viewer3D {
     }
 
 
+    public removeAll() {
+
+        this.scene.children.filter(child => child instanceof THREE.Scene)
+            .forEach(child => this.scene.remove(child));
+    }
+
+
     private initialize() {
 
         this.scene = new THREE.Scene();

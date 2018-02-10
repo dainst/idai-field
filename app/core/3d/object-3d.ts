@@ -9,7 +9,6 @@ export interface Object3D {
 
     resourceId: string;
     document: IdaiFieldDocument;    // TODO Remove
-    scene: THREE.Scene;
     mesh: THREE.Mesh;
     visible: boolean;
 }

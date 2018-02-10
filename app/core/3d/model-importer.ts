@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import {Model3DUtility} from './model-3d-utility';
 
 
 /**
@@ -7,18 +6,23 @@ import {Model3DUtility} from './model-3d-utility';
  */
 export class ModelImporter {
 
-    public static importColladaModel(colladaModel: THREE.ColladaModel): THREE.Scene {
+    public static importColladaModel(colladaModel: THREE.ColladaModel): THREE.Mesh {
 
         const scene: THREE.Scene = colladaModel.scene;
-        const mesh: THREE.Mesh = Model3DUtility.getMesh(scene);
+        const mesh: THREE.Mesh = this.getMesh(scene);
 
         this.smoothGeometry(mesh);
+        this.applySceneMatrix(mesh, scene);
         this.setPositionToCenter(mesh);
         this.makeMaterialDoubleSided(mesh);
 
-        scene.children = [mesh];
+        return mesh;
+    }
 
-        return scene;
+
+    private static getMesh(scene: THREE.Scene): THREE.Mesh {
+
+        return scene.children.find(object => object instanceof THREE.Mesh) as THREE.Mesh;
     }
 
 
@@ -33,17 +37,6 @@ export class ModelImporter {
         geometry.computeVertexNormals();
 
         mesh.geometry = new THREE.BufferGeometry().fromGeometry(geometry);
-    }
-
-
-    private static makeMaterialDoubleSided(mesh: THREE.Mesh) {
-
-        if (mesh.material instanceof Array) {
-            console.warn('Material arrays are not supported.');
-            return;
-        }
-
-        mesh.material.side = THREE.DoubleSide;
     }
 
 
@@ -105,6 +98,13 @@ export class ModelImporter {
     }
 
 
+    private static applySceneMatrix(mesh: THREE.Mesh, scene: THREE.Scene) {
+
+        scene.updateMatrix();
+        mesh.geometry.applyMatrix(scene.matrix);
+    }
+
+
     private static setPositionToCenter(mesh: THREE.Mesh) {
 
         mesh.geometry.computeBoundingSphere();
@@ -113,5 +113,16 @@ export class ModelImporter {
 
         mesh.position.set(center.x, center.y, center.z);
         mesh.geometry.translate(-center.x, -center.y, -center.z);
+    }
+
+
+    private static makeMaterialDoubleSided(mesh: THREE.Mesh) {
+
+        if (mesh.material instanceof Array) {
+            console.warn('Material arrays are not supported.');
+            return;
+        }
+
+        mesh.material.side = THREE.DoubleSide;
     }
 }

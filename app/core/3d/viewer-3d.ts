@@ -44,13 +44,13 @@ export class Viewer3D {
     }
 
 
-    public add(scene: THREE.Scene) {
+    public add(scene: THREE.Scene|THREE.Mesh) {
 
         this.scene.add(scene);
     }
 
 
-    public remove(scene: THREE.Scene) {
+    public remove(scene: THREE.Scene|THREE.Mesh) {
 
         this.scene.remove(scene);
     }
@@ -58,7 +58,7 @@ export class Viewer3D {
 
     public removeAll() {
 
-        this.scene.children.filter(child => child instanceof THREE.Scene)
+        this.scene.children.filter(child => child instanceof THREE.Scene || child instanceof THREE.Mesh)
             .forEach(child => this.scene.remove(child));
     }
 

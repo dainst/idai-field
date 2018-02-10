@@ -58,7 +58,7 @@ export class ObjectManager {
 
     private remove3DObject(object: Object3D) {
 
-        this.viewer.remove(object.scene);
+        this.viewer.remove(object.mesh);
         object.visible = false;
     }
 
@@ -91,7 +91,7 @@ export class ObjectManager {
     private addObjectToMap(object: Object3D) {
 
         object.visible = true;
-        this.viewer.add(object.scene);
+        this.viewer.add(object.mesh);
     }
 
 

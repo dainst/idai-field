@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Object3D} from './object-3d';
-import {Model3DUtility} from './model-3d-utility';
 import {ModelImporter} from './model-importer';
 import {SettingsService} from '../settings/settings-service';
 
@@ -19,13 +18,12 @@ export class Object3DLoader {
     // TODO Remove document parameter
     public async load(id: string, document: IdaiFieldDocument): Promise<Object3D> {
 
-        const scene: THREE.Scene = await this.loadFile(id);
+        const mesh: THREE.Mesh = await this.loadFile(id);
 
         const object: Object3D = {
             resourceId: id,
             document: document,
-            scene: scene,
-            mesh: Model3DUtility.getMesh(scene),
+            mesh: mesh,
             visible: false
         };
 
@@ -33,7 +31,7 @@ export class Object3DLoader {
     }
 
 
-    private loadFile(id: string): Promise<THREE.Scene> {
+    private loadFile(id: string): Promise<THREE.Mesh> {
 
         return new Promise((resolve, reject) => {
 

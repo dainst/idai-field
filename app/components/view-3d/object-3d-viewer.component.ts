@@ -68,7 +68,7 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
         const object: Object3D = await this.objectLoader.load(this.document.resource.id as string,
             this.document as any);
-        this.viewer.add(object.scene);
+        this.viewer.add(object.mesh);
         this.controls.focusObject(object);
     }
 

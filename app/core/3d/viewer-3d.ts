@@ -63,6 +63,21 @@ export class Viewer3D {
     }
 
 
+    public getScreenCoordinates(position: THREE.Vector3): THREE.Vector2|undefined {
+
+        const canvas: HTMLCanvasElement = this.renderer.domElement;
+        const projectedPosition: THREE.Vector3 = position.clone().project(this.camera);
+
+        const screenCoordinates: THREE.Vector2 = new THREE.Vector2();
+        screenCoordinates.x
+            = Math.round((projectedPosition.x + 1) * canvas.width  / 2) + canvas.getBoundingClientRect().left;
+        screenCoordinates.y
+            = Math.round((-projectedPosition.y + 1) * canvas.height / 2) + canvas.getBoundingClientRect().top;
+
+        return this.isInCanvas(screenCoordinates) ? screenCoordinates : undefined;
+    }
+
+
     private initialize() {
 
         this.scene = new THREE.Scene();
@@ -117,5 +132,16 @@ export class Viewer3D {
             this.camera.aspect = width / height;
             this.camera.updateProjectionMatrix();
         }
+    }
+
+
+    private isInCanvas(screenCoordinates: THREE.Vector2): boolean {
+
+        const canvas: HTMLCanvasElement = this.renderer.domElement;
+
+        return screenCoordinates.x > canvas.getBoundingClientRect().left
+            && screenCoordinates.x < canvas.getBoundingClientRect().right
+            && screenCoordinates.y > canvas.getBoundingClientRect().top
+            && screenCoordinates.y < canvas.getBoundingClientRect().bottom;
     }
 }

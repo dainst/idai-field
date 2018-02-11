@@ -8,3 +8,8 @@
      (wheel)="onWheel($event)"
      (contextmenu)="$event.preventDefault()">
 </div>
+
+<map-3d-point-geometries [viewer]="viewer"
+                         [documents]="documents"
+                         (onSelectDocument)="select($event)">
+</map-3d-point-geometries>

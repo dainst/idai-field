@@ -75,7 +75,7 @@ export class Map3DLayerManager {
 
     private async getLayer(id: string, document: IdaiFieldDocument): Promise<Map3DLayer> {
 
-        return this.getObjectMap()[id] || this.loadLayer(id, document);
+        return this.getObjectMap()[document.resource.id as string] || this.loadLayer(id, document);
     }
 
 

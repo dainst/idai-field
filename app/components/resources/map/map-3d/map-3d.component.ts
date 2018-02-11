@@ -21,11 +21,13 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
 
-    @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Output() onSelectDocument: EventEmitter<IdaiFieldDocument|undefined>
+        = new EventEmitter<IdaiFieldDocument|undefined>();
 
     @ViewChild('container') container: ElementRef;
 
-    private viewer: Viewer3D;
+    public viewer: Viewer3D;
+
     private controls: Map3DControls;
     private layerManager: Map3DLayerManager;
 
@@ -56,6 +58,9 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     }
 
 
+    public select = (document: IdaiFieldDocument|undefined) => this.onSelectDocument.emit(document);
+
+
     private initialize() {
 
         this.viewer = new Viewer3D(this.container.nativeElement);
@@ -67,7 +72,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     private setControlState(controlState: Map3DControlState) {
 
         if (controlState.selectedDocument != this.selectedDocument) {
-            this.onSelectDocument.emit(controlState.selectedDocument);
+            this.select(this.controlState.selectedDocument);
         }
 
         this.controlState = controlState;

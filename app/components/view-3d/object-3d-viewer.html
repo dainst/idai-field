@@ -7,3 +7,8 @@
      (wheel)="onWheel($event)"
      (contextmenu)="$event.preventDefault()">
 </div>
+
+<div id="toggle-texture-button" class="btn btn-light" (click)="toggleTexture()">
+    <span *ngIf="!textured" class="mdi mdi-cube-outline"></span>
+    <span *ngIf="textured" class="mdi mdi-cube"></span>
+</div>

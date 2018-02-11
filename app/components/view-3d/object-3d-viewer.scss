@@ -15,5 +15,11 @@
   &.rotate {
     cursor: none;
   }
+}
 
+#toggle-texture-button {
+  position: absolute;
+  z-index: 1000;
+  left: 15px;
+  top: 15px;
 }

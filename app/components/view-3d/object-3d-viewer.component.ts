@@ -22,9 +22,14 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
     @ViewChild('container') container: ElementRef;
 
+    public textured: boolean = true;
+
     private viewer: Viewer3D;
     private controls: Object3DViewerControls;
     private meshLoader: MeshLoader;
+
+    private mesh: THREE.Mesh;
+    private meshMaterial: THREE.Material|Array<THREE.Material>;
 
 
     constructor(private settingsService: SettingsService) {}
@@ -55,6 +60,18 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     }
 
 
+    public toggleTexture() {
+
+        if (this.textured) {
+            MeshEditingUtility.setWhiteMaterial(this.mesh);
+        } else {
+            this.mesh.material = this.meshMaterial;
+        }
+
+        this.textured = !this.textured;
+    }
+
+
     private initialize() {
 
         this.viewer = new Viewer3D(this.container.nativeElement);
@@ -66,19 +83,18 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     private async update() {
 
         this.viewer.removeAll();
+        await this.loadMesh();
 
-        const mesh: THREE.Mesh = await this.loadMesh();
-        this.viewer.add(mesh);
-        this.controls.setMesh(mesh);
+        this.viewer.add(this.mesh);
+        this.controls.setMesh(this.mesh);
     }
 
 
-    private async loadMesh(): Promise<THREE.Mesh> {
+    private async loadMesh(): Promise<void> {
 
-        const mesh: THREE.Mesh = await this.meshLoader.load(this.document.resource.id as string);
-        MeshEditingUtility.createBackSide(mesh);
-
-        return mesh;
+        this.mesh = await this.meshLoader.load(this.document.resource.id as string);
+        this.meshMaterial = this.mesh.material;
+        MeshEditingUtility.createBackSide(this.mesh);
     }
 
 

@@ -18,11 +18,17 @@ export class MeshEditingUtility {
         const backSideMesh = new THREE.Mesh();
         backSideMesh.geometry = mesh.geometry.clone();
         backSideMesh.material = new THREE.MeshPhongMaterial({
-            color: new THREE.Color(0x333333),
+            color: new THREE.Color(0xffffff),
             side: THREE.BackSide
         });
 
         mesh.add(backSideMesh);
+    }
+
+
+    public static setWhiteMaterial(mesh: THREE.Mesh) {
+
+        mesh.material = new THREE.MeshPhongMaterial({ color: 0xffffff });
     }
 
 

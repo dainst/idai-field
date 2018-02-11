@@ -5,6 +5,7 @@ import {Viewer3D} from '../../core/3d/viewer-3d';
 import {SettingsService} from '../../core/settings/settings-service';
 import {Object3DViewerControls} from './object-3d-viewer-controls';
 import {MeshLoader} from '../../core/3d/mesh-loader';
+import {MeshEditingUtility} from '../../core/3d/mesh-editing-utility';
 
 
 @Component({
@@ -66,9 +67,18 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
         this.viewer.removeAll();
 
-        const mesh: THREE.Mesh = await this.meshLoader.load(this.document.resource.id as string);
+        const mesh: THREE.Mesh = await this.loadMesh();
         this.viewer.add(mesh);
         this.controls.setMesh(mesh);
+    }
+
+
+    private async loadMesh(): Promise<THREE.Mesh> {
+
+        const mesh: THREE.Mesh = await this.meshLoader.load(this.document.resource.id as string);
+        MeshEditingUtility.createBackSide(mesh);
+
+        return mesh;
     }
 
 

@@ -1,10 +1,10 @@
 <div *ngFor="let marker of getMarkers()"
-     style="position: fixed; height: 50px; border-left: 1px solid white; z-index: 1;"
+     class="map-3d-marker"
      [style.left]="marker.xPosition + 'px'"
      [style.top]="'calc(' + marker.yPosition + 'px - 50px)'"
      (click)="select(marker.document)">
-    <div style="position: relative; top: -28px; left: -12px;">
+    <div class="marker-head">
         <type-icon [size]="25" [type]="marker.document.resource.type"></type-icon>
-        <span style="color: white; font-size: 20px; font-weight: bold; -webkit-text-stroke: 1px black;">{{marker.document.resource.identifier}}</span>
+        <span class="marker-label">{{marker.document.resource.identifier}}</span>
     </div>
 </div>

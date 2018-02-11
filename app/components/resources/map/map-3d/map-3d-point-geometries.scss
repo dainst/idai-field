@@ -1,0 +1,23 @@
+/**
+ * @author Thomas Kleinke
+ */
+
+.map-3d-marker {
+  position: fixed;
+  height: 50px;
+  border-left: 1px solid #fff;
+  z-index: 1;
+
+  .marker-head {
+    position: relative;
+    top: -28px;
+    left: -12px;
+
+    .marker-label {
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      -webkit-text-stroke: 1px #000;
+    }
+  }
+}

@@ -1,12 +1,41 @@
 import * as THREE from 'three';
+import {SettingsService} from '../settings/settings-service';
+
+const ColladaLoader = require('three-collada-loader-2');
 
 
 /**
  * @author Thomas Kleinke
  */
-export class ModelImporter {
+export class MeshLoader {
 
-    public static importColladaModel(colladaModel: THREE.ColladaModel): THREE.Mesh {
+    constructor(private settingsService: SettingsService) {}
+
+
+    public load(id: string): Promise<THREE.Mesh> {
+
+        return new Promise((resolve, reject) => {
+
+            const loader = new ColladaLoader();
+            loader.load(this.getFilePath(id), (colladaModel: THREE.ColladaModel) => {
+                resolve(MeshLoader.extractAndAdjustMesh(colladaModel));
+            });
+
+            // TODO Error handling
+        });
+    }
+
+
+    private getFilePath(id: string) {
+
+        return this.settingsService.getSettings().model3DStorePath
+            + this.settingsService.getSelectedProject() + '/'
+            + id + '/'
+            + id + '.dae';
+    }
+
+
+    private static extractAndAdjustMesh(colladaModel: THREE.ColladaModel): THREE.Mesh {
 
         const scene: THREE.Scene = colladaModel.scene;
         const mesh: THREE.Mesh = this.getMesh(scene);
@@ -86,7 +115,7 @@ export class ModelImporter {
 
         const result: Array<Array<Array<THREE.Vector2>>> = [[]];
 
-        for (var i = 0; i < uv.length; i += 6) {
+        for (let i = 0; i < uv.length; i += 6) {
             result[0].push([
                 new THREE.Vector2(uv[i], uv[i + 1]),
                 new THREE.Vector2(uv[i + 2], uv[i + 3]),

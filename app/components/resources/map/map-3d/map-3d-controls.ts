@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
-import {Object3D} from '../../../../core/3d/object-3d';
-import {ObjectManager} from './object-manager';
+import {Map3DLayer} from './map-3d-layer';
+import {Map3DLayerManager} from './map-3d-layer-manager';
 import {Map3DControlState} from './map-3d-control-state';
 
 
@@ -24,7 +24,7 @@ export class Map3DControls {
 
 
     constructor(private viewer: Viewer3D,
-                private objectManager: ObjectManager) {}
+                private objectManager: Map3DLayerManager) {}
 
 
     public onMouseDown(event: MouseEvent): Map3DControlState {
@@ -156,27 +156,27 @@ export class Map3DControls {
             return;
         }
 
-        const clickedObject: Object3D|undefined = this.getObjectAtMousePosition(xPosition, yPosition);
+        const clickedObject: Map3DLayer|undefined = this.getObjectAtMousePosition(xPosition, yPosition);
         this.setSelectedDocument(clickedObject ? clickedObject.document : undefined);
     }
 
 
     private updateHoverDocument(xPosition: number, yPosition: number) {
 
-        const hoverObject: Object3D|undefined = this.getObjectAtMousePosition(xPosition, yPosition);
+        const hoverObject: Map3DLayer|undefined = this.getObjectAtMousePosition(xPosition, yPosition);
         this.state.hoverDocument = hoverObject && hoverObject.document != this.state.selectedDocument ?
             hoverObject.document :
             undefined;
     }
 
 
-    private getObjectAtMousePosition(xPosition: number, yPosition: number): Object3D|undefined {
+    private getObjectAtMousePosition(xPosition: number, yPosition: number): Map3DLayer|undefined {
 
         const intersections: Array<THREE.Intersection> = this.getIntersections(xPosition, yPosition);
 
         if (intersections.length == 0) return undefined;
 
-        return this.objectManager.get3DObjectByModelId(intersections[0].object.uuid);
+        return this.objectManager.getLayerByModelId(intersections[0].object.uuid);
     }
 
 
@@ -201,8 +201,8 @@ export class Map3DControls {
 
     private focusObjectOfDocument(document: IdaiFieldDocument) {
 
-        const object: Object3D|undefined
-            = this.objectManager.get3DObjectByDocumentResourceId(document.resource.id as string);
+        const object: Map3DLayer|undefined
+            = this.objectManager.getLayerByDocumentResourceId(document.resource.id as string);
 
         if (object) this.focusObject(object);
     }
@@ -217,7 +217,7 @@ export class Map3DControls {
     }
 
 
-    private focusObject(object: Object3D) {
+    private focusObject(object: Map3DLayer) {
 
         const position: THREE.Vector3 = object.mesh.getWorldPosition();
         const camera: THREE.Camera = this.viewer.getCamera();

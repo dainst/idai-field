@@ -4,7 +4,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Map3DControls} from './map-3d-controls';
 import {Map3DControlState} from './map-3d-control-state';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
-import {ObjectManager} from './object-manager';
+import {Map3DLayerManager} from './map-3d-layer-manager';
 import {SettingsService} from '../../../../core/settings/settings-service';
 
 
@@ -27,7 +27,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     private viewer: Viewer3D;
     private controls: Map3DControls;
-    private objectManager: ObjectManager;
+    private layerManager: Map3DLayerManager;
 
     private controlState: Map3DControlState;
 
@@ -45,7 +45,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
         if (!this.viewer) this.initialize();
 
-        if (changes['documents']) await this.objectManager.show3DObjectsForDocuments(this.documents);
+        if (changes['documents']) await this.layerManager.showLayersForDocuments(this.documents);
         if (changes['selectedDocument']) this.controls.setSelectedDocument(this.selectedDocument);
     }
 
@@ -59,8 +59,8 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     private initialize() {
 
         this.viewer = new Viewer3D(this.container.nativeElement);
-        this.objectManager = new ObjectManager(this.viewer, this.settingsService);
-        this.controls = new Map3DControls(this.viewer, this.objectManager);
+        this.layerManager = new Map3DLayerManager(this.viewer, this.settingsService);
+        this.controls = new Map3DControls(this.viewer, this.layerManager);
     }
 
 

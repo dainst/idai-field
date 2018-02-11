@@ -5,10 +5,9 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 /**
  * @author Thomas Kleinke
  */
-export interface Object3D {
+export interface Map3DLayer {
 
-    resourceId: string;
-    document: IdaiFieldDocument;    // TODO Remove
     mesh: THREE.Mesh;
+    document: IdaiFieldDocument;
     visible: boolean;
 }

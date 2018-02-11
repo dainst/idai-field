@@ -1,10 +1,10 @@
 import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, SimpleChanges} from '@angular/core';
+import * as THREE from 'three';
 import {Document} from 'idai-components-2/core';
 import {Viewer3D} from '../../core/3d/viewer-3d';
 import {SettingsService} from '../../core/settings/settings-service';
 import {Object3DViewerControls} from './object-3d-viewer-controls';
-import {Object3DLoader} from '../../core/3d/object-3d-loader';
-import {Object3D} from '../../core/3d/object-3d';
+import {MeshLoader} from '../../core/3d/mesh-loader';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
     private viewer: Viewer3D;
     private controls: Object3DViewerControls;
-    private objectLoader: Object3DLoader;
+    private meshLoader: MeshLoader;
 
 
     constructor(private settingsService: SettingsService) {}
@@ -58,7 +58,7 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
         this.viewer = new Viewer3D(this.container.nativeElement);
         this.controls = new Object3DViewerControls(this.viewer);
-        this.objectLoader = new Object3DLoader(this.settingsService);
+        this.meshLoader = new MeshLoader(this.settingsService);
     }
 
 
@@ -66,10 +66,9 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
         this.viewer.removeAll();
 
-        const object: Object3D = await this.objectLoader.load(this.document.resource.id as string,
-            this.document as any);
-        this.viewer.add(object.mesh);
-        this.controls.setMesh(object.mesh);
+        const mesh: THREE.Mesh = await this.meshLoader.load(this.document.resource.id as string);
+        this.viewer.add(mesh);
+        this.controls.setMesh(mesh);
     }
 
 

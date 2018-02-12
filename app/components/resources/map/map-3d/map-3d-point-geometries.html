@@ -3,8 +3,10 @@
      [style.left]="marker.xPosition + 'px'"
      [style.top]="'calc(' + marker.yPosition + 'px - 50px)'"
      (click)="select(marker.document)">
-    <div class="marker-head">
-        <type-icon [size]="25" [type]="marker.document.resource.type"></type-icon>
-        <span class="marker-label">{{marker.document.resource.identifier}}</span>
+    <div class="map-3d-marker-head">
+        <div class="map-3d-marker-icon">
+            <type-icon [size]="25" [type]="marker.document.resource.type"></type-icon>
+        </div>
+        <span class="map-3d-marker-label">{{marker.document.resource.identifier}}</span>
     </div>
 </div>

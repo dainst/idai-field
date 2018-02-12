@@ -8,15 +8,25 @@
   border-left: 1px solid #fff;
   z-index: 1;
 
-  .marker-head {
+  .map-3d-marker-head {
     position: relative;
-    top: -28px;
-    left: -12px;
+    top: -27px;
+    left: -14px;
 
-    .marker-label {
-      color: #fff;
-      font-size: 20px;
+    .map-3d-marker-icon {
+      border-radius: 50%;
+      width: 27px;
+      height: 27px;
+      border: 1px solid #fff;
+    }
+
+    .map-3d-marker-label {
+      position: absolute;
+      left: 32px;
+      top: -1px;
+      font-size: 18px;
       font-weight: bold;
+      color: #fff;
       -webkit-text-stroke: 1px #000;
     }
   }

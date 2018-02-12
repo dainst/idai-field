@@ -23,7 +23,6 @@ export interface Map3DMarker {
  */
 export class Map3DPointGeometriesComponent {
 
-    @Input() viewer: Viewer3D;
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
 
@@ -38,6 +37,7 @@ export class Map3DPointGeometriesComponent {
 
 
     public select = (document: IdaiFieldDocument) => this.onSelectDocument.emit(document);
+
     public onMouseMove = (event: MouseEvent) => this.map3DComponent.onMouseMove(event);
     public onMouseUp = (event: MouseEvent) => this.map3DComponent.onMouseUp(event);
     public onWheel = (event: WheelEvent) => this.map3DComponent.onWheel(event);
@@ -75,7 +75,7 @@ export class Map3DPointGeometriesComponent {
 
     private getScreenCoordinates(document: IdaiFieldDocument): THREE.Vector2|undefined {
 
-        return this.viewer.getScreenCoordinates(
+        return this.map3DComponent.getViewer().getScreenCoordinates(
             Map3DPointGeometriesComponent.getGeometryCoordinatesVector(document.resource.geometry as IdaiFieldGeometry)
         );
     }

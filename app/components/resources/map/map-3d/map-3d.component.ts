@@ -26,8 +26,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     @ViewChild('container') container: ElementRef;
 
-    public viewer: Viewer3D;
-
+    private viewer: Viewer3D;
     private controls: Map3DControls;
     private layerManager: Map3DLayerManager;
 
@@ -36,6 +35,9 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     constructor(private settingsService: SettingsService) {}
 
+
+    public select = (document: IdaiFieldDocument|undefined) => this.onSelectDocument.emit(document);
+    public getViewer = () => this.viewer;
 
     public onMouseDown = (event: MouseEvent) => this.setControlState(this.controls.onMouseDown(event));
     public onMouseUp = (event: MouseEvent) => this.setControlState(this.controls.onMouseUp(event));
@@ -56,9 +58,6 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
         this.viewer.destroy();
     }
-
-
-    public select = (document: IdaiFieldDocument|undefined) => this.onSelectDocument.emit(document);
 
 
     private initialize() {

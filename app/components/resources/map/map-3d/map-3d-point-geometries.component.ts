@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {Component, ViewChild, ElementRef, Input, Output, EventEmitter} from '@angular/core';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
+import {Map3DComponent} from './map-3d.component';
 
 
 export interface Map3DMarker {
@@ -33,7 +34,13 @@ export class Map3DPointGeometriesComponent {
     @ViewChild('container') container: ElementRef;
 
 
+    constructor(private map3DComponent: Map3DComponent) {}
+
+
     public select = (document: IdaiFieldDocument) => this.onSelectDocument.emit(document);
+    public onMouseMove = (event: MouseEvent) => this.map3DComponent.onMouseMove(event);
+    public onMouseUp = (event: MouseEvent) => this.map3DComponent.onMouseUp(event);
+    public onWheel = (event: WheelEvent) => this.map3DComponent.onWheel(event);
 
 
     public getMarkers(): Array<Map3DMarker> {

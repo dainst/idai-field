@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {Component, ViewChild, ElementRef, Input, Output, EventEmitter} from '@angular/core';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
-import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Map3DComponent} from './map-3d.component';
+import {has3DPointGeometry, getPointVector} from '../../../../util/util-3d';
 
 
 export interface Map3DMarker {
@@ -58,7 +58,7 @@ export class Map3DPointGeometriesComponent {
 
     private createMarker(document: IdaiFieldDocument): Map3DMarker|undefined {
 
-        if (!Map3DPointGeometriesComponent.has3DPointGeometry(document)) return undefined;
+        if (!has3DPointGeometry(document)) return undefined;
 
         const screenCoordinates: THREE.Vector2|undefined = this.getScreenCoordinates(document);
         if (!screenCoordinates) return;
@@ -76,22 +76,7 @@ export class Map3DPointGeometriesComponent {
     private getScreenCoordinates(document: IdaiFieldDocument): THREE.Vector2|undefined {
 
         return this.map3DComponent.getViewer().getScreenCoordinates(
-            Map3DPointGeometriesComponent.getGeometryCoordinatesVector(document.resource.geometry as IdaiFieldGeometry)
+            getPointVector(document.resource.geometry as IdaiFieldGeometry)
         );
-    }
-
-
-    private static has3DPointGeometry(document: IdaiFieldDocument): boolean {
-
-        return document.resource.geometry != undefined &&
-            document.resource.geometry.type == 'Point' &&
-            document.resource.geometry.coordinates != undefined &&
-            document.resource.geometry.coordinates.length == 3;
-    }
-
-
-    private static getGeometryCoordinatesVector(geometry: IdaiFieldGeometry): THREE.Vector3 {
-
-        return new THREE.Vector3(geometry.coordinates[0], geometry.coordinates[2], geometry.coordinates[1]);
     }
 }

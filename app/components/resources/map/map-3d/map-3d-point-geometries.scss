@@ -12,6 +12,7 @@
     position: relative;
     top: -27px;
     left: -14px;
+    user-select: none;
 
     .map-3d-marker-icon {
       border-radius: 50%;
@@ -28,6 +29,14 @@
       font-weight: bold;
       color: #fff;
       -webkit-text-stroke: 1px #000;
+    }
+  }
+
+  .map-3d-marker-head:hover {
+    cursor: pointer;
+
+    .map-3d-marker-label {
+      color: #748db5;
     }
   }
 }

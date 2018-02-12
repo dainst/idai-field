@@ -18,7 +18,7 @@ export class Map3DControls {
 
     private lastXPosition: number;
     private lastYPosition: number;
-    
+
     private focusedMesh: THREE.Mesh|undefined;
     private focusedMeshOriginalRotation: THREE.Quaternion;
 
@@ -35,10 +35,6 @@ export class Map3DControls {
         switch (event.which) {
             case 1:  // Left mouse button
                 this.beginDragAction();
-                break;
-
-            case 3:  // Right mouse button
-                this.beginRotateAction();
                 break;
         }
 
@@ -99,12 +95,6 @@ export class Map3DControls {
     }
 
 
-    private beginRotateAction() {
-
-        this.state.action = 'rotate';
-    }
-
-
     private resetAction() {
 
         this.state.action = 'none';
@@ -116,10 +106,6 @@ export class Map3DControls {
         switch (this.state.action) {
             case 'drag':
                 this.drag(deltaX, deltaY);
-                break;
-
-            case 'rotate':
-                this.rotate(deltaX, deltaY);
                 break;
         }
     }
@@ -133,18 +119,6 @@ export class Map3DControls {
         this.dragCounter++;
         if (this.dragCounter > 10 || deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5) {
             this.noSelection = true;
-        }
-    }
-
-
-    private rotate(deltaX: number, deltaY: number) {
-
-        if (this.focusedMesh) {
-            this.focusedMesh.rotation.x += deltaY / 100;
-            this.focusedMesh.rotation.y += deltaX / 100;
-        } else {
-            this.viewer.getCamera().rotation.x += deltaY / 100;
-            this.viewer.getCamera().rotation.y += deltaX / 100;
         }
     }
 

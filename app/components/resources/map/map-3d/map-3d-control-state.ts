@@ -6,7 +6,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
  */
 export interface Map3DControlState {
 
-    action: string; // drag, rotate, none
+    action: string; // drag, none
     hoverDocument?: IdaiFieldDocument;
     selectedDocument?: IdaiFieldDocument;
 }

@@ -28,9 +28,9 @@ export class Map3DPointGeometriesComponent {
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
-    private markers: { [resourceId: string]: Map3DMarker } = {};
-
     @ViewChild('container') container: ElementRef;
+
+    private cachedMarkers: { [resourceId: string]: Map3DMarker } = {};
 
 
     constructor(private map3DComponent: Map3DComponent) {}
@@ -49,10 +49,7 @@ export class Map3DPointGeometriesComponent {
 
         this.documents.forEach(document => {
            const marker: Map3DMarker|undefined = this.createMarker(document);
-           if (marker) {
-               this.markers[document.resource.id as string] = marker;
-               markers.push(marker);
-           }
+           if (marker) markers.push(marker);
         });
 
         return markers;
@@ -66,9 +63,12 @@ export class Map3DPointGeometriesComponent {
         const screenCoordinates: THREE.Vector2|undefined = this.getScreenCoordinates(document);
         if (!screenCoordinates) return;
 
-        const marker = this.markers[document.resource.id as string] || { document: document };
+        const marker = this.cachedMarkers[document.resource.id as string] || { document: document };
         marker.xPosition = screenCoordinates.x;
         marker.yPosition = screenCoordinates.y;
+
+        this.cachedMarkers[document.resource.id as string] = marker;
+
         return marker;
     }
 

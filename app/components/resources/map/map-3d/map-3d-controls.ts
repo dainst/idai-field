@@ -1,9 +1,10 @@
 import * as THREE from 'three';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Map3DLayer} from './map-3d-layer';
 import {Map3DLayerManager} from './map-3d-layer-manager';
 import {Map3DControlState} from './map-3d-control-state';
+import {getPointVector} from '../../../../util/util-3d';
 
 
 /**
@@ -18,9 +19,6 @@ export class Map3DControls {
 
     private lastXPosition: number;
     private lastYPosition: number;
-
-    private focusedMesh: THREE.Mesh|undefined;
-    private focusedMeshOriginalRotation: THREE.Quaternion;
 
 
     constructor(private viewer: Viewer3D,
@@ -79,12 +77,24 @@ export class Map3DControls {
 
         if (document == this.state.selectedDocument) return;
 
-        if (this.state.selectedDocument) this.quitFocus();
-        if (document) this.focusObjectOfDocument(document);
-
         this.state.selectedDocument = document;
 
-        this.updateHoverDocument(this.lastXPosition, this.lastYPosition);
+        if (!document) return;
+
+        const geometry: IdaiFieldGeometry|undefined = document.resource.geometry;
+        if (geometry && geometry.type == 'Point') this.focusPoint(getPointVector(geometry));
+    }
+
+
+    private focusPoint(point: THREE.Vector3) {
+
+        const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
+
+        camera.position.set(
+            point.x,
+            camera.position.y > point.y ? camera.position.y : point.y + 3,
+            point.z);
+        camera.lookAt(point);
     }
 
 
@@ -170,36 +180,5 @@ export class Map3DControls {
         raycaster.setFromCamera(coordinates, this.viewer.getCamera());
 
         return raycaster.intersectObjects(scene.children, true);
-    }
-
-
-    private focusObjectOfDocument(document: IdaiFieldDocument) {
-
-        const object: Map3DLayer|undefined
-            = this.objectManager.getLayerByDocumentResourceId(document.resource.id as string);
-
-        if (object) this.focusObject(object);
-    }
-
-
-    private quitFocus() {
-
-        if (!this.focusedMesh) return;
-
-        this.focusedMesh.setRotationFromQuaternion(this.focusedMeshOriginalRotation);
-        this.focusedMesh = undefined;
-    }
-
-
-    private focusObject(object: Map3DLayer) {
-
-        const position: THREE.Vector3 = object.mesh.getWorldPosition();
-        const camera: THREE.Camera = this.viewer.getCamera();
-
-        this.focusedMesh = object.mesh;
-        this.focusedMeshOriginalRotation = object.mesh.quaternion.clone();
-
-        camera.position.set(position.x, position.y + 6, position.z);
-        camera.lookAt(position);
     }
 }

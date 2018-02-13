@@ -15,7 +15,7 @@ import {EditSaveDialogComponent} from './edit-save-dialog.component';
 import {TypeSwitcherButtonComponent} from './type-switcher-button.component';
 import {ImagePickerComponent} from "./imagetab/image-picker.component";
 import {ImageGridModule} from "../imagegrid/image-grid.module";
-import {DoceditDeleteModalComponent} from './docedit-delete-modal.component';
+import {DeleteModalComponent} from './delete-modal.component';
 
 @NgModule({
     imports: [
@@ -31,7 +31,7 @@ import {DoceditDeleteModalComponent} from './docedit-delete-modal.component';
     ],
     declarations: [
         ConflictDeletedModalComponent,
-        DoceditDeleteModalComponent,
+        DeleteModalComponent,
         DoceditComponent,
         EditSaveDialogComponent,
         DoceditImageTabComponent,
@@ -47,7 +47,7 @@ import {DoceditDeleteModalComponent} from './docedit-delete-modal.component';
         DoceditComponent,
         ConflictDeletedModalComponent,
         ImagePickerComponent,
-        DoceditDeleteModalComponent
+        DeleteModalComponent
     ]
 })
 

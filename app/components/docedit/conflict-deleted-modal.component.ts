@@ -9,7 +9,5 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class ConflictDeletedModalComponent {
 
-
-    constructor(public activeModal: NgbActiveModal) {
-    }
+    constructor(public activeModal: NgbActiveModal) {}
 }

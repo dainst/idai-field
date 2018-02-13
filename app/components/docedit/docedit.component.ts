@@ -3,7 +3,7 @@ import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {DatastoreErrors} from 'idai-components-2/datastore';
-import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
+import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {SettingsService} from '../../core/settings/settings-service';
@@ -14,8 +14,8 @@ import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';
-import {Validator} from "../../core/model/validator";
-import {DoceditDeleteModalComponent} from './docedit-delete-modal.component';
+import {Validator} from '../../core/model/validator';
+import {DeleteModalComponent} from './delete-modal.component';
 
 
 @Component({
@@ -48,8 +48,6 @@ export class DoceditComponent {
     @ViewChild('modalTemplate') public modalTemplate: TemplateRef<any>;
     public dialog: NgbModalRef;
 
-    public isRecordedInResourcesCount: number;
-
     private projectImageTypes: any = {};
 
     /**
@@ -78,6 +76,10 @@ export class DoceditComponent {
 
         this.projectImageTypes = this.imageTypeUtility.getProjectImageTypes();
     }
+
+
+    public getRelationDefinitions = () => this.projectConfiguration.getRelationDefinitions(
+        this.clonedDocument.resource.type, false, 'editable');
 
 
     /**
@@ -131,21 +133,13 @@ export class DoceditComponent {
     }
 
 
-    public openDeleteModal(modal: any) {
+    public async openDeleteModal() {
 
-        const ref = this.modalService.open(DoceditDeleteModalComponent);
+        const ref = this.modalService.open(DeleteModalComponent);
         ref.componentInstance.setDocument(this.document);
-        ref.result.then(decision => {
-            if (decision == 'delete') this.deleteDoc();
-        });
-    }
-
-
-    public getRelationDefinitions() {
-
-        if (!this.projectConfiguration) return undefined;
-
-        return this.projectConfiguration.getRelationDefinitions(this.clonedDocument.resource.type, false, 'editable');
+        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.document));
+        const decision = await ref.result;
+        if (decision == 'delete') this.deleteDoc();
     }
 
 
@@ -183,15 +177,12 @@ export class DoceditComponent {
     }
 
 
-    private async fetchIsRecordedInCount(document: IdaiFieldDocument) {
+    private async fetchIsRecordedInCount(document: IdaiFieldDocument): Promise<number> {
 
-        if (!document.resource.id) {
-            this.isRecordedInResourcesCount = 0;
-            return;
-        }
+        if (!document.resource.id) return 0;
 
         const result = await this.datastore.find({ q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any);
-        this.isRecordedInResourcesCount = result.documents ? result.documents.length : 0;
+        return result.documents ? result.documents.length : 0;
     }
 
 

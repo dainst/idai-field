@@ -342,10 +342,9 @@ export class DoceditComponent {
 
     private async deleteDoc() {
 
-        await this.removeImageWithImageStore(this.document);
-        await this.removeWithPersistenceManager(this.document);
-
         try {
+            await this.removeImageWithImageStore(this.document);
+            await this.removeWithPersistenceManager(this.document);
             this.activeModal.dismiss('deleted');
             this.messages.add([M.DOCEDIT_DELETE_SUCCESS]);
         } catch(err) {

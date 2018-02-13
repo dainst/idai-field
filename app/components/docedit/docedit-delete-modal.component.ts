@@ -12,7 +12,11 @@ export class DoceditDeleteModalComponent {
 
     public document: any;
 
+    public isRecordedInResourcesCount: number;
+
     constructor(public activeModal: NgbActiveModal) {}
 
     public setDocument = (document: Document) => this.document = document;
+
+    public setCount = (count: number) => this.isRecordedInResourcesCount = count;
 }

@@ -48,8 +48,6 @@ export class DoceditComponent {
     @ViewChild('modalTemplate') public modalTemplate: TemplateRef<any>;
     public dialog: NgbModalRef;
 
-    public isRecordedInResourcesCount: number;
-
     private projectImageTypes: any = {};
 
     /**
@@ -135,13 +133,13 @@ export class DoceditComponent {
     }
 
 
-    public openDeleteModal(modal: any) {
+    public async openDeleteModal() {
 
         const ref = this.modalService.open(DoceditDeleteModalComponent);
         ref.componentInstance.setDocument(this.document);
-        ref.result.then(decision => {
-            if (decision == 'delete') this.deleteDoc();
-        });
+        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.document));
+        const decision = await ref.result;
+        if (decision == 'delete') this.deleteDoc();
     }
 
 
@@ -179,15 +177,12 @@ export class DoceditComponent {
     }
 
 
-    private async fetchIsRecordedInCount(document: IdaiFieldDocument) {
+    private async fetchIsRecordedInCount(document: IdaiFieldDocument): Promise<number> {
 
-        if (!document.resource.id) {
-            this.isRecordedInResourcesCount = 0;
-            return;
-        }
+        if (!document.resource.id) return 0;
 
         const result = await this.datastore.find({ q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any);
-        this.isRecordedInResourcesCount = result.documents ? result.documents.length : 0;
+        return result.documents ? result.documents.length : 0;
     }
 
 

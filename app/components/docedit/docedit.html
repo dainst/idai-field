@@ -22,7 +22,7 @@
                 <button *ngIf="clonedDocument && clonedDocument.resource.id
                             && clonedDocument.resource.type != 'Project'"
                         class="btn btn-danger pull-right" id="document-edit-button-delete-document"
-                         (click)="openDeleteModal(deleteModal);">
+                         (click)="openDeleteModal();">
                     <span class="mdi mdi-delete"></span>
                     <span class="button-label">Löschen</span>
                 </button>

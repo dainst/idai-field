@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration'
+import {isNot} from '../util/list/list-util-base';
 
 
 @Injectable()
@@ -45,8 +46,8 @@ export class ImageTypeUtility {
     public getNonImageTypeNames(): string[] {
 
         return this.projectConfiguration.getTypesList()
-            .filter(type => !this.isImageType(type.name))
-            .map(type => type.name);
+            .map(type => type.name)
+            .filter(typeName => !this.isImageType(typeName))
     }
 
 

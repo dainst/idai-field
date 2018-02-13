@@ -7,6 +7,13 @@
 
   $buttoncolor: #657faa;
 
+  .tab-content {
+    padding-top: 1em;
+    height: calc(100vh - 172px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
   .document-card .card-block {
     overflow: auto;
   }
@@ -16,7 +23,7 @@
   }
 
   .card-block {
-    padding-top: 9px !important;
+     padding-bottom: 0px !important;
   }
 
   #document-view-button-solve-conflicts:hover {

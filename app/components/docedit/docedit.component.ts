@@ -47,8 +47,6 @@ export class DoceditComponent {
     private clonedDocument: IdaiFieldDocument;
 
 
-    private projectImageTypes: any = {};
-
     /**
      * These are the revisions (of the cloned document as long as not saved)
      * that are conflict resolved. They will be be removed from document
@@ -57,6 +55,9 @@ export class DoceditComponent {
     private inspectedRevisionsIds: string[];
 
     private parentLabel: string;
+
+
+    private showDoceditImagesTab: boolean = false;
 
 
     constructor(
@@ -72,8 +73,6 @@ export class DoceditComponent {
         private imageTypeUtility: ImageTypeUtility,
         private activeTabService: DoceditActiveTabService,
         private projectConfiguration: ProjectConfiguration) {
-
-        this.projectImageTypes = this.imageTypeUtility.getProjectImageTypes();
     }
 
 
@@ -91,6 +90,10 @@ export class DoceditComponent {
         this.document = document;
         this.inspectedRevisionsIds = [];
         this.clonedDocument = <IdaiFieldDocument> ObjectUtil.cloneObject(this.document);
+
+        this.showDoceditImagesTab = (!
+            (this.imageTypeUtility.getProjectImageTypes())[this.clonedDocument.resource.type]
+        );
 
         this.persistenceManager.setOldVersions([this.document]);
 

@@ -49,7 +49,7 @@ export class DoceditComponent {
     public dialog: NgbModalRef;
 
     public isRecordedInResourcesCount: number;
-    
+
     private projectImageTypes: any = {};
 
     /**
@@ -183,15 +183,15 @@ export class DoceditComponent {
     }
 
 
-    private fetchIsRecordedInCount(document: IdaiFieldDocument) {
+    private async fetchIsRecordedInCount(document: IdaiFieldDocument) {
 
         if (!document.resource.id) {
             this.isRecordedInResourcesCount = 0;
             return;
         }
 
-        this.datastore.find({ q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any)
-            .then(result => this.isRecordedInResourcesCount = result.documents ? result.documents.length : 0);
+        const result = await this.datastore.find({ q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any);
+        this.isRecordedInResourcesCount = result.documents ? result.documents.length : 0;
     }
 
 
@@ -367,14 +367,15 @@ export class DoceditComponent {
     }
 
 
-    private removeWithPersistenceManager(document: any): Promise<any> {
+    private async removeWithPersistenceManager(document: any): Promise<any> {
 
-        return this.persistenceManager.remove(document, this.settingsService.getUsername())
-            .catch((removeError: any): any => {
-                if (removeError != DatastoreErrors.DOCUMENT_NOT_FOUND) {
-                    return Promise.reject([M.DOCEDIT_DELETE_ERROR]);
-                }
-            });
+        try {
+            await this.persistenceManager.remove(document, this.settingsService.getUsername())
+        } catch(removeError) {
+            if (removeError != DatastoreErrors.DOCUMENT_NOT_FOUND) {
+                throw [M.DOCEDIT_DELETE_ERROR];
+            }
+        }
     }
 
 

@@ -13,8 +13,6 @@ import {BaseList} from '../base-list';
     templateUrl: './list.html'
 })
 /**
- * A hierarchical view of resources
- *
  * @author Fabian Z.
  * @author Thomas Kleinke
  * @author Philipp Gerth
@@ -25,8 +23,6 @@ export class ListComponent extends BaseList {
     @Input() documents: IdaiFieldDocument[];
 
     public typesMap: { [type: string]: IdaiType };
-
-    private newResourceCreated: boolean = false;
 
 
     constructor(
@@ -52,7 +48,6 @@ export class ListComponent extends BaseList {
         }
 
         this.documents.push(newDoc);
-        this.newResourceCreated = true;
     }
 
 }

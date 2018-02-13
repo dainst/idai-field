@@ -55,8 +55,9 @@ export class DoceditComponent {
 
     private parentLabel: string|undefined = undefined;
 
-
     private showDoceditImagesTab: boolean = false;
+
+    private originalType: string = '';
 
 
     constructor(
@@ -93,7 +94,8 @@ export class DoceditComponent {
             (this.imageTypeUtility.getProjectImageTypes())[this.clonedDocument.resource.type]
         );
 
-        this.persistenceManager.setOldVersions([this.clonedDocument]);
+        this.originalType = document.resource.type;
+        this.persistenceManager.setOldVersions([document]);
 
         this.parentLabel = await this.fetchParentLabel(document);
     }
@@ -200,7 +202,7 @@ export class DoceditComponent {
             let invalidFieldsLabels: string[] = [];
             for (let fieldName of invalidFields) { // TODO replace loop by reduce with join
                 invalidFieldsLabels.push(
-                    this.projectConfiguration.getFieldDefinitionLabel(this.clonedDocument.resource.type, fieldName));
+                    this.projectConfiguration.getFieldDefinitionLabel(this.originalType, fieldName));
             }
 
             this.messages.add([M.DOCEDIT_TYPE_CHANGE_FIELDS_WARNING, invalidFieldsLabels.join(', ')]);

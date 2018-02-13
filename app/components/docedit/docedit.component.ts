@@ -3,7 +3,7 @@ import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {DatastoreErrors} from 'idai-components-2/datastore';
-import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
+import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {SettingsService} from '../../core/settings/settings-service';
@@ -14,7 +14,7 @@ import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';
-import {Validator} from "../../core/model/validator";
+import {Validator} from '../../core/model/validator';
 import {DoceditDeleteModalComponent} from './docedit-delete-modal.component';
 
 

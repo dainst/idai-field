@@ -16,11 +16,19 @@
 }
 
 .row-wrapper {
-   display: grid;
-   grid-template-columns: 1fr 1fr 2fr 1fr;
-   grid-gap: 1px;
-   color: #444;
- }
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr;
+  grid-gap: 1px;
+  color: #444;
+
+  button {
+    padding: 0
+  }
+
+  input {
+    border: 0
+  }
+}
 
 .row-wrapper > div {
   background-color: white;

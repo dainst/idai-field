@@ -5,7 +5,7 @@
             <i>{{typesMap[document.resource.type].label}}</i>
        </div>
 
-        <button class="btn-small btn-link float-right align-middle" style="padding:0"
+        <button class="btn-small btn-link float-right align-middle"
                 (click)="moveInto(document)">
             <span class="mdi mdi-arrow-right-drop-circle mdi-18px float-right"></span>
         </button>
@@ -16,8 +16,7 @@
                (focus)="startEditing(document.resource.identifier)"
                (blur)="stopEditing(document, document.resource.identifier)"
                (keyup)="onKeyup($event, document, document.resource.identifier)"
-               (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input"
-               style="border:0">
+               (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
 
     </div>
     <div>
@@ -26,11 +25,10 @@
                (blur)="stopEditing(document, document.resource.shortDescription)"
                (keyup)="onKeyup($event, document, document.resource.shortDescription)"
                (dblclick)="$event.stopPropagation();"
-               class="form-control form-control-sm"
-               style="border:0">
+               class="form-control form-control-sm">
     </div>
     <div>
-        <button class="btn-small btn-link float-right align-middle" style="padding:0"
+        <button class="btn-small btn-link float-right align-middle"
                 (click)="resourcesComponent.editDocument(document)">
             <span class="mdi mdi-pencil mdi-18px"></span>
         </button>

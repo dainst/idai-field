@@ -12,7 +12,8 @@
 
     </div>
     <div>
-        <input [(ngModel)]="document.resource.identifier" (focus)="startEditing(document.resource.identifier)"
+        <input #identifierInput [(ngModel)]="document.resource.identifier"
+               (focus)="startEditing(document.resource.identifier)"
                (blur)="stopEditing(document, document.resource.identifier)"
                (keyup)="onKeyup($event, document, document.resource.identifier)"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input"

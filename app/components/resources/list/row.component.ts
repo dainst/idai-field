@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Messages} from 'idai-components-2/messages';
 import {IdaiType} from 'idai-components-2/configuration';
@@ -21,10 +21,12 @@ import {Validator} from '../../../core/model/validator';
  * @author Fabian Z.
  * @autor Thomas Kleinke
  */
-export class RowComponent {
+export class RowComponent implements AfterViewInit {
 
     @Input() document: IdaiFieldDocument;
     @Input() typesMap: { [type: string]: IdaiType };
+
+    @ViewChild('identifierInput') identifierInput: ElementRef;
 
     private initialValueOfCurrentlyEditedField: string|undefined;
 
@@ -38,7 +40,13 @@ export class RowComponent {
         private validator: Validator,
         private datastore: IdaiFieldDocumentReadDatastore,
         private navigationService: NavigationService
-    ) {  }
+    ) {}
+
+
+    ngAfterViewInit() {
+
+        this.focusIdentifierInputIfDocumentIsNew();
+    }
 
 
     // TODO consider factoring out component for moveInto button, and put this and showMoveIntoOption into it
@@ -100,6 +108,14 @@ export class RowComponent {
                 ).resource.identifier;
         } catch(_) {
             return [M.DATASTORE_NOT_FOUND];
+        }
+    }
+
+
+    private focusIdentifierInputIfDocumentIsNew() {
+
+        if (!this.document.resource.identifier) {
+            this.identifierInput.nativeElement.focus();
         }
     }
 }

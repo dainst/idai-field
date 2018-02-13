@@ -66,7 +66,7 @@ export class DoceditComponent {
         private messages: Messages,
         private persistenceManager: PersistenceManager,
         private validator: Validator,
-        private settingsService: SettingsService, // TODO inject via setter, like setDocument
+        private settingsService: SettingsService,
         private modalService: NgbModal,
         private datastore: IdaiFieldDocumentDatastore,
         private imagestore: Imagestore,

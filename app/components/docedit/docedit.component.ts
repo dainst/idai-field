@@ -35,9 +35,6 @@ import {EditSaveDialogComponent} from './edit-save-dialog.component';
  */
 export class DoceditComponent {
 
-    // TODO in template: instead of multiple ngIfs for document replace them by one check at a top level element
-
-
     /**
      * Holds a cloned version of the <code>document</code> set via {@link DoceditComponent#setDocument}.
      * On clonedDocument changes can be made which can be either saved or discarded later.

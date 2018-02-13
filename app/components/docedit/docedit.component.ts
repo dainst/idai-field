@@ -97,24 +97,17 @@ export class DoceditComponent {
 
         this.fetchIsRecordedInCount(document);
 
-        this.getParentId(this.clonedDocument);
+        this.fetchParentLabel(this.clonedDocument.resource.relations.liesWithin
+            ? this.clonedDocument.resource.relations.liesWithin[0]
+            : this.clonedDocument.resource.relations.isRecordedIn[0])
     }
 
 
-    public getParentId(document: IdaiFieldDocument) {
+    private fetchParentLabel(id: string) {
 
-        const parentId = document.resource.relations.liesWithin ?
-            document.resource.relations.liesWithin[0] : document.resource.relations.isRecordedIn[0] ;
-
-        this.fetchParentLabel(parentId)
-    }
-
-
-    public fetchParentLabel(id: string) {
-
-        this.datastore.get(id).then(doc => {
-            this.parentLabel = doc.resource.identifier;
-        });
+        this.datastore.get(id).then(doc =>
+            this.parentLabel = doc.resource.identifier
+        );
     }
 
 

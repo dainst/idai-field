@@ -80,6 +80,10 @@ export class DoceditComponent {
     }
 
 
+    public getRelationDefinitions = () => this.projectConfiguration.getRelationDefinitions(
+        this.clonedDocument.resource.type, false, 'editable');
+
+
     /**
      * @param document
      */
@@ -138,14 +142,6 @@ export class DoceditComponent {
         ref.result.then(decision => {
             if (decision == 'delete') this.deleteDoc();
         });
-    }
-
-
-    public getRelationDefinitions() {
-
-        if (!this.projectConfiguration) return undefined;
-
-        return this.projectConfiguration.getRelationDefinitions(this.clonedDocument.resource.type, false, 'editable');
     }
 
 

@@ -31,12 +31,12 @@ export class ObjectUtil {
     }
 
 
-    public static cloneObject(object: Object): Object {
+    public static cloneObject<O>(object: O): O {
 
         return JSON.parse(JSON.stringify(object));
     }
 
-
+    // TODO remove and use cloneObject instead
     public static cloneAny(object: any): any {
 
         return JSON.parse(JSON.stringify(object));

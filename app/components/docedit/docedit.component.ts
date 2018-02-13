@@ -83,7 +83,7 @@ export class DoceditComponent {
     public async setDocument(document: IdaiFieldDocument) {
 
         this.inspectedRevisionsIds = [];
-        this.clonedDocument = <IdaiFieldDocument> ObjectUtil.cloneObject(document);
+        this.clonedDocument = ObjectUtil.cloneObject(document);
 
         this.showDoceditImagesTab = (!
             (this.imageTypeUtility.getProjectImageTypes())[this.clonedDocument.resource.type]

@@ -47,7 +47,8 @@ import {DeleteModalComponent} from './delete-modal.component';
         DoceditComponent,
         ConflictDeletedModalComponent,
         ImagePickerComponent,
-        DeleteModalComponent
+        DeleteModalComponent,
+        EditSaveDialogComponent
     ]
 })
 

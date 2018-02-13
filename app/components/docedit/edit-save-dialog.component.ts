@@ -1,4 +1,5 @@
 import {Component, Output, EventEmitter} from "@angular/core";
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'edit-save-dialog',
@@ -7,8 +8,5 @@ import {Component, Output, EventEmitter} from "@angular/core";
 })
 export class EditSaveDialogComponent {
 
-
-    @Output() onSave = new EventEmitter<any>();
-    @Output() onDiscard = new EventEmitter<any>();
-    @Output() onCancel = new EventEmitter<any>();
+    constructor(public activeModal: NgbActiveModal) {}
 }

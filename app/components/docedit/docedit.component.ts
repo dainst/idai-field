@@ -16,6 +16,7 @@ import {PersistenceManager} from '../../core/persist/persistence-manager';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';
 import {Validator} from '../../core/model/validator';
 import {DeleteModalComponent} from './delete-modal.component';
+import {EditSaveDialogComponent} from './edit-save-dialog.component';
 
 
 @Component({
@@ -45,8 +46,6 @@ export class DoceditComponent {
      */
     private clonedDocument: IdaiFieldDocument;
 
-    @ViewChild('modalTemplate') public modalTemplate: TemplateRef<any>;
-    public dialog: NgbModalRef;
 
     private projectImageTypes: any = {};
 
@@ -66,7 +65,7 @@ export class DoceditComponent {
         private messages: Messages,
         private persistenceManager: PersistenceManager,
         private validator: Validator,
-        private settingsService: SettingsService,
+        private settingsService: SettingsService, // TODO inject via setter, like setDocument
         private modalService: NgbModal,
         private datastore: IdaiFieldDocumentDatastore,
         private imagestore: Imagestore,
@@ -125,9 +124,13 @@ export class DoceditComponent {
     }
 
 
-    public showModal() {
+    public cancel() {
 
-        this.dialog = this.modalService.open(this.modalTemplate);
+        if (this.documentEditChangeMonitor.isChanged()) {
+            this.showModal();
+        } else {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
 
@@ -138,16 +141,6 @@ export class DoceditComponent {
         ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.document));
         const decision = await ref.result;
         if (decision == 'delete') this.deleteDoc();
-    }
-
-
-    public cancel() {
-
-        if (this.documentEditChangeMonitor.isChanged()) {
-            this.showModal();
-        } else {
-            this.activeModal.dismiss('cancel');
-        }
     }
 
 
@@ -175,11 +168,22 @@ export class DoceditComponent {
     }
 
 
+    private async showModal() {
+
+        try {
+            if ((await this.modalService.open(EditSaveDialogComponent).result) === 'save') this.save();
+        } catch (_) {
+            this.activeModal.dismiss('discard');
+        }
+    }
+
+
     private async fetchIsRecordedInCount(document: IdaiFieldDocument): Promise<number> {
 
         if (!document.resource.id) return 0;
 
-        const result = await this.datastore.find({ q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any);
+        const result = await this.datastore.find(
+            { q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any);
         return result.documents ? result.documents.length : 0;
     }
 

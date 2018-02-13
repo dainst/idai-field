@@ -6,10 +6,10 @@
 </div>
 <div class="modal-footer">
     <button id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary"
-            (click)="onSave.emit();">Speichern</button>
+            (click)="activeModal.close('save')">Speichern</button>
     <button id="overview-save-confirmation-modal-discard-button" type="button" class="btn btn-secondary"
-            (click)="onDiscard.emit();">Änderungen verwerfen</button>
+            (click)="activeModal.dismiss('discard')">Änderungen verwerfen</button>
     <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
-            (click)="onCancel.emit()">Abbrechen
+            (click)="activeModal.close('cancel')">Abbrechen
     </button>
 </div>

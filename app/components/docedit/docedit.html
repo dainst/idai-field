@@ -103,11 +103,4 @@
         </main>
     </section>
 </div>
-<ng-template #modalTemplate>
-    <edit-save-dialog
-            (onSave)="save(); dialog.close();"
-            (onDiscard)="activeModal.dismiss('discard'); dialog.close();"
-            (onCancel)="dialog.close();">
-    </edit-save-dialog>
-</ng-template>
 

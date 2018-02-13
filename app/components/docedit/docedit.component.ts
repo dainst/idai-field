@@ -36,11 +36,6 @@ import {EditSaveDialogComponent} from './edit-save-dialog.component';
 export class DoceditComponent {
 
     /**
-     * The original unmodified version of the document
-     */
-    public document: IdaiFieldDocument;
-
-    /**
      * Holds a cloned version of the <code>document</code> field,
      * on which changes can be made which can be either saved or discarded later.
      */
@@ -87,15 +82,14 @@ export class DoceditComponent {
 
         if (!document) return; // TODO remove and rely on type checking
 
-        this.document = document;
         this.inspectedRevisionsIds = [];
-        this.clonedDocument = <IdaiFieldDocument> ObjectUtil.cloneObject(this.document);
+        this.clonedDocument = <IdaiFieldDocument> ObjectUtil.cloneObject(document);
 
         this.showDoceditImagesTab = (!
             (this.imageTypeUtility.getProjectImageTypes())[this.clonedDocument.resource.type]
         );
 
-        this.persistenceManager.setOldVersions([this.document]);
+        this.persistenceManager.setOldVersions([this.clonedDocument]);
 
         this.fetchParentLabel(this.clonedDocument.resource.relations.liesWithin
             ? this.clonedDocument.resource.relations.liesWithin[0]
@@ -105,9 +99,7 @@ export class DoceditComponent {
 
     private fetchParentLabel(id: string) {
 
-        this.datastore.get(id).then(doc =>
-            this.parentLabel = doc.resource.identifier
-        );
+        this.datastore.get(id).then(doc => this.parentLabel = doc.resource.identifier);
     }
 
 
@@ -140,8 +132,8 @@ export class DoceditComponent {
     public async openDeleteModal() {
 
         const ref = this.modalService.open(DeleteModalComponent);
-        ref.componentInstance.setDocument(this.document);
-        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.document));
+        ref.componentInstance.setDocument(this.clonedDocument);
+        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.clonedDocument));
         const decision = await ref.result;
         if (decision == 'delete') this.deleteDoc();
     }
@@ -200,7 +192,7 @@ export class DoceditComponent {
             let invalidFieldsLabels: string[] = [];
             for (let fieldName of invalidFields) {
                 invalidFieldsLabels.push(
-                    this.projectConfiguration.getFieldDefinitionLabel(this.document.resource.type, fieldName));
+                    this.projectConfiguration.getFieldDefinitionLabel(this.clonedDocument.resource.type, fieldName));
             }
 
             this.messages.add([M.DOCEDIT_TYPE_CHANGE_FIELDS_WARNING, invalidFieldsLabels.join(', ')]);
@@ -215,7 +207,7 @@ export class DoceditComponent {
 
         if (invalidRelationFields && invalidRelationFields.length > 0) {
             let invalidRelationFieldsLabels: string[] = [];
-            for (let relationFieldName of invalidRelationFields) {
+            for (let relationFieldName of invalidRelationFields) { // TODO replace loop by reduce with join
                 invalidRelationFieldsLabels.push(
                     this.projectConfiguration.getRelationDefinitionLabel(relationFieldName));
             }
@@ -339,8 +331,8 @@ export class DoceditComponent {
     private async deleteDoc() {
 
         try {
-            await this.removeImageWithImageStore(this.document);
-            await this.removeWithPersistenceManager(this.document);
+            await this.removeImageWithImageStore(this.clonedDocument);
+            await this.removeWithPersistenceManager(this.clonedDocument);
             this.activeModal.dismiss('deleted');
             this.messages.add([M.DOCEDIT_DELETE_SUCCESS]);
         } catch(err) {

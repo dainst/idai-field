@@ -17,7 +17,6 @@ import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-docume
 import {Validator} from '../../core/model/validator';
 import {DeleteModalComponent} from './delete-modal.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
-import {noUndefined} from '@angular/compiler/src/util';
 
 
 @Component({

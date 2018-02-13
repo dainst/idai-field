@@ -1,5 +1,5 @@
-import {Component, TemplateRef, ViewChild} from '@angular/core';
-import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {Component} from '@angular/core';
+import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Messages} from 'idai-components-2/messages';
 import {DatastoreErrors} from 'idai-components-2/datastore';

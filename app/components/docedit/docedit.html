@@ -7,17 +7,20 @@
                                   (onTypeChanged)="changeType($event)">
                 </type-switcher-button>
             </div>
-            
-            <div *ngIf="projectConfiguration && clonedDocument"
+
+            <div *ngIf="clonedDocument"
                   class="docedit-header-label text-truncate">
-                <small>
+                <small *ngIf="!clonedDocument.resource.id">
                     {{projectConfiguration.getLabelForType(this.clonedDocument.resource.type)}}
-                    in {{parentLabel}}
-                    <span *ngIf="clonedDocument.resource.id">bearbeiten</span>
-                    <span *ngIf="!clonedDocument.resource.id">anlegen</span>
-                </small><br>
+                    in {{parentLabel}} anlegen
+                </small>
+                <small *ngIf="clonedDocument.resource.id">
+                    {{projectConfiguration.getLabelForType(this.clonedDocument.resource.type)}} bearbeiten
+                </small>
+                <br>
                 <strong>{{clonedDocument.resource.identifier}}</strong>
             </div>
+
             <div>
                 <button *ngIf="clonedDocument && clonedDocument.resource.id
                             && clonedDocument.resource.type != 'Project'"

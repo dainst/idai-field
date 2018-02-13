@@ -17,6 +17,7 @@ import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-docume
 import {Validator} from '../../core/model/validator';
 import {DeleteModalComponent} from './delete-modal.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
+import {noUndefined} from '@angular/compiler/src/util';
 
 
 @Component({
@@ -35,6 +36,9 @@ import {EditSaveDialogComponent} from './edit-save-dialog.component';
  */
 export class DoceditComponent {
 
+    // TODO in template: instead of multiple ngIfs for document replace them by one check at a top level element
+
+
     /**
      * Holds a cloned version of the <code>document</code> set via {@link DoceditComponent#setDocument}.
      * On clonedDocument changes can be made which can be either saved or discarded later.
@@ -49,7 +53,7 @@ export class DoceditComponent {
      */
     private inspectedRevisionsIds: string[];
 
-    private parentLabel: string;
+    private parentLabel: string|undefined = undefined;
 
 
     private showDoceditImagesTab: boolean = false;
@@ -78,7 +82,7 @@ export class DoceditComponent {
     /**
      * @param document
      */
-    public setDocument(document: IdaiFieldDocument) {
+    public async setDocument(document: IdaiFieldDocument) {
 
         if (!document) return; // TODO remove and rely on type checking
 
@@ -91,15 +95,7 @@ export class DoceditComponent {
 
         this.persistenceManager.setOldVersions([this.clonedDocument]);
 
-        this.fetchParentLabel(this.clonedDocument.resource.relations.liesWithin
-            ? this.clonedDocument.resource.relations.liesWithin[0]
-            : this.clonedDocument.resource.relations.isRecordedIn[0])
-    }
-
-
-    private fetchParentLabel(id: string) {
-
-        this.datastore.get(id).then(doc => this.parentLabel = doc.resource.identifier);
+        this.parentLabel = await this.fetchParentLabel(document);
     }
 
 
@@ -160,6 +156,18 @@ export class DoceditComponent {
                     )
             )
             .catch((msgWithParams: any) => this.messages.add(msgWithParams))
+    }
+
+
+    private async fetchParentLabel(document: IdaiFieldDocument) {
+
+        return document.resource.id
+                ? undefined
+                : (await this.datastore.get(
+                        document.resource.relations.liesWithin
+                            ? document.resource.relations.liesWithin[0]
+                            : document.resource.relations.isRecordedIn[0])
+                ).resource.identifier;
     }
 
 

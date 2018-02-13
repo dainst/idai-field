@@ -95,8 +95,6 @@ export class DoceditComponent {
 
         this.persistenceManager.setOldVersions([this.document]);
 
-        this.fetchIsRecordedInCount(document);
-
         this.fetchParentLabel(this.clonedDocument.resource.relations.liesWithin
             ? this.clonedDocument.resource.relations.liesWithin[0]
             : this.clonedDocument.resource.relations.isRecordedIn[0])

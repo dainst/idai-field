@@ -80,12 +80,7 @@ export class DoceditComponent {
         this.clonedDocument.resource.type, false, 'editable');
 
 
-    /**
-     * @param document
-     */
     public async setDocument(document: IdaiFieldDocument) {
-
-        if (!document) return; // TODO remove and rely on type checking
 
         this.inspectedRevisionsIds = [];
         this.clonedDocument = <IdaiFieldDocument> ObjectUtil.cloneObject(document);

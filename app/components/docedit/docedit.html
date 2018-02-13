@@ -1,37 +1,5 @@
 <div class="modal-body p-0">
 
-    <ng-template #deleteModal let-c="close">
-        <div class="modal-header">
-            <h4 class="modal-title">Ressource löschen?</h4>
-        </div>
-        <div class="modal-body">
-            <div *ngIf="isRecordedInResourcesCount == 1" class="text-center alert alert-warning">
-                Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
-            </div>
-            <div *ngIf="isRecordedInResourcesCount > 1" class="text-center alert alert-warning">
-                Zu dieser Ressource gehören insgesamt {{isRecordedInResourcesCount}} Ressourcen, die beim Löschen
-                ebenfalls entfernt werden.
-            </div>
-            <div id="confirm-delete-info">
-                Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen.
-            </div>
-            <div class="input-group">
-                <input id="delete-resource-input" type="text" class="form-control"
-                       [(ngModel)]="confirmDeletionIdentifier"/>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button id="delete-resource-confirm" class="btn btn-danger" type="button"
-                    [ngClass]="{ 'disabled': confirmDeletionIdentifier != document.resource.identifier }"
-                    (click)="confirmDeletionIdentifier != document.resource.identifier || c('delete')">
-                Löschen
-            </button>
-            <button type="button" id="delete-resource-cancel" class="btn btn-secondary" (click)="c('cancel')">
-                Abbrechen
-            </button>
-        </div>
-    </ng-template>
-
     <section id="document-edit-wrapper">
         <header class="overview-document-heading d-flex justify-content-between">
             <div id="type-switcher-button-container">
@@ -67,7 +35,6 @@
                 </button>
                 <button *ngIf="showBackButton" class="btn btn-primary"
                         id="document-edit-button-goto-view"
-                        
                         (click)="cancel()">
                     <span class="mdi mdi-close"></span>
                 </button>

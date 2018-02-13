@@ -15,6 +15,7 @@ import {DoceditActiveTabService} from './docedit-active-tab-service';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';
 import {Validator} from "../../core/model/validator";
+import {DoceditDeleteModalComponent} from './docedit-delete-modal.component';
 
 
 @Component({
@@ -135,7 +136,9 @@ export class DoceditComponent {
 
     public openDeleteModal(modal: any) {
 
-        this.modalService.open(modal).result.then(decision => {
+        const ref = this.modalService.open(DoceditDeleteModalComponent);
+        ref.componentInstance.setDocument(this.document);
+        ref.result.then(decision => {
             if (decision == 'delete') this.deleteDoc();
         });
     }

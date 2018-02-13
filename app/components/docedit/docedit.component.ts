@@ -87,7 +87,7 @@ export class DoceditComponent {
      */
     public setDocument(document: IdaiFieldDocument) {
 
-        if (!document) return;
+        if (!document) return; // TODO remove and rely on type checking
 
         this.document = document;
         this.inspectedRevisionsIds = [];

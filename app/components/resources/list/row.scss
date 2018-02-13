@@ -1,25 +1,20 @@
-.list-row {
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
-  padding: 10px !important;
-}
-
-.list-row-left {
-  user-select: none;
-  cursor: default;
-
-  .plus-button-wrapper {
-    margin-top: -8px;
-    display: inline-block;
-    width: 24px;
-    float: right;
-  }
-}
-
 .row-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr;
   grid-gap: 1px;
   color: #444;
+
+  div {
+    background-color: white;
+    padding: 2px;
+
+    div {
+      font-size: 14px;
+      padding-left: 8px;
+      padding-top: 4px;
+      display: inline-block;
+    }
+  }
 
   button {
     padding: 0
@@ -28,16 +23,4 @@
   input {
     border: 0
   }
-}
-
-.row-wrapper > div {
-  background-color: white;
-  padding: 2px;
-}
-
-.row-wrapper > div > div{
-  font-size: 14px;
-  padding-left: 8px;
-  padding-top: 4px;
-  display: inline-block;
 }

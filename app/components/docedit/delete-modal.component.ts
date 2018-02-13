@@ -4,11 +4,11 @@ import {Document} from 'idai-components-2/core';
 
 
 @Component({
-    selector: 'docedit-delete-modal',
+    selector: 'delete-modal',
     moduleId: module.id,
-    templateUrl: './docedit-delete-modal.html'
+    templateUrl: './delete-modal.html'
 })
-export class DoceditDeleteModalComponent {
+export class DeleteModalComponent {
 
     public document: any;
 

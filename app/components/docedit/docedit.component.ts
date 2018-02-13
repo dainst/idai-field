@@ -49,10 +49,7 @@ export class DoceditComponent {
     public dialog: NgbModalRef;
 
     public isRecordedInResourcesCount: number;
-
-    // used in template
-    public showBackButton: boolean = true;
-
+    
     private projectImageTypes: any = {};
 
     /**

@@ -190,7 +190,7 @@ export class DoceditComponent {
 
         if (invalidFields && invalidFields.length > 0) {
             let invalidFieldsLabels: string[] = [];
-            for (let fieldName of invalidFields) {
+            for (let fieldName of invalidFields) { // TODO replace loop by reduce with join
                 invalidFieldsLabels.push(
                     this.projectConfiguration.getFieldDefinitionLabel(this.clonedDocument.resource.type, fieldName));
             }

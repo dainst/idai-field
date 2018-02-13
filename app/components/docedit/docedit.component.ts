@@ -52,8 +52,6 @@ export class DoceditComponent {
     // used in template
     public showBackButton: boolean = true;
 
-    private projectConfiguration: ProjectConfiguration;
-
     private projectImageTypes: any = {};
 
     /**
@@ -78,14 +76,9 @@ export class DoceditComponent {
         private imagestore: Imagestore,
         private imageTypeUtility: ImageTypeUtility,
         private activeTabService: DoceditActiveTabService,
-        configLoader: ConfigLoader) {
+        private projectConfiguration: ProjectConfiguration) {
 
         this.projectImageTypes = this.imageTypeUtility.getProjectImageTypes();
-
-        (configLoader.getProjectConfiguration() as any)
-            .then((projectConfiguration: ProjectConfiguration) => {
-                this.projectConfiguration = projectConfiguration;
-        });
     }
 
 
@@ -294,28 +287,25 @@ export class DoceditComponent {
     }
 
 
-    private handleSaveError(errorWithParams: any) {
+    private async handleSaveError(errorWithParams: any) {
 
         if (errorWithParams[0] == DatastoreErrors.DOCUMENT_NOT_FOUND) {
             this.handleDeletedConflict();
+            return undefined;
         } else {
             console.error(errorWithParams);
-            return Promise.reject([M.DOCEDIT_SAVE_ERROR]);
+            return [M.DOCEDIT_SAVE_ERROR];
         }
-        return Promise.resolve(undefined);
     }
 
 
-    private closeModalAfterSave(resourceId: string, viaSaveButton: boolean): Promise<any> {
+    private async closeModalAfterSave(resourceId: string, viaSaveButton: boolean): Promise<any> {
 
-        return this.datastore.get(resourceId)
-            .then(document => {
-                this.activeModal.close({
-                    document: document,
-                    viaSaveButton: viaSaveButton
-                });
-                this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
-            });
+        this.activeModal.close({
+            document: (await this.datastore.get(resourceId)),
+            viaSaveButton: viaSaveButton
+        });
+        this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
     }
 
 
@@ -357,29 +347,29 @@ export class DoceditComponent {
     }
 
 
-    private deleteDoc() {
+    private async deleteDoc() {
 
-        this.removeImageWithImageStore(this.document)
-            .then(() => this.removeWithPersistenceManager(this.document))
-            .then(() => {
-                this.activeModal.dismiss('deleted');
-                this.messages.add([M.DOCEDIT_DELETE_SUCCESS]);
-            })
-            .catch(err => {
-                this.messages.add(err);
-            });
+        await this.removeImageWithImageStore(this.document);
+        await this.removeWithPersistenceManager(this.document);
+
+        try {
+            this.activeModal.dismiss('deleted');
+            this.messages.add([M.DOCEDIT_DELETE_SUCCESS]);
+        } catch(err) {
+            this.messages.add(err);
+        }
     }
 
 
-    private removeImageWithImageStore(document: any): Promise<any> {
+    private async removeImageWithImageStore(document: any): Promise<any> {
 
-        if (this.imageTypeUtility.isImageType(document.resource.type)) {
-            if (!this.imagestore.getPath()) return Promise.reject([M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]);
-            return this.imagestore.remove(document.resource.id).catch(() => {
-                return [M.IMAGESTORE_ERROR_DELETE, document.resource.id];
-            });
-        } else {
-            return Promise.resolve();
+        if (!this.imageTypeUtility.isImageType(document.resource.type)) return undefined;
+
+        if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
+        try {
+            await this.imagestore.remove(document.resource.id);
+        } catch (_) {
+            return [M.IMAGESTORE_ERROR_DELETE, document.resource.id];
         }
     }
 
@@ -387,7 +377,7 @@ export class DoceditComponent {
     private removeWithPersistenceManager(document: any): Promise<any> {
 
         return this.persistenceManager.remove(document, this.settingsService.getUsername())
-            .catch((removeError:any):any => {
+            .catch((removeError: any): any => {
                 if (removeError != DatastoreErrors.DOCUMENT_NOT_FOUND) {
                     return Promise.reject([M.DOCEDIT_DELETE_ERROR]);
                 }

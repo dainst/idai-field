@@ -213,44 +213,32 @@ export class DoceditComponent {
     }
 
 
+    private removeInvalidFields() {
+
+        if (this.validateFields().length > 0) {
+            for (let fieldName of this.validateFields()) {
+                delete this.clonedDocument.resource[fieldName];
+            }
+        }
+    }
+
+
+    private removeInvalidRelations() {
+
+        if (this.validateRelationFields().length > 0) {
+            for (let relationFieldName of this.validateRelationFields()) {
+                delete this.clonedDocument.resource.relations[relationFieldName];
+            }
+        }
+    }
+
+
     private validateFields: () => Array<string> = () =>
         Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
 
 
     private validateRelationFields: () => Array<string> = () =>
         Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
-
-
-    /**
-     * Removes fields that have become invalid after a type change.
-     */
-    private removeInvalidFields() {
-
-        const invalidFields: string[]
-            = Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration) as any;
-
-        if (!invalidFields) return;
-
-        for (let fieldName of invalidFields) {
-            delete this.clonedDocument.resource[fieldName];
-        }
-    }
-
-
-    /**
-     * Removes relation fields that have become invalid after a type change.
-     */
-    private removeInvalidRelations() {
-
-        const invalidRelationFields: string[]
-            = Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration) as any;
-
-        if (!invalidRelationFields) return;
-
-        for (let relationFieldName of invalidRelationFields) {
-            delete this.clonedDocument.resource.relations[relationFieldName];
-        }
-    }
 
 
     private handleSaveSuccess(documentBeforeSave: IdaiFieldDocument, viaSaveButton: boolean) {

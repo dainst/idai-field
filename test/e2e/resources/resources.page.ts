@@ -254,6 +254,18 @@ export class ResourcesPage {
     }
 
 
+    public static getSuggestionsBox() {
+
+        return element(by.id('search-suggestions'));
+    }
+
+
+    public static getSuggestions() {
+
+        return element.all(by.css('.suggestion-container .title'));
+    }
+
+
     // type in
 
     public static typeInListModeInputField(identifier, index, inputText) {

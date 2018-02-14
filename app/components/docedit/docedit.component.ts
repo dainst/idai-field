@@ -248,16 +248,15 @@ export class DoceditComponent {
 
         try {
             await this.removeInspectedRevisions(this.clonedDocument.resource.id as any);
-            const latestRevision =  await this.getLatestRevision(this.clonedDocument.resource.id as any);
 
-            this.clonedDocument = latestRevision;
+            this.clonedDocument = await this.getLatestRevision(this.clonedDocument.resource.id as any);
             this.documentEditChangeMonitor.reset();
 
-            if (DoceditComponent.detectSaveConflicts(documentBeforeSave, latestRevision)) {
+            if (DoceditComponent.detectSaveConflicts(documentBeforeSave, this.clonedDocument)) {
                 this.activeTabService.setActiveTab('conflicts');
                 this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
             } else {
-                await this.closeModalAfterSave(latestRevision.resource.id as any, viaSaveButton);
+                await this.closeModalAfterSave(this.clonedDocument.resource.id as any, viaSaveButton);
             }
         } catch (msgWithParams) {
 

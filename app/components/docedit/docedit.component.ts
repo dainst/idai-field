@@ -189,13 +189,10 @@ export class DoceditComponent {
 
     private showTypeChangeFieldsWarning() {
 
-        const invalidFields: string[]
-            = Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
-
-        if (invalidFields.length > 0) {
+        if (this.validateFields().length > 0) {
             this.messages.add([
                 M.DOCEDIT_TYPE_CHANGE_FIELDS_WARNING,
-                invalidFields
+                this.validateFields()
                     .map(this.getFieldDefinitionLabel)
                     .reduce((acc, fieldLabel) => acc + ', ' + fieldLabel)
             ]);
@@ -205,18 +202,23 @@ export class DoceditComponent {
 
     private showTypeChangeRelationsWarning() {
 
-        const invalidRelationFields: string[]
-            = Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
-
-        if (invalidRelationFields.length > 0) {
+        if (this.validateRelationFields().length > 0) {
             this.messages.add([
                 M.DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING,
-                invalidRelationFields
+                this.validateRelationFields()
                     .map((relationName: string) => this.projectConfiguration.getRelationDefinitionLabel(relationName))
                     .reduce((acc, relationLabel) => acc + ', ' + relationLabel)
             ]);
         }
     }
+
+
+    private validateFields: () => Array<string> = () =>
+        Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
+
+
+    private validateRelationFields: () => Array<string> = () =>
+        Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
 
 
     /**

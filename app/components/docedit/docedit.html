@@ -3,27 +3,27 @@
     <section id="document-edit-wrapper">
         <header class="overview-document-heading d-flex justify-content-between">
             <div id="type-switcher-button-container">
-                <type-switcher-button [type]="clonedDocument.resource.type"
+                <type-switcher-button [type]="documentHolder.clonedDocument.resource.type"
                                   (onTypeChanged)="changeType($event)">
                 </type-switcher-button>
             </div>
 
-            <div *ngIf="clonedDocument"
+            <div *ngIf="documentHolder.clonedDocument"
                   class="docedit-header-label text-truncate">
-                <small *ngIf="!clonedDocument.resource.id">
-                    {{projectConfiguration.getLabelForType(this.clonedDocument.resource.type)}}
+                <small *ngIf="!documentHolder.clonedDocument.resource.id">
+                    {{projectConfiguration.getLabelForType(this.documentHolder.clonedDocument.resource.type)}}
                     in {{parentLabel}} anlegen
                 </small>
-                <small *ngIf="clonedDocument.resource.id">
-                    {{projectConfiguration.getLabelForType(this.clonedDocument.resource.type)}} bearbeiten
+                <small *ngIf="documentHolder.clonedDocument.resource.id">
+                    {{projectConfiguration.getLabelForType(this.documentHolder.clonedDocument.resource.type)}} bearbeiten
                 </small>
                 <br>
-                <strong>{{clonedDocument.resource.identifier}}</strong>
+                <strong>{{documentHolder.clonedDocument.resource.identifier}}</strong>
             </div>
 
             <div>
-                <button *ngIf="clonedDocument && clonedDocument.resource.id
-                            && clonedDocument.resource.type != 'Project'"
+                <button *ngIf="documentHolder.clonedDocument && documentHolder.clonedDocument.resource.id
+                            && documentHolder.clonedDocument.resource.type != 'Project'"
                         class="btn btn-danger pull-right" id="document-edit-button-delete-document"
                          (click)="openDeleteModal();">
                     <span class="mdi mdi-delete"></span>
@@ -31,8 +31,8 @@
                 </button>
                 <button class="btn btn-success disabled pull-right"
                         id="document-edit-button-save-document"
-                        [class.disabled]="!documentEditChangeMonitor.isChanged()"
-                        (click)="!documentEditChangeMonitor.isChanged() || save(true);">
+                        [class.disabled]="!isChanged()"
+                        (click)="!isChanged() || save(true);">
                     <span class="mdi mdi-content-save"></span>
                     <span class="button-label">Speichern</span>
                 </button>
@@ -45,7 +45,7 @@
         </header>
         <main>
 
-            <div *ngIf="clonedDocument" class="container">
+            <div *ngIf="documentHolder.clonedDocument" class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <ngb-tabset (tabChange)="changeActiveTab($event)" activeId="docedit-{{activeTabService.getActiveTab()}}-tab">
@@ -55,9 +55,9 @@
                                     Metadaten
                                 </ng-template>
                                 <ng-template ngbTabContent>
-                                    <edit-form *ngIf="projectConfiguration" [(document)]="clonedDocument"
+                                    <edit-form *ngIf="projectConfiguration" [(document)]="documentHolder.clonedDocument"
                                                [fieldDefinitions]="projectConfiguration.getFieldDefinitions
-                                                    (clonedDocument.resource.type)">
+                                                    (documentHolder.clonedDocument.resource.type)">
                                     </edit-form>
                                 </ng-template>
                             </ngb-tab>
@@ -69,7 +69,7 @@
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <relations-form
-                                            [(document)]="clonedDocument"
+                                            [(document)]="documentHolder.clonedDocument"
                                             [primary]="'identifier'"
                                             [relationDefinitions]="getRelationDefinitions()">
                                     </relations-form>
@@ -84,17 +84,17 @@
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <docedit-image-tab
-                                            [(document)]="clonedDocument">
+                                            [(document)]="documentHolder.clonedDocument">
                                     </docedit-image-tab>
                                 </ng-template>
                             </ngb-tab>
 
-                            <ngb-tab *ngIf="clonedDocument._conflicts" id="docedit-conflicts-tab">
+                            <ngb-tab *ngIf="documentHolder.clonedDocument._conflicts" id="docedit-conflicts-tab">
                                 <ng-template ngbTabTitle><span class="mdi mdi-alert-outline"></span> Konflikte
                                 </ng-template>
                                 <ng-template ngbTabContent>
-                                    <docedit-conflicts-tab [(document)]="clonedDocument"
-                                                       [(inspectedRevisionsIds)]="inspectedRevisionsIds">
+                                    <docedit-conflicts-tab [(document)]="documentHolder.clonedDocument"
+                                                       [(inspectedRevisionsIds)]="documentHolder.inspectedRevisionsIds">
                                     </docedit-conflicts-tab>
                                 </ng-template>
                             </ngb-tab>

@@ -52,6 +52,9 @@ describe('resources/messages --', () => {
 
     it('warn if identifier is missing', () => {
 
+
+        browser.sleep(5000);
+
         ResourcesPage.performCreateResource('', 'feature', 'shortDescription', 'Text', undefined, false);
 
         NavbarPage.awaitAlert('identifier', false);

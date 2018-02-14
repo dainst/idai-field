@@ -16,8 +16,12 @@ import {TypeSwitcherButtonComponent} from './type-switcher-button.component';
 import {ImagePickerComponent} from "./imagetab/image-picker.component";
 import {ImageGridModule} from "../imagegrid/image-grid.module";
 import {DeleteModalComponent} from './delete-modal.component';
+import {DocumentHolder} from './document-holder';
 
 @NgModule({
+    providers: [
+      DocumentHolder
+    ],
     imports: [
         BrowserModule,
         NgbModule,

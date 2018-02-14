@@ -1,23 +1,19 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
-import {DatastoreErrors} from 'idai-components-2/datastore';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
-import {SettingsService} from '../../core/settings/settings-service';
 import {ImageTypeUtility} from '../../common/image-type-utility';
-import {Imagestore} from '../../core/imagestore/imagestore';
 import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
-import {PersistenceManager} from '../../core/persist/persistence-manager';
-import {Validator} from '../../core/model/validator';
 import {DeleteModalComponent} from './delete-modal.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
+import {DocumentHolder} from './document-holder';
+import {DatastoreErrors} from 'idai-components-2/datastore';
 
 
 @Component({
@@ -36,20 +32,6 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
  */
 export class DoceditComponent {
 
-    /**
-     * Holds a cloned version of the <code>document</code> set via {@link DoceditComponent#setDocument}.
-     * On clonedDocument changes can be made which can be either saved or discarded later.
-     */
-    private clonedDocument: Document;
-
-
-    /**
-     * These are the revisions (of the cloned document as long as not saved)
-     * that are conflict resolved. They will be be removed from document
-     * as soon as it gets saved.
-     */
-    private inspectedRevisionsIds: string[];
-
     private parentLabel: string|undefined = undefined;
 
     private showDoceditImagesTab: boolean = false;
@@ -57,42 +39,68 @@ export class DoceditComponent {
 
     constructor(
         public activeModal: NgbActiveModal,
-        public documentEditChangeMonitor: DocumentEditChangeMonitor,
         private messages: Messages,
-        private persistenceManager: PersistenceManager,
-        private validator: Validator,
-        private settingsService: SettingsService,
+        private documentHolder: DocumentHolder,
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
-        private imagestore: Imagestore,
         private imageTypeUtility: ImageTypeUtility,
         private activeTabService: DoceditActiveTabService,
         private projectConfiguration: ProjectConfiguration) {
     }
 
 
+    public isChanged = this.documentHolder.isChanged;
+
     public getFieldDefinitionLabel: (_: string) => string;
 
 
     public getRelationDefinitions = () => this.projectConfiguration.getRelationDefinitions(
-        this.clonedDocument.resource.type, false, 'editable');
+        this.documentHolder.getClonedDocument().resource.type, false, 'editable');
 
 
     public async setDocument(document: IdaiFieldDocument) {
 
-        this.inspectedRevisionsIds = [];
-        this.clonedDocument = ObjectUtil.cloneObject(document);
+        this.documentHolder.setClonedDocument(document);
 
         this.showDoceditImagesTab = (!
-            (this.imageTypeUtility.getProjectImageTypes())[this.clonedDocument.resource.type]
+            (this.imageTypeUtility.getProjectImageTypes())[this.documentHolder.getClonedDocument().resource.type]
         );
 
         this.getFieldDefinitionLabel = (fieldName: string) =>
             this.projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);
 
-        this.persistenceManager.setOldVersions([document]);
-
         this.parentLabel = await this.fetchParentLabel(document);
+    }
+
+
+    /**
+     * @param viaSaveButton if true, it is assumed the call for save came directly
+     *   via a user interaction.
+     */
+    public save(viaSaveButton: boolean) {
+
+        const documentBeforeSave: Document = ObjectUtil.cloneObject(this.documentHolder.getClonedDocument());
+
+        this.documentHolder.save().then(
+            () => this.handleSaveSuccess(documentBeforeSave, viaSaveButton),
+            msgWithParams => this.handleSaveError(msgWithParams)
+        );
+    }
+
+
+    private async handleSaveSuccess(documentBeforeSave: Document, viaSaveButton: boolean) {
+
+        try {
+            if (this.documentHolder.detectSaveConflicts(documentBeforeSave)) {
+                this.activeTabService.setActiveTab('conflicts');
+                this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
+            } else {
+                await this.closeModalAfterSave(this.documentHolder.getClonedDocument().resource.id as any, viaSaveButton);
+            }
+        } catch (msgWithParams) {
+
+            this.messages.add(msgWithParams);
+        }
     }
 
 
@@ -104,16 +112,15 @@ export class DoceditComponent {
 
     public changeType(newType: string) {
 
-        this.clonedDocument.resource.type = newType;
-        this.documentEditChangeMonitor.setChanged();
-        this.showTypeChangeFieldsWarning();
-        this.showTypeChangeRelationsWarning();
+        const {invalidFields, invalidRelations} = this.documentHolder.changeType(newType);
+        this.showTypeChangeFieldsWarning(invalidFields);
+        this.showTypeChangeRelationsWarning(invalidRelations);
     }
 
 
     public cancel() {
 
-        if (this.documentEditChangeMonitor.isChanged()) {
+        if (this.documentHolder.isChanged()) {
             this.showModal();
         } else {
             this.activeModal.dismiss('cancel');
@@ -124,53 +131,12 @@ export class DoceditComponent {
     public async openDeleteModal() {
 
         const ref = this.modalService.open(DeleteModalComponent);
-        ref.componentInstance.setDocument(this.clonedDocument);
-        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.clonedDocument));
+        ref.componentInstance.setDocument(this.documentHolder.getClonedDocument());
+        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.getClonedDocument()));
         const decision = await ref.result;
         if (decision == 'delete') this.deleteDoc();
     }
 
-
-    /**
-     * @param viaSaveButton if true, it is assumed the call for save came directly
-     *   via a user interaction.
-     */
-    public async save(viaSaveButton: boolean = false) {
-
-        try {
-            await this.removeInvalidLiesWithinRelationTargets();
-            this.removeInvalidFields();
-            this.removeInvalidRelations();
-            
-            const documentBeforeSave: Document = ObjectUtil.cloneObject(this.clonedDocument);
-
-            await this.validator.validate(this.clonedDocument);
-
-            try {
-                await this.persistenceManager.persist(this.clonedDocument, this.settingsService.getUsername());
-                await this.handleSaveSuccess(documentBeforeSave, viaSaveButton);
-            } catch (errorWithParams) {
-                await this.handleSaveError(errorWithParams);
-            }
-
-        } catch (msgWithParams) {
-            this.messages.add(msgWithParams);
-        }
-    }
-
-
-    private async removeInvalidLiesWithinRelationTargets(): Promise<any> {
-
-        const invalidRelationTargetIds: string[]
-            = await this.validator.validateRelationTargets(this.clonedDocument, 'liesWithin');
-
-        if (invalidRelationTargetIds.length == 0) return;
-
-        // TODO remove only the invalid targets
-        delete this.clonedDocument.resource.relations['liesWithin'];
-
-        return Promise.reject([M.DOCEDIT_LIESWITHIN_RELATION_REMOVED_WARNING]);
-    }
 
 
     private async fetchParentLabel(document: IdaiFieldDocument) {
@@ -188,7 +154,7 @@ export class DoceditComponent {
     private async showModal() {
 
         try {
-            if ((await this.modalService.open(EditSaveDialogComponent).result) === 'save') this.save();
+            if ((await this.modalService.open(EditSaveDialogComponent).result) === 'save') this.save(false);
         } catch (_) {
             this.activeModal.dismiss('discard');
         }
@@ -205,12 +171,12 @@ export class DoceditComponent {
     }
 
 
-    private showTypeChangeFieldsWarning() {
+    private showTypeChangeFieldsWarning(invalidFields: string[]) {
 
-        if (this.validateFields().length > 0) {
+        if (invalidFields.length > 0) {
             this.messages.add([
                 M.DOCEDIT_TYPE_CHANGE_FIELDS_WARNING,
-                this.validateFields()
+                invalidFields
                     .map(this.getFieldDefinitionLabel)
                     .reduce((acc, fieldLabel) => acc + ', ' + fieldLabel)
             ]);
@@ -218,76 +184,15 @@ export class DoceditComponent {
     }
 
 
-    private showTypeChangeRelationsWarning() {
+    private showTypeChangeRelationsWarning(invalidRelations: string[]) {
 
-        if (this.validateRelationFields().length > 0) {
+        if (invalidRelations.length > 0) {
             this.messages.add([
                 M.DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING,
-                this.validateRelationFields()
+                invalidRelations
                     .map((relationName: string) => this.projectConfiguration.getRelationDefinitionLabel(relationName))
                     .reduce((acc, relationLabel) => acc + ', ' + relationLabel)
             ]);
-        }
-    }
-
-
-    private removeInvalidFields() {
-
-        if (this.validateFields().length > 0) {
-            for (let fieldName of this.validateFields()) {
-                delete this.clonedDocument.resource[fieldName];
-            }
-        }
-    }
-
-
-    private removeInvalidRelations() {
-
-        if (this.validateRelationFields().length > 0) {
-            for (let relationFieldName of this.validateRelationFields()) {
-                delete this.clonedDocument.resource.relations[relationFieldName]; 
-            }
-        }
-    }
-
-
-    private validateFields: () => Array<string> = () =>
-        Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
-
-
-    private validateRelationFields: () => Array<string> = () =>
-        Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
-
-
-    private async handleSaveSuccess(documentBeforeSave: Document, viaSaveButton: boolean) {
-
-        try {
-            await this.removeInspectedRevisions(this.clonedDocument.resource.id as any);
-
-            this.clonedDocument = await this.getLatestRevision(this.clonedDocument.resource.id as any);
-            this.documentEditChangeMonitor.reset();
-
-            if (DoceditComponent.detectSaveConflicts(documentBeforeSave, this.clonedDocument)) {
-                this.activeTabService.setActiveTab('conflicts');
-                this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
-            } else {
-                await this.closeModalAfterSave(this.clonedDocument.resource.id as any, viaSaveButton);
-            }
-        } catch (msgWithParams) {
-
-            this.messages.add(msgWithParams);
-        }
-    }
-
-
-    private async handleSaveError(errorWithParams: any) {
-
-        if (errorWithParams[0] == DatastoreErrors.DOCUMENT_NOT_FOUND) {
-            this.handleDeletedConflict();
-            return undefined;
-        } else {
-            console.error(errorWithParams);
-            return [M.DOCEDIT_SAVE_ERROR];
         }
     }
 
@@ -302,57 +207,24 @@ export class DoceditComponent {
     }
 
 
-    private async getLatestRevision(resourceId: string) {
+    private async handleSaveError(errorWithParams: any) {
 
-        try {
-            return await this.datastore.get(resourceId, {skip_cache: true});
-        } catch (e) {
-            throw [M.DATASTORE_NOT_FOUND];
+        if (errorWithParams[0] == DatastoreErrors.DOCUMENT_NOT_FOUND) {
+            this.handleDeletedConflict();
+            return undefined;
+        } else if (errorWithParams.length > 0) {
+            this.messages.add(errorWithParams);
+        } else {
+            console.error(errorWithParams);
+            return [M.DOCEDIT_SAVE_ERROR];
         }
-    }
-
-
-    /**
-     * @param resourceId
-     * @return {Promise<IdaiFieldDocument>} latest revision
-     */
-    private removeInspectedRevisions(resourceId: string): Promise<any> {
-
-        let promises = [] as any;
-        for (let revisionId of this.inspectedRevisionsIds) {
-            promises.push(this.datastore.removeRevision(resourceId, revisionId) as never);
-        }
-        this.inspectedRevisionsIds = [];
-
-        return Promise.all(promises)
-            .catch(() => Promise.reject([M.DATASTORE_GENERIC_ERROR]));
-    }
-
-
-    private handleDeletedConflict() {
-
-        this.modalService.open(
-            ConflictDeletedModalComponent, {size: 'lg', windowClass: 'conflict-deleted-modal'}
-        ).result.then(() => {
-            this.makeClonedDocAppearNew();
-        }).catch(() => {});
-    }
-
-
-    private makeClonedDocAppearNew() {
-
-        // make the doc appear 'new' ...
-        delete this.clonedDocument.resource.id; // ... for persistenceManager
-        delete (this.clonedDocument as any)['_id'];      // ... for pouchdbdatastore
-        delete (this.clonedDocument as any)['_rev'];
     }
 
 
     private async deleteDoc() {
 
         try {
-            await this.removeImageWithImageStore(this.clonedDocument);
-            await this.removeWithPersistenceManager(this.clonedDocument);
+            await this.documentHolder.remove();
             this.activeModal.dismiss('deleted');
             this.messages.add([M.DOCEDIT_DELETE_SUCCESS]);
         } catch(err) {
@@ -361,46 +233,12 @@ export class DoceditComponent {
     }
 
 
-    private async removeImageWithImageStore(document: any): Promise<any> {
+    private handleDeletedConflict() {
 
-        if (!this.imageTypeUtility.isImageType(document.resource.type)) return undefined;
-
-        if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
-        try {
-            await this.imagestore.remove(document.resource.id);
-        } catch (_) {
-            return [M.IMAGESTORE_ERROR_DELETE, document.resource.id];
-        }
-    }
-
-
-    private async removeWithPersistenceManager(document: any): Promise<any> {
-
-        try {
-            await this.persistenceManager.remove(document, this.settingsService.getUsername())
-        } catch(removeError) {
-            if (removeError != DatastoreErrors.DOCUMENT_NOT_FOUND) {
-                throw [M.DOCEDIT_DELETE_ERROR];
-            }
-        }
-    }
-
-
-    private static detectSaveConflicts(documentBeforeSave: Document,
-                                       documentAfterSave: Document): boolean {
-
-        const conflictsBeforeSave: string[] = (documentBeforeSave as any)['_conflicts'];
-        const conflictsAfterSave: string[] =  (documentAfterSave as any)['_conflicts'];
-
-        if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
-        if (!conflictsAfterSave) return false;
-
-        for (let conflict of conflictsAfterSave) {
-            if (conflictsBeforeSave.indexOf(conflict) == -1) {
-                return true;
-            }
-        }
-
-        return false;
+        this.modalService.open(
+            ConflictDeletedModalComponent, {size: 'lg', windowClass: 'conflict-deleted-modal'}
+        ).result.then(() => {
+            this.documentHolder.makeClonedDocAppearNew();
+        }).catch(() => {});
     }
 }

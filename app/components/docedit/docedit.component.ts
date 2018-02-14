@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/messages';
 import {DatastoreErrors} from 'idai-components-2/datastore';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
@@ -13,10 +14,10 @@ import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
-import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';
 import {Validator} from '../../core/model/validator';
 import {DeleteModalComponent} from './delete-modal.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
+import {DocumentDatastore} from '../../core/datastore/document-datastore';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class DoceditComponent {
      * Holds a cloned version of the <code>document</code> set via {@link DoceditComponent#setDocument}.
      * On clonedDocument changes can be made which can be either saved or discarded later.
      */
-    private clonedDocument: IdaiFieldDocument;
+    private clonedDocument: Document;
 
 
     /**
@@ -62,7 +63,7 @@ export class DoceditComponent {
         private validator: Validator,
         private settingsService: SettingsService,
         private modalService: NgbModal,
-        private datastore: IdaiFieldDocumentDatastore,
+        private datastore: DocumentDatastore,
         private imagestore: Imagestore,
         private imageTypeUtility: ImageTypeUtility,
         private activeTabService: DoceditActiveTabService,
@@ -140,8 +141,8 @@ export class DoceditComponent {
             await this.removeInvalidLiesWithinRelationTargets();
             this.removeInvalidFields();
             this.removeInvalidRelations();
-
-            const documentBeforeSave: IdaiFieldDocument = ObjectUtil.cloneObject(this.clonedDocument);
+            
+            const documentBeforeSave: Document = ObjectUtil.cloneObject(this.clonedDocument);
 
             await this.validator.validate(this.clonedDocument);
 
@@ -194,7 +195,7 @@ export class DoceditComponent {
     }
 
 
-    private async fetchIsRecordedInCount(document: IdaiFieldDocument): Promise<number> {
+    private async fetchIsRecordedInCount(document: Document): Promise<number> {
 
         return !document.resource.id
             ? 0
@@ -258,20 +259,22 @@ export class DoceditComponent {
         Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
 
 
-    private async handleSaveSuccess(documentBeforeSave: IdaiFieldDocument, viaSaveButton: boolean) {
+    private async handleSaveSuccess(documentBeforeSave: Document, viaSaveButton: boolean) {
 
         try {
-            const latestRevision = await this.removeInspectedRevisions(this.clonedDocument.resource.id as any);
-            this.clonedDocument = latestRevision;
+            await this.removeInspectedRevisions(this.clonedDocument.resource.id as any);
+
+            this.clonedDocument = await this.getLatestRevision(this.clonedDocument.resource.id as any);
             this.documentEditChangeMonitor.reset();
 
-            if (DoceditComponent.detectSaveConflicts(documentBeforeSave, latestRevision)) {
+            if (DoceditComponent.detectSaveConflicts(documentBeforeSave, this.clonedDocument)) {
                 this.activeTabService.setActiveTab('conflicts');
                 this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
             } else {
-                await this.closeModalAfterSave(latestRevision.resource.id as any, viaSaveButton);
+                await this.closeModalAfterSave(this.clonedDocument.resource.id as any, viaSaveButton);
             }
         } catch (msgWithParams) {
+
             this.messages.add(msgWithParams);
         }
     }
@@ -299,11 +302,21 @@ export class DoceditComponent {
     }
 
 
+    private async getLatestRevision(resourceId: string) {
+
+        try {
+            return await this.datastore.get(resourceId, {skip_cache: true});
+        } catch (e) {
+            throw [M.DATASTORE_NOT_FOUND];
+        }
+    }
+
+
     /**
      * @param resourceId
      * @return {Promise<IdaiFieldDocument>} latest revision
      */
-    private removeInspectedRevisions(resourceId: string): Promise<IdaiFieldDocument> {
+    private removeInspectedRevisions(resourceId: string): Promise<any> {
 
         let promises = [] as any;
         for (let revisionId of this.inspectedRevisionsIds) {
@@ -312,9 +325,7 @@ export class DoceditComponent {
         this.inspectedRevisionsIds = [];
 
         return Promise.all(promises)
-            .catch(() => Promise.reject([M.DATASTORE_GENERIC_ERROR]))
-            .then(() => this.datastore.get(resourceId, { skip_cache: true}))
-            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
+            .catch(() => Promise.reject([M.DATASTORE_GENERIC_ERROR]));
     }
 
 
@@ -375,8 +386,8 @@ export class DoceditComponent {
     }
 
 
-    private static detectSaveConflicts(documentBeforeSave: IdaiFieldDocument,
-                                       documentAfterSave: IdaiFieldDocument): boolean {
+    private static detectSaveConflicts(documentBeforeSave: Document,
+                                       documentAfterSave: Document): boolean {
 
         const conflictsBeforeSave: string[] = (documentBeforeSave as any)['_conflicts'];
         const conflictsAfterSave: string[] =  (documentAfterSave as any)['_conflicts'];

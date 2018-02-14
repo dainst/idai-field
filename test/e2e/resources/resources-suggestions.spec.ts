@@ -27,8 +27,8 @@ describe('resources/suggestions --', function() {
             });
             browser.sleep(delays.shortRest * 3);
             NavbarPage.clickNavigateToProject();
-            browser.sleep(delays.shortRest * 3);
         }
+        browser.sleep(delays.shortRest * 3);
         index++;
     });
 

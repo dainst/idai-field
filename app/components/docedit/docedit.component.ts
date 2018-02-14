@@ -96,8 +96,7 @@ export class DoceditComponent {
 
     public changeActiveTab(event: any) {
 
-        this.activeTabService.setActiveTab(
-            event.nextId.replace('docedit-','').replace('-tab',''));
+        this.activeTabService.setActiveTab(event.nextId.replace('docedit-','').replace('-tab',''));
     };
 
 
@@ -134,23 +133,26 @@ export class DoceditComponent {
      * @param viaSaveButton if true, it is assumed the call for save came directly
      *   via a user interaction.
      */
-    public save(viaSaveButton: boolean = false) {
+    public async save(viaSaveButton: boolean = false) {
 
         this.removeInvalidFields();
         this.removeInvalidRelations();
 
-        const documentBeforeSave: IdaiFieldDocument =
-            <IdaiFieldDocument> ObjectUtil.cloneObject(this.clonedDocument);
+        const documentBeforeSave: IdaiFieldDocument = ObjectUtil.cloneObject(this.clonedDocument);
 
-        this.validator.validate(<IdaiFieldDocument> this.clonedDocument)
-            .then(
-                () => this.persistenceManager.persist(this.clonedDocument, this.settingsService.getUsername())
-                    .then(
-                        () => this.handleSaveSuccess(documentBeforeSave, viaSaveButton),
-                        errorWithParams => this.handleSaveError(errorWithParams)
-                    )
-            )
-            .catch((msgWithParams: any) => this.messages.add(msgWithParams))
+        try {
+            await this.validator.validate(<IdaiFieldDocument> this.clonedDocument);
+
+            try {
+                await this.persistenceManager.persist(this.clonedDocument, this.settingsService.getUsername());
+                await this.handleSaveSuccess(documentBeforeSave, viaSaveButton);
+            } catch (errorWithParams) {
+                await this.handleSaveError(errorWithParams)
+            }
+
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams)
+        }
     }
 
 
@@ -216,7 +218,7 @@ export class DoceditComponent {
 
         if (this.validateFields().length > 0) {
             for (let fieldName of this.validateFields()) {
-                delete this.clonedDocument.resource[fieldName];
+                delete this.clonedDocument.resource[fieldName]; // TODO use subtract from list util
             }
         }
     }
@@ -226,7 +228,7 @@ export class DoceditComponent {
 
         if (this.validateRelationFields().length > 0) {
             for (let relationFieldName of this.validateRelationFields()) {
-                delete this.clonedDocument.resource.relations[relationFieldName];
+                delete this.clonedDocument.resource.relations[relationFieldName]; // TODO use subtract from list util
             }
         }
     }

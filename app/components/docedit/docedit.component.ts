@@ -180,11 +180,11 @@ export class DoceditComponent {
 
     private async fetchIsRecordedInCount(document: IdaiFieldDocument): Promise<number> {
 
-        if (!document.resource.id) return 0;
-
-        const result = await this.datastore.find(
-            { q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any);
-        return result.documents ? result.documents.length : 0;
+        return !document.resource.id
+            ? 0
+            : (await this.datastore.find(
+                    { q: '', constraints: { 'isRecordedIn:contain': document.resource.id }} as any)
+            ).documents.length;
     }
 
 

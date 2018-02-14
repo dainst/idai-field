@@ -70,6 +70,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_SAVE_CONFLICT: string = 'docedit/saveconflict';
     public static DOCEDIT_TYPE_CHANGE_FIELDS_WARNING: string = 'docedit/typechangefieldswarning';
     public static DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING: string = 'docedit/typechangerelationswarning';
+    public static DOCEDIT_LIESWITHIN_RELATION_REMOVED_WARNING: string = 'docedit/lieswithinrelationremovedwarning';
 
     // Images Package
 
@@ -401,6 +402,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING]={
             content: 'Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren ' +
                 'gehen: {0}',
+            level: 'warning',
+            params: [''],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_LIESWITHIN_RELATION_REMOVED_WARNING]={
+            content: 'Das Ziel einer \'Liegt in\'-Relation konnte nicht gefunden werden. Wählen Sie ' +
+                'gegebenenfalls eine andere Zielressource aus und speichern Sie bitte erneut.',
             level: 'warning',
             params: [''],
             hidden: false

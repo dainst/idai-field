@@ -1,8 +1,9 @@
 import {ConfigLoader} from 'idai-components-2/configuration'
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {M} from '../../m';
-import {IdaiFieldDocumentDatastore} from "../datastore/idai-field-document-datastore";
+import {IdaiFieldDocumentDatastore} from '../datastore/idai-field-document-datastore';
 import {Validator} from './validator';
+import {ModelUtil} from './model-util';
 
 
 /**
@@ -16,34 +17,61 @@ export class IdaiFieldValidator extends Validator {
         super(configLoader);
     }
 
+
+    public async validateRelationTargets(document: IdaiFieldDocument,
+                                         relationName: string): Promise<string[]> {
+
+        if (!ModelUtil.hasRelations(document, relationName)) return [];
+
+        const invalidRelationTargetIds: string[] = [];
+
+        for (let targetId of document.resource.relations[relationName]) {
+            if (!(await this.isExistingRelationTarget(targetId))) invalidRelationTargetIds.push(targetId);
+        }
+
+        return invalidRelationTargetIds;
+    }
+
+
+    private async isExistingRelationTarget(targetId: string): Promise<boolean> {
+
+        const {documents} = await this.datastore.find({
+            constraints: {
+                'id:match': targetId
+            }
+        });
+
+        return Promise.resolve(documents.length == 1);
+    }
+
+    
     /**
      * @param doc
      * @returns {Promise<void>}
      * @returns {Promise<void>} resolves with () or rejects with msgsWithParams in case of validation error
      */
-    protected validateCustom(doc: IdaiFieldDocument): Promise<any> {
+    protected async validateCustom(doc: IdaiFieldDocument): Promise<any> {
 
-        return new Promise<any>((resolve, reject) => {
+        try {
+            await this.validateIdentifier(doc);
 
-            this.validateIdentifier(doc).then(
-                () => {
-                    let msgWithParams = IdaiFieldValidator.validateGeometry(doc.resource.geometry as any);
-                    if (!msgWithParams) {
-                        resolve();
-                    } else {
-                        reject(msgWithParams);
-                    }
-                },
-                err => reject(err)
-            );
-        });
+            let msgWithParams = await IdaiFieldValidator.validateGeometry(doc.resource.geometry as any);
+            if (!msgWithParams) {
+                return Promise.resolve();
+            } else {
+                return Promise.reject(msgWithParams);
+            }
+        } catch(msgWithParams) {
+            return Promise.reject(msgWithParams);
+        }
     }
+    
 
     private validateIdentifier(doc: IdaiFieldDocument): Promise<any> {
 
         return this.datastore.find({
                 constraints: {
-                    'identifier:match' : doc.resource.identifier
+                    'identifier:match': doc.resource.identifier
                 }
             }).then(result => {
                 if (result.totalCount > 0 && IdaiFieldValidator.isDuplicate(result.documents[0], doc)) {
@@ -55,6 +83,7 @@ export class IdaiFieldValidator extends Validator {
             });
     }
 
+    
     private static validateGeometry(geometry: IdaiFieldGeometry): Array<string>|null {
 
         if (!geometry) return null;
@@ -95,6 +124,7 @@ export class IdaiFieldValidator extends Validator {
         return null;
     }
 
+
     private static validatePointCoordinates(coordinates: number[]): boolean {
 
         if (coordinates.length < 2 || coordinates.length > 3) return false;
@@ -104,6 +134,7 @@ export class IdaiFieldValidator extends Validator {
 
         return true;
     }
+
 
     private static validatePolylineCoordinates(coordinates: number[][]): boolean {
 
@@ -116,6 +147,7 @@ export class IdaiFieldValidator extends Validator {
         return true;
     }
 
+
     private static validateMultiPolylineCoordinates(coordinates: number[][][]): boolean {
 
         if (coordinates.length == 0) return false;
@@ -126,6 +158,7 @@ export class IdaiFieldValidator extends Validator {
 
         return true;
     }
+
 
     private static validatePolygonCoordinates(coordinates: number[][][]): boolean {
 
@@ -142,6 +175,7 @@ export class IdaiFieldValidator extends Validator {
         return true;
     }
 
+
     private static validateMultiPolygonCoordinates(coordinates: number[][][][]): boolean {
 
         if (coordinates.length == 0) return false;
@@ -153,7 +187,9 @@ export class IdaiFieldValidator extends Validator {
         return true;
     }
 
+
     private static isDuplicate(result: any, doc: any) {
+
         return result.resource.id != doc.resource.id;
     }
 }

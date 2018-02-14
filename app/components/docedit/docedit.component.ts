@@ -136,24 +136,39 @@ export class DoceditComponent {
      */
     public async save(viaSaveButton: boolean = false) {
 
-        this.removeInvalidFields();
-        this.removeInvalidRelations();
-
-        const documentBeforeSave: IdaiFieldDocument = ObjectUtil.cloneObject(this.clonedDocument);
-
         try {
+            await this.removeInvalidLiesWithinRelationTargets();
+            this.removeInvalidFields();
+            this.removeInvalidRelations();
+
+            const documentBeforeSave: IdaiFieldDocument = ObjectUtil.cloneObject(this.clonedDocument);
+
             await this.validator.validate(this.clonedDocument);
 
             try {
                 await this.persistenceManager.persist(this.clonedDocument, this.settingsService.getUsername());
                 await this.handleSaveSuccess(documentBeforeSave, viaSaveButton);
             } catch (errorWithParams) {
-                await this.handleSaveError(errorWithParams)
+                await this.handleSaveError(errorWithParams);
             }
 
         } catch (msgWithParams) {
-            this.messages.add(msgWithParams)
+            this.messages.add(msgWithParams);
         }
+    }
+
+
+    private async removeInvalidLiesWithinRelationTargets(): Promise<any> {
+
+        const invalidRelationTargetIds: string[]
+            = await this.validator.validateRelationTargets(this.clonedDocument, 'liesWithin');
+
+        if (invalidRelationTargetIds.length == 0) return;
+
+        // TODO remove only the invalid targets
+        delete this.clonedDocument.resource.relations['liesWithin'];
+
+        return Promise.reject([M.DOCEDIT_LIESWITHIN_RELATION_REMOVED_WARNING]);
     }
 
 

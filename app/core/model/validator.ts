@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ConfigLoader,
-    ProjectConfiguration, FieldDefinition,
+import {ConfigLoader, ProjectConfiguration, FieldDefinition,
     RelationDefinition} from 'idai-components-2/configuration';
 import {Document, Resource} from 'idai-components-2/core';
 import {M} from '../../m';
@@ -197,5 +196,12 @@ export class Validator {
         }
 
         return (invalidFields.length > 0) ? invalidFields : undefined;
+    }
+
+
+    // TODO get rid of this when validator classes are merged
+    public async validateRelationTargets(document: Document, relationName: string): Promise<string[]> {
+
+        return [];
     }
 }

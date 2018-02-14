@@ -73,6 +73,7 @@ export class DoceditComponent {
 
     public getFieldDefinitionLabel: (_: string) => string;
 
+
     public getRelationDefinitions = () => this.projectConfiguration.getRelationDefinitions(
         this.clonedDocument.resource.type, false, 'editable');
 
@@ -189,7 +190,7 @@ export class DoceditComponent {
     private showTypeChangeFieldsWarning() {
 
         const invalidFields: string[]
-            = Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration) as any;
+            = Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
 
         if (invalidFields.length > 0) {
             this.messages.add([
@@ -205,16 +206,15 @@ export class DoceditComponent {
     private showTypeChangeRelationsWarning() {
 
         const invalidRelationFields: string[]
-            = Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration) as any;
+            = Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
 
-        if (invalidRelationFields && invalidRelationFields.length > 0) {
-            let invalidRelationFieldsLabels: string[] = [];
-            for (let relationFieldName of invalidRelationFields) { // TODO replace loop by reduce with join
-                invalidRelationFieldsLabels.push(
-                    this.projectConfiguration.getRelationDefinitionLabel(relationFieldName));
-            }
-
-            this.messages.add([M.DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING, invalidRelationFieldsLabels.join(', ')]);
+        if (invalidRelationFields.length > 0) {
+            this.messages.add([
+                M.DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING,
+                invalidRelationFields
+                    .map((relationName: string) => this.projectConfiguration.getRelationDefinitionLabel(relationName))
+                    .reduce((acc, relationLabel) => acc + ', ' + relationLabel)
+            ]);
         }
     }
 

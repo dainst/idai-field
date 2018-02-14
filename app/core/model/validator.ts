@@ -44,9 +44,9 @@ export class Validator {
                 return Promise.reject(err);
             }
 
-            let invalidRelationFields;
-            if (invalidRelationFields = Validator.validateRelations(resource, projectConfiguration)) {
-                let err = [invalidRelationFields.length == 1 ?
+            const invalidRelationFields = Validator.validateRelations(resource, projectConfiguration);
+            if (invalidRelationFields.length > 0) {
+                const err = [invalidRelationFields.length == 1 ?
                     M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
                     M.VALIDATION_ERROR_INVALIDRELATIONFIELDS];
                 err.push(resource.type);
@@ -139,7 +139,7 @@ export class Validator {
      * @returns {string[]} the names of invalid relation fields if one or more of the fields are invalid, otherwise
      * <code>undefined</code>
      */
-    public static validateRelations(resource: Resource, projectConfiguration: ProjectConfiguration): string[]|undefined {
+    public static validateRelations(resource: Resource, projectConfiguration: ProjectConfiguration): string[] {
 
         const fields: Array<RelationDefinition> = projectConfiguration.getRelationDefinitions(resource.type) as any;
         const invalidFields: Array<any> = [];
@@ -159,7 +159,7 @@ export class Validator {
             }
         }
 
-        return (invalidFields.length > 0) ? invalidFields : undefined;
+        return (invalidFields.length > 0) ? invalidFields : [];
     }
 
 

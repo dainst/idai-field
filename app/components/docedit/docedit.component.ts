@@ -219,7 +219,7 @@ export class DoceditComponent {
 
         if (this.validateFields().length > 0) {
             for (let fieldName of this.validateFields()) {
-                delete this.clonedDocument.resource[fieldName]; // TODO use subtract from list util
+                delete this.clonedDocument.resource[fieldName];
             }
         }
     }
@@ -229,7 +229,7 @@ export class DoceditComponent {
 
         if (this.validateRelationFields().length > 0) {
             for (let relationFieldName of this.validateRelationFields()) {
-                delete this.clonedDocument.resource.relations[relationFieldName]; // TODO use subtract from list util
+                delete this.clonedDocument.resource.relations[relationFieldName]; 
             }
         }
     }

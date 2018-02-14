@@ -17,6 +17,7 @@ import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-docume
 import {Validator} from '../../core/model/validator';
 import {DeleteModalComponent} from './delete-modal.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
+import {uncurry2} from '../../util/list/list-util-base';
 
 
 @Component({
@@ -53,8 +54,6 @@ export class DoceditComponent {
 
     private showDoceditImagesTab: boolean = false;
 
-    private originalType: string = '';
-
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -72,6 +71,8 @@ export class DoceditComponent {
     }
 
 
+    public getFieldDefinitionLabel: (_: string) => string;
+
     public getRelationDefinitions = () => this.projectConfiguration.getRelationDefinitions(
         this.clonedDocument.resource.type, false, 'editable');
 
@@ -85,7 +86,8 @@ export class DoceditComponent {
             (this.imageTypeUtility.getProjectImageTypes())[this.clonedDocument.resource.type]
         );
 
-        this.originalType = document.resource.type;
+        this.getFieldDefinitionLabel = (fieldName: string) => this.projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);
+
         this.persistenceManager.setOldVersions([document]);
 
         this.parentLabel = await this.fetchParentLabel(document);
@@ -189,14 +191,13 @@ export class DoceditComponent {
         const invalidFields: string[]
             = Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration) as any;
 
-        if (invalidFields && invalidFields.length > 0) {
-            let invalidFieldsLabels: string[] = [];
-            for (let fieldName of invalidFields) { // TODO replace loop by reduce with join
-                invalidFieldsLabels.push(
-                    this.projectConfiguration.getFieldDefinitionLabel(this.originalType, fieldName));
-            }
-
-            this.messages.add([M.DOCEDIT_TYPE_CHANGE_FIELDS_WARNING, invalidFieldsLabels.join(', ')]);
+        if (invalidFields.length > 0) {
+            this.messages.add([
+                M.DOCEDIT_TYPE_CHANGE_FIELDS_WARNING,
+                invalidFields
+                    .map(this.getFieldDefinitionLabel)
+                    .reduce((acc, fieldLabel) => acc + ', ' + fieldLabel)
+            ]);
         }
     }
 

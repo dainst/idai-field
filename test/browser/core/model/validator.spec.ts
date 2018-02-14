@@ -132,7 +132,9 @@ export function main() {
                 });
         });
 
+
         it('should report a missing field definition', done => {
+
             const doc = {
                 resource: {
                     id: '1',
@@ -149,6 +151,7 @@ export function main() {
                 done();
             });
         });
+
 
         it('should report missing field definitions', done => {
 
@@ -169,6 +172,7 @@ export function main() {
                 done();
             });
         });
+
 
         it('should report a missing relation field definition', done => {
 

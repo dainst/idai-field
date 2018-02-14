@@ -35,9 +35,9 @@ export class Validator {
                     .concat(missingProperties.join((', '))));
             }
 
-            let invalidFields;
-            if (invalidFields = Validator.validateFields(resource, projectConfiguration)) {
-                let err = [invalidFields.length == 1 ?
+            const invalidFields = Validator.validateFields(resource, projectConfiguration);
+            if (invalidFields.length > 0) {
+                const err = [invalidFields.length == 1 ?
                     M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS];
                 err.push(resource.type);
                 err.push(invalidFields.join(', '));
@@ -106,14 +106,8 @@ export class Validator {
             .some(type => type.name == resource.type);
     }
 
-    /**
-     *
-     * @param resource
-     * @param projectConfiguration
-     * @returns {string[]} the names of invalid fields if one or more of the fields are invalid, otherwise
-     * <code>undefined</code>
-     */
-    public static validateFields(resource: Resource, projectConfiguration: ProjectConfiguration): string[]|undefined {
+
+    public static validateFields(resource: Resource, projectConfiguration: ProjectConfiguration): Array<string> {
 
         const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
         const defaultFields: Array<FieldDefinition> = [{ name: 'relations' }];
@@ -137,8 +131,9 @@ export class Validator {
             }
         }
 
-        return (invalidFields.length > 0) ? invalidFields : undefined;
+        return (invalidFields.length > 0) ? invalidFields : [];
     }
+
 
     /**
      * @returns {string[]} the names of invalid relation fields if one or more of the fields are invalid, otherwise

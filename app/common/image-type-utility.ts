@@ -48,11 +48,19 @@ export class ImageTypeUtility {
         return this.projectConfiguration.getTypesList()
             .map(type => type.name)
             .filter(typeName => !this.isImageType(typeName))
+            // TODO Check if this is really the right place to get rid of the project document in search results
+            .filter(typeName => !this.isProjectType(typeName))
     }
 
 
     public getImageTypeNames(): string[] {
 
         return Object.keys(this.getProjectImageTypes());
+    }
+
+
+    private isProjectType(typeName: string): boolean {
+
+        return typeName == 'Project';
     }
 }

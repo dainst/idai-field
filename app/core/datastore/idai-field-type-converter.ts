@@ -22,7 +22,7 @@ export class IdaiFieldTypeConverter extends TypeConverter {
         if (types) return types.map(type => this.proveIsCorrectType(type, typeClass));
 
         if (typeClass == 'IdaiFieldImageDocument') {
-            return this.imageTypeUtility.getImageTypeNames()
+            return this.imageTypeUtility.getImageTypeNames();
         } else if (typeClass == 'IdaiFieldDocument') {
             return this.imageTypeUtility.getNonImageTypeNames();
         }

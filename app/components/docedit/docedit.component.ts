@@ -241,22 +241,22 @@ export class DoceditComponent {
         Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
 
 
-    private handleSaveSuccess(documentBeforeSave: IdaiFieldDocument, viaSaveButton: boolean) {
+    private async handleSaveSuccess(documentBeforeSave: IdaiFieldDocument, viaSaveButton: boolean) {
 
-        this.removeInspectedRevisions(this.clonedDocument.resource.id as any)
-            .then(latestRevision => {
-                this.clonedDocument = latestRevision;
-                this.documentEditChangeMonitor.reset();
+        try {
+            const latestRevision = await this.removeInspectedRevisions(this.clonedDocument.resource.id as any);
+            this.clonedDocument = latestRevision;
+            this.documentEditChangeMonitor.reset();
 
-                if (DoceditComponent.detectSaveConflicts(documentBeforeSave, latestRevision)) {
-                    this.activeTabService.setActiveTab('conflicts');
-                    this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
-                } else {
-                    return this.closeModalAfterSave(latestRevision.resource.id as any, viaSaveButton);
-                }
-            }).catch(msgWithParams => {
-                this.messages.add(msgWithParams);
-            });
+            if (DoceditComponent.detectSaveConflicts(documentBeforeSave, latestRevision)) {
+                this.activeTabService.setActiveTab('conflicts');
+                this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
+            } else {
+                await this.closeModalAfterSave(latestRevision.resource.id as any, viaSaveButton);
+            }
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+        }
     }
 
 

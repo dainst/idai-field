@@ -86,7 +86,8 @@ export class DoceditComponent {
             (this.imageTypeUtility.getProjectImageTypes())[this.clonedDocument.resource.type]
         );
 
-        this.getFieldDefinitionLabel = (fieldName: string) => this.projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);
+        this.getFieldDefinitionLabel = (fieldName: string) =>
+            this.projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);
 
         this.persistenceManager.setOldVersions([document]);
 

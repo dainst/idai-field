@@ -142,7 +142,7 @@ export class DoceditComponent {
         const documentBeforeSave: IdaiFieldDocument = ObjectUtil.cloneObject(this.clonedDocument);
 
         try {
-            await this.validator.validate(<IdaiFieldDocument> this.clonedDocument);
+            await this.validator.validate(this.clonedDocument);
 
             try {
                 await this.persistenceManager.persist(this.clonedDocument, this.settingsService.getUsername());

@@ -57,8 +57,6 @@
     "bootstrap": "4.0.0-beta",
     "es6-shim": "0.35.0",
     "express": "~4.15.0",
-    "express-pouchdb-dainst": "1000.0.3",
-    "idai-components-2": "1.4.81",
     "ip": "1.1.5",
     "leaflet": "1.2.0",
     "leaflet-imageoverlay-rotated": "0.1.1",
@@ -74,6 +72,8 @@
     "rxjs": "5.0.1",
     "systemjs": "0.19.31",
     "zone.js": "0.8.11",
+    "express-pouchdb-dainst": "1000.0.3",
+    "idai-components-2": "1.4.81",
     "tsfun": "1.0.24"
   },
   "devDependencies": {
@@ -100,7 +100,6 @@
     "jasmine": "2.5.2",
     "jasmine-core": "2.5.2",
     "karma": "1.4.0",
-    "karma-chrome-launcher": "2.0.0",
     "karma-electron-launcher": "^0.2.0",
     "karma-jasmine": "1.1.0",
     "pouchdb-adapter-memory": "^6.3.4",

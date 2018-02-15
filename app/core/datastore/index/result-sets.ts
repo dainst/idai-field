@@ -1,4 +1,4 @@
-import {intersection, NestedArray, subtract, union} from 'tsfun';
+import {intersection, NestedArray, subtract, union, uniteO} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 import {ObjectUtil} from '../../../util/object-util';
 
@@ -40,10 +40,11 @@ export class ResultSets {
 
         const copy = this.copy();
 
-        ResultSets.putTo(copy.map, indexItems);
+        const indexItemsMap = indexItems.reduce((acc: IndexItemMap, item) => (acc[item.id] = item, acc), {});
+        copy.map = uniteO(indexItemsMap)(copy.map);
 
-        if (mode !== 'subtract') copy.addSets.push(indexItems.map(item => item.id));
-        else copy.subtractSets.push(indexItems.map(item => item.id));
+        if (mode !== 'subtract') copy.addSets.push(Object.keys(indexItemsMap));
+        else copy.subtractSets.push(Object.keys(indexItemsMap));
 
         return copy;
     }
@@ -74,12 +75,6 @@ export class ResultSets {
             ObjectUtil.cloneObject(this.subtractSets),
             ObjectUtil.cloneObject(this.map)
         );
-    }
-
-
-    private static putTo(map: IndexItemMap, set: Array<SimpleIndexItem>): void {
-
-        set.forEach(item => map[item.id] = item);
     }
 
 

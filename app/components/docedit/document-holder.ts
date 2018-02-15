@@ -1,6 +1,7 @@
+import {subtractO} from 'tsfun';
 import {Validator} from '../../core/model/validator';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {Document} from 'idai-components-2/core';
+import {Document, Resource} from 'idai-components-2/core';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
 import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
@@ -50,8 +51,6 @@ export class DocumentHolder {
 
     public isChanged = () => this.documentEditChangeMonitor.isChanged();
 
-    public setChanged = () => this.documentEditChangeMonitor.setChanged();
-
     public getClonedDocument = () => this.clonedDocument;
 
 
@@ -77,9 +76,8 @@ export class DocumentHolder {
 
     public async save() {
 
-        await this.removeInvalidLiesWithinRelationTargets();
-        this.removeInvalidFields();
-        this.removeInvalidRelations();
+        this.clonedDocument = await this.cleanup(this.clonedDocument);
+
         await this.validator.validate(this.clonedDocument);
         await this.persistenceManager.persist(this.clonedDocument, this.settingsService.getUsername());
 
@@ -120,6 +118,17 @@ export class DocumentHolder {
 
         await this.removeImageWithImageStore();
         await this.removeWithPersistenceManager();
+    }
+
+
+    private async cleanup(document: Document): Promise<Document> {
+
+        // TODO make synchronous and make function pure
+        await this.removeInvalidLiesWithinRelationTargets(document);
+
+        return DocumentHolder.removeRelations(
+            DocumentHolder.removeFields(document, this.validateFields())
+            , this.validateRelationFields());
     }
 
 
@@ -171,44 +180,46 @@ export class DocumentHolder {
     }
 
 
-    private validateFields: () => Array<string> = () =>
-        Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
-
-
-    private validateRelationFields: () => Array<string> = () =>
-        Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
-
-
-    private async removeInvalidLiesWithinRelationTargets(): Promise<any> {
+    private async removeInvalidLiesWithinRelationTargets(document: Document): Promise<any> {
 
         const invalidRelationTargetIds: string[]
-            = await this.validator.validateRelationTargets(this.clonedDocument, 'liesWithin');
+            = await this.validator.validateRelationTargets(document, 'liesWithin');
 
         if (invalidRelationTargetIds.length == 0) return;
 
         // TODO remove only the invalid targets
-        delete this.clonedDocument.resource.relations['liesWithin'];
+        delete document.resource.relations['liesWithin'];
 
         return Promise.reject([M.DOCEDIT_LIESWITHIN_RELATION_REMOVED_WARNING]);
     }
 
 
-    private removeInvalidFields() {
 
-        if (this.validateFields().length > 0) {
-            for (let fieldName of this.validateFields()) {
-                delete this.clonedDocument.resource[fieldName];
-            } // TODO extract a more general subtract method which deletes from an object, given a list of keys: subtract(keys: string[], object: Object). it should return an object with the remaining keys.
-        }
+    private validateFields(): Array<string>  {
+
+        return Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
+    }
+
+    private validateRelationFields(): Array<string> {
+
+        return Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
     }
 
 
-    private removeInvalidRelations() {
+    // TODO move to core / model package
+    private static removeFields<D extends Document>(document: D, fields: Array<string>): D {
 
-        if (this.validateRelationFields().length > 0) {
-            for (let relationFieldName of this.validateRelationFields()) {
-                delete this.clonedDocument.resource.relations[relationFieldName];
-            }
-        }
+        const result = subtractO([])(document) as D; // TODO implement shallow copy method, rename unique to copy to match up names
+        result.resource = subtractO(fields)(document.resource) as Resource;
+        return result;
+    }
+
+
+    // TODO move to core / model package
+    private static removeRelations<D extends Document>(document: D, relations: Array<string>): D {
+
+        const result = subtractO([])(document) as D; // TODO implement shallow copy method, rename unique to copy to match up names
+        result.resource.relations = subtractO(relations)(result.resource.relations);
+        return result;
     }
 }

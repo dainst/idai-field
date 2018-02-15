@@ -1,4 +1,4 @@
-import {intersection, NestedArray, subtract, union} from '../../../util/list/list-util';
+import {intersection, NestedArray, subtract, union} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 import {ObjectUtil} from '../../../util/object-util';
 
@@ -82,8 +82,7 @@ export class ResultSets {
 
         return ResultSets.pickFrom(this.map,
 
-            subtract(union(this.subtractSets))
-                (intersection(this.addSets))
+            subtract(...this.subtractSets)(intersection(this.addSets))
         );
     }
 

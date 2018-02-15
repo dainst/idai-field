@@ -6,7 +6,7 @@ import {NavigationPath} from './navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
-import {differentFrom, takeUntil, takeWhile} from '../../../util/list/list-util';
+import {differentFrom, takeUntil, takeWhile} from 'tsfun';
 import {
     isSegmentOf,
     NavigationPathInternal,

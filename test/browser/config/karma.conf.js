@@ -26,6 +26,7 @@ module.exports = function(config) {
 
             // our stuff
             { pattern: 'node_modules/idai-components-2/**/!(*spec).js', included: false, watched: false },
+            { pattern: 'node_modules/tsfun/**/!(*spec).js', included: false, watched: false },
             { pattern: 'app/**/*.js', included: false, watched: true },
             { pattern: 'config/*', included: false, watched: false },
             { pattern: 'test/browser/**/*.spec.js', included: false, watched: true },
@@ -40,7 +41,8 @@ module.exports = function(config) {
             'node_modules/@angular/**/*_spec.js',
 
             // our stuff
-            'node_modules/idai-components-2/test/**/*'
+            'node_modules/idai-components-2/test/**/*',
+            'node_modules/tsfun/test/**/*'
         ],
 
         reporters: ['dots'],

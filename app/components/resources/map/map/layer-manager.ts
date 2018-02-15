@@ -3,7 +3,7 @@ import {ImageTypeUtility} from '../../../../common/image-type-utility';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../state/view-facade';
-import {addUniqueTo, removeFrom, subtract} from '../../../../util/list/list-util';
+import {unique, subtract} from 'tsfun';
 
 
 export interface LayersInitializationResult {
@@ -64,8 +64,8 @@ export class LayerManager {
     public toggleLayer(resourceId: string) {
 
         this.activeLayerIds = this.isActiveLayer(resourceId) ?
-            removeFrom(this.activeLayerIds)(resourceId) :
-            addUniqueTo(this.activeLayerIds)(resourceId);
+            subtract([resourceId])(this.activeLayerIds) :
+            unique<string>()(this.activeLayerIds.concat([resourceId]));
 
         this.viewFacade.setActiveLayersIds(this.activeLayerIds);
     }

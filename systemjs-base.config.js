@@ -15,6 +15,11 @@ config.packages['rxjs'] = {
     defaultExtension: 'js'
 };
 
+config.packages['tsfun'] = {
+    main: 'index.js',
+    defaultExtension: 'js'
+};
+
 config.packages.node_modules = {
     defaultExtension: 'js'
 };
@@ -56,6 +61,7 @@ config.map = {
     'rxjs': 'node_modules/rxjs',
     'ts-md5': 'node_modules/ts-md5',
     'idai-components-2' : 'node_modules/idai-components-2',
+    'tsfun' : 'node_modules/tsfun',
     'pouchdb': 'node_modules/pouchdb/dist/pouchdb.js',
     'fs' : '@node/fs',
     'express': '@node/express',

@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {getAtIndex} from '../../util/list/list-util';
+import {getAtIndex} from '../../util/list-util';
 
 /**
  * @author: Thomas Kleinke

@@ -12,7 +12,7 @@ import {ChangesStream} from '../../../core/datastore/core/changes-stream';
 import {ResourcesState} from './resources-state';
 import {ObserverUtil} from '../../../util/observer-util';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
-import {includedIn, removeFrom, isNot} from '../../../util/list/list-util';
+import {includedIn, subtract, isNot} from 'tsfun';
 
 
 /**
@@ -47,7 +47,7 @@ export class DocumentsManager {
 
     public getSelectedDocument = () => this.selectedDocument;
 
-    public removeFromDocuments = (document: Document) => this.documents = removeFrom(this.documents)(document);
+    public removeFromDocuments = (document: Document) => this.documents = subtract([document])(this.documents);
 
     public isNewDocumentFromRemote = (document: Document) => this.newDocumentsFromRemote.indexOf(document) > -1;
 
@@ -125,7 +125,8 @@ export class DocumentsManager {
         this.selectAndNotify(document);
 
         this.documents = this.documents.filter(hasId);
-        removeFrom(this.newDocumentsFromRemote)(document);
+        this.newDocumentsFromRemote =
+            subtract([document as Document])(this.newDocumentsFromRemote);
 
         return this.performUpdates(document);
     }

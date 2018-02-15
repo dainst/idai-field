@@ -1,6 +1,7 @@
 import {intersection, NestedArray, subtract, union, uniteO} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 import {ObjectUtil} from '../../../util/object-util';
+import {intersectO} from "tsfun/src/sets";
 
 
 type IndexItemMap = {[id: string]: SimpleIndexItem};
@@ -52,19 +53,24 @@ export class ResultSets {
 
     public collapse(): Array<SimpleIndexItem> {
 
-        return ResultSets.pickFrom(this.map,
-
-            subtract(...this.subtractSets)(intersection(this.addSets))
-        );
+        return this.pickFromMap(
+                subtract(...this.subtractSets)(intersection(this.addSets))
+                );
     }
 
 
     public unify(): Array<SimpleIndexItem> {
 
-        return ResultSets.pickFrom(this.map,
+        return this.pickFromMap(
+                union(this.addSets)
+                );
 
-            union(this.addSets)
-        );
+    }
+
+
+    private pickFromMap(ids: Array<string>) {
+
+        return Object.values(intersectO(ids)(this.map))
     }
 
 
@@ -75,11 +81,5 @@ export class ResultSets {
             ObjectUtil.cloneObject(this.subtractSets),
             ObjectUtil.cloneObject(this.map)
         );
-    }
-
-
-    private static pickFrom(map: IndexItemMap, indices: Array<string>): Array<SimpleIndexItem> {
-
-        return indices.reduce((acc, index) => acc.concat([map[index] as never]), []);
     }
 }

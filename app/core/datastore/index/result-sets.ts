@@ -30,7 +30,7 @@ export class ResultSets {
 
     public isEmpty(): boolean {
 
-        return this.addSets.length == 0 && this.subtractSets.length == 0;
+        return this.addSets.length === 0 && this.subtractSets.length === 0;
     }
 
 

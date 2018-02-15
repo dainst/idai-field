@@ -126,8 +126,8 @@ export class DocumentHolder {
         // TODO make synchronous and make function pure
         await this.removeInvalidLiesWithinRelationTargets(document);
 
-        return DocumentHolder.removeRelations(
-            DocumentHolder.removeFields(document, this.validateFields())
+        return Document.removeRelations(
+            Document.removeFields(document, this.validateFields())
             , this.validateRelationFields());
     }
 
@@ -203,23 +203,5 @@ export class DocumentHolder {
     private validateRelationFields(): Array<string> {
 
         return Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
-    }
-
-
-    // TODO move to core / model package
-    private static removeFields<D extends Document>(document: D, fields: Array<string>): D {
-
-        const result = subtractO([])(document) as D; // TODO implement shallow copy method, rename unique to copy to match up names
-        result.resource = subtractO(fields)(document.resource) as Resource;
-        return result;
-    }
-
-
-    // TODO move to core / model package
-    private static removeRelations<D extends Document>(document: D, relations: Array<string>): D {
-
-        const result = subtractO([])(document) as D; // TODO implement shallow copy method, rename unique to copy to match up names
-        result.resource.relations = subtractO(relations)(result.resource.relations);
-        return result;
     }
 }

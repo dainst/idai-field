@@ -61,23 +61,6 @@ export class ResultSets {
     }
 
 
-    /**
-     * Finds the elements that are common to all sets.
-     * Elements from subtract sets are removed from the result.
-     *
-     * Assuming, one adds the two add sets
-     *
-     *   [{id:'1'}, {id:'2'}, {id:'3'}]
-     *   [{id:'2'}, {id:'3'}]
-     *
-     *   and the subtract set
-     *
-     *   [{id:'3'}]
-     *
-     * collapse would return
-     *
-     *   [{id:'2'}]
-     */
     public collapse(): Array<SimpleIndexItem> {
 
         return ResultSets.pickFrom(this.map,
@@ -87,18 +70,6 @@ export class ResultSets {
     }
 
 
-    /**
-     * Returns a single result set which contains the objects of all add sets
-     *
-     *  Assuming, one adds the two sets
-     *
-     *   [{id:'1'}, {id:'2'}, {id:'3'}]
-     *   [{id:'2'}, {id:'3'}]
-     *
-     * unify would return
-     *
-     *   [{id:'1'}, {id:'2'}, {id:'3'}]
-     */
     public unify(): Array<SimpleIndexItem> {
 
         return ResultSets.pickFrom(this.map,

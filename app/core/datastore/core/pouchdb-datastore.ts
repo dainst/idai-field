@@ -269,8 +269,11 @@ export class PouchdbDatastore {
         return Object.keys(constraints).reduce((setsAcc: ResultSets, name: string) => {
 
                 const {type, value} = Constraint.convertTo(constraints[name]);
-                return setsAcc.combine(
-                    this.constraintIndexer.get(name, value), type);
+
+                const indexItems = this.constraintIndexer.get(name, value);
+                return indexItems
+                    ? setsAcc.combine(indexItems, type)
+                    : setsAcc;
 
             }, ResultSets.make());
     }

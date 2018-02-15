@@ -11,7 +11,7 @@ type IndexItemMap = {[id: string]: SimpleIndexItem};
  */
 export class ResultSets {
 
-    // Hide constructor on purpose to force usage of make or copy.
+    // Hide constructor on purpose to force usage of make.
     // This way one can not modify the sets directly. One can
     // only start with make or copy and then modify via combine.
     private constructor(
@@ -28,29 +28,17 @@ export class ResultSets {
     }
 
 
-    public copy(): ResultSets {
-
-        return new ResultSets(
-            ObjectUtil.cloneAny(this.addSets),
-            ObjectUtil.cloneAny(this.subtractSets),
-            ObjectUtil.cloneAny(this.map)
-        );
-    }
-
-
     public isEmpty(): boolean {
 
         return this.addSets.length == 0 && this.subtractSets.length == 0;
     }
 
 
-
     public combine(
-        indexItems: Array<SimpleIndexItem>|undefined,
+        indexItems: Array<SimpleIndexItem>,
         mode: string = 'add'): ResultSets {
 
         const copy = this.copy();
-        if (!indexItems) return copy;
 
         ResultSets.putTo(copy.map, indexItems);
 
@@ -75,6 +63,16 @@ export class ResultSets {
         return ResultSets.pickFrom(this.map,
 
             union(this.addSets)
+        );
+    }
+
+
+    private copy(): ResultSets {
+
+        return new ResultSets(
+            ObjectUtil.cloneObject(this.addSets),
+            ObjectUtil.cloneObject(this.subtractSets),
+            ObjectUtil.cloneObject(this.map)
         );
     }
 

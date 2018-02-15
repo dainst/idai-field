@@ -1,7 +1,6 @@
-import {subtractO} from 'tsfun';
 import {Validator} from '../../core/model/validator';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {Document, Resource} from 'idai-components-2/core';
+import {Document} from 'idai-components-2/core';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
 import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
@@ -11,7 +10,7 @@ import {DatastoreErrors} from 'idai-components-2/datastore';
 import {ImageTypeUtility} from '../../common/image-type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {Injectable} from '@angular/core';
-import {DocumentEditChangeMonitor} from "idai-components-2/documents";
+import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 
 
 @Injectable()

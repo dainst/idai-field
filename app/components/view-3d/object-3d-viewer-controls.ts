@@ -31,7 +31,7 @@ export class Object3DViewerControls {
         this.mesh = mesh;
         this.originalRotation = mesh.quaternion.clone();
 
-        this.focusMesh(mesh);
+        this.focusMesh();
     }
 
 
@@ -75,6 +75,25 @@ export class Object3DViewerControls {
     public onWheel(event: WheelEvent) {
 
         this.viewer.getCamera().translateZ(event.wheelDelta / 100);
+    }
+
+
+    public focusMesh() {
+
+        const position: THREE.Vector3 = this.mesh.getWorldPosition();
+        const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
+
+        camera.position.set(
+            position.x,
+            this.mesh.position.y + Object3DViewerControls.computeDistance(camera, this.mesh),
+            position.z);
+        camera.lookAt(position);
+    }
+
+
+    public resetRotation() {
+
+        this.mesh.setRotationFromQuaternion(this.originalRotation);
     }
 
 
@@ -123,19 +142,6 @@ export class Object3DViewerControls {
 
         this.mesh.rotation.x += deltaY / 100;
         this.mesh.rotation.z += deltaX / 100;
-    }
-
-
-    private focusMesh(mesh: THREE.Mesh) {
-
-        const position: THREE.Vector3 = mesh.getWorldPosition();
-        const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
-
-        camera.position.set(
-            position.x,
-            mesh.position.y + Object3DViewerControls.computeDistance(camera, mesh),
-            position.z);
-        camera.lookAt(position);
     }
 
 

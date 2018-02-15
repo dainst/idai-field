@@ -72,6 +72,13 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     }
 
 
+    public focusMesh() {
+
+        this.controls.resetRotation();
+        this.controls.focusMesh();
+    }
+
+
     private initialize() {
 
         this.viewer = new Viewer3D(this.container.nativeElement);

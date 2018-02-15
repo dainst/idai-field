@@ -1,8 +1,6 @@
 import * as THREE from 'three';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
-import {Map3DLayer} from './map-3d-layer';
-import {Map3DLayerManager} from './map-3d-layer-manager';
 import {Map3DControlState} from './map-3d-control-state';
 import {getPointVector} from '../../../../util/util-3d';
 
@@ -21,8 +19,7 @@ export class Map3DControls {
     private lastYPosition: number;
 
 
-    constructor(private viewer: Viewer3D,
-                private objectManager: Map3DLayerManager) {}
+    constructor(private viewer: Viewer3D) {}
 
 
     public onMouseDown(event: MouseEvent): Map3DControlState {
@@ -86,6 +83,20 @@ export class Map3DControls {
     }
 
 
+    public focusMesh(mesh: THREE.Mesh) {
+
+        const position: THREE.Vector3 = mesh.getWorldPosition();
+        const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
+
+        camera.position.set(
+            position.x,
+            mesh.position.y + Map3DControls.computeDistance(camera, mesh),
+            position.z);
+        camera.lookAt(position);
+    }
+
+
+
     private focusPoint(point: THREE.Vector3) {
 
         const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
@@ -133,6 +144,15 @@ export class Map3DControls {
     }
 
 
+    private static computeDistance(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
+
+        const fovInRadians: number = camera.fov * (Math.PI / 180);
+        const size = mesh.geometry.boundingSphere.radius;
+
+        return Math.abs(size / Math.sin(fovInRadians / 2));
+    }
+
+
     private updateSelectedDocument(xPosition: number, yPosition: number) {
 
         if (this.noSelection) {
@@ -140,27 +160,29 @@ export class Map3DControls {
             return;
         }
 
-        const clickedObject: Map3DLayer|undefined = this.getObjectAtMousePosition(xPosition, yPosition);
-        this.setSelectedDocument(clickedObject ? clickedObject.document : undefined);
+        const selectedMeshId: string|undefined = this.getMeshIdAtMousePosition(xPosition, yPosition);
+
+        // TODO properly implement this as soon as mesh geometries are added
+        this.setSelectedDocument(undefined);
     }
 
 
     private updateHoverDocument(xPosition: number, yPosition: number) {
 
-        const hoverObject: Map3DLayer|undefined = this.getObjectAtMousePosition(xPosition, yPosition);
-        this.state.hoverDocument = hoverObject && hoverObject.document != this.state.selectedDocument ?
-            hoverObject.document :
-            undefined;
+        const hoverMeshId: string|undefined = this.getMeshIdAtMousePosition(xPosition, yPosition);
+
+        // TODO properly implement this as soon as mesh geometries are added
+        this.state.hoverDocument = undefined;
     }
 
 
-    private getObjectAtMousePosition(xPosition: number, yPosition: number): Map3DLayer|undefined {
+    private getMeshIdAtMousePosition(xPosition: number, yPosition: number): string|undefined {
 
         const intersections: Array<THREE.Intersection> = this.getIntersections(xPosition, yPosition);
 
         if (intersections.length == 0) return undefined;
 
-        return this.objectManager.getLayerByModelId(intersections[0].object.uuid);
+        return intersections[0].object.uuid;
     }
 
 

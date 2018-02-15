@@ -13,3 +13,8 @@
                          [selectedDocument]="selectedDocument"
                          (onSelectDocument)="select($event)">
 </map-3d-point-geometries>
+
+<layer-3d-menu [layers]="layers"
+               (onToggleLayer)="toggleLayer($event)"
+               (onFocusLayer)="focusLayer($event)">
+</layer-3d-menu>

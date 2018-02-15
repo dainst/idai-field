@@ -101,10 +101,30 @@ export class ViewManager {
     }
 
 
+    public removeActive3DLayersIds(mainTypeDocumentId: string|undefined) {
+
+        if (mainTypeDocumentId) this.resourcesState.removeActiveLayersIds(this.viewName, mainTypeDocumentId);
+    }
+
+
+    public getActive3DLayersIds(mainTypeDocumentResourceId: string): string[] {
+
+        return this.resourcesState.getActive3DLayersIds(this.viewName, mainTypeDocumentResourceId);
+    }
+
+
+    public setActive3DLayersIds(mainTypeDocumentResourceId: string, active3DLayersIds: string[]) {
+
+        this.resourcesState.setActive3DLayersIds(this.viewName, mainTypeDocumentResourceId,
+            active3DLayersIds);
+    }
+
+
     public removeActiveLayersIds(mainTypeDocumentId: string|undefined) {
 
-        if (mainTypeDocumentId)
-            this.resourcesState.removeActiveLayersIds(this.viewName, mainTypeDocumentId);
+        if (mainTypeDocumentId) {
+            this.resourcesState.removeActive3DLayersIds(this.viewName, mainTypeDocumentId);
+        }
     }
 
 

@@ -121,4 +121,40 @@ export class ResourcesState {
         delete layerIds[mainTypeDocumentId];
         this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
     }
+
+
+    public setActive3DLayersIds(viewName: string, mainTypeDocumentId: string, active3DLayersIds: string[]) {
+
+        if (!this._[viewName]) this._[viewName] = {};
+        if (!this._[viewName].layer3DIds) this._[viewName].layer3DIds = {};
+
+        const layer3DIds = this._[viewName].layer3DIds;
+        if (!layer3DIds) return;
+
+        layer3DIds[mainTypeDocumentId] = active3DLayersIds.slice(0);
+        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
+    }
+
+
+    public getActive3DLayersIds(viewName: string, mainTypeDocumentId: string): string[] {
+
+        if (!this._[viewName] || !this._[viewName].layer3DIds) return [];
+
+        const layer3DIds = this._[viewName].layer3DIds;
+        if (!layer3DIds) return [];
+
+        return layer3DIds[mainTypeDocumentId];
+    }
+
+
+    public removeActive3DLayersIds(viewName: string, mainTypeDocumentId: string) {
+
+        if (!this._[viewName] || !this._[viewName].layer3DIds) return;
+
+        const layer3DIds = this._[viewName].layer3DIds;
+        if (!layer3DIds) return;
+
+        delete layer3DIds[mainTypeDocumentId];
+        this.serializer.store(StateSerializer.RESOURCES_STATE, this._);
+    }
 }

@@ -16,6 +16,7 @@
                       (onQuitEditing)="quitEditing($event)"></editable-map>
         <map-3d *ngIf="mapMode == '3d'" [documents]="viewFacade.getDocuments()"
                 [selectedDocument]="viewFacade.getSelectedDocument()"
+                [mainTypeDocument]="resourcesComponent.getIsRecordedInTarget()"
                 (onSelectDocument)="select($event)"></map-3d>
     </div>
 

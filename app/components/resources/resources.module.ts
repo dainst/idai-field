@@ -24,13 +24,15 @@ import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {SettingsService} from '../../core/settings/settings-service';
 import {SidebarListComponent} from './map/sidebar-list.component';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';
-import {LayerManager} from './map/map/layer-manager';
 import {LayerImageProvider} from './map/map/layer-image-provider';
-import {LayerMenuComponent} from './map/map/layer-menu.component';
 import {ChangesStream} from '../../core/datastore/core/changes-stream';
 import {FoldState} from './list/fold-state';
 import {Map3DComponent} from './map/map-3d/map-3d.component';
 import {Map3DPointGeometriesComponent} from './map/map-3d/map-3d-point-geometries.component';
+import {ImageLayerManager} from './map/map/image-layer-manager';
+import {ImageLayerMenuComponent} from './map/map/image-layer-menu.component';
+import {Layer3DMenuComponent} from './map/map-3d/layer-3d-menu.component';
+import {Layer3DManager} from './map/map-3d/layer-3d-manager';
 
 @NgModule({
     imports: [
@@ -48,7 +50,7 @@ import {Map3DPointGeometriesComponent} from './map/map-3d/map-3d-point-geometrie
         GeometryViewComponent,
         EditableMapComponent,
         ResourcesMapComponent,
-        LayerMenuComponent,
+        ImageLayerMenuComponent,
         ListComponent,
         RowComponent,
         PlusButtonComponent,
@@ -56,6 +58,7 @@ import {Map3DPointGeometriesComponent} from './map/map-3d/map-3d-point-geometrie
         DocumentViewSidebarComponent,
         SidebarListComponent,
         Map3DComponent,
+        Layer3DMenuComponent,
         Map3DPointGeometriesComponent
     ],
     providers: [
@@ -63,7 +66,8 @@ import {Map3DPointGeometriesComponent} from './map/map-3d/map-3d-point-geometrie
         ResourcesState,
         RoutingService,
         DoceditLauncher,
-        LayerManager,
+        ImageLayerManager,
+        Layer3DManager,
         LayerImageProvider,
         {
             provide: ViewFacade,

@@ -152,6 +152,7 @@ export class ViewFacade {
         if (!selectedDocument.resource.id) return;
 
         this.viewManager.removeActiveLayersIds(selectedDocument.resource.id);
+        this.viewManager.removeActive3DLayersIds(selectedDocument.resource.id);
         this.viewManager.setLastSelectedOperationTypeDocumentId(undefined);
         await this.populateMainTypeDocuments();
     }
@@ -166,6 +167,20 @@ export class ViewFacade {
     public getActiveLayersIds(mainTypeDocumentResourceId: string): string[] {
 
         const ids: string[] = this.viewManager.getActiveLayersIds(mainTypeDocumentResourceId);
+
+        return ids ? ids : [];
+    }
+
+
+    public setActive3DLayersIds(mainTypeDocumentResourceId: string, active3DLayersIds: string[]) {
+
+        return this.viewManager.setActive3DLayersIds(mainTypeDocumentResourceId, active3DLayersIds);
+    }
+
+
+    public getActive3DLayersIds(mainTypeDocumentResourceId: string): string[] {
+
+        const ids: string[] = this.viewManager.getActive3DLayersIds(mainTypeDocumentResourceId);
 
         return ids ? ids : [];
     }

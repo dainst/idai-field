@@ -3,7 +3,8 @@ import {MapComponent} from 'idai-components-2/idai-field-map';
 import {Messages} from 'idai-components-2/messages';
 import {ConfigLoader} from 'idai-components-2/configuration';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
-import {LayerManager, ListDiffResult} from './layer-manager';
+import {ImageLayerManager} from './image-layer-manager';
+import {ListDiffResult} from '../layer-manager';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {LayerImageProvider} from './layer-image-provider';
 
@@ -26,7 +27,7 @@ export class LayerMapComponent extends MapComponent {
     private layersUpdate: boolean = false;
 
 
-    constructor(private layerManager: LayerManager,
+    constructor(private layerManager: ImageLayerManager,
                 private layerImageProvider: LayerImageProvider,
                 protected messages: Messages,
                 configLoader: ConfigLoader) {

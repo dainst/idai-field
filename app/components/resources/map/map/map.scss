@@ -2,9 +2,6 @@
  * @author: Thomas Kleinke
  */
 
-$layer-menu-button-color: #657faa;
-$layer-menu-button-inactive-color: grey;
-
 #map-container {
   width: 100%;
   height: calc(100vh - 113px);
@@ -38,8 +35,6 @@ $layer-menu-button-inactive-color: grey;
     }
 }
 
-#layer-button,
-#layer-menu,
 #mouse-position-coordinates-x,
 #mouse-position-coordinates-y,
 #map-editor-button-ok,
@@ -50,26 +45,6 @@ $layer-menu-button-inactive-color: grey;
 #map-editor-button-add-polyline {
   position: absolute;
   z-index: 1000;
-}
-
-#layer-button,
-#layer-menu {
-  border: none;
-  border-radius: 0;
-}
-
-#layer-button {
-  top: 11px;
-  right: 25px;
-}
-
-#layer-menu {
-  top: 11px;
-  right: 25px;
-  max-height: 314px;
-  padding-bottom: 10px;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 #mouse-position-coordinates-x,
@@ -106,40 +81,4 @@ $layer-menu-button-inactive-color: grey;
 #map-editor-button-add-polyline {
   left: 100px;
   bottom: 20px;
-}
-
-.layer-entry {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: default;
-}
-
-.layer-menu-button {
-  padding: 0;
-  font-size: 18px;
-  cursor: pointer !important;
-}
-
-.layer-menu-button.layer-active {
-  color: $layer-menu-button-color !important;
-}
-
-.layer-menu-button.layer-inactive {
-  color: $layer-menu-button-inactive-color !important;
-}
-
-.layer-menu-button:hover {
-  color: lighten($layer-menu-button-color, 10%) !important;
-}
-
-.layer-menu-button.layer-inactive.mdi-image-filter-center-focus {
-  visibility: hidden;
-}
-
-.layer-menu-label {
-  position: relative;
-  top: -1px;
-  font-size: 14px;
 }

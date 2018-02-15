@@ -1,7 +1,7 @@
-import {LayerManager} from '../../../../../app/components/resources/map/map/layer-manager';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {ImageLayerManager} from '../../../../../app/components/resources/map/map/image-layer-manager';
 import {IdaiFieldImageDocument} from '../../../../../app/core/model/idai-field-image-document';
 import {Static} from '../../../helper/static';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
 
 /**
@@ -10,9 +10,9 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
  */
 export function main() {
 
-    describe('LayerManager', () => {
+    describe('ImageLayerManager', () => {
 
-        let layerManager: LayerManager;
+        let layerManager: ImageLayerManager;
 
         const layerDocuments: Array<IdaiFieldImageDocument> = [
             Static.doc('Layer 1', 'layer1', 'Image', 'l1') as IdaiFieldImageDocument,
@@ -38,7 +38,7 @@ export function main() {
                 ['getActiveLayersIds', 'setActiveLayersIds']);
             mockViewFacade.getActiveLayersIds.and.returnValue([]);
 
-            layerManager = new LayerManager(mockDatastore, mockImageTypeUtility, mockViewFacade);
+            layerManager = new ImageLayerManager(mockDatastore, mockImageTypeUtility, mockViewFacade);
         });
 
 

@@ -11,6 +11,7 @@ import {ImageTypeUtility} from '../../common/image-type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {Injectable} from '@angular/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {flow} from "tsfun";
 
 
 @Injectable()
@@ -123,12 +124,14 @@ export class DocumentHolder {
 
     private async cleanup(document: Document): Promise<Document> {
 
-        // TODO make synchronous and make function pure
+        // TODO make synchronous and make function pure, then insert into flow
         await this.removeInvalidLiesWithinRelationTargets(document);
 
-        return Document.removeRelations(
-            Document.removeFields(document, this.validateFields())
-            , this.validateRelationFields());
+        return flow<Document>(
+            document,
+            Document.removeRelations(this.validateRelationFields()),
+            Document.removeFields(this.validateFields())
+        )
     }
 
 

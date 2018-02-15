@@ -73,8 +73,8 @@
     "systemjs": "0.19.31",
     "zone.js": "0.8.11",
     "express-pouchdb-dainst": "1000.0.3",
-    "idai-components-2": "1.4.82",
-    "tsfun": "1.0.24"
+    "idai-components-2": "1.4.83",
+    "tsfun": "1.0.25"
   },
   "devDependencies": {
     "@types/geojson": "0.0.32",

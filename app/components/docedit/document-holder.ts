@@ -95,6 +95,7 @@ export class DocumentHolder {
         if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
         if (!conflictsAfterSave) return false;
 
+        // TODO factor out abstract method which tests one set contains at least one element of another
         for (let conflict of conflictsAfterSave) {
             if (conflictsBeforeSave.indexOf(conflict) == -1) {
                 return true;

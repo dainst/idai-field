@@ -187,7 +187,9 @@ export class DocumentHolder {
 
         if (invalidRelationTargetIds.length == 0) return;
 
-        // TODO remove only the invalid targets
+        // TODO remove only the invalid targets, use 'relations['liesWithin'] = subtract(invalidRelationTargetIds)(relations['liesWithin'])' from tsfun
+        // maybe the procedure of modifieing liesWithin does not belong here (nor to docedit.component)
+        // since we work with Document (and for a reason, we support IdaiFieldImageDocument as well in the docedit package)
         delete document.resource.relations['liesWithin'];
 
         return Promise.reject([M.DOCEDIT_LIESWITHIN_RELATION_REMOVED_WARNING]);

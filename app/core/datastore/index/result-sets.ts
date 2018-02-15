@@ -85,12 +85,8 @@ export class ResultSets {
     }
 
 
-    private static pickFrom(map: IndexItemMap, indices: Array<string>):
-        Array<SimpleIndexItem> {
+    private static pickFrom(map: IndexItemMap, indices: Array<string>): Array<SimpleIndexItem> {
 
-        return indices.reduce((acc, index: string) => {
-                acc.push(map[index] as never);
-                return acc;
-            }, []);
+        return indices.reduce((acc, index) => acc.concat([map[index] as never]), []);
     }
 }

@@ -127,7 +127,7 @@ export class DocumentHolder {
         // TODO make synchronous and make function pure, then insert into flow
         await this.removeInvalidLiesWithinRelationTargets(document);
 
-        return flow<Document>(
+        return flow(
             document,
             Document.removeRelations(this.validateRelationFields()),
             Document.removeFields(this.validateFields())

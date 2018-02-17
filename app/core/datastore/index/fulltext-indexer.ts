@@ -34,6 +34,11 @@ export class FulltextIndexer {
         const indexItem = IndexItem.from(doc);
         if (!indexItem) return;
 
+        if (!skipRemoval) this.remove(doc);
+        if (!this.index[doc.resource.type]) this.index[doc.resource.type] = {'*' : { } };
+        this.index[doc.resource.type]['*'][doc.resource.id as any] = indexItem;
+
+
         function indexToken(token: string) {
 
             const type = doc.resource.type;
@@ -47,21 +52,10 @@ export class FulltextIndexer {
                 }, '');
         }
 
-        function putFieldToIndex(field: string) {
-            return doc.resource[field]
-                .split(' ')
-                .forEach(indexToken.bind(this));
-        }
-
-
-        if (!skipRemoval) this.remove(doc);
-        if (!this.index[doc.resource.type]) this.index[doc.resource.type] = {'*' : { } };
-        this.index[doc.resource.type]['*'][doc.resource.id as any] = indexItem;
-
         this.fieldsToIndex
             .filter(field => doc.resource[field])
             .filter(field => doc.resource[field] !== '')
-            .forEach(putFieldToIndex.bind(this));
+            .forEach(field => doc.resource[field].split(' ').forEach(indexToken.bind(this)));
     }
 
 

@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Map3DControlState} from './map-3d-control-state';
+import {Map3DMeshGeometries} from './map-3d-mesh-geometries';
 import {getPointVector} from '../../../../util/util-3d';
 
 
@@ -19,7 +20,8 @@ export class Map3DControls {
     private lastYPosition: number;
 
 
-    constructor(private viewer: Viewer3D) {}
+    constructor(private viewer: Viewer3D,
+                private meshGeometries: Map3DMeshGeometries) {}
 
 
     public onMouseDown(event: MouseEvent): Map3DControlState {
@@ -79,11 +81,17 @@ export class Map3DControls {
         if (!document) return;
 
         const geometry: IdaiFieldGeometry|undefined = document.resource.geometry;
-        if (geometry && geometry.type == 'Point') this.focusPoint(getPointVector(geometry.coordinates));
+        if (geometry && geometry.type == 'Point') {
+            this.focusPoint(getPointVector(geometry.coordinates));
+        } else if (geometry && geometry.type == 'LineString') {
+            this.focusMesh(this.meshGeometries.getMesh(document));
+        }
     }
 
 
-    public focusMesh(mesh: THREE.Mesh) {
+    public focusMesh(mesh: THREE.Mesh|undefined) {
+
+        if (!mesh) return;
 
         const position: THREE.Vector3 = mesh.getWorldPosition();
         const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
@@ -160,36 +168,30 @@ export class Map3DControls {
             return;
         }
 
-        const selectedMeshId: string|undefined = this.getMeshIdAtMousePosition(xPosition, yPosition);
-
-        // TODO properly implement this as soon as mesh geometries are added
-        this.setSelectedDocument(undefined);
+        this.setSelectedDocument(this.getDocumentOfGeometryAtMousePosition(xPosition, yPosition));
     }
 
 
     private updateHoverDocument(xPosition: number, yPosition: number) {
 
-        const hoverMeshId: string|undefined = this.getMeshIdAtMousePosition(xPosition, yPosition);
-
-        // TODO properly implement this as soon as mesh geometries are added
-        this.state.hoverDocument = undefined;
+        this.state.hoverDocument = this.getDocumentOfGeometryAtMousePosition(xPosition, yPosition);
     }
 
 
-    private getMeshIdAtMousePosition(xPosition: number, yPosition: number): string|undefined {
+    private getDocumentOfGeometryAtMousePosition(xPosition: number, yPosition: number)
+            : IdaiFieldDocument|undefined {
 
         const intersections: Array<THREE.Intersection> = this.getIntersections(xPosition, yPosition);
 
         if (intersections.length == 0) return undefined;
 
-        return intersections[0].object.uuid;
+        return this.meshGeometries.getDocument(intersections[0].object);
     }
 
 
     private getIntersections(xPosition: number, yPosition: number): Array<THREE.Intersection> {
 
         const renderer: THREE.WebGLRenderer = this.viewer.getRenderer();
-        const scene: THREE.Scene = this.viewer.getScene();
 
         const raycaster: THREE.Raycaster = new THREE.Raycaster();
         raycaster.linePrecision = 0.01;
@@ -202,6 +204,6 @@ export class Map3DControls {
 
         raycaster.setFromCamera(coordinates, this.viewer.getCamera());
 
-        return raycaster.intersectObjects(scene.children, true);
+        return raycaster.intersectObjects(this.meshGeometries.getRaycasterObjects());
     }
 }

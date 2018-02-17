@@ -37,6 +37,29 @@ export class Map3DMeshGeometries {
     }
 
 
+    public getRaycasterObjects(): Array<THREE.Object3D> {
+
+        return Object.values(this.lines).map(line => line.raycasterLine);
+    }
+
+
+    public getDocument(raycasterLine: THREE.Object3D): IdaiFieldDocument|undefined {
+
+        const line: Map3DLine|undefined
+            = Object.values(this.lines).find(line => line.raycasterLine == raycasterLine);
+
+        return line ? line.document: undefined;
+    }
+
+
+    public getMesh(document: IdaiFieldDocument): THREE.Mesh|undefined {
+
+        const line: Map3DLine|undefined = this.lines[document.resource.id as string];
+
+        return line ? line.mesh : undefined;
+    }
+
+
     private add(document: IdaiFieldDocument) {
 
         if (!document.resource.geometry) return;

@@ -31,8 +31,8 @@ import {Map3DComponent} from './map/map-3d/map-3d.component';
 import {Map3DPointGeometriesComponent} from './map/map-3d/map-3d-point-geometries.component';
 import {ImageLayerManager} from './map/map/image-layer-manager';
 import {ImageLayerMenuComponent} from './map/map/image-layer-menu.component';
-import {Layer3DMenuComponent} from './map/map-3d/layer-3d-menu.component';
-import {Layer3DManager} from './map/map-3d/layer-3d-manager';
+import {Layer3DMenuComponent} from './map/map-3d/layers/layer-3d-menu.component';
+import {Layer3DManager} from './map/map-3d/layers/layer-3d-manager';
 
 @NgModule({
     imports: [

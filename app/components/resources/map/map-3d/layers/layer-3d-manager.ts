@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ViewFacade} from '../../view/view-facade';
-import {ListUtil} from '../../../../util/list-util';
-import {LayerManager, LayersInitializationResult, ListDiffResult} from '../layer-manager';
-import {IdaiFieldDocumentReadDatastore} from '../../../../core/datastore/idai-field-document-read-datastore';
+import {ViewFacade} from '../../../view/view-facade';
+import {ListUtil} from '../../../../../util/list-util';
+import {LayerManager, LayersInitializationResult, ListDiffResult} from '../../layer-manager';
+import {IdaiFieldDocumentReadDatastore} from '../../../../../core/datastore/idai-field-document-read-datastore';
 
 
 @Injectable()

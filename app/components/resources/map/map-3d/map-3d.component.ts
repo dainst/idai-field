@@ -7,7 +7,7 @@ import {Map3DControlState} from './map-3d-control-state';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Map3DMeshManager} from './map-3d-mesh-manager';
 import {SettingsService} from '../../../../core/settings/settings-service';
-import {Layer3DManager} from './layer-3d-manager';
+import {Layer3DManager} from './layers/layer-3d-manager';
 import {ListDiffResult} from '../layer-manager';
 
 

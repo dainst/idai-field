@@ -86,14 +86,17 @@ export class FulltextIndexer {
 
         if (Object.keys(this.index).length == 0) return [];
 
-        const resultSets: ResultSets = s.split(' ')
-            .filter(token => token.length > 0)
-            .reduce((_resultSets, token) =>
-                _resultSets.combine(
-                    FulltextIndexer.getForToken(this.index, token, types ? types : Object.keys(this.index))),
-            ResultSets.make());
+        function getFromIndex(resultSets: ResultSets, token: string) {
+            return resultSets.combine(
+                    FulltextIndexer.getForToken(
+                        this.index, token, types ? types : Object.keys(this.index))
+            );
+        }
 
-        return resultSets.collapse() as Array<IndexItem>;
+        return s.split(' ')
+            .filter(token => token.length > 0)
+            .reduce(getFromIndex.bind(this), ResultSets.make())
+            .collapse() as Array<IndexItem>;
     }
 
 

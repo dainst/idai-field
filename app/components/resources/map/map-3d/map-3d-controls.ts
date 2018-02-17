@@ -55,7 +55,7 @@ export class Map3DControls {
         const deltaY = this.lastYPosition - event.clientY;
 
         this.performAction(deltaX, deltaY);
-        this.updateHoverDocument(event.clientX, event.clientY);
+        //this.updateHoverDocument(event.clientX, event.clientY);
 
         this.lastXPosition = event.clientX;
         this.lastYPosition = event.clientY;

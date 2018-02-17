@@ -1,13 +1,13 @@
 import * as THREE from 'three';
-import {Viewer3D} from '../../../../core/3d/viewer-3d';
-import {MeshLoader} from '../../../../core/3d/mesh-loader';
-import {SettingsService} from '../../../../core/settings/settings-service';
+import {Viewer3D} from '../../../../../core/3d/viewer-3d';
+import {MeshLoader} from '../../../../../core/3d/mesh-loader';
+import {SettingsService} from '../../../../../core/settings/settings-service';
 
 
 /**
  * @author Thomas Kleinke
  */
-export class Map3DMeshManager {
+export class Map3DLayerMeshManager {
 
     private meshes: { [resourceId: string]: THREE.Mesh } = {};
     private loader: MeshLoader;

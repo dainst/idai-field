@@ -5,8 +5,8 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Map3DControls} from './map-3d-controls';
 import {Map3DControlState} from './map-3d-control-state';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
-import {Map3DMeshManager} from './map-3d-mesh-manager';
 import {SettingsService} from '../../../../core/settings/settings-service';
+import {Map3DLayerMeshManager} from './layers/map-3d-layer-mesh-manager';
 import {Layer3DManager} from './layers/layer-3d-manager';
 import {ListDiffResult} from '../layer-manager';
 
@@ -32,7 +32,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     private viewer: Viewer3D;
     private controls: Map3DControls;
-    private meshManager: Map3DMeshManager;
+    private layerMeshManager: Map3DLayerMeshManager;
 
     private controlState: Map3DControlState;
 
@@ -77,16 +77,16 @@ export class Map3DComponent implements OnChanges, OnDestroy {
         this.layerManager.toggleLayer(id, this.mainTypeDocument);
 
         if (this.layerManager.isActiveLayer(id as string)) {
-            await this.meshManager.addMesh(id);
+            await this.layerMeshManager.addMesh(id);
         } else {
-            this.meshManager.removeMesh(id);
+            this.layerMeshManager.removeMesh(id);
         }
     }
 
 
     public focusLayer(layer: Document) {
 
-        const mesh: THREE.Mesh = this.meshManager.getMesh(layer.resource.id as string) as THREE.Mesh;
+        const mesh: THREE.Mesh = this.layerMeshManager.getMesh(layer.resource.id as string) as THREE.Mesh;
         this.controls.focusMesh(mesh);
     }
 
@@ -94,7 +94,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     private initialize() {
 
         this.viewer = new Viewer3D(this.container.nativeElement);
-        this.meshManager = new Map3DMeshManager(this.viewer, this.settingsService);
+        this.layerMeshManager = new Map3DLayerMeshManager(this.viewer, this.settingsService);
         this.controls = new Map3DControls(this.viewer);
     }
 
@@ -111,8 +111,8 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     private handleActiveLayersChange(change: ListDiffResult) {
 
-        change.removed.forEach(layerId => this.meshManager.removeMesh(layerId));
-        change.added.forEach(layerId => this.meshManager.addMesh(layerId));
+        change.removed.forEach(layerId => this.layerMeshManager.removeMesh(layerId));
+        change.added.forEach(layerId => this.layerMeshManager.addMesh(layerId));
     }
 
 

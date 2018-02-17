@@ -33,7 +33,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "identifier": "trench2",
             "shortDescription": "3D-Testschnitt",
             "relations": {
-                "has3DRepresentation": [ "obj3d" ],
+                "has3DRepresentation": [ "obj3d", "vra_trench", "vra_trench_georef" ],
                 "isRecordedIn": [ "test" ]
             },
             "type": "Trench"
@@ -62,7 +62,8 @@ export const DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Testfund",
             "relations": {
                 "isRecordedIn": [ "t1" ],
-                "liesWithin": [ "c1" ]
+                "liesWithin": [ "c1" ],
+                "has3DRepresentation": [ "brandlehm"]
             },
             "geometry": {
                 "type": "Point",
@@ -118,6 +119,42 @@ export const DOCS: IdaiFieldDocument[] = [
             "relations": {
                 "isRecordedIn": [],
                 "is3DRepresentationOf": ["t2"]
+            }
+        }
+    },
+    {
+        "resource": {
+            "id": "vra_trench",
+            "identifier": "vraTrench",
+            "shortDescription": "VRA-Trench",
+            "type": "Object3D",
+            "relations": {
+                "isRecordedIn": [],
+                "is3DRepresentationOf": ["t2"]
+            }
+        }
+    },
+    {
+        "resource": {
+            "id": "vra_trench_georef",
+            "identifier": "vraTrenchGeoref",
+            "shortDescription": "VRA-Trench (georeferenziert)",
+            "type": "Object3D",
+            "relations": {
+                "isRecordedIn": [],
+                "is3DRepresentationOf": ["t2"]
+            }
+        }
+    },
+    {
+        "resource": {
+            "id": "brandlehm",
+            "identifier": "brandlehm",
+            "shortDescription": "Brandlehm",
+            "type": "Object3D",
+            "relations": {
+                "isRecordedIn": [],
+                "is3DRepresentationOf": ["tf1"]
             }
         }
     }

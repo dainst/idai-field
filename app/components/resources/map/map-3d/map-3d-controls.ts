@@ -194,7 +194,7 @@ export class Map3DControls {
         const renderer: THREE.WebGLRenderer = this.viewer.getRenderer();
 
         const raycaster: THREE.Raycaster = new THREE.Raycaster();
-        raycaster.linePrecision = 0.01;
+        raycaster.linePrecision = 0.05;
 
         const x: number = ((xPosition - renderer.domElement.getBoundingClientRect().left)
             / renderer.domElement.getBoundingClientRect().width) * 2 - 1;

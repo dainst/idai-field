@@ -141,7 +141,7 @@ export class Map3DMeshGeometries {
             near: this.viewer.getCamera().near,
             far: this.viewer.getCamera().far,
             sizeAttenuation: false,
-            lineWidth: 5,
+            lineWidth: 10,
             color: new THREE.Color(this.projectConfiguration.getColorForType(document.resource.type))
         });
 

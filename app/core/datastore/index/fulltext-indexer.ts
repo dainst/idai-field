@@ -26,10 +26,7 @@ export class FulltextIndexer {
     }
 
 
-    public clear() {
-
-        this.setUp();
-    }
+    public clear = () => this.setUp();
 
 
     public put(doc: Document, skipRemoval: boolean = false) {
@@ -37,32 +34,33 @@ export class FulltextIndexer {
         const indexItem = IndexItem.from(doc);
         if (!indexItem) return;
 
-        if (!skipRemoval) this.remove(doc);
-        if (!this.index[doc.resource.type]) {
-            this.index[doc.resource.type] = {'*' : { } };
+        function indexToken(token: string) {
+
+            const type = doc.resource.type;
+
+            Array.from(token.toLowerCase())
+                .reduce((accumulator: string, letter: string) => {
+                    accumulator += letter;
+                    if (!this.index[type][accumulator]) this.index[type][accumulator] = {};
+                    this.index[type][accumulator][doc.resource.id as any] = indexItem;
+                    return accumulator;
+                }, '');
         }
+
+        function putFieldToIndex(field: string) {
+            return doc.resource[field]
+                .split(' ')
+                .forEach(indexToken.bind(this));
+        }
+
+
+        if (!skipRemoval) this.remove(doc);
+        if (!this.index[doc.resource.type]) this.index[doc.resource.type] = {'*' : { } };
         this.index[doc.resource.type]['*'][doc.resource.id as any] = indexItem;
 
-        this.fieldsToIndex.
-            filter(field => doc.resource[field] && doc.resource[field] !== '').
-            forEach(field =>
-                doc.resource[field].split(' ').forEach((token: string) =>
-                    this.indexToken(doc.resource.id as any, token,
-                        doc.resource.type, indexItem)
-                )
-            );
-    }
-
-
-    private indexToken(id: string, token: string, type: string, indexItem: IndexItem) {
-
-        Array.from(token.toLowerCase())
-            .reduce((accumulator: string, letter: string) => {
-                accumulator += letter;
-                if (!this.index[type][accumulator]) this.index[type][accumulator] = {};
-                this.index[type][accumulator][id] = indexItem;
-                return accumulator;
-            }, '');
+        this.fieldsToIndex
+            .filter(field => doc.resource[field] && doc.resource[field] !== '')
+            .forEach(putFieldToIndex.bind(this));
     }
 
 
@@ -88,9 +86,9 @@ export class FulltextIndexer {
 
         if (Object.keys(this.index).length == 0) return [];
 
-        const resultSets: ResultSets = s.split(' ').
-            filter(token => token.length > 0).
-            reduce((_resultSets, token) =>
+        const resultSets: ResultSets = s.split(' ')
+            .filter(token => token.length > 0)
+            .reduce((_resultSets, token) =>
                 _resultSets.combine(
                     FulltextIndexer.getForToken(this.index, token, types ? types : Object.keys(this.index))),
             ResultSets.make());
@@ -117,17 +115,17 @@ export class FulltextIndexer {
 
     private static getForToken(index: any, token: string, types: string[]): Array<any> {
 
-        return (
-            types.reduce((_resultSets, type) =>
-                this._get(index, _resultSets, token.toLowerCase(), type), ResultSets.make())).unify();
-    }
+        const s = token.toLowerCase();
 
+        function get(resultSets: ResultSets, type: string): ResultSets {
 
-    private static _get(index: any, resultSets: ResultSets, s: string, type: string): ResultSets {
+            const {hasPlaceholder, tokens} = FulltextIndexer.extractReplacementTokens(s);
+            return (hasPlaceholder)
+                ? this.getWithPlaceholder(index, resultSets, s, type, tokens)
+                : this.addKeyToResultSets(index, resultSets, type, s);
+        }
 
-        const {hasPlaceholder, tokens} = FulltextIndexer.extractReplacementTokens(s);
-        if (hasPlaceholder) return this.getWithPlaceholder(index, resultSets, s, type, tokens);
-        return this.addKeyToResultSets(index, resultSets, type, s);
+        return types.reduce(get.bind(this), ResultSets.make()).unify();
     }
 
 

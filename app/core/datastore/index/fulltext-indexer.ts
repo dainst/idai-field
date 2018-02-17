@@ -55,7 +55,8 @@ export class FulltextIndexer {
         this.fieldsToIndex
             .filter(field => doc.resource[field])
             .filter(field => doc.resource[field] !== '')
-            .forEach(field => doc.resource[field].split(' ').forEach(indexToken.bind(this)));
+            .map(field => doc.resource[field])
+            .forEach(content => content.split(' ').forEach(indexToken.bind(this)));
     }
 
 

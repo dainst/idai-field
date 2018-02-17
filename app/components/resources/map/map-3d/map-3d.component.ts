@@ -10,7 +10,7 @@ import {SettingsService} from '../../../../core/settings/settings-service';
 import {Map3DLayerMeshManager} from './layers/map-3d-layer-mesh-manager';
 import {Layer3DManager} from './layers/layer-3d-manager';
 import {ListDiffResult} from '../layer-manager';
-import {Map3DMeshGeometries} from './map-3d-mesh-geometries';
+import {Map3DMeshGeometryManager} from './map-3d-mesh-geometry-manager';
 
 
 @Component({
@@ -32,12 +32,12 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     @ViewChild('container') container: ElementRef;
 
+    public meshGeometryManager: Map3DMeshGeometryManager;
+    public controlState: Map3DControlState;
+
     private viewer: Viewer3D;
     private controls: Map3DControls;
     private layerMeshManager: Map3DLayerMeshManager;
-    private meshGeometries: Map3DMeshGeometries;
-
-    private controlState: Map3DControlState;
 
     public layers: Array<Document> = [];
 
@@ -65,7 +65,6 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
         if (changes['selectedDocument']) this.controls.setSelectedDocument(this.selectedDocument);
         if (changes['mainTypeDocument']) await this.updateLayers();
-        if (changes['documents']) await this.updateGeometries();
     }
 
 
@@ -100,8 +99,8 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
         this.viewer = new Viewer3D(this.container.nativeElement);
         this.layerMeshManager = new Map3DLayerMeshManager(this.viewer, this.settingsService);
-        this.meshGeometries = new Map3DMeshGeometries(this.viewer, this.projectConfiguration);
-        this.controls = new Map3DControls(this.viewer, this.meshGeometries);
+        this.meshGeometryManager = new Map3DMeshGeometryManager(this.viewer, this.projectConfiguration);
+        this.controls = new Map3DControls(this.viewer, this.meshGeometryManager);
     }
 
 
@@ -112,13 +111,6 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
         this.layers = layers;
         this.handleActiveLayersChange(activeLayersChange);
-    }
-
-
-    private async updateGeometries() {
-
-        await this.viewer.waitForSizeAdjustment();
-        this.meshGeometries.showGeometries(this.documents);
     }
 
 

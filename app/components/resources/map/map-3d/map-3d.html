@@ -14,6 +14,11 @@
                          (onSelectDocument)="select($event)">
 </map-3d-point-geometries>
 
+<map-3d-mesh-geometries [documents]="documents"
+                        [hoverDocument]="controlState ? controlState.hoverDocument : undefined"
+                        [meshGeometryManager]="meshGeometryManager"
+></map-3d-mesh-geometries>
+
 <layer-3d-menu [layers]="layers"
                (onToggleLayer)="toggleLayer($event)"
                (onFocusLayer)="focusLayer($event)">

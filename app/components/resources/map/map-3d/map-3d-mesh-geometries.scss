@@ -1,0 +1,27 @@
+/**
+ * @author Thomas Kleinke
+ */
+
+.map-3d-line-info {
+  position: fixed;
+  z-index: 10000;
+  pointer-events: none;
+  user-select: none;
+
+  .map-3d-line-info-icon {
+    border-radius: 50%;
+    width: 27px;
+    height: 27px;
+    border: 1px solid #000;
+  }
+
+  .map-3d-line-info-label {
+    position: absolute;
+    left: 31px;
+    top: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    -webkit-text-stroke: 1px #000;
+  }
+}

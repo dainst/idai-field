@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Map3DControlState} from './map-3d-control-state';
-import {Map3DMeshGeometries} from './map-3d-mesh-geometries';
+import {Map3DMeshGeometryManager} from './map-3d-mesh-geometry-manager';
 import {getPointVector} from '../../../../util/util-3d';
 
 
@@ -21,7 +21,7 @@ export class Map3DControls {
 
 
     constructor(private viewer: Viewer3D,
-                private meshGeometries: Map3DMeshGeometries) {}
+                private meshGeometryManager: Map3DMeshGeometryManager) {}
 
 
     public onMouseDown(event: MouseEvent): Map3DControlState {
@@ -84,7 +84,7 @@ export class Map3DControls {
         if (geometry && geometry.type == 'Point') {
             this.focusPoint(getPointVector(geometry.coordinates));
         } else if (geometry && geometry.type == 'LineString') {
-            this.focusMesh(this.meshGeometries.getMesh(document));
+            this.focusMesh(this.meshGeometryManager.getMesh(document));
         }
     }
 
@@ -185,7 +185,7 @@ export class Map3DControls {
 
         if (intersections.length == 0) return undefined;
 
-        return this.meshGeometries.getDocument(intersections[0].object);
+        return this.meshGeometryManager.getDocument(intersections[0].object);
     }
 
 
@@ -204,6 +204,6 @@ export class Map3DControls {
 
         raycaster.setFromCamera(coordinates, this.viewer.getCamera());
 
-        return raycaster.intersectObjects(this.meshGeometries.getRaycasterObjects());
+        return raycaster.intersectObjects(this.meshGeometryManager.getRaycasterObjects());
     }
 }

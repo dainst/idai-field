@@ -33,6 +33,7 @@ import {ImageLayerManager} from './map/map/image-layer-manager';
 import {ImageLayerMenuComponent} from './map/map/image-layer-menu.component';
 import {Layer3DMenuComponent} from './map/map-3d/layers/layer-3d-menu.component';
 import {Layer3DManager} from './map/map-3d/layers/layer-3d-manager';
+import {Map3DMeshGeometriesComponent} from './map/map-3d/map-3d-mesh-geometries.component';
 
 @NgModule({
     imports: [
@@ -59,7 +60,8 @@ import {Layer3DManager} from './map/map-3d/layers/layer-3d-manager';
         SidebarListComponent,
         Map3DComponent,
         Layer3DMenuComponent,
-        Map3DPointGeometriesComponent
+        Map3DPointGeometriesComponent,
+        Map3DMeshGeometriesComponent
     ],
     providers: [
         FoldState,
@@ -99,7 +101,7 @@ import {Layer3DManager} from './map/map-3d/layers/layer-3d-manager';
                 ChangesStream,
                 SettingsService,
                 ResourcesState]
-        },
+        }
     ],
     exports: [
         GeometryViewComponent

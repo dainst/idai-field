@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {has3DLineGeometry, has3DPolygonGeometry, getPointVector} from '../../../../util/util-3d';
+import {Viewer3D} from '../../../../core/3d/viewer-3d';
 
 const {MeshLine, MeshLineMaterial} = require('three.meshline');
 
@@ -18,19 +18,21 @@ export interface Map3DLine {
 /**
  * @author Thomas Kleinke
  */
-export class Map3DMeshGeometries {
+export class Map3DMeshGeometryManager {
 
     private lines: { [resourceId: string]: Map3DLine } = {};
 
 
     constructor(private viewer: Viewer3D,
-                private projectConfiguration: ProjectConfiguration) {}
+        private projectConfiguration: ProjectConfiguration) {}
 
 
-    public showGeometries(documents: Array<IdaiFieldDocument>) {
+    public async update(documents: Array<IdaiFieldDocument>) {
+
+        await this.viewer.waitForSizeAdjustment();
 
         const geometryDocuments: Array<IdaiFieldDocument>
-            = Map3DMeshGeometries.getMeshGeometryDocuments(documents);
+            = Map3DMeshGeometryManager.getMeshGeometryDocuments(documents);
 
         this.getGeometriesToAdd(geometryDocuments).forEach(document => this.add(document));
         this.getGeometriesToRemove(geometryDocuments).forEach(document => this.remove(document));

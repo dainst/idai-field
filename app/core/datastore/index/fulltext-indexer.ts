@@ -59,7 +59,8 @@ export class FulltextIndexer {
         this.index[doc.resource.type]['*'][doc.resource.id as any] = indexItem;
 
         this.fieldsToIndex
-            .filter(field => doc.resource[field] && doc.resource[field] !== '')
+            .filter(field => doc.resource[field])
+            .filter(field => doc.resource[field] !== '')
             .forEach(putFieldToIndex.bind(this));
     }
 
@@ -67,9 +68,9 @@ export class FulltextIndexer {
     public remove(doc: any) {
 
         Object.keys(this.index).forEach(type =>
-            Object.keys(this.index[type]).
-                filter(term => this.index[type][term][doc.resource.id]).
-                forEach(term => delete this.index[type][term][doc.resource.id]))
+            Object.keys(this.index[type])
+                .filter(term => this.index[type][term][doc.resource.id])
+                .forEach(term => delete this.index[type][term][doc.resource.id]))
     }
 
 

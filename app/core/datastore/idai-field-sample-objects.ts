@@ -22,7 +22,7 @@ export const DOCS: IdaiFieldDocument[] = [
             },
             "geometry": {
                 "type": "Point",
-                "coordinates": [ -0.8994746477806455, 0.9951833618310227, -5.45066680229818 ]
+                "coordinates": [ -0.8994746477806455, -0.9951833618310227, -5.45066680229818 ]
             },
             "type": "Trench"
         }
@@ -33,7 +33,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "identifier": "trench2",
             "shortDescription": "3D-Testschnitt",
             "relations": {
-                "has3DRepresentation": [ "obj3d", "vra_trench", "vra_trench_georef" ],
+                "has3DRepresentation": [ "obj3d", "vra_trench" ],
                 "isRecordedIn": [ "test" ]
             },
             "type": "Trench"
@@ -46,11 +46,35 @@ export const DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Ein Befund",
             "relations": {
                 "isRecordedIn": [ "t1" ],
-                "includes": [ "tf1" ]
+                "includes": [ "tf1", "wall1" ]
             },
             "geometry": {
                 "type": "Point",
                 "coordinates": [ 27.1892209283, 39.1411510096 ]
+            },
+            "type": "Feature"
+        }
+    },
+    {
+        "resource": {
+            "id": "l1",
+            "identifier": "layer1",
+            "shortDescription": "Erdbefund",
+            "relations": {
+                "isRecordedIn": [ "t1" ]
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [ -0.3877585029102312, -0.46227262115293377, -4.915723748738051 ],
+                    [ -0.24837439727090138, 0.20747249047775296, -4.9734058885751065 ],
+                    [ 0.13019944929879645, 0.4261670459494882, -4.959676229120316 ],
+                    [ 0.7387265662420579, 0.4550025087401067, -5.082321189861148 ],
+                    [ 0.6242972784800536, -0.4181520006665652, -5.005370749217381 ],
+                    [ 0.34671502420224276, -0.5783505400429254, -4.991124986111626 ],
+                    [ 0.0917967743690784, -0.595520053612953, -4.965325730424526 ],
+                    [ -0.3877585029102312, -0.46227262115293377, -4.915723748738051 ]
+                ]]
             },
             "type": "Feature"
         }
@@ -70,6 +94,30 @@ export const DOCS: IdaiFieldDocument[] = [
                 "coordinates": [ 27.1892609283, 39.1411810096 ]
             },
             "type": "Find"
+        }
+    },
+    {
+        "resource": {
+            "id": "w1",
+            "identifier": "wall1",
+            "shortDescription": "Mauer",
+            "relations": {
+                "isRecordedIn": [ "t1" ],
+                "includes": [ "c1" ]
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [ -2.2095436172975216, -1.436992752962385, -5.102948079909838 ],
+                    [ -1.8109481359427646, -1.5983842407899034, -5.038467276526666 ],
+                    [ -1.3305057824768185, -1.5953595641055394, -5.000968914089073 ],
+                    [ -0.8972719087199742, -1.800754498503687, -5.001872175929329 ],
+                    [ -0.38366033811825595, -1.8849288056426847, -5.072992699627526 ],
+                    [ 0.17176131734742994, -1.9461711775762744, -5.19699178993693 ],
+                    [ 0.4232096508073948, -1.8506835891849063, -5.030903031922371 ]
+                ]
+            },
+            "type": "Feature"
         }
     },
     {
@@ -126,19 +174,7 @@ export const DOCS: IdaiFieldDocument[] = [
         "resource": {
             "id": "vra_trench",
             "identifier": "vraTrench",
-            "shortDescription": "VRA-Trench",
-            "type": "Object3D",
-            "relations": {
-                "isRecordedIn": [],
-                "is3DRepresentationOf": ["t2"]
-            }
-        }
-    },
-    {
-        "resource": {
-            "id": "vra_trench_georef",
-            "identifier": "vraTrenchGeoref",
-            "shortDescription": "VRA-Trench (georeferenziert)",
+            "shortDescription": "VRATrench",
             "type": "Object3D",
             "relations": {
                 "isRecordedIn": [],

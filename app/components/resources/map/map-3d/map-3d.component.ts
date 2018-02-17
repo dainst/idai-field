@@ -2,6 +2,7 @@ import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, Output, E
     from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Map3DControls} from './map-3d-controls';
 import {Map3DControlState} from './map-3d-control-state';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
@@ -9,6 +10,7 @@ import {SettingsService} from '../../../../core/settings/settings-service';
 import {Map3DLayerMeshManager} from './layers/map-3d-layer-mesh-manager';
 import {Layer3DManager} from './layers/layer-3d-manager';
 import {ListDiffResult} from '../layer-manager';
+import {Map3DMeshGeometries} from './map-3d-mesh-geometries';
 
 
 @Component({
@@ -33,6 +35,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     private viewer: Viewer3D;
     private controls: Map3DControls;
     private layerMeshManager: Map3DLayerMeshManager;
+    private meshGeometries: Map3DMeshGeometries;
 
     private controlState: Map3DControlState;
 
@@ -40,7 +43,8 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
 
     constructor(private settingsService: SettingsService,
-                private layerManager: Layer3DManager) {
+                private layerManager: Layer3DManager,
+                private projectConfiguration: ProjectConfiguration) {
 
         this.layerManager.reset();
     }
@@ -61,6 +65,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
         if (changes['selectedDocument']) this.controls.setSelectedDocument(this.selectedDocument);
         if (changes['mainTypeDocument']) await this.updateLayers();
+        if (changes['documents']) await this.updateGeometries();
     }
 
 
@@ -95,6 +100,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
         this.viewer = new Viewer3D(this.container.nativeElement);
         this.layerMeshManager = new Map3DLayerMeshManager(this.viewer, this.settingsService);
+        this.meshGeometries = new Map3DMeshGeometries(this.viewer, this.projectConfiguration);
         this.controls = new Map3DControls(this.viewer);
     }
 
@@ -106,6 +112,13 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
         this.layers = layers;
         this.handleActiveLayersChange(activeLayersChange);
+    }
+
+
+    private async updateGeometries() {
+
+        await this.viewer.waitForSizeAdjustment();
+        this.meshGeometries.showGeometries(this.documents);
     }
 
 

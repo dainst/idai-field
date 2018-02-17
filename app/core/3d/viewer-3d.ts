@@ -10,6 +10,9 @@ export class Viewer3D {
     private scene: THREE.Scene;
     private camera: THREE.PerspectiveCamera;
 
+    private resized: boolean = false;
+    private notifyForResize: Function;
+
 
     constructor(private containerElement: HTMLElement) {
 
@@ -44,13 +47,13 @@ export class Viewer3D {
     }
 
 
-    public add(scene: THREE.Scene|THREE.Mesh) {
+    public add(scene: THREE.Object3D) {
 
         this.scene.add(scene);
     }
 
 
-    public remove(scene: THREE.Scene|THREE.Mesh) {
+    public remove(scene: THREE.Object3D) {
 
         this.scene.remove(scene);
     }
@@ -80,19 +83,29 @@ export class Viewer3D {
 
     private initialize() {
 
-        this.scene = new THREE.Scene();
-        this.renderer = new THREE.WebGLRenderer({ antialias: true });
-        this.containerElement.appendChild(this.renderer.domElement);
-
-        this.addLight();
-
+        this.renderer = this.createRenderer();
+        this.scene = this.createScene();
         this.camera = this.createCamera();
     }
 
 
-    private addLight() {
+    private createRenderer(): THREE.WebGLRenderer {
 
-        this.scene.add(new THREE.HemisphereLight(0xf9edd9, 0x000000, 1));
+        const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(this.containerElement.clientWidth, this.containerElement.clientHeight,
+            false);
+        this.containerElement.appendChild(renderer.domElement);
+
+        return renderer;
+    }
+
+
+    private createScene(): THREE.Scene {
+
+        const scene: THREE.Scene = new THREE.Scene();
+        scene.add(new THREE.HemisphereLight(0xf9edd9, 0x000000, 1));
+
+        return scene;
     }
 
 
@@ -131,6 +144,9 @@ export class Viewer3D {
             this.renderer.setSize(width, height, false);
             this.camera.aspect = width / height;
             this.camera.updateProjectionMatrix();
+
+            this.resized = true;
+            if (this.notifyForResize) this.notifyForResize();
         }
     }
 
@@ -143,5 +159,17 @@ export class Viewer3D {
             && screenCoordinates.x < canvas.getBoundingClientRect().right
             && screenCoordinates.y > canvas.getBoundingClientRect().top
             && screenCoordinates.y < canvas.getBoundingClientRect().bottom;
+    }
+
+
+    public waitForSizeAdjustment(): Promise<void> {
+
+        return new Promise<void>(resolve => {
+            if (this.resized) {
+                resolve();
+            } else {
+                this.notifyForResize = resolve;
+            }
+        });
     }
 }

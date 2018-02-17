@@ -75,6 +75,7 @@
     "systemjs": "0.19.31",
     "three": "0.89.0",
     "three-collada-loader-2": "1.0.1",
+    "three.meshline": "1.0.3",
     "zone.js": "0.8.11"
   },
   "devDependencies": {

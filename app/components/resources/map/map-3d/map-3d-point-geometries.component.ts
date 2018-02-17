@@ -76,7 +76,7 @@ export class Map3DPointGeometriesComponent {
     private getScreenCoordinates(document: IdaiFieldDocument): THREE.Vector2|undefined {
 
         return this.map3DComponent.getViewer().getScreenCoordinates(
-            getPointVector(document.resource.geometry as IdaiFieldGeometry)
+            getPointVector((document.resource.geometry as IdaiFieldGeometry).coordinates)
         );
     }
 }

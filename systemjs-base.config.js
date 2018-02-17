@@ -67,7 +67,8 @@ config.map = {
     'os': '@node/os',
     'buffer': '@node/buffer',
     'three': 'node_modules/three/build/three.js',
-    'three-collada-loader-2': 'node_modules/three-collada-loader-2/index.js'
+    'three-collada-loader-2': 'node_modules/three-collada-loader-2/index.js',
+    'three.meshline': 'node_modules/three.meshline/src/THREE.MeshLine.js'
 };
 
 config.meta = {

@@ -55,7 +55,7 @@ export class Map3DControls {
         const deltaY = this.lastYPosition - event.clientY;
 
         this.performAction(deltaX, deltaY);
-        //this.updateHoverDocument(event.clientX, event.clientY);
+        this.updateHoverDocument(event.clientX, event.clientY);
 
         this.lastXPosition = event.clientX;
         this.lastYPosition = event.clientY;
@@ -79,7 +79,7 @@ export class Map3DControls {
         if (!document) return;
 
         const geometry: IdaiFieldGeometry|undefined = document.resource.geometry;
-        if (geometry && geometry.type == 'Point') this.focusPoint(getPointVector(geometry));
+        if (geometry && geometry.type == 'Point') this.focusPoint(getPointVector(geometry.coordinates));
     }
 
 
@@ -192,6 +192,7 @@ export class Map3DControls {
         const scene: THREE.Scene = this.viewer.getScene();
 
         const raycaster: THREE.Raycaster = new THREE.Raycaster();
+        raycaster.linePrecision = 0.01;
 
         const x: number = ((xPosition - renderer.domElement.getBoundingClientRect().left)
             / renderer.domElement.getBoundingClientRect().width) * 2 - 1;

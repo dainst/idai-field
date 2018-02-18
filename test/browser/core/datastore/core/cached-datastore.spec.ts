@@ -15,8 +15,11 @@ export function main() {
 
         let ds: IdaiFieldDocumentDatastore;
         let mockdb: any;
+        let mockIndexFacade: any;
 
-        function createMockedDatastore(mockdb: any) {
+        function createMockedDatastore(
+            mockdb: any
+        ) {
 
             const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
                 ['isImageType', 'validate', 'getNonImageTypeNames']);
@@ -26,7 +29,7 @@ export function main() {
             const documentCache = new DocumentCache<IdaiFieldDocument>();
             return new IdaiFieldDocumentDatastore(
                     mockdb,
-                    undefined,
+                    mockIndexFacade,
                     documentCache,
                     new IdaiFieldTypeConverter(mockImageTypeUtility));
         }
@@ -45,7 +48,10 @@ export function main() {
             spyOn(console, 'error'); // suppress
 
             mockdb = jasmine.createSpyObj('mockdb',
-                    ['findIds', 'create', 'update', 'fetch', 'fetchRevision']);
+                    ['create', 'update', 'fetch', 'fetchRevision']);
+            mockIndexFacade = jasmine.createSpyObj('mockIndexFacade',
+                ['perform', 'put', 'remove']);
+
 
             mockdb.update.and.callFake(function(dd) {
                 // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
@@ -53,10 +59,13 @@ export function main() {
                 dd['_rev'] = '2';
                 return Promise.resolve(dd);
             });
-            mockdb.findIds.and.callFake(function() {
+            mockIndexFacade.perform.and.callFake(function() {
                 const d = Static.doc('sd1');
                 d.resource.id = '1';
-                return Promise.resolve(['1']);
+                return['1'];
+            });
+            mockIndexFacade.put.and.callFake(function(doc) {
+                return Promise.resolve(doc);
             });
             mockdb.create.and.callFake(function(dd) {
                 // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
@@ -106,7 +115,7 @@ export function main() {
 
         it('should add missing fields on find, bypassing cache', async done => {
 
-            mockdb.findIds.and.returnValues(Promise.resolve(['1']));
+            mockIndexFacade.perform.and.returnValues(['1']);
             mockdb.fetch.and.returnValues(Promise.resolve({
                 resource: {
                     id: '1',
@@ -127,7 +136,7 @@ export function main() {
                 id: '1',
                 relations: {}
             }} as any);
-            mockdb.findIds.and.returnValues(Promise.resolve(['1']));
+            mockIndexFacade.perform.and.returnValues(['1']);
 
             const documents = (await ds.find({})).documents; // fetch from cache
             expect(documents.length).toBe(1);
@@ -148,7 +157,7 @@ export function main() {
                 relations: {}
             }} as any);
 
-            mockdb.findIds.and.returnValues(Promise.resolve(['1', '2']));
+            mockIndexFacade.perform.and.returnValues(['1', '2']);
 
             const { documents, totalCount } = await ds.find({ 'limit': 1 });
             expect(documents.length).toBe(1);
@@ -160,7 +169,7 @@ export function main() {
 
         it('cant find one and only document', async done => {
 
-            mockdb.findIds.and.returnValues(Promise.resolve(['1']));
+            mockIndexFacade.perform.and.returnValues(['1']);
             mockdb.fetch.and.returnValue(Promise.reject("e"));
 
             const { documents, totalCount } = await ds.find({});
@@ -172,7 +181,7 @@ export function main() {
 
         it('cant find second document', async done => {
 
-            mockdb.findIds.and.returnValues(Promise.resolve(['1', '2']));
+            mockIndexFacade.perform.and.returnValues(['1', '2']);
             mockdb.fetch.and.returnValues(
                 Promise.resolve({
                     resource: {
@@ -230,6 +239,7 @@ export function main() {
                 id: '1',
                 relations: {}
             }} as any);
+
             const document = await ds.get('1'); // fetch from cache
             verifyIsIdaiFieldDocument(document);
             done();

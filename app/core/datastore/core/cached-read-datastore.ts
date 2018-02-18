@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {FindResult, Query, ReadDatastore} from 'idai-components-2/datastore';
+import {FindResult, Query, ReadDatastore, DatastoreErrors} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
@@ -76,7 +76,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         query.types = this.typeConverter.validate(query.types, this.typeClass);
 
-        const ids: string[] = await this.datastore.findIds(query);
+        const ids = this.findIds(query);
 
         const {docs, failures} = await this.getDocumentsForIds(ids, query.limit);
         return {
@@ -103,6 +103,27 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         return (await this.datastore.fetchConflictedRevisions(docId))
             .map(document => this.typeConverter.convert<T>(document));
+    }
+
+
+    /**
+     * @param query
+     * @return an array of the resource ids of the documents the query matches.
+     *   the sort order of the ids is determinded in that way that ids of documents with newer modified
+     *   dates come first. they are sorted by last modfied descending, so to speak.
+     *   if two or more documents have the same last modifed date, their sort order is unspecified.
+     *   the modified date is taken from document.modified[document.modified.length-1].date
+     */
+    private findIds(query: Query): string[] {
+
+        if (!query) return [];
+
+        try {
+            // await this.datastore.ready(); // TODO check if taking this out leads to any problems
+            return this.indexFacade.perform(query); // TODO should have await to catch err locally
+        } catch (err) {
+            throw [DatastoreErrors.GENERIC_ERROR, err];
+        }
     }
 
 

@@ -44,7 +44,9 @@ export abstract class CachedDatastore<T extends Document>
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
         return this.documentCache.set(this.typeConverter.
-            convert<T>(await this.datastore.create(document)));
+            convert<T>(await this.datastore.create(document).then(
+                (newestRevision) => this.indexFacade.put(newestRevision))
+        ));
     }
 
 
@@ -58,7 +60,8 @@ export abstract class CachedDatastore<T extends Document>
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
         const updatedDocument = this.typeConverter.
-            convert<T>(await this.datastore.update(document));
+            convert<T>(await this.datastore.update(document).then(
+                (newestRevision) => this.indexFacade.put(newestRevision)));
 
         if (!this.documentCache.get(document.resource.id as any)) {
             return this.documentCache.set(updatedDocument);

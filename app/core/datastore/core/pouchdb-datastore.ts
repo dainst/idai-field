@@ -136,32 +136,14 @@ export class PouchdbDatastore {
 
         try {
             await this.db.remove(docId, revisionId);
-            await this.reindex(docId);
+            await this.fetchNewestRevision(docId);
         } catch (genericerr) {
             throw [DatastoreErrors.GENERIC_ERROR, genericerr];
         }
     }
 
 
-    /**
-     * @param query
-     * @return an array of the resource ids of the documents the query matches.
-     *   the sort order of the ids is determinded in that way that ids of documents with newer modified
-     *   dates come first. they are sorted by last modfied descending, so to speak.
-     *   if two or more documents have the same last modifed date, their sort order is unspecified.
-     *   the modified date is taken from document.modified[document.modified.length-1].date
-     */
-    public async findIds(query: Query): Promise<string[]> {
 
-        if (!query) return [];
-
-        try {
-            await this.db.ready();
-            return this.indexFacade.perform(query);
-        } catch (err) {
-            throw [DatastoreErrors.GENERIC_ERROR, err];
-        }
-    }
 
 
     /**
@@ -235,7 +217,7 @@ export class PouchdbDatastore {
 
         try {
             document['_rev'] = (await this.db.put(document, { force: true })).rev;
-            return this.reindex(document.resource.id);
+            return this.fetchNewestRevision(document.resource.id);
         } catch (err) {
             resetFun(document);
             return errFun(err);
@@ -243,14 +225,10 @@ export class PouchdbDatastore {
     }
 
 
-    private async reindex(resourceId: string): Promise<Document> {
+    private async fetchNewestRevision(resourceId: string): Promise<Document> {
 
         const newestRevision: Document = await this.fetch(resourceId);
-
-        this.indexFacade.put(newestRevision);
-
         this.notifyAllChangesAndDeletionsObservers();
-
         return newestRevision;
     }
 

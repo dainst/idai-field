@@ -74,7 +74,7 @@
     "zone.js": "0.8.11",
     "express-pouchdb-dainst": "1000.0.3",
     "idai-components-2": "1.6.0",
-    "tsfun": "1.6.1"
+    "tsfun": "1.7.0"
   },
   "devDependencies": {
     "@types/geojson": "0.0.32",

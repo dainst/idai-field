@@ -65,7 +65,7 @@ export class LayerManager {
 
         this.activeLayerIds = this.isActiveLayer(resourceId) ?
             subtract([resourceId])(this.activeLayerIds) :
-            unique<string>()(this.activeLayerIds.concat([resourceId]));
+            unique(this.activeLayerIds.concat([resourceId]));
 
         this.viewFacade.setActiveLayersIds(this.activeLayerIds);
     }

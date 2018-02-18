@@ -60,18 +60,6 @@ export class ObjectUtil {
     }
 
 
-    public static removeDuplicateValues(array: any[]): any[] {
-
-        const result: any[] = [];
-
-        for (let value of array) {
-            if (result.indexOf(value) == -1) result.push(value);
-        }
-
-        return result;
-    }
-
-
     public static findDifferingFieldsInObject(object1: Object, object2: Object, fieldsToIgnore?: string[]): string[] {
 
         const differingFieldsNames: string[] = [];

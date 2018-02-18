@@ -1,5 +1,6 @@
 import {IdaiFieldResource} from 'idai-components-2/idai-field-model';
 import {ObjectUtil} from '../../util/object-util';
+import {unique} from "tsfun";
 
 /**
  * @author Thomas Kleinke
@@ -14,7 +15,7 @@ export class IdaiFieldDiffUtility {
             = ObjectUtil.findDifferingFieldsInObject(resource1, resource2, fieldsToIgnore)
                 .concat(ObjectUtil.findDifferingFieldsInObject(resource2, resource1, fieldsToIgnore));
 
-        return ObjectUtil.removeDuplicateValues(differingFieldsNames);
+        return unique(differingFieldsNames);
     }
 
 
@@ -24,6 +25,6 @@ export class IdaiFieldDiffUtility {
             = ObjectUtil.findDifferingFieldsInObject(resource1.relations, resource2.relations)
                 .concat(ObjectUtil.findDifferingFieldsInObject(resource2.relations, resource1.relations));
 
-        return ObjectUtil.removeDuplicateValues(differingRelationNames);
+        return unique(differingRelationNames);
     }
 }

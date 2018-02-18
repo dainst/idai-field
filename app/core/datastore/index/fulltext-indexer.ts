@@ -93,7 +93,8 @@ export class FulltextIndexer {
             );
         }
 
-        return s.split(' ')
+        return s
+            .split(' ')
             .filter(token => token.length > 0)
             .reduce(getFromIndex.bind(this), ResultSets.make())
             .collapse() as Array<IndexItem>;

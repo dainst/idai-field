@@ -1,18 +1,10 @@
 import * as THREE from 'three';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {has3DLineGeometry, has3DPolygonGeometry, getPointVector} from '../../../../util/util-3d';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
-
-const {MeshLine, MeshLineMaterial} = require('three.meshline');
-
-
-export interface Map3DMeshGeometry {
-
-    mesh: THREE.Mesh,
-    raycasterObject: THREE.Object3D,
-    document: IdaiFieldDocument
-}
+import {Map3DMeshGeometry} from './map-3d-mesh-geometry';
+import {Map3DLineBuilder} from './map-3d-line-builder';
+import {has3DLineGeometry, has3DPolygonGeometry} from '../../../../util/util-3d';
 
 
 /**
@@ -22,9 +14,14 @@ export class Map3DMeshGeometryManager {
 
     private meshGeometries: { [resourceId: string]: Map3DMeshGeometry } = {};
 
+    private lineBuilder: Map3DLineBuilder;
+
 
     constructor(private viewer: Viewer3D,
-        private projectConfiguration: ProjectConfiguration) {}
+                projectConfiguration: ProjectConfiguration) {
+
+        this.lineBuilder = new Map3DLineBuilder(viewer, projectConfiguration);
+    }
 
 
     public async update(documents: Array<IdaiFieldDocument>) {
@@ -93,51 +90,12 @@ export class Map3DMeshGeometryManager {
 
         switch(document.resource.geometry.type) {
             case 'LineString':
-                return this.createLine(document);
+                return this.lineBuilder.buildLine(document);
 
             case 'Polygon':
                 // TODO Implement
                 break;
         }
-    }
-
-
-    private createLine(document: IdaiFieldDocument): Map3DMeshGeometry {
-
-        const geometry = new THREE.Geometry();
-        (document.resource.geometry as IdaiFieldGeometry).coordinates.forEach(point => {
-            geometry.vertices.push(getPointVector(point));
-        });
-
-        geometry.computeLineDistances();
-
-        const rayCasterMaterial = new THREE.LineDashedMaterial({
-            dashSize: 0,
-            gapSize: 10
-        });
-
-        const raycasterLine = new THREE.Line(geometry, rayCasterMaterial);
-
-        const line = new MeshLine();
-        line.setGeometry(geometry);
-
-        const material = new MeshLineMaterial({
-            resolution: new THREE.Vector2(this.viewer.getRenderer().getSize().width,
-                this.viewer.getRenderer().getSize().height),
-            near: this.viewer.getCamera().near,
-            far: this.viewer.getCamera().far,
-            sizeAttenuation: false,
-            lineWidth: 10,
-            color: new THREE.Color(this.projectConfiguration.getColorForType(document.resource.type))
-        });
-
-        const mesh = new THREE.Mesh(line.geometry, material);
-
-        return {
-            mesh: mesh,
-            raycasterObject: raycasterLine,
-            document: document
-        };
     }
 
 

@@ -2,6 +2,7 @@ import {browser, protractor, element, by} from 'protractor';
 
 'use strict';
 import {NavbarPage} from '../navbar.page';
+import {ResourcesPage} from "../resources/resources.page";
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 
@@ -18,7 +19,9 @@ export class ImageOverviewPage {
 
     public static getAndWaitForImageCells() {
 
-        ImageOverviewPage.get();
+        ResourcesPage.get();
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToImages();
         ImageOverviewPage.waitForCells();
     };
 

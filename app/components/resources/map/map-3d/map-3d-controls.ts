@@ -83,7 +83,7 @@ export class Map3DControls {
         const geometry: IdaiFieldGeometry|undefined = document.resource.geometry;
         if (geometry && geometry.type == 'Point') {
             this.focusPoint(getPointVector(geometry.coordinates));
-        } else if (geometry && geometry.type == 'LineString') {
+        } else if (geometry && (geometry.type == 'LineString' || geometry.type == 'Polygon')) {
             this.focusMesh(this.meshGeometryManager.getMesh(document));
         }
     }

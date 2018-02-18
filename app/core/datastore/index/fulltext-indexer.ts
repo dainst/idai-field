@@ -33,14 +33,6 @@ export class FulltextIndexer {
 
     public put(doc: Document, skipRemoval: boolean = false) {
 
-        const indexItem = IndexItem.from(doc);
-        if (!indexItem) return;
-
-        if (!skipRemoval) this.remove(doc);
-        if (!this.index[doc.resource.type]) this.index[doc.resource.type] = {'*' : { } };
-        this.index[doc.resource.type]['*'][doc.resource.id as any] = indexItem;
-
-
         function indexToken(token: string) {
 
             const type = doc.resource.type;
@@ -53,6 +45,14 @@ export class FulltextIndexer {
                     return accumulator;
                 }, '');
         }
+
+
+        const indexItem = IndexItem.from(doc);
+        if (!indexItem) return;
+
+        if (!skipRemoval) this.remove(doc);
+        if (!this.index[doc.resource.type]) this.index[doc.resource.type] = {'*' : { } };
+        this.index[doc.resource.type]['*'][doc.resource.id as any] = indexItem;
 
         flow(
             this.fieldsToIndex

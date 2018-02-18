@@ -156,7 +156,8 @@ export class PouchdbDatastore {
         if (!query) return [];
 
         try {
-            return this.perform(query);
+            await this.db.ready();
+            return this.indexFacade.perform(query);
         } catch (err) {
             throw [DatastoreErrors.GENERIC_ERROR, err];
         }
@@ -227,13 +228,6 @@ export class PouchdbDatastore {
     protected setupServer() {
 
         return Promise.resolve();
-    }
-
-
-    private async perform(query: Query): Promise<any> {
-
-        await this.db.ready();
-        return this.indexFacade.perform(query);
     }
 
 

@@ -15,7 +15,7 @@ import {IndexFacade} from '../../../app/core/datastore/index/index-facade';
  */
 export class Static {
 
-    public static createPouchdbDatastore(dbname) {
+    public static createIndexers() {
 
         const constraintIndexer = new ConstraintIndexer({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
@@ -25,6 +25,13 @@ export class Static {
             'id:match': { path: 'resource.id', type: 'match' }
         });
         const fulltextIndexer = new FulltextIndexer();
+        return [constraintIndexer, fulltextIndexer] as [ConstraintIndexer, FulltextIndexer];
+    }
+
+
+    public static createPouchdbDatastore(dbname) {
+
+        const [constraintIndexer, fulltextIndexer] = Static.createIndexers();
 
         let documentCache = new DocumentCache<IdaiFieldDocument>();
         let pouchdbManager = new PouchdbManager

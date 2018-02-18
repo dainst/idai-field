@@ -14,7 +14,7 @@ var index_facade_1 = require("../../../app/core/datastore/index/index-facade");
 var Static = (function () {
     function Static() {
     }
-    Static.createPouchdbDatastore = function (dbname) {
+    Static.createIndexers = function () {
         var constraintIndexer = new constraint_indexer_1.ConstraintIndexer({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
@@ -23,6 +23,10 @@ var Static = (function () {
             'id:match': { path: 'resource.id', type: 'match' }
         });
         var fulltextIndexer = new fulltext_indexer_1.FulltextIndexer();
+        return [constraintIndexer, fulltextIndexer];
+    };
+    Static.createPouchdbDatastore = function (dbname) {
+        var _a = Static.createIndexers(), constraintIndexer = _a[0], fulltextIndexer = _a[1];
         var documentCache = new document_cache_1.DocumentCache();
         var pouchdbManager = new pouchdb_manager_1.PouchdbManager(undefined, constraintIndexer, fulltextIndexer);
         var appState = new app_state_1.AppState();

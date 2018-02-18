@@ -79,6 +79,14 @@ export abstract class CachedDatastore<T extends Document>
 
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
+        // we want the doc removed from the indices asap,
+        // in order to not risk someone finding it still with findIds due to
+        // issues that are theoretically possible because we cannot know
+        // when .on('change' (pouchdbdatastore) fires. so we do remove it here,
+        // although we know it will be done again for the same doc
+        // in .on('change'
+        this.indexFacade.remove(document);
+
         await this.datastore.remove(document);
         this.documentCache.remove(document.resource.id);
     }

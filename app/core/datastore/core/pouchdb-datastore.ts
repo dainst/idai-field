@@ -107,13 +107,6 @@ export class PouchdbDatastore {
         if (!doc.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
 
         this.deletedOnes.push(doc.resource.id as never);
-        // we want the doc removed from the indices asap,
-        // in order to not risk someone finding it still with findIds due to
-        // issues that are theoretically possible because we cannot know
-        // when .on('change' fires. so we do remove it here,
-        // although we know it will be done again for the same doc
-        // in .on('change'
-        this.indexFacade.remove(doc);
 
         this.notifyAllChangesAndDeletionsObservers();
 
@@ -302,8 +295,6 @@ export class PouchdbDatastore {
         if (!ChangeHistoryUtil.isRemoteChange(document, conflictedRevisions, this.appState.getCurrentUser())) {
             return;
         }
-
-        this.indexFacade.put(document);
 
         try {
             this.notifyRemoteChangesObservers(document);

@@ -5,6 +5,7 @@ import {Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
+import {IndexFacade} from "../index/index-facade";
 
 
 @Injectable()
@@ -19,10 +20,13 @@ export class ChangesStream {
 
     constructor(
         protected datastore: PouchdbDatastore,
+        protected indexFacade: IndexFacade,
         protected documentCache: DocumentCache<Document>,
         protected typeConverter: TypeConverter) {
 
         datastore.remoteChangesNotifications().subscribe(document => {
+
+            this.indexFacade.put(document); // TODO put after the guards, it was moved here during a refactoring and we want to maintain the original order for now
 
             if (!this.autoCacheUpdate) return;
             if (!document || !document.resource) return;

@@ -7,10 +7,10 @@ import {Viewer3D} from '../../../../core/3d/viewer-3d';
 const {MeshLine, MeshLineMaterial} = require('three.meshline');
 
 
-export interface Map3DLine {
+export interface Map3DMeshGeometry {
 
     mesh: THREE.Mesh,
-    raycasterLine: THREE.Line,
+    raycasterObject: THREE.Object3D,
     document: IdaiFieldDocument
 }
 
@@ -20,7 +20,7 @@ export interface Map3DLine {
  */
 export class Map3DMeshGeometryManager {
 
-    private lines: { [resourceId: string]: Map3DLine } = {};
+    private meshGeometries: { [resourceId: string]: Map3DMeshGeometry } = {};
 
 
     constructor(private viewer: Viewer3D,
@@ -41,51 +41,59 @@ export class Map3DMeshGeometryManager {
 
     public getRaycasterObjects(): Array<THREE.Object3D> {
 
-        return Object.values(this.lines).map(line => line.raycasterLine);
+        return Object.values(this.meshGeometries).map(line => line.raycasterObject);
     }
 
 
-    public getDocument(raycasterLine: THREE.Object3D): IdaiFieldDocument|undefined {
+    public getDocument(raycasterObject: THREE.Object3D): IdaiFieldDocument|undefined {
 
-        const line: Map3DLine|undefined
-            = Object.values(this.lines).find(line => line.raycasterLine == raycasterLine);
+        const geometry: Map3DMeshGeometry|undefined
+            = Object.values(this.meshGeometries).find(line => line.raycasterObject == raycasterObject);
 
-        return line ? line.document: undefined;
+        return geometry ? geometry.document: undefined;
     }
 
 
     public getMesh(document: IdaiFieldDocument): THREE.Mesh|undefined {
 
-        const line: Map3DLine|undefined = this.lines[document.resource.id as string];
+        const geometry: Map3DMeshGeometry|undefined = this.meshGeometries[document.resource.id as string];
 
-        return line ? line.mesh : undefined;
+        return geometry ? geometry.mesh : undefined;
     }
 
 
     private add(document: IdaiFieldDocument) {
 
-        if (!document.resource.geometry) return;
+        const geometry: Map3DMeshGeometry|undefined = this.createMeshGeometry(document);
 
-        switch(document.resource.geometry.type) {
-            case 'LineString':
-                this.addLine(document);
-                break;
+        if (!geometry) return;
 
-            case 'Polygon':
-                // TODO Implement
-                break;
-        }
+        this.meshGeometries[document.resource.id as string] = geometry;
+
+        this.viewer.add(geometry.mesh);
+        if (geometry.raycasterObject != geometry.mesh) this.viewer.add(geometry.raycasterObject);
     }
 
 
     private remove(document: IdaiFieldDocument) {
 
-        if (!document.resource.geometry) return;
+        const geometry: Map3DMeshGeometry|undefined = this.meshGeometries[document.resource.id as string];
+        if (!geometry) return;
+
+        this.viewer.remove(geometry.mesh);
+        if (geometry.raycasterObject != geometry.mesh) this.viewer.remove(geometry.raycasterObject);
+
+        delete this.meshGeometries[document.resource.id as string];
+    }
+
+
+    private createMeshGeometry(document: IdaiFieldDocument): Map3DMeshGeometry|undefined {
+
+        if (!document.resource.geometry) return undefined;
 
         switch(document.resource.geometry.type) {
             case 'LineString':
-                this.removeLine(document);
-                break;
+                return this.createLine(document);
 
             case 'Polygon':
                 // TODO Implement
@@ -94,31 +102,7 @@ export class Map3DMeshGeometryManager {
     }
 
 
-    private addLine(document: IdaiFieldDocument) {
-
-        const line: Map3DLine = this.createLine(document);
-        this.lines[document.resource.id as string] = line;
-
-        this.viewer.add(line.raycasterLine);
-        this.viewer.add(line.mesh);
-    }
-
-
-    private removeLine(document: IdaiFieldDocument) {
-
-        const line: Map3DLine|undefined = this.lines[document.resource.id as string];
-        if (!line) return;
-
-        this.viewer.remove(line.raycasterLine);
-        this.viewer.remove(line.mesh);
-
-        line.mesh.geometry.dispose();
-
-        delete this.lines[document.resource.id as string];
-    }
-
-
-    private createLine(document: IdaiFieldDocument): Map3DLine {
+    private createLine(document: IdaiFieldDocument): Map3DMeshGeometry {
 
         const geometry = new THREE.Geometry();
         (document.resource.geometry as IdaiFieldGeometry).coordinates.forEach(point => {
@@ -151,7 +135,7 @@ export class Map3DMeshGeometryManager {
 
         return {
             mesh: mesh,
-            raycasterLine: raycasterLine,
+            raycasterObject: raycasterLine,
             document: document
         };
     }
@@ -160,14 +144,14 @@ export class Map3DMeshGeometryManager {
     private getGeometriesToAdd(documents: Array<IdaiFieldDocument>): Array<IdaiFieldDocument> {
 
         return documents.filter(document => {
-            return !Object.keys(this.lines).includes(document.resource.id as string);
+            return !Object.keys(this.meshGeometries).includes(document.resource.id as string);
         });
     }
 
 
     private getGeometriesToRemove(documents: Array<IdaiFieldDocument>): Array<IdaiFieldDocument> {
 
-        return Object.values(this.lines).filter(line => {
+        return Object.values(this.meshGeometries).filter(line => {
             return !documents.map(document => document.resource.id)
                 .includes(line.document.resource.id as string);
         }).map(line => line.document);

@@ -76,17 +76,11 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     public async find(query: Query): Promise<IdaiFieldFindResult<T>> {
 
-        query.types = this.typeConverter.validate(query.types, this.typeClass);
-
         if (!this.suppressWait) await this.datastore.ready();
 
-        const ids = this.findIds(query);
+        query.types = this.typeConverter.validate(query.types, this.typeClass);
 
-        const {docs, failures} = await this.getDocumentsForIds(ids, query.limit);
-        return {
-            documents: docs,
-            totalCount: ids.length - failures
-        };
+        return this.getDocumentsForIds(this.findIds(query), query.limit);
     }
 
 
@@ -131,7 +125,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
 
     private async getDocumentsForIds(ids: string[], limit?: number):
-        Promise<{docs:Array<T>, failures: number}> {
+        Promise<{documents:Array<T>, totalCount: number}> {
 
         const docs: Array<T> = [];
         let failures = 0;
@@ -148,8 +142,8 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             }
         }
         return {
-            docs: docs,
-            failures: failures
+            documents: docs,
+            totalCount: ids.length - failures
         };
     }
 }

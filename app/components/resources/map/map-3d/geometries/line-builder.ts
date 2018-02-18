@@ -33,15 +33,6 @@ export class LineBuilder {
     }
 
 
-    public buildPolygonOutline(document: IdaiFieldDocument, position: THREE.Vector3): THREE.Mesh {
-
-        const geometry: THREE.Geometry
-            = this.createGeometry((document.resource.geometry as IdaiFieldGeometry).coordinates[0], position);
-
-        return this.createMesh(document, geometry, new THREE.Vector3(0, 0, 0));
-    }
-
-
     private createGeometry(coordinates: number[][], position: THREE.Vector3): THREE.Geometry {
 
         const geometry: THREE.Geometry = new THREE.Geometry();

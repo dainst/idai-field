@@ -23,7 +23,7 @@ export class MeshGeometryManager {
                 projectConfiguration: ProjectConfiguration) {
 
         this.lineBuilder = new LineBuilder(viewer, projectConfiguration);
-        this.polygonBuilder = new PolygonBuilder(this.lineBuilder, projectConfiguration);
+        this.polygonBuilder = new PolygonBuilder(projectConfiguration);
     }
 
 

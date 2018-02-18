@@ -68,15 +68,13 @@ export class ConstraintIndexer {
 
     public remove(doc: Document) {
 
-        for (let indexDefinition of Object.values(this.indexDefinitions)) {
-            const index: any = this.getIndex(indexDefinition);
-
-            for (let key of Object.keys(index[indexDefinition.path])) {
-                if (index[indexDefinition.path][key][doc.resource.id as any]) {
-                    delete index[indexDefinition.path][key][doc.resource.id as any];
-                }
-            }
-        }
+        Object.values(this.indexDefinitions)
+            .map(definition => (this.getIndex(definition))[definition.path])
+            .forEach(path =>
+                Object.keys(path)
+                    .filter(key => path[key][doc.resource.id as any])
+                    .forEach(key => delete path[key][doc.resource.id as any])
+            );
     }
 
 

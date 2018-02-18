@@ -27,6 +27,7 @@
             <ng-template ngbTabContent>
 
                 <geometry-view [document]="viewFacade.getSelectedDocument()"
+                               [showEditingOptions]="showGeometryEditingOptions"
                                (onEditGeometry)="resourcesComponent.isEditingGeometry = true;"
                                (onCreateGeometry)="resourcesComponent.createGeometry($event)">
                 </geometry-view>

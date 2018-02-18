@@ -15,7 +15,8 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 export class GeometryViewComponent {
 
     @Input() document: IdaiFieldDocument;
+    @Input() showEditingOptions: boolean;
+
     @Output() onCreateGeometry: EventEmitter<string> = new EventEmitter<string>();
     @Output() onEditGeometry: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
-
 }

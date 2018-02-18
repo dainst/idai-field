@@ -22,6 +22,6 @@
 
     <div *ngIf="viewFacade.getSelectedDocument() && viewFacade.getSelectedDocument().resource.id"
          class="col-sm-3 document-info px-0">
-        <document-view-sidebar></document-view-sidebar>
+        <document-view-sidebar [showGeometryEditingOptions]="mapMode == '2d'"></document-view-sidebar>
     </div>
 </div>

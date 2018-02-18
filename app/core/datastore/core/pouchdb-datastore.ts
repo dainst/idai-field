@@ -31,7 +31,7 @@ export class PouchdbDatastore {
 
     constructor(
         private pouchdbManager: PouchdbManager,
-        private indexFacade: IndexFacade,
+        private indexFacade: IndexFacade, // TODO move this dependency to CachedDatastore
         private appState: AppState,
         private conflictResolvingExtension: ConflictResolvingExtension,
         private conflictResolver: ConflictResolver

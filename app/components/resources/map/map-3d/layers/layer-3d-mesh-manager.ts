@@ -7,7 +7,7 @@ import {SettingsService} from '../../../../../core/settings/settings-service';
 /**
  * @author Thomas Kleinke
  */
-export class Map3DLayerMeshManager {
+export class Layer3DMeshManager {
 
     private meshes: { [resourceId: string]: THREE.Mesh } = {};
     private loader: MeshLoader;

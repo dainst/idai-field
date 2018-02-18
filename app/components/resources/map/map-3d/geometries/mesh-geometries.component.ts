@@ -25,7 +25,7 @@ export class MeshGeometriesComponent implements OnChanges {
 
     async ngOnChanges(changes: SimpleChanges) {
 
-        if (changes['documents']) await this.meshGeometryManager.update(this.documents);
+        if (changes['documents'] && this.documents) await this.meshGeometryManager.update(this.documents);
     }
 
 

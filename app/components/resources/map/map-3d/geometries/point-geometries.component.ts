@@ -47,6 +47,8 @@ export class PointGeometriesComponent {
 
         const markers: Array<any> = [];
 
+        if (!this.documents) return markers;
+
         this.documents.forEach(document => {
            const marker: Map3DMarker|undefined = this.createMarker(document);
            if (marker) markers.push(marker);

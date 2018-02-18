@@ -51,10 +51,7 @@ export class ConstraintIndexer {
     }
 
 
-    public clear() {
-
-        this.setUp();
-    }
+    public clear = () => this.setUp();
 
 
     public put(doc: Document, skipRemoval: boolean = false) {
@@ -84,7 +81,7 @@ export class ConstraintIndexer {
 
         if (!indexDefinition) {
             console.warn('Ignoring unknown constraint "' + indexName + '".');
-            return undefined;
+            return undefined; // TODO throw instead of returning undefined
         }
 
         const result = this.getIndex(indexDefinition)[indexDefinition.path][matchTerm];

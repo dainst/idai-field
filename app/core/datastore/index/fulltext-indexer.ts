@@ -2,6 +2,8 @@ import {Document} from 'idai-components-2/core';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
 import {ObjectUtil} from '../../../util/object-util';
+import {flow} from "tsfun";
+import {flatMap} from "tsfun/src/arrays/arrays";
 
 /**
  * @author Daniel de Oliveira
@@ -52,11 +54,13 @@ export class FulltextIndexer {
                 }, '');
         }
 
-        this.fieldsToIndex
+        flow(
+            this.fieldsToIndex
             .filter(field => doc.resource[field])
             .filter(field => doc.resource[field] !== '')
-            .map(field => doc.resource[field])
-            .forEach(content => content.split(' ').forEach(indexToken.bind(this)));
+            .map(field => doc.resource[field]),
+            flatMap((content: string) => content.split(' ')))
+            .forEach(indexToken.bind(this));
     }
 
 

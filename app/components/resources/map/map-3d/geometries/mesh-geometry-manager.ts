@@ -4,8 +4,8 @@ import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Viewer3D} from '../../../../../core/3d/viewer-3d';
 import {MeshGeometry} from './mesh-geometry';
 import {LineBuilder} from './line-builder';
-import {has3DLineGeometry, has3DPolygonGeometry} from '../../../../../util/util-3d';
 import {PolygonBuilder} from './polygon-builder';
+import {has3DLineGeometry, has3DPolygonGeometry} from '../../../../../util/util-3d';
 
 
 /**
@@ -23,7 +23,7 @@ export class MeshGeometryManager {
                 projectConfiguration: ProjectConfiguration) {
 
         this.lineBuilder = new LineBuilder(viewer, projectConfiguration);
-        this.polygonBuilder = new PolygonBuilder(projectConfiguration);
+        this.polygonBuilder = new PolygonBuilder(this.lineBuilder, projectConfiguration);
     }
 
 

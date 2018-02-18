@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {MeshGeometry} from './mesh-geometry';
+import {LineBuilder} from './line-builder';
 import {getPointVector} from '../../../../../util/util-3d';
 
 
@@ -11,7 +12,8 @@ import {getPointVector} from '../../../../../util/util-3d';
 
 export class PolygonBuilder {
 
-    constructor(private projectConfiguration: ProjectConfiguration) {}
+    constructor(private lineBuilder: LineBuilder,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public buildPolygon(document: IdaiFieldDocument): MeshGeometry {
@@ -32,10 +34,15 @@ export class PolygonBuilder {
 
         const material: THREE.Material = new THREE.MeshPhongMaterial({
             color: this.projectConfiguration.getColorForType(document.resource.type),
-            side: THREE.DoubleSide
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.4
         });
 
-        return new THREE.Mesh(geometry, material);
+        const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
+        mesh.add(this.lineBuilder.buildPolygonOutline(document));
+
+        return mesh;
     }
 
 

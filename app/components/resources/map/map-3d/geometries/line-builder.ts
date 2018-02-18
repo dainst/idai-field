@@ -20,7 +20,8 @@ export class LineBuilder {
 
     public buildLine(document: IdaiFieldDocument): MeshGeometry {
 
-        const geometry: THREE.Geometry = this.createGeometry(document);
+        const geometry: THREE.Geometry
+            = this.createGeometry((document.resource.geometry as IdaiFieldGeometry).coordinates);
 
         return {
             mesh: this.createMesh(document, geometry),
@@ -30,10 +31,20 @@ export class LineBuilder {
     }
 
 
-    private createGeometry(document: IdaiFieldDocument): THREE.Geometry {
+    public buildPolygonOutline(document: IdaiFieldDocument): THREE.Mesh {
+
+        const geometry: THREE.Geometry
+            = this.createGeometry((document.resource.geometry as IdaiFieldGeometry).coordinates[0]);
+
+        return this.createMesh(document, geometry);
+    }
+
+
+    private createGeometry(coordinates: number[][]): THREE.Geometry {
 
         const geometry: THREE.Geometry = new THREE.Geometry();
-        (document.resource.geometry as IdaiFieldGeometry).coordinates.forEach(point => {
+
+        coordinates.forEach(point => {
             geometry.vertices.push(getPointVector(point));
         });
 

@@ -3,7 +3,7 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Map3DControlState} from './map-3d-control-state';
 import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
-import {getPointVector} from '../../../../util/util-3d';
+import {addOffset, getPointVector} from '../../../../util/util-3d';
 
 
 /**
@@ -93,7 +93,8 @@ export class Map3DControls {
 
         if (!mesh) return;
 
-        const position: THREE.Vector3 = mesh.getWorldPosition();
+        const position: THREE.Vector3
+            = addOffset(mesh.geometry.boundingSphere.center, mesh.getWorldPosition());
         const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
 
         camera.position.set(

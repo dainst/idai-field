@@ -17,6 +17,8 @@ import {ChangeHistoryUtil} from '../../model/change-history-util';
 export class PouchdbDatastore {
 
     protected db: any;
+    public ready = () => this.db.ready();
+
     private allChangesAndDeletionsObservers = [];
     private remoteChangesObservers = [];
     private remoteDeletedObservers = [];

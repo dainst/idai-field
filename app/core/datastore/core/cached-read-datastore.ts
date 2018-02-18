@@ -34,6 +34,8 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
  */
 export abstract class CachedReadDatastore<T extends Document> implements ReadDatastore {
 
+    public suppressWait = false;
+
     constructor(
         protected datastore: PouchdbDatastore,
         protected indexFacade: IndexFacade,
@@ -75,6 +77,8 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     public async find(query: Query): Promise<IdaiFieldFindResult<T>> {
 
         query.types = this.typeConverter.validate(query.types, this.typeClass);
+
+        if (!this.suppressWait) await this.datastore.ready();
 
         const ids = this.findIds(query);
 
@@ -119,7 +123,6 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         if (!query) return [];
 
         try {
-            // await this.datastore.ready(); // TODO check if taking this out leads to any problems
             return this.indexFacade.perform(query); // TODO should have await to catch err locally
         } catch (err) {
             throw [DatastoreErrors.GENERIC_ERROR, err];

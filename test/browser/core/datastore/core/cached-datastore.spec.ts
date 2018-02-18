@@ -27,11 +27,13 @@ export function main() {
             mockImageTypeUtility.getNonImageTypeNames.and.returnValue(['Find']);
 
             const documentCache = new DocumentCache<IdaiFieldDocument>();
-            return new IdaiFieldDocumentDatastore(
-                    mockdb,
-                    mockIndexFacade,
-                    documentCache,
-                    new IdaiFieldTypeConverter(mockImageTypeUtility));
+            const docDatastore = new IdaiFieldDocumentDatastore(
+                mockdb,
+                mockIndexFacade,
+                documentCache,
+                new IdaiFieldTypeConverter(mockImageTypeUtility));
+            docDatastore.suppressWait = true;
+            return docDatastore;
         }
 
 

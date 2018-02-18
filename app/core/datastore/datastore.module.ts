@@ -24,6 +24,7 @@ import {DocumentReadDatastore} from "./document-read-datastore";
 import {IdaiFieldTypeConverter} from "./idai-field-type-converter";
 import {ReadDatastore, Datastore} from "idai-components-2/datastore";
 import {ChangesStream} from "./core/changes-stream";
+import {IndexFacade} from './index/index-facade';
 
 /**
  * There is the top level package, in which everything idai-field specific resides,
@@ -75,22 +76,20 @@ import {ChangesStream} from "./core/changes-stream";
             }
         },
         DocumentCache,
-
+        IndexFacade,
 
         {
             provide: PouchdbDatastore,
             useFactory: function(pouchdbManager: PouchdbManager,
-                                 constraintIndexer: ConstraintIndexer,
-                                 fulltextIndexer: FulltextIndexer,
+                                 indexFacade: IndexFacade,
                                  appState: AppState,
                                  autoConflictResolvingExtension: ConflictResolvingExtension,
                                  conflictResolver: ConflictResolver): PouchdbDatastore {
                 return new PouchdbServerDatastore(pouchdbManager, // Provides fauxton
-                    constraintIndexer, fulltextIndexer,
+                    indexFacade,
                     appState, autoConflictResolvingExtension, conflictResolver);
             },
-            deps: [PouchdbManager, ConstraintIndexer,
-                FulltextIndexer, AppState, ConflictResolvingExtension, ConflictResolver]
+            deps: [PouchdbManager, IndexFacade, AppState, ConflictResolvingExtension, ConflictResolver]
         },
 
 

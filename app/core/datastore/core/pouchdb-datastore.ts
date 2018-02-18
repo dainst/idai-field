@@ -1,17 +1,14 @@
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
-import {Constraint, DatastoreErrors, Query} from 'idai-components-2/datastore';
+import {DatastoreErrors, Query} from 'idai-components-2/datastore';
 import {Document} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {PouchdbManager} from './pouchdb-manager';
-import {ResultSets} from '../index/result-sets';
-import {ConstraintIndexer} from '../index/constraint-indexer';
-import {FulltextIndexer} from '../index/fulltext-indexer';
 import {AppState} from '../../settings/app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
 import {ConflictResolver} from './conflict-resolver';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
-import {IndexItem} from "../index/index-item";
+import {IndexFacade} from '../index/index-facade';
 
 /**
  * @author Sebastian Cuy
@@ -34,8 +31,7 @@ export class PouchdbDatastore {
 
     constructor(
         private pouchdbManager: PouchdbManager,
-        private constraintIndexer: ConstraintIndexer,
-        private fulltextIndexer: FulltextIndexer,
+        private indexFacade: IndexFacade,
         private appState: AppState,
         private conflictResolvingExtension: ConflictResolvingExtension,
         private conflictResolver: ConflictResolver
@@ -117,8 +113,7 @@ export class PouchdbDatastore {
         // when .on('change' fires. so we do remove it here,
         // although we know it will be done again for the same doc
         // in .on('change'
-        this.constraintIndexer.remove(doc);
-        this.fulltextIndexer.remove(doc);
+        this.indexFacade.remove(doc);
 
         this.notifyAllChangesAndDeletionsObservers();
 
@@ -238,44 +233,7 @@ export class PouchdbDatastore {
     private async perform(query: Query): Promise<any> {
 
         await this.db.ready();
-
-        const resultSets = query.constraints ?
-            this.performThem(query.constraints) :
-            ResultSets.make();
-
-        return IndexItem.generateOrderedResultList(
-            (Query.isEmpty(query) && !resultSets.isEmpty() ?
-                resultSets :
-                this.performFulltext(query, resultSets))
-            .collapse() as Array<IndexItem>);
-    }
-
-
-    private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
-
-        return resultSets.combine(
-            this.fulltextIndexer.get(
-                !query.q || query.q.trim() == '' ? '*' : query.q,
-                query.types));
-    }
-
-
-    /**
-     * @param constraints
-     * @returns {any} undefined if there is no usable constraint
-     */
-    private performThem(constraints: { [name: string]: Constraint|string }): ResultSets {
-
-        return Object.keys(constraints).reduce((setsAcc: ResultSets, name: string) => {
-
-                const {type, value} = Constraint.convertTo(constraints[name]);
-
-                const indexItems = this.constraintIndexer.get(name, value);
-                return indexItems
-                    ? setsAcc.combine(indexItems, type)
-                    : setsAcc;
-
-            }, ResultSets.make());
+        return this.indexFacade.perform(query);
     }
 
 
@@ -295,8 +253,7 @@ export class PouchdbDatastore {
 
         const newestRevision: Document = await this.fetch(resourceId);
 
-        this.constraintIndexer.put(newestRevision);
-        this.fulltextIndexer.put(newestRevision);
+        this.indexFacade.put(newestRevision);
 
         this.notifyAllChangesAndDeletionsObservers();
 
@@ -336,8 +293,7 @@ export class PouchdbDatastore {
                 if (!change || !change.id) return;
 
                 if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
-                    this.constraintIndexer.remove({resource: {id: change.id}} as Document);
-                    this.fulltextIndexer.remove({resource: {id: change.id}} as Document);
+                    this.indexFacade.remove({resource: {id: change.id}} as Document);
                     this.notifyAllChangesAndDeletionsObservers();
                     return;
                 }
@@ -375,8 +331,7 @@ export class PouchdbDatastore {
             return;
         }
 
-        this.constraintIndexer.put(document);
-        this.fulltextIndexer.put(document);
+        this.indexFacade.put(document);
 
         try {
             this.notifyRemoteChangesObservers(document);

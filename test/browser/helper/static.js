@@ -6,6 +6,7 @@ var pouchdb_manager_1 = require("../../../app/core/datastore/core/pouchdb-manage
 var document_cache_1 = require("../../../app/core/datastore/core/document-cache");
 var pouchdb_datastore_1 = require("../../../app/core/datastore/core/pouchdb-datastore");
 var app_state_1 = require("../../../app/core/settings/app-state");
+var index_facade_1 = require("../../../app/core/datastore/index/index-facade");
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
@@ -28,7 +29,7 @@ var Static = (function () {
         var conflictResolvingExtension = jasmine.createSpyObj('conflictResolvingExtension', ['setDatastore', 'setConflictResolver', 'autoResolve', 'setDb']);
         conflictResolvingExtension.autoResolve.and.callFake(function () { return Promise.resolve(); });
         var conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
-        var datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbManager, constraintIndexer, fulltextIndexer, appState, conflictResolvingExtension, conflictResolver);
+        var datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbManager, new index_facade_1.IndexFacade(constraintIndexer, fulltextIndexer), appState, conflictResolvingExtension, conflictResolver);
         pouchdbManager.setProject(dbname);
         return {
             datastore: datastore,

@@ -1,9 +1,9 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
-import {DocumentCache} from '../../../../app/core/datastore/core/document-cache';
-import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
-import {IdaiFieldTypeConverter} from '../../../../app/core/datastore/idai-field-type-converter';
-import {Static} from '../../helper/static';
+import {CachedDatastore} from '../../../../../app/core/datastore/core/cached-datastore';
+import {DocumentCache} from '../../../../../app/core/datastore/core/document-cache';
+import {IdaiFieldDocumentDatastore} from '../../../../../app/core/datastore/idai-field-document-datastore';
+import {IdaiFieldTypeConverter} from '../../../../../app/core/datastore/idai-field-type-converter';
+import {Static} from '../../../helper/static';
 
 
 /**

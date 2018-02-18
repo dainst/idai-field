@@ -6,6 +6,7 @@ import {PouchdbManager} from '../../../app/core/datastore/core/pouchdb-manager';
 import {DocumentCache} from '../../../app/core/datastore/core/document-cache';
 import {PouchdbDatastore} from '../../../app/core/datastore/core/pouchdb-datastore';
 import {AppState} from '../../../app/core/settings/app-state';
+import {IndexFacade} from '../../../app/core/datastore/index/index-facade';
 
 
 /**
@@ -36,8 +37,7 @@ export class Static {
         const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
 
         let datastore = new PouchdbDatastore(
-            pouchdbManager, constraintIndexer,
-            fulltextIndexer, appState,
+            pouchdbManager, new IndexFacade(constraintIndexer, fulltextIndexer), appState,
             conflictResolvingExtension,
             conflictResolver);
         pouchdbManager.setProject(dbname);

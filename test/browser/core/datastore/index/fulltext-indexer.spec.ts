@@ -1,6 +1,6 @@
-import {FulltextIndexer} from '../../../../app/core/datastore/index/fulltext-indexer';
-import {Static} from '../../helper/static';
-import {IndexItem} from '../../../../app/core/datastore/index/index-item';
+import {FulltextIndexer} from '../../../../../app/core/datastore/index/fulltext-indexer';
+import {Static} from '../../../helper/static';
+import {IndexItem} from '../../../../../app/core/datastore/index/index-item';
 
 /**
  * @author Daniel de Oliveira

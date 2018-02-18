@@ -4,7 +4,8 @@
 
 .map-3d-geometry-info {
   position: fixed;
-  z-index: 10000;
+  -webkit-transform: translate(-50%, -50%);
+  z-index: 1;
   pointer-events: none;
   user-select: none;
 

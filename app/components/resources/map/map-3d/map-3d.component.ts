@@ -1,15 +1,10 @@
 import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, Output, EventEmitter, SimpleChanges}
     from '@angular/core';
-import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Map3DControls} from './map-3d-controls';
 import {Map3DControlState} from './map-3d-control-state';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
-import {SettingsService} from '../../../../core/settings/settings-service';
-import {Layer3DMeshManager} from './layers/layer-3d-mesh-manager';
-import {Layer3DManager} from './layers/layer-3d-manager';
-import {ListDiffResult} from '../layer-manager';
 import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
 
 
@@ -37,21 +32,14 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     private viewer: Viewer3D;
     private controls: Map3DControls;
-    private layerMeshManager: Layer3DMeshManager;
-
-    public layers: Array<Document> = [];
 
 
-    constructor(private settingsService: SettingsService,
-                private layerManager: Layer3DManager,
-                private projectConfiguration: ProjectConfiguration) {
-
-        this.layerManager.reset();
-    }
+    constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     public select = (document: IdaiFieldDocument|undefined) => this.onSelectDocument.emit(document);
     public getViewer = () => this.viewer;
+    public getControls = () => this.controls;
 
     public onMouseDown = (event: MouseEvent) => this.setControlState(this.controls.onMouseDown(event));
     public onMouseUp = (event: MouseEvent) => this.setControlState(this.controls.onMouseUp(event));
@@ -64,7 +52,6 @@ export class Map3DComponent implements OnChanges, OnDestroy {
         if (!this.viewer) this.initialize();
 
         if (changes['selectedDocument']) this.controls.setSelectedDocument(this.selectedDocument);
-        if (changes['mainTypeDocument']) await this.updateLayers();
     }
 
 
@@ -74,50 +61,11 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     }
 
 
-    public async toggleLayer(layer: Document) {
-
-        const id: string = layer.resource.id as string;
-
-        this.layerManager.toggleLayer(id, this.mainTypeDocument);
-
-        if (this.layerManager.isActiveLayer(id as string)) {
-            await this.layerMeshManager.addMesh(id);
-        } else {
-            this.layerMeshManager.removeMesh(id);
-        }
-    }
-
-
-    public focusLayer(layer: Document) {
-
-        const mesh: THREE.Mesh = this.layerMeshManager.getMesh(layer.resource.id as string) as THREE.Mesh;
-        this.controls.focusMesh(mesh);
-    }
-
-
     private initialize() {
 
         this.viewer = new Viewer3D(this.container.nativeElement);
-        this.layerMeshManager = new Layer3DMeshManager(this.viewer, this.settingsService);
         this.meshGeometryManager = new MeshGeometryManager(this.viewer, this.projectConfiguration);
         this.controls = new Map3DControls(this.viewer, this.meshGeometryManager);
-    }
-
-
-    private async updateLayers() {
-
-        const { layers, activeLayersChange }
-            = await this.layerManager.initializeLayers(this.mainTypeDocument);
-
-        this.layers = layers;
-        this.handleActiveLayersChange(activeLayersChange);
-    }
-
-
-    private handleActiveLayersChange(change: ListDiffResult) {
-
-        change.removed.forEach(layerId => this.layerMeshManager.removeMesh(layerId));
-        change.added.forEach(layerId => this.layerMeshManager.addMesh(layerId));
     }
 
 

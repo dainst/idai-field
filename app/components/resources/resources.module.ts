@@ -34,6 +34,7 @@ import {PointGeometriesComponent} from './map/map-3d/geometries/point-geometries
 import {MeshGeometriesComponent} from './map/map-3d/geometries/mesh-geometries.component';
 import {Layer3DMenuComponent} from './map/map-3d/layers/layer-3d-menu.component';
 import {Layer3DManager} from './map/map-3d/layers/layer-3d-manager';
+import {Layers3DComponent} from './map/map-3d/layers/layers-3d.component';
 
 @NgModule({
     imports: [
@@ -59,6 +60,7 @@ import {Layer3DManager} from './map/map-3d/layers/layer-3d-manager';
         DocumentViewSidebarComponent,
         SidebarListComponent,
         Map3DComponent,
+        Layers3DComponent,
         Layer3DMenuComponent,
         PointGeometriesComponent,
         MeshGeometriesComponent

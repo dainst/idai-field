@@ -5,6 +5,7 @@ import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CachedReadDatastore} from './cached-read-datastore';
 import {TypeConverter} from './type-converter';
+import {IndexFacade} from "../index/index-facade";
 
 
 @Injectable()
@@ -23,11 +24,12 @@ export abstract class CachedDatastore<T extends Document>
 
     constructor(
         datastore: PouchdbDatastore,
+        indexFacade: IndexFacade,
         documentCache: DocumentCache<T>,
         typeConverter: TypeConverter,
         typeClass: string) {
 
-        super(datastore, documentCache, typeConverter, typeClass);
+        super(datastore, indexFacade, documentCache, typeConverter, typeClass);
     }
 
 

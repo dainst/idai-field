@@ -115,12 +115,13 @@ import {IndexFacade} from './index/index-facade';
         {
             provide: DocumentDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
+                                 indexFacade: IndexFacade,
                                  documentCache: DocumentCache<Document>,
                                  documentConverter: TypeConverter,
             ): DocumentDatastore {
-                return new DocumentDatastore(pouchdbDatastore, documentCache, documentConverter);
+                return new DocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
-            deps: [PouchdbDatastore, DocumentCache, TypeConverter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
         },
         { provide: DocumentReadDatastore, useExisting: DocumentDatastore },
         { provide: Datastore, useExisting: DocumentDatastore },     // used by components-2 lib
@@ -134,12 +135,13 @@ import {IndexFacade} from './index/index-facade';
         {
             provide: IdaiFieldDocumentDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
+                                 indexFacade: IndexFacade,
                                  documentCache: DocumentCache<IdaiFieldDocument>,
                                  documentConverter: TypeConverter
             ): IdaiFieldDocumentDatastore {
-                return new IdaiFieldDocumentDatastore(pouchdbDatastore, documentCache, documentConverter);
+                return new IdaiFieldDocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
-            deps: [PouchdbDatastore, DocumentCache, TypeConverter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
         },
         { provide: IdaiFieldDocumentReadDatastore, useExisting: IdaiFieldDocumentDatastore }, // read-only version of it
 
@@ -151,12 +153,13 @@ import {IndexFacade} from './index/index-facade';
         {
             provide: IdaiFieldImageDocumentDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
+                                 indexFacade: IndexFacade,
                                  documentCache: DocumentCache<IdaiFieldImageDocument>,
                                  documentConverter: TypeConverter,
             ): IdaiFieldImageDocumentDatastore {
-                return new IdaiFieldImageDocumentDatastore(pouchdbDatastore, documentCache, documentConverter);
+                return new IdaiFieldImageDocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
                 },
-            deps: [PouchdbDatastore, DocumentCache, TypeConverter]
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
         },
         { provide: IdaiFieldImageDocumentReadDatastore, useExisting: IdaiFieldImageDocumentDatastore }, // read-only version of it
     ]

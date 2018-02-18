@@ -32,15 +32,15 @@ export class DAOsSpecHelper {
 
         spyOn(console, 'debug'); // suppress console.debug
 
-        const {datastore, documentCache} = Static.createPouchdbDatastore('testdb');
+        const {datastore, documentCache, indexFacade} = Static.createPouchdbDatastore('testdb');
         const converter = new IdaiFieldTypeConverter(
             new ImageTypeUtility(this.projectConfiguration));
 
         this.idaiFieldImageDocumentDatastore = new IdaiFieldImageDocumentDatastore(
-            datastore, documentCache as any, converter);
+            datastore, indexFacade, documentCache as any, converter);
         this.idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
-            datastore, documentCache, converter);
+            datastore, indexFacade, documentCache, converter);
         this.documentDatastore = new DocumentDatastore(
-            datastore, documentCache, converter);
+            datastore, indexFacade, documentCache, converter);
     }
 }

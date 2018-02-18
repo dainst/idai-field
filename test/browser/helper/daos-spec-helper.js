@@ -25,11 +25,11 @@ var DAOsSpecHelper = (function () {
             ]
         });
         spyOn(console, 'debug'); // suppress console.debug
-        var _a = static_1.Static.createPouchdbDatastore('testdb'), datastore = _a.datastore, documentCache = _a.documentCache;
+        var _a = static_1.Static.createPouchdbDatastore('testdb'), datastore = _a.datastore, documentCache = _a.documentCache, indexFacade = _a.indexFacade;
         var converter = new idai_field_type_converter_1.IdaiFieldTypeConverter(new image_type_utility_1.ImageTypeUtility(this.projectConfiguration));
-        this.idaiFieldImageDocumentDatastore = new idai_field_image_document_datastore_1.IdaiFieldImageDocumentDatastore(datastore, documentCache, converter);
-        this.idaiFieldDocumentDatastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(datastore, documentCache, converter);
-        this.documentDatastore = new document_datastore_1.DocumentDatastore(datastore, documentCache, converter);
+        this.idaiFieldImageDocumentDatastore = new idai_field_image_document_datastore_1.IdaiFieldImageDocumentDatastore(datastore, indexFacade, documentCache, converter);
+        this.idaiFieldDocumentDatastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(datastore, indexFacade, documentCache, converter);
+        this.documentDatastore = new document_datastore_1.DocumentDatastore(datastore, indexFacade, documentCache, converter);
     }
     return DAOsSpecHelper;
 }());

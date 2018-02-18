@@ -4,6 +4,7 @@ import {Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
+import {IndexFacade} from "../index/index-facade";
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -35,6 +36,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
     constructor(
         protected datastore: PouchdbDatastore,
+        protected indexFacade: IndexFacade,
         protected documentCache: DocumentCache<T>,
         protected typeConverter: TypeConverter,
         protected typeClass: string) { }

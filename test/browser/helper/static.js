@@ -33,12 +33,14 @@ var Static = (function () {
         var conflictResolvingExtension = jasmine.createSpyObj('conflictResolvingExtension', ['setDatastore', 'setConflictResolver', 'autoResolve', 'setDb']);
         conflictResolvingExtension.autoResolve.and.callFake(function () { return Promise.resolve(); });
         var conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
-        var datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbManager, new index_facade_1.IndexFacade(constraintIndexer, fulltextIndexer), appState, conflictResolvingExtension, conflictResolver);
+        var indexFacade = new index_facade_1.IndexFacade(constraintIndexer, fulltextIndexer);
+        var datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbManager, indexFacade, appState, conflictResolvingExtension, conflictResolver);
         pouchdbManager.setProject(dbname);
         return {
             datastore: datastore,
             documentCache: documentCache,
-            appState: appState
+            appState: appState,
+            indexFacade: indexFacade
         };
     };
     Static.doc = function (sd, identifier, type, id) {

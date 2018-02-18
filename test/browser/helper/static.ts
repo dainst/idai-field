@@ -43,8 +43,10 @@ export class Static {
         conflictResolvingExtension.autoResolve.and.callFake(() => Promise.resolve());
         const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
 
+        const indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
+
         let datastore = new PouchdbDatastore(
-            pouchdbManager, new IndexFacade(constraintIndexer, fulltextIndexer), appState,
+            pouchdbManager, indexFacade, appState,
             conflictResolvingExtension,
             conflictResolver);
         pouchdbManager.setProject(dbname);
@@ -52,7 +54,8 @@ export class Static {
         return {
             datastore: datastore,
             documentCache: documentCache,
-            appState: appState
+            appState: appState,
+            indexFacade: indexFacade
         }
     }
 

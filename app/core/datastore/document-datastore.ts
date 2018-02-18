@@ -3,6 +3,7 @@ import {CachedDatastore} from './core/cached-datastore';
 import {PouchdbDatastore} from './core/pouchdb-datastore';
 import {DocumentCache} from './core/document-cache';
 import {TypeConverter} from './core/type-converter';
+import {IndexFacade} from "./index/index-facade";
 
 /**
  * Data Access Object
@@ -14,9 +15,10 @@ export class DocumentDatastore
 
     constructor(
         datastore: PouchdbDatastore,
+        indexFacade: IndexFacade,
         documentCache: DocumentCache<Document>,
         documentConverter: TypeConverter) {
 
-        super(datastore, documentCache, documentConverter, 'Document');
+        super(datastore, indexFacade, documentCache, documentConverter, 'Document');
     }
 }

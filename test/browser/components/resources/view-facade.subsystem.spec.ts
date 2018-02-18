@@ -59,9 +59,9 @@ export function main() {
 
             spyOn(console, 'debug'); // suppress console.debug
 
-            const {datastore, documentCache} = Static.createPouchdbDatastore('testdb');
+            const {datastore, documentCache, indexFacade} = Static.createPouchdbDatastore('testdb');
             idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
-                datastore, documentCache,
+                datastore, indexFacade, documentCache,
                 new IdaiFieldTypeConverter(new ImageTypeUtility(new ProjectConfiguration(pc))));
 
             const projectDocument = Static.doc('testdb','testdb','Project','testdb');

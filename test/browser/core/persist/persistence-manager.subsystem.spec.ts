@@ -64,7 +64,7 @@ export function main() {
 
                 const result = Static.createPouchdbDatastore('testdb');
                 datastore = new IdaiFieldDocumentDatastore(
-                    result.datastore, result.documentCache,
+                    result.datastore, result.indexFacade, result.documentCache,
                     new IdaiFieldTypeConverter(new ImageTypeUtility(projectConfiguration)));
 
                 result.appState.setCurrentUser('anonymous');

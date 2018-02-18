@@ -26,6 +26,7 @@ export function main() {
             const documentCache = new DocumentCache<IdaiFieldDocument>();
             return new IdaiFieldDocumentDatastore(
                     mockdb,
+                    undefined,
                     documentCache,
                     new IdaiFieldTypeConverter(mockImageTypeUtility));
         }

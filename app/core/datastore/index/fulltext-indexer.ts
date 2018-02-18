@@ -2,7 +2,7 @@ import {Document} from 'idai-components-2/core';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
 import {ObjectUtil} from '../../../util/object-util';
-import {flow} from "tsfun";
+import {flow as _} from "tsfun";
 import {flatMap} from "tsfun/src/arrays/arrays";
 
 /**
@@ -54,8 +54,7 @@ export class FulltextIndexer {
         if (!this.index[doc.resource.type]) this.index[doc.resource.type] = {'*' : { } };
         this.index[doc.resource.type]['*'][doc.resource.id as any] = indexItem;
 
-        flow(
-            this.fieldsToIndex
+        _(this.fieldsToIndex
             .filter(field => doc.resource[field])
             .filter(field => doc.resource[field] !== '')
             .map(field => doc.resource[field]),

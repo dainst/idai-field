@@ -39,17 +39,7 @@ export class PolygonBuilder {
 
         const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(position.x, position.y, position.z);
-
-        const edgesGeometry: THREE.EdgesGeometry
-            = new THREE.EdgesGeometry(new THREE.BufferGeometry().fromGeometry(geometry), 180);
-
-        const edgesMaterial: THREE.LineBasicMaterial = new THREE.LineBasicMaterial({
-            color: this.projectConfiguration.getColorForType(document.resource.type)
-        });
-
-        const outline: THREE.LineSegments = new THREE.LineSegments(edgesGeometry, edgesMaterial);
-
-        mesh.add(outline);
+        mesh.add(this.createOutline(document, geometry));
 
         return mesh;
     }
@@ -57,19 +47,8 @@ export class PolygonBuilder {
 
     private createGeometry(document: IdaiFieldDocument, position: THREE.Vector3): THREE.Geometry {
 
-        const shape: THREE.Shape = new THREE.Shape();
-
-        const points: Array<THREE.Vector3> = PolygonBuilder
-            .getPointVectors((document.resource.geometry as IdaiFieldGeometry).coordinates)
-            .map(point => subtractOffset(point, position));
-
-        shape.moveTo(points[0].x, points[0].z);
-
-        for (let i = 1; i < points.length; i++) {
-            shape.lineTo(points[i].x, points[i].z);
-        }
-
-        const geometry: THREE.Geometry = new THREE.ShapeGeometry(shape);
+        const points: Array<THREE.Vector3> = PolygonBuilder.getPoints(document, position);
+        const geometry: THREE.Geometry = new THREE.ShapeGeometry(this.createShape(points));
 
         geometry.vertices.forEach(vertex => {
             vertex.z = vertex.y;
@@ -80,11 +59,46 @@ export class PolygonBuilder {
     }
 
 
+    private createShape(points: Array<THREE.Vector3>): THREE.Shape {
+
+        const shape: THREE.Shape = new THREE.Shape();
+
+        shape.moveTo(points[0].x, points[0].z);
+
+        for (let i = 1; i < points.length; i++) {
+            shape.lineTo(points[i].x, points[i].z);
+        }
+
+        return shape;
+    }
+
+
+    private createOutline(document: IdaiFieldDocument, geometry: THREE.Geometry): THREE.LineSegments {
+
+        const edgesGeometry: THREE.EdgesGeometry
+            = new THREE.EdgesGeometry(new THREE.BufferGeometry().fromGeometry(geometry), 180);
+
+        const edgesMaterial: THREE.LineBasicMaterial = new THREE.LineBasicMaterial({
+            color: this.projectConfiguration.getColorForType(document.resource.type)
+        });
+
+        return new THREE.LineSegments(edgesGeometry, edgesMaterial);
+    }
+
+
     private static getPosition(document: IdaiFieldDocument): THREE.Vector3 {
 
         const firstPoint: number[] = (document.resource.geometry as IdaiFieldGeometry).coordinates[0][0];
 
         return getPointVector(firstPoint);
+    }
+
+
+    private static getPoints(document: IdaiFieldDocument, position: THREE.Vector3): Array<THREE.Vector3> {
+
+        return PolygonBuilder
+            .getPointVectors((document.resource.geometry as IdaiFieldGeometry).coordinates)
+            .map(point => subtractOffset(point, position));
     }
 
 

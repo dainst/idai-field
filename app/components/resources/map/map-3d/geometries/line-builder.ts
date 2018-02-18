@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {Viewer3D} from '../../../../core/3d/viewer-3d';
-import {Map3DMeshGeometry} from './map-3d-mesh-geometry';
-import {getPointVector} from '../../../../util/util-3d';
+import {Viewer3D} from '../../../../../core/3d/viewer-3d';
+import {MeshGeometry} from './mesh-geometry';
+import {getPointVector} from '../../../../../util/util-3d';
 
 const {MeshLine, MeshLineMaterial} = require('three.meshline');
 
@@ -12,13 +12,13 @@ const {MeshLine, MeshLineMaterial} = require('three.meshline');
  * @author Thomas Kleinke
  */
 
-export class Map3DLineBuilder {
+export class LineBuilder {
 
     constructor(private viewer: Viewer3D,
                 private projectConfiguration: ProjectConfiguration) {}
 
 
-    public buildLine(document: IdaiFieldDocument): Map3DMeshGeometry {
+    public buildLine(document: IdaiFieldDocument): MeshGeometry {
 
         const geometry: THREE.Geometry = this.createGeometry(document);
 

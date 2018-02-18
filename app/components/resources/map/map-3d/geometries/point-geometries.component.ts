@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {Component, ViewChild, ElementRef, Input, Output, EventEmitter} from '@angular/core';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
-import {Map3DComponent} from './map-3d.component';
-import {has3DPointGeometry, getPointVector} from '../../../../util/util-3d';
+import {Map3DComponent} from '../map-3d.component';
+import {has3DPointGeometry, getPointVector} from '../../../../../util/util-3d';
 
 
 export interface Map3DMarker {
@@ -15,13 +15,13 @@ export interface Map3DMarker {
 
 @Component({
     moduleId: module.id,
-    selector: 'map-3d-point-geometries',
-    templateUrl: './map-3d-point-geometries.html'
+    selector: 'point-geometries',
+    templateUrl: './point-geometries.html'
 })
 /**
  * @author Thomas Kleinke
  */
-export class Map3DPointGeometriesComponent {
+export class PointGeometriesComponent {
 
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;

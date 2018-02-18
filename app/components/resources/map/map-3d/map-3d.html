@@ -9,15 +9,15 @@
      (contextmenu)="$event.preventDefault()">
 </div>
 
-<map-3d-point-geometries [documents]="documents"
+<point-geometries [documents]="documents"
                          [selectedDocument]="selectedDocument"
                          (onSelectDocument)="select($event)">
-</map-3d-point-geometries>
+</point-geometries>
 
-<map-3d-mesh-geometries [documents]="documents"
+<mesh-geometries [documents]="documents"
                         [hoverDocument]="controlState ? controlState.hoverDocument : undefined"
                         [meshGeometryManager]="meshGeometryManager"
-></map-3d-mesh-geometries>
+></mesh-geometries>
 
 <layer-3d-menu [layers]="layers"
                (onToggleLayer)="toggleLayer($event)"

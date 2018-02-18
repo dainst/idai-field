@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Map3DControlState} from './map-3d-control-state';
-import {Map3DMeshGeometryManager} from './map-3d-mesh-geometry-manager';
+import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
 import {getPointVector} from '../../../../util/util-3d';
 
 
@@ -21,7 +21,7 @@ export class Map3DControls {
 
 
     constructor(private viewer: Viewer3D,
-                private meshGeometryManager: Map3DMeshGeometryManager) {}
+                private meshGeometryManager: MeshGeometryManager) {}
 
 
     public onMouseDown(event: MouseEvent): Map3DControlState {

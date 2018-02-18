@@ -1,23 +1,23 @@
 import * as THREE from 'three';
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Map3DComponent} from './map-3d.component';
-import {Map3DMeshGeometryManager} from './map-3d-mesh-geometry-manager';
+import {Map3DComponent} from '../map-3d.component';
+import {MeshGeometryManager} from './mesh-geometry-manager';
 
 
 @Component({
     moduleId: module.id,
-    selector: 'map-3d-mesh-geometries',
-    templateUrl: './map-3d-mesh-geometries.html'
+    selector: 'mesh-geometries',
+    templateUrl: './mesh-geometries.html'
 })
 /**
  * @author Thomas Kleinke
  */
-export class Map3DMeshGeometriesComponent implements OnChanges {
+export class MeshGeometriesComponent implements OnChanges {
 
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() hoverDocument: IdaiFieldDocument;
-    @Input() meshGeometryManager: Map3DMeshGeometryManager;
+    @Input() meshGeometryManager: MeshGeometryManager;
 
 
     constructor(private map3DComponent: Map3DComponent) {}

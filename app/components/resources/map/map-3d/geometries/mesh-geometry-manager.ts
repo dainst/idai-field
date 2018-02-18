@@ -1,26 +1,26 @@
 import * as THREE from 'three';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {Viewer3D} from '../../../../core/3d/viewer-3d';
-import {Map3DMeshGeometry} from './map-3d-mesh-geometry';
-import {Map3DLineBuilder} from './map-3d-line-builder';
-import {has3DLineGeometry, has3DPolygonGeometry} from '../../../../util/util-3d';
+import {Viewer3D} from '../../../../../core/3d/viewer-3d';
+import {MeshGeometry} from './mesh-geometry';
+import {LineBuilder} from './line-builder';
+import {has3DLineGeometry, has3DPolygonGeometry} from '../../../../../util/util-3d';
 
 
 /**
  * @author Thomas Kleinke
  */
-export class Map3DMeshGeometryManager {
+export class MeshGeometryManager {
 
-    private meshGeometries: { [resourceId: string]: Map3DMeshGeometry } = {};
+    private meshGeometries: { [resourceId: string]: MeshGeometry } = {};
 
-    private lineBuilder: Map3DLineBuilder;
+    private lineBuilder: LineBuilder;
 
 
     constructor(private viewer: Viewer3D,
                 projectConfiguration: ProjectConfiguration) {
 
-        this.lineBuilder = new Map3DLineBuilder(viewer, projectConfiguration);
+        this.lineBuilder = new LineBuilder(viewer, projectConfiguration);
     }
 
 
@@ -29,7 +29,7 @@ export class Map3DMeshGeometryManager {
         await this.viewer.waitForSizeAdjustment();
 
         const geometryDocuments: Array<IdaiFieldDocument>
-            = Map3DMeshGeometryManager.getMeshGeometryDocuments(documents);
+            = MeshGeometryManager.getMeshGeometryDocuments(documents);
 
         this.getGeometriesToAdd(geometryDocuments).forEach(document => this.add(document));
         this.getGeometriesToRemove(geometryDocuments).forEach(document => this.remove(document));
@@ -44,7 +44,7 @@ export class Map3DMeshGeometryManager {
 
     public getDocument(raycasterObject: THREE.Object3D): IdaiFieldDocument|undefined {
 
-        const geometry: Map3DMeshGeometry|undefined
+        const geometry: MeshGeometry|undefined
             = Object.values(this.meshGeometries).find(line => line.raycasterObject == raycasterObject);
 
         return geometry ? geometry.document: undefined;
@@ -53,7 +53,7 @@ export class Map3DMeshGeometryManager {
 
     public getMesh(document: IdaiFieldDocument): THREE.Mesh|undefined {
 
-        const geometry: Map3DMeshGeometry|undefined = this.meshGeometries[document.resource.id as string];
+        const geometry: MeshGeometry|undefined = this.meshGeometries[document.resource.id as string];
 
         return geometry ? geometry.mesh : undefined;
     }
@@ -61,7 +61,7 @@ export class Map3DMeshGeometryManager {
 
     private add(document: IdaiFieldDocument) {
 
-        const geometry: Map3DMeshGeometry|undefined = this.createMeshGeometry(document);
+        const geometry: MeshGeometry|undefined = this.createMeshGeometry(document);
 
         if (!geometry) return;
 
@@ -74,7 +74,7 @@ export class Map3DMeshGeometryManager {
 
     private remove(document: IdaiFieldDocument) {
 
-        const geometry: Map3DMeshGeometry|undefined = this.meshGeometries[document.resource.id as string];
+        const geometry: MeshGeometry|undefined = this.meshGeometries[document.resource.id as string];
         if (!geometry) return;
 
         this.viewer.remove(geometry.mesh);
@@ -84,7 +84,7 @@ export class Map3DMeshGeometryManager {
     }
 
 
-    private createMeshGeometry(document: IdaiFieldDocument): Map3DMeshGeometry|undefined {
+    private createMeshGeometry(document: IdaiFieldDocument): MeshGeometry|undefined {
 
         if (!document.resource.geometry) return undefined;
 

@@ -27,13 +27,13 @@ import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-docume
 import {LayerImageProvider} from './map/map/layer-image-provider';
 import {ChangesStream} from '../../core/datastore/core/changes-stream';
 import {FoldState} from './list/fold-state';
-import {Map3DComponent} from './map/map-3d/map-3d.component';
-import {Map3DPointGeometriesComponent} from './map/map-3d/map-3d-point-geometries.component';
 import {ImageLayerManager} from './map/map/image-layer-manager';
 import {ImageLayerMenuComponent} from './map/map/image-layer-menu.component';
+import {Map3DComponent} from './map/map-3d/map-3d.component';
+import {PointGeometriesComponent} from './map/map-3d/geometries/point-geometries.component';
+import {MeshGeometriesComponent} from './map/map-3d/geometries/mesh-geometries.component';
 import {Layer3DMenuComponent} from './map/map-3d/layers/layer-3d-menu.component';
 import {Layer3DManager} from './map/map-3d/layers/layer-3d-manager';
-import {Map3DMeshGeometriesComponent} from './map/map-3d/map-3d-mesh-geometries.component';
 
 @NgModule({
     imports: [
@@ -60,8 +60,8 @@ import {Map3DMeshGeometriesComponent} from './map/map-3d/map-3d-mesh-geometries.
         SidebarListComponent,
         Map3DComponent,
         Layer3DMenuComponent,
-        Map3DPointGeometriesComponent,
-        Map3DMeshGeometriesComponent
+        PointGeometriesComponent,
+        MeshGeometriesComponent
     ],
     providers: [
         FoldState,

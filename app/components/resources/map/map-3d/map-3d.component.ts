@@ -10,7 +10,7 @@ import {SettingsService} from '../../../../core/settings/settings-service';
 import {Map3DLayerMeshManager} from './layers/map-3d-layer-mesh-manager';
 import {Layer3DManager} from './layers/layer-3d-manager';
 import {ListDiffResult} from '../layer-manager';
-import {Map3DMeshGeometryManager} from './map-3d-mesh-geometry-manager';
+import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     @ViewChild('container') container: ElementRef;
 
-    public meshGeometryManager: Map3DMeshGeometryManager;
+    public meshGeometryManager: MeshGeometryManager;
     public controlState: Map3DControlState;
 
     private viewer: Viewer3D;
@@ -99,7 +99,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
         this.viewer = new Viewer3D(this.container.nativeElement);
         this.layerMeshManager = new Map3DLayerMeshManager(this.viewer, this.settingsService);
-        this.meshGeometryManager = new Map3DMeshGeometryManager(this.viewer, this.projectConfiguration);
+        this.meshGeometryManager = new MeshGeometryManager(this.viewer, this.projectConfiguration);
         this.controls = new Map3DControls(this.viewer, this.meshGeometryManager);
     }
 

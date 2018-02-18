@@ -33,17 +33,16 @@ export class FulltextIndexer {
 
     public put(doc: Document, skipRemoval: boolean = false) {
 
-        function indexToken(token: string) {
+        function indexToken(tokenAsCharArray: string[]) {
 
-            const type = doc.resource.type;
+            const typeIndex = this.index[doc.resource.type];
 
-            Array.from(token.toLowerCase())
-                .reduce((accumulator: string, letter: string) => {
-                    accumulator += letter;
-                    if (!this.index[type][accumulator]) this.index[type][accumulator] = {};
-                    this.index[type][accumulator][doc.resource.id as any] = indexItem;
-                    return accumulator;
-                }, '');
+            tokenAsCharArray.reduce((accumulator, letter) => {
+                accumulator += letter;
+                if (!typeIndex[accumulator]) typeIndex[accumulator] = {};
+                typeIndex[accumulator][doc.resource.id as any] = indexItem;
+                return accumulator;
+            }, '');
         }
 
 
@@ -59,6 +58,8 @@ export class FulltextIndexer {
             .filter(field => doc.resource[field] !== '')
             .map(field => doc.resource[field]),
             flatMap((content: string) => content.split(' ')))
+            .map(token => token.toLowerCase())
+            .map(token => Array.from(token))
             .forEach(indexToken.bind(this));
     }
 

@@ -130,7 +130,7 @@ export class PouchdbDatastore {
 
         try {
             await this.db.remove(docId, revisionId);
-            await this.fetchNewestRevision(docId);
+            await this.fetchNewestRevision(docId); // TODO caller must remove from index, now that this functionality got removed from fetchNewestRevision
         } catch (genericerr) {
             throw [DatastoreErrors.GENERIC_ERROR, genericerr];
         }
@@ -184,7 +184,7 @@ export class PouchdbDatastore {
         return Promise.resolve(conflictedRevisions);
     }
 
-
+    // TODO make use of observer util
     public allChangesAndDeletionsNotifications(): Observable<void> {
 
         return Observable.create((observer: Observer<void>) => {

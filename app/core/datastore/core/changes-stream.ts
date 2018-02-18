@@ -41,6 +41,12 @@ export class ChangesStream {
             ChangesStream.removeClosedObservers(this.observers);
             this.observers.forEach(observer => observer.next(convertedDocument));
         });
+
+
+        datastore.remoteDeletedNotifications().subscribe(document => {
+
+            this.indexFacade.remove(document);
+        });
     }
 
 

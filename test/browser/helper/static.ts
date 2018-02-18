@@ -46,7 +46,7 @@ export class Static {
         const indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
 
         let datastore = new PouchdbDatastore(
-            pouchdbManager, indexFacade, appState,
+            pouchdbManager, appState,
             conflictResolvingExtension,
             conflictResolver);
         pouchdbManager.setProject(dbname);

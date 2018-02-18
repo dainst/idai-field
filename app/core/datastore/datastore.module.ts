@@ -81,15 +81,13 @@ import {IndexFacade} from './index/index-facade';
         {
             provide: PouchdbDatastore,
             useFactory: function(pouchdbManager: PouchdbManager,
-                                 indexFacade: IndexFacade,
                                  appState: AppState,
                                  autoConflictResolvingExtension: ConflictResolvingExtension,
                                  conflictResolver: ConflictResolver): PouchdbDatastore {
                 return new PouchdbServerDatastore(pouchdbManager, // Provides fauxton
-                    indexFacade,
                     appState, autoConflictResolvingExtension, conflictResolver);
             },
-            deps: [PouchdbManager, IndexFacade, AppState, ConflictResolvingExtension, ConflictResolver]
+            deps: [PouchdbManager, AppState, ConflictResolvingExtension, ConflictResolver]
         },
 
 

@@ -8,7 +8,6 @@ import {AppState} from '../../settings/app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
 import {ConflictResolver} from './conflict-resolver';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
-import {IndexFacade} from '../index/index-facade';
 
 /**
  * @author Sebastian Cuy
@@ -20,6 +19,7 @@ export class PouchdbDatastore {
     protected db: any;
     private allChangesAndDeletionsObservers = [];
     private remoteChangesObservers = [];
+    private remoteDeletedObservers = [];
 
     // There is an issue where docs pop up in }).on('change',
     // despite them beeing deleted in remove before. When they
@@ -31,7 +31,6 @@ export class PouchdbDatastore {
 
     constructor(
         private pouchdbManager: PouchdbManager,
-        private indexFacade: IndexFacade, // TODO move this dependency to CachedDatastore
         private appState: AppState,
         private conflictResolvingExtension: ConflictResolvingExtension,
         private conflictResolver: ConflictResolver
@@ -200,6 +199,14 @@ export class PouchdbDatastore {
     }
 
 
+    public remoteDeletedNotifications(): Observable<Document> {
+
+        return Observable.create((observer: Observer<Document>) => {
+            this.remoteDeletedObservers.push(observer as never);
+        });
+    }
+
+
     protected setupServer() {
 
         return Promise.resolve();
@@ -258,8 +265,8 @@ export class PouchdbDatastore {
                 if (!change || !change.id) return;
 
                 if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
-                    this.indexFacade.remove({resource: {id: change.id}} as Document);
                     this.notifyAllChangesAndDeletionsObservers();
+                    this.notifyRemoteDeletedObservers({resource: {id: change.id}} as Document);
                     return;
                 }
 
@@ -310,6 +317,13 @@ export class PouchdbDatastore {
 
         if (this.allChangesAndDeletionsObservers) {
             this.allChangesAndDeletionsObservers.forEach((observer: any) => observer.next());
+        }
+    }
+
+    private notifyRemoteDeletedObservers(document: Document) {
+
+        if (this.remoteDeletedObservers) {
+            this.remoteDeletedObservers.forEach((observer: any) => observer.next(document));
         }
     }
 

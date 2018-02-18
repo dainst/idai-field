@@ -29,7 +29,7 @@ export class MeshGeometriesComponent implements OnChanges {
     }
 
 
-    public getLineInfoPosition(): THREE.Vector2|undefined {
+    public getGeometryInfoPosition(): THREE.Vector2|undefined {
 
         if (!this.hoverDocument) return;
 

@@ -5,6 +5,7 @@ import {Viewer3D} from '../../../../../core/3d/viewer-3d';
 import {MeshGeometry} from './mesh-geometry';
 import {LineBuilder} from './line-builder';
 import {has3DLineGeometry, has3DPolygonGeometry} from '../../../../../util/util-3d';
+import {PolygonBuilder} from './polygon-builder';
 
 
 /**
@@ -15,12 +16,14 @@ export class MeshGeometryManager {
     private meshGeometries: { [resourceId: string]: MeshGeometry } = {};
 
     private lineBuilder: LineBuilder;
+    private polygonBuilder: PolygonBuilder;
 
 
     constructor(private viewer: Viewer3D,
                 projectConfiguration: ProjectConfiguration) {
 
         this.lineBuilder = new LineBuilder(viewer, projectConfiguration);
+        this.polygonBuilder = new PolygonBuilder(projectConfiguration);
     }
 
 
@@ -93,8 +96,7 @@ export class MeshGeometryManager {
                 return this.lineBuilder.buildLine(document);
 
             case 'Polygon':
-                // TODO Implement
-                break;
+                return this.polygonBuilder.buildPolygon(document);
         }
     }
 

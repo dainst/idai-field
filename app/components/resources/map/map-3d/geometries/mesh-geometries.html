@@ -1,9 +1,9 @@
-<div *ngIf="getLineInfoPosition()"
-     class="map-3d-line-info"
-     [style.left]="getLineInfoPosition().x + 'px'"
-     [style.top]="getLineInfoPosition().y + 'px'">
-    <div class="map-3d-line-info-icon">
+<div *ngIf="getGeometryInfoPosition()"
+     class="map-3d-geometry-info"
+     [style.left]="getGeometryInfoPosition().x + 'px'"
+     [style.top]="getGeometryInfoPosition().y + 'px'">
+    <div class="map-3d-geometry-info-icon">
         <type-icon [size]="25" [type]="hoverDocument.resource.type"></type-icon>
     </div>
-    <span class="map-3d-line-info-label">{{hoverDocument.resource.identifier}}</span>
+    <span class="map-3d-geometry-info-label">{{hoverDocument.resource.identifier}}</span>
 </div>

@@ -2,20 +2,20 @@
  * @author Thomas Kleinke
  */
 
-.map-3d-line-info {
+.map-3d-geometry-info {
   position: fixed;
   z-index: 10000;
   pointer-events: none;
   user-select: none;
 
-  .map-3d-line-info-icon {
+  .map-3d-geometry-info-icon {
     border-radius: 50%;
     width: 27px;
     height: 27px;
     border: 1px solid #000;
   }
 
-  .map-3d-line-info-label {
+  .map-3d-geometry-info-label {
     position: absolute;
     left: 31px;
     top: 0;

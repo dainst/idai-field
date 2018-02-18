@@ -40,16 +40,6 @@ export function main() {
         });
 
 
-        it('should not find with query undefined', () => {
-
-            const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
-            indexFacade.put(doc1);
-
-            const result = indexFacade.perform(undefined);
-            expect(result.length).toBe(0);
-        });
-
-
         it('should find with prefix query undefined', () => {
 
             const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');

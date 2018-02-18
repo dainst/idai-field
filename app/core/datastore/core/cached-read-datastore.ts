@@ -114,8 +114,6 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     private findIds(query: Query): string[] {
 
-        if (!query) return [];
-
         try {
             return this.indexFacade.perform(query); // TODO should have await to catch err locally
         } catch (err) {

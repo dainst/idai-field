@@ -21,8 +21,6 @@ export class IndexFacade {
 
     public perform(query: Query): any {
 
-        if (!query) return [];
-
         const resultSets = query.constraints ?
             this.performThem(query.constraints) :
             ResultSets.make();

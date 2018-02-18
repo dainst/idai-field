@@ -3,7 +3,7 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Viewer3D} from '../../../../../core/3d/viewer-3d';
 import {MeshGeometry} from './mesh-geometry';
-import {getPointVector} from '../../../../../util/util-3d';
+import {getPointVector, subtractOffset} from '../../../../../util/util-3d';
 
 const {MeshLine, MeshLineMaterial} = require('three.meshline');
 
@@ -20,32 +20,34 @@ export class LineBuilder {
 
     public buildLine(document: IdaiFieldDocument): MeshGeometry {
 
+        const position: THREE.Vector3 = LineBuilder.getPosition(document);
+
         const geometry: THREE.Geometry
-            = this.createGeometry((document.resource.geometry as IdaiFieldGeometry).coordinates);
+            = this.createGeometry((document.resource.geometry as IdaiFieldGeometry).coordinates, position);
 
         return {
-            mesh: this.createMesh(document, geometry),
-            raycasterObject: this.createRaycasterObject(geometry),
+            mesh: this.createMesh(document, geometry, position),
+            raycasterObject: this.createRaycasterObject(geometry, position),
             document: document
         };
     }
 
 
-    public buildPolygonOutline(document: IdaiFieldDocument): THREE.Mesh {
+    public buildPolygonOutline(document: IdaiFieldDocument, position: THREE.Vector3): THREE.Mesh {
 
         const geometry: THREE.Geometry
-            = this.createGeometry((document.resource.geometry as IdaiFieldGeometry).coordinates[0]);
+            = this.createGeometry((document.resource.geometry as IdaiFieldGeometry).coordinates[0], position);
 
-        return this.createMesh(document, geometry);
+        return this.createMesh(document, geometry, new THREE.Vector3(0, 0, 0));
     }
 
 
-    private createGeometry(coordinates: number[][]): THREE.Geometry {
+    private createGeometry(coordinates: number[][], position: THREE.Vector3): THREE.Geometry {
 
         const geometry: THREE.Geometry = new THREE.Geometry();
 
         coordinates.forEach(point => {
-            geometry.vertices.push(getPointVector(point));
+            geometry.vertices.push(subtractOffset(getPointVector(point), position));
         });
 
         geometry.computeLineDistances();
@@ -54,14 +56,18 @@ export class LineBuilder {
     }
 
 
-    private createMesh(document: IdaiFieldDocument, geometry: THREE.Geometry): THREE.Mesh {
+    private createMesh(document: IdaiFieldDocument, geometry: THREE.Geometry,
+                       position: THREE.Vector3): THREE.Mesh {
 
         const line = new MeshLine();
         line.setGeometry(geometry);
 
         const material: THREE.Material = this.createMaterial(document);
 
-        return new THREE.Mesh(line.geometry, material);
+        const mesh: THREE.Mesh = new THREE.Mesh(line.geometry, material);
+        mesh.position.set(position.x, position.y, position.z);
+
+        return mesh;
     }
 
 
@@ -79,13 +85,24 @@ export class LineBuilder {
     }
 
 
-    private createRaycasterObject(geometry: THREE.Geometry): THREE.Object3D {
+    private createRaycasterObject(geometry: THREE.Geometry, position: THREE.Vector3): THREE.Object3D {
 
         const rayCasterMaterial: THREE.LineDashedMaterial = new THREE.LineDashedMaterial({
             dashSize: 0,
             gapSize: 10
         });
 
-        return new THREE.Line(geometry, rayCasterMaterial);
+        const raycasterObject: THREE.Object3D = new THREE.Line(geometry, rayCasterMaterial);
+        raycasterObject.position.set(position.x, position.y, position.z);
+
+        return raycasterObject;
+    }
+
+
+    private static getPosition(document: IdaiFieldDocument): THREE.Vector3 {
+
+        const firstPoint: number[] = (document.resource.geometry as IdaiFieldGeometry).coordinates[0];
+
+        return getPointVector(firstPoint);
     }
 }

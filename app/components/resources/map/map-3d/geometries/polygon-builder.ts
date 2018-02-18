@@ -3,13 +3,12 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {MeshGeometry} from './mesh-geometry';
 import {LineBuilder} from './line-builder';
-import {getPointVector} from '../../../../../util/util-3d';
+import {getPointVector, subtractOffset} from '../../../../../util/util-3d';
 
 
 /**
  * @author Thomas Kleinke
  */
-
 export class PolygonBuilder {
 
     constructor(private lineBuilder: LineBuilder,
@@ -30,7 +29,8 @@ export class PolygonBuilder {
 
     private createMesh(document: IdaiFieldDocument): THREE.Mesh {
 
-        const geometry: THREE.Geometry = this.createGeometry(document);
+        const position: THREE.Vector3 = PolygonBuilder.getPosition(document);
+        const geometry: THREE.Geometry = this.createGeometry(document, position);
 
         const material: THREE.Material = new THREE.MeshPhongMaterial({
             color: this.projectConfiguration.getColorForType(document.resource.type),
@@ -40,18 +40,20 @@ export class PolygonBuilder {
         });
 
         const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
-        mesh.add(this.lineBuilder.buildPolygonOutline(document));
+        mesh.position.set(position.x, position.y, position.z);
+        mesh.add(this.lineBuilder.buildPolygonOutline(document, position));
 
         return mesh;
     }
 
 
-    private createGeometry(document: IdaiFieldDocument): THREE.Geometry {
+    private createGeometry(document: IdaiFieldDocument, position: THREE.Vector3): THREE.Geometry {
 
         const shape: THREE.Shape = new THREE.Shape();
 
-        const points: Array<THREE.Vector3>
-            = PolygonBuilder.getPointVectors((document.resource.geometry as IdaiFieldGeometry).coordinates);
+        const points: Array<THREE.Vector3> = PolygonBuilder
+            .getPointVectors((document.resource.geometry as IdaiFieldGeometry).coordinates)
+            .map(point => subtractOffset(point, position));
 
         shape.moveTo(points[0].x, points[0].z);
 
@@ -67,6 +69,14 @@ export class PolygonBuilder {
         });
 
         return geometry;
+    }
+
+
+    private static getPosition(document: IdaiFieldDocument): THREE.Vector3 {
+
+        const firstPoint: number[] = (document.resource.geometry as IdaiFieldGeometry).coordinates[0][0];
+
+        return getPointVector(firstPoint);
     }
 
 

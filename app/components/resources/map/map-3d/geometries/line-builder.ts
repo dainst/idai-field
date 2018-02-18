@@ -70,7 +70,7 @@ export class LineBuilder {
             near: this.viewer.getCamera().near,
             far: this.viewer.getCamera().far,
             sizeAttenuation: false,
-            lineWidth: 10,
+            lineWidth: 3,
             color: new THREE.Color(this.projectConfiguration.getColorForType(document.resource.type))
         });
     }

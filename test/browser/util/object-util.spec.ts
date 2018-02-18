@@ -61,11 +61,5 @@ export function main() {
             expect(ObjectUtil.compare('field1', ['value1', 'value2'])).toBe(false);
             expect(ObjectUtil.compare({ field: 'value' }, ['value1', 'value2'])).toBe(false);
         });
-
-
-        it('clone any clones array of array of strings', () => {
-
-            expect(ObjectUtil.cloneAny([["a"],["b"]])).toEqual([["a"],["b"]]);
-        })
     });
 }

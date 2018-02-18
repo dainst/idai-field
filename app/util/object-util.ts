@@ -36,12 +36,6 @@ export class ObjectUtil {
         return JSON.parse(JSON.stringify(object));
     }
 
-    // TODO remove and use cloneObject instead
-    public static cloneAny(object: any): any {
-
-        return JSON.parse(JSON.stringify(object));
-    }
-
 
     public static isEmpty(object: Object): boolean {
 

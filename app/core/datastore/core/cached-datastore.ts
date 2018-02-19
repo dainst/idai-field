@@ -48,7 +48,7 @@ export abstract class CachedDatastore<T extends Document>
 
         return this.documentCache.set(this.typeConverter.
             convert(await this.datastore.create(document).then(
-                (newestRevision) => this.indexFacade.put(newestRevision))
+                newestRevision => this.indexFacade.put(newestRevision))
         ));
     }
 
@@ -64,14 +64,11 @@ export abstract class CachedDatastore<T extends Document>
 
         const updatedDocument = this.typeConverter.
             convert(await this.datastore.update(document).then(
-                (newestRevision) => this.indexFacade.put(newestRevision)));
+                newestRevision => this.indexFacade.put(newestRevision)));
 
-        if (!this.documentCache.get(document.resource.id as any)) {
-            return this.documentCache.set(updatedDocument);
-        } else {
-            this.documentCache.reassign(updatedDocument);
-            return this.documentCache.get(document.resource.id as any);
-        }
+        return !this.documentCache.get(document.resource.id as any)
+            ? this.documentCache.set(updatedDocument)
+            : this.documentCache.reassign(updatedDocument);
     }
 
 

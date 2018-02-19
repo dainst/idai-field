@@ -35,6 +35,7 @@ import {MeshGeometriesComponent} from './map/map-3d/geometries/mesh-geometries.c
 import {Layer3DMenuComponent} from './map/map-3d/layers/layer-3d-menu.component';
 import {Layer3DManager} from './map/map-3d/layers/layer-3d-manager';
 import {Layers3DComponent} from './map/map-3d/layers/layers-3d.component';
+import {Core3DModule} from '../core-3d/core-3d.module';
 
 @NgModule({
     imports: [
@@ -45,7 +46,8 @@ import {Layers3DComponent} from './map/map-3d/layers/layers-3d.component';
         WidgetsModule,
         ImageGridModule,
         IdaiWidgetsModule,
-        DoceditModule
+        DoceditModule,
+        Core3DModule
     ],
     declarations: [
         ResourcesComponent,

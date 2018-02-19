@@ -40,6 +40,7 @@ import {DatastoreModule} from './core/datastore/datastore.module';
 import {IdaiFieldDocumentDatastore} from './core/datastore/idai-field-document-datastore';
 import {PersistenceManager} from './core/persist/persistence-manager';
 import {DocumentDatastore} from './core/datastore/document-datastore';
+import {Core3DModule} from './components/core-3d/core-3d.module';
 
 
 const remote = require('electron').remote;
@@ -64,7 +65,8 @@ let pconf: any = undefined;
         WidgetsModule,
         ImportModule,
         ExportModule,
-        DatastoreModule
+        DatastoreModule,
+        Core3DModule
     ],
     declarations: [
         AppComponent,

@@ -1,15 +1,41 @@
 import * as THREE from 'three';
+import {MeshLoadingProgress} from '../../components/core-3d/mesh-loading-progress';
 
 /**
  * @author Thomas Kleinke
  */
 export class MeshEditingUtility {
 
-    public static performDefaultAdjustments(mesh: THREE.Mesh, scene: THREE.Scene) {
+    constructor(private meshLoadingProgress: MeshLoadingProgress) {}
 
-        MeshEditingUtility.smoothGeometry(mesh);
-        MeshEditingUtility.applySceneMatrix(mesh, scene);
-        MeshEditingUtility.setPositionToCenterOfGeometry(mesh);
+
+    public performDefaultAdjustments(mesh: THREE.Mesh, scene: THREE.Scene): Promise<any> {
+
+        return new Promise<any>(async resolve => {
+
+            await this.performAdjustment(1,
+                MeshEditingUtility.smoothGeometry.bind(MeshEditingUtility), mesh);
+            await this.performAdjustment(2,
+                MeshEditingUtility.applySceneMatrix.bind(MeshEditingUtility), mesh, scene);
+            await this.performAdjustment(3,
+                MeshEditingUtility.setPositionToCenterOfGeometry.bind(MeshEditingUtility), mesh);
+
+            resolve();
+        });
+    }
+
+
+    private async performAdjustment(stepNumber: number, adjustmentFunction: Function, mesh: THREE.Mesh,
+                              scene?: THREE.Scene): Promise<void> {
+
+        return new Promise<any>(resolve => {
+
+            setTimeout(() => {
+                adjustmentFunction(mesh, scene);
+                this.meshLoadingProgress.setAdjustingProgress(mesh.name, stepNumber, 3);
+                resolve();
+            });
+        });
     }
 
 

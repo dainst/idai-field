@@ -19,4 +19,10 @@
   &.hover:not(.drag):not(.rotate) {
     cursor: pointer;
   }
+
+  mesh-loading-progress-bar {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+  }
 }

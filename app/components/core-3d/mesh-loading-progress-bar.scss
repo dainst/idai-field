@@ -1,0 +1,10 @@
+.progress-bar-wrapper {
+  opacity: 1;
+  width: 150px;
+
+  -webkit-transition: opacity 1.5s ease-in-out;
+
+  &.full-progress {
+    opacity: 0;
+  }
+}

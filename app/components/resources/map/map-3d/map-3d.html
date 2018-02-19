@@ -7,6 +7,8 @@
      (mousemove)="onMouseMove($event)"
      (wheel)="onWheel($event)"
      (contextmenu)="$event.preventDefault()">
+
+    <mesh-loading-progress-bar></mesh-loading-progress-bar>
 </div>
 
 <point-geometries [documents]="documents"

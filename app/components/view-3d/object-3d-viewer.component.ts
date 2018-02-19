@@ -6,6 +6,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {Object3DViewerControls} from './object-3d-viewer-controls';
 import {MeshLoader} from '../../core/3d/mesh-loader';
 import {MeshEditingUtility} from '../../core/3d/mesh-editing-utility';
+import {MeshLoadingProgress} from '../core-3d/mesh-loading-progress';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     private meshMaterial: THREE.Material|Array<THREE.Material>;
 
 
-    constructor(private settingsService: SettingsService) {}
+    constructor(private settingsService: SettingsService,
+                private meshLoadingProgress: MeshLoadingProgress) {}
 
 
     public onMouseDown = (event: MouseEvent) => this.controls.onMouseDown(event);
@@ -83,7 +85,7 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
         this.viewer = new Viewer3D(this.container.nativeElement);
         this.controls = new Object3DViewerControls(this.viewer);
-        this.meshLoader = new MeshLoader(this.settingsService);
+        this.meshLoader = new MeshLoader(this.settingsService, this.meshLoadingProgress);
     }
 
 

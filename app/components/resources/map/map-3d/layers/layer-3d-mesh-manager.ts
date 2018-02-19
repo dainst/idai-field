@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {Viewer3D} from '../../../../../core/3d/viewer-3d';
 import {MeshLoader} from '../../../../../core/3d/mesh-loader';
 import {SettingsService} from '../../../../../core/settings/settings-service';
+import {MeshLoadingProgress} from '../../../../core-3d/mesh-loading-progress';
 
 
 /**
@@ -14,9 +15,10 @@ export class Layer3DMeshManager {
 
 
     constructor(private viewer: Viewer3D,
-                private settingsService: SettingsService) {
+                settingsService: SettingsService,
+                meshLoadingProgress: MeshLoadingProgress) {
 
-        this.loader = new MeshLoader(settingsService);
+        this.loader = new MeshLoader(settingsService, meshLoadingProgress);
     }
 
 

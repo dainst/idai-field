@@ -15,18 +15,24 @@
   &.rotate {
     cursor: none;
   }
+
+  mesh-loading-progress-bar {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+  }
 }
 
 #toggle-texture-button {
   position: absolute;
   z-index: 1000;
-  left: 65px;
+  right: 65px;
   top: 15px;
 }
 
 #focus-button {
   position: absolute;
   z-index: 1000;
-  left: 15px;
+  right: 15px;
   top: 15px;
 }

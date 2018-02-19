@@ -6,6 +6,8 @@
      (mousemove)="onMouseMove($event)"
      (wheel)="onWheel($event)"
      (contextmenu)="$event.preventDefault()">
+
+    <mesh-loading-progress-bar></mesh-loading-progress-bar>
 </div>
 
 <div id="toggle-texture-button" class="btn btn-light" (click)="toggleTexture()">

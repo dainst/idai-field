@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {SettingsService} from '../settings/settings-service';
 import {MeshEditingUtility} from './mesh-editing-utility';
+import {MeshLoadingProgress} from '../../components/core-3d/mesh-loading-progress';
 
 const ColladaLoader = require('three-collada-loader-2');
 
@@ -10,17 +11,31 @@ const ColladaLoader = require('three-collada-loader-2');
  */
 export class MeshLoader {
 
-    constructor(private settingsService: SettingsService) {}
+    private meshEditingUtility: MeshEditingUtility;
+
+
+    constructor(private settingsService: SettingsService,
+                private loadingProgress: MeshLoadingProgress) {
+
+        this.meshEditingUtility = new MeshEditingUtility(loadingProgress);
+    }
 
 
     public load(id: string): Promise<THREE.Mesh> {
 
         return new Promise((resolve, reject) => {
 
+            this.loadingProgress.reset();
+
             const loader = new ColladaLoader();
-            loader.load(this.getFilePath(id), (colladaModel: THREE.ColladaModel) => {
-                resolve(this.extractAndAdjustMesh(colladaModel));
-            });
+
+            loader.load(this.getFilePath(id),
+                async (colladaModel: THREE.ColladaModel) => {
+                    resolve(this.extractMesh(colladaModel, id));
+                },
+                (event: ProgressEvent) => {
+                    this.loadingProgress.setLoadingProgress(id, event.loaded, event.total);
+                });
 
             // TODO Error handling
         });
@@ -36,12 +51,14 @@ export class MeshLoader {
     }
 
 
-    private extractAndAdjustMesh(colladaModel: THREE.ColladaModel): THREE.Mesh {
+    private async extractMesh(colladaModel: THREE.ColladaModel, id: string): Promise<THREE.Mesh> {
 
         const scene: THREE.Scene = colladaModel.scene;
-        const mesh: THREE.Mesh = MeshLoader.getMesh(scene);
 
-        MeshEditingUtility.performDefaultAdjustments(mesh, scene);
+        const mesh: THREE.Mesh = MeshLoader.getMesh(scene);
+        mesh.name = id;
+
+        await this.meshEditingUtility.performDefaultAdjustments(mesh, scene);
 
         return mesh;
     }

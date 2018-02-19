@@ -6,6 +6,7 @@ import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from "../index/index-facade";
+import {ObserverUtil} from '../../../util/observer-util';
 
 
 @Injectable()
@@ -38,7 +39,7 @@ export class ChangesStream {
                 this.documentCache.reassign(convertedDocument);
             }
 
-            ChangesStream.removeClosedObservers(this.observers);
+            ObserverUtil.removeClosedObservers(this.observers);
             this.observers.forEach(observer => observer.next(convertedDocument));
         });
 
@@ -50,35 +51,13 @@ export class ChangesStream {
     }
 
 
-    public remoteChangesNotifications(): Observable<Document> {
+    public allChangesAndDeletionsNotifications = () => this.datastore.allChangesAndDeletionsNotifications();
 
-        return new Observable<Document>((observer: Observer<Document>) => {
-            this.observers.push(observer);
-        });
-    }
-
-
-    public allChangesAndDeletionsNotifications(): Observable<void> {
-
-        return this.datastore.allChangesAndDeletionsNotifications();
-    }
+    public remoteChangesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
     public setAutoCacheUpdate(autoCacheUpdate: boolean) {
 
         this.autoCacheUpdate = autoCacheUpdate;
-    }
-
-
-    private static removeClosedObservers(observers: Array<any>) {
-
-        const observersToDelete: any[] = [];
-        for (let i = 0; i < observers.length; i++) {
-            if ((observers[i] as any).closed) observersToDelete.push(observers[i]);
-        }
-        for (let observerToDelete of observersToDelete) {
-            let i = observers.indexOf(observerToDelete as never);
-            observers.splice(i, 1);
-        }
     }
 }

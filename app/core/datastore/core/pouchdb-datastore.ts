@@ -8,6 +8,7 @@ import {AppState} from '../../settings/app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
 import {ConflictResolver} from './conflict-resolver';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
+import {ObserverUtil} from '../../../util/observer-util';
 
 /**
  * @author Sebastian Cuy
@@ -45,6 +46,13 @@ export class PouchdbDatastore {
 
         this.setupServer().then(() => this.setupChangesEmitter());
     }
+
+
+    public allChangesAndDeletionsNotifications = (): Observable<void> => ObserverUtil.register(this.allChangesAndDeletionsObservers);
+
+    public remoteChangesNotifications = (): Observable<Document> => ObserverUtil.register(this.remoteChangesObservers);
+
+    public remoteDeletedNotifications = (): Observable<Document> => ObserverUtil.register(this.remoteDeletedObservers);
 
 
     /**
@@ -109,7 +117,7 @@ export class PouchdbDatastore {
 
         this.deletedOnes.push(doc.resource.id as never);
 
-        this.notifyAllChangesAndDeletionsObservers();
+        ObserverUtil.notify(this.allChangesAndDeletionsObservers, undefined);
 
         let docFromGet;
         try {
@@ -135,9 +143,6 @@ export class PouchdbDatastore {
             throw [DatastoreErrors.GENERIC_ERROR, genericerr];
         }
     }
-
-
-
 
 
     /**
@@ -184,30 +189,6 @@ export class PouchdbDatastore {
         return Promise.resolve(conflictedRevisions);
     }
 
-    // TODO make use of observer util
-    public allChangesAndDeletionsNotifications(): Observable<void> {
-
-        return Observable.create((observer: Observer<void>) => {
-            this.allChangesAndDeletionsObservers.push(observer as never);
-        });
-    }
-
-
-    public remoteChangesNotifications(): Observable<Document> {
-
-        return Observable.create((observer: Observer<Document>) => {
-            this.remoteChangesObservers.push(observer as never);
-        });
-    }
-
-
-    public remoteDeletedNotifications(): Observable<Document> {
-
-        return Observable.create((observer: Observer<Document>) => {
-            this.remoteDeletedObservers.push(observer as never);
-        });
-    }
-
 
     protected setupServer() {
 
@@ -230,7 +211,8 @@ export class PouchdbDatastore {
     private async fetchNewestRevision(resourceId: string): Promise<Document> {
 
         const newestRevision: Document = await this.fetch(resourceId);
-        this.notifyAllChangesAndDeletionsObservers();
+
+        ObserverUtil.notify(this.allChangesAndDeletionsObservers, undefined);
         return newestRevision;
     }
 
@@ -267,8 +249,8 @@ export class PouchdbDatastore {
                 if (!change || !change.id) return;
 
                 if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
-                    this.notifyAllChangesAndDeletionsObservers();
-                    this.notifyRemoteDeletedObservers({resource: {id: change.id}} as Document);
+                    ObserverUtil.notify(this.allChangesAndDeletionsObservers, undefined);
+                    ObserverUtil.notify(this.remoteDeletedObservers, {resource: {id: change.id}} as Document);
                     return;
                 }
 
@@ -306,34 +288,12 @@ export class PouchdbDatastore {
         }
 
         try {
-            this.notifyRemoteChangesObservers(document);
+            ObserverUtil.notify(this.remoteChangesObservers, document);
         } catch (e) {
             console.error('Error while notifying observers');
         }
 
-        this.notifyAllChangesAndDeletionsObservers();
-    }
-
-
-    private notifyAllChangesAndDeletionsObservers() {
-
-        if (this.allChangesAndDeletionsObservers) {
-            this.allChangesAndDeletionsObservers.forEach((observer: any) => observer.next());
-        }
-    }
-
-    private notifyRemoteDeletedObservers(document: Document) {
-
-        if (this.remoteDeletedObservers) {
-            this.remoteDeletedObservers.forEach((observer: any) => observer.next(document));
-        }
-    }
-
-
-    private notifyRemoteChangesObservers(document: Document) {
-
-        if (this.remoteChangesObservers) this.remoteChangesObservers.
-            forEach((observer: Observer<Document>) => observer.next(document));
+        ObserverUtil.notify(this.allChangesAndDeletionsObservers, undefined)
     }
 
 

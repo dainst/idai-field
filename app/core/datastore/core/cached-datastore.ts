@@ -26,7 +26,7 @@ export abstract class CachedDatastore<T extends Document>
         datastore: PouchdbDatastore,
         indexFacade: IndexFacade,
         documentCache: DocumentCache<T>,
-        typeConverter: TypeConverter,
+        typeConverter: TypeConverter<T>,
         typeClass: string) {
 
         super(datastore, indexFacade, documentCache, typeConverter, typeClass);
@@ -44,7 +44,7 @@ export abstract class CachedDatastore<T extends Document>
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
         return this.documentCache.set(this.typeConverter.
-            convert<T>(await this.datastore.create(document).then(
+            convert(await this.datastore.create(document).then(
                 (newestRevision) => this.indexFacade.put(newestRevision))
         ));
     }
@@ -60,7 +60,7 @@ export abstract class CachedDatastore<T extends Document>
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
         const updatedDocument = this.typeConverter.
-            convert<T>(await this.datastore.update(document).then(
+            convert(await this.datastore.update(document).then(
                 (newestRevision) => this.indexFacade.put(newestRevision)));
 
         if (!this.documentCache.get(document.resource.id as any)) {

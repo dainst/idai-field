@@ -17,7 +17,7 @@ export class IdaiFieldDocumentDatastore
         datastore: PouchdbDatastore,
         indexFacade: IndexFacade,
         documentCache: DocumentCache<IdaiFieldDocument>,
-        documentConverter: TypeConverter) {
+        documentConverter: TypeConverter<IdaiFieldDocument>) {
 
         super(datastore, indexFacade, documentCache, documentConverter, 'IdaiFieldDocument');
     }

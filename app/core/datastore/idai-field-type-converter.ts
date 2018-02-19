@@ -9,7 +9,7 @@ import {ObjectUtil} from '../../util/object-util';
 /**
  * @author Daniel de Oliveira
  */
-export class IdaiFieldTypeConverter extends TypeConverter {
+export class IdaiFieldTypeConverter extends TypeConverter<Document> {
 
     constructor(private imageTypeUtility: ImageTypeUtility) {
 

@@ -17,7 +17,7 @@ export class DocumentDatastore
         datastore: PouchdbDatastore,
         indexFacade: IndexFacade,
         documentCache: DocumentCache<Document>,
-        documentConverter: TypeConverter) {
+        documentConverter: TypeConverter<Document>) {
 
         super(datastore, indexFacade, documentCache, documentConverter, 'Document');
     }

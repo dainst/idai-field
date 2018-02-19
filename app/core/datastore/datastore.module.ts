@@ -115,7 +115,7 @@ import {IndexFacade} from './index/index-facade';
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache<Document>,
-                                 documentConverter: TypeConverter,
+                                 documentConverter: TypeConverter<Document>,
             ): DocumentDatastore {
                 return new DocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
@@ -135,7 +135,7 @@ import {IndexFacade} from './index/index-facade';
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache<IdaiFieldDocument>,
-                                 documentConverter: TypeConverter
+                                 documentConverter: TypeConverter<IdaiFieldDocument>
             ): IdaiFieldDocumentDatastore {
                 return new IdaiFieldDocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
             },
@@ -153,7 +153,7 @@ import {IndexFacade} from './index/index-facade';
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
                                  indexFacade: IndexFacade,
                                  documentCache: DocumentCache<IdaiFieldImageDocument>,
-                                 documentConverter: TypeConverter,
+                                 documentConverter: TypeConverter<IdaiFieldImageDocument>,
             ): IdaiFieldImageDocumentDatastore {
                 return new IdaiFieldImageDocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
                 },

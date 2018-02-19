@@ -40,7 +40,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         protected datastore: PouchdbDatastore,
         protected indexFacade: IndexFacade,
         protected documentCache: DocumentCache<T>,
-        protected typeConverter: TypeConverter,
+        protected typeConverter: TypeConverter<T>,
         protected typeClass: string) { }
 
 
@@ -61,7 +61,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         const document = await this.datastore.fetch(id);
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
-        return this.documentCache.set(this.typeConverter.convert<T>(document));
+        return this.documentCache.set(this.typeConverter.convert(document));
     }
 
 
@@ -92,7 +92,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     public async getRevision(docId: string, revisionId: string): Promise<T> {
 
-        return this.typeConverter.convert<T>(
+        return this.typeConverter.convert(
             await this.datastore.fetchRevision(docId, revisionId));
     }
 
@@ -100,7 +100,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     public async getConflictedRevisions(docId: string): Promise<Array<T>> {
 
         return (await this.datastore.fetchConflictedRevisions(docId))
-            .map(document => this.typeConverter.convert<T>(document));
+            .map(document => this.typeConverter.convert(document));
     }
 
 

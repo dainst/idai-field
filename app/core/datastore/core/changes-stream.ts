@@ -23,7 +23,7 @@ export class ChangesStream {
         private datastore: PouchdbDatastore,
         private indexFacade: IndexFacade,
         private documentCache: DocumentCache<Document>,
-        private typeConverter: TypeConverter) {
+        private typeConverter: TypeConverter<Document>) {
 
         datastore.remoteChangesNotifications().subscribe(document => {
             if (!document || ! document.resource) return;
@@ -48,7 +48,7 @@ export class ChangesStream {
 
         if (!this.autoCacheUpdate) return; // TODO put to constructor
 
-        const convertedDocument = this.typeConverter.convert<Document>(document);
+        const convertedDocument = this.typeConverter.convert(document);
 
         // explicitly assign by value in order for changes to be detected by angular
         if (this.documentCache.get(convertedDocument.resource.id as string)) {

@@ -1,12 +1,12 @@
-<div id="{{document.resource.id ? 'resource-' + document.resource.identifier : 'new-resource'}}"
+<div id="{{makeId()}}"
      class="row-wrapper">
     <div>
         <div [class.text-info]="!document.resource.id">
-            <i>{{typesMap[document.resource.type].label}}</i>
+            <i>{{getLabel()}}</i>
        </div>
 
-        <button class="btn-small btn-link float-right align-middle"
-                (click)="moveInto(document)">
+        <button *ngIf="showMoveIntoOption()" class="btn-small btn-link float-right align-middle"
+                (click)="moveInto()">
             <span class="mdi mdi-arrow-right-drop-circle mdi-18px float-right"></span>
         </button>
 
@@ -14,22 +14,22 @@
     <div>
         <input #identifierInput [(ngModel)]="document.resource.identifier"
                (focus)="startEditing(document.resource.identifier)"
-               (blur)="stopEditing(document, document.resource.identifier)"
-               (keyup)="onKeyup($event, document, document.resource.identifier)"
+               (blur)="stopEditing(document.resource.identifier)"
+               (keyup)="onKeyup($event, document.resource.identifier)"
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
 
     </div>
     <div>
         <input *ngIf="document.resource.id" [(ngModel)]="document.resource.shortDescription"
                (focus)="startEditing(document.resource.shortDescription)"
-               (blur)="stopEditing(document, document.resource.shortDescription)"
-               (keyup)="onKeyup($event, document, document.resource.shortDescription)"
+               (blur)="stopEditing(document.resource.shortDescription)"
+               (keyup)="onKeyup($event, document.resource.shortDescription)"
                (dblclick)="$event.stopPropagation();"
                class="form-control form-control-sm">
     </div>
     <div>
         <button class="btn-small btn-link float-right align-middle"
-                (click)="resourcesComponent.editDocument(document)">
+                (click)="editDocument()">
             <span class="mdi mdi-pencil mdi-18px"></span>
         </button>
     </div>

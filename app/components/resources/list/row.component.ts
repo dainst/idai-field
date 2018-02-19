@@ -12,6 +12,9 @@ import {NavigationService} from '../navigation/navigation-service';
 import {Validator} from '../../../core/model/validator';
 
 
+const RETURN_KEY = 13;
+
+
 @Component({
     selector: 'row',
     moduleId: module.id,
@@ -43,53 +46,47 @@ export class RowComponent implements AfterViewInit {
     ) {}
 
 
-    ngAfterViewInit() {
+    ngAfterViewInit = () => this.focusIdentifierInputIfDocumentIsNew();
 
-        this.focusIdentifierInputIfDocumentIsNew();
-    }
+    public editDocument = () => this.resourcesComponent.editDocument(this.document);
+
+    public startEditing = (fieldValue: string) => this.initialValueOfCurrentlyEditedField = fieldValue;
+
+    public showMoveIntoOption = () => this.navigationService.showMoveIntoOption(this.document);
+
+    public moveInto = () => this.navigationService.moveInto(this.document);
+
+    public getLabel = () => this.typesMap[this.document.resource.type].label;
+
+    public makeId = () => this.document.resource.id ? 'resource-' + this.document.resource.identifier : 'new-resource';
 
 
-    // TODO consider factoring out component for moveInto button, and put this and showMoveIntoOption into it
-    public moveInto = (document: IdaiFieldDocument) => this.navigationService.moveInto(document);
+    public stopEditing(fieldValue: string) {
 
-
-    public showMoveIntoOption = (document: IdaiFieldDocument) => this.navigationService.showMoveIntoOption(document);
-
-
-    public startEditing(fieldValue: string) {
-
+        if (this.initialValueOfCurrentlyEditedField != fieldValue) this.save();
         this.initialValueOfCurrentlyEditedField = fieldValue;
     }
 
 
-    public stopEditing(document: IdaiFieldDocument, fieldValue: string) {
+    public onKeyup(event: KeyboardEvent, fieldValue: string) {
 
-        if (this.initialValueOfCurrentlyEditedField != fieldValue) this.save(document);
-        this.initialValueOfCurrentlyEditedField = fieldValue;
+        if (event.keyCode == RETURN_KEY) this.stopEditing(fieldValue);
     }
 
 
-    public onKeyup(event: KeyboardEvent, document: IdaiFieldDocument, fieldValue: string) {
+    private async save() {
 
-        if (event.keyCode == 13) { // Return key
-            this.stopEditing(document, fieldValue);
-        }
-    }
-
-
-    public async save(document: IdaiFieldDocument) {
-
-        const oldVersion = JSON.parse(JSON.stringify(document));
+        const oldVersion = JSON.parse(JSON.stringify(this.document));
 
         try {
-            await this.validator.validate(document);
+            await this.validator.validate(this.document);
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);
-            return this.restoreIdentifier(document);
+            return this.restoreIdentifier(this.document);
         }
 
         try {
-            await this.persistenceManager.persist(document, this.settingsService.getUsername(),
+            await this.persistenceManager.persist(this.document, this.settingsService.getUsername(),
                 [oldVersion]);
             this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
         } catch(msgWithParams) {
@@ -114,8 +111,6 @@ export class RowComponent implements AfterViewInit {
 
     private focusIdentifierInputIfDocumentIsNew() {
 
-        if (!this.document.resource.identifier) {
-            this.identifierInput.nativeElement.focus();
-        }
+        if (!this.document.resource.identifier) this.identifierInput.nativeElement.focus();
     }
 }

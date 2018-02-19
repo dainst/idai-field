@@ -50,10 +50,11 @@ export class IndexFacade {
 
     private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
 
-        return resultSets.combine(
-            this.fulltextIndexer.get(
-                !query.q || query.q.trim() == '' ? '*' : query.q,
-                query.types));
+        const indexItems = this.fulltextIndexer.get(
+            !query.q || query.q.trim() == '' ? '*' : query.q,
+            query.types);
+
+        return resultSets.combine(indexItems);
     }
 
 
@@ -63,15 +64,16 @@ export class IndexFacade {
      */
     private performConstraints(constraints: { [name: string]: Constraint|string }): ResultSets {
 
-        return Object.keys(constraints).reduce((setsAcc: ResultSets, name: string) => {
+        return Object.keys(constraints)
+            .reduce((setsAcc: ResultSets, name: string) => {
 
-            const {type, value} = Constraint.convertTo(constraints[name]);
+                const {type, value} = Constraint.convertTo(constraints[name]);
 
-            const indexItems = this.constraintIndexer.get(name, value);
-            return indexItems
-                ? setsAcc.combine(indexItems, type)
-                : setsAcc;
+                const indexItems = this.constraintIndexer.get(name, value);
+                return indexItems
+                    ? setsAcc.combine(indexItems, type)
+                    : setsAcc;
 
-        }, ResultSets.make());
+            }, ResultSets.make());
     }
 }

@@ -26,26 +26,10 @@ export class ChangesStream {
         protected typeConverter: TypeConverter) {
 
         datastore.remoteChangesNotifications().subscribe(document => {
-
-            this.indexFacade.put(document); // TODO put after the guards, it was moved here during a refactoring and we want to maintain the original order for now
-
-            if (!this.autoCacheUpdate) return;
-            if (!document || !document.resource) return;
-
-            const convertedDocument: Document = this.typeConverter.convert<Document>(document);
-
-            // explicitly assign by value in order for changes to be detected by angular
-            if (this.documentCache.get(convertedDocument.resource.id as string)) {
-                this.documentCache.reassign(convertedDocument);
-            }
-
-            ObserverUtil.removeClosedObservers(this.observers);
-            this.observers.forEach(observer => observer.next(convertedDocument));
+            if (!document || ! document.resource) return;
+            this.welcomeRemoteDocument(document);
         });
-
-
         datastore.remoteDeletedNotifications().subscribe(document => {
-
             this.indexFacade.remove(document);
         });
     }
@@ -55,9 +39,23 @@ export class ChangesStream {
 
     public remoteChangesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
+    public setAutoCacheUpdate = (autoCacheUpdate: boolean) => this.autoCacheUpdate = autoCacheUpdate;
 
-    public setAutoCacheUpdate(autoCacheUpdate: boolean) {
 
-        this.autoCacheUpdate = autoCacheUpdate;
+    private welcomeRemoteDocument(document: Document) {
+
+        this.indexFacade.put(document); // TODO put after the guards, it was moved here during a refactoring and we want to maintain the original order for now
+
+        if (!this.autoCacheUpdate) return; // TODO put to constructor
+
+        const convertedDocument = this.typeConverter.convert<Document>(document);
+
+        // explicitly assign by value in order for changes to be detected by angular
+        if (this.documentCache.get(convertedDocument.resource.id as string)) {
+            this.documentCache.reassign(convertedDocument);
+        }
+
+        ObserverUtil.removeClosedObservers(this.observers);
+        ObserverUtil.notify(this.observers, convertedDocument);
     }
 }

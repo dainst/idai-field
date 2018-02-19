@@ -20,10 +20,10 @@ export class ChangesStream {
     private observers: Array<Observer<Document>> = [];
 
     constructor(
-        protected datastore: PouchdbDatastore,
-        protected indexFacade: IndexFacade,
-        protected documentCache: DocumentCache<Document>,
-        protected typeConverter: TypeConverter) {
+        private datastore: PouchdbDatastore,
+        private indexFacade: IndexFacade,
+        private documentCache: DocumentCache<Document>,
+        private typeConverter: TypeConverter) {
 
         datastore.remoteChangesNotifications().subscribe(document => {
             if (!document || ! document.resource) return;

@@ -20,7 +20,7 @@ import {BaseList} from '../base-list';
 export class ListComponent extends BaseList {
 
     @Input() ready: boolean;
-    @Input() documents: IdaiFieldDocument[];
+    @Input() documents: Array<IdaiFieldDocument>;
 
     public typesMap: { [type: string]: IdaiType };
 
@@ -36,18 +36,10 @@ export class ListComponent extends BaseList {
     }
 
 
-    public async createNewDocument(newDoc: IdaiFieldDocument) {
+    public async createNewDocument(doc: IdaiFieldDocument) {
 
-        const docs: Array<IdaiFieldDocument> = this.viewFacade.getDocuments() as IdaiFieldDocument[];
-        
-        for (let doc of this.documents) {
-            if (!doc.resource.id) {
-                this.documents.splice(docs.indexOf(doc),1);
-                break;
-            }
-        }
-
-        this.documents.push(newDoc);
+        this.documents = this.documents
+            .filter(_ => _.resource.id)
+            .concat([doc]);
     }
-
 }

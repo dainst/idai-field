@@ -54,7 +54,7 @@ export class IndexItem {
     }
 
 
-    public static generateOrderedResultList(items: Array<IndexItem>): Array<any> {
+    public static generateOrderedResultList(items: Array<SimpleIndexItem>): Array<any> {
 
         return items
             .sort((a: any, b: any) =>

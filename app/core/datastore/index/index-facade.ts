@@ -21,15 +21,15 @@ export class IndexFacade {
 
     public perform(query: Query): any {
 
-        const resultSets = query.constraints ?
-            this.performThem(query.constraints) :
+        let resultSets = query.constraints ?
+            this.performConstraints(query.constraints) :
             ResultSets.make();
 
-        return IndexItem.generateOrderedResultList(
-            (Query.isEmpty(query) && !resultSets.isEmpty() ?
-                resultSets :
-                this.performFulltext(query, resultSets))
-                .collapse() as Array<IndexItem>);
+        resultSets = (Query.isEmpty(query) && !resultSets.isEmpty()
+            ? resultSets
+            : this.performFulltext(query, resultSets));
+
+        return IndexItem.generateOrderedResultList(resultSets.collapse());
     }
 
 
@@ -61,7 +61,7 @@ export class IndexFacade {
      * @param constraints
      * @returns {any} undefined if there is no usable constraint
      */
-    private performThem(constraints: { [name: string]: Constraint|string }): ResultSets {
+    private performConstraints(constraints: { [name: string]: Constraint|string }): ResultSets {
 
         return Object.keys(constraints).reduce((setsAcc: ResultSets, name: string) => {
 

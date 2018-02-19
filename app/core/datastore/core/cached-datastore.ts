@@ -33,6 +33,9 @@ export abstract class CachedDatastore<T extends Document>
     }
 
 
+    public removeRevision = (docId: string, revisionId: string): Promise<void> => this.datastore.removeRevision(docId, revisionId);
+
+
     /**
      * Implements {@link Datastore#create}
      *
@@ -89,11 +92,5 @@ export abstract class CachedDatastore<T extends Document>
 
         await this.datastore.remove(document);
         this.documentCache.remove(document.resource.id);
-    }
-
-
-    public removeRevision(docId: string, revisionId: string): Promise<void> {
-
-        return this.datastore.removeRevision(docId, revisionId);
     }
 }

@@ -69,9 +69,12 @@ export class PouchdbDatastore {
         if (!document.resource.id) document.resource.id = IdGenerator.generateId();
         (document as any)['_id'] = document.resource.id;
 
-        return this.performPut(document, resetFun, (err: any) =>
-            Promise.reject([DatastoreErrors.GENERIC_ERROR, err])
-        );
+        try {
+            return await this.performPut(document);
+        } catch (err) {
+            resetFun(document);
+            throw [DatastoreErrors.GENERIC_ERROR, err];
+        }
     }
 
 
@@ -93,13 +96,16 @@ export class PouchdbDatastore {
         const resetFun = this.resetDocOnErr(document);
         (document as any)['_id'] = document.resource.id;
 
-        return this.performPut(document, resetFun, (err: any) => {
+        try {
+            return await this.performPut(document);
+        } catch (err) {
+            resetFun(document);
             if (err.name && err.name == 'conflict') {
                 throw [DatastoreErrors.SAVE_CONFLICT];
             } else {
                 throw [DatastoreErrors.GENERIC_ERROR, err];
             }
-        })
+        }
     }
 
 
@@ -131,7 +137,7 @@ export class PouchdbDatastore {
 
         try {
             await this.db.remove(docId, revisionId);
-            return await this.fetchNewestRevision(docId);
+            return await this.fetch(docId);
         } catch (genericerr) {
             throw [DatastoreErrors.GENERIC_ERROR, genericerr];
         }
@@ -189,21 +195,10 @@ export class PouchdbDatastore {
     }
 
 
-    private async performPut(document: any, resetFun: any, errFun: any) {
+    private async performPut(document: any) {
 
-        try {
-            document['_rev'] = (await this.db.put(document, { force: true })).rev;
-            return this.fetchNewestRevision(document.resource.id);
-        } catch (err) {
-            resetFun(document);
-            return errFun(err);
-        }
-    }
-
-
-    private fetchNewestRevision(resourceId: string): Promise<Document> {
-
-        return this.fetch(resourceId);
+        document['_rev'] = (await this.db.put(document, { force: true })).rev;
+        return this.fetch(document.resource.id);
     }
 
 

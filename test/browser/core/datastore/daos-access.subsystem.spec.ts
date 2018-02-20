@@ -22,7 +22,7 @@ export function main() {
         function expectErr1(err) {
 
             if (!err) fail("Wrong Err - undefined");
-            if (err.indexOf('Wrong') === -1) fail('Wrong Err' + err);
+            if (err.indexOf('Wrong') === -1) fail('Wrong Err - ' + err);
         }
 
 

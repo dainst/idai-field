@@ -42,17 +42,12 @@ export abstract class CachedDatastore<T extends Document>
     public async create(document: Document): Promise<T> {
 
         this.typeConverter.validate([document.resource.type], this.typeClass);
-
-        return this.documentCache.set(this.typeConverter. // TODO reuse updateIndex
-            convert(await this.datastore.create(document).then(
-                newestRevision => this.indexFacade.put(newestRevision))
-        ));
+        return this.updateIndex(await this.datastore.create(document));
     }
 
 
     /**
      * Implements {@link Datastore#update}
-     *
      * @throws if document is not of type T, determined by resource.type
      */
     public async update(document: Document): Promise<T> {
@@ -70,11 +65,11 @@ export abstract class CachedDatastore<T extends Document>
 
     private updateIndex(document: Document) {
 
-        this.indexFacade.put(document); // TODO should be indexed after reassign, because of reassigns modification of _conflicts
-        const updatedDocument = this.typeConverter.convert(document);
+        this.indexFacade.put(document);
+        const convertedDocument = this.typeConverter.convert(document);
         return !this.documentCache.get(document.resource.id as any)
-            ? this.documentCache.set(updatedDocument)
-            : this.documentCache.reassign(updatedDocument);
+            ? this.documentCache.set(convertedDocument)
+            : this.documentCache.reassign(convertedDocument);
     }
 
 

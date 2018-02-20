@@ -10,7 +10,7 @@ export function main() {
 
     describe('Validator', () => {
 
-        var projectConfiguration = new ProjectConfiguration(
+        const projectConfiguration = new ProjectConfiguration(
             {
                 types: [
                     {
@@ -60,11 +60,11 @@ export function main() {
             }
         );
 
-        var configLoader = {
-            getProjectConfiguration: function() {
-                return new Promise<any>(resolve => resolve(projectConfiguration));
-            }
+
+        const configLoader = {
+            getProjectConfiguration: () => Promise.resolve(projectConfiguration)
         };
+
 
         it('should report nothing', done => {
 
@@ -82,6 +82,7 @@ export function main() {
                 .validate(doc).then(() => done(), msgWithParams => fail(msgWithParams));
         });
 
+
         it('should report nothing when omitting optional property', done => {
 
             const doc = {
@@ -96,6 +97,7 @@ export function main() {
             new Validator(<ConfigLoader> configLoader)
                 .validate(doc).then(() => done(), msgWithParams => fail(msgWithParams));
         });
+
 
         it('should report error when omitting mandatory property', done => {
 
@@ -113,6 +115,7 @@ export function main() {
                 done();
             });
         });
+
 
         it('should report error when leaving mandatory property empty', done => {
 
@@ -195,6 +198,7 @@ export function main() {
                 });
         });
 
+
         it('should report missing relation field definitions', done => {
 
             const doc = {
@@ -216,5 +220,5 @@ export function main() {
                     done();
                 });
         });
-    })
+    });
 }

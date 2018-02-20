@@ -257,15 +257,14 @@ export class SettingsService {
     private static makeUrlFromSyncTarget(serverSetting: any) {
 
         let address = serverSetting['address'];
-
         if (!address) return false;
 
         if (address.indexOf('http') == -1) address = 'http://' + address;
 
-        if (!serverSetting['username'] || !serverSetting['password']) return address;
-
-        return address.replace(/(https?):\/\//, '$1://' +
-            serverSetting['username'] + ':' + serverSetting['password'] + '@');
+        return !serverSetting['username'] || !serverSetting['password']
+            ? address
+            : address.replace(/(https?):\/\//, '$1://' +
+                serverSetting['username'] + ':' + serverSetting['password'] + '@');
     }
 
 
@@ -283,9 +282,7 @@ export class SettingsService {
     private static initSettings(settings: Settings): Settings {
 
         if (!settings.username) settings.username = 'anonymous';
-
         if (!settings.dbs || settings.dbs.length == 0) settings.dbs = ['test'];
-
         if (!settings.isSyncActive) settings.isSyncActive = false;
 
         if (settings.imagestorePath) {

@@ -65,14 +65,14 @@ export class IndexFacade {
     private performConstraints(constraints: { [name: string]: Constraint|string }): ResultSets {
 
         return Object.keys(constraints)
-            .reduce((setsAcc: ResultSets, name: string) => {
+            .reduce((resultSets: ResultSets, name: string) => {
 
                 const {type, value} = Constraint.convertTo(constraints[name]);
 
                 const indexItems = this.constraintIndexer.get(name, value);
                 return indexItems
-                    ? setsAcc.combine(indexItems, type)
-                    : setsAcc;
+                    ? resultSets.combine(indexItems, type)
+                    : resultSets;
 
             }, ResultSets.make());
     }

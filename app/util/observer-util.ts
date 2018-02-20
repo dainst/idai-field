@@ -8,7 +8,8 @@ export class ObserverUtil {
 
     public static notify<A>(observers: Array<Observer<A>>, a: A) {
 
-        for (let observer of observers) observer.next(a);
+        // TODO call removeClosedObservers
+        for (let observer of observers) observer.next(a); // TODO handle error send to log.error
     }
 
 

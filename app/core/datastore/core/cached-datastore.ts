@@ -33,9 +33,6 @@ export abstract class CachedDatastore<T extends Document>
     }
 
 
-    public removeRevision = (docId: string, revisionId: string): Promise<void> => this.datastore.removeRevision(docId, revisionId);
-
-
     /**
      * Implements {@link Datastore#create}
      *
@@ -46,7 +43,7 @@ export abstract class CachedDatastore<T extends Document>
 
         this.typeConverter.validate([document.resource.type], this.typeClass);
 
-        return this.documentCache.set(this.typeConverter.
+        return this.documentCache.set(this.typeConverter. // TODO reuse updateIndex
             convert(await this.datastore.create(document).then(
                 newestRevision => this.indexFacade.put(newestRevision))
         ));
@@ -61,11 +58,20 @@ export abstract class CachedDatastore<T extends Document>
     public async update(document: Document): Promise<T> {
 
         this.typeConverter.validate([document.resource.type], this.typeClass);
+        return this.updateIndex(await this.datastore.update(document));
+    }
 
-        const updatedDocument = this.typeConverter.
-            convert(await this.datastore.update(document).then(
-                newestRevision => this.indexFacade.put(newestRevision)));
 
+    public async removeRevision(docId: string, revisionId: string): Promise<T> {
+
+        return this.updateIndex(await this.datastore.removeRevision(docId, revisionId));
+    }
+
+
+    private updateIndex(document: Document) {
+
+        this.indexFacade.put(document); // TODO should be indexed after reassign, because of reassigns modification of _conflicts
+        const updatedDocument = this.typeConverter.convert(document);
         return !this.documentCache.get(document.resource.id as any)
             ? this.documentCache.set(updatedDocument)
             : this.documentCache.reassign(updatedDocument);

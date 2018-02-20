@@ -14,6 +14,7 @@ import {EditSaveDialogComponent} from './edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
 import {DatastoreErrors} from 'idai-components-2/datastore';
+import {Observer} from 'rxjs/Observer';
 
 
 @Component({

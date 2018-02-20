@@ -35,8 +35,6 @@ export class ChangesStream {
     }
 
 
-    public allChangesAndDeletionsNotifications = () => this.datastore.allChangesAndDeletionsNotifications();
-
     public remoteChangesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
     public setAutoCacheUpdate = (autoCacheUpdate: boolean) => this.autoCacheUpdate = autoCacheUpdate;

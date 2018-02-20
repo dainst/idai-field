@@ -4,6 +4,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {RoutingService} from '../routing-service';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {ChangesStream} from '../../core/datastore/core/changes-stream';
+import {DocumentHolder} from '../docedit/document-holder';
 
 @Component({
     moduleId: module.id,
@@ -30,10 +31,13 @@ export class TaskbarComponent {
                 private settings: SettingsService,
                 private elementRef: ElementRef,
                 private renderer: Renderer,
-                private routingService: RoutingService) {
+                private routingService: RoutingService,
+                private documentHolder: DocumentHolder) {
 
         this.fetchConflicts();
-        this.subscribeForChanges();
+
+        this.documentHolder.changes().subscribe(document => this.fetchConflicts());
+        this.changesStream.remoteChangesNotifications().subscribe(() => this.fetchConflicts());
 
         settings.syncStatusChanges().subscribe(c => {
             if (c == 'disconnected') {
@@ -56,14 +60,6 @@ export class TaskbarComponent {
             this.popover.open();
             this.cancelClickListener = this.startClickListener();
         }
-    }
-
-
-    private subscribeForChanges(): void {
-
-        this.changesStream.allChangesAndDeletionsNotifications().subscribe(() => {
-            this.fetchConflicts();
-        });
     }
 
 

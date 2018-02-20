@@ -12,6 +12,9 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {Injectable} from '@angular/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {flow} from "tsfun";
+import {Observer} from 'rxjs/Observer';
+import {ObserverUtil} from '../../util/observer-util';
+import {Observable} from 'rxjs/Observable';
 
 
 @Injectable()
@@ -36,6 +39,9 @@ export class DocumentHolder {
     public clonedDocument: Document;
 
 
+    private observers: Array<Observer<Document>> = [];
+
+
     constructor(
         private projectConfiguration: ProjectConfiguration,
         private persistenceManager: PersistenceManager,
@@ -48,6 +54,8 @@ export class DocumentHolder {
 
     }
 
+
+    public changes = (): Observable<Document> => ObserverUtil.register(this.observers);
 
     public isChanged = () => this.documentEditChangeMonitor.isChanged();
 
@@ -84,6 +92,7 @@ export class DocumentHolder {
         await this.removeInspectedRevisions();
         await this.fetchLatestRevision();
         this.documentEditChangeMonitor.reset();
+        ObserverUtil.notify(this.observers, this.clonedDocument);
     }
 
 
@@ -154,7 +163,9 @@ export class DocumentHolder {
         this.inspectedRevisionsIds = [];
 
         return Promise.all(promises)
-            .catch(() => Promise.reject([M.DATASTORE_GENERIC_ERROR]));
+            .catch(err => {
+                Promise.reject([M.DATASTORE_GENERIC_ERROR,err])
+            });
     }
 
 

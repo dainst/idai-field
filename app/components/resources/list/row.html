@@ -20,7 +20,7 @@
 
     </div>
     <div>
-        <input *ngIf="document.resource.id" [(ngModel)]="document.resource.shortDescription"
+        <input [(ngModel)]="document.resource.shortDescription"
                (focus)="startEditing(document.resource.shortDescription)"
                (blur)="stopEditing(document.resource.shortDescription)"
                (keyup)="onKeyup($event, document.resource.shortDescription)"

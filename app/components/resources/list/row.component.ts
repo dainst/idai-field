@@ -22,7 +22,8 @@ const RETURN_KEY = 13;
 })
 /**
  * @author Fabian Z.
- * @autor Thomas Kleinke
+ * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class RowComponent implements AfterViewInit {
 
@@ -76,35 +77,31 @@ export class RowComponent implements AfterViewInit {
 
     private async save() {
 
-        const oldVersion = JSON.parse(JSON.stringify(this.document));
-
         try {
             await this.validator.validate(this.document);
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);
-            return this.restoreIdentifier(this.document);
+            this.restoreIdentifier(this.document);
+            return;
         }
 
+        const oldVersion = JSON.parse(JSON.stringify(this.document));
         try {
             await this.persistenceManager.persist(this.document, this.settingsService.getUsername(),
                 [oldVersion]);
-            this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
         } catch(msgWithParams) {
-            return this.messages.add(msgWithParams);
+            this.messages.add(msgWithParams);
         }
-
-        if (!oldVersion.resource.id) await this.viewFacade.populateDocumentList();
     }
 
 
     private async restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
 
         try {
-            document.resource.identifier =
-                (await this.datastore.get(document.resource.id as any, {skip_cache: true})
-                ).resource.identifier;
+            const old = await this.datastore.get(document.resource.id as any, {skip_cache: true});
+            document.resource.identifier = old.resource.identifier;
         } catch(_) {
-            return [M.DATASTORE_NOT_FOUND];
+            this.messages.add([M.DATASTORE_NOT_FOUND]);
         }
     }
 

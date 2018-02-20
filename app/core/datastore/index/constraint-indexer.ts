@@ -104,13 +104,9 @@ export class ConstraintIndexer {
                 if (!elForPath || (elForPath instanceof Array && (!elForPath.length || elForPath.length === 0))) {
                     return ConstraintIndexer.addToIndex(this.existIndex, doc, indexDefinition.path, 'UNKNOWN');
                 }
-
                 // TODO remove as soon as auto conflict resolving is properly implemented. this is a hack to make sure the project document is never listed as conflicted
-                if (doc.resource.type == 'Project') {
-                    ConstraintIndexer.addToIndex(this.existIndex, doc, indexDefinition.path, 'UNKNOWN');
-                } else {
-                    ConstraintIndexer.addToIndex(this.existIndex, doc, indexDefinition.path, 'KNOWN');
-                }
+                ConstraintIndexer.addToIndex(this.existIndex, doc, indexDefinition.path,
+                    doc.resource.type == 'Project' ? 'UNKNOWN' : 'KNOWN');
                 break;
 
             case 'match':

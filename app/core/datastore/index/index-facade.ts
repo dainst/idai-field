@@ -37,7 +37,6 @@ export class IndexFacade {
 
         this.constraintIndexer.put(document);
         this.fulltextIndexer.put(document);
-        return document;
     }
 
 

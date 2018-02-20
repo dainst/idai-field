@@ -11,7 +11,7 @@ import {ImageTypeUtility} from '../../common/image-type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {Injectable} from '@angular/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {flow} from "tsfun";
+import {flow, includedIn, isNot} from "tsfun";
 import {Observer} from 'rxjs/Observer';
 import {ObserverUtil} from '../../util/observer-util';
 import {Observable} from 'rxjs/Observable';
@@ -23,7 +23,6 @@ import {Observable} from 'rxjs/Observable';
  * @author Thomas Kleinke
  */
 export class DocumentHolder {
-
 
     /**
      * These are the revisions (of the cloned document as long as not saved)
@@ -103,14 +102,7 @@ export class DocumentHolder {
         if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
         if (!conflictsAfterSave) return false;
 
-        // TODO factor out abstract method which tests one set contains at least one element of another
-        for (let conflict of conflictsAfterSave) {
-            if (conflictsBeforeSave.indexOf(conflict) == -1) {
-                return true;
-            }
-        }
-
-        return false;
+        return conflictsAfterSave.find(isNot(includedIn(conflictsBeforeSave))) != undefined;
     }
 
 

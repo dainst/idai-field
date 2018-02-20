@@ -205,53 +205,6 @@ export function main() {
         });
 
 
-        it('should filter with unknown constraint', () => {
-
-            const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
-            const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
-
-            const q: Query = {
-                q: 'blub',
-                constraints: {
-                    'unknown' : 'id1',
-                }
-            };
-
-            indexFacade.put(doc1);
-            indexFacade.put(doc2);
-
-            const result = indexFacade.perform(q);
-            expect(result).toContain('id1');
-            expect(result).toContain('id2');
-            expect(result.length).toBe(2);
-            expect(console.warn).toHaveBeenCalled();
-        });
-
-
-        it('should filter with one known and one unknown constraint ', () => {
-
-            const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
-            const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
-            doc2.resource.relations['liesWithin'] = ['id1'];
-
-            const q: Query = {
-                q: 'blub',
-                constraints: {
-                    'unknown' : 'id1',
-                    'liesWithin:contain' : 'id1'
-                }
-            };
-
-            indexFacade.put(doc1);
-            indexFacade.put(doc2);
-
-            const result = indexFacade.perform(q);
-            expect(result[0]).toBe('id2');
-            expect(result.length).toBe(1);
-            expect(console.warn).toHaveBeenCalled();
-        });
-
-
         it('should sort by last modified descending', () => {
 
             const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');

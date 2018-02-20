@@ -75,22 +75,18 @@ export class ConstraintIndexer {
     }
 
 
-    public get(indexName: string, matchTerm: string): Array<IndexItem>|undefined {
+    public get(indexName: string, matchTerm: string): Array<IndexItem> {
 
         const indexDefinition: IndexDefinition = this.indexDefinitions[indexName];
+        if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
 
-        if (!indexDefinition) {
-            console.warn('Ignoring unknown constraint "' + indexName + '".');
-            return undefined; // TODO throw instead of returning undefined
-        }
+        const index = this.getIndex(indexDefinition)[indexDefinition.path][matchTerm];
+        if (!index) return [];
 
-        const result = this.getIndex(indexDefinition)[indexDefinition.path][matchTerm];
-        if (!result) return [];
-
-        return Object.keys(result).map(id => { return {
+        return Object.keys(index).map(id => { return {
             id: id,
-            date: result[id].date,
-            identifier: result[id].identifier
+            date: index[id].date,
+            identifier: index[id].identifier
         }});
     }
 

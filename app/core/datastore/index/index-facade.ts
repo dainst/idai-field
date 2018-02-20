@@ -57,21 +57,13 @@ export class IndexFacade {
     }
 
 
-    /**
-     * @param constraints
-     * @returns {any} undefined if there is no usable constraint
-     */
     private performConstraints(constraints: { [name: string]: Constraint|string }): ResultSets {
 
         return Object.keys(constraints)
             .reduce((resultSets: ResultSets, name: string) => {
 
                 const {type, value} = Constraint.convertTo(constraints[name]);
-
-                const indexItems = this.constraintIndexer.get(name, value);
-                return indexItems
-                    ? resultSets.combine(indexItems, type)
-                    : resultSets;
+                return resultSets.combine(this.constraintIndexer.get(name, value), type)
 
             }, ResultSets.make());
     }

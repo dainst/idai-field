@@ -178,22 +178,6 @@ export function main() {
         });
 
 
-        it('ask for non existing index', () => {
-
-            ci = new ConstraintIndexer({});
-
-            expect(ci.get('identifier:match', 'identifier1')).toEqual(undefined);
-        });
-
-
-        it('ask without constraints', () => {
-
-            ci = new ConstraintIndexer({});
-
-            expect(ci.get(undefined)).toEqual(undefined);
-        });
-
-
         it('ask for one existing index and one nonexisting index', () => {
 
             ci = new ConstraintIndexer({

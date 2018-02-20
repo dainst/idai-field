@@ -36,7 +36,7 @@ export class TaskbarComponent {
 
         this.fetchConflicts();
 
-        this.documentHolder.changes().subscribe(document => this.fetchConflicts());
+        this.documentHolder.changes().subscribe(() => this.fetchConflicts());
         this.changesStream.remoteChangesNotifications().subscribe(() => this.fetchConflicts());
 
         settings.syncStatusChanges().subscribe(c => {

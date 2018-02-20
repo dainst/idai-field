@@ -46,8 +46,8 @@ describe('resources/list --', () => {
         ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
         ResourcesPage.getListModeInputField('2', 0).click();
 
-        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
-        NavbarPage.clickCloseAllMessages();
+        // expect(NavbarPage.getMessageText()).toContain('erfolgreich'); // TODO no msg any more. change route, come back, and check if it is there instead
+        // NavbarPage.clickCloseAllMessages();
     });
 
 

@@ -33,10 +33,10 @@ export class IndexFacade {
     }
 
 
-    public put(document: Document) {
+    public put(document: Document, skipRemoval: boolean = false) {
 
-        this.constraintIndexer.put(document);
-        this.fulltextIndexer.put(document);
+        this.constraintIndexer.put(document, skipRemoval);
+        this.fulltextIndexer.put(document, skipRemoval);
     }
 
 
@@ -44,6 +44,13 @@ export class IndexFacade {
 
         this.constraintIndexer.remove(document);
         this.fulltextIndexer.remove(document);
+    }
+
+
+    public clear() {
+
+        this.constraintIndexer.clear();
+        this.fulltextIndexer.clear();
     }
 
 

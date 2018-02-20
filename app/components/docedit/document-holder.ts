@@ -155,7 +155,7 @@ export class DocumentHolder {
 
     private removeInspectedRevisions(): Promise<any> {
 
-        let promises = [] as any;
+        const promises = [] as any;
         for (let revisionId of this.inspectedRevisionsIds) {
             promises.push(this.datastore.removeRevision(this.clonedDocument.resource.id as any, revisionId) as never);
         }

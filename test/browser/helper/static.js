@@ -28,12 +28,12 @@ var Static = (function () {
     Static.createPouchdbDatastore = function (dbname) {
         var _a = Static.createIndexers(), constraintIndexer = _a[0], fulltextIndexer = _a[1];
         var documentCache = new document_cache_1.DocumentCache();
-        var pouchdbManager = new pouchdb_manager_1.PouchdbManager(undefined, constraintIndexer, fulltextIndexer);
+        var indexFacade = new index_facade_1.IndexFacade(constraintIndexer, fulltextIndexer);
+        var pouchdbManager = new pouchdb_manager_1.PouchdbManager(undefined, indexFacade);
         var appState = new app_state_1.AppState();
         var conflictResolvingExtension = jasmine.createSpyObj('conflictResolvingExtension', ['setDatastore', 'setConflictResolver', 'autoResolve', 'setDb']);
         conflictResolvingExtension.autoResolve.and.callFake(function () { return Promise.resolve(); });
         var conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
-        var indexFacade = new index_facade_1.IndexFacade(constraintIndexer, fulltextIndexer);
         var datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbManager, appState, conflictResolvingExtension, conflictResolver);
         pouchdbManager.setProject(dbname);
         return {

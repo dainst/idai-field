@@ -104,6 +104,7 @@ export class SettingsService {
             .then(() => this.storeSettings());
     }
 
+
     /**
      * Retrieve the current settings.
      * Returns a clone of the settings object in order to prevent the settings
@@ -114,6 +115,7 @@ export class SettingsService {
 
         return JSON.parse(JSON.stringify(this.settings)); // deep copy
     }
+
 
     /**
      * Sets project settings
@@ -145,10 +147,12 @@ export class SettingsService {
         return p;
     }
 
+
     public deleteProject(name: string) {
 
         return this.pouchdbManager.destroyDb(name);
     }
+
 
     public startSync(): Promise<any> {
 
@@ -173,6 +177,7 @@ export class SettingsService {
             syncState.onChange.subscribe(() => this.syncStatusObservers.forEach((o: Observer<any>) => o.next('changed')));
         });
     }
+
 
     public restartSync() {
 
@@ -213,6 +218,7 @@ export class SettingsService {
         };
     }
 
+
     private static validateAddress(address: any) {
 
         if (address == '') return true;
@@ -220,6 +226,7 @@ export class SettingsService {
         const re = new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$');
         return re.test(address);
     }
+
 
     private makeFirstOfDbsArray(projectName: string) {
 
@@ -229,6 +236,7 @@ export class SettingsService {
             this.settings.dbs.unshift(projectName);
         }
     }
+
 
     /**
      * Observe synchronization status changes. The following states can be
@@ -245,6 +253,7 @@ export class SettingsService {
         });
     }
 
+
     private static makeUrlFromSyncTarget(serverSetting: any) {
 
         let address = serverSetting['address'];
@@ -259,10 +268,12 @@ export class SettingsService {
             serverSetting['username'] + ':' + serverSetting['password'] + '@');
     }
 
+
     private storeSettings(): Promise<any> {
 
         return this.settingsSerializer.store(this.settings);
     }
+
 
     /**
      * initializes settings to default values

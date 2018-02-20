@@ -42,15 +42,13 @@ import {IndexFacade} from './index/index-facade';
 
         { provide: PouchdbManager, useFactory: function(
             sampleDataLoader: SampleDataLoader,
-            constraintIndexer: ConstraintIndexer,
-            fulltextIndexer: FulltextIndexer
+            indexFacade: IndexFacade
         ){
             return new PouchdbManager(
                 sampleDataLoader,
-                constraintIndexer,
-                fulltextIndexer);
+                indexFacade);
         },
-            deps: [SampleDataLoader, ConstraintIndexer, FulltextIndexer]
+            deps: [SampleDataLoader, IndexFacade]
         },
 
         { provide: ConflictResolver, useClass: IdaiFieldConflictResolver },

@@ -6,7 +6,7 @@ import {SyncState} from './sync-state';
 import {Observable} from 'rxjs/Observable';
 import {ConstraintIndexer} from "../index/constraint-indexer";
 import {FulltextIndexer} from "../index/fulltext-indexer";
-import {ModelUtil} from '../../model/model-util';
+import {IndexFacade} from "../index/index-facade";
 
 const remote = require('electron').remote;
 
@@ -28,18 +28,16 @@ export class PouchdbManager {
 
     constructor(
         private sampleDataLoader: SampleDataLoader,
-        private constraintIndexer: ConstraintIndexer,
-        private fulltextIndexer: FulltextIndexer) {
+        private indexFacade: IndexFacade) {
 
-        let dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
+        const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
         this.dbProxy = new PouchdbProxy(dbReady);
     }
 
 
     public resetForE2E() {
 
-        let dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
-
+        const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
         Object.assign(this.dbProxy, new PouchdbProxy(dbReady));
         this.setProject('test');
     }
@@ -77,7 +75,7 @@ export class PouchdbManager {
      */
     public setupSync(url: string): Promise<SyncState> {
 
-        let fullUrl = url + '/' + this.name;
+        const fullUrl = url + '/' + this.name;
         console.log('start syncing');
 
         return (this.getDb() as any).ready().then((db: any) => {
@@ -115,7 +113,7 @@ export class PouchdbManager {
      */
     public getDb(): PouchdbProxy {
 
-        return this.dbProxy as any;
+        return this.dbProxy as PouchdbProxy;
     }
 
 
@@ -139,7 +137,7 @@ export class PouchdbManager {
      * and not overwritten.
      *
      */
-    public createDb(name: string, doc: any) {
+    public async createDb(name: string, doc: any) {
 
         let db = this.createPouchDBObject(name);
 
@@ -150,28 +148,22 @@ export class PouchdbManager {
                 );
         }
 
-        return promise
-            .then(() => db.get(name)
-                // create project only if it does not exist,
-                // which can happen if the db already existed
-                .catch(() => db.put(doc))
-            );
+        await promise;
+        return db.get(name)
+            // create project only if it does not exist,
+            // which can happen if the db already existed
+            .catch(() => db.put(doc));
     }
 
 
     private index() {
 
         return this.db.allDocs({include_docs: true, conflicts: true},(err: any, resultDocs: any) => {
-            this.constraintIndexer.clear();
-            this.fulltextIndexer.clear();
+            this.indexFacade.clear();
 
-            for (let row of resultDocs.rows) {
-
-                if (PouchdbManager.isDesignDoc(row)) continue;
-
-                this.constraintIndexer.put(row.doc, true);
-                this.fulltextIndexer.put(row.doc, true);
-            }
+            (resultDocs.rows as Array<any>)
+                .filter(row => !PouchdbManager.isDesignDoc(row))
+                .forEach(row => this.indexFacade.put(row.doc, true));
 
             (this.resolveDbReady as any)(this.db)
         })

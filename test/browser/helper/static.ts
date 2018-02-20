@@ -33,9 +33,10 @@ export class Static {
 
         const [constraintIndexer, fulltextIndexer] = Static.createIndexers();
 
-        let documentCache = new DocumentCache<IdaiFieldDocument>();
-        let pouchdbManager = new PouchdbManager
-            (undefined, constraintIndexer, fulltextIndexer);
+        const documentCache = new DocumentCache<IdaiFieldDocument>();
+        const indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
+        const pouchdbManager = new PouchdbManager
+            (undefined, indexFacade);
 
         const appState = new AppState();
         const conflictResolvingExtension = jasmine.createSpyObj('conflictResolvingExtension',
@@ -43,9 +44,8 @@ export class Static {
         conflictResolvingExtension.autoResolve.and.callFake(() => Promise.resolve());
         const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
 
-        const indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
 
-        let datastore = new PouchdbDatastore(
+        const datastore = new PouchdbDatastore(
             pouchdbManager, appState,
             conflictResolvingExtension,
             conflictResolver);

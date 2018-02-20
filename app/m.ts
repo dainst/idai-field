@@ -634,7 +634,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES]={
-            content: 'Falsche Zahlenwerte für das Felder \'{1}\' der Ressource vom Typ \'{0}\'.',
+            content: 'Falsche Zahlenwerte für die Felder \'{1}\' der Ressource vom Typ \'{0}\'.',
             level: 'danger',
             params: [],
             hidden: false

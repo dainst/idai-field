@@ -49,11 +49,8 @@ export class IndexFacade {
 
     private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
 
-        const indexItems = this.fulltextIndexer.get(
-            !query.q || query.q.trim() == '' ? '*' : query.q,
-            query.types);
-
-        return resultSets.combine(indexItems);
+        const q = !query.q || query.q.trim() == '' ? '*' : query.q;
+        return resultSets.combine(this.fulltextIndexer.get(q, query.types));
     }
 
 

@@ -28,6 +28,16 @@ export function main() {
                             {
                                 name: 'mandatory',
                                 mandatory: true
+                            },
+                            {
+                                name: 'number1',
+                                label: 'number1',
+                                inputType: 'float'
+                            },
+                            {
+                                name: 'number2',
+                                label: 'number2',
+                                inputType: 'float'
                             }
                         ]
                     },
@@ -217,6 +227,50 @@ export function main() {
                 msgWithParams => {
                     expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDRELATIONFIELDS, 'T2',
                         'isRelatedTo, isDepictedIn']);
+                    done();
+                });
+        });
+
+
+        it('should report invalid numeric field', done => {
+
+            const doc = {
+                resource: {
+                    id: '1',
+                    type: 'T',
+                    mandatory: 'm',
+                    number1: 'ABC',
+                    relations: {}
+                }
+            };
+
+            new Validator(<ConfigLoader> configLoader).validate(doc).then(
+                () => fail(),
+                msgWithParams => {
+                    expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE, 'T', 'number1']);
+                    done();
+                });
+        });
+
+
+        it('should report invalid numeric fields', done => {
+
+            const doc = {
+                resource: {
+                    id: '1',
+                    type: 'T',
+                    mandatory: 'm',
+                    number1: 'ABC',
+                    number2: 'DEF',
+                    relations: {}
+                }
+            };
+
+            new Validator(<ConfigLoader> configLoader).validate(doc).then(
+                () => fail(),
+                msgWithParams => {
+                    expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES, 'T',
+                        'number1, number2']);
                     done();
                 });
         });

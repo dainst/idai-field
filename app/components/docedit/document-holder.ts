@@ -38,7 +38,6 @@ export class DocumentHolder {
      */
     public clonedDocument: Document;
 
-
     private observers: Array<Observer<Document>> = [];
 
 

@@ -42,9 +42,9 @@ export class ChangesStream {
 
     private welcomeRemoteDocument(document: Document) {
 
-        this.indexFacade.put(document); // TODO put after the guards, it was moved here during a refactoring and we want to maintain the original order for now
+        this.indexFacade.put(document);
 
-        if (!this.autoCacheUpdate) return; // TODO put to constructor
+        if (!this.autoCacheUpdate) return;
 
         const convertedDocument = this.typeConverter.convert(document);
 

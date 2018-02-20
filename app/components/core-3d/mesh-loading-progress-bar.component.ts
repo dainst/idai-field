@@ -19,4 +19,10 @@ export class MeshLoadingProgressBarComponent {
 
         meshLoadingProgress.progressNotifications().subscribe(progress => this.progress = progress);
     }
+
+
+    public isInProgress(): boolean {
+
+        return this.progress >= 0 && this.progress < 100;
+    }
 }

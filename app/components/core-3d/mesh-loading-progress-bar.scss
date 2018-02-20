@@ -1,10 +1,23 @@
 .progress-bar-wrapper {
-  opacity: 1;
+  opacity: 0;
   width: 150px;
-
   -webkit-transition: opacity 1.5s ease-in-out;
 
-  &.full-progress {
-    opacity: 0;
+  &.in-progress {
+    opacity: 1;
+  }
+
+  .spinner {
+    float: left;
+  }
+
+  ngb-progressbar {
+    position: relative;
+    top: 12px;
+    left: 15px;
+
+    .progress-bar {
+      background-color: $navbar-default-bg !important;
+    }
   }
 }

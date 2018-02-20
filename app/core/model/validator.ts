@@ -3,6 +3,7 @@ import {ConfigLoader, ProjectConfiguration, FieldDefinition,
     RelationDefinition} from 'idai-components-2/configuration';
 import {Document, Resource} from 'idai-components-2/core';
 import {M} from '../../m';
+import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../util/number-util';
 
 
 @Injectable()
@@ -168,34 +169,33 @@ export class Validator {
         const numericInputTypes: string[] = ['unsignedInt', 'float', 'unsignedFloat'];
         const invalidFields: string[] = [];
 
-        for (let i in projectFields) {
-            let fieldDef = projectFields[i] as any;
+        projectFields.filter(fieldDefinition => {
+            return fieldDefinition.inputType && numericInputTypes.includes(fieldDefinition.inputType)
+        }).forEach(fieldDefinition => {
+            let value = resource[fieldDefinition.name];
 
-            if (fieldDef.hasOwnProperty('inputType')) {
-                let value = resource[fieldDef.name];
-
-                if (value && numericInputTypes.indexOf(fieldDef['inputType']) != -1) {
-                    let valueIsValid = false;
-
-                    if (fieldDef['inputType'] == 'unsignedInt') {
-                        valueIsValid = value >>> 0 === parseFloat(value);
-                    }
-
-                    if (fieldDef['inputType'] == 'unsignedFloat') {
-                        valueIsValid = 0 <= (value = parseFloat(value));
-                    }
-                    if (fieldDef['inputType'] == 'float') {
-                        valueIsValid = !isNaN(value = parseFloat(value));
-                    }
-
-                    if (!valueIsValid) {
-                        invalidFields.push(fieldDef.label as any);
-                    }
-                }
+            if (value && numericInputTypes.includes(fieldDefinition.inputType as string)
+                    && !Validator.validateNumber(value, fieldDefinition.inputType as string)) {
+                invalidFields.push(fieldDefinition.label as any);
             }
-        }
+        });
 
         return (invalidFields.length > 0) ? invalidFields : undefined;
+    }
+
+
+    private static validateNumber(value: string, inputType: string): boolean {
+
+        switch(inputType) {
+            case 'unsignedInt':
+                return validateUnsignedInt(value);
+            case 'float':
+                return validateFloat(value);
+            case 'unsignedFloat':
+                return validateUnsignedFloat(value);
+            default:
+                return false;
+        }
     }
 
 

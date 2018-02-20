@@ -73,7 +73,7 @@
     "systemjs": "0.19.31",
     "zone.js": "0.8.11",
     "express-pouchdb-dainst": "1000.0.3",
-    "idai-components-2": "1.6.1",
+    "idai-components-2": "1.6.2",
     "tsfun": "1.7.0"
   },
   "devDependencies": {

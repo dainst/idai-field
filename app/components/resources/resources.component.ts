@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, Renderer} from '@angular/core';
+import {AfterViewChecked, Component, Renderer2} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
@@ -36,7 +36,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private viewFacade: ViewFacade,
                 private routingService: RoutingService,
                 private doceditProxy: DoceditLauncher,
-                private renderer: Renderer,
+                private renderer: Renderer2,
                 private messages: Messages,
                 private loading: Loading
     ) {
@@ -177,7 +177,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private initializeClickEventListener() {
 
-        this.renderer.listenGlobal('document', 'click', (event: any) =>
+        this.renderer.listen('document', 'click', (event: any) =>
             this.clickEventObservers.forEach(observer => observer.next(event)));
     }
 

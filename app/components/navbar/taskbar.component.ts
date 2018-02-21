@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, ViewChild} from '@angular/core';
+import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {SettingsService} from '../../core/settings/settings-service';
 import {RoutingService} from '../routing-service';
@@ -30,7 +30,7 @@ export class TaskbarComponent {
                 private changesStream: ChangesStream,
                 private settings: SettingsService,
                 private elementRef: ElementRef,
-                private renderer: Renderer,
+                private renderer: Renderer2,
                 private routingService: RoutingService,
                 private documentHolder: DocumentHolder) {
 
@@ -72,7 +72,7 @@ export class TaskbarComponent {
 
     private startClickListener(): Function {
 
-        return this.renderer.listenGlobal('document', 'click', (event: any) => {
+        return this.renderer.listen('document', 'click', (event: any) => {
             this.handleClick(event);
         });
     }

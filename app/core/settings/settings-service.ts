@@ -9,6 +9,7 @@ import {AppState} from './app-state';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
 import {M} from '../../m';
 import {Observer} from 'rxjs/Observer';
+import {unique} from "tsfun/src/arrays/sets";
 
 const app = require('electron').remote.app;
 
@@ -44,6 +45,19 @@ export class SettingsService {
     }
 
 
+    /**
+     * Retrieve the current settings.
+     * Returns a clone of the settings object in order to prevent the settings
+     * object from being changed without explicitly saving the settings.
+     * @returns {Settings} the current settings
+     */
+    public getSettings = (): Settings => JSON.parse(JSON.stringify(this.settings)); // deep copy
+
+    public deleteProject = (name: string) => this.pouchdbManager.destroyDb(name);
+
+    public getUsername = () => this.settings.username;
+
+
     public init() {
 
         this.ready = this.settingsSerializer.load()
@@ -62,12 +76,6 @@ export class SettingsService {
     public getSelectedProject(): string|undefined {
         
         if (this.settings.dbs && this.settings.dbs.length > 0) return this.settings.dbs[0];
-    }
-
-
-    public getUsername(): string {
-
-        return this.settings.username;
     }
 
 
@@ -101,19 +109,7 @@ export class SettingsService {
                     console.error("something went wrong with imagestore.setPath",errWithParams);
                 }
             })
-            .then(() => this.storeSettings());
-    }
-
-
-    /**
-     * Retrieve the current settings.
-     * Returns a clone of the settings object in order to prevent the settings
-     * object from being changed without explicitly saving the settings.
-     * @returns {Settings} the current settings
-     */
-    public getSettings(): Settings {
-
-        return JSON.parse(JSON.stringify(this.settings)); // deep copy
+            .then(() => this.settingsSerializer.store(this.settings));
     }
 
 
@@ -126,31 +122,19 @@ export class SettingsService {
      * @param create
      * @returns {any}
      */
-    public setProjectSettings(projects: string[], selectedProject: string,
+    public async setProjectSettings(projects: string[], selectedProject: string,
                               storeSettings: boolean = true, create: boolean = false): Promise<any> {
 
-        this.settings.dbs = projects.slice(0);
-        this.makeFirstOfDbsArray(selectedProject);
+        this.settings.dbs = unique([selectedProject].concat(projects));
 
-        let p: Promise<any> = Promise.resolve();
-        if (storeSettings) {
-            p = p.then(() => this.storeSettings());
-        }
+        if (storeSettings) await this.settingsSerializer.store(this.settings);
 
         if (create) {
-            p = p.then(() => {
-                return this.pouchdbManager.createDb(
-                    selectedProject, this.makeProjectDoc(selectedProject));
-            });
+            await this.pouchdbManager.createDb(
+                selectedProject,
+                SettingsService.makeProjectDoc(selectedProject, this.settings.username)
+            );
         }
-
-        return p;
-    }
-
-
-    public deleteProject(name: string) {
-
-        return this.pouchdbManager.destroyDb(name);
     }
 
 
@@ -195,48 +179,6 @@ export class SettingsService {
             });
     }
 
-    private stopSync() {
-
-        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
-        this.pouchdbManager.stopSync();
-        this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
-    }
-
-    private makeProjectDoc(name: string) {
-
-        return {
-            _id: name,
-            resource: {
-                type: 'Project',
-                identifier: name,
-                id: name,
-                coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
-                relations: {}
-            },
-            created: { user: this.settings.username, date: new Date() },
-            modified: [{ user: this.settings.username, date: new Date() }]
-        };
-    }
-
-
-    private static validateAddress(address: any) {
-
-        if (address == '') return true;
-
-        const re = new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$');
-        return re.test(address);
-    }
-
-
-    private makeFirstOfDbsArray(projectName: string) {
-
-        const index = this.settings.dbs.indexOf(projectName);
-        if (index != -1) {
-            this.settings.dbs.splice(index, 1);
-            this.settings.dbs.unshift(projectName);
-        }
-    }
-
 
     /**
      * Observe synchronization status changes. The following states can be
@@ -254,6 +196,38 @@ export class SettingsService {
     }
 
 
+    private stopSync() {
+
+        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
+        this.pouchdbManager.stopSync();
+        this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
+    }
+
+
+    private static makeProjectDoc(name: string, username: string) {
+
+        return {
+            _id: name,
+            resource: {
+                type: 'Project',
+                identifier: name,
+                id: name,
+                coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
+                relations: {}
+            },
+            created: { user: username, date: new Date() },
+            modified: [{ user: username, date: new Date() }]
+        };
+    }
+
+
+    private static validateAddress(address: any) {
+
+        if (address == '') return true;
+        return new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$').test(address);
+    }
+
+
     private static makeUrlFromSyncTarget(serverSetting: any) {
 
         let address = serverSetting['address'];
@@ -265,12 +239,6 @@ export class SettingsService {
             ? address
             : address.replace(/(https?):\/\//, '$1://' +
                 serverSetting['username'] + ':' + serverSetting['password'] + '@');
-    }
-
-
-    private storeSettings(): Promise<any> {
-
-        return this.settingsSerializer.store(this.settings);
     }
 
 

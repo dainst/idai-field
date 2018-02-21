@@ -9,7 +9,7 @@ import {AppState} from './app-state';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
 import {M} from '../../m';
 import {Observer} from 'rxjs/Observer';
-import {unique} from "tsfun/src/arrays/sets";
+import {unique} from 'tsfun';
 
 const app = require('electron').remote.app;
 

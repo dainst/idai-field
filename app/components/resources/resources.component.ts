@@ -149,6 +149,10 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (!this.ready) return;
 
+        // this is so that new elements are properly included and sorted when coming back to list
+        if (this.viewFacade.getMode() === 'list'
+            && mode === 'map') this.viewFacade.populateDocumentList();
+
         this.loading.start();
         // The timeout is necessary to make the loading icon appear
         setTimeout(() => {

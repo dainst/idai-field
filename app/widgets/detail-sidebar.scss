@@ -3,8 +3,11 @@
  * @author: Jan G. Wieners
  * @author: Daniel de Oliveira
  */
-.detail-sidebar {
+.detail-sidebar-container {
+  overflow: hidden;
+}
 
+.detail-sidebar {
   $buttoncolor: #657faa;
 
   .tab-content {
@@ -14,12 +17,31 @@
     overflow-x: hidden;
   }
 
+  .empty-tab {
+    color: #5a6269;
+  }
+
+  .empty-tab-info {
+    font-style: italic;
+    font-size: 0.9em;
+  }
+
   .document-card .card-block {
     overflow: auto;
   }
 
   .document-card .btn-link {
     box-shadow: none !important;
+  }
+
+  .card-header {
+    background-color: transparent !important;
+  }
+
+  .card {
+    margin-bottom: 0;
+    box-sizing: border-box;
+    background-color: transparent !important;
   }
 
   .card-block {
@@ -76,7 +98,7 @@
     font-size: 20px;
   }
 
-  h2{
+  h2 {
     font-size: 15px;
     color: #999;
     margin-bottom: 20px;

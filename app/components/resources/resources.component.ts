@@ -73,6 +73,9 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public getTypeFilters = () => this.viewFacade.getFilterTypes();
 
+    public solveConflicts = (doc: IdaiFieldDocument) => this.editDocument(doc, 'conflicts');
+
+    public setScrollTarget = (doc: IdaiFieldDocument|undefined) => this.scrollTarget = doc;
 
 
     public getIsRecordedInTarget() {
@@ -130,18 +133,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
         (this.viewFacade.getSelectedDocument() as any).resource['geometry'] = { 'type': geometryType };
         this.startGeometryEditing();
-    }
-
-
-    public solveConflicts(doc: IdaiFieldDocument) {
-
-        this.editDocument(doc, 'conflicts');
-    }
-
-
-    public setScrollTarget(doc: IdaiFieldDocument|undefined) {
-
-        this.scrollTarget = doc;
     }
 
 

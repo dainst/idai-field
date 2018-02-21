@@ -5,9 +5,9 @@ import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {NavbarPage} from '../navbar.page';
 
-let common = require('../common.js');
-let EC = protractor.ExpectedConditions;
-let delays = require('../config/delays');
+const common = require('../common.js');
+const EC = protractor.ExpectedConditions;
+const delays = require('../config/delays');
 
 
 export class ResourcesPage {
@@ -23,18 +23,6 @@ export class ResourcesPage {
     public static clickCreateResource() {
 
         common.click(ResourcesPage.getCreateDocumentButton());
-    }
-
-
-    public static clickCreateMainTypeResource() {
-
-        common.click(element(by.css('#create-main-type-document-button .circular-button')));
-    }
-
-
-    public static clickEditMainTypeResource() {
-
-        common.click(element(by.id('edit-main-type-document-button')));
     }
 
 
@@ -321,13 +309,6 @@ export class ResourcesPage {
         NavbarPage.clickNavigateToProject();
         this.performCreateResource(identifier, 'trench');
         this.clickGoToMainTypeViewByIdentifier(identifier);
-
-        // ResourcesPage.clickCreateMainTypeResource();
-        // ResourcesPage.clickSelectGeometryType();
-        // DoceditPage.typeInInputField('identifier', identifier);
-        // ResourcesPage.scrollUp();
-        // DoceditPage.clickSaveDocument();
-        // browser.sleep(delays.shortRest);
     }
 
 

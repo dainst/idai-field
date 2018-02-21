@@ -27,7 +27,7 @@ import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-docume
 import {LayerManager} from './map/map/layer-manager';
 import {LayerImageProvider} from './map/map/layer-image-provider';
 import {LayerMenuComponent} from './map/map/layer-menu.component';
-import {ChangesStream} from '../../core/datastore/core/changes-stream';
+import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
 import {NavigationComponent} from './navigation/navigation.component';
 import {NavigationService} from './navigation/navigation-service';
 import {StateSerializer} from '../../common/state-serializer';
@@ -100,7 +100,7 @@ const remote = require('electron').remote;
             useFactory: function(
                 projectConfiguration: ProjectConfiguration,
                 datastore: IdaiFieldDocumentDatastore,
-                changesStream: ChangesStream,
+                changesStream: RemoteChangesStream,
                 settingsService: SettingsService,
                 resourcesState: ResourcesState
             ) {
@@ -115,7 +115,7 @@ const remote = require('electron').remote;
             deps: [
                 ProjectConfiguration,
                 IdaiFieldDocumentDatastore,
-                ChangesStream,
+                RemoteChangesStream,
                 SettingsService,
                 ResourcesState]
         },

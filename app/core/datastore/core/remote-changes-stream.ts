@@ -14,7 +14,7 @@ import {ObserverUtil} from '../../../util/observer-util';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ChangesStream {
+export class RemoteChangesStream {
 
     private autoCacheUpdate: boolean = true;
     private observers: Array<Observer<Document>> = [];

@@ -7,7 +7,7 @@ import {RelationsStrategy} from './relations-strategy';
 import {RollbackStrategy} from './rollback-strategy';
 import {M} from '../../m';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {ChangesStream} from '../datastore/core/changes-stream';
+import {RemoteChangesStream} from '../datastore/core/remote-changes-stream';
 
 
 export interface ImportReport {
@@ -43,7 +43,7 @@ export class Importer {
     private rollbackStrategy: RollbackStrategy;
 
     private datastore: DocumentDatastore;
-    private changesStream: ChangesStream;
+    private remoteChangesStream: RemoteChangesStream;
 
 
     private initState(importStrategy: ImportStrategy, relationsStrategy: RelationsStrategy,
@@ -89,7 +89,7 @@ export class Importer {
     public importResources(reader: Reader, parser: Parser, importStrategy: ImportStrategy,
                            relationsStrategy: RelationsStrategy,
                            rollbackStrategy: RollbackStrategy, datastore: DocumentDatastore,
-                           changesStream: ChangesStream): Promise<ImportReport> {
+                           remoteChangesStream: RemoteChangesStream): Promise<ImportReport> {
 
         return new Promise<any>(resolve => {
 
@@ -97,8 +97,8 @@ export class Importer {
             this.initState(importStrategy, relationsStrategy, rollbackStrategy);
 
             this.datastore = datastore;
-            this.changesStream = changesStream;
-            this.changesStream.setAutoCacheUpdate(false);
+            this.remoteChangesStream = remoteChangesStream;
+            this.remoteChangesStream.setAutoCacheUpdate(false);
 
             reader.go().then(fileContent => {
 
@@ -169,24 +169,24 @@ export class Importer {
 
         if (this.importReport.errors.length > 0) {
             return this.performRollback().then(
-                () => this.changesStream.setAutoCacheUpdate(true)
+                () => this.remoteChangesStream.setAutoCacheUpdate(true)
             );
         } else {
             return this.relationsStrategy.completeInverseRelations(this.importReport.importedResourcesIds).then(
                 () => {
-                    this.changesStream.setAutoCacheUpdate(true);
+                    this.remoteChangesStream.setAutoCacheUpdate(true);
                     this.resolvePromise(this.importReport);
                 }, msgWithParams => {
                     this.importReport.errors.push(msgWithParams);
                     return this.relationsStrategy.resetInverseRelations(this.importReport.importedResourcesIds).then(
                         () => {
                             return this.performRollback().then(
-                                () => this.changesStream.setAutoCacheUpdate(true)
+                                () => this.remoteChangesStream.setAutoCacheUpdate(true)
                             );
                         }, msgWithParams => {
                             this.importReport.errors.push(msgWithParams);
                             return this.performRollback().then(
-                                () => this.changesStream.setAutoCacheUpdate(true)
+                                () => this.remoteChangesStream.setAutoCacheUpdate(true)
                             );
                         });
                 }

@@ -1,29 +1,29 @@
 import {NgModule} from '@angular/core';
-import {DocumentCache} from "./core/document-cache";
-import {PouchdbDatastore} from "./core/pouchdb-datastore";
-import {ConstraintIndexer} from "./index/constraint-indexer";
-import {FulltextIndexer} from "./index/fulltext-indexer";
-import {AppState} from "../settings/app-state";
-import {ConflictResolvingExtension} from "./core/conflict-resolving-extension";
-import {ConflictResolver} from "./core/conflict-resolver";
-import {PouchdbServerDatastore} from "./pouchdb-server-datastore";
-import {PouchdbManager} from "./core/pouchdb-manager";
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocumentDatastore} from "./idai-field-document-datastore";
-import {IdaiFieldDocument} from "idai-components-2/idai-field-model";
-import {IdaiFieldDocumentReadDatastore} from "./idai-field-document-read-datastore";
-import {IdaiFieldImageDocumentDatastore} from "./idai-field-image-document-datastore";
-import {IdaiFieldImageDocument} from "../model/idai-field-image-document";
-import {IdaiFieldImageDocumentReadDatastore} from "./idai-field-image-document-read-datastore";
-import {TypeConverter} from "./core/type-converter";
-import {IdaiFieldSampleDataLoader} from "./idai-field-sample-data-loader";
-import {SampleDataLoader} from "./core/sample-data-loader";
-import {IdaiFieldConflictResolver} from "../model/idai-field-conflict-resolver";
-import {DocumentDatastore} from "./document-datastore";
-import {DocumentReadDatastore} from "./document-read-datastore";
-import {IdaiFieldTypeConverter} from "./idai-field-type-converter";
-import {ReadDatastore, Datastore} from "idai-components-2/datastore";
-import {ChangesStream} from "./core/changes-stream";
+import {ReadDatastore, Datastore} from 'idai-components-2/datastore';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {DocumentCache} from './core/document-cache';
+import {PouchdbDatastore} from './core/pouchdb-datastore';
+import {ConstraintIndexer} from './index/constraint-indexer';
+import {FulltextIndexer} from './index/fulltext-indexer';
+import {AppState} from '../settings/app-state';
+import {ConflictResolvingExtension} from './core/conflict-resolving-extension';
+import {ConflictResolver} from './core/conflict-resolver';
+import {PouchdbServerDatastore} from './pouchdb-server-datastore';
+import {PouchdbManager} from './core/pouchdb-manager';
+import {IdaiFieldDocumentDatastore} from './idai-field-document-datastore';
+import {IdaiFieldDocumentReadDatastore} from './idai-field-document-read-datastore';
+import {IdaiFieldImageDocumentDatastore} from './idai-field-image-document-datastore';
+import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {IdaiFieldImageDocumentReadDatastore} from './idai-field-image-document-read-datastore';
+import {TypeConverter} from './core/type-converter';
+import {IdaiFieldSampleDataLoader} from './idai-field-sample-data-loader';
+import {SampleDataLoader} from './core/sample-data-loader';
+import {IdaiFieldConflictResolver} from '../model/idai-field-conflict-resolver';
+import {DocumentDatastore} from './document-datastore';
+import {DocumentReadDatastore} from './document-read-datastore';
+import {IdaiFieldTypeConverter} from './idai-field-type-converter';
+import {RemoteChangesStream} from './core/remote-changes-stream';
 import {IndexFacade} from './index/index-facade';
 
 /**
@@ -34,7 +34,7 @@ import {IndexFacade} from './index/index-facade';
  */
 @NgModule({
     providers: [
-        ChangesStream,
+        RemoteChangesStream,
 
 
         // TODO place app state here, its a direct dependency of this package

@@ -1,20 +1,17 @@
-import {Validator} from '../../core/model/validator';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
+import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {DatastoreErrors} from 'idai-components-2/datastore';
+import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
 import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {SettingsService} from '../../core/settings/settings-service';
-import {DatastoreErrors} from 'idai-components-2/datastore';
 import {ImageTypeUtility} from '../../common/image-type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {Injectable} from '@angular/core';
-import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {flow, includedIn, isNot} from "tsfun";
-import {Observer} from 'rxjs/Observer';
-import {ObserverUtil} from '../../util/observer-util';
-import {Observable} from 'rxjs/Observable';
+import {flow, includedIn, isNot} from 'tsfun';
 
 
 @Injectable()
@@ -37,8 +34,6 @@ export class DocumentHolder {
      */
     public clonedDocument: Document;
 
-    private observers: Array<Observer<Document>> = [];
-
 
     constructor(
         private projectConfiguration: ProjectConfiguration,
@@ -49,11 +44,7 @@ export class DocumentHolder {
         private settingsService: SettingsService,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private datastore: DocumentDatastore) {
-
     }
-
-
-    public changes = (): Observable<Document> => ObserverUtil.register(this.observers);
 
     public isChanged = () => this.documentEditChangeMonitor.isChanged();
 
@@ -90,7 +81,6 @@ export class DocumentHolder {
         await this.removeInspectedRevisions();
         await this.fetchLatestRevision();
         this.documentEditChangeMonitor.reset();
-        ObserverUtil.notify(this.observers, this.clonedDocument);
     }
 
 
@@ -200,11 +190,11 @@ export class DocumentHolder {
     }
 
 
-
     private validateFields(): Array<string>  {
 
         return Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
     }
+
 
     private validateRelationFields(): Array<string> {
 

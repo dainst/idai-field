@@ -8,7 +8,7 @@ import {NavigationPathManager} from './navigation-path-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
-import {ChangesStream} from '../../../core/datastore/core/changes-stream';
+import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {ResourcesState} from './resources-state';
 import {ObserverUtil} from '../../../util/observer-util';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
@@ -33,13 +33,13 @@ export class DocumentsManager {
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
-        private changesStream: ChangesStream,
+        private remoteChangesStream: RemoteChangesStream,
         private settingsService: SettingsService,
         private navigationPathManager: NavigationPathManager,
         private mainTypeDocumentsManager: MainTypeDocumentsManager,
         private resourcesState: ResourcesState
     ) {
-        changesStream.remoteChangesNotifications().subscribe(document => this.handleChange(document));
+        remoteChangesStream.remoteChangesNotifications().subscribe(document => this.handleChange(document));
     }
 
 

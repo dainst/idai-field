@@ -28,7 +28,7 @@ import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/state/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {ChangesStream} from '../../core/datastore/core/changes-stream';
+import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
 import {Validator} from '../../core/model/validator';
 
 
@@ -61,7 +61,7 @@ export class ImportComponent {
         private messages: Messages,
         private importer: Importer,
         private datastore: DocumentDatastore,
-        private changesStream: ChangesStream,
+        private remoteChangesStream: RemoteChangesStream,
         private validator: Validator,
         private http: Http,
         private relationsCompleter: RelationsCompleter,
@@ -101,7 +101,7 @@ export class ImportComponent {
                 { backdrop: 'static', keyboard: false });
         }, 200);
         this.importer.importResources(reader, parser, importStrategy, relationsStrategy as any, rollbackStrategy,
-            this.datastore, this.changesStream)
+            this.datastore, this.remoteChangesStream)
             .then(importReport => {
                 uploadReady = true;
                 if(uploadModalRef) uploadModalRef.close();

@@ -1,10 +1,13 @@
 import {Injectable} from '@angular/core';
+import {Observer} from 'rxjs/Observer';
+import {Observable} from 'rxjs/Observable';
+import {Document} from 'idai-components-2/core';
+import {Constraint, Query} from 'idai-components-2/datastore';
 import {ConstraintIndexer} from './constraint-indexer';
 import {FulltextIndexer} from './fulltext-indexer';
-import {Constraint, Query} from 'idai-components-2/datastore';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
-import {Document} from 'idai-components-2/core';
+import {ObserverUtil} from '../../../util/observer-util';
 
 
 @Injectable()
@@ -13,10 +16,15 @@ import {Document} from 'idai-components-2/core';
  */
 export class IndexFacade {
 
+    private observers: Array<Observer<Document>> = [];
+
     constructor(
         private constraintIndexer: ConstraintIndexer,
         private fulltextIndexer: FulltextIndexer
     ) {}
+
+
+    public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
 
     public perform(query: Query): any {
@@ -37,6 +45,8 @@ export class IndexFacade {
 
         this.constraintIndexer.put(document, skipRemoval);
         this.fulltextIndexer.put(document, skipRemoval);
+
+        ObserverUtil.notify(this.observers, document);
     }
 
 
@@ -44,6 +54,8 @@ export class IndexFacade {
 
         this.constraintIndexer.remove(document);
         this.fulltextIndexer.remove(document);
+
+        ObserverUtil.notify(this.observers, document);
     }
 
 

@@ -3,8 +3,8 @@ import {Document} from 'idai-components-2/core';
 import {SettingsService} from '../../core/settings/settings-service';
 import {RoutingService} from '../routing-service';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
-import {ChangesStream} from '../../core/datastore/core/changes-stream';
-import {DocumentHolder} from '../docedit/document-holder';
+import {IndexFacade} from '../../core/datastore/index/index-facade';
+
 
 @Component({
     moduleId: module.id,
@@ -27,17 +27,15 @@ export class TaskbarComponent {
 
 
     constructor(private datastore: DocumentReadDatastore,
-                private changesStream: ChangesStream,
+                private indexFacade: IndexFacade,
                 private settings: SettingsService,
                 private elementRef: ElementRef,
                 private renderer: Renderer2,
-                private routingService: RoutingService,
-                private documentHolder: DocumentHolder) {
+                private routingService: RoutingService) {
 
         this.fetchConflicts();
 
-        this.documentHolder.changes().subscribe(() => this.fetchConflicts());
-        this.changesStream.remoteChangesNotifications().subscribe(() => this.fetchConflicts());
+        this.indexFacade.changesNotifications().subscribe(() => this.fetchConflicts());
 
         settings.syncStatusChanges().subscribe(c => {
             if (c == 'disconnected') {

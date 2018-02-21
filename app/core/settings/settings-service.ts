@@ -223,8 +223,9 @@ export class SettingsService {
 
     private static validateAddress(address: any) {
 
-        if (address == '') return true;
-        return new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$').test(address);
+        return (address == '')
+            ? true
+            : new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$').test(address);
     }
 
 

@@ -1,22 +1,20 @@
 <div class="row image-view detail-sidebar-container">
-    <div *ngIf="image.document" class="col-md-9 px-0">
-        <img *ngIf="image.imgSrc" [src]="image.imgSrc" style="width: 100%; height: 100%;">
+    <div *ngIf="image.document" id="image-container" class="col-md-9 px-0">
+        <div *ngIf="image.imgSrc" class="d-flex align-items-center justify-content-center">
+            <img id="original-image" [src]="image.imgSrc">
+        </div>
         <div *ngIf="originalNotFound">
-            <div class="alert alert-info" role="alert" *ngIf="image.thumbSrc">
+            <div *ngIf="image.thumbSrc" class="alert alert-info" role="alert">
                 Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
             </div>
-            <div class="d-flex align-items-center justify-content-center"
-                 style="height: 600px;">
-                <img *ngIf="image.thumbSrc" [src]="image.thumbSrc">
+            <div class="d-flex align-items-center justify-content-center">
+                <img *ngIf="image.thumbSrc" [src]="image.thumbSrc" id="thumb-image">
             </div>
         </div>
     </div>
 
-    <div *ngIf="image.document"
-         class="col-md-3 px-0 detail-sidebar">
-
+    <div *ngIf="image.document" class="col-md-3 px-0 detail-sidebar">
         <div class="card-block">
-
             <button *ngIf="image.document._conflicts" class="btn btn-link btn-xs"
                     id="document-view-button-solve-conflicts"
                     (click)="startEdit('conflicts')">

@@ -1,12 +1,31 @@
 @import 'georeference-view';
 
-
+/**
+ * @author Thomas Kleinke
+ */
 .image-view {
-
   .detail-sidebar {
-
     .tab-content {
       height: calc(100vh - 110px);
+    }
+  }
+
+  #image-container {
+    height: calc(100vh - 57px);
+    overflow: auto;
+    background-color: #000;
+
+    #original-image {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    #thumb-image {
+      height: 600px;
+    }
+
+    .align-items-center {
+      height: 100%;
     }
   }
 }

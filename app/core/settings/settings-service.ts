@@ -9,7 +9,7 @@ import {AppState} from './app-state';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
 import {M} from '../../m';
 import {Observer} from 'rxjs/Observer';
-import {unique} from "tsfun/src/arrays/sets";
+import {unique} from 'tsfun';
 
 const app = require('electron').remote.app;
 
@@ -223,8 +223,9 @@ export class SettingsService {
 
     private static validateAddress(address: any) {
 
-        if (address == '') return true;
-        return new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$').test(address);
+        return (address == '')
+            ? true
+            : new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$').test(address);
     }
 
 

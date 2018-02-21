@@ -77,7 +77,7 @@ describe('resources/filter --', () => {
     });
 
 
-    it('show correct types in plus type menu after choosing type filter', () => {
+    xit('show correct types in plus type menu after choosing type filter', () => {
 
         const checkTypeOptions = () => {
 

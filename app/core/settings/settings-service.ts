@@ -132,7 +132,7 @@ export class SettingsService {
         if (create) {
             await this.pouchdbManager.createDb(
                 selectedProject,
-                this.makeProjectDoc(selectedProject)
+                SettingsService.makeProjectDoc(selectedProject, this.settings.username)
             );
         }
     }
@@ -204,7 +204,7 @@ export class SettingsService {
     }
 
 
-    private makeProjectDoc(name: string) {
+    private static makeProjectDoc(name: string, username: string) {
 
         return {
             _id: name,
@@ -215,8 +215,8 @@ export class SettingsService {
                 coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
                 relations: {}
             },
-            created: { user: this.settings.username, date: new Date() },
-            modified: [{ user: this.settings.username, date: new Date() }]
+            created: { user: username, date: new Date() },
+            modified: [{ user: username, date: new Date() }]
         };
     }
 

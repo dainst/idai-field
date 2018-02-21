@@ -14,20 +14,6 @@
 @import 'searchbar/resources-search-bar';
 @import 'searchbar/search-suggestions';
 
-#objectOverview {
-  overflow: hidden;
-}
-
-#objectOverview,
-#imageOverview {
-  padding: 0 !important;
-  background-color: #f7f7f7;
-
-  main {
-    padding: 7px;
-  }
-}
-
 #resources {
   position: fixed;
   width: 100%;

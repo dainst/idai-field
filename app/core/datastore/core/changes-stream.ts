@@ -5,7 +5,7 @@ import {Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
-import {IndexFacade} from "../index/index-facade";
+import {IndexFacade} from '../index/index-facade';
 import {ObserverUtil} from '../../../util/observer-util';
 
 

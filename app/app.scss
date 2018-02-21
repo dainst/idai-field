@@ -42,10 +42,6 @@ body {
   height: 35px;
 }
 
-
-
-
-
 .btn {
   text-transform: none !important;
   border-radius: 0 !important;
@@ -303,28 +299,4 @@ relations-view .fieldvalue:hover {
 /* wider modals */
 .modal-lg {
   min-width: 86%;
-}
-
-/* Document view is used in map and image overview */
-
-.document-info {
-
-  .card-header {
-    background-color: transparent !important;
-  }
-
-  .card {
-    margin-bottom: 0;
-    box-sizing: border-box;
-    background-color: transparent !important;
-  }
-
-  .empty-tab {
-    color: #5a6269;
-  }
-
-  .empty-tab-info {
-    font-style: italic;
-    font-size: 0.9em;
-  }
 }

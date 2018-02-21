@@ -1,5 +1,5 @@
-<div class="row resources-map">
-    <div class="col-lg-3 col-md-3 col-sm-3" id="objectOverview">
+<div class="row">
+    <div id="sidebar-list-container" class="col-lg-3 col-md-3 col-sm-3">
         <sidebar-list></sidebar-list>
     </div>
 
@@ -18,7 +18,7 @@
     </div>
 
     <div *ngIf="viewFacade.getSelectedDocument() && viewFacade.getSelectedDocument().resource.id"
-         class="col-sm-3 document-info px-0">
+         class="col-lg-3 col-md-3 col-sm-3 px-0 detail-sidebar-container">
         <document-view-sidebar></document-view-sidebar>
     </div>
 </div>

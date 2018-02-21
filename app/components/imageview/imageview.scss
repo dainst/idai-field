@@ -1,4 +1,4 @@
-@import "georeference-view";
+@import 'georeference-view';
 
 
 .image-view {
@@ -6,7 +6,7 @@
   .detail-sidebar {
 
     .tab-content {
-      height: calc(100vh - 0px);
+      height: calc(100vh - 110px);
     }
   }
 }

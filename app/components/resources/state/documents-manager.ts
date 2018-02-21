@@ -39,7 +39,7 @@ export class DocumentsManager {
         private mainTypeDocumentsManager: MainTypeDocumentsManager,
         private resourcesState: ResourcesState
     ) {
-        remoteChangesStream.remoteChangesNotifications().subscribe(document => this.handleChange(document));
+        remoteChangesStream.notifications().subscribe(document => this.handleChange(document));
     }
 
 

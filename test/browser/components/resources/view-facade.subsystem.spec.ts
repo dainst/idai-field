@@ -107,8 +107,8 @@ export function main() {
             stateSerializer.load.and.returnValue(Promise.resolve({}));
             stateSerializer.store.and.returnValue(Promise.resolve());
 
-            changesStream = jasmine.createSpyObj('changesStream', ['remoteChangesNotifications']);
-            changesStream.remoteChangesNotifications.and.returnValue({
+            changesStream = jasmine.createSpyObj('changesStream', ['notifications']);
+            changesStream.notifications.and.returnValue({
                 subscribe: () => {}
             });
 

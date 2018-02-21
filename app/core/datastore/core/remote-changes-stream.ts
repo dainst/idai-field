@@ -35,7 +35,7 @@ export class RemoteChangesStream {
     }
 
 
-    public remoteChangesNotifications = (): Observable<Document> => ObserverUtil.register(this.observers);
+    public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
     public setAutoCacheUpdate = (autoCacheUpdate: boolean) => this.autoCacheUpdate = autoCacheUpdate;
 

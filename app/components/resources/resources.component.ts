@@ -65,15 +65,11 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public currentModeIs = (mode: string) => (this.viewFacade.getMode() === mode);
 
-
     public setQueryString = (q: string) => this.viewFacade.setSearchString(q);
-
 
     public setTypeFilters = (types: string[]) => this.viewFacade.setTypeFilters(types);
 
-
     public getQueryString = () => this.viewFacade.getQueryString();
-
 
     public getTypeFilters = () => this.viewFacade.getFilterTypes();
 
@@ -152,6 +148,10 @@ export class ResourcesComponent implements AfterViewChecked {
     public switchMode(mode: string) {
 
         if (!this.ready) return;
+
+        // this is so that new elements are properly included and sorted when coming back to list
+        if (this.viewFacade.getMode() === 'list'
+            && mode === 'map') this.viewFacade.populateDocumentList();
 
         this.loading.start();
         // The timeout is necessary to make the loading icon appear

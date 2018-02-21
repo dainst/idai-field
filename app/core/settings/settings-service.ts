@@ -109,7 +109,7 @@ export class SettingsService {
                     console.error("something went wrong with imagestore.setPath",errWithParams);
                 }
             })
-            .then(() => this.storeSettings());
+            .then(() => this.settingsSerializer.store(this.settings));
     }
 
 
@@ -127,10 +127,13 @@ export class SettingsService {
 
         this.settings.dbs = unique([selectedProject].concat(projects));
 
-        if (storeSettings) await this.storeSettings();
+        if (storeSettings) await this.settingsSerializer.store(this.settings);
 
         if (create) {
-            await this.pouchdbManager.createDb(selectedProject, this.makeProjectDoc(selectedProject));
+            await this.pouchdbManager.createDb(
+                selectedProject,
+                this.makeProjectDoc(selectedProject)
+            );
         }
     }
 
@@ -236,12 +239,6 @@ export class SettingsService {
             ? address
             : address.replace(/(https?):\/\//, '$1://' +
                 serverSetting['username'] + ':' + serverSetting['password'] + '@');
-    }
-
-
-    private storeSettings(): Promise<any> {
-
-        return this.settingsSerializer.store(this.settings);
     }
 
 

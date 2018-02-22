@@ -97,7 +97,7 @@ export class ViewFacade {
 
     public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesState.setActiveLayersIds(activeLayersIds);
 
-    public setMode = (mode: string) => this.resourcesState.setMode(mode);
+    public setMode = (mode: 'map' | 'list') => this.resourcesState.setMode(mode);
 
     public setSelectedDocumentById = (id: string) => this.documentsManager.setSelectedById(id);
 

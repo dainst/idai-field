@@ -18,6 +18,7 @@ export class ResourcesState {
     private view: string = 'project';
     public loaded = false;
     private activeDocumentViewTab: string|undefined;
+    private mode: 'map' | 'list' = 'map';
 
     constructor(
         private serializer: StateSerializer,
@@ -61,9 +62,9 @@ export class ResourcesState {
 
     public getMainTypeDocument = (): IdaiFieldDocument|undefined => this.viewStates[this.view].mainTypeDocument;
 
-    public getMode = () => this.viewStates[this.view].mode;
+    public getMode = () => this.mode;
 
-    public setMode = (mode: string) => this.viewStates[this.view].mode = mode;
+    public setMode = (mode: 'map' | 'list') => this.mode = mode;
 
     private serialize = () => this.serializer.store(StateSerializer.RESOURCES_STATE, this.createObjectToSerialize());
 

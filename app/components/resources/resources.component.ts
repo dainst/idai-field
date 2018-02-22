@@ -136,7 +136,7 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public switchMode(mode: string) {
+    public switchMode(mode: 'map' | 'list') {
 
         if (!this.ready) return;
 

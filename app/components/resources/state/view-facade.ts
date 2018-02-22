@@ -148,18 +148,6 @@ export class ViewFacade {
     }
 
 
-    public async handleMainTypeDocumentOnDeleted() {
-
-        const selectedDocument = this.resourcesState.getMainTypeDocument();
-        if (!selectedDocument) return;
-        if (!selectedDocument.resource.id) return;
-
-        this.resourcesState.removeActiveLayersIds();
-        this.navigationPathManager.setMainTypeDocument(undefined);
-        await this.populateMainTypeDocuments();
-    }
-
-
     public getSelectedMainTypeDocument(): IdaiFieldDocument|undefined {
 
         if (this.isInOverview()) throw ViewFacade.err('getSelectedMainTypeDocument');

@@ -377,6 +377,7 @@ describe('resources/state --', function() {
     it('keep type filter on switching view modes', () => {
 
         NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickMapModeButton();
         ResourcesPage.performCreateResource('find2', 'find');
 
         SearchBarPage.clickChooseTypeFilter('feature');

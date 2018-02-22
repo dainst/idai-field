@@ -61,9 +61,9 @@ export class ResourcesPage {
     }
 
 
-    public static clickGoToMainTypeViewByIdentifier(identifier) {
+    public static clickMoveIntoButton(identifier) {
 
-        return common.click(element(by.css('#resource-'+identifier + ' .selectInMainTypeViewBtn')));
+        return common.click(element(by.css('#resource-' + identifier + ' .moveIntoButton')));
     }
 
 
@@ -82,12 +82,6 @@ export class ResourcesPage {
     public static clickListModeButton() {
 
         common.click(element(by.id('list-mode-button')));
-    }
-
-
-    public static clickMoveIntoButton(identifier) {
-
-        common.click(element(by.css('#resource-' + identifier + ' .mdi')))
     }
 
 
@@ -308,7 +302,7 @@ export class ResourcesPage {
 
         NavbarPage.clickNavigateToProject();
         this.performCreateResource(identifier, 'trench');
-        this.clickGoToMainTypeViewByIdentifier(identifier);
+        this.clickMoveIntoButton(identifier);
     }
 
 

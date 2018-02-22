@@ -159,18 +159,18 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('floor1', 'feature-floor');
 
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.clickGoToMainTypeViewByIdentifier('building1');
+        ResourcesPage.clickMoveIntoButton('building1');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
         
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.clickGoToMainTypeViewByIdentifier('trench1');
+        ResourcesPage.clickMoveIntoButton('trench1');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
 
         NavbarPage.clickNavigateToProject();
         ResourcesPage.performCreateResource('trench2', 'trench');
-        ResourcesPage.clickGoToMainTypeViewByIdentifier('trench2');
+        ResourcesPage.clickMoveIntoButton('trench2');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench2'));
     });

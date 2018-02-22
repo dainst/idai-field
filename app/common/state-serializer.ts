@@ -26,7 +26,12 @@ export class StateSerializer {
                 if (err) {
                     resolve({});
                 } else {
-                    resolve(JSON.parse(content));
+                    try {
+                        resolve(JSON.parse(content));
+                    } catch (_) {
+                        resolve({})
+                    }
+
                 }
             });
         });

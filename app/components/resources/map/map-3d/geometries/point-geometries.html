@@ -13,3 +13,8 @@
         <span class="map-3d-marker-label">{{marker.document.resource.identifier}}</span>
     </div>
 </div>
+
+<div id="toggle-point-geometries-button" class="btn btn-light" [class.activated]="showMarkers"
+     (click)="toggleMarkers()">
+    <span class="mdi mdi-map-marker"></span>
+</div>

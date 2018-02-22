@@ -30,6 +30,8 @@ export class PointGeometriesComponent {
 
     @ViewChild('container') container: ElementRef;
 
+    public showMarkers: boolean = true;
+
     private cachedMarkers: { [resourceId: string]: Map3DMarker } = {};
 
 
@@ -47,7 +49,7 @@ export class PointGeometriesComponent {
 
         const markers: Array<any> = [];
 
-        if (!this.documents) return markers;
+        if (!this.documents || !this.showMarkers) return markers;
 
         this.documents.forEach(document => {
            const marker: Map3DMarker|undefined = this.createMarker(document);
@@ -55,6 +57,12 @@ export class PointGeometriesComponent {
         });
 
         return markers;
+    }
+
+
+    public toggleMarkers() {
+
+        this.showMarkers = !this.showMarkers;
     }
 
 

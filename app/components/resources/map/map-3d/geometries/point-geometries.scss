@@ -39,7 +39,19 @@
     cursor: pointer;
 
     .map-3d-marker-label {
-      color: #748db5;
+      color: #5572a1;
     }
+  }
+}
+
+#toggle-point-geometries-button {
+  position: absolute;
+  z-index: 1000;
+  left: 15px;
+  bottom: 15px;
+  color: #aaa;
+
+  &.activated .mdi {
+    color: #5572a1;
   }
 }

@@ -63,7 +63,7 @@ export class ResourcesPage {
 
     public static clickMoveIntoButton(identifier) {
 
-        return common.click(element(by.css('#resource-' + identifier + ' .moveIntoButton')));
+        return common.click(element(by.css('#resource-' + identifier + ' .move-into-button')));
     }
 
 

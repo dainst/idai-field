@@ -230,8 +230,8 @@ export class PouchdbDatastore {
                 // neither is change.deleted set nor is sure if the document already is deleted (meaning fetch still works)
                 // TODO do further investigation, maybe file an issue for pouchdb
 
-                if (change && change.id && (change.id.indexOf('_design') == 0)) return; // starts with _design
                 if (!change || !change.id) return;
+                if (change.id.indexOf('_design') == 0) return; // starts with _design
 
                 if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
                     ObserverUtil.notify(this.remoteDeletedObservers, {resource: {id: change.id}} as Document);

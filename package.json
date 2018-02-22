@@ -26,11 +26,13 @@
     "mac": {
       "category": "public.app-category.productivity",
       "target": "zip",
-      "icon": "img/logo.icns"
+      "icon": "img/logo.icns",
+      "artifactName": "idai-field-client-${version}-MacOS.${ext}"
     },
     "win": {
       "target": "zip",
-      "icon": "img/logo.ico"
+      "icon": "img/logo.ico",
+      "artifactName": "idai-field-client-${version}-Windows.${ext}"
     },
     "npmRebuild": false,
     "extraResources": [

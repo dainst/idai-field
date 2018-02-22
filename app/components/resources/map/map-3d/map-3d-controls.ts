@@ -105,6 +105,14 @@ export class Map3DControls {
     }
 
 
+    public rotateCamera(clockwise: boolean) {
+
+        const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
+
+        if (clockwise) camera.rotateZ(Math.PI / 2);
+        if (!clockwise) camera.rotateZ(-Math.PI / 2);
+    }
+
 
     private focusPoint(point: THREE.Vector3) {
 

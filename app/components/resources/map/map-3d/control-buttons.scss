@@ -1,0 +1,59 @@
+/**
+ * @author Thomas Kleinke
+ */
+
+#turn-clockwise-button,
+#turn-counterclockwise-button {
+  position: absolute;
+  bottom: 20px;
+  width: 30px;
+  height: 30px;
+  border: 6px solid transparent;
+  border-top-color: #fff;
+  border-left-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#turn-clockwise-button:hover,
+#turn-counterclockwise-button:hover {
+  border-top-color: darken($list-item-hover-colour, 5%);
+  border-left-color: darken($list-item-hover-colour, 5%);
+}
+
+#turn-clockwise-button {
+  right: 40px;
+  -webkit-transform: rotate(-45deg);
+}
+
+#turn-counterclockwise-button {
+  right: 15px;
+  -webkit-transform: rotate(135deg);
+}
+
+#turn-clockwise-button:before,
+#turn-counterclockwise-button:before {
+  position: absolute;
+  content: '';
+  left: 80%;
+  width: 0;
+  height: 0;
+  border-left: 9px solid #fff;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  -webkit-transform: rotate(45deg);
+}
+
+#turn-clockwise-button:hover:before,
+#turn-counterclockwise-button:hover:before {
+  border-left: 9px solid darken($list-item-hover-colour, 5%);
+}
+
+#turn-clockwise-button:before {
+  top: -6px;
+}
+
+#turn-counterclockwise-button:before {
+  top: 10px;
+  left: -1px;
+}

@@ -36,6 +36,7 @@ import {Layer3DMenuComponent} from './map/map-3d/layers/layer-3d-menu.component'
 import {Layer3DManager} from './map/map-3d/layers/layer-3d-manager';
 import {Layers3DComponent} from './map/map-3d/layers/layers-3d.component';
 import {Core3DModule} from '../core-3d/core-3d.module';
+import {ControlButtonsComponent} from './map/map-3d/control-buttons.component';
 
 @NgModule({
     imports: [
@@ -65,7 +66,8 @@ import {Core3DModule} from '../core-3d/core-3d.module';
         Layers3DComponent,
         Layer3DMenuComponent,
         PointGeometriesComponent,
-        MeshGeometriesComponent
+        MeshGeometriesComponent,
+        ControlButtonsComponent
     ],
     providers: [
         FoldState,

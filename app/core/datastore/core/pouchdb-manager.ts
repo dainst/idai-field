@@ -165,7 +165,7 @@ export class PouchdbManager {
 
             (resultDocs.rows as Array<any>)
                 .filter(row => !PouchdbManager.isDesignDoc(row))
-                .forEach(row => this.indexFacade.put(row.doc, true));
+                .forEach(row => this.indexFacade.put(row.doc, true, false));
 
             (this.resolveDbReady as any)(this.db);
         });

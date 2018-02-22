@@ -41,12 +41,12 @@ export class IndexFacade {
     }
 
 
-    public put(document: Document, skipRemoval: boolean = false) {
+    public put(document: Document, skipRemoval: boolean = false, notify: boolean = true) {
 
         this.constraintIndexer.put(document, skipRemoval);
         this.fulltextIndexer.put(document, skipRemoval);
 
-        ObserverUtil.notify(this.observers, document);
+        if (notify) ObserverUtil.notify(this.observers, document);
     }
 
 

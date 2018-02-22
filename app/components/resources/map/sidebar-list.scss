@@ -18,13 +18,19 @@
     -ms-user-select: none;
     user-select: none;
     min-height: 62px;
+    max-height: 62px;
 
     .move-into-button {
+      position: relative;
+      bottom: 6px;
       color: #868e96;
     }
 
     .move-into-button:hover {
       color: darken(#868e96, 10%);
+      background-color: darken($list-item-hover-color, 10%);
+      transition: color .65s ease;
+      transition: background-color .65s ease;
     }
   }
 

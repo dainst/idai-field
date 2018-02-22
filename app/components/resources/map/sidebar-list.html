@@ -9,9 +9,11 @@
                 && viewFacade.getSelectedDocument().resource.id === document.resource.id"
         [id]="'resource-' + document.resource.identifier">
 
-        <span *ngIf="showMoveIntoOption(document)"
-              class="move-into-button mdi mdi-arrow-right-drop-circle mt-2 mr-2 float-right"
-              (click)="moveInto(document); $event.stopPropagation();"></span>
+        <div *ngIf="showMoveIntoOption(document)"
+              class="move-into-button btn mt-2 mr-2 float-right"
+              (click)="moveInto(document); $event.stopPropagation();">
+            <span class="mdi mdi-subdirectory-arrow-right mdi-18px"></span>
+        </div>
 
         <document-teaser [document]="document"></document-teaser>
     </li>

@@ -16,9 +16,21 @@
     }
   }
 
-  button {
-    padding: 0;
+  .move-into-button {
+    position: relative;
+    top: 4px;
+    right: 2px;
+    padding: 2px 2px 2px 4px;
+    color: #868e96;
+    background-color: #fff;
     cursor: pointer;
+  }
+
+  .move-into-button:hover {
+    color: darken(#868e96, 5%);
+    background-color: darken(#fff, 5%);
+    transition: color .4s ease;
+    transition: background-color .4s ease;
   }
 
   input {

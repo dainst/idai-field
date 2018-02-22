@@ -464,7 +464,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMAGES_ONE_NOT_FOUND]={
-            content: "Das Bild konnten nicht gefunden werden.",
+            content: "Das Bild konnte nicht gefunden werden.",
             level: 'danger',
             params: [],
             hidden: false

@@ -1,14 +1,13 @@
-import * as PouchDB from "pouchdb";
-import {PouchdbProxy} from "./pouchdb-proxy";
-import {Injectable} from "@angular/core";
-import {SampleDataLoader} from "./sample-data-loader";
-import {SyncState} from './sync-state';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {ConstraintIndexer} from "../index/constraint-indexer";
-import {FulltextIndexer} from "../index/fulltext-indexer";
-import {IndexFacade} from "../index/index-facade";
+import * as PouchDB from 'pouchdb';
+import {PouchdbProxy} from './pouchdb-proxy';
+import {SampleDataLoader} from './sample-data-loader';
+import {SyncState} from './sync-state';
+import {IndexFacade} from '../index/index-facade';
 
 const remote = require('electron').remote;
+
 
 @Injectable()
 /**
@@ -24,11 +23,11 @@ export class PouchdbManager {
     private name: string|undefined = undefined;
     private syncHandles = [];
 
-    private resolveDbReady = undefined;
+    private resolveDbReady: Function|undefined = undefined;
 
-    constructor(
-        private sampleDataLoader: SampleDataLoader,
-        private indexFacade: IndexFacade) {
+
+    constructor(private sampleDataLoader: SampleDataLoader,
+                private indexFacade: IndexFacade) {
 
         const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
         this.dbProxy = new PouchdbProxy(dbReady);
@@ -144,8 +143,8 @@ export class PouchdbManager {
         let promise = Promise.resolve();
         if (remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create) {
             promise = db.destroy().then(() =>
-                    db = this.createPouchDBObject(name)
-                );
+                db = this.createPouchDBObject(name)
+            );
         }
 
         await promise;
@@ -158,15 +157,18 @@ export class PouchdbManager {
 
     private index() {
 
-        return this.db.allDocs({include_docs: true, conflicts: true},(err: any, resultDocs: any) => {
+        return this.db.allDocs({
+            include_docs: true,
+            conflicts: true
+        }, (err: any, resultDocs: any) => {
             this.indexFacade.clear();
 
             (resultDocs.rows as Array<any>)
                 .filter(row => !PouchdbManager.isDesignDoc(row))
                 .forEach(row => this.indexFacade.put(row.doc, true));
 
-            (this.resolveDbReady as any)(this.db)
-        })
+            (this.resolveDbReady as any)(this.db);
+        });
     }
 
 
@@ -174,6 +176,7 @@ export class PouchdbManager {
 
         this.db = new PouchDB(name);
         if (console.debug) console.debug('PouchDB is using adapter', this.db.adapter);
+
         return this.db;
     }
 

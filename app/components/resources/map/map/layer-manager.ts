@@ -39,10 +39,10 @@ export class LayerManager {
     public isActiveLayer = (resourceId: string) => this.activeLayerIds.indexOf(resourceId) > -1;
 
 
-    public async initializeLayers()
+    public async initializeLayers(skipRemoval = false)
             : Promise<LayersInitializationResult> {
 
-        await this.removeNonExistingLayers();
+        if (!skipRemoval) await this.removeNonExistingLayers();
 
         const activeLayersChange = LayerManager.computeActiveLayersChange(
             this.viewFacade.getActiveLayersIds(),

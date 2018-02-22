@@ -32,6 +32,12 @@ export class ResourcesViewState {
 
         if (!viewState.layerIds || Array.isArray(viewState.layerIds)) {
             viewState.layerIds = {};
+        } else {
+            for (let key of Object.keys(viewState.layerIds)) {
+                if (!Array.isArray(viewState.layerIds[key])) {
+                    delete viewState.layerIds[key];
+                }
+            }
         }
 
         viewState.navigationPaths = {};

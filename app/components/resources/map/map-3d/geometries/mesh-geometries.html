@@ -7,3 +7,13 @@
     </div>
     <span class="map-3d-geometry-info-label">{{hoverDocument.resource.identifier}}</span>
 </div>
+
+<div id="toggle-line-geometries-button" class="btn btn-light" [class.activated]="showLineGeometries"
+     (click)="toggleLineGeometries()">
+    <span class="mdi mdi-vector-polyline"></span>
+</div>
+
+<div id="toggle-polygon-geometries-button" class="btn btn-light" [class.activated]="showPolygonGeometries"
+     (click)="togglePolygonGeometries()">
+    <span class="mdi mdi-vector-polygon"></span>
+</div>

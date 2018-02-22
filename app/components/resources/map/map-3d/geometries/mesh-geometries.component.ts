@@ -20,13 +20,16 @@ export class MeshGeometriesComponent implements OnChanges {
     @Input() hoverDocument: IdaiFieldDocument;
     @Input() meshGeometryManager: MeshGeometryManager;
 
+    public showLineGeometries: boolean = true;
+    public showPolygonGeometries: boolean = true;
+
 
     constructor(private map3DComponent: Map3DComponent) {}
 
 
     async ngOnChanges(changes: SimpleChanges) {
 
-        if (changes['documents'] && this.documents) await this.meshGeometryManager.update(this.documents);
+        if (changes['documents'] && this.documents) await this.update();
     }
 
 
@@ -42,4 +45,24 @@ export class MeshGeometriesComponent implements OnChanges {
         return this.map3DComponent.getViewer().getScreenCoordinates(centerPosition);
     }
 
+
+    public async toggleLineGeometries() {
+
+        this.showLineGeometries = !this.showLineGeometries;
+        await this.update();
+    }
+
+
+    public async togglePolygonGeometries() {
+
+        this.showPolygonGeometries = !this.showPolygonGeometries;
+        await this.update();
+    }
+
+
+    private async update() {
+
+        await this.meshGeometryManager.update(this.documents, this.showLineGeometries,
+            this.showPolygonGeometries);
+    }
 }

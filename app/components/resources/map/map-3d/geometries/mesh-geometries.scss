@@ -26,3 +26,23 @@
     -webkit-text-stroke: 1px #000;
   }
 }
+
+#toggle-line-geometries-button,
+#toggle-polygon-geometries-button {
+  position: absolute;
+  bottom: 15px;
+  z-index: 1000;
+  color: #aaa;
+
+  &.activated .mdi {
+    color: #5572a1;
+  }
+}
+
+#toggle-line-geometries-button {
+  left: 65px;
+}
+
+#toggle-polygon-geometries-button {
+  left: 115px;
+}

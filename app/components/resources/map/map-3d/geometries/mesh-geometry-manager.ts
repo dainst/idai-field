@@ -27,12 +27,14 @@ export class MeshGeometryManager {
     }
 
 
-    public async update(documents: Array<IdaiFieldDocument>) {
+    public async update(documents: Array<IdaiFieldDocument>, showLineGeometries: boolean,
+                        showPolygonGeometries: boolean) {
 
         await this.viewer.waitForSizeAdjustment();
 
         const geometryDocuments: Array<IdaiFieldDocument>
-            = MeshGeometryManager.getMeshGeometryDocuments(documents);
+            = MeshGeometryManager.getMeshGeometryDocuments(documents, showLineGeometries,
+                showPolygonGeometries);
 
         this.getGeometriesToAdd(geometryDocuments).forEach(document => this.add(document));
         this.getGeometriesToRemove(geometryDocuments).forEach(document => this.remove(document));
@@ -118,10 +120,12 @@ export class MeshGeometryManager {
     }
 
 
-    private static getMeshGeometryDocuments(documents: Array<IdaiFieldDocument>): Array<IdaiFieldDocument> {
+    private static getMeshGeometryDocuments(documents: Array<IdaiFieldDocument>, showLineGeometries: boolean,
+                                            showPolygonGeometries: boolean): Array<IdaiFieldDocument> {
 
         return documents.filter(document => {
-            return has3DLineGeometry(document) || has3DPolygonGeometry(document);
+            return (showLineGeometries && has3DLineGeometry(document))
+                || (showPolygonGeometries && has3DPolygonGeometry(document));
         });
     }
 }

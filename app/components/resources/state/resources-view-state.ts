@@ -30,7 +30,10 @@ export class ResourcesViewState {
 
     public static complete(viewState: ResourcesViewState) {
 
-        if (!viewState.layerIds) viewState.layerIds = {};
+        if (!viewState.layerIds || Array.isArray(viewState.layerIds)) {
+            viewState.layerIds = {};
+        }
+
         viewState.navigationPaths = {};
         viewState.q = '';
     }

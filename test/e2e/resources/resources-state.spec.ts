@@ -314,17 +314,16 @@ describe('resources/state --', function() {
     });
 
 
-    it('autoselect last selected view mode on switching views', () => {
+    it('keep mode when switching views', () => {
 
         ResourcesPage.clickListModeButton();
         browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('trench1', 0)), delays.ECWaitTime);
 
         NavbarPage.clickNavigateToExcavation();
-        browser.wait(EC.presenceOf(MapPage.getMapContainer()), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('context1', 0)), delays.ECWaitTime);
 
         NavbarPage.clickNavigateToProject();
-        browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('trench1', 0)), delays.ECWaitTime);
     });
 

@@ -13,7 +13,9 @@ describe('resources/list --', () => {
 
     beforeAll(function() {
         ResourcesPage.get();
+        browser.sleep(delays.shortRest);
         ResourcesPage.clickListModeButton();
+        browser.sleep(delays.shortRest);
     });
 
 
@@ -23,9 +25,11 @@ describe('resources/list --', () => {
             require('request').post('http://localhost:3003/reset', {});
             browser.sleep(delays.shortRest);
             NavbarPage.clickNavigateToProject();
-            browser.sleep(delays.shortRest * 4);
+            browser.sleep(delays.shortRest * 2);
             NavbarPage.clickNavigateToExcavation();
+            browser.sleep(delays.shortRest);
             ResourcesPage.clickListModeButton();
+            browser.sleep(delays.shortRest);
         }
         index++;
     });

@@ -258,8 +258,8 @@ export class ResourcesPage {
 
     public static typeInNewResourceAndHitEnterInList (inputText) {
   
-        browser.wait(EC.visibilityOf(element(by.css('#new-resource input'))), delays.ECWaitTime);
-        common.typeIn(element(by.css('#new-resource input')), inputText);
+        browser.wait(EC.visibilityOf(element.all(by.css('#list .identifier-input')).first()), delays.ECWaitTime);
+        common.typeIn(element.all(by.css('#list .identifier-input')).last(), inputText);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 

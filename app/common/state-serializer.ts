@@ -15,14 +15,11 @@ export class StateSerializer {
     constructor(private settingsService: SettingsService) {}
 
 
-    /**
-     * @param stateType can be either RESOURCES_STATE or IMAGES_STATE
-     */
-    public async load(stateType: string): Promise<any> {
+    public async load(): Promise<any> {
 
         return new Promise(resolve => {
 
-            fs.readFile(this.getFilePath(stateType), 'utf-8', (err: any, content: any) => {
+            fs.readFile(this.getFilePath(), 'utf-8', (err: any, content: any) => {
                 if (err) {
                     resolve({});
                 } else {
@@ -38,16 +35,14 @@ export class StateSerializer {
     }
 
 
-    /**
-     * @param stateType can be either RESOURCES_STATE or IMAGES_STATE
-     */
-    public store(stateType: string, stateObject: any): Promise<any> {
+    public store(stateObject: any): Promise<any> {
 
         return new Promise((resolve, reject) => {
 
             if (this.settingsService.getSelectedProject() == 'test') return resolve();
 
-            fs.writeFile(this.getFilePath(stateType), JSON.stringify(stateObject), (err: any) => {
+            fs.writeFile(this.getFilePath(),
+                    JSON.stringify(stateObject), (err: any) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -58,9 +53,9 @@ export class StateSerializer {
     }
 
 
-    private getFilePath(stateType: string): string {
+    private getFilePath(): string {
 
-        return remote.getGlobal('appDataPath') + '/' + stateType + '-'
+        return remote.getGlobal('appDataPath') + '/' + StateSerializer.RESOURCES_STATE + '-'
             + this.settingsService.getSelectedProject() + '.json';
     }
 }

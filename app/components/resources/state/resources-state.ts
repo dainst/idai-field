@@ -66,7 +66,7 @@ export class ResourcesState {
 
     public setMode = (mode: 'map' | 'list') => this.mode = mode;
 
-    private serialize = () => this.serializer.store(StateSerializer.RESOURCES_STATE, this.createObjectToSerialize());
+    private serialize = () => this.serializer.store(this.createObjectToSerialize());
 
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.activeDocumentViewTab = activeDocumentViewTab;
 
@@ -215,7 +215,7 @@ export class ResourcesState {
                 ? this.suppressLoadMapInTestProject
                     ? ResourcesState.makeDefaults()
                     : ResourcesState.makeSampleDefaults()
-                : await this.serializer.load(StateSerializer.RESOURCES_STATE);
+                : await this.serializer.load();
 
         ResourcesState.complete(resourcesViewStates);
         return resourcesViewStates;

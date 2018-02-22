@@ -42,12 +42,13 @@ export class LayerManager {
     public async initializeLayers()
             : Promise<LayersInitializationResult> {
 
+        await this.removeNonExistingLayers();
+
         const activeLayersChange = LayerManager.computeActiveLayersChange(
             this.viewFacade.getActiveLayersIds(),
             this.activeLayerIds);
 
         this.activeLayerIds = this.viewFacade.getActiveLayersIds();
-
 
         try {
             return {
@@ -68,6 +69,22 @@ export class LayerManager {
             unique(this.activeLayerIds.concat([resourceId]));
 
         this.viewFacade.setActiveLayersIds(this.activeLayerIds);
+    }
+
+
+    private async removeNonExistingLayers() {
+
+        const newActiveLayersIds = this.viewFacade.getActiveLayersIds();
+
+        let i = newActiveLayersIds.length;
+        while (i--) {
+            try {
+                await this.datastore.get(newActiveLayersIds[i])
+            } catch (_) {
+                newActiveLayersIds.splice(i, 1);
+                this.viewFacade.setActiveLayersIds(newActiveLayersIds);
+            }
+        }
     }
 
 

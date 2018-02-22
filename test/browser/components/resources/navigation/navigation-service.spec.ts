@@ -23,7 +23,7 @@ export function main() {
         it('in overview', () => {
 
             viewFacade.isInOverview.and.returnValue(true);
-            expect(navigationService.showMoveIntoOption(Static.idfDoc('abc'))).toEqual(true);
+            expect(navigationService.showMoveIntoOption(Static.idfDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(true);
         });
 
 
@@ -32,7 +32,16 @@ export function main() {
             projectConfiguration.getRelationDefinitions.and.returnValue(
                 [{name: 'liesWithin'}]
             );
-            expect(navigationService.showMoveIntoOption(Static.idfDoc('abc'))).toEqual(true);
+            expect(navigationService.showMoveIntoOption(Static.idfDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(true);
+        });
+
+
+        it('is new doc', () => {
+
+            projectConfiguration.getRelationDefinitions.and.returnValue(
+                [{name: 'liesWithin'}]
+            );
+            expect(navigationService.showMoveIntoOption(Static.idfDoc('abc', 'def', 'ghi'))).toEqual(false);
         });
 
 
@@ -41,7 +50,7 @@ export function main() {
             projectConfiguration.getRelationDefinitions.and.returnValue(
                 [{name: 'abc'}]
             );
-            expect(navigationService.showMoveIntoOption(Static.idfDoc('abc'))).toEqual(false);
+            expect(navigationService.showMoveIntoOption(Static.idfDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(false);
         });
 
 

@@ -28,6 +28,7 @@ export class NavigationService {
 
     public showMoveIntoOption(document: IdaiFieldDocument): boolean {
 
+        if (!document.resource.id) return false; // do not show as long as it is not saved
         if (document.resource.type === 'Place') return false; // TODO check if place is hardcoded, and if not, do so
         if (this.viewFacade.isInOverview()) return true;
 

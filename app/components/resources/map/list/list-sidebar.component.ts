@@ -1,16 +1,16 @@
 import {Component, Input} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ResourcesComponent} from '../resources.component';
-import {Loading} from '../../../widgets/loading';
-import {ViewFacade} from '../state/view-facade';
-import {NavigationService} from '../navigation/navigation-service';
-import {BaseList} from '../base-list';
+import {ResourcesComponent} from '../../resources.component';
+import {Loading} from '../../../../widgets/loading';
+import {ViewFacade} from '../../state/view-facade';
+import {NavigationService} from '../../navigation/navigation-service';
+import {BaseList} from '../../base-list';
 
 
 @Component({
     selector: 'sidebar-list',
     moduleId: module.id,
-    templateUrl: './sidebar-list.html'
+    templateUrl: './list-sidebar.html'
 })
 /**
  * @author Daniel de Oliveira
@@ -18,7 +18,7 @@ import {BaseList} from '../base-list';
  * @author Sebastian Cuy
  */
 
-export class SidebarListComponent extends BaseList {
+export class ListSidebarComponent extends BaseList {
 
     @Input() activeTab: string;
 
@@ -33,7 +33,6 @@ export class SidebarListComponent extends BaseList {
 
 
     public moveInto = (document: IdaiFieldDocument) => this.navigationService.moveInto(document);
-
 
     public showMoveIntoOption = (document: IdaiFieldDocument) => this.navigationService.showMoveIntoOption(document);
 

@@ -21,6 +21,9 @@ import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/idai-fie
 })
 /**
  * @author Daniel de Oliveira
+ *
+ *
+ * TODO extract image-detail-sidebar component
  */
 export class ImageViewComponent implements OnInit {
 

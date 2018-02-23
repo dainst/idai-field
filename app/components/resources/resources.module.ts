@@ -22,7 +22,7 @@ import {DoceditLauncher} from './service/docedit-launcher';
 import {ViewFacade} from './state/view-facade';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {SettingsService} from '../../core/settings/settings-service';
-import {SidebarListComponent} from './map/sidebar-list.component';
+import {ListSidebarComponent} from './map/list/list-sidebar.component';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';
 import {LayerManager} from './map/map/layer-manager';
 import {LayerImageProvider} from './map/map/layer-image-provider';
@@ -59,7 +59,7 @@ const remote = require('electron').remote;
         PlusButtonComponent,
         ThumbnailViewComponent,
         DocumentViewSidebarComponent,
-        SidebarListComponent,
+        ListSidebarComponent,
         NavigationComponent,
         ResourcesSearchBarComponent,
         SearchSuggestionsComponent
@@ -79,8 +79,7 @@ const remote = require('electron').remote;
 
                 const views = projectConfiguration.getViewsList();
                 for (let view of views) {
-                    (view as any)['mainTypeLabel'] = // TODO do this with a new idai-field-configuration-preprocessor that extends configuration-preprocessor
-                        projectConfiguration.getLabelForType(view.operationSubtype) as any;
+                    (view as any)['mainTypeLabel'] = projectConfiguration.getLabelForType(view.operationSubtype) as any;
                 }
 
                 const project = settingsService.getSelectedProject();

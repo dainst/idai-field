@@ -2,13 +2,6 @@
 
     <div *ngIf="viewFacade.getSelectedDocument()" class="card-block">
 
-        <button *ngIf="viewFacade.getSelectedDocument()._conflicts"
-                class="btn btn-link btn-xs solve-button"
-                id="document-view-button-solve-conflicts"
-                (click)="resourcesComponent.solveConflicts(viewFacade.getSelectedDocument())">
-            <span class="mdi mdi-alert-outline"></span>
-        </button>
-
         <button class="close-button btn btn-link btn-xs"
                 id="back-to-map"
                 (click)="viewFacade.deselect()">

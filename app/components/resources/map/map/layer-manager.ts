@@ -36,7 +36,7 @@ export class LayerManager {
 
     public reset = () => this.activeLayerIds = [];
 
-    public isActiveLayer = (resourceId: string) => this.activeLayerIds.indexOf(resourceId) > -1;
+    public isActiveLayer = (resourceId: string) => this.activeLayerIds.includes(resourceId);
 
 
     public async initializeLayers(skipRemoval = false)

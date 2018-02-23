@@ -7,6 +7,7 @@ import {ImageContainer} from '../../../../core/imagestore/image-container';
 import {LayerManager, ListDiffResult} from './layer-manager';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {LayerImageProvider} from './layer-image-provider';
+import {IdaiFieldGeoreference} from "../../../../core/model/idai-field-georeference";
 
 
 @Component({
@@ -134,12 +135,12 @@ export class LayerMapComponent extends MapComponent {
 
         const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
 
-        const georeference = layerDocument.resource.georeference;
+        const georeference = layerDocument.resource.georeference as IdaiFieldGeoreference;
         this.imageOverlays[resourceId] = L.imageOverlay(
             imageContainer.imgSrc ? imageContainer.imgSrc : imageContainer.thumbSrc as any,
-            [(georeference as any).topLeftCoordinates,
-            (georeference as any).topRightCoordinates,
-            (georeference as any).bottomLeftCoordinates],
+            [georeference.topLeftCoordinates,
+            georeference.topRightCoordinates,
+            georeference.bottomLeftCoordinates],
             { pane: layerDocument.resource.id }).addTo(this.map);
     }
 

@@ -59,9 +59,8 @@ export class RoutingService {
     public jumpToRelationTarget(documentToSelect: Document, tab?: string,
                                 comingFromOutsideOverviewComponent: boolean = false) {
 
-        if (comingFromOutsideOverviewComponent) this.currentRoute = undefined; // TODO see also comment below. it feels actually a bit unfortunate have this kind of state (this.currentRoute) here at all at all.
+        if (comingFromOutsideOverviewComponent) this.currentRoute = undefined;
 
-        // TODO we really have two separate public methods instead of this check
         if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
             this.jumpToImageTypeRelationTarget(documentToSelect);
         } else {
@@ -71,16 +70,16 @@ export class RoutingService {
     }
 
 
-    public jumpToConflictResolver(document: Document) {
+    public async jumpToConflictResolver(document: Document) {
+
+        this.router.navigate(['settings']); // indirect away first to reload the resources component, in case you are already there
 
         if (this.imageTypeUtility.isImageType(document.resource.type)) {
             return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
         } else {
-            this.getMainTypeNameForDocument(document).then(mainTypeName =>
-                this.viewFacade.getMainTypeHomeViewName(mainTypeName)
-            ).then(viewName => {
-                this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
-            });
+            const mainTypeName = await this.getMainTypeNameForDocument(document);
+            const viewName = await this.viewFacade.getMainTypeHomeViewName(mainTypeName);
+            this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
         }
     }
 

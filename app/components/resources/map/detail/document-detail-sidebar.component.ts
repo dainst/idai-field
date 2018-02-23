@@ -15,7 +15,7 @@ import {M} from '../../../../m';
 @Component({
     selector: 'document-view-sidebar',
     moduleId: module.id,
-    templateUrl: './document-view-sidebar.html'
+    templateUrl: './document-detail-sidebar.html'
 })
 /**
  * @author Daniel de Oliveira

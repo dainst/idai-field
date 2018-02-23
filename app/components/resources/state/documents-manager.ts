@@ -57,7 +57,7 @@ export class DocumentsManager {
         ObserverUtil.register(this.populateDocumentsObservers);
 
 
-    public async populateProjectDocument() {
+    public async populateProjectDocument(): Promise<void> {
 
         try {
             this.projectDocument = await this.datastore.get(this.settingsService.getSelectedProject() as any);

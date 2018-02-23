@@ -155,14 +155,14 @@ export class ViewFacade {
     }
 
 
-    public getMainTypeDocuments() {
+    public getMainTypeDocuments(): Array<IdaiFieldDocument> {
 
         if (this.isInOverview()) throw ViewFacade.err('getMainTypeDocuments');
         return this.mainTypeDocumentsManager.getDocuments();
     }
 
 
-    public async getAllOperationSubtypeWithViewDocuments() {
+    public async getAllOperationSubtypeWithViewDocuments(): Promise<Array<Document>> {
 
         const viewMainTypes = this.resourcesState.getViews()
             .map((view: any) => {return view.operationSubtype});
@@ -190,7 +190,7 @@ export class ViewFacade {
     }
 
 
-    public async selectMainTypeDocument(mainTypeDocument: Document) {
+    public async selectMainTypeDocument(mainTypeDocument: Document): Promise<void> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument');
         this.mainTypeDocumentsManager.select(mainTypeDocument as IdaiFieldDocument);
@@ -209,17 +209,15 @@ export class ViewFacade {
      *   a) the last selected one for that view if any or
      *   b) the first element of the operation type documents it is not set
      *      and operation type documents length > 1
-     *
-     * @returns {Promise<any>}
      */
-    public async populateMainTypeDocuments() {
+    public async populateMainTypeDocuments(): Promise<void> {
 
         if (this.isInOverview()) throw ViewFacade.err('populateMainTypeDocuments');
         await this.mainTypeDocumentsManager.populate();
     }
 
 
-    public async selectView(viewName: string) {
+    public async selectView(viewName: string): Promise<void> {
 
         await this.setupView(viewName);
         await this.setupMainTypeDocument();
@@ -227,7 +225,7 @@ export class ViewFacade {
     }
 
 
-    private async setupView(viewName: string): Promise<any> {
+    private async setupView(viewName: string): Promise<void> {
 
         await this.resourcesState.initialize(viewName);
 
@@ -236,7 +234,7 @@ export class ViewFacade {
     }
 
 
-    private async setupMainTypeDocument() {
+    private async setupMainTypeDocument(): Promise<void> {
 
         let mainTypeResource: IdaiFieldDocument|undefined;
 

@@ -25,7 +25,7 @@ export class MainTypeDocumentsManager {
     public select = (document: IdaiFieldDocument) => this.navigationPathManager.setMainTypeDocument(document);
 
 
-    public async populate(): Promise<any> {
+    public async populate(): Promise<void> {
 
         this.documents = await this.fetchDocuments(
             MainTypeDocumentsManager.makeMainTypeQuery(this.resourcesState.getViewType()));
@@ -88,7 +88,7 @@ export class MainTypeDocumentsManager {
     };
 
 
-    private async restoreLastSelectedOperationTypeDocument(): Promise<any> {
+    private async restoreLastSelectedOperationTypeDocument(): Promise<void> {
 
         const mainTypeDocument = this.resourcesState.getMainTypeDocument();
         if (!mainTypeDocument) {

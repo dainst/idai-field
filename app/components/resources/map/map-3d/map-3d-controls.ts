@@ -19,6 +19,8 @@ export class Map3DControls {
     private lastXPosition: number;
     private lastYPosition: number;
 
+    private cameraDirection: number = 0; // 0 (north), 1 (east), 2 (south), 3 (west)
+
 
     constructor(private viewer: Viewer3D,
                 private meshGeometryManager: MeshGeometryManager) {}
@@ -102,10 +104,19 @@ export class Map3DControls {
             mesh.position.y + Map3DControls.computeDistance(camera, mesh),
             position.z);
         camera.lookAt(position);
+        camera.rotateZ((Math.PI / 2) * this.cameraDirection);
     }
 
 
     public rotateCamera(clockwise: boolean) {
+
+        if (this.viewer.isCameraAnimationRunning()) return;
+
+        if (clockwise) {
+            this.cameraDirection = this.cameraDirection == 3 ? 0 : this.cameraDirection += 1;
+        } else {
+            this.cameraDirection = this.cameraDirection == 0 ? 3 : this.cameraDirection -= 1;
+        }
 
         const clonedCamera: THREE.PerspectiveCamera = this.viewer.getCamera().clone();
 
@@ -125,6 +136,7 @@ export class Map3DControls {
             camera.position.y > point.y ? camera.position.y : point.y + 3,
             point.z);
         camera.lookAt(point);
+        camera.rotateZ((Math.PI / 2) * this.cameraDirection);
     }
 
 

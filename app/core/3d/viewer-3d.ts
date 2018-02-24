@@ -98,6 +98,12 @@ export class Viewer3D {
     }
 
 
+    public isCameraAnimationRunning(): boolean {
+
+        return this.cameraAnimation != undefined;
+    }
+
+
     private initialize() {
 
         this.renderer = this.createRenderer();

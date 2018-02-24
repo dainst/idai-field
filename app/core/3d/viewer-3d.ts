@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+const TWEEN = require('tweenjs');
+
 
 /**
  * @author Thomas Kleinke
@@ -12,6 +14,8 @@ export class Viewer3D {
 
     private resized: boolean = false;
     private notifyForResize: Function;
+
+    private cameraAnimation: { targetQuaternion: THREE.Quaternion, progress: number }|undefined;
 
 
     constructor(private containerElement: HTMLElement) {
@@ -81,6 +85,19 @@ export class Viewer3D {
     }
 
 
+    public startCameraAnimation(targetQuarternion: THREE.Quaternion) {
+
+        if (this.cameraAnimation) return;
+
+        this.cameraAnimation = { targetQuaternion: targetQuarternion, progress: 0 };
+
+        new TWEEN.Tween(this.cameraAnimation)
+            .to({ progress: 1 }, 300)
+            .easing(TWEEN.Easing.Circular.In)
+            .start();
+    }
+
+
     private initialize() {
 
         this.renderer = this.createRenderer();
@@ -126,10 +143,22 @@ export class Viewer3D {
         if (!this.renderer) return;
 
         this.resize();
+        this.animateCamera();
 
         requestAnimationFrame(this.animate.bind(this));
 
         this.renderer.render(this.scene, this.camera);
+    }
+
+
+    private animateCamera() {
+
+        if (!this.cameraAnimation) return;
+
+        TWEEN.update();
+        this.camera.quaternion.slerp(this.cameraAnimation.targetQuaternion, this.cameraAnimation.progress);
+
+        if (this.cameraAnimation.progress == 1) this.cameraAnimation = undefined;
     }
 
 

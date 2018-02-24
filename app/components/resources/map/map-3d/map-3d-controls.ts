@@ -107,10 +107,12 @@ export class Map3DControls {
 
     public rotateCamera(clockwise: boolean) {
 
-        const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
+        const clonedCamera: THREE.PerspectiveCamera = this.viewer.getCamera().clone();
 
-        if (clockwise) camera.rotateZ(Math.PI / 2);
-        if (!clockwise) camera.rotateZ(-Math.PI / 2);
+        if (clockwise) clonedCamera.rotateZ(Math.PI / 2);
+        if (!clockwise) clonedCamera.rotateZ(-Math.PI / 2);
+
+        this.viewer.startCameraAnimation(clonedCamera.quaternion);
     }
 
 

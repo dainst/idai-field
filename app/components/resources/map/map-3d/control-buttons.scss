@@ -22,7 +22,7 @@
 }
 
 #turn-clockwise-button {
-  right: 58px;
+  right: 63px;
   -webkit-transform: rotate(-45deg);
 }
 
@@ -61,7 +61,7 @@
 #compass-needle {
   position: absolute;
   bottom: 35px;
-  right: 52px;
+  right: 54px;
   -webkit-transition: all 0.5s ease;
 }
 
@@ -69,21 +69,20 @@
 #compass-needle:after {
   position: absolute;
   content: '';
+  left: -5px;
   width: 0;
   height: 0;
   border-style: solid;
 }
 
 #compass-needle:before {
-  top: -16px;
-  left: -4px;
-  border-width: 0 4px 16px 4px;
+  top: -20px;
+  left: -5px;
+  border-width: 0 5px 20px 5px;
   border-color: transparent transparent #ff0000 transparent;
 }
 
 #compass-needle:after {
-  top: 0;
-  left: -4px;
-  border-width: 16px 4px 0 4px;
+  border-width: 20px 5px 0 5px;
   border-color: #c2c2c2 transparent transparent transparent;
 }

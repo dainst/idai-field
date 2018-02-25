@@ -15,14 +15,6 @@ export class ControlButtonsComponent {
     constructor(private map3DComponent: Map3DComponent) {}
 
 
-    public turnClockwise() {
-
-        this.map3DComponent.getControls().rotateCamera(true);
-    }
-
-
-    public turnCounterclockwise() {
-
-        this.map3DComponent.getControls().rotateCamera(false);
-    }
+    public turnClockwise = () => this.map3DComponent.getControls().rotateCamera(true);
+    public turnCounterclockwise = () => this.map3DComponent.getControls().rotateCamera(false);
 }

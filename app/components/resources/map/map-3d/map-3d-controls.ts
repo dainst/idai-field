@@ -6,6 +6,12 @@ import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
 import {addOffset, getPointVector} from '../../../../util/util-3d';
 
 
+export const CAMERA_DIRECTION_NORTH: number = 0;
+export const CAMERA_DIRECTION_WEST: number = 1;
+export const CAMERA_DIRECTION_SOUTH: number = 2;
+export const CAMERA_DIRECTION_EAST: number = 3;
+
+
 /**
  * @author Thomas Kleinke
  */
@@ -19,7 +25,7 @@ export class Map3DControls {
     private lastXPosition: number;
     private lastYPosition: number;
 
-    private cameraDirection: number = 0; // 0 (north), 1 (east), 2 (south), 3 (west)
+    private cameraDirection: number = CAMERA_DIRECTION_NORTH;
 
 
     constructor(private viewer: Viewer3D,
@@ -120,8 +126,11 @@ export class Map3DControls {
 
         const clonedCamera: THREE.PerspectiveCamera = this.viewer.getCamera().clone();
 
-        if (clockwise) clonedCamera.rotateZ(Math.PI / 2);
-        if (!clockwise) clonedCamera.rotateZ(-Math.PI / 2);
+        if (clockwise) {
+            clonedCamera.rotateZ(Math.PI / 2);
+        } else {
+            clonedCamera.rotateZ(-Math.PI / 2);
+        }
 
         this.viewer.startCameraAnimation(clonedCamera.quaternion);
     }
@@ -153,11 +162,12 @@ export class Map3DControls {
     }
 
 
-    private performAction(deltaX: number, deltaY: number) {
+    private performAction(mouseDeltaX: number, mouseDeltaY: number) {
 
         switch (this.state.action) {
             case 'drag':
-                this.drag(deltaX, deltaY);
+                const { deltaX, deltaZ } = this.getDragDeltas(mouseDeltaX, mouseDeltaY);
+                this.drag(deltaX, deltaZ);
                 break;
         }
     }
@@ -165,12 +175,34 @@ export class Map3DControls {
 
     private drag(deltaX: number, deltaY: number) {
 
-        this.viewer.getCamera().translateX(deltaX / 100);
-        this.viewer.getCamera().translateY(-deltaY / 100);
+        const position: THREE.Vector3 = this.viewer.getCamera().position;
+
+        this.viewer.getCamera().position.set(
+            position.x + (deltaX / 100),
+            position.y,
+            position.z + (deltaY / 100)
+        );
 
         this.dragCounter++;
         if (this.dragCounter > 10 || deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5) {
             this.noSelection = true;
+        }
+    }
+
+
+    private getDragDeltas(mouseDeltaX: number,
+                          mouseDeltaY: number): { deltaX: number, deltaZ: number } {
+
+        switch(this.cameraDirection) {
+            case CAMERA_DIRECTION_WEST:
+                return { deltaX: mouseDeltaY, deltaZ: -mouseDeltaX };
+            case CAMERA_DIRECTION_SOUTH:
+                return { deltaX: -mouseDeltaX, deltaZ: -mouseDeltaY };
+            case CAMERA_DIRECTION_EAST:
+                return { deltaX: -mouseDeltaY, deltaZ: mouseDeltaX };
+            case CAMERA_DIRECTION_NORTH:
+            default:
+                return { deltaX: mouseDeltaX, deltaZ: mouseDeltaY };
         }
     }
 

@@ -12,9 +12,22 @@ import {Map3DComponent} from './map-3d.component';
  */
 export class ControlButtonsComponent {
 
+    public compassRotationDegrees: number = 0;
+
+
     constructor(private map3DComponent: Map3DComponent) {}
 
 
-    public turnClockwise = () => this.map3DComponent.getControls().rotateCamera(true);
-    public turnCounterclockwise = () => this.map3DComponent.getControls().rotateCamera(false);
+    public turnClockwise() {
+
+        this.map3DComponent.getControls().rotateCamera(true);
+        this.compassRotationDegrees += 90;
+    }
+
+
+    public turnCounterclockwise() {
+
+        this.map3DComponent.getControls().rotateCamera(false);
+        this.compassRotationDegrees -= 90;
+    }
 }

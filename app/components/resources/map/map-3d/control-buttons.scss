@@ -22,7 +22,7 @@
 }
 
 #turn-clockwise-button {
-  right: 40px;
+  right: 58px;
   -webkit-transform: rotate(-45deg);
 }
 
@@ -56,4 +56,34 @@
 #turn-counterclockwise-button:before {
   top: 10px;
   left: -1px;
+}
+
+#compass-needle {
+  position: absolute;
+  bottom: 35px;
+  right: 52px;
+  -webkit-transition: all 0.5s ease;
+}
+
+#compass-needle:before,
+#compass-needle:after {
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+#compass-needle:before {
+  top: -16px;
+  left: -4px;
+  border-width: 0 4px 16px 4px;
+  border-color: transparent transparent #ff0000 transparent;
+}
+
+#compass-needle:after {
+  top: 0;
+  left: -4px;
+  border-width: 16px 4px 0 4px;
+  border-color: #c2c2c2 transparent transparent transparent;
 }

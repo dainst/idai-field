@@ -65,7 +65,7 @@
     "leaflet-imageoverlay-rotated": "0.1.1",
     "leaflet.pm": "0.17.3",
     "levelup": "^1.3.5",
-    "mdi": "1.8.36",
+    "mdi": "2.1.19",
     "moment": "2.18.1",
     "papaparse": "~4.1.4",
     "pouchdb": "^6.3.4",
@@ -75,7 +75,6 @@
     "rxjs": "5.0.1",
     "systemjs": "0.19.31",
     "three": "0.89.0",
-    "three-collada-loader-2": "1.0.1",
     "three.meshline": "1.0.3",
     "zone.js": "0.8.11"
   },

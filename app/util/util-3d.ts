@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
 
 /**

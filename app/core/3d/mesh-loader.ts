@@ -3,7 +3,7 @@ import {SettingsService} from '../settings/settings-service';
 import {MeshEditingUtility} from './mesh-editing-utility';
 import {MeshLoadingProgress} from '../../components/core-3d/mesh-loading-progress';
 
-const ColladaLoader = require('three-collada-loader-2');
+const ColladaLoader = require('three-collada-loader');
 
 
 /**

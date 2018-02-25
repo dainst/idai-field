@@ -33,7 +33,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "identifier": "trench2",
             "shortDescription": "3D-Testschnitt",
             "relations": {
-                "has3DRepresentation": [ "obj3d", "vra_trench" ],
+                "has3DRepresentation": [ "obj3d", "vra_trench", "vra_trench_georef" ],
                 "isRecordedIn": [ "test" ]
             },
             "type": "Trench"
@@ -175,6 +175,18 @@ export const DOCS: IdaiFieldDocument[] = [
             "id": "vra_trench",
             "identifier": "vraTrench",
             "shortDescription": "VRATrench",
+            "type": "Object3D",
+            "relations": {
+                "isRecordedIn": [],
+                "is3DRepresentationOf": ["t2"]
+            }
+        }
+    },
+    {
+        "resource": {
+            "id": "vra_trench_georef",
+            "identifier": "vraTrenchGeoref",
+            "shortDescription": "VRATrench (georeferenziert)",
             "type": "Object3D",
             "relations": {
                 "isRecordedIn": [],

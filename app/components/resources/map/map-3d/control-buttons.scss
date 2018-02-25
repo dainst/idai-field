@@ -63,6 +63,8 @@
   bottom: 35px;
   right: 54px;
   -webkit-transition: all 300ms ease;
+  user-select: none;
+  cursor: default;
 }
 
 #compass-needle:before,

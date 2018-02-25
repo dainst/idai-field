@@ -20,12 +20,16 @@ export class ControlButtonsComponent {
 
     public turnClockwise() {
 
+        if (!this.map3DComponent.getControls().isCameraRotationAllowed()) return;
+
         this.map3DComponent.getControls().rotateCamera(true);
         this.compassRotationDegrees += 90;
     }
 
 
     public turnCounterclockwise() {
+
+        if (!this.map3DComponent.getControls().isCameraRotationAllowed()) return;
 
         this.map3DComponent.getControls().rotateCamera(false);
         this.compassRotationDegrees -= 90;

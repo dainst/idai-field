@@ -116,7 +116,7 @@ export class Map3DControls {
 
     public rotateCamera(clockwise: boolean) {
 
-        if (this.viewer.isCameraAnimationRunning()) return;
+        if (!this.isCameraRotationAllowed()) return;
 
         if (clockwise) {
             this.cameraDirection = this.cameraDirection == 3 ? 0 : this.cameraDirection += 1;
@@ -133,6 +133,12 @@ export class Map3DControls {
         }
 
         this.viewer.startCameraAnimation(clonedCamera.quaternion);
+    }
+
+
+    public isCameraRotationAllowed(): boolean {
+
+        return !this.viewer.isCameraAnimationRunning();
     }
 
 

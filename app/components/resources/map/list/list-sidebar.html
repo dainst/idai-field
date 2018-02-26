@@ -10,7 +10,7 @@
         [id]="'resource-' + document.resource.identifier">
 
         <div *ngIf="showMoveIntoOption(document)"
-              class="move-into-button btn mt-2 mr-2 float-right"
+              class="move-into-button btn float-right"
               (click)="moveInto(document); $event.stopPropagation();">
             <span class="mdi mdi-subdirectory-arrow-right mdi-18px"></span>
         </div>

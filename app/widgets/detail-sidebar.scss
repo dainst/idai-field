@@ -68,16 +68,15 @@
     margin-top: -12px;
     position: absolute;
     right: -8px;
-    top: 68px
+    top: 68px;
+    box-shadow: none !important;
   }
 
   .edit-button:hover {
-
     color: lighten($buttoncolor, 10%) !important;
   }
 
   .close-button {
-
     font-size: 23px;
     color: $buttoncolor !important;
     position: absolute;

@@ -57,15 +57,15 @@ export class RoutingService {
 
     // Currently used from DocumentViewSidebar and ImageViewComponent
     public jumpToRelationTarget(documentToSelect: Document, tab?: string,
-                                comingFromOutsideOverviewComponent: boolean = false) {
+                                comingFromOutsideResourcesComponent: boolean = false) {
 
-        if (comingFromOutsideOverviewComponent) this.currentRoute = undefined;
+        if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
 
         if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
-            this.jumpToImageTypeRelationTarget(documentToSelect);
+            this.jumpToImageTypeRelationTarget(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
             this.jumpToResourceTypeRelationTarget(
-                documentToSelect, tab, comingFromOutsideOverviewComponent);
+                documentToSelect, tab, comingFromOutsideResourcesComponent);
         }
     }
 
@@ -94,7 +94,7 @@ export class RoutingService {
     }
 
 
-    private jumpToImageTypeRelationTarget(documentToSelect: Document) {
+    private jumpToImageTypeRelationTarget(documentToSelect: Document, comingFromOutsideResourcesComponent: boolean) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (selectedDocument) {
@@ -104,19 +104,19 @@ export class RoutingService {
         }
 
         this.router.navigate(
-            ['images', documentToSelect.resource.id, 'show', 'relations'],
+            ['images', documentToSelect.resource.id, 'show', comingFromOutsideResourcesComponent ? 'fields' : 'relations'],
             { queryParams: { from: this.currentRoute } }
         );
     }
 
 
     private async jumpToResourceTypeRelationTarget(documentToSelect: Document, tab?: string,
-                                                   comingFromOutsideOverviewComponent: boolean = false) {
+                                                   comingFromOutsideResourcesComponent: boolean = false) {
 
         const viewName = await this.viewFacade.getMainTypeHomeViewName(
             await this.getMainTypeNameForDocument(documentToSelect));
 
-        if (comingFromOutsideOverviewComponent || viewName != this.viewFacade.getCurrentViewName()) {
+        if (comingFromOutsideResourcesComponent || viewName != this.viewFacade.getCurrentViewName()) {
             this.router.navigate(tab ?
                 ['resources', viewName, documentToSelect.resource.id, 'view', tab] :
                 ['resources', viewName, documentToSelect.resource.id]);

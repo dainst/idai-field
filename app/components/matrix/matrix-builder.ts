@@ -39,10 +39,12 @@ export class MatrixBuilder {
 
         if (!relations) return;
 
-        const isAfterDocument: IdaiFieldDocument|undefined = this.getDocument(relations[0]);
-        if (!isAfterDocument) throw 'Document not found: ' + relations[0];
+        for (let i = 0; i < relations.length; i++) {
+            const isAfterDocument: IdaiFieldDocument|undefined = this.getDocument(relations[i]);
+            if (!isAfterDocument) throw 'Document not found: ' + relations[i];
 
-        this.addToRows(isAfterDocument, row + 1, 0);
+            this.addToRows(isAfterDocument, row + 1, column + i);
+        }
     }
 
 

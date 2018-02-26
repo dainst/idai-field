@@ -1,14 +1,12 @@
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {Document} from 'idai-components-2/core';
 
-export const DOCS: IdaiFieldDocument[] = [
+export const DOCS: Document[] = [
     {
         "resource": {
             "id": "test",
             "identifier": "test",
             "shortDescription": "Testprojekt",
-            "relations": {
-                "isRecordedIn": []
-            },
+            "relations": {},
             "type": "Project"
         }
     },
@@ -79,9 +77,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "originalFilename" : "PE07-So-07_Z001.jpg",
             "height" : 2423,
             "width" : 3513,
-            "relations": {
-                "isRecordedIn" : []
-            },
+            "relations": {},
             "georeference": {
                 "bottomLeftCoordinates": [39.1411810096, 27.1892609283],
                 "topLeftCoordinates": [39.1412672328, 27.1892609283],
@@ -95,9 +91,7 @@ export const DOCS: IdaiFieldDocument[] = [
             "identifier": "mapLayerTest2.png",
             "shortDescription": "Test Layer 2",
             "type": "Image",
-            "relations": {
-                "isRecordedIn" : []
-            },
+            "relations": {},
             "originalFilename" : "mapLayerTest2.png",
             "height" : 782,
             "width" : 748,

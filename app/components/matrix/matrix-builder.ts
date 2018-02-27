@@ -21,7 +21,7 @@ export class MatrixBuilder {
 
     private documents: Array<IdaiFieldDocument>;
     private treeNodes: { [resourceId: string]: TreeNode };
-    private rows: Array<Array<IdaiFieldDocument>>;
+    private rows: Array<Array<IdaiFieldDocument|undefined>>;
 
 
     public build(documents: Array<IdaiFieldDocument>): Matrix {
@@ -88,11 +88,10 @@ export class MatrixBuilder {
 
     private addToRows(treeNode: TreeNode, row: number = 0, columnOffset: number = 0) {
 
-        if (!this.rows[row]) this.rows[row] = [];
-
         const column: number = MatrixBuilder.getLeftSizeNodeWidth(treeNode) + columnOffset;
 
         if (treeNode.row !== undefined && treeNode.column !== undefined) {
+            this.rows[treeNode.row][treeNode.column] = undefined;
             if (treeNode.row != row) treeNode.row = Math.max(treeNode.row, row);
             treeNode.column = Math.floor((treeNode.column + column) / 2);
         } else {
@@ -100,6 +99,9 @@ export class MatrixBuilder {
             treeNode.column = column;
         }
 
+        this.switchRowIfCurrentFieldIsOccupied(treeNode);
+
+        if (!this.rows[treeNode.row]) this.rows[treeNode.row] = [];
         this.rows[treeNode.row][treeNode.column] = treeNode.document;
 
         let currentColumn: number = columnOffset;
@@ -126,6 +128,16 @@ export class MatrixBuilder {
     private getDocument(id: string): IdaiFieldDocument|undefined {
 
         return this.documents.find(document => document.resource.id == id);
+    }
+
+
+    private switchRowIfCurrentFieldIsOccupied(treeNode: TreeNode) {
+
+        if (treeNode.row === undefined || treeNode.column === undefined) throw 'TreeNode position is not set';
+
+        while (this.rows[treeNode.row] && this.rows[treeNode.row][treeNode.column]) {
+            treeNode.row++;
+        }
     }
 
 

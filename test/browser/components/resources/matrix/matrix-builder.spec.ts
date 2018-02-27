@@ -83,6 +83,47 @@ export function main() {
         });
 
 
+        it('prevent two documents from occupying the same space', () => {
+
+            const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
+            const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
+            const feature3: IdaiFieldDocument = Static.idfDoc('Feature 3', 'feature3', 'Feature', 'f3');
+            const feature4: IdaiFieldDocument = Static.idfDoc('Feature 4', 'feature4', 'Feature', 'f4');
+            const feature5: IdaiFieldDocument = Static.idfDoc('Feature 5', 'feature5', 'Feature', 'f5');
+            const feature6: IdaiFieldDocument = Static.idfDoc('Feature 6', 'feature6', 'Feature', 'f6');
+
+            feature1.resource.relations['isAfter'] = ['f2', 'f5', 'f3'];
+            feature2.resource.relations['isAfter'] = ['f4'];
+            feature3.resource.relations['isAfter'] = ['f4'];
+            feature5.resource.relations['isAfter'] = ['f6'];
+
+            feature2.resource.relations['isBefore'] = ['f1'];
+            feature3.resource.relations['isBefore'] = ['f1'];
+            feature4.resource.relations['isBefore'] = ['f2', 'f3'];
+            feature5.resource.relations['isBefore'] = ['f1'];
+            feature6.resource.relations['isBefore'] = ['f5'];
+
+            const matrix: Matrix = matrixBuilder.build([
+                feature1, feature2, feature3, feature4, feature5, feature6
+            ]);
+
+            expect(matrix.rows.length).toBe(4);
+            expect(matrix.rows[0].length).toBe(2);
+            expect(matrix.rows[1].length).toBe(3);
+            expect(matrix.rows[2].length).toBe(2);
+            expect(matrix.rows[3].length).toBe(2);
+            expect(matrix.rows[0][0]).toBeUndefined();
+            expect(matrix.rows[0][1]).toBe(feature1);
+            expect(matrix.rows[1][0]).toBe(feature2);
+            expect(matrix.rows[1][1]).toBe(feature5);
+            expect(matrix.rows[1][2]).toBe(feature3);
+            expect(matrix.rows[2][0]).toBeUndefined();
+            expect(matrix.rows[2][1]).toBe(feature6);
+            expect(matrix.rows[3][0]).toBeUndefined();
+            expect(matrix.rows[3][1]).toBe(feature4);
+        });
+
+
         it('build complicated matrix', () => {
 
             const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');

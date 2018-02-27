@@ -2,7 +2,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Matrix} from './matrix';
 
 
-interface TreeNode {
+export interface TreeNode {
 
     document: IdaiFieldDocument;
     leftChildren: Array<TreeNode>;
@@ -39,7 +39,10 @@ export class MatrixBuilder {
         this.addToRows(rootNode);
 
         return {
-            rows: this.rows
+            rows: this.rows,
+            nodes: Object.values(this.treeNodes),
+            rowCount: this.rows.length,
+            columnCount: this.getMatrixColumnCount()
         };
     }
 
@@ -141,6 +144,15 @@ export class MatrixBuilder {
     }
 
 
+    private getMatrixColumnCount(): number {
+
+        let maxWidth: number = 0;
+        this.rows.forEach(row => maxWidth = Math.max(maxWidth, row.length));
+
+        return maxWidth;
+    }
+
+
     private static findRootDocument(documents: Array<IdaiFieldDocument>): IdaiFieldDocument|undefined {
 
         return documents.find(document => {
@@ -177,7 +189,10 @@ export class MatrixBuilder {
     private static createEmptyMatrix(): Matrix {
 
         return {
-            rows: []
+            rows: [],
+            nodes: [],
+            rowCount: 0,
+            columnCount: 0
         };
     }
 }

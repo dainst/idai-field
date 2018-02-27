@@ -25,6 +25,8 @@ export function main() {
 
             const matrix: Matrix = matrixBuilder.build([feature1, feature2]);
 
+            expect(matrix.rowCount).toBe(2);
+            expect(matrix.columnCount).toBe(1);
             expect(matrix.rows.length).toBe(2);
             expect(matrix.rows[0].length).toBe(1);
             expect(matrix.rows[1].length).toBe(1);
@@ -46,6 +48,8 @@ export function main() {
 
             const matrix: Matrix = matrixBuilder.build([feature1, feature2, feature3]);
 
+            expect(matrix.rowCount).toBe(2);
+            expect(matrix.columnCount).toBe(3);
             expect(matrix.rows.length).toBe(2);
             expect(matrix.rows[0].length).toBe(2);
             expect(matrix.rows[1].length).toBe(3);
@@ -74,6 +78,8 @@ export function main() {
 
             const matrix: Matrix = matrixBuilder.build([feature1, feature2, feature3, feature4]);
 
+            expect(matrix.rowCount).toBe(3);
+            expect(matrix.columnCount).toBe(3);
             expect(matrix.rows.length).toBe(3);
             expect(matrix.rows[0].length).toBe(2);
             expect(matrix.rows[1].length).toBe(3);
@@ -112,6 +118,8 @@ export function main() {
                 feature1, feature2, feature3, feature4, feature5, feature6
             ]);
 
+            expect(matrix.rowCount).toBe(4);
+            expect(matrix.columnCount).toBe(3);
             expect(matrix.rows.length).toBe(4);
             expect(matrix.rows[0].length).toBe(2);
             expect(matrix.rows[1].length).toBe(3);
@@ -174,6 +182,8 @@ export function main() {
                 feature9, feature10, feature11, feature12,
                 feature13, feature14]);
 
+            expect(matrix.rowCount).toBe(5);
+            expect(matrix.columnCount).toBe(9);
             expect(matrix.rows.length).toBe(5);
             expect(matrix.rows[0].length).toBe(5);
             expect(matrix.rows[1].length).toBe(8);

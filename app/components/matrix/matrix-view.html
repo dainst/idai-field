@@ -8,6 +8,8 @@
         </div>
     </div>
     <div *ngIf="selectedTrench" id="selected-trench-label">{{getDocumentLabel(selectedTrench)}}</div>
-</div>
 
-<matrix [documents]="documents"></matrix>
+    <div id="matrix-container">
+        <matrix [documents]="documents"></matrix>
+    </div>
+</div>

@@ -57,8 +57,11 @@
     "Leaflet.vector-markers": "0.0.6",
     "angular2-uuid": "1.1.0",
     "bootstrap": "4.0.0-beta",
+    "d3": "4.13.0",
     "es6-shim": "0.35.0",
     "express": "~4.15.0",
+    "express-pouchdb-dainst": "1000.0.3",
+    "idai-components-2": "1.6.2",
     "ip": "1.1.5",
     "leaflet": "1.2.0",
     "leaflet-imageoverlay-rotated": "0.1.1",
@@ -73,12 +76,11 @@
     "roboto-fontface": "0.6.0",
     "rxjs": "5.0.1",
     "systemjs": "0.19.31",
-    "zone.js": "0.8.11",
-    "express-pouchdb-dainst": "1000.0.3",
-    "idai-components-2": "1.6.2",
-    "tsfun": "1.7.0"
+    "tsfun": "1.7.0",
+    "zone.js": "0.8.11"
   },
   "devDependencies": {
+    "@types/d3": "5.0.0",
     "@types/geojson": "0.0.32",
     "@types/jasmine": "~2.5.41",
     "@types/leaflet": "1.0.66",

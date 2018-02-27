@@ -35,6 +35,7 @@ export class MatrixBuilder {
         if (!rootDocument) return MatrixBuilder.createEmptyMatrix();
 
         const rootNode: TreeNode = this.buildTreeNode(rootDocument);
+        this.treeNodes[rootDocument.resource.id as string] = rootNode;
 
         this.addToRows(rootNode);
 

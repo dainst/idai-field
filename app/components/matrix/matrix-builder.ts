@@ -5,9 +5,9 @@ import {Matrix} from './matrix';
 interface TreeNode {
 
     document: IdaiFieldDocument;
-    leftBranch: Array<TreeNode>;
+    leftChildren: Array<TreeNode>;
     belowChild?: TreeNode;
-    rightBranch: Array<TreeNode>;
+    rightChildren: Array<TreeNode>;
     row?: number;
     column?: number;
 }
@@ -46,7 +46,7 @@ export class MatrixBuilder {
 
     private buildTreeNode(document: IdaiFieldDocument): TreeNode {
 
-        const treeNode: TreeNode = { document: document, leftBranch: [], rightBranch: [] };
+        const treeNode: TreeNode = { document: document, leftChildren: [], rightChildren: [] };
 
         const relations: string[] = document.resource.relations['isAfter'];
 
@@ -62,11 +62,11 @@ export class MatrixBuilder {
             const childNode: TreeNode = this.getTreeNode(isAfterDocument);
 
             if (i < sideChildrenCount) {
-                treeNode.leftBranch.push(childNode);
+                treeNode.leftChildren.push(childNode);
             } else if (i == sideChildrenCount && hasBelowChild) {
                 treeNode.belowChild = childNode;
             } else {
-                treeNode.rightBranch.push(childNode);
+                treeNode.rightChildren.push(childNode);
             }
         }
 
@@ -90,33 +90,33 @@ export class MatrixBuilder {
 
         if (!this.rows[row]) this.rows[row] = [];
 
-        const centralColumn: number = MatrixBuilder.getLeftSizeNodeWidth(treeNode) + columnOffset;
+        const column: number = MatrixBuilder.getLeftSizeNodeWidth(treeNode) + columnOffset;
 
         if (treeNode.row !== undefined && treeNode.column !== undefined) {
             if (treeNode.row != row) treeNode.row = Math.max(treeNode.row, row);
-            treeNode.column = Math.floor((treeNode.column + centralColumn) / 2);
+            treeNode.column = Math.floor((treeNode.column + column) / 2);
         } else {
             treeNode.row = row;
-            treeNode.column = centralColumn;
+            treeNode.column = column;
         }
 
         this.rows[treeNode.row][treeNode.column] = treeNode.document;
 
         let currentColumn: number = columnOffset;
 
-        treeNode.leftBranch.forEach(childNode => {
+        treeNode.leftChildren.forEach(childNode => {
             this.addToRows(childNode, row + 1, currentColumn);
             currentColumn += MatrixBuilder.getNodeColumnWidth(childNode);
         });
 
         if (treeNode.belowChild) {
-            this.addToRows(treeNode.belowChild, row + 1, centralColumn);
+            this.addToRows(treeNode.belowChild, row + 1, column);
             currentColumn += MatrixBuilder.getNodeColumnWidth(treeNode.belowChild);
         } else {
             currentColumn++;
         }
 
-        treeNode.rightBranch.forEach(childNode => {
+        treeNode.rightChildren.forEach(childNode => {
             this.addToRows(childNode, row + 1, currentColumn);
             currentColumn += MatrixBuilder.getNodeColumnWidth(childNode);
         });
@@ -141,8 +141,8 @@ export class MatrixBuilder {
 
         let leftBranchChildren: number = 0;
 
-        treeNode.leftBranch.forEach(childNode => {
-            leftBranchChildren += this.getNodeColumnWidth(childNode)
+        treeNode.leftChildren.forEach(childNode => {
+            leftBranchChildren += this.getNodeColumnWidth(childNode);
         });
 
         if (treeNode.belowChild) leftBranchChildren += this.getLeftSizeNodeWidth(treeNode.belowChild);
@@ -155,8 +155,8 @@ export class MatrixBuilder {
 
         let columns: number = 1;
 
-        treeNode.leftBranch.forEach(childNode => columns += this.getNodeColumnWidth(childNode));
-        treeNode.rightBranch.forEach(childNode => columns += this.getNodeColumnWidth(childNode));
+        treeNode.leftChildren.forEach(childNode => columns += this.getNodeColumnWidth(childNode));
+        treeNode.rightChildren.forEach(childNode => columns += this.getNodeColumnWidth(childNode));
 
         return columns;
     }

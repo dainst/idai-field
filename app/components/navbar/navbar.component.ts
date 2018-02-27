@@ -15,7 +15,6 @@ import {ViewFacade} from '../resources/state/view-facade';
  */
 export class NavbarComponent implements OnInit {
 
-
     public views: Array<ViewDefinition>;
     public activeRoute: string;
 

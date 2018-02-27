@@ -1,0 +1,13 @@
+<div id="matrix-view">
+    <div class="btn-group" ngbDropdown placement="bottom-left" role="group">
+        <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+            <button *ngFor="let trench of trenches" class="dropdown-item" (click)="selectTrench(trench)">
+                {{getDocumentLabel(trench)}}
+            </button>
+        </div>
+    </div>
+    <div *ngIf="selectedTrench" id="selected-trench-label">{{getDocumentLabel(selectedTrench)}}</div>
+</div>
+
+<matrix [documents]="documents"></matrix>

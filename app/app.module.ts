@@ -39,6 +39,7 @@ import {IdaiFieldDocumentDatastore} from './core/datastore/idai-field-document-d
 import {PersistenceManager} from './core/persist/persistence-manager';
 import {DocumentDatastore} from './core/datastore/document-datastore';
 import {Validator} from './core/model/validator';
+import {MatrixModule} from './components/matrix/matrix.module';
 
 
 const remote = require('electron').remote;
@@ -62,7 +63,8 @@ let pconf: any = undefined;
         WidgetsModule,
         ImportModule,
         ExportModule,
-        DatastoreModule
+        DatastoreModule,
+        MatrixModule
     ],
     declarations: [
         AppComponent,

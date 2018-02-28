@@ -32,15 +32,29 @@ export class MatrixComponent implements OnChanges {
 
     private static update(matrix: Matrix) {
 
-        const canvas = d3.select('#matrix')
+        d3.select('#matrix')
             .attr('width', matrix.columnCount * (COLUMN_WIDTH + MARGIN) + MARGIN * 2)
             .attr('height', matrix.rowCount * (ROW_HEIGHT + MARGIN) + MARGIN * 2);
 
-        canvas.selectAll('g').remove();
+
+        this.removeNodeElements();
+        this.removeLines();
 
         this.createNodeElements(matrix);
+        this.createLines(matrix);
     }
 
+
+    private static removeNodeElements() {
+
+        d3.select('#matrix').selectAll('g').remove();
+    }
+
+
+    private static removeLines() {
+
+        d3.select('#matrix').selectAll('line').remove();
+    }
 
     private static createNodeElements(matrix: Matrix) {
 
@@ -79,5 +93,44 @@ export class MatrixComponent implements OnChanges {
             .attr('alignment-baseline', 'middle')
             .attr('font-size', 12)
             .text(node => node.document.resource.identifier);
+    }
+
+
+    private static createLines(matrix: Matrix) {
+
+        d3.select('#matrix').selectAll('line')
+            .data(this.getConnections(matrix))
+            .enter()
+            .append('line')
+            .attr('x1', connection => {
+                return connection.parent.column as number * (COLUMN_WIDTH + MARGIN) + (COLUMN_WIDTH / 2)
+                    + MARGIN;
+            })
+            .attr('y1', connection => {
+                return (connection.parent.row as number + 1) * (ROW_HEIGHT + MARGIN);
+            })
+            .attr('x2', connection => {
+                return connection.child.column as number * (COLUMN_WIDTH + MARGIN) + (COLUMN_WIDTH / 2)
+                    + MARGIN;
+            })
+            .attr('y2', connection => {
+                return connection.child.row as number * (ROW_HEIGHT + MARGIN) + MARGIN;
+            })
+            .attr('stroke', 'black')
+            .attr('stroke-width', 3);
+    }
+
+
+    private static getConnections(matrix: Matrix): Array<{ parent: TreeNode, child: TreeNode }> {
+
+        const connections: Array<{ parent: TreeNode, child: TreeNode }> = [];
+
+        matrix.nodes.forEach(node => {
+            node.leftChildren.forEach(child => connections.push({ parent: node, child: child}));
+            if (node.belowChild) connections.push({ parent: node, child: node.belowChild });
+            node.rightChildren.forEach(child => connections.push({ parent: node, child: child}));
+        });
+
+        return connections;
     }
 }

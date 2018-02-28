@@ -78,9 +78,7 @@ export class MatrixComponent implements OnChanges {
             .attr('cx', COLUMN_WIDTH / 2)
             .attr('cy', ROW_HEIGHT / 2)
             .attr('r', ROW_HEIGHT / 2)
-            .attr('stroke', 'black')
-            .attr('stroke-width', 2)
-            .attr('fill', '#748db5');
+            .attr('class', 'node-circle');
     }
 
 
@@ -89,9 +87,7 @@ export class MatrixComponent implements OnChanges {
         nodeElements.append('text')
             .attr('x', COLUMN_WIDTH / 2)
             .attr('y', ROW_HEIGHT / 2)
-            .attr('text-anchor', 'middle')
-            .attr('alignment-baseline', 'middle')
-            .attr('font-size', 12)
+            .attr('class', 'node-text-label')
             .text(node => node.document.resource.identifier);
     }
 
@@ -116,9 +112,7 @@ export class MatrixComponent implements OnChanges {
             .attr('y2', connection => {
                 return connection.child.row as number * (ROW_HEIGHT + MARGIN) + MARGIN;
             })
-            .attr('stroke', 'black')
-            .attr('stroke-width', 2)
-            .attr('stroke-opacity', 0.5);
+            .attr('class', 'line')
     }
 
 

@@ -1,0 +1,23 @@
+/**
+ * @author Thomas Kleinke
+ */
+
+#matrix {
+  .node-circle {
+    stroke: #000;
+    stroke-width: 2px;
+    fill:  #748db5;
+  }
+
+  .node-text-label {
+    text-anchor: middle;
+    alignment-baseline: middle;
+    font-size: 12px;
+  }
+
+  .line {
+    stroke: #000;
+    stroke-width: 2px;
+    stroke-opacity: 0.5;
+  }
+}

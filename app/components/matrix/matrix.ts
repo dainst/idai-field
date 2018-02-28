@@ -1,5 +1,4 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {TreeNode} from './matrix-builder';
 
 
 /**
@@ -13,4 +12,15 @@ export interface Matrix {
     rowCount: number;
     columnCount: number;
     loopDocuments: Array<IdaiFieldDocument>;
+}
+
+
+export interface TreeNode {
+
+    document: IdaiFieldDocument;
+    leftChildren: Array<TreeNode>;
+    belowChild?: TreeNode;
+    rightChildren: Array<TreeNode>;
+    row?: number;
+    column?: number;
 }

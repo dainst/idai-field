@@ -1,16 +1,5 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Matrix} from './matrix';
-
-
-export interface TreeNode {
-
-    document: IdaiFieldDocument;
-    leftChildren: Array<TreeNode>;
-    belowChild?: TreeNode;
-    rightChildren: Array<TreeNode>;
-    row?: number;
-    column?: number;
-}
+import {Matrix, TreeNode} from './matrix';
 
 
 /**

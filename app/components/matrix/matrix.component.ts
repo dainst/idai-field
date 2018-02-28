@@ -2,8 +2,8 @@ import * as d3 from 'd3';
 import {Component, Input, OnChanges} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Messages} from 'idai-components-2/messages';
-import {MatrixBuilder, TreeNode} from './matrix-builder';
-import {Matrix} from './matrix';
+import {MatrixBuilder} from './matrix-builder';
+import {Matrix, TreeNode} from './matrix';
 import {M} from '../../m';
 
 

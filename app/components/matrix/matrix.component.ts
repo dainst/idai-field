@@ -1,8 +1,10 @@
 import * as d3 from 'd3';
 import {Component, Input, OnChanges} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {Messages} from 'idai-components-2/messages';
 import {MatrixBuilder, TreeNode} from './matrix-builder';
 import {Matrix} from './matrix';
+import {M} from '../../m';
 
 
 const COLUMN_WIDTH: number = 70;
@@ -23,10 +25,22 @@ export class MatrixComponent implements OnChanges {
     @Input() documents: Array<IdaiFieldDocument>;
 
 
+    constructor(private messages: Messages) {}
+
+
     ngOnChanges() {
 
         const matrix: Matrix = new MatrixBuilder().build(this.documents);
+        this.showWarnings(matrix);
         MatrixComponent.update(matrix);
+    }
+
+
+    private showWarnings(matrix: Matrix) {
+
+        matrix.loopDocuments.forEach(document => {
+            this.messages.add([M.MATRIX_WARNING_LOOP_DOCUMENT, document.resource.identifier]);
+        });
     }
 
 

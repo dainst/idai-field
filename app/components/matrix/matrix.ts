@@ -12,4 +12,5 @@ export interface Matrix {
     nodes: Array<TreeNode>;
     rowCount: number;
     columnCount: number;
+    loopDocuments: Array<IdaiFieldDocument>;
 }

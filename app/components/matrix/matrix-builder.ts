@@ -22,6 +22,7 @@ export class MatrixBuilder {
     private documents: Array<IdaiFieldDocument>;
     private treeNodes: { [resourceId: string]: TreeNode };
     private rows: Array<Array<IdaiFieldDocument|undefined>>;
+    private loopDocuments: Array<IdaiFieldDocument>;
 
 
     public build(documents: Array<IdaiFieldDocument>): Matrix {
@@ -29,6 +30,7 @@ export class MatrixBuilder {
         this.documents = documents;
         this.treeNodes = {};
         this.rows = [];
+        this.loopDocuments = [];
 
         const rootDocument: IdaiFieldDocument|undefined = MatrixBuilder.findRootDocument(documents);
 
@@ -43,14 +45,17 @@ export class MatrixBuilder {
             rows: this.rows,
             nodes: Object.values(this.treeNodes),
             rowCount: this.rows.length,
-            columnCount: this.getMatrixColumnCount()
+            columnCount: this.getMatrixColumnCount(),
+            loopDocuments: this.loopDocuments
         };
     }
 
 
-    private buildTreeNode(document: IdaiFieldDocument): TreeNode {
+    private buildTreeNode(document: IdaiFieldDocument,
+                          branchDocuments: Array<IdaiFieldDocument> = []): TreeNode {
 
         const treeNode: TreeNode = { document: document, leftChildren: [], rightChildren: [] };
+        branchDocuments = branchDocuments.concat([document]);
 
         const relations: string[] = document.resource.relations['isAfter'];
 
@@ -63,7 +68,12 @@ export class MatrixBuilder {
             const isAfterDocument: IdaiFieldDocument|undefined = this.getDocument(relations[i]);
             if (!isAfterDocument) throw 'Document not found: ' + relations[i];
 
-            const childNode: TreeNode = this.getTreeNode(isAfterDocument);
+            if (branchDocuments.includes(isAfterDocument)) {
+                this.loopDocuments.push(isAfterDocument);
+                continue;
+            }
+
+            const childNode: TreeNode = this.getTreeNode(isAfterDocument, branchDocuments);
 
             if (i < sideChildrenCount) {
                 treeNode.leftChildren.push(childNode);
@@ -78,12 +88,12 @@ export class MatrixBuilder {
     }
 
 
-    private getTreeNode(document: IdaiFieldDocument): TreeNode {
+    private getTreeNode(document: IdaiFieldDocument, branchDocuments: Array<IdaiFieldDocument>): TreeNode {
 
         const resourceId = document.resource.id as string;
 
         if (!this.treeNodes[resourceId]) {
-            this.treeNodes[resourceId] = this.buildTreeNode(document);
+            this.treeNodes[resourceId] = this.buildTreeNode(document, branchDocuments);
         }
 
         return this.treeNodes[resourceId];
@@ -193,7 +203,8 @@ export class MatrixBuilder {
             rows: [],
             nodes: [],
             rowCount: 0,
-            columnCount: 0
+            columnCount: 0,
+            loopDocuments: []
         };
     }
 }

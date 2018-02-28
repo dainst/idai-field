@@ -135,6 +135,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static VALIDATION_ERROR_INVALID_NUMERIC_VALUE: string = 'validation/error/invalidnumericvalue';
     public static VALIDATION_ERROR_INVALID_NUMERIC_VALUES: string = 'validation/error/invalidnumericvalues';
 
+    // Matrix Package
+    public static MATRIX_WARNING_LOOP_DOCUMENT: string = 'matrix/warning/loopdocument';
+
 
 
     // Keys END /////////////////////////////////
@@ -678,6 +681,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.VALIDATION_ERROR_INVALIDINPUTTYPE]={
             content: 'Ungültiger Wert \'{1}\' für \'inputType\' in Felddefinition für \'{0}\'. Erlaubte Werte: {2}.',
             level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.MATRIX_WARNING_LOOP_DOCUMENT]={
+            content: 'Widersprüchliche Relationen gefunden: Die Ressource \'{0}\' taucht in mehr als einer '
+                + 'Ebene der Hierarchie auf.',
+            level: 'warning',
             params: [],
             hidden: false
         };

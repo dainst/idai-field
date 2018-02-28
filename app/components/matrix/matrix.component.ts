@@ -117,7 +117,8 @@ export class MatrixComponent implements OnChanges {
                 return connection.child.row as number * (ROW_HEIGHT + MARGIN) + MARGIN;
             })
             .attr('stroke', 'black')
-            .attr('stroke-width', 3);
+            .attr('stroke-width', 2)
+            .attr('stroke-opacity', 0.5);
     }
 
 

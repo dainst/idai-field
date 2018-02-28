@@ -118,13 +118,12 @@ export function main() {
                 feature1, feature2, feature3, feature4, feature5, feature6
             ]);
 
-            expect(matrix.rowCount).toBe(4);
+            expect(matrix.rowCount).toBe(3);
             expect(matrix.columnCount).toBe(3);
-            expect(matrix.rows.length).toBe(4);
+            expect(matrix.rows.length).toBe(3);
             expect(matrix.rows[0].length).toBe(2);
             expect(matrix.rows[1].length).toBe(3);
-            expect(matrix.rows[2].length).toBe(2);
-            expect(matrix.rows[3].length).toBe(2);
+            expect(matrix.rows[2].length).toBe(3);
             expect(matrix.rows[0][0]).toBeUndefined();
             expect(matrix.rows[0][1]).toBe(feature1);
             expect(matrix.rows[1][0]).toBe(feature2);
@@ -132,8 +131,7 @@ export function main() {
             expect(matrix.rows[1][2]).toBe(feature3);
             expect(matrix.rows[2][0]).toBeUndefined();
             expect(matrix.rows[2][1]).toBe(feature6);
-            expect(matrix.rows[3][0]).toBeUndefined();
-            expect(matrix.rows[3][1]).toBe(feature4);
+            expect(matrix.rows[2][2]).toBe(feature4);
         });
 
 

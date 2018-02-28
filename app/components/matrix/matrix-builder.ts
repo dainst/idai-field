@@ -103,7 +103,7 @@ export class MatrixBuilder {
             treeNode.column = column;
         }
 
-        this.switchRowIfCurrentFieldIsOccupied(treeNode);
+        this.switchColumnIfCurrentFieldIsOccupied(treeNode);
 
         if (!this.rows[treeNode.row]) this.rows[treeNode.row] = [];
         this.rows[treeNode.row][treeNode.column] = treeNode.document;
@@ -135,12 +135,12 @@ export class MatrixBuilder {
     }
 
 
-    private switchRowIfCurrentFieldIsOccupied(treeNode: TreeNode) {
+    private switchColumnIfCurrentFieldIsOccupied(treeNode: TreeNode) {
 
         if (treeNode.row === undefined || treeNode.column === undefined) throw 'TreeNode position is not set';
 
         while (this.rows[treeNode.row] && this.rows[treeNode.row][treeNode.column]) {
-            treeNode.row++;
+            treeNode.column++;
         }
     }
 

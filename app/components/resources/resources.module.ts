@@ -37,6 +37,7 @@ import {Layer3DManager} from './map/map-3d/layers/layer-3d-manager';
 import {Layers3DComponent} from './map/map-3d/layers/layers-3d.component';
 import {Core3DModule} from '../core-3d/core-3d.module';
 import {ControlButtonsComponent} from './map/map-3d/control-buttons.component';
+import {Layer3DMeshManager} from './map/map-3d/layers/layer-3d-mesh-manager';
 
 @NgModule({
     imports: [
@@ -76,6 +77,7 @@ import {ControlButtonsComponent} from './map/map-3d/control-buttons.component';
         DoceditLauncher,
         ImageLayerManager,
         Layer3DManager,
+        Layer3DMeshManager,
         LayerImageProvider,
         {
             provide: ViewFacade,

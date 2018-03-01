@@ -6,8 +6,6 @@ import {Layer3DManager} from './layer-3d-manager';
 import {Layer3DMeshManager} from './layer-3d-mesh-manager';
 import {Map3DComponent} from '../map-3d.component';
 import {ListDiffResult} from '../../layer-manager';
-import {SettingsService} from '../../../../../core/settings/settings-service';
-import {MeshLoadingProgress} from '../../../../core-3d/mesh-loading-progress';
 
 
 @Component({
@@ -24,13 +22,10 @@ export class Layers3DComponent implements OnChanges {
 
     public layers: Array<Document> = [];
 
-    private layerMeshManager: Layer3DMeshManager;
-
 
     constructor(private map3DComponent: Map3DComponent,
                 private layerManager: Layer3DManager,
-                private settingsService: SettingsService,
-                private meshLoadingProgress: MeshLoadingProgress) {
+                private layerMeshManager: Layer3DMeshManager) {
 
         this.layerManager.reset();
     }
@@ -38,11 +33,7 @@ export class Layers3DComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        if (!this.layerMeshManager) {
-            this.layerMeshManager = new Layer3DMeshManager(this.map3DComponent.getViewer(),
-                this.settingsService, this.meshLoadingProgress);
-        }
-
+        this.layerMeshManager.setViewer(this.map3DComponent.getViewer());
         await this.updateLayers();
     }
 

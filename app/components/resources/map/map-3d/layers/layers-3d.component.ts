@@ -33,7 +33,6 @@ export class Layers3DComponent implements OnChanges {
 
     async ngOnChanges() {
 
-        this.layerMeshManager.setViewer(this.map3DComponent.getViewer());
         await this.updateLayers();
     }
 
@@ -44,17 +43,17 @@ export class Layers3DComponent implements OnChanges {
 
         this.layerManager.toggleLayer(id, this.mainTypeDocument);
 
-        if (this.layerManager.isActiveLayer(id as string)) {
-            await this.layerMeshManager.addMesh(id);
+        if (this.layerManager.isActiveLayer(id)) {
+            await this.addLayerMesh(id);
         } else {
-            this.layerMeshManager.removeMesh(id);
+            await this.removeLayerMesh(id);
         }
     }
 
 
-    public focusLayer(layer: Document) {
+    public async focusLayer(layer: Document) {
 
-        const mesh: THREE.Mesh = this.layerMeshManager.getMesh(layer.resource.id as string) as THREE.Mesh;
+        const mesh: THREE.Mesh = await this.layerMeshManager.getMesh(layer.resource.id as string);
         this.map3DComponent.getControls().focusMesh(mesh);
     }
 
@@ -71,7 +70,21 @@ export class Layers3DComponent implements OnChanges {
 
     private handleActiveLayersChange(change: ListDiffResult) {
 
-        change.removed.forEach(layerId => this.layerMeshManager.removeMesh(layerId));
-        change.added.forEach(layerId => this.layerMeshManager.addMesh(layerId));
+        change.removed.forEach(layerId => this.removeLayerMesh(layerId));
+        change.added.forEach(layerId => this.addLayerMesh(layerId));
+    }
+
+
+    private async addLayerMesh(id: string) {
+
+        const mesh: THREE.Mesh = await this.layerMeshManager.getMesh(id);
+        this.map3DComponent.getViewer().add(mesh);
+    }
+
+
+    private async removeLayerMesh(id: string) {
+
+        const mesh: THREE.Mesh = await this.layerMeshManager.getMesh(id);
+        this.map3DComponent.getViewer().remove(mesh);
     }
 }

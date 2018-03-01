@@ -21,39 +21,48 @@ export class Layer2DMeshBuilder {
 
     public async build(imageResourceId: string): Promise<THREE.Mesh> {
 
-        const georeference: IdaiFieldGeoreference = await this.getGeoreference(imageResourceId);
+        const geometry: THREE.Geometry = await this.createGeometry(imageResourceId);
+        const material: THREE.Material = this.createMaterial(imageResourceId);
+
+        return new THREE.Mesh(geometry, material);
+    }
+
+
+    private async createGeometry(imageResourceId: string): Promise<THREE.Geometry> {
 
         const geometry: THREE.Geometry = new THREE.Geometry();
 
-        geometry.vertices.push(Layer2DMeshBuilder.getVertex(georeference.bottomLeftCoordinates));
-        geometry.vertices.push(Layer2DMeshBuilder.getVertex(georeference.topLeftCoordinates));
-        geometry.vertices.push(Layer2DMeshBuilder.getVertex(georeference.topRightCoordinates));
-        geometry.vertices.push(Layer2DMeshBuilder.getBottomRightVertex(georeference));
-
-        geometry.faces.push(new THREE.Face3(0, 2, 1));
-        geometry.faces.push(new THREE.Face3(0, 3, 2));
+        geometry.vertices = await this.createVertices(imageResourceId);
+        geometry.faces = Layer2DMeshBuilder.createFaces();
+        geometry.faceVertexUvs[0] = Layer2DMeshBuilder.createFaceVertexUvs();
 
         geometry.computeFaceNormals();
         geometry.computeVertexNormals();
 
-        geometry.faceVertexUvs[0].push([
-            new THREE.Vector2(0, 0),
-            new THREE.Vector2(1, 1),
-            new THREE.Vector2(0, 1)
-        ]);
+        return geometry;
+    }
 
-        geometry.faceVertexUvs[0].push([
-            new THREE.Vector2(0, 0),
-            new THREE.Vector2(1, 0),
-            new THREE.Vector2(1, 1)
-        ]);
 
-        const material: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial({
+    private async createVertices(imageResourceId: string): Promise<Array<THREE.Vector3>> {
+
+        const georeference: IdaiFieldGeoreference = await this.getGeoreference(imageResourceId);
+        const vertices: Array<THREE.Vector3> = [];
+
+        vertices.push(Layer2DMeshBuilder.getVertex(georeference.bottomLeftCoordinates));
+        vertices.push(Layer2DMeshBuilder.getVertex(georeference.topLeftCoordinates));
+        vertices.push(Layer2DMeshBuilder.getVertex(georeference.topRightCoordinates));
+        vertices.push(Layer2DMeshBuilder.getBottomRightVertex(georeference));
+
+        return vertices;
+    }
+
+
+    private createMaterial(imageResourceId: string): THREE.Material {
+
+        return new THREE.MeshPhongMaterial({
             color: 0xffffff,
             map: new THREE.TextureLoader().load(this.getFilePath(imageResourceId)),
         });
-
-        return new THREE.Mesh(geometry, material);
     }
 
 
@@ -69,6 +78,37 @@ export class Layer2DMeshBuilder {
         return this.appState.getImagestorePath()
             + this.settingsService.getSelectedProject()
             + '/' + imageResourceId;
+    }
+
+
+    private static createFaces(): Array<THREE.Face3> {
+
+        const faces: Array<THREE.Face3> = [];
+
+        faces.push(new THREE.Face3(0, 2, 1));
+        faces.push(new THREE.Face3(0, 3, 2));
+
+        return faces;
+    }
+
+
+    private static createFaceVertexUvs(): Array<Array<THREE.Vector2>> {
+
+        const faceVertexUvs: Array<Array<THREE.Vector2>> = [];
+
+        faceVertexUvs.push([
+            new THREE.Vector2(0, 0),
+            new THREE.Vector2(1, 1),
+            new THREE.Vector2(0, 1)
+        ]);
+
+        faceVertexUvs.push([
+            new THREE.Vector2(0, 0),
+            new THREE.Vector2(1, 0),
+            new THREE.Vector2(1, 1)
+        ]);
+
+        return faceVertexUvs;
     }
 
 

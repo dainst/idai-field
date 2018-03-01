@@ -73,9 +73,6 @@ export class LayersComponent implements OnChanges {
 
         const mesh: THREE.Mesh = await this.layerMeshManager.getMesh(id);
         this.map3DComponent.getViewer().add(mesh);
-
-        var box = new THREE.BoxHelper( mesh, new THREE.Color(0xffff00));
-        this.map3DComponent.getViewer().add( box );
     }
 
 

@@ -1,8 +1,10 @@
+import {Injectable} from '@angular/core';
 import * as THREE from 'three';
 import {MeshLoadingProgress} from '../../components/core-3d/mesh-loading-progress';
 import {addOffset} from '../../util/util-3d';
 
 
+@Injectable()
 /**
  * @author Thomas Kleinke
  */

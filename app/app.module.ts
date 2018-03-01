@@ -41,6 +41,8 @@ import {IdaiFieldDocumentDatastore} from './core/datastore/idai-field-document-d
 import {PersistenceManager} from './core/persist/persistence-manager';
 import {DocumentDatastore} from './core/datastore/document-datastore';
 import {Core3DModule} from './components/core-3d/core-3d.module';
+import {MeshLoader} from './core/3d/mesh-loader';
+import {MeshEditingUtility} from './core/3d/mesh-editing-utility';
 
 
 const remote = require('electron').remote;
@@ -140,7 +142,9 @@ let pconf: any = undefined;
         { provide: MD, useClass: M},
         DoceditActiveTabService,
         StateSerializer,
-        ImageTypeUtility
+        ImageTypeUtility,
+        MeshLoader,
+        MeshEditingUtility
     ],
     bootstrap: [ AppComponent ]
 })

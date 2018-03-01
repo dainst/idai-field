@@ -1,3 +1,4 @@
+import {Injectable} from '@angular/core';
 import * as THREE from 'three';
 import {SettingsService} from '../settings/settings-service';
 import {MeshEditingUtility} from './mesh-editing-utility';
@@ -6,19 +7,15 @@ import {MeshLoadingProgress} from '../../components/core-3d/mesh-loading-progres
 const ColladaLoader = require('three-collada-loader');
 
 
+@Injectable()
 /**
  * @author Thomas Kleinke
  */
 export class MeshLoader {
 
-    private meshEditingUtility: MeshEditingUtility;
-
-
     constructor(private settingsService: SettingsService,
-                private loadingProgress: MeshLoadingProgress) {
-
-        this.meshEditingUtility = new MeshEditingUtility(loadingProgress);
-    }
+                private loadingProgress: MeshLoadingProgress,
+                private meshEditingUtility: MeshEditingUtility) {}
 
 
     public load(id: string): Promise<THREE.Mesh> {

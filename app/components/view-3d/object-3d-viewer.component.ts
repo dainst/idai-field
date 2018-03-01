@@ -2,11 +2,9 @@ import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, SimpleCha
 import * as THREE from 'three';
 import {Document} from 'idai-components-2/core';
 import {Viewer3D} from '../../core/3d/viewer-3d';
-import {SettingsService} from '../../core/settings/settings-service';
 import {Object3DViewerControls} from './object-3d-viewer-controls';
 import {MeshLoader} from '../../core/3d/mesh-loader';
 import {MeshEditingUtility} from '../../core/3d/mesh-editing-utility';
-import {MeshLoadingProgress} from '../core-3d/mesh-loading-progress';
 
 
 @Component({
@@ -27,14 +25,12 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
     private viewer: Viewer3D;
     private controls: Object3DViewerControls;
-    private meshLoader: MeshLoader;
 
     private mesh: THREE.Mesh;
     private meshMaterial: THREE.Material|Array<THREE.Material>;
 
 
-    constructor(private settingsService: SettingsService,
-                private meshLoadingProgress: MeshLoadingProgress) {}
+    constructor(private meshLoader: MeshLoader) {}
 
 
     public onMouseDown = (event: MouseEvent) => this.controls.onMouseDown(event);
@@ -85,7 +81,6 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
         this.viewer = new Viewer3D(this.container.nativeElement);
         this.controls = new Object3DViewerControls(this.viewer);
-        this.meshLoader = new MeshLoader(this.settingsService, this.meshLoadingProgress);
     }
 
 

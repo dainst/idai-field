@@ -3,7 +3,8 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Map3DControlState} from './map-3d-control-state';
 import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
-import {addOffset, getPointVector} from '../../../../util/util-3d';
+import {addOffset, getPointVector, has3DLineGeometry, has3DPointGeometry,
+    has3DPolygonGeometry} from '../../../../util/util-3d';
 
 
 export const CAMERA_DIRECTION_NORTH: number = 0;
@@ -88,10 +89,10 @@ export class Map3DControls {
 
         if (!document) return;
 
-        const geometry: IdaiFieldGeometry|undefined = document.resource.geometry;
-        if (geometry && geometry.type == 'Point') {
+        const geometry: IdaiFieldGeometry = document.resource.geometry as IdaiFieldGeometry;
+        if (has3DPointGeometry(document)) {
             this.focusPoint(getPointVector(geometry.coordinates));
-        } else if (geometry && (geometry.type == 'LineString' || geometry.type == 'Polygon')) {
+        } else if (has3DLineGeometry(document) || has3DPolygonGeometry(document)) {
             this.focusMesh(this.meshGeometryManager.getMesh(document));
         }
     }

@@ -1,9 +1,8 @@
 <div *ngIf="layers.length > 0">
-    <div *ngIf="!isOpened()" id="layer-button" class="btn btn-primary" (mouseenter)="open()">
+    <div *ngIf="!isOpened()" class="btn btn-primary layer-button" (mouseenter)="open()">
         <span class="mdi mdi-layers mdi-18px"></span>
     </div>
-    <div *ngIf="isOpened()" id="layer-menu" class="card card-block form-group"
-         (mouseleave)="close()">
+    <div *ngIf="isOpened()" class="card card-block form-group layer-menu" (mouseleave)="close()">
         <div *ngFor="let layer of layers" class="layer-entry">
             <span *ngIf="isActiveLayer(layer)">
                 <span class="mdi mdi-eye layer-menu-button layer-active" (click)="toggleLayer(layer)"

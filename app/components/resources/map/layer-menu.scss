@@ -5,22 +5,20 @@
 $layer-menu-button-color: #657faa;
 $layer-menu-button-inactive-color: grey;
 
-#layer-button,
-#layer-menu {
+.layer-button,
+.layer-menu {
   position: absolute;
   z-index: 1000;
   border: none;
   border-radius: 0;
 }
 
-#layer-button {
+.layer-button {
   top: 11px;
-  right: 25px;
 }
 
-#layer-menu {
+.layer-menu {
   top: 11px;
-  right: 25px;
   max-height: 314px;
   padding-bottom: 10px;
   overflow-y: auto;

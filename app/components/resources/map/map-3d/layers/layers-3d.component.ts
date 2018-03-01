@@ -1,11 +1,8 @@
-import * as THREE from 'three';
-import {Component, Input, OnChanges} from '@angular/core';
-import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {Component, OnChanges} from '@angular/core';
 import {Layer3DManager} from './layer-3d-manager';
 import {Layer3DMeshManager} from './layer-3d-mesh-manager';
 import {Map3DComponent} from '../map-3d.component';
-import {ListDiffResult} from '../../layer-manager';
+import {LayersComponent} from './layers.component';
 
 
 @Component({
@@ -16,75 +13,12 @@ import {ListDiffResult} from '../../layer-manager';
 /**
  * @author Thomas Kleinke
  */
-export class Layers3DComponent implements OnChanges {
+export class Layers3DComponent extends LayersComponent implements OnChanges {
 
-    @Input() mainTypeDocument: IdaiFieldDocument;
+    constructor(map3DComponent: Map3DComponent,
+                layerManager: Layer3DManager,
+                layerMeshManager: Layer3DMeshManager) {
 
-    public layers: Array<Document> = [];
-
-
-    constructor(private map3DComponent: Map3DComponent,
-                private layerManager: Layer3DManager,
-                private layerMeshManager: Layer3DMeshManager) {
-
-        this.layerManager.reset();
-    }
-
-
-    async ngOnChanges() {
-
-        await this.updateLayers();
-    }
-
-
-    public async toggleLayer(layer: Document) {
-
-        const id: string = layer.resource.id as string;
-
-        this.layerManager.toggleLayer(id, this.mainTypeDocument);
-
-        if (this.layerManager.isActiveLayer(id)) {
-            await this.addLayerMesh(id);
-        } else {
-            await this.removeLayerMesh(id);
-        }
-    }
-
-
-    public async focusLayer(layer: Document) {
-
-        const mesh: THREE.Mesh = await this.layerMeshManager.getMesh(layer.resource.id as string);
-        this.map3DComponent.getControls().focusMesh(mesh);
-    }
-
-
-    private async updateLayers() {
-
-        const { layers, activeLayersChange }
-            = await this.layerManager.initializeLayers(this.mainTypeDocument);
-
-        this.layers = layers;
-        this.handleActiveLayersChange(activeLayersChange);
-    }
-
-
-    private handleActiveLayersChange(change: ListDiffResult) {
-
-        change.removed.forEach(layerId => this.removeLayerMesh(layerId));
-        change.added.forEach(layerId => this.addLayerMesh(layerId));
-    }
-
-
-    private async addLayerMesh(id: string) {
-
-        const mesh: THREE.Mesh = await this.layerMeshManager.getMesh(id);
-        this.map3DComponent.getViewer().add(mesh);
-    }
-
-
-    private async removeLayerMesh(id: string) {
-
-        const mesh: THREE.Mesh = await this.layerMeshManager.getMesh(id);
-        this.map3DComponent.getViewer().remove(mesh);
+        super(map3DComponent, layerManager, layerMeshManager);
     }
 }

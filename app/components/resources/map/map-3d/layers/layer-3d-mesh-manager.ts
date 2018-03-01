@@ -1,18 +1,22 @@
 import {Injectable} from '@angular/core';
 import * as THREE from 'three';
 import {MeshLoader} from '../../../../../core/3d/mesh-loader';
+import {LayerMeshManager} from './layer-mesh-manager';
 
 
 @Injectable()
 /**
  * @author Thomas Kleinke
  */
-export class Layer3DMeshManager {
+export class Layer3DMeshManager extends LayerMeshManager {
 
     private meshes: { [resourceId: string]: THREE.Mesh } = {};
 
 
-    constructor(private meshLoader: MeshLoader) {}
+    constructor(private meshLoader: MeshLoader) {
+
+        super();
+    }
 
 
     public async getMesh(id: string): Promise<THREE.Mesh> {

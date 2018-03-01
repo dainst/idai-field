@@ -38,6 +38,9 @@ import {Layers3DComponent} from './map/map-3d/layers/layers-3d.component';
 import {Core3DModule} from '../core-3d/core-3d.module';
 import {ControlButtonsComponent} from './map/map-3d/control-buttons.component';
 import {Layer3DMeshManager} from './map/map-3d/layers/layer-3d-mesh-manager';
+import {Layers2DComponent} from './map/map-3d/layers/layers-2d.component';
+import {Layer2DMeshManager} from './map/map-3d/layers/layer-2d-mesh-manager';
+import {Layer2DMeshBuilder} from './map/map-3d/layers/layer-2d-mesh-builder';
 
 @NgModule({
     imports: [
@@ -64,6 +67,7 @@ import {Layer3DMeshManager} from './map/map-3d/layers/layer-3d-mesh-manager';
         DocumentViewSidebarComponent,
         SidebarListComponent,
         Map3DComponent,
+        Layers2DComponent,
         Layers3DComponent,
         Layer3DMenuComponent,
         PointGeometriesComponent,
@@ -77,8 +81,10 @@ import {Layer3DMeshManager} from './map/map-3d/layers/layer-3d-mesh-manager';
         DoceditLauncher,
         ImageLayerManager,
         Layer3DManager,
+        Layer2DMeshManager,
         Layer3DMeshManager,
         LayerImageProvider,
+        Layer2DMeshBuilder,
         {
             provide: ViewFacade,
             useFactory: function(

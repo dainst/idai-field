@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ImageTypeUtility} from '../../../../common/image-type-utility';
+import {TypeUtility} from '../../../../common/type-utility';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../view/view-facade';
 import {ListUtil} from '../../../../util/list-util';
@@ -16,7 +16,7 @@ import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-do
 export class ImageLayerManager extends LayerManager<IdaiFieldImageDocument> {
 
     constructor(private datastore: IdaiFieldImageDocumentReadDatastore,
-                private imageTypeUtility: ImageTypeUtility,
+                private imageTypeUtility: TypeUtility,
                 viewFacade: ViewFacade) {
 
         super(viewFacade);

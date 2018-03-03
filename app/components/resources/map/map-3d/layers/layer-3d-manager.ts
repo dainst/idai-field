@@ -4,7 +4,8 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ViewFacade} from '../../../view/view-facade';
 import {ListUtil} from '../../../../../util/list-util';
 import {LayerManager, LayersInitializationResult, ListDiffResult} from '../../layer-manager';
-import {IdaiFieldDocumentReadDatastore} from '../../../../../core/datastore/idai-field-document-read-datastore';
+import {IdaiField3DDocumentReadDatastore} from '../../../../../core/datastore/idai-field-3d-document-read-datastore';
+import {IdaiField3DDocument} from '../../../../../core/model/idai-field-3d-document';
 
 
 @Injectable()
@@ -13,7 +14,7 @@ import {IdaiFieldDocumentReadDatastore} from '../../../../../core/datastore/idai
  */
 export class Layer3DManager extends LayerManager<Document> {
 
-    constructor(private datastore: IdaiFieldDocumentReadDatastore,
+    constructor(private datastore: IdaiField3DDocumentReadDatastore,
                 viewFacade: ViewFacade) {
 
         super(viewFacade);
@@ -21,7 +22,7 @@ export class Layer3DManager extends LayerManager<Document> {
 
 
     public async initializeLayers(mainTypeDocument: IdaiFieldDocument | undefined)
-            : Promise<LayersInitializationResult<Document>> {
+            : Promise<LayersInitializationResult<IdaiField3DDocument>> {
 
         try {
             return {

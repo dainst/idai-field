@@ -24,6 +24,9 @@ import {DocumentReadDatastore} from "./document-read-datastore";
 import {IdaiFieldTypeConverter} from "./idai-field-type-converter";
 import {ReadDatastore, Datastore} from "idai-components-2/datastore";
 import {ChangesStream} from "./core/changes-stream";
+import {IdaiField3DDocumentDatastore} from './idai-field-3d-document-datastore';
+import {IdaiField3DDocument} from '../model/idai-field-3d-document';
+import {IdaiField3DDocumentReadDatastore} from './idai-field-3d-document-read-datastore';
 
 /**
  * There is the top level package, in which everything idai-field specific resides,
@@ -158,6 +161,18 @@ import {ChangesStream} from "./core/changes-stream";
             deps: [PouchdbDatastore, DocumentCache, TypeConverter]
         },
         { provide: IdaiFieldImageDocumentReadDatastore, useExisting: IdaiFieldImageDocumentDatastore }, // read-only version of it
+
+        {
+            provide: IdaiField3DDocumentDatastore,
+            useFactory: function(pouchdbDatastore: PouchdbDatastore,
+                                 documentCache: DocumentCache<IdaiField3DDocument>,
+                                 documentConverter: TypeConverter,
+            ): IdaiField3DDocumentDatastore {
+                return new IdaiField3DDocumentDatastore(pouchdbDatastore, documentCache, documentConverter);
+            },
+            deps: [PouchdbDatastore, DocumentCache, TypeConverter]
+        },
+        { provide: IdaiField3DDocumentReadDatastore, useExisting: IdaiField3DDocumentDatastore }
     ]
 })
 

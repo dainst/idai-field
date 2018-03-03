@@ -1,6 +1,7 @@
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {Document} from 'idai-components-2/core';
 
-export const DOCS: IdaiFieldDocument[] = [
+
+export const DOCS: Array<Document> = [
     {
         "resource": {
             "id": "test",
@@ -130,12 +131,12 @@ export const DOCS: IdaiFieldDocument[] = [
             "height" : 2423,
             "width" : 3513,
             "relations": {
-                "isRecordedIn" : []
+                "depicts": []
             },
             "georeference": {
-                "bottomLeftCoordinates": [39.1411810096, 27.1892609283],
-                "topLeftCoordinates": [39.1412672328, 27.1892609283],
-                "topRightCoordinates": [39.1412672328, 27.1893859555]
+                "bottomLeftCoordinates": [0.0, 0.0],
+                "topLeftCoordinates": [5.0, 0.0],
+                "topRightCoordinates": [5.0, 10.0]
             }
         }
     },
@@ -146,16 +147,16 @@ export const DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Test Layer 2",
             "type": "Image",
             "relations": {
-                "isRecordedIn" : []
+                "depicts": []
             },
             "originalFilename" : "mapLayerTest2.png",
             "height" : 782,
             "width" : 748,
             "georeference": {
-                "bottomLeftCoordinates": [39.1412810096, 27.1893609283],
-                "topLeftCoordinates": [39.1413672328, 27.1893609283],
-                "topRightCoordinates": [39.1413672328, 27.1894859555]
-            }
+                    "bottomLeftCoordinates": [0.0, 0.0],
+                    "topLeftCoordinates": [0.5, 0.0],
+                    "topRightCoordinates": [0.5, 0.5]
+                }
         }
     },
     {
@@ -165,7 +166,6 @@ export const DOCS: IdaiFieldDocument[] = [
             "shortDescription": "3D-Testobjekt",
             "type": "Object3D",
             "relations": {
-                "isRecordedIn": [],
                 "is3DRepresentationOf": ["t2"]
             }
         }
@@ -177,7 +177,6 @@ export const DOCS: IdaiFieldDocument[] = [
             "shortDescription": "VRATrench",
             "type": "Object3D",
             "relations": {
-                "isRecordedIn": [],
                 "is3DRepresentationOf": ["t2"]
             }
         }
@@ -189,7 +188,6 @@ export const DOCS: IdaiFieldDocument[] = [
             "shortDescription": "VRATrench (georeferenziert)",
             "type": "Object3D",
             "relations": {
-                "isRecordedIn": [],
                 "is3DRepresentationOf": ["t2"]
             }
         }
@@ -201,7 +199,6 @@ export const DOCS: IdaiFieldDocument[] = [
             "shortDescription": "Brandlehm",
             "type": "Object3D",
             "relations": {
-                "isRecordedIn": [],
                 "is3DRepresentationOf": ["tf1"]
             }
         }

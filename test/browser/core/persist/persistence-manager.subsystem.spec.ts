@@ -6,7 +6,7 @@ import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datast
 import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
 import {IdaiFieldTypeConverter} from '../../../../app/core/datastore/idai-field-type-converter';
 import {PersistenceManager} from '../../../../app/core/persist/persistence-manager';
-import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
+import {TypeUtility} from '../../../../app/common/type-utility';
 
 /**
  * This is a subsystem test.
@@ -65,7 +65,7 @@ export function main() {
                 const result = Static.createPouchdbDatastore('testdb');
                 datastore = new IdaiFieldDocumentDatastore(
                     result.datastore, result.documentCache,
-                    new IdaiFieldTypeConverter(new ImageTypeUtility(projectConfiguration)));
+                    new IdaiFieldTypeConverter(new TypeUtility(projectConfiguration)));
 
                 result.appState.setCurrentUser('anonymous');
 

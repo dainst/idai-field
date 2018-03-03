@@ -18,16 +18,17 @@ export function main() {
 
         function createMockedDatastore(mockdb: any) {
 
-            const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
-                ['isImageType', 'validate', 'getNonImageTypeNames']);
-            mockImageTypeUtility.isImageType.and.returnValue(false);
-            mockImageTypeUtility.getNonImageTypeNames.and.returnValue(['Find']);
+            const mockTypeUtility = jasmine.createSpyObj('mockTypeUtility',
+                ['isImageType', 'is3DType', 'validate', 'getResourceTypeNames']);
+            mockTypeUtility.isImageType.and.returnValue(false);
+            mockTypeUtility.is3DType.and.returnValue(false);
+            mockTypeUtility.getResourceTypeNames.and.returnValue(['Find']);
 
             const documentCache = new DocumentCache<IdaiFieldDocument>();
             return new IdaiFieldDocumentDatastore(
                     mockdb,
                     documentCache,
-                    new IdaiFieldTypeConverter(mockImageTypeUtility));
+                    new IdaiFieldTypeConverter(mockTypeUtility));
         }
 
 

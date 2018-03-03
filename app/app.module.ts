@@ -25,7 +25,7 @@ import {IdaiFieldAppConfigurator} from 'idai-components-2/idai-field-model';
 import {SettingsService} from './core/settings/settings-service';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
-import {ImageTypeUtility} from './common/image-type-utility';
+import {TypeUtility} from './common/type-utility';
 import {PouchDbFsImagestore} from './core/imagestore/pouch-db-fs-imagestore';
 import {AppState} from './core/settings/app-state';
 import {ProjectsComponent} from './components/navbar/projects.component';
@@ -110,7 +110,7 @@ let pconf: any = undefined;
             },
             deps: [MD]
         },
-        ImageTypeUtility,
+        TypeUtility,
         { provide: Imagestore, useClass: PouchDbFsImagestore },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -142,7 +142,6 @@ let pconf: any = undefined;
         { provide: MD, useClass: M},
         DoceditActiveTabService,
         StateSerializer,
-        ImageTypeUtility,
         MeshLoader,
         MeshEditingUtility
     ],

@@ -8,7 +8,7 @@ import {Validator} from 'idai-components-2/persist';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {SettingsService} from '../../core/settings/settings-service';
-import {ImageTypeUtility} from '../../common/image-type-utility';
+import {TypeUtility} from '../../common/type-utility';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
@@ -74,7 +74,7 @@ export class DoceditComponent {
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
         private imagestore: Imagestore,
-        private imageTypeUtility: ImageTypeUtility,
+        private imageTypeUtility: TypeUtility,
         private activeTabService: DoceditActiveTabService,
         configLoader: ConfigLoader) {
 

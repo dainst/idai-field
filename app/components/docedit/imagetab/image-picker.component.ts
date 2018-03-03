@@ -4,7 +4,7 @@ import {Messages} from 'idai-components-2/messages';
 import {Query} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
-import {ImageTypeUtility} from '../../../common/image-type-utility';
+import {TypeUtility} from '../../../common/type-utility';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {M} from '../../../m';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/idai-field-image-document-read-datastore';
@@ -38,7 +38,7 @@ export class ImagePickerComponent implements OnInit {
         private messages: Messages,
         private datastore: IdaiFieldImageDocumentReadDatastore,
         private el: ElementRef,
-        private imageTypeUtility: ImageTypeUtility
+        private imageTypeUtility: TypeUtility
     ) {}
 
 

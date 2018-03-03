@@ -7,7 +7,7 @@ import {ViewFacade} from '../../../../app/components/resources/view/view-facade'
 import {ResourcesState} from '../../../../app/components/resources/view/resources-state';
 import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
 import {IdaiFieldTypeConverter} from '../../../../app/core/datastore/idai-field-type-converter';
-import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
+import {TypeUtility} from '../../../../app/common/type-utility';
 
 /**
  * This is a subsystem test.
@@ -54,7 +54,7 @@ export function main() {
             const {datastore, documentCache} = Static.createPouchdbDatastore('testdb');
             idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
                 datastore, documentCache,
-                new IdaiFieldTypeConverter(new ImageTypeUtility(new ProjectConfiguration(pc))));
+                new IdaiFieldTypeConverter(new TypeUtility(new ProjectConfiguration(pc))));
 
             const projectDocument = Static.doc('testdb','testdb','Project','testdb');
             operationTypeDocument1 = Static.doc('trench1','trench1','Trench','t1');

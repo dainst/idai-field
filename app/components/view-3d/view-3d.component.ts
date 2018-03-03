@@ -7,7 +7,8 @@ import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {RoutingService} from '../routing-service';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {ObjectUtil} from '../../util/object-util';
-import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
+import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
+import {IdaiField3DDocumentReadDatastore} from '../../core/datastore/idai-field-3d-document-read-datastore';
 
 
 @Component({
@@ -19,7 +20,7 @@ import {DocumentReadDatastore} from '../../core/datastore/document-read-datastor
  */
 export class View3DComponent implements OnInit {
 
-    private document: Document;
+    private document: IdaiField3DDocument;
 
     private activeTab: string;
     private comingFrom: Array<any>|undefined = undefined;
@@ -35,7 +36,7 @@ export class View3DComponent implements OnInit {
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private doceditActiveTabService: DoceditActiveTabService,
         private routingService: RoutingService,
-        private datastore: DocumentReadDatastore
+        private datastore: IdaiField3DDocumentReadDatastore
     ) {
         this.route.queryParams.subscribe(queryParams => {
             if (queryParams['from']) this.comingFrom = queryParams['from'].split('/');
@@ -63,7 +64,8 @@ export class View3DComponent implements OnInit {
 
         this.doceditActiveTabService.setActiveTab(tabName);
 
-        const doceditModalRef = this.modalService.open(DoceditComponent, {size: 'lg', backdrop: 'static'});
+        const doceditModalRef
+            = this.modalService.open(DoceditComponent,{size: 'lg', backdrop: 'static'});
         const doceditModalComponent = doceditModalRef.componentInstance;
         doceditModalComponent.setDocument(this.document);
 

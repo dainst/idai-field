@@ -8,7 +8,7 @@ import {ProjectConfiguration, IdaiType} from 'idai-components-2/configuration'
  * @author F.Z.
  * @author Daniel de Oliveira
  */
-export class ImageTypeUtility {
+export class TypeUtility {
 
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
@@ -17,8 +17,15 @@ export class ImageTypeUtility {
     public isImageType(typeName: string): boolean {
 
         const type = this.projectConfiguration.getTypesMap()[typeName];
-        if (!type) throw 'Unknown type "'+typeName+'"';
-        return (type.name == 'Image' || (type.parentType && type.parentType.name && type.parentType.name == 'Image'));
+        if (!type) throw 'Unknown type "' + typeName + '"';
+        return (type.name == 'Image' ||
+            (type.parentType && type.parentType.name && type.parentType.name == 'Image'));
+    }
+
+
+    public is3DType(typeName: string): boolean {
+
+        return typeName == 'Object3D';
     }
 
 
@@ -42,10 +49,10 @@ export class ImageTypeUtility {
     }
 
 
-    public getNonImageTypeNames(): string[] {
+    public getResourceTypeNames(): string[] {
 
         return this.projectConfiguration.getTypesList()
-            .filter(type => !this.isImageType(type.name))
+            .filter(type => !this.isImageType(type.name) && !this.is3DType(type.name))
             .map(type => type.name);
     }
 
@@ -53,5 +60,11 @@ export class ImageTypeUtility {
     public getImageTypeNames(): string[] {
 
         return Object.keys(this.getProjectImageTypes());
+    }
+
+
+    public get3DTypeNames(): string[] {
+
+        return ['Object3D'];
     }
 }

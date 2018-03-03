@@ -1,10 +1,10 @@
 import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, SimpleChanges} from '@angular/core';
 import * as THREE from 'three';
-import {Document} from 'idai-components-2/core';
 import {Viewer3D} from '../../core/3d/viewer-3d';
 import {Object3DViewerControls} from './object-3d-viewer-controls';
 import {MeshLoader} from '../../core/3d/mesh-loader';
 import {MeshEditingUtility} from '../../core/3d/mesh-editing-utility';
+import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
 
 
 @Component({
@@ -17,7 +17,7 @@ import {MeshEditingUtility} from '../../core/3d/mesh-editing-utility';
  */
 export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
-    @Input() document: Document;
+    @Input() document: IdaiField3DDocument;
 
     @ViewChild('container') container: ElementRef;
 

@@ -16,7 +16,7 @@ import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-do
 export class ImageLayerManager extends LayerManager<IdaiFieldImageDocument> {
 
     constructor(private datastore: IdaiFieldImageDocumentReadDatastore,
-                private imageTypeUtility: TypeUtility,
+                private typeUtility: TypeUtility,
                 viewFacade: ViewFacade) {
 
         super(viewFacade);
@@ -30,7 +30,7 @@ export class ImageLayerManager extends LayerManager<IdaiFieldImageDocument> {
             return {
                 layers: (await this.datastore.find({
                     q: '',
-                    types: this.imageTypeUtility.getImageTypeNames(),
+                    types: this.typeUtility.getImageTypeNames(),
                     constraints: { 'georeference:exist': 'KNOWN' }
                 })).documents,
                 activeLayersChange: this.fetchActiveLayersFromResourcesState(mainTypeDocument)

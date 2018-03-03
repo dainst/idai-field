@@ -19,7 +19,7 @@ export class ImageOverviewFacade {
     constructor(
         private imageDocumentsManager: ImageDocumentsManager,
         private imagesState: ImagesState,
-        private imageTypeUtility: TypeUtility
+        private typeUtility: TypeUtility
     ) {}
 
 
@@ -145,7 +145,7 @@ export class ImageOverviewFacade {
 
         return {
             q: '',
-            types: this.imageTypeUtility.getImageTypeNames()
+            types: this.typeUtility.getImageTypeNames()
         };
     }
 

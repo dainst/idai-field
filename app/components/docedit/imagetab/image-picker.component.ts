@@ -38,7 +38,7 @@ export class ImagePickerComponent implements OnInit {
         private messages: Messages,
         private datastore: IdaiFieldImageDocumentReadDatastore,
         private el: ElementRef,
-        private imageTypeUtility: TypeUtility
+        private typeUtility: TypeUtility
     ) {}
 
 
@@ -93,7 +93,7 @@ export class ImagePickerComponent implements OnInit {
         this.query = query;
         if (!this.query) this.query = {};
 
-        this.query.types = this.imageTypeUtility.getImageTypeNames();
+        this.query.types = this.typeUtility.getImageTypeNames();
         this.query.constraints = {
             'depicts:contain': { value: this.document.resource.id as string, type: 'subtract' }
         };

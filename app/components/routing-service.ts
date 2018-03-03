@@ -28,7 +28,7 @@ export class RoutingService {
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
-                private imageTypeUtility: TypeUtility,
+                private typeUtility: TypeUtility,
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: DocumentReadDatastore
     ) {
@@ -62,7 +62,7 @@ export class RoutingService {
         if (comingFromOutsideOverviewComponent) this.currentRoute = undefined; // TODO see also comment below. it feels actually a bit unfortunate have this kind of state (this.currentRoute) here at all at all.
 
         // TODO we really have two separate public methods instead of this check
-        if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
+        if (this.typeUtility.isImageType(documentToSelect.resource.type)) {
             this.jumpToImageTypeRelationTarget(documentToSelect);
         } else if (documentToSelect.resource.type == 'Object3D') {
             this.jumpTo3DTypeRelationTarget(documentToSelect);
@@ -75,7 +75,7 @@ export class RoutingService {
 
     public jumpToConflictResolver(document: Document) {
 
-        if (this.imageTypeUtility.isImageType(document.resource.type)) {
+        if (this.typeUtility.isImageType(document.resource.type)) {
             return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
         } else {
             this.getMainTypeNameForDocument(document).then(mainTypeName =>

@@ -74,11 +74,11 @@ export class DoceditComponent {
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
         private imagestore: Imagestore,
-        private imageTypeUtility: TypeUtility,
+        private typeUtility: TypeUtility,
         private activeTabService: DoceditActiveTabService,
         configLoader: ConfigLoader) {
 
-        this.projectImageTypes = this.imageTypeUtility.getProjectImageTypes();
+        this.projectImageTypes = this.typeUtility.getProjectImageTypes();
 
         (configLoader.getProjectConfiguration() as any)
             .then((projectConfiguration: ProjectConfiguration) => {
@@ -352,7 +352,7 @@ export class DoceditComponent {
 
     private removeImageWithImageStore(document: any): Promise<any> {
 
-        if (this.imageTypeUtility.isImageType(document.resource.type)) {
+        if (this.typeUtility.isImageType(document.resource.type)) {
             if (!this.imagestore.getPath()) return Promise.reject([M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]);
             return this.imagestore.remove(document.resource.id).catch(() => {
                 return [M.IMAGESTORE_ERROR_DELETE, document.resource.id];

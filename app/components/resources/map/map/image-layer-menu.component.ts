@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Renderer2} from '@angular/core';
 import {ImageLayerManager} from './image-layer-manager';
 import {LayerMenuComponent} from '../layer-menu.component';
 
@@ -12,8 +12,9 @@ import {LayerMenuComponent} from '../layer-menu.component';
  */
 export class ImageLayerMenuComponent extends LayerMenuComponent {
 
-    constructor(layerManager: ImageLayerManager) {
+    constructor(layerManager: ImageLayerManager,
+                renderer: Renderer2) {
 
-        super(layerManager);
+        super(layerManager, renderer, 'image-layer-menu-button', 'image-layer-menu');
     }
 }

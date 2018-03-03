@@ -18,11 +18,12 @@ $layer-menu-button-inactive-color: grey;
 }
 
 .layer-menu {
-  top: 11px;
+  top: 50px;
   max-height: 314px;
   padding-bottom: 10px;
   overflow-y: auto;
   overflow-x: hidden;
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3)
 }
 
 .layer-entry {

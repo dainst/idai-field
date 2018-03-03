@@ -498,6 +498,90 @@
                 "SurveyUnit"
             ],
             "sameMainTypeResource": true
+        },
+        {
+            "domain": [
+                "Trench",
+                "Survey",
+                "Building",
+                "Place",
+                "Feature",
+                "Architecture",
+                "Layer",
+                "Floor",
+                "DrillCoreLayer",
+                "Grave",
+                "Other",
+                "Find",
+                "Brick",
+                "Bone",
+                "Coin",
+                "Glass",
+                "Metal",
+                "Mollusk",
+                "PlasterFragment",
+                "Pottery",
+                "Stone",
+                "Terracotta",
+                "Wood",
+                "ProcessUnit",
+                "Drilling",
+                "Planum",
+                "SurveyUnit",
+                "Sample",
+                "Profile",
+                "Inscription",
+                "Wall_surface"
+            ],
+            "inverse": "is3DRepresentationOf",
+            "label": "Hat das 3D-Objekt",
+            "name": "has3DRepresentation",
+            "range": [
+                "Object3D"
+            ],
+            "visible": false,
+            "editable": false
+        },
+        {
+            "domain": [
+                "Object3D"
+            ],
+            "inverse": "has3DRepresentation",
+            "label": "Ist 3D-Repräsentation von",
+            "name": "is3DRepresentationOf",
+            "range": [
+                "Trench",
+                "Survey",
+                "Building",
+                "Place",
+                "Feature",
+                "Architecture",
+                "Layer",
+                "Floor",
+                "DrillCoreLayer",
+                "Grave",
+                "Other",
+                "Find",
+                "Brick",
+                "Bone",
+                "Coin",
+                "Glass",
+                "Metal",
+                "Mollusk",
+                "PlasterFragment",
+                "Pottery",
+                "Stone",
+                "Terracotta",
+                "Wood",
+                "ProcessUnit",
+                "Drilling",
+                "Planum",
+                "SurveyUnit",
+                "Sample",
+                "Profile",
+                "Inscription",
+                "Wall_surface"
+            ]
         }
     ],
     "types": [
@@ -10679,6 +10763,32 @@
             },
             "parent": "Find",
             "type": "Metal"
+        },
+        {
+            "fields": [
+                {
+                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
+                    "descriptions": {
+                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Bearbeiter/Bearbeiterin",
+                    "labels": {
+                        "de": "Bearbeiter/Bearbeiterin",
+                        "en": "Processor",
+                        "it": "Responsabile"
+                    },
+                    "name": "hasProcessor",
+                    "visible": true
+                }
+            ],
+            "label": "3D-Objekt",
+            "labels": {
+                "de": "3D-Objekt",
+                "en": "3D Object"
+            },
+            "type": "Object3D"
         }
     ],
     "views": [

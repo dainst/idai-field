@@ -10781,6 +10781,18 @@
                     },
                     "name": "hasProcessor",
                     "visible": true
+                },
+                {
+                    "editable": false,
+                    "visible": false,
+                    "inputType": "unsignedInt",
+                    "name": "thumbnailWidth"
+                },
+                {
+                    "editable": false,
+                    "visible": false,
+                    "inputType": "unsignedInt",
+                    "name": "thumbnailHeight"
                 }
             ],
             "label": "3D-Objekt",

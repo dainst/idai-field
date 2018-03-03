@@ -32,15 +32,15 @@ import {ImageLayerMenuComponent} from './map/map/image-layer-menu.component';
 import {Map3DComponent} from './map/map-3d/map-3d.component';
 import {PointGeometriesComponent} from './map/map-3d/geometries/point-geometries.component';
 import {MeshGeometriesComponent} from './map/map-3d/geometries/mesh-geometries.component';
-import {Layer3DMenuComponent} from './map/map-3d/layers/layer-3d-menu.component';
-import {Layer3DManager} from './map/map-3d/layers/layer-3d-manager';
-import {Layers3DComponent} from './map/map-3d/layers/layers-3d.component';
+import {Layer3DMenuComponent} from './map/map-3d/layers/layers-3d/layer-3d-menu.component';
+import {Layer3DManager} from './map/map-3d/layers/layers-3d/layer-3d-manager';
+import {Layers3DComponent} from './map/map-3d/layers/layers-3d/layers-3d.component';
 import {Core3DModule} from '../core-3d/core-3d.module';
 import {ControlButtonsComponent} from './map/map-3d/control-buttons.component';
-import {Layer3DMeshManager} from './map/map-3d/layers/layer-3d-mesh-manager';
-import {Layers2DComponent} from './map/map-3d/layers/layers-2d.component';
-import {Layer2DMeshManager} from './map/map-3d/layers/layer-2d-mesh-manager';
-import {Layer2DMeshBuilder} from './map/map-3d/layers/layer-2d-mesh-builder';
+import {Layer3DMeshManager} from './map/map-3d/layers/layers-3d/layer-3d-mesh-manager';
+import {Layers2DComponent} from './map/map-3d/layers/layers-2d/layers-2d.component';
+import {Layer2DMeshManager} from './map/map-3d/layers/layers-2d/layer-2d-mesh-manager';
+import {Layer2DMeshBuilder} from './map/map-3d/layers/layers-2d/layer-2d-mesh-builder';
 
 @NgModule({
     imports: [

@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import * as THREE from 'three';
-import {SettingsService} from '../../../../../core/settings/settings-service';
-import {AppState} from '../../../../../core/settings/app-state';
-import {IdaiFieldImageDocumentReadDatastore} from '../../../../../core/datastore/idai-field-image-document-read-datastore';
-import {IdaiFieldImageDocument} from '../../../../../core/model/idai-field-image-document';
-import {IdaiFieldGeoreference} from '../../../../../core/model/idai-field-georeference';
-import {getPointVector} from '../../../../../util/util-3d';
+import {SettingsService} from '../../../../../../core/settings/settings-service';
+import {AppState} from '../../../../../../core/settings/app-state';
+import {IdaiFieldImageDocumentReadDatastore} from '../../../../../../core/datastore/idai-field-image-document-read-datastore';
+import {IdaiFieldImageDocument} from '../../../../../../core/model/idai-field-image-document';
+import {IdaiFieldGeoreference} from '../../../../../../core/model/idai-field-georeference';
+import {getPointVector} from '../../../../../../util/util-3d';
 
 
 @Injectable()

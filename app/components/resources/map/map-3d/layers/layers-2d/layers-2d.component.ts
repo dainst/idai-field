@@ -1,8 +1,8 @@
 import {Component, OnChanges} from '@angular/core';
-import {Map3DComponent} from '../map-3d.component';
-import {LayersComponent} from './layers.component';
+import {Map3DComponent} from '../../map-3d.component';
+import {LayersComponent} from '../layers.component';
 import {Layer2DMeshManager} from './layer-2d-mesh-manager';
-import {ImageLayerManager} from '../../map/image-layer-manager';
+import {ImageLayerManager} from '../../../map/image-layer-manager';
 
 
 @Component({

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as THREE from 'three';
-import {MeshLoader} from '../../../../../core/3d/mesh-loader';
-import {LayerMeshManager} from './layer-mesh-manager';
+import {MeshLoader} from '../../../../../../core/3d/mesh-loader';
+import {LayerMeshManager} from '../layer-mesh-manager';
 
 
 @Injectable()

@@ -1,5 +1,5 @@
 import {Component, Renderer2} from '@angular/core';
-import {LayerMenuComponent} from '../../layer-menu.component';
+import {LayerMenuComponent} from '../../../layer-menu.component';
 import {Layer3DManager} from './layer-3d-manager';
 
 

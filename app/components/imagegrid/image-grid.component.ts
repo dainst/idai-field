@@ -5,6 +5,7 @@ import {ImageGridBuilder} from './image-grid-builder';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/idai-field-document-read-datastore';
+import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
 
 
 @Component({
@@ -20,8 +21,8 @@ import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/idai-field-do
 export class ImageGridComponent implements OnChanges {
 
     @Input() nrOfColumns: number = 1;
-    @Input() documents: IdaiFieldImageDocument[];
-    @Input() selected: IdaiFieldImageDocument[] = [];
+    @Input() documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>;
+    @Input() selected: Array<IdaiFieldImageDocument|IdaiField3DDocument> = [];
     @Input() totalDocumentCount: number = 0;
     @Input() showLinkBadges: boolean = true;
     @Input() showIdentifier: boolean = true;

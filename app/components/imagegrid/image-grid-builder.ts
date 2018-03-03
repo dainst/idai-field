@@ -1,18 +1,19 @@
-import {Document} from 'idai-components-2/core';
-import {IdaiFieldImageResource} from '../../core/model/idai-field-image-resource';
 import {ImageContainer} from '../../core/imagestore/image-container';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
+import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
+import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 export class ImageGridBuilder {
 
     // nr of pixels between the right end of the screenspace and the grid
     private paddingRight: number = 20;
-    private documents: Array<Document>;
+    private documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>;
 
 
     /**
@@ -23,7 +24,8 @@ export class ImageGridBuilder {
      * @returns an object with rows containing the rows of the calculated grid
      *   and msgsWithParams containing one or more msgWithParams.
      */
-    public calcGrid(documents: Array<Document>, nrOfColumns: number, gridWidth: number): any {
+    public calcGrid(documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>, nrOfColumns: number,
+                    gridWidth: number): any {
 
         if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');
 
@@ -87,21 +89,33 @@ export class ImageGridBuilder {
                 naturalRowWidth += naturalRowWidth * (nrOfColumns - columnIndex) / columnIndex;
                 break;
             }
-            naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
+            naturalRowWidth += this.getWidth(document) / this.getHeight(document);
         }
 
         return naturalRowWidth;
     }
 
 
-    private static newCell(document: any, calculatedHeight: any): ImageContainer {
+    private static newCell(document: IdaiFieldImageDocument|IdaiField3DDocument,
+                           calculatedHeight: any): ImageContainer {
 
         const cell: ImageContainer = {};
-        const image = document.resource as IdaiFieldImageResource;
         cell.document = document;
-        cell.calculatedWidth = image.width * calculatedHeight / image.height;
+        cell.calculatedWidth = this.getWidth(document) * calculatedHeight / this.getHeight(document);
         cell.calculatedHeight = calculatedHeight;
 
         return cell;
+    }
+
+
+    private static getWidth(document: IdaiFieldImageDocument|IdaiField3DDocument): number {
+
+        return parseFloat(document.resource.width || document.resource.thumbnailWidth);
+    }
+
+
+    private static getHeight(document: IdaiFieldImageDocument|IdaiField3DDocument): number {
+
+        return parseFloat(document.resource.height || document.resource.thumbnailHeight);
     }
 }

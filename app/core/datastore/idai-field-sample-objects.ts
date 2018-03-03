@@ -165,6 +165,8 @@ export const DOCS: Array<Document> = [
             "identifier": "object3d",
             "shortDescription": "3D-Testobjekt",
             "type": "Object3D",
+            "thumbnailWidth": 1250,
+            "thumbnailHeight": 1084,
             "relations": {
                 "is3DRepresentationOf": ["t2"]
             }
@@ -176,6 +178,8 @@ export const DOCS: Array<Document> = [
             "identifier": "vraTrench",
             "shortDescription": "VRATrench",
             "type": "Object3D",
+            "thumbnailWidth": 516,
+            "thumbnailHeight": 1164,
             "relations": {
                 "is3DRepresentationOf": ["t2"]
             }
@@ -187,6 +191,8 @@ export const DOCS: Array<Document> = [
             "identifier": "vraTrenchGeoref",
             "shortDescription": "VRATrench (georeferenziert)",
             "type": "Object3D",
+            "thumbnailWidth": 606,
+            "thumbnailHeight": 1172,
             "relations": {
                 "is3DRepresentationOf": ["t2"]
             }
@@ -198,6 +204,8 @@ export const DOCS: Array<Document> = [
             "identifier": "brandlehm",
             "shortDescription": "Brandlehm",
             "type": "Object3D",
+            "thumbnailWidth": 824,
+            "thumbnailHeight": 498,
             "relations": {
                 "is3DRepresentationOf": ["tf1"]
             }

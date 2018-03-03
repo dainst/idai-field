@@ -11,6 +11,8 @@ export interface IdaiField3DResource extends Resource {
     shortDescription: string;
 
     originalFilename: string;
+    thumbnailWidth: number;
+    thumbnailHeight: number;
 
     relations: IdaiField3DRelations;
 }

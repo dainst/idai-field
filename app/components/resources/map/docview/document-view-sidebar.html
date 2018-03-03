@@ -51,7 +51,7 @@
                                 (onRelationTargetClicked)="jumpToRelationTarget($event)">
                 </relations-view>
             </ng-template>
-        </ngb-tab>s
+        </ngb-tab>
 
         <ngb-tab id="document-view-images-tab">
             <ng-template ngbTabTitle>
@@ -75,6 +75,22 @@
                     </div>
                     <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
                                     [imageIds]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
+                                    (onRelationTargetClicked)="jumpToRelationTarget($event)">
+                    </thumbnail-view>
+                </div>
+            </ng-template>
+        </ngb-tab>
+
+        <ngb-tab id="document-view-3d-objects-tab">
+            <ng-template ngbTabTitle>
+                    <span class="mdi mdi-cube-outline"
+                          [class.empty-tab]="!viewFacade.getSelectedDocument().resource.relations['has3DRepresentation']">
+                    </span>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <div>
+                    <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['has3DRepresentation']"
+                                    [imageIds]="viewFacade.getSelectedDocument().resource.relations['has3DRepresentation']"
                                     (onRelationTargetClicked)="jumpToRelationTarget($event)">
                     </thumbnail-view>
                 </div>

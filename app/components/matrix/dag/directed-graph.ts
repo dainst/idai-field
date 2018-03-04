@@ -1,19 +1,23 @@
 /**
- * A directed acyclical graph
+ * A directed (acyclical) graph
  */
-export type Graph = {map: {[node: string]: number}, matrix: string[][]};
+export type DirectedGraph = { map: {[vertex: string]: VertexYIndex}, matrix: Vertex[][] };
+export type VertexYIndex = number;
+export type Vertex = string;
+export type Edge = [Vertex, Vertex];
+
 
 
 /**
  * @author Daniel de Oliveira
  */
-export module Graph {
+export module DirectedGraph {
 
 
     /**
      * @returns the vertices of the graph which have no in edges
      */
-    export function sources({map, matrix}: Graph): string[] {
+    export function sources({map, matrix}: DirectedGraph): string[] {
 
         const sources = [];
 
@@ -33,7 +37,7 @@ export module Graph {
     }
 
 
-    export function build(vertices: string[], edges: string[][]): Graph {
+    export function build(vertices: Vertex[], edges: Edge[]): DirectedGraph {
 
         const matrix: string[][] = [];
         const map: {[node: string]: number} = {};
@@ -55,42 +59,47 @@ export module Graph {
     }
 
 
-    export function substituteNodes({map, matrix}: Graph, predifinedRanks: string[][]) {
+    /**
+     * @param {string[][]} predifinedRanks disjoint sets of vertices // TODO throw if not
+     */
+    export function substituteNodes({map, matrix}: DirectedGraph, predifinedRanks: Vertex[][]) {
 
-        let rankIndex = 0;
+        // _ is the marker for a vertex being substituted
+        // ! is the marker for a new vertex substituting other vertices
+
+        let substituteIndex = 0;
         for (let predifinedRank of predifinedRanks) {
 
-            map["!" + rankIndex] = matrix.length;
+            map["!" + substituteIndex] = matrix.length;
             matrix.push([]);
 
             for (let vertex of predifinedRank) {
 
-                substituteEdges({map, matrix}, vertex, rankIndex);
+                substituteEdges({map, matrix}, vertex, substituteIndex);
             }
 
-            rankIndex++;
+            substituteIndex++;
         }
     }
 
 
-    function substituteEdges({map, matrix}: Graph, vertex: string, rankIndex: number) {
+    function substituteEdges({map, matrix}: DirectedGraph, v: Vertex, substituteIndex: number) {
 
         for (let y = 0; y < matrix.length - 1; y++) {
             for (let x = 0; x < matrix.length - 1; x++) {
 
-                if (y === map[vertex]) { // put all out edges from that row to the subsitute
+                if (y === map[v]) { // put all out edges from that row to the subsitute
+
                     if (matrix[y][x] != undefined) {
-                        matrix[map["!" + rankIndex]][x] = matrix[y][x];
+                        matrix[map["!" + substituteIndex]][x] = matrix[y][x];
                         matrix[y][x] = '_' + matrix[y][x];
                     }
-                } else {
 
-                    if (vertex === matrix[y][x] &&
-                        (!matrix[y][x].includes('_'))) // TODO still necessary?
-                    {
+                } else {
+                    if (v === matrix[y][x]) {
 
                         matrix[y][x] = '_' + matrix[y][x];
-                        matrix[y][matrix.length - 1] = '!' + rankIndex;
+                        matrix[y][matrix.length - 1] = '!' + substituteIndex;
                     }
                 }
             }

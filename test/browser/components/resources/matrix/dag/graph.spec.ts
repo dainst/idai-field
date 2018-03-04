@@ -2,14 +2,14 @@
  * @author Daniel de Oliveira
  */
 import {Rank} from "../../../../../../app/components/matrix/dag/rank";
-import {Graph} from "../../../../../../app/components/matrix/dag/graph";
+import {DirectedGraph} from "../../../../../../app/components/matrix/dag/directed-graph";
 
 export function main() {
     describe('Core', () => {
 
         it('create a graph', () => {
 
-            const g = Graph.build(
+            const g = DirectedGraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["a", "c"], ["a", "d"], ["b", "e"], ["c", "e"], ["d", "e"]]);
 
@@ -19,7 +19,7 @@ export function main() {
 
         it('rank a graph', () => {
 
-            const r = Rank.rank(Graph.build(
+            const r = Rank.rank(DirectedGraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["a", "c"], ["a", "d"], ["b", "e"], ["c", "e"], ["d", "e"]]));
 
@@ -29,7 +29,7 @@ export function main() {
 
         it('rank another graph', () => {
 
-            const r = Rank.rank(Graph.build(
+            const r = Rank.rank(DirectedGraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["b", "c"], ["b", "d"], ["d", "e"]]));
 
@@ -39,7 +39,7 @@ export function main() {
 
         it('multiple sources', () => {
 
-            const g = Graph.build(
+            const g = DirectedGraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["b", "e"], ["c", "d"], ["d", "e"]]);
 
@@ -52,11 +52,11 @@ export function main() {
 
         it('substitute nodes on rank and then rank', () => {
 
-            const g: Graph = Graph.build(
+            const g: DirectedGraph = DirectedGraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["a", "c"], ["a", "d"], ["b", "e"], ["c", "e"], ["d", "e"]]);
 
-            Graph.substituteNodes(g, [["b", "c", "d"]]);
+            DirectedGraph.substituteNodes(g, [["b", "c", "d"]]);
 
             const r = Rank.rank(g);
 
@@ -67,11 +67,11 @@ export function main() {
 
         it('substitute - one rank', () => {
 
-            const g: Graph = Graph.build(
+            const g: DirectedGraph = DirectedGraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["a", "c"], ["a", "d"], ["b", "e"], ["c", "e"], ["d", "e"]]);
 
-            Graph.substituteNodes(g, [["b", "c", "d"]]);
+            DirectedGraph.substituteNodes(g, [["b", "c", "d"]]);
 
             expect(g.matrix[0][1]).toBe('_b');
             expect(g.matrix[0][2]).toBe('_c');
@@ -86,11 +86,11 @@ export function main() {
 
         it('substitute - multiple ranks', () => {
 
-            const g: Graph = Graph.build(
+            const g: DirectedGraph = DirectedGraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["b", "e"], ["c", "d"], ["d", "e"]]);
 
-            Graph.substituteNodes(g, [["a", "c"], ["b", "d"]]);
+            DirectedGraph.substituteNodes(g, [["a", "c"], ["b", "d"]]);
 
             console.log("4", JSON.stringify(g));
             expect(g.matrix[6][4]).toBe('e');

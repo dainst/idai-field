@@ -1,4 +1,4 @@
-import {Graph} from './graph';
+import {DirectedGraph, Vertex} from './directed-graph';
 
 
 /**
@@ -9,21 +9,20 @@ import {Graph} from './graph';
 export module Rank {
 
     type Rank = number;
-    export type Vertex = string;
     export type Ranks = Array<Array<Vertex>>;
 
     /**
      * Longest path based ranking
      */
-    export function rank(g: Graph): Ranks {
+    export function rank(g: DirectedGraph): Ranks {
 
         const visited: {[name: string]: Rank} = {};
 
-        function depthFirstSearch(vertex: Vertex): Rank {
+        function depthFirstSearch(v: Vertex): Rank {
 
-            if (Object.keys(visited).includes(vertex)) return visited[vertex];
+            if (Object.keys(visited).includes(v)) return visited[v];
 
-            const children = g.matrix[g.map[vertex]]
+            const children = g.matrix[g.map[v]]
                 .filter(isDefined)
                 .filter(_ => !_.includes('_'));
 
@@ -32,18 +31,12 @@ export module Rank {
             const computedRank = (childRanks.length === 0)
                 ? 0 : Math.min(...childRanks) - 1;
 
-            visited[vertex] = computedRank;
+            visited[v] = computedRank;
             return computedRank;
         }
 
-        Graph.sources(g).forEach(depthFirstSearch);
+        DirectedGraph.sources(g).forEach(depthFirstSearch);
         return convertAndNormalize(visited);
-    }
-
-
-    function isDefined(what: any) {
-
-        return what != undefined;
     }
 
 
@@ -57,5 +50,11 @@ export module Rank {
             else result[row] = result[row].concat([vertex]);
             return result;
         }, []);
+    }
+
+
+    function isDefined(what: any) {
+
+        return what != undefined;
     }
 }

@@ -83,7 +83,7 @@ export module Graph {
                         matrix[map["!" + rankIndex]][x] = matrix[y][x];
                         matrix[y][x] = '_' + matrix[y][x];
                     }
-                }
+                } // TODO maybe the following block can come in an else branch, perhaps the test for _ then also can get omitted
 
                 if (vertex === matrix[y][x] && (!matrix[y][x].includes('_'))) {
                     matrix[y][x] = '_' + matrix[y][x];

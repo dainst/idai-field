@@ -16,20 +16,20 @@ export module Rank {
      */
     export function rank(g: Digraph): Ranks {
 
-        const visited: {[name: string]: Rank} = {};
+        const visited: {[vertex: string]: Rank} = {};
 
         function depthFirstSearch(v: Vertex): Rank {
 
             if (Object.keys(visited).includes(v)) return visited[v];
 
-            const children = g.matrix[g.map[v]]
+            const targets = g.matrix[g.map[v]]
                 .filter(isDefined)
                 .filter(_ => !_.includes('_'));
 
-            const childRanks = children.map(depthFirstSearch);
+            const targetRanks = targets.map(depthFirstSearch);
 
-            const computedRank = (childRanks.length === 0)
-                ? 0 : Math.min(...childRanks) - 1;
+            const computedRank = (targetRanks.length === 0)
+                ? 0 : Math.min(...targetRanks) - 1;
 
             visited[v] = computedRank;
             return computedRank;

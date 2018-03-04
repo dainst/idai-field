@@ -1,16 +1,14 @@
 /**
  * A directed (acyclical) graph
  */
-export type Digraph = {
-    map: {[vertex: string]: SourceVertexIndex},
-    matrix: TargetVertex[][] // target of
-};
-export type SourceVertexIndex = number;
-export type Vertex = string;
+export type Vertex = string;                                         // V
 export type SourceVertex = Vertex;
 export type TargetVertex = Vertex;
-export type Edge = [SourceVertex, TargetVertex];
+export type Edge = [SourceVertex, TargetVertex];                     // E
 
+export type SourceIndexMap = {[sourceVertex: string]: number};
+export type TargetMatrix = TargetVertex[][];
+export type Digraph = { map: SourceIndexMap, matrix: TargetMatrix }; // G(V,E)
 
 
 /**
@@ -20,8 +18,8 @@ export module Digraph {
 
     export function build(vertices: Vertex[], edges: Edge[]): Digraph {
 
-        const matrix: string[][] = [];
-        const map: {[node: string]: number} = {};
+        const matrix: TargetMatrix = [];
+        const map: SourceIndexMap = {};
 
         let i = 0;
         for (let vertex of vertices) {
@@ -30,10 +28,10 @@ export module Digraph {
             i++;
         }
 
-        for (let edge of edges) {
-            const source = map[edge[0]];
-            const target = map[edge[1]];
-            matrix[source][target] = edge[1];
+        for (let e of edges) {
+            const source = map[e[0]];
+            const target = map[e[1]];
+            matrix[source][target] = e[1];
         }
 
         return {map, matrix};

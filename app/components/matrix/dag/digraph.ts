@@ -1,7 +1,7 @@
 /**
  * A directed (acyclical) graph
  */
-export type DirectedGraph = {
+export type Digraph = {
     map: {[vertex: string]: SourceVertexIndex},
     matrix: TargetVertex[][] // target of
 };
@@ -16,9 +16,9 @@ export type Edge = [SourceVertex, TargetVertex];
 /**
  * @author Daniel de Oliveira
  */
-export module DirectedGraph {
+export module Digraph {
 
-    export function build(vertices: Vertex[], edges: Edge[]): DirectedGraph {
+    export function build(vertices: Vertex[], edges: Edge[]): Digraph {
 
         const matrix: string[][] = [];
         const map: {[node: string]: number} = {};
@@ -43,7 +43,7 @@ export module DirectedGraph {
     /**
      * @returns the vertices of the graph which have no in edges
      */
-    export function sources({map, matrix}: DirectedGraph): string[] {
+    export function sources({map, matrix}: Digraph): string[] {
 
         const sources = [];
 

@@ -1,4 +1,4 @@
-import {DirectedGraph, Vertex} from './directed-graph';
+import {Digraph, Vertex} from './digraph';
 
 
 /**
@@ -14,7 +14,7 @@ export module Rank {
     /**
      * Longest path based ranking
      */
-    export function rank(g: DirectedGraph): Ranks {
+    export function rank(g: Digraph): Ranks {
 
         const visited: {[name: string]: Rank} = {};
 
@@ -35,14 +35,14 @@ export module Rank {
             return computedRank;
         }
 
-        DirectedGraph.sources(g).forEach(depthFirstSearch);
+        Digraph.sources(g).forEach(depthFirstSearch);
         return convertAndNormalize(visited);
     }
 
     /**
      * @param {string[][]} predifinedRanks disjoint sets of vertices // TODO throw if not
      */
-    export function substituteNodes({map, matrix}: DirectedGraph, predifinedRanks: Vertex[][]) {
+    export function substituteNodes({map, matrix}: Digraph, predifinedRanks: Vertex[][]) {
 
         // _ is the marker for a vertex being substituted
         // ! is the marker for a new vertex substituting other vertices
@@ -63,7 +63,7 @@ export module Rank {
     }
 
 
-    function substituteEdges({map, matrix}: DirectedGraph, v: Vertex, substituteIndex: number) {
+    function substituteEdges({map, matrix}: Digraph, v: Vertex, substituteIndex: number) {
 
         for (let y = 0; y < matrix.length - 1; y++) {
             for (let x = 0; x < matrix.length - 1; x++) {

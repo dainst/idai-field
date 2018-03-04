@@ -2,14 +2,14 @@
  * @author Daniel de Oliveira
  */
 import {Rank} from "../../../../../../app/components/matrix/dag/rank";
-import {DirectedGraph} from "../../../../../../app/components/matrix/dag/directed-graph";
+import {Digraph} from "../../../../../../app/components/matrix/dag/digraph";
 
 export function main() {
     describe('Core', () => {
 
         it('create a graph', () => {
 
-            const g = DirectedGraph.build(
+            const g = Digraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["a", "c"], ["a", "d"], ["b", "e"], ["c", "e"], ["d", "e"]]);
 
@@ -19,7 +19,7 @@ export function main() {
 
         it('rank a graph', () => {
 
-            const r = Rank.rank(DirectedGraph.build(
+            const r = Rank.rank(Digraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["a", "c"], ["a", "d"], ["b", "e"], ["c", "e"], ["d", "e"]]));
 
@@ -29,7 +29,7 @@ export function main() {
 
         it('rank another graph', () => {
 
-            const r = Rank.rank(DirectedGraph.build(
+            const r = Rank.rank(Digraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["b", "c"], ["b", "d"], ["d", "e"]]));
 
@@ -39,7 +39,7 @@ export function main() {
 
         it('multiple sources', () => {
 
-            const g = DirectedGraph.build(
+            const g = Digraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["b", "e"], ["c", "d"], ["d", "e"]]);
 
@@ -52,7 +52,7 @@ export function main() {
 
         it('substitute nodes on rank and then rank', () => {
 
-            const g: DirectedGraph = DirectedGraph.build(
+            const g: Digraph = Digraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["a", "c"], ["a", "d"], ["b", "e"], ["c", "e"], ["d", "e"]]);
 
@@ -67,7 +67,7 @@ export function main() {
 
         it('substitute - one rank', () => {
 
-            const g: DirectedGraph = DirectedGraph.build(
+            const g: Digraph = Digraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["a", "c"], ["a", "d"], ["b", "e"], ["c", "e"], ["d", "e"]]);
 
@@ -86,7 +86,7 @@ export function main() {
 
         it('substitute - multiple ranks', () => {
 
-            const g: DirectedGraph = DirectedGraph.build(
+            const g: Digraph = Digraph.build(
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["b", "e"], ["c", "d"], ["d", "e"]]);
 

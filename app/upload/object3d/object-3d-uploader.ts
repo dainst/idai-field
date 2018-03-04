@@ -45,9 +45,9 @@ export class Object3DUploader extends Uploader {
 
     protected async uploadFile(file: File, type: IdaiType, relationTarget?: Document): Promise<any> {
 
-        const document: IdaiField3DDocument = await this.create3DDocument(file, type, relationTarget);
+        const document: IdaiField3DDocument = await this.create3DDocument(file, type);
         await this.copyToModel3DStore(file, document);
-        await this.createThumbnail(document);
+        await this.createThumbnail(document, relationTarget);
     }
 
 
@@ -74,13 +74,13 @@ export class Object3DUploader extends Uploader {
     }
 
 
-    private async createThumbnail(document: IdaiField3DDocument): Promise<any> {
+    private async createThumbnail(document: IdaiField3DDocument, relationTarget?: Document): Promise<any> {
 
         const { blob, width, height } = await this.openThumbnailCreator(document);
         if (!blob) return;
 
         const updatedDocument: IdaiField3DDocument
-            = await this.updateThumbnailDimensions(document, width, height);
+            = await this.complete(document, width, height, relationTarget);
         await this.saveThumbnail(updatedDocument, blob);
     }
 
@@ -131,8 +131,7 @@ export class Object3DUploader extends Uploader {
     }
 
 
-    private async create3DDocument(file: File, type: IdaiType,
-                                   relationTarget?: Document): Promise<IdaiField3DDocument> {
+    private async create3DDocument(file: File, type: IdaiType): Promise<IdaiField3DDocument> {
 
         const document: IdaiField3DDocument = {
             resource: {
@@ -148,20 +147,20 @@ export class Object3DUploader extends Uploader {
             }
         };
 
-        if (relationTarget && relationTarget.resource.id) {
-            document.resource.relations['is3DRepresentationOf'] = [relationTarget.resource.id];
-        }
-
         return this.persistenceManager.persist(document, this.settingsService.getUsername(),
             [document]);
     }
 
 
-    private async updateThumbnailDimensions(document: IdaiField3DDocument,
-                                            width: number, height: number): Promise<any> {
+    private async complete(document: IdaiField3DDocument, width: number, height: number,
+                           relationTarget?: Document): Promise<any> {
 
         document.resource.thumbnailWidth = width;
         document.resource.thumbnailHeight = height;
+
+        if (relationTarget && relationTarget.resource.id) {
+            document.resource.relations['is3DRepresentationOf'] = [relationTarget.resource.id];
+        }
 
         return this.persistenceManager.persist(document, this.settingsService.getUsername(),
             [document]);

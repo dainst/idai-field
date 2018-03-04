@@ -56,7 +56,7 @@ export function main() {
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["a", "c"], ["a", "d"], ["b", "e"], ["c", "e"], ["d", "e"]]);
 
-            DirectedGraph.substituteNodes(g, [["b", "c", "d"]]);
+            Rank.substituteNodes(g, [["b", "c", "d"]]);
 
             const r = Rank.rank(g);
 
@@ -71,7 +71,7 @@ export function main() {
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["a", "c"], ["a", "d"], ["b", "e"], ["c", "e"], ["d", "e"]]);
 
-            DirectedGraph.substituteNodes(g, [["b", "c", "d"]]);
+            Rank.substituteNodes(g, [["b", "c", "d"]]);
 
             expect(g.matrix[0][1]).toBe('_b');
             expect(g.matrix[0][2]).toBe('_c');
@@ -90,7 +90,7 @@ export function main() {
                 ["a", "b", "c", "d", "e"],
                 [["a", "b"], ["b", "e"], ["c", "d"], ["d", "e"]]);
 
-            DirectedGraph.substituteNodes(g, [["a", "c"], ["b", "d"]]);
+            Rank.substituteNodes(g, [["a", "c"], ["b", "d"]]);
 
             console.log("4", JSON.stringify(g));
             expect(g.matrix[6][4]).toBe('e');

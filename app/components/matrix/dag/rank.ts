@@ -39,6 +39,53 @@ export module Rank {
         return convertAndNormalize(visited);
     }
 
+    /**
+     * @param {string[][]} predifinedRanks disjoint sets of vertices // TODO throw if not
+     */
+    export function substituteNodes({map, matrix}: DirectedGraph, predifinedRanks: Vertex[][]) {
+
+        // _ is the marker for a vertex being substituted
+        // ! is the marker for a new vertex substituting other vertices
+
+        let substituteIndex = 0;
+        for (let predifinedRank of predifinedRanks) {
+
+            map["!" + substituteIndex] = matrix.length;
+            matrix.push([]);
+
+            for (let vertex of predifinedRank) {
+
+                substituteEdges({map, matrix}, vertex, substituteIndex);
+            }
+
+            substituteIndex++;
+        }
+    }
+
+
+    function substituteEdges({map, matrix}: DirectedGraph, v: Vertex, substituteIndex: number) {
+
+        for (let y = 0; y < matrix.length - 1; y++) {
+            for (let x = 0; x < matrix.length - 1; x++) {
+
+                if (y === map[v]) { // put all out edges from that row to the subsitute
+
+                    if (matrix[y][x] != undefined) {
+                        matrix[map["!" + substituteIndex]][x] = matrix[y][x];
+                        matrix[y][x] = '_' + matrix[y][x];
+                    }
+
+                } else {
+                    if (v === matrix[y][x]) {
+
+                        matrix[y][x] = '_' + matrix[y][x];
+                        matrix[y][matrix.length - 1] = '!' + substituteIndex;
+                    }
+                }
+            }
+        }
+    }
+
 
     function convertAndNormalize(visited: {[name: string]: Rank}): Ranks {
 

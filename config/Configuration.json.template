@@ -10785,6 +10785,11 @@
                 {
                     "editable": false,
                     "visible": false,
+                    "name": "originalFilename"
+                },
+                {
+                    "editable": false,
+                    "visible": false,
                     "inputType": "unsignedInt",
                     "name": "thumbnailWidth"
                 },

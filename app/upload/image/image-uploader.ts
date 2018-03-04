@@ -110,7 +110,7 @@ export class ImageUploader extends Uploader {
             img.onload = () => {
                 const doc: IdaiFieldImageDocument = {
                     resource: {
-                        identifier: file.name,
+                        identifier: this.getIdentifier(file.name),
                         shortDescription: '',
                         type: type.name,
                         originalFilename: file.name,
@@ -132,5 +132,11 @@ export class ImageUploader extends Uploader {
                     .catch(error => reject(error));
             };
         });
+    }
+
+
+    protected getIdentifier(filename: string): string {
+
+        return filename;
     }
 }

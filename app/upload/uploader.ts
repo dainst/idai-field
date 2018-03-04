@@ -117,10 +117,13 @@ export abstract class Uploader {
 
         return this.datastore.find({
             constraints: {
-                'identifier:match' : filename
+                'identifier:match' : this.getIdentifier(filename)
             }
         }).then((result: IdaiFieldFindResult<Document>) => result.totalCount > 0);
     }
+
+
+    protected abstract getIdentifier(filename: string): string;
 
 
     private static getFiles(event: any): Array<File> {

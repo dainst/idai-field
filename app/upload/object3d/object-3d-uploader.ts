@@ -101,7 +101,7 @@ export class Object3DUploader extends Uploader {
 
         const document: IdaiField3DDocument = {
             resource: {
-                identifier: Object3DUploader.getIdentifier(file),
+                identifier: this.getIdentifier(file.name),
                 shortDescription: '',
                 type: type.name,
                 originalFilename: file.name,
@@ -122,6 +122,15 @@ export class Object3DUploader extends Uploader {
     }
 
 
+    protected getIdentifier(filename: string): string {
+
+        const fileName: string[] = filename.split('.');
+        fileName.pop();
+
+        return fileName.join('');
+    }
+
+
     private static getImageFileNames(file: File): string[] {
 
         const fileContent: string = fs.readFileSync(file.path);
@@ -139,15 +148,6 @@ export class Object3DUploader extends Uploader {
         }
 
         return imageFileNames;
-    }
-
-
-    private static getIdentifier(file: File): string {
-
-        const fileName: string[] = file.name.split('.');
-        fileName.pop();
-
-        return fileName.join('');
     }
 
 

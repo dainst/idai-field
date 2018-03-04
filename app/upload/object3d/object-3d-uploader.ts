@@ -47,7 +47,11 @@ export class Object3DUploader extends Uploader {
 
         const document: IdaiField3DDocument = await this.create3DDocument(file, type);
         await this.copyToModel3DStore(file, document);
-        await this.createThumbnail(document, relationTarget);
+
+        const {blob, width, height} = await this.createThumbnail(document);
+        const updatedDocument: IdaiField3DDocument = await this.complete(document, width, height,
+            relationTarget);
+        await this.saveThumbnail(updatedDocument, blob);
     }
 
 
@@ -74,18 +78,7 @@ export class Object3DUploader extends Uploader {
     }
 
 
-    private async createThumbnail(document: IdaiField3DDocument, relationTarget?: Document): Promise<any> {
-
-        const { blob, width, height } = await this.openThumbnailCreator(document);
-        if (!blob) return;
-
-        const updatedDocument: IdaiField3DDocument
-            = await this.complete(document, width, height, relationTarget);
-        await this.saveThumbnail(updatedDocument, blob);
-    }
-
-
-    private openThumbnailCreator(document: IdaiField3DDocument)
+    private createThumbnail(document: IdaiField3DDocument)
             : Promise<{ blob: Blob|null, width: number, height: number }> {
 
         const modal: NgbModalRef = this.modalService.open(Object3DThumbnailCreatorModalComponent,
@@ -167,7 +160,9 @@ export class Object3DUploader extends Uploader {
     }
 
 
-    private async saveThumbnail(document: IdaiField3DDocument, blob: Blob) {
+    private async saveThumbnail(document: IdaiField3DDocument, blob: Blob|null) {
+
+        if (!blob) return;
 
         await this.pouchdbManager.getDb().putAttachment(
             document.resource.id,

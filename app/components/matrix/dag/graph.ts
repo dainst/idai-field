@@ -85,7 +85,10 @@ export module Graph {
                     }
                 } else {
 
-                    if (vertex === matrix[y][x] && (!matrix[y][x].includes('_'))) {
+                    if (vertex === matrix[y][x] &&
+                        (!matrix[y][x].includes('_'))) // TODO still necessary?
+                    {
+
                         matrix[y][x] = '_' + matrix[y][x];
                         matrix[y][matrix.length - 1] = '!' + rankIndex;
                     }

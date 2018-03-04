@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
 import {SettingsService} from '../../core/settings/settings-service';
@@ -9,6 +9,8 @@ import {DocumentReadDatastore} from "../../core/datastore/document-read-datastor
 import {Uploader} from '../uploader';
 import {M} from '../../m';
 import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
+import {Object3DThumbnailCreatorModalComponent} from './object-3d-thumbnail-creator-modal.component';
+import {PouchdbManager} from '../../core/datastore/core/pouchdb-manager';
 
 const fs = require('fs');
 
@@ -26,6 +28,7 @@ export class Object3DUploader extends Uploader {
         private persistenceManager: PersistenceManager,
         private projectConfiguration: ProjectConfiguration,
         private settingsService: SettingsService,
+        private pouchdbManager: PouchdbManager,
         modalService: NgbModal,
         datastore: DocumentReadDatastore,
         uploadStatus: UploadStatus
@@ -44,6 +47,7 @@ export class Object3DUploader extends Uploader {
 
         const document: IdaiField3DDocument = await this.create3DDocument(file, type, relationTarget);
         await this.copyToModel3DStore(file, document);
+        await this.createThumbnail(document);
     }
 
 
@@ -63,22 +67,53 @@ export class Object3DUploader extends Uploader {
 
     private async copyImageFilesToModel3DStore(file: File, directoryPath: string): Promise<any> {
 
-        Object3DUploader.getImageFileNames(file).forEach(async imageFileName => {
+        for (let imageFileName of Object3DUploader.getImageFileNames(file)) {
             await this.copyFile(Object3DUploader.getImageFilePath(imageFileName, file),
                 directoryPath + '/' + imageFileName);
-        })
+        }
     }
 
 
-    private async copyFile(sourcePath: string, targetPath: string): Promise<any> {
+    private async createThumbnail(document: IdaiField3DDocument): Promise<any> {
 
-        const readStream = fs.createReadStream(sourcePath);
-        readStream.on('error', () => Promise.reject([M.UPLOAD_ERROR_FILEREADER]));
+        const { blob, width, height } = await this.openThumbnailCreator(document);
+        if (!blob) return;
 
-        const writeStream = fs.createWriteStream(targetPath);
-        writeStream.on('error', () => Promise.reject([M.MODEL3DSTORE_ERROR_WRITE]));
+        const updatedDocument: IdaiField3DDocument
+            = await this.updateThumbnailDimensions(document, width, height);
+        await this.saveThumbnail(updatedDocument, blob);
+    }
 
-        readStream.pipe(writeStream);
+
+    private openThumbnailCreator(document: IdaiField3DDocument)
+            : Promise<{ blob: Blob|null, width: number, height: number }> {
+
+        const modal: NgbModalRef = this.modalService.open(Object3DThumbnailCreatorModalComponent,
+            { backdrop: 'static', keyboard: false }
+        );
+
+        modal.componentInstance.document = document;
+
+        return modal.result.then(
+            result => Promise.resolve(result),
+            closeReason => Promise.resolve({})
+        );
+    }
+
+
+    private copyFile(sourcePath: string, targetPath: string): Promise<any> {
+
+        return new Promise<any>((resolve, reject) => {
+
+            const readStream = fs.createReadStream(sourcePath);
+            readStream.on('error', () => reject([M.UPLOAD_ERROR_FILEREADER]));
+
+            const writeStream = fs.createWriteStream(targetPath);
+            writeStream.on('error', () => reject([M.MODEL3DSTORE_ERROR_WRITE]));
+            writeStream.on('close', () => resolve());
+
+            readStream.pipe(writeStream);
+        });
     }
 
 
@@ -119,6 +154,29 @@ export class Object3DUploader extends Uploader {
 
         return this.persistenceManager.persist(document, this.settingsService.getUsername(),
             [document]);
+    }
+
+
+    private async updateThumbnailDimensions(document: IdaiField3DDocument,
+                                            width: number, height: number): Promise<any> {
+
+        document.resource.thumbnailWidth = width;
+        document.resource.thumbnailHeight = height;
+
+        return this.persistenceManager.persist(document, this.settingsService.getUsername(),
+            [document]);
+    }
+
+
+    private async saveThumbnail(document: IdaiField3DDocument, blob: Blob) {
+
+        await this.pouchdbManager.getDb().putAttachment(
+            document.resource.id,
+            'thumb',
+            (document as any)['_rev'],
+            blob,
+            'image/jpeg'
+        );
     }
 
 

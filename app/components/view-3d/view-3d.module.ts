@@ -22,6 +22,9 @@ import {Core3DModule} from '../core-3d/core-3d.module';
     declarations: [
         View3DComponent,
         Object3DViewerComponent
+    ],
+    exports: [
+        Object3DViewerComponent
     ]
 })
 

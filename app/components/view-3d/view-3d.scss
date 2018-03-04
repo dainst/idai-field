@@ -1,1 +1,7 @@
 @import 'object-3d-viewer';
+
+#view-3d {
+  #object-3d-viewer-container {
+    height: calc(100vh - 57px);
+  }
+}

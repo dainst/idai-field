@@ -114,7 +114,10 @@ export class Viewer3D {
 
     private createRenderer(): THREE.WebGLRenderer {
 
-        const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({ antialias: true });
+        const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({
+            antialias: true,
+            preserveDrawingBuffer: true
+        });
         renderer.setSize(this.containerElement.clientWidth, this.containerElement.clientHeight,
             false);
         this.containerElement.appendChild(renderer.domElement);

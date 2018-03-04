@@ -1,10 +1,15 @@
 /**
  * A directed (acyclical) graph
  */
-export type DirectedGraph = { map: {[vertex: string]: VertexYIndex}, matrix: Vertex[][] };
-export type VertexYIndex = number;
+export type DirectedGraph = {
+    map: {[vertex: string]: SourceVertexIndex},
+    matrix: TargetVertex[][] // target of
+};
+export type SourceVertexIndex = number;
 export type Vertex = string;
-export type Edge = [Vertex, Vertex];
+export type SourceVertex = Vertex;
+export type TargetVertex = Vertex;
+export type Edge = [SourceVertex, TargetVertex];
 
 
 

@@ -88,7 +88,16 @@
                     </span>
             </ng-template>
             <ng-template ngbTabContent>
-                <div>
+                <div (drop)="upload3DObjects($event, viewFacade.getSelectedDocument())">
+                    <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['has3DRepresentation']
+                            || viewFacade.getSelectedDocument().resource.relations['has3DRepresentation'].length == 0"
+                         class="empty-tab-info">
+                        Keine 3D-Modelle vorhanden.
+                        <br><br>
+                        Ziehen Sie Collada-Dateien (.dae) per Drag'n'Drop in diesen Reiter, um sie
+                        hinzuzufügen.
+                        <br><br><br><br><br><br><br><br><br>
+                    </div>
                     <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['has3DRepresentation']"
                                     [imageIds]="viewFacade.getSelectedDocument().resource.relations['has3DRepresentation']"
                                     (onRelationTargetClicked)="jumpToRelationTarget($event)">

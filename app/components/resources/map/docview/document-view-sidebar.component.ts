@@ -8,8 +8,9 @@ import {ResourcesComponent} from '../../resources.component';
 import {ObjectUtil} from '../../../../util/object-util';
 import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../view/view-facade';
-import {ImageUploader} from '../../../imageupload/image-uploader';
+import {ImageUploader} from '../../../../upload/image/image-uploader';
 import {M} from '../../../../m';
+import {Object3DUploader} from '../../../../upload/object3d/object-3d-uploader';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class DocumentViewSidebarComponent {
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
         private imageUploader: ImageUploader,
+        private object3DUploader: Object3DUploader,
         private messages: Messages
     ) { }
 
@@ -47,7 +49,7 @@ export class DocumentViewSidebarComponent {
 
         this.imageUploader.startUpload(event, document).then(uploadResult => {
 
-            if (uploadResult.uploadedImages > 0) {
+            if (uploadResult.uploadedFiles > 0) {
                 this.viewFacade.setActiveDocumentViewTab('images');
                 this.viewFacade.setSelectedDocument(document);
             }
@@ -56,14 +58,36 @@ export class DocumentViewSidebarComponent {
                 this.messages.add(msgWithParams);
             }
 
-            if (uploadResult.uploadedImages == 1) {
+            if (uploadResult.uploadedFiles == 1) {
                 this.messages.add([M.RESOURCES_SUCCESS_IMAGE_UPLOADED, document.resource.identifier]);
-            } else if (uploadResult.uploadedImages > 1) {
-                this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString(),
+            } else if (uploadResult.uploadedFiles > 1) {
+                this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedFiles.toString(),
                     document.resource.identifier]);
             }
         });
+    }
 
+
+    public upload3DObjects(event: Event, document: IdaiFieldDocument) {
+
+        this.object3DUploader.startUpload(event, document).then(uploadResult => {
+
+            if (uploadResult.uploadedFiles > 0) {
+                this.viewFacade.setActiveDocumentViewTab('3d-objects');
+                this.viewFacade.setSelectedDocument(document);
+            }
+
+            for (let msgWithParams of uploadResult.messages) {
+                this.messages.add(msgWithParams);
+            }
+
+            if (uploadResult.uploadedFiles == 1) {
+                this.messages.add([M.RESOURCES_SUCCESS_3D_OBJECT_UPLOADED, document.resource.identifier]);
+            } else if (uploadResult.uploadedFiles > 1) {
+                this.messages.add([M.RESOURCES_SUCCESS_3D_OBJECTS_UPLOADED,
+                    uploadResult.uploadedFiles.toString(), document.resource.identifier]);
+            }
+        });
     }
 
 

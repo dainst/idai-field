@@ -75,9 +75,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     public static IMAGES_SUCCESS_WORLDFILE_UPLOADED: string = 'images/success/worldfileuploaded';
     public static IMAGES_SUCCESS_GEOREFERENCE_DELETED: string = 'images/success/georeferencedeleted';
-    public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
-    public static IMAGES_ERROR_DUPLICATE_FILENAME: string = 'images/error/duplicatefilename';
-    public static IMAGES_ERROR_DUPLICATE_FILENAMES: string = 'images/error/duplicatefilenames';
     public static IMAGES_ONE_NOT_FOUND: string = 'images/error/one_notfound';
     public static IMAGES_N_NOT_FOUND: string = 'images/error/notfound';
 
@@ -91,7 +88,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGESTORE_ERROR_WRITE: string = 'images/error/mediastore/write';
     public static IMAGESTORE_ERROR_DELETE: string = 'images/error/mediastore/delete';
     public static IMAGESTORE_ERROR_INVALID_WORLDFILE: string = 'images/error/mediastore/invalidworldfile';
-    public static IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS: string = 'images/error/mediastore/unsupportedexts';
 
     // Model Package
 
@@ -105,6 +101,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     public static RESOURCES_SUCCESS_IMAGE_UPLOADED: string = 'resources/success/imageimported';
     public static RESOURCES_SUCCESS_IMAGES_UPLOADED: string = 'resources/success/imagesimported';
+    public static RESOURCES_SUCCESS_3D_OBJECT_UPLOADED: string = 'resources/success/3dobjectimported';
+    public static RESOURCES_SUCCESS_3D_OBJECTS_UPLOADED: string = 'resources/success/3dobjectsimported';
     public static RESOURCES_SUCCESS_PROJECT_DELETED: string = 'resources/success/projectdeleted';
     public static RESOURCES_ERROR_TYPE_NOT_FOUND: string = 'resources/error/typenotfound';
     public static RESOURCES_ERROR_NO_PROJECT_NAME: string = 'resources/error/noprojectname';
@@ -116,6 +114,18 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Persist Package
 
     public static PERSISTENCE_ERROR_TARGETNOTFOUND: string = 'persist/error/targetnotfound';
+
+    // Upload Packe
+
+    public static UPLOAD_ERROR_UNSUPPORTED_EXTS: string = 'upload/error/unsupportedexts';
+    public static UPLOAD_ERROR_FILEREADER: string = 'upload/error/filereader';
+    public static UPLOAD_ERROR_DUPLICATE_FILENAME: string = 'upload/error/duplicatefilename';
+    public static UPLOAD_ERROR_DUPLICATE_FILENAMES: string = 'upload/error/duplicatefilenames';
+
+    // Model3DStore Package
+
+    public static MODEL3DSTORE_ERROR_WRITE: string = 'model3dstore/error/write';
+
 
     // Keys END /////////////////////////////////
 
@@ -416,26 +426,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMAGES_ERROR_FILEREADER]={
-            content: "Datei '{0}' konnte nicht vom lokalen Dateisystem gelesen werden.",
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.IMAGES_ERROR_DUPLICATE_FILENAME]={
-            content: "Die Bilddatei '{0}' konnte nicht hinzugefügt werden. Ein Bild mit dem gleichen Dateinamen " +
-                "existiert bereits.",
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.IMAGES_ERROR_DUPLICATE_FILENAMES]={
-            content: "Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen " +
-                " Dateinamen bereits existieren: {0}",
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
         this.msgs[M.IMAGES_ONE_NOT_FOUND]={
             content: "Das Bild konnten nicht gefunden werden.",
             level: 'danger',
@@ -500,12 +490,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS] = {
-            content: "Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ({0}). Die entsprechenden Dateien werden ignoriert.",
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
         this.msgs[M.RESOURCES_ERROR_TYPE_NOT_FOUND] = {
             content: "Typdefinition für \'{0}\' fehlt in Configuration.json.",
             level: 'danger',
@@ -554,6 +538,18 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.RESOURCES_SUCCESS_3D_OBJECT_UPLOADED] = {
+            content: 'Ein 3D-Modell wurde erfolgreich importiert und mit der Ressource {0} verknüpft.',
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_SUCCESS_3D_OBJECTS_UPLOADED] = {
+            content: '{0} 3D-Modelle wurden erfolgreich importiert und mit der Ressource {1} verknüpft.',
+            level: 'success',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.RESOURCES_ERROR_PROJECT_DELETED] = {
             content: 'Beim Löschen des Projektes ist ein Fehler aufgetreten.',
             level: 'danger',
@@ -564,6 +560,39 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: 'Die Ressource wurde erfolgreich gespeichert. Relationen wurden aufgrund fehlender Zielressourcen '
             + 'nicht aktualisiert.',
             level: 'warning',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.UPLOAD_ERROR_UNSUPPORTED_EXTS] = {
+            content: "Diese Auswahl ein oder mehrerer Dateien enthält ungültige Dateiformate ({0}). Die entsprechenden Dateien werden ignoriert.",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.UPLOAD_ERROR_FILEREADER]={
+            content: "Die Datei '{0}' konnte nicht vom lokalen Dateisystem gelesen werden.",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.UPLOAD_ERROR_DUPLICATE_FILENAME]={
+            content: "Die Datei '{0}' konnte nicht hinzugefügt werden. Eine Ressource mit dem gleichen " +
+            "Dateinamen existiert bereits.",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.UPLOAD_ERROR_DUPLICATE_FILENAMES]={
+            content: "Die folgenden Dateien konnten nicht hinzugefügt werden, da Ressourcen mit "
+            + "identischen Dateinamen bereits existieren: {0}",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.MODEL3DSTORE_ERROR_WRITE] = {
+            content: "Es können keine Dateien im 3D-Modell-Verzeichnis gespeichert werden. Bitte geben Sie " +
+                "einen gültigen Verzeichnispfad in den Einstellungen an.",
+            level: 'danger',
             params: [],
             hidden: false
         };

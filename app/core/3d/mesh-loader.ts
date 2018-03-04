@@ -43,8 +43,7 @@ export class MeshLoader {
 
         return this.settingsService.getSettings().model3DStorePath
             + this.settingsService.getSelectedProject() + '/'
-            + id + '/'
-            + id + '.dae';
+            + id + '/' + id;
     }
 
 

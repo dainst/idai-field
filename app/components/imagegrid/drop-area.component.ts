@@ -1,6 +1,8 @@
 import {Component, Output, EventEmitter} from '@angular/core';
-import {ImageUploader, ImageUploadResult} from '../imageupload/image-uploader';
 import {Messages} from 'idai-components-2/messages';
+import {ImageUploader} from '../../upload/image/image-uploader';
+import {UploadResult} from '../../upload/upload-result';
+
 
 @Component({
     selector: 'drop-area',
@@ -56,9 +58,9 @@ export class DropAreaComponent {
     }
 
 
-    private handleUploadResult(uploadResult: ImageUploadResult) {
+    private handleUploadResult(uploadResult: UploadResult) {
 
-        if (uploadResult.uploadedImages > 0) this.onImagesUploaded.emit();
+        if (uploadResult.uploadedFiles > 0) this.onImagesUploaded.emit();
 
         for (let msgWithParams of uploadResult.messages) {
             this.messages.add(msgWithParams);

@@ -1,0 +1,13 @@
+<div class="modal-body" id="file-upload-modal">
+    <div class="file-upload-modal-container">
+        <div class="spinner"></div>
+        <div class="upload-info">
+            <span *ngIf="uploadStatus.getTotalFiles() == 1">
+                Datei wird eingelesen...
+            </span>
+            <span *ngIf="uploadStatus.getTotalFiles() > 1">
+                {{uploadStatus.getHandledFiles()}} / {{uploadStatus.getTotalFiles()}} Dateien eingelesen...
+            </span>
+        </div>
+    </div>
+</div>

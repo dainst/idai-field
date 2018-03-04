@@ -9,7 +9,7 @@ import {IdaiMessagesModule} from 'idai-components-2/messages';
 import {ImageGridComponent} from './image-grid.component';
 import {DropAreaComponent} from './drop-area.component';
 import {ImageGridBuilder} from './image-grid-builder';
-import {ImageUploadModule} from '../imageupload/image-upload.module';
+import {UploadModule} from '../../upload/upload.module';
 import {ImageGridCellComponent} from "./image-grid-cell.component";
 
 @NgModule({
@@ -21,7 +21,7 @@ import {ImageGridCellComponent} from "./image-grid-cell.component";
         IdaiDocumentsModule,
         RouterModule,
         IdaiMessagesModule,
-        ImageUploadModule
+        UploadModule
     ],
     declarations: [
         ImageGridComponent,

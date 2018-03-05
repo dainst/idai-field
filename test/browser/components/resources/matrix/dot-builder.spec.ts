@@ -1,6 +1,6 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Static} from '../../../helper/static';
-import {GraphBuilder} from '../../../../../app/components/matrix/graph-builder';
+import {DotBuilder} from '../../../../../app/components/matrix/dot-builder';
 
 
 /**
@@ -9,12 +9,12 @@ import {GraphBuilder} from '../../../../../app/components/matrix/graph-builder';
  */
 export function main() {
 
-    describe('GraphBuilder', () => {
+    describe('DotBuilder', () => {
 
-        const graphBuilder: GraphBuilder = new GraphBuilder();
+        const dotBuilder: DotBuilder = new DotBuilder();
 
 
-        it('build simple graph', () => {
+        it('build dot string for simple graph', () => {
 
             const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
             const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -22,13 +22,13 @@ export function main() {
             feature1.resource.relations['isAfter'] = ['f2'];
             feature2.resource.relations['isBefore'] = ['f1'];
 
-            const graph: string = graphBuilder.build([feature1, feature2]);
+            const graph: string = dotBuilder.build([feature1, feature2]);
 
             expect(graph).toEqual('digraph { feature1 -> feature2 }');
         });
 
 
-        it('build graph with multiple children', () => {
+        it('build dot string for graph with multiple children', () => {
 
             const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
             const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -39,13 +39,13 @@ export function main() {
             feature2.resource.relations['isBefore'] = ['f1'];
             feature3.resource.relations['isBefore'] = ['f1'];
 
-            const graph: string = graphBuilder.build([feature1, feature2, feature3]);
+            const graph: string = dotBuilder.build([feature1, feature2, feature3]);
 
             expect(graph).toEqual('digraph { feature1 -> {feature2, feature3} }');
         });
 
 
-        it('build diamond formed graph', () => {
+        it('build dot string for diamond formed graph', () => {
 
             const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
             const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -60,7 +60,7 @@ export function main() {
             feature3.resource.relations['isBefore'] = ['f1'];
             feature4.resource.relations['isBefore'] = ['f2', 'f3'];
 
-            const graph: string = graphBuilder.build([feature1, feature2, feature3, feature4]);
+            const graph: string = dotBuilder.build([feature1, feature2, feature3, feature4]);
 
             expect(graph).toEqual(
                 'digraph { ' +
@@ -72,7 +72,7 @@ export function main() {
         });
 
 
-        it('build complicated graph', () => {
+        it('build dot string for complicated graph', () => {
 
             const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
             const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -111,7 +111,7 @@ export function main() {
             feature13.resource.relations['isBefore'] = ['f8', 'f10'];
             feature14.resource.relations['isBefore'] = ['f13'];
 
-            const graph: string = graphBuilder.build([
+            const graph: string = dotBuilder.build([
                 feature1, feature2, feature3, feature4,
                 feature5, feature6, feature7, feature8,
                 feature9, feature10, feature11, feature12,

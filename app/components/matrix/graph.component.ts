@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {GraphBuilder} from './graph-builder';
+import {DotBuilder} from './dot-builder';
 
 
 // TODO Use typings file from viz.js v1.8.1 as soon as it is released
@@ -74,9 +74,9 @@ export class GraphComponent implements OnChanges {
 
     private showGraph() {
 
-        const graph: string = new GraphBuilder().build(this.documents);
+        const graph: string = new DotBuilder().build(this.documents);
 
-        const svg = Viz(graph) as string;
+        const svg = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
         const svgElement = new DOMParser().parseFromString(svg, 'image/svg+xml');
 
         this.graphContainer.nativeElement.appendChild(svgElement.getElementsByTagName('svg')[0]);

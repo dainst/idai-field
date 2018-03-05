@@ -1,7 +1,13 @@
+<div class="modal-header">
+    <h5>Import des 3D-Modells <b>{{document.resource.identifier}}</b></h5>
+</div>
+
 <div id="object-3d-thumbnail-creator-modal" class="modal-body">
     <object-3d-viewer [document]="document"></object-3d-viewer>
 </div>
 
 <div class="modal-footer">
+    Bitte wählen Sie das Vorschaubild des 3D-Modells. Sie können das Modell dazu mit der Maus drehen und
+    bewegen.
     <button type="button" class="btn btn-primary" (click)="createThumbnail()">OK</button>
 </div>

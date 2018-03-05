@@ -82,7 +82,12 @@ export class Object3DUploader extends Uploader {
             : Promise<{ blob: Blob|null, width: number, height: number }> {
 
         const modal: NgbModalRef = this.modalService.open(Object3DThumbnailCreatorModalComponent,
-            { backdrop: 'static', keyboard: false }
+            {
+                backdrop: 'static',
+                keyboard: false,
+                size: 'lg',
+                windowClass: 'thumbnail-creator-modal'
+            }
         );
 
         modal.componentInstance.document = document;

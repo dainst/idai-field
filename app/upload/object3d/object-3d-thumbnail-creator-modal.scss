@@ -4,7 +4,7 @@
 
 #object-3d-thumbnail-creator-modal {
   #object-3d-viewer-container {
-    height: 70vh;
+    height: 65vh;
   }
 
   #toggle-texture-button {
@@ -16,4 +16,9 @@
     right: 25px !important;
     top: 25px !important;
   }
+}
+
+.thumbnail-creator-modal .modal-lg {
+  min-width: 600px !important;
+  width: 600px !important;
 }

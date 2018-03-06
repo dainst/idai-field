@@ -89,6 +89,7 @@ export function main() {
 
             feature1.resource.relations['isAfter'] = ['f2'];
             feature2.resource.relations['isAfter'] = ['f5'];
+
             feature2.resource.relations['isContemporaryWith'] = ['f3', 'f4'];
             feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
             feature4.resource.relations['isContemporaryWith'] = ['f2', 'f3'];
@@ -167,6 +168,36 @@ export function main() {
                 'feature8 -> feature13 ' +
                 'feature10 -> feature13 ' +
                 'feature13 -> feature14 ' +
+                '}'
+            );
+        });
+
+
+        it('do not make a node a root node if it has a isContemporaryWith relation to a non root node', () => {
+
+            const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
+            const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
+            const feature3: IdaiFieldDocument = Static.idfDoc('Feature 3', 'feature3', 'Feature', 'f3');
+            const feature4: IdaiFieldDocument = Static.idfDoc('Feature 4', 'feature4', 'Feature', 'f4');
+
+            feature1.resource.relations['isAfter'] = ['f2'];
+            feature3.resource.relations['isAfter'] = ['f4'];
+
+            feature2.resource.relations['isContemporaryWith'] = ['f3'];
+            feature3.resource.relations['isContemporaryWith'] = ['f2'];
+
+            feature2.resource.relations['isBefore'] = ['f1'];
+            feature4.resource.relations['isBefore'] = ['f3'];
+
+            const graph: string = dotBuilder.build([feature1, feature2, feature3, feature4]);
+
+            expect(graph).toEqual(
+                'digraph { ' +
+                '{rank=min feature1} ' +
+                'feature1 -> feature2 ' +
+                'feature3 -> feature4 ' +
+                'feature2 -> feature3 [dir="none"] ' +
+                '{rank=same feature2, feature3} ' +
                 '}'
             );
         });

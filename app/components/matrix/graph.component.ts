@@ -74,11 +74,31 @@ export class GraphComponent implements OnChanges {
 
     private showGraph() {
 
+        const svg: SVGSVGElement = this.getSvg();
+        this.removeTitleElements(svg);
+        this.graphContainer.nativeElement.appendChild(svg);
+    }
+
+
+    private getSvg(): SVGSVGElement {
+
         const graph: string = new DotBuilder().build(this.documents);
+        const svg: string = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
 
-        const svg = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
-        const svgElement = new DOMParser().parseFromString(svg, 'image/svg+xml');
+        return new DOMParser().parseFromString(svg, 'image/svg+xml')
+            .getElementsByTagName('svg')[0]
+    }
 
-        this.graphContainer.nativeElement.appendChild(svgElement.getElementsByTagName('svg')[0]);
+
+    private removeTitleElements(svg: SVGSVGElement) {
+
+        const rootElement: SVGGElement = svg.getElementsByTagName('g')[0];
+        rootElement.removeChild(rootElement.getElementsByTagName('title')[0]);
+
+        for (let i = 0; i < rootElement.children.length; i++) {
+            const titleElements: NodeListOf<HTMLTitleElement>
+                = rootElement.children[i].getElementsByTagName('title');
+            if (titleElements.length == 1) rootElement.children[i].removeChild(titleElements[0]);
+        }
     }
 }

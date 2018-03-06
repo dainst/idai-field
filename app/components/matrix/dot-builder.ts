@@ -127,8 +127,27 @@ export class DotBuilder {
 
     private getRootDocuments(): Array<IdaiFieldDocument> {
 
-        return this.documents.filter(document => {
-            return document.resource.relations['isAfter'] && !document.resource.relations['isBefore'];
-        });
+        return this.documents.filter(document => this.isRootDocument(document));
+    }
+
+
+    private isRootDocument(document: IdaiFieldDocument, processedDocuments: string[] = []): boolean {
+
+        if (!document.resource.relations['isAfter'] || document.resource.relations['isBefore']) return false;
+
+        processedDocuments.push(document.resource.id as string);
+
+        let targetIds: string[]|undefined = document.resource.relations['isContemporaryWith'];
+
+        if (!targetIds) return true;
+
+        for (let targetId of targetIds.filter(targetId => !processedDocuments.includes(targetId))) {
+            const targetDocument: IdaiFieldDocument | undefined = this.getDocument(targetId);
+            if (targetDocument && !this.isRootDocument(targetDocument, processedDocuments)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

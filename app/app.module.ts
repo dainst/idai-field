@@ -81,7 +81,8 @@ let pconf: any = undefined;
 
                 return() => {
                     const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
-                    appConfigurator.go(PROJECT_CONFIGURATION_PATH);
+                    const HIDDEN_CONFIGURATION_PATH = remote.getGlobal('hiddenConfigurationPath');
+                    appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH);
 
                     return (configLoader.getProjectConfiguration() as any).then((pc: any) => {
                         pconf = pc as any;

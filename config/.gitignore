@@ -3,5 +3,6 @@
 # Explicitely mention files which should be part of the repo.
 
 !Configuration.json.template
+!Hidden.json.template
 !README.md
 

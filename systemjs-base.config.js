@@ -71,8 +71,7 @@ config.map = {
     'moment': 'node_modules/moment/min/moment-with-locales.js',
     'ip': 'node_modules/ip/lib/ip.js',
     'os': '@node/os',
-    'buffer': '@node/buffer',
-    'd3': 'node_modules/d3/build/d3.js'
+    'buffer': '@node/buffer'
 };
 
 config.meta=  {

@@ -17,11 +17,20 @@ export class DotBuilder {
         this.processedIsContemporaryWithTargetIds = [];
 
         let result: string = 'digraph { '
+            + this.createRootDocumentMinRankDefinition()
             + this.createIsAfterEdgesDefinitions()
             + this.createIsContemporaryWithEdgesDefinitions()
             + '}';
 
         return result;
+    }
+
+
+    private createRootDocumentMinRankDefinition(): string {
+
+        return '{rank=min '
+            + this.getRootDocuments().map(document => document.resource.identifier).join(', ')
+            + '} ';
     }
 
 
@@ -113,5 +122,13 @@ export class DotBuilder {
     private getDocument(id: string): IdaiFieldDocument|undefined {
 
         return this.documents.find(document => document.resource.id == id);
+    }
+
+
+    private getRootDocuments(): Array<IdaiFieldDocument> {
+
+        return this.documents.filter(document => {
+            return document.resource.relations['isAfter'] && !document.resource.relations['isBefore'];
+        });
     }
 }

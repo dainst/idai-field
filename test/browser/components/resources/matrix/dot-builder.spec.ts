@@ -24,7 +24,10 @@ export function main() {
 
             const graph: string = dotBuilder.build([feature1, feature2]);
 
-            expect(graph).toEqual('digraph { feature1 -> feature2 }');
+            expect(graph).toEqual('digraph { ' +
+                '{rank=min feature1} ' +
+                'feature1 -> feature2 ' +
+                '}');
         });
 
 
@@ -41,7 +44,10 @@ export function main() {
 
             const graph: string = dotBuilder.build([feature1, feature2, feature3]);
 
-            expect(graph).toEqual('digraph { feature1 -> {feature2, feature3} }');
+            expect(graph).toEqual('digraph { ' +
+                '{rank=min feature1} ' +
+                'feature1 -> {feature2, feature3} ' +
+                '}');
         });
 
 
@@ -64,6 +70,7 @@ export function main() {
 
             expect(graph).toEqual(
                 'digraph { ' +
+                '{rank=min feature1} ' +
                 'feature1 -> {feature2, feature3} ' +
                 'feature2 -> feature4 ' +
                 'feature3 -> feature4 ' +
@@ -95,6 +102,7 @@ export function main() {
 
             expect(graph).toEqual(
                 'digraph { ' +
+                '{rank=min feature1} ' +
                 'feature1 -> feature2 ' +
                 'feature2 -> feature5 ' +
                 'feature2 -> {feature3, feature4} [dir="none"] ' +
@@ -151,6 +159,7 @@ export function main() {
 
             expect(graph).toEqual(
                 'digraph { ' +
+                '{rank=min feature1} ' +
                 'feature1 -> {feature2, feature3, feature4, feature5, feature6} ' +
                 'feature2 -> {feature7, feature8} ' +
                 'feature5 -> feature9 ' +

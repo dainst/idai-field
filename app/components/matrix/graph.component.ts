@@ -57,6 +57,8 @@ export class GraphComponent implements OnChanges {
 
     @ViewChild('graphContainer') graphContainer: ElementRef;
 
+    private static maxRealZoom: number = 2;
+
 
     ngOnChanges() {
 
@@ -78,8 +80,7 @@ export class GraphComponent implements OnChanges {
         const svg: SVGSVGElement = this.getSvg();
         this.removeTitleElements(svg);
         this.graphContainer.nativeElement.appendChild(svg);
-        const zoom: SvgPanZoom.Instance = svgPanZoom(svg);
-        zoom.fit();
+        this.configurePanZoomBehavior(svg);
     }
 
 
@@ -103,5 +104,16 @@ export class GraphComponent implements OnChanges {
                 = rootElement.children[i].getElementsByTagName('title');
             if (titleElements.length == 1) rootElement.children[i].removeChild(titleElements[0]);
         }
+    }
+
+
+    private configurePanZoomBehavior(svg: SVGSVGElement) {
+
+        const panZoomBehavior: SvgPanZoom.Instance = svgPanZoom(svg, {
+            dblClickZoomEnabled: false
+        });
+
+        panZoomBehavior.setMinZoom(1);
+        panZoomBehavior.setMaxZoom(GraphComponent.maxRealZoom / panZoomBehavior.getSizes().realZoom);
     }
 }

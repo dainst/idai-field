@@ -1,7 +1,7 @@
 {
   "spec_dir": "test/node",
   "spec_files": [
-    "*.spec.js"
+    "**/*.spec.js"
   ],
   "helpers": [
     "../../node_modules/reflect-metadata/Reflect.js",

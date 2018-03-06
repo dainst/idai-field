@@ -48,7 +48,8 @@ export class Static {
         const datastore = new PouchdbDatastore(
             pouchdbManager, appState,
             conflictResolvingExtension,
-            conflictResolver);
+            conflictResolver,
+            false);
         pouchdbManager.setProject(dbname);
 
         return {

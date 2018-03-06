@@ -34,7 +34,8 @@ export class PouchdbDatastore {
         private pouchdbManager: PouchdbManager,
         private appState: AppState,
         private conflictResolvingExtension: ConflictResolvingExtension,
-        private conflictResolver: ConflictResolver
+        private conflictResolver: ConflictResolver,
+        setupChangesEmitterAndServer = true
         ) {
 
         this.db = pouchdbManager.getDb();
@@ -42,7 +43,9 @@ export class PouchdbDatastore {
         conflictResolvingExtension.setDb(this.db);
         conflictResolvingExtension.setConflictResolver(conflictResolver);
 
-        this.setupServer().then(() => this.setupChangesEmitter());
+        if (setupChangesEmitterAndServer) {
+            this.setupServer().then(() => this.setupChangesEmitter());
+        }
     }
 
     public remoteChangesNotifications = (): Observable<Document> => ObserverUtil.register(this.remoteChangesObservers);

@@ -24,7 +24,10 @@ export function main() {
 
             const graph: string = dotBuilder.build([feature1, feature2]);
 
-            expect(graph).toEqual('digraph { feature1 -> feature2 }');
+            expect(graph).toEqual('digraph { ' +
+                '{rank=min feature1} ' +
+                'feature1 -> feature2 ' +
+                '}');
         });
 
 
@@ -41,7 +44,10 @@ export function main() {
 
             const graph: string = dotBuilder.build([feature1, feature2, feature3]);
 
-            expect(graph).toEqual('digraph { feature1 -> {feature2, feature3} }');
+            expect(graph).toEqual('digraph { ' +
+                '{rank=min feature1} ' +
+                'feature1 -> {feature2, feature3} ' +
+                '}');
         });
 
 
@@ -64,9 +70,43 @@ export function main() {
 
             expect(graph).toEqual(
                 'digraph { ' +
+                '{rank=min feature1} ' +
                 'feature1 -> {feature2, feature3} ' +
                 'feature2 -> feature4 ' +
                 'feature3 -> feature4 ' +
+                '}'
+            );
+        });
+
+
+        it('build dot string for graph with isContemporaryWith relations', () => {
+
+            const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
+            const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
+            const feature3: IdaiFieldDocument = Static.idfDoc('Feature 3', 'feature3', 'Feature', 'f3');
+            const feature4: IdaiFieldDocument = Static.idfDoc('Feature 4', 'feature4', 'Feature', 'f4');
+            const feature5: IdaiFieldDocument = Static.idfDoc('Feature 5', 'feature5', 'Feature', 'f5');
+
+            feature1.resource.relations['isAfter'] = ['f2'];
+            feature2.resource.relations['isAfter'] = ['f5'];
+            feature2.resource.relations['isContemporaryWith'] = ['f3', 'f4'];
+            feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
+            feature4.resource.relations['isContemporaryWith'] = ['f2', 'f3'];
+
+            feature2.resource.relations['isBefore'] = ['f1'];
+            feature5.resource.relations['isBefore'] = ['f2'];
+
+            const graph: string = dotBuilder.build([
+                feature1, feature2, feature3, feature4, feature5
+            ]);
+
+            expect(graph).toEqual(
+                'digraph { ' +
+                '{rank=min feature1} ' +
+                'feature1 -> feature2 ' +
+                'feature2 -> feature5 ' +
+                'feature2 -> {feature3, feature4} [dir="none"] ' +
+                '{rank=same feature2, feature3, feature4} ' +
                 '}'
             );
         });
@@ -119,6 +159,7 @@ export function main() {
 
             expect(graph).toEqual(
                 'digraph { ' +
+                '{rank=min feature1} ' +
                 'feature1 -> {feature2, feature3, feature4, feature5, feature6} ' +
                 'feature2 -> {feature7, feature8} ' +
                 'feature5 -> feature9 ' +

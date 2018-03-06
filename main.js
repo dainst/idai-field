@@ -23,6 +23,7 @@ if (process.argv && process.argv.length > 2) {
 }
 if (env) { // is environment 'dev' (npm start) or 'test' (npm run e2e)
     global.configurationPath = 'config/Configuration.json';
+    global.hiddenConfigurationPath = 'config/Hidden.json';
 }
 
 
@@ -34,7 +35,8 @@ if (!env || // is environment 'production' (packaged app)
     global.configPath = global.appDataPath + '/config.json';
 
     if (!env) { // is environment 'production' (packaged app)
-        global.configurationPath = '../config/Configuration.json'
+        global.configurationPath = '../config/Configuration.json';
+        global.hiddenConfigurationPath = '../config/Hidden.json';
     }
 
 } else { // is environment 'test' (npm run e2e)

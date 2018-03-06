@@ -45,4 +45,14 @@ gulp.task('create-configs', function (callback) {
             console.log('Will not create ' + path + ' from template because file already exists.');
         }
     });
+
+    var hpath = './config/Hidden.json';
+
+    fs.access(hpath, fs.F_OK, function(err) {
+        if (err) {
+            fs.createReadStream(hpath + '.template').pipe(fs.createWriteStream(hpath));
+        } else {
+            console.log('Will not create ' + hpath + ' from template because file already exists.');
+        }
+    });
 });

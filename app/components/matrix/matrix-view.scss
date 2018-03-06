@@ -2,6 +2,8 @@
  * @author Thomas Kleinke
  */
 
+@import 'graph';
+
 #matrix-view {
   .btn-group {
     position: absolute;
@@ -19,5 +21,7 @@
     position: absolute;
     top: 70px;
     left: 10px;
+    width: calc(100% - 10px);
+    height: calc(100vh - 131px);
   }
 }

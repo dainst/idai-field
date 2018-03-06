@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DotBuilder} from './dot-builder';
+import * as svgPanZoom from 'svg-pan-zoom';
 
 
 // TODO Use typings file from viz.js v1.8.1 as soon as it is released
@@ -77,6 +78,8 @@ export class GraphComponent implements OnChanges {
         const svg: SVGSVGElement = this.getSvg();
         this.removeTitleElements(svg);
         this.graphContainer.nativeElement.appendChild(svg);
+        const zoom: SvgPanZoom.Instance = svgPanZoom(svg);
+        zoom.fit();
     }
 
 

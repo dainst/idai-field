@@ -30,10 +30,11 @@ import {LayerMenuComponent} from './map/map/layer-menu.component';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
 import {NavigationComponent} from './navigation/navigation.component';
 import {NavigationService} from './navigation/navigation-service';
-import {StateSerializer} from '../../common/state-serializer';
 import {OperationViews} from './state/operation-views';
 import {ResourcesSearchBarComponent} from './searchbar/resources-search-bar.component';
 import {SearchSuggestionsComponent} from './searchbar/search-suggestions.component';
+import {StandardStateSerializer} from "../../common/standard-state-serializer";
+import {StateSerializer} from "../../common/state-serializer";
 
 const remote = require('electron').remote;
 
@@ -65,6 +66,7 @@ const remote = require('electron').remote;
         SearchSuggestionsComponent
     ],
     providers: [
+        { provide: StateSerializer, useClass: StandardStateSerializer },
         NavigationService,
         ResourcesState,
         RoutingService,

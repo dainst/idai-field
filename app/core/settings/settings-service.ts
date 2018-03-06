@@ -11,7 +11,7 @@ import {M} from '../../m';
 import {Observer} from 'rxjs/Observer';
 import {unique} from 'tsfun';
 
-const app = require('electron').remote.app;
+const remote = require('electron').remote;
 
 @Injectable()
 /**
@@ -259,8 +259,10 @@ export class SettingsService {
             if (path.substr(-1) != '/') path += '/';
             settings.imagestorePath = path;
         } else {
-            settings.imagestorePath = app.getPath('appData') + '/'
-                + app.getName() + '/imagestore/';
+            if (remote.app){ // jasmine unit tests
+                settings.imagestorePath = remote.app.getPath('appData') + '/'
+                    + remote.app.getName() + '/imagestore/';
+            }
         }
         return settings;
     }

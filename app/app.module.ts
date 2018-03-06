@@ -32,7 +32,6 @@ import {ImportModule} from './components/import/import-module';
 import {ExportModule} from './components/export/export.module';
 import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-service';
 import {ImageViewModule} from './components/imageview/image-view.module';
-import {StateSerializer} from './common/state-serializer';
 import {AppController} from './app-controller';
 import {DatastoreModule} from './core/datastore/datastore.module';
 import {IdaiFieldDocumentDatastore} from './core/datastore/idai-field-document-datastore';
@@ -138,7 +137,6 @@ let pconf: any = undefined;
         },
         { provide: MD, useClass: M},
         DoceditActiveTabService,
-        StateSerializer,
         ImageTypeUtility
     ],
     bootstrap: [ AppComponent ]

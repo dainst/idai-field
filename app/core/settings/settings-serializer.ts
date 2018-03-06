@@ -1,7 +1,8 @@
 import {Settings} from './settings';
 
 const remote = require('electron').remote;
-const fs = remote.require('fs');
+import * as fs from 'fs';
+
 
 /**
  * @author Thomas Kleinke

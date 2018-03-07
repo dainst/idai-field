@@ -11,7 +11,7 @@
     "clean": "git clean -xdf app test",
     "convert-sass": "gulp convert-sass",
     "start": "electron . dev",
-    "jasmine": "jasmine JASMINE_CONFIG_PATH=test/node/config/jasmine.json",
+    "jasmine": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
     "karma": "karma start test/browser/config/karma.conf.js",
     "test": "npm run jasmine && npm run karma",
     "pree2e": "rimraf test/e2e-screenshots/*.png",

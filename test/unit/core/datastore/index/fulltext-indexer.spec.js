@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var fulltext_indexer_1 = require("../../../../../app/core/datastore/index/fulltext-indexer");
-var static_1 = require("../../../../browser/static");
+var static_1 = require("../../../../subsystem/static");
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke

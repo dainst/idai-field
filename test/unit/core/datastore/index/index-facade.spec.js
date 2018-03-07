@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var static_1 = require("../../../../browser/static");
+var static_1 = require("../../../../subsystem/static");
 var index_facade_1 = require("../../../../../app/core/datastore/index/index-facade");
 /**
  * @author Daniel de Oliveira

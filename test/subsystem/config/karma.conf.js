@@ -29,10 +29,10 @@ module.exports = function(config) {
             { pattern: 'node_modules/tsfun/**/!(*spec).js', included: false, watched: false },
             { pattern: 'app/**/*.js', included: false, watched: true },
             { pattern: 'config/*', included: false, watched: false },
-            { pattern: 'test/browser/**/*.js', included: false, watched: true },
+            { pattern: 'test/subsystem/**/*.js', included: false, watched: true },
             'systemjs-base.config.js',
-            'test/browser/config/main.js',
-            'test/browser/config/require-conf.js'
+            'test/subsystem/config/main.js',
+            'test/subsystem/config/require-conf.js'
         ],
 
         exclude: [

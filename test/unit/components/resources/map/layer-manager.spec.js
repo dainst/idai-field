@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var layer_manager_1 = require("../../../../../app/components/resources/map/map/layer-manager");
-var static_1 = require("../../../../browser/static");
+var static_1 = require("../../../../subsystem/static");
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke

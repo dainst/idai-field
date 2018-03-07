@@ -38,7 +38,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var resources_state_1 = require("../../../../../app/components/resources/state/resources-state");
 var operation_views_1 = require("../../../../../app/components/resources/state/operation-views");
-var static_1 = require("../../../../browser/static");
+var static_1 = require("../../../../subsystem/static");
 var navigation_path_manager_1 = require("../../../../../app/components/resources/state/navigation-path-manager");
 /**
  * @author Daniel de Oliveira

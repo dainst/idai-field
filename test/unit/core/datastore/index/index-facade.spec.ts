@@ -1,5 +1,5 @@
 import {Query} from 'idai-components-2/datastore';
-import {Static} from '../../../../browser/static';
+import {Static} from '../../../../subsystem/static';
 import {IndexFacade} from "../../../../../app/core/datastore/index/index-facade";
 
 

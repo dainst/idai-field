@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var document_cache_1 = require("../../../../../app/core/datastore/core/document-cache");
 var idai_field_document_datastore_1 = require("../../../../../app/core/datastore/idai-field-document-datastore");
 var idai_field_type_converter_1 = require("../../../../../app/core/datastore/idai-field-type-converter");
-var static_1 = require("../../../../browser/static");
+var static_1 = require("../../../../subsystem/static");
 /**
  * @author Daniel de Oliveira
  */

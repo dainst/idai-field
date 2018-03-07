@@ -1,14 +1,14 @@
 import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Static} from '../../helper/static';
-import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
-import {ViewFacade} from '../../../../app/components/resources/state/view-facade';
-import {ResourcesState} from '../../../../app/components/resources/state/resources-state';
-import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
-import {IdaiFieldTypeConverter} from '../../../../app/core/datastore/idai-field-type-converter';
-import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
-import {OperationViews} from '../../../../app/components/resources/state/operation-views';
+import {Static} from './static';
+import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
+import {ViewFacade} from '../../app/components/resources/state/view-facade';
+import {ResourcesState} from '../../app/components/resources/state/resources-state';
+import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/idai-field-document-datastore';
+import {IdaiFieldTypeConverter} from '../../app/core/datastore/idai-field-type-converter';
+import {ImageTypeUtility} from '../../app/common/image-type-utility';
+import {OperationViews} from '../../app/components/resources/state/operation-views';
 
 /**
  * This is a subsystem test.

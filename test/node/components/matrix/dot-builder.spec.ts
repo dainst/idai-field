@@ -1,5 +1,5 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Static} from '../../../browser/helper/static';
+import {Static} from '../../../browser/static';
 import {DotBuilder} from '../../../../app/components/matrix/dot-builder';
 
 

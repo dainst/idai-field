@@ -248,7 +248,7 @@ describe('ConstraintIndexer', () => {
     it('throw error if type is unknown', () => {
 
         expect(() => {
-            new ConstraintIndexer({ 'name': { path: 'testpath', type: 'unknown' }})
+            new ConstraintIndexer({ 'name': { path: 'testpath', type: 'unknown' }}, false)
         }).toThrow();
     });
 
@@ -264,7 +264,7 @@ describe('ConstraintIndexer', () => {
 
         ci = new ConstraintIndexer({
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' }
-        });
+        }, false);
 
         ci.put(docs[0]);
         ci.put(docs[1]);
@@ -290,7 +290,7 @@ describe('ConstraintIndexer', () => {
         ci = new ConstraintIndexer({
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
-        });
+        }, false);
 
         ci.put(docs[0]);
         ci.put(docs[1]);

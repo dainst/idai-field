@@ -1,12 +1,12 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {Static} from '../../helper/static';
-import {CachedDatastore} from '../../../../app/core/datastore/core/cached-datastore';
-import {IdaiFieldDocumentDatastore} from '../../../../app/core/datastore/idai-field-document-datastore';
-import {IdaiFieldTypeConverter} from '../../../../app/core/datastore/idai-field-type-converter';
-import {PersistenceManager} from '../../../../app/core/persist/persistence-manager';
-import {ImageTypeUtility} from '../../../../app/common/image-type-utility';
+import {Static} from './static';
+import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
+import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/idai-field-document-datastore';
+import {IdaiFieldTypeConverter} from '../../app/core/datastore/idai-field-type-converter';
+import {PersistenceManager} from '../../app/core/persist/persistence-manager';
+import {ImageTypeUtility} from '../../app/common/image-type-utility';
 
 /**
  * This is a subsystem test.

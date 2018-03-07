@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {Static} from "../../browser/helper/static";
+import {Static} from "../../browser/static";
 
 
 /**

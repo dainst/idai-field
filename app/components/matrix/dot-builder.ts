@@ -21,14 +21,12 @@ export class DotBuilder {
         this.documents = documents;
         this.processedIsContemporaryWithTargetIds = [];
 
-        let result: string = 'digraph { '
+        return 'digraph { '
             + this.createNodeDefinitions()
             + this.createRootDocumentMinRankDefinition()
             + this.createIsAfterEdgesDefinitions()
             + this.createIsContemporaryWithEdgesDefinitions()
             + '}';
-
-        return result;
     }
 
 

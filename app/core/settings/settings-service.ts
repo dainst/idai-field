@@ -60,33 +60,32 @@ export class SettingsService {
     public getUsername = () => this.settings.username;
 
 
-    public bootProject(): Promise<ProjectConfiguration> {
+    public async bootProject(): Promise<ProjectConfiguration> {
 
         const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
         const HIDDEN_CONFIGURATION_PATH = remote.getGlobal('hiddenConfigurationPath');
 
-        this.ready = this.appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH)
-            .then(pconf => {
 
-                    return this.settingsSerializer.load()
-                        .then(settings => this.updateSettings(settings))
-                        .then(() => this.pouchdbManager.setProject(this.getSelectedProject() as any))
-                        .then(() => this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false))
-                        .then(() => { if (this.settings.isSyncActive) return this.startSync();})
-                        .then(() => {
-                            return pconf;
-                        })
-                },
-                (msgsWithParams: any) => {
+        await this.updateSettings(await this.settingsSerializer.load());
+        await this.pouchdbManager.setProject(this.getSelectedProject() as any);
+        await this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false);
+        if (this.settings.isSyncActive) await this.startSync();
 
-                    msgsWithParams.forEach((msg: any) => {
-                        console.error('err in project configuration', msg)
-                    });
-                    if (msgsWithParams.length > 1) {
-                        console.error('num errors in project configuration', msgsWithParams.length);
-                    }
-                });
 
+        let pconf: ProjectConfiguration|undefined;
+        try {
+            pconf = await this.appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH);
+        } catch (msgsWithParams) {
+            msgsWithParams.forEach((msg: any) => {
+                console.error('err in project configuration', msg)
+            });
+            if (msgsWithParams.length > 1) {
+                console.error('num errors in project configuration', msgsWithParams.length);
+            }
+        }
+
+
+        this.ready = pconf ? Promise.resolve(pconf) : Promise.reject(undefined);
         return this.ready;
     }
 

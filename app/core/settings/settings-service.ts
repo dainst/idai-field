@@ -65,27 +65,27 @@ export class SettingsService {
         const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
         const HIDDEN_CONFIGURATION_PATH = remote.getGlobal('hiddenConfigurationPath');
 
+
+        await this.updateSettings(await this.settingsSerializer.load());
+        await this.pouchdbManager.setProject(this.getSelectedProject() as any);
+        await this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false);
+        if (this.settings.isSyncActive) await this.startSync();
+
+
+        let pconf: ProjectConfiguration|undefined;
         try {
-            const settings = await this.settingsSerializer.load();
-            await this.updateSettings(settings);
-            await this.pouchdbManager.setProject(this.getSelectedProject() as any);
-            await this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false);
-            if (this.settings.isSyncActive) await this.startSync();
-
-            const pconf = await this.appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH);
-            this.ready = Promise.resolve(pconf);
-
+            pconf = await this.appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH);
         } catch (msgsWithParams) {
-
             msgsWithParams.forEach((msg: any) => {
                 console.error('err in project configuration', msg)
             });
             if (msgsWithParams.length > 1) {
                 console.error('num errors in project configuration', msgsWithParams.length);
             }
-            this.ready = Promise.reject(undefined);
         }
 
+
+        this.ready = pconf ? Promise.resolve(pconf) : Promise.reject(undefined);
         return this.ready;
     }
 

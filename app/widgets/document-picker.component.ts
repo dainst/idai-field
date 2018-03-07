@@ -68,10 +68,8 @@ export class DocumentPickerComponent implements OnChanges {
         if (this.fetchDocsRunning) return;
         this.fetchDocsRunning = true;
 
-        console.debug('doc picker fetch docs');
         this.datastore.find(this.query)
             .then(result => {
-                console.debug('doc picker fetch docs end');
                 this.documents = this.filterNotAllowedRelationDomainTypes(result.documents);
                 this.fetchDocsRunning = false;
             },

@@ -93,9 +93,6 @@ export class PouchDbFsImagestore implements Imagestore {
      */
     public read(key: string, sanitizeAfter: boolean = false, thumb: boolean = true): Promise<string | SafeResourceUrl> {
 
-        if (thumb) console.log('read THUMB ' + key);
-        if (!thumb) console.log('read ORIGINAL ' + key);
-
         const readFun = thumb ? this.readThumb.bind(this) : this.readOriginal.bind(this);
         const blobUrls = thumb ? this.thumbBlobUrls : this.originalBlobUrls;
 

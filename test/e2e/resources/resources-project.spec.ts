@@ -12,7 +12,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/project --', function() {
+xdescribe('resources/project --', function() {
 
     const appDataPath = browser.params.appDataPath;
 

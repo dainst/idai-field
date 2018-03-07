@@ -254,7 +254,7 @@ describe('resources/syncing --', function() {
     });
 
 
-    it('open conflict resolver via taskbar', async done => {
+    xit('open conflict resolver via taskbar', async done => {
 
         const nr = '8';
 

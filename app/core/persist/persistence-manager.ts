@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2/core';
 import {Document, NewDocument, Resource} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {ConnectedDocsResolver} from './connected-docs-resolver';
+import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {M} from '../../m';
 import {DocumentDatastore} from '../datastore/document-datastore';
+
 
 @Injectable()
 /**
@@ -21,32 +22,21 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 export class PersistenceManager {
     
     private oldVersions: Array<NewDocument> = [];
-    private ready: Promise<any>;
-
-    private connectedDocsResolver: any;
-
 
     constructor(
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration
-    ) {
-        this.ready = Promise.resolve();
-        this.connectedDocsResolver = new ConnectedDocsResolver(projectConfiguration);
-    }
+    ) {}
 
 
     /**
      * Package private.
-     * 
      * @param oldVersions
      */
     setOldVersions(oldVersions: Array<Document>) {
 
         this.oldVersions = [];
-
-        for (let oldVersion of oldVersions) {
-            this.addOldVersion(oldVersion);
-        }
+        for (let oldVersion of oldVersions) this.addOldVersion(oldVersion);
     }
 
 
@@ -95,8 +85,7 @@ export class PersistenceManager {
 
         let persistedDocument: Document;
 
-        return this.ready
-            .then(() => this.persistIt(document as Document, user))
+        return this.persistIt(document as Document, user)
             .then(persistedDoc => {
                 persistedDocument = persistedDoc;
                 return Promise.all(this.getConnectedDocs(document as Document, oldVersions as Document[]))
@@ -110,18 +99,15 @@ export class PersistenceManager {
     }
 
 
-    private updateDocs(document: Document, connectedDocs: Array<Document>, setInverseRelations: boolean, user: string) {
+    private async updateDocs(document: Document, connectedDocs: Array<Document>, setInverseRelations: boolean, user: string) {
 
-        const docsToUpdate = this.connectedDocsResolver.determineDocsToUpdate(document, connectedDocs,
-            setInverseRelations);
+        for (let docToUpdate of
+            ConnectedDocsResolution.determineDocsToUpdate(
+                this.projectConfiguration, document, connectedDocs,
+                setInverseRelations)) {
 
-        let promise: Promise<any> = Promise.resolve();
-
-        for (let docToUpdate of docsToUpdate) {
-            promise = promise.then(() => this.persistIt(docToUpdate, user));
+            await this.persistIt(docToUpdate, user);
         }
-
-        return promise;
     }
 
 
@@ -144,8 +130,7 @@ export class PersistenceManager {
 
         if (document == undefined) return Promise.resolve();
 
-        return this.ready
-            .then(() => this.getRecordedInDocs(document))
+        return this.getRecordedInDocs(document)
             .then(recordedInDocs => {
                 let promise: Promise<any> = Promise.resolve();
 

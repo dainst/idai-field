@@ -29,28 +29,15 @@ export class ImageDocumentsManager {
     }
 
 
-    public getSelected(): Array<IdaiFieldImageDocument> {
+    public getSelected = (): Array<IdaiFieldImageDocument> => this.selected;
 
-        return this.selected;
-    }
+    public getDocuments = (): Array<IdaiFieldImageDocument> => this.documents;
 
+    public getTotalDocumentCount = (): number => this.totalDocumentCount;
 
-    public getDocuments(): Array<IdaiFieldImageDocument> {
+    public getDepictsRelationsSelected = (): boolean => this.depictsRelationsSelected;
 
-        return this.documents;
-    }
-
-
-    public getTotalDocumentCount(): number {
-
-        return this.totalDocumentCount;
-    }
-
-
-    public getDepictsRelationsSelected(): boolean {
-
-        return this.depictsRelationsSelected;
-    }
+    public clearSelection = () => this.selected = [];
 
 
     public remove(document: IdaiFieldImageDocument) {
@@ -89,12 +76,6 @@ export class ImageDocumentsManager {
     }
 
 
-    public clearSelection() {
-
-        this.selected = [];
-    }
-
-
     /**
      * Populates the document list with all documents from
      * the datastore which match a <code>query</code>
@@ -104,12 +85,10 @@ export class ImageDocumentsManager {
         const query: Query = JSON.parse(JSON.stringify(this.imagesState.getQuery()));
         query.limit = limit;
 
-        console.debug('fetch docs', query);
         try {
             const {documents, totalCount} = await this.imageDatastore.find(query);
             this.documents = documents;
             this.totalDocumentCount = totalCount;
-            console.debug('fetch docs end');
         } catch (errWithParams) {
             console.error('ERROR with find using query', query);
             if (errWithParams.length == 2) console.error('Cause: ', errWithParams[1]);

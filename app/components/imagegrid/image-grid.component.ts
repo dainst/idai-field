@@ -102,15 +102,13 @@ export class ImageGridComponent implements OnChanges {
 
     private async _calcGrid() {
 
-        if (!this.documents) return Promise.resolve();
+        if (!this.documents) return;
 
         const rows = this.imageGridBuilder.calcGrid(
             this.documents, this.nrOfColumns, this.el.nativeElement.children[0].clientWidth);
 
         this.moreRowsMsg = undefined;
-        console.debug('fetching images for grid start');
         await this.loadImages(rows);
-        console.debug('fetching images for grid end');
         this.rows = rows;
 
         // TODO Show error message if one or more images were not found (possibly using method showImagesNotFoundMessage)

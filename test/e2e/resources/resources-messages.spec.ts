@@ -1,7 +1,7 @@
 import {ResourcesPage} from './resources.page';
 import {NavbarPage} from '../navbar.page';
 import {DoceditPage} from '../docedit/docedit.page';
-import {browser, protractor, element, by} from 'protractor';
+import {browser, protractor} from 'protractor';
 
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
@@ -11,9 +11,7 @@ describe('resources/messages --', () => {
     let index = 0;
 
 
-    beforeAll(() => {
-        ResourcesPage.get();
-    });
+    beforeAll(() => ResourcesPage.get());
 
 
     beforeEach(() => {
@@ -51,7 +49,6 @@ describe('resources/messages --', () => {
 
 
     it('warn if identifier is missing', () => {
-
 
         browser.sleep(5000);
 

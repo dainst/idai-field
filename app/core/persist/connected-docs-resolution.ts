@@ -1,15 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Document} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
+import {Document, ProjectConfiguration} from 'idai-components-2/core';
 
-@Injectable()
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class ConnectedDocsResolver {
-
-    constructor(private projectConfiguration: ProjectConfiguration) {}
+export module ConnectedDocsResolution {
 
 
     /**
@@ -23,43 +18,57 @@ export class ConnectedDocsResolver {
      * @returns a selection with copies of the targetDocuments which
      *   got an update in their relations
      */
-    public determineDocsToUpdate(document: Document,
-                                 targetDocuments: Array<Document>,
-                                 setInverseRelations: boolean = true): Array<Document> {
+    export function determineDocsToUpdate(
+        projectConfiguration: ProjectConfiguration,
+        document: Document,
+        targetDocuments: Array<Document>,
+        shouldSetInverseRelations: boolean = true): Array<Document> {
 
         const copyOfTargetDocuments = JSON.parse(JSON.stringify(targetDocuments));
 
         for (let targetDocument of targetDocuments) {
-            this.pruneInverseRelations(document.resource.id as any, targetDocument, setInverseRelations);
-            if (setInverseRelations) this.setInverseRelations(document, targetDocument);
+
+            pruneInverseRelations(
+                projectConfiguration,
+                document.resource.id,
+                targetDocument,
+                shouldSetInverseRelations);
+
+            if (shouldSetInverseRelations) setInverseRelations(
+                projectConfiguration, document, targetDocument);
         }
 
-        return ConnectedDocsResolver.compare(targetDocuments, copyOfTargetDocuments);
+        return compare(targetDocuments, copyOfTargetDocuments);
     }
 
 
-    private pruneInverseRelations(resourceId: string,
-                                  targetDocument: Document,
-                                  keepAllNoInverseRelations: boolean) {
+    function pruneInverseRelations(
+        projectConfiguration: ProjectConfiguration,
+        resourceId: string,
+        targetDocument: Document,
+        keepAllNoInverseRelations: boolean) {
 
         Object.keys(targetDocument.resource.relations)
-            .filter(relation => this.projectConfiguration.isRelationProperty(relation))
+            .filter(relation => projectConfiguration.isRelationProperty(relation))
             .filter(relation => (!(keepAllNoInverseRelations && relation == 'isRecordedIn')))
             .forEach(relation =>
-                ConnectedDocsResolver.removeRelation(
+                removeRelation(
                     resourceId, targetDocument.resource.relations, relation)
             );
     }
 
 
-    private setInverseRelations(document: Document, targetDocument: Document) {
+    function setInverseRelations(
+        projectConfiguration: ProjectConfiguration,
+        document: Document,
+        targetDocument: Document) {
 
         Object.keys(document.resource.relations)
-            .filter(relation => this.projectConfiguration.isRelationProperty(relation))
+            .filter(relation => projectConfiguration.isRelationProperty(relation))
             .filter(relation => relation != "isRecordedIn")
             .forEach(relation => {
 
-                const inverse = this.projectConfiguration.getInverseRelations(relation);
+                const inverse = projectConfiguration.getInverseRelations(relation);
 
                 document.resource.relations[relation]
                     .filter(id => id == targetDocument.resource.id) // match only the one targetDocument
@@ -78,7 +87,7 @@ export class ConnectedDocsResolver {
     }
 
 
-    private static compare(targetDocuments: Array<Document>, copyOfTargetDocuments: Array<Document>): Array<Document> {
+    function compare(targetDocuments: Array<Document>, copyOfTargetDocuments: Array<Document>): Array<Document> {
 
         const docsToUpdate = [] as any;
 
@@ -104,7 +113,7 @@ export class ConnectedDocsResolver {
     }
 
 
-    private static removeRelation(resourceId: string, relations: any, relation: string): boolean {
+    function removeRelation(resourceId: string, relations: any, relation: string): boolean {
 
         const index = relations[relation].indexOf(resourceId);
         if (index == -1) return false;

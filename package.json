@@ -79,7 +79,7 @@
     "systemjs": "0.19.31",
     "tsfun": "1.7.0",
     "idai-components-2": "1.9.12",
-    "viz.js": "1.8.0",
+    "viz.js": "1.8.1",
     "zone.js": "0.8.11"
   },
   "devDependencies": {

@@ -1,45 +1,8 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild} from '@angular/core';
+import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {DotBuilder} from './dot-builder';
-
-
-// TODO Use typings file from viz.js v1.8.1 as soon as it is released
-declare var Viz: VizJs.Viz;
-
-declare namespace VizJs {
-
-    interface Viz {
-        (src: string, opts?: VizOpts): string | HTMLImageElement
-        svgXmlToPngImageElement(svgXml: string, scale: number | undefined, callback: ImageCallback): void
-        svgXmlToPngImageElement(svgXml: string, scale?: number): HTMLImageElement
-        svgXmlToPngBase64(svgXml: string, scale: number | undefined, callback: ImageCallback): void
-    }
-
-    interface ImageCallback {
-        (error: Error | null, image: HTMLImageElement): void
-    }
-
-    interface VizOpts {
-        format?: string
-        engine?: string
-        scale?: number
-        images?: Image[]
-        totalMemory?: number,
-        files?: File[]
-    }
-
-    interface File {
-        path: string
-        data: string
-    }
-
-    interface Image {
-        href: string
-        height: string
-        width: string
-    }
-}
 
 
 type ElementType = 'node'|'edge'|undefined;

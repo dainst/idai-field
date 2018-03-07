@@ -72,6 +72,7 @@ config.map = {
     'ip': 'node_modules/ip/lib/ip.js',
     'os': '@node/os',
     'buffer': '@node/buffer',
+    'viz.js': 'node_modules/viz.js/viz.js',
     'svg-pan-zoom': 'node_modules/svg-pan-zoom/dist/svg-pan-zoom.js'
 };
 

@@ -21,7 +21,6 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 export class PersistenceManager {
     
     private oldVersions: Array<Document> = [];
-    private projectConfiguration: ProjectConfiguration|undefined = undefined;
     private ready: Promise<any>;
 
     private connectedDocsResolver: any;
@@ -29,15 +28,10 @@ export class PersistenceManager {
 
     constructor(
         private datastore: DocumentDatastore,
-        private configLoader: ConfigLoader
+        private projectConfiguration: ProjectConfiguration
     ) {
-        this.ready = new Promise<string>(resolve => {
-            (this.configLoader.getProjectConfiguration() as any).then((projectConfiguration: ProjectConfiguration) => {
-                this.projectConfiguration = projectConfiguration;
-                this.connectedDocsResolver = new ConnectedDocsResolver(projectConfiguration);
-                resolve();
-            })
-        });
+        this.ready = Promise.resolve();
+        this.connectedDocsResolver = new ConnectedDocsResolver(projectConfiguration);
     }
 
 

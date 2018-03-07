@@ -68,14 +68,7 @@ export function main() {
                     new IdaiFieldTypeConverter(new ImageTypeUtility(projectConfiguration)));
 
                 result.appState.setCurrentUser('anonymous');
-
-                const mockConfigLoader = jasmine.createSpyObj('mockConfigLoader',
-                    ['getProjectConfiguration']);
-                mockConfigLoader.getProjectConfiguration.and.callFake(() => Promise.resolve(projectConfiguration));
-
-
-                persistenceManager = new PersistenceManager(datastore, mockConfigLoader);
-
+                persistenceManager = new PersistenceManager(datastore, projectConfiguration);
                 // persistenceManager.setOldVersions([{ resource: {} }]);
             }
         );

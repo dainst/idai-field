@@ -36,7 +36,7 @@ export class GraphComponent implements OnInit, OnChanges {
 
     ngOnInit() {
 
-        this.initializeMouseEventListener();
+        this.initializeMouseMoveEventListener();
     }
 
 
@@ -57,14 +57,14 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private showGraph() {
 
-        const svg: SVGSVGElement = this.getSvg();
+        const svg: SVGSVGElement = this.createGraph();
         GraphComponent.removeTitleElements(svg);
         this.graphContainer.nativeElement.appendChild(svg);
         GraphComponent.configurePanZoomBehavior(svg);
     }
 
 
-    private getSvg(): SVGSVGElement {
+    private createGraph(): SVGSVGElement {
 
         const graph: string = this.dotBuilder.build(this.documents);
         const svg: string = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
@@ -74,15 +74,15 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
-    private initializeMouseEventListener() {
+    private initializeMouseMoveEventListener() {
 
         this.renderer.listen(this.graphContainer.nativeElement, 'mousemove', event => {
-            this.handleMouseEnterEvent(event);
+            this.onMouseMove(event);
         });
     }
 
 
-    private handleMouseEnterEvent(event: MouseEvent) {
+    private onMouseMove(event: MouseEvent) {
 
         const gElement: Element|undefined = GraphComponent.getGElement(event.target as Element);
 
@@ -199,7 +199,7 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private static getResourceId(gElement: Element): string {
 
-        return gElement.id.substring(gElement.id.indexOf('-') + 1)
+        return gElement.id.substring(gElement.id.indexOf('-') + 1);
     }
 
 

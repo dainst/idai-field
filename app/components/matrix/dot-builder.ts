@@ -113,7 +113,7 @@ export class DotBuilder {
 
         return 'node [style=filled] '
             + this.getGraphDocuments().map(document => this.createColorDefinition(document))
-            .join(' ') + ' ';
+            .join('');
     }
 
 
@@ -122,7 +122,9 @@ export class DotBuilder {
          return document.resource.identifier
              + ' [fillcolor="'
              + this.projectConfiguration.getColorForType(document.resource.type)
-             + '"]';
+             + '", fontcolor="'
+             + this.projectConfiguration.getTextColorForType(document.resource.type)
+             + '"] ';
     }
 
 

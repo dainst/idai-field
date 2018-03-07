@@ -35,6 +35,7 @@ import {ResourcesSearchBarComponent} from './searchbar/resources-search-bar.comp
 import {SearchSuggestionsComponent} from './searchbar/search-suggestions.component';
 import {StandardStateSerializer} from "../../common/standard-state-serializer";
 import {StateSerializer} from "../../common/state-serializer";
+import {ViewDefinition} from './state/view-definition';
 
 const remote = require('electron').remote;
 
@@ -79,7 +80,26 @@ const remote = require('electron').remote;
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService) => {
 
-                const views = projectConfiguration.getViewsList();
+                const views: ViewDefinition[] = [
+                    {
+                        "label": "Ausgrabung",
+                        "mainType": "Trench",
+                        "name": "excavation",
+                        "operationSubtype": "Trench"
+                    },
+                    {
+                        "label": "Bauaufnahme",
+                        "mainType": "Building",
+                        "name": "Building",
+                        "operationSubtype": "Building"
+                    },
+                    {
+                        "label": "Survey",
+                        "mainType": "Survey",
+                        "name": "survey",
+                        "operationSubtype": "Survey"
+                    }
+                ];
                 for (let view of views) {
                     (view as any)['mainTypeLabel'] = projectConfiguration.getLabelForType(view.operationSubtype) as any;
                 }

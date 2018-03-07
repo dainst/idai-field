@@ -1,0 +1,8 @@
+{
+  "Operation": ["hasArea", "hasCampaign"],
+  "Feature": ["hasArea", "hasBeginningDate", "hasEndDate", "hasFeatureForm", "hasFeatureBorders", "hasPeriodBeginning", "hasPeriodEnd", "hasDairy"],
+  "Grave": ["hasConditionAmount", "hasDistinguishingCriteria", "hasSoilType"],
+  "Find": ["hasAmount", "hasConditionPercent", "hasPeriodBeginning", "hasPeriodEnd", "hasConditionAmount", "hasDate"],
+  "Floor": ["hasMortarBinder", "hasLayerClassification"],
+  "Pottery": ["hasAmountSherdsHandles", "hasAmountRimSherds", "hasAmountSherdsRimBase", "hasAmountSherdsLip", "hasAmountSherdsBase", "hasAmountSherdsPedestal", "hasAmountSherdsRimBase", "hasAmountSherdsRimShoulder", "hasAmountSherdsShoulder", "hasAmountSherdsxOther", "hasAmountSherdsxPercent", "hasAmountShertsLid", "hasTemperTypeClay"]
+}

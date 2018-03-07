@@ -44,6 +44,18 @@
         },
         {
             "domain": [
+                "Burial"
+            ],
+            "editable": false,
+            "label": "Gehört zu",
+            "name": "isRecordedIn",
+            "range": [
+                "Grave"
+            ],
+            "visible": true
+        },
+        {
+            "domain": [
                 "Room"
             ],
             "editable": false,
@@ -76,7 +88,8 @@
                 "Other",
                 "Architecture",
                 "Drilling",
-                "Sample"
+                "Sample",
+                "Burial"
             ],
             "inverse": "includes",
             "label": "Liegt in",
@@ -132,7 +145,8 @@
                 "Other",
                 "Architecture",
                 "Drilling",
-                "Sample"
+                "Sample",
+                "Burial"
             ],
             "sameMainTypeResource": true
         },
@@ -146,7 +160,8 @@
                 "Other",
                 "Architecture",
                 "Planum",
-                "Sample"
+                "Sample",
+                "Burial"
             ],
             "inverse": "isBelow",
             "label": "Liegt über",
@@ -160,7 +175,8 @@
                 "Other",
                 "Architecture",
                 "Planum",
-                "Sample"
+                "Sample",
+                "Burial"
             ],
             "sameMainTypeResource": true
         },
@@ -174,7 +190,8 @@
                 "Other",
                 "Architecture",
                 "Planum",
-                "Sample"
+                "Sample",
+                "Burial"
             ],
             "inverse": "isAbove",
             "label": "Liegt unter",
@@ -188,7 +205,8 @@
                 "Other",
                 "Architecture",
                 "Planum",
-                "Sample"
+                "Sample",
+                "Burial"
             ],
             "sameMainTypeResource": true
         },
@@ -201,7 +219,8 @@
                 "Layer",
                 "Other",
                 "Architecture",
-                "Profile"
+                "Profile",
+                "Burial"
             ],
             "inverse": "isCutBy",
             "label": "Schneidet",
@@ -213,7 +232,8 @@
                 "Grave",
                 "Layer",
                 "Other",
-                "Architecture"
+                "Architecture",
+                "Burial"
             ],
             "sameMainTypeResource": true
         },
@@ -225,7 +245,8 @@
                 "Grave",
                 "Layer",
                 "Other",
-                "Architecture"
+                "Architecture",
+                "Burial"
             ],
             "inverse": "cuts",
             "label": "Wird geschnitten von",
@@ -238,7 +259,8 @@
                 "Layer",
                 "Other",
                 "Architecture",
-                "Profile"
+                "Profile",
+                "Burial"
             ],
             "sameMainTypeResource": true
         },
@@ -264,7 +286,8 @@
                 "Pottery",
                 "Stone",
                 "Terracotta",
-                "Wood"
+                "Wood",
+                "Burial"
             ],
             "inverse": "isAfter",
             "label": "Zeitlich vor",
@@ -290,7 +313,8 @@
                 "Pottery",
                 "Stone",
                 "Terracotta",
-                "Wood"
+                "Wood",
+                "Burial"
             ]
         },
         {
@@ -315,7 +339,8 @@
                 "Pottery",
                 "Stone",
                 "Terracotta",
-                "Wood"
+                "Wood",
+                "Burial"
             ],
             "inverse": "isBefore",
             "label": "Zeitlich nach",
@@ -341,7 +366,8 @@
                 "Pottery",
                 "Stone",
                 "Terracotta",
-                "Wood"
+                "Wood",
+                "Burial"
             ]
         },
         {
@@ -366,7 +392,8 @@
                 "Terracotta",
                 "Wood",
                 "Wall_surface",
-                "Room"
+                "Room",
+                "Burial"
             ],
             "inverse": "isContemporaryWith",
             "label": "Zeitgleich mit",
@@ -392,7 +419,8 @@
                 "Terracotta",
                 "Wood",
                 "Wall_surface",
-                "Room"
+                "Room",
+                "Burial"
             ]
         },
         {
@@ -481,7 +509,8 @@
                 "Layer",
                 "Other",
                 "Architecture",
-                "SurveyUnit"
+                "SurveyUnit",
+                "Burial"
             ],
             "inverse": "borders",
             "label": "Grenzt an",
@@ -495,7 +524,8 @@
                 "Layer",
                 "Other",
                 "Architecture",
-                "SurveyUnit"
+                "SurveyUnit",
+                "Burial"
             ],
             "sameMainTypeResource": true
         }
@@ -1110,22 +1140,6 @@
         {
             "fields": [
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "ShortDescription",
-                    "visible": false
-                },
-                {
                     "description": "Freies Beschreibungsfeld",
                     "descriptions": {
                         "de": "Freies Beschreibungsfeld"
@@ -1414,26 +1428,6 @@
                         "Schachbrettmuster"
                     ],
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Liegt über",
-                    "labels": {
-                        "de": "Liegt über"
-                    },
-                    "name": "isAbove",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "liegt unter",
-                    "labels": {
-                        "de": "liegt unter"
-                    },
-                    "name": "isBelow",
-                    "visible": false
                 }
             ],
             "label": "Planum",
@@ -1998,21 +1992,123 @@
         {
             "fields": [
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
+                    "editable": true,
+                    "inputType": "dropdown",
+                    "label": "Bestattungsart - Anzahl",
                     "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
+                        "de": "Bestattungsart - Anzahl"
                     },
-                    "name": "ShortDescription",
-                    "visible": false
+                    "name": "hasAmountIndividuals",
+                    "valuelist": [
+                        "Doppelbestattung",
+                        "Dreifachbestattung",
+                        "Einzelbestattung",
+                        "Grabdeponat",
+                        "Kollektivbestattung",
+                        "Massengrab",
+                        "Mehrfachbestattung",
+                        "Unsicher bzw. unbestimmbar",
+                        "Wiedergängerbestattung"
+                    ],
+                    "visible": true
                 },
+                {
+                    "editable": true,
+                    "inputType": "dropdown",
+                    "label": "Bestattungsfolge (Primär/Sekundär)",
+                    "labels": {
+                        "de": "Bestattungsfolge (Primär/Sekundär)"
+                    },
+                    "name": "hasBurialCharacteristic",
+                    "valuelist": [
+                        "Primäre Bestattung",
+                        "Sekundäre Bestattung",
+                        "Unsicher bzw. unbestimmbar"
+                    ],
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "checkboxes",
+                    "label": "Bestattungsform",
+                    "labels": {
+                        "de": "Bestattungsform"
+                    },
+                    "name": "hasGraveFeature",
+                    "valuelist": [
+                        "Brandbestattung",
+                        "Kenotaph",
+                        "Körperbestattung",
+                        "Ossuar",
+                        "Teil-Körperbestattung"
+                    ],
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "checkboxes",
+                    "label": "Position der Arme",
+                    "labels": {
+                        "de": "Position der Arme"
+                    },
+                    "name": "hasPositionArms",
+                    "valuelist": [
+                        "Unsicher bzw. unbestimmbar",
+                        "am Kinn",
+                        "an den Seiten",
+                        "auf dem Bauch",
+                        "auf dem Becken",
+                        "auf der Brust",
+                        "ungleichmäßig"
+                    ],
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "checkboxes",
+                    "label": "Position der Beine",
+                    "labels": {
+                        "de": "Position der Beine"
+                    },
+                    "name": "hasPositionLegs",
+                    "valuelist": [
+                        "Beine angewinkelt",
+                        "Beinhocker",
+                        "Extremhocker",
+                        "Hocker",
+                        "Unsicher bzw. unbestimmbar",
+                        "gestreckt"
+                    ],
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "checkboxes",
+                    "label": "Lage des/der Verstorbenen",
+                    "labels": {
+                        "de": "Lage des/der Verstorbenen"
+                    },
+                    "name": "hasPositioningIndividuals",
+                    "valuelist": [
+                        "Bauchlage",
+                        "Rückenlage",
+                        "Seitenlage, links",
+                        "Seitenlage, rechts",
+                        "Unsicher bzw. unbestimmbar"
+                    ],
+                    "visible": true
+                }
+            ],
+            "label": "Bestattung",
+            "labels": {
+                "de": "Bestattung",
+                "en": "Burial"
+            },
+            "parent": "Feature",
+            "type": "Burial"
+        },
+        {
+            "fields": [
                 {
                     "description": "Historische Abhandlung des Bauwerks.",
                     "descriptions": {
@@ -2087,16 +2183,6 @@
                     },
                     "name": "hasRestauration",
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "grenzt an",
-                    "labels": {
-                        "de": "grenzt an"
-                    },
-                    "name": "borders",
-                    "visible": false
                 },
                 {
                     "description": "Angabe der architektonischen Säulenordnung.",
@@ -2381,46 +2467,6 @@
                         "Tuff"
                     ],
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Enthält",
-                    "labels": {
-                        "de": "Enthält"
-                    },
-                    "name": "includes",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist nach",
-                    "labels": {
-                        "de": "ist nach"
-                    },
-                    "name": "isAfter",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist vor",
-                    "labels": {
-                        "de": "ist vor"
-                    },
-                    "name": "isBefore",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist gleichzeitig mit",
-                    "labels": {
-                        "de": "ist gleichzeitig mit"
-                    },
-                    "name": "isContemporaryWith",
-                    "visible": false
                 }
             ],
             "label": "Bauaufnahme",
@@ -2462,16 +2508,6 @@
                     },
                     "name": "hasFinds",
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "grenzt an",
-                    "labels": {
-                        "de": "grenzt an"
-                    },
-                    "name": "borders",
-                    "visible": false
                 },
                 {
                     "description": "Angabe der Länge.",
@@ -2762,16 +2798,6 @@
                     },
                     "name": "hasMuralCrown",
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "trägt",
-                    "labels": {
-                        "de": "trägt"
-                    },
-                    "name": "bears",
-                    "visible": false
                 },
                 {
                     "editable": true,
@@ -3081,22 +3107,6 @@
             "abstract": true,
             "fields": [
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "ShortDescription",
-                    "visible": false
-                },
-                {
                     "description": "Flächenangabe in Quadratmetern",
                     "descriptions": {
                         "de": "Flächenangabe in Quadratmetern"
@@ -3306,24 +3316,6 @@
                         "Spätklassisch"
                     ],
                     "visible": true
-                },
-                {
-                    "description": "Ortsangabe",
-                    "descriptions": {
-                        "de": "Ortsangabe"
-                    },
-                    "editable": false,
-                    "inputType": "dropdown",
-                    "label": "Ort",
-                    "labels": {
-                        "de": "Ort",
-                        "en": "place"
-                    },
-                    "name": "hasPlace",
-                    "valuelist": [
-                        "Place"
-                    ],
-                    "visible": false
                 }
             ],
             "label": "Maßnahme",
@@ -3590,22 +3582,6 @@
             "color": "black",
             "fields": [
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "ShortDescription",
-                    "visible": false
-                },
-                {
                     "description": "Flächenangabe in Quadratmetern",
                     "descriptions": {
                         "de": "Flächenangabe in Quadratmetern"
@@ -3724,29 +3700,6 @@
                     },
                     "name": "hasProcessor",
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "grenzt an",
-                    "labels": {
-                        "de": "grenzt an"
-                    },
-                    "name": "borders",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "schneidet",
-                    "labels": {
-                        "de": "schneidet"
-                    },
-                    "name": "cuts",
-                    "valuelist": [
-                        "Feature"
-                    ],
-                    "visible": false
                 },
                 {
                     "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange.",
@@ -4005,99 +3958,6 @@
                         "Spätklassisch"
                     ],
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Enthält",
-                    "labels": {
-                        "de": "Enthält"
-                    },
-                    "name": "includes",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Liegt über",
-                    "labels": {
-                        "de": "Liegt über"
-                    },
-                    "name": "isAbove",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist nach",
-                    "labels": {
-                        "de": "ist nach"
-                    },
-                    "name": "isAfter",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist vor",
-                    "labels": {
-                        "de": "ist vor"
-                    },
-                    "name": "isBefore",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "liegt unter",
-                    "labels": {
-                        "de": "liegt unter"
-                    },
-                    "name": "isBelow",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist gleichzeitig mit",
-                    "labels": {
-                        "de": "ist gleichzeitig mit"
-                    },
-                    "name": "isContemporaryWith",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "wird geschnitten von",
-                    "labels": {
-                        "de": "wird geschnitten von"
-                    },
-                    "name": "isCutBy",
-                    "valuelist": [
-                        "Feature"
-                    ],
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist dokumentiert in",
-                    "labels": {
-                        "de": "ist dokumentiert in"
-                    },
-                    "name": "isRecordedIn",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "liegt in",
-                    "labels": {
-                        "de": "liegt in"
-                    },
-                    "name": "liesWithin",
-                    "visible": false
                 }
             ],
             "label": "Stratigrafische Einheit",
@@ -4111,16 +3971,6 @@
         {
             "color": "#6600cc",
             "fields": [
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "trägt",
-                    "labels": {
-                        "de": "trägt"
-                    },
-                    "name": "bears",
-                    "visible": false
-                },
                 {
                     "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)",
                     "descriptions": {
@@ -4291,22 +4141,6 @@
         },
         {
             "fields": [
-                {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "ShortDescription",
-                    "visible": false
-                },
                 {
                     "description": "Vergleich mit ähnlichen Befunden/Objekten/Inschriften etc. mit Angabe einer Referenz.",
                     "descriptions": {
@@ -4548,26 +4382,6 @@
                         "Spätklassisch"
                     ],
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist aufgetragen auf",
-                    "labels": {
-                        "de": "ist aufgetragen auf"
-                    },
-                    "name": "isFoundOn",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist dokumentiert in",
-                    "labels": {
-                        "de": "ist dokumentiert in"
-                    },
-                    "name": "isRecordedIn",
-                    "visible": false
                 }
             ],
             "label": "Inschrift",
@@ -4580,63 +4394,6 @@
         },
         {
             "fields": [
-                {
-                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
-                    "descriptions": {
-                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Bearbeiter/Bearbeiterin",
-                    "labels": {
-                        "de": "Bearbeiter/Bearbeiterin",
-                        "en": "Processor",
-                        "it": "Responsabile"
-                    },
-                    "name": "hasProcessor",
-                    "visible": true
-                },
-                {
-                    "description": "Leitende Person einer Kampagne oder Maßnahme.",
-                    "descriptions": {
-                        "de": "Leitende Person einer Kampagne oder Maßnahme."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Leiter/Leiterin",
-                    "labels": {
-                        "de": "Leiter/Leiterin",
-                        "en": "supervisor"
-                    },
-                    "name": "hasSupervisor",
-                    "visible": true
-                }
-            ],
-            "label": "Kampagne",
-            "labels": {
-                "de": "Kampagne",
-                "en": "Campaign"
-            },
-            "type": "Campaign"
-        },
-        {
-            "fields": [
-                {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "ShortDescription",
-                    "visible": false
-                },
                 {
                     "description": "Historische Abhandlung des Bauwerks.",
                     "descriptions": {
@@ -4861,24 +4618,6 @@
                     "visible": true
                 },
                 {
-                    "description": "Ortsangabe",
-                    "descriptions": {
-                        "de": "Ortsangabe"
-                    },
-                    "editable": false,
-                    "inputType": "dropdown",
-                    "label": "Ort",
-                    "labels": {
-                        "de": "Ort",
-                        "en": "place"
-                    },
-                    "name": "hasPlace",
-                    "valuelist": [
-                        "Place"
-                    ],
-                    "visible": false
-                },
-                {
                     "editable": true,
                     "inputType": "dropdown",
                     "label": "Klassifikation Fundplatz",
@@ -4903,22 +4642,6 @@
         },
         {
             "fields": [
-                {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "ShortDescription",
-                    "visible": false
-                },
                 {
                     "description": "Feld der Abbildungsbeschriftung.",
                     "descriptions": {
@@ -5858,44 +5581,12 @@
                 },
                 {
                     "editable": true,
-                    "inputType": "checkboxes",
+                    "inputType": "input",
                     "label": "Tongruppe",
                     "labels": {
                         "de": "Tongruppe"
                     },
                     "name": "hasTemperTypeClay",
-                    "valuelist": [
-                        "T1",
-                        "T2",
-                        "T3",
-                        "T4",
-                        "T5",
-                        "T6",
-                        "T7",
-                        "T8",
-                        "T9",
-                        "T10",
-                        "T11",
-                        "T12",
-                        "T13",
-                        "T14",
-                        "T15",
-                        "T16",
-                        "T17",
-                        "T18",
-                        "T19",
-                        "T20",
-                        "T21",
-                        "T22",
-                        "T23",
-                        "T24",
-                        "T25",
-                        "T26",
-                        "T27",
-                        "T28",
-                        "T29",
-                        "T30"
-                    ],
                     "visible": true
                 },
                 {
@@ -6108,42 +5799,6 @@
             "color": "#339900",
             "fields": [
                 {
-                    "editable": true,
-                    "inputType": "dropdown",
-                    "label": "Bestattungsart - Anzahl",
-                    "labels": {
-                        "de": "Bestattungsart - Anzahl"
-                    },
-                    "name": "hasAmountIndividuals",
-                    "valuelist": [
-                        "Doppelbestattung",
-                        "Dreifachbestattung",
-                        "Einzebestattung",
-                        "Grabdeponat",
-                        "Kollektivbestattung",
-                        "Massengrab",
-                        "Mehrfachbestattung",
-                        "Unsicher bzw. unbestimmbar",
-                        "Wiedergängerbestattung"
-                    ],
-                    "visible": true
-                },
-                {
-                    "editable": true,
-                    "inputType": "dropdown",
-                    "label": "Bestattungsfolge (Primär/Sekundär)",
-                    "labels": {
-                        "de": "Bestattungsfolge (Primär/Sekundär)"
-                    },
-                    "name": "hasBurialCharacteristic",
-                    "valuelist": [
-                        "Primäre Bestattung",
-                        "Sekundäre Bestattung",
-                        "Unsicher bzw. unbestimmbar"
-                    ],
-                    "visible": true
-                },
-                {
                     "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)",
                     "descriptions": {
                         "de": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
@@ -6205,23 +5860,6 @@
                     "visible": true
                 },
                 {
-                    "editable": true,
-                    "inputType": "checkboxes",
-                    "label": "Bestattungsform",
-                    "labels": {
-                        "de": "Bestattungsform"
-                    },
-                    "name": "hasGraveFeature",
-                    "valuelist": [
-                        "Brandbestattung",
-                        "Kenotaph",
-                        "Körperbestattung",
-                        "Ossuar",
-                        "Teil-Körperbestattung"
-                    ],
-                    "visible": true
-                },
-                {
                     "description": "Bezeichnet die Art des Grabes",
                     "descriptions": {
                         "de": "Bezeichnet die Art des Grabes"
@@ -6256,60 +5894,6 @@
                         "Steinplattengrab",
                         "Urnengrab",
                         "Ziegelplattengrab"
-                    ],
-                    "visible": true
-                },
-                {
-                    "editable": true,
-                    "inputType": "checkboxes",
-                    "label": "Position der Arme",
-                    "labels": {
-                        "de": "Position der Arme"
-                    },
-                    "name": "hasPositionArms",
-                    "valuelist": [
-                        "Unsicher bzw. unbestimmbar",
-                        "am Kinn",
-                        "an den Seiten",
-                        "auf dem Bauch",
-                        "auf dem Becken",
-                        "auf der Brust",
-                        "ungleichmäßig"
-                    ],
-                    "visible": true
-                },
-                {
-                    "editable": true,
-                    "inputType": "checkboxes",
-                    "label": "Position der Beine",
-                    "labels": {
-                        "de": "Position der Beine"
-                    },
-                    "name": "hasPositionLegs",
-                    "valuelist": [
-                        "Beine angewinkelt",
-                        "Beinhocker",
-                        "Extremhocker",
-                        "Hocker",
-                        "Unsicher bzw. unbestimmbar",
-                        "gestreckt"
-                    ],
-                    "visible": true
-                },
-                {
-                    "editable": true,
-                    "inputType": "checkboxes",
-                    "label": "Lage des/der Verstorbenen",
-                    "labels": {
-                        "de": "Lage des/der Verstorbenen"
-                    },
-                    "name": "hasPositioningIndividuals",
-                    "valuelist": [
-                        "Bauchlage",
-                        "Rückenlage",
-                        "Seitenlage, links",
-                        "Seitenlage, rechts",
-                        "Unsicher bzw. unbestimmbar"
                     ],
                     "visible": true
                 },
@@ -6550,22 +6134,6 @@
         {
             "fields": [
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "ShortDescription",
-                    "visible": false
-                },
-                {
                     "description": "Flächenangabe in Quadratmetern",
                     "descriptions": {
                         "de": "Flächenangabe in Quadratmetern"
@@ -6609,16 +6177,6 @@
                     },
                     "name": "hasProcessor",
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "grenzt an",
-                    "labels": {
-                        "de": "grenzt an"
-                    },
-                    "name": "borders",
-                    "visible": false
                 },
                 {
                     "editable": true,
@@ -6845,56 +6403,6 @@
                         "Spätklassisch"
                     ],
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist nach",
-                    "labels": {
-                        "de": "ist nach"
-                    },
-                    "name": "isAfter",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist vor",
-                    "labels": {
-                        "de": "ist vor"
-                    },
-                    "name": "isBefore",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist gleichzeitig mit",
-                    "labels": {
-                        "de": "ist gleichzeitig mit"
-                    },
-                    "name": "isContemporaryWith",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist dokumentiert in",
-                    "labels": {
-                        "de": "ist dokumentiert in"
-                    },
-                    "name": "isRecordedIn",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "liegt in",
-                    "labels": {
-                        "de": "liegt in"
-                    },
-                    "name": "liesWithin",
-                    "visible": false
                 }
             ],
             "label": "Raum",
@@ -6907,22 +6415,6 @@
         {
             "color": "#08306b",
             "fields": [
-                {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "ShortDescription",
-                    "visible": false
-                },
                 {
                     "description": "Datum der Durchführung",
                     "descriptions": {
@@ -6989,16 +6481,6 @@
                         "Sondage"
                     ],
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist dokumentiert in",
-                    "labels": {
-                        "de": "ist dokumentiert in"
-                    },
-                    "name": "isRecordedIn",
-                    "visible": false
                 }
             ],
             "label": "Arbeitsgang",
@@ -7528,22 +7010,6 @@
             "color": "#ffff99",
             "fields": [
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "ShortDescription",
-                    "visible": false
-                },
-                {
                     "description": "Flächenangabe in Quadratmetern",
                     "descriptions": {
                         "de": "Flächenangabe in Quadratmetern"
@@ -7677,16 +7143,6 @@
                     },
                     "name": "hasWallConstructionTechnique",
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "trägt",
-                    "labels": {
-                        "de": "trägt"
-                    },
-                    "name": "bears",
-                    "visible": false
                 },
                 {
                     "description": "Bearbeitung des Blockes/Bearbeitungsspuren",
@@ -8103,56 +7559,6 @@
                     "visible": true
                 },
                 {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist nach",
-                    "labels": {
-                        "de": "ist nach"
-                    },
-                    "name": "isAfter",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist vor",
-                    "labels": {
-                        "de": "ist vor"
-                    },
-                    "name": "isBefore",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist gleichzeitig mit",
-                    "labels": {
-                        "de": "ist gleichzeitig mit"
-                    },
-                    "name": "isContemporaryWith",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist aufgetragen auf",
-                    "labels": {
-                        "de": "ist aufgetragen auf"
-                    },
-                    "name": "isFoundOn",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist dokumentiert in",
-                    "labels": {
-                        "de": "ist dokumentiert in"
-                    },
-                    "name": "isRecordedIn",
-                    "visible": false
-                },
-                {
                     "description": "Welche Seite des Raumes wird beschrieben/welche Ausrichtung hat er?",
                     "descriptions": {
                         "de": "Welche Seite des Raumes wird beschrieben/welche Ausrichtung hat er?"
@@ -8227,16 +7633,6 @@
                     },
                     "name": "hasNatural",
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "trägt",
-                    "labels": {
-                        "de": "trägt"
-                    },
-                    "name": "bears",
-                    "visible": false
                 },
                 {
                     "editable": true,
@@ -9545,22 +8941,6 @@
             "color": "black",
             "fields": [
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "ShortDescription",
-                    "visible": false
-                },
-                {
                     "description": "Anzahl der aufgehobenen bzw. inventarisierten Fundstücke.",
                     "descriptions": {
                         "de": "Anzahl der aufgehobenen bzw. inventarisierten Fundstücke."
@@ -9724,16 +9104,6 @@
                     },
                     "name": "hasWeight",
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "trägt",
-                    "labels": {
-                        "de": "trägt"
-                    },
-                    "name": "bears",
-                    "visible": false
                 },
                 {
                     "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)",
@@ -10048,56 +9418,6 @@
                         "Staatsbesitz"
                     ],
                     "visible": true
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist nach",
-                    "labels": {
-                        "de": "ist nach"
-                    },
-                    "name": "isAfter",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist vor",
-                    "labels": {
-                        "de": "ist vor"
-                    },
-                    "name": "isBefore",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist gleichzeitig mit",
-                    "labels": {
-                        "de": "ist gleichzeitig mit"
-                    },
-                    "name": "isContemporaryWith",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "ist dokumentiert in",
-                    "labels": {
-                        "de": "ist dokumentiert in"
-                    },
-                    "name": "isRecordedIn",
-                    "visible": false
-                },
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "liegt in",
-                    "labels": {
-                        "de": "liegt in"
-                    },
-                    "name": "liesWithin",
-                    "visible": false
                 }
             ],
             "label": "Fund",
@@ -10268,16 +9588,6 @@
         {
             "color": "#c6dbef",
             "fields": [
-                {
-                    "editable": false,
-                    "inputType": "input",
-                    "label": "grenzt an",
-                    "labels": {
-                        "de": "grenzt an"
-                    },
-                    "name": "borders",
-                    "visible": false
-                },
                 {
                     "description": "Angabe der Objekthöhe",
                     "descriptions": {
@@ -10679,6 +9989,26 @@
             },
             "parent": "Find",
             "type": "Metal"
+        }
+    ],
+    "views": [
+        {
+            "label": "Ausgrabung",
+            "mainType": "Trench",
+            "name": "excavation",
+            "operationSubtype": "Trench"
+        },
+        {
+            "label": "Bauaufnahme",
+            "mainType": "Building",
+            "name": "Building",
+            "operationSubtype": "Building"
+        },
+        {
+            "label": "Survey",
+            "mainType": "Survey",
+            "name": "survey",
+            "operationSubtype": "Survey"
         }
     ]
 }

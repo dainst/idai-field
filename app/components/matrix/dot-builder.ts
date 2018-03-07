@@ -85,18 +85,17 @@ export class DotBuilder {
 
         if (targetIds.length == 0) return;
 
-        const edgesDefinition: string = this.createEdgesDefinition(document, targetIds)
-            + ' [dir="none", class="'
-            + [document.resource.id].concat(targetIds)
-                .map(id => 'is-contemporary-with-' + id)
-                .join(' ')
-            + '"]';
+        const edgesDefinitions: string = targetIds.map(targetId => {
+            return this.createEdgesDefinition(document, [targetId])
+                + ' [dir="none", class="is-contemporary-with-' + document.resource.id
+                + ' is-contemporary-with-' + targetId + '"]';
+        }).join(' ');
 
         const sameRankDefinition: string = this.createSameRankDefinition(
             [document.resource.id].concat(targetIds)
         );
 
-        return edgesDefinition + ' ' + sameRankDefinition;
+        return edgesDefinitions + ' ' + sameRankDefinition;
     }
 
 

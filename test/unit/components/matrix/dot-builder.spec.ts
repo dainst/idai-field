@@ -133,8 +133,10 @@ describe('DotBuilder', () => {
             '{rank=min feature1} ' +
             'feature1 -> feature2 [class="is-after-f1"] ' +
             'feature2 -> feature5 [class="is-after-f2"] ' +
-            'feature2 -> {feature3, feature4} [dir="none", ' +
-            'class="is-contemporary-with-f2 is-contemporary-with-f3 is-contemporary-with-f4"] ' +
+            'feature2 -> feature3 [dir="none", ' +
+            'class="is-contemporary-with-f2 is-contemporary-with-f3"] ' +
+            'feature2 -> feature4 [dir="none", ' +
+            'class="is-contemporary-with-f2 is-contemporary-with-f4"] ' +
             '{rank=same feature2, feature3, feature4} ' +
             '}'
         );

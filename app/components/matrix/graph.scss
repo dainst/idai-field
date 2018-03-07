@@ -8,5 +8,10 @@
   svg {
     width: 100% !important;
     height: 100% !important;
+
+    .node {
+      cursor: default;
+      user-select: none;
+    }
   }
 }

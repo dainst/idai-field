@@ -65,7 +65,7 @@ describe('resources/filter --', () => {
     });
 
 
-    it('filter by parent type', () => {
+    xit('filter by parent type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'inscription');

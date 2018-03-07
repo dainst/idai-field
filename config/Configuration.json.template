@@ -9990,25 +9990,5 @@
             "parent": "Find",
             "type": "Metal"
         }
-    ],
-    "views": [
-        {
-            "label": "Ausgrabung",
-            "mainType": "Trench",
-            "name": "excavation",
-            "operationSubtype": "Trench"
-        },
-        {
-            "label": "Bauaufnahme",
-            "mainType": "Building",
-            "name": "Building",
-            "operationSubtype": "Building"
-        },
-        {
-            "label": "Survey",
-            "mainType": "Survey",
-            "name": "survey",
-            "operationSubtype": "Survey"
-        }
     ]
 }

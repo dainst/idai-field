@@ -1,11 +1,9 @@
-import {ImageGridBuilder} from '../../../app/components/imagegrid/image-grid-builder';
+import {ImageGridConstruction} from '../../../app/components/imagegrid/image-grid-builder';
 
 /**
  * @author Daniel de Oliveira
  */
-describe('ImageGridBuilder', () => {
-
-    let imageGridBuilder;
+describe('ImageGridConstruction', () => {
 
     const documents = [{
         id: 'o1',
@@ -20,15 +18,9 @@ describe('ImageGridBuilder', () => {
     }];
 
 
-    beforeEach(function () {
-
-        imageGridBuilder = new ImageGridBuilder();
-    });
-
-
     it('should keep the aspect ration of an image', ()=> {
 
-        const rows = imageGridBuilder.calcGrid(documents,4,800);
+        const rows = ImageGridConstruction.calcGrid(documents as any,4,800);
 
         expect(rows[0][0].calculatedWidth).toBe(rows[0][0].calculatedHeight * 2);
     });
@@ -36,6 +28,6 @@ describe('ImageGridBuilder', () => {
 
     it('should throw when nrOfColumns not integer', () => {
 
-        expect(function(){imageGridBuilder.calcGrid([],4.1,0)}).toThrow();
+        expect(function(){ImageGridConstruction.calcGrid([],4.1,0)}).toThrow();
     });
 });

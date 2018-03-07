@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
 import {Messages} from 'idai-components-2/core';
 import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
-import {ImageGridBuilder} from './image-grid-builder';
+import {ImageGridConstruction} from './image-grid-builder';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/idai-field-document-read-datastore';
@@ -54,7 +54,6 @@ export class ImageGridComponent implements OnChanges {
 
     constructor(
         private el: ElementRef,
-        private imageGridBuilder: ImageGridBuilder, // TODO create with new, not via DI
         private messages: Messages,
         private imagestore: Imagestore,
         private datastore: IdaiFieldDocumentReadDatastore
@@ -104,7 +103,7 @@ export class ImageGridComponent implements OnChanges {
 
         if (!this.documents) return;
 
-        const rows = this.imageGridBuilder.calcGrid(
+        const rows = ImageGridConstruction.calcGrid(
             this.documents, this.nrOfColumns, this.el.nativeElement.children[0].clientWidth);
 
         this.moreRowsMsg = undefined;

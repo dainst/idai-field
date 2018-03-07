@@ -34,10 +34,7 @@ export class PouchDbFsImagestore implements Imagestore {
     }
 
     
-    public getPath(): string|undefined {
-
-        return this.projectPath;
-    }
+    public getPath = (): string|undefined => this.projectPath;
 
     
     public setPath(imagestorePath: string, projectName: string): Promise<any> {

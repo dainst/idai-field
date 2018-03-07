@@ -8,11 +8,10 @@ import {BlobMaker} from '../../core/imagestore/blob-maker';
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  */
-export class ImageGridBuilder {
+export module ImageGridConstruction {
 
     // nr of pixels between the right end of the screenspace and the grid
-    private paddingRight: number = 20;
-    private documents: Array<Document>;
+    const paddingRight: number = 20;
 
 
     /**
@@ -23,16 +22,20 @@ export class ImageGridBuilder {
      * @returns an object with rows containing the rows of the calculated grid
      *   and msgsWithParams containing one or more msgWithParams.
      */
-    public calcGrid(documents: Array<Document>, nrOfColumns: number, gridWidth: number): any {
+    export function calcGrid(
+        documents: Array<Document>,
+        nrOfColumns: number,
+        gridWidth: number): any {
 
         if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');
 
-        this.documents = documents;
-        if (!this.documents) return [];
+        if (!documents) return [];
 
         const rows = [] as any;
-        for (let i = 0; i < this.nrOfRows(nrOfColumns); i++) {
-            rows.push(this.calcRow(i, this.calculatedHeight(i, nrOfColumns, gridWidth), nrOfColumns) as never);
+        for (let i = 0; i < nrOfRows(documents, nrOfColumns); i++) {
+            rows.push(
+                calcRow(documents, i, calculatedHeight(documents, i, nrOfColumns, gridWidth)
+                    , nrOfColumns) as never);
         }
 
         return rows;
@@ -42,16 +45,16 @@ export class ImageGridBuilder {
     /**
      * @returns {Promise<any>} cellsWithMessages
      */
-    private calcRow(rowIndex: any, calculatedHeight: any, nrOfColumns: any) {
+    function calcRow(documents: Array<Document>, rowIndex: any, calculatedHeight: any, nrOfColumns: any) {
 
         const row = [] as any;
 
         for (let i = 0; i < nrOfColumns; i++) {
 
-            const document = this.documents[rowIndex * nrOfColumns + i];
+            const document = documents[rowIndex * nrOfColumns + i];
             if (!document) break;
 
-            const cell = ImageGridBuilder.newCell(document, calculatedHeight);
+            const cell = newCell(document, calculatedHeight);
             if ((document as any)['id'] !== 'droparea') cell.imgSrc = BlobMaker.blackImg;
 
             row.push(cell as never);
@@ -61,23 +64,25 @@ export class ImageGridBuilder {
     }
 
 
-    private calculatedHeight(rowIndex: any, nrOfColumns: any, gridWidth: any) {
+    function calculatedHeight(
+        documents: Array<Document>,
+        rowIndex: any, nrOfColumns: any, gridWidth: any) {
 
-        const rowWidth = Math.ceil(gridWidth - this.paddingRight);
-        return rowWidth / ImageGridBuilder.calcNaturalRowWidth(this.documents, nrOfColumns, rowIndex);
+        const rowWidth = Math.ceil(gridWidth - paddingRight);
+        return rowWidth / calcNaturalRowWidth(documents, nrOfColumns, rowIndex);
     }
 
 
-    private nrOfRows(nrOfColumns: number): number {
+    function nrOfRows(documents: Array<Document>, nrOfColumns: number): number {
 
-        return Math.ceil(this.documents.length / nrOfColumns);
+        return Math.ceil(documents.length / nrOfColumns);
     }
 
 
     /**
      * Generate a row of images scaled to height 1 and sum up widths.
      */
-    private static calcNaturalRowWidth(documents: any, nrOfColumns: any, rowIndex: any) {
+    function calcNaturalRowWidth(documents: any, nrOfColumns: any, rowIndex: any) {
 
         let naturalRowWidth = 0;
 
@@ -94,7 +99,7 @@ export class ImageGridBuilder {
     }
 
 
-    private static newCell(document: any, calculatedHeight: any): ImageContainer {
+    function newCell(document: any, calculatedHeight: any): ImageContainer {
 
         const cell: ImageContainer = {};
         const image = document.resource as IdaiFieldImageResource;

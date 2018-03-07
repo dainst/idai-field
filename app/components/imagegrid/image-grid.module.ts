@@ -8,7 +8,6 @@ import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {IdaiMessagesModule} from 'idai-components-2/core';
 import {ImageGridComponent} from './image-grid.component';
 import {DropAreaComponent} from './drop-area.component';
-import {ImageGridBuilder} from './image-grid-builder';
 import {ImageUploadModule} from '../imageupload/image-upload.module';
 import {ImageGridCellComponent} from "./image-grid-cell.component";
 
@@ -27,9 +26,6 @@ import {ImageGridCellComponent} from "./image-grid-cell.component";
         ImageGridComponent,
         ImageGridCellComponent,
         DropAreaComponent
-    ],
-    providers: [
-        ImageGridBuilder
     ],
     exports: [
         ImageGridComponent, // export necessary?

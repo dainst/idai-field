@@ -55,8 +55,12 @@ import {IndexFacade} from './index/index-facade';
         { provide: TypeConverter, useClass: IdaiFieldTypeConverter },
         ConflictResolvingExtension,
 
-
-        FulltextIndexer,
+        {
+            provide: FulltextIndexer,
+            useFactory: function () {
+                return new FulltextIndexer(true);
+            }
+        },
         {
             provide: ConstraintIndexer,
             useFactory: function() {
@@ -70,11 +74,17 @@ import {IndexFacade} from './index/index-facade';
                     'id:match': { path: 'resource.id', type: 'match' },
                     'georeference:exist': { path: 'resource.georeference', type: 'exist' },
                     'conflicts:exist': { path: '_conflicts', type: 'exist' }
-                });
+                }, true);
             }
         },
         DocumentCache,
-        IndexFacade,
+        {
+            provide: IndexFacade,
+            useFactory: function (fulltextIndexer: FulltextIndexer, constraintIndexer: ConstraintIndexer) {
+                return new IndexFacade(constraintIndexer, fulltextIndexer);
+            },
+            deps: [FulltextIndexer, ConstraintIndexer]
+        },
 
         {
             provide: PouchdbDatastore,

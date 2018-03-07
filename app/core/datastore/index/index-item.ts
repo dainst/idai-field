@@ -26,23 +26,23 @@ export class IndexItem {
     private constructor() {} // hide on purpose, use from or copy instead
 
 
-    public static from(document: Document): IndexItem|undefined {
+    public static from(document: Document, showWarnings: boolean): IndexItem|undefined {
 
         if (!document.resource) {
-            console.warn('no resource, will not index');
+            if (showWarnings) console.warn('no resource, will not index');
             return undefined;
         }
         if (!document.resource.id) {
-            console.warn('no resourceId, will not index');
+            if (showWarnings) console.warn('no resourceId, will not index');
             return undefined;
         }
         if (!document.resource['identifier']) {
-            console.warn("no identifier, will not index");
+            if (showWarnings) console.warn("no identifier, will not index");
             return undefined;
         }
         const lastModified: Action = ChangeHistoryUtil.getLastModified(document);
         if (!lastModified) {
-            console.warn('no created/modified action, will not index', document);
+            if (showWarnings) console.warn('no created/modified action, will not index', document);
             return undefined;
         }
 

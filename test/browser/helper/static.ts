@@ -23,8 +23,8 @@ export class Static {
             'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
             'identifier:match': { path: 'resource.identifier', type: 'match' },
             'id:match': { path: 'resource.id', type: 'match' }
-        });
-        const fulltextIndexer = new FulltextIndexer();
+        }, false);
+        const fulltextIndexer = new FulltextIndexer(false);
         return [constraintIndexer, fulltextIndexer] as [ConstraintIndexer, FulltextIndexer];
     }
 

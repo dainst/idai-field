@@ -22,7 +22,7 @@ export class FulltextIndexer {
     };
 
 
-    constructor() {
+    constructor(private showWarnings = true) {
 
         this.setUp();
     }
@@ -46,7 +46,7 @@ export class FulltextIndexer {
         }
 
 
-        const indexItem = IndexItem.from(doc);
+        const indexItem = IndexItem.from(doc, this.showWarnings);
         if (!indexItem) return;
 
         if (!skipRemoval) this.remove(doc);

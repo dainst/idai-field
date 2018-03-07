@@ -41,7 +41,10 @@ export class ConstraintIndexer {
     };
 
 
-    constructor(private indexDefinitions: { [name: string]: IndexDefinition }) {
+    constructor(
+        private indexDefinitions: { [name: string]: IndexDefinition },
+        private showWarnings = true
+        ) {
 
         const validationError
             = ConstraintIndexer.validateIndexDefinitions(Object.values(this.indexDefinitions));
@@ -98,21 +101,29 @@ export class ConstraintIndexer {
         switch(indexDefinition.type) {
             case 'exist':
                 if (!elForPath || (elForPath instanceof Array && (!elForPath.length || elForPath.length === 0))) {
-                    return ConstraintIndexer.addToIndex(this.existIndex, doc, indexDefinition.path, 'UNKNOWN');
+                    return ConstraintIndexer.addToIndex(
+                        this.existIndex,
+                        doc,
+                        indexDefinition.path, 'UNKNOWN',
+                        this.showWarnings);
                 }
                 // TODO remove as soon as auto conflict resolving is properly implemented. this is a hack to make sure the project document is never listed as conflicted
-                ConstraintIndexer.addToIndex(this.existIndex, doc, indexDefinition.path,
-                    doc.resource.type == 'Project' ? 'UNKNOWN' : 'KNOWN');
+                ConstraintIndexer.addToIndex(
+                    this.existIndex,
+                    doc,
+                    indexDefinition.path,
+                    doc.resource.type == 'Project' ? 'UNKNOWN' : 'KNOWN',
+                    this.showWarnings);
                 break;
 
             case 'match':
-                ConstraintIndexer.addToIndex(this.matchIndex, doc, indexDefinition.path, elForPath);
+                ConstraintIndexer.addToIndex(this.matchIndex, doc, indexDefinition.path, elForPath, this.showWarnings);
                 break;
 
             case 'contain':
                 if (!elForPath) break;
                 for (let target of elForPath) {
-                    ConstraintIndexer.addToIndex(this.containIndex, doc, indexDefinition.path, target);
+                    ConstraintIndexer.addToIndex(this.containIndex, doc, indexDefinition.path, target, this.showWarnings);
                 }
                 break;
         }
@@ -154,9 +165,10 @@ export class ConstraintIndexer {
     }
 
 
-    private static addToIndex(index: any, doc: Document, path: string, target: string) {
+    private static addToIndex(
+        index: any, doc: Document, path: string, target: string, showWarnings: boolean) {
 
-        const indexItem = IndexItem.from(doc);
+        const indexItem = IndexItem.from(doc, showWarnings);
         if (!indexItem) return;
 
         if (!index[path][target]) index[path][target] = {};

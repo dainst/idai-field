@@ -21,8 +21,8 @@ var Static = (function () {
             'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
             'identifier:match': { path: 'resource.identifier', type: 'match' },
             'id:match': { path: 'resource.id', type: 'match' }
-        });
-        var fulltextIndexer = new fulltext_indexer_1.FulltextIndexer();
+        }, false);
+        var fulltextIndexer = new fulltext_indexer_1.FulltextIndexer(false);
         return [constraintIndexer, fulltextIndexer];
     };
     Static.createPouchdbDatastore = function (dbname) {

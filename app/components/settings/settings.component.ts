@@ -18,7 +18,6 @@ export class SettingsComponent implements OnInit {
 
 
     public settings: Settings;
-    public ready: boolean = false;
     public saving: boolean = false;
     public ipAddress: string = ip.address();
 
@@ -30,10 +29,7 @@ export class SettingsComponent implements OnInit {
 
     ngOnInit() {
 
-        this.settingsService.ready.then(() => {
-            this.ready = true;
-            this.settings = this.settingsService.getSettings();
-        });
+        this.settings = this.settingsService.getSettings();
     }
 
 

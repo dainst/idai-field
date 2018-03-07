@@ -36,8 +36,6 @@ export class SettingsService {
     private currentSyncUrl = '';
     private currentSyncTimeout: any;
 
-    public ready: Promise<ProjectConfiguration>;
-
 
     constructor(private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager,
@@ -82,11 +80,10 @@ export class SettingsService {
             if (msgsWithParams.length > 1) {
                 console.error('num errors in project configuration', msgsWithParams.length);
             }
+            throw "could not boot project";
         }
 
-
-        this.ready = pconf ? Promise.resolve(pconf) : Promise.reject(undefined);
-        return this.ready;
+        return pconf;
     }
 
 

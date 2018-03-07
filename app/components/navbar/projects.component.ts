@@ -18,7 +18,6 @@ const remote = require('electron').remote;
  */
 export class ProjectsComponent implements OnInit {
 
-    public ready: boolean = false;
     public projects: string[];
     public selectedProject: string;
     public newProject: string = '';
@@ -36,11 +35,8 @@ export class ProjectsComponent implements OnInit {
 
     ngOnInit() {
 
-        this.settingsService.ready.then(() => {
-            this.ready = true;
-            this.selectedProject = this.settingsService.getSelectedProject() as any;
-            this.projects = this.settingsService.getSettings().dbs.slice(0);
-        });
+        this.selectedProject = this.settingsService.getSelectedProject() as any;
+           this.projects = this.settingsService.getSettings().dbs.slice(0);
     }
 
     public reset() {

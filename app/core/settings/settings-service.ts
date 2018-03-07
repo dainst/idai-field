@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Messages} from 'idai-components-2/core';
+import {Messages, ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldAppConfigurator} from 'idai-components-2/field';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
@@ -36,7 +36,7 @@ export class SettingsService {
     private currentSyncUrl = '';
     private currentSyncTimeout: any;
 
-    public ready: Promise<any>;
+    public ready: Promise<ProjectConfiguration>;
 
 
     constructor(private imagestore: Imagestore,
@@ -60,18 +60,17 @@ export class SettingsService {
     public getUsername = () => this.settings.username;
 
 
-    public bootProject() {
+    public bootProject(): Promise<ProjectConfiguration> {
 
         const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
         const HIDDEN_CONFIGURATION_PATH = remote.getGlobal('hiddenConfigurationPath');
-
 
         this.ready = this.appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH)
             .then(pconf => {
 
                     return this.settingsSerializer.load()
                         .then(settings => this.updateSettings(settings))
-                        .then(() => this.pouchdbManager.setProject(this.getSelectedProject() as any, pconf))
+                        .then(() => this.pouchdbManager.setProject(this.getSelectedProject() as any))
                         .then(() => this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false))
                         .then(() => { if (this.settings.isSyncActive) return this.startSync();})
                         .then(() => {
@@ -87,7 +86,6 @@ export class SettingsService {
                         console.error('num errors in project configuration', msgsWithParams.length);
                     }
                 });
-
 
         return this.ready;
     }

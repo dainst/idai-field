@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild} from '@angular/core';
+import * as svgPanZoom from 'svg-pan-zoom';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {DotBuilder} from './dot-builder';
-import * as svgPanZoom from 'svg-pan-zoom';
 
 
 // TODO Use typings file from viz.js v1.8.1 as soon as it is released
@@ -41,6 +41,9 @@ declare namespace VizJs {
     }
 }
 
+
+type ElementType = 'node'|'edge'|undefined;
+type EdgeType = 'is-after'|'is-contemporary-with'|undefined;
 
 
 @Component({
@@ -144,37 +147,35 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private setHighlighting(element: Element, highlight: boolean) {
 
-        const elementType: 'node'|'edge'|undefined = GraphComponent.getElementType(element);
+        const elementType: ElementType = GraphComponent.getElementType(element);
 
         if (elementType == 'node') {
             this.setEdgesHighlighting(GraphComponent.getResourceId(element), highlight);
         } else if (elementType == 'edge') {
-            GraphComponent.setEdgeHighlighting(element, highlight, GraphComponent.getRelationType(element));
+            GraphComponent.setEdgeHighlighting(element, highlight, GraphComponent.getEdgeType(element));
         }
     }
 
 
     private setEdgesHighlighting(id: string, highlight: boolean) {
 
-        this.setEdgesHighlightingForRelation('is-after', id, highlight);
-        this.setEdgesHighlightingForRelation('is-contemporary-with', id, highlight);
+        this.setEdgesHighlightingForType('is-after', id, highlight);
+        this.setEdgesHighlightingForType('is-contemporary-with', id, highlight);
     }
 
 
-    private setEdgesHighlightingForRelation(relationType: 'is-after'|'is-contemporary-with'|undefined,
-                                            id: string, highlight: boolean) {
+    private setEdgesHighlightingForType(edgeType: EdgeType, id: string, highlight: boolean) {
 
         const edges: HTMLCollection
-            = this.graphContainer.nativeElement.getElementsByClassName(relationType + '-' + id);
+            = this.graphContainer.nativeElement.getElementsByClassName(edgeType + '-' + id);
 
         for (let i = 0; i < edges.length; i++) {
-            GraphComponent.setEdgeHighlighting(edges[i], highlight, relationType);
+            GraphComponent.setEdgeHighlighting(edges[i], highlight, edgeType);
         }
     }
 
 
-    private static setEdgeHighlighting(edge: Element, highlight: boolean,
-                                       relationType: 'is-after'|'is-contemporary-with'|undefined) {
+    private static setEdgeHighlighting(edge: Element, highlight: boolean, edgeType: EdgeType) {
 
         const color: string = highlight ? this.hoverColor : this.defaultColor;
         const strokeWidth: string = highlight ? '2' : '1';
@@ -183,7 +184,7 @@ export class GraphComponent implements OnInit, OnChanges {
         path.setAttribute('stroke', color);
         path.setAttribute('stroke-width', strokeWidth);
 
-        if (relationType == 'is-after') {
+        if (edgeType == 'is-after') {
             const polygon = edge.getElementsByTagName('polygon')[0];
             polygon.setAttribute('stroke', color);
             polygon.setAttribute('fill', color);
@@ -239,7 +240,7 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
-    private static getElementType(gElement: Element): 'node'|'edge'|undefined {
+    private static getElementType(gElement: Element): ElementType {
 
         if (gElement.id.startsWith('node')) {
             return 'node';
@@ -249,7 +250,7 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
-    private static getRelationType(edge: Element): 'is-after'|'is-contemporary-with'|undefined {
+    private static getEdgeType(edge: Element): EdgeType {
 
         const classAttribute: string|null = edge.getAttribute('class');
 

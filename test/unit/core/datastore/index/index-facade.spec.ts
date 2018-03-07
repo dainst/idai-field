@@ -1,4 +1,4 @@
-import {Query} from 'idai-components-2/datastore';
+import {Query} from 'idai-components-2/core';
 import {Static} from '../../../../subsystem/static';
 import {IndexFacade} from "../../../../../app/core/datastore/index/index-facade";
 

@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {PersistenceManager} from "../../../../app/core/persist/persistence-manager";
 
 /**

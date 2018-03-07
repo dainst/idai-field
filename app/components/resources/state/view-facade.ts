@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {NavigationPathManager} from './navigation-path-manager';
 import {DocumentsManager} from './documents-manager';

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var configuration_1 = require("idai-components-2/configuration");
+var core_1 = require("idai-components-2/core");
 var connected_docs_resolver_1 = require("../../../../app/core/persist/connected-docs-resolver");
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 describe('ConnectedDocsResolver', function () {
-    var projectConfiguration = new configuration_1.ProjectConfiguration({
+    var projectConfiguration = new core_1.ProjectConfiguration({
         'types': [],
         'relations': [
             {

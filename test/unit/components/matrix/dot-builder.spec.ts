@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {Static} from '../../../subsystem/static';
 import {DotBuilder} from '../../../../app/components/matrix/dot-builder';
 

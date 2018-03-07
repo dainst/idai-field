@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Messages} from 'idai-components-2/messages';
+import {Messages} from 'idai-components-2/core';
 import {Exporter} from '../../core/exporter/exporter';
 import {Serializer} from '../../core/exporter/serializer';
 import {NativeJsonlSerializer} from '../../core/exporter/native-jsonl-serializer';

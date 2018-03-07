@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var configuration_1 = require("idai-components-2/configuration");
+var core_1 = require("idai-components-2/core");
 var static_1 = require("./static");
 var idai_field_document_datastore_1 = require("../../app/core/datastore/idai-field-document-datastore");
 var idai_field_type_converter_1 = require("../../app/core/datastore/idai-field-type-converter");
@@ -49,7 +49,7 @@ var image_type_utility_1 = require("../../app/common/image-type-utility");
  */
 function main() {
     var _this = this;
-    var projectConfiguration = new configuration_1.ProjectConfiguration({
+    var projectConfiguration = new core_1.ProjectConfiguration({
         'types': [
             {
                 'type': 'Trench',

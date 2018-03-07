@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ConfigLoader} from 'idai-components-2/configuration';
+import {ConfigLoader} from 'idai-components-2/core';
 import {Document} from 'idai-components-2/core';
 import {M} from '../../m';
 import {Validations} from './validations';

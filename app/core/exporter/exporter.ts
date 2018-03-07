@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Serializer} from './serializer';
-import {Datastore} from 'idai-components-2/datastore';
+import {Datastore} from 'idai-components-2/core';
 import {M} from '../../m';
 
 const remote = require('electron').remote;

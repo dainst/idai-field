@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {IdaiFieldDocument} from 'idai-components-2/field';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {Static} from './static';
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/idai-field-document-datastore';
@@ -15,6 +15,7 @@ import {ImageTypeUtility} from '../../app/common/image-type-utility';
  * @author Daniel de Oliveira
  */
 export function main() {
+
 
     const projectConfiguration = new ProjectConfiguration({
         'types': [

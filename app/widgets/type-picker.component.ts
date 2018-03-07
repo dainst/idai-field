@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {IdaiType} from 'idai-components-2/configuration';
+import {IdaiType} from 'idai-components-2/core';
 
 @Component({
     selector: 'type-picker',

@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {DotBuilder} from './dot-builder';
 import * as svgPanZoom from 'svg-pan-zoom';
 

@@ -1,5 +1,5 @@
 import {Component, Input, ViewChild, ElementRef} from '@angular/core';
-import {Messages} from 'idai-components-2/messages';
+import {Messages} from 'idai-components-2/core';
 import {M} from '../../m';
 import {IdaiFieldGeoreference} from '../../core/model/idai-field-georeference';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';

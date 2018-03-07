@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ImportStrategy} from './import-strategy';
 import {SettingsService} from '../settings/settings-service';
 import {M} from '../../m';

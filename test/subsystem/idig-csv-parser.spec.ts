@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {IdigCsvParser} from '../../app/core/importer/idig-csv-parser';
 import {M} from '../../app/m';
 
@@ -8,6 +8,7 @@ import {M} from '../../app/m';
  * @author Thomas Kleinke
  */
 export function main() {
+
 
     describe('IdigCsvParser', () => {
 

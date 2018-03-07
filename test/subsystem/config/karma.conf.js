@@ -19,13 +19,16 @@ module.exports = function(config) {
             'node_modules/papaparse/papaparse.js',
             'node_modules/systemjs/dist/system.src.js',
             'node_modules/pouchdb/dist/pouchdb.js',
+            { pattern: 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/@angular/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/angular2-uuid/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false },
 
             // our stuff
-            { pattern: 'node_modules/idai-components-2/**/!(*spec).js', included: false, watched: false },
+            { pattern: 'node_modules/idai-components-2/core.js', included: false, watched: false },
+            { pattern: 'node_modules/idai-components-2/field.js', included: false, watched: false },
+            { pattern: 'node_modules/idai-components-2/src/**/!(*spec).js', included: false, watched: false },
             { pattern: 'node_modules/tsfun/**/!(*spec).js', included: false, watched: false },
             { pattern: 'app/**/*.js', included: false, watched: true },
             { pattern: 'config/*', included: false, watched: false },

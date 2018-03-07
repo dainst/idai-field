@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {ProjectConfiguration} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {Static} from './static';
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {ViewFacade} from '../../app/components/resources/state/view-facade';
@@ -18,6 +18,7 @@ import {OperationViews} from '../../app/components/resources/state/operation-vie
  * @author Daniel de Oliveira
  */
 export function main() {
+
 
     describe('ViewFacade/Subsystem', () => {
 

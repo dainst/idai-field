@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Document} from 'idai-components-2/core';
-import {ReadDatastore, Datastore} from 'idai-components-2/datastore';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {ReadDatastore, Datastore} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {DocumentCache} from './core/document-cache';
 import {PouchdbDatastore} from './core/pouchdb-datastore';
 import {ConstraintIndexer} from './index/constraint-indexer';

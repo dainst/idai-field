@@ -1,5 +1,5 @@
 import {Component, ElementRef} from '@angular/core';
-import {ConfigLoader} from 'idai-components-2/configuration';
+import {ConfigLoader} from 'idai-components-2/core';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
 
 @Component({

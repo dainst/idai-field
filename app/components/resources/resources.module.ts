@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiDocumentsModule} from 'idai-components-2/documents';
+import {IdaiDocumentsModule} from 'idai-components-2/core';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/detail/geometry-view.component';
@@ -20,7 +20,7 @@ import {DocumentViewSidebarComponent} from './map/detail/document-detail-sidebar
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {ViewFacade} from './state/view-facade';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {SettingsService} from '../../core/settings/settings-service';
 import {ListSidebarComponent} from './map/list/list-sidebar.component';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';
@@ -35,6 +35,7 @@ import {ResourcesSearchBarComponent} from './searchbar/resources-search-bar.comp
 import {SearchSuggestionsComponent} from './searchbar/search-suggestions.component';
 import {StandardStateSerializer} from "../../common/standard-state-serializer";
 import {StateSerializer} from "../../common/state-serializer";
+import {ViewDefinition} from './state/view-definition';
 
 const remote = require('electron').remote;
 
@@ -79,7 +80,26 @@ const remote = require('electron').remote;
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService) => {
 
-                const views = projectConfiguration.getViewsList();
+                const views: ViewDefinition[] = [
+                    {
+                        "label": "Ausgrabung",
+                        "mainType": "Trench",
+                        "name": "excavation",
+                        "operationSubtype": "Trench"
+                    },
+                    {
+                        "label": "Bauaufnahme",
+                        "mainType": "Building",
+                        "name": "Building",
+                        "operationSubtype": "Building"
+                    },
+                    {
+                        "label": "Survey",
+                        "mainType": "Survey",
+                        "name": "survey",
+                        "operationSubtype": "Survey"
+                    }
+                ];
                 for (let view of views) {
                     (view as any)['mainTypeLabel'] = projectConfiguration.getLabelForType(view.operationSubtype) as any;
                 }

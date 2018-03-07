@@ -1,6 +1,6 @@
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Injectable} from '@angular/core';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {ProjectConfiguration} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 
 
 @Injectable()

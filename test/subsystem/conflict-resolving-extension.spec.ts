@@ -6,6 +6,7 @@ import {ConflictResolvingExtension} from '../../app/core/datastore/core/conflict
  */
 export function main() {
 
+
     describe('ConflictResolvingExtension', () => {
 
         let originalRevision: Document;

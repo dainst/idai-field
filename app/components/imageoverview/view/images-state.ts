@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Query} from 'idai-components-2/datastore';
+import {Query} from 'idai-components-2/core';
 
 @Injectable()
 /**

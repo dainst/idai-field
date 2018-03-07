@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var configuration_1 = require("idai-components-2/configuration");
+var core_1 = require("idai-components-2/core");
 var static_1 = require("./static");
 var view_facade_1 = require("../../app/components/resources/state/view-facade");
 var resources_state_1 = require("../../app/components/resources/state/resources-state");
@@ -89,7 +89,7 @@ function main() {
                     case 0:
                         spyOn(console, 'debug'); // suppress console.debug
                         _a = static_1.Static.createPouchdbDatastore('testdb'), datastore = _a.datastore, documentCache = _a.documentCache, indexFacade = _a.indexFacade;
-                        idaiFieldDocumentDatastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(datastore, indexFacade, documentCache, new idai_field_type_converter_1.IdaiFieldTypeConverter(new image_type_utility_1.ImageTypeUtility(new configuration_1.ProjectConfiguration(pc))));
+                        idaiFieldDocumentDatastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(datastore, indexFacade, documentCache, new idai_field_type_converter_1.IdaiFieldTypeConverter(new image_type_utility_1.ImageTypeUtility(new core_1.ProjectConfiguration(pc))));
                         projectDocument = static_1.Static.doc('testdb', 'testdb', 'Project', 'testdb');
                         trenchDocument1 = static_1.Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
                         trenchDocument1.resource.relations['isRecordedIn'] = ['testdb'];

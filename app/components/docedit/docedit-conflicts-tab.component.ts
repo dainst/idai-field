@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/field';
 import {Action} from 'idai-components-2/core';
-import {Messages} from 'idai-components-2/messages';
-import {ConfigLoader} from 'idai-components-2/configuration';
-import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {Messages} from 'idai-components-2/core';
+import {ConfigLoader} from 'idai-components-2/core';
+import {DocumentEditChangeMonitor} from 'idai-components-2/core';
 import {IdaiFieldDiffUtility} from '../../core/model/idai-field-diff-utility';
 import {ChangeHistoryUtil} from '../../core/model/change-history-util';
 import {M} from '../../m';

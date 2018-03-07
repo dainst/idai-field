@@ -1,4 +1,4 @@
-import {ViewDefinition} from 'idai-components-2/configuration';
+import {ViewDefinition} from 'idai-components-2/field';
 
 /**
  * @author Thomas Kleinke

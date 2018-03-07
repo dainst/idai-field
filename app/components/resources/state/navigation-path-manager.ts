@@ -1,6 +1,6 @@
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ResourcesState} from './resources-state';
 import {NavigationPath} from './navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';

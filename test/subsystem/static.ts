@@ -1,5 +1,5 @@
 import {Document, NewDocument} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ConstraintIndexer} from '../../app/core/datastore/index/constraint-indexer';
 import {FulltextIndexer} from '../../app/core/datastore/index/fulltext-indexer';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';

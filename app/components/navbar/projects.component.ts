@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, TemplateRef} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Messages} from 'idai-components-2/messages';
+import {Messages} from 'idai-components-2/core';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../../m';
 import {DoceditComponent} from "../docedit/docedit.component";

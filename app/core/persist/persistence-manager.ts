@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Query} from 'idai-components-2/datastore';
+import {Query} from 'idai-components-2/core';
 import {Document, NewDocument, Resource} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {ConnectedDocsResolver} from './connected-docs-resolver';
 import {M} from '../../m';
 import {DocumentDatastore} from '../datastore/document-datastore';

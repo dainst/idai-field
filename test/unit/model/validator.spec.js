@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var configuration_1 = require("idai-components-2/configuration");
+var core_1 = require("idai-components-2/core");
 var validator_1 = require("../../../app/core/model/validator");
 var m_1 = require("../../../app/m");
 /**
@@ -8,7 +8,7 @@ var m_1 = require("../../../app/m");
  * @author Thomas Kleinke
  */
 describe('Validator', function () {
-    var projectConfiguration = new configuration_1.ProjectConfiguration({
+    var projectConfiguration = new core_1.ProjectConfiguration({
         types: [
             {
                 type: 'T',

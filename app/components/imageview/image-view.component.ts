@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Messages} from 'idai-components-2/messages';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {Messages} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/field';
+import {DocumentEditChangeMonitor} from 'idai-components-2/core';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {ObjectUtil} from '../../util/object-util';

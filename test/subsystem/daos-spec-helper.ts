@@ -1,4 +1,4 @@
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldImageDocumentDatastore} from "../../app/core/datastore/idai-field-image-document-datastore";
 import {IdaiFieldDocumentDatastore} from "../../app/core/datastore/idai-field-document-datastore";
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';

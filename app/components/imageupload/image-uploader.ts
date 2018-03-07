@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
-import {IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
+import {IdaiType, ProjectConfiguration} from 'idai-components-2/core';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {SettingsService} from '../../core/settings/settings-service';

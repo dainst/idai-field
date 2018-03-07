@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var datastore_1 = require("idai-components-2/datastore");
+var core_1 = require("idai-components-2/core");
 var static_1 = require("./static");
 /**
  * @author Daniel de Oliveira
@@ -144,7 +144,7 @@ function main() {
             expectErr(function () {
                 return datastore.create(docToCreate1)
                     .then(function () { return datastore.create(docToCreate2); });
-            }, [datastore_1.DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS], done);
+            }, [core_1.DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS], done);
         });
         it('should not create if created not present', function (done) { return __awaiter(_this, void 0, void 0, function () {
             var doc, expected_1;
@@ -163,7 +163,7 @@ function main() {
                         return [3 /*break*/, 4];
                     case 3:
                         expected_1 = _a.sent();
-                        expect(expected_1[0]).toBe(datastore_1.DatastoreErrors.INVALID_DOCUMENT);
+                        expect(expected_1[0]).toBe(core_1.DatastoreErrors.INVALID_DOCUMENT);
                         return [3 /*break*/, 4];
                     case 4:
                         done();
@@ -214,7 +214,7 @@ function main() {
                         return [3 /*break*/, 3];
                     case 2:
                         expected_2 = _a.sent();
-                        expect(expected_2[0]).toBe(datastore_1.DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
+                        expect(expected_2[0]).toBe(core_1.DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
                         return [3 /*break*/, 3];
                     case 3:
                         done();
@@ -239,7 +239,7 @@ function main() {
                         return [3 /*break*/, 4];
                     case 3:
                         expected_3 = _a.sent();
-                        expect(expected_3[0]).toBe(datastore_1.DatastoreErrors.INVALID_DOCUMENT);
+                        expect(expected_3[0]).toBe(core_1.DatastoreErrors.INVALID_DOCUMENT);
                         return [3 /*break*/, 4];
                     case 4:
                         done();
@@ -260,7 +260,7 @@ function main() {
                         return [3 /*break*/, 3];
                     case 2:
                         expectedErr_1 = _a.sent();
-                        expect(expectedErr_1[0]).toBe(datastore_1.DatastoreErrors.DOCUMENT_NOT_FOUND);
+                        expect(expectedErr_1[0]).toBe(core_1.DatastoreErrors.DOCUMENT_NOT_FOUND);
                         return [3 /*break*/, 3];
                     case 3:
                         done();
@@ -300,14 +300,14 @@ function main() {
                             return [2 /*return*/];
                     }
                 });
-            }); }, [datastore_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);
+            }); }, [core_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);
         });
         // refresh
         it('should reject with keyOfM in when trying to refresh a non existing document', function (done) {
             expectErr(function () {
                 return datastore.create(static_1.Static.doc('id1'))
                     .then(function () { return datastore.fetch('nonexistingid'); });
-            }, [datastore_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);
+            }, [core_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);
         });
         // remove
         it('should remove if existent', function (done) {
@@ -316,15 +316,15 @@ function main() {
                 return datastore.create(d)
                     .then(function () { return datastore.remove(d); })
                     .then(function () { return datastore.fetch(d['resource']['id']); });
-            }, [datastore_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);
+            }, [core_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);
         });
         it('should throw error when no resource id', function (done) {
-            expectErr(function () { return datastore.remove(static_1.Static.doc('sd2')); }, [datastore_1.DatastoreErrors.DOCUMENT_NO_RESOURCE_ID], done);
+            expectErr(function () { return datastore.remove(static_1.Static.doc('sd2')); }, [core_1.DatastoreErrors.DOCUMENT_NO_RESOURCE_ID], done);
         });
         it('should throw error when trying to remove and not existent', function (done) {
             var d = static_1.Static.doc('sd1');
             d['resource']['id'] = 'hoax';
-            expectErr(function () { return datastore.remove(d); }, [datastore_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);
+            expectErr(function () { return datastore.remove(d); }, [core_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);
         });
     });
 }

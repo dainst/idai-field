@@ -1,4 +1,4 @@
-import {FieldDefinition, ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
+import {FieldDefinition, ProjectConfiguration, RelationDefinition} from 'idai-components-2/core';
 import {Resource} from 'idai-components-2/core';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../util/number-util';
 

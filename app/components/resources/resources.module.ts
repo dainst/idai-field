@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiDocumentsModule} from 'idai-components-2/documents';
+import {IdaiDocumentsModule} from 'idai-components-2/core';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/detail/geometry-view.component';
@@ -20,7 +20,7 @@ import {DocumentViewSidebarComponent} from './map/detail/document-detail-sidebar
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {ViewFacade} from './state/view-facade';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {SettingsService} from '../../core/settings/settings-service';
 import {ListSidebarComponent} from './map/list/list-sidebar.component';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/idai-field-document-datastore';

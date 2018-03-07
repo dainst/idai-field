@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as fs from 'fs';
-import {ConfigLoader} from 'idai-components-2/configuration';
+import {ConfigLoader} from 'idai-components-2/core';
 import {DOCS} from './idai-field-sample-objects';
 import {Converter} from '../imagestore/converter';
 import {SampleDataLoader} from './core/sample-data-loader';

@@ -1,6 +1,6 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {ImageUploader, ImageUploadResult} from '../imageupload/image-uploader';
-import {Messages} from 'idai-components-2/messages';
+import {Messages} from 'idai-components-2/core';
 
 @Component({
     selector: 'drop-area',

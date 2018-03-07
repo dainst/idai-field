@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Query} from 'idai-components-2/datastore';
+import {Query} from 'idai-components-2/core';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {ViewFacade} from '../../resources/state/view-facade';
 import {ImagesState} from './images-state';

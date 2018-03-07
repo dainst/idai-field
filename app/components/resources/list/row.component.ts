@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Messages} from 'idai-components-2/messages';
-import {IdaiType} from 'idai-components-2/configuration';
+import {IdaiFieldDocument} from 'idai-components-2/field';
+import {Messages} from 'idai-components-2/core';
+import {IdaiType} from 'idai-components-2/core';
 import {M} from '../../../m';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';

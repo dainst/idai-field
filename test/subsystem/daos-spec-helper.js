@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var configuration_1 = require("idai-components-2/configuration");
+var core_1 = require("idai-components-2/core");
 var idai_field_image_document_datastore_1 = require("../../app/core/datastore/idai-field-image-document-datastore");
 var idai_field_document_datastore_1 = require("../../app/core/datastore/idai-field-document-datastore");
 var document_datastore_1 = require("../../app/core/datastore/document-datastore");
@@ -12,7 +12,7 @@ var static_1 = require("./static");
  */
 var DAOsSpecHelper = (function () {
     function DAOsSpecHelper() {
-        this.projectConfiguration = new configuration_1.ProjectConfiguration({
+        this.projectConfiguration = new core_1.ProjectConfiguration({
             'types': [
                 {
                     'type': 'Trench',

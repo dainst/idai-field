@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {MapComponent} from 'idai-components-2/idai-field-map';
-import {Messages} from 'idai-components-2/messages';
-import {ConfigLoader} from 'idai-components-2/configuration';
+import {IdaiFieldDocument} from 'idai-components-2/field';
+import {MapComponent} from 'idai-components-2/field';
+import {Messages} from 'idai-components-2/core';
+import {ConfigLoader} from 'idai-components-2/core';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
 import {LayerManager, ListDiffResult} from './layer-manager';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';

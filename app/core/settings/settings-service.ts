@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Messages} from 'idai-components-2/messages';
+import {Messages} from 'idai-components-2/core';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';

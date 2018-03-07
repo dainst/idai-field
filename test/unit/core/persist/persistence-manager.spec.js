@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var configuration_1 = require("idai-components-2/configuration");
+var core_1 = require("idai-components-2/core");
 var persistence_manager_1 = require("../../../../app/core/persist/persistence-manager");
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 describe('PersistenceManager', function () {
-    var projectConfiguration = new configuration_1.ProjectConfiguration({
+    var projectConfiguration = new core_1.ProjectConfiguration({
         'types': [],
         'relations': [
             {

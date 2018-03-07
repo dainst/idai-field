@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {IdaiFieldConflictResolver} from '../../../app/core/model/idai-field-conflict-resolver';
 
 /**

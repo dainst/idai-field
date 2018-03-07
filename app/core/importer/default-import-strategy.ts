@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
+import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/core';
 import {ImportStrategy} from './import-strategy';
 import {SettingsService} from '../settings/settings-service';
 import {M} from '../../m';

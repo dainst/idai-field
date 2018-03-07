@@ -1,8 +1,8 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} from '@angular/core';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/field';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
-import {IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from "idai-components-2/idai-field-map";
+import {IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from "idai-components-2/field";
 
 declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
                      _layer: any } }

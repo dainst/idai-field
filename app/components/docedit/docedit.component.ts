@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
-import {Messages} from 'idai-components-2/messages';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {Messages} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {ImageTypeUtility} from '../../common/image-type-utility';
 import {ObjectUtil} from '../../util/object-util';
@@ -13,7 +13,7 @@ import {DeleteModalComponent} from './delete-modal.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
-import {DatastoreErrors} from 'idai-components-2/datastore';
+import {DatastoreErrors} from 'idai-components-2/core';
 import {Observer} from 'rxjs/Observer';
 
 

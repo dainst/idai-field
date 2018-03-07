@@ -1,4 +1,4 @@
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {ConnectedDocsResolver} from "../../../../app/core/persist/connected-docs-resolver";
 
 

@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Document} from 'idai-components-2/core';
-import {Messages} from 'idai-components-2/messages';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+import {Messages} from 'idai-components-2/core';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/field';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';

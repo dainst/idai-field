@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {DotBuilder} from './dot-builder';
 import * as svgPanZoom from 'svg-pan-zoom';
@@ -51,16 +51,27 @@ declare namespace VizJs {
 /**
  * @author Thomas Kleinke
  */
-export class GraphComponent implements OnChanges {
+export class GraphComponent implements OnInit, OnChanges {
 
     @Input() documents: Array<IdaiFieldDocument>;
 
     @ViewChild('graphContainer') graphContainer: ElementRef;
 
+    private hoverNodeId: string|undefined;
+
     private static maxRealZoom: number = 2;
+    private static hoverColor: string = '#6e95de';
+    private static defaultColor: string = '#000000';
 
 
-    constructor(private dotBuilder: DotBuilder) {}
+    constructor(private dotBuilder: DotBuilder,
+                private renderer: Renderer2) {}
+
+
+    ngOnInit() {
+
+        this.initializeMouseEventListener();
+    }
 
 
     ngOnChanges() {
@@ -118,5 +129,82 @@ export class GraphComponent implements OnChanges {
 
         panZoomBehavior.setMinZoom(1);
         panZoomBehavior.setMaxZoom(GraphComponent.maxRealZoom / panZoomBehavior.getSizes().realZoom);
+    }
+
+
+    private initializeMouseEventListener() {
+
+        this.renderer.listen(this.graphContainer.nativeElement, 'mousemove', event => {
+            this.handleMouseEnterEvent(event);
+        });
+    }
+
+
+    private handleMouseEnterEvent(event: MouseEvent) {
+
+        const gElement: HTMLElement|undefined = GraphComponent.getGElement(event.target as HTMLElement);
+
+        if (!gElement) return;
+
+        if (gElement.id.startsWith('node')) {
+            this.setHoverNodeId(GraphComponent.getResourceId(gElement));
+        } else if (this.hoverNodeId) {
+            this.setEdgesHighlighting(this.hoverNodeId, false);
+            this.hoverNodeId = undefined;
+        }
+    }
+
+
+    private setHoverNodeId(id: string) {
+
+        if (this.hoverNodeId == id) return;
+
+        if (this.hoverNodeId) this.setEdgesHighlighting(this.hoverNodeId, false);
+        this.setEdgesHighlighting(id, true);
+
+        this.hoverNodeId = id;
+    }
+
+
+    private setEdgesHighlighting(id: string, highlight: boolean) {
+
+        const edges: HTMLCollection
+            = this.graphContainer.nativeElement.getElementsByClassName('is-after-' + id);
+
+        for (let i = 0; i < edges.length; i++) {
+            this.setEdgeHighlighting(edges[i], highlight);
+        }
+    }
+
+
+    private setEdgeHighlighting(edge: Element, highlight: boolean) {
+
+        const path = edge.getElementsByTagName('path')[0];
+        const polygon = edge.getElementsByTagName('polygon')[0];
+
+        const color: string = highlight ? GraphComponent.hoverColor : GraphComponent.defaultColor;
+        const strokeWidth: string = highlight ? '2' : '1';
+
+        path.setAttribute('stroke', color);
+        path.setAttribute('stroke-width', strokeWidth);
+        polygon.setAttribute('stroke', color);
+        polygon.setAttribute('fill', color);
+    }
+
+
+    private static getGElement(element: HTMLElement): HTMLElement|undefined {
+
+        do {
+            if (element.tagName == 'g') return element;
+            element = element.parentNode as HTMLElement;
+        } while (element);
+
+        return undefined;
+    }
+
+
+    private static getResourceId(gElement: HTMLElement): string {
+
+        return gElement.id.substring(gElement.id.indexOf('-') + 1)
     }
 }

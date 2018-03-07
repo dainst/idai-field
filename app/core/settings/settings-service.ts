@@ -60,7 +60,7 @@ export class SettingsService {
     public getUsername = () => this.settings.username;
 
 
-    public bootApplication() {
+    public bootProject() {
 
         const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
         const HIDDEN_CONFIGURATION_PATH = remote.getGlobal('hiddenConfigurationPath');

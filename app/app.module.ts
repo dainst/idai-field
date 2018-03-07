@@ -80,7 +80,7 @@ let pconf: any = undefined;
             multi: true,
             deps: [SettingsService],
             useFactory: (settingsService: SettingsService) =>
-                 () => settingsService.bootApplication().then(proconf => pconf = proconf)
+                 () => settingsService.bootProject().then(proconf => pconf = proconf)
         },
         AppState,
         SettingsService,

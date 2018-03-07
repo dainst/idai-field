@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Messages} from 'idai-components-2/core';
+import {IdaiFieldAppConfigurator} from 'idai-components-2/field';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
@@ -41,7 +42,8 @@ export class SettingsService {
     constructor(private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager,
                 private appState: AppState,
-                private messages: Messages) {
+                private messages: Messages,
+                private appConfigurator: IdaiFieldAppConfigurator) {
     }
 
 
@@ -58,16 +60,34 @@ export class SettingsService {
     public getUsername = () => this.settings.username;
 
 
-    public init() {
+    public bootApplication() {
 
-        this.ready = this.settingsSerializer.load()
-            .then(settings => this.updateSettings(settings))
-            .then(() => this.pouchdbManager.setProject(this.getSelectedProject() as any))
-            .then(() => this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false))
-            .then(() => {
-                if (this.settings.isSyncActive)
-                    return this.startSync();
-            });
+        const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
+        const HIDDEN_CONFIGURATION_PATH = remote.getGlobal('hiddenConfigurationPath');
+
+
+        this.ready = this.appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH)
+            .then(pconf => {
+
+                    return this.settingsSerializer.load()
+                        .then(settings => this.updateSettings(settings))
+                        .then(() => this.pouchdbManager.setProject(this.getSelectedProject() as any, pconf))
+                        .then(() => this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false))
+                        .then(() => { if (this.settings.isSyncActive) return this.startSync();})
+                        .then(() => {
+                            return pconf;
+                        })
+                },
+                (msgsWithParams: any) => {
+
+                    msgsWithParams.forEach((msg: any) => {
+                        console.error('err in project configuration', msg)
+                    });
+                    if (msgsWithParams.length > 1) {
+                        console.error('num errors in project configuration', msgsWithParams.length);
+                    }
+                });
+
 
         return this.ready;
     }

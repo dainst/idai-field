@@ -50,7 +50,7 @@ export class Static {
             conflictResolvingExtension,
             conflictResolver,
             false);
-        pouchdbManager.setProject(dbname);
+        pouchdbManager.setProject(dbname, undefined);
 
         return {
             datastore: datastore,

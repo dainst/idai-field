@@ -5,6 +5,7 @@ import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
 import {SyncState} from './sync-state';
 import {IndexFacade} from '../index/index-facade';
+import {ProjectConfiguration} from 'idai-components-2/core';
 
 const remote = require('electron').remote;
 
@@ -24,7 +25,7 @@ export class PouchdbManager {
     private syncHandles = [];
 
     private resolveDbReady: Function|undefined = undefined;
-
+    private projectConfiguration: ProjectConfiguration|undefined;
 
     constructor(private sampleDataLoader: SampleDataLoader,
                 private indexFacade: IndexFacade) {
@@ -38,11 +39,13 @@ export class PouchdbManager {
 
         const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
         Object.assign(this.dbProxy, new PouchdbProxy(dbReady));
-        this.setProject('test');
+        this.setProject('test', this.projectConfiguration);
     }
 
 
-    public setProject(name: string) {
+    public setProject(name: string, projectConfiguration: ProjectConfiguration|undefined) {
+
+        if (projectConfiguration) this.projectConfiguration = projectConfiguration;
 
         this.name = name;
 
@@ -60,10 +63,10 @@ export class PouchdbManager {
             rdy = rdy.then(() => this.db.destroy()).then(() => this.createPouchDBObject(name));
         }
         if (name == 'test') {
-            rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name as any));
+            rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name as any, projectConfiguration as any));
         }
 
-        rdy.then(() => this.index());
+        return rdy.then(() => this.index());
     }
 
 

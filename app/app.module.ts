@@ -78,26 +78,9 @@ let pconf: any = undefined;
         {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [IdaiFieldAppConfigurator, SettingsService],
-            useFactory: function(appConfigurator: IdaiFieldAppConfigurator, settingsService: SettingsService) {
-
-                return () => {
-                    const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
-                    const HIDDEN_CONFIGURATION_PATH = remote.getGlobal('hiddenConfigurationPath');
-
-                    return appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH).then((pc: any) => {
-                        pconf = pc as any;
-                    }).catch((msgsWithParams: any) => {
-                        msgsWithParams.forEach((msg: any) => {
-                            console.error('err in project configuration', msg)
-                        });
-                        if (msgsWithParams.length > 1) {
-                            console.error('num errors in project configuration', msgsWithParams.length);
-                        }
-                    })
-                    .then(() => settingsService.init());
-                }
-            }
+            deps: [SettingsService],
+            useFactory: (settingsService: SettingsService) =>
+                 () => settingsService.bootApplication().then(proconf => pconf = proconf)
         },
         AppState,
         SettingsService,

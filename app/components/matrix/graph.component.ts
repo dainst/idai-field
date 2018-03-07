@@ -92,9 +92,9 @@ export class GraphComponent implements OnInit, OnChanges {
     private showGraph() {
 
         const svg: SVGSVGElement = this.getSvg();
-        this.removeTitleElements(svg);
+        GraphComponent.removeTitleElements(svg);
         this.graphContainer.nativeElement.appendChild(svg);
-        this.configurePanZoomBehavior(svg);
+        GraphComponent.configurePanZoomBehavior(svg);
     }
 
 
@@ -105,37 +105,6 @@ export class GraphComponent implements OnInit, OnChanges {
 
         return new DOMParser().parseFromString(svg, 'image/svg+xml')
             .getElementsByTagName('svg')[0]
-    }
-
-
-    private removeTitleElements(svg: SVGSVGElement) {
-
-        const rootElement: SVGGElement = svg.getElementsByTagName('g')[0];
-        rootElement.removeChild(rootElement.getElementsByTagName('title')[0]);
-
-        for (let i = 0; i < rootElement.children.length; i++) {
-            const titleElements: NodeListOf<HTMLTitleElement>
-                = rootElement.children[i].getElementsByTagName('title');
-            if (titleElements.length == 1) rootElement.children[i].removeChild(titleElements[0]);
-        }
-    }
-
-
-    private configurePanZoomBehavior(svg: SVGSVGElement) {
-
-        const panZoomBehavior: SvgPanZoom.Instance = svgPanZoom(svg, {
-            dblClickZoomEnabled: false
-        });
-
-        const maxZoom: number = GraphComponent.maxRealZoom / panZoomBehavior.getSizes().realZoom;
-
-        if (panZoomBehavior.getSizes().realZoom > GraphComponent.maxRealZoom) {
-            panZoomBehavior.zoom(maxZoom);
-            panZoomBehavior.disableZoom();
-        } else {
-            panZoomBehavior.setMinZoom(1);
-            panZoomBehavior.setMaxZoom(maxZoom);
-        }
     }
 
 
@@ -186,14 +155,14 @@ export class GraphComponent implements OnInit, OnChanges {
             = this.graphContainer.nativeElement.getElementsByClassName(relationType + '-' + id);
 
         for (let i = 0; i < edges.length; i++) {
-            this.setEdgeHighlighting(edges[i], highlight, relationType);
+            GraphComponent.setEdgeHighlighting(edges[i], highlight, relationType);
         }
     }
 
 
-    private setEdgeHighlighting(edge: Element, highlight: boolean, relationType: string) {
+    private static setEdgeHighlighting(edge: Element, highlight: boolean, relationType: string) {
 
-        const color: string = highlight ? GraphComponent.hoverColor : GraphComponent.defaultColor;
+        const color: string = highlight ? this.hoverColor : this.defaultColor;
         const strokeWidth: string = highlight ? '2' : '1';
 
         const path = edge.getElementsByTagName('path')[0];
@@ -204,6 +173,37 @@ export class GraphComponent implements OnInit, OnChanges {
             const polygon = edge.getElementsByTagName('polygon')[0];
             polygon.setAttribute('stroke', color);
             polygon.setAttribute('fill', color);
+        }
+    }
+
+
+    private static removeTitleElements(svg: SVGSVGElement) {
+
+        const rootElement: SVGGElement = svg.getElementsByTagName('g')[0];
+        rootElement.removeChild(rootElement.getElementsByTagName('title')[0]);
+
+        for (let i = 0; i < rootElement.children.length; i++) {
+            const titleElements: NodeListOf<HTMLTitleElement>
+                = rootElement.children[i].getElementsByTagName('title');
+            if (titleElements.length == 1) rootElement.children[i].removeChild(titleElements[0]);
+        }
+    }
+
+
+    private static configurePanZoomBehavior(svg: SVGSVGElement) {
+
+        const panZoomBehavior: SvgPanZoom.Instance = svgPanZoom(svg, {
+            dblClickZoomEnabled: false
+        });
+
+        const maxZoom: number = GraphComponent.maxRealZoom / panZoomBehavior.getSizes().realZoom;
+
+        if (panZoomBehavior.getSizes().realZoom > GraphComponent.maxRealZoom) {
+            panZoomBehavior.zoom(maxZoom);
+            panZoomBehavior.disableZoom();
+        } else {
+            panZoomBehavior.setMinZoom(1);
+            panZoomBehavior.setMaxZoom(maxZoom);
         }
     }
 

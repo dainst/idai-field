@@ -32,7 +32,7 @@ export class DotBuilder {
 
     private createNodeDefinitions(): string {
 
-        return 'node [style=filled] '
+        return 'node [style=filled, fontname="Roboto"] '
             + this.getGraphDocuments().map(document => this.createNodeDefinition(document))
                 .join('');
     }

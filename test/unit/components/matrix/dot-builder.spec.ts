@@ -34,7 +34,7 @@ describe('DotBuilder', () => {
         const graph: string = dotBuilder.build([feature1, feature2]);
 
         expect(graph).toEqual('digraph { ' +
-            'node [style=filled] ' +
+            'node [style=filled, fontname="Roboto"] ' +
             'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
             '{rank=min feature1} ' +
@@ -57,7 +57,7 @@ describe('DotBuilder', () => {
         const graph: string = dotBuilder.build([feature1, feature2, feature3]);
 
         expect(graph).toEqual('digraph { ' +
-            'node [style=filled] ' +
+            'node [style=filled, fontname="Roboto"] ' +
             'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
@@ -86,7 +86,7 @@ describe('DotBuilder', () => {
 
         expect(graph).toEqual(
             'digraph { ' +
-            'node [style=filled] ' +
+            'node [style=filled, fontname="Roboto"] ' +
             'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
@@ -124,7 +124,7 @@ describe('DotBuilder', () => {
 
         expect(graph).toEqual(
             'digraph { ' +
-            'node [style=filled] ' +
+            'node [style=filled, fontname="Roboto"] ' +
             'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
@@ -190,7 +190,7 @@ describe('DotBuilder', () => {
 
         expect(graph).toEqual(
             'digraph { ' +
-            'node [style=filled] ' +
+            'node [style=filled, fontname="Roboto"] ' +
             'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
@@ -238,7 +238,7 @@ describe('DotBuilder', () => {
 
         expect(graph).toEqual(
             'digraph { ' +
-            'node [style=filled] ' +
+            'node [style=filled, fontname="Roboto"] ' +
             'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +

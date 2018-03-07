@@ -21,7 +21,7 @@ describe('DotBuilder', function () {
         feature2.resource.relations['isBefore'] = ['f1'];
         var graph = dotBuilder.build([feature1, feature2]);
         expect(graph).toEqual('digraph { ' +
-            'node [style=filled] ' +
+            'node [style=filled, fontname="Roboto"] ' +
             'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
             '{rank=min feature1} ' +
@@ -37,7 +37,7 @@ describe('DotBuilder', function () {
         feature3.resource.relations['isBefore'] = ['f1'];
         var graph = dotBuilder.build([feature1, feature2, feature3]);
         expect(graph).toEqual('digraph { ' +
-            'node [style=filled] ' +
+            'node [style=filled, fontname="Roboto"] ' +
             'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
@@ -58,7 +58,7 @@ describe('DotBuilder', function () {
         feature4.resource.relations['isBefore'] = ['f2', 'f3'];
         var graph = dotBuilder.build([feature1, feature2, feature3, feature4]);
         expect(graph).toEqual('digraph { ' +
-            'node [style=filled] ' +
+            'node [style=filled, fontname="Roboto"] ' +
             'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
@@ -86,7 +86,7 @@ describe('DotBuilder', function () {
             feature1, feature2, feature3, feature4, feature5
         ]);
         expect(graph).toEqual('digraph { ' +
-            'node [style=filled] ' +
+            'node [style=filled, fontname="Roboto"] ' +
             'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
@@ -144,7 +144,7 @@ describe('DotBuilder', function () {
             feature13, feature14
         ]);
         expect(graph).toEqual('digraph { ' +
-            'node [style=filled] ' +
+            'node [style=filled, fontname="Roboto"] ' +
             'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
@@ -182,7 +182,7 @@ describe('DotBuilder', function () {
         feature4.resource.relations['isBefore'] = ['f3'];
         var graph = dotBuilder.build([feature1, feature2, feature3, feature4]);
         expect(graph).toEqual('digraph { ' +
-            'node [style=filled] ' +
+            'node [style=filled, fontname="Roboto"] ' +
             'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
             'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +

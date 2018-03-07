@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {ViewDefinition} from 'idai-components-2/field';
 import {ViewFacade} from '../resources/state/view-facade';
+import {ViewDefinition} from '../resources/state/view-definition';
 
 @Component({
     moduleId: module.id,

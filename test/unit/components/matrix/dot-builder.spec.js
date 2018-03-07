@@ -7,7 +7,12 @@ var dot_builder_1 = require("../../../../app/components/matrix/dot-builder");
  * @author Thomas Kleinke
  */
 describe('DotBuilder', function () {
-    var dotBuilder = new dot_builder_1.DotBuilder();
+    var dotBuilder;
+    beforeAll(function () {
+        var mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration', ['getColorForType']);
+        mockProjectConfiguration.getColorForType.and.returnValue('#ffffff');
+        dotBuilder = new dot_builder_1.DotBuilder(mockProjectConfiguration);
+    });
     it('build dot string for simple graph', function () {
         var feature1 = static_1.Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
         var feature2 = static_1.Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
@@ -15,6 +20,9 @@ describe('DotBuilder', function () {
         feature2.resource.relations['isBefore'] = ['f1'];
         var graph = dotBuilder.build([feature1, feature2]);
         expect(graph).toEqual('digraph { ' +
+            'node [style=filled] ' +
+            'feature1 [fillcolor="#ffffff"] ' +
+            'feature2 [fillcolor="#ffffff"] ' +
             '{rank=min feature1} ' +
             'feature1 -> feature2 ' +
             '}');
@@ -28,6 +36,10 @@ describe('DotBuilder', function () {
         feature3.resource.relations['isBefore'] = ['f1'];
         var graph = dotBuilder.build([feature1, feature2, feature3]);
         expect(graph).toEqual('digraph { ' +
+            'node [style=filled] ' +
+            'feature1 [fillcolor="#ffffff"] ' +
+            'feature2 [fillcolor="#ffffff"] ' +
+            'feature3 [fillcolor="#ffffff"] ' +
             '{rank=min feature1} ' +
             'feature1 -> {feature2, feature3} ' +
             '}');
@@ -45,6 +57,11 @@ describe('DotBuilder', function () {
         feature4.resource.relations['isBefore'] = ['f2', 'f3'];
         var graph = dotBuilder.build([feature1, feature2, feature3, feature4]);
         expect(graph).toEqual('digraph { ' +
+            'node [style=filled] ' +
+            'feature1 [fillcolor="#ffffff"] ' +
+            'feature2 [fillcolor="#ffffff"] ' +
+            'feature3 [fillcolor="#ffffff"] ' +
+            'feature4 [fillcolor="#ffffff"] ' +
             '{rank=min feature1} ' +
             'feature1 -> {feature2, feature3} ' +
             'feature2 -> feature4 ' +
@@ -68,6 +85,12 @@ describe('DotBuilder', function () {
             feature1, feature2, feature3, feature4, feature5
         ]);
         expect(graph).toEqual('digraph { ' +
+            'node [style=filled] ' +
+            'feature1 [fillcolor="#ffffff"] ' +
+            'feature2 [fillcolor="#ffffff"] ' +
+            'feature3 [fillcolor="#ffffff"] ' +
+            'feature4 [fillcolor="#ffffff"] ' +
+            'feature5 [fillcolor="#ffffff"] ' +
             '{rank=min feature1} ' +
             'feature1 -> feature2 ' +
             'feature2 -> feature5 ' +
@@ -117,6 +140,21 @@ describe('DotBuilder', function () {
             feature13, feature14
         ]);
         expect(graph).toEqual('digraph { ' +
+            'node [style=filled] ' +
+            'feature1 [fillcolor="#ffffff"] ' +
+            'feature2 [fillcolor="#ffffff"] ' +
+            'feature3 [fillcolor="#ffffff"] ' +
+            'feature4 [fillcolor="#ffffff"] ' +
+            'feature5 [fillcolor="#ffffff"] ' +
+            'feature6 [fillcolor="#ffffff"] ' +
+            'feature7 [fillcolor="#ffffff"] ' +
+            'feature8 [fillcolor="#ffffff"] ' +
+            'feature9 [fillcolor="#ffffff"] ' +
+            'feature10 [fillcolor="#ffffff"] ' +
+            'feature11 [fillcolor="#ffffff"] ' +
+            'feature12 [fillcolor="#ffffff"] ' +
+            'feature13 [fillcolor="#ffffff"] ' +
+            'feature14 [fillcolor="#ffffff"] ' +
             '{rank=min feature1} ' +
             'feature1 -> {feature2, feature3, feature4, feature5, feature6} ' +
             'feature2 -> {feature7, feature8} ' +
@@ -140,6 +178,11 @@ describe('DotBuilder', function () {
         feature4.resource.relations['isBefore'] = ['f3'];
         var graph = dotBuilder.build([feature1, feature2, feature3, feature4]);
         expect(graph).toEqual('digraph { ' +
+            'node [style=filled] ' +
+            'feature1 [fillcolor="#ffffff"] ' +
+            'feature2 [fillcolor="#ffffff"] ' +
+            'feature3 [fillcolor="#ffffff"] ' +
+            'feature4 [fillcolor="#ffffff"] ' +
             '{rank=min feature1} ' +
             'feature1 -> feature2 ' +
             'feature3 -> feature4 ' +

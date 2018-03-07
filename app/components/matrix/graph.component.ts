@@ -60,6 +60,9 @@ export class GraphComponent implements OnChanges {
     private static maxRealZoom: number = 2;
 
 
+    constructor(private dotBuilder: DotBuilder) {}
+
+
     ngOnChanges() {
 
         this.reset();
@@ -86,7 +89,7 @@ export class GraphComponent implements OnChanges {
 
     private getSvg(): SVGSVGElement {
 
-        const graph: string = new DotBuilder().build(this.documents);
+        const graph: string = this.dotBuilder.build(this.documents);
         const svg: string = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
 
         return new DOMParser().parseFromString(svg, 'image/svg+xml')

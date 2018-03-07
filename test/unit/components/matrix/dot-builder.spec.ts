@@ -10,7 +10,16 @@ import {DotBuilder} from '../../../../app/components/matrix/dot-builder';
 
 describe('DotBuilder', () => {
 
-    const dotBuilder: DotBuilder = new DotBuilder();
+    let dotBuilder: DotBuilder;
+
+    beforeAll(() => {
+
+        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration',
+            ['getColorForType']);
+        mockProjectConfiguration.getColorForType.and.returnValue('#ffffff');
+
+        dotBuilder = new DotBuilder(mockProjectConfiguration);
+    });
 
 
     it('build dot string for simple graph', () => {
@@ -24,6 +33,9 @@ describe('DotBuilder', () => {
         const graph: string = dotBuilder.build([feature1, feature2]);
 
         expect(graph).toEqual('digraph { ' +
+            'node [style=filled] ' +
+            'feature1 [fillcolor="#ffffff"] ' +
+            'feature2 [fillcolor="#ffffff"] ' +
             '{rank=min feature1} ' +
             'feature1 -> feature2 ' +
             '}');
@@ -44,6 +56,10 @@ describe('DotBuilder', () => {
         const graph: string = dotBuilder.build([feature1, feature2, feature3]);
 
         expect(graph).toEqual('digraph { ' +
+            'node [style=filled] ' +
+            'feature1 [fillcolor="#ffffff"] ' +
+            'feature2 [fillcolor="#ffffff"] ' +
+            'feature3 [fillcolor="#ffffff"] ' +
             '{rank=min feature1} ' +
             'feature1 -> {feature2, feature3} ' +
             '}');
@@ -69,6 +85,11 @@ describe('DotBuilder', () => {
 
         expect(graph).toEqual(
             'digraph { ' +
+            'node [style=filled] ' +
+            'feature1 [fillcolor="#ffffff"] ' +
+            'feature2 [fillcolor="#ffffff"] ' +
+            'feature3 [fillcolor="#ffffff"] ' +
+            'feature4 [fillcolor="#ffffff"] ' +
             '{rank=min feature1} ' +
             'feature1 -> {feature2, feature3} ' +
             'feature2 -> feature4 ' +
@@ -102,6 +123,12 @@ describe('DotBuilder', () => {
 
         expect(graph).toEqual(
             'digraph { ' +
+            'node [style=filled] ' +
+            'feature1 [fillcolor="#ffffff"] ' +
+            'feature2 [fillcolor="#ffffff"] ' +
+            'feature3 [fillcolor="#ffffff"] ' +
+            'feature4 [fillcolor="#ffffff"] ' +
+            'feature5 [fillcolor="#ffffff"] ' +
             '{rank=min feature1} ' +
             'feature1 -> feature2 ' +
             'feature2 -> feature5 ' +
@@ -159,6 +186,21 @@ describe('DotBuilder', () => {
 
         expect(graph).toEqual(
             'digraph { ' +
+            'node [style=filled] ' +
+            'feature1 [fillcolor="#ffffff"] ' +
+            'feature2 [fillcolor="#ffffff"] ' +
+            'feature3 [fillcolor="#ffffff"] ' +
+            'feature4 [fillcolor="#ffffff"] ' +
+            'feature5 [fillcolor="#ffffff"] ' +
+            'feature6 [fillcolor="#ffffff"] ' +
+            'feature7 [fillcolor="#ffffff"] ' +
+            'feature8 [fillcolor="#ffffff"] ' +
+            'feature9 [fillcolor="#ffffff"] ' +
+            'feature10 [fillcolor="#ffffff"] ' +
+            'feature11 [fillcolor="#ffffff"] ' +
+            'feature12 [fillcolor="#ffffff"] ' +
+            'feature13 [fillcolor="#ffffff"] ' +
+            'feature14 [fillcolor="#ffffff"] ' +
             '{rank=min feature1} ' +
             'feature1 -> {feature2, feature3, feature4, feature5, feature6} ' +
             'feature2 -> {feature7, feature8} ' +
@@ -192,6 +234,11 @@ describe('DotBuilder', () => {
 
         expect(graph).toEqual(
             'digraph { ' +
+            'node [style=filled] ' +
+            'feature1 [fillcolor="#ffffff"] ' +
+            'feature2 [fillcolor="#ffffff"] ' +
+            'feature3 [fillcolor="#ffffff"] ' +
+            'feature4 [fillcolor="#ffffff"] ' +
             '{rank=min feature1} ' +
             'feature1 -> feature2 ' +
             'feature3 -> feature4 ' +

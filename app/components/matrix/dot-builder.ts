@@ -1,14 +1,19 @@
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {Injectable} from '@angular/core';
+import {ProjectConfiguration} from 'idai-components-2/configuration';
 
 
+@Injectable()
 /**
  * @author Thomas Kleinke
  */
 export class DotBuilder {
 
     private documents: Array<IdaiFieldDocument>;
-
     private processedIsContemporaryWithTargetIds: string[];
+
+
+    constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     public build(documents: Array<IdaiFieldDocument>): string {
@@ -17,6 +22,7 @@ export class DotBuilder {
         this.processedIsContemporaryWithTargetIds = [];
 
         let result: string = 'digraph { '
+            + this.createColorDefinitions()
             + this.createRootDocumentMinRankDefinition()
             + this.createIsAfterEdgesDefinitions()
             + this.createIsContemporaryWithEdgesDefinitions()
@@ -100,6 +106,33 @@ export class DotBuilder {
     private createSameRankDefinition(targetIds: string[]): string {
 
         return '{rank=same ' + this.getRelationTargetIdentifiers(targetIds) + '}';
+    }
+
+
+    private createColorDefinitions(): string {
+
+        return 'node [style=filled] '
+            + this.getGraphDocuments().map(document => this.createColorDefinition(document))
+            .join(' ') + ' ';
+    }
+
+
+    private createColorDefinition(document: IdaiFieldDocument) {
+
+         return document.resource.identifier
+             + ' [fillcolor="'
+             + this.projectConfiguration.getColorForType(document.resource.type)
+             + '"]';
+    }
+
+
+    private getGraphDocuments(): Array<IdaiFieldDocument> {
+
+        return this.documents.filter(document => {
+            return (document.resource.relations['isAfter']
+                || document.resource.relations['isBefore']
+                || document.resource.relations['isContemporaryWith']);
+        })
     }
 
 

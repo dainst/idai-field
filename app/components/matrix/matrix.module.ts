@@ -3,6 +3,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BrowserModule} from '@angular/platform-browser';
 import {MatrixViewComponent} from './matrix-view.component';
 import {GraphComponent} from './graph.component';
+import {DotBuilder} from './dot-builder';
 
 @NgModule({
     imports: [
@@ -14,6 +15,7 @@ import {GraphComponent} from './graph.component';
         GraphComponent
     ],
     providers: [
+        DotBuilder
     ]
 })
 

@@ -168,27 +168,36 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private setEdgesHighlighting(id: string, highlight: boolean) {
 
+        this.setEdgesHighlightingForRelation('is-after', id, highlight);
+        this.setEdgesHighlightingForRelation('is-contemporary-with', id, highlight);
+    }
+
+
+    private setEdgesHighlightingForRelation(relationType: string, id: string, highlight: boolean) {
+
         const edges: HTMLCollection
-            = this.graphContainer.nativeElement.getElementsByClassName('is-after-' + id);
+            = this.graphContainer.nativeElement.getElementsByClassName(relationType + '-' + id);
 
         for (let i = 0; i < edges.length; i++) {
-            this.setEdgeHighlighting(edges[i], highlight);
+            this.setEdgeHighlighting(edges[i], highlight, relationType);
         }
     }
 
 
-    private setEdgeHighlighting(edge: Element, highlight: boolean) {
-
-        const path = edge.getElementsByTagName('path')[0];
-        const polygon = edge.getElementsByTagName('polygon')[0];
+    private setEdgeHighlighting(edge: Element, highlight: boolean, relationType: string) {
 
         const color: string = highlight ? GraphComponent.hoverColor : GraphComponent.defaultColor;
         const strokeWidth: string = highlight ? '2' : '1';
 
+        const path = edge.getElementsByTagName('path')[0];
         path.setAttribute('stroke', color);
         path.setAttribute('stroke-width', strokeWidth);
-        polygon.setAttribute('stroke', color);
-        polygon.setAttribute('fill', color);
+
+        if (relationType == 'is-after') {
+            const polygon = edge.getElementsByTagName('polygon')[0];
+            polygon.setAttribute('stroke', color);
+            polygon.setAttribute('fill', color);
+        }
     }
 
 

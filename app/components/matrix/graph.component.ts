@@ -57,7 +57,7 @@ export class GraphComponent implements OnInit, OnChanges {
 
     @ViewChild('graphContainer') graphContainer: ElementRef;
 
-    private hoverNodeId: string|undefined;
+    private hoverElement: Element|undefined;
 
     private static maxRealZoom: number = 2;
     private static hoverColor: string = '#6e95de';
@@ -118,27 +118,39 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private handleMouseEnterEvent(event: MouseEvent) {
 
-        const gElement: HTMLElement|undefined = GraphComponent.getGElement(event.target as HTMLElement);
+        const gElement: Element|undefined = GraphComponent.getGElement(event.target as Element);
 
         if (!gElement) return;
 
-        if (gElement.id.startsWith('node')) {
-            this.setHoverNodeId(GraphComponent.getResourceId(gElement));
-        } else if (this.hoverNodeId) {
-            this.setEdgesHighlighting(this.hoverNodeId, false);
-            this.hoverNodeId = undefined;
+        if (GraphComponent.getElementType(gElement)) {
+            this.setHoverElement(gElement);
+        } else if (this.hoverElement) {
+            this.setHighlighting(this.hoverElement, false);
+            this.hoverElement = undefined;
         }
     }
 
 
-    private setHoverNodeId(id: string) {
+    private setHoverElement(element: Element) {
 
-        if (this.hoverNodeId == id) return;
+        if (this.hoverElement && this.hoverElement == element) return;
 
-        if (this.hoverNodeId) this.setEdgesHighlighting(this.hoverNodeId, false);
-        this.setEdgesHighlighting(id, true);
+        if (this.hoverElement) this.setHighlighting(this.hoverElement, false);
+        this.setHighlighting(element, true);
 
-        this.hoverNodeId = id;
+        this.hoverElement = element;
+    }
+
+
+    private setHighlighting(element: Element, highlight: boolean) {
+
+        const elementType: 'node'|'edge'|undefined = GraphComponent.getElementType(element);
+
+        if (elementType == 'node') {
+            this.setEdgesHighlighting(GraphComponent.getResourceId(element), highlight);
+        } else if (elementType == 'edge') {
+            GraphComponent.setEdgeHighlighting(element, highlight, GraphComponent.getRelationType(element));
+        }
     }
 
 
@@ -149,7 +161,8 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
-    private setEdgesHighlightingForRelation(relationType: string, id: string, highlight: boolean) {
+    private setEdgesHighlightingForRelation(relationType: 'is-after'|'is-contemporary-with'|undefined,
+                                            id: string, highlight: boolean) {
 
         const edges: HTMLCollection
             = this.graphContainer.nativeElement.getElementsByClassName(relationType + '-' + id);
@@ -160,7 +173,8 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
-    private static setEdgeHighlighting(edge: Element, highlight: boolean, relationType: string) {
+    private static setEdgeHighlighting(edge: Element, highlight: boolean,
+                                       relationType: 'is-after'|'is-contemporary-with'|undefined) {
 
         const color: string = highlight ? this.hoverColor : this.defaultColor;
         const strokeWidth: string = highlight ? '2' : '1';
@@ -208,7 +222,7 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
-    private static getGElement(element: HTMLElement): HTMLElement|undefined {
+    private static getGElement(element: Element): Element|undefined {
 
         do {
             if (element.tagName == 'g') return element;
@@ -219,8 +233,30 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
-    private static getResourceId(gElement: HTMLElement): string {
+    private static getResourceId(gElement: Element): string {
 
         return gElement.id.substring(gElement.id.indexOf('-') + 1)
+    }
+
+
+    private static getElementType(gElement: Element): 'node'|'edge'|undefined {
+
+        if (gElement.id.startsWith('node')) {
+            return 'node';
+        } else if (gElement.id.startsWith('edge')) {
+            return 'edge';
+        } else return undefined;
+    }
+
+
+    private static getRelationType(edge: Element): 'is-after'|'is-contemporary-with'|undefined {
+
+        const classAttribute: string|null = edge.getAttribute('class');
+
+        if (classAttribute && classAttribute.includes('is-after')) {
+            return 'is-after';
+        } else if (classAttribute && classAttribute.includes('is-contemporary-with')) {
+            return 'is-contemporary-with';
+        } else return undefined;
     }
 }

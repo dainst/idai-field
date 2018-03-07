@@ -127,8 +127,15 @@ export class GraphComponent implements OnInit, OnChanges {
             dblClickZoomEnabled: false
         });
 
-        panZoomBehavior.setMinZoom(1);
-        panZoomBehavior.setMaxZoom(GraphComponent.maxRealZoom / panZoomBehavior.getSizes().realZoom);
+        const maxZoom: number = GraphComponent.maxRealZoom / panZoomBehavior.getSizes().realZoom;
+
+        if (panZoomBehavior.getSizes().realZoom > GraphComponent.maxRealZoom) {
+            panZoomBehavior.zoom(maxZoom);
+            panZoomBehavior.disableZoom();
+        } else {
+            panZoomBehavior.setMinZoom(1);
+            panZoomBehavior.setMaxZoom(maxZoom);
+        }
     }
 
 

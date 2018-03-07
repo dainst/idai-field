@@ -12,6 +12,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {ImageTypeUtility} from '../../common/image-type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {flow, includedIn, isNot} from 'tsfun';
+import {Validations} from '../../core/model/validations';
 
 
 @Injectable()
@@ -192,12 +193,12 @@ export class DocumentHolder {
 
     private validateFields(): Array<string>  {
 
-        return Validator.validateFields(this.clonedDocument.resource, this.projectConfiguration);
+        return Validations.validateFields(this.clonedDocument.resource, this.projectConfiguration);
     }
 
 
     private validateRelationFields(): Array<string> {
 
-        return Validator.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
+        return Validations.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
     }
 }

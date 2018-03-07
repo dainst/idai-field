@@ -4,6 +4,7 @@ import {M} from '../../m';
 import {IdaiFieldDocumentDatastore} from '../datastore/idai-field-document-datastore';
 import {Validator} from './validator';
 import {ModelUtil} from './model-util';
+import {Validations} from './validations';
 
 
 /**
@@ -93,27 +94,27 @@ export class IdaiFieldValidator extends Validator {
 
         switch(geometry.type) {
             case 'Point':
-                if (!IdaiFieldValidator.validatePointCoordinates(geometry.coordinates)) {
+                if (!Validations.validatePointCoordinates(geometry.coordinates)) {
                     return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'Point' ];
                 }
                 break;
             case 'LineString':
-                if (!IdaiFieldValidator.validatePolylineCoordinates(geometry.coordinates)) {
+                if (!Validations.validatePolylineCoordinates(geometry.coordinates)) {
                     return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'LineString' ];
                 }
                 break;
             case 'MultiLineString':
-                if (!IdaiFieldValidator.validateMultiPolylineCoordinates(geometry.coordinates)) {
+                if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
                     return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'MultiLineString' ];
                 }
                 break;
             case 'Polygon':
-                if (!IdaiFieldValidator.validatePolygonCoordinates(geometry.coordinates)) {
+                if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
                     return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'Polygon' ];
                 }
                 break;
             case 'MultiPolygon':
-                if (!IdaiFieldValidator.validateMultiPolygonCoordinates(geometry.coordinates)) {
+                if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
                     return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'MultiPolygon' ];
                 }
                 break;
@@ -122,69 +123,6 @@ export class IdaiFieldValidator extends Validator {
         }
 
         return null;
-    }
-
-
-    private static validatePointCoordinates(coordinates: number[]): boolean {
-
-        if (coordinates.length < 2 || coordinates.length > 3) return false;
-        if (isNaN(coordinates[0])) return false;
-        if (isNaN(coordinates[1])) return false;
-        if (coordinates.length == 3 && isNaN(coordinates[2])) return false;
-
-        return true;
-    }
-
-
-    private static validatePolylineCoordinates(coordinates: number[][]): boolean {
-
-        if (coordinates.length < 2) return false;
-
-        for (let i in coordinates) {
-            if (!IdaiFieldValidator.validatePointCoordinates(coordinates[i])) return false;
-        }
-
-        return true;
-    }
-
-
-    private static validateMultiPolylineCoordinates(coordinates: number[][][]): boolean {
-
-        if (coordinates.length == 0) return false;
-
-        for (let i in coordinates) {
-            if (!IdaiFieldValidator.validatePolylineCoordinates(coordinates[i])) return false;
-        }
-
-        return true;
-    }
-
-
-    private static validatePolygonCoordinates(coordinates: number[][][]): boolean {
-
-        if (coordinates.length == 0) return false;
-
-        for (let i in coordinates) {
-            if (coordinates[i].length < 3) return false;
-
-            for (let j in coordinates[i]) {
-                if (!IdaiFieldValidator.validatePointCoordinates(coordinates[i][j])) return false;
-            }
-        }
-
-        return true;
-    }
-
-
-    private static validateMultiPolygonCoordinates(coordinates: number[][][][]): boolean {
-
-        if (coordinates.length == 0) return false;
-
-        for (let i in coordinates) {
-            if (!IdaiFieldValidator.validatePolygonCoordinates(coordinates[i])) return false;
-        }
-
-        return true;
     }
 
 

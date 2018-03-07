@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {ConfigLoader, ProjectConfiguration, FieldDefinition,
-    RelationDefinition} from 'idai-components-2/configuration';
-import {Document, Resource} from 'idai-components-2/core';
+import {ConfigLoader} from 'idai-components-2/configuration';
+import {Document} from 'idai-components-2/core';
 import {M} from '../../m';
-import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../util/number-util';
+import {Validations} from './validations';
 
 
 @Injectable()
@@ -25,17 +24,17 @@ export class Validator {
 
             let resource = doc.resource;
 
-            if (!Validator.validateType(resource, projectConfiguration)) {
+            if (!Validations.validateType(resource, projectConfiguration)) {
                 return Promise.reject([M.VALIDATION_ERROR_INVALIDTYPE, resource.type]);
             }
 
-            let missingProperties = Validator.getMissingProperties(resource, projectConfiguration);
+            let missingProperties = Validations.getMissingProperties(resource, projectConfiguration);
             if (missingProperties.length > 0) {
                 return Promise.reject([M.VALIDATION_ERROR_MISSINGPROPERTY, resource.type]
                     .concat(missingProperties.join((', '))));
             }
 
-            const invalidFields = Validator.validateFields(resource, projectConfiguration);
+            const invalidFields = Validations.validateFields(resource, projectConfiguration);
             if (invalidFields.length > 0) {
                 const err = [invalidFields.length == 1 ?
                     M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS];
@@ -44,7 +43,7 @@ export class Validator {
                 return Promise.reject(err);
             }
 
-            const invalidRelationFields = Validator.validateRelations(resource, projectConfiguration);
+            const invalidRelationFields = Validations.validateRelations(resource, projectConfiguration);
             if (invalidRelationFields.length > 0) {
                 const err = [invalidRelationFields.length == 1 ?
                     M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
@@ -55,7 +54,7 @@ export class Validator {
             }
 
             let invalidNumericValues;
-            if (invalidNumericValues = Validator.validateNumericValues(resource, projectConfiguration)) {
+            if (invalidNumericValues = Validations.validateNumericValues(resource, projectConfiguration)) {
                 let err = [invalidNumericValues.length == 1 ?
                     M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
                     M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES];
@@ -75,127 +74,6 @@ export class Validator {
     protected validateCustom(doc: Document): Promise<any> {
 
         return Promise.resolve();
-    }
-
-    private static getMissingProperties(resource: Resource, projectConfiguration: ProjectConfiguration) {
-
-        const missingFields: string[] = [];
-        const fieldDefinitions: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
-
-        for (let fieldDefinition of fieldDefinitions) {
-            if (projectConfiguration.isMandatory(resource.type,fieldDefinition.name)) {
-                if (resource[fieldDefinition.name] == undefined || resource[fieldDefinition.name] == '') {
-                    missingFields.push(fieldDefinition.name);
-                }
-            }
-        }
-
-        return missingFields;
-    }
-
-    /**
-     *
-     * @param resource
-     * @param projectConfiguration
-     * @returns {boolean} true if the type of the resource is valid, otherwise false
-     */
-    private static validateType(resource: Resource, projectConfiguration: ProjectConfiguration): boolean {
-
-        if (!resource.type) return false;
-        return projectConfiguration.getTypesList()
-            .some(type => type.name == resource.type);
-    }
-
-
-    public static validateFields(resource: Resource, projectConfiguration: ProjectConfiguration): Array<string> {
-
-        const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
-        const defaultFields: Array<FieldDefinition> = [{ name: 'relations' }];
-
-        const fields: Array<any> = projectFields.concat(defaultFields);
-
-        const invalidFields: Array<any> = [];
-
-        for (let resourceField in resource) {
-            if (resource.hasOwnProperty(resourceField)) {
-                let fieldFound: boolean = false;
-                for (let i in fields) {
-                    if (fields[i].name == resourceField) {
-                        fieldFound = true;
-                        break;
-                    }
-                }
-                if (!fieldFound) {
-                    invalidFields.push(resourceField);
-                }
-            }
-        }
-
-        return (invalidFields.length > 0) ? invalidFields : [];
-    }
-
-
-    /**
-     * @returns {string[]} the names of invalid relation fields if one or more of the fields are invalid, otherwise
-     * <code>undefined</code>
-     */
-    public static validateRelations(resource: Resource, projectConfiguration: ProjectConfiguration): string[] {
-
-        const fields: Array<RelationDefinition> = projectConfiguration.getRelationDefinitions(resource.type) as any;
-        const invalidFields: Array<any> = [];
-
-        for (let relationField in resource.relations) {
-            if (resource.relations.hasOwnProperty(relationField)) {
-                let fieldFound: boolean = false;
-                for (let i in fields) {
-                    if (fields[i].name == relationField) {
-                        fieldFound = true;
-                        break;
-                    }
-                }
-                if (!fieldFound) {
-                    invalidFields.push(relationField);
-                }
-            }
-        }
-
-        return (invalidFields.length > 0) ? invalidFields : [];
-    }
-
-
-    public static validateNumericValues(resource: Resource, projectConfiguration: ProjectConfiguration): string[]|undefined {
-
-        const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
-        const numericInputTypes: string[] = ['unsignedInt', 'float', 'unsignedFloat'];
-        const invalidFields: string[] = [];
-
-        projectFields.filter(fieldDefinition => {
-            return fieldDefinition.inputType && numericInputTypes.includes(fieldDefinition.inputType)
-        }).forEach(fieldDefinition => {
-            let value = resource[fieldDefinition.name];
-
-            if (value && numericInputTypes.includes(fieldDefinition.inputType as string)
-                    && !Validator.validateNumber(value, fieldDefinition.inputType as string)) {
-                invalidFields.push(fieldDefinition.label as any);
-            }
-        });
-
-        return (invalidFields.length > 0) ? invalidFields : undefined;
-    }
-
-
-    private static validateNumber(value: string, inputType: string): boolean {
-
-        switch(inputType) {
-            case 'unsignedInt':
-                return validateUnsignedInt(value);
-            case 'float':
-                return validateFloat(value);
-            case 'unsignedFloat':
-                return validateUnsignedFloat(value);
-            default:
-                return false;
-        }
     }
 
 

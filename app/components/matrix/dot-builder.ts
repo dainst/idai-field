@@ -22,7 +22,7 @@ export class DotBuilder {
         this.processedIsContemporaryWithTargetIds = [];
 
         let result: string = 'digraph { '
-            + this.createColorDefinitions()
+            + this.createNodeDefinitions()
             + this.createRootDocumentMinRankDefinition()
             + this.createIsAfterEdgesDefinitions()
             + this.createIsContemporaryWithEdgesDefinitions()
@@ -67,7 +67,8 @@ export class DotBuilder {
         const targetIds: string[]|undefined = document.resource.relations['isAfter'];
         if (!targetIds || targetIds.length == 0) return;
 
-        return this.createEdgesDefinition(document, targetIds);
+        return this.createEdgesDefinition(document, targetIds)
+            + ' [class="is-after-' + document.resource.id + '"]';
     }
 
 
@@ -84,7 +85,13 @@ export class DotBuilder {
 
         if (targetIds.length == 0) return;
 
-        const edgesDefinition: string = this.createEdgesDefinition(document, targetIds) + ' [dir="none"]';
+        const edgesDefinition: string = this.createEdgesDefinition(document, targetIds)
+            + ' [dir="none", class="'
+            + [document.resource.id].concat(targetIds)
+                .map(id => 'is-contemporary-with-' + id)
+                .join(' ')
+            + '"]';
+
         const sameRankDefinition: string = this.createSameRankDefinition(
             [document.resource.id].concat(targetIds)
         );
@@ -109,18 +116,18 @@ export class DotBuilder {
     }
 
 
-    private createColorDefinitions(): string {
+    private createNodeDefinitions(): string {
 
         return 'node [style=filled] '
-            + this.getGraphDocuments().map(document => this.createColorDefinition(document))
+            + this.getGraphDocuments().map(document => this.createNodeDefinition(document))
             .join('');
     }
 
 
-    private createColorDefinition(document: IdaiFieldDocument) {
+    private createNodeDefinition(document: IdaiFieldDocument) {
 
          return document.resource.identifier
-             + ' [fillcolor="'
+             + ' [id="node-' + document.resource.id + '", fillcolor="'
              + this.projectConfiguration.getColorForType(document.resource.type)
              + '", fontcolor="'
              + this.projectConfiguration.getTextColorForType(document.resource.type)

@@ -115,23 +115,23 @@ export class ImageGridComponent implements OnChanges {
     }
 
 
-    private loadImages(rows: any) {
+    private async loadImages(rows: any) {
 
-        let promise: any = Promise.resolve();
         for (let row of rows) {
             for (let cell of row) {
-                if (!cell.document || !cell.document.resource || !cell.document.resource.id) continue;
 
-                promise = promise.then(() =>
-                    this.imagestore.read(cell.document.resource.id).then(url =>
-                        cell.imgSrc = url
-                    ).catch(e => {
-                        console.error('error fetching image', e)
-                    })
-                )
+                if (!cell.document
+                    || !cell.document.resource
+                    || !cell.document.resource.id
+                    || cell.document.resource.id === 'droparea') continue;
+
+                try {
+                    cell.imgSrc = await this.imagestore.read(cell.document.resource.id)
+                } catch(e) {
+                    console.error('error fetching image', e);
+                }
             }
         }
-        return promise;
     }
 
 

@@ -25,7 +25,7 @@ describe('images/image-overview --', function() {
         if (i > 0) {
             NavbarPage.performNavigateToSettings();
             request.post('http://localhost:3003/reset', {});
-            browser.sleep(delays.shortRest);
+            browser.sleep(delays.shortRest * 3);
             NavbarPage.clickNavigateToImages();
             ImageOverviewPage.waitForCells();
             browser.sleep(delays.shortRest);

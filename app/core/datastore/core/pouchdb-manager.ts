@@ -25,7 +25,6 @@ export class PouchdbManager {
     private syncHandles = [];
 
     private resolveDbReady: Function|undefined = undefined;
-    private projectConfiguration: ProjectConfiguration|undefined;
 
     constructor(private sampleDataLoader: SampleDataLoader,
                 private indexFacade: IndexFacade) {
@@ -39,13 +38,11 @@ export class PouchdbManager {
 
         const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
         Object.assign(this.dbProxy, new PouchdbProxy(dbReady));
-        this.setProject('test', this.projectConfiguration);
+        this.setProject('test');
     }
 
 
-    public setProject(name: string, projectConfiguration: ProjectConfiguration|undefined) {
-
-        if (projectConfiguration) this.projectConfiguration = projectConfiguration;
+    public setProject(name: string) {
 
         this.name = name;
 
@@ -63,7 +60,7 @@ export class PouchdbManager {
             rdy = rdy.then(() => this.db.destroy()).then(() => this.createPouchDBObject(name));
         }
         if (name == 'test') {
-            rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name as any, projectConfiguration as any));
+            rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name as any));
         }
 
         return rdy.then(() => this.index());

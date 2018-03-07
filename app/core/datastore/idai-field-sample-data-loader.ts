@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import * as fs from 'fs';
-import {ProjectConfiguration} from 'idai-components-2/core';
 import {DOCS} from './idai-field-sample-objects';
 import {Converter} from '../imagestore/converter';
 import {SampleDataLoader} from './core/sample-data-loader';
@@ -20,13 +19,13 @@ export class IdaiFieldSampleDataLoader implements SampleDataLoader {
                 private appState: AppState) { }
 
 
-    public go(db: any, project: string, projectConfiguration: ProjectConfiguration): Promise<any> {
+    public go(db: any, project: string): Promise<any> {
 
-        return this.loadSampleObjects(db,  projectConfiguration).then(() => this.loadSampleImages(db, project));
+        return this.loadSampleObjects(db).then(() => this.loadSampleImages(db, project));
     }
 
 
-    private loadSampleObjects(db: any, config: any): Promise<any> {
+    private loadSampleObjects(db: any): Promise<any> {
 
         let promises = [] as any;
         for (let doc of DOCS) {

@@ -60,32 +60,31 @@ export class SettingsService {
     public getUsername = () => this.settings.username;
 
 
-    public bootProject(): Promise<ProjectConfiguration> {
+    public async bootProject(): Promise<ProjectConfiguration> {
 
         const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
         const HIDDEN_CONFIGURATION_PATH = remote.getGlobal('hiddenConfigurationPath');
 
-        this.ready = this.appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH)
-            .then(pconf => {
+        try {
+            const settings = await this.settingsSerializer.load();
+            await this.updateSettings(settings);
+            await this.pouchdbManager.setProject(this.getSelectedProject() as any);
+            await this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false);
+            if (this.settings.isSyncActive) await this.startSync();
 
-                    return this.settingsSerializer.load()
-                        .then(settings => this.updateSettings(settings))
-                        .then(() => this.pouchdbManager.setProject(this.getSelectedProject() as any))
-                        .then(() => this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false))
-                        .then(() => { if (this.settings.isSyncActive) return this.startSync();})
-                        .then(() => {
-                            return pconf;
-                        })
-                },
-                (msgsWithParams: any) => {
+            const pconf = await this.appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH);
+            this.ready = Promise.resolve(pconf);
 
-                    msgsWithParams.forEach((msg: any) => {
-                        console.error('err in project configuration', msg)
-                    });
-                    if (msgsWithParams.length > 1) {
-                        console.error('num errors in project configuration', msgsWithParams.length);
-                    }
-                });
+        } catch (msgsWithParams) {
+
+            msgsWithParams.forEach((msg: any) => {
+                console.error('err in project configuration', msg)
+            });
+            if (msgsWithParams.length > 1) {
+                console.error('num errors in project configuration', msgsWithParams.length);
+            }
+            this.ready = Promise.reject(undefined);
+        }
 
         return this.ready;
     }

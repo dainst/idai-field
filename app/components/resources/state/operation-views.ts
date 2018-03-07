@@ -1,9 +1,9 @@
-import {ViewDefinition} from 'idai-components-2/field';
-
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
+import {ViewDefinition} from './view-definition';
+
 export class OperationViews {
 
 

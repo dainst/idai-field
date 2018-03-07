@@ -44,7 +44,7 @@ export class MatrixViewComponent implements OnInit {
         this.selectedTrench = trench;
 
         this.documents = (await this.datastore.find( {
-            constraints: { 'isRecordedIn:contain': this.selectedTrench.resource.id as string }
+            constraints: { 'isRecordedIn:contain': this.selectedTrench.resource.id }
         })).documents;
     }
 }

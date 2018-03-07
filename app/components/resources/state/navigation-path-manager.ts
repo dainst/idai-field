@@ -127,7 +127,7 @@ export class NavigationPathManager {
         const navigationPath = this.getNavigationPath();
 
         if (navigationPath.rootDocument && ModelUtil.hasRelationTarget(document, 'liesWithin',
-                navigationPath.rootDocument.resource.id as string)) {
+                navigationPath.rootDocument.resource.id)) {
             return true;
         }
 
@@ -135,7 +135,7 @@ export class NavigationPathManager {
 
         return (!navigationPath.rootDocument && mainTypeDocument != undefined
                 && ModelUtil.hasRelationTarget(document, 'isRecordedIn',
-                    mainTypeDocument.resource.id as string)
+                    mainTypeDocument.resource.id )
                 && !ModelUtil.hasRelations(document, 'liesWithin'));
     }
 
@@ -183,7 +183,7 @@ export class NavigationPathManager {
 
         return (await this.datastore.find({
             q: '',
-            constraints: { 'id:match': segment.document.resource.id as string }
+            constraints: { 'id:match': segment.document.resource.id }
         })).totalCount != 0;
     }
 
@@ -195,9 +195,9 @@ export class NavigationPathManager {
 
         return (index == 0)
             ? mainTypeDocument != undefined && ModelUtil.hasRelationTarget(segment.document,
-                'isRecordedIn', mainTypeDocument.resource.id as string)
+                'isRecordedIn', mainTypeDocument.resource.id)
             : ModelUtil.hasRelationTarget(segment.document,
-                'liesWithin', segments[index - 1].document.resource.id as string);
+                'liesWithin', segments[index - 1].document.resource.id);
     }
 
 
@@ -255,7 +255,7 @@ export class NavigationPathManager {
         return newNavigationPath.elements.reduce((elements, document) => {
 
                 const index = currentNavigationPath.elements
-                    .map(toResourceId).indexOf(document.resource.id as string);
+                    .map(toResourceId).indexOf(document.resource.id);
 
                 return elements.concat([(index > -1 ?
                         currentNavigationPath.elements[index] :

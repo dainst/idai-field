@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Datastore} from 'idai-components-2/datastore';
-import {Document} from 'idai-components-2/core';
+import {Document, NewDocument} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CachedReadDatastore} from './cached-read-datastore';
@@ -39,7 +39,7 @@ export abstract class CachedDatastore<T extends Document>
      * @throws if document is not of type T, determined by resource.type
      * @throws if resource.type is unknown
      */
-    public async create(document: Document): Promise<T> {
+    public async create(document: NewDocument): Promise<T> {
 
         this.typeConverter.validate([document.resource.type], this.typeClass);
         return this.updateIndex(await this.datastore.create(document));

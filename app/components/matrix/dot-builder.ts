@@ -74,13 +74,13 @@ export class DotBuilder {
             .filter(targetId => !this.processedIsContemporaryWithTargetIds.includes(targetId));
 
         targetIds.forEach(targetId => this.processedIsContemporaryWithTargetIds.push(targetId));
-        this.processedIsContemporaryWithTargetIds.push(document.resource.id as string);
+        this.processedIsContemporaryWithTargetIds.push(document.resource.id);
 
         if (targetIds.length == 0) return;
 
         const edgesDefinition: string = this.createEdgesDefinition(document, targetIds) + ' [dir="none"]';
         const sameRankDefinition: string = this.createSameRankDefinition(
-            [document.resource.id as string].concat(targetIds)
+            [document.resource.id].concat(targetIds)
         );
 
         return edgesDefinition + ' ' + sameRankDefinition;

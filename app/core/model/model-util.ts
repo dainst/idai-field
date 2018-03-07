@@ -42,4 +42,4 @@ export const hasEqualId = (l: Document|undefined) => (r: Document): boolean => (
 
 export const hasId = (doc: Document) => doc.resource.id != undefined;
 
-export const toResourceId = (doc: Document) => doc.resource.id as string;
+export const toResourceId = (doc: Document) => doc.resource.id;

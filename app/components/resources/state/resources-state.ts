@@ -73,8 +73,8 @@ export class ResourcesState {
 
     public setMainTypeDocument(document: IdaiFieldDocument|undefined) {
 
-        if (document && !this.viewStates[this.view].navigationPaths[document.resource.id as string]) {
-            this.viewStates[this.view].navigationPaths[document.resource.id as string] = NavigationPath.empty();
+        if (document && !this.viewStates[this.view].navigationPaths[document.resource.id]) {
+            this.viewStates[this.view].navigationPaths[document.resource.id] = NavigationPath.empty();
         }
 
         this.viewStates[this.view].mainTypeDocument = document;
@@ -138,7 +138,7 @@ export class ResourcesState {
         const mainTypeDocument = this.getMainTypeDocument();
         if (!mainTypeDocument) return;
 
-        this.viewStates[this.view].layerIds[mainTypeDocument.resource.id as string] = activeLayersIds.slice(0);
+        this.viewStates[this.view].layerIds[mainTypeDocument.resource.id] = activeLayersIds.slice(0);
         this.serialize();
     }
 
@@ -148,7 +148,7 @@ export class ResourcesState {
         const mainTypeDocument = this.getMainTypeDocument();
         if (!mainTypeDocument) return [];
 
-        const layersIds = this.viewStates[this.view].layerIds[mainTypeDocument.resource.id as string];
+        const layersIds = this.viewStates[this.view].layerIds[mainTypeDocument.resource.id];
         return layersIds ? layersIds : [];
     }
 
@@ -158,7 +158,7 @@ export class ResourcesState {
         const mainTypeDocument = this.getMainTypeDocument();
         if (!mainTypeDocument) return;
 
-        delete this.viewStates[this.view].layerIds[mainTypeDocument.resource.id as string];
+        delete this.viewStates[this.view].layerIds[mainTypeDocument.resource.id];
         this.serialize();
     }
 
@@ -169,7 +169,7 @@ export class ResourcesState {
         if (!mainTypeDocument) return NavigationPath.empty();
 
         const navigationPaths = this.viewStates[this.view].navigationPaths;
-        const path = (navigationPaths as any)[mainTypeDocument.resource.id as string];
+        const path = (navigationPaths as any)[mainTypeDocument.resource.id];
 
         return path ? path : NavigationPath.empty();
     }
@@ -180,7 +180,7 @@ export class ResourcesState {
         const mainTypeDocument = this.getMainTypeDocument();
         if (!mainTypeDocument) return;
 
-        this.viewStates[this.view].navigationPaths[mainTypeDocument.resource.id as string] = navigationPathInternal;
+        this.viewStates[this.view].navigationPaths[mainTypeDocument.resource.id] = navigationPathInternal;
     }
 
 

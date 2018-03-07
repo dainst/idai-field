@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2/core';
+import {Document, NewDocument} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ConstraintIndexer} from '../../app/core/datastore/index/constraint-indexer';
 import {FulltextIndexer} from '../../app/core/datastore/index/fulltext-indexer';
@@ -70,6 +70,7 @@ export class Static {
         if (!type) type = 'Find';
         const doc = {
             resource : {
+                id: "A",
                 shortDescription: sd,
                 identifier: identifier,
                 title: 'title',
@@ -90,7 +91,7 @@ export class Static {
         if (id) {
             doc['_id'] = id;
             doc.resource['id'] = id;
-        }
-        return doc;
+        } else delete doc.resource['id'];
+        return doc as Document;
     }
 }

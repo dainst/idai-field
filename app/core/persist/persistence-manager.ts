@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2/datastore';
-import {Document, Resource} from 'idai-components-2/core';
-import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
+import {Document, NewDocument, Resource} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {ConnectedDocsResolver} from './connected-docs-resolver';
 import {M} from '../../m';
 import {DocumentDatastore} from '../datastore/document-datastore';
@@ -20,7 +20,7 @@ import {DocumentDatastore} from '../datastore/document-datastore';
  */
 export class PersistenceManager {
     
-    private oldVersions: Array<Document> = [];
+    private oldVersions: Array<NewDocument> = [];
     private ready: Promise<any>;
 
     private connectedDocsResolver: any;
@@ -88,21 +88,21 @@ export class PersistenceManager {
      *   objects could not get stored properly, the promise will get rejected
      *   with msgWithParams.
      */
-    public persist(document: Document, user: string = 'anonymous',
-                   oldVersions: Array<Document> = this.oldVersions): Promise<any> {
+    public persist(document: NewDocument, user: string = 'anonymous',
+                   oldVersions: Array<NewDocument> = this.oldVersions): Promise<any> {
 
         if (document == undefined) return Promise.resolve();
 
         let persistedDocument: Document;
 
         return this.ready
-            .then(() => this.persistIt(document, user))
+            .then(() => this.persistIt(document as Document, user))
             .then(persistedDoc => {
                 persistedDocument = persistedDoc;
-                return Promise.all(this.getConnectedDocs(document, oldVersions))
+                return Promise.all(this.getConnectedDocs(document as Document, oldVersions as Document[]))
                     .catch(() => Promise.reject([M.PERSISTENCE_ERROR_TARGETNOTFOUND]));
             })
-            .then(connectedDocs => this.updateDocs(document, connectedDocs, true, user))
+            .then(connectedDocs => this.updateDocs(document as Document, connectedDocs, true, user))
             .then(() => {
                 this.oldVersions = [document];
                 return Promise.resolve(persistedDocument);
@@ -140,7 +140,7 @@ export class PersistenceManager {
      *     [DatastoreErrors.GENERIC_DELETE_ERROR] - if cannot delete for another reason
      */
     public remove(document: Document, user: string = 'anonymous',
-                  oldVersions: Array<Document> = this.oldVersions): Promise<any> {
+                  oldVersions: Array<NewDocument> = this.oldVersions): Promise<any> {
 
         if (document == undefined) return Promise.resolve();
 
@@ -153,7 +153,7 @@ export class PersistenceManager {
                     promise = promise.then(() => this.removeDocument(doc, user, []));
                 }
 
-                return promise.then(() => this.removeDocument(document, user, oldVersions));
+                return promise.then(() => this.removeDocument(document, user, oldVersions as Document[]));
             });
     }
 

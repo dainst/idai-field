@@ -50,6 +50,7 @@ var Static = (function () {
             type = 'Find';
         var doc = {
             resource: {
+                id: "A",
                 shortDescription: sd,
                 identifier: identifier,
                 title: 'title',
@@ -71,6 +72,8 @@ var Static = (function () {
             doc['_id'] = id;
             doc.resource['id'] = id;
         }
+        else
+            delete doc.resource['id'];
         return doc;
     };
     return Static;

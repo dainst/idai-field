@@ -1,6 +1,6 @@
 import {Observable} from 'rxjs/Observable';
 import {DatastoreErrors} from 'idai-components-2/datastore';
-import {Document} from 'idai-components-2/core';
+import {Document, NewDocument} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {PouchdbManager} from './pouchdb-manager';
 import {AppState} from '../../settings/app-state';
@@ -58,9 +58,9 @@ export class PouchdbDatastore {
      * @throws [INVALID_DOCUMENT] - in case either the document given as param or
      *   the document fetched directly after db.put is not valid
      */
-    public async create(document: Document): Promise<Document> {
+    public async create(document: NewDocument): Promise<Document> {
 
-        if (!Document.isValid(document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
+        if (!Document.isValid(document as Document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
         if (document.resource.id) try {
             await this.db.get(document.resource.id);
             throw 'exists';
@@ -68,14 +68,14 @@ export class PouchdbDatastore {
             if (expected === 'exists') throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS]
         }
 
-        const resetFun = this.resetDocOnErr(document);
+        const resetFun = this.resetDocOnErr(document as Document);
         if (!document.resource.id) document.resource.id = IdGenerator.generateId();
         (document as any)['_id'] = document.resource.id;
 
         try {
             return await this.performPut(document);
         } catch (err) {
-            resetFun(document);
+            resetFun(document as Document);
             throw [DatastoreErrors.GENERIC_ERROR, err];
         }
     }
@@ -184,7 +184,7 @@ export class PouchdbDatastore {
 
         if ((document as any)['_conflicts']) {
             for (let revisionId of (document as any)['_conflicts']) {
-                conflictedRevisions.push(await this.fetchRevision(document.resource.id as string, revisionId));
+                conflictedRevisions.push(await this.fetchRevision(document.resource.id, revisionId));
             }
         }
 

@@ -189,7 +189,7 @@ export class DocumentsManager {
         if (!isRecordedInTarget) return [];
 
         return (await this.fetchDocuments(
-                    this.makeDocsQuery(isRecordedInTarget.resource.id as string))
+                    this.makeDocsQuery(isRecordedInTarget.resource.id))
             ).filter(hasId);
     }
 
@@ -203,7 +203,7 @@ export class DocumentsManager {
             .filter(async document =>
                 ChangeHistoryUtil.isRemoteChange(
                     document,
-                    await this.datastore.getConflictedRevisions(document.resource.id as string),
+                    await this.datastore.getConflictedRevisions(document.resource.id),
                     this.settingsService.getUsername())
             );
     }
@@ -255,7 +255,7 @@ export class DocumentsManager {
 
         const constraints: { [name: string]: string} =
             rootDoc
-            ? { 'liesWithin:contain': rootDoc.resource.id as string }
+            ? { 'liesWithin:contain': rootDoc.resource.id}
             : { 'liesWithin:exist': 'UNKNOWN' };
 
         constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;

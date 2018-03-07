@@ -95,7 +95,7 @@ export class ImagePickerComponent implements OnInit {
 
         this.query.types = this.imageTypeUtility.getImageTypeNames();
         this.query.constraints = {
-            'depicts:contain': { value: this.document.resource.id as string, type: 'subtract' }
+            'depicts:contain': { value: this.document.resource.id, type: 'subtract' }
         };
         this.query.limit = ImagePickerComponent.documentLimit;
 

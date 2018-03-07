@@ -9,9 +9,9 @@ import {M} from '../../m';
 import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../../util/extension-util';
 import {UploadStatus} from './upload-status';
-import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
+import {NewIdaiFieldImageDocument} from "../../core/model/new-idai-field-image-document";
 
 export interface ImageUploadResult {
 
@@ -184,7 +184,7 @@ export class ImageUploader {
             let img = new Image();
             img.src = URL.createObjectURL(file);
             img.onload = () => {
-                const doc: IdaiFieldImageDocument = {
+                const doc: NewIdaiFieldImageDocument = {
                     resource: {
                         identifier: file.name,
                         shortDescription: '',
@@ -202,9 +202,9 @@ export class ImageUploader {
                     doc.resource.relations['depicts'] = [depictsRelationTarget.resource.id];
                 }
 
-                this.persistenceManager.persist(doc, this.settingsService.getUsername(), [doc])
-                    .then(result => resolve(result))
-                    .catch(error => reject(error));
+                this.persistenceManager.persist(doc as Document, this.settingsService.getUsername(), [doc as Document])
+                    .then((result: any) => resolve(result))
+                    .catch((error: any) => reject(error));
             };
         });
     }

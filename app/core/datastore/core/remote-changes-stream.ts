@@ -49,7 +49,7 @@ export class RemoteChangesStream {
         const convertedDocument = this.typeConverter.convert(document);
 
         // explicitly assign by value in order for changes to be detected by angular
-        if (this.documentCache.get(convertedDocument.resource.id as string)) {
+        if (this.documentCache.get(convertedDocument.resource.id)) {
             this.documentCache.reassign(convertedDocument);
         }
 

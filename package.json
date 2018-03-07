@@ -62,7 +62,6 @@
     "es6-shim": "0.35.0",
     "express": "~4.15.0",
     "express-pouchdb-dainst": "1000.0.3",
-    "idai-components-2": "1.7.1",
     "ip": "1.1.5",
     "leaflet": "1.2.0",
     "leaflet-imageoverlay-rotated": "0.1.1",
@@ -79,6 +78,7 @@
     "svg-pan-zoom": "3.5.3",
     "systemjs": "0.19.31",
     "tsfun": "1.7.0",
+    "idai-components-2": "1.8.1",
     "viz.js": "1.8.0",
     "zone.js": "0.8.11"
   },

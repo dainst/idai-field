@@ -48,7 +48,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private startPointEditing() {
 
-        this.editableMarker = this.markers[this.selectedDocument.resource.id as string];
+        this.editableMarker = this.markers[this.selectedDocument.resource.id];
         if (!this.editableMarker) return;
 
         this.editableMarker.unbindTooltip();

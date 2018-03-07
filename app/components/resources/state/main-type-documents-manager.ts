@@ -95,7 +95,7 @@ export class MainTypeDocumentsManager {
             this.selectFirstOperationTypeDocumentFromList();
         } else {
             try {
-                const document = await this.datastore.get(mainTypeDocument.resource.id as string);
+                const document = await this.datastore.get(mainTypeDocument.resource.id);
                 this.resourcesState.setMainTypeDocument(document);
             } catch(e) {
                 this.resourcesState.removeActiveLayersIds();

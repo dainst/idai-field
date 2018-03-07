@@ -30,6 +30,25 @@ export class DotBuilder {
     }
 
 
+    private createNodeDefinitions(): string {
+
+        return 'node [style=filled] '
+            + this.getGraphDocuments().map(document => this.createNodeDefinition(document))
+                .join('');
+    }
+
+
+    private createNodeDefinition(document: IdaiFieldDocument) {
+
+        return document.resource.identifier
+            + ' [id="node-' + document.resource.id + '", fillcolor="'
+            + this.projectConfiguration.getColorForType(document.resource.type)
+            + '", fontcolor="'
+            + this.projectConfiguration.getTextColorForType(document.resource.type)
+            + '"] ';
+    }
+
+
     private createRootDocumentMinRankDefinition(): string {
 
         return '{rank=min '
@@ -110,25 +129,6 @@ export class DotBuilder {
     private createSameRankDefinition(targetIds: string[]): string {
 
         return '{rank=same ' + this.getRelationTargetIdentifiers(targetIds) + '}';
-    }
-
-
-    private createNodeDefinitions(): string {
-
-        return 'node [style=filled] '
-            + this.getGraphDocuments().map(document => this.createNodeDefinition(document))
-            .join('');
-    }
-
-
-    private createNodeDefinition(document: IdaiFieldDocument) {
-
-         return document.resource.identifier
-             + ' [id="node-' + document.resource.id + '", fillcolor="'
-             + this.projectConfiguration.getColorForType(document.resource.type)
-             + '", fontcolor="'
-             + this.projectConfiguration.getTextColorForType(document.resource.type)
-             + '"] ';
     }
 
 

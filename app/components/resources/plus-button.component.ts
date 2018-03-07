@@ -1,6 +1,6 @@
 import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output} from '@angular/core';
 import {Relations} from 'idai-components-2/core';
-import {ConfigLoader, IdaiType, ProjectConfiguration} from 'idai-components-2/core';
+import {IdaiType, ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {Messages} from 'idai-components-2/core';
 import {ResourcesComponent} from './resources.component';
@@ -39,7 +39,7 @@ export class PlusButtonComponent implements OnChanges {
     constructor(
         private elementRef: ElementRef,
         private resourcesComponent: ResourcesComponent,
-        private configLoader: ConfigLoader,
+        private projectConfiguration: ProjectConfiguration,
         private messages: Messages) {
 
         this.resourcesComponent.listenToClickEvents().subscribe(event => {
@@ -50,12 +50,7 @@ export class PlusButtonComponent implements OnChanges {
 
     ngOnChanges() {
 
-        const pconf = this.configLoader.getProjectConfiguration();
-        if (!pconf) return;
-
-        pconf
-            .then(projectConfiguration => this.initializeTypesTreeList(projectConfiguration))
-            .catch(() => {});
+        this.initializeTypesTreeList(this.projectConfiguration);
     }
 
 

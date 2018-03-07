@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, OnChanges, ViewChild} from '@angular/core';
 import {Messages} from 'idai-components-2/core';
-import {ConfigLoader, IdaiType} from 'idai-components-2/core';
+import {ProjectConfiguration, IdaiType} from 'idai-components-2/core';
 
 @Component({
     moduleId: module.id,
@@ -25,13 +25,13 @@ export class TypeSwitcherButtonComponent implements OnChanges{
     private typesTreeList: Array<IdaiType>;
 
 
-    constructor(private configLoader: ConfigLoader,
+    constructor(private projectConfiguration: ProjectConfiguration,
                 private messages: Messages) {}
 
 
     ngOnChanges() {
 
-        this.initializeTypes().catch(msgWithParams => this.messages.add(msgWithParams));
+        this.initializeTypes();
     }
 
 
@@ -51,16 +51,14 @@ export class TypeSwitcherButtonComponent implements OnChanges{
     }
 
 
-    private initializeTypes(): Promise<any> {
+    private initializeTypes() {
 
-        return (this.configLoader.getProjectConfiguration() as any).then((projectConfiguration: any) => {
-            const typeObject: IdaiType = projectConfiguration.getTypesMap()[this.type];
-            if (typeObject.parentType && !typeObject.parentType.isAbstract) {
-                this.typesTreeList = [typeObject.parentType];
-            } else {
-                this.typesTreeList = [typeObject];
-            }
-        });
+        const typeObject: IdaiType = this.projectConfiguration.getTypesMap()[this.type];
+        if (typeObject.parentType && !typeObject.parentType.isAbstract) {
+            this.typesTreeList = [typeObject.parentType];
+        } else {
+            this.typesTreeList = [typeObject];
+        }
     }
 
 

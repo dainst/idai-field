@@ -1,5 +1,5 @@
 import {Component, ElementRef} from '@angular/core';
-import {ConfigLoader} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
 
 @Component({
@@ -19,9 +19,9 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
 
     constructor(private elementRef: ElementRef,
-                configLoader: ConfigLoader) {
+                projectConfiguration: ProjectConfiguration) {
 
-        super(configLoader);
+        super(projectConfiguration);
     }
 
 

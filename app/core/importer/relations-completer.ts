@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {Document, Resource} from 'idai-components-2/core';
 import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";
@@ -11,7 +11,7 @@ import {DocumentDatastore} from "../datastore/document-datastore";
 export class RelationsCompleter {
 
     constructor(private datastore: DocumentDatastore,
-                private configLoader: ConfigLoader) {
+                private projectConfiguration: ProjectConfiguration) {
     }
 
 
@@ -72,18 +72,17 @@ export class RelationsCompleter {
 
             this.datastore.get(resourceId).then(
                 document => {
-                    (this.configLoader.getProjectConfiguration() as any).then((projectConfiguration: ProjectConfiguration) => {
 
                         let promise: Promise<any> = new Promise<any>((res) => res());
 
                         for (let relationName in document.resource.relations) {
                             if (relationName == 'isRecordedIn') continue;
 
-                            if (projectConfiguration.isRelationProperty(relationName)) {
+                            if (this.projectConfiguration.isRelationProperty(relationName)) {
                                 for (let targetId of document.resource.relations[relationName]) {
                                     promise = promise.then(
                                         () => this.alterRelation(mode, document.resource, targetId,
-                                            projectConfiguration.getInverseRelations(relationName) as any),
+                                            this.projectConfiguration.getInverseRelations(relationName) as any),
                                         err => reject(err)
                                     );
                                 }
@@ -94,8 +93,8 @@ export class RelationsCompleter {
                             () => resolve(),
                             err => reject(err)
                         );
-                    });
-                },
+                    }
+                ,
                 err => reject(err)
             );
         });

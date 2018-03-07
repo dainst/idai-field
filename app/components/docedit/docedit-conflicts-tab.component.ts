@@ -2,7 +2,7 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/field';
 import {Action} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/core';
-import {ConfigLoader} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/core';
 import {IdaiFieldDiffUtility} from '../../core/model/idai-field-diff-utility';
 import {ChangeHistoryUtil} from '../../core/model/change-history-util';
@@ -35,7 +35,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private messages: Messages,
-        private configLoader: ConfigLoader,
+        private projectConfiguration: ProjectConfiguration,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private persistenceManager: PersistenceManager) {}
 
@@ -89,8 +89,6 @@ export class DoceditConflictsTabComponent implements OnChanges {
         let differingRelationsNames: string[]
             = IdaiFieldDiffUtility.findDifferingRelations(this.document.resource, revision.resource);
 
-        return (this.configLoader.getProjectConfiguration() as any).then((projectConfiguration: any) => {
-
             for (let fieldName of differingFieldsNames) {
                 let type: string;
                 let label: string;
@@ -103,7 +101,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
                     label = 'Georeferenz';
                 } else {
                     type = 'field';
-                    label = projectConfiguration.getFieldDefinitionLabel(this.document.resource.type, fieldName);
+                    label = this.projectConfiguration.getFieldDefinitionLabel(this.document.resource.type, fieldName);
                 }
 
                 differingFields.push({
@@ -117,14 +115,13 @@ export class DoceditConflictsTabComponent implements OnChanges {
             for (let relationName of differingRelationsNames) {
                 differingFields.push({
                     name: relationName,
-                    label: projectConfiguration.getRelationDefinitionLabel(relationName),
+                    label: this.projectConfiguration.getRelationDefinitionLabel(relationName),
                     type: 'relation',
                     rightSideWinning: false
                 });
             }
 
             return Promise.resolve(differingFields);
-        });
     }
 
     

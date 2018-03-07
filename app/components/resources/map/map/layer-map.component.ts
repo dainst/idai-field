@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/co
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {MapComponent} from 'idai-components-2/field';
 import {Messages} from 'idai-components-2/core';
-import {ConfigLoader} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
 import {LayerManager, ListDiffResult} from './layer-manager';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
@@ -39,9 +39,9 @@ export class LayerMapComponent extends MapComponent {
     constructor(private layerManager: LayerManager,
                 private layerImageProvider: LayerImageProvider,
                 protected messages: Messages,
-                configLoader: ConfigLoader) {
+                projectConfiguration: ProjectConfiguration) {
 
-        super(configLoader);
+        super(projectConfiguration);
 
         this.layerManager.reset();
     }

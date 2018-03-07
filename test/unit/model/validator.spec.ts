@@ -69,11 +69,6 @@ describe('Validator', () => {
     );
 
 
-    const configLoader = {
-        getProjectConfiguration: () => Promise.resolve(projectConfiguration)
-    };
-
-
     it('should report nothing', done => {
 
         const doc = {
@@ -86,7 +81,7 @@ describe('Validator', () => {
                 },
             }
         };
-        new Validator(<ConfigLoader> configLoader)
+        new Validator(projectConfiguration)
             .validate(doc).then(() => done(), msgWithParams => fail(msgWithParams));
     });
 
@@ -102,7 +97,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(<ConfigLoader> configLoader)
+        new Validator(projectConfiguration)
             .validate(doc).then(() => done(), msgWithParams => fail(msgWithParams));
     });
 
@@ -117,7 +112,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(<ConfigLoader> configLoader)
+        new Validator(projectConfiguration)
             .validate(doc).then(() => fail(), msgWithParams => {
             expect(msgWithParams).toEqual([M.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
             done();
@@ -136,7 +131,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(<ConfigLoader> configLoader)
+        new Validator(projectConfiguration)
             .validate(doc).then(() => fail(), msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
                 done();
@@ -156,7 +151,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(<ConfigLoader> configLoader)
+        new Validator(projectConfiguration)
             .validate(doc).then(() => fail(), msgWithParams => {
             expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDFIELD, 'T', 'a']);
             done();
@@ -177,7 +172,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(<ConfigLoader> configLoader)
+        new Validator(projectConfiguration)
             .validate(doc).then(() => fail(), msgWithParams => {
             expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDFIELDS, 'T', 'a, b']);
             done();
@@ -197,7 +192,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(<ConfigLoader> configLoader).validate(doc).then(
+        new Validator(projectConfiguration).validate(doc).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDRELATIONFIELD, 'T2',
@@ -220,7 +215,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(<ConfigLoader> configLoader).validate(doc).then(
+        new Validator(projectConfiguration).validate(doc).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDRELATIONFIELDS, 'T2',
@@ -242,7 +237,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(<ConfigLoader> configLoader).validate(doc).then(
+        new Validator(projectConfiguration).validate(doc).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE, 'T', 'number1']);
@@ -264,7 +259,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(<ConfigLoader> configLoader).validate(doc).then(
+        new Validator(projectConfiguration).validate(doc).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES, 'T',

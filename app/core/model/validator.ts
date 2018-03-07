@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ConfigLoader} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {Document} from 'idai-components-2/core';
 import {M} from '../../m';
 import {Validations} from './validations';
@@ -12,7 +12,7 @@ import {Validations} from './validations';
  */
 export class Validator {
 
-    constructor(private configLoader: ConfigLoader) {}
+    constructor(private projectConfiguration: ProjectConfiguration) {}
 
     /**
      * @param doc
@@ -20,51 +20,48 @@ export class Validator {
      */
     public validate(doc: Document): Promise<any> {
 
-        return (this.configLoader.getProjectConfiguration() as any).then((projectConfiguration: any) => {
+        let resource = doc.resource;
 
-            let resource = doc.resource;
+        if (!Validations.validateType(resource, this.projectConfiguration)) {
+            return Promise.reject([M.VALIDATION_ERROR_INVALIDTYPE, resource.type]);
+        }
 
-            if (!Validations.validateType(resource, projectConfiguration)) {
-                return Promise.reject([M.VALIDATION_ERROR_INVALIDTYPE, resource.type]);
-            }
+        let missingProperties = Validations.getMissingProperties(resource, this.projectConfiguration);
+        if (missingProperties.length > 0) {
+            return Promise.reject([M.VALIDATION_ERROR_MISSINGPROPERTY, resource.type]
+                .concat(missingProperties.join((', '))));
+        }
 
-            let missingProperties = Validations.getMissingProperties(resource, projectConfiguration);
-            if (missingProperties.length > 0) {
-                return Promise.reject([M.VALIDATION_ERROR_MISSINGPROPERTY, resource.type]
-                    .concat(missingProperties.join((', '))));
-            }
+        const invalidFields = Validations.validateFields(resource, this.projectConfiguration);
+        if (invalidFields.length > 0) {
+            const err = [invalidFields.length == 1 ?
+                M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS];
+            err.push(resource.type);
+            err.push(invalidFields.join(', '));
+            return Promise.reject(err);
+        }
 
-            const invalidFields = Validations.validateFields(resource, projectConfiguration);
-            if (invalidFields.length > 0) {
-                const err = [invalidFields.length == 1 ?
-                    M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS];
-                err.push(resource.type);
-                err.push(invalidFields.join(', '));
-                return Promise.reject(err);
-            }
+        const invalidRelationFields = Validations.validateRelations(resource, this.projectConfiguration);
+        if (invalidRelationFields.length > 0) {
+            const err = [invalidRelationFields.length == 1 ?
+                M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
+                M.VALIDATION_ERROR_INVALIDRELATIONFIELDS];
+            err.push(resource.type);
+            err.push(invalidRelationFields.join(', '));
+            return Promise.reject(err);
+        }
 
-            const invalidRelationFields = Validations.validateRelations(resource, projectConfiguration);
-            if (invalidRelationFields.length > 0) {
-                const err = [invalidRelationFields.length == 1 ?
-                    M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
-                    M.VALIDATION_ERROR_INVALIDRELATIONFIELDS];
-                err.push(resource.type);
-                err.push(invalidRelationFields.join(', '));
-                return Promise.reject(err);
-            }
+        let invalidNumericValues;
+        if (invalidNumericValues = Validations.validateNumericValues(resource, this.projectConfiguration)) {
+            let err = [invalidNumericValues.length == 1 ?
+                M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
+                M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES];
+            err.push(resource.type);
+            err.push(invalidNumericValues.join(', '));
+            return Promise.reject(err);
+        }
 
-            let invalidNumericValues;
-            if (invalidNumericValues = Validations.validateNumericValues(resource, projectConfiguration)) {
-                let err = [invalidNumericValues.length == 1 ?
-                    M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
-                    M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES];
-                err.push(resource.type);
-                err.push(invalidNumericValues.join(', '));
-                return Promise.reject(err);
-            }
-
-            return this.validateCustom(doc);
-        });
+        return this.validateCustom(doc);
     }
 
     /**

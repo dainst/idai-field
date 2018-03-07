@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {ConfigLoader} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiType} from 'idai-components-2/core';
 
 @Component({
@@ -40,7 +40,7 @@ export class SearchBarComponent implements OnChanges {
     private filterOptions: Array<IdaiType> = [];
 
 
-    constructor(private configLoader: ConfigLoader) {}
+    constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -80,43 +80,40 @@ export class SearchBarComponent implements OnChanges {
 
         this.filterOptions = [];
 
-        (this.configLoader.getProjectConfiguration() as any).then((projectConfiguration: any) => {
+        for (let type of this.projectConfiguration.getTypesTreeList()) {
 
-            for (let type of projectConfiguration.getTypesTreeList()) {
-
-                if (this.parentType && type.name != this.parentType) continue;
+            if (this.parentType && type.name != this.parentType) continue;
 
 
 
-                if ((!this.relationName && !this.relationRangeType)
-                        || projectConfiguration.isAllowedRelationDomainType(type.name, this.relationRangeType,
-                        this.relationName)) {
+            if ((!this.relationName && !this.relationRangeType)
+                    || this.projectConfiguration.isAllowedRelationDomainType(type.name, this.relationRangeType,
+                    this.relationName)) {
 
-                    if (this.relationRangeType == 'Project' && type.isAbstract) {
+                if (this.relationRangeType == 'Project' && type.isAbstract) {
 
-                        for (let childType of type.children) { // TODO remove duplication
-                            if (projectConfiguration.isAllowedRelationDomainType(childType.name, this.relationRangeType,
-                                    this.relationName)) {
-                                this.addFilterOption(childType);
-                            }
-                        }
-                        continue;
-                    }
-
-                    this.addFilterOption(type);
-
-                } else if (type.children) {
-
-                    for (let childType of type.children) {
-                        if (projectConfiguration.isAllowedRelationDomainType(childType.name, this.relationRangeType,
+                    for (let childType of type.children) { // TODO remove duplication
+                        if (this.projectConfiguration.isAllowedRelationDomainType(childType.name, this.relationRangeType,
                                 this.relationName)) {
                             this.addFilterOption(childType);
                         }
                     }
+                    continue;
                 }
 
+                this.addFilterOption(type);
+
+            } else if (type.children) {
+
+                for (let childType of type.children) {
+                    if (this.projectConfiguration.isAllowedRelationDomainType(childType.name, this.relationRangeType,
+                            this.relationName)) {
+                        this.addFilterOption(childType);
+                    }
+                }
             }
-        });
+
+        }
     }
 
 

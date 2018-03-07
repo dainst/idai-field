@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {ImportStrategy} from './import-strategy';
 import {SettingsService} from '../settings/settings-service';
 import {M} from '../../m';
@@ -14,7 +14,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     constructor(private validator: Validator, private datastore: DocumentDatastore, private settingsService: SettingsService,
-                private configLoader: ConfigLoader, private mainTypeDocumentId?: string) { }
+                private projectConfiguration: ProjectConfiguration, private mainTypeDocumentId?: string) { }
 
 
     importDoc(document: Document): Promise<any> {
@@ -37,14 +37,9 @@ export class DefaultImportStrategy implements ImportStrategy {
 
         if (!this.mainTypeDocumentId || this.mainTypeDocumentId == '') return Promise.resolve();
 
-        let projectConfiguration: ProjectConfiguration;
-
-        return (this.configLoader.getProjectConfiguration() as any)
-            .then((projectConfig: ProjectConfiguration) => {
-                projectConfiguration = projectConfig;
-                return this.datastore.get(this.mainTypeDocumentId as any);
-            }).then((mainTypeDocument: any) => {
-                if (!projectConfiguration.isAllowedRelationDomainType(document.resource.type,
+        return this.datastore.get(this.mainTypeDocumentId as any)
+            .then((mainTypeDocument: any) => {
+                if (!this.projectConfiguration.isAllowedRelationDomainType(document.resource.type,
                         mainTypeDocument.resource.type, 'isRecordedIn')) {
                     return Promise.reject([M.IMPORT_FAILURE_INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
                         mainTypeDocument.resource.type]);

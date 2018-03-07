@@ -6,7 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {IdaiMessagesModule, MD, Messages} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor, IdaiDocumentsModule} from 'idai-components-2/core';
 import {IdaiFieldValidator} from './core/model/idai-field-validator';
-import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/core';
+import {ConfigReader, ConfigLoader, ProjectConfiguration} from 'idai-components-2/core';
 import {routing} from './app.routing';
 import {M} from './m';
 import {AppComponent} from './app.component';
@@ -72,18 +72,20 @@ let pconf: any = undefined;
         ProjectsComponent
     ],
     providers: [
+        ConfigReader,
+        ConfigLoader,
+        IdaiFieldAppConfigurator,
         {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [IdaiFieldAppConfigurator, ConfigLoader, SettingsService],
-            useFactory: function(appConfigurator: IdaiFieldAppConfigurator, configLoader: ConfigLoader, settingsService: SettingsService) {
+            deps: [IdaiFieldAppConfigurator, SettingsService],
+            useFactory: function(appConfigurator: IdaiFieldAppConfigurator, settingsService: SettingsService) {
 
-                return() => {
+                return () => {
                     const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
                     const HIDDEN_CONFIGURATION_PATH = remote.getGlobal('hiddenConfigurationPath');
-                    appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH);
 
-                    return (configLoader.getProjectConfiguration() as any).then((pc: any) => {
+                    return appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH).then((pc: any) => {
                         pconf = pc as any;
                     }).catch((msgsWithParams: any) => {
                         msgsWithParams.forEach((msg: any) => {
@@ -113,8 +115,6 @@ let pconf: any = undefined;
         BlobMaker,
         Converter,
         AppController,
-        IdaiFieldAppConfigurator,
-        ConfigLoader,
         {
             provide: ProjectConfiguration,
             useFactory: () => {
@@ -130,10 +130,10 @@ let pconf: any = undefined;
         DocumentEditChangeMonitor,
         {
             provide: Validator,
-            useFactory: function(configLoader: ConfigLoader, datastore: IdaiFieldDocumentDatastore) {
-                return new IdaiFieldValidator(configLoader, datastore);
+            useFactory: function(projectConfiguration: ProjectConfiguration, datastore: IdaiFieldDocumentDatastore) {
+                return new IdaiFieldValidator(projectConfiguration, datastore);
             },
-            deps: [ConfigLoader, DocumentDatastore]
+            deps: [ProjectConfiguration, DocumentDatastore]
         },
         { provide: MD, useClass: M},
         DoceditActiveTabService,

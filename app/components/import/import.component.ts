@@ -3,7 +3,7 @@ import {Http} from '@angular/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/core';
-import {ConfigLoader} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {Importer, ImportReport} from '../../core/importer/importer';
 import {Reader} from '../../core/importer/reader';
 import {FileSystemReader} from '../../core/importer/file-system-reader';
@@ -66,7 +66,7 @@ export class ImportComponent {
         private http: Http,
         private relationsCompleter: RelationsCompleter,
         private settingsService: SettingsService,
-        private configLoader: ConfigLoader,
+        private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
         private modalService: NgbModal
     ) {
@@ -83,7 +83,7 @@ export class ImportComponent {
             this.url as any, this.http);
         const parser: Parser|undefined = ImportComponent.createParser(this.format);
         const importStrategy: ImportStrategy|undefined = ImportComponent.createImportStrategy(this.format,
-            this.validator, this.datastore, this.settingsService, this.configLoader, this.mainTypeDocumentId);
+            this.validator, this.datastore, this.settingsService, this.projectConfiguration, this.mainTypeDocumentId);
         const relationsStrategy: RelationsStrategy|undefined
             = ImportComponent.createRelationsStrategy(this.format, this.relationsCompleter);
         const rollbackStrategy: RollbackStrategy|undefined
@@ -131,15 +131,15 @@ export class ImportComponent {
     
 
     private static createImportStrategy(format: string, validator: Validator, datastore: DocumentDatastore,
-                                        settingsService: SettingsService, configLoader: ConfigLoader,
+                                        settingsService: SettingsService, projectConfiguration: ProjectConfiguration,
                                         mainTypeDocumentId: string): ImportStrategy|undefined {
 
         switch (format) {
             case 'native':
-                return new DefaultImportStrategy(validator, datastore, settingsService, configLoader,
+                return new DefaultImportStrategy(validator, datastore, settingsService, projectConfiguration,
                     mainTypeDocumentId);
             case 'idig':
-                return new DefaultImportStrategy(validator, datastore, settingsService, configLoader);
+                return new DefaultImportStrategy(validator, datastore, settingsService, projectConfiguration);
             case 'geojson':
                 return new MergeGeometriesImportStrategy(validator, datastore as any, settingsService);
         }

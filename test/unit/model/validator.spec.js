@@ -65,9 +65,6 @@ describe('Validator', function () {
             }
         ]
     });
-    var configLoader = {
-        getProjectConfiguration: function () { return Promise.resolve(projectConfiguration); }
-    };
     it('should report nothing', function (done) {
         var doc = {
             resource: {
@@ -79,7 +76,7 @@ describe('Validator', function () {
                 },
             }
         };
-        new validator_1.Validator(configLoader)
+        new validator_1.Validator(projectConfiguration)
             .validate(doc).then(function () { return done(); }, function (msgWithParams) { return fail(msgWithParams); });
     });
     it('should report nothing when omitting optional property', function (done) {
@@ -91,7 +88,7 @@ describe('Validator', function () {
                 relations: {},
             }
         };
-        new validator_1.Validator(configLoader)
+        new validator_1.Validator(projectConfiguration)
             .validate(doc).then(function () { return done(); }, function (msgWithParams) { return fail(msgWithParams); });
     });
     it('should report error when omitting mandatory property', function (done) {
@@ -102,7 +99,7 @@ describe('Validator', function () {
                 relations: {},
             }
         };
-        new validator_1.Validator(configLoader)
+        new validator_1.Validator(projectConfiguration)
             .validate(doc).then(function () { return fail(); }, function (msgWithParams) {
             expect(msgWithParams).toEqual([m_1.M.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
             done();
@@ -117,7 +114,7 @@ describe('Validator', function () {
                 relations: {},
             }
         };
-        new validator_1.Validator(configLoader)
+        new validator_1.Validator(projectConfiguration)
             .validate(doc).then(function () { return fail(); }, function (msgWithParams) {
             expect(msgWithParams).toEqual([m_1.M.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
             done();
@@ -133,7 +130,7 @@ describe('Validator', function () {
                 relations: {},
             }
         };
-        new validator_1.Validator(configLoader)
+        new validator_1.Validator(projectConfiguration)
             .validate(doc).then(function () { return fail(); }, function (msgWithParams) {
             expect(msgWithParams).toEqual([m_1.M.VALIDATION_ERROR_INVALIDFIELD, 'T', 'a']);
             done();
@@ -150,7 +147,7 @@ describe('Validator', function () {
                 relations: {},
             }
         };
-        new validator_1.Validator(configLoader)
+        new validator_1.Validator(projectConfiguration)
             .validate(doc).then(function () { return fail(); }, function (msgWithParams) {
             expect(msgWithParams).toEqual([m_1.M.VALIDATION_ERROR_INVALIDFIELDS, 'T', 'a, b']);
             done();
@@ -166,7 +163,7 @@ describe('Validator', function () {
                 }
             }
         };
-        new validator_1.Validator(configLoader).validate(doc).then(function () { return fail(); }, function (msgWithParams) {
+        new validator_1.Validator(projectConfiguration).validate(doc).then(function () { return fail(); }, function (msgWithParams) {
             expect(msgWithParams).toEqual([m_1.M.VALIDATION_ERROR_INVALIDRELATIONFIELD, 'T2',
                 'isRelatedTo']);
             done();
@@ -183,7 +180,7 @@ describe('Validator', function () {
                 }
             }
         };
-        new validator_1.Validator(configLoader).validate(doc).then(function () { return fail(); }, function (msgWithParams) {
+        new validator_1.Validator(projectConfiguration).validate(doc).then(function () { return fail(); }, function (msgWithParams) {
             expect(msgWithParams).toEqual([m_1.M.VALIDATION_ERROR_INVALIDRELATIONFIELDS, 'T2',
                 'isRelatedTo, isDepictedIn']);
             done();
@@ -199,7 +196,7 @@ describe('Validator', function () {
                 relations: {}
             }
         };
-        new validator_1.Validator(configLoader).validate(doc).then(function () { return fail(); }, function (msgWithParams) {
+        new validator_1.Validator(projectConfiguration).validate(doc).then(function () { return fail(); }, function (msgWithParams) {
             expect(msgWithParams).toEqual([m_1.M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE, 'T', 'number1']);
             done();
         });
@@ -215,7 +212,7 @@ describe('Validator', function () {
                 relations: {}
             }
         };
-        new validator_1.Validator(configLoader).validate(doc).then(function () { return fail(); }, function (msgWithParams) {
+        new validator_1.Validator(projectConfiguration).validate(doc).then(function () { return fail(); }, function (msgWithParams) {
             expect(msgWithParams).toEqual([m_1.M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES, 'T',
                 'number1, number2']);
             done();

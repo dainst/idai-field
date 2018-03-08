@@ -25,6 +25,7 @@ import {DocumentReadDatastore} from './document-read-datastore';
 import {IdaiFieldTypeConverter} from './idai-field-type-converter';
 import {RemoteChangesStream} from './core/remote-changes-stream';
 import {IndexFacade} from './index/index-facade';
+import {IdGenerator} from './core/id-generator';
 
 /**
  * There is the top level package, in which everything idai-field specific resides,
@@ -86,16 +87,19 @@ import {IndexFacade} from './index/index-facade';
             deps: [FulltextIndexer, ConstraintIndexer]
         },
 
+        IdGenerator,
         {
             provide: PouchdbDatastore,
             useFactory: function(pouchdbManager: PouchdbManager,
                                  appState: AppState,
                                  autoConflictResolvingExtension: ConflictResolvingExtension,
-                                 conflictResolver: ConflictResolver): PouchdbDatastore {
-                return new PouchdbServerDatastore(pouchdbManager, // Provides fauxton
-                    appState, autoConflictResolvingExtension, conflictResolver);
+                                 conflictResolver: ConflictResolver,
+                                 idGenerator: IdGenerator): PouchdbDatastore {
+
+                return new PouchdbServerDatastore(pouchdbManager.getDb(), // Provides fauxton
+                    appState, autoConflictResolvingExtension, conflictResolver, idGenerator);
             },
-            deps: [PouchdbManager, AppState, ConflictResolvingExtension, ConflictResolver]
+            deps: [PouchdbManager, AppState, ConflictResolvingExtension, ConflictResolver, IdGenerator]
         },
 
 

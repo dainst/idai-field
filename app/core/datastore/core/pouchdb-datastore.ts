@@ -2,12 +2,12 @@ import {Observable} from 'rxjs/Observable';
 import {DatastoreErrors} from 'idai-components-2/core';
 import {Document, NewDocument} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
-import {PouchdbManager} from './pouchdb-manager';
 import {AppState} from '../../settings/app-state';
 import {ConflictResolvingExtension} from './conflict-resolving-extension';
 import {ConflictResolver} from './conflict-resolver';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
 import {ObserverUtil} from '../../../util/observer-util';
+import {PouchdbProxy} from './pouchdb-proxy';
 
 /**
  * @author Sebastian Cuy
@@ -16,7 +16,6 @@ import {ObserverUtil} from '../../../util/observer-util';
  */
 export class PouchdbDatastore {
 
-    protected db: any;
     public ready = () => this.db.ready();
 
     private remoteChangesObservers = [];
@@ -31,14 +30,14 @@ export class PouchdbDatastore {
 
 
     constructor(
-        private pouchdbManager: PouchdbManager,
+        private db: PouchdbProxy,
         private appState: AppState,
         private conflictResolvingExtension: ConflictResolvingExtension,
         private conflictResolver: ConflictResolver,
+        private idGenerator: IdGenerator,
         setupChangesEmitterAndServer = true
         ) {
 
-        this.db = pouchdbManager.getDb();
         conflictResolvingExtension.setDatastore(this);
         conflictResolvingExtension.setDb(this.db);
         conflictResolvingExtension.setConflictResolver(conflictResolver);
@@ -67,9 +66,8 @@ export class PouchdbDatastore {
         } catch (expected) {
             if (expected === 'exists') throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS]
         }
-
         const resetFun = this.resetDocOnErr(document as Document);
-        if (!document.resource.id) document.resource.id = IdGenerator.generateId();
+        if (!document.resource.id) document.resource.id = this.idGenerator.generateId();
         (document as any)['_id'] = document.resource.id;
 
         try {
@@ -155,12 +153,13 @@ export class PouchdbDatastore {
                  options: any = { conflicts: true }): Promise<Document> {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
+
         return this.db.get(resourceId, options)
             .then(
                 (result: any) => {
                     if (!Document.isValid(result)) return Promise.reject([DatastoreErrors.INVALID_DOCUMENT]);
                     PouchdbDatastore.convertDates(result);
-                    return result as Document;
+                    return Promise.resolve(result as Document);
                 },
                 (err: any) => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
     }

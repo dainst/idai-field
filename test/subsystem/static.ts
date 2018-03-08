@@ -7,6 +7,7 @@ import {DocumentCache} from '../../app/core/datastore/core/document-cache';
 import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
 import {AppState} from '../../app/core/settings/app-state';
 import {IndexFacade} from '../../app/core/datastore/index/index-facade';
+import {IdGenerator} from '../../app/core/datastore/core/id-generator';
 
 
 /**
@@ -46,9 +47,10 @@ export class Static {
 
 
         const datastore = new PouchdbDatastore(
-            pouchdbManager, appState,
+            pouchdbManager.getDb(), appState,
             conflictResolvingExtension,
             conflictResolver,
+            new IdGenerator(),
             false);
         pouchdbManager.setProject(dbname);
 

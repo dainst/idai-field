@@ -18,7 +18,7 @@ const remote = require('electron').remote;
  */
 export class PouchdbManager {
 
-    private db: any = undefined;
+    private db: any = undefined; // TODO replace with initialized bool and obtain db via dbProxy
     private dbProxy: PouchdbProxy|undefined = undefined;
     private syncHandles = [];
 

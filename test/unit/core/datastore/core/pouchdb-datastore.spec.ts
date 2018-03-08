@@ -19,11 +19,6 @@ describe('PouchdbDatastore', () => {
 
 
         const appState = new AppState();
-        const conflictResolvingExtension = jasmine.createSpyObj('conflictResolvingExtension',
-            ['setDatastore', 'setConflictResolver', 'autoResolve', 'setDb']);
-        conflictResolvingExtension.autoResolve.and.callFake(() => Promise.resolve());
-        const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
-
 
         let idGenerator = jasmine.createSpyObj('idGenerator', ['generateId']);
         idGenerator.generateId.and.returnValue(1);
@@ -44,8 +39,6 @@ describe('PouchdbDatastore', () => {
         datastore = new PouchdbDatastore(
             pouchdbProxy,
             appState,
-            conflictResolvingExtension,
-            conflictResolver,
             idGenerator,
             false);
     }

@@ -92,14 +92,12 @@ import {IdGenerator} from './core/id-generator';
             provide: PouchdbDatastore,
             useFactory: function(pouchdbManager: PouchdbManager,
                                  appState: AppState,
-                                 autoConflictResolvingExtension: ConflictResolvingExtension,
-                                 conflictResolver: ConflictResolver,
                                  idGenerator: IdGenerator): PouchdbDatastore {
 
                 return new PouchdbServerDatastore(pouchdbManager.getDb(), // Provides fauxton
-                    appState, autoConflictResolvingExtension, conflictResolver, idGenerator);
+                    appState, idGenerator);
             },
-            deps: [PouchdbManager, AppState, ConflictResolvingExtension, ConflictResolver, IdGenerator]
+            deps: [PouchdbManager, AppState, IdGenerator]
         },
 
 

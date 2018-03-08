@@ -1,10 +1,7 @@
 import {Observable} from 'rxjs/Observable';
-import {DatastoreErrors} from 'idai-components-2/core';
-import {Document, NewDocument} from 'idai-components-2/core';
+import {DatastoreErrors, Document, NewDocument} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
 import {AppState} from '../../settings/app-state';
-import {ConflictResolvingExtension} from './conflict-resolving-extension';
-import {ConflictResolver} from './conflict-resolver';
 import {ChangeHistoryUtil} from '../../model/change-history-util';
 import {ObserverUtil} from '../../../util/observer-util';
 import {PouchdbProxy} from './pouchdb-proxy';
@@ -32,15 +29,9 @@ export class PouchdbDatastore {
     constructor(
         private db: PouchdbProxy,
         private appState: AppState,
-        private conflictResolvingExtension: ConflictResolvingExtension,
-        private conflictResolver: ConflictResolver,
         private idGenerator: IdGenerator,
         setupChangesEmitterAndServer = true
         ) {
-
-        conflictResolvingExtension.setDatastore(this);
-        conflictResolvingExtension.setDb(this.db);
-        conflictResolvingExtension.setConflictResolver(conflictResolver);
 
         if (setupChangesEmitterAndServer) {
             this.setupServer().then(() => this.setupChangesEmitter());

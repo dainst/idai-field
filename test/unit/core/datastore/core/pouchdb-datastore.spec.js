@@ -50,9 +50,6 @@ describe('PouchdbDatastore', function () {
     var pouchdbProxy;
     function createPouchdbDatastore() {
         var appState = new app_state_1.AppState();
-        var conflictResolvingExtension = jasmine.createSpyObj('conflictResolvingExtension', ['setDatastore', 'setConflictResolver', 'autoResolve', 'setDb']);
-        conflictResolvingExtension.autoResolve.and.callFake(function () { return Promise.resolve(); });
-        var conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
         var idGenerator = jasmine.createSpyObj('idGenerator', ['generateId']);
         idGenerator.generateId.and.returnValue(1);
         pouchdbProxy = jasmine.createSpyObj('pouchdbProxy', ['get', 'put']);
@@ -67,7 +64,7 @@ describe('PouchdbDatastore', function () {
                 modified: [] // TODO extend isValid to check for existing modified
             });
         });
-        datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbProxy, appState, conflictResolvingExtension, conflictResolver, idGenerator, false);
+        datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbProxy, appState, idGenerator, false);
     }
     beforeEach(function () { return createPouchdbDatastore(); });
     var expectErr = function (promise, expectedMsgWithParams, done) {

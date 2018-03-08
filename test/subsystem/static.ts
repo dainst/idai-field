@@ -40,16 +40,9 @@ export class Static {
             (undefined, indexFacade);
 
         const appState = new AppState();
-        const conflictResolvingExtension = jasmine.createSpyObj('conflictResolvingExtension',
-            ['setDatastore', 'setConflictResolver', 'autoResolve', 'setDb']);
-        conflictResolvingExtension.autoResolve.and.callFake(() => Promise.resolve());
-        const conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
-
 
         const datastore = new PouchdbDatastore(
             pouchdbManager.getDb(), appState,
-            conflictResolvingExtension,
-            conflictResolver,
             new IdGenerator(),
             false);
         pouchdbManager.loadProjectDb(dbname);

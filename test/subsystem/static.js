@@ -32,10 +32,7 @@ var Static = (function () {
         var indexFacade = new index_facade_1.IndexFacade(constraintIndexer, fulltextIndexer);
         var pouchdbManager = new pouchdb_manager_1.PouchdbManager(undefined, indexFacade);
         var appState = new app_state_1.AppState();
-        var conflictResolvingExtension = jasmine.createSpyObj('conflictResolvingExtension', ['setDatastore', 'setConflictResolver', 'autoResolve', 'setDb']);
-        conflictResolvingExtension.autoResolve.and.callFake(function () { return Promise.resolve(); });
-        var conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
-        var datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbManager.getDb(), appState, conflictResolvingExtension, conflictResolver, new id_generator_1.IdGenerator(), false);
+        var datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbManager.getDb(), appState, new id_generator_1.IdGenerator(), false);
         pouchdbManager.loadProjectDb(dbname);
         return {
             datastore: datastore,

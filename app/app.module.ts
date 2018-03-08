@@ -43,6 +43,7 @@ import {DocumentDatastore} from './core/datastore/document-datastore';
 import {Core3DModule} from './components/core-3d/core-3d.module';
 import {MeshLoader} from './core/3d/mesh-loader';
 import {MeshEditingUtility} from './core/3d/mesh-editing-utility';
+import {Store3D} from './core/3d/store-3d';
 
 
 const remote = require('electron').remote;
@@ -143,7 +144,8 @@ let pconf: any = undefined;
         DoceditActiveTabService,
         StateSerializer,
         MeshLoader,
-        MeshEditingUtility
+        MeshEditingUtility,
+        Store3D
     ],
     bootstrap: [ AppComponent ]
 })

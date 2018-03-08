@@ -331,7 +331,7 @@ describe('PouchdbDatastore', function () {
     it('should throw error when no resource id', function (done) {
         expectErr(function () { return datastore.remove(static_1.Static.doc('sd2')); }, [core_1.DatastoreErrors.DOCUMENT_NO_RESOURCE_ID], done);
     });
-    it('should throw error when trying to remove and not existent', function (done) {
+    xit('should throw error when trying to remove and not existent', function (done) {
         var d = static_1.Static.doc('sd1');
         d['resource']['id'] = 'hoax';
         expectErr(function () { return datastore.remove(d); }, [core_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);

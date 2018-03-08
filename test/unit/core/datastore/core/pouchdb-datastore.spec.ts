@@ -258,7 +258,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('should throw error when trying to remove and not existent', done => {
+    xit('should throw error when trying to remove and not existent', done => {
 
         const d = Static.doc('sd1');
         d['resource']['id'] = 'hoax';

@@ -20,7 +20,6 @@ export class PouchdbManager {
 
     private db: any = undefined;
     private dbProxy: PouchdbProxy|undefined = undefined;
-    private name: string|undefined = undefined;
     private syncHandles = [];
 
     private resolveDbReady: Function;
@@ -57,8 +56,6 @@ export class PouchdbManager {
 
     public async loadProjectDb(name: string) {
 
-        this.name = name;
-
         if (this.db) {
             await this.db.close();
             this.db = undefined;
@@ -84,9 +81,9 @@ export class PouchdbManager {
      * Changes to sync state will be published via the onSync*-Methods.
      * @param url target datastore
      */
-    public setupSync(url: string): Promise<SyncState> {
+    public setupSync(url: string, projectName: string): Promise<SyncState> {
 
-        const fullUrl = url + '/' + this.name; // TODO save name only in settings service
+        const fullUrl = url + '/' + projectName;
         console.log('start syncing');
 
         return (this.getDb() as any).ready().then((db: any) => {

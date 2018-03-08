@@ -158,10 +158,11 @@ export class SettingsService {
 
         this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
         if (!this.currentSyncUrl) return Promise.resolve();
+        if (!this.getSelectedProject()) return Promise.resolve();
 
         console.log('SettingsService.startSync()');
 
-        return this.pouchdbManager.setupSync(this.currentSyncUrl).then(syncState => {
+        return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject() as any).then(syncState => {
 
             // avoid issuing 'connected' too early
             const msg = setTimeout(() => this.syncStatusObservers.forEach((o: Observer<any>) => o.next('connected')), 500);

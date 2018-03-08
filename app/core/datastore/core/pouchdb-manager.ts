@@ -142,7 +142,7 @@ export class PouchdbManager {
 
     private static fetchAll(db:any, forEach: Function) {
 
-        return db
+        return db // TODO replace return with await
             .allDocs({
                     include_docs: true,
                     conflicts: true

@@ -55,7 +55,7 @@ var DAOsSpecHelper = (function () {
         var indexFacade = new index_facade_1.IndexFacade(constraintIndexer, fulltextIndexer);
         var pouchdbManager = new pouchdb_manager_1.PouchdbManager(undefined, indexFacade);
         var appState = new app_state_1.AppState();
-        var datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbManager.getDb(), appState, new id_generator_1.IdGenerator(), false);
+        var datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbManager.getDbProxy(), appState, new id_generator_1.IdGenerator(), false);
         pouchdbManager.loadProjectDb(dbname);
         return {
             datastore: datastore,

@@ -6,6 +6,7 @@ import {Imagestore} from './imagestore';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {ImagestoreErrors} from './imagestore-errors';
 import {SafeResourceUrl} from '@angular/platform-browser';
+import {PouchdbProxy} from '../datastore/core/pouchdb-proxy';
 
 
 @Injectable()
@@ -19,7 +20,6 @@ import {SafeResourceUrl} from '@angular/platform-browser';
 export class PouchDbFsImagestore implements Imagestore {
 
     private projectPath: string|undefined = undefined;
-    private db: any = undefined;
 
     private thumbBlobUrls: { [key: string]: BlobUrlSet } = {};
     private originalBlobUrls: { [key: string]: BlobUrlSet } = {};
@@ -28,15 +28,13 @@ export class PouchDbFsImagestore implements Imagestore {
     constructor(
         private converter: Converter,
         private blobMaker: BlobMaker,
-        pouchdbManager: PouchdbManager) {
-
-        this.db = pouchdbManager.getDb();
+        private db: PouchdbProxy) {
     }
 
-    
+
     public getPath = (): string|undefined => this.projectPath;
 
-    
+
     public setPath(imagestorePath: string, projectName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {

@@ -94,7 +94,7 @@ import {IdGenerator} from './core/id-generator';
                                  appState: AppState,
                                  idGenerator: IdGenerator): PouchdbDatastore {
 
-                return new PouchdbServerDatastore(pouchdbManager.getDb(), // Provides fauxton
+                return new PouchdbServerDatastore(pouchdbManager.getDbProxy(), // Provides fauxton
                     appState, idGenerator);
             },
             deps: [PouchdbManager, AppState, IdGenerator]

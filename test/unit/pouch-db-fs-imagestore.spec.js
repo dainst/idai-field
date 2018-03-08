@@ -46,7 +46,7 @@ describe('PouchDbFsImagestore', function () {
         var mockFulltextIndexer = jasmine.createSpyObj('mockFulltextIndexer', ['add', 'clear']);
         manager = new pouchdb_manager_1.PouchdbManager(mockConfigProvider, new index_facade_1.IndexFacade(mockConstraintIndexer, mockFulltextIndexer));
         manager.loadProjectDb('unittest');
-        store = new pouch_db_fs_imagestore_1.PouchDbFsImagestore(mockConverter, mockBlobMaker, manager);
+        store = new pouch_db_fs_imagestore_1.PouchDbFsImagestore(mockConverter, mockBlobMaker, manager.getDbProxy());
         store.setPath('store/', 'unittest');
     });
     afterEach(function (done) {

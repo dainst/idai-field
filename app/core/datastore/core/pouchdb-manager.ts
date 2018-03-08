@@ -18,8 +18,8 @@ const remote = require('electron').remote;
  */
 export class PouchdbManager {
 
-    private db: any = undefined; // TODO replace with initialized bool and obtain db via dbProxy
-    private dbProxy: PouchdbProxy|undefined = undefined;
+    private dbHandle: any = undefined;
+    private dbProxy: PouchdbProxy;
     private syncHandles = [];
 
     private resolveDbReady: Function;
@@ -36,7 +36,7 @@ export class PouchdbManager {
      * @returns {PouchdbProxy} a proxy that automatically hands over method
      *  calls to the actual PouchDB instance as soon as it is available
      */
-    public getDb = () => this.dbProxy as PouchdbProxy;
+    public getDbProxy = () => this.dbProxy;
 
 
     /**
@@ -46,33 +46,34 @@ export class PouchdbManager {
     public destroyDb = (dbName: string) => PouchdbManager.createPouchDBObject(dbName).destroy();
 
 
-    public resetForE2E() {
+    public async resetForE2E() {
 
         const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
         Object.assign(this.dbProxy, new PouchdbProxy(dbReady));
+
+        if (this.dbHandle) {
+            await this.dbHandle.close();
+            this.dbHandle = undefined;
+        }
         this.loadProjectDb('test');
     }
 
 
     public async loadProjectDb(name: string) {
 
-        if (this.db) {
-            await this.db.close();
-            this.db = undefined;
-        }
-
-        this.db = await PouchdbManager.createPouchDBObject(name);
+        let db = await PouchdbManager.createPouchDBObject(name);
         if (name === 'test') {
-            await this.db.destroy();
-            this.db = await PouchdbManager.createPouchDBObject(name);
-            await this.sampleDataLoader.go(this.db, name);
+            await db.destroy();
+            db = await PouchdbManager.createPouchDBObject(name);
+            await this.sampleDataLoader.go(db, name);
         }
 
         this.indexFacade.clear();
-        await PouchdbManager.fetchAll(this.db,
+        await PouchdbManager.fetchAll(db,
             (doc: any) => this.indexFacade.put(doc, true, false)
         );
-        this.resolveDbReady(this.db);
+        this.resolveDbReady(db);
+        this.dbHandle = db;
     }
 
 
@@ -86,7 +87,7 @@ export class PouchdbManager {
         const fullUrl = url + '/' + projectName;
         console.log('start syncing');
 
-        return (this.getDb() as any).ready().then((db: any) => {
+        return (this.getDbProxy() as any).ready().then((db: any) => {
             let sync = db.sync(fullUrl, { live: true, retry: false });
             this.syncHandles.push(sync as never);
             return {
@@ -140,9 +141,9 @@ export class PouchdbManager {
     }
 
 
-    private static fetchAll(db:any, forEach: Function) {
+    private static async fetchAll(db:any, forEach: Function) {
 
-        return db // TODO replace return with await
+        await db
             .allDocs({
                     include_docs: true,
                     conflicts: true

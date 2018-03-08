@@ -39,6 +39,7 @@ import {PersistenceManager} from './core/persist/persistence-manager';
 import {DocumentDatastore} from './core/datastore/document-datastore';
 import {Validator} from './core/model/validator';
 import {MatrixModule} from './components/matrix/matrix.module';
+import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
 
 
 const remote = require('electron').remote;
@@ -91,8 +92,14 @@ let pconf: any = undefined;
             },
             deps: [MD]
         },
+        {
+            provide: Imagestore,
+            useFactory: function(pouchdbManager: PouchdbManager, converter: Converter, blobMaker: BlobMaker) {
+                return new PouchDbFsImagestore(converter, blobMaker, pouchdbManager.getDbProxy());
+            },
+            deps: [PouchdbManager, Converter, BlobMaker]
+        },
         ImageTypeUtility,
-        { provide: Imagestore, useClass: PouchDbFsImagestore },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         BlobMaker,

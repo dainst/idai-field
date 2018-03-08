@@ -53,7 +53,7 @@ describe('PouchDbFsImagestore', () => {
         manager = new PouchdbManager(mockConfigProvider, new IndexFacade(mockConstraintIndexer, mockFulltextIndexer));
         manager.loadProjectDb('unittest');
 
-        store = new PouchDbFsImagestore(mockConverter, mockBlobMaker, manager);
+        store = new PouchDbFsImagestore(mockConverter, mockBlobMaker, manager.getDbProxy());
         store.setPath('store/', 'unittest');
     });
 

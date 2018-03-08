@@ -79,7 +79,7 @@ export class DAOsSpecHelper {
         const appState = new AppState();
 
         const datastore = new PouchdbDatastore(
-            pouchdbManager.getDb(), appState,
+            pouchdbManager.getDbProxy(), appState,
             new IdGenerator(),
             false);
         pouchdbManager.loadProjectDb(dbname);

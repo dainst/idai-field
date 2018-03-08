@@ -57,7 +57,10 @@ export class PouchdbManager {
             await this.sampleDataLoader.go(this.db, this.name as any);
         }
 
-        await this.index();
+        this.indexFacade.clear();
+        await PouchdbManager.fetchAll(this.db,
+            (doc: any) => this.indexFacade.put(doc, true, false)
+        );
         this.resolveDbReady(this.db);
     }
 
@@ -150,18 +153,18 @@ export class PouchdbManager {
     }
 
 
-    private index() {
+    private static fetchAll(db:any, forEach: Function) {
 
-        return this.db.allDocs({
-            include_docs: true,
-            conflicts: true
-        }, (err: any, resultDocs: any) => {
-            this.indexFacade.clear();
-
-            (resultDocs.rows as Array<any>)
-                .filter(row => !PouchdbManager.isDesignDoc(row))
-                .forEach(row => this.indexFacade.put(row.doc, true, false));
-        });
+        return db
+            .allDocs({
+                    include_docs: true,
+                    conflicts: true
+                },
+                (err: any, resultDocs: any) => {
+                    (resultDocs.rows as Array<any>)
+                        .filter(row => !PouchdbManager.isDesignDoc(row))
+                        .forEach(row => forEach(row.doc));
+                });
     }
 
 

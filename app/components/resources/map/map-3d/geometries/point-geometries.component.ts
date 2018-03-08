@@ -70,7 +70,7 @@ export class PointGeometriesComponent {
 
         if (!has3DPointGeometry(document)) return undefined;
 
-        const screenCoordinates: THREE.Vector2|undefined = this.getScreenCoordinates(document);
+        const screenCoordinates: THREE.Vector2|undefined = this.getCanvasCoordinates(document);
         if (!screenCoordinates) return;
 
         const marker = this.cachedMarkers[document.resource.id as string] || { document: document };
@@ -83,9 +83,9 @@ export class PointGeometriesComponent {
     }
 
 
-    private getScreenCoordinates(document: IdaiFieldDocument): THREE.Vector2|undefined {
+    private getCanvasCoordinates(document: IdaiFieldDocument): THREE.Vector2|undefined {
 
-        return this.map3DComponent.getViewer().getScreenCoordinates(
+        return this.map3DComponent.getViewer().getCanvasCoordinates(
             getPointVector((document.resource.geometry as IdaiFieldGeometry).coordinates)
         );
     }

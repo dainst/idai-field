@@ -3,6 +3,7 @@
  */
 
 #map-3d-container {
+  position: relative;
   width: 100%;
   height: calc(100vh - 113px);
   overflow: hidden;

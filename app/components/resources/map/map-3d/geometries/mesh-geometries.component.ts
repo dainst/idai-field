@@ -42,7 +42,7 @@ export class MeshGeometriesComponent implements OnChanges {
 
         const centerPosition: THREE.Vector3 = addOffset(mesh.geometry.boundingSphere.center, mesh.position);
 
-        return this.map3DComponent.getViewer().getScreenCoordinates(centerPosition);
+        return this.map3DComponent.getViewer().getCanvasCoordinates(centerPosition);
     }
 
 

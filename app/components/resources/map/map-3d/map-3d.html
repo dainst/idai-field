@@ -1,27 +1,27 @@
 <div id="map-3d-container" #container
-     [class.drag]="controlState && controlState.action == 'drag'"
-     [class.rotate]="controlState && controlState.action == 'rotate'"
-     [class.hover]="controlState && controlState.hoverDocument"
-     (mousedown)="onMouseDown($event)"
-     (mouseup)="onMouseUp($event)"
-     (mousemove)="onMouseMove($event)"
-     (wheel)="onWheel($event)"
-     (contextmenu)="$event.preventDefault()">
+         [class.drag]="controlState && controlState.action == 'drag'"
+         [class.rotate]="controlState && controlState.action == 'rotate'"
+         [class.hover]="controlState && controlState.hoverDocument"
+         (mousedown)="onMouseDown($event)"
+         (mouseup)="onMouseUp($event)"
+         (mousemove)="onMouseMove($event)"
+         (wheel)="onWheel($event)"
+         (contextmenu)="$event.preventDefault()">
+
+    <point-geometries [documents]="documents"
+                      [selectedDocument]="selectedDocument"
+                      (onSelectDocument)="select($event)">
+    </point-geometries>
+
+    <mesh-geometries [documents]="documents"
+                     [hoverDocument]="controlState ? controlState.hoverDocument : undefined"
+                     [meshGeometryManager]="meshGeometryManager">
+    </mesh-geometries>
+
+    <layers-2d [mainTypeDocument]="mainTypeDocument"></layers-2d>
+    <layers-3d [mainTypeDocument]="mainTypeDocument"></layers-3d>
+
+    <control-buttons></control-buttons>
 
     <mesh-loading-progress-bar></mesh-loading-progress-bar>
 </div>
-
-<point-geometries [documents]="documents"
-                  [selectedDocument]="selectedDocument"
-                  (onSelectDocument)="select($event)">
-</point-geometries>
-
-<mesh-geometries [documents]="documents"
-                 [hoverDocument]="controlState ? controlState.hoverDocument : undefined"
-                 [meshGeometryManager]="meshGeometryManager"
-></mesh-geometries>
-
-<layers-2d [mainTypeDocument]="mainTypeDocument"></layers-2d>
-<layers-3d [mainTypeDocument]="mainTypeDocument"></layers-3d>
-
-<control-buttons></control-buttons>

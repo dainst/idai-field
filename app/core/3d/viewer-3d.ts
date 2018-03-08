@@ -70,18 +70,18 @@ export class Viewer3D {
     }
 
 
-    public getScreenCoordinates(position: THREE.Vector3): THREE.Vector2|undefined {
+    public getCanvasCoordinates(position: THREE.Vector3): THREE.Vector2|undefined {
 
         const canvas: HTMLCanvasElement = this.renderer.domElement;
         const projectedPosition: THREE.Vector3 = position.clone().project(this.camera);
 
-        const screenCoordinates: THREE.Vector2 = new THREE.Vector2();
-        screenCoordinates.x
-            = Math.round((projectedPosition.x + 1) * canvas.width  / 2) + canvas.getBoundingClientRect().left;
-        screenCoordinates.y
-            = Math.round((-projectedPosition.y + 1) * canvas.height / 2) + canvas.getBoundingClientRect().top;
+        const canvasCoordinates: THREE.Vector2 = new THREE.Vector2();
+        canvasCoordinates.x
+            = Math.round((projectedPosition.x + 1) * canvas.width / 2);
+        canvasCoordinates.y
+            = Math.round((-projectedPosition.y + 1) * canvas.height / 2);
 
-        return this.isInCanvas(screenCoordinates) ? screenCoordinates : undefined;
+        return this.isInCanvas(canvasCoordinates) ? canvasCoordinates : undefined;
     }
 
 
@@ -193,10 +193,10 @@ export class Viewer3D {
 
         const canvas: HTMLCanvasElement = this.renderer.domElement;
 
-        return screenCoordinates.x > canvas.getBoundingClientRect().left
-            && screenCoordinates.x < canvas.getBoundingClientRect().right
-            && screenCoordinates.y > canvas.getBoundingClientRect().top
-            && screenCoordinates.y < canvas.getBoundingClientRect().bottom;
+        return screenCoordinates.x > 0
+            && screenCoordinates.x < canvas.width
+            && screenCoordinates.y > 0
+            && screenCoordinates.y < canvas.height;
     }
 
 

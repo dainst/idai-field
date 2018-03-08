@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var navigation_service_1 = require("../../../../../app/components/resources/navigation/navigation-service");
-var static_1 = require("../../../../subsystem/static");
+var static_1 = require("../../../static");
 describe('NavigationService', function () {
     var viewFacade;
     var projectConfiguration;

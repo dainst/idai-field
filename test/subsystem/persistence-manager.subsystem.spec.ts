@@ -1,12 +1,13 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {Static} from './static';
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/idai-field-document-datastore';
 import {IdaiFieldTypeConverter} from '../../app/core/datastore/idai-field-type-converter';
 import {PersistenceManager} from '../../app/core/persist/persistence-manager';
 import {ImageTypeUtility} from '../../app/common/image-type-utility';
+import {Static} from '../unit/static';
+import {DAOsSpecHelper} from './daos-spec-helper';
 
 /**
  * This is a subsystem test.
@@ -63,7 +64,7 @@ export function main() {
             () => {
                 spyOn(console, 'debug'); // suppress console.debug
 
-                const result = Static.createPouchdbDatastore('testdb');
+                const result = DAOsSpecHelper.createPouchdbDatastore('testdb');
                 datastore = new IdaiFieldDocumentDatastore(
                     result.datastore, result.indexFacade, result.documentCache,
                     new IdaiFieldTypeConverter(new ImageTypeUtility(projectConfiguration)));

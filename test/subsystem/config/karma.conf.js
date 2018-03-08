@@ -33,6 +33,7 @@ module.exports = function(config) {
             { pattern: 'app/**/*.js', included: false, watched: true },
             { pattern: 'config/*', included: false, watched: false },
             { pattern: 'test/subsystem/**/*.js', included: false, watched: true },
+            { pattern: 'test/unit/static.js', included: false, watched: true },
             'systemjs-base.config.js',
             'test/subsystem/config/main.js',
             'test/subsystem/config/require-conf.js'

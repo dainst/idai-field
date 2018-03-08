@@ -4,7 +4,15 @@ import {IdaiFieldDocumentDatastore} from "../../app/core/datastore/idai-field-do
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
 import {IdaiFieldTypeConverter} from "../../app/core/datastore/idai-field-type-converter";
 import {ImageTypeUtility} from '../../app/common/image-type-utility';
-import {Static} from './static';
+import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
+import {IndexFacade} from '../../app/core/datastore/index/index-facade';
+import {AppState} from '../../app/core/settings/app-state';
+import {IdaiFieldDocument} from 'idai-components-2/field';
+import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
+import {FulltextIndexer} from '../../app/core/datastore/index/fulltext-indexer';
+import {IdGenerator} from '../../app/core/datastore/core/id-generator';
+import {DocumentCache} from '../../app/core/datastore/core/document-cache';
+import {ConstraintIndexer} from '../../app/core/datastore/index/constraint-indexer';
 
 /**
  * @author Daniel de Oliveira
@@ -32,7 +40,7 @@ export class DAOsSpecHelper {
 
         spyOn(console, 'debug'); // suppress console.debug
 
-        const {datastore, documentCache, indexFacade} = Static.createPouchdbDatastore('testdb');
+        const {datastore, documentCache, indexFacade} = DAOsSpecHelper.createPouchdbDatastore('testdb');
         const converter = new IdaiFieldTypeConverter(
             new ImageTypeUtility(this.projectConfiguration));
 
@@ -42,5 +50,45 @@ export class DAOsSpecHelper {
             datastore, indexFacade, documentCache, converter);
         this.documentDatastore = new DocumentDatastore(
             datastore, indexFacade, documentCache, converter);
+    }
+
+
+    public static createIndexers() {
+
+        const constraintIndexer = new ConstraintIndexer({
+            'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
+            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
+            'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
+            'identifier:match': { path: 'resource.identifier', type: 'match' },
+            'id:match': { path: 'resource.id', type: 'match' }
+        }, false);
+        const fulltextIndexer = new FulltextIndexer(false);
+        return [constraintIndexer, fulltextIndexer] as [ConstraintIndexer, FulltextIndexer];
+    }
+
+
+    public static createPouchdbDatastore(dbname) {
+
+        const [constraintIndexer, fulltextIndexer] = DAOsSpecHelper.createIndexers();
+
+        const documentCache = new DocumentCache<IdaiFieldDocument>();
+        const indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
+        const pouchdbManager = new PouchdbManager
+        (undefined, indexFacade);
+
+        const appState = new AppState();
+
+        const datastore = new PouchdbDatastore(
+            pouchdbManager.getDb(), appState,
+            new IdGenerator(),
+            false);
+        pouchdbManager.loadProjectDb(dbname);
+
+        return {
+            datastore: datastore,
+            documentCache: documentCache,
+            appState: appState,
+            indexFacade: indexFacade
+        }
     }
 }

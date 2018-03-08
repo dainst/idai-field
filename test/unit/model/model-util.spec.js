@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var static_1 = require("../../subsystem/static");
+var static_1 = require("../static");
 /**
  * @author Thomas Kleinke
  */

@@ -36,13 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("idai-components-2/core");
-var static_1 = require("./static");
 var view_facade_1 = require("../../app/components/resources/state/view-facade");
 var resources_state_1 = require("../../app/components/resources/state/resources-state");
 var idai_field_document_datastore_1 = require("../../app/core/datastore/idai-field-document-datastore");
 var idai_field_type_converter_1 = require("../../app/core/datastore/idai-field-type-converter");
 var image_type_utility_1 = require("../../app/common/image-type-utility");
 var operation_views_1 = require("../../app/components/resources/state/operation-views");
+var static_1 = require("../unit/static");
+var daos_spec_helper_1 = require("./daos-spec-helper");
 /**
  * This is a subsystem test.
  * The use of mocks is intentionally reduced.
@@ -88,7 +89,7 @@ function main() {
                 switch (_b.label) {
                     case 0:
                         spyOn(console, 'debug'); // suppress console.debug
-                        _a = static_1.Static.createPouchdbDatastore('testdb'), datastore = _a.datastore, documentCache = _a.documentCache, indexFacade = _a.indexFacade;
+                        _a = daos_spec_helper_1.DAOsSpecHelper.createPouchdbDatastore('testdb'), datastore = _a.datastore, documentCache = _a.documentCache, indexFacade = _a.indexFacade;
                         idaiFieldDocumentDatastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(datastore, indexFacade, documentCache, new idai_field_type_converter_1.IdaiFieldTypeConverter(new image_type_utility_1.ImageTypeUtility(new core_1.ProjectConfiguration(pc))));
                         projectDocument = static_1.Static.doc('testdb', 'testdb', 'Project', 'testdb');
                         trenchDocument1 = static_1.Static.idfDoc('trench1', 'trench1', 'Trench', 't1');

@@ -1,7 +1,6 @@
 import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {Static} from './static';
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {ViewFacade} from '../../app/components/resources/state/view-facade';
 import {ResourcesState} from '../../app/components/resources/state/resources-state';
@@ -9,6 +8,8 @@ import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/idai-field-do
 import {IdaiFieldTypeConverter} from '../../app/core/datastore/idai-field-type-converter';
 import {ImageTypeUtility} from '../../app/common/image-type-utility';
 import {OperationViews} from '../../app/components/resources/state/operation-views';
+import {Static} from '../unit/static';
+import {DAOsSpecHelper} from './daos-spec-helper';
 
 /**
  * This is a subsystem test.
@@ -60,7 +61,7 @@ export function main() {
 
             spyOn(console, 'debug'); // suppress console.debug
 
-            const {datastore, documentCache, indexFacade} = Static.createPouchdbDatastore('testdb');
+            const {datastore, documentCache, indexFacade} = DAOsSpecHelper.createPouchdbDatastore('testdb');
             idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
                 datastore, indexFacade, documentCache,
                 new IdaiFieldTypeConverter(new ImageTypeUtility(new ProjectConfiguration(pc))));

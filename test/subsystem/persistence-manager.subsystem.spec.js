@@ -36,11 +36,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("idai-components-2/core");
-var static_1 = require("./static");
 var idai_field_document_datastore_1 = require("../../app/core/datastore/idai-field-document-datastore");
 var idai_field_type_converter_1 = require("../../app/core/datastore/idai-field-type-converter");
 var persistence_manager_1 = require("../../app/core/persist/persistence-manager");
 var image_type_utility_1 = require("../../app/common/image-type-utility");
+var static_1 = require("../unit/static");
+var daos_spec_helper_1 = require("./daos-spec-helper");
 /**
  * This is a subsystem test.
  * The use of mocks is intentionally reduced.
@@ -87,7 +88,7 @@ function main() {
         var persistenceManager;
         beforeEach(function () {
             spyOn(console, 'debug'); // suppress console.debug
-            var result = static_1.Static.createPouchdbDatastore('testdb');
+            var result = daos_spec_helper_1.DAOsSpecHelper.createPouchdbDatastore('testdb');
             datastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(result.datastore, result.indexFacade, result.documentCache, new idai_field_type_converter_1.IdaiFieldTypeConverter(new image_type_utility_1.ImageTypeUtility(projectConfiguration)));
             result.appState.setCurrentUser('anonymous');
             persistenceManager = new persistence_manager_1.PersistenceManager(datastore, projectConfiguration);

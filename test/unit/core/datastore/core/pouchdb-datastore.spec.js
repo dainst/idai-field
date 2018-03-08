@@ -37,9 +37,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var pouchdb_datastore_1 = require("../../../../../app/core/datastore/core/pouchdb-datastore");
-var static_1 = require("../../../../subsystem/static");
 var app_state_1 = require("../../../../../app/core/settings/app-state");
 var core_1 = require("idai-components-2/core");
+var static_1 = require("../../../static");
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy

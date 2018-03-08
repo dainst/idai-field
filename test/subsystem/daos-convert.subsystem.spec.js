@@ -35,8 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var static_1 = require("./static");
 var daos_spec_helper_1 = require("./daos-spec-helper");
+var static_1 = require("../unit/static");
 /**
  * This test suite focuses on the differences between the Data Access Objects.
  *

@@ -16,46 +16,6 @@ import {IdGenerator} from '../../app/core/datastore/core/id-generator';
  */
 export class Static {
 
-    public static createIndexers() {
-
-        const constraintIndexer = new ConstraintIndexer({
-            'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
-            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
-            'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
-            'identifier:match': { path: 'resource.identifier', type: 'match' },
-            'id:match': { path: 'resource.id', type: 'match' }
-        }, false);
-        const fulltextIndexer = new FulltextIndexer(false);
-        return [constraintIndexer, fulltextIndexer] as [ConstraintIndexer, FulltextIndexer];
-    }
-
-
-    public static createPouchdbDatastore(dbname) {
-
-        const [constraintIndexer, fulltextIndexer] = Static.createIndexers();
-
-        const documentCache = new DocumentCache<IdaiFieldDocument>();
-        const indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
-        const pouchdbManager = new PouchdbManager
-            (undefined, indexFacade);
-
-        const appState = new AppState();
-
-        const datastore = new PouchdbDatastore(
-            pouchdbManager.getDb(), appState,
-            new IdGenerator(),
-            false);
-        pouchdbManager.loadProjectDb(dbname);
-
-        return {
-            datastore: datastore,
-            documentCache: documentCache,
-            appState: appState,
-            indexFacade: indexFacade
-        }
-    }
-
-
     public static idfDoc = (sd, identifier?, type?, id?) => Static.doc(sd, identifier, type, id) as IdaiFieldDocument;
 
 

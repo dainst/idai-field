@@ -1,5 +1,5 @@
-import {Static} from './static';
 import {DAOsSpecHelper} from './daos-spec-helper';
+import {Static} from '../unit/static';
 
 /**
  * This test suite focuses on the differences between the Data Access Objects.
@@ -33,7 +33,7 @@ export function main() {
 
             spyOn(console, 'error'); // TODO remove
 
-            const result = Static.createPouchdbDatastore('testdb');
+            const result = DAOsSpecHelper.createPouchdbDatastore('testdb');
             const datastore = result.datastore;
 
             image0 = Static.doc('Image','Image','Image','image0');

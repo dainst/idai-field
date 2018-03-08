@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var static_1 = require("../../../../subsystem/static");
 var index_facade_1 = require("../../../../../app/core/datastore/index/index-facade");
+var static_1 = require("../../../static");
+var daos_spec_helper_1 = require("../../../../subsystem/daos-spec-helper");
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
@@ -10,7 +11,7 @@ var index_facade_1 = require("../../../../../app/core/datastore/index/index-faca
 describe('IndexFacade', function () {
     var indexFacade;
     beforeEach(function () {
-        var _a = static_1.Static.createIndexers(), constraintIndexer = _a[0], fulltextIndexer = _a[1];
+        var _a = daos_spec_helper_1.DAOsSpecHelper.createIndexers(), constraintIndexer = _a[0], fulltextIndexer = _a[1];
         indexFacade = new index_facade_1.IndexFacade(constraintIndexer, fulltextIndexer);
     });
     it('should find with filterSet undefined', function () {

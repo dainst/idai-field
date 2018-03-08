@@ -1,6 +1,7 @@
 import {Query} from 'idai-components-2/core';
-import {Static} from '../../../../subsystem/static';
 import {IndexFacade} from "../../../../../app/core/datastore/index/index-facade";
+import {Static} from '../../../static';
+import {DAOsSpecHelper} from '../../../../subsystem/daos-spec-helper';
 
 
 /**
@@ -15,7 +16,7 @@ describe('IndexFacade', () => {
 
     beforeEach(() => {
 
-        const [constraintIndexer, fulltextIndexer] = Static.createIndexers();
+        const [constraintIndexer, fulltextIndexer] = DAOsSpecHelper.createIndexers();
         indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
     });
 

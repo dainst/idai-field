@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var static_1 = require("../../../subsystem/static");
 var dot_builder_1 = require("../../../../app/components/matrix/dot-builder");
+var static_1 = require("../../static");
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke

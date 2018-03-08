@@ -35,8 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var static_1 = require("./static");
 var daos_spec_helper_1 = require("./daos-spec-helper");
+var static_1 = require("../unit/static");
 /**
  * This test suite focuses on the differences between the Data Access Objects.
  *
@@ -66,7 +66,7 @@ function main() {
                     case 0:
                         h = new daos_spec_helper_1.DAOsSpecHelper();
                         spyOn(console, 'error'); // TODO remove
-                        result = static_1.Static.createPouchdbDatastore('testdb');
+                        result = daos_spec_helper_1.DAOsSpecHelper.createPouchdbDatastore('testdb');
                         datastore = result.datastore;
                         image0 = static_1.Static.doc('Image', 'Image', 'Image', 'image0');
                         trench0 = static_1.Static.doc('Trench', 'Trench', 'Trench', 'trench0');

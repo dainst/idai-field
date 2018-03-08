@@ -1,6 +1,6 @@
 import {ResourcesState} from '../../../../../app/components/resources/state/resources-state';
 import {OperationViews} from '../../../../../app/components/resources/state/operation-views';
-import {Static} from '../../../../subsystem/static';
+import {Static} from '../../../static';
 
 
 /**

@@ -1,5 +1,5 @@
 import {NavigationService} from '../../../../../app/components/resources/navigation/navigation-service';
-import {Static} from '../../../../subsystem/static';
+import {Static} from '../../../static';
 
 describe('NavigationService', () => {
 

@@ -33,6 +33,20 @@ export class PouchdbManager {
     }
 
 
+    /**
+     * @returns {PouchdbProxy} a proxy that automatically hands over method
+     *  calls to the actual PouchDB instance as soon as it is available
+     */
+    public getDb = () => this.dbProxy as PouchdbProxy;
+
+
+    /**
+     * Destroys the db named dbName, if it is not the currently selected active database
+     * @throws if trying do delete the currently active database
+     */
+    public destroyDb = (dbName: string) => PouchdbManager.createPouchDBObject(dbName).destroy();
+
+
     public resetForE2E() {
 
         const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
@@ -54,7 +68,7 @@ export class PouchdbManager {
         if (name === 'test') {
             await this.db.destroy();
             this.db = await PouchdbManager.createPouchDBObject(name);
-            await this.sampleDataLoader.go(this.db, this.name as any);
+            await this.sampleDataLoader.go(this.db, name);
         }
 
         this.indexFacade.clear();
@@ -72,7 +86,7 @@ export class PouchdbManager {
      */
     public setupSync(url: string): Promise<SyncState> {
 
-        const fullUrl = url + '/' + this.name;
+        const fullUrl = url + '/' + this.name; // TODO save name only in settings service
         console.log('start syncing');
 
         return (this.getDb() as any).ready().then((db: any) => {
@@ -100,30 +114,6 @@ export class PouchdbManager {
             (handle as any).cancel();
         }
         this.syncHandles = [];
-    }
-
-
-    /**
-     * Gets the database object.
-     * @returns {PouchdbProxy} a proxy that automatically hands over method
-     *  calls to the actual PouchDB instance as soon as it is available
-     */
-    public getDb(): PouchdbProxy {
-
-        return this.dbProxy as PouchdbProxy;
-    }
-
-
-    /**
-     * Destroys the db named dbName, if it is not the currently selected active database
-     *
-     * @param dbName
-     * @returns {any}
-     *   Rejects with undefined if trying do delete the currently active database
-     */
-    public destroyDb(dbName: string): Promise<any> {
-
-        return PouchdbManager.createPouchDBObject(dbName).destroy();
     }
 
 

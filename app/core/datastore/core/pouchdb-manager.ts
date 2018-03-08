@@ -50,10 +50,10 @@ export class PouchdbManager {
             this.db = undefined;
         }
 
-        await this.createPouchDBObject(name);
+        this.db = await PouchdbManager.createPouchDBObject(name);
         if (name === 'test') {
             await this.db.destroy();
-            await this.createPouchDBObject(name);
+            this.db = await PouchdbManager.createPouchDBObject(name);
             await this.sampleDataLoader.go(this.db, this.name as any);
         }
 
@@ -120,7 +120,7 @@ export class PouchdbManager {
      */
     public destroyDb(dbName: string): Promise<any> {
 
-        return this.createPouchDBObject(dbName).destroy();
+        return PouchdbManager.createPouchDBObject(dbName).destroy();
     }
 
 
@@ -133,12 +133,12 @@ export class PouchdbManager {
      */
     public async createDb(name: string, doc: any) {
 
-        let db = this.createPouchDBObject(name);
+        let db = PouchdbManager.createPouchDBObject(name);
 
         let promise = Promise.resolve();
         if (remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create) {
             promise = db.destroy().then(() =>
-                db = this.createPouchDBObject(name)
+                db = PouchdbManager.createPouchDBObject(name)
             );
         }
 
@@ -165,12 +165,11 @@ export class PouchdbManager {
     }
 
 
-    private createPouchDBObject(name: string): any {
+    private static createPouchDBObject(name: string): any {
 
-        this.db = new PouchDB(name);
-        if (console.debug) console.debug('PouchDB is using adapter', this.db.adapter);
-
-        return this.db;
+        const db: any = new PouchDB(name);
+        if (console.debug) console.debug('PouchDB is using adapter', db.adapter);
+        return db;
     }
 
 

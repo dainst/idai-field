@@ -57,7 +57,7 @@ export class PouchdbManager {
             await this.sampleDataLoader.go(this.db, this.name as any);
         }
 
-        this.index();
+        await this.index();
         this.resolveDbReady(this.db);
     }
 

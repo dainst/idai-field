@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import * as rimraf from 'rimraf';
 import {IdaiField3DDocument} from '../model/idai-field-3d-document';
 import {M} from '../../m';
 import {SettingsService} from '../settings/settings-service';
@@ -45,6 +46,14 @@ export class Store3D {
     }
 
 
+    public async remove(id: string): Promise<any> {
+
+        return new Promise((resolve) => {
+            rimraf(this.getObjectDirectoryPath(id), () => resolve());
+        });
+    }
+
+
     private copyModelFile(sourcePath: string, targetPath: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
@@ -72,15 +81,33 @@ export class Store3D {
 
     private createDirectory(document: IdaiField3DDocument): string {
 
-        const model3DStorePath: string = this.settingsService.getSettings().model3DStorePath;
-        const projectDirectoryPath: string = model3DStorePath + this.settingsService.getSelectedProject();
-        const object3DDirectoryPath: string = projectDirectoryPath + '/' + document.resource.id;
+        const storeDirectoryPath: string = this.getStoreDirectoryPath();
+        const projectDirectoryPath: string = this.getProjectDirectoryPath();
+        const objectDirectoryPath: string = this.getObjectDirectoryPath(document.resource.id as string);
 
-        if (!fs.existsSync(model3DStorePath)) fs.mkdirSync(model3DStorePath);
+        if (!fs.existsSync(storeDirectoryPath)) fs.mkdirSync(storeDirectoryPath);
         if (!fs.existsSync(projectDirectoryPath)) fs.mkdirSync(projectDirectoryPath);
-        if (!fs.existsSync(object3DDirectoryPath)) fs.mkdirSync(object3DDirectoryPath);
+        if (!fs.existsSync(objectDirectoryPath)) fs.mkdirSync(objectDirectoryPath);
 
-        return object3DDirectoryPath;
+        return objectDirectoryPath;
+    }
+
+
+    private getStoreDirectoryPath(): string {
+
+        return this.settingsService.getSettings().model3DStorePath;
+    }
+
+
+    private getProjectDirectoryPath(): string {
+
+        return this.getStoreDirectoryPath() + this.settingsService.getSelectedProject();
+    }
+
+
+    private getObjectDirectoryPath(id: string): string {
+
+        return this.getProjectDirectoryPath() + '/' + id;
     }
 
 

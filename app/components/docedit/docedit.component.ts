@@ -15,6 +15,7 @@ import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
+import {Store3D} from '../../core/3d/store-3d';
 
 
 @Component({
@@ -74,6 +75,7 @@ export class DoceditComponent {
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
         private imagestore: Imagestore,
+        private store3D: Store3D,
         private typeUtility: TypeUtility,
         private activeTabService: DoceditActiveTabService,
         configLoader: ConfigLoader) {
@@ -338,7 +340,7 @@ export class DoceditComponent {
 
     private deleteDoc() {
 
-        this.removeImageWithImageStore(this.document)
+        this.removeAssociatedMediaFiles(this.document)
             .then(() => this.removeWithPersistenceManager(this.document))
             .then(() => {
                 this.activeModal.dismiss('deleted');
@@ -350,13 +352,15 @@ export class DoceditComponent {
     }
 
 
-    private removeImageWithImageStore(document: any): Promise<any> {
+    private removeAssociatedMediaFiles(document: any): Promise<any> {
 
         if (this.typeUtility.isImageType(document.resource.type)) {
             if (!this.imagestore.getPath()) return Promise.reject([M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]);
             return this.imagestore.remove(document.resource.id).catch(() => {
                 return [M.IMAGESTORE_ERROR_DELETE, document.resource.id];
             });
+        } else if (this.typeUtility.is3DType(document.resource.type)) {
+            return this.store3D.remove(document.resource.id);
         } else {
             return Promise.resolve();
         }

@@ -71,6 +71,7 @@
     "pouchdb": "^6.3.4",
     "pouchdb-server": "^2.3.6",
     "reflect-metadata": "0.1.8",
+    "rimraf": "2.5.4",
     "roboto-fontface": "0.6.0",
     "rxjs": "5.0.1",
     "systemjs": "0.19.31",
@@ -87,6 +88,7 @@
     "@types/node": "7.0.3",
     "@types/papaparse": "4.1.28",
     "@types/pouchdb": "~6.1.1",
+    "@types/rimraf": "2.0.2",
     "@types/three": "0.89.2",
     "archiver": "1.1.0",
     "electron": "1.7.9",
@@ -112,7 +114,6 @@
     "protractor": "5.1.2",
     "protractor-console-plugin": "0.1.1",
     "protractor-fail-fast": "2.0.0",
-    "rimraf": "2.5.4",
     "spectron": "^3.7.2",
     "typescript": "2.3.1",
     "yargs": "5.0.0"

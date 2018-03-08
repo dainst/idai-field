@@ -69,7 +69,11 @@ config.map = {
     'three': 'node_modules/three/build/three.js',
     'three-collada-loader': 'lib/three-collada-loader/three-collada-loader.js',
     'three.meshline': 'node_modules/three.meshline/src/THREE.MeshLine.js',
-    'tweenjs': 'node_modules/@tweenjs/tween.js/src/Tween.js'
+    'tweenjs': 'node_modules/@tweenjs/tween.js/src/Tween.js',
+    'rimraf': 'node_modules/rimraf/rimraf.js',
+    'assert': '@node/assert',
+    'path': '@node/path',
+    'glob': '@node/glob'
 };
 
 config.meta = {

@@ -5,7 +5,6 @@ import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
 import {SyncState} from './sync-state';
 import {IndexFacade} from '../index/index-facade';
-import {ProjectConfiguration} from 'idai-components-2/core';
 
 const remote = require('electron').remote;
 

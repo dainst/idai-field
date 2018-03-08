@@ -23,22 +23,11 @@ export class ConflictResolvingExtension {
     private conflictResolver: ConflictResolver;
 
 
-    public setDatastore(datastore: PouchdbDatastore) {
+    public setDatastore = (datastore: PouchdbDatastore) => this.datastore = datastore;
 
-        this.datastore = datastore;
-    }
+    public setDb = (db: PouchdbProxy) => this.db = db;
 
-
-    public setDb(db: PouchdbProxy) {
-
-        this.db = db;
-    }
-
-
-    public setConflictResolver(conflictResolver: ConflictResolver) {
-
-        this.conflictResolver = conflictResolver;
-    }
+    public setConflictResolver = (conflictResolver: ConflictResolver) => this.conflictResolver = conflictResolver;
 
 
     public autoResolve(document: Document, userName: string): Promise<any> {
@@ -143,7 +132,7 @@ export class ConflictResolvingExtension {
 
         if (!(document as any)['_conflicts']) return false;
 
-        for (let revisionId of (document as any)['_conflicts']) {
+        for (let revisionId of (document as any)['_conflicts']) { // TODO do with intersection != empty
             if (inspectedRevisionsIds.indexOf(revisionId) == -1) return true;
         }
 

@@ -65,7 +65,7 @@ export class SettingsService {
 
 
         await this.updateSettings(await this.settingsSerializer.load());
-        await this.pouchdbManager.setProject(this.getSelectedProject() as any);
+        await this.pouchdbManager.loadProjectDb(this.getSelectedProject() as any);
         await this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false);
         if (this.settings.isSyncActive) await this.startSync();
 

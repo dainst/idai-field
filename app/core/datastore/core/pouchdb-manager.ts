@@ -23,7 +23,7 @@ export class PouchdbManager {
     private name: string|undefined = undefined;
     private syncHandles = [];
 
-    private resolveDbReady: Function|undefined = undefined;
+    private resolveDbReady: Function;
 
     constructor(private sampleDataLoader: SampleDataLoader,
                 private indexFacade: IndexFacade) {
@@ -37,32 +37,28 @@ export class PouchdbManager {
 
         const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
         Object.assign(this.dbProxy, new PouchdbProxy(dbReady));
-        this.setProject('test');
+        this.loadProjectDb('test');
     }
 
 
-    public setProject(name: string) {
+    public async loadProjectDb(name: string) {
 
         this.name = name;
 
-        let rdy: Promise<any> = Promise.resolve();
-
         if (this.db) {
-            rdy = rdy.then(() => {
-                this.db.close();
-                this.db = undefined;
-            });
+            await this.db.close();
+            this.db = undefined;
         }
 
-        rdy = rdy.then(() => this.createPouchDBObject(name));
-        if ((name == 'test')) {
-            rdy = rdy.then(() => this.db.destroy()).then(() => this.createPouchDBObject(name));
-        }
-        if (name == 'test') {
-            rdy = rdy.then(config => this.sampleDataLoader.go(this.db, this.name as any));
+        await this.createPouchDBObject(name);
+        if (name === 'test') {
+            await this.db.destroy();
+            await this.createPouchDBObject(name);
+            await this.sampleDataLoader.go(this.db, this.name as any);
         }
 
-        return rdy.then(() => this.index());
+        this.index();
+        this.resolveDbReady(this.db);
     }
 
 
@@ -165,8 +161,6 @@ export class PouchdbManager {
             (resultDocs.rows as Array<any>)
                 .filter(row => !PouchdbManager.isDesignDoc(row))
                 .forEach(row => this.indexFacade.put(row.doc, true, false));
-
-            (this.resolveDbReady as any)(this.db);
         });
     }
 

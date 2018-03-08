@@ -52,7 +52,7 @@ export class Static {
             conflictResolver,
             new IdGenerator(),
             false);
-        pouchdbManager.setProject(dbname);
+        pouchdbManager.loadProjectDb(dbname);
 
         return {
             datastore: datastore,

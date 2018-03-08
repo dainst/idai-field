@@ -36,7 +36,7 @@ var Static = (function () {
         conflictResolvingExtension.autoResolve.and.callFake(function () { return Promise.resolve(); });
         var conflictResolver = jasmine.createSpyObj('conflictResolver', ['tryToSolveConflict']);
         var datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbManager.getDb(), appState, conflictResolvingExtension, conflictResolver, new id_generator_1.IdGenerator(), false);
-        pouchdbManager.setProject(dbname);
+        pouchdbManager.loadProjectDb(dbname);
         return {
             datastore: datastore,
             documentCache: documentCache,

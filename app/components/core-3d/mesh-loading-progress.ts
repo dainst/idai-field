@@ -28,6 +28,13 @@ export class MeshLoadingProgress {
     }
 
 
+    public isLoading(): boolean {
+
+        const totalProgress: number = this.getTotalProgress();
+        return totalProgress > -1 && totalProgress < 100;
+    }
+
+
     public setLoadingProgress(meshId: string, loaded: number, total: number) {
 
         if (!this.progressStates[meshId]) this.progressStates[meshId] = {

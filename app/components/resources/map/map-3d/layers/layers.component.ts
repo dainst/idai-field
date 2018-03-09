@@ -5,6 +5,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Map3DComponent} from '../map-3d.component';
 import {LayerManager, ListDiffResult} from '../../layer-manager';
 import {LayerMeshManager} from './layer-mesh-manager';
+import {MeshLoadingProgress} from '../../../../core-3d/mesh-loading-progress';
 
 
 /**
@@ -19,7 +20,8 @@ export class LayersComponent implements OnChanges {
 
     constructor(private map3DComponent: Map3DComponent,
                 private layerManager: LayerManager<Document>,
-                private layerMeshManager: LayerMeshManager) {
+                private layerMeshManager: LayerMeshManager,
+                private meshLoadingProgress: MeshLoadingProgress) {
 
         this.layerManager.reset();
     }
@@ -32,6 +34,8 @@ export class LayersComponent implements OnChanges {
 
 
     public async toggleLayer(layer: Document) {
+
+        if (this.meshLoadingProgress.isLoading()) return;
 
         const id: string = layer.resource.id as string;
 
@@ -46,6 +50,8 @@ export class LayersComponent implements OnChanges {
 
 
     public async focusLayer(layer: Document) {
+
+        if (this.meshLoadingProgress.isLoading()) return;
 
         const mesh: THREE.Mesh = await this.layerMeshManager.getMesh(layer.resource.id as string);
         this.map3DComponent.getControls().focusMesh(mesh);

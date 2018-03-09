@@ -1,12 +1,15 @@
-<div id="map-3d-container" #container
-         [class.drag]="controlState && controlState.action == 'drag'"
-         [class.rotate]="controlState && controlState.action == 'rotate'"
-         [class.hover]="controlState && controlState.hoverDocument"
+<div id="map-3d"
+     [class.drag]="controlState && controlState.action == 'drag'"
+     [class.rotate]="controlState && controlState.action == 'rotate'"
+     [class.hover]="controlState && controlState.hoverDocument">
+
+    <div id="canvas-container" #container
          (mousedown)="onMouseDown($event)"
          (mouseup)="onMouseUp($event)"
          (mousemove)="onMouseMove($event)"
          (wheel)="onWheel($event)"
          (contextmenu)="$event.preventDefault()">
+    </div>
 
     <point-geometries [documents]="documents"
                       [selectedDocument]="selectedDocument"

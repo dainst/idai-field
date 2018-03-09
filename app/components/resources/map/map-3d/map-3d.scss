@@ -2,7 +2,7 @@
  * @author Thomas Kleinke
  */
 
-#map-3d-container {
+#map-3d {
   position: relative;
   width: 100%;
   height: calc(100vh - 113px);
@@ -19,6 +19,11 @@
 
   &.hover:not(.drag):not(.rotate) {
     cursor: pointer;
+  }
+
+  #canvas-container {
+    width: 100%;
+    height: 100%;
   }
 
   mesh-loading-progress-bar {

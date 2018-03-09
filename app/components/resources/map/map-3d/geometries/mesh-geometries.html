@@ -2,10 +2,10 @@
      class="map-3d-geometry-info"
      [style.left]="getGeometryInfoPosition().x + 'px'"
      [style.top]="getGeometryInfoPosition().y + 'px'">
-    <div class="map-3d-geometry-info-icon">
+    <div class="map-3d-type-icon">
         <type-icon [size]="25" [type]="hoverDocument.resource.type"></type-icon>
     </div>
-    <span class="map-3d-geometry-info-label" [attr.data-outline-text]="hoverDocument.resource.identifier">
+    <span class="map-3d-label" [attr.data-outline-text]="hoverDocument.resource.identifier">
         {{hoverDocument.resource.identifier}}
     </span>
 </div>

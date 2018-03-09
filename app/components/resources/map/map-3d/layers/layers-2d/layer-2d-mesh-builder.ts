@@ -5,7 +5,7 @@ import {AppState} from '../../../../../../core/settings/app-state';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../../../core/datastore/idai-field-image-document-read-datastore';
 import {IdaiFieldImageDocument} from '../../../../../../core/model/idai-field-image-document';
 import {IdaiFieldGeoreference} from '../../../../../../core/model/idai-field-georeference';
-import {getPointVector} from '../../../../../../util/util-3d';
+import {getPointVector, subtractOffset} from '../../../../../../util/util-3d';
 
 
 @Injectable()
@@ -21,39 +21,20 @@ export class Layer2DMeshBuilder {
 
     public async build(imageResourceId: string): Promise<THREE.Mesh> {
 
-        const geometry: THREE.Geometry = await this.createGeometry(imageResourceId);
+        const georeference: IdaiFieldGeoreference = await this.getGeoreference(imageResourceId);
+        const position: THREE.Vector3 = Layer2DMeshBuilder.getPosition(georeference);
+
+        const geometry: THREE.Geometry = await Layer2DMeshBuilder.createGeometry(georeference, position);
         const material: THREE.Material = this.createMaterial(imageResourceId);
 
-        return new THREE.Mesh(geometry, material);
+        return Layer2DMeshBuilder.createMesh(geometry, material, position);
     }
 
 
-    private async createGeometry(imageResourceId: string): Promise<THREE.Geometry> {
+    private async getGeoreference(imageResourceId: string): Promise<IdaiFieldGeoreference> {
 
-        const geometry: THREE.Geometry = new THREE.Geometry();
-
-        geometry.vertices = await this.createVertices(imageResourceId);
-        geometry.faces = Layer2DMeshBuilder.createFaces();
-        geometry.faceVertexUvs[0] = Layer2DMeshBuilder.createFaceVertexUvs();
-
-        geometry.computeFaceNormals();
-        geometry.computeVertexNormals();
-
-        return geometry;
-    }
-
-
-    private async createVertices(imageResourceId: string): Promise<Array<THREE.Vector3>> {
-
-        const georeference: IdaiFieldGeoreference = await this.getGeoreference(imageResourceId);
-        const vertices: Array<THREE.Vector3> = [];
-
-        vertices.push(Layer2DMeshBuilder.getVertex(georeference.bottomLeftCoordinates));
-        vertices.push(Layer2DMeshBuilder.getVertex(georeference.topLeftCoordinates));
-        vertices.push(Layer2DMeshBuilder.getVertex(georeference.topRightCoordinates));
-        vertices.push(Layer2DMeshBuilder.getBottomRightVertex(georeference));
-
-        return vertices;
+        const imageDocument: IdaiFieldImageDocument = await this.datastore.get(imageResourceId);
+        return imageDocument.resource.georeference as IdaiFieldGeoreference;
     }
 
 
@@ -66,18 +47,56 @@ export class Layer2DMeshBuilder {
     }
 
 
-    private async getGeoreference(imageResourceId: string): Promise<IdaiFieldGeoreference> {
-
-        const imageDocument: IdaiFieldImageDocument = await this.datastore.get(imageResourceId);
-        return imageDocument.resource.georeference as IdaiFieldGeoreference;
-    }
-
-
     private getFilePath(imageResourceId: string): string {
 
         return this.appState.getImagestorePath()
             + this.settingsService.getSelectedProject()
             + '/' + imageResourceId;
+    }
+
+
+    private static getPosition(georeference: IdaiFieldGeoreference): THREE.Vector3 {
+
+        return Layer2DMeshBuilder.getVector(georeference.bottomLeftCoordinates);
+    }
+
+
+    private static async createGeometry(georeference: IdaiFieldGeoreference,
+                                        offset: THREE.Vector3): Promise<THREE.Geometry> {
+
+        const geometry: THREE.Geometry = new THREE.Geometry();
+
+        geometry.vertices = await this.createVertices(georeference, offset);
+        geometry.faces = this.createFaces();
+        geometry.faceVertexUvs[0] = this.createFaceVertexUvs();
+
+        geometry.computeFaceNormals();
+        geometry.computeVertexNormals();
+
+        return geometry;
+    }
+
+
+    private static createMesh(geometry: THREE.Geometry, material: THREE.Material, position: THREE.Vector3) {
+
+        const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(position.x, position.y, position.z);
+
+        return mesh;
+    }
+
+
+    private static async createVertices(georeference: IdaiFieldGeoreference,
+                                        offset: THREE.Vector3): Promise<Array<THREE.Vector3>> {
+
+        const vertices: Array<THREE.Vector3> = [];
+
+        vertices.push(subtractOffset(Layer2DMeshBuilder.getVector(georeference.bottomLeftCoordinates), offset));
+        vertices.push(subtractOffset(Layer2DMeshBuilder.getVector(georeference.topLeftCoordinates), offset));
+        vertices.push(subtractOffset(Layer2DMeshBuilder.getVector(georeference.topRightCoordinates), offset));
+        vertices.push(subtractOffset(Layer2DMeshBuilder.getBottomRightVector(georeference), offset));
+
+        return vertices;
     }
 
 
@@ -112,7 +131,7 @@ export class Layer2DMeshBuilder {
     }
 
 
-    private static getVertex(coordinates: number[]): THREE.Vector3 {
+    private static getVector(coordinates: number[]): THREE.Vector3 {
 
         return getPointVector([
             coordinates[1],
@@ -122,7 +141,7 @@ export class Layer2DMeshBuilder {
     }
 
 
-    private static getBottomRightVertex(georeference: IdaiFieldGeoreference): THREE.Vector3 {
+    private static getBottomRightVector(georeference: IdaiFieldGeoreference): THREE.Vector3 {
 
         return getPointVector([
             georeference.topRightCoordinates[1],

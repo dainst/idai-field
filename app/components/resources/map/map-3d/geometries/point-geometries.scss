@@ -34,9 +34,17 @@ point-geometries {
         left: 31px;
         top: 0;
         font-size: 18px;
-        font-weight: bold;
         color: #fff;
-        -webkit-text-stroke: 1px #000;
+        background: transparent;
+        z-index: 0;
+      }
+
+      .map-3d-marker-label:before {
+        position: absolute;
+        content: attr(data-outline-text);
+        -webkit-text-stroke: 0.2em #000;
+        left: 0;
+        z-index: -1;
       }
     }
 

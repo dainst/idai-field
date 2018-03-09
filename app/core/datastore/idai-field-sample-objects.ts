@@ -167,6 +167,7 @@ export const DOCS: Array<Document> = [
             "type": "Object3D",
             "thumbnailWidth": 1250,
             "thumbnailHeight": 1084,
+            "georeferenced": true,
             "relations": {
                 "is3DRepresentationOf": ["t2"]
             }
@@ -180,6 +181,7 @@ export const DOCS: Array<Document> = [
             "type": "Object3D",
             "thumbnailWidth": 516,
             "thumbnailHeight": 1164,
+            "georeferenced": false,
             "relations": {
                 "is3DRepresentationOf": ["t2"]
             }
@@ -193,6 +195,7 @@ export const DOCS: Array<Document> = [
             "type": "Object3D",
             "thumbnailWidth": 606,
             "thumbnailHeight": 1172,
+            "georeferenced": true,
             "relations": {
                 "is3DRepresentationOf": ["t2"]
             }
@@ -206,6 +209,7 @@ export const DOCS: Array<Document> = [
             "type": "Object3D",
             "thumbnailWidth": 824,
             "thumbnailHeight": 498,
+            "georeferenced": false,
             "relations": {
                 "is3DRepresentationOf": ["tf1"]
             }

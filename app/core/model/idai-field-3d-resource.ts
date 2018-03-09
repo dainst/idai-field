@@ -10,6 +10,7 @@ export interface IdaiField3DResource extends Resource {
     identifier: string;
     shortDescription: string;
 
+    georeferenced: boolean;
     originalFilename: string;
     thumbnailWidth: number;
     thumbnailHeight: number;

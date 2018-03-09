@@ -80,6 +80,7 @@ export class Object3DUploader extends Uploader {
                 identifier: this.getIdentifier(file.name),
                 shortDescription: '',
                 type: type.name,
+                georeferenced: false,
                 originalFilename: file.name,
                 thumbnailWidth: 0,
                 thumbnailHeight: 0,

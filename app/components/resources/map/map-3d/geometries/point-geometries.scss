@@ -27,7 +27,7 @@ point-geometries {
       cursor: pointer;
 
       .map-3d-label {
-        color: #5572a1;
+        color: lighten(#5572a1, 20%);
       }
     }
   }

@@ -71,6 +71,7 @@ import {IdaiField3DDocumentReadDatastore} from './idai-field-3d-document-read-da
                     'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
                     'identifier:match': { path: 'resource.identifier', type: 'match' },
                     'georeference:exist': { path: 'resource.georeference', type: 'exist' },
+                    'georeferenced:exist': { path: 'resource.georeferenced', type: 'exist' },
                     'conflicts:exist': { path: '_conflicts', type: 'exist' }
                 });
             }

@@ -29,6 +29,7 @@ export class Layer3DManager extends LayerManager<Document> {
                 layers: (await this.datastore.find({
                     q: '',
                     types: ['Object3D'],
+                    constraints: { 'georeferenced:exist': 'KNOWN' }
                 })).documents,
                 activeLayersChange: this.fetchActiveLayersFromResourcesState(mainTypeDocument)
             };

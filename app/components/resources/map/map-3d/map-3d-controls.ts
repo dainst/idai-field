@@ -3,6 +3,7 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Map3DControlState} from './map-3d-control-state';
 import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
+import {IntersectionHelper} from '../../../../core/3d/intersection-helper';
 import {addOffset, getPointVector, has3DLineGeometry, has3DPointGeometry,
     has3DPolygonGeometry} from '../../../../util/util-3d';
 
@@ -28,9 +29,14 @@ export class Map3DControls {
 
     private cameraDirection: number = CAMERA_DIRECTION_NORTH;
 
+    private intersectionHelper: IntersectionHelper;
+
 
     constructor(private viewer: Viewer3D,
-                private meshGeometryManager: MeshGeometryManager) {}
+                private meshGeometryManager: MeshGeometryManager) {
+
+        this.intersectionHelper = new IntersectionHelper(viewer);
+    }
 
 
     public onMouseDown(event: MouseEvent): Map3DControlState {
@@ -243,29 +249,13 @@ export class Map3DControls {
     private getDocumentOfGeometryAtMousePosition(xPosition: number, yPosition: number)
             : IdaiFieldDocument|undefined {
 
-        const intersections: Array<THREE.Intersection> = this.getIntersections(xPosition, yPosition);
+        const intersections: Array<THREE.Intersection> = this.intersectionHelper.getIntersections(
+            new THREE.Vector2(xPosition, yPosition),
+            this.meshGeometryManager.getRaycasterObjects()
+        );
 
         if (intersections.length == 0) return undefined;
 
         return this.meshGeometryManager.getDocument(intersections[0].object);
-    }
-
-
-    private getIntersections(xPosition: number, yPosition: number): Array<THREE.Intersection> {
-
-        const renderer: THREE.WebGLRenderer = this.viewer.getRenderer();
-
-        const raycaster: THREE.Raycaster = new THREE.Raycaster();
-        raycaster.linePrecision = 0.05;
-
-        const x: number = ((xPosition - renderer.domElement.getBoundingClientRect().left)
-            / renderer.domElement.getBoundingClientRect().width) * 2 - 1;
-        const y: number = -((yPosition - renderer.domElement.getBoundingClientRect().top)
-            / renderer.domElement.getBoundingClientRect().height) * 2 + 1;
-        const coordinates: THREE.Vector2 = new THREE.Vector2(x, y);
-
-        raycaster.setFromCamera(coordinates, this.viewer.getCamera());
-
-        return raycaster.intersectObjects(this.meshGeometryManager.getRaycasterObjects());
     }
 }

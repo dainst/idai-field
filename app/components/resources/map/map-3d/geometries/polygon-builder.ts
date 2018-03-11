@@ -50,7 +50,7 @@ export class PolygonBuilder {
     private createGeometry(document: IdaiFieldDocument, position: THREE.Vector3): THREE.Geometry {
 
         const points: Array<THREE.Vector3> = PolygonBuilder.getPoints(document, position);
-        const geometry: THREE.Geometry = new THREE.ShapeGeometry(this.createShape(points));
+        const geometry: THREE.Geometry = new THREE.ShapeGeometry(PolygonBuilder.createShape(points));
 
         geometry.vertices.forEach(vertex => {
             vertex.z = vertex.y;
@@ -58,20 +58,6 @@ export class PolygonBuilder {
         });
 
         return geometry;
-    }
-
-
-    private createShape(points: Array<THREE.Vector3>): THREE.Shape {
-
-        const shape: THREE.Shape = new THREE.Shape();
-
-        shape.moveTo(points[0].x, points[0].z);
-
-        for (let i = 1; i < points.length; i++) {
-            shape.lineTo(points[i].x, points[i].z);
-        }
-
-        return shape;
     }
 
 
@@ -88,6 +74,20 @@ export class PolygonBuilder {
         outline.layers.set(DepthMap.NO_DEPTH_MAPPING_LAYER);
 
         return outline;
+    }
+
+
+    private static createShape(points: Array<THREE.Vector3>): THREE.Shape {
+
+        const shape: THREE.Shape = new THREE.Shape();
+
+        shape.moveTo(points[0].x, points[0].z);
+
+        for (let i = 1; i < points.length; i++) {
+            shape.lineTo(points[i].x, points[i].z);
+        }
+
+        return shape;
     }
 
 

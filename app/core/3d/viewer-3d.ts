@@ -116,7 +116,7 @@ export class Viewer3D {
     private initialize(createDepthMap: boolean) {
 
         this.renderer = this.createRenderer();
-        this.scene = this.createScene();
+        this.scene = Viewer3D.createScene();
         this.camera = this.createCamera();
 
         if (createDepthMap) this.depthMap = new DepthMap(this.renderer, this.scene, this.camera);
@@ -134,15 +134,6 @@ export class Viewer3D {
         this.containerElement.appendChild(renderer.domElement);
 
         return renderer;
-    }
-
-
-    private createScene(): THREE.Scene {
-
-        const scene: THREE.Scene = new THREE.Scene();
-        scene.add(new THREE.HemisphereLight(0xf9edd9, 0x000000, 1));
-
-        return scene;
     }
 
 
@@ -202,6 +193,15 @@ export class Viewer3D {
             this.resized = true;
             if (this.notifyForResize) this.notifyForResize();
         }
+    }
+
+
+    private static createScene(): THREE.Scene {
+
+        const scene: THREE.Scene = new THREE.Scene();
+        scene.add(new THREE.HemisphereLight(0xf9edd9, 0x000000, 1));
+
+        return scene;
     }
 
 

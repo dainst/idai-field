@@ -28,7 +28,7 @@ export class LineBuilder {
 
         return {
             mesh: this.createMesh(document, geometry, position),
-            raycasterObject: this.createRaycasterObject(geometry, position),
+            raycasterObject: LineBuilder.createRaycasterObject(geometry, position),
             document: document
         };
     }
@@ -78,7 +78,7 @@ export class LineBuilder {
     }
 
 
-    private createRaycasterObject(geometry: THREE.Geometry, position: THREE.Vector3): THREE.Object3D {
+    private static createRaycasterObject(geometry: THREE.Geometry, position: THREE.Vector3): THREE.Object3D {
 
         const rayCasterMaterial: THREE.LineDashedMaterial = new THREE.LineDashedMaterial({
             dashSize: 0,

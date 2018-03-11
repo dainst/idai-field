@@ -73,7 +73,8 @@ config.map = {
     'rimraf': 'node_modules/rimraf/rimraf.js',
     'assert': '@node/assert',
     'path': '@node/path',
-    'glob': '@node/glob'
+    'glob': '@node/glob',
+    'read-depth': 'lib/read-depth/read-depth.js'
 };
 
 config.meta = {

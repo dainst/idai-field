@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {DepthMap} from './depth-map';
 
 const TWEEN = require('tweenjs');
 
@@ -12,15 +13,17 @@ export class Viewer3D {
     private scene: THREE.Scene;
     private camera: THREE.PerspectiveCamera;
 
+    private depthMap: DepthMap|undefined;
+
     private resized: boolean = false;
     private notifyForResize: Function;
 
     private cameraAnimation: { targetQuaternion: THREE.Quaternion, progress: number }|undefined;
 
 
-    constructor(private containerElement: HTMLElement) {
+    constructor(private containerElement: HTMLElement, createDepthMap: boolean = false) {
 
-        this.initialize();
+        this.initialize(createDepthMap);
         this.resize();
         this.animate();
     }
@@ -48,6 +51,12 @@ export class Viewer3D {
     public getCamera(): THREE.PerspectiveCamera {
 
         return this.camera;
+    }
+
+
+    public getDepthMap(): DepthMap|undefined {
+
+        return this.depthMap;
     }
 
 
@@ -104,11 +113,13 @@ export class Viewer3D {
     }
 
 
-    private initialize() {
+    private initialize(createDepthMap: boolean) {
 
         this.renderer = this.createRenderer();
         this.scene = this.createScene();
         this.camera = this.createCamera();
+
+        if (createDepthMap) this.depthMap = new DepthMap(this.renderer, this.scene, this.camera);
     }
 
 
@@ -156,6 +167,8 @@ export class Viewer3D {
 
         requestAnimationFrame(this.animate.bind(this));
 
+        if (this.depthMap) this.depthMap.update();
+
         this.renderer.render(this.scene, this.camera);
     }
 
@@ -180,6 +193,8 @@ export class Viewer3D {
 
         if (rendererElement.clientWidth !== width || rendererElement.clientHeight !== height) {
             this.renderer.setSize(width, height, false);
+            if (this.depthMap) this.depthMap.setSize(width, height);
+
             this.camera.aspect = width / height;
             this.camera.updateProjectionMatrix();
 

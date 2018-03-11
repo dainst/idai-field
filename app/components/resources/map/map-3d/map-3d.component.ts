@@ -63,7 +63,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     private initialize() {
 
-        this.viewer = new Viewer3D(this.container.nativeElement);
+        this.viewer = new Viewer3D(this.container.nativeElement, true);
         this.meshGeometryManager = new MeshGeometryManager(this.viewer, this.projectConfiguration);
         this.controls = new Map3DControls(this.viewer, this.meshGeometryManager);
     }

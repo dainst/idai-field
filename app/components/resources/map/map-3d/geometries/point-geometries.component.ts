@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {Component, ViewChild, ElementRef, Input, Output, EventEmitter} from '@angular/core';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Map3DComponent} from '../map-3d.component';
+import {DepthMap} from '../../../../../core/3d/depth-map';
 import {has3DPointGeometry, getPointVector} from '../../../../../util/util-3d';
 
 
@@ -10,6 +11,7 @@ export interface Map3DMarker {
     document: IdaiFieldDocument;
     xPosition: number;
     yPosition: number;
+    visible: boolean;
 }
 
 
@@ -76,10 +78,44 @@ export class PointGeometriesComponent {
         const marker = this.cachedMarkers[document.resource.id as string] || { document: document };
         marker.xPosition = screenCoordinates.x;
         marker.yPosition = screenCoordinates.y;
+        marker.visible = this.isVisible(marker);
 
         this.cachedMarkers[document.resource.id as string] = marker;
 
         return marker;
+    }
+
+
+    private isVisible(marker: Map3DMarker): boolean {
+
+        const camera: THREE.PerspectiveCamera = this.map3DComponent.getViewer().getCamera().clone();
+
+        const depthMap: DepthMap = this.map3DComponent.getViewer().getDepthMap() as DepthMap;
+
+        const distanceToIntersection: number = depthMap.getDepth(
+            new THREE.Vector2(marker.xPosition, marker.yPosition)
+        );
+
+        if (distanceToIntersection <= camera.near) return true;
+
+        const markerPosition: THREE.Vector3 = getPointVector(
+            (marker.document.resource.geometry as IdaiFieldGeometry).coordinates
+        );
+
+        const zeroPlane = new THREE.Plane(camera.getWorldDirection().normalize());
+
+        const plane = new THREE.Plane(
+            camera.getWorldDirection().normalize(),
+            -zeroPlane.distanceToPoint(camera.position) - camera.near
+        );
+
+        const distanceToMarkerPosition: number = plane.distanceToPoint(markerPosition);
+
+        if (distanceToIntersection > distanceToMarkerPosition) {
+            return true;
+        } else {
+            return (distanceToMarkerPosition > 50 && (distanceToMarkerPosition - distanceToIntersection) < 1);
+        }
     }
 
 

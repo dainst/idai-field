@@ -14,6 +14,10 @@ point-geometries {
     z-index: 1;
     pointer-events: none;
 
+    &.hidden {
+      opacity: 0.3;
+    }
+
     .map-3d-marker-head {
       position: relative;
       top: -27px;

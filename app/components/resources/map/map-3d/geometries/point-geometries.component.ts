@@ -56,6 +56,8 @@ export class PointGeometriesComponent {
 
         if (!this.documents || !this.showMarkers) return markers;
 
+        if (!this.visibilityHelper) this.visibilityHelper = this.createVisibilityHelper();
+
         this.documents.forEach(document => {
            const marker: Map3DMarker|undefined = this.createMarker(document);
            if (marker) markers.push(marker);
@@ -73,7 +75,7 @@ export class PointGeometriesComponent {
 
     private createMarker(document: IdaiFieldDocument): Map3DMarker|undefined {
 
-        if (!has3DPointGeometry(document)) return undefined;
+        if (!has3DPointGeometry(document) || !this.isInCameraViewFrustum(document)) return undefined;
 
         const screenCoordinates: THREE.Vector2|undefined = this.getCanvasCoordinates(document);
         if (!screenCoordinates) return;
@@ -89,13 +91,18 @@ export class PointGeometriesComponent {
     }
 
 
+    private isInCameraViewFrustum(document: IdaiFieldDocument): boolean {
+
+        return this.visibilityHelper.isInCameraViewFrustum(
+            PointGeometriesComponent.getWorldSpaceCoordinates(document)
+        );
+    }
+
+
     private isVisible(marker: Map3DMarker): boolean {
 
-        if (!this.visibilityHelper) this.visibilityHelper = this.createVisibilityHelper();
-
-        const positionInWorldSpace: THREE.Vector3 = getPointVector(
-            (marker.document.resource.geometry as IdaiFieldGeometry).coordinates
-        );
+        const positionInWorldSpace: THREE.Vector3
+            = PointGeometriesComponent.getWorldSpaceCoordinates(marker.document);
         const positionOnCanvas: THREE.Vector2 = new THREE.Vector2(marker.xPosition, marker.yPosition);
 
         return this.visibilityHelper.isVisible(positionInWorldSpace, positionOnCanvas);
@@ -106,6 +113,14 @@ export class PointGeometriesComponent {
 
         return this.map3DComponent.getViewer().getCanvasCoordinates(
             getPointVector((document.resource.geometry as IdaiFieldGeometry).coordinates)
+        );
+    }
+
+
+    private static getWorldSpaceCoordinates(document: IdaiFieldDocument): THREE.Vector3 {
+
+        return getPointVector(
+            (document.resource.geometry as IdaiFieldGeometry).coordinates
         );
     }
 

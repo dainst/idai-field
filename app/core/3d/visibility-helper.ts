@@ -11,10 +11,22 @@ export class VisibilityHelper {
                 private camera: THREE.PerspectiveCamera) {}
 
 
+    public isInCameraViewFrustum(point: THREE.Vector3): boolean {
+
+        const camera: THREE.PerspectiveCamera = this.camera.clone();
+
+        const viewFrustum: THREE.Frustum = new THREE.Frustum().setFromMatrix(
+            new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse)
+        );
+
+        return viewFrustum.containsPoint(point);
+    }
+
+
     public isVisible(pointInWorldSpace: THREE.Vector3, pointOnCanvas: THREE.Vector2): boolean {
 
-        const distanceToIntersection: number = this.getDistanceToNearestIntersection(pointOnCanvas);
         const camera: THREE.PerspectiveCamera = this.camera.clone();
+        const distanceToIntersection: number = this.getDistanceToNearestIntersection(pointOnCanvas);
 
         if (distanceToIntersection == camera.near) return true;
 

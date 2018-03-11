@@ -16,7 +16,7 @@ export class VisibilityHelper {
         const distanceToIntersection: number = this.getDistanceToNearestIntersection(pointOnCanvas);
         const camera: THREE.PerspectiveCamera = this.camera.clone();
 
-        if (distanceToIntersection <= camera.near) return true;
+        if (distanceToIntersection == camera.near) return true;
 
         const distanceToMarkerPosition: number
             = VisibilityHelper.getDistanceToMarkerPosition(pointInWorldSpace, camera);

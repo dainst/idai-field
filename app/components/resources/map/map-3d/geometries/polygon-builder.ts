@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {MeshGeometry} from './mesh-geometry';
+import {DepthMap} from '../../../../../core/3d/depth-map';
 import {getPointVector, subtractOffset} from '../../../../../util/util-3d';
 
 
@@ -39,6 +40,7 @@ export class PolygonBuilder {
 
         const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(position.x, position.y, position.z);
+        mesh.layers.set(DepthMap.NO_DEPTH_MAPPING_LAYER);
         mesh.add(this.createOutline(document, geometry));
 
         return mesh;
@@ -82,7 +84,10 @@ export class PolygonBuilder {
             color: this.projectConfiguration.getColorForType(document.resource.type)
         });
 
-        return new THREE.LineSegments(edgesGeometry, edgesMaterial);
+        const outline: THREE.LineSegments = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+        outline.layers.set(DepthMap.NO_DEPTH_MAPPING_LAYER);
+
+        return outline;
     }
 
 

@@ -8,6 +8,8 @@ const getDepthInWorldSpace = require('read-depth');
  */
 export class DepthMap {
 
+    public static readonly NO_DEPTH_MAPPING_LAYER: number = 1;
+
     private material: THREE.MeshDepthMaterial;
     private renderTarget: THREE.WebGLRenderTarget;
 
@@ -29,10 +31,13 @@ export class DepthMap {
         this.scene.overrideMaterial = this.material;
         this.renderer.setRenderTarget(this.renderTarget);
 
+        this.camera.layers.disable(DepthMap.NO_DEPTH_MAPPING_LAYER);
+
         if (this.isReady()) this.renderer.render(this.scene, this.camera, this.renderTarget);
 
         this.scene.overrideMaterial = defaultOverrideMaterial;
         this.renderer.setRenderTarget(defaultRenderTarget);
+        this.camera.layers.enable(DepthMap.NO_DEPTH_MAPPING_LAYER);
     }
 
 

@@ -3,6 +3,7 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Viewer3D} from '../../../../../core/3d/viewer-3d';
 import {MeshGeometry} from './mesh-geometry';
+import {DepthMap} from '../../../../../core/3d/depth-map';
 import {getPointVector, subtractOffset} from '../../../../../util/util-3d';
 
 const {MeshLine, MeshLineMaterial} = require('three.meshline');
@@ -57,6 +58,7 @@ export class LineBuilder {
 
         const mesh: THREE.Mesh = new THREE.Mesh(line.geometry, material);
         mesh.position.set(position.x, position.y, position.z);
+        mesh.layers.set(DepthMap.NO_DEPTH_MAPPING_LAYER);
 
         return mesh;
     }

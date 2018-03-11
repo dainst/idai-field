@@ -153,6 +153,7 @@ export class Viewer3D {
 
         camera.position.set(0, 3, 0);
         camera.lookAt(new THREE.Vector3(0, 0, 0));
+        camera.layers.enable(DepthMap.NO_DEPTH_MAPPING_LAYER);
 
         return camera;
     }

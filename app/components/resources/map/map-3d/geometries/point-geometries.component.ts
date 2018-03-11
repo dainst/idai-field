@@ -10,8 +10,8 @@ import {has3DPointGeometry, getPointVector} from '../../../../../util/util-3d';
 export interface Map3DMarker {
 
     document: IdaiFieldDocument;
-    xPosition: number;
-    yPosition: number;
+    canvasPosition: THREE.Vector2;
+    worldSpacePosition: THREE.Vector3;
     visible: boolean;
 }
 
@@ -75,15 +75,14 @@ export class PointGeometriesComponent {
 
     private createMarker(document: IdaiFieldDocument): Map3DMarker|undefined {
 
-        if (!has3DPointGeometry(document) || !this.isInCameraViewFrustum(document)) return undefined;
+        const { canvasPosition, worldSpacePosition } = this.getPositionVectors(document);
 
-        const screenCoordinates: THREE.Vector2|undefined = this.getCanvasCoordinates(document);
-        if (!screenCoordinates) return;
+        if (!canvasPosition || !worldSpacePosition) return undefined;
 
         const marker = this.cachedMarkers[document.resource.id as string] || { document: document };
-        marker.xPosition = screenCoordinates.x;
-        marker.yPosition = screenCoordinates.y;
-        marker.visible = this.isVisible(marker);
+        marker.canvasPosition = canvasPosition;
+        marker.worldSpacePosition = worldSpacePosition;
+        marker.visible = this.visibilityHelper.isVisible(marker.worldSpacePosition, marker.canvasPosition);
 
         this.cachedMarkers[document.resource.id as string] = marker;
 
@@ -91,37 +90,19 @@ export class PointGeometriesComponent {
     }
 
 
-    private isInCameraViewFrustum(document: IdaiFieldDocument): boolean {
+    private getPositionVectors(document: IdaiFieldDocument)
+            : { canvasPosition?: THREE.Vector2, worldSpacePosition?: THREE.Vector3 } {
 
-        return this.visibilityHelper.isInCameraViewFrustum(
-            PointGeometriesComponent.getWorldSpaceCoordinates(document)
-        );
-    }
+        if (!has3DPointGeometry(document)) return {};
 
+        const worldSpacePosition: THREE.Vector3 = PointGeometriesComponent.getWorldSpacePosition(document);
 
-    private isVisible(marker: Map3DMarker): boolean {
+        if (!this.visibilityHelper.isInCameraViewFrustum(worldSpacePosition)) return {};
 
-        const positionInWorldSpace: THREE.Vector3
-            = PointGeometriesComponent.getWorldSpaceCoordinates(marker.document);
-        const positionOnCanvas: THREE.Vector2 = new THREE.Vector2(marker.xPosition, marker.yPosition);
-
-        return this.visibilityHelper.isVisible(positionInWorldSpace, positionOnCanvas);
-    }
-
-
-    private getCanvasCoordinates(document: IdaiFieldDocument): THREE.Vector2|undefined {
-
-        return this.map3DComponent.getViewer().getCanvasCoordinates(
-            getPointVector((document.resource.geometry as IdaiFieldGeometry).coordinates)
-        );
-    }
-
-
-    private static getWorldSpaceCoordinates(document: IdaiFieldDocument): THREE.Vector3 {
-
-        return getPointVector(
-            (document.resource.geometry as IdaiFieldGeometry).coordinates
-        );
+        return {
+            canvasPosition: this.getCanvasPosition(document),
+            worldSpacePosition: worldSpacePosition
+        };
     }
 
 
@@ -130,6 +111,22 @@ export class PointGeometriesComponent {
         return new VisibilityHelper(
             this.map3DComponent.getViewer().getDepthMap() as DepthMap,
             this.map3DComponent.getViewer().getCamera()
+        );
+    }
+
+
+    private getCanvasPosition(document: IdaiFieldDocument): THREE.Vector2 {
+
+        return this.map3DComponent.getViewer().getCanvasCoordinates(
+            getPointVector((document.resource.geometry as IdaiFieldGeometry).coordinates)
+        );
+    }
+
+
+    private static getWorldSpacePosition(document: IdaiFieldDocument): THREE.Vector3 {
+
+        return getPointVector(
+            (document.resource.geometry as IdaiFieldGeometry).coordinates
         );
     }
 }

@@ -1,8 +1,8 @@
 <div *ngFor="let marker of getMarkers()"
      class="map-3d-marker"
      [class.hidden]="!marker.visible"
-     [style.left]="marker.xPosition + 'px'"
-     [style.top]="'calc(' + marker.yPosition + 'px - 50px)'">
+     [style.left]="marker.canvasPosition.x + 'px'"
+     [style.top]="'calc(' + marker.canvasPosition.y + 'px - 50px)'">
     <div class="map-3d-marker-head"
          (click)="select(marker.document)"
          (mousemove)="onMouseMove($event)"

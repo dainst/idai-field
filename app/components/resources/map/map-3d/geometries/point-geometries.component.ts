@@ -3,6 +3,7 @@ import {Component, ViewChild, ElementRef, Input, Output, EventEmitter} from '@an
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Map3DComponent} from '../map-3d.component';
 import {DepthMap} from '../../../../../core/3d/depth-map';
+import {VisibilityHelper} from '../../../../../core/3d/visibility-helper';
 import {has3DPointGeometry, getPointVector} from '../../../../../util/util-3d';
 
 
@@ -35,6 +36,8 @@ export class PointGeometriesComponent {
     public showMarkers: boolean = true;
 
     private cachedMarkers: { [resourceId: string]: Map3DMarker } = {};
+
+    private visibilityHelper: VisibilityHelper;
 
 
     constructor(private map3DComponent: Map3DComponent) {}
@@ -86,6 +89,19 @@ export class PointGeometriesComponent {
     }
 
 
+    private isVisible(marker: Map3DMarker): boolean {
+
+        if (!this.visibilityHelper) this.visibilityHelper = this.createVisibilityHelper();
+
+        const positionInWorldSpace: THREE.Vector3 = getPointVector(
+            (marker.document.resource.geometry as IdaiFieldGeometry).coordinates
+        );
+        const positionOnCanvas: THREE.Vector2 = new THREE.Vector2(marker.xPosition, marker.yPosition);
+
+        return this.visibilityHelper.isVisible(positionInWorldSpace, positionOnCanvas);
+    }
+
+
     private getCanvasCoordinates(document: IdaiFieldDocument): THREE.Vector2|undefined {
 
         return this.map3DComponent.getViewer().getCanvasCoordinates(
@@ -94,47 +110,11 @@ export class PointGeometriesComponent {
     }
 
 
-    private isVisible(marker: Map3DMarker): boolean {
+    private createVisibilityHelper(): VisibilityHelper {
 
-        const distanceToIntersection: number = this.getDistanceToNearestIntersection(marker);
-        const camera: THREE.PerspectiveCamera = this.map3DComponent.getViewer().getCamera().clone();
-
-        if (distanceToIntersection <= camera.near) return true;
-
-        const distanceToMarkerPosition: number
-            = PointGeometriesComponent.getDistanceToMarkerPosition(marker, camera);
-
-        if (distanceToIntersection > distanceToMarkerPosition) {
-            return true;
-        } else {
-            return (distanceToMarkerPosition > 50 && (distanceToMarkerPosition - distanceToIntersection) < 1);
-        }
-    }
-
-
-    private getDistanceToNearestIntersection(marker: Map3DMarker): number {
-
-        const depthMap: DepthMap = this.map3DComponent.getViewer().getDepthMap() as DepthMap;
-
-        return depthMap.getDepth(new THREE.Vector2(marker.xPosition, marker.yPosition));
-    }
-
-
-    private static getDistanceToMarkerPosition(marker: Map3DMarker, camera: THREE.PerspectiveCamera): number {
-
-        const markerPosition: THREE.Vector3 = getPointVector(
-            (marker.document.resource.geometry as IdaiFieldGeometry).coordinates
+        return new VisibilityHelper(
+            this.map3DComponent.getViewer().getDepthMap() as DepthMap,
+            this.map3DComponent.getViewer().getCamera()
         );
-
-        return this.getNearFrustumPlane(camera).distanceToPoint(markerPosition);
-    }
-
-
-    private static getNearFrustumPlane(camera: THREE.PerspectiveCamera): THREE.Plane {
-
-        const normal: THREE.Vector3 = camera.getWorldDirection().normalize();
-        const planeAtOrigin: THREE.Plane = new THREE.Plane(normal);
-
-        return new THREE.Plane(normal, -planeAtOrigin.distanceToPoint(camera.position) - camera.near);
     }
 }

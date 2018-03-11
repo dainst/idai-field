@@ -86,30 +86,23 @@ export class PointGeometriesComponent {
     }
 
 
+    private getCanvasCoordinates(document: IdaiFieldDocument): THREE.Vector2|undefined {
+
+        return this.map3DComponent.getViewer().getCanvasCoordinates(
+            getPointVector((document.resource.geometry as IdaiFieldGeometry).coordinates)
+        );
+    }
+
+
     private isVisible(marker: Map3DMarker): boolean {
 
+        const distanceToIntersection: number = this.getDistanceToNearestIntersection(marker);
         const camera: THREE.PerspectiveCamera = this.map3DComponent.getViewer().getCamera().clone();
-
-        const depthMap: DepthMap = this.map3DComponent.getViewer().getDepthMap() as DepthMap;
-
-        const distanceToIntersection: number = depthMap.getDepth(
-            new THREE.Vector2(marker.xPosition, marker.yPosition)
-        );
 
         if (distanceToIntersection <= camera.near) return true;
 
-        const markerPosition: THREE.Vector3 = getPointVector(
-            (marker.document.resource.geometry as IdaiFieldGeometry).coordinates
-        );
-
-        const zeroPlane = new THREE.Plane(camera.getWorldDirection().normalize());
-
-        const plane = new THREE.Plane(
-            camera.getWorldDirection().normalize(),
-            -zeroPlane.distanceToPoint(camera.position) - camera.near
-        );
-
-        const distanceToMarkerPosition: number = plane.distanceToPoint(markerPosition);
+        const distanceToMarkerPosition: number
+            = PointGeometriesComponent.getDistanceToMarkerPosition(marker, camera);
 
         if (distanceToIntersection > distanceToMarkerPosition) {
             return true;
@@ -119,10 +112,29 @@ export class PointGeometriesComponent {
     }
 
 
-    private getCanvasCoordinates(document: IdaiFieldDocument): THREE.Vector2|undefined {
+    private getDistanceToNearestIntersection(marker: Map3DMarker): number {
 
-        return this.map3DComponent.getViewer().getCanvasCoordinates(
-            getPointVector((document.resource.geometry as IdaiFieldGeometry).coordinates)
+        const depthMap: DepthMap = this.map3DComponent.getViewer().getDepthMap() as DepthMap;
+
+        return depthMap.getDepth(new THREE.Vector2(marker.xPosition, marker.yPosition));
+    }
+
+
+    private static getDistanceToMarkerPosition(marker: Map3DMarker, camera: THREE.PerspectiveCamera): number {
+
+        const markerPosition: THREE.Vector3 = getPointVector(
+            (marker.document.resource.geometry as IdaiFieldGeometry).coordinates
         );
+
+        return this.getNearFrustumPlane(camera).distanceToPoint(markerPosition);
+    }
+
+
+    private static getNearFrustumPlane(camera: THREE.PerspectiveCamera): THREE.Plane {
+
+        const normal: THREE.Vector3 = camera.getWorldDirection().normalize();
+        const planeAtOrigin: THREE.Plane = new THREE.Plane(normal);
+
+        return new THREE.Plane(normal, -planeAtOrigin.distanceToPoint(camera.position) - camera.near);
     }
 }

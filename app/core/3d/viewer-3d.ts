@@ -79,7 +79,7 @@ export class Viewer3D {
     }
 
 
-    public getCanvasCoordinates(position: THREE.Vector3): THREE.Vector2|undefined {
+    public getCanvasCoordinates(position: THREE.Vector3): THREE.Vector2 {
 
         const canvas: HTMLCanvasElement = this.renderer.domElement;
         const projectedPosition: THREE.Vector3 = position.clone().project(this.camera);
@@ -90,7 +90,7 @@ export class Viewer3D {
         canvasCoordinates.y
             = Math.round((-projectedPosition.y + 1) * canvas.height / 2);
 
-        return this.isInCanvas(canvasCoordinates) ? canvasCoordinates : undefined;
+        return canvasCoordinates;
     }
 
 
@@ -202,17 +202,6 @@ export class Viewer3D {
         scene.add(new THREE.HemisphereLight(0xf9edd9, 0x000000, 1));
 
         return scene;
-    }
-
-
-    private isInCanvas(screenCoordinates: THREE.Vector2): boolean {
-
-        const canvas: HTMLCanvasElement = this.renderer.domElement;
-
-        return screenCoordinates.x > 0
-            && screenCoordinates.x < canvas.width
-            && screenCoordinates.y > 0
-            && screenCoordinates.y < canvas.height;
     }
 
 

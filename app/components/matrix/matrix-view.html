@@ -10,6 +10,6 @@
     <div *ngIf="selectedTrench" id="selected-trench-label">{{getDocumentLabel(selectedTrench)}}</div>
 
     <div id="matrix-container">
-        <graph [documents]="documents"></graph>
+        <graph [documents]="documents" (onSelect)="select($event)"></graph>
     </div>
 </div>

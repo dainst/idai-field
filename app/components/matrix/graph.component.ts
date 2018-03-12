@@ -1,4 +1,7 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {
+    Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2,
+    ViewChild
+} from '@angular/core';
 import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
 import {IdaiFieldDocument} from 'idai-components-2/field';
@@ -20,6 +23,7 @@ type EdgeType = 'is-after'|'is-contemporary-with'|undefined;
 export class GraphComponent implements OnInit, OnChanges {
 
     @Input() documents: Array<IdaiFieldDocument>;
+    @Output() onSelect: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('graphContainer') graphContainer: ElementRef;
 
@@ -78,6 +82,24 @@ export class GraphComponent implements OnInit, OnChanges {
 
         this.renderer.listen(this.graphContainer.nativeElement, 'mousemove', event => {
             this.onMouseMove(event);
+        });
+
+        this.renderer.listen(this.graphContainer.nativeElement, 'click', event => {
+
+            if (event.path[0]) {
+
+                if (event.path[0].innerHTML === '') { // is ellipse or anything else
+
+                    if (event.path[0].nextElementSibling
+                        && event.path[0].nextElementSibling.childNodes.length > 0) {
+
+                        if (event.path[0].nextElementSibling.childNodes[0].data) {
+                            this.onSelect.emit(event.path[0].nextElementSibling.childNodes[0].data);
+                        }
+                    }
+                }
+            }
+
         });
     }
 

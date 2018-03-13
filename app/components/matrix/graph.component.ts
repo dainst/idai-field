@@ -86,9 +86,11 @@ export class GraphComponent implements OnInit, OnChanges {
 
         this.renderer.listen(this.graphContainer.nativeElement, 'click', event => {
 
-            if (event.path[0]) {
+            if (event.path[0]
+                && event.path[0].localName !== 'svg'
+                && event.path[0].localName !== 'polygon') {
 
-                if (event.path[0].innerHTML === '') { // is ellipse or anything else
+                if (event.path[0].localName === 'ellipse') {
 
                     if (event.path[0].nextElementSibling
                         && event.path[0].nextElementSibling.childNodes.length > 0) {
@@ -97,6 +99,10 @@ export class GraphComponent implements OnInit, OnChanges {
                             this.onSelect.emit(event.path[0].nextElementSibling.childNodes[0].data);
                         }
                     }
+                } else if (event.path[0].localName === 'text'
+                    && event.path[0].innerHTML !== '') {
+
+                    this.onSelect.emit(event.path[0].innerHTML)
                 }
             }
 

@@ -48,11 +48,20 @@ export class MatrixViewComponent implements OnInit {
             { size: 'lg', backdrop: 'static', keyboard: false });
         doceditRef.componentInstance.setDocument(selected);
 
-        this.documents = [];
-        this.selectedTrench = undefined;
         await doceditRef.result.then(
-            res => this.populateTrenches(),
-            closeReason => this.populateTrenches()
+            res => {
+                this.documents = [];
+                this.selectedTrench = undefined;
+                this.populateTrenches()
+            },
+            closeReason => {
+
+                if (closeReason === 'deleted') {
+                    this.documents = [];
+                    this.selectedTrench = undefined;
+                    this.populateTrenches();
+                }
+            }
         );
     }
 

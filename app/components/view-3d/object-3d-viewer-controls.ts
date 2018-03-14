@@ -74,6 +74,8 @@ export class Object3DViewerControls {
 
     public onWheel(event: WheelEvent) {
 
+        if (!this.isZoomingAllowed(event.wheelDelta > 0)) return;
+
         this.viewer.getCamera().translateZ(event.wheelDelta / 100);
     }
 
@@ -85,7 +87,7 @@ export class Object3DViewerControls {
 
         camera.position.set(
             position.x,
-            this.mesh.position.y + Object3DViewerControls.computeDistance(camera, this.mesh),
+            this.mesh.position.y + Object3DViewerControls.computeFocusDistance(camera, this.mesh),
             position.z);
         camera.lookAt(position);
     }
@@ -145,7 +147,21 @@ export class Object3DViewerControls {
     }
 
 
-    private static computeDistance(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
+    private isZoomingAllowed(zoomingOut: boolean): boolean {
+
+        const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
+        const maxDistance: number = Object3DViewerControls.computeFocusDistance(camera, this.mesh) * 2;
+
+        if (camera.position.distanceTo(this.mesh.position) <= maxDistance) {
+            return true;
+        } else {
+            return (zoomingOut && camera.position.y <= this.mesh.position.y
+                || !zoomingOut && camera.position.y >= this.mesh.position.y);
+        }
+    }
+
+
+    private static computeFocusDistance(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
 
         const fovInRadians: number = camera.fov * (Math.PI / 180);
         const size = mesh.geometry.boundingSphere.radius;

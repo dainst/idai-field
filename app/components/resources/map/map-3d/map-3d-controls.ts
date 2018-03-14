@@ -210,15 +210,6 @@ export class Map3DControls {
     }
 
 
-    private static computeDistance(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
-
-        const fovInRadians: number = camera.fov * (Math.PI / 180);
-        const size = mesh.geometry.boundingSphere.radius;
-
-        return Math.abs(size / Math.sin(fovInRadians / 2));
-    }
-
-
     private updateSelectedDocument(xPosition: number, yPosition: number) {
 
         if (this.noSelection) {
@@ -247,5 +238,14 @@ export class Map3DControls {
         if (intersections.length == 0) return undefined;
 
         return this.meshGeometryManager.getDocument(intersections[0].object);
+    }
+
+
+    private static computeDistance(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
+
+        const fovInRadians: number = camera.fov * (Math.PI / 180);
+        const size = mesh.geometry.boundingSphere.radius;
+
+        return Math.abs(size / Math.sin(fovInRadians / 2));
     }
 }

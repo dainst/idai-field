@@ -113,6 +113,18 @@ export class Viewer3D {
     }
 
 
+    public waitForSizeAdjustment(): Promise<void> {
+
+        return new Promise<void>(resolve => {
+            if (this.resized) {
+                resolve();
+            } else {
+                this.notifyForResize = resolve;
+            }
+        });
+    }
+
+
     private initialize(createDepthMap: boolean) {
 
         this.renderer = this.createRenderer();
@@ -203,17 +215,5 @@ export class Viewer3D {
         scene.add(new THREE.HemisphereLight(0xf9edd9, 0x000000, 1));
 
         return scene;
-    }
-
-
-    public waitForSizeAdjustment(): Promise<void> {
-
-        return new Promise<void>(resolve => {
-            if (this.resized) {
-                resolve();
-            } else {
-                this.notifyForResize = resolve;
-            }
-        });
     }
 }

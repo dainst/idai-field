@@ -60,8 +60,7 @@ export class SettingsService {
 
     public async bootProject(): Promise<ProjectConfiguration> {
 
-        const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
-        const HIDDEN_CONFIGURATION_PATH = remote.getGlobal('hiddenConfigurationPath');
+        const CONFIGURATIONDIRPATH = remote.getGlobal('configurationDirPath');
 
 
         await this.updateSettings(await this.settingsSerializer.load());
@@ -72,7 +71,7 @@ export class SettingsService {
 
         let pconf: ProjectConfiguration|undefined;
         try {
-            pconf = await this.appConfigurator.go(PROJECT_CONFIGURATION_PATH, HIDDEN_CONFIGURATION_PATH);
+            pconf = await this.appConfigurator.go(CONFIGURATIONDIRPATH);
         } catch (msgsWithParams) {
             msgsWithParams.forEach((msg: any) => {
                 console.error('err in project configuration', msg)

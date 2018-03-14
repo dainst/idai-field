@@ -19,7 +19,7 @@ export const CAMERA_DIRECTION_EAST: number = 3;
  */
 export class Map3DControls {
     
-    private state: Map3DControlState = { action: 'none' };
+    private state: Map3DControlState = { dragging: false };
 
     private dragCounter: number;
     private noSelection: boolean = false;
@@ -58,7 +58,7 @@ export class Map3DControls {
 
     public onMouseUp(event: MouseEvent): Map3DControlState {
 
-        if (this.state.action == 'drag') this.updateSelectedDocument(event.clientX, event.clientY);
+        if (this.state.dragging) this.updateSelectedDocument(event.clientX, event.clientY);
 
         this.resetAction();
 
@@ -71,7 +71,7 @@ export class Map3DControls {
         const deltaX = this.lastXPosition - event.clientX;
         const deltaY = this.lastYPosition - event.clientY;
 
-        this.performAction(deltaX, deltaY);
+        if (this.state.dragging) this.drag(deltaX, deltaY);
         this.updateHoverDocument(event.clientX, event.clientY);
 
         this.lastXPosition = event.clientX;
@@ -164,40 +164,30 @@ export class Map3DControls {
 
     private beginDragAction() {
 
-        this.state.action = 'drag';
+        this.state.dragging = true;
         this.dragCounter = 0;
     }
 
 
     private resetAction() {
 
-        this.state.action = 'none';
+        this.state.dragging = false;
     }
 
 
-    private performAction(mouseDeltaX: number, mouseDeltaY: number) {
+    private drag(mouseDeltaX: number, mouseDeltaY: number) {
 
-        switch (this.state.action) {
-            case 'drag':
-                const { deltaX, deltaZ } = this.getDragDeltas(mouseDeltaX, mouseDeltaY);
-                this.drag(deltaX, deltaZ);
-                break;
-        }
-    }
-
-
-    private drag(deltaX: number, deltaY: number) {
-
+        const { deltaX, deltaZ } = this.getDragDeltas(mouseDeltaX, mouseDeltaY);
         const position: THREE.Vector3 = this.viewer.getCamera().position;
 
         this.viewer.getCamera().position.set(
             position.x + (deltaX / 100),
             position.y,
-            position.z + (deltaY / 100)
+            position.z + (deltaZ / 100)
         );
 
         this.dragCounter++;
-        if (this.dragCounter > 10 || deltaX > 5 || deltaX < -5 || deltaY > 5 || deltaY < -5) {
+        if (this.dragCounter > 10 || deltaX > 5 || deltaX < -5 || deltaZ > 5 || deltaZ < -5) {
             this.noSelection = true;
         }
     }

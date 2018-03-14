@@ -1,6 +1,5 @@
 <div id="map-3d"
-     [class.drag]="controlState && controlState.action == 'drag'"
-     [class.rotate]="controlState && controlState.action == 'rotate'"
+     [class.drag]="controlState && controlState.dragging"
      [class.hover]="controlState && controlState.hoverDocument">
 
     <div id="canvas-container" #container

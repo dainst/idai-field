@@ -25,6 +25,8 @@ export class VisibilityHelper {
 
     public isVisible(pointInWorldSpace: THREE.Vector3, pointOnCanvas: THREE.Vector2): boolean {
 
+        if (!this.depthMap.isReady()) return false;
+
         const camera: THREE.PerspectiveCamera = this.camera.clone();
         const distanceToIntersection: number = this.getDistanceToNearestIntersection(pointOnCanvas);
 

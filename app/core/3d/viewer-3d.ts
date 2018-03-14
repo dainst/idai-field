@@ -159,7 +159,7 @@ export class Viewer3D {
 
         requestAnimationFrame(this.animate.bind(this));
 
-        if (this.depthMap) this.depthMap.update();
+        if (this.depthMap && this.depthMap.isReady()) this.depthMap.update();
 
         this.renderer.render(this.scene, this.camera);
     }
@@ -191,6 +191,7 @@ export class Viewer3D {
             this.camera.updateProjectionMatrix();
 
             this.resized = true;
+            if (this.depthMap) this.depthMap.setReady(true);
             if (this.notifyForResize) this.notifyForResize();
         }
     }

@@ -114,7 +114,7 @@ export class Map3DControls {
 
         camera.position.set(
             position.x,
-            mesh.position.y + Map3DControls.computeDistance(camera, mesh),
+            mesh.position.y + Map3DControls.computeFocusDistance(camera, mesh),
             position.z);
         camera.lookAt(position);
         camera.rotateZ((Math.PI / 2) * this.cameraDirection);
@@ -241,7 +241,7 @@ export class Map3DControls {
     }
 
 
-    private static computeDistance(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
+    private static computeFocusDistance(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
 
         const fovInRadians: number = camera.fov * (Math.PI / 180);
         const size = mesh.geometry.boundingSphere.radius;

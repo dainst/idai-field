@@ -83,13 +83,18 @@ export class Map3DControls {
 
     public onWheel(event: WheelEvent) {
 
+        let zoomValue: number;
+
         // Mac zoom gesture
         if (event.ctrlKey) {
             event.preventDefault();
             event.stopImmediatePropagation();
+            zoomValue = event.wheelDelta / 500;
+        } else {
+            zoomValue = -event.wheelDelta / 100;
         }
 
-        this.viewer.getCamera().translateZ(event.wheelDelta / 100);
+        this.zoom(zoomValue);
     }
 
 
@@ -178,6 +183,12 @@ export class Map3DControls {
     private resetAction() {
 
         this.state.dragging = false;
+    }
+
+
+    private zoom(value: number) {
+
+        this.viewer.getCamera().translateZ(value);
     }
 
 

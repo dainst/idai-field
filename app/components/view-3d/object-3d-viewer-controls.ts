@@ -74,15 +74,20 @@ export class Object3DViewerControls {
 
     public onWheel(event: WheelEvent) {
 
+        let zoomValue: number;
+
         // Mac zoom gesture
         if (event.ctrlKey) {
             event.preventDefault();
             event.stopImmediatePropagation();
+            zoomValue = event.wheelDelta / 500;
+        } else {
+            zoomValue = -event.wheelDelta / 100;
         }
 
-        if (!this.isZoomingAllowed(event.wheelDelta > 0)) return;
+        if (!this.isZoomingAllowed(zoomValue > 0)) return;
 
-        this.viewer.getCamera().translateZ(event.wheelDelta / 100);
+        this.zoom(zoomValue);
     }
 
 
@@ -164,6 +169,12 @@ export class Object3DViewerControls {
             return (zoomingOut && camera.position.y <= this.mesh.position.y
                 || !zoomingOut && camera.position.y >= this.mesh.position.y);
         }
+    }
+
+
+    private zoom(value: number) {
+
+        this.viewer.getCamera().translateZ(value);
     }
 
 

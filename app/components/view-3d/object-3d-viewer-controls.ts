@@ -74,6 +74,12 @@ export class Object3DViewerControls {
 
     public onWheel(event: WheelEvent) {
 
+        // Mac zoom gesture
+        if (event.ctrlKey) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+        }
+
         if (!this.isZoomingAllowed(event.wheelDelta > 0)) return;
 
         this.viewer.getCamera().translateZ(event.wheelDelta / 100);

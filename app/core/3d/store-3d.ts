@@ -4,6 +4,7 @@ import {IdaiField3DDocument} from '../model/idai-field-3d-document';
 import {M} from '../../m';
 import {SettingsService} from '../settings/settings-service';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
+import {IdaiField3DDocumentDatastore} from '../datastore/idai-field-3d-document-datastore';
 
 const fs = require('fs');
 const path = require('path');
@@ -16,7 +17,8 @@ const path = require('path');
 export class Store3D {
 
     constructor(private settingsService: SettingsService,
-                private pouchdbManager: PouchdbManager) {}
+                private pouchdbManager: PouchdbManager,
+                private datastore: IdaiField3DDocumentDatastore) {}
 
 
     public async save(file: File, document: IdaiField3DDocument): Promise<any> {
@@ -44,6 +46,9 @@ export class Store3D {
             blob,
             'image/jpeg'
         );
+
+        // Update datastore cache
+        await this.datastore.get(document.resource.id as string, { skip_cache: true });
     }
 
 

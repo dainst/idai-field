@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as THREE from 'three';
 import {MeshLoadingProgress} from '../../components/core-3d/mesh-loading-progress';
-import {addOffset} from '../../util/util-3d';
 
 
 @Injectable()
@@ -91,7 +90,7 @@ export class MeshEditingUtility {
 
     private static applyOffset(mesh: THREE.Mesh, offset: THREE.Vector3) {
 
-        const position: THREE.Vector3 = addOffset(mesh.position, offset);
+        const position: THREE.Vector3 = mesh.position.clone().add(offset);
         mesh.position.set(position.x, position.y, position.z);
     }
 

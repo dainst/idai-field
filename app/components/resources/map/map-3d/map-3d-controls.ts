@@ -4,7 +4,7 @@ import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Map3DControlState} from './map-3d-control-state';
 import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
 import {IntersectionHelper} from '../../../../core/3d/intersection-helper';
-import {addOffset, getPointVector, has3DLineGeometry, has3DPointGeometry,
+import {getPointVector, has3DLineGeometry, has3DPointGeometry,
     has3DPolygonGeometry} from '../../../../util/util-3d';
 
 
@@ -119,8 +119,8 @@ export class Map3DControls {
 
         if (!mesh) return;
 
-        const position: THREE.Vector3
-            = addOffset(mesh.geometry.boundingSphere.center, mesh.getWorldPosition());
+        const position: THREE.Vector3 = mesh.geometry.boundingSphere.center.clone()
+            .add(mesh.getWorldPosition());
         const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
 
         camera.position.set(

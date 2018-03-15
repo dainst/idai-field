@@ -3,7 +3,7 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {MeshGeometry} from './mesh-geometry';
 import {DepthMap} from '../../../../../core/3d/depth-map';
-import {getPointVector, subtractOffset} from '../../../../../util/util-3d';
+import {getPointVector} from '../../../../../util/util-3d';
 
 
 /**
@@ -103,7 +103,7 @@ export class PolygonBuilder {
 
         return PolygonBuilder
             .getPointVectors((document.resource.geometry as IdaiFieldGeometry).coordinates)
-            .map(point => subtractOffset(point, position));
+            .map(point => point.sub(position));
     }
 
 

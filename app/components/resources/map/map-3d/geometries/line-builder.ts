@@ -4,7 +4,7 @@ import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Viewer3D} from '../../../../../core/3d/viewer-3d';
 import {MeshGeometry} from './mesh-geometry';
 import {DepthMap} from '../../../../../core/3d/depth-map';
-import {getPointVector, subtractOffset} from '../../../../../util/util-3d';
+import {getPointVector} from '../../../../../util/util-3d';
 
 const {MeshLine, MeshLineMaterial} = require('three.meshline');
 
@@ -39,7 +39,7 @@ export class LineBuilder {
         const geometry: THREE.Geometry = new THREE.Geometry();
 
         coordinates.forEach(point => {
-            geometry.vertices.push(subtractOffset(getPointVector(point), position));
+            geometry.vertices.push(getPointVector(point).sub(position));
         });
 
         geometry.computeLineDistances();

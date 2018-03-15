@@ -3,7 +3,6 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Map3DComponent} from '../map-3d.component';
 import {MeshGeometryManager} from './mesh-geometry-manager';
-import {addOffset} from '../../../../../util/util-3d';
 
 
 @Component({
@@ -40,7 +39,7 @@ export class MeshGeometriesComponent implements OnChanges {
         const mesh: THREE.Mesh|undefined = this.meshGeometryManager.getMesh(this.hoverDocument);
         if (!mesh) return;
 
-        const centerPosition: THREE.Vector3 = addOffset(mesh.geometry.boundingSphere.center, mesh.position);
+        const centerPosition: THREE.Vector3 = mesh.geometry.boundingSphere.center.clone().add(mesh.position);
 
         return this.map3DComponent.getViewer().getCanvasCoordinates(centerPosition);
     }

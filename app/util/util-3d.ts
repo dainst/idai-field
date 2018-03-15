@@ -38,15 +38,3 @@ export const getPointVector = (coordinates: number[]): THREE.Vector3 => {
 
     return new THREE.Vector3(coordinates[0], coordinates[2], -coordinates[1]);
 };
-
-
-export const addOffset = (point: THREE.Vector3, offset: THREE.Vector3): THREE.Vector3 => {
-
-    return new THREE.Vector3(point.x + offset.x, point.y + offset.y, point.z + offset.z);
-};
-
-
-export const subtractOffset = (point: THREE.Vector3, offset: THREE.Vector3): THREE.Vector3 => {
-
-    return new THREE.Vector3(point.x - offset.x, point.y - offset.y, point.z - offset.z);
-};

@@ -5,7 +5,7 @@ import {AppState} from '../../../../../../core/settings/app-state';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../../../core/datastore/idai-field-image-document-read-datastore';
 import {IdaiFieldImageDocument} from '../../../../../../core/model/idai-field-image-document';
 import {IdaiFieldGeoreference} from '../../../../../../core/model/idai-field-georeference';
-import {getPointVector, subtractOffset} from '../../../../../../util/util-3d';
+import {getPointVector} from '../../../../../../util/util-3d';
 
 
 @Injectable()
@@ -91,10 +91,10 @@ export class Layer2DMeshBuilder {
 
         const vertices: Array<THREE.Vector3> = [];
 
-        vertices.push(subtractOffset(Layer2DMeshBuilder.getVector(georeference.bottomLeftCoordinates), offset));
-        vertices.push(subtractOffset(Layer2DMeshBuilder.getVector(georeference.topLeftCoordinates), offset));
-        vertices.push(subtractOffset(Layer2DMeshBuilder.getVector(georeference.topRightCoordinates), offset));
-        vertices.push(subtractOffset(Layer2DMeshBuilder.getBottomRightVector(georeference), offset));
+        vertices.push(Layer2DMeshBuilder.getVector(georeference.bottomLeftCoordinates).sub(offset));
+        vertices.push(Layer2DMeshBuilder.getVector(georeference.topLeftCoordinates).sub(offset));
+        vertices.push(Layer2DMeshBuilder.getVector(georeference.topRightCoordinates).sub(offset));
+        vertices.push(Layer2DMeshBuilder.getBottomRightVector(georeference).sub(offset));
 
         return vertices;
     }

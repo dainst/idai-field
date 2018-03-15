@@ -119,8 +119,7 @@ export class Map3DControls {
 
         if (!mesh) return;
 
-        const position: THREE.Vector3 = mesh.geometry.boundingSphere.center.clone()
-            .add(mesh.getWorldPosition());
+        const position: THREE.Vector3 = mesh.getWorldPosition();
         const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
 
         camera.position.set(

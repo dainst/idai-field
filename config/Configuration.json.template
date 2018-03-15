@@ -10783,6 +10783,11 @@
                     "visible": true
                 },
                 {
+                    "name": "georeferenced",
+                    "label": "Georeferenziert",
+                    "inputType": "boolean"
+                },
+                {
                     "editable": false,
                     "visible": false,
                     "name": "originalFilename"

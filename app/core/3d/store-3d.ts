@@ -59,7 +59,7 @@ export class Store3D {
         return new Promise<any>((resolve, reject) => {
 
             const readStream = fs.createReadStream(sourcePath);
-            readStream.on('error', () => reject([M.UPLOAD_ERROR_FILEREADER]));
+            readStream.on('error', () => reject([M.UPLOAD_ERROR_FILEREADER, sourcePath]));
 
             const writeStream = fs.createWriteStream(targetPath);
             writeStream.on('error', () => reject([M.MODEL3DSTORE_ERROR_WRITE]));

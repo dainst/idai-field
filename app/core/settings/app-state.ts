@@ -9,6 +9,7 @@ export class AppState {
 
     private currentUser: string;
     private imagestorePath: string;
+    private model3DStorePath: string;
 
 
     public getCurrentUser(): string {
@@ -32,5 +33,17 @@ export class AppState {
     public setImagestorePath(imagestorePath: string) {
 
         this.imagestorePath = imagestorePath;
+    }
+
+
+    public getModel3DStorePath(): string {
+
+        return this.model3DStorePath;
+    }
+
+
+    public setModel3DStorePath(model3DStorePath: string) {
+
+        this.model3DStorePath = model3DStorePath;
     }
 }

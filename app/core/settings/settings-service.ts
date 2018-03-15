@@ -92,6 +92,7 @@ export class SettingsService {
 
         this.appState.setCurrentUser(settings.username);
         this.appState.setImagestorePath(settings.imagestorePath);
+        this.appState.setModel3DStorePath(settings.model3DStorePath);
 
         return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject() as any)
             .catch((errWithParams: any) => {

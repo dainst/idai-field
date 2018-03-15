@@ -212,8 +212,18 @@ export class Viewer3D {
     private static createScene(): THREE.Scene {
 
         const scene: THREE.Scene = new THREE.Scene();
-        scene.add(new THREE.HemisphereLight(0xf9edd9, 0x000000, 1));
+        this.addLights(scene);
 
         return scene;
+    }
+
+
+    private static addLights(scene: THREE.Scene) {
+
+        scene.add(new THREE.HemisphereLight(0xffffff, 0x000000, 0.8));
+
+        const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 0.2);
+        directionalLight.position.set(0, 1, 1);
+        scene.add(directionalLight);
     }
 }

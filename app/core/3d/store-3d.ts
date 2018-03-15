@@ -6,6 +6,7 @@ import {SettingsService} from '../settings/settings-service';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 
 const fs = require('fs');
+const path = require('path');
 
 
 @Injectable()
@@ -133,7 +134,7 @@ export class Store3D {
 
     private static getImageFilePath(imageFileName: string, modelFile: File): string {
 
-        const filePath: string[] = modelFile.path.split('/');
+        const filePath: string[] = modelFile.path.split(path.sep);
         filePath.pop();
 
         return filePath.join('/') + '/' + imageFileName;

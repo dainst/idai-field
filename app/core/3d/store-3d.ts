@@ -27,7 +27,7 @@ export class Store3D {
             return Promise.reject([M.MODEL3DSTORE_ERROR_WRITE]);
         }
 
-        await this.copyModelFile(file.path, directoryPath + '/' + document.resource.id);
+        await this.copyFile(file.path, directoryPath + '/' + document.resource.id);
         await this.copyImageFiles(file, directoryPath);
     }
 
@@ -54,7 +54,7 @@ export class Store3D {
     }
 
 
-    private copyModelFile(sourcePath: string, targetPath: string): Promise<any> {
+    private copyFile(sourcePath: string, targetPath: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
@@ -73,7 +73,7 @@ export class Store3D {
     private async copyImageFiles(file: File, directoryPath: string): Promise<any> {
 
         for (let imageFileName of Store3D.getImageFileNames(file)) {
-            await this.copyModelFile(Store3D.getImageFilePath(imageFileName, file),
+            await this.copyFile(Store3D.getImageFilePath(imageFileName, file),
                 directoryPath + '/' + imageFileName);
         }
     }

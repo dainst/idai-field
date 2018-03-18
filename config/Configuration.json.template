@@ -29,7 +29,8 @@
                 "Sample",
                 "Profile",
                 "Inscription",
-                "Wall_surface"
+                "Wall_surface",
+                "Burial"
             ],
             "editable": false,
             "label": "Gehört zu",
@@ -39,18 +40,6 @@
                 "Survey",
                 "Building",
                 "Place"
-            ],
-            "visible": true
-        },
-        {
-            "domain": [
-                "Burial"
-            ],
-            "editable": false,
-            "label": "Gehört zu",
-            "name": "isRecordedIn",
-            "range": [
-                "Grave"
             ],
             "visible": true
         },
@@ -104,7 +93,8 @@
                 "Architecture",
                 "SurveyUnit",
                 "Planum",
-                "Room"
+                "Room",
+                "Burial"
             ],
             "sameMainTypeResource": true
         },
@@ -119,7 +109,8 @@
                 "Architecture",
                 "SurveyUnit",
                 "Planum",
-                "Room"
+                "Room",
+                "Burial"
             ],
             "inverse": "liesWithin",
             "label": "Enthält",
@@ -264,9 +255,6 @@
             ],
             "sameMainTypeResource": true
         },
-
-
-
         {
             "domain": [
                 "Find",
@@ -409,15 +397,15 @@
                     "visible": false
                 },
                 {
-                    "description": "Beschreibung der Lage der Ausgrabung im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'",
+                    "description": "Beschreibung der räumlichen Lage der Ausgrabung/der Stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'",
                     "descriptions": {
-                        "de": "Beschreibung der Lage der Ausgrabung im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
+                        "de": "Beschreibung der räumlichen Lage der Ausgrabung/der Stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
                     },
                     "editable": true,
                     "inputType": "input",
-                    "label": "Lage im Raum",
+                    "label": "Lage",
                     "labels": {
-                        "de": "Lage im Raum",
+                        "de": "Lage",
                         "en": "Spatial Location"
                     },
                     "name": "hasSpatialLocation",
@@ -1012,6 +1000,22 @@
                         "it": "Responsabile"
                     },
                     "name": "hasProcessor",
+                    "visible": true
+                },
+                {
+                    "description": "Beschreibung des Projekts.",
+                    "descriptions": {
+                        "de": "Beschreibung des Projekts."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Kurzbeschreibung",
+                    "labels": {
+                        "de": "Kurzbeschreibung",
+                        "en": "short description",
+                        "it": "Descrizione"
+                    },
+                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -1837,6 +1841,142 @@
             "fields": [
                 {
                     "editable": true,
+                    "inputType": "input",
+                    "label": "Altersbestimmung",
+                    "labels": {
+                        "de": "Altersbestimmung"
+                    },
+                    "name": "hasAgeDetermination",
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Grundlage der Altersbestimmung",
+                    "labels": {
+                        "de": "Grundlage der Altersbestimmung"
+                    },
+                    "name": "hasAgeDeterminationBasis",
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Körperhöhe und Robustizität",
+                    "labels": {
+                        "de": "Körperhöhe und Robustizität"
+                    },
+                    "name": "hasBodyHeightAndRobustness",
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Behandlung der Toten",
+                    "labels": {
+                        "de": "Behandlung der Toten"
+                    },
+                    "name": "hasBurialRite",
+                    "visible": true
+                },
+                {
+                    "description": "Kommentar zum Erhaltungszustand",
+                    "descriptions": {
+                        "de": "Kommentar zum Erhaltungszustand"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Beschreibung des Erhaltungszustandes",
+                    "labels": {
+                        "de": "Beschreibung des Erhaltungszustandes"
+                    },
+                    "name": "hasConditionComment",
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Rekonstruktion der Ernährung",
+                    "labels": {
+                        "de": "Rekonstruktion der Ernährung"
+                    },
+                    "name": "hasDietReconstruction",
+                    "visible": true
+                },
+                {
+                    "description": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002).",
+                    "descriptions": {
+                        "de": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Fundort",
+                    "labels": {
+                        "de": "Fundort"
+                    },
+                    "name": "hasFindingPlace",
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Paläopathologischer Befund",
+                    "labels": {
+                        "de": "Paläopathologischer Befund"
+                    },
+                    "name": "hasPalaeopathologicalReport",
+                    "visible": true
+                },
+                {
+                    "description": "Z.B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)",
+                    "descriptions": {
+                        "de": "Z.B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Datierung (Funde)",
+                    "labels": {
+                        "de": "Datierung (Funde)"
+                    },
+                    "name": "hasPublicationDatingFinds",
+                    "visible": true
+                },
+                {
+                    "description": "z.B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28",
+                    "descriptions": {
+                        "de": "z.B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Datierung (Stratigraphie)",
+                    "labels": {
+                        "de": "Datierung (Stratigraphie)"
+                    },
+                    "name": "hasPublicationDatingStratigraphy",
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Geschlechtsbestimmung",
+                    "labels": {
+                        "de": "Geschlechtsbestimmung"
+                    },
+                    "name": "hasSexDetermination",
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Grundlage der Geschlechtsbestimmung",
+                    "labels": {
+                        "de": "Grundlage der Geschlechtsbestimmung"
+                    },
+                    "name": "hasSexDeterminationBasis",
+                    "visible": true
+                },
+                {
+                    "editable": true,
                     "inputType": "dropdown",
                     "label": "Bestattungsart - Anzahl",
                     "labels": {
@@ -1868,6 +2008,28 @@
                         "Primäre Bestattung",
                         "Sekundäre Bestattung",
                         "Unsicher bzw. unbestimmbar"
+                    ],
+                    "visible": true
+                },
+                {
+                    "description": "Welche Form(en) der Dokumentation kamen zum Einsatz?",
+                    "descriptions": {
+                        "de": "Welche Form(en) der Dokumentation kamen zum Einsatz?"
+                    },
+                    "editable": true,
+                    "inputType": "checkboxes",
+                    "label": "Dokumentation",
+                    "labels": {
+                        "de": "Dokumentation"
+                    },
+                    "name": "hasBurialDocumentation",
+                    "valuelist": [
+                        "Endoskopie",
+                        "Foto",
+                        "Histologie",
+                        "LM",
+                        "REM",
+                        "Röntgen"
                     ],
                     "visible": true
                 },
@@ -1984,6 +2146,20 @@
                     "visible": true
                 },
                 {
+                    "description": "Kommentar zum Erhaltungszustand",
+                    "descriptions": {
+                        "de": "Kommentar zum Erhaltungszustand"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Beschreibung des Erhaltungszustandes",
+                    "labels": {
+                        "de": "Beschreibung des Erhaltungszustandes"
+                    },
+                    "name": "hasConditionComment",
+                    "visible": true
+                },
+                {
                     "description": "Abhandlung über die Grabungsprojekte auf der Fundstelle.",
                     "descriptions": {
                         "de": "Abhandlung über die Grabungsprojekte auf der Fundstelle."
@@ -2026,6 +2202,22 @@
                         "en": "Restauration"
                     },
                     "name": "hasRestauration",
+                    "visible": true
+                },
+                {
+                    "description": "Beschreibung des Projekts.",
+                    "descriptions": {
+                        "de": "Beschreibung des Projekts."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Kurzbeschreibung",
+                    "labels": {
+                        "de": "Kurzbeschreibung",
+                        "en": "short description",
+                        "it": "Descrizione"
+                    },
+                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -2508,6 +2700,20 @@
         {
             "color": "#707070",
             "fields": [
+                {
+                    "description": "Kommentar zum Erhaltungszustand",
+                    "descriptions": {
+                        "de": "Kommentar zum Erhaltungszustand"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Beschreibung des Erhaltungszustandes",
+                    "labels": {
+                        "de": "Beschreibung des Erhaltungszustandes"
+                    },
+                    "name": "hasConditionComment",
+                    "visible": true
+                },
                 {
                     "description": "Nähere beschreibung zur Konstruktion der Fundamente/Ecken/Lagen o.Ä.",
                     "descriptions": {
@@ -3056,6 +3262,22 @@
                     "visible": true
                 },
                 {
+                    "description": "Beschreibung des Projekts.",
+                    "descriptions": {
+                        "de": "Beschreibung des Projekts."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Kurzbeschreibung",
+                    "labels": {
+                        "de": "Kurzbeschreibung",
+                        "en": "short description",
+                        "it": "Descrizione"
+                    },
+                    "name": "shortDescription",
+                    "visible": true
+                },
+                {
                     "editable": true,
                     "inputType": "input",
                     "label": "Kampagne",
@@ -3460,10 +3682,10 @@
                         "de": "Vergleich mit ähnlichen Befunden/Objekten/Inschriften etc. mit Angabe einer Referenz."
                     },
                     "editable": true,
-                    "inputType": "input",
-                    "label": "Vergleich",
+                    "inputType": "text",
+                    "label": "Vergleich(e)",
                     "labels": {
-                        "de": "Vergleich",
+                        "de": "Vergleich(e)",
                         "it": "Confronti"
                     },
                     "name": "hasComparison",
@@ -3543,6 +3765,22 @@
                         "it": "Responsabile"
                     },
                     "name": "hasProcessor",
+                    "visible": true
+                },
+                {
+                    "description": "Beschreibung des Projekts.",
+                    "descriptions": {
+                        "de": "Beschreibung des Projekts."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Kurzbeschreibung",
+                    "labels": {
+                        "de": "Kurzbeschreibung",
+                        "en": "short description",
+                        "it": "Descrizione"
+                    },
+                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -3816,6 +4054,20 @@
             "color": "#6600cc",
             "fields": [
                 {
+                    "description": "Kommentar zum Erhaltungszustand",
+                    "descriptions": {
+                        "de": "Kommentar zum Erhaltungszustand"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Beschreibung des Erhaltungszustandes",
+                    "labels": {
+                        "de": "Beschreibung des Erhaltungszustandes"
+                    },
+                    "name": "hasConditionComment",
+                    "visible": true
+                },
+                {
                     "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)",
                     "descriptions": {
                         "de": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
@@ -3991,13 +4243,27 @@
                         "de": "Vergleich mit ähnlichen Befunden/Objekten/Inschriften etc. mit Angabe einer Referenz."
                     },
                     "editable": true,
-                    "inputType": "input",
-                    "label": "Vergleich",
+                    "inputType": "text",
+                    "label": "Vergleich(e)",
                     "labels": {
-                        "de": "Vergleich",
+                        "de": "Vergleich(e)",
                         "it": "Confronti"
                     },
                     "name": "hasComparison",
+                    "visible": true
+                },
+                {
+                    "description": "Kommentar zum Erhaltungszustand",
+                    "descriptions": {
+                        "de": "Kommentar zum Erhaltungszustand"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Beschreibung des Erhaltungszustandes",
+                    "labels": {
+                        "de": "Beschreibung des Erhaltungszustandes"
+                    },
+                    "name": "hasConditionComment",
                     "visible": true
                 },
                 {
@@ -4049,6 +4315,22 @@
                         "it": "Responsabile"
                     },
                     "name": "hasProcessor",
+                    "visible": true
+                },
+                {
+                    "description": "Beschreibung des Projekts.",
+                    "descriptions": {
+                        "de": "Beschreibung des Projekts."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Kurzbeschreibung",
+                    "labels": {
+                        "de": "Kurzbeschreibung",
+                        "en": "short description",
+                        "it": "Descrizione"
+                    },
+                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -4345,6 +4627,22 @@
                     "visible": true
                 },
                 {
+                    "description": "Beschreibung des Projekts.",
+                    "descriptions": {
+                        "de": "Beschreibung des Projekts."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Kurzbeschreibung",
+                    "labels": {
+                        "de": "Kurzbeschreibung",
+                        "en": "short description",
+                        "it": "Descrizione"
+                    },
+                    "name": "shortDescription",
+                    "visible": true
+                },
+                {
                     "editable": true,
                     "inputType": "input",
                     "label": "Kampagne",
@@ -4545,6 +4843,22 @@
                         "it": "Responsabile"
                     },
                     "name": "hasProcessor",
+                    "visible": true
+                },
+                {
+                    "description": "Beschreibung des Projekts.",
+                    "descriptions": {
+                        "de": "Beschreibung des Projekts."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Kurzbeschreibung",
+                    "labels": {
+                        "de": "Kurzbeschreibung",
+                        "en": "short description",
+                        "it": "Descrizione"
+                    },
+                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -5643,6 +5957,87 @@
             "color": "#339900",
             "fields": [
                 {
+                    "editable": true,
+                    "inputType": "text",
+                    "label": "Bibliographie",
+                    "labels": {
+                        "de": "Bibliographie"
+                    },
+                    "name": "hasBibliography",
+                    "visible": true
+                },
+                {
+                    "description": "Kommentar zum Erhaltungszustand",
+                    "descriptions": {
+                        "de": "Kommentar zum Erhaltungszustand"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Beschreibung des Erhaltungszustandes",
+                    "labels": {
+                        "de": "Beschreibung des Erhaltungszustandes"
+                    },
+                    "name": "hasConditionComment",
+                    "visible": true
+                },
+                {
+                    "description": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002).",
+                    "descriptions": {
+                        "de": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Fundort",
+                    "labels": {
+                        "de": "Fundort"
+                    },
+                    "name": "hasFindingPlace",
+                    "visible": true
+                },
+                {
+                    "description": "Z.B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)",
+                    "descriptions": {
+                        "de": "Z.B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Datierung (Funde)",
+                    "labels": {
+                        "de": "Datierung (Funde)"
+                    },
+                    "name": "hasPublicationDatingFinds",
+                    "visible": true
+                },
+                {
+                    "description": "z.B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28",
+                    "descriptions": {
+                        "de": "z.B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Datierung (Stratigraphie)",
+                    "labels": {
+                        "de": "Datierung (Stratigraphie)"
+                    },
+                    "name": "hasPublicationDatingStratigraphy",
+                    "visible": true
+                },
+                {
+                    "description": "Beschreibung der räumlichen Lage der Ausgrabung/der Stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'",
+                    "descriptions": {
+                        "de": "Beschreibung der räumlichen Lage der Ausgrabung/der Stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Lage",
+                    "labels": {
+                        "de": "Lage",
+                        "en": "Spatial Location"
+                    },
+                    "name": "hasSpatialLocation",
+                    "visible": true
+                },
+                {
                     "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)",
                     "descriptions": {
                         "de": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
@@ -5724,13 +6119,15 @@
                         "Dolmen",
                         "Erdgrab",
                         "Felsgrab",
-                        "Felsnieschengrab",
+                        "Felsnischengrab",
                         "Flachgrab",
                         "Ganggrab",
+                        "Gefäßbestattung",
                         "Gemauertes Grab",
                         "Glockengrab",
                         "Gruft",
                         "Hügelgrab",
+                        "Kistengrab",
                         "Mausoleum",
                         "Megalithgrab",
                         "Schachthöhlengrab",
@@ -5738,6 +6135,25 @@
                         "Steinplattengrab",
                         "Urnengrab",
                         "Ziegelplattengrab"
+                    ],
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "checkboxes",
+                    "label": "Grabtyp speziell",
+                    "labels": {
+                        "de": "Grabtyp speziell"
+                    },
+                    "name": "hasGraveTypeSpecific",
+                    "valuelist": [
+                        "Amphorenbestattung",
+                        "In Dinos",
+                        "In Krug",
+                        "a cappuccina",
+                        "bruchsteingemauertes Grab",
+                        "quadergemauertes Grab",
+                        "ziegelgemauertes Grab"
                     ],
                     "visible": true
                 },
@@ -5776,6 +6192,21 @@
                         "Toniger Lehm",
                         "Toniger Sand",
                         "Toniger Schluff"
+                    ],
+                    "visible": true
+                },
+                {
+                    "editable": true,
+                    "inputType": "checkboxes",
+                    "label": "Grabbau",
+                    "labels": {
+                        "de": "Grabbau"
+                    },
+                    "name": "hasTombBuilding",
+                    "valuelist": [
+                        "Bruchsteingemauert",
+                        "Quadergemauert",
+                        "Ziegelgemauert"
                     ],
                     "visible": true
                 }
@@ -5992,6 +6423,20 @@
                     "visible": true
                 },
                 {
+                    "description": "Kommentar zum Erhaltungszustand",
+                    "descriptions": {
+                        "de": "Kommentar zum Erhaltungszustand"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Beschreibung des Erhaltungszustandes",
+                    "labels": {
+                        "de": "Beschreibung des Erhaltungszustandes"
+                    },
+                    "name": "hasConditionComment",
+                    "visible": true
+                },
+                {
                     "description": "Freies Beschreibungsfeld",
                     "descriptions": {
                         "de": "Freies Beschreibungsfeld"
@@ -6020,6 +6465,22 @@
                         "it": "Responsabile"
                     },
                     "name": "hasProcessor",
+                    "visible": true
+                },
+                {
+                    "description": "Beschreibung des Projekts.",
+                    "descriptions": {
+                        "de": "Beschreibung des Projekts."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Kurzbeschreibung",
+                    "labels": {
+                        "de": "Kurzbeschreibung",
+                        "en": "short description",
+                        "it": "Descrizione"
+                    },
+                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -6305,6 +6766,22 @@
                         "it": "Responsabile"
                     },
                     "name": "hasProcessor",
+                    "visible": true
+                },
+                {
+                    "description": "Beschreibung des Projekts.",
+                    "descriptions": {
+                        "de": "Beschreibung des Projekts."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Kurzbeschreibung",
+                    "labels": {
+                        "de": "Kurzbeschreibung",
+                        "en": "short description",
+                        "it": "Descrizione"
+                    },
+                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -6868,6 +7345,20 @@
                     "visible": true
                 },
                 {
+                    "description": "Kommentar zum Erhaltungszustand",
+                    "descriptions": {
+                        "de": "Kommentar zum Erhaltungszustand"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Beschreibung des Erhaltungszustandes",
+                    "labels": {
+                        "de": "Beschreibung des Erhaltungszustandes"
+                    },
+                    "name": "hasConditionComment",
+                    "visible": true
+                },
+                {
                     "description": "Nähere beschreibung zur Konstruktion der Fundamente/Ecken/Lagen o.Ä.",
                     "descriptions": {
                         "de": "Nähere beschreibung zur Konstruktion der Fundamente/Ecken/Lagen o.Ä."
@@ -6986,6 +7477,22 @@
                         "en": "wall construction technique"
                     },
                     "name": "hasWallConstructionTechnique",
+                    "visible": true
+                },
+                {
+                    "description": "Beschreibung des Projekts.",
+                    "descriptions": {
+                        "de": "Beschreibung des Projekts."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Kurzbeschreibung",
+                    "labels": {
+                        "de": "Kurzbeschreibung",
+                        "en": "short description",
+                        "it": "Descrizione"
+                    },
+                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -8831,13 +9338,27 @@
                         "de": "Vergleich mit ähnlichen Befunden/Objekten/Inschriften etc. mit Angabe einer Referenz."
                     },
                     "editable": true,
-                    "inputType": "input",
-                    "label": "Vergleich",
+                    "inputType": "text",
+                    "label": "Vergleich(e)",
                     "labels": {
-                        "de": "Vergleich",
+                        "de": "Vergleich(e)",
                         "it": "Confronti"
                     },
                     "name": "hasComparison",
+                    "visible": true
+                },
+                {
+                    "description": "Kommentar zum Erhaltungszustand",
+                    "descriptions": {
+                        "de": "Kommentar zum Erhaltungszustand"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Beschreibung des Erhaltungszustandes",
+                    "labels": {
+                        "de": "Beschreibung des Erhaltungszustandes"
+                    },
+                    "name": "hasConditionComment",
                     "visible": true
                 },
                 {
@@ -8903,6 +9424,20 @@
                     "visible": true
                 },
                 {
+                    "description": "Ausführliche Beschreibung zur Publikation",
+                    "descriptions": {
+                        "de": "Ausführliche Beschreibung zur Publikation"
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Material",
+                    "labels": {
+                        "de": "Material"
+                    },
+                    "name": "hasPublicationMaterialSummary",
+                    "visible": true
+                },
+                {
                     "description": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?",
                     "descriptions": {
                         "de": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?"
@@ -8947,6 +9482,22 @@
                         "it": "Peso (complessivo)"
                     },
                     "name": "hasWeight",
+                    "visible": true
+                },
+                {
+                    "description": "Beschreibung des Projekts.",
+                    "descriptions": {
+                        "de": "Beschreibung des Projekts."
+                    },
+                    "editable": true,
+                    "inputType": "input",
+                    "label": "Kurzbeschreibung",
+                    "labels": {
+                        "de": "Kurzbeschreibung",
+                        "en": "short description",
+                        "it": "Descrizione"
+                    },
+                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -9256,6 +9807,8 @@
                     "valuelist": [
                         "Landesamt",
                         "Museum",
+                        "Museum Bergama",
+                        "Pergamon Depot",
                         "Privatbesitz",
                         "Regionalverwaltung",
                         "Restaurierungswerkstatt",

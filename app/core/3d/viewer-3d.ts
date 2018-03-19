@@ -18,7 +18,11 @@ export class Viewer3D {
     private resized: boolean = false;
     private notifyForResize: Function;
 
-    private cameraAnimation: { targetQuaternion: THREE.Quaternion, progress: number }|undefined;
+    private cameraAnimation: {
+        targetPosition: THREE.Vector3,
+        targetQuaternion: THREE.Quaternion,
+        progress: number
+    }|undefined;
 
 
     constructor(private containerElement: HTMLElement, createDepthMap: boolean = false) {
@@ -94,11 +98,15 @@ export class Viewer3D {
     }
 
 
-    public startCameraAnimation(targetQuarternion: THREE.Quaternion) {
+    public startCameraAnimation(targetPosition: THREE.Vector3, targetQuaternion: THREE.Quaternion) {
 
         if (this.cameraAnimation) return;
 
-        this.cameraAnimation = { targetQuaternion: targetQuarternion, progress: 0 };
+        this.cameraAnimation = {
+            targetPosition: targetPosition,
+            targetQuaternion: targetQuaternion,
+            progress: 0
+        };
 
         new TWEEN.Tween(this.cameraAnimation)
             .to({ progress: 1 }, 300)
@@ -182,6 +190,8 @@ export class Viewer3D {
         if (!this.cameraAnimation) return;
 
         TWEEN.update();
+
+        this.camera.position.lerp(this.cameraAnimation.targetPosition, this.cameraAnimation.progress);
         this.camera.quaternion.slerp(this.cameraAnimation.targetQuaternion, this.cameraAnimation.progress);
 
         if (this.cameraAnimation.progress == 1) this.cameraAnimation = undefined;

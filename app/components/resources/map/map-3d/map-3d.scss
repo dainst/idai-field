@@ -26,9 +26,15 @@
     height: 100%;
   }
 
-  mesh-loading-progress-bar {
+  zoom-buttons {
     position: absolute;
     top: 30px;
     left: 30px;
+  }
+
+  mesh-loading-progress-bar {
+    position: absolute;
+    top: 30px;
+    left: 60px;
   }
 }

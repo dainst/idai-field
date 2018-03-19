@@ -1,0 +1,15 @@
+/*
+ * @author Thomas Kleinke
+ */
+
+.zoom-buttons {
+  .btn {
+    padding: 0 10px;
+    font-size: 22px;
+  }
+
+  .btn:focus,
+  .btn:active {
+    outline: none;
+  }
+}

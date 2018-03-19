@@ -25,6 +25,7 @@ $roboto-font-path: '../fonts/';
 @import 'components/imageoverview/image-overview';
 @import 'upload/upload';
 @import 'components/core-3d/mesh-loading-progress-bar';
+@import 'components/core-3d/zoom-buttons';
 
 html {
   position: relative;

@@ -13,6 +13,8 @@ export const CAMERA_DIRECTION_WEST: number = 1;
 export const CAMERA_DIRECTION_SOUTH: number = 2;
 export const CAMERA_DIRECTION_EAST: number = 3;
 
+const BUTTON_ZOOM_VALUE: number = 3.5;
+
 
 /**
  * @author Thomas Kleinke
@@ -98,6 +100,18 @@ export class Map3DControls {
     }
 
 
+    public zoomIn() {
+
+        this.zoomSmoothly(-BUTTON_ZOOM_VALUE);
+    }
+
+
+    public zoomOut() {
+
+        this.zoomSmoothly(BUTTON_ZOOM_VALUE);
+    }
+
+
     public setSelectedDocument(document: IdaiFieldDocument|undefined) {
 
         if (document == this.state.selectedDocument) return;
@@ -133,7 +147,7 @@ export class Map3DControls {
 
     public rotateCamera(clockwise: boolean) {
 
-        if (!this.isCameraRotationAllowed()) return;
+        if (!this.isCameraAnimationAllowed()) return;
 
         if (clockwise) {
             this.cameraDirection = this.cameraDirection == 3 ? 0 : this.cameraDirection += 1;
@@ -149,11 +163,11 @@ export class Map3DControls {
             clonedCamera.rotateZ(-Math.PI / 2);
         }
 
-        this.viewer.startCameraAnimation(clonedCamera.quaternion);
+        this.viewer.startCameraAnimation(clonedCamera.position, clonedCamera.quaternion);
     }
 
 
-    public isCameraRotationAllowed(): boolean {
+    public isCameraAnimationAllowed(): boolean {
 
         return !this.viewer.isCameraAnimationRunning();
     }
@@ -188,6 +202,17 @@ export class Map3DControls {
     private zoom(value: number) {
 
         this.viewer.getCamera().translateZ(value);
+    }
+
+
+    private zoomSmoothly(value: number) {
+
+        if (!this.isCameraAnimationAllowed()) return;
+
+        const clonedCamera: THREE.PerspectiveCamera = this.viewer.getCamera().clone();
+        clonedCamera.translateZ(value);
+
+        this.viewer.startCameraAnimation(clonedCamera.position, clonedCamera.quaternion);
     }
 
 

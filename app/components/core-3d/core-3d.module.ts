@@ -3,6 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MeshLoadingProgressBarComponent} from './mesh-loading-progress-bar.component';
 import {MeshLoadingProgress} from './mesh-loading-progress';
+import {ZoomButtonsComponent} from './zoom-buttons.component';
 
 @NgModule({
     imports: [
@@ -10,13 +11,15 @@ import {MeshLoadingProgress} from './mesh-loading-progress';
         NgbModule
     ],
     declarations: [
-        MeshLoadingProgressBarComponent
+        MeshLoadingProgressBarComponent,
+        ZoomButtonsComponent
     ],
     providers: [
         MeshLoadingProgress
     ],
     exports: [
-        MeshLoadingProgressBarComponent
+        MeshLoadingProgressBarComponent,
+        ZoomButtonsComponent
     ]
 })
 

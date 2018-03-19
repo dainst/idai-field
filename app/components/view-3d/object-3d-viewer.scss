@@ -2,8 +2,7 @@
  * @author Thomas Kleinke
  */
 
-#object-3d-viewer-container {
-  width: 100%;
+#object-3d-viewer {
   overflow: hidden;
   cursor: -webkit-grab;
 
@@ -13,6 +12,10 @@
 
   &.rotate {
     cursor: none;
+  }
+
+  .canvas-container {
+    width: 100%;
   }
 
   zoom-buttons {
@@ -26,18 +29,18 @@
     top: 20px;
     left: 65px;
   }
-}
 
-#toggle-texture-button {
-  position: absolute;
-  z-index: 1000;
-  right: 65px;
-  top: 15px;
-}
+  #toggle-texture-button {
+    position: absolute;
+    z-index: 1000;
+    right: 65px;
+    top: 15px;
+  }
 
-#focus-button {
-  position: absolute;
-  z-index: 1000;
-  right: 15px;
-  top: 15px;
+  #focus-button {
+    position: absolute;
+    z-index: 1000;
+    right: 15px;
+    top: 15px;
+  }
 }

@@ -3,18 +3,30 @@
  */
 
 #object-3d-thumbnail-creator-modal {
-  #object-3d-viewer-container {
-    height: 65vh;
-  }
+  #object-3d-viewer {
+    .canvas-container {
+      height: 65vh;
+    }
 
-  #toggle-texture-button {
-    right: 76px !important;
-    top: 25px !important;
-  }
+    #toggle-texture-button {
+      right: 76px !important;
+      top: 26px !important;
+    }
 
-  #focus-button {
-    right: 25px !important;
-    top: 25px !important;
+    #focus-button {
+      right: 26px !important;
+      top: 26px !important;
+    }
+
+    zoom-buttons {
+      top: 26px !important;
+      left: 26px !important;
+    }
+
+    mesh-loading-progress-bar {
+      top: 35px !important;
+      left: 80px !important;
+    }
   }
 }
 

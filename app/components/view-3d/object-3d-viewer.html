@@ -1,22 +1,25 @@
-<div id="object-3d-viewer-container" #container
+<div id="object-3d-viewer"
      [class.drag]="isCurrentAction('drag')"
-     [class.rotate]="isCurrentAction('rotate')"
-     (mousedown)="onMouseDown($event)"
-     (mouseup)="onMouseUp($event)"
-     (mousemove)="onMouseMove($event)"
-     (wheel)="onWheel($event)"
-     (contextmenu)="$event.preventDefault()">
+     [class.rotate]="isCurrentAction('rotate')">
+
+    <div class="canvas-container" #container
+         (mousedown)="onMouseDown($event)"
+         (mouseup)="onMouseUp($event)"
+         (mousemove)="onMouseMove($event)"
+         (wheel)="onWheel($event)"
+         (contextmenu)="$event.preventDefault()">
+    </div>
+
+    <div id="toggle-texture-button" class="btn btn-light" (click)="toggleTexture()">
+        <span *ngIf="!textured" class="mdi mdi-cube-outline"></span>
+        <span *ngIf="textured" class="mdi mdi-cube"></span>
+    </div>
+
+    <div id="focus-button" class="btn btn-light" (click)="focusMesh()">
+        <span class="mdi mdi-image-filter-center-focus"></span>
+    </div>
 
     <zoom-buttons (onZoomInClicked)="zoomIn()" (onZoomOutClicked)="zoomOut()"></zoom-buttons>
 
     <mesh-loading-progress-bar></mesh-loading-progress-bar>
-</div>
-
-<div id="toggle-texture-button" class="btn btn-light" (click)="toggleTexture()">
-    <span *ngIf="!textured" class="mdi mdi-cube-outline"></span>
-    <span *ngIf="textured" class="mdi mdi-cube"></span>
-</div>
-
-<div id="focus-button" class="btn btn-light" (click)="focusMesh()">
-    <span class="mdi mdi-image-filter-center-focus"></span>
 </div>

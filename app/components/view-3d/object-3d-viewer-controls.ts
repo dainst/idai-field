@@ -161,8 +161,8 @@ export class Object3DViewerControls {
 
     private drag(deltaX: number, deltaY: number) {
 
-        this.viewer.getCamera().translateX(deltaX / 100);
-        this.viewer.getCamera().translateY(-deltaY / 100);
+        if (deltaX != 0) this.viewer.getCamera().translateX((deltaX / 1000) * this.maxCameraDistance);
+        if (deltaY != 0) this.viewer.getCamera().translateY((-deltaY / 1000) * this.maxCameraDistance);
     }
 
 

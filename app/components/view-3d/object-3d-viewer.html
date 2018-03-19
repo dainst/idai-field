@@ -7,6 +7,8 @@
      (wheel)="onWheel($event)"
      (contextmenu)="$event.preventDefault()">
 
+    <zoom-buttons (onZoomInClicked)="zoomIn()" (onZoomOutClicked)="zoomOut()"></zoom-buttons>
+
     <mesh-loading-progress-bar></mesh-loading-progress-bar>
 </div>
 

@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import {Viewer3D} from '../../core/3d/viewer-3d';
 
 
+const BUTTON_ZOOM_VALUE: number = 3.5;
+
+
 /**
  * @author Thomas Kleinke
  */
@@ -91,6 +94,18 @@ export class Object3DViewerControls {
     }
 
 
+    public zoomIn() {
+
+        this.zoomSmoothly(-BUTTON_ZOOM_VALUE);
+    }
+
+
+    public zoomOut() {
+
+        this.zoomSmoothly(BUTTON_ZOOM_VALUE);
+    }
+
+
     public focusMesh() {
 
         const position: THREE.Vector3 = this.mesh.getWorldPosition();
@@ -175,6 +190,17 @@ export class Object3DViewerControls {
     private zoom(value: number) {
 
         this.viewer.getCamera().translateZ(value);
+    }
+
+
+    private zoomSmoothly(value: number) {
+
+        if (this.viewer.isCameraAnimationRunning() || ! this.isZoomingAllowed(value > 0)) return;
+
+        const clonedCamera: THREE.PerspectiveCamera = this.viewer.getCamera().clone();
+        clonedCamera.translateZ(value);
+
+        this.viewer.startCameraAnimation(clonedCamera.position, clonedCamera.quaternion);
     }
 
 

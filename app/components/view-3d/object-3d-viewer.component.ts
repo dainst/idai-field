@@ -38,6 +38,9 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     public onMouseMove = (event: MouseEvent) => this.controls.onMouseMove(event);
     public onWheel = (event: WheelEvent) => this.controls.onWheel(event);
 
+    public zoomIn = () => this.controls.zoomIn();
+    public zoomOut = () => this.controls.zoomOut();
+
 
     async ngOnChanges(changes: SimpleChanges) {
 

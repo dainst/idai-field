@@ -2,9 +2,6 @@ import * as THREE from 'three';
 import {Viewer3D} from '../../core/3d/viewer-3d';
 
 
-const BUTTON_ZOOM_VALUE: number = 3.5;
-
-
 /**
  * @author Thomas Kleinke
  */
@@ -18,6 +15,7 @@ export class Object3DViewerControls {
     private mesh: THREE.Mesh;
 
     private originalRotation: THREE.Quaternion;
+    private maxCameraDistance: number;
 
 
     constructor(private viewer: Viewer3D) {}
@@ -33,6 +31,10 @@ export class Object3DViewerControls {
 
         this.mesh = mesh;
         this.originalRotation = mesh.quaternion.clone();
+        this.maxCameraDistance = Object3DViewerControls.computeFocusDistance(
+            this.viewer.getCamera(),
+            this.mesh
+        ) * 2;
 
         this.focusMesh();
     }
@@ -83,9 +85,9 @@ export class Object3DViewerControls {
         if (event.ctrlKey) {
             event.preventDefault();
             event.stopImmediatePropagation();
-            zoomValue = event.wheelDelta / 500;
+            zoomValue = (event.wheelDelta / 12000) * this.maxCameraDistance
         } else {
-            zoomValue = -event.wheelDelta / 100;
+            zoomValue = (event.wheelDelta / 300) * -this.maxCameraDistance
         }
 
         if (!this.isZoomingAllowed(zoomValue > 0)) return;
@@ -96,13 +98,13 @@ export class Object3DViewerControls {
 
     public zoomIn() {
 
-        this.zoomSmoothly(-BUTTON_ZOOM_VALUE);
+        this.zoomSmoothly(-this.maxCameraDistance / 4);
     }
 
 
     public zoomOut() {
 
-        this.zoomSmoothly(BUTTON_ZOOM_VALUE);
+        this.zoomSmoothly(this.maxCameraDistance / 4);
     }
 
 
@@ -176,9 +178,8 @@ export class Object3DViewerControls {
     private isZoomingAllowed(zoomingOut: boolean): boolean {
 
         const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
-        const maxDistance: number = Object3DViewerControls.computeFocusDistance(camera, this.mesh) * 2;
 
-        if (camera.position.distanceTo(this.mesh.position) <= maxDistance) {
+        if (camera.position.distanceTo(this.mesh.position) <= this.maxCameraDistance) {
             return true;
         } else {
             return (zoomingOut && camera.position.y <= this.mesh.position.y

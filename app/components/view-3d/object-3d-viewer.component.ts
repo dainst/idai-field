@@ -1,7 +1,7 @@
 import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, SimpleChanges} from '@angular/core';
 import * as THREE from 'three';
 import {Viewer3D} from '../../core/3d/viewer-3d';
-import {Object3DViewerControls} from './object-3d-viewer-controls';
+import {Object3DViewerControls, Object3DViewerAction} from './object-3d-viewer-controls';
 import {MeshLoader} from '../../core/3d/mesh-loader';
 import {MeshEditingUtility} from '../../core/3d/mesh-editing-utility';
 import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
@@ -55,7 +55,7 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     }
 
 
-    public isCurrentAction(action: string) {
+    public isCurrentAction(action: Object3DViewerAction) {
 
         return this.controls.getCurrentAction() == action;
     }

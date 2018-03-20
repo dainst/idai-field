@@ -2,12 +2,15 @@ import * as THREE from 'three';
 import {Viewer3D} from '../../core/3d/viewer-3d';
 
 
+export type Object3DViewerAction = 'drag'|'rotate'|'none';
+
+
 /**
  * @author Thomas Kleinke
  */
 export class Object3DViewerControls {
     
-    private currentAction: string;  // drag, rotate, none
+    private currentAction: Object3DViewerAction;
 
     private lastXPosition: number;
     private lastYPosition: number;
@@ -21,7 +24,7 @@ export class Object3DViewerControls {
     constructor(private viewer: Viewer3D) {}
 
 
-    public getCurrentAction(): string {
+    public getCurrentAction(): Object3DViewerAction {
 
         return this.currentAction;
     }
@@ -97,13 +100,13 @@ export class Object3DViewerControls {
 
     public zoomIn() {
 
-        this.zoomSmoothly(-this.maxCameraDistance / 4);
+        this.zoomSmoothly(this.getAllowedZoomValue(-this.maxCameraDistance / 4));
     }
 
 
     public zoomOut() {
 
-        this.zoomSmoothly(this.maxCameraDistance / 4);
+        this.zoomSmoothly(this.getAllowedZoomValue(this.maxCameraDistance / 4));
     }
 
 
@@ -206,7 +209,7 @@ export class Object3DViewerControls {
         if (this.viewer.isCameraAnimationRunning()) return;
 
         const clonedCamera: THREE.PerspectiveCamera = this.viewer.getCamera().clone();
-        clonedCamera.translateZ(this.getAllowedZoomValue(value));
+        clonedCamera.translateZ(value);
 
         this.viewer.startCameraAnimation(clonedCamera.position, clonedCamera.quaternion);
     }

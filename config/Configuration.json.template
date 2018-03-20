@@ -257,6 +257,165 @@
         },
         {
             "domain": [
+                "Room",
+                "Wall_surface",
+                "Feature",
+                "DrillCoreLayer",
+                "Floor",
+                "Grave",
+                "Layer",
+                "Other",
+                "Architecture",
+                "Find",
+                "Brick",
+                "Bone",
+                "Coin",
+                "Glass",
+                "Metal",
+                "Mollusk",
+                "PlasterFragment",
+                "Pottery",
+                "Stone",
+                "Terracotta",
+                "Wood",
+                "Burial"
+            ],
+            "inverse": "isAfter",
+            "label": "Zeitlich vor",
+            "name": "isBefore",
+            "range": [
+                "Room",
+                "Wall_surface",
+                "Feature",
+                "DrillCoreLayer",
+                "Floor",
+                "Grave",
+                "Layer",
+                "Other",
+                "Architecture",
+                "Find",
+                "Brick",
+                "Bone",
+                "Coin",
+                "Glass",
+                "Metal",
+                "Mollusk",
+                "PlasterFragment",
+                "Pottery",
+                "Stone",
+                "Terracotta",
+                "Wood",
+                "Burial"
+            ]
+        },
+        {
+            "domain": [
+                "Room",
+                "Wall_surface",
+                "Feature",
+                "DrillCoreLayer",
+                "Floor",
+                "Grave",
+                "Layer",
+                "Other",
+                "Architecture",
+                "Find",
+                "Brick",
+                "Bone",
+                "Coin",
+                "Glass",
+                "Metal",
+                "Mollusk",
+                "PlasterFragment",
+                "Pottery",
+                "Stone",
+                "Terracotta",
+                "Wood",
+                "Burial"
+            ],
+            "inverse": "isBefore",
+            "label": "Zeitlich nach",
+            "name": "isAfter",
+            "range": [
+                "Room",
+                "Wall_surface",
+                "Feature",
+                "DrillCoreLayer",
+                "Floor",
+                "Grave",
+                "Layer",
+                "Other",
+                "Architecture",
+                "Find",
+                "Brick",
+                "Bone",
+                "Coin",
+                "Glass",
+                "Metal",
+                "Mollusk",
+                "PlasterFragment",
+                "Pottery",
+                "Stone",
+                "Terracotta",
+                "Wood",
+                "Burial"
+            ]
+        },
+        {
+            "domain": [
+                "Feature",
+                "DrillCoreLayer",
+                "Floor",
+                "Grave",
+                "Layer",
+                "Other",
+                "Architecture",
+                "Find",
+                "Brick",
+                "Bone",
+                "Coin",
+                "Glass",
+                "Metal",
+                "Mollusk",
+                "PlasterFragment",
+                "Pottery",
+                "Stone",
+                "Terracotta",
+                "Wood",
+                "Wall_surface",
+                "Room",
+                "Burial"
+            ],
+            "inverse": "isContemporaryWith",
+            "label": "Zeitgleich mit",
+            "name": "isContemporaryWith",
+            "range": [
+                "Feature",
+                "DrillCoreLayer",
+                "Floor",
+                "Grave",
+                "Layer",
+                "Other",
+                "Architecture",
+                "Find",
+                "Brick",
+                "Bone",
+                "Coin",
+                "Glass",
+                "Metal",
+                "Mollusk",
+                "PlasterFragment",
+                "Pottery",
+                "Stone",
+                "Terracotta",
+                "Wood",
+                "Wall_surface",
+                "Room",
+                "Burial"
+            ]
+        },
+        {
+            "domain": [
                 "Find",
                 "Brick",
                 "Bone",
@@ -1000,22 +1159,6 @@
                         "it": "Responsabile"
                     },
                     "name": "hasProcessor",
-                    "visible": true
-                },
-                {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -2205,22 +2348,6 @@
                     "visible": true
                 },
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "shortDescription",
-                    "visible": true
-                },
-                {
                     "description": "Angabe der architektonischen Säulenordnung.",
                     "descriptions": {
                         "de": "Angabe der architektonischen Säulenordnung.",
@@ -3262,22 +3389,6 @@
                     "visible": true
                 },
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "shortDescription",
-                    "visible": true
-                },
-                {
                     "editable": true,
                     "inputType": "input",
                     "label": "Kampagne",
@@ -3765,22 +3876,6 @@
                         "it": "Responsabile"
                     },
                     "name": "hasProcessor",
-                    "visible": true
-                },
-                {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -4318,22 +4413,6 @@
                     "visible": true
                 },
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "shortDescription",
-                    "visible": true
-                },
-                {
                     "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)",
                     "descriptions": {
                         "de": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
@@ -4627,22 +4706,6 @@
                     "visible": true
                 },
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "shortDescription",
-                    "visible": true
-                },
-                {
                     "editable": true,
                     "inputType": "input",
                     "label": "Kampagne",
@@ -4843,22 +4906,6 @@
                         "it": "Responsabile"
                     },
                     "name": "hasProcessor",
-                    "visible": true
-                },
-                {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -6468,22 +6515,6 @@
                     "visible": true
                 },
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "shortDescription",
-                    "visible": true
-                },
-                {
                     "editable": true,
                     "inputType": "input",
                     "label": "Kampagne",
@@ -6766,22 +6797,6 @@
                         "it": "Responsabile"
                     },
                     "name": "hasProcessor",
-                    "visible": true
-                },
-                {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -7477,22 +7492,6 @@
                         "en": "wall construction technique"
                     },
                     "name": "hasWallConstructionTechnique",
-                    "visible": true
-                },
-                {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "shortDescription",
                     "visible": true
                 },
                 {
@@ -9485,22 +9484,6 @@
                     "visible": true
                 },
                 {
-                    "description": "Beschreibung des Projekts.",
-                    "descriptions": {
-                        "de": "Beschreibung des Projekts."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Kurzbeschreibung",
-                    "labels": {
-                        "de": "Kurzbeschreibung",
-                        "en": "short description",
-                        "it": "Descrizione"
-                    },
-                    "name": "shortDescription",
-                    "visible": true
-                },
-                {
                     "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)",
                     "descriptions": {
                         "de": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
@@ -10386,6 +10369,26 @@
             },
             "parent": "Find",
             "type": "Metal"
+        }
+    ],
+    "views": [
+        {
+            "label": "Ausgrabung",
+            "mainType": "Trench",
+            "name": "excavation",
+            "operationSubtype": "Trench"
+        },
+        {
+            "label": "Bauaufnahme",
+            "mainType": "Building",
+            "name": "Building",
+            "operationSubtype": "Building"
+        },
+        {
+            "label": "Survey",
+            "mainType": "Survey",
+            "name": "survey",
+            "operationSubtype": "Survey"
         }
     ]
 }

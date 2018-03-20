@@ -165,8 +165,16 @@ export class Object3DViewerControls {
 
         if (!this.mesh) return;
 
-        this.mesh.rotation.x += deltaY / 100;
-        this.mesh.rotation.z += deltaX / 100;
+        this.rotateAroundWorldAxis(new THREE.Vector3(1, 0, 0), deltaY / 100);
+        this.rotateAroundWorldAxis(new THREE.Vector3(0, 0, 1), deltaX / 100);
+    }
+
+
+    private rotateAroundWorldAxis(axis: THREE.Vector3, radians: number) {
+
+        const quaternion: THREE.Quaternion = new THREE.Quaternion();
+        quaternion.setFromAxisAngle(axis, radians);
+        this.mesh.quaternion.premultiply(quaternion);
     }
 
 

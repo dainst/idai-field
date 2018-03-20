@@ -1,3 +1,6 @@
+import * as THREE from 'three';
+
+
 /**
  * @author Thomas Kleinke
  */

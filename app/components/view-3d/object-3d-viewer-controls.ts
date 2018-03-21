@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {Viewer3D} from '../../core/3d/viewer-3d';
+import {Object3DViewerCameraManager} from '../../core/3d/object-3d-viewer-camera-manager';
 
 
 export type Object3DViewerAction = 'drag'|'rotate'|'none';
@@ -18,10 +18,9 @@ export class Object3DViewerControls {
     private mesh: THREE.Mesh;
 
     private originalRotation: THREE.Quaternion;
-    private maxCameraDistance: number;
 
 
-    constructor(private viewer: Viewer3D) {}
+    constructor(private cameraManager: Object3DViewerCameraManager) {}
 
 
     public getCurrentAction(): Object3DViewerAction {
@@ -35,12 +34,9 @@ export class Object3DViewerControls {
         this.mesh = mesh;
         this.mesh.position.set(0, 0, 0);
         this.originalRotation = mesh.quaternion.clone();
-        this.maxCameraDistance = Object3DViewerControls.computeFocusDistance(
-            this.viewer.getCamera() as THREE.PerspectiveCamera,
-            this.mesh
-        ) * 2;
 
-        this.focusMesh();
+        this.cameraManager.updateMaxCameraDistance(mesh);
+        this.cameraManager.focusMesh(mesh);
     }
 
 
@@ -89,33 +85,24 @@ export class Object3DViewerControls {
         if (event.ctrlKey) {
             event.preventDefault();
             event.stopImmediatePropagation();
-            zoomValue = (event.wheelDelta / 12000) * this.maxCameraDistance
+            zoomValue = event.wheelDelta / 12000;
         } else {
-            zoomValue = (event.wheelDelta / 300) * -this.maxCameraDistance
+            zoomValue = -event.wheelDelta / 300;
         }
 
-        this.zoom(this.getAllowedZoomValue(zoomValue));
+        this.cameraManager.zoom(zoomValue);
     }
 
 
     public zoomIn() {
 
-        this.zoomSmoothly(this.getAllowedZoomValue(-this.maxCameraDistance / 4));
+        this.cameraManager.zoomSmoothly(-0.25);
     }
 
 
     public zoomOut() {
 
-        this.zoomSmoothly(this.getAllowedZoomValue(this.maxCameraDistance / 4));
-    }
-
-
-    public focusMesh() {
-
-        const camera: THREE.PerspectiveCamera = this.viewer.getCamera() as THREE.PerspectiveCamera;
-
-        camera.position.set(0, Object3DViewerControls.computeFocusDistance(camera, this.mesh), 0);
-        camera.lookAt(new THREE.Vector3(0, 0, 0));
+        this.cameraManager.zoomSmoothly(0.25);
     }
 
 
@@ -159,8 +146,7 @@ export class Object3DViewerControls {
 
     private drag(deltaX: number, deltaY: number) {
 
-        if (deltaX != 0) this.viewer.getCamera().translateX((deltaX / 1000) * this.maxCameraDistance);
-        if (deltaY != 0) this.viewer.getCamera().translateY((-deltaY / 1000) * this.maxCameraDistance);
+        this.cameraManager.drag(deltaX / 1000, -deltaY / 1000);
     }
 
 
@@ -178,49 +164,5 @@ export class Object3DViewerControls {
         const quaternion: THREE.Quaternion = new THREE.Quaternion();
         quaternion.setFromAxisAngle(axis, radians);
         this.mesh.quaternion.premultiply(quaternion);
-    }
-
-
-    private getAllowedZoomValue(zoomValue: number): number {
-
-        const camera: THREE.Camera = this.viewer.getCamera();
-        const zoomingOut: boolean = zoomValue > 0;
-
-        if (zoomingOut) {
-            return camera.position.y + zoomValue <= this.maxCameraDistance ?
-                zoomValue :
-                this.maxCameraDistance - camera.position.y;
-        } else {
-            return camera.position.y + zoomValue >= 0 ?
-                zoomValue :
-                -camera.position.y
-        }
-    }
-
-
-    private zoom(value: number) {
-
-        this.viewer.getCamera().translateZ(value);
-    }
-
-
-    private zoomSmoothly(value: number) {
-
-        if (this.viewer.isCameraAnimationRunning()) return;
-
-        const clonedCamera: THREE.PerspectiveCamera
-            = this.viewer.getCamera().clone() as THREE.PerspectiveCamera;
-        clonedCamera.translateZ(value);
-
-        this.viewer.startCameraAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
-    }
-
-
-    private static computeFocusDistance(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
-
-        const fovInRadians: number = camera.fov * (Math.PI / 180);
-        const size = mesh.geometry.boundingSphere.radius;
-
-        return Math.abs(size / Math.sin(fovInRadians / 2));
     }
 }

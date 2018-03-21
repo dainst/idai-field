@@ -6,6 +6,8 @@ import {Map3DControls} from './map-3d-controls';
 import {Map3DControlState} from './map-3d-control-state';
 import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
+import {Map3DCameraManager} from '../../../../core/3d/map-3d-camera-manager';
+import {IntersectionHelper} from '../../../../core/3d/intersection-helper';
 
 
 @Component({
@@ -32,14 +34,15 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     private viewer: Viewer3D;
     private controls: Map3DControls;
+    private cameraManager: Map3DCameraManager;
 
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
-    public select = (document: IdaiFieldDocument|undefined) => this.onSelectDocument.emit(document);
     public getViewer = () => this.viewer;
     public getControls = () => this.controls;
+    public getCameraManager = () => this.cameraManager;
 
     public onMouseDown = (event: MouseEvent) => this.setControlState(this.controls.onMouseDown(event));
     public onMouseUp = (event: MouseEvent) => this.setControlState(this.controls.onMouseUp(event));
@@ -48,6 +51,8 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     public zoomIn = () => this.controls.zoomIn();
     public zoomOut = () => this.controls.zoomOut();
+
+    public select = (document: IdaiFieldDocument|undefined) => this.onSelectDocument.emit(document);
 
     public recreateLineGeometries = () => this.meshGeometryManager.recreateLineGeometries();
 
@@ -68,9 +73,12 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     private initialize() {
 
-        this.viewer = new Viewer3D(this.container.nativeElement, true);
-        this.meshGeometryManager = new MeshGeometryManager(this.viewer, this.projectConfiguration);
-        this.controls = new Map3DControls(this.viewer, this.meshGeometryManager);
+        this.cameraManager = new Map3DCameraManager();
+        this.viewer = new Viewer3D(this.container.nativeElement, this.cameraManager, true);
+        this.meshGeometryManager = new MeshGeometryManager(this.viewer, this.cameraManager,
+            this.projectConfiguration);
+        this.controls = new Map3DControls(this.cameraManager, this.meshGeometryManager,
+            new IntersectionHelper(this.viewer, this.cameraManager));
     }
 
 

@@ -4,6 +4,7 @@ import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Viewer3D} from '../../../../../core/3d/viewer-3d';
 import {MeshGeometry} from './mesh-geometry';
 import {DepthMap} from '../../../../../core/3d/depth-map';
+import {Map3DCameraManager} from '../../../../../core/3d/map-3d-camera-manager';
 import {getPointVector} from '../../../../../util/util-3d';
 
 const {MeshLine, MeshLineMaterial} = require('three.meshline');
@@ -16,6 +17,7 @@ const {MeshLine, MeshLineMaterial} = require('three.meshline');
 export class LineBuilder {
 
     constructor(private viewer: Viewer3D,
+                private cameraManager: Map3DCameraManager,
                 private projectConfiguration: ProjectConfiguration) {}
 
 
@@ -69,7 +71,7 @@ export class LineBuilder {
 
     private createMaterial(document: IdaiFieldDocument): THREE.Material {
 
-        return this.viewer.getCameraMode() == 'perspective' ?
+        return this.cameraManager.getMode() == 'perspective' ?
             this.createMaterialForPerspectiveCameraMode(document) :
             this.createMaterialForOrthographicCameraMode(document);
     }
@@ -80,8 +82,8 @@ export class LineBuilder {
         return new MeshLineMaterial({
             resolution: new THREE.Vector2(this.viewer.getRenderer().getSize().width,
                 this.viewer.getRenderer().getSize().height),
-            near: this.viewer.getCamera().near,
-            far: this.viewer.getCamera().far,
+            near: this.cameraManager.getCamera().near,
+            far: this.cameraManager.getCamera().far,
             sizeAttenuation: false,
             lineWidth: 3,
             color: new THREE.Color(this.projectConfiguration.getColorForType(document.resource.type))

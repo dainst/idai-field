@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
-import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {Map3DControlState} from './map-3d-control-state';
 import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
 import {IntersectionHelper} from '../../../../core/3d/intersection-helper';
 import {getPointVector, has3DLineGeometry, has3DPointGeometry,
     has3DPolygonGeometry} from '../../../../util/util-3d';
+import {Map3DCameraManager} from '../../../../core/3d/map-3d-camera-manager';
 
 
 export const CAMERA_DIRECTION_NORTH: number = 0;
@@ -31,14 +31,10 @@ export class Map3DControls {
 
     private cameraDirection: number = CAMERA_DIRECTION_NORTH;
 
-    private intersectionHelper: IntersectionHelper;
 
-
-    constructor(private viewer: Viewer3D,
-                private meshGeometryManager: MeshGeometryManager) {
-
-        this.intersectionHelper = new IntersectionHelper(viewer);
-    }
+    constructor(private cameraManager: Map3DCameraManager,
+                private meshGeometryManager: MeshGeometryManager,
+                private intersectionHelper: IntersectionHelper) {}
 
 
     public onMouseDown(event: MouseEvent): Map3DControlState {
@@ -96,19 +92,19 @@ export class Map3DControls {
             zoomValue = -event.wheelDelta / 100;
         }
 
-        this.viewer.zoom(zoomValue);
+        this.cameraManager.zoom(zoomValue);
     }
 
 
     public zoomIn() {
 
-        this.viewer.zoomSmoothly(-BUTTON_ZOOM_VALUE);
+        this.cameraManager.zoomSmoothly(-BUTTON_ZOOM_VALUE);
     }
 
 
     public zoomOut() {
 
-        this.viewer.zoomSmoothly(BUTTON_ZOOM_VALUE);
+        this.cameraManager.zoomSmoothly(BUTTON_ZOOM_VALUE);
     }
 
 
@@ -122,7 +118,7 @@ export class Map3DControls {
 
         const geometry: IdaiFieldGeometry = document.resource.geometry as IdaiFieldGeometry;
         if (has3DPointGeometry(document)) {
-            this.viewer.focusPoint(getPointVector(geometry.coordinates), this.cameraDirection);
+            this.cameraManager.focusPoint(getPointVector(geometry.coordinates), this.cameraDirection);
         } else if (has3DLineGeometry(document) || has3DPolygonGeometry(document)) {
             const mesh: THREE.Mesh|undefined = this.meshGeometryManager.getMesh(document);
             if (mesh) this.focusMesh(mesh);
@@ -140,7 +136,8 @@ export class Map3DControls {
             this.cameraDirection = this.cameraDirection == 0 ? 3 : this.cameraDirection -= 1;
         }
 
-        const clonedCamera: THREE.PerspectiveCamera|THREE.OrthographicCamera = this.viewer.getCamera().clone();
+        const clonedCamera: THREE.PerspectiveCamera|THREE.OrthographicCamera
+            = this.cameraManager.getCamera().clone();
 
         if (clockwise) {
             clonedCamera.rotateZ(Math.PI / 2);
@@ -148,19 +145,20 @@ export class Map3DControls {
             clonedCamera.rotateZ(-Math.PI / 2);
         }
 
-        this.viewer.startCameraAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
+        this.cameraManager.startAnimation(clonedCamera.position, clonedCamera.quaternion,
+            clonedCamera.zoom);
     }
 
 
     public isCameraAnimationAllowed(): boolean {
 
-        return !this.viewer.isCameraAnimationRunning();
+        return !this.cameraManager.isAnimationRunning();
     }
 
 
     public focusMesh(mesh: THREE.Mesh) {
 
-        this.viewer.focusMesh(mesh, this.cameraDirection);
+        this.cameraManager.focusMesh(mesh, this.cameraDirection);
     }
 
 
@@ -180,13 +178,10 @@ export class Map3DControls {
     private drag(mouseDeltaX: number, mouseDeltaY: number) {
 
         const { deltaX, deltaZ } = this.getDragDeltas(mouseDeltaX, mouseDeltaY);
-        const position: THREE.Vector3 = this.viewer.getCamera().position;
 
-        this.viewer.getCamera().position.set(
-            position.x + (deltaX / 100),
-            position.y,
-            position.z + (deltaZ / 100)
-        );
+
+        this.cameraManager.drag(deltaX / 100, deltaZ / 100);
+
 
         this.dragCounter++;
         if (this.dragCounter > 10 || deltaX > 5 || deltaX < -5 || deltaZ > 5 || deltaZ < -5) {

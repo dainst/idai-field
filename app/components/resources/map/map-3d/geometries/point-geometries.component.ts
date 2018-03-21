@@ -110,21 +110,21 @@ export class PointGeometriesComponent {
 
         return new VisibilityHelper(
             this.map3DComponent.getViewer().getDepthMap() as DepthMap,
-            this.map3DComponent.getViewer().getCamera()
+            this.map3DComponent.getCameraManager().getCamera()
         );
     }
 
 
     private isInViewFrustum(position: THREE.Vector3) {
 
-        return this.map3DComponent.getViewer().getCameraMode() == 'orthographic'
+        return this.map3DComponent.getCameraManager().getMode() == 'orthographic'
             || this.visibilityHelper.isInCameraViewFrustum(position);
     }
 
 
     private isVisible(marker: Map3DMarker) {
 
-        return this.map3DComponent.getViewer().getCameraMode() == 'orthographic'
+        return this.map3DComponent.getCameraManager().getMode() == 'orthographic'
             || this.visibilityHelper.isVisible(marker.worldSpacePosition, marker.canvasPosition);
     }
 

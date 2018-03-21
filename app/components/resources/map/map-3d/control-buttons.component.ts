@@ -1,6 +1,6 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {Map3DComponent} from './map-3d.component';
-import {CameraMode} from '../../../../core/3d/camera-helper';
+import {CameraMode} from '../../../../core/3d/map-3d-camera-manager';
 
 
 @Component({
@@ -19,6 +19,9 @@ export class ControlButtonsComponent {
 
 
     constructor(private map3DComponent: Map3DComponent) {}
+
+
+    public getCameraMode = () => this.map3DComponent.getCameraManager().getMode();
 
 
     public turnClockwise() {
@@ -41,16 +44,10 @@ export class ControlButtonsComponent {
 
     public changeCameraMode() {
 
-        const currentMode: CameraMode = this.map3DComponent.getViewer().getCameraMode();
+        const currentMode: CameraMode = this.map3DComponent.getCameraManager().getMode();
         const newMode: CameraMode = currentMode == 'perspective' ? 'orthographic' : 'perspective';
 
-        this.map3DComponent.getViewer().setCameraMode(newMode);
+        this.map3DComponent.getCameraManager().setMode(newMode);
         this.onCameraModeChanged.emit();
-    }
-
-
-    public getCameraMode(): CameraMode {
-
-        return this.map3DComponent.getViewer().getCameraMode();
     }
 }

@@ -5,6 +5,7 @@ import {Object3DViewerControls, Object3DViewerAction} from './object-3d-viewer-c
 import {MeshLoader} from '../../core/3d/mesh-loader';
 import {MeshEditingUtility} from '../../core/3d/mesh-editing-utility';
 import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
+import {Object3DViewerCameraManager} from '../../core/3d/object-3d-viewer-camera-manager';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
     private viewer: Viewer3D;
     private controls: Object3DViewerControls;
+    private cameraManager: Object3DViewerCameraManager;
 
     private mesh: THREE.Mesh;
     private meshMaterial: THREE.Material|Array<THREE.Material>;
@@ -76,14 +78,15 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     public focusMesh() {
 
         this.controls.resetRotation();
-        this.controls.focusMesh();
+        this.cameraManager.focusMesh(this.mesh);
     }
 
 
     private initialize() {
 
-        this.viewer = new Viewer3D(this.container.nativeElement);
-        this.controls = new Object3DViewerControls(this.viewer);
+        this.cameraManager = new Object3DViewerCameraManager();
+        this.viewer = new Viewer3D(this.container.nativeElement, this.cameraManager);
+        this.controls = new Object3DViewerControls(this.cameraManager);
     }
 
 

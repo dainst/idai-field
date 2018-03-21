@@ -5,6 +5,7 @@ import {Viewer3D} from '../../../../../core/3d/viewer-3d';
 import {MeshGeometry} from './mesh-geometry';
 import {LineBuilder} from './line-builder';
 import {PolygonBuilder} from './polygon-builder';
+import {Map3DCameraManager} from '../../../../../core/3d/map-3d-camera-manager';
 import {has3DLineGeometry, has3DPolygonGeometry} from '../../../../../util/util-3d';
 
 
@@ -20,9 +21,10 @@ export class MeshGeometryManager {
 
 
     constructor(private viewer: Viewer3D,
+                private cameraManager: Map3DCameraManager,
                 projectConfiguration: ProjectConfiguration) {
 
-        this.lineBuilder = new LineBuilder(viewer, projectConfiguration);
+        this.lineBuilder = new LineBuilder(viewer, cameraManager, projectConfiguration);
         this.polygonBuilder = new PolygonBuilder(projectConfiguration);
     }
 

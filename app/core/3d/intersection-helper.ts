@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {Viewer3D} from './viewer-3d';
+import {CameraManager} from './camera-manager';
 
 
 /**
@@ -7,14 +8,15 @@ import {Viewer3D} from './viewer-3d';
  */
 export class IntersectionHelper {
 
-    constructor(private viewer: Viewer3D) {}
+    constructor(private viewer: Viewer3D,
+                private cameraManager: CameraManager) {}
 
 
     public getIntersections(position: THREE.Vector2,
                             objectsToCheck: Array<THREE.Object3D>): Array<THREE.Intersection> {
 
         const raycaster: THREE.Raycaster = IntersectionHelper.createRaycaster();
-        raycaster.setFromCamera(this.getNormalizedDeviceCoordinates(position), this.viewer.getCamera());
+        raycaster.setFromCamera(this.getNormalizedDeviceCoordinates(position), this.cameraManager.getCamera());
 
         return raycaster.intersectObjects(objectsToCheck);
     }

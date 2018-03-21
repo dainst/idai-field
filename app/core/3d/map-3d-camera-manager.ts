@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import {DepthMap} from './depth-map';
-
-const TWEEN = require('tweenjs');
+import {CameraManager} from './camera-manager';
 
 
 export type CameraMode = 'perspective'|'orthographic';
@@ -10,9 +9,9 @@ export type CameraMode = 'perspective'|'orthographic';
 /**
  * @author Thomas Kleinke
  */
-export class CameraHelper {
+export class Map3DCameraManager extends CameraManager {
 
-    private mode: CameraMode;
+    private mode: CameraMode = 'perspective';
 
     private perspectiveCamera: THREE.PerspectiveCamera;
     private orthographicCamera: THREE.OrthographicCamera;
@@ -20,13 +19,6 @@ export class CameraHelper {
     private perspectiveYLevel: number = 5;
     private orthographicYLevel: number = 5;
     private orthographicZoomLevel: number = 1;
-
-    private cameraAnimation: {
-        targetPosition: THREE.Vector3,
-        targetQuaternion: THREE.Quaternion,
-        zoom: number,
-        progress: number
-    }|undefined;
 
 
     public initialize(canvasWidth: number, canvasHeight: number) {
@@ -64,78 +56,15 @@ export class CameraHelper {
 
     public resize(canvasWidth: number, canvasHeight: number) {
 
-        this.updatePerspectiveCameraAspect(canvasWidth, canvasHeight);
+        this.updatePerspectiveCameraAspect(this.perspectiveCamera, canvasWidth, canvasHeight);
         this.updateOrthographicCameraFrustum(canvasWidth, canvasHeight);
     }
 
 
-    public startAnimation(targetPosition: THREE.Vector3, targetQuaternion: THREE.Quaternion,
-                          targetZoom: number) {
+    public drag(x: number, z: number) {
 
-        if (this.cameraAnimation) return;
-
-        this.cameraAnimation = {
-            targetPosition: targetPosition,
-            targetQuaternion: targetQuaternion,
-            zoom: this.getCamera().zoom,
-            progress: 0
-        };
-
-        new TWEEN.Tween(this.cameraAnimation)
-            .to({ progress: 1, zoom: targetZoom }, 300)
-            .easing(TWEEN.Easing.Linear.None)
-            .start();
-    }
-
-
-    public isAnimationRunning(): boolean {
-
-        return this.cameraAnimation != undefined;
-    }
-
-
-    public animate() {
-
-        if (!this.cameraAnimation) return;
-
-        TWEEN.update();
-
-        this.getCamera().position.lerp(
-            this.cameraAnimation.targetPosition,
-            this.cameraAnimation.progress
-        );
-
-        this.getCamera().quaternion.slerp(
-            this.cameraAnimation.targetQuaternion,
-            this.cameraAnimation.progress
-        );
-
-        this.getCamera().zoom = this.cameraAnimation.zoom;
-        this.getCamera().updateProjectionMatrix();
-
-        if (this.cameraAnimation.progress == 1) this.cameraAnimation = undefined;
-    }
-
-
-    public focusMesh(mesh: THREE.Mesh, cameraRotation: number) {
-
-        const meshPosition: THREE.Vector3 = mesh.getWorldPosition();
-
-        this.focusPoint(meshPosition, cameraRotation);
-
-        this.zoomPerspectiveCameraToFit(mesh);
-        this.zoomOrthographicCameraToFit(mesh);
-
-        this.saveState();
-    }
-
-
-    public focusPoint(point: THREE.Vector3, cameraRotation: number) {
-
-        CameraHelper.focusPoint(this.perspectiveCamera, point, 3, cameraRotation);
-        CameraHelper.focusPoint(this.orthographicCamera, point, 20, cameraRotation);
-
-        this.saveState();
+        const camera: THREE.Camera = this.getCamera();
+        camera.position.set(camera.position.x + x, camera.position.y, camera.position.z + z);
     }
 
 
@@ -160,40 +89,25 @@ export class CameraHelper {
     }
 
 
-    private createPerspectiveCamera(canvasWidth: number, canvasHeight: number) {
+    public focusMesh(mesh: THREE.Mesh, cameraRotation: number) {
 
-        this.perspectiveCamera = new THREE.PerspectiveCamera(75, canvasWidth / canvasHeight, 0.1, 1000);
-        this.perspectiveCamera.position.set(0, this.perspectiveYLevel, 0);
-        CameraHelper.applyDefaultSettings(this.perspectiveCamera);
+        const meshPosition: THREE.Vector3 = mesh.getWorldPosition();
+
+        this.focusPoint(meshPosition, cameraRotation);
+
+        this.zoomPerspectiveCameraToFit(mesh);
+        this.zoomOrthographicCameraToFit(mesh);
+
+        this.saveState();
     }
 
 
-    private createOrthographicCamera(canvasWidth: number, canvasHeight: number) {
+    public focusPoint(point: THREE.Vector3, cameraRotation: number) {
 
-        this.orthographicCamera = new THREE.OrthographicCamera(
-            -canvasWidth / 50, canvasWidth / 50,
-            canvasHeight / 50, -canvasHeight / 50,
-            0.1, 1000);
-        this.orthographicCamera.position.set(0, this.orthographicYLevel, 0);
+        CameraManager.focusPoint(this.perspectiveCamera, point, 3, cameraRotation);
+        CameraManager.focusPoint(this.orthographicCamera, point, 20, cameraRotation);
 
-        CameraHelper.applyDefaultSettings(this.orthographicCamera);
-    }
-
-
-    private updatePerspectiveCameraAspect(canvasWidth: number, canvasHeight: number) {
-
-        this.perspectiveCamera.aspect = canvasWidth / canvasHeight;
-        this.perspectiveCamera.updateProjectionMatrix();
-    }
-
-
-    private updateOrthographicCameraFrustum(canvasWidth: number, canvasHeight: number) {
-
-        this.orthographicCamera.left = -canvasWidth / 50;
-        this.orthographicCamera.right = canvasWidth / 50;
-        this.orthographicCamera.top = canvasHeight / 50;
-        this.orthographicCamera.bottom = -canvasHeight / 50;
-        this.orthographicCamera.updateProjectionMatrix();
+        this.saveState();
     }
 
 
@@ -209,8 +123,8 @@ export class CameraHelper {
         if (camera.zoom < 0) camera.zoom = 0;
         camera.updateProjectionMatrix();
     }
-    
-    
+
+
     private zoomPerspectiveCameraToFit(mesh: THREE.Mesh) {
 
         const fovInRadians: number = this.perspectiveCamera.fov * (Math.PI / 180);
@@ -232,6 +146,36 @@ export class CameraHelper {
 
         this.orthographicCamera.zoom = Math.min(width / boundingBox.getSize().x,
             height / boundingBox.getSize().z);
+        this.orthographicCamera.updateProjectionMatrix();
+    }
+
+
+    private createPerspectiveCamera(canvasWidth: number, canvasHeight: number) {
+
+        this.perspectiveCamera = new THREE.PerspectiveCamera(75, canvasWidth / canvasHeight, 0.1, 1000);
+        this.perspectiveCamera.position.set(0, this.perspectiveYLevel, 0);
+        Map3DCameraManager.applyDefaultSettings(this.perspectiveCamera);
+    }
+
+
+    private createOrthographicCamera(canvasWidth: number, canvasHeight: number) {
+
+        this.orthographicCamera = new THREE.OrthographicCamera(
+            -canvasWidth / 50, canvasWidth / 50,
+            canvasHeight / 50, -canvasHeight / 50,
+            0.1, 1000);
+        this.orthographicCamera.position.set(0, this.orthographicYLevel, 0);
+
+        Map3DCameraManager.applyDefaultSettings(this.orthographicCamera);
+    }
+
+
+    private updateOrthographicCameraFrustum(canvasWidth: number, canvasHeight: number) {
+
+        this.orthographicCamera.left = -canvasWidth / 50;
+        this.orthographicCamera.right = canvasWidth / 50;
+        this.orthographicCamera.top = canvasHeight / 50;
+        this.orthographicCamera.bottom = -canvasHeight / 50;
         this.orthographicCamera.updateProjectionMatrix();
     }
 
@@ -275,17 +219,5 @@ export class CameraHelper {
 
         camera.lookAt(new THREE.Vector3(0, 0, 0));
         camera.layers.enable(DepthMap.NO_DEPTH_MAPPING_LAYER);
-    }
-
-
-    private static focusPoint(camera: THREE.Camera, point: THREE.Vector3, yDistance: number,
-                              cameraRotation: number) {
-
-        camera.position.set(
-            point.x,
-            camera.position.y > point.y ? camera.position.y : point.y + yDistance,
-            point.z);
-        camera.lookAt(point);
-        camera.rotateZ((Math.PI / 2) * cameraRotation);
     }
 }

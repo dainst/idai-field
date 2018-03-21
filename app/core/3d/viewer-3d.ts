@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {DepthMap} from './depth-map';
-import {CameraHelper, CameraMode} from './camera-helper';
+import {CameraManager} from './camera-manager';
 
 
 /**
@@ -11,35 +11,20 @@ export class Viewer3D {
     private renderer: THREE.WebGLRenderer;
     private scene: THREE.Scene;
 
-    private cameraHelper: CameraHelper = new CameraHelper();
     private depthMap: DepthMap|undefined;
 
     private resized: boolean = false;
     private notifyForResize: Function;
 
 
-    constructor(private containerElement: HTMLElement, createDepthMap: boolean = false) {
+    constructor(private containerElement: HTMLElement,
+                private cameraManager: CameraManager,
+                createDepthMap: boolean = false) {
 
         this.initialize(createDepthMap);
         this.resize();
         this.animate();
     }
-
-
-    public startCameraAnimation =
-        (targetPosition: THREE.Vector3, targetQuaternion: THREE.Quaternion, targetZoom: number) =>
-            this.cameraHelper.startAnimation(targetPosition, targetQuaternion, targetZoom);
-    public isCameraAnimationRunning = () => this.cameraHelper.isAnimationRunning();
-
-    public zoom = (value: number) => this.cameraHelper.zoom(value);
-    public zoomSmoothly = (value: number) => this.cameraHelper.zoomSmoothly(value);
-    public focusMesh = (mesh: THREE.Mesh, cameraRotation: number) => this.cameraHelper.focusMesh(mesh,
-        cameraRotation);
-    public focusPoint = (point: THREE.Vector3, cameraRotation: number) => this.cameraHelper.focusPoint(point,
-        cameraRotation);
-
-    public setCameraMode = (mode: CameraMode) => this.cameraHelper.setMode(mode);
-    public getCameraMode = () => this.cameraHelper.getMode();
 
 
     public destroy() {
@@ -58,12 +43,6 @@ export class Viewer3D {
     public getScene(): THREE.Scene {
 
         return this.scene;
-    }
-
-
-    public getCamera(): THREE.PerspectiveCamera|THREE.OrthographicCamera {
-
-        return this.cameraHelper.getCamera();
     }
 
 
@@ -95,7 +74,7 @@ export class Viewer3D {
     public getCanvasCoordinates(position: THREE.Vector3): THREE.Vector2 {
 
         const canvas: HTMLCanvasElement = this.renderer.domElement;
-        const projectedPosition: THREE.Vector3 = position.clone().project(this.getCamera());
+        const projectedPosition: THREE.Vector3 = position.clone().project(this.cameraManager.getCamera());
 
         const canvasCoordinates: THREE.Vector2 = new THREE.Vector2();
         canvasCoordinates.x
@@ -124,10 +103,11 @@ export class Viewer3D {
         this.renderer = this.createRenderer();
         this.scene = Viewer3D.createScene();
 
-        this.cameraHelper.initialize(this.renderer.domElement.width, this.renderer.domElement.height);
-        this.cameraHelper.setMode('perspective');
+        this.cameraManager.initialize(this.renderer.domElement.width, this.renderer.domElement.height);
 
-        if (createDepthMap) this.depthMap = new DepthMap(this.renderer, this.scene, this.getCamera());
+        if (createDepthMap) {
+            this.depthMap = new DepthMap(this.renderer, this.scene, this.cameraManager.getCamera());
+        }
     }
 
 
@@ -150,13 +130,13 @@ export class Viewer3D {
         if (!this.renderer) return;
 
         this.resize();
-        this.cameraHelper.animate();
+        this.cameraManager.animate();
 
         requestAnimationFrame(this.animate.bind(this));
 
         if (this.depthMap && this.depthMap.isReady()) this.depthMap.update();
 
-        this.renderer.render(this.scene, this.getCamera());
+        this.renderer.render(this.scene, this.cameraManager.getCamera());
     }
 
 
@@ -170,7 +150,7 @@ export class Viewer3D {
         if (rendererElement.clientWidth !== width || rendererElement.clientHeight !== height) {
             this.renderer.setSize(width, height, false);
             if (this.depthMap) this.depthMap.setSize(width, height);
-            this.cameraHelper.resize(width, height);
+            this.cameraManager.resize(width, height);
 
             this.resized = true;
             if (this.depthMap) this.depthMap.setReady(true);

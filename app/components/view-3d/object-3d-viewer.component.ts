@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {Viewer3D} from '../../core/3d/viewer-3d';
 import {Object3DViewerControls, Object3DViewerAction} from './object-3d-viewer-controls';
 import {MeshLoader} from '../../core/3d/mesh-loader';
-import {MeshEditingUtility} from '../../core/3d/mesh-editing-utility';
+import {MeshPreparationUtility} from '../../core/3d/mesh-preparation-utility';
 import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
 import {Object3DViewerCameraManager} from './object-3d-viewer-camera-manager';
 
@@ -66,7 +66,7 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     public toggleTexture() {
 
         if (this.textured) {
-            MeshEditingUtility.setWhiteMaterial(this.mesh);
+            MeshPreparationUtility.setWhiteMaterial(this.mesh);
         } else {
             this.mesh.material = this.meshMaterial;
         }
@@ -104,7 +104,7 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
         this.mesh = await this.meshLoader.load(this.document.resource.id as string);
         this.meshMaterial = this.mesh.material;
-        MeshEditingUtility.createBackSide(this.mesh);
+        MeshPreparationUtility.createBackSide(this.mesh);
     }
 
 

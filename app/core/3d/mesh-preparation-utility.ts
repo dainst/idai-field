@@ -7,7 +7,7 @@ import {MeshLoadingProgress} from '../../components/core-3d/mesh-loading-progres
 /**
  * @author Thomas Kleinke
  */
-export class MeshEditingUtility {
+export class MeshPreparationUtility {
 
     constructor(private meshLoadingProgress: MeshLoadingProgress) {}
 
@@ -16,16 +16,16 @@ export class MeshEditingUtility {
 
         return new Promise<any>(async resolve => {
 
-            const position: THREE.Vector3 = MeshEditingUtility.getPosition(mesh);
+            const position: THREE.Vector3 = MeshPreparationUtility.getPosition(mesh);
 
             await this.performAdjustment(1,
-                MeshEditingUtility.smoothGeometry.bind(MeshEditingUtility), mesh, position);
+                MeshPreparationUtility.smoothGeometry.bind(MeshPreparationUtility), mesh, position);
             await this.performAdjustment(2,
-                MeshEditingUtility.applySceneMatrix.bind(MeshEditingUtility), mesh, position, scene);
+                MeshPreparationUtility.applySceneMatrix.bind(MeshPreparationUtility), mesh, position, scene);
             await this.performAdjustment(3,
-                MeshEditingUtility.centerGeometry.bind(MeshEditingUtility), mesh);
+                MeshPreparationUtility.centerGeometry.bind(MeshPreparationUtility), mesh);
 
-            MeshEditingUtility.applyOffset(mesh, position);
+            MeshPreparationUtility.applyOffset(mesh, position);
 
             resolve();
         });

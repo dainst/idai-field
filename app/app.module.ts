@@ -42,7 +42,7 @@ import {PersistenceManager} from './core/persist/persistence-manager';
 import {DocumentDatastore} from './core/datastore/document-datastore';
 import {Core3DModule} from './components/core-3d/core-3d.module';
 import {MeshLoader} from './core/3d/mesh-loader';
-import {MeshEditingUtility} from './core/3d/mesh-editing-utility';
+import {MeshPreparationUtility} from './core/3d/mesh-preparation-utility';
 import {Store3D} from './core/3d/store-3d';
 
 
@@ -144,7 +144,7 @@ let pconf: any = undefined;
         DoceditActiveTabService,
         StateSerializer,
         MeshLoader,
-        MeshEditingUtility,
+        MeshPreparationUtility,
         Store3D
     ],
     bootstrap: [ AppComponent ]

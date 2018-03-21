@@ -4,7 +4,7 @@ import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {MeshGeometry} from './mesh-geometry';
 import {DepthMap} from '../../../../../core/3d/depth-map';
 import {getPointVector} from '../../../../../util/util-3d';
-import {MeshEditingUtility} from '../../../../../core/3d/mesh-editing-utility';
+import {MeshPreparationUtility} from '../../../../../core/3d/mesh-preparation-utility';
 
 
 /**
@@ -43,7 +43,7 @@ export class PolygonBuilder {
         const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(position.x, position.y, position.z);
 
-        MeshEditingUtility.centerGeometry(mesh);
+        MeshPreparationUtility.centerGeometry(mesh);
 
         mesh.layers.set(DepthMap.NO_DEPTH_MAPPING_LAYER);
         mesh.add(this.createOutline(document, geometry));

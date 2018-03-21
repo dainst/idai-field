@@ -5,8 +5,8 @@ import {AppState} from '../../../../../../core/settings/app-state';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../../../core/datastore/idai-field-image-document-read-datastore';
 import {IdaiFieldImageDocument} from '../../../../../../core/model/idai-field-image-document';
 import {IdaiFieldGeoreference} from '../../../../../../core/model/idai-field-georeference';
+import {MeshPreparationUtility} from '../../../../../../core/3d/mesh-preparation-utility';
 import {getPointVector} from '../../../../../../util/util-3d';
-import {MeshEditingUtility} from '../../../../../../core/3d/mesh-editing-utility';
 
 
 @Injectable()
@@ -83,7 +83,7 @@ export class Layer2DMeshBuilder {
         const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(position.x, position.y, position.z);
 
-        MeshEditingUtility.centerGeometry(mesh);
+        MeshPreparationUtility.centerGeometry(mesh);
 
         return mesh;
     }

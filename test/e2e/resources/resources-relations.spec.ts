@@ -9,7 +9,7 @@ import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
-fdescribe('resources/relations --', () => {
+describe('resources/relations --', () => {
 
     let i = 0;
 
@@ -62,16 +62,15 @@ fdescribe('resources/relations --', () => {
     it('edit a resource that contains a relation', () => {
 
         ResourcesPage.performCreateLink();
-        // expect(NavbarPage.getMessageText()).toContain('erfolgreich');
         ResourcesPage.openEditByDoubleClickResource('2');
         DoceditPage.clickFieldsTab();
         DoceditPage.typeInInputField('identifier', '123');
         DoceditPage.clickSaveDocument();
-        // expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+        // expectation?
     });
 
 
-    fit('delete a relation and the corresponding inverse relation', () => {
+    it('delete a relation and the corresponding inverse relation', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
@@ -80,7 +79,7 @@ fdescribe('resources/relations --', () => {
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         DetailSidebarPage.performEditDocument();
         DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(4, 0, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0, 0);
         DoceditPage.clickSaveDocument();
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
         ResourcesPage.clickSelectResource('1');

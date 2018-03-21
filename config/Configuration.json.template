@@ -57,6 +57,7 @@
         },
         {
             "domain": [
+                "Inscription",
                 "Find",
                 "Brick",
                 "Bone",

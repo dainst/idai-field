@@ -130,18 +130,18 @@ describe('resources/state --', function() {
 
     it('switch views after click on relation link', () => {
 
-        ResourcesPage.performCreateResource('building1', 'building');
+        ResourcesPage.performCreateResource('b1', 'building');
 
         NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.performCreateResource('architecture1', 'feature-architecture');
+        ResourcesPage.performCreateResource('a1', 'feature-architecture');
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.performCreateResource('floor1', 'feature-floor');
-        ResourcesPage.performCreateRelation('floor1', 'architecture1', 6);
+        ResourcesPage.performCreateRelation('floor1', 'a1', 1);
 
         RelationsViewPage.clickRelation(0);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
 
         RelationsViewPage.clickRelation(0);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
@@ -151,50 +151,50 @@ describe('resources/state --', function() {
 
     it('switch views after click on arrow in project-view list for jumping to mainType-view', () => {
 
-        ResourcesPage.performCreateResource('building1', 'building');
+        ResourcesPage.performCreateResource('b1', 'building');
         NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.performCreateResource('architecture1', 'feature-architecture');
+        ResourcesPage.performCreateResource('a1', 'feature-architecture');
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performCreateResource('floor1', 'feature-floor');
+        ResourcesPage.performCreateResource('f1', 'feature-floor');
 
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.clickMoveIntoButton('building1');
+        ResourcesPage.clickMoveIntoButton('b1');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
         
         NavbarPage.clickNavigateToProject();
         ResourcesPage.clickMoveIntoButton('trench1');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
-
+        //
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.performCreateResource('trench2', 'trench');
-        ResourcesPage.clickMoveIntoButton('trench2');
+        ResourcesPage.performCreateResource('t2', 'trench');
+        ResourcesPage.clickMoveIntoButton('t2');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench2'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('t2'));
     });
 
 
     it('select correct main type document after click on relation link', () => {
 
-        ResourcesPage.performCreateResource('building1', 'building');
-        ResourcesPage.performCreateResource('building2', 'building');
+        ResourcesPage.performCreateResource('b1', 'building');
+        ResourcesPage.performCreateResource('b2', 'building');
 
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.performSelectOperation(0); // building2
-        ResourcesPage.performCreateResource('architecture1', 'feature-architecture');
+        ResourcesPage.performCreateResource('a1', 'feature-architecture');
         ResourcesPage.performSelectOperation(1); // building1
-        ResourcesPage.performCreateResource('floor1', 'feature-floor');
-        ResourcesPage.performCreateRelation('floor1', 'architecture1', 6);
+        ResourcesPage.performCreateResource('f1', 'feature-floor');
+        ResourcesPage.performCreateRelation('f1', 'a1', 1);
 
         RelationsViewPage.clickRelation(0);
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('architecture1'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('a1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
 
         RelationsViewPage.clickRelation(0);
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('floor1'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building2'));
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('f1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b2'));
     });
 
 
@@ -202,10 +202,10 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
 
-        ResourcesPage.performCreateResource('context2', 'feature');
-        ResourcesPage.clickMoveIntoButton('context2');
-        ResourcesPage.performCreateResource('testf2', 'find');
-        ResourcesPage.performCreateRelation('testf2', 'testf1', 1);
+        ResourcesPage.performCreateResource('c2', 'feature');
+        ResourcesPage.clickMoveIntoButton('c2');
+        ResourcesPage.performCreateResource('i1', 'inscription');
+        ResourcesPage.performCreateRelation('i1', 'testf1', 1);
 
         RelationsViewPage.clickRelation(0);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
@@ -265,25 +265,25 @@ describe('resources/state --', function() {
 
     it('autoselect last selected main type document on switching views', () => {
 
-        ResourcesPage.performCreateResource('trench2', 'trench');
-        ResourcesPage.performCreateResource('building1', 'building');
-        ResourcesPage.performCreateResource('building2', 'building');
+        ResourcesPage.performCreateResource('t2', 'trench');
+        ResourcesPage.performCreateResource('b1', 'building');
+        ResourcesPage.performCreateResource('b2', 'building');
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('t2'));
+        ResourcesPage.performSelectOperation(1);
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
+
+        NavbarPage.clickNavigateToBuilding();
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
+        ResourcesPage.performSelectOperation(1);
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b2'));
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
-        ResourcesPage.performSelectOperation(1);
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench2'));
 
         NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building1'));
-        ResourcesPage.performSelectOperation(1);
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building2'));
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench2'));
-
-        NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('building2'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b2'));
     });
 
 
@@ -292,25 +292,25 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('building', 'building');
 
         NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.performCreateResource('building-befund');
+        ResourcesPage.performCreateResource('b-befund');
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performCreateResource('excavation-befund', 'feature-architecture');
-        ResourcesPage.performCreateResource('excavation-inschrift', 'feature-floor');
+        ResourcesPage.performCreateResource('e-befund', 'feature-architecture');
+        ResourcesPage.performCreateResource('e-inschrift', 'feature-floor');
 
         SearchBarPage.clickChooseTypeFilter('feature-floor');
         SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('F'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-inschrift')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('e-befund')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('e-inschrift')), delays.ECWaitTime);
 
         NavbarPage.clickNavigateToBuilding();
         browser.wait(EC.stalenessOf(SearchBarPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('building-befund')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('b-befund')), delays.ECWaitTime);
 
         NavbarPage.clickNavigateToExcavation();
         SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('F'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('excavation-befund')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('excavation-inschrift')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('e-befund')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('e-inschrift')), delays.ECWaitTime);
     });
 
 
@@ -378,27 +378,27 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.clickMapModeButton();
-        ResourcesPage.performCreateResource('find2', 'find');
+        ResourcesPage.performCreateResource('f2', 'find');
 
         SearchBarPage.clickChooseTypeFilter('feature');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('find2')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         ResourcesPage.clickListModeButton();
         SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('S'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('find2')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         ResourcesPage.clickMapModeButton();
         SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('S'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('find2')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
 
         SearchBarPage.clickChooseTypeFilter('all');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('find2')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
 
         ResourcesPage.clickListModeButton();
         browser.wait(EC.stalenessOf(SearchBarPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('find2')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
     });
 });

@@ -20,7 +20,6 @@ describe('import --', function() {
     beforeAll(function() {
 
         ImportPage.get();
-        browser.wait(EC.visibilityOf(element(by.id('idai-field-brand'))), delays.ECWaitTime);
     });
 
 
@@ -50,7 +49,7 @@ describe('import --', function() {
     };
 
 
-    it('import a relation and add the corresponding inverse relation', () => {
+    xit('import a relation and add the corresponding inverse relation', () => {
 
         importIt('./test/test-data/importer-test-relation-ok.jsonl');
         browser.sleep(delays.shortRest);
@@ -123,7 +122,7 @@ describe('import --', function() {
     });
 
 
-    it('abort if a relation target cannot be found and remove all imported resources & already '
+    xit('abort if a relation target cannot be found and remove all imported resources & already '
             + 'created inverse relations', () => {
 
         importIt('./test/test-data/importer-test-relation-error.jsonl');
@@ -163,5 +162,4 @@ describe('import --', function() {
         importIt('./test/test-data/importer-test-ok.jsonl', 1);
         NavbarPage.awaitAlert('nicht zugeordnet werden', false);
     });
-
 });

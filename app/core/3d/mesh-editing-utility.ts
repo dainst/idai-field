@@ -23,7 +23,7 @@ export class MeshEditingUtility {
             await this.performAdjustment(2,
                 MeshEditingUtility.applySceneMatrix.bind(MeshEditingUtility), mesh, position, scene);
             await this.performAdjustment(3,
-                MeshEditingUtility.setPositionToCenterOfGeometry.bind(MeshEditingUtility), mesh);
+                MeshEditingUtility.centerGeometry.bind(MeshEditingUtility), mesh);
 
             MeshEditingUtility.applyOffset(mesh, position);
 
@@ -65,6 +65,18 @@ export class MeshEditingUtility {
     }
 
 
+    public static centerGeometry(mesh: THREE.Mesh) {
+
+        mesh.geometry.computeBoundingSphere();
+        mesh.geometry.computeBoundingBox();
+
+        const center: THREE.Vector3 = mesh.geometry.boundingSphere.center;
+
+        mesh.position.add(center);
+        mesh.geometry.translate(-center.x, -center.y, -center.z);
+    }
+
+
     private static smoothGeometry(mesh: THREE.Mesh, position: THREE.Vector3) {
 
         const geometry: THREE.Geometry = mesh.geometry instanceof THREE.BufferGeometry ?
@@ -92,17 +104,6 @@ export class MeshEditingUtility {
 
         const position: THREE.Vector3 = mesh.position.clone().add(offset);
         mesh.position.set(position.x, position.y, position.z);
-    }
-
-
-    private static setPositionToCenterOfGeometry(mesh: THREE.Mesh) {
-
-        mesh.geometry.computeBoundingSphere();
-
-        const center: THREE.Vector3 = mesh.geometry.boundingSphere.center;
-
-        mesh.position.set(center.x, center.y, center.z);
-        mesh.geometry.translate(-center.x, -center.y, -center.z);
     }
 
 

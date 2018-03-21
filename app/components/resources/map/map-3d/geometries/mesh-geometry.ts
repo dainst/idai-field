@@ -8,5 +8,6 @@ export interface MeshGeometry {
 
     mesh: THREE.Mesh,
     raycasterObject: THREE.Object3D,
-    document: IdaiFieldDocument
+    document: IdaiFieldDocument,
+    type: 'polygon'|'line'
 }

@@ -49,6 +49,8 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     public zoomIn = () => this.controls.zoomIn();
     public zoomOut = () => this.controls.zoomOut();
 
+    public recreateLineGeometries = () => this.meshGeometryManager.recreateLineGeometries();
+
 
     async ngOnChanges(changes: SimpleChanges) {
 

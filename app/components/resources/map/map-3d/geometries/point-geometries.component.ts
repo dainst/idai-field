@@ -82,7 +82,7 @@ export class PointGeometriesComponent {
         const marker = this.cachedMarkers[document.resource.id as string] || { document: document };
         marker.canvasPosition = canvasPosition;
         marker.worldSpacePosition = worldSpacePosition;
-        marker.visible = this.visibilityHelper.isVisible(marker.worldSpacePosition, marker.canvasPosition);
+        marker.visible = this.isVisible(marker);
 
         this.cachedMarkers[document.resource.id as string] = marker;
 
@@ -97,7 +97,7 @@ export class PointGeometriesComponent {
 
         const worldSpacePosition: THREE.Vector3 = PointGeometriesComponent.getWorldSpacePosition(document);
 
-        if (!this.visibilityHelper.isInCameraViewFrustum(worldSpacePosition)) return {};
+        if (!this.isInViewFrustum(worldSpacePosition)) return {};
 
         return {
             canvasPosition: this.getCanvasPosition(document),
@@ -112,6 +112,20 @@ export class PointGeometriesComponent {
             this.map3DComponent.getViewer().getDepthMap() as DepthMap,
             this.map3DComponent.getViewer().getCamera()
         );
+    }
+
+
+    private isInViewFrustum(position: THREE.Vector3) {
+
+        return this.map3DComponent.getViewer().getCameraMode() == 'orthographic'
+            || this.visibilityHelper.isInCameraViewFrustum(position);
+    }
+
+
+    private isVisible(marker: Map3DMarker) {
+
+        return this.map3DComponent.getViewer().getCameraMode() == 'orthographic'
+            || this.visibilityHelper.isVisible(marker.worldSpacePosition, marker.canvasPosition);
     }
 
 

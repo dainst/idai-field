@@ -8,12 +8,12 @@ import {DepthMap} from './depth-map';
 export class VisibilityHelper {
 
     constructor(private depthMap: DepthMap,
-                private camera: THREE.PerspectiveCamera) {}
+                private camera: THREE.PerspectiveCamera|THREE.OrthographicCamera) {}
 
 
     public isInCameraViewFrustum(point: THREE.Vector3): boolean {
 
-        const camera: THREE.PerspectiveCamera = this.camera.clone();
+        const camera: THREE.Camera = this.camera.clone();
 
         const viewFrustum: THREE.Frustum = new THREE.Frustum().setFromMatrix(
             new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse)
@@ -27,7 +27,7 @@ export class VisibilityHelper {
 
         if (!this.depthMap.isReady()) return false;
 
-        const camera: THREE.PerspectiveCamera = this.camera.clone();
+        const camera: THREE.PerspectiveCamera|THREE.OrthographicCamera = this.camera.clone();
         const distanceToIntersection: number = this.getDistanceToNearestIntersection(pointOnCanvas);
 
         if (distanceToIntersection == camera.near) return true;
@@ -50,13 +50,13 @@ export class VisibilityHelper {
 
 
     private static getDistanceToMarkerPosition(point: THREE.Vector3,
-                                               camera: THREE.PerspectiveCamera): number {
+                                               camera: THREE.PerspectiveCamera|THREE.OrthographicCamera): number {
 
         return this.getNearFrustumPlane(camera).distanceToPoint(point);
     }
 
 
-    private static getNearFrustumPlane(camera: THREE.PerspectiveCamera): THREE.Plane {
+    private static getNearFrustumPlane(camera: THREE.PerspectiveCamera|THREE.OrthographicCamera): THREE.Plane {
 
         const normal: THREE.Vector3 = camera.getWorldDirection().normalize();
         const planeAtOrigin: THREE.Plane = new THREE.Plane(normal);

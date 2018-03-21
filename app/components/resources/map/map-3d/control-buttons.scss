@@ -90,3 +90,14 @@
   border-width: 20px 5px 0 5px;
   border-color: #c2c2c2 transparent transparent transparent;
 }
+
+#change-camera-mode-button {
+  position: absolute;
+  bottom: 15px;
+  right: 80px;
+  color: #aaa;
+
+  &.activated .mdi {
+    color: #5572a1;
+  }
+}

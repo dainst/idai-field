@@ -23,7 +23,7 @@
     <layers-2d [mainTypeDocument]="mainTypeDocument"></layers-2d>
     <layers-3d [mainTypeDocument]="mainTypeDocument"></layers-3d>
 
-    <control-buttons></control-buttons>
+    <control-buttons (onCameraModeChanged)="recreateLineGeometries()"> </control-buttons>
 
     <zoom-buttons (onZoomInClicked)="zoomIn()" (onZoomOutClicked)="zoomOut()"></zoom-buttons>
 

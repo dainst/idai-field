@@ -47,6 +47,17 @@ export class MeshGeometryManager {
     }
 
 
+    public recreateLineGeometries() {
+
+        Object.values(this.meshGeometries)
+            .filter(meshGeometry => meshGeometry.type == 'line')
+            .forEach(lineGeometry => {
+                this.remove(lineGeometry.document);
+                this.add(lineGeometry.document);
+            });
+    }
+
+
     public getDocument(raycasterObject: THREE.Object3D): IdaiFieldDocument|undefined {
 
         const geometry: MeshGeometry|undefined

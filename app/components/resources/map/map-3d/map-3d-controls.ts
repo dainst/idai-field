@@ -96,19 +96,19 @@ export class Map3DControls {
             zoomValue = -event.wheelDelta / 100;
         }
 
-        this.zoom(zoomValue);
+        this.viewer.zoom(zoomValue);
     }
 
 
     public zoomIn() {
 
-        this.zoomSmoothly(-BUTTON_ZOOM_VALUE);
+        this.viewer.zoomSmoothly(-BUTTON_ZOOM_VALUE);
     }
 
 
     public zoomOut() {
 
-        this.zoomSmoothly(BUTTON_ZOOM_VALUE);
+        this.viewer.zoomSmoothly(BUTTON_ZOOM_VALUE);
     }
 
 
@@ -122,26 +122,11 @@ export class Map3DControls {
 
         const geometry: IdaiFieldGeometry = document.resource.geometry as IdaiFieldGeometry;
         if (has3DPointGeometry(document)) {
-            this.focusPoint(getPointVector(geometry.coordinates));
+            this.viewer.focusPoint(getPointVector(geometry.coordinates), this.cameraDirection);
         } else if (has3DLineGeometry(document) || has3DPolygonGeometry(document)) {
-            this.focusMesh(this.meshGeometryManager.getMesh(document));
+            const mesh: THREE.Mesh|undefined = this.meshGeometryManager.getMesh(document);
+            if (mesh) this.focusMesh(mesh);
         }
-    }
-
-
-    public focusMesh(mesh: THREE.Mesh|undefined) {
-
-        if (!mesh) return;
-
-        const position: THREE.Vector3 = mesh.getWorldPosition();
-        const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
-
-        camera.position.set(
-            position.x,
-            mesh.position.y + Map3DControls.computeFocusDistance(camera, mesh),
-            position.z);
-        camera.lookAt(position);
-        camera.rotateZ((Math.PI / 2) * this.cameraDirection);
     }
 
 
@@ -155,7 +140,7 @@ export class Map3DControls {
             this.cameraDirection = this.cameraDirection == 0 ? 3 : this.cameraDirection -= 1;
         }
 
-        const clonedCamera: THREE.PerspectiveCamera = this.viewer.getCamera().clone();
+        const clonedCamera: THREE.PerspectiveCamera|THREE.OrthographicCamera = this.viewer.getCamera().clone();
 
         if (clockwise) {
             clonedCamera.rotateZ(Math.PI / 2);
@@ -163,7 +148,7 @@ export class Map3DControls {
             clonedCamera.rotateZ(-Math.PI / 2);
         }
 
-        this.viewer.startCameraAnimation(clonedCamera.position, clonedCamera.quaternion);
+        this.viewer.startCameraAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
     }
 
 
@@ -173,16 +158,9 @@ export class Map3DControls {
     }
 
 
-    private focusPoint(point: THREE.Vector3) {
+    public focusMesh(mesh: THREE.Mesh) {
 
-        const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
-
-        camera.position.set(
-            point.x,
-            camera.position.y > point.y ? camera.position.y : point.y + 3,
-            point.z);
-        camera.lookAt(point);
-        camera.rotateZ((Math.PI / 2) * this.cameraDirection);
+        this.viewer.focusMesh(mesh, this.cameraDirection);
     }
 
 
@@ -196,23 +174,6 @@ export class Map3DControls {
     private resetAction() {
 
         this.state.dragging = false;
-    }
-
-
-    private zoom(value: number) {
-
-        this.viewer.getCamera().translateZ(value);
-    }
-
-
-    private zoomSmoothly(value: number) {
-
-        if (!this.isCameraAnimationAllowed()) return;
-
-        const clonedCamera: THREE.PerspectiveCamera = this.viewer.getCamera().clone();
-        clonedCamera.translateZ(value);
-
-        this.viewer.startCameraAnimation(clonedCamera.position, clonedCamera.quaternion);
     }
 
 
@@ -282,11 +243,5 @@ export class Map3DControls {
     }
 
 
-    private static computeFocusDistance(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
 
-        const fovInRadians: number = camera.fov * (Math.PI / 180);
-        const size = mesh.geometry.boundingSphere.radius;
-
-        return Math.abs(size / Math.sin(fovInRadians / 2));
-    }
 }

@@ -36,7 +36,7 @@ export class Object3DViewerControls {
         this.mesh.position.set(0, 0, 0);
         this.originalRotation = mesh.quaternion.clone();
         this.maxCameraDistance = Object3DViewerControls.computeFocusDistance(
-            this.viewer.getCamera(),
+            this.viewer.getCamera() as THREE.PerspectiveCamera,
             this.mesh
         ) * 2;
 
@@ -112,7 +112,7 @@ export class Object3DViewerControls {
 
     public focusMesh() {
 
-        const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
+        const camera: THREE.PerspectiveCamera = this.viewer.getCamera() as THREE.PerspectiveCamera;
 
         camera.position.set(0, Object3DViewerControls.computeFocusDistance(camera, this.mesh), 0);
         camera.lookAt(new THREE.Vector3(0, 0, 0));
@@ -183,7 +183,7 @@ export class Object3DViewerControls {
 
     private getAllowedZoomValue(zoomValue: number): number {
 
-        const camera: THREE.PerspectiveCamera = this.viewer.getCamera();
+        const camera: THREE.Camera = this.viewer.getCamera();
         const zoomingOut: boolean = zoomValue > 0;
 
         if (zoomingOut) {
@@ -208,10 +208,11 @@ export class Object3DViewerControls {
 
         if (this.viewer.isCameraAnimationRunning()) return;
 
-        const clonedCamera: THREE.PerspectiveCamera = this.viewer.getCamera().clone();
+        const clonedCamera: THREE.PerspectiveCamera
+            = this.viewer.getCamera().clone() as THREE.PerspectiveCamera;
         clonedCamera.translateZ(value);
 
-        this.viewer.startCameraAnimation(clonedCamera.position, clonedCamera.quaternion);
+        this.viewer.startCameraAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
     }
 
 

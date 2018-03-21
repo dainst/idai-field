@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import {DepthMap} from './depth-map';
-
-const TWEEN = require('tweenjs');
+import {CameraHelper, CameraMode} from './camera-helper';
 
 
 /**
@@ -11,18 +10,12 @@ export class Viewer3D {
 
     private renderer: THREE.WebGLRenderer;
     private scene: THREE.Scene;
-    private camera: THREE.PerspectiveCamera;
 
+    private cameraHelper: CameraHelper = new CameraHelper();
     private depthMap: DepthMap|undefined;
 
     private resized: boolean = false;
     private notifyForResize: Function;
-
-    private cameraAnimation: {
-        targetPosition: THREE.Vector3,
-        targetQuaternion: THREE.Quaternion,
-        progress: number
-    }|undefined;
 
 
     constructor(private containerElement: HTMLElement, createDepthMap: boolean = false) {
@@ -31,6 +24,22 @@ export class Viewer3D {
         this.resize();
         this.animate();
     }
+
+
+    public startCameraAnimation =
+        (targetPosition: THREE.Vector3, targetQuaternion: THREE.Quaternion, targetZoom: number) =>
+            this.cameraHelper.startAnimation(targetPosition, targetQuaternion, targetZoom);
+    public isCameraAnimationRunning = () => this.cameraHelper.isAnimationRunning();
+
+    public zoom = (value: number) => this.cameraHelper.zoom(value);
+    public zoomSmoothly = (value: number) => this.cameraHelper.zoomSmoothly(value);
+    public focusMesh = (mesh: THREE.Mesh, cameraRotation: number) => this.cameraHelper.focusMesh(mesh,
+        cameraRotation);
+    public focusPoint = (point: THREE.Vector3, cameraRotation: number) => this.cameraHelper.focusPoint(point,
+        cameraRotation);
+
+    public setCameraMode = (mode: CameraMode) => this.cameraHelper.setMode(mode);
+    public getCameraMode = () => this.cameraHelper.getMode();
 
 
     public destroy() {
@@ -52,9 +61,9 @@ export class Viewer3D {
     }
 
 
-    public getCamera(): THREE.PerspectiveCamera {
+    public getCamera(): THREE.PerspectiveCamera|THREE.OrthographicCamera {
 
-        return this.camera;
+        return this.cameraHelper.getCamera();
     }
 
 
@@ -86,7 +95,7 @@ export class Viewer3D {
     public getCanvasCoordinates(position: THREE.Vector3): THREE.Vector2 {
 
         const canvas: HTMLCanvasElement = this.renderer.domElement;
-        const projectedPosition: THREE.Vector3 = position.clone().project(this.camera);
+        const projectedPosition: THREE.Vector3 = position.clone().project(this.getCamera());
 
         const canvasCoordinates: THREE.Vector2 = new THREE.Vector2();
         canvasCoordinates.x
@@ -95,29 +104,6 @@ export class Viewer3D {
             = Math.round((-projectedPosition.y + 1) * canvas.height / 2);
 
         return canvasCoordinates;
-    }
-
-
-    public startCameraAnimation(targetPosition: THREE.Vector3, targetQuaternion: THREE.Quaternion) {
-
-        if (this.cameraAnimation) return;
-
-        this.cameraAnimation = {
-            targetPosition: targetPosition,
-            targetQuaternion: targetQuaternion,
-            progress: 0
-        };
-
-        new TWEEN.Tween(this.cameraAnimation)
-            .to({ progress: 1 }, 300)
-            .easing(TWEEN.Easing.Circular.In)
-            .start();
-    }
-
-
-    public isCameraAnimationRunning(): boolean {
-
-        return this.cameraAnimation != undefined;
     }
 
 
@@ -137,9 +123,11 @@ export class Viewer3D {
 
         this.renderer = this.createRenderer();
         this.scene = Viewer3D.createScene();
-        this.camera = this.createCamera();
 
-        if (createDepthMap) this.depthMap = new DepthMap(this.renderer, this.scene, this.camera);
+        this.cameraHelper.initialize(this.renderer.domElement.width, this.renderer.domElement.height);
+        this.cameraHelper.setMode('perspective');
+
+        if (createDepthMap) this.depthMap = new DepthMap(this.renderer, this.scene, this.getCamera());
     }
 
 
@@ -157,44 +145,18 @@ export class Viewer3D {
     }
 
 
-    private createCamera(): THREE.PerspectiveCamera {
-
-        const camera = new THREE.PerspectiveCamera(75,
-            this.containerElement.clientWidth / this.containerElement.clientHeight, 0.1, 1000);
-
-        camera.position.set(0, 3, 0);
-        camera.lookAt(new THREE.Vector3(0, 0, 0));
-        camera.layers.enable(DepthMap.NO_DEPTH_MAPPING_LAYER);
-
-        return camera;
-    }
-
-
     private animate() {
 
         if (!this.renderer) return;
 
         this.resize();
-        this.animateCamera();
+        this.cameraHelper.animate();
 
         requestAnimationFrame(this.animate.bind(this));
 
         if (this.depthMap && this.depthMap.isReady()) this.depthMap.update();
 
-        this.renderer.render(this.scene, this.camera);
-    }
-
-
-    private animateCamera() {
-
-        if (!this.cameraAnimation) return;
-
-        TWEEN.update();
-
-        this.camera.position.lerp(this.cameraAnimation.targetPosition, this.cameraAnimation.progress);
-        this.camera.quaternion.slerp(this.cameraAnimation.targetQuaternion, this.cameraAnimation.progress);
-
-        if (this.cameraAnimation.progress == 1) this.cameraAnimation = undefined;
+        this.renderer.render(this.scene, this.getCamera());
     }
 
 
@@ -208,9 +170,7 @@ export class Viewer3D {
         if (rendererElement.clientWidth !== width || rendererElement.clientHeight !== height) {
             this.renderer.setSize(width, height, false);
             if (this.depthMap) this.depthMap.setSize(width, height);
-
-            this.camera.aspect = width / height;
-            this.camera.updateProjectionMatrix();
+            this.cameraHelper.resize(width, height);
 
             this.resized = true;
             if (this.depthMap) this.depthMap.setReady(true);

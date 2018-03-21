@@ -18,7 +18,7 @@ export class DepthMap {
 
     constructor(private renderer: THREE.WebGLRenderer,
                 private scene: THREE.Scene,
-                private camera: THREE.PerspectiveCamera) {
+                private camera: THREE.PerspectiveCamera|THREE.OrthographicCamera) {
 
         this.material = DepthMap.createMaterial();
         this.renderTarget = this.createRenderTarget();

@@ -29,7 +29,8 @@ export class LineBuilder {
         return {
             mesh: this.createMesh(document, geometry, position),
             raycasterObject: LineBuilder.createRaycasterObject(geometry, position),
-            document: document
+            document: document,
+            type: 'line'
         };
     }
 
@@ -60,11 +61,21 @@ export class LineBuilder {
         mesh.position.set(position.x, position.y, position.z);
         mesh.layers.set(DepthMap.NO_DEPTH_MAPPING_LAYER);
 
+        mesh.geometry.computeBoundingBox();
+
         return mesh;
     }
 
 
     private createMaterial(document: IdaiFieldDocument): THREE.Material {
+
+        return this.viewer.getCameraMode() == 'perspective' ?
+            this.createMaterialForPerspectiveCameraMode(document) :
+            this.createMaterialForOrthographicCameraMode(document);
+    }
+
+
+    private createMaterialForPerspectiveCameraMode(document: IdaiFieldDocument): THREE.Material {
 
         return new MeshLineMaterial({
             resolution: new THREE.Vector2(this.viewer.getRenderer().getSize().width,
@@ -73,6 +84,18 @@ export class LineBuilder {
             far: this.viewer.getCamera().far,
             sizeAttenuation: false,
             lineWidth: 3,
+            color: new THREE.Color(this.projectConfiguration.getColorForType(document.resource.type))
+        });
+    }
+
+
+    private createMaterialForOrthographicCameraMode(document: IdaiFieldDocument): THREE.Material {
+
+        return new MeshLineMaterial({
+            resolution: new THREE.Vector2(this.viewer.getRenderer().getSize().width,
+                this.viewer.getRenderer().getSize().height),
+            sizeAttenuation: true,
+            lineWidth: 0.003,
             color: new THREE.Color(this.projectConfiguration.getColorForType(document.resource.type))
         });
     }

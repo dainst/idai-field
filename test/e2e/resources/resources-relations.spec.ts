@@ -9,7 +9,7 @@ import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
-describe('resources/relations --', () => {
+fdescribe('resources/relations --', () => {
 
     let i = 0;
 
@@ -49,11 +49,11 @@ describe('resources/relations --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        expect(DoceditRelationsTabPage.getRelationButtonText(4, 0, 0)).toEqual('1');
+        expect(DoceditRelationsTabPage.getRelationButtonText(1, 0, 0)).toEqual('1');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSelectResource('1');
         DetailSidebarPage.performEditDocument();
-        expect(DoceditRelationsTabPage.getRelationButtonText(5, 0, 0)).toEqual('2');
+        expect(DoceditRelationsTabPage.getRelationButtonText(2, 0, 0)).toEqual('2');
         DoceditPage.clickCloseEdit();
 
     });
@@ -71,7 +71,7 @@ describe('resources/relations --', () => {
     });
 
 
-    it('delete a relation and the corresponding inverse relation', () => {
+    fit('delete a relation and the corresponding inverse relation', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');

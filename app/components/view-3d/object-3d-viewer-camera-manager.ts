@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import {DepthMap} from '../../core/3d/depth-map';
 import {CameraManager} from '../../core/3d/camera-manager';
-import {PerspectiveCamera} from 'three';
 
 
 /**
@@ -9,7 +8,7 @@ import {PerspectiveCamera} from 'three';
  */
 export class Object3DViewerCameraManager extends CameraManager {
 
-    private camera: PerspectiveCamera;
+    private camera: THREE.PerspectiveCamera;
     private maxCameraDistance: number = 1;
 
 
@@ -41,13 +40,6 @@ export class Object3DViewerCameraManager extends CameraManager {
 
         this.camera.translateX(x * this.maxCameraDistance);
         this.camera.translateY(z * this.maxCameraDistance);
-    }
-
-
-    public rotate(mesh: THREE.Mesh, xAxisRadians: number, zAxisRadians: number) {
-
-        Object3DViewerCameraManager.rotateAroundWorldAxis(mesh, new THREE.Vector3(1, 0, 0), xAxisRadians);
-        Object3DViewerCameraManager.rotateAroundWorldAxis(mesh, new THREE.Vector3(0, 0, 1), zAxisRadians);
     }
 
 
@@ -118,13 +110,5 @@ export class Object3DViewerCameraManager extends CameraManager {
                 zoomValue :
                 -this.camera.position.y
         }
-    }
-
-
-    private static rotateAroundWorldAxis(mesh: THREE.Mesh, axis: THREE.Vector3, radians: number) {
-
-        const quaternion: THREE.Quaternion = new THREE.Quaternion();
-        quaternion.setFromAxisAngle(axis, radians);
-        mesh.quaternion.premultiply(quaternion);
     }
 }

@@ -1,6 +1,6 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {Map3DComponent} from './map-3d.component';
-import {CameraMode} from '../../../../core/3d/map-3d-camera-manager';
+import {CameraMode} from './map-3d-camera-manager';
 
 
 @Component({

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {DepthMap} from './depth-map';
-import {CameraManager} from './camera-manager';
+import {DepthMap} from '../../core/3d/depth-map';
+import {CameraManager} from '../../core/3d/camera-manager';
 import {PerspectiveCamera} from 'three';
 
 

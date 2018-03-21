@@ -5,7 +5,7 @@ import {Object3DViewerControls, Object3DViewerAction} from './object-3d-viewer-c
 import {MeshLoader} from '../../core/3d/mesh-loader';
 import {MeshEditingUtility} from '../../core/3d/mesh-editing-utility';
 import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
-import {Object3DViewerCameraManager} from '../../core/3d/object-3d-viewer-camera-manager';
+import {Object3DViewerCameraManager} from './object-3d-viewer-camera-manager';
 
 
 @Component({

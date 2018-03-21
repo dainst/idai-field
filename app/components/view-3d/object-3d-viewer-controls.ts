@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {Object3DViewerCameraManager} from '../../core/3d/object-3d-viewer-camera-manager';
+import {Object3DViewerCameraManager} from './object-3d-viewer-camera-manager';
 
 
 export type Object3DViewerAction = 'drag'|'rotate'|'none';

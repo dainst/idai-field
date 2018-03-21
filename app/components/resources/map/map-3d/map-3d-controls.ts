@@ -3,9 +3,9 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field
 import {Map3DControlState} from './map-3d-control-state';
 import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
 import {IntersectionHelper} from '../../../../core/3d/intersection-helper';
+import {Map3DCameraManager} from './map-3d-camera-manager';
 import {getPointVector, has3DLineGeometry, has3DPointGeometry,
     has3DPolygonGeometry} from '../../../../util/util-3d';
-import {Map3DCameraManager} from '../../../../core/3d/map-3d-camera-manager';
 
 
 export const CAMERA_DIRECTION_NORTH: number = 0;

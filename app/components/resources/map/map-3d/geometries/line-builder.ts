@@ -54,16 +54,20 @@ export class LineBuilder {
     private createMesh(document: IdaiFieldDocument, geometry: THREE.Geometry,
                        position: THREE.Vector3): THREE.Mesh {
 
+        const clonedGeometry: THREE.Geometry = geometry.clone();
+
+        const center: THREE.Vector3 = LineBuilder.getCenter(clonedGeometry);
+        clonedGeometry.translate(-center.x, -center.y, -center.z);
+
         const line = new MeshLine();
-        line.setGeometry(geometry);
+        line.setGeometry(clonedGeometry);
 
         const material: THREE.Material = this.createMaterial(document);
 
         const mesh: THREE.Mesh = new THREE.Mesh(line.geometry, material);
-        mesh.position.set(position.x, position.y, position.z);
-        mesh.layers.set(DepthMap.NO_DEPTH_MAPPING_LAYER);
-
         mesh.geometry.computeBoundingBox();
+        mesh.position.set(position.x + center.x, position.y + center.y, position.z + center.z);
+        mesh.layers.set(DepthMap.NO_DEPTH_MAPPING_LAYER);
 
         return mesh;
     }
@@ -122,5 +126,13 @@ export class LineBuilder {
         const firstPoint: number[] = (document.resource.geometry as IdaiFieldGeometry).coordinates[0];
 
         return getPointVector(firstPoint);
+    }
+
+
+    private static getCenter(geometry: THREE.Geometry): THREE.Vector3 {
+
+        geometry.computeBoundingSphere();
+
+        return geometry.boundingSphere.center.clone();
     }
 }

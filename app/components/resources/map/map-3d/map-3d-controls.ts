@@ -136,17 +136,7 @@ export class Map3DControls {
             this.cameraDirection = this.cameraDirection == 0 ? 3 : this.cameraDirection -= 1;
         }
 
-        const clonedCamera: THREE.PerspectiveCamera|THREE.OrthographicCamera
-            = this.cameraManager.getCamera().clone();
-
-        if (clockwise) {
-            clonedCamera.rotateZ(Math.PI / 2);
-        } else {
-            clonedCamera.rotateZ(-Math.PI / 2);
-        }
-
-        this.cameraManager.startAnimation(clonedCamera.position, clonedCamera.quaternion,
-            clonedCamera.zoom);
+        this.cameraManager.rotateSmoothly(clockwise ? Math.PI / 2 : -Math.PI / 2);
     }
 
 
@@ -236,7 +226,4 @@ export class Map3DControls {
 
         return this.meshGeometryManager.getDocument(intersections[0].object);
     }
-
-
-
 }

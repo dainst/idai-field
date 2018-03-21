@@ -68,6 +68,15 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
+    public rotateSmoothly(radians: number) {
+
+        const clonedCamera: THREE.PerspectiveCamera|THREE.OrthographicCamera = this.getCamera().clone();
+        clonedCamera.rotateZ(radians);
+
+        this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
+    }
+
+
     public zoom(value: number, camera?: THREE.Camera) {
 
         if (this.mode == 'perspective') {

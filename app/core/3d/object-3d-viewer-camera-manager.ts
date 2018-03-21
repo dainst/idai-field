@@ -44,6 +44,13 @@ export class Object3DViewerCameraManager extends CameraManager {
     }
 
 
+    public rotate(mesh: THREE.Mesh, xAxisRadians: number, zAxisRadians: number) {
+
+        Object3DViewerCameraManager.rotateAroundWorldAxis(mesh, new THREE.Vector3(1, 0, 0), xAxisRadians);
+        Object3DViewerCameraManager.rotateAroundWorldAxis(mesh, new THREE.Vector3(0, 0, 1), zAxisRadians);
+    }
+
+
     public zoom(value: number, camera: THREE.PerspectiveCamera = this.camera) {
 
         camera.translateZ(this.getAllowedZoomValue(value * this.maxCameraDistance));
@@ -111,5 +118,13 @@ export class Object3DViewerCameraManager extends CameraManager {
                 zoomValue :
                 -this.camera.position.y
         }
+    }
+
+
+    private static rotateAroundWorldAxis(mesh: THREE.Mesh, axis: THREE.Vector3, radians: number) {
+
+        const quaternion: THREE.Quaternion = new THREE.Quaternion();
+        quaternion.setFromAxisAngle(axis, radians);
+        mesh.quaternion.premultiply(quaternion);
     }
 }

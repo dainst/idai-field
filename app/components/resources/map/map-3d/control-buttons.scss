@@ -5,7 +5,7 @@
 #turn-clockwise-button,
 #turn-counterclockwise-button {
   position: absolute;
-  bottom: 20px;
+  bottom: 18px;
   width: 30px;
   height: 30px;
   border: 6px solid transparent;
@@ -61,7 +61,7 @@
 
 #compass-needle {
   position: absolute;
-  bottom: 35px;
+  bottom: 34px;
   right: 54px;
   -webkit-transition: all 300ms ease;
   user-select: none;
@@ -94,7 +94,7 @@
 #change-camera-mode-button {
   position: absolute;
   bottom: 15px;
-  right: 80px;
+  right: 110px;
   color: #aaa;
 
   &.activated .mdi {

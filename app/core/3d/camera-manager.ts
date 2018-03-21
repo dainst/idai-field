@@ -88,7 +88,7 @@ export abstract class CameraManager {
     }
 
 
-    protected updatePerspectiveCameraAspect(camera: THREE.PerspectiveCamera, canvasWidth: number,
+    protected static updatePerspectiveCameraAspect(camera: THREE.PerspectiveCamera, canvasWidth: number,
                                             canvasHeight: number) {
 
         camera.aspect = canvasWidth / canvasHeight;

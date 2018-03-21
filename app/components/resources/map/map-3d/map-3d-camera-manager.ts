@@ -56,7 +56,7 @@ export class Map3DCameraManager extends CameraManager {
 
     public resize(canvasWidth: number, canvasHeight: number) {
 
-        this.updatePerspectiveCameraAspect(this.perspectiveCamera, canvasWidth, canvasHeight);
+        CameraManager.updatePerspectiveCameraAspect(this.perspectiveCamera, canvasWidth, canvasHeight);
         this.updateOrthographicCameraFrustum(canvasWidth, canvasHeight);
     }
 

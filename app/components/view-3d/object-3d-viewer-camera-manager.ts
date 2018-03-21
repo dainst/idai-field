@@ -27,7 +27,7 @@ export class Object3DViewerCameraManager extends CameraManager {
 
     public resize(canvasWidth: number, canvasHeight: number) {
 
-        this.updatePerspectiveCameraAspect(this.camera, canvasWidth, canvasHeight);
+        CameraManager.updatePerspectiveCameraAspect(this.camera, canvasWidth, canvasHeight);
     }
 
 

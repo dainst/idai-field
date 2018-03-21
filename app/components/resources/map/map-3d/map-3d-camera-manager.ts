@@ -153,8 +153,12 @@ export class Map3DCameraManager extends CameraManager {
 
         const boundingBox: THREE.Box3 = mesh.geometry.boundingBox;
 
-        this.orthographicCamera.zoom = Math.min(width / boundingBox.getSize().x,
-            height / boundingBox.getSize().z);
+        this.orthographicCamera.zoom = Math.min(
+            width / boundingBox.getSize().x,
+            width / boundingBox.getSize().z,
+            height / boundingBox.getSize().x,
+            height / boundingBox.getSize().z
+        );
         this.orthographicCamera.updateProjectionMatrix();
     }
 

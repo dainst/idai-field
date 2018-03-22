@@ -7,33 +7,36 @@ import {DepthMap} from './depth-map';
  */
 export class VisibilityHelper {
 
-    constructor(private depthMap: DepthMap,
-                private camera: THREE.PerspectiveCamera|THREE.OrthographicCamera) {}
 
+    public static isInCameraViewFrustum(point: THREE.Vector3,
+                                 camera: THREE.PerspectiveCamera|THREE.OrthographicCamera): boolean {
 
-    public isInCameraViewFrustum(point: THREE.Vector3): boolean {
-
-        const camera: THREE.Camera = this.camera.clone();
+        const clonedCamera: THREE.Camera = camera.clone();
 
         const viewFrustum: THREE.Frustum = new THREE.Frustum().setFromMatrix(
-            new THREE.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse)
+            new THREE.Matrix4().multiplyMatrices(
+                clonedCamera.projectionMatrix,
+                clonedCamera.matrixWorldInverse
+            )
         );
 
         return viewFrustum.containsPoint(point);
     }
 
 
-    public isVisible(pointInWorldSpace: THREE.Vector3, pointOnCanvas: THREE.Vector2): boolean {
+    public static isVisible(pointInWorldSpace: THREE.Vector3, pointOnCanvas: THREE.Vector2,
+                     camera: THREE.PerspectiveCamera|THREE.OrthographicCamera,
+                     depthMap: DepthMap): boolean {
 
-        if (!this.depthMap.isReady()) return false;
+        if (!depthMap.isReady()) return false;
 
-        const camera: THREE.PerspectiveCamera|THREE.OrthographicCamera = this.camera.clone();
-        const distanceToIntersection: number = this.getDistanceToNearestIntersection(pointOnCanvas);
+        const clonedCamera: THREE.PerspectiveCamera|THREE.OrthographicCamera = camera.clone();
+        const distanceToIntersection: number = this.getDistanceToNearestIntersection(pointOnCanvas, depthMap);
 
-        if (distanceToIntersection == camera.near) return true;
+        if (distanceToIntersection == clonedCamera.near) return true;
 
         const distanceToMarkerPosition: number
-            = VisibilityHelper.getDistanceToMarkerPosition(pointInWorldSpace, camera);
+            = VisibilityHelper.getDistanceToMarkerPosition(pointInWorldSpace, clonedCamera);
 
         if (distanceToIntersection > distanceToMarkerPosition) {
             return true;
@@ -43,9 +46,9 @@ export class VisibilityHelper {
     }
 
 
-    private getDistanceToNearestIntersection(point: THREE.Vector2): number {
+    private static getDistanceToNearestIntersection(point: THREE.Vector2, depthMap: DepthMap): number {
 
-        return this.depthMap.getDepth(new THREE.Vector2(point.x, point.y));
+        return depthMap.getDepth(new THREE.Vector2(point.x, point.y));
     }
 
 

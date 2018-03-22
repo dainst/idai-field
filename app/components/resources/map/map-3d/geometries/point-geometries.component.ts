@@ -37,8 +37,6 @@ export class PointGeometriesComponent {
 
     private cachedMarkers: { [resourceId: string]: Map3DMarker } = {};
 
-    private visibilityHelper: VisibilityHelper;
-
 
     constructor(private map3DComponent: Map3DComponent) {}
 
@@ -55,8 +53,6 @@ export class PointGeometriesComponent {
         const markers: Array<any> = [];
 
         if (!this.documents || !this.showMarkers) return markers;
-
-        if (!this.visibilityHelper) this.visibilityHelper = this.createVisibilityHelper();
 
         this.documents.forEach(document => {
            const marker: Map3DMarker|undefined = this.createMarker(document);
@@ -106,26 +102,25 @@ export class PointGeometriesComponent {
     }
 
 
-    private createVisibilityHelper(): VisibilityHelper {
+    private isInViewFrustum(position: THREE.Vector3) {
 
-        return new VisibilityHelper(
-            this.map3DComponent.getViewer().getDepthMap() as DepthMap,
+        return VisibilityHelper.isInCameraViewFrustum(
+            position,
             this.map3DComponent.getCameraManager().getCamera()
         );
     }
 
 
-    private isInViewFrustum(position: THREE.Vector3) {
-
-        return this.map3DComponent.getCameraManager().getMode() == 'orthographic'
-            || this.visibilityHelper.isInCameraViewFrustum(position);
-    }
-
-
     private isVisible(marker: Map3DMarker) {
 
-        return this.map3DComponent.getCameraManager().getMode() == 'orthographic'
-            || this.visibilityHelper.isVisible(marker.worldSpacePosition, marker.canvasPosition);
+        if (this.map3DComponent.getCameraManager().getMode() == 'orthographic') return true;
+
+        return VisibilityHelper.isVisible(
+            marker.worldSpacePosition,
+            marker.canvasPosition,
+            this.map3DComponent.getCameraManager().getCamera(),
+            this.map3DComponent.getViewer().getDepthMap() as DepthMap
+        );
     }
 
 

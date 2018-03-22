@@ -37,6 +37,9 @@ export class Map3DControls {
                 private intersectionHelper: IntersectionHelper) {}
 
 
+    public getCameraDirection = () => this.cameraDirection;
+
+
     public onMouseDown(event: MouseEvent): Map3DControlState {
 
         this.lastXPosition = event.clientX;
@@ -118,7 +121,7 @@ export class Map3DControls {
 
         const geometry: IdaiFieldGeometry = document.resource.geometry as IdaiFieldGeometry;
         if (has3DPointGeometry(document)) {
-            this.cameraManager.focusPoint(getPointVector(geometry.coordinates), this.cameraDirection);
+            this.cameraManager.focusPoint(getPointVector(geometry.coordinates));
         } else if (has3DLineGeometry(document) || has3DPolygonGeometry(document)) {
             const mesh: THREE.Mesh|undefined = this.meshGeometryManager.getMesh(document);
             if (mesh) this.focusMesh(mesh);
@@ -136,7 +139,8 @@ export class Map3DControls {
             this.cameraDirection = this.cameraDirection == 0 ? 3 : this.cameraDirection -= 1;
         }
 
-        this.cameraManager.rotateSmoothly(clockwise ? Math.PI / 2 : -Math.PI / 2);
+        this.cameraManager.rotateSmoothly(clockwise ? Math.PI / 2 : -Math.PI / 2,
+            this.cameraDirection);
     }
 
 
@@ -148,7 +152,7 @@ export class Map3DControls {
 
     public focusMesh(mesh: THREE.Mesh) {
 
-        this.cameraManager.focusMesh(mesh, this.cameraDirection);
+        this.cameraManager.focusMesh(mesh);
     }
 
 

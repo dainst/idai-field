@@ -101,3 +101,14 @@
     color: #5572a1;
   }
 }
+
+#change-camera-mode-button-2 {
+  position: absolute;
+  bottom: 15px;
+  right: 160px;
+  color: #aaa;
+
+  &.activated .mdi {
+    color: #5572a1;
+  }
+}

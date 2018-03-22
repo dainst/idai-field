@@ -96,15 +96,11 @@ export abstract class CameraManager {
     }
 
 
-    protected static focusPoint(camera: THREE.Camera, point: THREE.Vector3, yDistance: number,
-                              cameraRotation?: number) {
+    protected static focusPoint(camera: THREE.Camera, point: THREE.Vector3, yDistance: number) {
 
         camera.position.set(
             point.x,
             camera.position.y > point.y ? camera.position.y : point.y + yDistance,
             point.z);
-        camera.lookAt(point);
-
-        if (cameraRotation) camera.rotateZ((Math.PI / 2) * cameraRotation);
     }
 }

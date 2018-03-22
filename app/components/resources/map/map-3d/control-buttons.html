@@ -6,3 +6,8 @@
     (click)="changeCameraMode()">
     <span class="mdi mdi-cctv"></span>
 </div>
+
+<div id="change-camera-mode-button-2" class="btn btn-light" [class.activated]="getCameraMode() == 'perspective-down'"
+     (click)="changeCameraModeToPerspectiveDown()">
+    <span class="mdi mdi-cctv"></span>
+</div>

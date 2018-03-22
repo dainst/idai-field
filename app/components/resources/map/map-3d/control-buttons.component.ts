@@ -50,4 +50,10 @@ export class ControlButtonsComponent {
         this.map3DComponent.getCameraManager().setMode(newMode);
         this.onCameraModeChanged.emit();
     }
+
+
+    public changeCameraModeToPerspectiveDown() {
+
+        this.map3DComponent.getCameraManager().tiltView();
+    }
 }

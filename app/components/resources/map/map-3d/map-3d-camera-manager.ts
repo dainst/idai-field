@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 import {DepthMap} from '../../../../core/3d/depth-map';
 import {CameraManager} from '../../../../core/3d/camera-manager';
+import {
+    CAMERA_DIRECTION_EAST, CAMERA_DIRECTION_NORTH, CAMERA_DIRECTION_SOUTH,
+    CAMERA_DIRECTION_WEST
+} from './map-3d-controls';
 
 
 export type CameraMode = 'perspective'|'orthographic';
@@ -16,9 +20,15 @@ export class Map3DCameraManager extends CameraManager {
     private perspectiveCamera: THREE.PerspectiveCamera;
     private orthographicCamera: THREE.OrthographicCamera;
 
+    private tilted: boolean = false;
+
     private perspectiveYLevel: number = 5;
     private orthographicYLevel: number = 5;
     private orthographicZoomLevel: number = 1;
+
+    private direction: number = CAMERA_DIRECTION_NORTH;
+
+    private level: number = 0;
 
 
     public initialize(canvasWidth: number, canvasHeight: number) {
@@ -68,10 +78,21 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
-    public rotateSmoothly(radians: number) {
+    public rotateSmoothly(radians: number, direction: number) {
 
+        if (this.isAnimationRunning()) return;
+
+        this.direction = direction;
+
+        const pivotPoint: THREE.Vector3 = this.getPivotPoint();
         const clonedCamera: THREE.PerspectiveCamera|THREE.OrthographicCamera = this.getCamera().clone();
-        clonedCamera.rotateZ(radians);
+        const yAxis: THREE.Vector3 = new THREE.Vector3(0, 1, 0);
+
+        clonedCamera.position.sub(pivotPoint);
+        clonedCamera.position.applyAxisAngle(yAxis, radians);
+        clonedCamera.position.add(pivotPoint);
+
+        clonedCamera.lookAt(pivotPoint);
 
         this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
     }
@@ -98,11 +119,7 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
-    public focusMesh(mesh: THREE.Mesh, cameraRotation: number) {
-
-        const meshPosition: THREE.Vector3 = mesh.getWorldPosition();
-
-        this.focusPoint(meshPosition, cameraRotation);
+    public focusMesh(mesh: THREE.Mesh) {
 
         this.zoomPerspectiveCameraToFit(mesh);
         this.zoomOrthographicCameraToFit(mesh);
@@ -111,10 +128,10 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
-    public focusPoint(point: THREE.Vector3, cameraRotation: number) {
+    public focusPoint(point: THREE.Vector3) {
 
-        CameraManager.focusPoint(this.perspectiveCamera, point, 3, cameraRotation);
-        CameraManager.focusPoint(this.orthographicCamera, point, 20, cameraRotation);
+        CameraManager.focusPoint(this.perspectiveCamera, point, 3);
+        CameraManager.focusPoint(this.orthographicCamera, point, 20);
 
         this.saveState();
     }
@@ -136,11 +153,15 @@ export class Map3DCameraManager extends CameraManager {
 
     private zoomPerspectiveCameraToFit(mesh: THREE.Mesh) {
 
-        const fovInRadians: number = this.perspectiveCamera.fov * (Math.PI / 180);
-        const size = Math.max(mesh.geometry.boundingBox.getSize().x, mesh.geometry.boundingBox.getSize().z);
-        const yDistance: number = Math.abs((size / 2) / Math.sin(fovInRadians / 2));
+        this.perspectiveCamera.position.set(mesh.position.x, mesh.position.y, mesh.position.z);
 
-        this.perspectiveCamera.position.setY(mesh.position.y + yDistance);
+        const fovInRadians: number = this.perspectiveCamera.fov * (Math.PI / 180);
+        const size = mesh.geometry.boundingSphere.radius;
+        const distance: number = Math.abs(size / Math.sin(fovInRadians / 2));
+
+        this.perspectiveCamera.translateZ(distance);
+
+        this.level = mesh.position.y;
     }
 
 
@@ -149,7 +170,7 @@ export class Map3DCameraManager extends CameraManager {
         const width: number = this.orthographicCamera.right - this.orthographicCamera.left;
         const height: number = this.orthographicCamera.top - this.orthographicCamera.bottom;
 
-        this.orthographicCamera.position.y = mesh.position.y + 20;
+        this.orthographicCamera.position.set(mesh.position.x, mesh.position.y + 20, mesh.position.z);
 
         const boundingBox: THREE.Box3 = mesh.geometry.boundingBox;
 
@@ -207,6 +228,8 @@ export class Map3DCameraManager extends CameraManager {
 
     private switchFromPerspectiveToOrthographic() {
 
+        if (this.tilted) this.tiltView(false);
+
         this.orthographicCamera.position.set(
             this.perspectiveCamera.position.x,
             this.orthographicYLevel,
@@ -220,11 +243,87 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
+    public tiltView(animate: boolean = true) {
+
+        if (this.isAnimationRunning()) return;
+
+        this.tilted = !this.tilted;
+
+        if (this.mode == 'orthographic') {
+            this.setMode('perspective');
+            animate = false;
+        }
+
+        this.adjustCameraTilt(animate);
+    }
+
+
+    private adjustCameraTilt(animate: boolean) {
+
+        const pivotPoint: THREE.Vector3 = this.getPivotPoint();
+        const radians: number = this.tilted ? Math.PI / 4 : -Math.PI / 4;
+        const xAxis: THREE.Vector3 = new THREE.Vector3(1, 0, 0);
+        const zAxis: THREE.Vector3 = new THREE.Vector3(0, 0, 1);
+
+        const clonedCamera: THREE.PerspectiveCamera = this.perspectiveCamera.clone();
+
+        clonedCamera.position.sub(pivotPoint);
+
+        switch(this.direction) {
+            case CAMERA_DIRECTION_NORTH:
+                clonedCamera.position.applyAxisAngle(xAxis, radians);
+                break;
+            case CAMERA_DIRECTION_EAST:
+                clonedCamera.position.applyAxisAngle(zAxis, radians);
+                break;
+            case CAMERA_DIRECTION_WEST:
+                clonedCamera.position.applyAxisAngle(zAxis, -radians);
+                break;
+            case CAMERA_DIRECTION_SOUTH:
+                clonedCamera.position.applyAxisAngle(xAxis, -radians);
+                break;
+        }
+
+        clonedCamera.position.add(pivotPoint);
+
+        clonedCamera.rotateOnAxis(xAxis, radians);
+
+        if (animate) {
+            this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
+        } else {
+            this.perspectiveCamera.position.set(
+                clonedCamera.position.x,
+                clonedCamera.position.y,
+                clonedCamera.position.z
+            );
+            this.perspectiveCamera.quaternion.set(
+                clonedCamera.quaternion.x,
+                clonedCamera.quaternion.y,
+                clonedCamera.quaternion.z,
+                clonedCamera.quaternion.w
+            );
+            this.perspectiveCamera.updateProjectionMatrix();
+        }
+    }
+
+
     private saveState() {
 
         this.perspectiveYLevel = this.perspectiveCamera.position.y;
         this.orthographicYLevel = this.orthographicCamera.position.y;
         this.orthographicZoomLevel = this.orthographicCamera.zoom;
+    }
+
+
+    private getPivotPoint(): THREE.Vector3 {
+
+        const plane: THREE.Plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), this.level);
+        const ray: THREE.Ray = new THREE.Ray(
+            this.perspectiveCamera.position,
+            this.perspectiveCamera.getWorldDirection()
+        );
+
+        return ray.intersectPlane(plane);
     }
 
 

@@ -32,27 +32,23 @@
                 "Wall_surface",
                 "Burial"
             ],
-            "editable": false,
             "label": "Gehört zu",
             "name": "isRecordedIn",
             "range": [
                 "Trench",
                 "Survey",
                 "Building"
-            ],
-            "visible": true
+            ]
         },
         {
             "domain": [
                 "Room"
             ],
-            "editable": false,
             "label": "Gehört zu",
             "name": "isRecordedIn",
             "range": [
                 "Building"
-            ],
-            "visible": true
+            ]
         },
         {
             "domain": [

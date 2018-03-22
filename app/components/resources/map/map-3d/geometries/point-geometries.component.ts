@@ -43,8 +43,6 @@ export class PointGeometriesComponent {
 
     public select = (document: IdaiFieldDocument) => this.onSelectDocument.emit(document);
 
-    public onMouseMove = (event: MouseEvent) => this.map3DComponent.onMouseMove(event);
-    public onMouseUp = (event: MouseEvent) => this.map3DComponent.onMouseUp(event);
     public onWheel = (event: WheelEvent) => this.map3DComponent.onWheel(event);
 
 

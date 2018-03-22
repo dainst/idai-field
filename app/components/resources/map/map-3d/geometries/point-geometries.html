@@ -5,8 +5,6 @@
      [style.top]="'calc(' + marker.canvasPosition.y + 'px - 50px)'">
     <div class="map-3d-marker-head"
          (click)="select(marker.document)"
-         (mousemove)="onMouseMove($event)"
-         (mouseup)="onMouseUp($event)"
          (wheel)="onWheel($event)">
         <div class="map-3d-type-icon">
             <type-icon [size]="25" [type]="marker.document.resource.type"></type-icon>

@@ -1,4 +1,7 @@
-import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, Output, EventEmitter, SimpleChanges}
+import {
+    Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, Output, EventEmitter, SimpleChanges,
+    Renderer2
+}
     from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
@@ -37,7 +40,8 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     private cameraManager: Map3DCameraManager;
 
 
-    constructor(private projectConfiguration: ProjectConfiguration) {}
+    constructor(private renderer: Renderer2,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     public getViewer = () => this.viewer;
@@ -45,8 +49,6 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     public getCameraManager = () => this.cameraManager;
 
     public onMouseDown = (event: MouseEvent) => this.setControlState(this.controls.onMouseDown(event));
-    public onMouseUp = (event: MouseEvent) => this.setControlState(this.controls.onMouseUp(event));
-    public onMouseMove = (event: MouseEvent) => this.setControlState(this.controls.onMouseMove(event));
     public onWheel = (event: WheelEvent) => this.controls.onWheel(event);
 
     public zoomIn = () => this.controls.zoomIn();
@@ -79,6 +81,24 @@ export class Map3DComponent implements OnChanges, OnDestroy {
             this.projectConfiguration);
         this.controls = new Map3DControls(this.cameraManager, this.meshGeometryManager,
             new IntersectionHelper(this.viewer, this.cameraManager));
+
+        this.listenToMouseEvents();
+    }
+
+
+    private listenToMouseEvents() {
+
+        this.renderer.listen(
+            'document',
+            'mousemove',
+            (event: MouseEvent) => this.setControlState(this.controls.onMouseMove(event))
+        );
+
+        this.renderer.listen(
+            'document',
+            'mouseup',
+            (event: MouseEvent) => this.setControlState(this.controls.onMouseUp(event))
+        );
     }
 
 

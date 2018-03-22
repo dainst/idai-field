@@ -1,4 +1,5 @@
-import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, SimpleChanges} from '@angular/core';
+import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, SimpleChanges,
+    Renderer2} from '@angular/core';
 import * as THREE from 'three';
 import {Viewer3D} from '../../core/3d/viewer-3d';
 import {Object3DViewerControls, Object3DViewerAction} from './object-3d-viewer-controls';
@@ -32,12 +33,11 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     private meshMaterial: THREE.Material|Array<THREE.Material>;
 
 
-    constructor(private meshLoader: MeshLoader) {}
+    constructor(private renderer: Renderer2,
+                private meshLoader: MeshLoader) {}
 
 
     public onMouseDown = (event: MouseEvent) => this.controls.onMouseDown(event);
-    public onMouseUp = (event: MouseEvent) => this.controls.onMouseUp(event);
-    public onMouseMove = (event: MouseEvent) => this.controls.onMouseMove(event);
     public onWheel = (event: WheelEvent) => this.controls.onWheel(event);
 
     public zoomIn = () => this.controls.zoomIn();
@@ -87,6 +87,24 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
         this.cameraManager = new Object3DViewerCameraManager();
         this.viewer = new Viewer3D(this.container.nativeElement, this.cameraManager);
         this.controls = new Object3DViewerControls(this.cameraManager);
+
+        this.listenToMouseEvents();
+    }
+
+
+    private listenToMouseEvents() {
+
+        this.renderer.listen(
+            'document',
+            'mousemove',
+            (event: MouseEvent) => this.controls.onMouseMove(event)
+        );
+
+        this.renderer.listen(
+            'document',
+            'mouseup',
+            (event: MouseEvent) => this.controls.onMouseUp(event)
+        );
     }
 
 

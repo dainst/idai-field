@@ -154,11 +154,7 @@ export class Map3DCameraManager extends CameraManager {
     private zoomPerspectiveCameraToFit(mesh: THREE.Mesh) {
 
         this.perspectiveCamera.position.set(mesh.position.x, mesh.position.y, mesh.position.z);
-
-        const fovInRadians: number = this.perspectiveCamera.fov * (Math.PI / 180);
-        const size = mesh.geometry.boundingSphere.radius;
-        const distance: number = Math.abs(size / Math.sin(fovInRadians / 2));
-
+        const distance: number = CameraManager.computeZoomToFitDistance(this.perspectiveCamera, mesh);
         this.perspectiveCamera.translateZ(distance);
 
         this.level = mesh.position.y;

@@ -91,4 +91,13 @@ export abstract class CameraManager {
         camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
     }
+
+
+    protected static computeZoomToFitDistance(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
+
+        const fovInRadians: number = camera.fov * (Math.PI / 180);
+        const size = mesh.geometry.boundingSphere.radius;
+
+        return Math.abs(size / Math.sin(fovInRadians / 2));
+    }
 }

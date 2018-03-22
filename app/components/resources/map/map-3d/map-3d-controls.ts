@@ -4,9 +4,9 @@ import {Map3DControlState} from './map-3d-control-state';
 import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
 import {IntersectionHelper} from '../../../../core/3d/intersection-helper';
 import {Map3DCameraManager} from './map-3d-camera-manager';
+import {VisibilityHelper} from '../../../../core/3d/visibility-helper';
 import {getPointVector, has3DLineGeometry, has3DPointGeometry,
     has3DPolygonGeometry} from '../../../../util/util-3d';
-import {VisibilityHelper} from '../../../../core/3d/visibility-helper';
 
 
 export const CAMERA_DIRECTION_NORTH: number = 0;

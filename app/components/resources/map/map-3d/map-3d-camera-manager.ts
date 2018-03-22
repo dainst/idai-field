@@ -130,8 +130,8 @@ export class Map3DCameraManager extends CameraManager {
 
     public focusPoint(point: THREE.Vector3) {
 
-        CameraManager.focusPoint(this.perspectiveCamera, point, 3);
-        CameraManager.focusPoint(this.orthographicCamera, point, 20);
+        Map3DCameraManager.focusPoint(this.perspectiveCamera, point, 3);
+        Map3DCameraManager.focusPoint(this.orthographicCamera, point, 20);
 
         this.saveState();
     }
@@ -331,5 +331,12 @@ export class Map3DCameraManager extends CameraManager {
 
         camera.lookAt(new THREE.Vector3(0, 0, 0));
         camera.layers.enable(DepthMap.NO_DEPTH_MAPPING_LAYER);
+    }
+
+
+    protected static focusPoint(camera: THREE.Camera, point: THREE.Vector3, yDistance: number) {
+
+        camera.position.set(point.x, point.y, point.z);
+        camera.translateZ(yDistance);
     }
 }

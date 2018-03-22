@@ -6,6 +6,7 @@ import {IntersectionHelper} from '../../../../core/3d/intersection-helper';
 import {Map3DCameraManager} from './map-3d-camera-manager';
 import {getPointVector, has3DLineGeometry, has3DPointGeometry,
     has3DPolygonGeometry} from '../../../../util/util-3d';
+import {VisibilityHelper} from '../../../../core/3d/visibility-helper';
 
 
 export const CAMERA_DIRECTION_NORTH: number = 0;
@@ -119,13 +120,7 @@ export class Map3DControls {
 
         if (!document) return;
 
-        const geometry: IdaiFieldGeometry = document.resource.geometry as IdaiFieldGeometry;
-        if (has3DPointGeometry(document)) {
-            this.cameraManager.focusPoint(getPointVector(geometry.coordinates));
-        } else if (has3DLineGeometry(document) || has3DPolygonGeometry(document)) {
-            const mesh: THREE.Mesh|undefined = this.meshGeometryManager.getMesh(document);
-            if (mesh) this.focusMesh(mesh);
-        }
+        this.focusGeometry(document);
     }
 
 
@@ -215,6 +210,34 @@ export class Map3DControls {
     private updateHoverDocument(xPosition: number, yPosition: number) {
 
         this.state.hoverDocument = this.getDocumentOfGeometryAtMousePosition(xPosition, yPosition);
+    }
+
+
+    private focusGeometry(document: IdaiFieldDocument) {
+
+        if (has3DPointGeometry(document)) {
+            this.focusPointGeometry(document);
+        } else if (has3DLineGeometry(document) || has3DPolygonGeometry(document)) {
+            this.focusMeshGeometry(document);
+        }
+    }
+
+
+    private focusPointGeometry(document: IdaiFieldDocument) {
+
+        const geometry: IdaiFieldGeometry = document.resource.geometry as IdaiFieldGeometry;
+        const point: THREE.Vector3 = getPointVector(geometry.coordinates);
+
+        if (!VisibilityHelper.isInCameraViewFrustum(point, this.cameraManager.getCamera())) {
+            this.cameraManager.focusPoint(point);
+        }
+    }
+
+
+    private focusMeshGeometry(document: IdaiFieldDocument) {
+
+        const mesh: THREE.Mesh|undefined = this.meshGeometryManager.getMesh(document);
+        if (mesh) this.focusMesh(mesh);
     }
 
 

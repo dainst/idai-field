@@ -37,9 +37,6 @@ export abstract class CameraManager {
     public abstract focusMesh(mesh: THREE.Mesh, cameraRotation: number): void;
 
 
-    public abstract focusPoint(point: THREE.Vector3, cameraRotation: number): void;
-
-
     public startAnimation(targetPosition: THREE.Vector3, targetQuaternion: THREE.Quaternion,
                           targetZoom: number) {
 
@@ -93,14 +90,5 @@ export abstract class CameraManager {
 
         camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
-    }
-
-
-    protected static focusPoint(camera: THREE.Camera, point: THREE.Vector3, yDistance: number) {
-
-        camera.position.set(
-            point.x,
-            camera.position.y > point.y ? camera.position.y : point.y + yDistance,
-            point.z);
     }
 }

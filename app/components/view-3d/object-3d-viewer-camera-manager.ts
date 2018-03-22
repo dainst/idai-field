@@ -62,20 +62,8 @@ export class Object3DViewerCameraManager extends CameraManager {
 
     public focusMesh(mesh: THREE.Mesh) {
 
-        this.focusPoint(mesh.getWorldPosition());
-        this.zoomToFit(mesh);
-    }
-
-
-    public focusPoint(point: THREE.Vector3) {
-
-        CameraManager.focusPoint(this.camera, point, 1);
-    }
-
-
-    private zoomToFit(mesh: THREE.Mesh) {
-
-        this.camera.position.setY(mesh.position.y + this.computeZoomToFitDistance(mesh));
+        this.camera.position.set(0, mesh.position.y + this.computeZoomToFitDistance(mesh), 0);
+        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
     }
 
 
@@ -83,7 +71,6 @@ export class Object3DViewerCameraManager extends CameraManager {
 
         this.camera = new THREE.PerspectiveCamera(75, canvasWidth / canvasHeight, 0.1, 1000);
         this.camera.position.set(0, 0, 0);
-        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
         this.camera.layers.enable(DepthMap.NO_DEPTH_MAPPING_LAYER);
     }
 

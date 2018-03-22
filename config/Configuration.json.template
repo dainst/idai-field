@@ -38,8 +38,7 @@
             "range": [
                 "Trench",
                 "Survey",
-                "Building",
-                "Place"
+                "Building"
             ],
             "visible": true
         },

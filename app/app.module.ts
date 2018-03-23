@@ -40,6 +40,7 @@ import {DocumentDatastore} from './core/datastore/document-datastore';
 import {Validator} from './core/model/validator';
 import {MatrixModule} from './components/matrix/matrix.module';
 import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
+import {TaskbarConflictsComponent} from './components/navbar/taskbar-conflicts.component';
 
 
 const remote = require('electron').remote;
@@ -70,6 +71,7 @@ let pconf: any = undefined;
         AppComponent,
         NavbarComponent,
         TaskbarComponent,
+        TaskbarConflictsComponent,
         ProjectsComponent
     ],
     providers: [

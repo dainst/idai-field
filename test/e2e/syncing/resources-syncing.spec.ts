@@ -174,6 +174,31 @@ describe('resources/syncing --', function() {
     }
 
 
+    it('open conflict resolver via taskbar', async done => {
+
+        const nr = '8';
+
+        await createEventualConflict(nr);
+        await NavbarPage.clickConflictsButton();
+        browser.sleep(delays.shortRest * 5);
+        NavbarPage.clickConflictResolverLink('testf' + nr);
+        await browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
+        done();
+    });
+
+
+    xit('open conflict resolver via conflict button in document view', done => {
+
+        const nr = '9';
+
+        createEventualConflict(nr).then(() => {
+            ResourcesPage.clickSelectResource('testf' + nr);
+            DetailSidebarPage.clickSolveConflicts();
+            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
+        });
+    });
+
+
     it('resource created in client should be synced to other db', done => {
 
         NavbarPage.clickNavigateToExcavation()
@@ -251,30 +276,6 @@ describe('resources/syncing --', function() {
             .not.toContain('conflicted');
 
         done();
-    });
-
-
-    xit('open conflict resolver via taskbar', async done => {
-
-        const nr = '8';
-
-        await createEventualConflict(nr);
-        await NavbarPage.clickConflictsButton();
-        NavbarPage.clickConflictResolverLink('testf' + nr);
-        await browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
-        done();
-    });
-
-
-    xit('open conflict resolver via conflict button in document view', done => {
-
-        const nr = '9';
-
-        createEventualConflict(nr).then(() => {
-            ResourcesPage.clickSelectResource('testf' + nr);
-            DetailSidebarPage.clickSolveConflicts();
-            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
-        });
     });
 
 

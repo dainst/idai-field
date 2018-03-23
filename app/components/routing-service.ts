@@ -72,14 +72,13 @@ export class RoutingService {
 
     public async jumpToConflictResolver(document: Document) {
 
-        this.router.navigate(['settings']); // indirect away first to reload the resources component, in case you are already there
-
         if (this.imageTypeUtility.isImageType(document.resource.type)) {
             return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
         } else {
             const mainTypeName = await this.getMainTypeNameForDocument(document);
-            const viewName = await this.viewFacade.getMainTypeHomeViewName(mainTypeName);
-            this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
+            const viewName = this.viewFacade.getMainTypeHomeViewName(mainTypeName);
+            await this.router.navigate(['resources', viewName]); // indirect away first to reload the resources component, in case you are already there
+            return this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
         }
     }
 

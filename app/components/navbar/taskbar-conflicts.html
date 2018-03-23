@@ -1,0 +1,22 @@
+<div *ngIf="conflicts.length">
+
+    <ng-template #popContent>
+        <ul class="list-group conflicts-popover-content">
+            <li *ngFor="let document of conflicts" class="list-group-item"
+                [id]="'taskbar-conflict-' + document.resource.identifier"
+                (click)="openConflictResolver(document)">
+                <document-teaser [document]="document"></document-teaser>
+            </li>
+        </ul>
+    </ng-template>
+    <a [ngbPopover]="popContent" popoverTitle="Konflikte"
+       #popover="ngbPopover" placement="bottom" id="taskbar-conflicts-button"
+       ngbTooltip="Insgesamt {{conflicts.length}} Konflikte"
+       triggers="manual" (click)="togglePopover()"
+       placement="bottom" class="navbar-hover-element">
+        <span class="mdi mdi-alert-outline"></span>
+        <span class="badge-pill badge-danger conflicts-badge">
+            {{conflicts.length}}
+        </span>
+    </a>
+</div>

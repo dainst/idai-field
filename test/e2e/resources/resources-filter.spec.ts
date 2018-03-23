@@ -28,12 +28,14 @@ fdescribe('resources/filter --', () => {
     beforeEach(() => {
 
         if (index > 0) {
-            NavbarPage.performNavigateToSettings();
-            require('request').post('http://localhost:3003/reset', {});
-            browser.sleep(delays.shortRest);
+            NavbarPage.performNavigateToSettings().then(() => {
+                require('request').post('http://localhost:3003/reset', {});
+            });
+            browser.sleep(delays.shortRest * 3);
             NavbarPage.clickNavigateToProject();
-            browser.sleep(delays.shortRest * 4);
+            browser.sleep(delays.shortRest * 3);
             NavbarPage.clickNavigateToExcavation();
+            browser.sleep(delays.shortRest * 3);
         }
         index++;
     });
@@ -65,7 +67,7 @@ fdescribe('resources/filter --', () => {
     });
 
 
-    fit('filter by parent type', () => {
+    xit('filter by parent type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'inscription');
@@ -77,7 +79,7 @@ fdescribe('resources/filter --', () => {
     });
 
 
-    xit('show correct types in plus type menu after choosing type filter', () => {
+    fit('show correct types in plus type menu after choosing type filter', () => {
 
         const checkTypeOptions = () => {
 

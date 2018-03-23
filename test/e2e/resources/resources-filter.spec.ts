@@ -41,7 +41,7 @@ fdescribe('resources/filter --', () => {
     });
 
 
-    it('select all filter', () => {
+    fit('select all filter', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');
@@ -123,7 +123,7 @@ fdescribe('resources/filter --', () => {
     });
 
 
-    xit('set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+    fit('set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
         const checkTypeIcon = () => {
 

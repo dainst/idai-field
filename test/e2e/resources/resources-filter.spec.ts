@@ -15,34 +15,10 @@ let delays = require('../config/delays');
  */
 fdescribe('resources/filter --', () => {
 
-    let index = 0;
+    beforeEach(() => ResourcesPage.get());
 
 
-    beforeAll(() => {
-
-        ResourcesPage.get();
-        browser.sleep(delays.shortRest);
-        
-    });
-
-
-    beforeEach(() => {
-
-        if (index > 0) {
-            NavbarPage.performNavigateToSettings().then(() => {
-                require('request').post('http://localhost:3003/reset', {});
-            });
-            browser.sleep(delays.shortRest * 3);
-            NavbarPage.clickNavigateToProject();
-            browser.sleep(delays.shortRest * 3);
-            NavbarPage.clickNavigateToExcavation();
-            browser.sleep(delays.shortRest * 3);
-        }
-        index++;
-    });
-
-
-    fit('select all filter', () => {
+    it('select all filter', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');
@@ -55,7 +31,7 @@ fdescribe('resources/filter --', () => {
     });
 
 
-    fit('show only resources of the selected type', () => {
+    it('show only resources of the selected type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');
@@ -68,19 +44,7 @@ fdescribe('resources/filter --', () => {
     });
 
 
-    xit('filter by parent type', () => {
-
-        ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.performCreateResource('2', 'inscription');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        SearchBarPage.clickChooseTypeFilter('feature');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-    });
-
-
-    fit('show correct types in plus type menu after choosing type filter', () => {
+    it('show correct types in plus type menu after choosing type filter', () => {
 
         const checkTypeOptions = () => {
 
@@ -124,7 +88,7 @@ fdescribe('resources/filter --', () => {
     });
 
 
-    fit('set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+    it('set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
         const checkTypeIcon = () => {
 
@@ -166,5 +130,17 @@ fdescribe('resources/filter --', () => {
         checkTypeIcon();
         createResourceWithPresetType('2', false);
         // TODO comment in ResourcesPage.getDocumentTeaserTypeCharacter().then(character => expect(character).toEqual('E'));
+    });
+
+
+    it('filter by parent type', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.performCreateResource('2', 'inscription');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+        SearchBarPage.clickChooseTypeFilter('feature');
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
     });
 });

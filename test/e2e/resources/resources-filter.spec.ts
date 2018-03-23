@@ -22,6 +22,7 @@ fdescribe('resources/filter --', () => {
 
         ResourcesPage.get();
         browser.sleep(delays.shortRest);
+        
     });
 
 

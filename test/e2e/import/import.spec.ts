@@ -49,29 +49,6 @@ describe('import --', function() {
     };
 
 
-    xit('import a relation and add the corresponding inverse relation', () => {
-
-        importIt('./test/test-data/importer-test-relation-ok.jsonl');
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToExcavation();
-
-        ResourcesPage.clickSelectResource('obob1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        RelationsViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toContain('context1'));
-        RelationsViewPage.getRelationName(0).then(relationName => expect(relationName).toEqual('Zeitlich vor'));
-
-        ResourcesPage.clickSelectResource('context1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        RelationsViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toContain('obob1'));
-        RelationsViewPage.getRelationName(0).then(relationName => expect(relationName).toEqual('Zeitlich nach'));
-
-        NavbarPage.clickNavigateToProject();
-
-        ResourcesPage.clickSelectResource('trench1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
-    });
-
-
     it('delete already imported iDAI.field documents if an error occurs', () => {
 
         importIt('./test/test-data/importer-test-constraint-violation.jsonl');
@@ -119,27 +96,6 @@ describe('import --', function() {
 
         importIt('./test/test-data/importer-test-unsupported-geometry-type.jsonl');
         NavbarPage.awaitAlert('nicht unterstützt', false);
-    });
-
-
-    xit('abort if a relation target cannot be found and remove all imported resources & already '
-            + 'created inverse relations', () => {
-
-        importIt('./test/test-data/importer-test-relation-error.jsonl');
-        NavbarPage.awaitAlert('konnte nicht gefunden werden', false);
-
-        NavbarPage.clickCloseMessage();
-        NavbarPage.clickNavigateToExcavation();
-
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob1'));
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob2'));
-
-        ResourcesPage.clickSelectResource('context1');
-        RelationsViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(0);
-        });
     });
 
 

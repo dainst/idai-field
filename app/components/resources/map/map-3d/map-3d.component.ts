@@ -1,8 +1,7 @@
 import {
     Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, Output, EventEmitter, SimpleChanges,
     Renderer2
-}
-    from '@angular/core';
+} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {ProjectConfiguration} from 'idai-components-2/configuration';
 import {Map3DControls} from './map-3d-controls';
@@ -39,6 +38,9 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     private controls: Map3DControls;
     private cameraManager: Map3DCameraManager;
 
+    private removeMouseMoveEventListener: Function;
+    private removeMouseUpEventListener: Function;
+
 
     constructor(private renderer: Renderer2,
                 private projectConfiguration: ProjectConfiguration) {}
@@ -70,6 +72,8 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     ngOnDestroy() {
 
         this.viewer.destroy();
+        this.removeMouseMoveEventListener();
+        this.removeMouseUpEventListener();
     }
 
 
@@ -88,13 +92,13 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     private listenToMouseEvents() {
 
-        this.renderer.listen(
+        this.removeMouseMoveEventListener = this.renderer.listen(
             'document',
             'mousemove',
             (event: MouseEvent) => this.setControlState(this.controls.onMouseMove(event))
         );
 
-        this.renderer.listen(
+        this.removeMouseUpEventListener =this.renderer.listen(
             'document',
             'mouseup',
             (event: MouseEvent) => this.setControlState(this.controls.onMouseUp(event))

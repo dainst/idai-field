@@ -32,6 +32,9 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     private mesh: THREE.Mesh;
     private meshMaterial: THREE.Material|Array<THREE.Material>;
 
+    private removeMouseMoveEventListener: Function;
+    private removeMouseUpEventListener: Function;
+
 
     constructor(private renderer: Renderer2,
                 private meshLoader: MeshLoader) {}
@@ -54,6 +57,8 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     ngOnDestroy() {
 
         this.viewer.destroy();
+        this.removeMouseMoveEventListener();
+        this.removeMouseUpEventListener();
     }
 
 
@@ -94,13 +99,13 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
     private listenToMouseEvents() {
 
-        this.renderer.listen(
+        this.removeMouseMoveEventListener = this.renderer.listen(
             'document',
             'mousemove',
             (event: MouseEvent) => this.controls.onMouseMove(event)
         );
 
-        this.renderer.listen(
+        this.removeMouseUpEventListener = this.renderer.listen(
             'document',
             'mouseup',
             (event: MouseEvent) => this.controls.onMouseUp(event)

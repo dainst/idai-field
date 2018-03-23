@@ -12,7 +12,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/project --', function() {
+fdescribe('resources/project --', function() {
 
     const appDataPath = browser.params.appDataPath;
 
@@ -50,6 +50,38 @@ describe('resources/project --', function() {
         const filePath = appDataPath + '/resources-state-' + 'abc.json';
         if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
     }
+
+
+    it('delete project', () => {
+
+        performCreateProject();
+        ResourcesPage.get();
+
+        ProjectPage.clickProjectsBadge();
+        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
+        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
+
+        ProjectPage.clickDeleteProject();
+        browser.sleep(delays.shortRest);
+
+        ProjectPage.typeInProjectName('abc');
+        ProjectPage.clickConfirmProjectOperation();
+        browser.sleep(1000);
+
+        ResourcesPage.get();
+        browser.sleep(delays.shortRest * 10);
+        NavbarPage.clickNavigateToProject();
+        browser.sleep(delays.shortRest * 15);
+        NavbarPage.clickNavigateToExcavation();
+        browser.sleep(delays.shortRest * 5);
+        SearchBarPage.typeInSearchField('con');
+        browser.sleep(delays.shortRest * 5);
+
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+
+        ProjectPage.clickProjectsBadge();
+        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
+    });
 
 
     it('create & switch project', () => {
@@ -107,38 +139,6 @@ describe('resources/project --', function() {
 
         NavbarPage.clickNavigateToProject();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
-    });
-
-
-    xit('delete project', () => {
-
-        performCreateProject();
-        ResourcesPage.get();
-
-        ProjectPage.clickProjectsBadge();
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('abc') });
-        ProjectPage.getProjectNameOptionText(1).then(t => { expect(t).toContain('test') });
-
-        ProjectPage.clickDeleteProject();
-        browser.sleep(delays.shortRest);
-
-        ProjectPage.typeInProjectName('abc');
-        ProjectPage.clickConfirmProjectOperation();
-        browser.sleep(1000);
-
-        ResourcesPage.get();
-        browser.sleep(delays.shortRest * 10);
-        NavbarPage.clickNavigateToProject();
-        browser.sleep(delays.shortRest * 15);
-        NavbarPage.clickNavigateToExcavation();
-        browser.sleep(delays.shortRest * 5);
-        SearchBarPage.typeInSearchField('con');
-        browser.sleep(delays.shortRest * 5);
-
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-
-        ProjectPage.clickProjectsBadge();
-        ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
     });
 
 

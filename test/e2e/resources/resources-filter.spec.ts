@@ -13,7 +13,7 @@ let delays = require('../config/delays');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/filter --', () => {
+fdescribe('resources/filter --', () => {
 
     let index = 0;
 
@@ -52,7 +52,7 @@ describe('resources/filter --', () => {
     });
 
 
-    it('show only resources of the selected type', () => {
+    fit('show only resources of the selected type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');
@@ -65,7 +65,7 @@ describe('resources/filter --', () => {
     });
 
 
-    xit('filter by parent type', () => {
+    fit('filter by parent type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'inscription');

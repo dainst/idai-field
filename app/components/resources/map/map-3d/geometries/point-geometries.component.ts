@@ -37,6 +37,8 @@ export class PointGeometriesComponent {
 
     private cachedMarkers: { [resourceId: string]: Map3DMarker } = {};
 
+    private visibilityCheckIndex: number = -1;
+
 
     constructor(private map3DComponent: Map3DComponent) {}
 
@@ -53,9 +55,11 @@ export class PointGeometriesComponent {
         if (!this.documents || !this.showMarkers) return markers;
 
         this.documents.forEach(document => {
-           const marker: Map3DMarker|undefined = this.createMarker(document);
+           const marker: Map3DMarker|undefined = this.getMarker(document);
            if (marker) markers.push(marker);
         });
+
+        this.performVisibilityCheck(markers);
 
         return markers;
     }
@@ -67,16 +71,32 @@ export class PointGeometriesComponent {
     }
 
 
-    private createMarker(document: IdaiFieldDocument): Map3DMarker|undefined {
+    private getMarker(document: IdaiFieldDocument): Map3DMarker|undefined {
 
         const { canvasPosition, worldSpacePosition } = this.getPositionVectors(document);
 
         if (!canvasPosition || !worldSpacePosition) return undefined;
 
-        const marker = this.cachedMarkers[document.resource.id as string] || { document: document };
-        marker.canvasPosition = canvasPosition;
-        marker.worldSpacePosition = worldSpacePosition;
-        marker.visible = this.isVisible(marker);
+        const cachedMarker: Map3DMarker|undefined = this.cachedMarkers[document.resource.id as string];
+
+        if (cachedMarker) {
+            PointGeometriesComponent.updateMarker(cachedMarker, canvasPosition, worldSpacePosition);
+            return cachedMarker;
+        } else {
+            return this.createMarker(document, canvasPosition, worldSpacePosition);
+        }
+    }
+
+
+    private createMarker(document: IdaiFieldDocument, canvasPosition: THREE.Vector2,
+                         worldSpacePosition: THREE.Vector3): Map3DMarker|undefined {
+
+        const marker: Map3DMarker = {
+            document: document,
+            canvasPosition: canvasPosition,
+            worldSpacePosition: worldSpacePosition,
+            visible: true
+        };
 
         this.cachedMarkers[document.resource.id as string] = marker;
 
@@ -109,6 +129,20 @@ export class PointGeometriesComponent {
     }
 
 
+    private performVisibilityCheck(markers: Array<Map3DMarker>) {
+
+        if (markers.length == 0) return;
+
+        if (this.visibilityCheckIndex >= markers.length - 1) {
+            this.visibilityCheckIndex = 0;
+        } else {
+            this.visibilityCheckIndex++;
+        }
+
+        markers[this.visibilityCheckIndex].visible = this.isVisible(markers[this.visibilityCheckIndex]);
+    }
+
+
     private isVisible(marker: Map3DMarker) {
 
         if (this.map3DComponent.getCameraManager().getMode() == 'orthographic') return true;
@@ -135,5 +169,13 @@ export class PointGeometriesComponent {
         return getPointVector(
             (document.resource.geometry as IdaiFieldGeometry).coordinates
         );
+    }
+
+
+    private static updateMarker(marker: Map3DMarker, canvasPosition: THREE.Vector2,
+                                worldSpacePosition: THREE.Vector3) {
+
+        marker.canvasPosition = canvasPosition;
+        marker.worldSpacePosition = worldSpacePosition;
     }
 }

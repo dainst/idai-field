@@ -4,15 +4,15 @@ import {DoceditPage} from '../docedit/docedit.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 
-let EC = protractor.ExpectedConditions;
-let delays = require('../config/delays');
+const EC = protractor.ExpectedConditions;
+const delays = require('../config/delays');
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-fdescribe('resources/filter --', () => {
+describe('resources/filter --', () => {
 
     beforeEach(() => ResourcesPage.get());
 

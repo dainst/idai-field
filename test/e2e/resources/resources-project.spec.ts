@@ -12,7 +12,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/project --', function() {
+fdescribe('resources/project --', function() {
 
     const appDataPath = browser.params.appDataPath;
 
@@ -52,7 +52,7 @@ describe('resources/project --', function() {
     }
 
 
-    xit('create & switch project', () => {
+    it('create & switch project', () => {
 
         performCreateProject();
 

@@ -122,7 +122,6 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
         this.mesh = await this.meshLoader.load(this.document.resource.id as string);
         this.meshMaterial = this.mesh.material;
-        MeshPreparationUtility.createBackSide(this.mesh);
     }
 
 

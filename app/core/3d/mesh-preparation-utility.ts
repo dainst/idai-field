@@ -18,14 +18,24 @@ export class MeshPreparationUtility {
 
             const position: THREE.Vector3 = MeshPreparationUtility.getPosition(mesh);
 
-            await this.performAdjustment(1,
-                MeshPreparationUtility.smoothGeometry.bind(MeshPreparationUtility), mesh, position);
+            const geometry: THREE.Geometry = await this.performAdjustment(1,
+                MeshPreparationUtility.makeGeometryFromBufferGeometry.bind(MeshPreparationUtility),
+                mesh, position);
+
             await this.performAdjustment(2,
-                MeshPreparationUtility.applySceneMatrix.bind(MeshPreparationUtility), mesh, position, scene);
-            await this.performAdjustment(3,
+                MeshPreparationUtility.prepareGeometry.bind(MeshPreparationUtility), mesh, geometry);
+
+            const backSideMesh: THREE.Mesh = await this.performAdjustment(3,
+                MeshPreparationUtility.createBackSideMesh.bind(MeshPreparationUtility), mesh, geometry);
+
+            await this.performAdjustment(4,
+                MeshPreparationUtility.applySceneMatrix.bind(MeshPreparationUtility), mesh, backSideMesh,
+                position, scene);
+
+            await this.performAdjustment(5,
                 MeshPreparationUtility.centerGeometry.bind(MeshPreparationUtility), mesh);
 
-            MeshPreparationUtility.applyOffset(mesh, position);
+            mesh.position.add(position);
 
             resolve();
         });
@@ -33,29 +43,32 @@ export class MeshPreparationUtility {
 
 
     private async performAdjustment(stepNumber: number, adjustmentFunction: Function, mesh: THREE.Mesh,
-                              position?: THREE.Vector3, scene?: THREE.Scene): Promise<void> {
+                                    parameter1?: any, parameter2?: any, parameter3?: any): Promise<any> {
 
         return new Promise<any>(resolve => {
 
             setTimeout(() => {
-                adjustmentFunction(mesh, position, scene);
-                this.meshLoadingProgress.setAdjustingProgress(mesh.name, stepNumber, 3);
-                resolve();
+                const result: any = adjustmentFunction(mesh, parameter1, parameter2, parameter3);
+                this.meshLoadingProgress.setAdjustingProgress(mesh.name, stepNumber, 5);
+                resolve(result);
             });
         });
     }
 
 
-    public static createBackSide(mesh: THREE.Mesh) {
+    private static createBackSideMesh(mesh: THREE.Mesh, geometry: THREE.Geometry): THREE.Mesh {
+
+        this.flipNormals(geometry);
 
         const backSideMesh = new THREE.Mesh();
-        backSideMesh.geometry = mesh.geometry.clone();
+        backSideMesh.geometry = new THREE.BufferGeometry().fromGeometry(geometry);
         backSideMesh.material = new THREE.MeshPhongMaterial({
-            color: new THREE.Color(0xffffff),
-            side: THREE.BackSide
+            color: new THREE.Color(0xffffff)
         });
 
         mesh.add(backSideMesh);
+
+        return backSideMesh;
     }
 
 
@@ -70,18 +83,18 @@ export class MeshPreparationUtility {
         mesh.geometry.computeBoundingSphere();
         mesh.geometry.computeBoundingBox();
 
-        const center: THREE.Vector3 = mesh.geometry.boundingSphere.center;
-
+        const center: THREE.Vector3 = mesh.geometry.boundingSphere.center.clone();
         mesh.position.add(center);
+
         mesh.geometry.translate(-center.x, -center.y, -center.z);
+
+        for (let child of mesh.children) {
+            if (child instanceof THREE.Mesh) child.geometry.translate(-center.x, -center.y, -center.z);
+        }
     }
 
 
-    private static smoothGeometry(mesh: THREE.Mesh, position: THREE.Vector3) {
-
-        const geometry: THREE.Geometry = mesh.geometry instanceof THREE.BufferGeometry ?
-            this.makeGeometryFromBufferGeometry(mesh.geometry, position) :
-            mesh.geometry;
+    private static prepareGeometry(mesh: THREE.Mesh, geometry: THREE.Geometry) {
 
         geometry.computeFaceNormals();
         geometry.mergeVertices();
@@ -91,24 +104,20 @@ export class MeshPreparationUtility {
     }
 
 
-    private static applySceneMatrix(mesh: THREE.Mesh, position: THREE.Vector3, scene: THREE.Scene) {
+    private static applySceneMatrix(mesh: THREE.Mesh, backSideMesh: THREE.Mesh, position: THREE.Vector3,
+                                    scene: THREE.Scene) {
 
         scene.updateMatrix();
 
         mesh.geometry.applyMatrix(scene.matrix);
+        backSideMesh.geometry.applyMatrix(scene.matrix);
         position.applyMatrix4(scene.matrix);
     }
 
 
-    private static applyOffset(mesh: THREE.Mesh, offset: THREE.Vector3) {
+    private static makeGeometryFromBufferGeometry(mesh: THREE.Mesh, offset: THREE.Vector3): THREE.Geometry {
 
-        const position: THREE.Vector3 = mesh.position.clone().add(offset);
-        mesh.position.set(position.x, position.y, position.z);
-    }
-
-
-    private static makeGeometryFromBufferGeometry(bufferGeometry: THREE.BufferGeometry,
-                                                  offset: THREE.Vector3): THREE.Geometry {
+        const bufferGeometry: THREE.BufferGeometry = mesh.geometry as THREE.BufferGeometry;
 
         const geometry = new THREE.Geometry();
         geometry.vertices = this.getVertices(bufferGeometry, offset);
@@ -176,5 +185,24 @@ export class MeshPreparationUtility {
         const vertices: any = (mesh.geometry as THREE.BufferGeometry).getAttribute('position').array;
 
         return new THREE.Vector3(vertices[0], vertices[1], vertices[2]);
+    }
+
+
+    private static flipNormals(geometry: THREE.Geometry) {
+
+        for (let face of geometry.faces) {
+            let a: number = face.a;
+            face.a = face.c;
+            face.c = a;
+        }
+
+        geometry.computeFaceNormals();
+        geometry.computeVertexNormals();
+
+        for (let faceUvs of geometry.faceVertexUvs[0]) {
+            let firstUv: THREE.Vector2 = faceUvs[0];
+            faceUvs[0] = faceUvs[2];
+            faceUvs[2] = firstUv;
+        }
     }
 }

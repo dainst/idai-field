@@ -2,7 +2,6 @@ import {browser, protractor} from 'protractor';
 import {ResourcesPage} from './resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
-import {NavbarPage} from '../navbar.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 
 let EC = protractor.ExpectedConditions;

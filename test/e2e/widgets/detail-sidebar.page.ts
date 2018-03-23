@@ -26,7 +26,7 @@ export class DetailSidebarPage {
 
     public static clickSolveConflicts() {
 
-        common.click(element(by.css('.document-detail-sidebar .solve-button')));
+        common.click(element(by.css('.detail-sidebar .solve-button')));
     };
 
 

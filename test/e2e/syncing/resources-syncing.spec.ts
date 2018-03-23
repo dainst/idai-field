@@ -187,7 +187,7 @@ describe('resources/syncing --', function() {
     });
 
 
-    xit('open conflict resolver via conflict button in document view', done => {
+    it('open conflict resolver via conflict button in document view', done => {
 
         const nr = '9';
 

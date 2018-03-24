@@ -1,13 +1,14 @@
 import * as THREE from 'three';
 import {DepthMap} from '../../../../core/3d/depth-map';
 import {CameraManager} from '../../../../core/3d/camera-manager';
-import {
-    CAMERA_DIRECTION_EAST, CAMERA_DIRECTION_NORTH, CAMERA_DIRECTION_SOUTH,
-    CAMERA_DIRECTION_WEST
-} from './map-3d-controls';
 
 
 export type CameraMode = 'perspective'|'orthographic';
+
+const CAMERA_DIRECTION_NORTH: number = 0;
+const CAMERA_DIRECTION_WEST: number = 1;
+const CAMERA_DIRECTION_SOUTH: number = 2;
+const CAMERA_DIRECTION_EAST: number = 3;
 
 
 /**
@@ -71,18 +72,32 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
-    public drag(x: number, z: number) {
+    public drag(deltaX: number, deltaY: number): { xChange: number, zChange: number } {
+
+        const { xChange, zChange } = this.getDragValues(deltaX, deltaY);
 
         const camera: THREE.Camera = this.getCamera();
-        camera.position.set(camera.position.x + x, camera.position.y, camera.position.z + z);
+        camera.position.set(camera.position.x + xChange, camera.position.y, camera.position.z + zChange);
+
+        return { xChange, zChange };
     }
 
 
-    public rotateSmoothly(radians: number, direction: number) {
+    public rotateCamera(clockwise: boolean) {
 
         if (this.isAnimationRunning()) return;
 
-        this.direction = direction;
+        if (clockwise) {
+            this.direction = this.direction == 3 ? 0 : this.direction += 1;
+        } else {
+            this.direction = this.direction == 0 ? 3 : this.direction -= 1;
+        }
+
+        this.rotateSmoothly(clockwise ? Math.PI / 2 : -Math.PI / 2);
+    }
+
+
+    private rotateSmoothly(radians: number) {
 
         const pivotPoint: THREE.Vector3 = this.getPivotPoint();
         const clonedCamera: THREE.PerspectiveCamera|THREE.OrthographicCamera = this.getCamera().clone();
@@ -320,6 +335,22 @@ export class Map3DCameraManager extends CameraManager {
         );
 
         return ray.intersectPlane(plane);
+    }
+
+
+    private getDragValues(deltaX: number, deltaY: number): { xChange: number, zChange: number } {
+
+        switch(this.direction) {
+            case CAMERA_DIRECTION_WEST:
+                return { xChange: deltaY, zChange: -deltaX };
+            case CAMERA_DIRECTION_SOUTH:
+                return { xChange: -deltaX, zChange: -deltaY };
+            case CAMERA_DIRECTION_EAST:
+                return { xChange: -deltaY, zChange: deltaX };
+            case CAMERA_DIRECTION_NORTH:
+            default:
+                return { xChange: deltaX, zChange: deltaY };
+        }
     }
 
 

@@ -26,23 +26,25 @@ export class ControlButtonsComponent {
 
     public turnClockwise() {
 
-        if (!this.map3DComponent.getControls().isCameraAnimationAllowed()) return;
+        if (this.map3DComponent.getCameraManager().isAnimationRunning()) return;
 
-        this.map3DComponent.getControls().rotateCamera(true);
+        this.map3DComponent.getCameraManager().rotateCamera(true);
         this.compassRotationDegrees += 90;
     }
 
 
     public turnCounterclockwise() {
 
-        if (!this.map3DComponent.getControls().isCameraAnimationAllowed()) return;
+        if (this.map3DComponent.getCameraManager().isAnimationRunning()) return;
 
-        this.map3DComponent.getControls().rotateCamera(false);
+        this.map3DComponent.getCameraManager().rotateCamera(false);
         this.compassRotationDegrees -= 90;
     }
 
 
     public changeCameraMode() {
+
+        if (this.map3DComponent.getCameraManager().isAnimationRunning()) return;
 
         const currentMode: CameraMode = this.map3DComponent.getCameraManager().getMode();
         const newMode: CameraMode = currentMode == 'perspective' ? 'orthographic' : 'perspective';

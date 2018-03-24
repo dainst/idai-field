@@ -9,11 +9,6 @@ import {getPointVector, has3DLineGeometry, has3DPointGeometry,
     has3DPolygonGeometry} from '../../../../util/util-3d';
 
 
-export const CAMERA_DIRECTION_NORTH: number = 0;
-export const CAMERA_DIRECTION_WEST: number = 1;
-export const CAMERA_DIRECTION_SOUTH: number = 2;
-export const CAMERA_DIRECTION_EAST: number = 3;
-
 const BUTTON_ZOOM_VALUE: number = 3.5;
 
 
@@ -30,15 +25,10 @@ export class Map3DControls {
     private lastXPosition: number;
     private lastYPosition: number;
 
-    private cameraDirection: number = CAMERA_DIRECTION_NORTH;
-
 
     constructor(private cameraManager: Map3DCameraManager,
                 private meshGeometryManager: MeshGeometryManager,
                 private intersectionHelper: IntersectionHelper) {}
-
-
-    public getCameraDirection = () => this.cameraDirection;
 
 
     public onMouseDown(event: MouseEvent): Map3DControlState {
@@ -124,27 +114,6 @@ export class Map3DControls {
     }
 
 
-    public rotateCamera(clockwise: boolean) {
-
-        if (!this.isCameraAnimationAllowed()) return;
-
-        if (clockwise) {
-            this.cameraDirection = this.cameraDirection == 3 ? 0 : this.cameraDirection += 1;
-        } else {
-            this.cameraDirection = this.cameraDirection == 0 ? 3 : this.cameraDirection -= 1;
-        }
-
-        this.cameraManager.rotateSmoothly(clockwise ? Math.PI / 2 : -Math.PI / 2,
-            this.cameraDirection);
-    }
-
-
-    public isCameraAnimationAllowed(): boolean {
-
-        return !this.cameraManager.isAnimationRunning();
-    }
-
-
     public focusMesh(mesh: THREE.Mesh) {
 
         this.cameraManager.focusMesh(mesh);
@@ -166,32 +135,12 @@ export class Map3DControls {
 
     private drag(mouseDeltaX: number, mouseDeltaY: number) {
 
-        const { deltaX, deltaZ } = this.getDragDeltas(mouseDeltaX, mouseDeltaY);
+        const {xChange, zChange} = this.cameraManager.drag(mouseDeltaX / 100, mouseDeltaY / 100);
 
-
-        this.cameraManager.drag(deltaX / 100, deltaZ / 100);
-
-
+        // Prevent selection of mesh geometries if a distinguishable drag action is performed
         this.dragCounter++;
-        if (this.dragCounter > 10 || deltaX > 5 || deltaX < -5 || deltaZ > 5 || deltaZ < -5) {
+        if (this.dragCounter > 10 || xChange > 5 || xChange < -5 || zChange > 5 || zChange < -5) {
             this.noSelection = true;
-        }
-    }
-
-
-    private getDragDeltas(mouseDeltaX: number,
-                          mouseDeltaY: number): { deltaX: number, deltaZ: number } {
-
-        switch(this.cameraDirection) {
-            case CAMERA_DIRECTION_WEST:
-                return { deltaX: mouseDeltaY, deltaZ: -mouseDeltaX };
-            case CAMERA_DIRECTION_SOUTH:
-                return { deltaX: -mouseDeltaX, deltaZ: -mouseDeltaY };
-            case CAMERA_DIRECTION_EAST:
-                return { deltaX: -mouseDeltaY, deltaZ: mouseDeltaX };
-            case CAMERA_DIRECTION_NORTH:
-            default:
-                return { deltaX: mouseDeltaX, deltaZ: mouseDeltaY };
         }
     }
 

@@ -83,16 +83,11 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
-    public rotateCamera(clockwise: boolean) {
+    public rotateBy90Degrees(clockwise: boolean) {
 
         if (this.isAnimationRunning()) return;
 
-        if (clockwise) {
-            this.direction = this.direction == 3 ? 0 : this.direction += 1;
-        } else {
-            this.direction = this.direction == 0 ? 3 : this.direction -= 1;
-        }
-
+        this.direction = Map3DCameraManager.getNextDirection(this.direction, clockwise);
         this.rotateSmoothly(clockwise ? Math.PI / 2 : -Math.PI / 2);
     }
 
@@ -350,6 +345,16 @@ export class Map3DCameraManager extends CameraManager {
             case CAMERA_DIRECTION_NORTH:
             default:
                 return { xChange: deltaX, zChange: deltaY };
+        }
+    }
+
+
+    private static getNextDirection(direction: number, clockwise: boolean) {
+
+        if (clockwise) {
+            return direction == 3 ? 0 : direction + 1;
+        } else {
+            return direction == 0 ? 3 : direction - 1;
         }
     }
 

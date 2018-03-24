@@ -28,7 +28,7 @@ export class ControlButtonsComponent {
 
         if (this.map3DComponent.getCameraManager().isAnimationRunning()) return;
 
-        this.map3DComponent.getCameraManager().rotateCamera(true);
+        this.map3DComponent.getCameraManager().rotateBy90Degrees(true);
         this.compassRotationDegrees += 90;
     }
 
@@ -37,7 +37,7 @@ export class ControlButtonsComponent {
 
         if (this.map3DComponent.getCameraManager().isAnimationRunning()) return;
 
-        this.map3DComponent.getCameraManager().rotateCamera(false);
+        this.map3DComponent.getCameraManager().rotateBy90Degrees(false);
         this.compassRotationDegrees -= 90;
     }
 

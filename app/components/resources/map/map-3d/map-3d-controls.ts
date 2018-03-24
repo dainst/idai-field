@@ -193,7 +193,7 @@ export class Map3DControls {
     private getDocumentOfGeometryAtMousePosition(xPosition: number, yPosition: number)
             : IdaiFieldDocument|undefined {
 
-        const intersections: Array<THREE.Intersection> = this.intersectionHelper.getIntersections(
+        const intersections: Array<THREE.Intersection> = this.intersectionHelper.getIntersectionsAtScreenPosition(
             new THREE.Vector2(xPosition, yPosition),
             this.meshGeometryManager.getRaycasterObjects()
         );

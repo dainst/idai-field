@@ -12,8 +12,8 @@ export class IntersectionHelper {
                 private cameraManager: CameraManager) {}
 
 
-    public getIntersections(position: THREE.Vector2,
-                            objectsToCheck: Array<THREE.Object3D>): Array<THREE.Intersection> {
+    public getIntersectionsAtScreenPosition(position: THREE.Vector2,
+                                            objectsToCheck: Array<THREE.Object3D>): Array<THREE.Intersection> {
 
         const raycaster: THREE.Raycaster = IntersectionHelper.createRaycaster();
         raycaster.setFromCamera(this.getNormalizedDeviceCoordinates(position), this.cameraManager.getCamera());

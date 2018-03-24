@@ -9,9 +9,16 @@ export class SceneManager {
     private scene: THREE.Scene = SceneManager.createScene();
 
 
-    public getScene() {
+    public getScene(): THREE.Scene {
 
         return this.scene;
+    }
+
+
+    public getMeshes(): Array<THREE.Mesh> {
+
+        return this.scene.children
+            .filter(child => child instanceof THREE.Mesh) as Array<THREE.Mesh>;
     }
 
 

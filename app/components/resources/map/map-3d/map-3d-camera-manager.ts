@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {DepthMap} from '../../../../core/3d/depth-map';
 import {CameraManager} from '../../../../core/3d/camera-manager';
+import {SceneManager} from '../../../../core/3d/scene-manager';
 
 
 export type CameraMode = 'perspective'|'orthographic';
@@ -22,6 +23,7 @@ export class Map3DCameraManager extends CameraManager {
     private orthographicCamera: THREE.OrthographicCamera;
 
     private tilted: boolean = false;
+    private pivotPoint: THREE.Vector3|undefined;
 
     private perspectiveYLevel: number = 5;
     private orthographicYLevel: number = 5;
@@ -29,7 +31,11 @@ export class Map3DCameraManager extends CameraManager {
 
     private direction: number = CAMERA_DIRECTION_NORTH;
 
-    private level: number = 0;
+
+    constructor(private sceneManager: SceneManager) {
+
+        super();
+    }
 
 
     public initialize(canvasWidth: number, canvasHeight: number) {
@@ -56,6 +62,7 @@ export class Map3DCameraManager extends CameraManager {
         }
 
         this.mode = mode;
+        this.pivotPoint = undefined;
     }
 
 
@@ -73,6 +80,8 @@ export class Map3DCameraManager extends CameraManager {
 
 
     public drag(deltaX: number, deltaY: number): { xChange: number, zChange: number } {
+
+        this.pivotPoint = undefined;
 
         const { xChange, zChange } = this.getDragValues(deltaX, deltaY);
 
@@ -110,6 +119,8 @@ export class Map3DCameraManager extends CameraManager {
 
     public zoom(value: number, camera?: THREE.Camera) {
 
+        this.pivotPoint = undefined;
+
         if (this.mode == 'perspective') {
             this.zoomPerspectiveCamera(value, camera as THREE.PerspectiveCamera);
         } else {
@@ -131,16 +142,18 @@ export class Map3DCameraManager extends CameraManager {
 
     public focusMesh(mesh: THREE.Mesh) {
 
+        this.pivotPoint = undefined;
+
         this.zoomPerspectiveCameraToFit(mesh);
         this.zoomOrthographicCameraToFit(mesh);
-
-        this.level = mesh.position.y;
 
         this.saveState();
     }
 
 
     public focusPoint(point: THREE.Vector3) {
+
+        this.pivotPoint = undefined;
 
         Map3DCameraManager.focusPoint(this.perspectiveCamera, point, 3);
         Map3DCameraManager.focusPoint(this.orthographicCamera, point, 20);
@@ -323,13 +336,42 @@ export class Map3DCameraManager extends CameraManager {
 
     private getPivotPoint(): THREE.Vector3 {
 
-        const plane: THREE.Plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), this.level);
+        if (!this.pivotPoint) this.pivotPoint = this.computePivotPoint();
+
+        return this.pivotPoint;
+    }
+
+
+    private computePivotPoint(): THREE.Vector3 {
+
         const ray: THREE.Ray = new THREE.Ray(
             this.getCamera().position,
             this.getCamera().getWorldDirection()
         );
 
-        return ray.intersectPlane(plane);
+        return ray.intersectPlane(this.getGroundPlane());
+    }
+
+
+    private getGroundPlane(): THREE.Plane {
+
+        const groundMesh: THREE.Mesh|undefined = this.getNearestMeshBelowCamera();
+        const yPosition: number = groundMesh ? groundMesh.position.y : this.getCamera().position.y - 3;
+
+        return new THREE.Plane(new THREE.Vector3(0, -1, 0), yPosition);
+    }
+
+
+    private getNearestMeshBelowCamera(): THREE.Mesh|undefined {
+
+        const meshes: Array<THREE.Mesh> = this.sceneManager.getMeshes()
+            .filter(mesh => mesh.position.y < this.getCamera().position.y)
+            .sort((mesh1, mesh2) => {
+                return mesh1.position.distanceTo(this.getCamera().position)
+                    - mesh2.position.distanceTo(this.getCamera().position)
+            });
+
+        return meshes.length > 0 ? meshes[0] : undefined;
     }
 
 

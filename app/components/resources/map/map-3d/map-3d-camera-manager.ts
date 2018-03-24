@@ -139,6 +139,8 @@ export class Map3DCameraManager extends CameraManager {
         this.zoomPerspectiveCameraToFit(mesh);
         this.zoomOrthographicCameraToFit(mesh);
 
+        this.level = mesh.position.y;
+
         this.saveState();
     }
 
@@ -171,8 +173,6 @@ export class Map3DCameraManager extends CameraManager {
         this.perspectiveCamera.position.set(mesh.position.x, mesh.position.y, mesh.position.z);
         const distance: number = CameraManager.computeZoomToFitDistance(this.perspectiveCamera, mesh);
         this.perspectiveCamera.translateZ(distance);
-
-        this.level = mesh.position.y;
     }
 
 
@@ -330,8 +330,8 @@ export class Map3DCameraManager extends CameraManager {
 
         const plane: THREE.Plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), this.level);
         const ray: THREE.Ray = new THREE.Ray(
-            this.perspectiveCamera.position,
-            this.perspectiveCamera.getWorldDirection()
+            this.getCamera().position,
+            this.getCamera().getWorldDirection()
         );
 
         return ray.intersectPlane(plane);

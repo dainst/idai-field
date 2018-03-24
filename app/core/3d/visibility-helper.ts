@@ -11,12 +11,10 @@ export class VisibilityHelper {
     public static isInCameraViewFrustum(point: THREE.Vector3,
                                  camera: THREE.PerspectiveCamera|THREE.OrthographicCamera): boolean {
 
-        const clonedCamera: THREE.Camera = camera.clone();
-
         const viewFrustum: THREE.Frustum = new THREE.Frustum().setFromMatrix(
             new THREE.Matrix4().multiplyMatrices(
-                clonedCamera.projectionMatrix,
-                clonedCamera.matrixWorldInverse
+                camera.projectionMatrix,
+                camera.matrixWorldInverse
             )
         );
 
@@ -30,13 +28,12 @@ export class VisibilityHelper {
 
         if (!depthMap.isReady()) return false;
 
-        const clonedCamera: THREE.PerspectiveCamera|THREE.OrthographicCamera = camera.clone();
         const distanceToIntersection: number = this.getDistanceToNearestIntersection(pointOnCanvas, depthMap);
 
-        if (distanceToIntersection == clonedCamera.near) return true;
+        if (distanceToIntersection == camera.near) return true;
 
         const distanceToMarkerPosition: number
-            = VisibilityHelper.getDistanceToMarkerPosition(pointInWorldSpace, clonedCamera);
+            = VisibilityHelper.getDistanceToMarkerPosition(pointInWorldSpace, camera);
 
         if (distanceToIntersection > distanceToMarkerPosition) {
             return true;

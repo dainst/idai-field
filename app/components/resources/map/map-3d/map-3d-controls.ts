@@ -228,7 +228,7 @@ export class Map3DControls {
         const geometry: IdaiFieldGeometry = document.resource.geometry as IdaiFieldGeometry;
         const point: THREE.Vector3 = getPointVector(geometry.coordinates);
 
-        if (!VisibilityHelper.isInCameraViewFrustum(point, this.cameraManager.getCamera())) {
+        if (!VisibilityHelper.isInCameraViewFrustum(point, this.cameraManager.getCamera().clone())) {
             this.cameraManager.focusPoint(point);
         }
     }

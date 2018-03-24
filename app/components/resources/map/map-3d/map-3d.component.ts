@@ -10,6 +10,7 @@ import {Viewer3D} from '../../../../core/3d/viewer-3d';
 import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
 import {Map3DCameraManager} from './map-3d-camera-manager';
 import {IntersectionHelper} from '../../../../core/3d/intersection-helper';
+import {SceneManager} from '../../../../core/3d/scene-manager';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     private viewer: Viewer3D;
     private controls: Map3DControls;
     private cameraManager: Map3DCameraManager;
+    private sceneManager: SceneManager;
 
     private removeMouseMoveEventListener: Function;
     private removeMouseUpEventListener: Function;
@@ -49,6 +51,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     public getViewer = () => this.viewer;
     public getControls = () => this.controls;
     public getCameraManager = () => this.cameraManager;
+    public getSceneManager = () => this.sceneManager;
 
     public onMouseDown = (event: MouseEvent) => this.setControlState(this.controls.onMouseDown(event));
     public onWheel = (event: WheelEvent) => this.controls.onWheel(event);
@@ -79,9 +82,10 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     private initialize() {
 
+        this.sceneManager = new SceneManager();
         this.cameraManager = new Map3DCameraManager();
-        this.viewer = new Viewer3D(this.container.nativeElement, this.cameraManager, true);
-        this.meshGeometryManager = new MeshGeometryManager(this.viewer, this.cameraManager,
+        this.viewer = new Viewer3D(this.container.nativeElement, this.cameraManager, this.sceneManager, true);
+        this.meshGeometryManager = new MeshGeometryManager(this.viewer, this.cameraManager, this.sceneManager,
             this.projectConfiguration);
         this.controls = new Map3DControls(this.cameraManager, this.meshGeometryManager,
             new IntersectionHelper(this.viewer, this.cameraManager));

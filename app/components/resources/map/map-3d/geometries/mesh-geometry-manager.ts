@@ -7,6 +7,7 @@ import {LineBuilder} from './line-builder';
 import {PolygonBuilder} from './polygon-builder';
 import {Map3DCameraManager} from '../map-3d-camera-manager';
 import {has3DLineGeometry, has3DPolygonGeometry} from '../../../../../util/util-3d';
+import {SceneManager} from '../../../../../core/3d/scene-manager';
 
 
 /**
@@ -22,6 +23,7 @@ export class MeshGeometryManager {
 
     constructor(private viewer: Viewer3D,
                 private cameraManager: Map3DCameraManager,
+                private sceneManager: SceneManager,
                 projectConfiguration: ProjectConfiguration) {
 
         this.lineBuilder = new LineBuilder(viewer, cameraManager, projectConfiguration);
@@ -85,8 +87,8 @@ export class MeshGeometryManager {
 
         this.meshGeometries[document.resource.id as string] = geometry;
 
-        this.viewer.add(geometry.mesh);
-        if (geometry.raycasterObject != geometry.mesh) this.viewer.add(geometry.raycasterObject);
+        this.sceneManager.add(geometry.mesh);
+        if (geometry.raycasterObject != geometry.mesh) this.sceneManager.add(geometry.raycasterObject);
     }
 
 
@@ -95,8 +97,8 @@ export class MeshGeometryManager {
         const geometry: MeshGeometry|undefined = this.meshGeometries[document.resource.id as string];
         if (!geometry) return;
 
-        this.viewer.remove(geometry.mesh);
-        if (geometry.raycasterObject != geometry.mesh) this.viewer.remove(geometry.raycasterObject);
+        this.sceneManager.remove(geometry.mesh);
+        if (geometry.raycasterObject != geometry.mesh) this.sceneManager.remove(geometry.raycasterObject);
 
         delete this.meshGeometries[document.resource.id as string];
     }

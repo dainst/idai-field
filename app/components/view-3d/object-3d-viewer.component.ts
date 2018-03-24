@@ -7,6 +7,7 @@ import {MeshLoader} from '../../core/3d/mesh-loader';
 import {MeshPreparationUtility} from '../../core/3d/mesh-preparation-utility';
 import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
 import {Object3DViewerCameraManager} from './object-3d-viewer-camera-manager';
+import {SceneManager} from '../../core/3d/scene-manager';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     private viewer: Viewer3D;
     private controls: Object3DViewerControls;
     private cameraManager: Object3DViewerCameraManager;
+    private sceneManager: SceneManager;
 
     private mesh: THREE.Mesh;
     private meshMaterial: THREE.Material|Array<THREE.Material>;
@@ -90,7 +92,8 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     private initialize() {
 
         this.cameraManager = new Object3DViewerCameraManager();
-        this.viewer = new Viewer3D(this.container.nativeElement, this.cameraManager);
+        this.sceneManager = new SceneManager();
+        this.viewer = new Viewer3D(this.container.nativeElement, this.cameraManager, this.sceneManager);
         this.controls = new Object3DViewerControls(this.cameraManager);
 
         this.listenToMouseEvents();
@@ -115,10 +118,10 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
     private async update() {
 
-        this.viewer.removeAll();
+        this.sceneManager.removeAll();
         await this.loadMesh();
 
-        this.viewer.add(this.mesh);
+        this.sceneManager.add(this.mesh);
         this.controls.setMesh(this.mesh);
     }
 

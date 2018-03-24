@@ -78,13 +78,13 @@ export class LayersComponent implements OnChanges {
     private async addLayerMesh(id: string) {
 
         const mesh: THREE.Mesh = await this.layerMeshManager.getMesh(id);
-        this.map3DComponent.getViewer().add(mesh);
+        this.map3DComponent.getSceneManager().add(mesh);
     }
 
 
     private async removeLayerMesh(id: string) {
 
         const mesh: THREE.Mesh = await this.layerMeshManager.getMesh(id);
-        this.map3DComponent.getViewer().remove(mesh);
+        this.map3DComponent.getSceneManager().remove(mesh);
     }
 }

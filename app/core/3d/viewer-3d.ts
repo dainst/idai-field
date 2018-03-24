@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {DepthMap} from './depth-map';
 import {CameraManager} from './camera-manager';
+import {SceneManager} from './scene-manager';
 
 
 /**
@@ -9,7 +10,6 @@ import {CameraManager} from './camera-manager';
 export class Viewer3D {
 
     private renderer: THREE.WebGLRenderer;
-    private scene: THREE.Scene;
 
     private depthMap: DepthMap|undefined;
 
@@ -19,6 +19,7 @@ export class Viewer3D {
 
     constructor(private containerElement: HTMLElement,
                 private cameraManager: CameraManager,
+                private sceneManager: SceneManager,
                 createDepthMap: boolean = false) {
 
         this.initialize(createDepthMap);
@@ -40,34 +41,9 @@ export class Viewer3D {
     }
 
 
-    public getScene(): THREE.Scene {
-
-        return this.scene;
-    }
-
-
     public getDepthMap(): DepthMap|undefined {
 
         return this.depthMap;
-    }
-
-
-    public add(scene: THREE.Object3D) {
-
-        this.scene.add(scene);
-    }
-
-
-    public remove(scene: THREE.Object3D) {
-
-        this.scene.remove(scene);
-    }
-
-
-    public removeAll() {
-
-        this.scene.children.filter(child => child instanceof THREE.Scene || child instanceof THREE.Mesh)
-            .forEach(child => this.scene.remove(child));
     }
 
 
@@ -101,12 +77,15 @@ export class Viewer3D {
     private initialize(createDepthMap: boolean) {
 
         this.renderer = this.createRenderer();
-        this.scene = Viewer3D.createScene();
 
         this.cameraManager.initialize(this.renderer.domElement.width, this.renderer.domElement.height);
 
         if (createDepthMap) {
-            this.depthMap = new DepthMap(this.renderer, this.scene, this.cameraManager.getCamera());
+            this.depthMap = new DepthMap(
+                this.renderer,
+                this.sceneManager.getScene(),
+                this.cameraManager.getCamera()
+            );
         }
     }
 
@@ -136,7 +115,7 @@ export class Viewer3D {
 
         if (this.depthMap && this.depthMap.isReady()) this.depthMap.update();
 
-        this.renderer.render(this.scene, this.cameraManager.getCamera());
+        this.renderer.render(this.sceneManager.getScene(), this.cameraManager.getCamera());
     }
 
 
@@ -156,24 +135,5 @@ export class Viewer3D {
             if (this.depthMap) this.depthMap.setReady(true);
             if (this.notifyForResize) this.notifyForResize();
         }
-    }
-
-
-    private static createScene(): THREE.Scene {
-
-        const scene: THREE.Scene = new THREE.Scene();
-        this.addLights(scene);
-
-        return scene;
-    }
-
-
-    private static addLights(scene: THREE.Scene) {
-
-        scene.add(new THREE.HemisphereLight(0xffffff, 0x000000, 0.8));
-
-        const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 0.2);
-        directionalLight.position.set(0, 1, 1);
-        scene.add(directionalLight);
     }
 }

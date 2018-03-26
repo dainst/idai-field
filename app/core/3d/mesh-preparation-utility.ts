@@ -42,6 +42,22 @@ export class MeshPreparationUtility {
     }
 
 
+    public static centerGeometry(mesh: THREE.Mesh) {
+
+        mesh.geometry.computeBoundingSphere();
+        mesh.geometry.computeBoundingBox();
+
+        const center: THREE.Vector3 = mesh.geometry.boundingSphere.center.clone();
+        mesh.position.add(center);
+
+        mesh.geometry.translate(-center.x, -center.y, -center.z);
+
+        for (let child of mesh.children) {
+            if (child instanceof THREE.Mesh) child.geometry.translate(-center.x, -center.y, -center.z);
+        }
+    }
+
+
     private async performAdjustment(stepNumber: number, adjustmentFunction: Function, mesh: THREE.Mesh,
                                     parameter1?: any, parameter2?: any, parameter3?: any): Promise<any> {
 
@@ -53,6 +69,30 @@ export class MeshPreparationUtility {
                 resolve(result);
             });
         });
+    }
+
+
+    private static makeGeometryFromBufferGeometry(mesh: THREE.Mesh, offset: THREE.Vector3): THREE.Geometry {
+
+        const bufferGeometry: THREE.BufferGeometry = mesh.geometry as THREE.BufferGeometry;
+
+        const geometry = new THREE.Geometry();
+        geometry.vertices = this.getVertices(bufferGeometry, offset);
+        geometry.faces = this.getFaces(geometry.vertices);
+        geometry.faceVertexUvs = this.getUV(bufferGeometry);
+        geometry.uvsNeedUpdate = true;
+
+        return geometry;
+    }
+
+
+    private static prepareGeometry(mesh: THREE.Mesh, geometry: THREE.Geometry) {
+
+        geometry.computeFaceNormals();
+        geometry.mergeVertices();
+        geometry.computeVertexNormals();
+
+        mesh.geometry = new THREE.BufferGeometry().fromGeometry(geometry);
     }
 
 
@@ -72,32 +112,6 @@ export class MeshPreparationUtility {
     }
 
 
-    public static centerGeometry(mesh: THREE.Mesh) {
-
-        mesh.geometry.computeBoundingSphere();
-        mesh.geometry.computeBoundingBox();
-
-        const center: THREE.Vector3 = mesh.geometry.boundingSphere.center.clone();
-        mesh.position.add(center);
-
-        mesh.geometry.translate(-center.x, -center.y, -center.z);
-
-        for (let child of mesh.children) {
-            if (child instanceof THREE.Mesh) child.geometry.translate(-center.x, -center.y, -center.z);
-        }
-    }
-
-
-    private static prepareGeometry(mesh: THREE.Mesh, geometry: THREE.Geometry) {
-
-        geometry.computeFaceNormals();
-        geometry.mergeVertices();
-        geometry.computeVertexNormals();
-
-        mesh.geometry = new THREE.BufferGeometry().fromGeometry(geometry);
-    }
-
-
     private static applySceneMatrix(mesh: THREE.Mesh, backSideMesh: THREE.Mesh, position: THREE.Vector3,
                                     scene: THREE.Scene) {
 
@@ -106,20 +120,6 @@ export class MeshPreparationUtility {
         mesh.geometry.applyMatrix(scene.matrix);
         backSideMesh.geometry.applyMatrix(scene.matrix);
         position.applyMatrix4(scene.matrix);
-    }
-
-
-    private static makeGeometryFromBufferGeometry(mesh: THREE.Mesh, offset: THREE.Vector3): THREE.Geometry {
-
-        const bufferGeometry: THREE.BufferGeometry = mesh.geometry as THREE.BufferGeometry;
-
-        const geometry = new THREE.Geometry();
-        geometry.vertices = this.getVertices(bufferGeometry, offset);
-        geometry.faces = this.getFaces(geometry.vertices);
-        geometry.faceVertexUvs = this.getUV(bufferGeometry);
-        geometry.uvsNeedUpdate = true;
-
-        return geometry;
     }
 
 

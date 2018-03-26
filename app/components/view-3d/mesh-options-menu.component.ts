@@ -49,19 +49,20 @@ export class MeshOptionsMenuComponent extends MenuComponent implements OnChanges
 
         this.smoothShading = !this.smoothShading;
 
-        if (Array.isArray(this.mesh.material)) {
-            this.mesh.material.forEach(material => {
-                MeshOptionsMenuComponent.setFlatShading(material, !this.smoothShading);
-            });
-        } else {
-            MeshOptionsMenuComponent.setFlatShading(this.mesh.material, !this.smoothShading);
+        MeshOptionsMenuComponent.setFlatShading(this.mesh.material, !this.smoothShading);
+
+        if (this.meshMaterial) {
+            MeshOptionsMenuComponent.setFlatShading(this.meshMaterial, !this.smoothShading);
         }
     }
 
 
     private setWhiteMaterial() {
 
-        this.mesh.material = new THREE.MeshPhongMaterial({ color: 0xffffff });
+        this.mesh.material = new THREE.MeshPhongMaterial({
+            color: 0xffffff,
+            flatShading: !this.smoothShading
+        });
     }
 
 
@@ -71,7 +72,19 @@ export class MeshOptionsMenuComponent extends MenuComponent implements OnChanges
     }
 
 
-    private static setFlatShading(material: THREE.Material, flatShading: boolean) {
+    private static setFlatShading(material: THREE.Material|Array<THREE.Material>, flatShading: boolean) {
+
+        if (Array.isArray(material)) {
+            material.forEach(mat => {
+                MeshOptionsMenuComponent.setFlatShadingForMaterial(mat, flatShading);
+            });
+        } else {
+            MeshOptionsMenuComponent.setFlatShadingForMaterial(material, flatShading);
+        }
+    }
+
+
+    private static setFlatShadingForMaterial(material: THREE.Material, flatShading: boolean) {
 
         material.flatShading = flatShading;
         material.needsUpdate = true;

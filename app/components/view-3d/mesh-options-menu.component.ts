@@ -35,13 +35,13 @@ export class MeshOptionsMenuComponent extends MenuComponent implements OnChanges
 
     public toggleTexture() {
 
-        if (this.textured) {
-            this.setWhiteMaterial();
-        } else {
-            this.mesh.material = this.meshMaterial;
-        }
-
         this.textured = !this.textured;
+
+        if (this.textured) {
+            this.setDefaultMaterial();
+        } else {
+            this.setWhiteMaterial();
+        }
     }
 
 
@@ -65,10 +65,15 @@ export class MeshOptionsMenuComponent extends MenuComponent implements OnChanges
     }
 
 
+    private setDefaultMaterial() {
+
+        this.mesh.material = this.meshMaterial;
+    }
+
+
     private static setFlatShading(material: THREE.Material, flatShading: boolean) {
 
         material.flatShading = flatShading;
         material.needsUpdate = true;
     }
-
 }

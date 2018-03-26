@@ -4,7 +4,6 @@ import * as THREE from 'three';
 import {Viewer3D} from '../../core/3d/viewer-3d';
 import {Object3DViewerControls, Object3DViewerAction} from './object-3d-viewer-controls';
 import {MeshLoader} from '../../core/3d/mesh-loader';
-import {MeshPreparationUtility} from '../../core/3d/mesh-preparation-utility';
 import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
 import {Object3DViewerCameraManager} from './object-3d-viewer-camera-manager';
 import {SceneManager} from '../../core/3d/scene-manager';
@@ -24,15 +23,12 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
     @ViewChild('container') container: ElementRef;
 
-    public textured: boolean = true;
-
     private viewer: Viewer3D;
     private controls: Object3DViewerControls;
     private cameraManager: Object3DViewerCameraManager;
     private sceneManager: SceneManager;
 
     private mesh: THREE.Mesh;
-    private meshMaterial: THREE.Material|Array<THREE.Material>;
 
     private removeMouseMoveEventListener: Function;
     private removeMouseUpEventListener: Function;
@@ -67,18 +63,6 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     public isCurrentAction(action: Object3DViewerAction) {
 
         return this.controls.getCurrentAction() == action;
-    }
-
-
-    public toggleTexture() {
-
-        if (this.textured) {
-            MeshPreparationUtility.setWhiteMaterial(this.mesh);
-        } else {
-            this.mesh.material = this.meshMaterial;
-        }
-
-        this.textured = !this.textured;
     }
 
 
@@ -129,7 +113,6 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     private async loadMesh(): Promise<void> {
 
         this.mesh = await this.meshLoader.load(this.document.resource.id as string);
-        this.meshMaterial = this.mesh.material;
     }
 
 

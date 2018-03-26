@@ -72,12 +72,6 @@ export class MeshPreparationUtility {
     }
 
 
-    public static setWhiteMaterial(mesh: THREE.Mesh) {
-
-        mesh.material = new THREE.MeshPhongMaterial({ color: 0xffffff });
-    }
-
-
     public static centerGeometry(mesh: THREE.Mesh) {
 
         mesh.geometry.computeBoundingSphere();

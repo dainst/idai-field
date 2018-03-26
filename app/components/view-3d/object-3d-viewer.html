@@ -8,10 +8,7 @@
          (contextmenu)="$event.preventDefault()">
     </div>
 
-    <div id="toggle-texture-button" class="btn btn-light" (click)="toggleTexture()">
-        <span *ngIf="!textured" class="mdi mdi-cube-outline"></span>
-        <span *ngIf="textured" class="mdi mdi-cube"></span>
-    </div>
+    <mesh-options-menu [mesh]="mesh"></mesh-options-menu>
 
     <div id="focus-button" class="btn btn-light" (click)="focusMesh()">
         <span class="mdi mdi-image-filter-center-focus"></span>

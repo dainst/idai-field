@@ -8,6 +8,7 @@ import {view3DRouting} from './view-3d.routing';
 import {View3DComponent} from './view-3d.component';
 import {Object3DViewerComponent} from './object-3d-viewer.component';
 import {Core3DModule} from '../core-3d/core-3d.module';
+import {MeshOptionsMenuComponent} from './mesh-options-menu.component';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import {Core3DModule} from '../core-3d/core-3d.module';
     ],
     declarations: [
         View3DComponent,
-        Object3DViewerComponent
+        Object3DViewerComponent,
+        MeshOptionsMenuComponent
     ],
     exports: [
         Object3DViewerComponent

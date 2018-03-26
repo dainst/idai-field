@@ -73,7 +73,8 @@
                 "Architecture",
                 "Drilling",
                 "Sample",
-                "Burial"
+                "Burial",
+                "Inscription"
             ],
             "inverse": "includes",
             "label": "Liegt in",

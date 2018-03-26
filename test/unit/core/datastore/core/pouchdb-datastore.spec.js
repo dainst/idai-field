@@ -52,7 +52,7 @@ describe('PouchdbDatastore', function () {
         var appState = new app_state_1.AppState();
         var idGenerator = jasmine.createSpyObj('idGenerator', ['generateId']);
         idGenerator.generateId.and.returnValue(1);
-        pouchdbProxy = jasmine.createSpyObj('pouchdbProxy', ['get', 'put']);
+        pouchdbProxy = jasmine.createSpyObj('pouchdbProxy', ['get', 'put', 'remove']);
         pouchdbProxy.put.and.callFake(function (arg) {
             arg['_rev'] = '1';
             return Promise.resolve(arg);
@@ -64,6 +64,7 @@ describe('PouchdbDatastore', function () {
                 modified: [] // TODO extend isValid to check for existing modified
             });
         });
+        pouchdbProxy.remove.and.returnValue(Promise.resolve(undefined));
         datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbProxy, appState, idGenerator, false);
     }
     beforeEach(function () { return createPouchdbDatastore(); });
@@ -284,51 +285,58 @@ describe('PouchdbDatastore', function () {
         });
     }); });
     // fetch
-    /*
-    it('should get if existent', async done => {
-
-        const d = Static.doc('sd1');
-        await datastore.create(d);
-        expect((await datastore.fetch(d.resource.id))
-            ['resource']['shortDescription']).toBe('sd1');
-        done();
-    });
-    */
-    xit('should reject with keyOfM in when trying to get a non existing document', function (done) {
+    it('should get if existent', function (done) { return __awaiter(_this, void 0, void 0, function () {
+        var result, e_4;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, datastore.fetch('id5')];
+                case 1:
+                    result = _a.sent();
+                    expect(result.resource.id).toBe('id5');
+                    return [3 /*break*/, 3];
+                case 2:
+                    e_4 = _a.sent();
+                    fail(e_4);
+                    return [3 /*break*/, 3];
+                case 3:
+                    done();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('should reject with keyOfM in when trying to get a non existing document', function (done) {
+        pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
         expectErr(function () { return __awaiter(_this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, datastore.create(static_1.Static.doc('sd1'))];
+                    case 0: return [4 /*yield*/, datastore.fetch('nonexisting')];
                     case 1:
-                        _a.sent();
-                        return [4 /*yield*/, datastore.fetch('nonexisting')];
-                    case 2:
                         _a.sent();
                         return [2 /*return*/];
                 }
             });
         }); }, [core_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);
     });
-    // refresh
-    xit('should reject with keyOfM in when trying to refresh a non existing document', function (done) {
-        expectErr(function () {
-            return datastore.create(static_1.Static.doc('id1'))
-                .then(function () { return datastore.fetch('nonexistingid'); });
-        }, [core_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);
-    });
     // remove
-    xit('should remove if existent', function (done) {
-        var d = static_1.Static.doc('sd1');
-        expectErr(function () {
-            return datastore.create(d)
-                .then(function () { return datastore.remove(d); })
-                .then(function () { return datastore.fetch(d['resource']['id']); });
-        }, [core_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);
-    });
+    it('should remove if existent', function (done) { return __awaiter(_this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, datastore.remove(static_1.Static.doc('sd1', 'identifier1', 'Find', 'id1'))];
+                case 1:
+                    _a.sent();
+                    expect(pouchdbProxy.remove).toHaveBeenCalled();
+                    done();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     it('should throw when no resource id', function (done) {
         expectErr(function () { return datastore.remove(static_1.Static.doc('sd2')); }, [core_1.DatastoreErrors.DOCUMENT_NO_RESOURCE_ID], done);
     });
-    xit('should throw when trying to remove and not existent', function (done) {
+    it('should throw when trying to remove and not existent', function (done) {
+        pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
         var d = static_1.Static.doc('sd1');
         d['resource']['id'] = 'hoax';
         expectErr(function () { return datastore.remove(d); }, [core_1.DatastoreErrors.DOCUMENT_NOT_FOUND], done);

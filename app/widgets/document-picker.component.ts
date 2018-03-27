@@ -63,17 +63,18 @@ export class DocumentPickerComponent implements OnChanges {
      * Populates the document list with all documents
      * from the datastore which match the current query.
      */
-    public fetchDocuments() { // TODO make private
+    private async fetchDocuments() {
 
         if (this.fetchDocsRunning) return;
         this.fetchDocsRunning = true;
 
-        this.datastore.find(this.query)
-            .then(result => {
-                this.documents = this.filterNotAllowedRelationDomainTypes(result.documents);
-                this.fetchDocsRunning = false;
-            },
-            err => console.error(err));
+        try {
+            const result = await this.datastore.find(this.query);
+            this.documents = this.filterNotAllowedRelationDomainTypes(result.documents);
+            this.fetchDocsRunning = false;
+        } catch (err) {
+            console.error(err);
+        }
     }
 
 

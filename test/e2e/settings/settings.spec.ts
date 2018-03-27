@@ -56,18 +56,18 @@ describe('settings --', function() {
         common.typeIn(SettingsPage.getImagestorePathInput(), '/invalid/path/to/imagestore');
         SettingsPage.clickSaveSettingsButton();
         NavbarPage.awaitAlert('Das Bilderverzeichnis konnte nicht gefunden werden', false);
-        NavbarPage.clickCloseMessage(1);
+        NavbarPage.clickCloseAllMessages();
 
         NavbarPage.clickNavigateToImages();
         browser.sleep(delays.shortRest * 50);
         ImageOverviewPage.clickUploadArea();
         ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/Aldrin_Apollo_11.jpg'));
         NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
-        NavbarPage.clickCloseMessage();
+        NavbarPage.clickCloseAllMessages();
 
         ImageOverviewPage.doubleClickCell(0);
         NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
-        NavbarPage.clickCloseMessage();
+        NavbarPage.clickCloseAllMessages();
         //
         DetailSidebarPage.performEditDocument();
         DoceditPage.clickDeleteDocument();

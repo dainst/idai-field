@@ -201,7 +201,7 @@ describe('resources --', () => {
         DoceditPage.clickTypeSwitcherOption('feature');
         NavbarPage.awaitAlert('Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren ' +
             'gehen: Mauertyp');
-        NavbarPage.clickCloseMessage();
+        NavbarPage.clickCloseAllMessages();
         DoceditPage.clickSaveDocument();
         DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Stratigrafische Einheit'));
         browser.wait(EC.stalenessOf(FieldsViewPage.getFieldElement(0)));
@@ -224,7 +224,7 @@ describe('resources --', () => {
         DoceditPage.clickTypeSwitcherOption('feature-layer');
         NavbarPage.awaitAlert('Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern '
             + 'verloren gehen: Trägt');
-        NavbarPage.clickCloseMessage();
+        NavbarPage.clickCloseAllMessages();
         DoceditPage.clickSaveDocument();
         DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));

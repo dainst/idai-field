@@ -30,8 +30,7 @@ export class IdaiFieldTypeConverter extends TypeConverter<Document> {
 
 
     public convert<T extends Document>(doc: Document): T {
-
-        // TODO do not do anything for document, use typeClass
+        
         if (this.imageTypeUtility.isImageType(doc.resource.type)) {
             ObjectUtil.takeOrMake(doc,'resource.identifier','');
             ObjectUtil.takeOrMake(doc,'resource.relations.depicts', []);

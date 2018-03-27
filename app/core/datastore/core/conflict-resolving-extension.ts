@@ -132,7 +132,7 @@ export class ConflictResolvingExtension {
 
         if (!(document as any)['_conflicts']) return false;
 
-        for (let revisionId of (document as any)['_conflicts']) { // TODO do with intersection != empty
+        for (let revisionId of (document as any)['_conflicts']) {
             if (inspectedRevisionsIds.indexOf(revisionId) == -1) return true;
         }
 

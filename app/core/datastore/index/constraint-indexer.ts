@@ -107,7 +107,7 @@ export class ConstraintIndexer {
                         indexDefinition.path, 'UNKNOWN',
                         this.showWarnings);
                 }
-                // TODO remove as soon as auto conflict resolving is properly implemented. this is a hack to make sure the project document is never listed as conflicted
+                // this is a hack to make sure the project document is never listed as conflicted and can be removed when auto conflict resolving gets implemented.
                 ConstraintIndexer.addToIndex(
                     this.existIndex,
                     doc,

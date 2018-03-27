@@ -37,8 +37,6 @@ import {IdGenerator} from './core/id-generator';
     providers: [
         RemoteChangesStream,
 
-
-        // TODO place app state here, its a direct dependency of this package
         { provide: SampleDataLoader, useClass: IdaiFieldSampleDataLoader },
 
         { provide: PouchdbManager, useFactory: function(

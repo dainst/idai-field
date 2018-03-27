@@ -279,25 +279,4 @@ describe('CachedDatastore', () => {
         expect((result.documents[0]).resource['shortDescription']).toBe('s4');
         done();
     });
-
-
-    xit('should add missing fields on remoteChangesNotifications with reassign', async (done) => {
-
-        // await datastore.create({resource: { // trigger caching of document
-        //     id: '1',
-        //     val: 'a',
-        //     relations: {}
-        // }} as any);
-        // remoteChangesNotificationsCallback(
-        //     {resource: { // trigger reassigning of document
-        //         id: '1',
-        //         val: 'b',
-        //         relations: {}
-        //     }} as any);
-        //
-        // const document = await datastore.get('1'); // fetch from cache
-        // expect(document.resource['val']).toEqual('b');
-        // verifyIsIdaiFieldDocument(document);
-        // done();
-    });
 });

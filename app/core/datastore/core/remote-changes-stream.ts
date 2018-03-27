@@ -26,6 +26,7 @@ export class RemoteChangesStream {
         private typeConverter: TypeConverter<Document>) {
 
         datastore.remoteChangesNotifications().subscribe(document => {
+
             if (!document || ! document.resource) return;
             this.welcomeRemoteDocument(document);
         });
@@ -42,7 +43,7 @@ export class RemoteChangesStream {
 
     private welcomeRemoteDocument(document: Document) {
 
-        this.indexFacade.put(document);
+        this.indexFacade.put(document); // TODO put after convert
 
         if (!this.autoCacheUpdate) return;
 

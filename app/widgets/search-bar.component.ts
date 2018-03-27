@@ -84,20 +84,13 @@ export class SearchBarComponent implements OnChanges {
 
             if (this.parentType && type.name != this.parentType) continue;
 
-
-
             if ((!this.relationName && !this.relationRangeType)
                     || this.projectConfiguration.isAllowedRelationDomainType(type.name, this.relationRangeType,
                     this.relationName)) {
 
-                if (this.relationRangeType == 'Project' && type.isAbstract) {
+                if (this.relationRangeType === 'Project' && type.isAbstract) {
 
-                    for (let childType of type.children) { // TODO remove duplication
-                        if (this.projectConfiguration.isAllowedRelationDomainType(childType.name, this.relationRangeType,
-                                this.relationName)) {
-                            this.addFilterOption(childType);
-                        }
-                    }
+                    this.addFilterOptionsFor(type);
                     continue;
                 }
 
@@ -105,14 +98,20 @@ export class SearchBarComponent implements OnChanges {
 
             } else if (type.children) {
 
-                for (let childType of type.children) {
-                    if (this.projectConfiguration.isAllowedRelationDomainType(childType.name, this.relationRangeType,
-                            this.relationName)) {
-                        this.addFilterOption(childType);
-                    }
-                }
+                this.addFilterOptionsFor(type);
             }
 
+        }
+    }
+
+
+    private addFilterOptionsFor(type: IdaiType) {
+
+        for (let childType of type.children) {
+            if (this.projectConfiguration.isAllowedRelationDomainType(childType.name, this.relationRangeType,
+                    this.relationName)) {
+                this.addFilterOption(childType);
+            }
         }
     }
 

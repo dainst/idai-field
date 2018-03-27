@@ -65,7 +65,7 @@ function main() {
                 switch (_a.label) {
                     case 0:
                         h = new daos_spec_helper_1.DAOsSpecHelper();
-                        spyOn(console, 'error'); // TODO remove
+                        spyOn(console, 'error');
                         result = daos_spec_helper_1.DAOsSpecHelper.createPouchdbDatastore('testdb');
                         datastore = result.datastore;
                         image0 = static_1.Static.doc('Image', 'Image', 'Image', 'image0');

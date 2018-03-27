@@ -480,7 +480,6 @@ function main() {
                 }
             });
         }); });
-        // TODO build up whole path automatically (in navigationpathmanager) when using selectDocument
     });
 }
 exports.main = main;

@@ -362,8 +362,5 @@ export function main() {
 
             done();
         });
-
-
-        // TODO build up whole path automatically (in navigationpathmanager) when using selectDocument
     });
 }

@@ -31,7 +31,7 @@ export function main() {
 
             h = new DAOsSpecHelper();
 
-            spyOn(console, 'error'); // TODO remove
+            spyOn(console, 'error');
 
             const result = DAOsSpecHelper.createPouchdbDatastore('testdb');
             const datastore = result.datastore;

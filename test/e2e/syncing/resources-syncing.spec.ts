@@ -11,7 +11,7 @@ let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
 const cors = require('pouchdb-server/lib/cors');
 const express = require('express');
-// TODO reuse main branch when pull-request is accepted
+// reuse main branch when pull-request is accepted
 // https://github.com/pouchdb/pouchdb-server/pull/263
 const expressPouchDB = require('express-pouchdb-dainst');
 const fs = require('fs');

@@ -128,7 +128,6 @@ describe('resources/filter --', () => {
         ResourcesPage.clickListModeButton();
         checkTypeIcon();
         createResourceWithPresetType('2', false);
-        // TODO comment in ResourcesPage.getDocumentTeaserTypeCharacter().then(character => expect(character).toEqual('E'));
     });
 
 

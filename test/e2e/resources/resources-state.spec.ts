@@ -81,9 +81,7 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('befund1', 'feature-architecture');
 
         ResourcesPage.performSelectOperation(1);
-        // TODO comment in
-        // ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-        //
+
         ResourcesPage.performSelectOperation(0); // trench2
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 

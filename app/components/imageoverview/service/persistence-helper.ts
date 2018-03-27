@@ -39,7 +39,7 @@ export class PersistenceHelper {
                     msgWithParams => reject(msgWithParams)
                 ).then(
                     () => this.persistenceManager.remove(document, this.settingsService.getUsername(), [document]),
-                    err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier]) // TODO get rid of M, return datastore errWithParams
+                    err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier])
                 ).then(() => {
                     this.imageOverviewFacade.remove(document);
                 })

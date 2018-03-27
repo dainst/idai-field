@@ -56,7 +56,4 @@ describe('images/image-overview/state --', () => {
 
         ImageOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
     });
-
-    // TODO Write test for main type document filter select
-
 });

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ProjectConfiguration, IdaiType} from 'idai-components-2/core'
-import {isNot} from 'tsfun';
+import {IdaiType, ProjectConfiguration} from 'idai-components-2/core'
 
 
 @Injectable()
@@ -48,8 +47,7 @@ export class ImageTypeUtility {
         return this.projectConfiguration.getTypesList()
             .map(type => type.name)
             .filter(typeName => !this.isImageType(typeName))
-            // TODO Check if this is really the right place to get rid of the project document in search results
-            .filter(typeName => !this.isProjectType(typeName))
+            .filter(typeName => !ImageTypeUtility.isProjectType(typeName))
     }
 
 
@@ -59,7 +57,7 @@ export class ImageTypeUtility {
     }
 
 
-    private isProjectType(typeName: string): boolean {
+    private static isProjectType(typeName: string): boolean {
 
         return typeName == 'Project';
     }

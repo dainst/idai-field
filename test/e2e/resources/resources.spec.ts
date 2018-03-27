@@ -158,13 +158,10 @@ describe('resources --', () => {
 
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
         ResourcesPage.performSelectOperation(1);
-        // ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBeGreaterThan(0));
-        // ResourcesPage.performSelectOperation(0);
-        // ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
 
 
-    it('should edit a main type resource', () => { // TODO is this test still necessary?
+    it('should edit a main type resource', () => {
 
         NavbarPage.clickNavigateToProject();
         ResourcesPage.openEditByDoubleClickResource('trench1');

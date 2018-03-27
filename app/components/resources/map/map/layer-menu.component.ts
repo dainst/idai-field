@@ -33,8 +33,6 @@ export class LayerMenuComponent {
     public toggleLayer = (layer: IdaiFieldImageDocument) => this.onToggleLayer.emit(layer);
     public focusLayer = (layer: IdaiFieldImageDocument) => this.onFocusLayer.emit(layer);
 
-
-    // TODO remove this. check if ModelUtil.getDocumentLabel can be adjusted, the trimming should be done via css
     public getLayerLabel(layer: IdaiFieldImageDocument): string {
 
         let label = layer.resource.shortDescription && layer.resource.shortDescription != '' ?

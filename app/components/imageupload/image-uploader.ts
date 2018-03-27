@@ -36,7 +36,7 @@ export class ImageUploader {
         private modalService: NgbModal,
         private persistenceManager: PersistenceManager,
         private projectConfiguration: ProjectConfiguration,
-        private settingsService: SettingsService, // TODO remove this dependency. replace by username param. it would be nice to get rid of depencency to settings package altogether
+        private settingsService: SettingsService,
         private uploadStatus: UploadStatus
     ) {}
 

@@ -70,10 +70,7 @@ export class NavbarPage {
     public static getMessageText() {
 
         browser.sleep(200);
-        browser.ignoreSynchronization = true; // TODO this should not be necessary anymore, success manages in tests can get clicked away
-        let text =  element(by.id('message-0')).getText();
-        browser.ignoreSynchronization = false;
-        return text;
+        return element(by.id('message-0')).getText();
     };
 
     public static getActiveNavLinkLabel() {

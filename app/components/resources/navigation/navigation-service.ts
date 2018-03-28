@@ -35,7 +35,7 @@ export class NavigationService {
         return ((this.projectConfiguration
             .getRelationDefinitions(document.resource.type, true) as any)
             .map((_: RelationDefinition) => _.name)
-            .indexOf('liesWithin') !== -1); // TODO check if liesWithin is hardcoded, and if not, do so
+            .indexOf('liesWithin') !== -1);
     }
 }
 

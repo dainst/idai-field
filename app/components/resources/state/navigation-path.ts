@@ -17,5 +17,5 @@ export class NavigationPath {
 export interface NavigationPathBase<A> {
 
     elements: Array<A>;
-    rootDocument?: IdaiFieldDocument; // TODO rename to selected
+    rootDocument?: IdaiFieldDocument;
 }

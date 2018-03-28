@@ -14,8 +14,6 @@ export class ChangeHistoryUtil {
      */
     public static mergeChangeHistories(mainDocument: Document, secondDocument: Document) {
 
-        // TODO Return cloned instance
-
         const changeHistory: Array<Action> = ChangeHistoryUtil.getCombinedChangeHistory([mainDocument, secondDocument]);
         ChangeHistoryUtil.sortChangeHistory(changeHistory);
 

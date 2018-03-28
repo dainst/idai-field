@@ -221,7 +221,6 @@ export class PouchdbDatastore {
             }).on('change', (change: any) => {
                 // it is noteworthy that currently often after a deletion of a document we get a change that does not reflect deletion.
                 // neither is change.deleted set nor is sure if the document already is deleted (meaning fetch still works)
-                // TODO do further investigation, maybe file an issue for pouchdb
 
                 if (!change || !change.id) return;
                 if (change.id.indexOf('_design') == 0) return; // starts with _design

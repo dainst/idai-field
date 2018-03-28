@@ -166,7 +166,6 @@ export class PlusButtonComponent implements OnChanges {
             }
         }
 
-        // TODO simplify return statement
         if (this.liesWithin && !projectConfiguration.isAllowedRelationDomainType(type.name,
                 this.liesWithin.resource.type, 'liesWithin')) {
             return false;

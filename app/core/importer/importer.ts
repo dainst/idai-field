@@ -121,7 +121,7 @@ export class Importer {
                     this.objectReaderFinished = true;
                     if (!this.inUpdateDocumentLoop) this.finishImport();
                 });
-            }).catch(msgWithParams => { // TODO test this
+            }).catch(msgWithParams => {
                 this.importReport.errors.push(msgWithParams);
                 this.finishImport();
             });

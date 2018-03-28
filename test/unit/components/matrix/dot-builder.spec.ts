@@ -10,7 +10,7 @@ import {Static} from '../../static';
 
 describe('DotBuilder', () => {
 
-    let dotBuilder: DotBuilder;
+    let dotBuilder: DotBuilder;;
 
     beforeAll(() => {
 

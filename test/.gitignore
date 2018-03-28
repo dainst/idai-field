@@ -1,10 +1,8 @@
-browser/**/*.spec.js
-browser/**/*.spec.js.map
-browser/*.js
 e2e/**/*.js
 e2e/**/*.js.map
 !e2e/config
 !e2e/*.ts
 browser/references.js*
-node/**/*.spec.js
-node/**/*.spec.js.map
+unit/**/*.spec.js
+unit/**/*.spec.js.map
+unit/**/*.js

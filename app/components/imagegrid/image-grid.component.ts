@@ -109,8 +109,6 @@ export class ImageGridComponent implements OnChanges {
         this.moreRowsMsg = undefined;
         await this.loadImages(rows);
         this.rows = rows;
-
-        // TODO Show error message if one or more images were not found (possibly using method showImagesNotFoundMessage)
     }
 
 

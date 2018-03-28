@@ -139,13 +139,12 @@ export class DocumentHolder {
 
         try {
             for (let revisionId of this.inspectedRevisionsIds) {
-                await this.datastore.removeRevision(this.clonedDocument.resource.id as any, revisionId);
+                await this.datastore.removeRevision(this.clonedDocument.resource.id, revisionId);
+                this.inspectedRevisionsIds = this.inspectedRevisionsIds.filter(item => item !== revisionId);
             }
         } catch (err) {
             console.error("error while removing revision",err);
         }
-
-        this.inspectedRevisionsIds = []; // TODO remove each item individually on successful revision removal
     }
 
 

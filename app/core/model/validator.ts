@@ -74,7 +74,6 @@ export class Validator {
     }
 
 
-    // TODO get rid of this when validator classes are merged
     public async validateRelationTargets(document: Document, relationName: string): Promise<string[]> {
 
         return [];

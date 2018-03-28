@@ -115,7 +115,6 @@ export class DocumentHolder {
 
     private async cleanup(document: Document): Promise<Document> {
 
-        // TODO make synchronous and make function pure, then insert into flow
         await this.removeInvalidLiesWithinRelationTargets(document);
 
         return flow(
@@ -143,7 +142,7 @@ export class DocumentHolder {
                 await this.datastore.removeRevision(this.clonedDocument.resource.id as any, revisionId);
             }
         } catch (err) {
-            throw [M.DATASTORE_GENERIC_ERROR, err]; // TODO doesn't get handled. Also: Don't work with keys of M in services
+            console.error("error while removing revision",err);
         }
 
         this.inspectedRevisionsIds = []; // TODO remove each item individually on successful revision removal
@@ -154,11 +153,11 @@ export class DocumentHolder {
 
         if (!this.imageTypeUtility.isImageType(this.clonedDocument.resource.type)) return undefined;
 
-        if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]; // TODO Don't work with keys of M in services
+        if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         try {
             await this.imagestore.remove(this.clonedDocument.resource.id as any);
         } catch (_) {
-            return [M.IMAGESTORE_ERROR_DELETE, this.clonedDocument.resource.id]; // TODO Don't work with keys of M in services
+            return [M.IMAGESTORE_ERROR_DELETE, this.clonedDocument.resource.id];
         }
     }
 

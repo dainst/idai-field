@@ -124,7 +124,6 @@ export class PouchdbDatastore {
     }
 
 
-    // TODO improve error handling, consider using PouchdbDatastore#remove
     public async removeRevision(docId: string, revisionId: string): Promise<any> {
 
         try {

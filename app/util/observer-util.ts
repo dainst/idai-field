@@ -8,8 +8,15 @@ export class ObserverUtil {
 
     public static notify<A>(observers: Array<Observer<A>>, a: A) {
 
-        // TODO call removeClosedObservers
-        for (let observer of observers) observer.next(a); // TODO handle error send to log.error
+        this.removeClosedObservers(observers);
+
+        for (let observer of observers) {
+            try {
+                observer.next(a);
+            } catch (err) {
+                console.log("error in ObserverUtil.notify, calling next",err)
+            }
+        }
     }
 
 
@@ -21,7 +28,7 @@ export class ObserverUtil {
     }
 
 
-    public static removeClosedObservers(observers: Array<any>) {
+    private static removeClosedObservers(observers: Array<any>) {
 
         const observersToDelete: any[] = [];
         for (let i = 0; i < observers.length; i++) {

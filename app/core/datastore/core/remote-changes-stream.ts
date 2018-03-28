@@ -54,7 +54,6 @@ export class RemoteChangesStream {
             this.documentCache.reassign(convertedDocument);
         }
 
-        ObserverUtil.removeClosedObservers(this.observers);
         ObserverUtil.notify(this.observers, convertedDocument);
     }
 }

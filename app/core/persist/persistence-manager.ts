@@ -218,10 +218,6 @@ export class PersistenceManager {
             document.created = { user: user, date: new Date() };
             document.modified = [{ user: user, date: new Date() }];
 
-            // TODO isn't it a problem that create resolves to object id?
-            // wouldn't persistChangedObjects() interpret it as an error?
-            // why does this not happen?
-
             return this.datastore.create(document);
         }
     }

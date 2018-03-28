@@ -6,3 +6,7 @@ browser/references.js*
 unit/**/*.spec.js
 unit/**/*.spec.js.map
 unit/**/*.js
+subsystem/**/*.spec.js
+subsystem/**/*.spec.js.map
+subsystem/**/*.js
+!subsystem/config

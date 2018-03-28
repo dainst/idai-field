@@ -13,7 +13,7 @@ describe('ConstraintIndexer', () => {
             resource: {
                 id: id,
                 identifier: 'identifier' + id,
-                relations: { } // TODO test for undefined relations,
+                relations: {}
             },
             created:
                 {

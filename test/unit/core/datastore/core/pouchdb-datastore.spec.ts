@@ -142,7 +142,7 @@ describe('PouchdbDatastore', () => {
 
     // update
 
-    it('should update an existing document with no identifier conflict', async done => { // TODO works but check test again
+    it('should update an existing document with no identifier conflict', async done => {
 
         const doc2 = Static.doc('id2');
 

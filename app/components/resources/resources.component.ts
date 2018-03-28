@@ -25,7 +25,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public isEditingGeometry: boolean = false;
 
-    public ready: boolean = true; // TODO remove, lets make use of loading instead
+    public ready: boolean = true;
 
     private scrollTarget: IdaiFieldDocument|undefined;
 

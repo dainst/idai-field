@@ -243,7 +243,6 @@ export class ViewFacade {
             const selectedMainTypeDocument: IdaiFieldDocument|undefined = this.getSelectedMainTypeDocument();
             if (selectedMainTypeDocument) mainTypeResource = selectedMainTypeDocument;
         } else {
-            // TODO Check if there is another way to notify resources component about navigation path change when entering overview
             mainTypeResource = this.getProjectDocument() as any;
         }
 

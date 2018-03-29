@@ -1,6 +1,6 @@
 <div id="matrix-view" class="row bg-light py-2">
 
-    <div *ngIf="trenches.length > 0" class="btn-group" ngbDropdown placement="bottom-left" role="group">
+    <div *ngIf="showTrenchSelector()" class="btn-group" ngbDropdown placement="bottom-left" role="group">
         <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
         <div class="dropdown-menu" ngbDropdownMenu>
             <button *ngFor="let trench of trenches" class="dropdown-item" (click)="selectTrench(trench)">
@@ -11,19 +11,32 @@
         <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">{{getDocumentLabel(selectedTrench)}}</div>
     </div>
 
-    <div *ngIf="trenches.length === 0">
+    <div *ngIf="!showTrenchSelector()">
         <div style="height: 41px; z-index: 1001;"></div>
     </div>
 </div>
 
 <div id="matrix-container">
 
-    <div *ngIf="trenches.length === 0"
+    <div *ngIf="showNoTrenchesWarning()"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
         <em>Legen Sie eine Ressource vom Typ 'Schnitt' in der
             <a href="#" routerLink="/resources/project">Übersicht</a> an, um hier mit ihr arbeiten zu können.
         </em>
     </div>
 
-    <graph *ngIf="trenches.length > 0" [documents]="documents" (onSelect)="select($event)"></graph>
+
+    <div *ngIf="showNoResourcesWarning()"
+         class="col-8 text-center alert alert-warning no-main-type-resource-alert">
+        <em>Legen Sie Ressourcen vom Typ 'Stratigrafische Einheit' in der
+            <a href="#" routerLink="/resources/excavation">Ausgrabungsansicht</a> an und verknüpfen Sie sie mit zeitlichen Relationen.
+        </em>
+    </div>
+
+
+    <graph *ngIf="showGraph()" [documents]="featureDocuments" (onSelect)="select($event)"></graph>
 </div>
+
+
+
+<!-- TODO fetch all labels from config -->

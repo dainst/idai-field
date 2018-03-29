@@ -17,7 +17,7 @@ export class MatrixViewComponent implements OnInit {
 
     private trenches: Array<IdaiFieldDocument> = [];
     private selectedTrench: IdaiFieldDocument|undefined;
-    private documents: Array<IdaiFieldDocument> = [];
+    private featureDocuments: Array<IdaiFieldDocument> = [];
 
 
     constructor(
@@ -35,10 +35,23 @@ export class MatrixViewComponent implements OnInit {
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
 
+    private noTrenches = () => this.trenches.length === 0;
+
+    private noFeatures = () => this.featureDocuments.length === 0;
+
+    public showGraph = () => !this.noTrenches() && !this.noFeatures();
+
+    public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures();
+
+    public showNoTrenchesWarning = () => this.noTrenches();
+
+    public showTrenchSelector = () => !this.noTrenches();
+
+
     public async select(event: string) {
 
         let selected;
-        for (let doc of this.documents) {
+        for (let doc of this.featureDocuments) {
             if (event === doc.resource.identifier) selected = doc;
         }
         if (!selected) return;
@@ -49,14 +62,14 @@ export class MatrixViewComponent implements OnInit {
 
         await doceditRef.result.then(
             res => {
-                this.documents = [];
+                this.featureDocuments = [];
                 this.selectedTrench = undefined;
                 this.populateTrenches()
             },
             closeReason => {
 
                 if (closeReason === 'deleted') {
-                    this.documents = [];
+                    this.featureDocuments = [];
                     this.selectedTrench = undefined;
                     this.populateTrenches();
                 }
@@ -79,8 +92,10 @@ export class MatrixViewComponent implements OnInit {
 
         this.selectedTrench = trench;
 
-        this.documents = (await this.datastore.find( {
+        this.featureDocuments = (await this.datastore.find( {
             constraints: { 'isRecordedIn:contain': this.selectedTrench.resource.id }
         })).documents;
+
+        console.log("feature docs",this.featureDocuments)
     }
 }

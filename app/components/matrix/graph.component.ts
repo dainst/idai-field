@@ -33,6 +33,8 @@ export class GraphComponent implements OnInit, OnChanges {
     private static hoverColor: string = '#6e95de';
     private static defaultColor: string = '#000000';
 
+    private nodesShown: boolean = false;
+
 
     constructor(private dotBuilder: DotBuilder,
                 private renderer: Renderer2) {}
@@ -61,20 +63,22 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private showGraph() {
 
-        const svg: SVGSVGElement = this.createGraph();
-        GraphComponent.removeTitleElements(svg);
-        this.graphContainer.nativeElement.appendChild(svg);
-        GraphComponent.configurePanZoomBehavior(svg);
+        const svg: string = this.createGraph();
+        this.nodesShown = svg.includes('node');
+
+        const svgGraph = new DOMParser().parseFromString(svg, 'image/svg+xml')
+            .getElementsByTagName('svg')[0];
+
+        GraphComponent.removeTitleElements(svgGraph);
+        this.graphContainer.nativeElement.appendChild(svgGraph);
+        GraphComponent.configurePanZoomBehavior(svgGraph);
     }
 
 
-    private createGraph(): SVGSVGElement {
+    private createGraph(): string {
 
         const graph: string = this.dotBuilder.build(this.documents);
-        const svg: string = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
-
-        return new DOMParser().parseFromString(svg, 'image/svg+xml')
-            .getElementsByTagName('svg')[0]
+        return Viz(graph, { format: 'svg', engine: 'dot' }) as string;
     }
 
 

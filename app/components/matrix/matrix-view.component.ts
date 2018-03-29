@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/idai-field-document-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
-import {DoceditLauncher} from '../resources/service/docedit-launcher';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DoceditComponent} from '../docedit/docedit.component';
 

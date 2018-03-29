@@ -8,7 +8,8 @@
 #matrix-view {
   position: fixed;
   width: 100%;
-  z-index: 1001;
+  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+  z-index:1001;
 
   .btn-group {
     top: 4px;
@@ -25,8 +26,17 @@
 
 #matrix-container {
   position: absolute;
-  padding-top: 56px;
+  padding-top: 58px;
 
   width: calc(100% - 10px);
   height: calc(100vh - 60px);
+
+  .no-main-type-resource-alert {
+    position: absolute;
+    padding: 10px;
+    margin: 35vh 16.6vw 0;
+    z-index: 900;
+    user-select: none;
+    cursor: default;
+  }
 }

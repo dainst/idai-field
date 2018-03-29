@@ -1,27 +1,32 @@
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 
 @import 'graph';
 
 #matrix-view {
+  position: fixed;
+  width: 100%;
+  z-index: 1001;
+
   .btn-group {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 4px;
+    padding-left: 8px;
+    margin-bottom: 4px;
   }
 
   #selected-trench-label {
     position: absolute;
-    top: 17px;
-    left: 60px;
+    left: 43px;
   }
+}
 
-  #matrix-container {
-    position: absolute;
-    top: 70px;
-    left: 10px;
-    width: calc(100% - 10px);
-    height: calc(100vh - 131px);
-  }
+
+#matrix-container {
+  position: absolute;
+  padding-top: 56px;
+
+  width: calc(100% - 10px);
+  height: calc(100vh - 60px);
 }

@@ -1,4 +1,5 @@
-<div id="matrix-view">
+<div id="matrix-view" class="row bg-light py-2">
+
     <div class="btn-group" ngbDropdown placement="bottom-left" role="group">
         <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
         <div class="dropdown-menu" ngbDropdownMenu>
@@ -6,10 +7,11 @@
                 {{getDocumentLabel(trench)}}
             </button>
         </div>
-    </div>
-    <div *ngIf="selectedTrench" id="selected-trench-label">{{getDocumentLabel(selectedTrench)}}</div>
 
-    <div id="matrix-container">
-        <graph [documents]="documents" (onSelect)="select($event)"></graph>
+        <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">{{getDocumentLabel(selectedTrench)}}</div>
     </div>
+</div>
+
+<div id="matrix-container">
+    <graph [documents]="documents" (onSelect)="select($event)"></graph>
 </div>

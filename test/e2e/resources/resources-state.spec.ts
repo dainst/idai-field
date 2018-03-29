@@ -74,7 +74,7 @@ describe('resources/state --', function() {
 
     it('basic stuff', () => {
 
-        ResourcesPage.performCreateResource('trench2', 'trench');
+        ResourcesPage.performCreateResource('trench3', 'trench');
 
         NavbarPage.clickNavigateToExcavation();
 
@@ -88,6 +88,7 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToProject();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('trench1'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench2'));
+        ResourcesPage.getListItemIdentifierText(2).then(text => expect(text).toEqual('trench3'));
     });
 
 

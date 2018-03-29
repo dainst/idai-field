@@ -32,6 +32,81 @@ export const DOCS: Document[] = [
     },
     {
         "resource": {
+            "id": "t2",
+            "identifier": "trench2",
+            "shortDescription": "Matrix Schnitt",
+            "relations": {
+                "isRecordedIn": [ "test" ]
+            },
+            "type": "Trench"
+        }
+    },
+    {
+        "resource": {
+            "id": "si1",
+            "identifier": "SI1",
+            "shortDescription": "Ein Befund",
+            "relations": {
+                "isRecordedIn": [ "t2" ],
+                "isAfter": [ "si2", "si5"],
+            },
+            "type": "Feature"
+        }
+    },
+    {
+        "resource": {
+            "id": "si2",
+            "identifier": "SI2",
+            "shortDescription": "Ein Erdbefund",
+            "relations": {
+                "isRecordedIn": [ "t2" ],
+                "isBefore": ["si1"],
+                "isAfter": ["si3"]
+            },
+            "type": "Layer"
+        }
+    },
+    {
+        "resource": {
+            "id": "si3",
+            "identifier": "SI3",
+            "shortDescription": "Architektur",
+            "relations": {
+                "isRecordedIn": [ "t2" ],
+                "isBefore": ["si2"],
+                "isAfter": ["si4"],
+                "isContemporaryWith": ["si5"]
+            },
+            "type": "Architecture"
+        }
+    },
+    {
+        "resource": {
+            "id": "si4",
+            "identifier": "SI4",
+            "shortDescription": "Ein Befund",
+            "relations": {
+                "isRecordedIn": [ "t2" ],
+                "isBefore": ["si3"],
+            },
+            "type": "Feature"
+        }
+    },
+    {
+        "resource": {
+            "id": "si5",
+            "identifier": "SI5",
+            "shortDescription": "Ein Befund",
+            "relations": {
+                "isRecordedIn": [ "t2" ],
+                "isBefore": ["si1"],
+                "isContemporaryWith": ["si3"]
+            },
+            "type": "Feature"
+        }
+    },
+    {
+        "resource": {
             "id": "c1",
             "identifier": "context1",
             "shortDescription": "Ein Befund",

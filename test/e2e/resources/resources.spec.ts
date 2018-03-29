@@ -42,14 +42,6 @@ describe('resources --', () => {
 
     it('should delete a main type resource', () => {
 
-        ResourcesPage.performCreateMainTypeResource('newTrench');
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
-        NavbarPage.clickNavigateToProject();
-        ResourcesPage.openEditByDoubleClickResource('newTrench');
-        DoceditPage.clickDeleteDocument();
-        DoceditPage.typeInIdentifierInConfirmDeletionInputField('newTrench');
-        DoceditPage.clickConfirmDeleteInModal();
-
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBeGreaterThan(0));
@@ -58,6 +50,11 @@ describe('resources --', () => {
         ResourcesPage.openEditByDoubleClickResource('trench1');
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('trench1');
+        DoceditPage.clickConfirmDeleteInModal();
+
+        ResourcesPage.openEditByDoubleClickResource('trench2');
+        DoceditPage.clickDeleteDocument();
+        DoceditPage.typeInIdentifierInConfirmDeletionInputField('trench2');
         DoceditPage.clickConfirmDeleteInModal();
 
         browser.sleep(delays.shortRest);

@@ -5,6 +5,7 @@ import {MatrixViewComponent} from './matrix-view.component';
 import {GraphComponent} from './graph.component';
 import {DotBuilder} from './dot-builder';
 import {RouterModule} from '@angular/router';
+import {MatrixState} from './matrix-state';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import {RouterModule} from '@angular/router';
         GraphComponent
     ],
     providers: [
-        DotBuilder
+        DotBuilder,
+        MatrixState
     ]
 })
 

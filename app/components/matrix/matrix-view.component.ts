@@ -4,6 +4,7 @@ import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/idai-field-do
 import {ModelUtil} from '../../core/model/model-util';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DoceditComponent} from '../docedit/docedit.component';
+import {MatrixState} from './matrix-state';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class MatrixViewComponent implements OnInit {
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private matrixState: MatrixState
     ) {}
 
 
@@ -80,9 +82,17 @@ export class MatrixViewComponent implements OnInit {
 
     private async populateTrenches(): Promise<void> {
 
-
         this.trenches = (await this.datastore.find({ types: ['Trench'] })).documents;
-        if (this.trenches.length > 0) await this.selectTrench(this.trenches[0]);
+
+        if (this.trenches.length > 0) {
+
+            for (let trench of this.trenches) {
+                if (this.matrixState.selectedTrenchId === trench.resource.id) return this.selectTrench(trench);
+            }
+
+            this.matrixState.selectedTrenchId = this.trenches[0].resource.id;
+            await this.selectTrench(this.trenches[0]);
+        }
     }
 
 
@@ -91,11 +101,10 @@ export class MatrixViewComponent implements OnInit {
         if (trench == this.selectedTrench) return;
 
         this.selectedTrench = trench;
+        this.matrixState.selectedTrenchId = this.selectedTrench.resource.id;
 
         this.featureDocuments = (await this.datastore.find( {
             constraints: { 'isRecordedIn:contain': this.selectedTrench.resource.id }
         })).documents;
-
-        console.log("feature docs",this.featureDocuments)
     }
 }

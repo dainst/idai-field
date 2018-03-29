@@ -4,10 +4,10 @@ import {Messages} from 'idai-components-2/messages';
 import {Query} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
-import {TypeUtility} from '../../../common/type-utility';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {M} from '../../../m';
-import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/idai-field-image-document-read-datastore';
+import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
+import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
 
 
 @Component({
@@ -23,10 +23,10 @@ export class ImagePickerComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
-    public documents: IdaiFieldImageDocument[];
+    public documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>;
 
     public document: IdaiFieldDocument;
-    public selectedDocuments: Array<IdaiFieldImageDocument> = [];
+    public selectedDocuments: Array<IdaiFieldImageDocument|IdaiField3DDocument> = [];
 
     private query: Query = { q: '' };
 
@@ -36,9 +36,8 @@ export class ImagePickerComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private messages: Messages,
-        private datastore: IdaiFieldImageDocumentReadDatastore,
-        private el: ElementRef,
-        private typeUtility: TypeUtility
+        private datastore: IdaiFieldMediaDocumentReadDatastore,
+        private el: ElementRef
     ) {}
 
 
@@ -53,17 +52,24 @@ export class ImagePickerComponent implements OnInit {
     }
 
 
-    public setDocument(document: IdaiFieldDocument) {
+    public async setDocument(document: IdaiFieldDocument) {
 
         this.document = document;
-        this.fetchDocuments(this.query);
+        await this.fetchDocuments(this.query);
     }
 
 
-    public setQueryString(q: string) {
+    public async setQueryString(q: string) {
 
         this.query.q = q;
-        this.fetchDocuments(this.query);
+        await this.fetchDocuments(this.query);
+    }
+
+
+    public async setQueryTypes(types: string[]|undefined) {
+
+        this.query.types = types;
+        await this.fetchDocuments(this.query);
     }
 
 
@@ -93,7 +99,6 @@ export class ImagePickerComponent implements OnInit {
         this.query = query;
         if (!this.query) this.query = {};
 
-        this.query.types = this.typeUtility.getImageTypeNames();
         this.query.constraints = {
             'depicts:contain': { value: this.document.resource.id as string, type: 'subtract' }
         };

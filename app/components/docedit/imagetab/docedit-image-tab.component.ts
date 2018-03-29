@@ -5,7 +5,8 @@ import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {ImagePickerComponent} from './image-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
-import {IdaiFieldImageDocumentReadDatastore} from "../../../core/datastore/idai-field-image-document-read-datastore";
+import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
+import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
 
 @Component({
     selector: 'docedit-image-tab',
@@ -19,15 +20,15 @@ import {IdaiFieldImageDocumentReadDatastore} from "../../../core/datastore/idai-
 export class DoceditImageTabComponent {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
-    public documents: IdaiFieldImageDocument[];
+    public documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>;
 
-    public selected: IdaiFieldImageDocument[] = [];
+    public selected: Array<IdaiFieldImageDocument|IdaiField3DDocument> = [];
 
     @Input() document: IdaiFieldDocument;
 
 
     constructor(
-        private datastore: IdaiFieldImageDocumentReadDatastore,
+        private datastore: IdaiFieldMediaDocumentReadDatastore,
         private modalService: NgbModal,
         private documentEditChangeMonitor: DocumentEditChangeMonitor
     ) {
@@ -46,7 +47,7 @@ export class DoceditImageTabComponent {
     /**
      * @param document the object that should be selected
      */
-    public select(document: IdaiFieldImageDocument) {
+    public select(document: IdaiFieldImageDocument|IdaiField3DDocument) {
 
         if (this.selected.indexOf(document) == -1) this.selected.push(document);
         else this.selected.splice(this.selected.indexOf(document), 1);
@@ -97,13 +98,13 @@ export class DoceditImageTabComponent {
         });
 
         Promise.all(imageDocPromises as any).then(docs => {
-            this.documents = docs as Array<IdaiFieldImageDocument>;
+            this.documents = docs as Array<IdaiFieldImageDocument|IdaiField3DDocument>;
             this.clearSelection();
         });
     }
 
 
-    private addIsDepictedInRelations(imageDocuments: IdaiFieldImageDocument[]) {
+    private addIsDepictedInRelations(imageDocuments: Array<IdaiFieldImageDocument|IdaiField3DDocument>) {
 
         const relations = this.document.resource.relations['isDepictedIn']
             ? this.document.resource.relations['isDepictedIn'].slice() : [];
@@ -134,7 +135,7 @@ export class DoceditImageTabComponent {
         imagePickerModal.componentInstance.setDocument(this.document);
 
         imagePickerModal.result.then(
-            (selectedImages: Array<IdaiFieldImageDocument>) => {
+            (selectedImages: Array<IdaiFieldImageDocument|IdaiField3DDocument>) => {
                 this.addIsDepictedInRelations(selectedImages);
                 this.documentEditChangeMonitor.setChanged();
             }

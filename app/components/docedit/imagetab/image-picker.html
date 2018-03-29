@@ -23,10 +23,16 @@
     </div>
 
     <div class="modal-body" id="image-picker-modal">
-        <search-bar *ngIf="!selectedDocuments.length"
-                    [showFiltersMenu]="false"
-                    (onQueryStringChanged)="setQueryString($event)">
-        </search-bar>
+        <div class="row">
+            <div class="col-md-6">
+                <search-bar *ngIf="!selectedDocuments.length"
+                            [relationName]="'depicts'"
+                            [relationRangeType]="'Trench'"
+                            (onQueryStringChanged)="setQueryString($event)"
+                            (onTypesChanged)="setQueryTypes($event)">>
+                </search-bar>
+            </div>
+        </div>
         <div class="image-grid" (window:resize)="onResize($event)">
 
             <image-grid #imageGrid

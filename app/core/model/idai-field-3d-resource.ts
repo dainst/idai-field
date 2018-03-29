@@ -1,5 +1,5 @@
 import {Resource} from 'idai-components-2/core';
-import {IdaiField3DRelations} from './idai-field-3d-relations';
+import {IdaiFieldMediaRelations} from './idai-field-media-relations';
 
 
 /**
@@ -15,5 +15,5 @@ export interface IdaiField3DResource extends Resource {
     thumbnailWidth: number;
     thumbnailHeight: number;
 
-    relations: IdaiField3DRelations;
+    relations: IdaiFieldMediaRelations;
 }

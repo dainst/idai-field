@@ -27,6 +27,8 @@ import {ChangesStream} from "./core/changes-stream";
 import {IdaiField3DDocumentDatastore} from './idai-field-3d-document-datastore';
 import {IdaiField3DDocument} from '../model/idai-field-3d-document';
 import {IdaiField3DDocumentReadDatastore} from './idai-field-3d-document-read-datastore';
+import {IdaiFieldMediaDocumentReadDatastore} from './idai-field-media-document-read-datastore';
+import {IdaiFieldMediaDocumentDatastore} from './idai-field-media-document-datastore';
 
 /**
  * There is the top level package, in which everything idai-field specific resides,
@@ -173,7 +175,19 @@ import {IdaiField3DDocumentReadDatastore} from './idai-field-3d-document-read-da
             },
             deps: [PouchdbDatastore, DocumentCache, TypeConverter]
         },
-        { provide: IdaiField3DDocumentReadDatastore, useExisting: IdaiField3DDocumentDatastore }
+        { provide: IdaiField3DDocumentReadDatastore, useExisting: IdaiField3DDocumentDatastore },
+
+        {
+            provide: IdaiFieldMediaDocumentDatastore,
+            useFactory: function(pouchdbDatastore: PouchdbDatastore,
+                                 documentCache: DocumentCache<IdaiFieldImageDocument|IdaiField3DDocument>,
+                                 documentConverter: TypeConverter,
+            ): IdaiFieldMediaDocumentDatastore {
+                return new IdaiFieldMediaDocumentDatastore(pouchdbDatastore, documentCache, documentConverter);
+            },
+            deps: [PouchdbDatastore, DocumentCache, TypeConverter]
+        },
+        { provide: IdaiFieldMediaDocumentReadDatastore, useExisting: IdaiFieldMediaDocumentDatastore }
     ]
 })
 

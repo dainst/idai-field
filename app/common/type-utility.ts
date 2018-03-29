@@ -29,42 +29,41 @@ export class TypeUtility {
     }
 
 
-    public getProjectImageTypes(): any {
+    public isMediaType(typeName: string): boolean {
 
-        const projectTypesTree: { [type: string]: IdaiType } = this.projectConfiguration.getTypesTree();
-        let projectImageTypes: any = {};
-
-        if (projectTypesTree['Image']) {
-            projectImageTypes['Image'] = projectTypesTree['Image'];
-
-            if (projectTypesTree['Image'].children) {
-                for (let i = projectTypesTree['Image'].children.length - 1; i >= 0; i--) {
-                    projectImageTypes[projectTypesTree['Image'].children[i].name]
-                        = projectTypesTree['Image'].children[i];
-                }
-            }
-        }
-
-        return projectImageTypes;
+        return this.isImageType(typeName) || this.is3DType(typeName);
     }
 
 
     public getResourceTypeNames(): string[] {
 
         return this.projectConfiguration.getTypesList()
-            .filter(type => !this.isImageType(type.name) && !this.is3DType(type.name))
+            .filter(type => !this.isMediaType(type.name))
             .map(type => type.name);
     }
 
 
     public getImageTypeNames(): string[] {
 
-        return Object.keys(this.getProjectImageTypes());
+        let imageTypeNames: string[] = ['Image'];
+
+        const imageChildTypes: Array<IdaiType> = this.projectConfiguration.getTypesMap()['Image'].children;
+        if (imageChildTypes) imageTypeNames = imageTypeNames.concat(
+            imageChildTypes.map((type: IdaiType) => type.name)
+        );
+
+        return imageTypeNames;
     }
 
 
     public get3DTypeNames(): string[] {
 
         return ['Object3D'];
+    }
+
+
+    public getMediaTypeNames(): string[] {
+
+        return this.getImageTypeNames().concat(this.get3DTypeNames());
     }
 }

@@ -19,9 +19,8 @@ export function main() {
         function createMockedDatastore(mockdb: any) {
 
             const mockTypeUtility = jasmine.createSpyObj('mockTypeUtility',
-                ['isImageType', 'is3DType', 'validate', 'getResourceTypeNames']);
-            mockTypeUtility.isImageType.and.returnValue(false);
-            mockTypeUtility.is3DType.and.returnValue(false);
+                ['isMediaType', 'validate', 'getResourceTypeNames']);
+            mockTypeUtility.isMediaType.and.returnValue(false);
             mockTypeUtility.getResourceTypeNames.and.returnValue(['Find']);
 
             const documentCache = new DocumentCache<IdaiFieldDocument>();

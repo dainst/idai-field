@@ -500,7 +500,14 @@
             "sameMainTypeResource": true
         },
         {
+            "name": "depicts",
             "domain": [
+                "Image",
+                "Drawing",
+                "Photo",
+                "Object3D"
+            ],
+            "range": [
                 "Trench",
                 "Survey",
                 "Building",
@@ -533,23 +540,13 @@
                 "Inscription",
                 "Wall_surface"
             ],
-            "inverse": "is3DRepresentationOf",
-            "label": "Hat das 3D-Objekt",
-            "name": "has3DRepresentation",
-            "range": [
-                "Object3D"
-            ],
-            "visible": false,
-            "editable": false
+            "inverse": "isDepictedIn",
+            "label": "Zeigt",
+            "editable": true
         },
         {
+            "name": "isDepictedIn",
             "domain": [
-                "Object3D"
-            ],
-            "inverse": "has3DRepresentation",
-            "label": "Ist 3D-Repräsentation von",
-            "name": "is3DRepresentationOf",
-            "range": [
                 "Trench",
                 "Survey",
                 "Building",
@@ -581,7 +578,16 @@
                 "Profile",
                 "Inscription",
                 "Wall_surface"
-            ]
+            ],
+            "range": [
+                "Image",
+                "Drawing",
+                "Photo",
+                "Object3D"
+            ],
+            "inverse": "depicts",
+            "visible": false,
+            "editable": false
         }
     ],
     "types": [

@@ -27,6 +27,8 @@ export class IdaiFieldTypeConverter extends TypeConverter {
             return this.typeUtility.getImageTypeNames();
         } else if (typeClass == 'IdaiField3DDocument') {
             return this.typeUtility.get3DTypeNames();
+        } else if (typeClass == 'IdaiFieldMediaDocument') {
+            return this.typeUtility.getMediaTypeNames();
         } else if (typeClass == 'IdaiFieldDocument') {
             return this.typeUtility.getResourceTypeNames();
         }
@@ -38,10 +40,8 @@ export class IdaiFieldTypeConverter extends TypeConverter {
         ObjectUtil.takeOrMake(doc,'resource.identifier','');
 
         // TODO do not do anything for document, use typeClass
-        if (this.typeUtility.isImageType(doc.resource.type)) {
+        if (this.typeUtility.isMediaType(doc.resource.type)) {
             ObjectUtil.takeOrMake(doc,'resource.relations.depicts', []);
-        } else if (this.typeUtility.is3DType(doc.resource.type)) {
-            ObjectUtil.takeOrMake(doc,'resource.relations.is3DRepresentationOf', []);
         } else {
             ObjectUtil.takeOrMake(doc,'resource.relations.isRecordedIn', []);
         }
@@ -57,7 +57,13 @@ export class IdaiFieldTypeConverter extends TypeConverter {
         } else if (typeClass == 'IdaiField3DDocument') {
             if (!this.typeUtility.is3DType(type)) throw 'Wrong type class: must be IdaiField3DDocument';
         } else if (typeClass == 'IdaiFieldDocument') {
-            if (this.typeUtility.isImageType(type)) throw 'Wrong type class: must not be IdaiFieldImageDocument';
+            if (this.typeUtility.isMediaType(type)) {
+                throw 'Wrong type class: must not be IdaiFieldImageDocument or IdaiField3DDocument';
+            }
+        } else if (typeClass == 'IdaiFieldMediaDocument') {
+            if (!this.typeUtility.isMediaType(type)) {
+                throw 'Wrong type class: must be IdaiFieldImageDocument or IdaiField3DDocument';
+            }
         }
 
         return type;

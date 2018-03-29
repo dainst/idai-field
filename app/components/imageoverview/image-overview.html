@@ -8,7 +8,8 @@
         <div class="row bg-light image-overview-nav">
             <div *ngIf="!getSelected().length" class="col-sm-7 py-2">
                 <search-bar *ngIf="getQuery()" [q]="getQuery().q"
-                            [types]="getQuery().types" [parentType]="'Image'" [hidden]="getSelected().length"
+                            [types]="getQuery().types" [relationName]="'depicts'"
+                            [relationRangeType]="'Trench'" [hidden]="getSelected().length"
                             (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setQueryTypes($event)">
                 </search-bar>
             </div>

@@ -55,8 +55,6 @@ export class DoceditComponent {
 
     private projectConfiguration: ProjectConfiguration;
 
-    private projectImageTypes: any = {};
-
     /**
      * These are the revisions (of the cloned document as long as not saved)
      * that are conflict resolved. They will be be removed from document
@@ -79,8 +77,6 @@ export class DoceditComponent {
         private typeUtility: TypeUtility,
         private activeTabService: DoceditActiveTabService,
         configLoader: ConfigLoader) {
-
-        this.projectImageTypes = this.typeUtility.getProjectImageTypes();
 
         (configLoader.getProjectConfiguration() as any)
             .then((projectConfiguration: ProjectConfiguration) => {
@@ -175,6 +171,12 @@ export class DoceditComponent {
                     )
             )
             .catch(msgWithParams => this.messages.add(msgWithParams))
+    }
+
+
+    public isImageDocument(): boolean {
+
+        return this.typeUtility.isImageType(this.clonedDocument.resource.type);
     }
 
 

@@ -105,7 +105,7 @@
                                 </ng-template>
                             </ngb-tab>
 
-                            <ngb-tab *ngIf="!projectImageTypes[clonedDocument.resource.type]"
+                            <ngb-tab *ngIf="!isImageDocument()"
                                      id="docedit-images-tab">
                                 <ng-template ngbTabTitle>
                                     <span class="mdi mdi-image"></span>

@@ -3,7 +3,8 @@ import {Query} from 'idai-components-2/datastore';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {ViewFacade} from '../../resources/view/view-facade';
 import {ImagesState} from './images-state';
-import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/idai-field-image-document-read-datastore';
+import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
+import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
 
 
 @Injectable()
@@ -13,10 +14,10 @@ import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/idai-
  */
 export class ImageDocumentsManager {
 
-    private documents: Array<IdaiFieldImageDocument>;
+    private documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>;
     private totalDocumentCount: number;
 
-    public selected: Array<IdaiFieldImageDocument>  = [];
+    public selected: Array<IdaiFieldImageDocument|IdaiField3DDocument>  = [];
 
     private depictsRelationsSelected: boolean = false;
 
@@ -24,18 +25,18 @@ export class ImageDocumentsManager {
     constructor(
         public viewFacade: ViewFacade,
         private imagesState: ImagesState,
-        private imageDatastore: IdaiFieldImageDocumentReadDatastore
+        private imageDatastore: IdaiFieldMediaDocumentReadDatastore
     ) {
     }
 
 
-    public getSelected(): Array<IdaiFieldImageDocument> {
+    public getSelected(): Array<IdaiFieldImageDocument|IdaiField3DDocument> {
 
         return this.selected;
     }
 
 
-    public getDocuments(): Array<IdaiFieldImageDocument> {
+    public getDocuments(): Array<IdaiFieldImageDocument|IdaiField3DDocument> {
 
         return this.documents;
     }
@@ -53,7 +54,7 @@ export class ImageDocumentsManager {
     }
 
 
-    public remove(document: IdaiFieldImageDocument) {
+    public remove(document: IdaiFieldImageDocument|IdaiField3DDocument) {
 
         this.documents.splice(this.documents.indexOf(document), 1);
     }
@@ -62,7 +63,7 @@ export class ImageDocumentsManager {
     /**
      * @param document the object that should be selected
      */
-    public select(document: IdaiFieldImageDocument) {
+    public select(document: IdaiFieldImageDocument|IdaiField3DDocument) {
 
         if (this.selected.indexOf(document) == -1) {
             this.selected.push(document);

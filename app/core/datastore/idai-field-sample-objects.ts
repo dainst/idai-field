@@ -34,7 +34,7 @@ export const DOCS: Array<Document> = [
             "identifier": "trench2",
             "shortDescription": "3D-Testschnitt",
             "relations": {
-                "has3DRepresentation": [ "obj3d", "vra_trench", "vra_trench_georef" ],
+                "isDepictedIn": [ "obj3d", "vra_trench", "vra_trench_georef" ],
                 "isRecordedIn": [ "test" ]
             },
             "type": "Trench"
@@ -88,7 +88,7 @@ export const DOCS: Array<Document> = [
             "relations": {
                 "isRecordedIn": [ "t1" ],
                 "liesWithin": [ "c1" ],
-                "has3DRepresentation": [ "brandlehm"]
+                "isDepictedIn": [ "brandlehm"]
             },
             "geometry": {
                 "type": "Point",
@@ -169,7 +169,7 @@ export const DOCS: Array<Document> = [
             "thumbnailHeight": 1084,
             "georeferenced": true,
             "relations": {
-                "is3DRepresentationOf": ["t2"]
+                "depicts": ["t2"]
             }
         }
     },
@@ -183,7 +183,7 @@ export const DOCS: Array<Document> = [
             "thumbnailHeight": 1164,
             "georeferenced": false,
             "relations": {
-                "is3DRepresentationOf": ["t2"]
+                "depicts": ["t2"]
             }
         }
     },
@@ -197,7 +197,7 @@ export const DOCS: Array<Document> = [
             "thumbnailHeight": 1172,
             "georeferenced": true,
             "relations": {
-                "is3DRepresentationOf": ["t2"]
+                "depicts": ["t2"]
             }
         }
     },
@@ -211,7 +211,7 @@ export const DOCS: Array<Document> = [
             "thumbnailHeight": 498,
             "georeferenced": false,
             "relations": {
-                "is3DRepresentationOf": ["tf1"]
+                "depicts": ["tf1"]
             }
         }
     }

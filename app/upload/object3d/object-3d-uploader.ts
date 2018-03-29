@@ -85,7 +85,7 @@ export class Object3DUploader extends Uploader {
                 thumbnailWidth: 0,
                 thumbnailHeight: 0,
                 relations: {
-                    is3DRepresentationOf: []
+                    depicts: []
                 }
             }
         };
@@ -102,7 +102,7 @@ export class Object3DUploader extends Uploader {
         document.resource.thumbnailHeight = height;
 
         if (relationTarget && relationTarget.resource.id) {
-            document.resource.relations['is3DRepresentationOf'] = [relationTarget.resource.id];
+            document.resource.relations.depicts = [relationTarget.resource.id];
         }
 
         return this.persistenceManager.persist(document, this.settingsService.getUsername(),

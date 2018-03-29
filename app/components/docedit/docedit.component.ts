@@ -174,9 +174,9 @@ export class DoceditComponent {
     }
 
 
-    public isImageDocument(): boolean {
+    public isMediaDocument(): boolean {
 
-        return this.typeUtility.isImageType(this.clonedDocument.resource.type);
+        return this.typeUtility.isMediaType(this.clonedDocument.resource.type);
     }
 
 

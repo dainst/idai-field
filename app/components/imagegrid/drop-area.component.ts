@@ -1,7 +1,7 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
-import {ImageUploader} from '../../upload/image/image-uploader';
 import {UploadResult} from '../../upload/upload-result';
+import {UploadService} from '../../upload/upload-service';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class DropAreaComponent {
 
 
     public constructor(
-        private imageUploader: ImageUploader,
+        private uploadService: UploadService,
         private messages: Messages
     ) {}
 
@@ -44,17 +44,20 @@ export class DropAreaComponent {
     }
 
 
-    public onDrop(event: any) {
+    public async onDrop(event: any) {
 
         event.preventDefault();
-        this.imageUploader.startUpload(event).then(uploadResult => this.handleUploadResult(uploadResult));
+
+        const uploadResult: UploadResult = await this.uploadService.startUpload(event);
+        this.handleUploadResult(uploadResult);
         this.onDragLeave(event);
     }
 
 
-    public onSelectImages(event: any) {
+    public async onSelectImages(event: any) {
 
-        this.imageUploader.startUpload(event).then(uploadResult => this.handleUploadResult(uploadResult));
+        const uploadResult: UploadResult = await this.uploadService.startUpload(event);
+        this.handleUploadResult(uploadResult);
     }
 
 

@@ -5,7 +5,6 @@
  */
 export class ExtensionUtil {
 
-
     /**
      * @param files
      * @param supportedFileTypes
@@ -15,12 +14,12 @@ export class ExtensionUtil {
      */
     public static reportUnsupportedFileTypes(files: Array<File>, supportedFileTypes: Array<string>): Array<any> {
 
-        const uniqueUnsupportedExts = ExtensionUtil.getUnsupportedExts(files, supportedFileTypes).reduce(function(c, p) {
+        const uniqueUnsupportedExts = ExtensionUtil.getUnsupportedExtensions(files, supportedFileTypes).reduce(function(c, p) {
             if (c.indexOf(p as never) < 0) c.push(p as never);
             return c;
         }, []);
 
-        let result: Array<any> = [(files.length - ExtensionUtil.getUnsupportedExts(files, supportedFileTypes).length)];
+        let result: Array<any> = [(files.length - ExtensionUtil.getUnsupportedExtensions(files, supportedFileTypes).length)];
         if (uniqueUnsupportedExts.length > 0) {
             result.push(uniqueUnsupportedExts.join(','));
         }
@@ -28,21 +27,39 @@ export class ExtensionUtil {
     }
 
 
-    public static ofUnsupportedExtension(file: File, supportedFileTypes: Array<string>) {
+    public static isSupported(file: File, supportedFileTypes: Array<string>) {
 
-        let ext = file.name.split('.').pop();
-        if (!ext) return undefined;
-        if (supportedFileTypes.indexOf(ext.toLowerCase()) == -1) return ext;
+        let extension: string|undefined = this.getExtension(file);
+
+        return extension && this.isSupportedExtension(extension, supportedFileTypes);
     }
 
 
-    private static getUnsupportedExts(files: Array<File>, supportedFileTypes: Array<string>) {
+    private static isSupportedExtension(extension: string, supportedFileTypes: Array<string>) {
 
-        let unsupportedExts: Array<string> = [];
+        return supportedFileTypes.includes(extension.toLowerCase());
+    }
+
+
+    private static getExtension(file: File): string|undefined {
+
+        return file.name.split('.').pop();
+    }
+
+
+    private static getUnsupportedExtensions(files: Array<File>, supportedFileTypes: Array<string>) {
+
+        const unsupportedExtensions: Array<string> = [];
+
         for (let file of files) {
-            let ext;
-            if ((ext = ExtensionUtil.ofUnsupportedExtension(file, supportedFileTypes)) != undefined) unsupportedExts.push('"*.' + ext + '"');
+            let extension: string|undefined = this.getExtension(file);
+            if (!extension) {
+                unsupportedExtensions.push('"*."');
+            } else if (!this.isSupportedExtension(extension, supportedFileTypes)) {
+                unsupportedExtensions.push('"*.' + extension + '"');
+            }
         }
-        return unsupportedExts;
+
+        return unsupportedExtensions;
     }
 }

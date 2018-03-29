@@ -20,7 +20,7 @@ import {M} from '../m';
  */
 export abstract class Uploader {
 
-    protected static supportedFileTypes: Array<string> = [];
+    public static supportedFileTypes: Array<string> = [];
 
 
     public constructor(
@@ -37,15 +37,8 @@ export abstract class Uploader {
      * contain a relation to the resource specified by the id. The type of the relation is determined by the
      * extending class.
      */
-    public startUpload(event: Event, relationTarget?: Document): Promise<UploadResult> {
-
-        const uploadResult: UploadResult = { uploadedFiles: 0, messages: [] };
-
-        const files = Uploader.getFiles(event);
-        const result = ExtensionUtil.reportUnsupportedFileTypes(files,
-            (<typeof Uploader>this.constructor).supportedFileTypes);
-        if (result[1]) uploadResult.messages.push([M.UPLOAD_ERROR_UNSUPPORTED_EXTS, result[1]]);
-        if (result[0] == 0) return Promise.resolve(uploadResult);
+    public startUpload(files: Array<File>, uploadResult: UploadResult,
+                       relationTarget?: Document): Promise<UploadResult> {
 
         let uploadModalRef: any;
         return this.determineType(files.length, relationTarget)
@@ -75,7 +68,7 @@ export abstract class Uploader {
         let promise: Promise<any> = Promise.resolve();
 
         for (let file of files) {
-            if (ExtensionUtil.ofUnsupportedExtension(file,
+            if (!ExtensionUtil.isSupported(file,
                     (<typeof Uploader>this.constructor).supportedFileTypes)) {
                 this.uploadStatus.setTotalFiles(this.uploadStatus.getTotalFiles() - 1);
             } else {
@@ -124,16 +117,4 @@ export abstract class Uploader {
 
 
     protected abstract getIdentifier(filename: string): string;
-
-
-    private static getFiles(event: any): Array<File> {
-
-        if (event['dataTransfer'] && event['dataTransfer']['files']) {
-            return event['dataTransfer']['files'];
-        } else if (event['srcElement'] && event['srcElement']['files']) {
-            return event['srcElement']['files'];
-        }
-
-        return [];
-    }
 }

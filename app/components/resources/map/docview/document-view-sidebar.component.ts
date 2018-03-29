@@ -8,9 +8,9 @@ import {ResourcesComponent} from '../../resources.component';
 import {ObjectUtil} from '../../../../util/object-util';
 import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../view/view-facade';
-import {ImageUploader} from '../../../../upload/image/image-uploader';
 import {M} from '../../../../m';
-import {Object3DUploader} from '../../../../upload/object3d/object-3d-uploader';
+import {UploadService} from '../../../../upload/upload-service';
+import {UploadResult} from '../../../../upload/upload-result';
 
 
 @Component({
@@ -39,55 +39,30 @@ export class DocumentViewSidebarComponent {
         private routingService: RoutingService,
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
-        private imageUploader: ImageUploader,
-        private object3DUploader: Object3DUploader,
+        private uploadService: UploadService,
         private messages: Messages
     ) { }
 
 
-    public uploadImages(event: Event, document: IdaiFieldDocument) {
+    public async uploadImages(event: Event, document: IdaiFieldDocument) {
 
-        this.imageUploader.startUpload(event, document).then(uploadResult => {
+        const uploadResult: UploadResult = await this.uploadService.startUpload(event, document);
 
-            if (uploadResult.uploadedFiles > 0) {
-                this.viewFacade.setActiveDocumentViewTab('images');
-                this.viewFacade.setSelectedDocument(document);
-            }
+        if (uploadResult.uploadedFiles > 0) {
+            this.viewFacade.setActiveDocumentViewTab('images');
+            await this.viewFacade.setSelectedDocument(document);
+        }
 
-            for (let msgWithParams of uploadResult.messages) {
-                this.messages.add(msgWithParams);
-            }
+        for (let msgWithParams of uploadResult.messages) {
+            this.messages.add(msgWithParams);
+        }
 
-            if (uploadResult.uploadedFiles == 1) {
-                this.messages.add([M.RESOURCES_SUCCESS_IMAGE_UPLOADED, document.resource.identifier]);
-            } else if (uploadResult.uploadedFiles > 1) {
-                this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedFiles.toString(),
-                    document.resource.identifier]);
-            }
-        });
-    }
-
-
-    public upload3DObjects(event: Event, document: IdaiFieldDocument) {
-
-        this.object3DUploader.startUpload(event, document).then(uploadResult => {
-
-            if (uploadResult.uploadedFiles > 0) {
-                this.viewFacade.setActiveDocumentViewTab('3d-objects');
-                this.viewFacade.setSelectedDocument(document);
-            }
-
-            for (let msgWithParams of uploadResult.messages) {
-                this.messages.add(msgWithParams);
-            }
-
-            if (uploadResult.uploadedFiles == 1) {
-                this.messages.add([M.RESOURCES_SUCCESS_3D_OBJECT_UPLOADED, document.resource.identifier]);
-            } else if (uploadResult.uploadedFiles > 1) {
-                this.messages.add([M.RESOURCES_SUCCESS_3D_OBJECTS_UPLOADED,
-                    uploadResult.uploadedFiles.toString(), document.resource.identifier]);
-            }
-        });
+        if (uploadResult.uploadedFiles == 1) {
+            this.messages.add([M.RESOURCES_SUCCESS_FILE_UPLOADED, document.resource.identifier]);
+        } else if (uploadResult.uploadedFiles > 1) {
+            this.messages.add([M.RESOURCES_SUCCESS_FILES_UPLOADED, uploadResult.uploadedFiles.toString(),
+                document.resource.identifier]);
+        }
     }
 
 

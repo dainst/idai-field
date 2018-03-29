@@ -8,6 +8,8 @@ import {ImageTypePickerModalComponent} from './image/image-type-picker-modal.com
 import {Object3DUploader} from './object3d/object-3d-uploader';
 import {Object3DThumbnailCreatorModalComponent} from './object3d/object-3d-thumbnail-creator-modal.component';
 import {View3DModule} from '../components/view-3d/view-3d.module';
+import {UploadService} from './upload-service';
+
 
 @NgModule({
     imports: [
@@ -26,6 +28,7 @@ import {View3DModule} from '../components/view-3d/view-3d.module';
         Object3DThumbnailCreatorModalComponent
     ],
     providers: [
+        UploadService,
         ImageUploader,
         Object3DUploader,
         UploadStatus

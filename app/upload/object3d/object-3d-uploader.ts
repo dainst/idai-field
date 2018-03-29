@@ -18,7 +18,7 @@ import {Store3D} from '../../core/3d/store-3d';
  */
 export class Object3DUploader extends Uploader {
 
-    protected static supportedFileTypes: Array<string> = ['dae'];
+    public static supportedFileTypes: Array<string> = ['dae'];
 
 
     public constructor(

@@ -99,10 +99,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Resources Package
 
-    public static RESOURCES_SUCCESS_IMAGE_UPLOADED: string = 'resources/success/imageimported';
-    public static RESOURCES_SUCCESS_IMAGES_UPLOADED: string = 'resources/success/imagesimported';
-    public static RESOURCES_SUCCESS_3D_OBJECT_UPLOADED: string = 'resources/success/3dobjectimported';
-    public static RESOURCES_SUCCESS_3D_OBJECTS_UPLOADED: string = 'resources/success/3dobjectsimported';
+    public static RESOURCES_SUCCESS_FILE_UPLOADED: string = 'resources/success/fileimported';
+    public static RESOURCES_SUCCESS_FILES_UPLOADED: string = 'resources/success/filesimported';
     public static RESOURCES_SUCCESS_PROJECT_DELETED: string = 'resources/success/projectdeleted';
     public static RESOURCES_ERROR_TYPE_NOT_FOUND: string = 'resources/error/typenotfound';
     public static RESOURCES_ERROR_NO_PROJECT_NAME: string = 'resources/error/noprojectname';
@@ -115,12 +113,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     public static PERSISTENCE_ERROR_TARGETNOTFOUND: string = 'persist/error/targetnotfound';
 
-    // Upload Packe
+    // Upload Package
 
     public static UPLOAD_ERROR_UNSUPPORTED_EXTS: string = 'upload/error/unsupportedexts';
     public static UPLOAD_ERROR_FILEREADER: string = 'upload/error/filereader';
     public static UPLOAD_ERROR_DUPLICATE_FILENAME: string = 'upload/error/duplicatefilename';
     public static UPLOAD_ERROR_DUPLICATE_FILENAMES: string = 'upload/error/duplicatefilenames';
+    public static UPLOAD_ERROR_FILE_TYPES_MIXED: string = 'upload/error/filetypesmixes';
 
     // Model3DStore Package
 
@@ -526,26 +525,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.RESOURCES_SUCCESS_IMAGE_UPLOADED] = {
-            content: 'Ein Bild wurde erfolgreich importiert und mit der Ressource {0} verknüpft.',
+        this.msgs[M.RESOURCES_SUCCESS_FILE_UPLOADED] = {
+            content: 'Eine Datei wurde erfolgreich importiert und mit der Ressource {0} verknüpft.',
             level: 'success',
             params: [],
             hidden: false
         };
-        this.msgs[M.RESOURCES_SUCCESS_IMAGES_UPLOADED] = {
-            content: '{0} Bilder wurden erfolgreich importiert und mit der Ressource {1} verknüpft.',
-            level: 'success',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.RESOURCES_SUCCESS_3D_OBJECT_UPLOADED] = {
-            content: 'Ein 3D-Modell wurde erfolgreich importiert und mit der Ressource {0} verknüpft.',
-            level: 'success',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.RESOURCES_SUCCESS_3D_OBJECTS_UPLOADED] = {
-            content: '{0} 3D-Modelle wurden erfolgreich importiert und mit der Ressource {1} verknüpft.',
+        this.msgs[M.RESOURCES_SUCCESS_FILES_UPLOADED] = {
+            content: '{0} Dateien wurden erfolgreich importiert und mit der Ressource {1} verknüpft.',
             level: 'success',
             params: [],
             hidden: false
@@ -585,6 +572,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.UPLOAD_ERROR_DUPLICATE_FILENAMES]={
             content: "Die folgenden Dateien konnten nicht hinzugefügt werden, da Ressourcen mit "
             + "identischen Dateinamen bereits existieren: {0}",
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.UPLOAD_ERROR_FILE_TYPES_MIXED]={
+            content: "Die von Ihnen gewählten Dateien gehören unterschiedlichen Medientypen an. Bitte " +
+                "fügen Sie in einem Uploadschritt nur Dateien eines einzigen Medientyps (Bild oder " +
+                "3D-Objekt) hinzu.",
             level: 'danger',
             params: [],
             hidden: false

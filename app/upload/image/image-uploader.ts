@@ -22,7 +22,7 @@ import {M} from '../../m';
  */
 export class ImageUploader extends Uploader {
 
-    protected static supportedFileTypes: Array<string> = ['jpg', 'jpeg', 'png'];
+    public static supportedFileTypes: Array<string> = ['jpg', 'jpeg', 'png'];
 
 
     public constructor(
@@ -38,7 +38,8 @@ export class ImageUploader extends Uploader {
     }
 
 
-    public startUpload(event: Event, depictsRelationTarget?: Document): Promise<UploadResult> {
+    public startUpload(files: Array<File>, uploadResult: UploadResult,
+                       depictsRelationTarget?: Document): Promise<UploadResult> {
 
         if (!this.imagestore.getPath()) {
             return Promise.resolve({
@@ -47,7 +48,7 @@ export class ImageUploader extends Uploader {
             });
         }
 
-        return super.startUpload(event, depictsRelationTarget);
+        return super.startUpload(files, uploadResult, depictsRelationTarget);
     }
 
 

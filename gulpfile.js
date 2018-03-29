@@ -66,4 +66,26 @@ gulp.task('create-configs', function (callback) {
             console.log('Will not create ' + hcpath + ' from template because file already exists.');
         }
     });
+
+
+    var lpath = './config/Language.json';
+
+    fs.access(lpath, fs.F_OK, function(err) {
+        if (err) {
+            fs.createReadStream(lpath + '.template').pipe(fs.createWriteStream(lpath));
+        } else {
+            console.log('Will not create ' + lpath + ' from template because file already exists.');
+        }
+    });
+
+
+    var lcpath = './config/Language-Custom.json';
+
+    fs.access(lcpath, fs.F_OK, function(err) {
+        if (err) {
+            fs.createReadStream(lcpath + '.template').pipe(fs.createWriteStream(lcpath));
+        } else {
+            console.log('Will not create ' + lcpath + ' from template because file already exists.');
+        }
+    });
 });

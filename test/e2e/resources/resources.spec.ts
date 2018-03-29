@@ -15,7 +15,7 @@ const delays = require('../config/delays');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources --', () => {
+fdescribe('resources --', () => {
 
     let i = 0;
 
@@ -51,13 +51,14 @@ describe('resources --', () => {
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('trench1');
         DoceditPage.clickConfirmDeleteInModal();
+        browser.sleep(delays.shortRest * 2);
 
         ResourcesPage.openEditByDoubleClickResource('trench2');
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('trench2');
         DoceditPage.clickConfirmDeleteInModal();
 
-        browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest * 2);
         NavbarPage.clickNavigateToExcavation();
 
         browser.sleep(delays.shortRest);

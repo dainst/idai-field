@@ -51,14 +51,15 @@ fdescribe('resources --', () => {
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('trench1');
         DoceditPage.clickConfirmDeleteInModal();
-        browser.sleep(delays.shortRest * 2);
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickCloseAllMessages();
 
         ResourcesPage.openEditByDoubleClickResource('trench2');
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('trench2');
         DoceditPage.clickConfirmDeleteInModal();
-
-        browser.sleep(delays.shortRest * 2);
+        browser.sleep(delays.shortRest);
+        NavbarPage.clickCloseAllMessages();
         NavbarPage.clickNavigateToExcavation();
 
         browser.sleep(delays.shortRest);

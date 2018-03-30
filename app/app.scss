@@ -18,7 +18,6 @@ $roboto-font-path: '../fonts/';
 @import 'components/export/export';
 @import 'components/settings/settings';
 @import 'components/imageview/imageview';
-@import 'components/view-3d/view-3d';
 @import 'widgets/widgets';
 @import 'components/docedit/docedit';
 @import 'components/imagegrid/image-grid';
@@ -26,6 +25,8 @@ $roboto-font-path: '../fonts/';
 @import 'upload/upload';
 @import 'components/core-3d/mesh-loading-progress-bar';
 @import 'components/core-3d/zoom-buttons';
+@import 'components/object-3d-viewer/object-3d-viewer';
+@import 'components/view-3d/view-3d';
 
 html {
   position: relative;

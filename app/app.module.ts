@@ -44,6 +44,7 @@ import {Core3DModule} from './components/core-3d/core-3d.module';
 import {MeshLoader} from './core/3d/mesh-loader';
 import {MeshPreparationUtility} from './core/3d/mesh-preparation-utility';
 import {Store3D} from './core/3d/store-3d';
+import {Object3DViewerModule} from './components/object-3d-viewer/object-3d-viewer';
 
 
 const remote = require('electron').remote;
@@ -69,7 +70,8 @@ let pconf: any = undefined;
         ImportModule,
         ExportModule,
         DatastoreModule,
-        Core3DModule
+        Core3DModule,
+        Object3DViewerModule
     ],
     declarations: [
         AppComponent,

@@ -1,12 +1,11 @@
-import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {IdaiField3DDocument} from '../model/idai-field-3d-document';
+import {IdaiFieldMediaDocument} from '../model/idai-field-media-document';
 
 
 export interface ImageContainer {
 
     imgSrc?: string;
     thumbSrc?: string;
-    document?: IdaiFieldImageDocument|IdaiField3DDocument;
+    document?: IdaiFieldMediaDocument;
 
     // used by ImagesGridComponent
     calculatedWidth?: number;

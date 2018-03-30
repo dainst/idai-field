@@ -2,11 +2,10 @@ import {Component, Input, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
-import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {MediaResourcePickerComponent} from './media-resource-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
-import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
 import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
+import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
 
 @Component({
     selector: 'docedit-media-tab',
@@ -21,9 +20,9 @@ import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-
 export class DoceditMediaTabComponent {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
-    public documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>;
+    public documents: Array<IdaiFieldMediaDocument>;
 
-    public selected: Array<IdaiFieldImageDocument|IdaiField3DDocument> = [];
+    public selected: Array<IdaiFieldMediaDocument> = [];
 
     @Input() document: IdaiFieldDocument;
 
@@ -48,7 +47,7 @@ export class DoceditMediaTabComponent {
     /**
      * @param document the object that should be selected
      */
-    public select(document: IdaiFieldImageDocument|IdaiField3DDocument) {
+    public select(document: IdaiFieldMediaDocument) {
 
         if (this.selected.indexOf(document) == -1) this.selected.push(document);
         else this.selected.splice(this.selected.indexOf(document), 1);
@@ -92,20 +91,20 @@ export class DoceditMediaTabComponent {
 
     private loadMediaResources() {
 
-        const promises: Array<Promise<IdaiFieldImageDocument|IdaiField3DDocument>> = [];
+        const promises: Array<Promise<IdaiFieldMediaDocument>> = [];
         this.documents = [];
         this.document.resource.relations['isDepictedIn'].forEach(id => {
             promises.push(this.datastore.get(id));
         });
 
         Promise.all(promises as any).then(docs => {
-            this.documents = docs as Array<IdaiFieldImageDocument|IdaiField3DDocument>;
+            this.documents = docs as Array<IdaiFieldMediaDocument>;
             this.clearSelection();
         });
     }
 
 
-    private addIsDepictedInRelations(mediaDocuments: Array<IdaiFieldImageDocument|IdaiField3DDocument>) {
+    private addIsDepictedInRelations(mediaDocuments: Array<IdaiFieldMediaDocument>) {
 
         const relations = this.document.resource.relations['isDepictedIn']
             ? this.document.resource.relations['isDepictedIn'].slice() : [];
@@ -136,7 +135,7 @@ export class DoceditMediaTabComponent {
         modal.componentInstance.setDocument(this.document);
 
         modal.result.then(
-            (selectedMediaResources: Array<IdaiFieldImageDocument|IdaiField3DDocument>) => {
+            (selectedMediaResources: Array<IdaiFieldMediaDocument>) => {
                 this.addIsDepictedInRelations(selectedMediaResources);
                 this.documentEditChangeMonitor.setChanged();
             }

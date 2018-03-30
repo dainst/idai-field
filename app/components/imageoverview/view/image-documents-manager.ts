@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2/datastore';
-import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {ViewFacade} from '../../resources/view/view-facade';
 import {ImagesState} from './images-state';
 import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
-import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
+import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
 
 
 @Injectable()
@@ -14,10 +13,10 @@ import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
  */
 export class ImageDocumentsManager {
 
-    private documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>;
+    private documents: Array<IdaiFieldMediaDocument>;
     private totalDocumentCount: number;
 
-    public selected: Array<IdaiFieldImageDocument|IdaiField3DDocument>  = [];
+    public selected: Array<IdaiFieldMediaDocument>  = [];
 
     private depictsRelationsSelected: boolean = false;
 
@@ -30,13 +29,13 @@ export class ImageDocumentsManager {
     }
 
 
-    public getSelected(): Array<IdaiFieldImageDocument|IdaiField3DDocument> {
+    public getSelected(): Array<IdaiFieldMediaDocument> {
 
         return this.selected;
     }
 
 
-    public getDocuments(): Array<IdaiFieldImageDocument|IdaiField3DDocument> {
+    public getDocuments(): Array<IdaiFieldMediaDocument> {
 
         return this.documents;
     }
@@ -54,7 +53,7 @@ export class ImageDocumentsManager {
     }
 
 
-    public remove(document: IdaiFieldImageDocument|IdaiField3DDocument) {
+    public remove(document: IdaiFieldMediaDocument) {
 
         this.documents.splice(this.documents.indexOf(document), 1);
     }
@@ -63,7 +62,7 @@ export class ImageDocumentsManager {
     /**
      * @param document the object that should be selected
      */
-    public select(document: IdaiFieldImageDocument|IdaiField3DDocument) {
+    public select(document: IdaiFieldMediaDocument) {
 
         if (this.selected.indexOf(document) == -1) {
             this.selected.push(document);

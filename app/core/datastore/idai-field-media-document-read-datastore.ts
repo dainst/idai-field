@@ -1,18 +1,16 @@
 import {Query} from 'idai-components-2/datastore';
 import {CachedReadDatastore, IdaiFieldFindResult} from './core/cached-read-datastore';
-import {IdaiField3DDocument} from '../model/idai-field-3d-document';
-import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {IdaiFieldMediaDocument} from '../model/idai-field-media-document';
 
 
-export interface IdaiFieldMediaDocumentFindResult
-    extends IdaiFieldFindResult<IdaiFieldImageDocument|IdaiField3DDocument> {}
+export interface IdaiFieldMediaDocumentFindResult extends IdaiFieldFindResult<IdaiFieldMediaDocument> {}
 
 
 /**
  * @author Thomas Kleinke
  */
 export abstract class IdaiFieldMediaDocumentReadDatastore
-    extends CachedReadDatastore<IdaiFieldImageDocument|IdaiField3DDocument> {
+        extends CachedReadDatastore<IdaiFieldMediaDocument> {
 
     public async find(query: Query): Promise<IdaiFieldMediaDocumentFindResult> {
 

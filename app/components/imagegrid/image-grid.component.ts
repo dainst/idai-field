@@ -5,7 +5,7 @@ import {ImageGridBuilder} from './image-grid-builder';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/idai-field-document-read-datastore';
-import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
+import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
 
 
 @Component({
@@ -21,8 +21,8 @@ import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
 export class ImageGridComponent implements OnChanges {
 
     @Input() nrOfColumns: number = 1;
-    @Input() documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>;
-    @Input() selected: Array<IdaiFieldImageDocument|IdaiField3DDocument> = [];
+    @Input() documents: Array<IdaiFieldMediaDocument>;
+    @Input() selected: Array<IdaiFieldMediaDocument> = [];
     @Input() totalDocumentCount: number = 0;
     @Input() showLinkBadges: boolean = true;
     @Input() showIdentifier: boolean = true;
@@ -177,7 +177,7 @@ export class ImageGridComponent implements OnChanges {
 
         if (!this.documents) this.documents = [];
 
-        this.documents.unshift(<IdaiFieldImageDocument>{
+        this.documents.unshift(<IdaiFieldMediaDocument>{
             id: 'droparea',
             resource: { identifier: '', shortDescription:'', type: '', originalFilename: '',
                 width: 1, height: 1, relations: { depicts: [] } }

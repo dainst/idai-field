@@ -1,7 +1,6 @@
 import {ImageContainer} from '../../core/imagestore/image-container';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
-import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
-import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
+import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
 
 
 /**
@@ -13,7 +12,7 @@ export class ImageGridBuilder {
 
     // nr of pixels between the right end of the screenspace and the grid
     private paddingRight: number = 20;
-    private documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>;
+    private documents: Array<IdaiFieldMediaDocument>;
 
 
     /**
@@ -24,7 +23,7 @@ export class ImageGridBuilder {
      * @returns an object with rows containing the rows of the calculated grid
      *   and msgsWithParams containing one or more msgWithParams.
      */
-    public calcGrid(documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>, nrOfColumns: number,
+    public calcGrid(documents: Array<IdaiFieldMediaDocument>, nrOfColumns: number,
                     gridWidth: number): any {
 
         if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');
@@ -96,7 +95,7 @@ export class ImageGridBuilder {
     }
 
 
-    private static newCell(document: IdaiFieldImageDocument|IdaiField3DDocument,
+    private static newCell(document: IdaiFieldMediaDocument,
                            calculatedHeight: any): ImageContainer {
 
         const cell: ImageContainer = {};
@@ -108,13 +107,13 @@ export class ImageGridBuilder {
     }
 
 
-    private static getWidth(document: IdaiFieldImageDocument|IdaiField3DDocument): number {
+    private static getWidth(document: IdaiFieldMediaDocument): number {
 
         return parseFloat(document.resource.width || document.resource.thumbnailWidth);
     }
 
 
-    private static getHeight(document: IdaiFieldImageDocument|IdaiField3DDocument): number {
+    private static getHeight(document: IdaiFieldMediaDocument): number {
 
         return parseFloat(document.resource.height || document.resource.thumbnailHeight);
     }

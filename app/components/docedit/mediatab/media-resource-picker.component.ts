@@ -3,11 +3,10 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2/messages';
 import {Query} from 'idai-components-2/datastore';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {M} from '../../../m';
 import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
-import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
+import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
 
 
 @Component({
@@ -23,10 +22,10 @@ export class MediaResourcePickerComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
-    public documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>;
+    public documents: Array<IdaiFieldMediaDocument>;
 
     public document: IdaiFieldDocument;
-    public selectedDocuments: Array<IdaiFieldImageDocument|IdaiField3DDocument> = [];
+    public selectedDocuments: Array<IdaiFieldMediaDocument> = [];
 
     private query: Query = { q: '' };
 
@@ -82,7 +81,7 @@ export class MediaResourcePickerComponent implements OnInit {
     /**
      * @param document the object that should be selected
      */
-    public select(document: IdaiFieldImageDocument|IdaiField3DDocument) {
+    public select(document: IdaiFieldMediaDocument) {
 
         if (this.selectedDocuments.indexOf(document) == -1) this.selectedDocuments.push(document);
         else this.selectedDocuments.splice(this.selectedDocuments.indexOf(document), 1);

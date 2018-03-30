@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2/datastore';
-import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {TypeUtility} from '../../../common/type-utility';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
-import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
+import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
 
 
 @Injectable()
@@ -100,13 +99,13 @@ export class ImageOverviewFacade {
     }
 
 
-    public select(document: IdaiFieldImageDocument|IdaiField3DDocument) {
+    public select(document: IdaiFieldMediaDocument) {
 
         return this.imageDocumentsManager.select(document);
     }
 
 
-    public getDocuments(): Array<IdaiFieldImageDocument|IdaiField3DDocument> {
+    public getDocuments(): Array<IdaiFieldMediaDocument> {
 
         return this.imageDocumentsManager.getDocuments();
     }
@@ -118,13 +117,13 @@ export class ImageOverviewFacade {
     }
 
 
-    public remove(document: IdaiFieldImageDocument|IdaiField3DDocument) {
+    public remove(document: IdaiFieldMediaDocument) {
 
         return this.imageDocumentsManager.remove(document);
     }
 
 
-    public getSelected(): Array<IdaiFieldImageDocument|IdaiField3DDocument> {
+    public getSelected(): Array<IdaiFieldMediaDocument> {
 
         return this.imageDocumentsManager.getSelected();
     }

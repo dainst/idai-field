@@ -29,6 +29,7 @@ import {IdaiField3DDocument} from '../model/idai-field-3d-document';
 import {IdaiField3DDocumentReadDatastore} from './idai-field-3d-document-read-datastore';
 import {IdaiFieldMediaDocumentReadDatastore} from './idai-field-media-document-read-datastore';
 import {IdaiFieldMediaDocumentDatastore} from './idai-field-media-document-datastore';
+import {IdaiFieldMediaDocument} from '../model/idai-field-media-document';
 
 /**
  * There is the top level package, in which everything idai-field specific resides,
@@ -180,7 +181,7 @@ import {IdaiFieldMediaDocumentDatastore} from './idai-field-media-document-datas
         {
             provide: IdaiFieldMediaDocumentDatastore,
             useFactory: function(pouchdbDatastore: PouchdbDatastore,
-                                 documentCache: DocumentCache<IdaiFieldImageDocument|IdaiField3DDocument>,
+                                 documentCache: DocumentCache<IdaiFieldMediaDocument>,
                                  documentConverter: TypeConverter,
             ): IdaiFieldMediaDocumentDatastore {
                 return new IdaiFieldMediaDocumentDatastore(pouchdbDatastore, documentCache, documentConverter);

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2/datastore';
 import {ViewFacade} from '../../resources/view/view-facade';
-import {ImagesState} from './images-state';
+import {MediaState} from './media-state';
 import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
 import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
 
@@ -11,7 +11,7 @@ import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-docum
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ImageDocumentsManager {
+export class MediaDocumentsManager {
 
     private documents: Array<IdaiFieldMediaDocument>;
     private totalDocumentCount: number;
@@ -23,8 +23,8 @@ export class ImageDocumentsManager {
 
     constructor(
         public viewFacade: ViewFacade,
-        private imagesState: ImagesState,
-        private imageDatastore: IdaiFieldMediaDocumentReadDatastore
+        private mediaState: MediaState,
+        private mediaDatastore: IdaiFieldMediaDocumentReadDatastore
     ) {
     }
 
@@ -101,12 +101,12 @@ export class ImageDocumentsManager {
      */
     public async fetchDocuments(limit: number) {
 
-        const query: Query = JSON.parse(JSON.stringify(this.imagesState.getQuery()));
+        const query: Query = JSON.parse(JSON.stringify(this.mediaState.getQuery()));
         query.limit = limit;
 
         console.debug('fetch docs', query);
         try {
-            const {documents, totalCount} = await this.imageDatastore.find(query);
+            const {documents, totalCount} = await this.mediaDatastore.find(query);
             this.documents = documents;
             this.totalDocumentCount = totalCount;
             console.debug('fetch docs end');

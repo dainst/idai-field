@@ -1,11 +1,11 @@
-<div class="image-overview row">
+<div class="media-overview row">
 
     <div class="col-sm-12"
          (dragover)="false"
          (dragleave)="false"
          (drop)="false">
 
-        <div class="row bg-light image-overview-nav">
+        <div class="row bg-light media-overview-nav">
             <div *ngIf="!getSelected().length" class="col-sm-7 py-2">
                 <search-bar *ngIf="getQuery()" [q]="getQuery().q"
                             [types]="getQuery().types" [relationName]="'depicts'"
@@ -25,7 +25,7 @@
             </div>
 
             <div *ngIf="getSelected().length" class="col-sm-10 py-2">
-                <image-overview-taskbar [imageGrid]="imageGrid"></image-overview-taskbar>
+                <media-overview-taskbar [imageGrid]="imageGrid"></media-overview-taskbar>
             </div>
 
             <div class="col-sm-2 text-right py-3 slider-container">

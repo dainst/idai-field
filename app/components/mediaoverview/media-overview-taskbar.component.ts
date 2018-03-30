@@ -5,35 +5,35 @@ import {Messages} from 'idai-components-2/messages';
 import {LinkModalComponent} from './link-modal.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
-import {ImageOverviewFacade} from './view/imageoverview-facade';
+import {MediaOverviewFacade} from './view/media-overview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
 
 @Component({
-    selector: 'image-overview-taskbar',
+    selector: 'media-overview-taskbar',
     moduleId: module.id,
-    templateUrl: './image-overview-taskbar.html'
+    templateUrl: './media-overview-taskbar.html'
 })
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class ImageOverviewTaskbarComponent {
+export class MediaOverviewTaskbarComponent {
 
     @Input() imageGrid: any;
 
-    public getSelected = () => this.imageOverviewFacade.getSelected();
-    public getDepictsRelationsSelected = () => this.imageOverviewFacade.getDepictsRelationsSelected();
-    public clearSelection = () => this.imageOverviewFacade.clearSelection();
+    public getSelected = () => this.mediaOverviewFacade.getSelected();
+    public getDepictsRelationsSelected = () => this.mediaOverviewFacade.getDepictsRelationsSelected();
+    public clearSelection = () => this.mediaOverviewFacade.clearSelection();
 
     constructor(
         public viewFacade: ViewFacade,
         private modalService: NgbModal,
         private messages: Messages,
-        private imageOverviewFacade: ImageOverviewFacade,
+        private mediaOverviewFacade: MediaOverviewFacade,
         private persistenceHelper: PersistenceHelper
     ) {
-        this.imageOverviewFacade.initialize();
+        this.mediaOverviewFacade.initialize();
     }
 
 
@@ -45,7 +45,7 @@ export class ImageOverviewTaskbarComponent {
 
             try {
                 await this.persistenceHelper.addRelationsToSelectedDocuments(targetDoc);
-                this.imageOverviewFacade.clearSelection();
+                this.mediaOverviewFacade.clearSelection();
             } catch(msgWithParams) {
                 this.messages.add(msgWithParams);
             }
@@ -66,8 +66,8 @@ export class ImageOverviewTaskbarComponent {
         try {
             await this.modalService.open(RemoveLinkModalComponent).result;
             await this.persistenceHelper.removeRelationsOnSelectedDocuments();
-            this.imageOverviewFacade.clearSelection();
-            await this.imageOverviewFacade.fetchDocuments();
+            this.mediaOverviewFacade.clearSelection();
+            await this.mediaOverviewFacade.fetchDocuments();
             this.imageGrid.calcGrid();
         } catch (e) {
             // do nothing on dismiss
@@ -77,9 +77,9 @@ export class ImageOverviewTaskbarComponent {
 
     private async deleteSelected() {
 
-        await this.persistenceHelper.deleteSelectedImageDocuments();
+        await this.persistenceHelper.deleteSelectedMediaDocuments();
 
-        this.imageOverviewFacade.clearSelection();
-        this.imageOverviewFacade.fetchDocuments();
+        this.mediaOverviewFacade.clearSelection();
+        this.mediaOverviewFacade.fetchDocuments();
     }
 }

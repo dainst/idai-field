@@ -4,29 +4,33 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets'
-import {imagesRouting} from './image-overview.routing';
-import {ImageOverviewComponent} from './image-overview.component';
+import {mediaRouting} from './media-overview.routing';
+import {MediaOverviewComponent} from './media-overview.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {LinkModalComponent} from './link-modal.component'
-import {ImagesState} from './view/images-state';
+import {MediaState} from './view/media-state';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
-import {ImageOverviewTaskbarComponent} from "./image-overview-taskbar.component";
+import {MediaOverviewTaskbarComponent} from './media-overview-taskbar.component';
+import {MediaOverviewFacade} from './view/media-overview-facade';
+import {MediaDocumentsManager} from './view/media-documents-manager';
+import {PersistenceHelper} from './service/persistence-helper';
+
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         NgbModule,
-        imagesRouting,
+        mediaRouting,
         WidgetsModule,
         IdaiDocumentsModule,
         IdaiWidgetsModule,
         ImageGridModule
     ],
     declarations: [
-        ImageOverviewComponent,
-        ImageOverviewTaskbarComponent,
+        MediaOverviewComponent,
+        MediaOverviewTaskbarComponent,
         LinkModalComponent,
         RemoveLinkModalComponent
     ],
@@ -35,8 +39,11 @@ import {ImageOverviewTaskbarComponent} from "./image-overview-taskbar.component"
         RemoveLinkModalComponent
     ],
     providers: [
-        ImagesState
+        MediaState,
+        MediaOverviewFacade,
+        MediaDocumentsManager,
+        PersistenceHelper
     ]
 })
 
-export class ImageOverviewModule {}
+export class MediaOverviewModule {}

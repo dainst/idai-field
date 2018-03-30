@@ -1,4 +1,4 @@
-.image-overview {
+.media-overview {
 
   margin-top: 62px;
   height: calc(100vh - 119px);
@@ -13,7 +13,7 @@
     margin-right: 1px;
   }
 
-  .image-overview-nav {
+  .media-overview-nav {
     position: fixed;
     z-index: 1001;
     right: 0;
@@ -23,7 +23,7 @@
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
   }
 
-  #image-overview-buttons {
+  #media-overview-buttons {
     height: 40px;
 
     div {
@@ -43,7 +43,7 @@
     user-select: none;
   }
 
-  #image-count-badge {
+  #media-resources-count-badge {
     margin-top: 10px;
     margin-left: 5px;
     user-select: none;

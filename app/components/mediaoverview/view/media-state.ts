@@ -6,7 +6,7 @@ import {StateSerializer} from '../../../common/state-serializer';
 /**
  * @author Thomas Kleinke
  */
-export class ImagesState {
+export class MediaState {
 
     private query: Query;
     private mainTypeDocumentFilterOption: string = '';
@@ -28,7 +28,7 @@ export class ImagesState {
 
         if (this.initialized) return Promise.resolve();
 
-        return this.serializer.load(StateSerializer.IMAGES_STATE)
+        return this.serializer.load(StateSerializer.MEDIA_STATE)
             .then(result => {
                 if (result.query) this.query = result.query;
                 if (result.mainTypeDocumentFilterOption) this.mainTypeDocumentFilterOption
@@ -48,7 +48,7 @@ export class ImagesState {
     public setQuery(query: Query) {
 
         this.query = query;
-        this.serializer.store(StateSerializer.IMAGES_STATE, this.getSerializableObject());
+        this.serializer.store(StateSerializer.MEDIA_STATE, this.getSerializableObject());
     }
 
 
@@ -67,7 +67,7 @@ export class ImagesState {
     public setMainTypeDocumentFilterOption(mainTypeDocumentFilterOption: string) {
 
         this.mainTypeDocumentFilterOption = mainTypeDocumentFilterOption;
-        this.serializer.store(StateSerializer.IMAGES_STATE, this.getSerializableObject());
+        this.serializer.store(StateSerializer.MEDIA_STATE, this.getSerializableObject());
     }
 
 
@@ -80,7 +80,7 @@ export class ImagesState {
     public setGridSize(value: number) {
 
         this.gridSize = value;
-        this.serializer.store(StateSerializer.IMAGES_STATE, this.getSerializableObject());
+        this.serializer.store(StateSerializer.MEDIA_STATE, this.getSerializableObject());
     }
 
 

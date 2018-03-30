@@ -15,7 +15,7 @@ import {ResourcesModule} from './components/resources/resources.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Imagestore} from './core/imagestore/imagestore';
 import {ReadImagestore} from './core/imagestore/read-imagestore';
-import {ImageOverviewModule} from './components/imageoverview/image-overview.module';
+import {MediaOverviewModule} from './components/mediaoverview/media-overview.module';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {BlobMaker} from './core/imagestore/blob-maker';
 import {Converter} from './core/imagestore/converter';
@@ -53,7 +53,7 @@ let pconf: any = undefined;
 
 @NgModule({
     imports: [
-        ImageOverviewModule,
+        MediaOverviewModule,
         ImageViewModule,
         View3DModule,
         ResourcesModule,

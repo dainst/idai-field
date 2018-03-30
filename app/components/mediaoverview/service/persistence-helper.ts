@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ObjectUtil} from '../../../util/object-util';
-import {ImageOverviewFacade} from '../view/imageoverview-facade';
+import {MediaOverviewFacade} from '../view/media-overview-facade';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {M} from '../../../m';
-import {PersistenceManager} from "../../../core/persist/persistence-manager";
+import {PersistenceManager} from '../../../core/persist/persistence-manager';
 
 @Injectable()
 /**
@@ -15,33 +14,33 @@ import {PersistenceManager} from "../../../core/persist/persistence-manager";
  */
 export class PersistenceHelper {
 
-
     constructor(
-        private imageOverviewFacade: ImageOverviewFacade,
+        private mediaOverviewFacade: MediaOverviewFacade,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private imagestore: Imagestore
     ) {}
 
 
-    public deleteSelectedImageDocuments(): Promise<any> {
+    public deleteSelectedMediaDocuments(): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
             let promise: Promise<any> = new Promise<any>((res) => res());
 
-            for (let document of this.imageOverviewFacade.getSelected()) {
+            for (let document of this.mediaOverviewFacade.getSelected()) {
                 if (!document.resource.id) continue;
                 const resourceId = document.resource.id;
 
                 promise = promise.then(
+                    // TODO Remove 3d files correctly
                     () => this.imagestore.remove(resourceId),
                     msgWithParams => reject(msgWithParams)
                 ).then(
                     () => this.persistenceManager.remove(document, this.settingsService.getUsername(), [document]),
                     err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier]) // TODO get rid of M, return datastore errWithParams
                 ).then(() => {
-                    this.imageOverviewFacade.remove(document);
+                    this.mediaOverviewFacade.remove(document);
                 })
             }
 
@@ -59,17 +58,17 @@ export class PersistenceHelper {
 
             let promise: Promise<any> = new Promise<any>((res) => res());
 
-            for (let imageDocument of this.imageOverviewFacade.getSelected()) {
-                const oldVersion = JSON.parse(JSON.stringify(imageDocument));
+            for (let mediaDocument of this.mediaOverviewFacade.getSelected()) {
+                const oldVersion = JSON.parse(JSON.stringify(mediaDocument));
 
-                const depictsEl = imageDocument.resource.relations.depicts;
+                const depictsEl = mediaDocument.resource.relations.depicts;
 
                 if (depictsEl.indexOf(targetDocument.resource.id as any) == -1) {
                     depictsEl.push(targetDocument.resource.id as any);
                 }
 
                 promise = promise.then(
-                    () => this.persistenceManager.persist(imageDocument, this.settingsService.getUsername(),
+                    () => this.persistenceManager.persist(mediaDocument, this.settingsService.getUsername(),
                         [oldVersion]),
                     msgWithParams => reject(msgWithParams)
                 );
@@ -86,7 +85,7 @@ export class PersistenceHelper {
     public removeRelationsOnSelectedDocuments() {
 
         const promises = [] as any;
-        for (let document of this.imageOverviewFacade.getSelected()) {
+        for (let document of this.mediaOverviewFacade.getSelected()) {
 
             const oldVersion = JSON.parse(JSON.stringify(document));
             document.resource.relations.depicts = [];

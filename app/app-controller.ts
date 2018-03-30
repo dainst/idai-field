@@ -1,16 +1,16 @@
-/// <reference path="desktop/express-import" />
+/// <reference path='desktop/express-import' />
 
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 import * as express from 'express';
+import {Document} from 'idai-components-2/core';
+import {ResourcesState} from './components/resources/view/resources-state';
+import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
+import {DocumentCache} from './core/datastore/core/document-cache';
+import {MediaState} from './components/mediaoverview/view/media-state';
 
 const remote = require('electron').remote;
 const expressPouchDB = require('express-pouchdb');
 
-import {Document} from 'idai-components-2/core';
-import {ResourcesState} from "./components/resources/view/resources-state";
-import {PouchdbManager} from "./core/datastore/core/pouchdb-manager";
-import {DocumentCache} from "./core/datastore/core/document-cache";
-import {ImagesState} from "./components/imageoverview/view/images-state";
 
 @Injectable()
 /**
@@ -22,7 +22,7 @@ export class AppController {
         private pouchdbManager: PouchdbManager,
         private resourcesState: ResourcesState,
         private documentCache: DocumentCache<Document>,
-        private imagesState: ImagesState) {
+        private mediaState: MediaState) {
     }
 
     public setupServer(): Promise<any> {
@@ -33,7 +33,7 @@ export class AppController {
                 this.pouchdbManager.resetForE2E();
                 this.resourcesState.resetForE2E();
                 this.documentCache.resetForE2E();
-                this.imagesState.resetForE2E();
+                this.mediaState.resetForE2E();
                 res.send('done');
             });
             control.listen(3003, function() {

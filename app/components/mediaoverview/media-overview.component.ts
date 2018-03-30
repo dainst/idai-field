@@ -1,25 +1,25 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
-import {ImageOverviewFacade} from './view/imageoverview-facade';
+import {MediaOverviewFacade} from './view/media-overview-facade';
 import {RoutingService} from '../routing-service';
+import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './image-overview.html'
+    templateUrl: './media-overview.html'
 })
 /**
- * Displays images as a grid of tiles.
+ * Displays thumbnails of media resources as a grid of tiles.
  *
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ImageOverviewComponent implements OnInit {
+export class MediaOverviewComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
@@ -31,31 +31,31 @@ export class ImageOverviewComponent implements OnInit {
     public getDocumentLabel = (document: Document) => ModelUtil.getDocumentLabel(document);
 
     // for clean and refactor safe template, and to help find usages
-    public getDocuments = () => this.imageOverviewFacade.getDocuments();
-    public getSelected = () => this.imageOverviewFacade.getSelected();
-    public getTotalDocumentCount = () => this.imageOverviewFacade.getTotalDocumentCount();
-    public select = (document: Document) => this.imageOverviewFacade.select(document as IdaiFieldImageDocument);
-    public getGridSize = () => this.imageOverviewFacade.getGridSize();
-    public getQuery = () => this.imageOverviewFacade.getQuery();
-    public getMainTypeDocumentFilterOption = () => this.imageOverviewFacade.getMainTypeDocumentFilterOption();
+    public getDocuments = () => this.mediaOverviewFacade.getDocuments();
+    public getSelected = () => this.mediaOverviewFacade.getSelected();
+    public getTotalDocumentCount = () => this.mediaOverviewFacade.getTotalDocumentCount();
+    public select = (document: Document) => this.mediaOverviewFacade.select(document as IdaiFieldMediaDocument);
+    public getGridSize = () => this.mediaOverviewFacade.getGridSize();
+    public getQuery = () => this.mediaOverviewFacade.getQuery();
+    public getMainTypeDocumentFilterOption = () => this.mediaOverviewFacade.getMainTypeDocumentFilterOption();
 
     public jumpToRelationTarget
-        = (documentToSelect: IdaiFieldImageDocument) => this.routingService.jumpToRelationTarget(documentToSelect,
+        = (documentToSelect: IdaiFieldMediaDocument) => this.routingService.jumpToRelationTarget(documentToSelect,
             undefined, true);
 
 
     constructor(
         public viewFacade: ViewFacade,
-        private imageOverviewFacade: ImageOverviewFacade,
+        private mediaOverviewFacade: MediaOverviewFacade,
         private routingService: RoutingService
     ) {
-        this.imageOverviewFacade.initialize();
+        this.mediaOverviewFacade.initialize();
     }
 
 
     public ngOnInit() {
 
-        this.imageGrid.nrOfColumns = this.imageOverviewFacade.getGridSize();
+        this.imageGrid.nrOfColumns = this.mediaOverviewFacade.getGridSize();
     }
 
 
@@ -64,7 +64,7 @@ export class ImageOverviewComponent implements OnInit {
         const _size = parseInt(size);
 
         if (_size >= this.minGridSize && _size <= this.maxGridSize) {
-            this.imageOverviewFacade.setGridSize(_size);
+            this.mediaOverviewFacade.setGridSize(_size);
             this.imageGrid.nrOfColumns = _size;
             this.refreshGrid();
         }
@@ -79,30 +79,30 @@ export class ImageOverviewComponent implements OnInit {
 
     public refreshGrid() {
 
-        this.imageOverviewFacade.fetchDocuments();
+        this.mediaOverviewFacade.fetchDocuments();
     }
 
 
     public setQueryString(q: string) {
 
-        this.imageOverviewFacade.setQueryString(q);
+        this.mediaOverviewFacade.setQueryString(q);
     }
 
 
     public setQueryTypes(types: string[]) {
 
-        this.imageOverviewFacade.setQueryTypes(types);
+        this.mediaOverviewFacade.setQueryTypes(types);
     }
 
 
     public resetSearch() {
 
-        this.imageOverviewFacade.resetSearch();
+        this.mediaOverviewFacade.resetSearch();
     }
 
 
     public chooseMainTypeDocumentFilterOption(filterOption: string) {
 
-        this.imageOverviewFacade.chooseMainTypeDocumentFilterOption(filterOption);
+        this.mediaOverviewFacade.chooseMainTypeDocumentFilterOption(filterOption);
     }
 }

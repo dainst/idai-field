@@ -62,7 +62,7 @@ export class ImageViewComponent implements OnInit {
     public deselect() {
 
         if (this.comingFrom) this.router.navigate(this.comingFrom);
-        else this.router.navigate(['images']);
+        else this.router.navigate(['media']);
     }
 
 

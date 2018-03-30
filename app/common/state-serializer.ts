@@ -11,13 +11,13 @@ const fs = remote.require('fs');
 export class StateSerializer {
 
     public static RESOURCES_STATE: string = 'resources-state';
-    public static IMAGES_STATE: string = 'images-state';
+    public static MEDIA_STATE: string = 'media-state';
 
     constructor(private settingsService: SettingsService) {}
 
 
     /**
-     * @param stateType can be either RESOURCES_STATE or IMAGES_STATE
+     * @param stateType can be either RESOURCES_STATE or MEDIA_STATE
      */
     public load(stateType: string): Promise<any> {
 
@@ -37,7 +37,7 @@ export class StateSerializer {
 
 
     /**
-     * @param stateType can be either RESOURCES_STATE or IMAGES_STATE
+     * @param stateType can be either RESOURCES_STATE or MEDIA_STATE
      */
     public store(stateType: string, stateObject: any): Promise<any> {
 

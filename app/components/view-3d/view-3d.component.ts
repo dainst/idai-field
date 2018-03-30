@@ -55,7 +55,7 @@ export class View3DComponent implements OnInit {
         if (this.comingFrom) {
             await this.router.navigate(this.comingFrom);
         } else {
-            await this.router.navigate(['project']);
+            await this.router.navigate(['media']);
         }
     }
 

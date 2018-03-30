@@ -26,7 +26,7 @@ export class View3DComponent implements OnInit {
     private comingFrom: Array<any>|undefined = undefined;
 
     public jumpToRelationTarget = (documentToJumpTo: Document) => this.routingService.jumpToRelationTarget(
-        documentToJumpTo, '3d-objects', true);
+        documentToJumpTo, 'media', true);
 
 
     constructor(

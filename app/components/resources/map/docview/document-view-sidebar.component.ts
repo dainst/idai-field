@@ -44,12 +44,12 @@ export class DocumentViewSidebarComponent {
     ) { }
 
 
-    public async uploadImages(event: Event, document: IdaiFieldDocument) {
+    public async uploadMediaFiles(event: Event, document: IdaiFieldDocument) {
 
         const uploadResult: UploadResult = await this.uploadService.startUpload(event, document);
 
         if (uploadResult.uploadedFiles > 0) {
-            this.viewFacade.setActiveDocumentViewTab('images');
+            this.viewFacade.setActiveDocumentViewTab('media');
             await this.viewFacade.setSelectedDocument(document);
         }
 

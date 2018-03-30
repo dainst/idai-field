@@ -1,20 +1,20 @@
 <div class="image-picker">
     <div class="modal-header" id="image-picker-modal-header">
-        <button id="add-image" *ngIf="selectedDocuments.length == 0"
+        <button id="add-media-resource" *ngIf="selectedDocuments.length == 0"
                 class="btn btn-primary disabled" disabled>
             <span class="mdi mdi-link"></span>
-            Bild verknüpfen
+            Medienressource verknüpfen
         </button>
-        <button id="add-image" *ngIf="selectedDocuments.length == 1"
+        <button id="add-media-resource" *ngIf="selectedDocuments.length == 1"
                 (click)="activeModal.close(selectedDocuments)"
                 class="btn btn-primary">
             <span class="mdi mdi-link"></span>
-            Bild verknüpfen
+            Medienressource verknüpfen
         </button>
-        <button id="add-images" *ngIf="selectedDocuments.length > 1"
+        <button id="add-media-resources" *ngIf="selectedDocuments.length > 1"
                 (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
             <span class="mdi mdi-link"></span>
-            {{selectedDocuments.length}} Bilder verknüpfen
+            {{selectedDocuments.length}} Medienressourcen verknüpfen
         </button>
         <button type="button" class="btn btn-secondary"
                 (click)="activeModal.dismiss('dismissedByCancel')">
@@ -22,7 +22,7 @@
         </button>
     </div>
 
-    <div class="modal-body" id="image-picker-modal">
+    <div class="modal-body" id="media-resource-picker-modal">
         <div class="row">
             <div class="col-md-6">
                 <search-bar *ngIf="!selectedDocuments.length"

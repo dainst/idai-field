@@ -53,53 +53,28 @@
             </ng-template>
         </ngb-tab>
 
-        <ngb-tab id="document-view-images-tab">
+        <ngb-tab id="document-view-media-tab">
             <ng-template ngbTabTitle>
                         <span class="mdi mdi-image"
                               [class.empty-tab]="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"></span>
             </ng-template>
             <ng-template ngbTabContent>
-                <div (drop)="uploadImages($event, viewFacade.getSelectedDocument())">
+                <div (drop)="uploadMediaFiles($event, viewFacade.getSelectedDocument())">
                     <button class="btn btn-link"
                             id="document-view-button-edit-document"
-                            (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'images')">
+                            (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'media')">
                         <span class="mdi mdi-pencil"></span>
                     </button>
 
                     <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn'] || viewFacade.getSelectedDocument().resource.relations['isDepictedIn'].length == 0" class="empty-tab-info">
-                        Keine Bilder vorhanden.
+                        Keine Medienressourcen vorhanden.
                         <br><br>
-                        Ziehen Sie Bilder per Drag'n'Drop in diesen Reiter, um sie hinzuzufügen, oder klicken
-                        Sie auf den Stift, um bereits vorhandene Bilder zu verknüpfen.
+                        Ziehen Sie Bilder oder 3D-Modelle (.dae) per Drag'n'Drop in diesen Reiter, um sie hinzuzufügen, oder klicken
+                        Sie auf den Stift, um bereits vorhandene Medienressourcen zu verknüpfen.
                         <br><br><br><br><br><br><br><br><br>
                     </div>
                     <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
                                     [imageIds]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
-                                    (onRelationTargetClicked)="jumpToRelationTarget($event)">
-                    </thumbnail-view>
-                </div>
-            </ng-template>
-        </ngb-tab>
-
-        <ngb-tab id="document-view-3d-objects-tab">
-            <ng-template ngbTabTitle>
-                    <span class="mdi mdi-cube-outline"
-                          [class.empty-tab]="!viewFacade.getSelectedDocument().resource.relations['has3DRepresentation']">
-                    </span>
-            </ng-template>
-            <ng-template ngbTabContent>
-                <div (drop)="upload3DObjects($event, viewFacade.getSelectedDocument())">
-                    <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['has3DRepresentation']
-                            || viewFacade.getSelectedDocument().resource.relations['has3DRepresentation'].length == 0"
-                         class="empty-tab-info">
-                        Keine 3D-Modelle vorhanden.
-                        <br><br>
-                        Ziehen Sie Collada-Dateien (.dae) per Drag'n'Drop in diesen Reiter, um sie
-                        hinzuzufügen.
-                        <br><br><br><br><br><br><br><br><br>
-                    </div>
-                    <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['has3DRepresentation']"
-                                    [imageIds]="viewFacade.getSelectedDocument().resource.relations['has3DRepresentation']"
                                     (onRelationTargetClicked)="jumpToRelationTarget($event)">
                     </thumbnail-view>
                 </div>

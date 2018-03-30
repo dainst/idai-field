@@ -8,12 +8,12 @@ import {RouterModule} from '@angular/router';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {IdaiMessagesModule} from 'idai-components-2/messages';
 import {WidgetsModule} from '../../widgets/widgets.module';
-import {DoceditImageTabComponent} from './imagetab/docedit-image-tab.component';
+import {DoceditMediaTabComponent} from './mediatab/docedit-media-tab.component';
 import {DoceditConflictsTabComponent} from './docedit-conflicts-tab.component';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
 import {EditSaveDialogComponent} from './edit-save-dialog.component';
 import {TypeSwitcherButtonComponent} from './type-switcher-button.component';
-import {ImagePickerComponent} from "./imagetab/image-picker.component";
+import {MediaResourcePickerComponent} from './mediatab/media-resource-picker.component';
 import {ImageGridModule} from "../imagegrid/image-grid.module";
 
 @NgModule({
@@ -32,10 +32,10 @@ import {ImageGridModule} from "../imagegrid/image-grid.module";
         ConflictDeletedModalComponent,
         DoceditComponent,
         EditSaveDialogComponent,
-        DoceditImageTabComponent,
+        DoceditMediaTabComponent,
         DoceditConflictsTabComponent,
         TypeSwitcherButtonComponent,
-        ImagePickerComponent
+        MediaResourcePickerComponent
     ],
     exports: [
         EditSaveDialogComponent,
@@ -44,7 +44,7 @@ import {ImageGridModule} from "../imagegrid/image-grid.module";
     entryComponents: [
         DoceditComponent,
         ConflictDeletedModalComponent,
-        ImagePickerComponent
+        MediaResourcePickerComponent
     ]
 })
 

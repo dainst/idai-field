@@ -3,21 +3,22 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
-import {ImagePickerComponent} from './image-picker.component';
+import {MediaResourcePickerComponent} from './media-resource-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
 import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
 
 @Component({
-    selector: 'docedit-image-tab',
+    selector: 'docedit-media-tab',
     moduleId: module.id,
-    templateUrl: './docedit-image-tab.html'
+    templateUrl: './docedit-media-tab.html'
 })
 /**
  * @author F.Z.
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
-export class DoceditImageTabComponent {
+export class DoceditMediaTabComponent {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
     public documents: Array<IdaiFieldImageDocument|IdaiField3DDocument>;
@@ -39,7 +40,7 @@ export class DoceditImageTabComponent {
 
         if (!this.document) return;
         if (this.document.resource.relations['isDepictedIn']) {
-            this.loadImages();
+            this.loadMediaResources();
         }
     }
 
@@ -84,40 +85,40 @@ export class DoceditImageTabComponent {
             this.documents = [];
             this.clearSelection();
         } else {
-            this.loadImages();
+            this.loadMediaResources();
         }
     }
 
 
-    private loadImages() {
+    private loadMediaResources() {
 
-        const imageDocPromises: any[] = [];
+        const promises: Array<Promise<IdaiFieldImageDocument|IdaiField3DDocument>> = [];
         this.documents = [];
         this.document.resource.relations['isDepictedIn'].forEach(id => {
-            imageDocPromises.push(this.datastore.get(id));
+            promises.push(this.datastore.get(id));
         });
 
-        Promise.all(imageDocPromises as any).then(docs => {
+        Promise.all(promises as any).then(docs => {
             this.documents = docs as Array<IdaiFieldImageDocument|IdaiField3DDocument>;
             this.clearSelection();
         });
     }
 
 
-    private addIsDepictedInRelations(imageDocuments: Array<IdaiFieldImageDocument|IdaiField3DDocument>) {
+    private addIsDepictedInRelations(mediaDocuments: Array<IdaiFieldImageDocument|IdaiField3DDocument>) {
 
         const relations = this.document.resource.relations['isDepictedIn']
             ? this.document.resource.relations['isDepictedIn'].slice() : [];
 
-        for (let i in imageDocuments) {
-            if (relations.indexOf(imageDocuments[i].resource.id as any) == -1) {
-                relations.push(imageDocuments[i].resource.id as any);
+        for (let mediaDocument of mediaDocuments) {
+            if (!relations.includes(mediaDocument.resource.id as any)) {
+                relations.push(mediaDocument.resource.id as any);
             }
         }
 
         this.document.resource.relations['isDepictedIn'] = relations;
 
-        this.loadImages();
+        this.loadMediaResources();
     }
 
 
@@ -129,14 +130,14 @@ export class DoceditImageTabComponent {
     }
 
 
-    public openImagePicker() {
+    public openMediaResourcePicker() {
 
-        let imagePickerModal = this.modalService.open(ImagePickerComponent, { size: 'lg' });
-        imagePickerModal.componentInstance.setDocument(this.document);
+        const modal = this.modalService.open(MediaResourcePickerComponent, { size: 'lg' });
+        modal.componentInstance.setDocument(this.document);
 
-        imagePickerModal.result.then(
-            (selectedImages: Array<IdaiFieldImageDocument|IdaiField3DDocument>) => {
-                this.addIsDepictedInRelations(selectedImages);
+        modal.result.then(
+            (selectedMediaResources: Array<IdaiFieldImageDocument|IdaiField3DDocument>) => {
+                this.addIsDepictedInRelations(selectedMediaResources);
                 this.documentEditChangeMonitor.setChanged();
             }
         ).catch(() => {

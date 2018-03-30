@@ -1,7 +1,7 @@
-@import 'imagetab/docedit-image-tab';
+@import 'mediatab/docedit-media-tab';
 @import 'docedit-conflicts-tab';
 @import 'type-switcher-button';
-@import 'imagetab/image-picker';
+@import 'mediatab/media-resource-picker';
 
 #document-edit-wrapper {
 
@@ -103,7 +103,7 @@
 
   #docedit-fields-tab,
   #docedit-relations-tab,
-  #docedit-images-tab,
+  #docedit-media-tab,
   #docedit-conflicts-tab {
     user-select: none;
   }

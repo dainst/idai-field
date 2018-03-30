@@ -106,15 +106,15 @@
                             </ngb-tab>
 
                             <ngb-tab *ngIf="!isMediaDocument()"
-                                     id="docedit-images-tab">
+                                     id="docedit-media-tab">
                                 <ng-template ngbTabTitle>
                                     <span class="mdi mdi-image"></span>
-                                    Bilder
+                                    Medienressourcen
                                 </ng-template>
                                 <ng-template ngbTabContent>
-                                    <docedit-image-tab
+                                    <docedit-media-tab
                                             [(document)]="clonedDocument">
-                                    </docedit-image-tab>
+                                    </docedit-media-tab>
                                 </ng-template>
                             </ngb-tab>
 

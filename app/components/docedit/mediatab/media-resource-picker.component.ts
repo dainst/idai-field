@@ -11,15 +11,15 @@ import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
 
 
 @Component({
-    selector: 'image-picker',
+    selector: 'media-resource-picker',
     moduleId: module.id,
-    templateUrl: './image-picker.html'
+    templateUrl: './media-resource-picker.html'
 })
 /**
  * @author Fabian Z.
  * @author Thomas Kleinke
  */
-export class ImagePickerComponent implements OnInit {
+export class MediaResourcePickerComponent implements OnInit {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
@@ -82,7 +82,7 @@ export class ImagePickerComponent implements OnInit {
     /**
      * @param document the object that should be selected
      */
-    public select(document: IdaiFieldImageDocument) {
+    public select(document: IdaiFieldImageDocument|IdaiField3DDocument) {
 
         if (this.selectedDocuments.indexOf(document) == -1) this.selectedDocuments.push(document);
         else this.selectedDocuments.splice(this.selectedDocuments.indexOf(document), 1);
@@ -102,7 +102,7 @@ export class ImagePickerComponent implements OnInit {
         this.query.constraints = {
             'depicts:contain': { value: this.document.resource.id as string, type: 'subtract' }
         };
-        this.query.limit = ImagePickerComponent.documentLimit;
+        this.query.limit = MediaResourcePickerComponent.documentLimit;
 
         return this.datastore.find(this.query)
             // .catch(msgWithParams => this.messages.add(msgWithParams)

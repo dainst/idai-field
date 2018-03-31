@@ -5,6 +5,9 @@ import {SettingsService} from '../../../core/settings/settings-service';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {M} from '../../../m';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
+import {Store3D} from '../../../core/3d/store-3d';
+import {TypeUtility} from '../../../common/type-utility';
+import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
 
 @Injectable()
 /**
@@ -18,7 +21,9 @@ export class PersistenceHelper {
         private mediaOverviewFacade: MediaOverviewFacade,
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
-        private imagestore: Imagestore
+        private imagestore: Imagestore,
+        private store3D: Store3D,
+        private typeUtility: TypeUtility
     ) {}
 
 
@@ -33,15 +38,14 @@ export class PersistenceHelper {
                 const resourceId = document.resource.id;
 
                 promise = promise.then(
-                    // TODO Remove 3d files correctly
-                    () => this.imagestore.remove(resourceId),
+                    () => this.removeAssociatedMediaFiles(document),
                     msgWithParams => reject(msgWithParams)
                 ).then(
                     () => this.persistenceManager.remove(document, this.settingsService.getUsername(), [document]),
                     err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier]) // TODO get rid of M, return datastore errWithParams
                 ).then(() => {
                     this.mediaOverviewFacade.remove(document);
-                })
+                });
             }
 
             promise.then(
@@ -95,5 +99,20 @@ export class PersistenceHelper {
                 oldVersion) as never);
         }
         return Promise.all(promises);
+    }
+
+
+    private removeAssociatedMediaFiles(document: IdaiFieldMediaDocument): Promise<void> {
+
+        if (this.typeUtility.isImageType(document.resource.type)) {
+            if (!this.imagestore.getPath()) return Promise.reject([M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]);
+            return this.imagestore.remove(document.resource.id as string).catch(() => {
+                return [M.IMAGESTORE_ERROR_DELETE, document.resource.id];
+            });
+        } else if (this.typeUtility.is3DType(document.resource.type)) {
+            return this.store3D.remove(document.resource.id as string);
+        } else {
+            return Promise.resolve();
+        }
     }
 }

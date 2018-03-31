@@ -203,8 +203,8 @@ export const DOCS: Array<Document> = [
     },
     {
         "resource": {
-            "id": "brandlehm",
-            "identifier": "brandlehm",
+            "id": "object_brandlehm",
+            "identifier": "object_brandlehm",
             "shortDescription": "Brandlehm",
             "type": "Object3D",
             "thumbnailWidth": 824,

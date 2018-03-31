@@ -7,19 +7,19 @@ let delays = require('../config/delays');
 
 let common = require('../common.js');
 
-export class ImageOverviewPage {
+export class MediaOverviewPage {
 
     public static selectedClass = 'selected';
 
     public static get() {
 
-        browser.get('#/images');
+        browser.get('#/media');
     }
 
     public static getAndWaitForImageCells() {
 
-        ImageOverviewPage.get();
-        ImageOverviewPage.waitForCells();
+        MediaOverviewPage.get();
+        MediaOverviewPage.waitForCells();
     };
 
     public static waitForCells() {
@@ -31,7 +31,7 @@ export class ImageOverviewPage {
 
     public static clickCell(index) {
 
-        return ImageOverviewPage.getCell(index).click();
+        return MediaOverviewPage.getCell(index).click();
     };
 
     public static chooseImageSubtype(index) {
@@ -41,12 +41,12 @@ export class ImageOverviewPage {
 
     public static clickDeselectButton() {
 
-        return common.click(element(by.id('deselect-images')));
+        return common.click(element(by.id('deselect-media-resources')));
     };
 
     public static clickDeleteButton() {
 
-        return common.click(element(by.id('delete-images')));
+        return common.click(element(by.id('delete-media-resources')));
     };
 
     public static clickConfirmUnlinkButton() {
@@ -66,12 +66,12 @@ export class ImageOverviewPage {
 
     public static clickConfirmDeleteButton() {
 
-        return common.click(element(by.id('delete-images-confirm')));
+        return common.click(element(by.id('delete-media-resources-confirm')));
     };
 
     public static clickCancelDeleteButton() {
 
-        return common.click(element(by.id('delete-images-cancel')));
+        return common.click(element(by.id('delete-media-resources-cancel')));
     };
 
     public static clickSelectMainTypeDocumentFilterOption(optionIndex: number) {
@@ -89,7 +89,7 @@ export class ImageOverviewPage {
 
     public static doubleClickCell(index) {
 
-        return browser.actions().doubleClick(ImageOverviewPage.getCell(index)).perform();
+        return browser.actions().doubleClick(MediaOverviewPage.getCell(index)).perform();
     };
 
     // mouse moves
@@ -104,16 +104,16 @@ export class ImageOverviewPage {
 
     // send keys
 
-    public static uploadImage(filePath) {
+    public static uploadFile(filePath) {
 
         return element(by.id('file')).sendKeys(filePath);
     };
 
     // text
 
-    public static getCellImageName(index) {
+    public static getCellMediaResourceName(index) {
 
-        return ImageOverviewPage.getCell(index).getAttribute('id').then(id => id.substring('resource-'.length));
+        return MediaOverviewPage.getCell(index).getAttribute('id').then(id => id.substring('resource-'.length));
     };
 
     public static getGridSizeSliderValue() {
@@ -130,7 +130,7 @@ export class ImageOverviewPage {
 
     public static getCell(index) {
 
-        return ImageOverviewPage.getAllCells().get(index);
+        return MediaOverviewPage.getAllCells().get(index);
     };
 
     public static getCellByIdentifier(identifier: string) {
@@ -150,27 +150,27 @@ export class ImageOverviewPage {
 
     public static typeInIdentifierInLinkModal(identifier) {
 
-        return common.typeIn(ImageOverviewPage.getLinkModal().element(by.id('object-search')), identifier);
+        return common.typeIn(MediaOverviewPage.getLinkModal().element(by.id('object-search')), identifier);
     };
 
     public static getSuggestedResourcesInLinkModalByIdentifier(identifier) {
 
-        return ImageOverviewPage.getLinkModal().element(by.id('resource-'+identifier))
+        return MediaOverviewPage.getLinkModal().element(by.id('resource-'+identifier))
     };
 
     // sequences
 
     public static createDepictsRelation(identifier) {
 
-        const imageToConnect = ImageOverviewPage.getCell(0);
+        const mediaResourceToConnect = MediaOverviewPage.getCell(0);
 
-        imageToConnect.click();
-        expect(imageToConnect.getAttribute('class')).toMatch(ImageOverviewPage.selectedClass);
-        ImageOverviewPage.clickLinkButton();
-        ImageOverviewPage.typeInIdentifierInLinkModal(identifier);
-        ImageOverviewPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
+        mediaResourceToConnect.click();
+        expect(mediaResourceToConnect.getAttribute('class')).toMatch(MediaOverviewPage.selectedClass);
+        MediaOverviewPage.clickLinkButton();
+        MediaOverviewPage.typeInIdentifierInLinkModal(identifier);
+        MediaOverviewPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();
         NavbarPage.clickNavigateToExcavation();
-        NavbarPage.clickNavigateToImages();
+        NavbarPage.clickNavigateToMediaOverview();
         browser.sleep(delays.shortRest * 5);
     }
 }

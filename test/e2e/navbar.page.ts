@@ -22,7 +22,7 @@ export class NavbarPage {
         return common.click(element.all(by.css('.nav-link')).get(3));
     };
 
-    public static clickNavigateToImages() {
+    public static clickNavigateToMediaOverview() {
 
         return common.click(element.all(by.css('.nav-link')).get(6));
     };

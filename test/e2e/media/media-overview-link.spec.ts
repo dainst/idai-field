@@ -1,5 +1,5 @@
 import {by, browser, protractor} from 'protractor';
-import {ImageOverviewPage} from './image-overview.page';
+import {MediaOverviewPage} from './media-overview.page';
 import {NavbarPage} from "../navbar.page";
 
 const path = require('path');
@@ -8,15 +8,15 @@ const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 const request = require('request');
 
-describe('images/image-overview/link --', function() {
+describe('media/media-overview/link --', function() {
 
     const resourceId1 = 'tf1';
     const resourceId2 = 'c1';
 
     function createTwo() {
 
-        ImageOverviewPage.createDepictsRelation('testf1');
-        ImageOverviewPage.createDepictsRelation('context1');
+        MediaOverviewPage.createDepictsRelation('testf1');
+        MediaOverviewPage.createDepictsRelation('context1');
     }
 
     function expectLinkBadgePresence(toBeTruthy: boolean, nrBadges: number = 1) {
@@ -27,7 +27,7 @@ describe('images/image-overview/link --', function() {
 
     function _expectLinkBadgePresence(toBeTruthy, relatedResourceId) {
 
-        const exp = expect(ImageOverviewPage.getCell(0)
+        const exp = expect(MediaOverviewPage.getCell(0)
             .all(by.id('related-resource-'+relatedResourceId))
             .first().isPresent());
 
@@ -38,16 +38,16 @@ describe('images/image-overview/link --', function() {
 
     function unlink() {
 
-        ImageOverviewPage.getCell(0).click();
-        ImageOverviewPage.clickUnlinkButton();
-        ImageOverviewPage.clickConfirmUnlinkButton();
+        MediaOverviewPage.getCell(0).click();
+        MediaOverviewPage.clickUnlinkButton();
+        MediaOverviewPage.clickConfirmUnlinkButton();
         browser.sleep(delays.shortRest);
     }
 
 
     beforeAll(() => {
 
-        ImageOverviewPage.getAndWaitForImageCells();
+        MediaOverviewPage.getAndWaitForImageCells();
         browser.sleep(delays.shortRest * 3);
     });
 
@@ -59,35 +59,35 @@ describe('images/image-overview/link --', function() {
             NavbarPage.performNavigateToSettings();
             request.post('http://localhost:3003/reset', {});
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToImages();
-            ImageOverviewPage.waitForCells();
+            NavbarPage.clickNavigateToMediaOverview();
+            MediaOverviewPage.waitForCells();
             browser.sleep(delays.shortRest);
         }
         i++;
     });
 
-    it('link an image to a resource', () => {
+    it('link a media resource to a resource', () => {
 
-        ImageOverviewPage.createDepictsRelation('testf1');
+        MediaOverviewPage.createDepictsRelation('testf1');
         expectLinkBadgePresence(true);
     });
 
-    it('link two images to a resource', () => {
+    it('link two media resources to a resource', () => {
 
         createTwo();
         expectLinkBadgePresence(true, 2);
         browser.sleep(delays.shortRest);
     });
 
-    it('unlink an image from a resource', () => {
+    it('unlink a media resource from a resource', () => {
 
-        ImageOverviewPage.createDepictsRelation('testf1');
+        MediaOverviewPage.createDepictsRelation('testf1');
         unlink();
         browser.sleep(delays.shortRest);
         expectLinkBadgePresence(false);
     });
 
-    it('unlink two images from a resource', () => {
+    it('unlink two media resources from a resource', () => {
 
         createTwo();
         unlink();
@@ -97,24 +97,24 @@ describe('images/image-overview/link --', function() {
 
     xit('use main type document filter', () => {
 
-        ImageOverviewPage.createDepictsRelation('testf1');
+        MediaOverviewPage.createDepictsRelation('testf1');
 
-        ImageOverviewPage.clickSelectMainTypeDocumentFilterOption(1);
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
+        MediaOverviewPage.clickSelectMainTypeDocumentFilterOption(1);
+        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
             delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
-            delays.ECWaitTime);
-
-        ImageOverviewPage.clickSelectMainTypeDocumentFilterOption(2);
-        browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
-            delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
+        browser.wait(EC.stalenessOf(MediaOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
             delays.ECWaitTime);
 
-        ImageOverviewPage.clickSelectMainTypeDocumentFilterOption(0);
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
+        MediaOverviewPage.clickSelectMainTypeDocumentFilterOption(2);
+        browser.wait(EC.stalenessOf(MediaOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
             delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
+        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
+            delays.ECWaitTime);
+
+        MediaOverviewPage.clickSelectMainTypeDocumentFilterOption(0);
+        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
+            delays.ECWaitTime);
+        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
             delays.ECWaitTime);
     });
 });

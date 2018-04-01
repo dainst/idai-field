@@ -166,7 +166,7 @@ export class Map3DControls {
 
     private changeAngle(mouseDeltaY: number) {
 
-        this.cameraManager.changeAngle(mouseDeltaY / 100);
+        this.cameraManager.changeAngle(-mouseDeltaY / 100);
     }
 
 

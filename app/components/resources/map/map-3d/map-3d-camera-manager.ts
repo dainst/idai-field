@@ -13,7 +13,7 @@ const CAMERA_DIRECTION_EAST: number = 3;
 
 const minAngle: number = -Math.PI / 2;
 const maxAngle: number = -Math.PI / 8;
-const defaultAngle: number = -Math.PI / 4;
+const defaultAngle: number = -Math.PI / 3;
 
 
 /**

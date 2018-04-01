@@ -17,7 +17,7 @@ const BUTTON_ZOOM_VALUE: number = 3.5;
  */
 export class Map3DControls {
     
-    private state: Map3DControlState = { dragging: false };
+    private state: Map3DControlState = { action: 'none' };
 
     private dragCounter: number;
     private noSelection: boolean = false;
@@ -40,6 +40,9 @@ export class Map3DControls {
             case 1:  // Left mouse button
                 this.beginDragAction();
                 break;
+            case 3:  // Right mouse button
+                this.beginChangeAngleAction();
+                break;
         }
 
         event.preventDefault();
@@ -50,7 +53,7 @@ export class Map3DControls {
 
     public onMouseUp(event: MouseEvent): Map3DControlState {
 
-        if (this.state.dragging) this.updateSelectedDocument(event.clientX, event.clientY);
+        if (this.state.action == 'drag') this.updateSelectedDocument(event.clientX, event.clientY);
 
         this.resetAction();
 
@@ -63,7 +66,7 @@ export class Map3DControls {
         const deltaX = this.lastXPosition - event.clientX;
         const deltaY = this.lastYPosition - event.clientY;
 
-        if (this.state.dragging) this.drag(deltaX, deltaY);
+        this.performAction(deltaX, deltaY);
         this.updateHoverDocument(event.clientX, event.clientY);
 
         this.lastXPosition = event.clientX;
@@ -120,16 +123,32 @@ export class Map3DControls {
     }
 
 
+    private performAction(deltaX: number, deltaY: number) {
+
+        if (this.state.action == 'drag') {
+            this.drag(deltaX, deltaY);
+        } else if (this.state.action == 'changeAngle') {
+            this.changeAngle(deltaY);
+        }
+    }
+
+
     private beginDragAction() {
 
-        this.state.dragging = true;
+        this.state.action = 'drag';
         this.dragCounter = 0;
+    }
+
+
+    private beginChangeAngleAction() {
+
+        this.state.action = 'changeAngle';
     }
 
 
     private resetAction() {
 
-        this.state.dragging = false;
+        this.state.action = 'none';
     }
 
 
@@ -142,6 +161,12 @@ export class Map3DControls {
         if (this.dragCounter > 10 || xChange > 5 || xChange < -5 || zChange > 5 || zChange < -5) {
             this.noSelection = true;
         }
+    }
+
+
+    private changeAngle(mouseDeltaY: number) {
+
+        this.cameraManager.changeAngle(mouseDeltaY / 100);
     }
 
 

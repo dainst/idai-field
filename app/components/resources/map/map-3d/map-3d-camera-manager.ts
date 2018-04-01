@@ -11,6 +11,10 @@ const CAMERA_DIRECTION_WEST: number = 1;
 const CAMERA_DIRECTION_SOUTH: number = 2;
 const CAMERA_DIRECTION_EAST: number = 3;
 
+const minAngle: number = -Math.PI / 2;
+const maxAngle: number = -Math.PI / 8;
+const defaultAngle: number = -Math.PI / 4;
+
 
 /**
  * @author Thomas Kleinke
@@ -22,8 +26,8 @@ export class Map3DCameraManager extends CameraManager {
     private perspectiveCamera: THREE.PerspectiveCamera;
     private orthographicCamera: THREE.OrthographicCamera;
 
-    private tilted: boolean = false;
     private pivotPoint: THREE.Vector3|undefined;
+    private xAxisRotationAngle: number = minAngle;
 
     private perspectiveYLevel: number = 5;
     private orthographicYLevel: number = 5;
@@ -53,7 +57,7 @@ export class Map3DCameraManager extends CameraManager {
 
     public setMode(mode: CameraMode) {
 
-        if (mode == this.mode) return;
+        if (mode == this.mode || this.isAnimationRunning()) return;
 
         if (mode == 'perspective') {
             this.switchFromOrthographicToPerspective();
@@ -89,6 +93,14 @@ export class Map3DCameraManager extends CameraManager {
         camera.position.set(camera.position.x + xChange, camera.position.y, camera.position.z + zChange);
 
         return { xChange, zChange };
+    }
+
+
+    public changeAngle(delta: number) {
+
+        const angleChange: number = this.getAllowedAngleChange(delta);
+
+        if (angleChange != 0) this.adjustCameraTilt(angleChange, false);
     }
 
 
@@ -247,7 +259,7 @@ export class Map3DCameraManager extends CameraManager {
 
     private switchFromPerspectiveToOrthographic() {
 
-        if (this.tilted) this.tiltView(false);
+        this.setMinAngle(false);
 
         this.orthographicCamera.position.set(
             this.perspectiveCamera.position.x,
@@ -262,25 +274,30 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
-    public tiltView(animate: boolean = true) {
+    public setDefaultAngle(animate: boolean = true) {
 
         if (this.isAnimationRunning()) return;
-
-        this.tilted = !this.tilted;
 
         if (this.mode == 'orthographic') {
             this.setMode('perspective');
             animate = false;
         }
 
-        this.adjustCameraTilt(animate);
+        this.adjustCameraTilt(defaultAngle - this.xAxisRotationAngle, animate);
     }
 
 
-    private adjustCameraTilt(animate: boolean) {
+    private setMinAngle(animate: boolean) {
+
+        this.adjustCameraTilt(minAngle - this.xAxisRotationAngle, animate);
+    }
+
+
+    private adjustCameraTilt(angleChange: number, animate: boolean) {
+
+        this.xAxisRotationAngle += angleChange;
 
         const pivotPoint: THREE.Vector3 = this.getPivotPoint();
-        const radians: number = this.tilted ? Math.PI / 4 : -Math.PI / 4;
         const xAxis: THREE.Vector3 = new THREE.Vector3(1, 0, 0);
         const zAxis: THREE.Vector3 = new THREE.Vector3(0, 0, 1);
 
@@ -290,22 +307,22 @@ export class Map3DCameraManager extends CameraManager {
 
         switch(this.direction) {
             case CAMERA_DIRECTION_NORTH:
-                clonedCamera.position.applyAxisAngle(xAxis, radians);
+                clonedCamera.position.applyAxisAngle(xAxis, angleChange);
                 break;
             case CAMERA_DIRECTION_EAST:
-                clonedCamera.position.applyAxisAngle(zAxis, radians);
+                clonedCamera.position.applyAxisAngle(zAxis, angleChange);
                 break;
             case CAMERA_DIRECTION_WEST:
-                clonedCamera.position.applyAxisAngle(zAxis, -radians);
+                clonedCamera.position.applyAxisAngle(zAxis, -angleChange);
                 break;
             case CAMERA_DIRECTION_SOUTH:
-                clonedCamera.position.applyAxisAngle(xAxis, -radians);
+                clonedCamera.position.applyAxisAngle(xAxis, -angleChange);
                 break;
         }
 
         clonedCamera.position.add(pivotPoint);
 
-        clonedCamera.rotateOnAxis(xAxis, radians);
+        clonedCamera.rotateOnAxis(xAxis, angleChange);
 
         if (animate) {
             this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
@@ -365,7 +382,7 @@ export class Map3DCameraManager extends CameraManager {
     private getNearestMeshBelowCamera(): THREE.Mesh|undefined {
 
         const meshes: Array<THREE.Mesh> = this.sceneManager.getMeshes()
-            .filter(mesh => mesh.position.y < this.getCamera().position.y)
+            .filter(mesh => mesh.geometry.boundingBox.min.y < this.getCamera().position.y)
             .sort((mesh1, mesh2) => {
                 return mesh1.position.distanceTo(this.getCamera().position)
                     - mesh2.position.distanceTo(this.getCamera().position)
@@ -387,6 +404,20 @@ export class Map3DCameraManager extends CameraManager {
             case CAMERA_DIRECTION_NORTH:
             default:
                 return { xChange: deltaX, zChange: deltaY };
+        }
+    }
+
+
+    private getAllowedAngleChange(delta: number): number {
+
+        if (delta < 0) {
+            return this.xAxisRotationAngle + delta >= minAngle ?
+                delta :
+                minAngle - this.xAxisRotationAngle;
+        } else {
+            return this.xAxisRotationAngle + delta <= maxAngle ?
+                delta :
+                maxAngle - this.xAxisRotationAngle;
         }
     }
 

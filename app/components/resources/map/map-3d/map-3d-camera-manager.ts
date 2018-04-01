@@ -27,7 +27,7 @@ export class Map3DCameraManager extends CameraManager {
     private orthographicCamera: THREE.OrthographicCamera;
 
     private pivotPoint: THREE.Vector3|undefined;
-    private xAxisRotationAngle: number = minAngle;
+    private xAxisRotationAngle: number;
 
     private perspectiveYLevel: number = 5;
     private orthographicYLevel: number = 5;
@@ -220,6 +220,9 @@ export class Map3DCameraManager extends CameraManager {
         this.perspectiveCamera = new THREE.PerspectiveCamera(75, canvasWidth / canvasHeight, 0.1, 1000);
         this.perspectiveCamera.position.set(0, this.perspectiveYLevel, 0);
         Map3DCameraManager.applyDefaultSettings(this.perspectiveCamera);
+
+        this.xAxisRotationAngle = this.perspectiveCamera.rotation.x;
+        this.setDefaultAngle(false);
     }
 
 
@@ -295,8 +298,6 @@ export class Map3DCameraManager extends CameraManager {
 
     private adjustCameraTilt(angleChange: number, animate: boolean) {
 
-        this.xAxisRotationAngle += angleChange;
-
         const pivotPoint: THREE.Vector3 = this.getPivotPoint();
         const xAxis: THREE.Vector3 = new THREE.Vector3(1, 0, 0);
         const zAxis: THREE.Vector3 = new THREE.Vector3(0, 0, 1);
@@ -340,6 +341,8 @@ export class Map3DCameraManager extends CameraManager {
             );
             this.perspectiveCamera.updateProjectionMatrix();
         }
+
+        this.xAxisRotationAngle = clonedCamera.rotation.x;
     }
 
 

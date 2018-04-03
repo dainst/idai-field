@@ -41,7 +41,7 @@ export abstract class CachedDatastore<T extends Document>
      */
     public async create(document: NewDocument): Promise<T> {
 
-        this.typeConverter.validate([document.resource.type], this.typeClass);
+        this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
         return this.updateIndex(await this.datastore.create(document));
     }
 
@@ -52,7 +52,7 @@ export abstract class CachedDatastore<T extends Document>
      */
     public async update(document: Document): Promise<T> {
 
-        this.typeConverter.validate([document.resource.type], this.typeClass);
+        this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
         return this.updateIndex(await this.datastore.update(document));
     }
 
@@ -78,7 +78,7 @@ export abstract class CachedDatastore<T extends Document>
      */
     public async remove(document: Document): Promise<void> {
 
-        this.typeConverter.validate([document.resource.type], this.typeClass);
+        this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
 
         // we want the doc removed from the indices asap,
         // in order to not risk someone finding it still with findIds due to

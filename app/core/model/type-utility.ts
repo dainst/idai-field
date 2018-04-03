@@ -57,6 +57,12 @@ export class TypeUtility {
     }
 
 
+    public getFeatureTypeNames(): string[] {
+
+        return Object.keys(this.getSubtypes('Feature'));
+    }
+
+
     private static isProjectType(typeName: string): boolean {
 
         return typeName === 'Project';

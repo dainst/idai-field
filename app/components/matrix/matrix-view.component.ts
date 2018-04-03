@@ -5,6 +5,7 @@ import {ModelUtil} from '../../core/model/model-util';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixState} from './matrix-state';
+import {TypeUtility} from '../../core/model/type-utility';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class MatrixViewComponent implements OnInit {
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private modalService: NgbModal,
-        private matrixState: MatrixState
+        private matrixState: MatrixState,
+        private typeUtility: TypeUtility
     ) {}
 
 
@@ -104,7 +106,10 @@ export class MatrixViewComponent implements OnInit {
         this.matrixState.selectedTrenchId = this.selectedTrench.resource.id;
 
         this.featureDocuments = (await this.datastore.find( {
-            constraints: { 'isRecordedIn:contain': this.selectedTrench.resource.id }
+            constraints: { 'isRecordedIn:contain': this.selectedTrench.resource.id },
+            types: this.typeUtility.getSubtypes('Feature')
         })).documents;
+
+        console.log("this.",this.featureDocuments.length)
     }
 }

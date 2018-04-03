@@ -17,13 +17,36 @@ export class IdaiFieldTypeConverter extends TypeConverter<Document> {
     }
 
 
-    public validate(types: string[]|undefined, typeClass: string): string[]|undefined {
+    public validateTypeToBeOfClass(type: string, typeClass: string): void {
 
-        if (types) return types.map(type => this.proveIsCorrectType(type, typeClass));
+        if (typeClass === 'IdaiFieldImageDocument') {
 
-        if (typeClass == 'IdaiFieldImageDocument') {
+            if (!this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must be IdaiFieldImageDocument';
+
+        } else if (typeClass === 'IdaiFieldFeatureDocument') {
+
+            if (!this.typeUtility.isSubtype(type, 'Feature')) throw 'Wrong type class: must be IdaiFieldFeatureDocument';
+
+        } else if (typeClass === 'IdaiFieldDocument') {
+
+            if (this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must not be IdaiFieldImageDocument';
+            // feature docs are allowed to also be idai field documents
+        }
+    }
+
+
+    public getTypesForClass(typeClass: string): string[]|undefined {
+
+        if (typeClass === 'IdaiFieldImageDocument') {
+
             return this.typeUtility.getImageTypeNames();
-        } else if (typeClass == 'IdaiFieldDocument') {
+
+        } else if (typeClass === 'IdaiFieldFeatureDocument') {
+
+            return this.typeUtility.getFeatureTypeNames();
+
+        } else if (typeClass === 'IdaiFieldDocument') {
+
             return this.typeUtility.getNonImageTypeNames();
         }
     }
@@ -35,22 +58,17 @@ export class IdaiFieldTypeConverter extends TypeConverter<Document> {
             ObjectUtil.takeOrMake(doc,'resource.identifier','');
             ObjectUtil.takeOrMake(doc,'resource.relations.depicts', []);
         } else {
+
             ObjectUtil.takeOrMake(doc,'resource.identifier','');
             ObjectUtil.takeOrMake(doc,'resource.relations.isRecordedIn', []);
+
+            if (this.typeUtility.isSubtype(doc.resource.type,'Feature')) {
+                ObjectUtil.takeOrMake(doc,'resource.relations.isContemporaryWith', []);
+                ObjectUtil.takeOrMake(doc,'resource.relations.isAfter', []);
+                ObjectUtil.takeOrMake(doc,'resource.relations.isBefore', []);
+            }
         }
 
         return doc as T;
-    }
-
-
-    private proveIsCorrectType(type: string, typeClass: string): string {
-
-        if (typeClass == 'IdaiFieldImageDocument') {
-            if (!this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must be IdaiFieldImageDocument';
-        } else if (typeClass == 'IdaiFieldDocument') {
-            if (this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must not be IdaiFieldImageDocument';
-        }
-
-        return type;
     }
 }

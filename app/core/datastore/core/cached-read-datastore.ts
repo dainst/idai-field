@@ -59,7 +59,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         }
 
         const document = await this.datastore.fetch(id);
-        this.typeConverter.validate([document.resource.type], this.typeClass);
+        this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
 
         return this.documentCache.set(this.typeConverter.convert(document));
     }
@@ -78,7 +78,11 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         if (!this.suppressWait) await this.datastore.ready();
 
-        query.types = this.typeConverter.validate(query.types, this.typeClass);
+        if (query.types) {
+            query.types.forEach(type => this.typeConverter.validateTypeToBeOfClass(type, this.typeClass));
+        } else {
+            query.types = this.typeConverter.getTypesForClass(this.typeClass);
+        }
 
         return this.getDocumentsForIds(this.findIds(query), query.limit);
     }

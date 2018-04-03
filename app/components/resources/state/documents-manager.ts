@@ -7,7 +7,7 @@ import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {NavigationPathManager} from './navigation-path-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
-import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
+import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {ResourcesState} from './resources-state';
 import {ObserverUtil} from '../../../util/observer-util';

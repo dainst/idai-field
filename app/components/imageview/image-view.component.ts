@@ -12,7 +12,7 @@ import {ImageContainer} from '../../core/imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../../m';
 import {RoutingService} from '../routing-service';
-import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/idai-field-image-document-read-datastore';
+import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/field/idai-field-image-document-read-datastore';
 
 
 @Component({

@@ -5,7 +5,7 @@ import {NavigationPathManager} from './navigation-path-manager';
 import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
 import {SettingsService} from '../../../core/settings/settings-service';
-import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
+import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 
 /**

@@ -33,7 +33,7 @@ import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-s
 import {ImageViewModule} from './components/imageview/image-view.module';
 import {AppController} from './app-controller';
 import {DatastoreModule} from './core/datastore/datastore.module';
-import {IdaiFieldDocumentDatastore} from './core/datastore/idai-field-document-datastore';
+import {IdaiFieldDocumentDatastore} from './core/datastore/field/idai-field-document-datastore';
 import {PersistenceManager} from './core/persist/persistence-manager';
 import {DocumentDatastore} from './core/datastore/document-datastore';
 import {Validator} from './core/model/validator';

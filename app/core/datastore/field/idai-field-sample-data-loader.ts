@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import * as fs from 'fs';
 import {DOCS} from './idai-field-sample-objects';
-import {Converter} from '../imagestore/converter';
-import {SampleDataLoader} from './core/sample-data-loader';
-import {AppState} from '../settings/app-state';
+import {Converter} from '../../imagestore/converter';
+import {SampleDataLoader} from '../core/sample-data-loader';
+import {AppState} from '../../settings/app-state';
 
 
 @Injectable()

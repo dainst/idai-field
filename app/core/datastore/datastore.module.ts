@@ -11,21 +11,24 @@ import {ConflictResolvingExtension} from './core/conflict-resolving-extension';
 import {ConflictResolver} from './core/conflict-resolver';
 import {PouchdbServerDatastore} from './pouchdb-server-datastore';
 import {PouchdbManager} from './core/pouchdb-manager';
-import {IdaiFieldDocumentDatastore} from './idai-field-document-datastore';
-import {IdaiFieldDocumentReadDatastore} from './idai-field-document-read-datastore';
-import {IdaiFieldImageDocumentDatastore} from './idai-field-image-document-datastore';
+import {IdaiFieldDocumentDatastore} from './field/idai-field-document-datastore';
+import {IdaiFieldDocumentReadDatastore} from './field/idai-field-document-read-datastore';
+import {IdaiFieldImageDocumentDatastore} from './field/idai-field-image-document-datastore';
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
-import {IdaiFieldImageDocumentReadDatastore} from './idai-field-image-document-read-datastore';
+import {IdaiFieldImageDocumentReadDatastore} from './field/idai-field-image-document-read-datastore';
 import {TypeConverter} from './core/type-converter';
-import {IdaiFieldSampleDataLoader} from './idai-field-sample-data-loader';
+import {IdaiFieldSampleDataLoader} from './field/idai-field-sample-data-loader';
 import {SampleDataLoader} from './core/sample-data-loader';
 import {IdaiFieldConflictResolver} from '../model/idai-field-conflict-resolver';
 import {DocumentDatastore} from './document-datastore';
 import {DocumentReadDatastore} from './document-read-datastore';
-import {IdaiFieldTypeConverter} from './idai-field-type-converter';
+import {IdaiFieldTypeConverter} from './field/idai-field-type-converter';
 import {RemoteChangesStream} from './core/remote-changes-stream';
 import {IndexFacade} from './index/index-facade';
 import {IdGenerator} from './core/id-generator';
+import {IdaiFieldFeatureDocumentDatastore} from './field/idai-field-feature-document-datastore';
+import {IdaiFieldFeatureDocumentReadDatastore} from './field/idai-field-feature-document-read-datastore';
+import {IdaiFieldFeatureDocument} from '../model/idai-field-feature-document';
 
 /**
  * There is the top level package, in which everything idai-field specific resides,
@@ -168,6 +171,24 @@ import {IdGenerator} from './core/id-generator';
             deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
         },
         { provide: IdaiFieldImageDocumentReadDatastore, useExisting: IdaiFieldImageDocumentDatastore }, // read-only version of it
+
+
+        // idai-field datastore
+        // knows IdaiFieldFeatureDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined
+        // guarantees that identifier constraint is available
+        // provides caching
+        {
+            provide: IdaiFieldFeatureDocumentDatastore,
+            useFactory: function(pouchdbDatastore: PouchdbDatastore,
+                                 indexFacade: IndexFacade,
+                                 documentCache: DocumentCache<IdaiFieldFeatureDocument>,
+                                 documentConverter: TypeConverter<IdaiFieldFeatureDocument>,
+            ): IdaiFieldFeatureDocumentDatastore {
+                return new IdaiFieldFeatureDocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
+            },
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
+        },
+        { provide: IdaiFieldFeatureDocumentReadDatastore, useExisting: IdaiFieldFeatureDocumentDatastore }, // read-only version of it
     ]
 })
 

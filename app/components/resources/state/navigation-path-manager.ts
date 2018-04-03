@@ -4,7 +4,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ResourcesState} from './resources-state';
 import {NavigationPath} from './navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
-import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
+import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
 import {differentFrom, takeUntil, takeWhile} from 'tsfun';
 import {

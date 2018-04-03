@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
-import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
+import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/field/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../state/view-facade';
 import {unique, subtract} from 'tsfun';
 import {TypeUtility} from '../../../../core/model/type-utility';

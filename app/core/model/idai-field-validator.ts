@@ -1,7 +1,7 @@
 import {ProjectConfiguration} from 'idai-components-2/core'
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/field';
 import {M} from '../../m';
-import {IdaiFieldDocumentDatastore} from '../datastore/idai-field-document-datastore';
+import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
 import {Validator} from './validator';
 import {ModelUtil} from './model-util';
 import {Validations} from './validations';

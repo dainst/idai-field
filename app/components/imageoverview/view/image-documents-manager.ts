@@ -3,7 +3,7 @@ import {Query} from 'idai-components-2/core';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
 import {ViewFacade} from '../../resources/state/view-facade';
 import {ImagesState} from './images-state';
-import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/idai-field-image-document-read-datastore';
+import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/field/idai-field-image-document-read-datastore';
 
 
 @Injectable()

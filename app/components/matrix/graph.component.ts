@@ -33,9 +33,6 @@ export class GraphComponent implements OnInit, OnChanges {
     private static hoverColor: string = '#6e95de';
     private static defaultColor: string = '#000000';
 
-    private nodesShown: boolean = false;
-
-
     constructor(private dotBuilder: DotBuilder,
                 private renderer: Renderer2) {}
 
@@ -64,7 +61,6 @@ export class GraphComponent implements OnInit, OnChanges {
     private showGraph() {
 
         const svg: string = this.createGraph();
-        this.nodesShown = svg.includes('node');
 
         const svgGraph = new DOMParser().parseFromString(svg, 'image/svg+xml')
             .getElementsByTagName('svg')[0];

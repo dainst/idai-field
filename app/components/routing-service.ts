@@ -5,9 +5,9 @@ import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration, RelationDefinition} from 'idai-components-2/core';
-import {ImageTypeUtility} from '../common/image-type-utility';
 import {ViewFacade} from './resources/state/view-facade';
 import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
+import {TypeUtility} from '../core/model/type-utility';
 
 
 @Injectable()
@@ -28,7 +28,7 @@ export class RoutingService {
     constructor(private router: Router,
                 private viewFacade: ViewFacade,
                 private location: Location,
-                private imageTypeUtility: ImageTypeUtility,
+                private typeUtility: TypeUtility,
                 private projectConfiguration: ProjectConfiguration,
                 private datastore: DocumentReadDatastore
     ) {
@@ -61,7 +61,7 @@ export class RoutingService {
 
         if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
 
-        if (this.imageTypeUtility.isImageType(documentToSelect.resource.type)) {
+        if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Image')) {
             this.jumpToImageTypeRelationTarget(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
             this.jumpToResourceTypeRelationTarget(
@@ -72,7 +72,7 @@ export class RoutingService {
 
     public async jumpToConflictResolver(document: Document) {
 
-        if (this.imageTypeUtility.isImageType(document.resource.type)) {
+        if (this.typeUtility.isSubtype(document.resource.type, 'Image')) {
             return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
         } else {
             const mainTypeName = await this.getMainTypeNameForDocument(document);

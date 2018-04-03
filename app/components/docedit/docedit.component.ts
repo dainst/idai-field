@@ -5,7 +5,6 @@ import {Messages} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
-import {ImageTypeUtility} from '../../common/image-type-utility';
 import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
@@ -14,7 +13,7 @@ import {EditSaveDialogComponent} from './edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
 import {DatastoreErrors} from 'idai-components-2/core';
-import {Observer} from 'rxjs/Observer';
+import {TypeUtility} from '../../core/model/type-utility';
 
 
 @Component({
@@ -44,7 +43,7 @@ export class DoceditComponent {
         private documentHolder: DocumentHolder,
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
-        private imageTypeUtility: ImageTypeUtility,
+        private typeUtility: TypeUtility,
         private activeTabService: DoceditActiveTabService,
         private projectConfiguration: ProjectConfiguration) {
     }
@@ -64,7 +63,7 @@ export class DoceditComponent {
         this.documentHolder.setClonedDocument(document);
 
         this.showDoceditImagesTab = (!
-            (this.imageTypeUtility.getProjectImageTypes())[this.documentHolder.getClonedDocument().resource.type]
+            (this.typeUtility.getSubtypes('Image'))[this.documentHolder.getClonedDocument().resource.type]
         );
 
         this.getFieldDefinitionLabel = (fieldName: string) =>

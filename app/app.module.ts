@@ -24,7 +24,6 @@ import {IdaiFieldAppConfigurator} from 'idai-components-2/field';
 import {SettingsService} from './core/settings/settings-service';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
-import {ImageTypeUtility} from './common/image-type-utility';
 import {PouchDbFsImagestore} from './core/imagestore/pouch-db-fs-imagestore';
 import {AppState} from './core/settings/app-state';
 import {ProjectsComponent} from './components/navbar/projects.component';
@@ -41,6 +40,7 @@ import {Validator} from './core/model/validator';
 import {MatrixModule} from './components/matrix/matrix.module';
 import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
 import {TaskbarConflictsComponent} from './components/navbar/taskbar-conflicts.component';
+import {TypeUtility} from './core/model/type-utility';
 
 
 const remote = require('electron').remote;
@@ -101,7 +101,7 @@ let pconf: any = undefined;
             },
             deps: [PouchdbManager, Converter, BlobMaker]
         },
-        ImageTypeUtility,
+        TypeUtility,
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         BlobMaker,
@@ -128,8 +128,7 @@ let pconf: any = undefined;
             deps: [ProjectConfiguration, DocumentDatastore]
         },
         { provide: MD, useClass: M},
-        DoceditActiveTabService,
-        ImageTypeUtility
+        DoceditActiveTabService
     ],
     bootstrap: [ AppComponent ]
 })

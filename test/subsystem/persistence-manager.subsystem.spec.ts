@@ -5,9 +5,9 @@ import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/idai-field-document-datastore';
 import {IdaiFieldTypeConverter} from '../../app/core/datastore/idai-field-type-converter';
 import {PersistenceManager} from '../../app/core/persist/persistence-manager';
-import {ImageTypeUtility} from '../../app/common/image-type-utility';
 import {Static} from '../unit/static';
 import {DAOsSpecHelper} from './daos-spec-helper';
+import {TypeUtility} from '../../app/core/model/type-utility';
 
 /**
  * This is a subsystem test.
@@ -67,7 +67,7 @@ export function main() {
                 const result = DAOsSpecHelper.createPouchdbDatastore('testdb');
                 datastore = new IdaiFieldDocumentDatastore(
                     result.datastore, result.indexFacade, result.documentCache,
-                    new IdaiFieldTypeConverter(new ImageTypeUtility(projectConfiguration)));
+                    new IdaiFieldTypeConverter(new TypeUtility(projectConfiguration)));
 
                 result.appState.setCurrentUser('anonymous');
                 persistenceManager = new PersistenceManager(datastore, projectConfiguration);

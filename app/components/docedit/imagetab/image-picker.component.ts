@@ -4,10 +4,10 @@ import {Messages} from 'idai-components-2/core';
 import {Query} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
-import {ImageTypeUtility} from '../../../common/image-type-utility';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {M} from '../../../m';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/idai-field-image-document-read-datastore';
+import {TypeUtility} from '../../../core/model/type-utility';
 
 
 @Component({
@@ -38,7 +38,7 @@ export class ImagePickerComponent implements OnInit {
         private messages: Messages,
         private datastore: IdaiFieldImageDocumentReadDatastore,
         private el: ElementRef,
-        private imageTypeUtility: ImageTypeUtility
+        private typeUtility: TypeUtility
     ) {}
 
 
@@ -93,7 +93,7 @@ export class ImagePickerComponent implements OnInit {
         this.query = query;
         if (!this.query) this.query = {};
 
-        this.query.types = this.imageTypeUtility.getImageTypeNames();
+        this.query.types = this.typeUtility.getImageTypeNames();
         this.query.constraints = {
             'depicts:contain': { value: this.document.resource.id, type: 'subtract' }
         };

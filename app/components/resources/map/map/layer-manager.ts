@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {ImageTypeUtility} from '../../../../common/image-type-utility';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../state/view-facade';
 import {unique, subtract} from 'tsfun';
+import {TypeUtility} from '../../../../core/model/type-utility';
 
 
 export interface LayersInitializationResult {
@@ -30,7 +30,7 @@ export class LayerManager {
 
     constructor(
         private datastore: IdaiFieldImageDocumentReadDatastore,
-        private imageTypeUtility: ImageTypeUtility,
+        private typeUtility: TypeUtility,
         private viewFacade: ViewFacade) {}
 
 
@@ -92,7 +92,7 @@ export class LayerManager {
 
         return (await this.datastore.find({
                 q: '',
-                types: this.imageTypeUtility.getImageTypeNames(),
+                types: this.typeUtility.getImageTypeNames(),
                 constraints: { 'georeference:exist': 'KNOWN' }
             })).documents;
     }

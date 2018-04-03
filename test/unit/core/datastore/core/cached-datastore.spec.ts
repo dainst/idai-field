@@ -19,17 +19,17 @@ describe('CachedDatastore', () => {
         mockdb: any
     ) {
 
-        const mockImageTypeUtility = jasmine.createSpyObj('mockImageTypeUtility',
-            ['isImageType', 'validate', 'getNonImageTypeNames']);
-        mockImageTypeUtility.isImageType.and.returnValue(false);
-        mockImageTypeUtility.getNonImageTypeNames.and.returnValue(['Find']);
+        const mockTypeUtility = jasmine.createSpyObj('mockTypeUtility',
+            ['isSubtype', 'validate', 'getNonImageTypeNames']);
+        mockTypeUtility.isSubtype.and.returnValue(false);
+        mockTypeUtility.getNonImageTypeNames.and.returnValue(['Find']);
 
         const documentCache = new DocumentCache<IdaiFieldDocument>();
         const docDatastore = new IdaiFieldDocumentDatastore(
             mockdb,
             mockIndexFacade,
             documentCache,
-            new IdaiFieldTypeConverter(mockImageTypeUtility));
+            new IdaiFieldTypeConverter(mockTypeUtility));
         docDatastore.suppressWait = true;
         return docDatastore;
     }

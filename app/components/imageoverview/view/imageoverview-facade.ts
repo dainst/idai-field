@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2/core';
 import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
-import {ImageTypeUtility} from '../../../common/image-type-utility';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
+import {TypeUtility} from '../../../core/model/type-utility';
 
 
 @Injectable()
@@ -19,7 +19,7 @@ export class ImageOverviewFacade {
     constructor(
         private imageDocumentsManager: ImageDocumentsManager,
         private imagesState: ImagesState,
-        private imageTypeUtility: ImageTypeUtility
+        private typeUtility: TypeUtility
     ) {}
 
 
@@ -145,7 +145,7 @@ export class ImageOverviewFacade {
 
         return {
             q: '',
-            types: this.imageTypeUtility.getImageTypeNames()
+            types: this.typeUtility.getImageTypeNames()
         };
     }
 

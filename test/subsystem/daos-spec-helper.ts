@@ -3,7 +3,6 @@ import {IdaiFieldImageDocumentDatastore} from "../../app/core/datastore/idai-fie
 import {IdaiFieldDocumentDatastore} from "../../app/core/datastore/idai-field-document-datastore";
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
 import {IdaiFieldTypeConverter} from "../../app/core/datastore/idai-field-type-converter";
-import {ImageTypeUtility} from '../../app/common/image-type-utility';
 import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
 import {IndexFacade} from '../../app/core/datastore/index/index-facade';
 import {AppState} from '../../app/core/settings/app-state';
@@ -13,6 +12,7 @@ import {FulltextIndexer} from '../../app/core/datastore/index/fulltext-indexer';
 import {IdGenerator} from '../../app/core/datastore/core/id-generator';
 import {DocumentCache} from '../../app/core/datastore/core/document-cache';
 import {ConstraintIndexer} from '../../app/core/datastore/index/constraint-indexer';
+import {TypeUtility} from '../../app/core/model/type-utility';
 
 /**
  * @author Daniel de Oliveira
@@ -42,7 +42,7 @@ export class DAOsSpecHelper {
 
         const {datastore, documentCache, indexFacade} = DAOsSpecHelper.createPouchdbDatastore('testdb');
         const converter = new IdaiFieldTypeConverter(
-            new ImageTypeUtility(this.projectConfiguration));
+            new TypeUtility(this.projectConfiguration));
 
         this.idaiFieldImageDocumentDatastore = new IdaiFieldImageDocumentDatastore(
             datastore, indexFacade, documentCache as any, converter);

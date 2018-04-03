@@ -6,10 +6,10 @@ import {ViewFacade} from '../../app/components/resources/state/view-facade';
 import {ResourcesState} from '../../app/components/resources/state/resources-state';
 import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/idai-field-document-datastore';
 import {IdaiFieldTypeConverter} from '../../app/core/datastore/idai-field-type-converter';
-import {ImageTypeUtility} from '../../app/common/image-type-utility';
 import {OperationViews} from '../../app/components/resources/state/operation-views';
 import {Static} from '../unit/static';
 import {DAOsSpecHelper} from './daos-spec-helper';
+import {TypeUtility} from '../../app/core/model/type-utility';
 
 /**
  * This is a subsystem test.
@@ -64,7 +64,7 @@ export function main() {
             const {datastore, documentCache, indexFacade} = DAOsSpecHelper.createPouchdbDatastore('testdb');
             idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
                 datastore, indexFacade, documentCache,
-                new IdaiFieldTypeConverter(new ImageTypeUtility(new ProjectConfiguration(pc))));
+                new IdaiFieldTypeConverter(new TypeUtility(new ProjectConfiguration(pc))));
 
             const projectDocument = Static.doc('testdb','testdb','Project','testdb');
             trenchDocument1 = Static.idfDoc('trench1','trench1','Trench','t1');

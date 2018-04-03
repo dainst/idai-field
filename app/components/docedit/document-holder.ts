@@ -9,10 +9,10 @@ import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {SettingsService} from '../../core/settings/settings-service';
-import {ImageTypeUtility} from '../../common/image-type-utility';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {flow, includedIn, isNot} from 'tsfun';
 import {Validations} from '../../core/model/validations';
+import {TypeUtility} from '../../core/model/type-utility';
 
 
 @Injectable()
@@ -41,7 +41,7 @@ export class DocumentHolder {
         private persistenceManager: PersistenceManager,
         private validator: Validator,
         private imagestore: Imagestore,
-        private imageTypeUtility: ImageTypeUtility,
+        private typeUtility: TypeUtility,
         private settingsService: SettingsService,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private datastore: DocumentDatastore) {
@@ -150,7 +150,7 @@ export class DocumentHolder {
 
     private async removeImageWithImageStore(): Promise<any> {
 
-        if (!this.imageTypeUtility.isImageType(this.clonedDocument.resource.type)) return undefined;
+        if (!this.typeUtility.isSubtype(this.clonedDocument.resource.type, 'Image')) return undefined;
 
         if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         try {

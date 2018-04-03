@@ -8,6 +8,7 @@ import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore'
 import {AppState} from '../../app/core/settings/app-state';
 import {IndexFacade} from '../../app/core/datastore/index/index-facade';
 import {IdGenerator} from '../../app/core/datastore/core/id-generator';
+import {IdaiFieldFeatureDocument} from '../../app/core/model/idai-field-feature-document';
 
 
 /**
@@ -18,6 +19,7 @@ export class Static {
 
     public static idfDoc = (sd, identifier?, type?, id?) => Static.doc(sd, identifier, type, id) as IdaiFieldDocument;
 
+    public static idffDoc = (sd, identifier?, type?, id?) => Static.doc(sd, identifier, type, id) as IdaiFieldFeatureDocument;
 
     public static doc(sd, identifier?, type?, id?): Document {
 

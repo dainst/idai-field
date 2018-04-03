@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-document';
 
 
 @Injectable()
@@ -9,14 +9,14 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
  */
 export class DotBuilder {
 
-    private documents: Array<IdaiFieldDocument>;
+    private documents: Array<IdaiFieldFeatureDocument>;
     private processedIsContemporaryWithTargetIds: string[];
 
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
-    public build(documents: Array<IdaiFieldDocument>): string {
+    public build(documents: Array<IdaiFieldFeatureDocument>): string {
 
         this.documents = documents;
         this.processedIsContemporaryWithTargetIds = [];
@@ -38,7 +38,7 @@ export class DotBuilder {
     }
 
 
-    private createNodeDefinition(document: IdaiFieldDocument) {
+    private createNodeDefinition(document: IdaiFieldFeatureDocument) {
 
         return document.resource.identifier
             + ' [id="node-' + document.resource.id + '", fillcolor="'
@@ -79,7 +79,7 @@ export class DotBuilder {
     }
 
 
-    private createIsAfterEdgesDefinition(document: IdaiFieldDocument): string|undefined {
+    private createIsAfterEdgesDefinition(document: IdaiFieldFeatureDocument): string|undefined {
 
         const targetIds: string[]|undefined = document.resource.relations['isAfter'];
         if (!targetIds || targetIds.length == 0) return;
@@ -89,9 +89,9 @@ export class DotBuilder {
     }
 
 
-    private createIsContemporaryWithEdgesDefinition(document: IdaiFieldDocument): string|undefined {
+    private createIsContemporaryWithEdgesDefinition(document: IdaiFieldFeatureDocument): string|undefined {
 
-        let targetIds: string[]|undefined = document.resource.relations['isContemporaryWith'];
+        let targetIds: string[]|undefined = document.resource.relations.isContemporaryWith;
         if (!targetIds) return;
 
         targetIds = targetIds
@@ -116,7 +116,7 @@ export class DotBuilder {
     }
 
 
-    private createEdgesDefinition(document: IdaiFieldDocument, targetIds: string[]): string {
+    private createEdgesDefinition(document: IdaiFieldFeatureDocument, targetIds: string[]): string {
 
         const targetIdentifiers: string = this.getRelationTargetIdentifiers(targetIds);
 
@@ -132,12 +132,12 @@ export class DotBuilder {
     }
 
 
-    private getGraphDocuments(): Array<IdaiFieldDocument> {
+    private getGraphDocuments(): Array<IdaiFieldFeatureDocument> {
 
         return this.documents.filter(document => {
-            return (document.resource.relations['isAfter']
-                || document.resource.relations['isBefore']
-                || document.resource.relations['isContemporaryWith']);
+            return (document.resource.relations.isAfter
+                || document.resource.relations.isBefore
+                || document.resource.relations.isContemporaryWith);
         })
     }
 
@@ -152,27 +152,27 @@ export class DotBuilder {
 
     private getIdentifier(id: string): string {
 
-        const document: IdaiFieldDocument|undefined = this.getDocument(id);
+        const document: IdaiFieldFeatureDocument|undefined = this.getDocument(id);
 
         return document ? document.resource.identifier : '';
     }
 
 
-    private getDocument(id: string): IdaiFieldDocument|undefined {
+    private getDocument(id: string): IdaiFieldFeatureDocument|undefined {
 
         return this.documents.find(document => document.resource.id == id);
     }
 
 
-    private getRootDocuments(): Array<IdaiFieldDocument> {
+    private getRootDocuments(): Array<IdaiFieldFeatureDocument> {
 
         return this.documents.filter(document => this.isRootDocument(document));
     }
 
 
-    private isRootDocument(document: IdaiFieldDocument, processedDocuments: string[] = []): boolean {
+    private isRootDocument(document: IdaiFieldFeatureDocument, processedDocuments: string[] = []): boolean {
 
-        if (!document.resource.relations['isAfter'] || document.resource.relations['isBefore']) return false;
+        if (!document.resource.relations.isAfter || document.resource.relations.isBefore) return false;
 
         processedDocuments.push(document.resource.id as string);
 
@@ -180,14 +180,14 @@ export class DotBuilder {
     }
 
 
-    private isContemporaryWithNonRootDocument(document: IdaiFieldDocument, processedDocuments: string[]) {
+    private isContemporaryWithNonRootDocument(document: IdaiFieldFeatureDocument, processedDocuments: string[]) {
 
-        let targetIds: string[]|undefined = document.resource.relations['isContemporaryWith'];
+        let targetIds: string[]|undefined = document.resource.relations.isContemporaryWith;
 
         if (!targetIds) return false;
 
         for (let targetId of targetIds.filter(targetId => !processedDocuments.includes(targetId))) {
-            const targetDocument: IdaiFieldDocument | undefined = this.getDocument(targetId);
+            const targetDocument: IdaiFieldFeatureDocument | undefined = this.getDocument(targetId);
             if (targetDocument && !this.isRootDocument(targetDocument, processedDocuments)) {
                 return true;
             }

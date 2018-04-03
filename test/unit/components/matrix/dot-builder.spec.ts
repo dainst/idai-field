@@ -10,7 +10,7 @@ import {Static} from '../../static';
 
 describe('DotBuilder', () => {
 
-    let dotBuilder: DotBuilder;;
+    let dotBuilder: DotBuilder;
 
     beforeAll(() => {
 
@@ -25,8 +25,8 @@ describe('DotBuilder', () => {
 
     it('build dot string for simple graph', () => {
 
-        const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature1 = Static.idffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.idffDoc('Feature 2', 'feature2', 'Feature', 'f2');
 
         feature1.resource.relations['isAfter'] = ['f2'];
         feature2.resource.relations['isBefore'] = ['f1'];
@@ -45,9 +45,9 @@ describe('DotBuilder', () => {
 
     it('build dot string for graph with multiple children', () => {
 
-        const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3: IdaiFieldDocument = Static.idfDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature1 = Static.idffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.idffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = Static.idffDoc('Feature 3', 'feature3', 'Feature', 'f3');
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
 
@@ -69,10 +69,10 @@ describe('DotBuilder', () => {
 
     it('build dot string for diamond formed graph', () => {
 
-        const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3: IdaiFieldDocument = Static.idfDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4: IdaiFieldDocument = Static.idfDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature1 = Static.idffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.idffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = Static.idffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = Static.idffDoc('Feature 4', 'feature4', 'Feature', 'f4');
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
         feature2.resource.relations['isAfter'] = ['f4'];
@@ -102,11 +102,11 @@ describe('DotBuilder', () => {
 
     it('build dot string for graph with isContemporaryWith relations', () => {
 
-        const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3: IdaiFieldDocument = Static.idfDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4: IdaiFieldDocument = Static.idfDoc('Feature 4', 'feature4', 'Feature', 'f4');
-        const feature5: IdaiFieldDocument = Static.idfDoc('Feature 5', 'feature5', 'Feature', 'f5');
+        const feature1 = Static.idffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.idffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = Static.idffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = Static.idffDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature5 = Static.idffDoc('Feature 5', 'feature5', 'Feature', 'f5');
 
         feature1.resource.relations['isAfter'] = ['f2'];
         feature2.resource.relations['isAfter'] = ['f5'];
@@ -145,20 +145,20 @@ describe('DotBuilder', () => {
 
     it('build dot string for complicated graph', () => {
 
-        const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3: IdaiFieldDocument = Static.idfDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4: IdaiFieldDocument = Static.idfDoc('Feature 4', 'feature4', 'Feature', 'f4');
-        const feature5: IdaiFieldDocument = Static.idfDoc('Feature 5', 'feature5', 'Feature', 'f5');
-        const feature6: IdaiFieldDocument = Static.idfDoc('Feature 6', 'feature6', 'Feature', 'f6');
-        const feature7: IdaiFieldDocument = Static.idfDoc('Feature 7', 'feature7', 'Feature', 'f7');
-        const feature8: IdaiFieldDocument = Static.idfDoc('Feature 8', 'feature8', 'Feature', 'f8');
-        const feature9: IdaiFieldDocument = Static.idfDoc('Feature 9', 'feature9', 'Feature', 'f9');
-        const feature10: IdaiFieldDocument = Static.idfDoc('Feature 10', 'feature10', 'Feature', 'f10');
-        const feature11: IdaiFieldDocument = Static.idfDoc('Feature 11', 'feature11', 'Feature', 'f11');
-        const feature12: IdaiFieldDocument = Static.idfDoc('Feature 12', 'feature12', 'Feature', 'f12');
-        const feature13: IdaiFieldDocument = Static.idfDoc('Feature 13', 'feature13', 'Feature', 'f13');
-        const feature14: IdaiFieldDocument = Static.idfDoc('Feature 14', 'feature14', 'Feature', 'f14');
+        const feature1 = Static.idffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.idffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = Static.idffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = Static.idffDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature5 = Static.idffDoc('Feature 5', 'feature5', 'Feature', 'f5');
+        const feature6 = Static.idffDoc('Feature 6', 'feature6', 'Feature', 'f6');
+        const feature7 = Static.idffDoc('Feature 7', 'feature7', 'Feature', 'f7');
+        const feature8 = Static.idffDoc('Feature 8', 'feature8', 'Feature', 'f8');
+        const feature9 = Static.idffDoc('Feature 9', 'feature9', 'Feature', 'f9');
+        const feature10 = Static.idffDoc('Feature 10', 'feature10', 'Feature', 'f10');
+        const feature11 = Static.idffDoc('Feature 11', 'feature11', 'Feature', 'f11');
+        const feature12 = Static.idffDoc('Feature 12', 'feature12', 'Feature', 'f12');
+        const feature13 = Static.idffDoc('Feature 13', 'feature13', 'Feature', 'f13');
+        const feature14 = Static.idffDoc('Feature 14', 'feature14', 'Feature', 'f14');
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3', 'f4', 'f5', 'f6'];
         feature2.resource.relations['isAfter'] = ['f7', 'f8'];
@@ -220,10 +220,10 @@ describe('DotBuilder', () => {
 
     it('do not make a node a root node if it has a isContemporaryWith relation to a non root node', () => {
 
-        const feature1: IdaiFieldDocument = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'f1');
-        const feature2: IdaiFieldDocument = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'f2');
-        const feature3: IdaiFieldDocument = Static.idfDoc('Feature 3', 'feature3', 'Feature', 'f3');
-        const feature4: IdaiFieldDocument = Static.idfDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature1 = Static.idffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.idffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = Static.idffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = Static.idffDoc('Feature 4', 'feature4', 'Feature', 'f4');
 
         feature1.resource.relations['isAfter'] = ['f2'];
         feature3.resource.relations['isAfter'] = ['f4'];

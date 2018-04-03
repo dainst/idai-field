@@ -4,8 +4,8 @@ import {
 } from '@angular/core';
 import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
-import {IdaiFieldDocument} from 'idai-components-2/field';
 import {DotBuilder} from './dot-builder';
+import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-document';
 
 
 type ElementType = 'node'|'edge'|undefined;
@@ -22,7 +22,7 @@ type EdgeType = 'is-after'|'is-contemporary-with'|undefined;
  */
 export class GraphComponent implements OnInit, OnChanges {
 
-    @Input() documents: Array<IdaiFieldDocument>;
+    @Input() documents: Array<IdaiFieldFeatureDocument>;
     @Output() onSelect: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('graphContainer') graphContainer: ElementRef;

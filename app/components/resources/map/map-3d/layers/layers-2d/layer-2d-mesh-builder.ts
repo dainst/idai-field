@@ -22,20 +22,26 @@ export class Layer2DMeshBuilder {
 
     public async build(imageResourceId: string): Promise<THREE.Mesh> {
 
-        const georeference: IdaiFieldGeoreference = await this.getGeoreference(imageResourceId);
-        const position: THREE.Vector3 = Layer2DMeshBuilder.getPosition(georeference);
+        const {georeference, height} = await this.getGeoreference(imageResourceId);
+        const position: THREE.Vector3 = Layer2DMeshBuilder.getPosition(georeference, height);
+        const offset: THREE.Vector3 = Layer2DMeshBuilder.getGeometryOffset(georeference);
 
-        const geometry: THREE.Geometry = await Layer2DMeshBuilder.createGeometry(georeference, position);
+        const geometry: THREE.Geometry
+            = await Layer2DMeshBuilder.createGeometry(georeference, offset);
         const material: THREE.Material = this.createMaterial(imageResourceId);
 
         return Layer2DMeshBuilder.createMesh(geometry, material, position);
     }
 
 
-    private async getGeoreference(imageResourceId: string): Promise<IdaiFieldGeoreference> {
+    private async getGeoreference(imageResourceId: string)
+    : Promise<{ georeference: IdaiFieldGeoreference, height: number}> {
 
         const imageDocument: IdaiFieldImageDocument = await this.datastore.get(imageResourceId);
-        return imageDocument.resource.georeference as IdaiFieldGeoreference;
+        return {
+            georeference: imageDocument.resource.georeference as IdaiFieldGeoreference,
+            height: imageDocument.resource.georeferenceHeight || 0
+        };
     }
 
 
@@ -56,7 +62,13 @@ export class Layer2DMeshBuilder {
     }
 
 
-    private static getPosition(georeference: IdaiFieldGeoreference): THREE.Vector3 {
+    private static getPosition(georeference: IdaiFieldGeoreference, height: number): THREE.Vector3 {
+
+        return Layer2DMeshBuilder.getVector(georeference.bottomLeftCoordinates, height);
+    }
+
+
+    private static getGeometryOffset(georeference: IdaiFieldGeoreference): THREE.Vector3 {
 
         return Layer2DMeshBuilder.getVector(georeference.bottomLeftCoordinates);
     }
@@ -134,12 +146,12 @@ export class Layer2DMeshBuilder {
     }
 
 
-    private static getVector(coordinates: number[]): THREE.Vector3 {
+    private static getVector(coordinates: number[], height: number = 0): THREE.Vector3 {
 
         return getPointVector([
             coordinates[1],
             coordinates[0],
-            0
+            height
         ]);
     }
 

@@ -27,4 +27,10 @@ export class Layer2DMeshManager extends LayerMeshManager {
 
         return this.meshes[imageResourceId];
     }
+
+
+    public reset() {
+
+        this.meshes = {};
+    }
 }

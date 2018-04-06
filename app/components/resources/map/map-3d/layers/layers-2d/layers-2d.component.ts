@@ -21,6 +21,8 @@ export class Layers2DComponent extends LayersComponent implements OnChanges {
                 layerMeshManager: Layer2DMeshManager,
                 meshLoadingProgress: MeshLoadingProgress) {
 
+        layerMeshManager.reset();
+
         super(map3DComponent, layerManager, layerMeshManager, meshLoadingProgress);
     }
 }

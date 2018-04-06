@@ -5106,6 +5106,21 @@
                         "Übersichtsfoto"
                     ],
                     "visible": true
+                },
+                {
+                    "description": "Höhenwert bei der Darstellung auf der 3D-Karte",
+                    "descriptions": {
+                        "de": "Höhenwert bei der Darstellung auf der 3D-Karte"
+                    },
+                    "editable": true,
+                    "inputType": "float",
+                    "label": "Höhe (Georeferenzierung)",
+                    "labels": {
+                        "de": "Höhe (Georeferenzierung)",
+                        "en": "Height (Georeference)"
+                    },
+                    "name": "georeferenceHeight",
+                    "visible": false
                 }
             ],
             "label": "Abbildung",

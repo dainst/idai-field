@@ -27,7 +27,7 @@ export class Map3DCameraManager extends CameraManager {
     private orthographicCamera: THREE.OrthographicCamera;
 
     private pivotPoint: THREE.Vector3|undefined;
-    private xAxisRotationAngle: number;
+    private cameraAngle: number;
 
     private perspectiveYLevel: number = 5;
     private orthographicYLevel: number = 5;
@@ -235,7 +235,7 @@ export class Map3DCameraManager extends CameraManager {
         this.perspectiveCamera.position.set(0, this.perspectiveYLevel, 0);
         Map3DCameraManager.applyDefaultSettings(this.perspectiveCamera);
 
-        this.xAxisRotationAngle = this.perspectiveCamera.rotation.x;
+        this.cameraAngle = this.perspectiveCamera.rotation.x;
         this.setDefaultAngle(false);
     }
 
@@ -300,62 +300,61 @@ export class Map3DCameraManager extends CameraManager {
             animate = false;
         }
 
-        this.adjustCameraAngle(defaultAngle - this.xAxisRotationAngle, animate);
+        this.adjustCameraAngle(defaultAngle - this.cameraAngle, animate);
     }
 
 
     private setMinAngle(animate: boolean) {
 
-        this.adjustCameraAngle(minAngle - this.xAxisRotationAngle, animate);
+        this.adjustCameraAngle(minAngle - this.cameraAngle, animate);
     }
 
 
     private adjustCameraAngle(angleChange: number, animate: boolean) {
 
         const pivotPoint: THREE.Vector3 = this.getPivotPoint();
-        const xAxis: THREE.Vector3 = new THREE.Vector3(1, 0, 0);
-        const zAxis: THREE.Vector3 = new THREE.Vector3(0, 0, 1);
-
         const clonedCamera: THREE.PerspectiveCamera = this.perspectiveCamera.clone();
 
-        clonedCamera.position.sub(pivotPoint);
-
-        switch(this.direction) {
-            case CAMERA_DIRECTION_NORTH:
-                clonedCamera.position.applyAxisAngle(xAxis, angleChange);
-                break;
-            case CAMERA_DIRECTION_EAST:
-                clonedCamera.position.applyAxisAngle(zAxis, angleChange);
-                break;
-            case CAMERA_DIRECTION_WEST:
-                clonedCamera.position.applyAxisAngle(zAxis, -angleChange);
-                break;
-            case CAMERA_DIRECTION_SOUTH:
-                clonedCamera.position.applyAxisAngle(xAxis, -angleChange);
-                break;
-        }
-
-        clonedCamera.position.add(pivotPoint);
+        this.moveAroundPivotPoint(clonedCamera, pivotPoint, angleChange);
         clonedCamera.lookAt(pivotPoint);
 
         if (animate) {
             this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
         } else {
-            this.perspectiveCamera.position.set(
-                clonedCamera.position.x,
-                clonedCamera.position.y,
-                clonedCamera.position.z
-            );
-            this.perspectiveCamera.quaternion.set(
-                clonedCamera.quaternion.x,
-                clonedCamera.quaternion.y,
-                clonedCamera.quaternion.z,
-                clonedCamera.quaternion.w
-            );
-            this.perspectiveCamera.updateProjectionMatrix();
+            Map3DCameraManager.updateFromClonedCamera(this.perspectiveCamera, clonedCamera);
         }
 
-        this.xAxisRotationAngle += angleChange;
+        this.cameraAngle += angleChange;
+    }
+
+
+    private moveAroundPivotPoint(camera: THREE.Camera, pivotPoint: THREE.Vector3, angleChange: number) {
+
+        camera.position.sub(pivotPoint);
+        this.applyAxisAngleToCameraPosition(camera, angleChange);
+        camera.position.add(pivotPoint);
+    }
+
+
+    private applyAxisAngleToCameraPosition(camera: THREE.Camera, angleChange: number) {
+
+        const xAxis: THREE.Vector3 = new THREE.Vector3(1, 0, 0);
+        const zAxis: THREE.Vector3 = new THREE.Vector3(0, 0, 1);
+
+        switch(this.direction) {
+            case CAMERA_DIRECTION_NORTH:
+                camera.position.applyAxisAngle(xAxis, angleChange);
+                break;
+            case CAMERA_DIRECTION_EAST:
+                camera.position.applyAxisAngle(zAxis, angleChange);
+                break;
+            case CAMERA_DIRECTION_WEST:
+                camera.position.applyAxisAngle(zAxis, -angleChange);
+                break;
+            case CAMERA_DIRECTION_SOUTH:
+                camera.position.applyAxisAngle(xAxis, -angleChange);
+                break;
+        }
     }
 
 
@@ -430,13 +429,13 @@ export class Map3DCameraManager extends CameraManager {
     private getAllowedAngleChange(delta: number): number {
 
         if (delta < 0) {
-            return this.xAxisRotationAngle + delta >= minAngle ?
+            return this.cameraAngle + delta >= minAngle ?
                 delta :
-                minAngle - this.xAxisRotationAngle;
+                minAngle - this.cameraAngle;
         } else {
-            return this.xAxisRotationAngle + delta <= maxAngle ?
+            return this.cameraAngle + delta <= maxAngle ?
                 delta :
-                maxAngle - this.xAxisRotationAngle;
+                maxAngle - this.cameraAngle;
         }
     }
 
@@ -467,6 +466,26 @@ export class Map3DCameraManager extends CameraManager {
 
         camera.lookAt(new THREE.Vector3(0, 0, 0));
         camera.layers.enable(DepthMap.NO_DEPTH_MAPPING_LAYER);
+    }
+
+
+    private static updateFromClonedCamera(camera: THREE.PerspectiveCamera,
+                                          clonedCamera: THREE.PerspectiveCamera) {
+
+        camera.position.set(
+            clonedCamera.position.x,
+            clonedCamera.position.y,
+            clonedCamera.position.z
+        );
+
+        camera.quaternion.set(
+            clonedCamera.quaternion.x,
+            clonedCamera.quaternion.y,
+            clonedCamera.quaternion.z,
+            clonedCamera.quaternion.w
+        );
+
+        camera.updateProjectionMatrix();
     }
 
 

@@ -12,7 +12,7 @@ const CAMERA_DIRECTION_SOUTH: number = 2;
 const CAMERA_DIRECTION_EAST: number = 3;
 
 const minAngle: number = -Math.PI / 2;
-const maxAngle: number = -Math.PI / 8;
+const maxAngle: number = -Math.PI / 6;
 const defaultAngle: number = -Math.PI / 3;
 
 
@@ -376,7 +376,10 @@ export class Map3DCameraManager extends CameraManager {
     private getGroundPlane(): THREE.Plane {
 
         const groundMesh: THREE.Mesh|undefined = this.getNearestMeshBelowCamera();
-        const yPosition: number = groundMesh ? groundMesh.position.y : this.getCamera().position.y - 3;
+
+        const yPosition: number = groundMesh ?
+            Map3DCameraManager.getMinY(groundMesh) :
+            this.getCamera().position.y - 3;
 
         return new THREE.Plane(new THREE.Vector3(0, -1, 0), yPosition);
     }
@@ -385,7 +388,7 @@ export class Map3DCameraManager extends CameraManager {
     private getNearestMeshBelowCamera(): THREE.Mesh|undefined {
 
         const meshes: Array<THREE.Mesh> = this.sceneManager.getMeshes()
-            .filter(mesh => mesh.geometry.boundingBox.min.y < this.getCamera().position.y)
+            .filter(mesh => Map3DCameraManager.getMinY(mesh) < this.getCamera().position.y)
             .sort((mesh1, mesh2) => {
                 return mesh1.position.distanceTo(this.getCamera().position)
                     - mesh2.position.distanceTo(this.getCamera().position)
@@ -432,6 +435,12 @@ export class Map3DCameraManager extends CameraManager {
         } else {
             return direction == 0 ? 3 : direction - 1;
         }
+    }
+
+
+    private static getMinY(mesh: THREE.Mesh): number {
+
+        return mesh.position.y + mesh.geometry.boundingBox.min.y;
     }
 
 

@@ -104,6 +104,8 @@ export class Map3DCameraManager extends CameraManager {
 
     public changeAngle(delta: number) {
 
+        if (this.mode == 'orthographic') return;
+
         const angleChange: number = this.getAllowedAngleChange(delta);
 
         if (angleChange != 0) this.adjustCameraAngle(angleChange, false);

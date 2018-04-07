@@ -83,6 +83,12 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
+    public resetPivotPoint() {
+
+        this.pivotPoint = undefined;
+    }
+
+
     public drag(deltaX: number, deltaY: number): { xChange: number, zChange: number } {
 
         this.pivotPoint = undefined;

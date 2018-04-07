@@ -46,6 +46,8 @@ export class LayersComponent implements OnChanges {
         } else {
             await this.removeLayerMesh(id);
         }
+
+        this.map3DComponent.getCameraManager().resetPivotPoint();
     }
 
 

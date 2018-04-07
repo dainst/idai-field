@@ -63,5 +63,7 @@ export class MeshGeometriesComponent implements OnChanges {
 
         await this.meshGeometryManager.update(this.documents, this.showLineGeometries,
             this.showPolygonGeometries);
+
+        this.map3DComponent.getCameraManager().resetPivotPoint();
     }
 }

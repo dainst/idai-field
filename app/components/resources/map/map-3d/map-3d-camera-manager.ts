@@ -106,7 +106,7 @@ export class Map3DCameraManager extends CameraManager {
 
         const angleChange: number = this.getAllowedAngleChange(delta);
 
-        if (angleChange != 0) this.adjustCameraTilt(angleChange, false);
+        if (angleChange != 0) this.adjustCameraAngle(angleChange, false);
     }
 
 
@@ -298,17 +298,17 @@ export class Map3DCameraManager extends CameraManager {
             animate = false;
         }
 
-        this.adjustCameraTilt(defaultAngle - this.xAxisRotationAngle, animate);
+        this.adjustCameraAngle(defaultAngle - this.xAxisRotationAngle, animate);
     }
 
 
     private setMinAngle(animate: boolean) {
 
-        this.adjustCameraTilt(minAngle - this.xAxisRotationAngle, animate);
+        this.adjustCameraAngle(minAngle - this.xAxisRotationAngle, animate);
     }
 
 
-    private adjustCameraTilt(angleChange: number, animate: boolean) {
+    private adjustCameraAngle(angleChange: number, animate: boolean) {
 
         const pivotPoint: THREE.Vector3 = this.getPivotPoint();
         const xAxis: THREE.Vector3 = new THREE.Vector3(1, 0, 0);

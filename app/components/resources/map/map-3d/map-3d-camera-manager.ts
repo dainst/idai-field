@@ -196,8 +196,14 @@ export class Map3DCameraManager extends CameraManager {
 
     private zoomPerspectiveCameraToFit(mesh: THREE.Mesh) {
 
-        this.perspectiveCamera.position.set(mesh.position.x, mesh.position.y, mesh.position.z);
-        const distance: number = CameraManager.computeZoomToFitDistance(this.perspectiveCamera, mesh);
+        this.perspectiveCamera.position.set(
+            mesh.position.x,
+            Map3DCameraManager.getMinY(mesh),
+            mesh.position.z
+        );
+
+        const distance: number = CameraManager.computeZoomToFitDistance(this.perspectiveCamera, mesh)
+            + mesh.geometry.boundingBox.getSize().y / 2;
         this.perspectiveCamera.translateZ(distance);
     }
 
@@ -396,8 +402,8 @@ export class Map3DCameraManager extends CameraManager {
         const meshes: Array<THREE.Mesh> = this.sceneManager.getMeshes()
             .filter(mesh => Map3DCameraManager.getMinY(mesh) < this.getCamera().position.y)
             .sort((mesh1, mesh2) => {
-                return mesh1.position.distanceTo(this.getCamera().position)
-                    - mesh2.position.distanceTo(this.getCamera().position)
+                return Map3DCameraManager.getPositionWithMinY(mesh1).distanceTo(this.getCamera().position)
+                    - Map3DCameraManager.getPositionWithMinY(mesh2).distanceTo(this.getCamera().position);
             });
 
         return meshes.length > 0 ? meshes[0] : undefined;
@@ -447,6 +453,12 @@ export class Map3DCameraManager extends CameraManager {
     private static getMinY(mesh: THREE.Mesh): number {
 
         return mesh.position.y + mesh.geometry.boundingBox.min.y;
+    }
+
+
+    private static getPositionWithMinY(mesh: THREE.Mesh): THREE.Vector3 {
+
+        return new THREE.Vector3(mesh.position.x, this.getMinY(mesh), mesh.position.z);
     }
 
 

@@ -11,7 +11,7 @@ const CAMERA_DIRECTION_WEST: number = 1;
 const CAMERA_DIRECTION_SOUTH: number = 2;
 const CAMERA_DIRECTION_EAST: number = 3;
 
-const minAngle: number = -Math.PI / 2;
+const minAngle: number = -1.5607963267948966;
 const maxAngle: number = -Math.PI / 6;
 const defaultAngle: number = -Math.PI / 3;
 
@@ -336,8 +336,7 @@ export class Map3DCameraManager extends CameraManager {
         }
 
         clonedCamera.position.add(pivotPoint);
-
-        clonedCamera.rotateOnAxis(xAxis, angleChange);
+        clonedCamera.lookAt(pivotPoint);
 
         if (animate) {
             this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
@@ -356,7 +355,7 @@ export class Map3DCameraManager extends CameraManager {
             this.perspectiveCamera.updateProjectionMatrix();
         }
 
-        this.xAxisRotationAngle = clonedCamera.rotation.x;
+        this.xAxisRotationAngle += angleChange;
     }
 
 

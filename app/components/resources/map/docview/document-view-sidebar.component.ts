@@ -9,8 +9,8 @@ import {ObjectUtil} from '../../../../util/object-util';
 import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../view/view-facade';
 import {M} from '../../../../m';
-import {UploadService} from '../../../../upload/upload-service';
-import {UploadResult} from '../../../../upload/upload-result';
+import {UploadService} from '../../../upload/upload-service';
+import {UploadResult} from '../../../upload/upload-result';
 
 
 @Component({

@@ -1,7 +1,7 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {Messages} from 'idai-components-2/messages';
-import {UploadResult} from '../../upload/upload-result';
-import {UploadService} from '../../upload/upload-service';
+import {UploadResult} from '../upload/upload-result';
+import {UploadService} from '../upload/upload-service';
 
 
 @Component({

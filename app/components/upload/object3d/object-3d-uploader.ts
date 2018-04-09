@@ -2,14 +2,14 @@ import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
-import {SettingsService} from '../../core/settings/settings-service';
+import {SettingsService} from '../../../core/settings/settings-service';
 import {UploadStatus} from '../upload-status';
-import {PersistenceManager} from "../../core/persist/persistence-manager";
-import {DocumentReadDatastore} from "../../core/datastore/document-read-datastore";
+import {PersistenceManager} from "../../../core/persist/persistence-manager";
+import {DocumentReadDatastore} from "../../../core/datastore/document-read-datastore";
 import {Uploader} from '../uploader';
-import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
+import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
 import {Object3DThumbnailCreatorModalComponent} from './object-3d-thumbnail-creator-modal.component';
-import {Store3D} from '../../core/3d/store-3d';
+import {Store3D} from '../../../core/3d/store-3d';
 
 
 @Injectable()

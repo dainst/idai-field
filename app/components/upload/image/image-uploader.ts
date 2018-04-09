@@ -2,16 +2,16 @@ import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
-import {Imagestore} from '../../core/imagestore/imagestore';
+import {Imagestore} from '../../../core/imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
-import {SettingsService} from '../../core/settings/settings-service';
+import {SettingsService} from '../../../core/settings/settings-service';
 import {UploadStatus} from '../upload-status';
-import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
-import {PersistenceManager} from "../../core/persist/persistence-manager";
-import {DocumentReadDatastore} from "../../core/datastore/document-read-datastore";
+import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
+import {PersistenceManager} from '../../../core/persist/persistence-manager';
+import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {UploadResult} from '../upload-result';
 import {Uploader} from '../uploader';
-import {M} from '../../m';
+import {M} from '../../../m';
 
 
 @Injectable()

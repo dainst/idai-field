@@ -3,8 +3,8 @@ import {Document} from 'idai-components-2/core';
 import {ImageUploader} from './image/image-uploader';
 import {Object3DUploader} from './object3d/object-3d-uploader';
 import {UploadResult} from './upload-result';
-import {ExtensionUtil} from '../util/extension-util';
-import {M} from '../m';
+import {ExtensionUtil} from '../../util/extension-util';
+import {M} from '../../m';
 import {Uploader} from './uploader';
 
 

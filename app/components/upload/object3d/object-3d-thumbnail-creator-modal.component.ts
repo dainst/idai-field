@@ -1,6 +1,6 @@
 import {Component, ElementRef} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
+import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
 
 
 @Component({

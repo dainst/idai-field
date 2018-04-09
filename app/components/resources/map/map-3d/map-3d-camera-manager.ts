@@ -59,14 +59,8 @@ export class Map3DCameraManager extends CameraManager {
 
         if (mode == this.mode || this.isAnimationRunning()) return;
 
-        if (mode == 'perspective') {
-            this.switchFromOrthographicToPerspective();
-        } else {
-            this.switchFromPerspectiveToOrthographic();
-        }
-
+        if (mode == 'orthographic') this.resetOrthographicZoom();
         this.mode = mode;
-        this.pivotPoint = undefined;
     }
 
 
@@ -91,12 +85,12 @@ export class Map3DCameraManager extends CameraManager {
 
     public drag(deltaX: number, deltaY: number): { xChange: number, zChange: number } {
 
-        this.pivotPoint = undefined;
+        this.resetPivotPoint();
 
         const { xChange, zChange } = this.getDragValues(deltaX, deltaY);
 
-        const camera: THREE.Camera = this.getCamera();
-        camera.position.set(camera.position.x + xChange, camera.position.y, camera.position.z + zChange);
+        Map3DCameraManager.translate(this.perspectiveCamera, xChange, zChange);
+        Map3DCameraManager.translate(this.orthographicCamera, xChange, zChange);
 
         return { xChange, zChange };
     }
@@ -117,14 +111,19 @@ export class Map3DCameraManager extends CameraManager {
         if (this.isAnimationRunning()) return;
 
         this.direction = Map3DCameraManager.getNextDirection(this.direction, clockwise);
-        this.rotateSmoothly(clockwise ? Math.PI / 2 : -Math.PI / 2);
+        const rotationInRadians: number = clockwise ? Math.PI / 2 : -Math.PI / 2;
+
+        this.rotatePerspectiveCamera(rotationInRadians, this.mode == 'perspective');
+        this.rotateOrthographicCamera(rotationInRadians, this.mode == 'orthographic');
     }
 
 
-    private rotateSmoothly(radians: number) {
+    private rotatePerspectiveCamera(radians: number, animate: boolean) {
 
+        this.resetPivotPoint();
+
+        const clonedCamera: THREE.PerspectiveCamera = this.perspectiveCamera.clone();
         const pivotPoint: THREE.Vector3 = this.getPivotPoint();
-        const clonedCamera: THREE.PerspectiveCamera|THREE.OrthographicCamera = this.getCamera().clone();
         const yAxis: THREE.Vector3 = new THREE.Vector3(0, 1, 0);
 
         clonedCamera.position.sub(pivotPoint);
@@ -133,13 +132,28 @@ export class Map3DCameraManager extends CameraManager {
 
         clonedCamera.lookAt(pivotPoint);
 
-        this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
+        if (animate) {
+            this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
+        } else {
+            Map3DCameraManager.updateFromClonedCamera(this.perspectiveCamera, clonedCamera);
+        }
+    }
+
+
+    private rotateOrthographicCamera(radians: number, animate: boolean) {
+
+        const clonedCamera: THREE.OrthographicCamera = this.orthographicCamera.clone();
+        clonedCamera.rotateZ(radians);
+
+        if (animate) {
+            this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
+        } else {
+            Map3DCameraManager.updateFromClonedCamera(this.orthographicCamera, clonedCamera);
+        }
     }
 
 
     public zoom(value: number, camera?: THREE.Camera) {
-
-        this.pivotPoint = undefined;
 
         if (this.mode == 'perspective') {
             this.zoomPerspectiveCamera(value, camera as THREE.PerspectiveCamera);
@@ -162,7 +176,7 @@ export class Map3DCameraManager extends CameraManager {
 
     public focusMesh(mesh: THREE.Mesh) {
 
-        this.pivotPoint = undefined;
+        this.resetPivotPoint();
 
         this.zoomPerspectiveCameraToFit(mesh);
         this.zoomOrthographicCameraToFit(mesh);
@@ -173,7 +187,7 @@ export class Map3DCameraManager extends CameraManager {
 
     public focusPoint(point: THREE.Vector3) {
 
-        this.pivotPoint = undefined;
+        this.resetPivotPoint();
 
         Map3DCameraManager.focusPoint(this.perspectiveCamera, point, 3);
         Map3DCameraManager.focusPoint(this.orthographicCamera, point, 20);
@@ -262,29 +276,7 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
-    private switchFromOrthographicToPerspective() {
-
-        this.perspectiveCamera.position.set(
-            this.orthographicCamera.position.x,
-            this.perspectiveYLevel,
-            this.orthographicCamera.position.z
-        );
-
-        this.perspectiveCamera.setRotationFromQuaternion(this.orthographicCamera.quaternion);
-    }
-
-
-    private switchFromPerspectiveToOrthographic() {
-
-        this.setMinAngle(false);
-
-        this.orthographicCamera.position.set(
-            this.perspectiveCamera.position.x,
-            this.orthographicYLevel,
-            this.perspectiveCamera.position.z
-        );
-
-        this.orthographicCamera.setRotationFromQuaternion(this.perspectiveCamera.quaternion);
+    private resetOrthographicZoom() {
 
         this.orthographicCamera.zoom = this.orthographicZoomLevel;
         this.orthographicCamera.updateProjectionMatrix();
@@ -377,8 +369,8 @@ export class Map3DCameraManager extends CameraManager {
     private computePivotPoint(): THREE.Vector3 {
 
         const ray: THREE.Ray = new THREE.Ray(
-            this.getCamera().position,
-            this.getCamera().getWorldDirection()
+            this.perspectiveCamera.position,
+            this.perspectiveCamera.getWorldDirection()
         );
 
         return ray.intersectPlane(this.getGroundPlane());
@@ -391,7 +383,7 @@ export class Map3DCameraManager extends CameraManager {
 
         const yPosition: number = groundMesh ?
             Map3DCameraManager.getMinY(groundMesh) :
-            this.getCamera().position.y - 3;
+            this.perspectiveCamera.position.y - 3;
 
         return new THREE.Plane(new THREE.Vector3(0, -1, 0), yPosition);
     }
@@ -462,15 +454,15 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
-    private static applyDefaultSettings(camera: THREE.Camera) {
+    private static applyDefaultSettings(camera: THREE.PerspectiveCamera|THREE.OrthographicCamera) {
 
         camera.lookAt(new THREE.Vector3(0, 0, 0));
         camera.layers.enable(DepthMap.NO_DEPTH_MAPPING_LAYER);
     }
 
 
-    private static updateFromClonedCamera(camera: THREE.PerspectiveCamera,
-                                          clonedCamera: THREE.PerspectiveCamera) {
+    private static updateFromClonedCamera(camera: THREE.PerspectiveCamera|THREE.OrthographicCamera,
+                                          clonedCamera: THREE.PerspectiveCamera|THREE.OrthographicCamera) {
 
         camera.position.set(
             clonedCamera.position.x,
@@ -486,6 +478,17 @@ export class Map3DCameraManager extends CameraManager {
         );
 
         camera.updateProjectionMatrix();
+    }
+
+
+    private static translate(camera: THREE.PerspectiveCamera|THREE.OrthographicCamera,
+                             xChange: number, zChange: number) {
+
+        camera.position.set(
+            camera.position.x + xChange,
+            camera.position.y,
+            camera.position.z + zChange
+        );
     }
 
 

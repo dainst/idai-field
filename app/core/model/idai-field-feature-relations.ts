@@ -1,9 +1,9 @@
-import {Relations} from "idai-components-2/core";
+import {IdaiFieldRelations} from "idai-components-2/field";
 
 /**
  * @author Daniel de Oliveira
  */
-export interface IdaiFieldFeatureRelations extends Relations {
+export interface IdaiFieldFeatureRelations extends IdaiFieldRelations {
 
     isContemporaryWith: string[];
     isAfter: string[];

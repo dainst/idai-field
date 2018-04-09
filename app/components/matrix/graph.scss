@@ -1,5 +1,6 @@
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 
 #graph-container {
@@ -12,6 +13,23 @@
     .node {
       cursor: default;
       user-select: none;
+    }
+
+    text {
+      fill: #ffffff;
+    }
+
+    #graph0 g {
+      ellipse {
+        stroke: #ffffff;
+      }
+      polygon {
+        fill: #f5f5f5;
+        stroke: #7e7e7e;
+      }
+      path {
+        stroke: #7e7e7e;
+      }
     }
   }
 }

@@ -22,7 +22,7 @@ describe('NavigationService', () => {
     it('in overview', () => {
 
         viewFacade.isInOverview.and.returnValue(true);
-        expect(navigationService.showMoveIntoOption(Static.idfDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(true);
+        expect(navigationService.showMoveIntoOption(Static.ifDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(true);
     });
 
 
@@ -31,7 +31,7 @@ describe('NavigationService', () => {
         projectConfiguration.getRelationDefinitions.and.returnValue(
             [{name: 'liesWithin'}]
         );
-        expect(navigationService.showMoveIntoOption(Static.idfDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(true);
+        expect(navigationService.showMoveIntoOption(Static.ifDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(true);
     });
 
 
@@ -40,7 +40,7 @@ describe('NavigationService', () => {
         projectConfiguration.getRelationDefinitions.and.returnValue(
             [{name: 'liesWithin'}]
         );
-        expect(navigationService.showMoveIntoOption(Static.idfDoc('abc', 'def', 'ghi'))).toEqual(false);
+        expect(navigationService.showMoveIntoOption(Static.ifDoc('abc', 'def', 'ghi'))).toEqual(false);
     });
 
 
@@ -49,13 +49,13 @@ describe('NavigationService', () => {
         projectConfiguration.getRelationDefinitions.and.returnValue(
             [{name: 'abc'}]
         );
-        expect(navigationService.showMoveIntoOption(Static.idfDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(false);
+        expect(navigationService.showMoveIntoOption(Static.ifDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(false);
     });
 
 
     it('is place', () => {
 
         expect(navigationService.showMoveIntoOption(
-            Static.idfDoc('abc','cde','Place'))).toEqual(false);
+            Static.ifDoc('abc','cde','Place'))).toEqual(false);
     });
 });

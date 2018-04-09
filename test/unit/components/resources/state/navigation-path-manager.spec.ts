@@ -61,7 +61,7 @@ describe('NavigationPathManager', () => {
 
     beforeEach(async () => {
 
-        trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
+        trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
         await resourcesState.initialize('excavation');
         resourcesState.setMainTypeDocument(trenchDocument1);
     });
@@ -69,7 +69,7 @@ describe('NavigationPathManager', () => {
 
     it('step into', async done => {
 
-        const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
         documents = [trenchDocument1, featureDocument1];
@@ -86,7 +86,7 @@ describe('NavigationPathManager', () => {
 
     it('step out', async done => {
 
-        const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
         documents = [trenchDocument1, featureDocument1];
@@ -104,8 +104,8 @@ describe('NavigationPathManager', () => {
 
     it('repair navigation path if a document is deleted', async done => {
 
-        const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
-        const findDocument1 = Static.idfDoc('Find 1', 'find1', 'Find', 'find1');
+        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
@@ -130,9 +130,9 @@ describe('NavigationPathManager', () => {
 
     it('repair navigation path if a relation is changed', async done => {
 
-        const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
-        const featureDocument2 = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'feature2');
-        const findDocument1 = Static.idfDoc('Find 1', 'find1', 'Find', 'find1');
+        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
+        const findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
@@ -157,10 +157,10 @@ describe('NavigationPathManager', () => {
 
     it('updateNavigationPathForDocument', async done => {
 
-        const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
-        const featureDocument2 = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'feature2');
-        const findDocument1 = Static.idfDoc('Find 1', 'find1', 'Find', 'find1');
-        const findDocument2 = Static.idfDoc('Find 2', 'find2', 'Find', 'find2');
+        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
+        const findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
+        const findDocument2 = Static.ifDoc('Find 2', 'find2', 'Find', 'find2');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
@@ -188,9 +188,9 @@ describe('NavigationPathManager', () => {
 
     it('updateNavigationPathForDocument - is correct navigation path', async done => {
 
-        const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
-        const featureDocument2 = Static.idfDoc('Feature 2', 'feature2', 'Feature', 'feature2');
-        const findDocument1 = Static.idfDoc('Find 1', 'find1', 'Find', 'find1');
+        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
+        const findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];

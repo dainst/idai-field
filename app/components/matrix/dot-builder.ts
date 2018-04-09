@@ -176,23 +176,19 @@ export class DotBuilder {
 
         processedDocuments.push(document.resource.id as string);
 
-        return !this.isContemporaryWithNonRootDocument(document, processedDocuments);
+        return !this.isContemporaryWithNonRootDocument(document.resource.relations.isContemporaryWith, processedDocuments);
     }
 
 
-    private isContemporaryWithNonRootDocument(document: IdaiFieldFeatureDocument, processedDocuments: string[]) {
+    private isContemporaryWithNonRootDocument(isContemporaryWith: string[], processedDocuments: string[]) {
 
-        let targetIds: string[]|undefined = document.resource.relations.isContemporaryWith;
-
-        if (!targetIds) return false;
-
-        for (let targetId of targetIds.filter(targetId => !processedDocuments.includes(targetId))) {
-            const targetDocument: IdaiFieldFeatureDocument | undefined = this.getDocument(targetId);
-            if (targetDocument && !this.isRootDocument(targetDocument, processedDocuments)) {
-                return true;
-            }
-        }
-
-        return false;
+        return (
+            undefined !=
+            isContemporaryWith
+                .filter(targetId => !processedDocuments.includes(targetId))
+                .find(targetId => {
+                    const targetDocument: IdaiFieldFeatureDocument | undefined = this.getDocument(targetId);
+                    return (targetDocument && !this.isRootDocument(targetDocument, processedDocuments)) === true;
+                }));
     }
 }

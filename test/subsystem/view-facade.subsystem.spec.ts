@@ -67,16 +67,16 @@ export function main() {
                 new IdaiFieldTypeConverter(new TypeUtility(new ProjectConfiguration(pc))));
 
             const projectDocument = Static.doc('testdb','testdb','Project','testdb');
-            trenchDocument1 = Static.idfDoc('trench1','trench1','Trench','t1');
+            trenchDocument1 = Static.ifDoc('trench1','trench1','Trench','t1');
             trenchDocument1.resource.relations['isRecordedIn'] = ['testdb'];
-            trenchDocument2 = Static.idfDoc('trench2','trench2','Trench','t2');
+            trenchDocument2 = Static.ifDoc('trench2','trench2','Trench','t2');
             trenchDocument2.resource.relations['isRecordedIn'] = ['testdb'];
 
-            findDocument1 = Static.idfDoc('Find 1','find1','Find', 'find1');
+            findDocument1 = Static.ifDoc('Find 1','find1','Find', 'find1');
             findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-            findDocument2 = Static.idfDoc('Find 2','find2','Find', 'find2');
+            findDocument2 = Static.ifDoc('Find 2','find2','Find', 'find2');
             findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-            featureDocument1 = Static.idfDoc('Feature 1','feature1','Feature', 'feature1');
+            featureDocument1 = Static.ifDoc('Feature 1','feature1','Feature', 'feature1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument1.resource.relations['includes'] = [findDocument1.resource.id, findDocument2.resource.id];
 
@@ -84,7 +84,7 @@ export function main() {
             findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
             findDocument2.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
-            featureDocument2 = Static.idfDoc('Feature 2','feature2','Feature', 'feature2');
+            featureDocument2 = Static.ifDoc('Feature 2','feature2','Feature', 'feature2');
             featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
             await idaiFieldDocumentDatastore.create(projectDocument);
@@ -220,7 +220,7 @@ export function main() {
 
         it('operations view: select operations type document', async done => {
 
-            const findDocument3 = Static.idfDoc('Find 3','find3','Find', 'find3');
+            const findDocument3 = Static.ifDoc('Find 3','find3','Find', 'find3');
             findDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];
             await idaiFieldDocumentDatastore.create(findDocument3);
 
@@ -306,12 +306,12 @@ export function main() {
 
         it('build path while navigating, first element, then second', async done => {
 
-            const featureDocument1a = Static.idfDoc('Feature 1a','feature1a','Feature', 'feature1a');
+            const featureDocument1a = Static.ifDoc('Feature 1a','feature1a','Feature', 'feature1a');
             featureDocument1a.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument1a.resource.relations['liesWithin'] = [featureDocument1.resource.id];
             await idaiFieldDocumentDatastore.create(featureDocument1a);
 
-            const featureDocument1b = Static.idfDoc('Feature 1b','feature1b','Feature', 'feature1b');
+            const featureDocument1b = Static.ifDoc('Feature 1b','feature1b','Feature', 'feature1b');
             featureDocument1a.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument1a.resource.relations['liesWithin'] = [featureDocument1.resource.id];
             await idaiFieldDocumentDatastore.create(featureDocument1b);

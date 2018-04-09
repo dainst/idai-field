@@ -17,9 +17,16 @@ import {IdaiFieldFeatureDocument} from '../../app/core/model/idai-field-feature-
  */
 export class Static {
 
-    public static idfDoc = (sd, identifier?, type?, id?) => Static.doc(sd, identifier, type, id) as IdaiFieldDocument;
+    public static ifDoc = (sd, identifier?, type?, id?) => Static.doc(sd, identifier, type, id) as IdaiFieldDocument;
 
-    public static idffDoc = (sd, identifier?, type?, id?) => Static.doc(sd, identifier, type, id) as IdaiFieldFeatureDocument;
+
+    public static iffDoc = (sd, identifier?, type?, id?) => {
+
+        const doc = Static.doc(sd, identifier, type, id) as IdaiFieldFeatureDocument;
+        doc.resource.relations.isContemporaryWith = [];
+        return doc;
+    };
+
 
     public static doc(sd, identifier?, type?, id?): Document {
 

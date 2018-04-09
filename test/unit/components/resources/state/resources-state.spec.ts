@@ -37,8 +37,8 @@ describe('ResourcesState', () => {
 
     it('set type filters and q', () => {
 
-        const trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
-        const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
+        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
         resourcesState.initialize('excavation');
@@ -66,8 +66,8 @@ describe('ResourcesState', () => {
 
     it('delete type filter and q of segment', () => {
 
-        const trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
-        const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
+        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
 
         resourcesState.initialize('excavation');
         resourcesState.setMainTypeDocument(trenchDocument1);
@@ -89,8 +89,8 @@ describe('ResourcesState', () => {
 
     it('delete type filter and q of non segment', () => {
 
-        const trenchDocument1 = Static.idfDoc('trench1', 'trench1', 'Trench', 't1');
-        const featureDocument1 = Static.idfDoc('Feature 1', 'feature1', 'Feature', 'feature1');
+        const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
+        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
 
         resourcesState.initialize('excavation');
         resourcesState.setMainTypeDocument(trenchDocument1);

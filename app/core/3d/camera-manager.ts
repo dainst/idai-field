@@ -86,14 +86,14 @@ export abstract class CameraManager {
 
 
     protected static updatePerspectiveCameraAspect(camera: THREE.PerspectiveCamera, canvasWidth: number,
-                                            canvasHeight: number) {
+                                                   canvasHeight: number) {
 
         camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
     }
 
 
-    protected static computeZoomToFitDistance(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
+    protected static computeDistanceForZoomToFit(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
 
         const fovInRadians: number = camera.fov * (Math.PI / 180);
         const size = mesh.geometry.boundingSphere.radius;

@@ -208,7 +208,7 @@ export class Map3DCameraManager extends CameraManager {
             mesh.position.z
         );
 
-        const distance: number = CameraManager.computeZoomToFitDistance(this.perspectiveCamera, mesh)
+        const distance: number = CameraManager.computeDistanceForZoomToFit(this.perspectiveCamera, mesh)
             + mesh.geometry.boundingBox.getSize().y / 2;
         this.perspectiveCamera.translateZ(distance);
     }

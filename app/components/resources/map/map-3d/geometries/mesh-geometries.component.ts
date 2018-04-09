@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChange, SimpleChanges} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Map3DComponent} from '../map-3d.component';
 import {MeshGeometryManager} from './mesh-geometry-manager';
@@ -16,6 +16,7 @@ import {MeshGeometryManager} from './mesh-geometry-manager';
 export class MeshGeometriesComponent implements OnChanges {
 
     @Input() documents: Array<IdaiFieldDocument>;
+    @Input() selectedDocument: IdaiFieldDocument;
     @Input() hoverDocument: IdaiFieldDocument;
     @Input() meshGeometryManager: MeshGeometryManager;
 
@@ -28,7 +29,8 @@ export class MeshGeometriesComponent implements OnChanges {
 
     async ngOnChanges(changes: SimpleChanges) {
 
-        if (changes['documents'] && this.documents) await this.update();
+        if (this.documents && (changes['documents'])) await this.update();
+        if (changes['selectedDocument']) await this.updateSelected(changes['selectedDocument']);
     }
 
 
@@ -61,9 +63,21 @@ export class MeshGeometriesComponent implements OnChanges {
 
     private async update() {
 
-        await this.meshGeometryManager.update(this.documents, this.showLineGeometries,
+        await this.meshGeometryManager.update(this.documents, this.selectedDocument, this.showLineGeometries,
             this.showPolygonGeometries);
 
         this.map3DComponent.getCameraManager().resetPivotPoint();
+    }
+
+
+    private async updateSelected(selecedDocumentChange: SimpleChange) {
+
+        if (selecedDocumentChange.previousValue) {
+            await this.meshGeometryManager.updateSelected(selecedDocumentChange.previousValue, false);
+        }
+
+        if (selecedDocumentChange.currentValue) {
+            await this.meshGeometryManager.updateSelected(selecedDocumentChange.currentValue, true);
+        }
     }
 }

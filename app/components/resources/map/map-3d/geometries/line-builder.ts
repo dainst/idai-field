@@ -21,7 +21,7 @@ export class LineBuilder {
                 private projectConfiguration: ProjectConfiguration) {}
 
 
-    public buildLine(document: IdaiFieldDocument): MeshGeometry {
+    public buildLine(document: IdaiFieldDocument, selected: boolean): MeshGeometry {
 
         const position: THREE.Vector3 = LineBuilder.getPosition(document);
 
@@ -29,7 +29,7 @@ export class LineBuilder {
             = this.createGeometry((document.resource.geometry as IdaiFieldGeometry).coordinates, position);
 
         return {
-            mesh: this.createMesh(document, geometry, position),
+            mesh: this.createMesh(document, geometry, position, selected),
             raycasterObject: LineBuilder.createRaycasterObject(geometry, position),
             document: document,
             type: 'line'
@@ -52,7 +52,7 @@ export class LineBuilder {
 
 
     private createMesh(document: IdaiFieldDocument, geometry: THREE.Geometry,
-                       position: THREE.Vector3): THREE.Mesh {
+                       position: THREE.Vector3, selected: boolean): THREE.Mesh {
 
         const clonedGeometry: THREE.Geometry = geometry.clone();
 
@@ -62,10 +62,11 @@ export class LineBuilder {
         const line = new MeshLine();
         line.setGeometry(clonedGeometry);
 
-        const material: THREE.Material = this.createMaterial(document);
+        const material: THREE.Material = this.createMaterial(document, selected);
 
         const mesh: THREE.Mesh = new THREE.Mesh(line.geometry, material);
         mesh.geometry.computeBoundingBox();
+        mesh.geometry.computeBoundingSphere();
         mesh.position.set(position.x + center.x, position.y + center.y, position.z + center.z);
         mesh.layers.set(DepthMap.NO_DEPTH_MAPPING_LAYER);
 
@@ -73,15 +74,16 @@ export class LineBuilder {
     }
 
 
-    private createMaterial(document: IdaiFieldDocument): THREE.Material {
+    private createMaterial(document: IdaiFieldDocument, selected: boolean): THREE.Material {
 
         return this.cameraManager.getMode() == 'perspective' ?
-            this.createMaterialForPerspectiveCameraMode(document) :
-            this.createMaterialForOrthographicCameraMode(document);
+            this.createMaterialForPerspectiveCameraMode(document, selected) :
+            this.createMaterialForOrthographicCameraMode(document, selected);
     }
 
 
-    private createMaterialForPerspectiveCameraMode(document: IdaiFieldDocument): THREE.Material {
+    private createMaterialForPerspectiveCameraMode(document: IdaiFieldDocument,
+                                                   selected: boolean): THREE.Material {
 
         return new MeshLineMaterial({
             resolution: new THREE.Vector2(this.viewer.getRenderer().getSize().width,
@@ -89,19 +91,20 @@ export class LineBuilder {
             near: this.cameraManager.getCamera().near,
             far: this.cameraManager.getCamera().far,
             sizeAttenuation: false,
-            lineWidth: 3,
+            lineWidth: selected ? 10 : 3,
             color: new THREE.Color(this.projectConfiguration.getColorForType(document.resource.type))
         });
     }
 
 
-    private createMaterialForOrthographicCameraMode(document: IdaiFieldDocument): THREE.Material {
+    private createMaterialForOrthographicCameraMode(document: IdaiFieldDocument,
+                                                    selected: boolean): THREE.Material {
 
         return new MeshLineMaterial({
             resolution: new THREE.Vector2(this.viewer.getRenderer().getSize().width,
                 this.viewer.getRenderer().getSize().height),
             sizeAttenuation: true,
-            lineWidth: 0.003,
+            lineWidth: selected ? 0.01 : 0.003,
             color: new THREE.Color(this.projectConfiguration.getColorForType(document.resource.type))
         });
     }

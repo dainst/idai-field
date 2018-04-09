@@ -61,7 +61,8 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     public select = (document: IdaiFieldDocument|undefined) => this.onSelectDocument.emit(document);
 
-    public recreateLineGeometries = () => this.meshGeometryManager.recreateLineGeometries();
+    public recreateLineGeometries = () =>
+        this.meshGeometryManager.recreateLineGeometries(this.selectedDocument);
 
 
     async ngOnChanges(changes: SimpleChanges) {

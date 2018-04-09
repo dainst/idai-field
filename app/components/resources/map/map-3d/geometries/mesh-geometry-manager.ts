@@ -31,8 +31,8 @@ export class MeshGeometryManager {
     }
 
 
-    public async update(documents: Array<IdaiFieldDocument>, showLineGeometries: boolean,
-                        showPolygonGeometries: boolean) {
+    public async update(documents: Array<IdaiFieldDocument>, selectedDocument: IdaiFieldDocument,
+                        showLineGeometries: boolean, showPolygonGeometries: boolean) {
 
         await this.viewer.waitForSizeAdjustment();
 
@@ -40,8 +40,16 @@ export class MeshGeometryManager {
             = MeshGeometryManager.getMeshGeometryDocuments(documents, showLineGeometries,
                 showPolygonGeometries);
 
-        this.getGeometriesToAdd(geometryDocuments).forEach(document => this.add(document));
+        this.getGeometriesToAdd(geometryDocuments)
+            .forEach(document => this.add(document, document == selectedDocument));
         this.getGeometriesToRemove(geometryDocuments).forEach(document => this.remove(document));
+    }
+
+
+    public async updateSelected(document: IdaiFieldDocument, selected: boolean) {
+
+        this.remove(document);
+        this.add(document, selected);
     }
 
 
@@ -51,13 +59,13 @@ export class MeshGeometryManager {
     }
 
 
-    public recreateLineGeometries() {
+    public recreateLineGeometries(selectedDocument: IdaiFieldDocument) {
 
         Object.values(this.meshGeometries)
             .filter(meshGeometry => meshGeometry.type == 'line')
             .forEach(lineGeometry => {
                 this.remove(lineGeometry.document);
-                this.add(lineGeometry.document);
+                this.add(lineGeometry.document, lineGeometry.document == selectedDocument);
             });
     }
 
@@ -79,9 +87,9 @@ export class MeshGeometryManager {
     }
 
 
-    private add(document: IdaiFieldDocument) {
+    private add(document: IdaiFieldDocument, selected: boolean) {
 
-        const geometry: MeshGeometry|undefined = this.createMeshGeometry(document);
+        const geometry: MeshGeometry|undefined = this.createMeshGeometry(document, selected);
 
         if (!geometry) return;
 
@@ -104,16 +112,16 @@ export class MeshGeometryManager {
     }
 
 
-    private createMeshGeometry(document: IdaiFieldDocument): MeshGeometry|undefined {
+    private createMeshGeometry(document: IdaiFieldDocument, selected: boolean): MeshGeometry|undefined {
 
         if (!document.resource.geometry) return undefined;
 
         switch(document.resource.geometry.type) {
             case 'LineString':
-                return this.lineBuilder.buildLine(document);
+                return this.lineBuilder.buildLine(document, selected);
 
             case 'Polygon':
-                return this.polygonBuilder.buildPolygon(document);
+                return this.polygonBuilder.buildPolygon(document, selected);
         }
     }
 

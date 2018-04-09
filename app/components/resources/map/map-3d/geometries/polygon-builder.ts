@@ -15,9 +15,9 @@ export class PolygonBuilder {
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
-    public buildPolygon(document: IdaiFieldDocument): MeshGeometry {
+    public buildPolygon(document: IdaiFieldDocument, selected: boolean): MeshGeometry {
 
-        const mesh: THREE.Mesh = this.createMesh(document);
+        const mesh: THREE.Mesh = this.createMesh(document, selected);
 
         return {
             mesh: mesh,
@@ -28,17 +28,11 @@ export class PolygonBuilder {
     }
 
 
-    private createMesh(document: IdaiFieldDocument): THREE.Mesh {
+    private createMesh(document: IdaiFieldDocument, selected: boolean): THREE.Mesh {
 
         const position: THREE.Vector3 = PolygonBuilder.getPosition(document);
         const geometry: THREE.Geometry = this.createGeometry(document, position);
-
-        const material: THREE.Material = new THREE.MeshPhongMaterial({
-            color: this.projectConfiguration.getColorForType(document.resource.type),
-            side: THREE.DoubleSide,
-            transparent: true,
-            opacity: 0.4
-        });
+        const material: THREE.Material = this.createMaterial(document, selected);
 
         const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(position.x, position.y, position.z);
@@ -63,6 +57,17 @@ export class PolygonBuilder {
         });
 
         return geometry;
+    }
+
+
+    private createMaterial(document: IdaiFieldDocument, selected: boolean): THREE.Material {
+
+        return new THREE.MeshPhongMaterial({
+            color: this.projectConfiguration.getColorForType(document.resource.type),
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: selected ? 0.8 : 0.4
+        });
     }
 
 

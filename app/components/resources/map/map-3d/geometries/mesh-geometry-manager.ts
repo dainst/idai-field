@@ -31,8 +31,8 @@ export class MeshGeometryManager {
     }
 
 
-    public async update(documents: Array<IdaiFieldDocument>, selectedDocument: IdaiFieldDocument,
-                        showLineGeometries: boolean, showPolygonGeometries: boolean) {
+    public async update(documents: Array<IdaiFieldDocument>, showLineGeometries: boolean,
+                        showPolygonGeometries: boolean) {
 
         await this.viewer.waitForSizeAdjustment();
 
@@ -40,8 +40,7 @@ export class MeshGeometryManager {
             = MeshGeometryManager.getMeshGeometryDocuments(documents, showLineGeometries,
                 showPolygonGeometries);
 
-        this.getGeometriesToAdd(geometryDocuments)
-            .forEach(document => this.add(document, document == selectedDocument));
+        this.getGeometriesToAdd(geometryDocuments).forEach(document => this.add(document));
         this.getGeometriesToRemove(geometryDocuments).forEach(document => this.remove(document));
     }
 
@@ -87,7 +86,7 @@ export class MeshGeometryManager {
     }
 
 
-    private add(document: IdaiFieldDocument, selected: boolean) {
+    private add(document: IdaiFieldDocument, selected: boolean = false) {
 
         const geometry: MeshGeometry|undefined = this.createMeshGeometry(document, selected);
 

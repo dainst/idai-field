@@ -44,6 +44,7 @@ export class PointGeometriesComponent implements DoCheck {
 
 
     public select = (document: IdaiFieldDocument) => this.onSelectDocument.emit(document);
+    public isSelected = (document: IdaiFieldDocument) => this.selectedDocument == document;
 
     public onWheel = (event: WheelEvent) => this.map3DComponent.onWheel(event);
 

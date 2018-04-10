@@ -9,7 +9,9 @@
         <div class="map-3d-type-icon">
             <type-icon [size]="25" [type]="marker.document.resource.type"></type-icon>
         </div>
-        <span class="map-3d-label" [attr.data-outline-text]="marker.document.resource.identifier">
+        <span class="map-3d-label"
+              [class.selected]="isSelected(marker.document)"
+              [attr.data-outline-text]="marker.document.resource.identifier">
             {{marker.document.resource.identifier}}
         </span>
     </div>

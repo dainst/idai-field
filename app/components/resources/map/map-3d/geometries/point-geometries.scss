@@ -29,10 +29,11 @@ point-geometries {
 
     .map-3d-marker-head:hover {
       cursor: pointer;
+    }
 
-      .map-3d-label {
-        color: lighten(#5572a1, 20%);
-      }
+    .map-3d-marker-head:hover .map-3d-label,
+    .map-3d-label.selected {
+      color: lighten(#5572a1, 20%);
     }
   }
 

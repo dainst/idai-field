@@ -40,7 +40,7 @@ export class DotBuilder {
 
     private createNodeDefinition(document: IdaiFieldFeatureDocument) {
 
-        return '"'+document.resource.identifier+'"'
+        return '"'+document.resource.identifier+'"' // <- important to enclose the identifier in "", otherwise -.*# etc. cause errors or unexpected behaviour
             + ' [id="node-' + document.resource.id + '" fillcolor="'
             + this.projectConfiguration.getColorForType(document.resource.type)
             + '" color="'
@@ -85,9 +85,12 @@ export class DotBuilder {
     private createIsAfterEdgesDefinition(document: IdaiFieldFeatureDocument): string|undefined {
 
         const targetIds: string[]|undefined = document.resource.relations['isAfter'];
-        if (!targetIds || targetIds.length == 0) return;
+        if (!targetIds || targetIds.length === 0) return;
 
-        return this.createEdgesDefinition(document, targetIds)
+        const targetIdentifiers = this.getRelationTargetIdentifiers(targetIds);
+        if (targetIdentifiers.length === 0) return;
+
+        return this.createEdgesDefinition(document, targetIdentifiers)
             + ' [class="is-after-' + document.resource.id + '" arrowsize="0.37" arrowhead="normal"]';
     }
 
@@ -106,32 +109,32 @@ export class DotBuilder {
         if (targetIds.length == 0) return;
 
         const edgesDefinitions: string = targetIds.map(targetId => {
-            return this.createEdgesDefinition(document, [targetId])
-                + ' [dir="none", class="is-contemporary-with-' + document.resource.id
-                + ' is-contemporary-with-' + targetId + '"]';
+            const targetIdentifiers = this.getRelationTargetIdentifiers([targetId]);
+            return targetIdentifiers.length === 0 ? '' :
+                this.createEdgesDefinition(document, targetIdentifiers)
+                    + ' [dir="none", class="is-contemporary-with-' + document.resource.id
+                    + ' is-contemporary-with-' + targetId + '"]';
         }).join(' ');
 
         const sameRankDefinition: string = this.createSameRankDefinition(
-            [document.resource.id].concat(targetIds)
+            this.getRelationTargetIdentifiers([document.resource.id].concat(targetIds))
         );
 
         return edgesDefinitions + ' ' + sameRankDefinition;
     }
 
 
-    private createEdgesDefinition(document: IdaiFieldFeatureDocument, targetIds: string[]): string {
+    private createEdgesDefinition(document: IdaiFieldFeatureDocument, targetIdentifiers: string[]): string {
 
-        const targetIdentifiers: string = this.getRelationTargetIdentifiers(targetIds);
-
-        return targetIds.length == 1
-            ? document.resource.identifier + ' -> ' + targetIdentifiers
-            : document.resource.identifier + ' -> {' + targetIdentifiers + '}';
+        return targetIdentifiers.length == 1
+            ? document.resource.identifier + ' -> ' + targetIdentifiers[0]
+            : document.resource.identifier + ' -> {' + targetIdentifiers.join(', ') + '}';
     }
 
 
-    private createSameRankDefinition(targetIds: string[]): string {
+    private createSameRankDefinition(targetIdentifiers: string[]): string {
 
-        return '{rank=same ' + this.getRelationTargetIdentifiers(targetIds) + '}';
+        return '{rank=same ' + targetIdentifiers.join(', ') + '}';
     }
 
 
@@ -145,12 +148,11 @@ export class DotBuilder {
     }
 
 
-    private getRelationTargetIdentifiers(targetIds: string[]): string {
+    private getRelationTargetIdentifiers(targetIds: string[]): string[] {
 
         return targetIds
             .map(targetId => this.getIdentifier(targetId))
-            .filter(targetId => targetId !== '')
-            .join(', ');
+            .filter(targetIdentifier => targetIdentifier !== '')
     }
 
 

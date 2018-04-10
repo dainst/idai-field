@@ -67,6 +67,96 @@ describe('DotBuilder', () => {
     });
 
 
+    it('can deal with missing document in isAfter edges', () => {
+
+        const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+
+        feature1.resource.relations['isAfter'] = ['f2', 'f3'];
+
+        const graph: string = dotBuilder.build([feature1, feature2]);
+
+        expect(graph).toMatch('digraph \{' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature2" \\[id="node-f2".*\\] ' +
+            '\{rank=min feature1\} ' +
+            'feature1 -> feature2 \\[class="is-after-f1".*\\] ' +
+            '\}');
+    });
+
+
+    it('can deal with missing documents (all) in isAfter edges', () => {
+
+        const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+
+        feature1.resource.relations['isAfter'] = ['f2', 'f3'];
+
+        const graph: string = dotBuilder.build([feature1]);
+
+        expect(graph).toMatch('digraph \{' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '\{rank=min feature1\} ' +
+            '\}');
+    });
+
+
+    it('can deal with missing document in isContemporaryWith edges', () => {
+
+        const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature3 = Static.iffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = Static.iffDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature5 = Static.iffDoc('Feature 5', 'feature5', 'Feature', 'f5');
+
+        feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
+        feature4.resource.relations['isContemporaryWith'] = ['f2', 'f3'];
+
+        const graph: string = dotBuilder.build([
+            feature1, feature3, feature4, feature5
+        ]);
+
+        expect(graph).toMatch(
+            'digraph \{' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature3" \\[id="node-f3".*\\] ' +
+            '"feature4" \\[id="node-f4".*\\] ' +
+            '"feature5" \\[id="node-f5".*\\] ' +
+            '\{rank=min \}  ' +
+            'feature3 -> feature4 \\[dir="none", class="is-contemporary-with-f3 is-contemporary-with-f4".*\\] ' +
+            '\{rank=same feature3, feature4\} ' +
+            '\}'
+        );
+    });
+
+
+    it('can deal with missing document (all) in isContemporaryWith edges', () => {
+
+        const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature3 = Static.iffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature5 = Static.iffDoc('Feature 5', 'feature5', 'Feature', 'f5');
+
+        feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
+
+        const graph: string = dotBuilder.build([
+            feature1, feature3, feature5
+        ]);
+
+        expect(graph).toMatch(
+            'digraph \{' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature3" \\[id="node-f3".*\\] ' +
+            '"feature5" \\[id="node-f5".*\\] ' +
+            '\{rank=min \}   ' +
+            '\{rank=same feature3\} ' +
+            '\}'
+        );
+    });
+
+
+
     it('build dot string for diamond formed graph', () => {
 
         const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');

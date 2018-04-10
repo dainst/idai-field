@@ -33,13 +33,13 @@ describe('DotBuilder', () => {
 
         const graph: string = dotBuilder.build([feature1, feature2]);
 
-        expect(graph).toEqual('digraph { ' +
-            'node [style=filled, fontname="Roboto"] ' +
-            'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            '{rank=min feature1} ' +
-            'feature1 -> feature2 [class="is-after-f1"] ' +
-            '}');
+        expect(graph).toMatch('digraph \{' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            'feature1 \\[id="node-f1".*\\] ' +
+            'feature2 \\[id="node-f2".*\\] ' +
+            '\{rank=min feature1\} ' +
+            'feature1 -> feature2 \\[class="is-after-f1".*\\] ' +
+            '\}');
     });
 
 
@@ -56,14 +56,14 @@ describe('DotBuilder', () => {
 
         const graph: string = dotBuilder.build([feature1, feature2, feature3]);
 
-        expect(graph).toEqual('digraph { ' +
-            'node [style=filled, fontname="Roboto"] ' +
-            'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            '{rank=min feature1} ' +
-            'feature1 -> {feature2, feature3} [class="is-after-f1"] ' +
-            '}');
+        expect(graph).toMatch('digraph \{' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            'feature1 \\[id="node-f1".*\\] ' +
+            'feature2 \\[id="node-f2".*\\] ' +
+            'feature3 \\[id="node-f3".*\\] ' +
+            '\{rank=min feature1\} ' +
+            'feature1 -> \{feature2, feature3\} \\[class="is-after-f1".*\\] ' +
+            '\}');
     });
 
 
@@ -84,17 +84,17 @@ describe('DotBuilder', () => {
 
         const graph: string = dotBuilder.build([feature1, feature2, feature3, feature4]);
 
-        expect(graph).toEqual(
-            'digraph { ' +
-            'node [style=filled, fontname="Roboto"] ' +
-            'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature4 [id="node-f4", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            '{rank=min feature1} ' +
-            'feature1 -> {feature2, feature3} [class="is-after-f1"] ' +
-            'feature2 -> feature4 [class="is-after-f2"] ' +
-            'feature3 -> feature4 [class="is-after-f3"] ' +
+        expect(graph).toMatch(
+            'digraph \{' +
+            'node \\[style=filled, fontname="Roboto"\] ' +
+            'feature1 \\[id="node-f1".*\\] ' +
+            'feature2 \\[id="node-f2".*\\] ' +
+            'feature3 \\[id="node-f3".*\\] ' +
+            'feature4 \\[id="node-f4".*\\] ' +
+            '\{rank=min feature1\} ' +
+            'feature1 -> \{feature2, feature3\} \\[class="is-after-f1".*\\] ' +
+            'feature2 -> feature4 \\[class="is-after-f2".*\\] ' +
+            'feature3 -> feature4 \\[class="is-after-f3".*\\] ' +
             '}'
         );
     });
@@ -122,23 +122,23 @@ describe('DotBuilder', () => {
             feature1, feature2, feature3, feature4, feature5
         ]);
 
-        expect(graph).toEqual(
-            'digraph { ' +
-            'node [style=filled, fontname="Roboto"] ' +
-            'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature4 [id="node-f4", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature5 [id="node-f5", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            '{rank=min feature1} ' +
-            'feature1 -> feature2 [class="is-after-f1"] ' +
-            'feature2 -> feature5 [class="is-after-f2"] ' +
-            'feature2 -> feature3 [dir="none", ' +
-            'class="is-contemporary-with-f2 is-contemporary-with-f3"] ' +
-            'feature2 -> feature4 [dir="none", ' +
-            'class="is-contemporary-with-f2 is-contemporary-with-f4"] ' +
-            '{rank=same feature2, feature3, feature4} ' +
-            '}'
+        expect(graph).toMatch(
+            'digraph \{' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            'feature1 \\[id="node-f1".*\\] ' +
+            'feature2 \\[id="node-f2".*\\] ' +
+            'feature3 \\[id="node-f3".*\\] ' +
+            'feature4 \\[id="node-f4".*\\] ' +
+            'feature5 \\[id="node-f5".*\\] ' +
+            '\{rank=min feature1\} ' +
+            'feature1 -> feature2 \\[class="is-after-f1".*\\] ' +
+            'feature2 -> feature5 \\[class="is-after-f2".*\\] ' +
+            'feature2 -> feature3 \\[dir="none", ' +
+            'class="is-contemporary-with-f2 is-contemporary-with-f3".*\\] ' +
+            'feature2 -> feature4 \\[dir="none", ' +
+            'class="is-contemporary-with-f2 is-contemporary-with-f4".*\\] ' +
+            '\{rank=same feature2, feature3, feature4\} ' +
+            '\}'
         );
     });
 
@@ -188,32 +188,32 @@ describe('DotBuilder', () => {
             feature9, feature10, feature11, feature12,
             feature13, feature14]);
 
-        expect(graph).toEqual(
-            'digraph { ' +
-            'node [style=filled, fontname="Roboto"] ' +
-            'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature4 [id="node-f4", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature5 [id="node-f5", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature6 [id="node-f6", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature7 [id="node-f7", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature8 [id="node-f8", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature9 [id="node-f9", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature10 [id="node-f10", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature11 [id="node-f11", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature12 [id="node-f12", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature13 [id="node-f13", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature14 [id="node-f14", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            '{rank=min feature1} ' +
-            'feature1 -> {feature2, feature3, feature4, feature5, feature6} [class="is-after-f1"] ' +
-            'feature2 -> {feature7, feature8} [class="is-after-f2"] ' +
-            'feature5 -> feature9 [class="is-after-f5"] ' +
-            'feature6 -> {feature10, feature11, feature12} [class="is-after-f6"] ' +
-            'feature8 -> feature13 [class="is-after-f8"] ' +
-            'feature10 -> feature13 [class="is-after-f10"] ' +
-            'feature13 -> feature14 [class="is-after-f13"] ' +
-            '}'
+        expect(graph).toMatch(
+            'digraph \{' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            'feature1 \\[id="node-f1".*\\] ' +
+            'feature2 \\[id="node-f2".*\\] ' +
+            'feature3 \\[id="node-f3".*\\] ' +
+            'feature4 \\[id="node-f4".*\\] ' +
+            'feature5 \\[id="node-f5".*\\] ' +
+            'feature6 \\[id="node-f6".*\\] ' +
+            'feature7 \\[id="node-f7".*\\] ' +
+            'feature8 \\[id="node-f8".*\\] ' +
+            'feature9 \\[id="node-f9".*\\] ' +
+            'feature10 \\[id="node-f10".*\\] ' +
+            'feature11 \\[id="node-f11".*\\] ' +
+            'feature12 \\[id="node-f12".*\\] ' +
+            'feature13 \\[id="node-f13".*\\] ' +
+            'feature14 \\[id="node-f14".*\\] ' +
+            '\{rank=min feature1\} ' +
+            'feature1 -> \{feature2, feature3, feature4, feature5, feature6\} \\[class="is-after-f1".*\\] ' +
+            'feature2 -> \{feature7, feature8\} \\[class="is-after-f2".*\\] ' +
+            'feature5 -> feature9 \\[class="is-after-f5".*\\] ' +
+            'feature6 -> \{feature10, feature11, feature12\} \\[class="is-after-f6".*\\] ' +
+            'feature8 -> feature13 \\[class="is-after-f8".*\\] ' +
+            'feature10 -> feature13 \\[class="is-after-f10".*\\] ' +
+            'feature13 -> feature14 \\[class="is-after-f13".*\\] ' +
+            '\}'
         );
     });
 
@@ -236,19 +236,19 @@ describe('DotBuilder', () => {
 
         const graph: string = dotBuilder.build([feature1, feature2, feature3, feature4]);
 
-        expect(graph).toEqual(
-            'digraph { ' +
-            'node [style=filled, fontname="Roboto"] ' +
-            'feature1 [id="node-f1", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature2 [id="node-f2", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature3 [id="node-f3", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            'feature4 [id="node-f4", fillcolor="#ffffff", fontcolor="#000000"] ' +
-            '{rank=min feature1} ' +
-            'feature1 -> feature2 [class="is-after-f1"] ' +
-            'feature3 -> feature4 [class="is-after-f3"] ' +
-            'feature2 -> feature3 [dir="none", class="is-contemporary-with-f2 is-contemporary-with-f3"] ' +
-            '{rank=same feature2, feature3} ' +
-            '}'
+        expect(graph).toMatch(
+            'digraph \{' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            'feature1 \\[id="node-f1".*\\] ' +
+            'feature2 \\[id="node-f2".*\\] ' +
+            'feature3 \\[id="node-f3".*\\] ' +
+            'feature4 \\[id="node-f4".*\\] ' +
+            '\{rank=min feature1\} ' +
+            'feature1 -> feature2 \\[class="is-after-f1".*\\] ' +
+            'feature3 -> feature4 \\[class="is-after-f3".*\\] ' +
+            'feature2 -> feature3 \\[dir="none", class="is-contemporary-with-f2 is-contemporary-with-f3".*\\] ' +
+            '\{rank=same feature2, feature3\} ' +
+            '\}'
         );
     });
 });

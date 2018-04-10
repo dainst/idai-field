@@ -21,7 +21,7 @@ export class DotBuilder {
         this.documents = documents;
         this.processedIsContemporaryWithTargetIds = [];
 
-        return 'digraph { '
+        return 'digraph {'
             + this.createNodeDefinitions()
             + this.createRootDocumentMinRankDefinition()
             + this.createIsAfterEdgesDefinitions()
@@ -46,7 +46,7 @@ export class DotBuilder {
             + '" color="'
             + this.projectConfiguration.getColorForType(document.resource.type)
             + '"' +
-            'fontcolor="'
+            ' fontcolor="'
             + this.projectConfiguration.getTextColorForType(document.resource.type)
             + '"] ';
     }
@@ -88,7 +88,7 @@ export class DotBuilder {
         if (!targetIds || targetIds.length == 0) return;
 
         return this.createEdgesDefinition(document, targetIds)
-            + ' [class="is-after-' + document.resource.id + '"]';
+            + ' [class="is-after-' + document.resource.id + '" arrowsize="0.5" arrowhead="open"]';
     }
 
 
@@ -156,7 +156,6 @@ export class DotBuilder {
     private getIdentifier(id: string): string {
 
         const document: IdaiFieldFeatureDocument|undefined = this.getDocument(id);
-
         return document ? document.resource.identifier : '';
     }
 

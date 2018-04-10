@@ -16,7 +16,7 @@ export class DotBuilder {
 
     public build(documents: Array<IdaiFieldFeatureDocument>): string {
 
-        const docs = this.takeOutNonExistingRelations(JSON.parse(JSON.stringify(documents)));
+        const docs = this.takeOutNonExistingRelations(documents);
 
         return 'digraph {'
             + DotCreation.createNodeDefinitions(this.projectConfiguration, docs)

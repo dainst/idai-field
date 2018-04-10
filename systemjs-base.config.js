@@ -74,7 +74,8 @@ config.map = {
     'assert': '@node/assert',
     'path': '@node/path',
     'glob': '@node/glob',
-    'read-depth': 'lib/read-depth/read-depth.js'
+    'read-depth': 'lib/read-depth/read-depth.js',
+    'earcut': 'node_modules/earcut/dist/earcut.min.js'
 };
 
 config.meta = {

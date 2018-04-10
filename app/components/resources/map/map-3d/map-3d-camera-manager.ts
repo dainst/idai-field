@@ -104,6 +104,25 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
+    public setDefaultAngle(animate: boolean = true) {
+
+        if (this.isAnimationRunning()) return;
+
+        if (this.mode == 'orthographic') {
+            this.setMode('perspective');
+            animate = false;
+        }
+
+        this.applyAngleChange(defaultAngle - this.perspectiveCameraAngle, animate);
+    }
+
+
+    public isDefaultAngle(): boolean {
+
+        return this.perspectiveCameraAngle == defaultAngle;
+    }
+
+
     public rotateBy90Degrees(clockwise: boolean) {
 
         if (this.isAnimationRunning()) return;
@@ -113,33 +132,6 @@ export class Map3DCameraManager extends CameraManager {
 
         this.rotatePerspectiveCamera(rotationInRadians, this.mode == 'perspective');
         this.rotateOrthographicCamera(rotationInRadians, this.mode == 'orthographic');
-    }
-
-
-    private rotatePerspectiveCamera(radians: number, animate: boolean) {
-
-        this.resetPivotPoint();
-
-        const clonedCamera: THREE.PerspectiveCamera = this.perspectiveCamera.clone();
-        const pivotPoint: THREE.Vector3 = this.getPivotPoint();
-        const yAxis: THREE.Vector3 = new THREE.Vector3(0, 1, 0);
-
-        clonedCamera.position.sub(pivotPoint);
-        clonedCamera.position.applyAxisAngle(yAxis, radians);
-        clonedCamera.position.add(pivotPoint);
-
-        clonedCamera.lookAt(pivotPoint);
-
-        this.applyChanges(this.perspectiveCamera, clonedCamera, animate);
-    }
-
-
-    private rotateOrthographicCamera(radians: number, animate: boolean) {
-
-        const clonedCamera: THREE.OrthographicCamera = this.orthographicCamera.clone();
-        clonedCamera.rotateZ(radians);
-
-        this.applyChanges(this.orthographicCamera, clonedCamera, animate);
     }
 
 
@@ -233,6 +225,33 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
+    private rotatePerspectiveCamera(radians: number, animate: boolean) {
+
+        this.resetPivotPoint();
+
+        const clonedCamera: THREE.PerspectiveCamera = this.perspectiveCamera.clone();
+        const pivotPoint: THREE.Vector3 = this.getPivotPoint();
+        const yAxis: THREE.Vector3 = new THREE.Vector3(0, 1, 0);
+
+        clonedCamera.position.sub(pivotPoint);
+        clonedCamera.position.applyAxisAngle(yAxis, radians);
+        clonedCamera.position.add(pivotPoint);
+
+        clonedCamera.lookAt(pivotPoint);
+
+        this.applyChanges(this.perspectiveCamera, clonedCamera, animate);
+    }
+
+
+    private rotateOrthographicCamera(radians: number, animate: boolean) {
+
+        const clonedCamera: THREE.OrthographicCamera = this.orthographicCamera.clone();
+        clonedCamera.rotateZ(radians);
+
+        this.applyChanges(this.orthographicCamera, clonedCamera, animate);
+    }
+
+
     private createPerspectiveCamera(canvasWidth: number, canvasHeight: number) {
 
         this.perspectiveCamera = new THREE.PerspectiveCamera(75, canvasWidth / canvasHeight, 0.1, 1000);
@@ -270,25 +289,6 @@ export class Map3DCameraManager extends CameraManager {
 
         this.orthographicCamera.zoom = this.orthographicCameraZoomLevel;
         this.orthographicCamera.updateProjectionMatrix();
-    }
-
-
-    public setDefaultAngle(animate: boolean = true) {
-
-        if (this.isAnimationRunning()) return;
-
-        if (this.mode == 'orthographic') {
-            this.setMode('perspective');
-            animate = false;
-        }
-
-        this.applyAngleChange(defaultAngle - this.perspectiveCameraAngle, animate);
-    }
-
-
-    public isDefaultAngle(): boolean {
-
-        return this.perspectiveCameraAngle == defaultAngle;
     }
 
 

@@ -175,7 +175,7 @@ export class GraphComponent implements OnInit, OnChanges {
         path.setAttribute('stroke', color);
         path.setAttribute('stroke-width', strokeWidth);
 
-        if (edgeType == 'is-after') {
+        if (edgeType === 'is-after') {
             const polygon = edge.getElementsByTagName('polygon')[0];
             polygon.setAttribute('stroke', color);
             polygon.setAttribute('fill', color);

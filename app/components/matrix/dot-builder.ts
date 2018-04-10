@@ -41,9 +41,12 @@ export class DotBuilder {
     private createNodeDefinition(document: IdaiFieldFeatureDocument) {
 
         return document.resource.identifier
-            + ' [id="node-' + document.resource.id + '", fillcolor="'
+            + ' [id="node-' + document.resource.id + '" fillcolor="'
             + this.projectConfiguration.getColorForType(document.resource.type)
-            + '", fontcolor="'
+            + '" color="'
+            + this.projectConfiguration.getColorForType(document.resource.type)
+            + '"' +
+            'fontcolor="'
             + this.projectConfiguration.getTextColorForType(document.resource.type)
             + '"] ';
     }

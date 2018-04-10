@@ -26,10 +26,10 @@ export class Map3DCameraManager extends CameraManager {
     private perspectiveCamera: THREE.PerspectiveCamera;
     private orthographicCamera: THREE.OrthographicCamera;
 
-    private pivotPoint: THREE.Vector3|undefined;
-    private cameraAngle: number;
+    private perspectiveCameraPivotPoint: THREE.Vector3|undefined;
+    private perspectiveCameraAngle: number;
 
-    private orthographicZoomLevel: number = 2;
+    private orthographicCameraZoomLevel: number = 2;
 
     private direction: number = CAMERA_DIRECTION_NORTH;
 
@@ -77,7 +77,7 @@ export class Map3DCameraManager extends CameraManager {
 
     public resetPivotPoint() {
 
-        this.pivotPoint = undefined;
+        this.perspectiveCameraPivotPoint = undefined;
     }
 
 
@@ -171,7 +171,7 @@ export class Map3DCameraManager extends CameraManager {
         this.zoomPerspectiveCameraToFit(mesh);
         this.zoomOrthographicCameraToFit(mesh);
 
-        this.orthographicZoomLevel = this.orthographicCamera.zoom;
+        this.orthographicCameraZoomLevel = this.orthographicCamera.zoom;
     }
 
 
@@ -182,7 +182,7 @@ export class Map3DCameraManager extends CameraManager {
         Map3DCameraManager.focusPoint(this.perspectiveCamera, point, 3);
         Map3DCameraManager.focusPoint(this.orthographicCamera, point, 20);
 
-        this.orthographicZoomLevel = this.orthographicCamera.zoom;
+        this.orthographicCameraZoomLevel = this.orthographicCamera.zoom;
     }
 
 
@@ -239,7 +239,7 @@ export class Map3DCameraManager extends CameraManager {
         this.perspectiveCamera.position.set(0, 5, 0);
         Map3DCameraManager.applyDefaultSettings(this.perspectiveCamera);
 
-        this.cameraAngle = this.perspectiveCamera.rotation.x;
+        this.perspectiveCameraAngle = this.perspectiveCamera.rotation.x;
         this.setDefaultAngle(false);
     }
 
@@ -268,7 +268,7 @@ export class Map3DCameraManager extends CameraManager {
 
     private resetOrthographicZoom() {
 
-        this.orthographicCamera.zoom = this.orthographicZoomLevel;
+        this.orthographicCamera.zoom = this.orthographicCameraZoomLevel;
         this.orthographicCamera.updateProjectionMatrix();
     }
 
@@ -282,13 +282,13 @@ export class Map3DCameraManager extends CameraManager {
             animate = false;
         }
 
-        this.applyAngleChange(defaultAngle - this.cameraAngle, animate);
+        this.applyAngleChange(defaultAngle - this.perspectiveCameraAngle, animate);
     }
 
 
     public isDefaultAngle(): boolean {
 
-        return this.cameraAngle == defaultAngle;
+        return this.perspectiveCameraAngle == defaultAngle;
     }
 
 
@@ -302,7 +302,7 @@ export class Map3DCameraManager extends CameraManager {
 
         this.applyChanges(this.perspectiveCamera, clonedCamera, animate);
 
-        this.cameraAngle += angleChange;
+        this.perspectiveCameraAngle += angleChange;
     }
 
 
@@ -338,9 +338,9 @@ export class Map3DCameraManager extends CameraManager {
 
     private getPivotPoint(): THREE.Vector3 {
 
-        if (!this.pivotPoint) this.pivotPoint = this.computePivotPoint();
+        if (!this.perspectiveCameraPivotPoint) this.perspectiveCameraPivotPoint = this.computePivotPoint();
 
-        return this.pivotPoint;
+        return this.perspectiveCameraPivotPoint;
     }
 
 
@@ -399,13 +399,13 @@ export class Map3DCameraManager extends CameraManager {
     private getAllowedAngleChange(delta: number): number {
 
         if (delta < 0) {
-            return this.cameraAngle + delta >= minAngle ?
+            return this.perspectiveCameraAngle + delta >= minAngle ?
                 delta :
-                minAngle - this.cameraAngle;
+                minAngle - this.perspectiveCameraAngle;
         } else {
-            return this.cameraAngle + delta <= maxAngle ?
+            return this.perspectiveCameraAngle + delta <= maxAngle ?
                 delta :
-                maxAngle - this.cameraAngle;
+                maxAngle - this.perspectiveCameraAngle;
         }
     }
 

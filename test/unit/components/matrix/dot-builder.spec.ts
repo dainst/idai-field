@@ -35,8 +35,8 @@ describe('DotBuilder', () => {
 
         expect(graph).toMatch('digraph \{' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
-            'feature1 \\[id="node-f1".*\\] ' +
-            'feature2 \\[id="node-f2".*\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature2" \\[id="node-f2".*\\] ' +
             '\{rank=min feature1\} ' +
             'feature1 -> feature2 \\[class="is-after-f1".*\\] ' +
             '\}');
@@ -58,9 +58,9 @@ describe('DotBuilder', () => {
 
         expect(graph).toMatch('digraph \{' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
-            'feature1 \\[id="node-f1".*\\] ' +
-            'feature2 \\[id="node-f2".*\\] ' +
-            'feature3 \\[id="node-f3".*\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature2" \\[id="node-f2".*\\] ' +
+            '"feature3" \\[id="node-f3".*\\] ' +
             '\{rank=min feature1\} ' +
             'feature1 -> \{feature2, feature3\} \\[class="is-after-f1".*\\] ' +
             '\}');
@@ -87,10 +87,10 @@ describe('DotBuilder', () => {
         expect(graph).toMatch(
             'digraph \{' +
             'node \\[style=filled, fontname="Roboto"\] ' +
-            'feature1 \\[id="node-f1".*\\] ' +
-            'feature2 \\[id="node-f2".*\\] ' +
-            'feature3 \\[id="node-f3".*\\] ' +
-            'feature4 \\[id="node-f4".*\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature2" \\[id="node-f2".*\\] ' +
+            '"feature3" \\[id="node-f3".*\\] ' +
+            '"feature4" \\[id="node-f4".*\\] ' +
             '\{rank=min feature1\} ' +
             'feature1 -> \{feature2, feature3\} \\[class="is-after-f1".*\\] ' +
             'feature2 -> feature4 \\[class="is-after-f2".*\\] ' +
@@ -125,11 +125,11 @@ describe('DotBuilder', () => {
         expect(graph).toMatch(
             'digraph \{' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
-            'feature1 \\[id="node-f1".*\\] ' +
-            'feature2 \\[id="node-f2".*\\] ' +
-            'feature3 \\[id="node-f3".*\\] ' +
-            'feature4 \\[id="node-f4".*\\] ' +
-            'feature5 \\[id="node-f5".*\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature2" \\[id="node-f2".*\\] ' +
+            '"feature3" \\[id="node-f3".*\\] ' +
+            '"feature4" \\[id="node-f4".*\\] ' +
+            '"feature5" \\[id="node-f5".*\\] ' +
             '\{rank=min feature1\} ' +
             'feature1 -> feature2 \\[class="is-after-f1".*\\] ' +
             'feature2 -> feature5 \\[class="is-after-f2".*\\] ' +
@@ -191,20 +191,20 @@ describe('DotBuilder', () => {
         expect(graph).toMatch(
             'digraph \{' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
-            'feature1 \\[id="node-f1".*\\] ' +
-            'feature2 \\[id="node-f2".*\\] ' +
-            'feature3 \\[id="node-f3".*\\] ' +
-            'feature4 \\[id="node-f4".*\\] ' +
-            'feature5 \\[id="node-f5".*\\] ' +
-            'feature6 \\[id="node-f6".*\\] ' +
-            'feature7 \\[id="node-f7".*\\] ' +
-            'feature8 \\[id="node-f8".*\\] ' +
-            'feature9 \\[id="node-f9".*\\] ' +
-            'feature10 \\[id="node-f10".*\\] ' +
-            'feature11 \\[id="node-f11".*\\] ' +
-            'feature12 \\[id="node-f12".*\\] ' +
-            'feature13 \\[id="node-f13".*\\] ' +
-            'feature14 \\[id="node-f14".*\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature2" \\[id="node-f2".*\\] ' +
+            '"feature3" \\[id="node-f3".*\\] ' +
+            '"feature4" \\[id="node-f4".*\\] ' +
+            '"feature5" \\[id="node-f5".*\\] ' +
+            '"feature6" \\[id="node-f6".*\\] ' +
+            '"feature7" \\[id="node-f7".*\\] ' +
+            '"feature8" \\[id="node-f8".*\\] ' +
+            '"feature9" \\[id="node-f9".*\\] ' +
+            '"feature10" \\[id="node-f10".*\\] ' +
+            '"feature11" \\[id="node-f11".*\\] ' +
+            '"feature12" \\[id="node-f12".*\\] ' +
+            '"feature13" \\[id="node-f13".*\\] ' +
+            '"feature14" \\[id="node-f14".*\\] ' +
             '\{rank=min feature1\} ' +
             'feature1 -> \{feature2, feature3, feature4, feature5, feature6\} \\[class="is-after-f1".*\\] ' +
             'feature2 -> \{feature7, feature8\} \\[class="is-after-f2".*\\] ' +
@@ -239,10 +239,10 @@ describe('DotBuilder', () => {
         expect(graph).toMatch(
             'digraph \{' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
-            'feature1 \\[id="node-f1".*\\] ' +
-            'feature2 \\[id="node-f2".*\\] ' +
-            'feature3 \\[id="node-f3".*\\] ' +
-            'feature4 \\[id="node-f4".*\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature2" \\[id="node-f2".*\\] ' +
+            '"feature3" \\[id="node-f3".*\\] ' +
+            '"feature4" \\[id="node-f4".*\\] ' +
             '\{rank=min feature1\} ' +
             'feature1 -> feature2 \\[class="is-after-f1".*\\] ' +
             'feature3 -> feature4 \\[class="is-after-f3".*\\] ' +

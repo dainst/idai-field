@@ -40,7 +40,7 @@ export class DotBuilder {
 
     private createNodeDefinition(document: IdaiFieldFeatureDocument) {
 
-        return document.resource.identifier
+        return '"'+document.resource.identifier+'"'
             + ' [id="node-' + document.resource.id + '" fillcolor="'
             + this.projectConfiguration.getColorForType(document.resource.type)
             + '" color="'
@@ -88,7 +88,7 @@ export class DotBuilder {
         if (!targetIds || targetIds.length == 0) return;
 
         return this.createEdgesDefinition(document, targetIds)
-            + ' [class="is-after-' + document.resource.id + '" arrowsize="0.5" arrowhead="open"]';
+            + ' [class="is-after-' + document.resource.id + '" arrowsize="0.37" arrowhead="normal"]';
     }
 
 
@@ -149,6 +149,7 @@ export class DotBuilder {
 
         return targetIds
             .map(targetId => this.getIdentifier(targetId))
+            .filter(targetId => targetId !== '')
             .join(', ');
     }
 

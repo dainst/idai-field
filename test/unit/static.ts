@@ -24,6 +24,8 @@ export class Static {
 
         const doc = Static.doc(sd, identifier, type, id) as IdaiFieldFeatureDocument;
         doc.resource.relations.isContemporaryWith = [];
+        doc.resource.relations.isBefore = [];
+        doc.resource.relations.isAfter = [];
         return doc;
     };
 

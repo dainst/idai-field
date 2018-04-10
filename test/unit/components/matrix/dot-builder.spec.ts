@@ -1,4 +1,3 @@
-import {IdaiFieldDocument} from 'idai-components-2/field';
 import {DotBuilder} from '../../../../app/components/matrix/dot-builder';
 import {Static} from '../../static';
 
@@ -97,7 +96,7 @@ describe('DotBuilder', () => {
         expect(graph).toMatch('digraph \{' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
-            '\{rank=min feature1\} ' +
+            '\{rank=min \} ' +
             '\}');
     });
 
@@ -123,7 +122,7 @@ describe('DotBuilder', () => {
             '"feature3" \\[id="node-f3".*\\] ' +
             '"feature4" \\[id="node-f4".*\\] ' +
             '"feature5" \\[id="node-f5".*\\] ' +
-            '\{rank=min \}  ' +
+            '\{rank=min \} ' +
             'feature3 -> feature4 \\[dir="none", class="is-contemporary-with-f3 is-contemporary-with-f4".*\\] ' +
             '\{rank=same feature3, feature4\} ' +
             '\}'
@@ -149,8 +148,7 @@ describe('DotBuilder', () => {
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature3" \\[id="node-f3".*\\] ' +
             '"feature5" \\[id="node-f5".*\\] ' +
-            '\{rank=min \}   ' +
-            '\{rank=same feature3\} ' +
+            '\{rank=min \} ' +
             '\}'
         );
     });

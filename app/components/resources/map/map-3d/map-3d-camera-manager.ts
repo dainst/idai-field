@@ -286,6 +286,12 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
+    public isDefaultAngle(): boolean {
+
+        return this.cameraAngle == defaultAngle;
+    }
+
+
     private applyAngleChange(angleChange: number, animate: boolean) {
 
         const pivotPoint: THREE.Vector3 = this.getPivotPoint();

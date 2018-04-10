@@ -95,14 +95,22 @@
   position: absolute;
   bottom: 15px;
   right: 110px;
+  width: 42px;
+  height: 39px;
   color: #aaa;
 
-  &.activated .mdi {
+  span {
+    position: relative;
+    right: 2px;
+    top: 1px;
+  }
+
+  &.activated span {
     color: #5572a1;
   }
 }
 
-#change-camera-mode-button-2 {
+#reset-camera-angle-button {
   position: absolute;
   bottom: 15px;
   right: 160px;

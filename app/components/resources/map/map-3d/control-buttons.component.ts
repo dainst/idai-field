@@ -22,6 +22,7 @@ export class ControlButtonsComponent {
 
 
     public getCameraMode = () => this.map3DComponent.getCameraManager().getMode();
+    public isDefaultAngle = () => this.map3DComponent.getCameraManager().isDefaultAngle();
 
 
     public turnClockwise() {
@@ -54,7 +55,7 @@ export class ControlButtonsComponent {
     }
 
 
-    public changeCameraModeToPerspectiveDown() {
+    public resetCameraAngle() {
 
         this.map3DComponent.getCameraManager().setDefaultAngle();
         this.onCameraModeChanged.emit();

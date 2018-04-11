@@ -29,7 +29,7 @@ export class MeshGeometriesComponent implements OnChanges {
 
     async ngOnChanges(changes: SimpleChanges) {
 
-        if (this.documents && changes['documents']) await this.update();
+        if (changes['documents']) await this.update();
         if (changes['selectedDocument']) await this.updateSelected(changes['selectedDocument']);
     }
 
@@ -63,10 +63,16 @@ export class MeshGeometriesComponent implements OnChanges {
 
     private async update() {
 
-        await this.meshGeometryManager.update(this.documents, this.showLineGeometries,
-            this.showPolygonGeometries);
+        await this.meshGeometryManager.update(
+            this.documents ? this.documents : [],
+            this.showLineGeometries,
+            this.showPolygonGeometries
+        );
 
-        this.map3DComponent.getGeometriesBounds().setMeshes(this.meshGeometryManager.getMeshes());
+        if (this.documents) {
+            this.map3DComponent.getGeometriesBounds().setMeshes(this.meshGeometryManager.getMeshes());
+        }
+
         this.map3DComponent.getCameraManager().resetPivotPoint();
     }
 

@@ -48,7 +48,7 @@ export class Map3DCameraManager extends CameraManager {
         this.createOrthographicCamera(canvasWidth, canvasHeight);
 
         this.geometriesBounds.initializationNotification().subscribe(() => {
-           this.focusDefaultBounds();
+           this.focusGeometriesBounds();
         });
     }
 
@@ -162,6 +162,17 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
+    public focusPoint(point: THREE.Vector3) {
+
+        this.resetPivotPoint();
+
+        Map3DCameraManager.focusPoint(this.perspectiveCamera, point, 3);
+        Map3DCameraManager.focusPoint(this.orthographicCamera, point, 20);
+
+        this.orthographicCameraZoomLevel = this.orthographicCamera.zoom;
+    }
+
+
     public focusMesh(mesh: THREE.Mesh) {
 
         this.resetPivotPoint();
@@ -175,7 +186,7 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
-    public focusDefaultBounds() {
+    private focusGeometriesBounds() {
 
         this.resetPivotPoint();
 
@@ -187,16 +198,6 @@ export class Map3DCameraManager extends CameraManager {
         this.orthographicCameraZoomLevel = this.orthographicCamera.zoom;
     }
 
-
-    public focusPoint(point: THREE.Vector3) {
-
-        this.resetPivotPoint();
-
-        Map3DCameraManager.focusPoint(this.perspectiveCamera, point, 3);
-        Map3DCameraManager.focusPoint(this.orthographicCamera, point, 20);
-
-        this.orthographicCameraZoomLevel = this.orthographicCamera.zoom;
-    }
 
 
     private zoomPerspectiveCamera(value: number, camera: THREE.PerspectiveCamera = this.perspectiveCamera) {

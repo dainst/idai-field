@@ -9,16 +9,14 @@ import {Static} from '../../static';
 
 describe('DotBuilder', () => {
 
-    let dotBuilder: DotBuilder;
+    let mockProjectConfiguration;
 
     beforeAll(() => {
 
-        const mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration',
+        mockProjectConfiguration = jasmine.createSpyObj('mockProjectConfiguration',
             ['getColorForType', 'getTextColorForType']);
         mockProjectConfiguration.getColorForType.and.returnValue('#ffffff');
         mockProjectConfiguration.getTextColorForType.and.returnValue('#000000');
-
-        dotBuilder = new DotBuilder(mockProjectConfiguration);
     });
 
 
@@ -30,7 +28,7 @@ describe('DotBuilder', () => {
         feature1.resource.relations['isAfter'] = ['f2'];
         feature2.resource.relations['isBefore'] = ['f1'];
 
-        const graph: string = dotBuilder.build([feature1, feature2]);
+        const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2]);
 
         expect(graph).toMatch('digraph \{' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -53,7 +51,7 @@ describe('DotBuilder', () => {
         feature2.resource.relations['isBefore'] = ['f1'];
         feature3.resource.relations['isBefore'] = ['f1'];
 
-        const graph: string = dotBuilder.build([feature1, feature2, feature3]);
+        const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2, feature3]);
 
         expect(graph).toMatch('digraph \{' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -73,7 +71,7 @@ describe('DotBuilder', () => {
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
 
-        const graph: string = dotBuilder.build([feature1, feature2]);
+        const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2]);
 
         expect(graph).toMatch('digraph \{' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -91,7 +89,7 @@ describe('DotBuilder', () => {
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
 
-        const graph: string = dotBuilder.build([feature1]);
+        const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1]);
 
         expect(graph).toMatch('digraph \{' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -111,7 +109,7 @@ describe('DotBuilder', () => {
         feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
         feature4.resource.relations['isContemporaryWith'] = ['f2', 'f3'];
 
-        const graph: string = dotBuilder.build([
+        const graph: string = DotBuilder.build(mockProjectConfiguration, [
             feature1, feature3, feature4, feature5
         ]);
 
@@ -138,7 +136,7 @@ describe('DotBuilder', () => {
 
         feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
 
-        const graph: string = dotBuilder.build([
+        const graph: string = DotBuilder.build(mockProjectConfiguration, [
             feature1, feature3, feature5
         ]);
 
@@ -170,7 +168,7 @@ describe('DotBuilder', () => {
         feature3.resource.relations['isBefore'] = ['f1'];
         feature4.resource.relations['isBefore'] = ['f2', 'f3'];
 
-        const graph: string = dotBuilder.build([feature1, feature2, feature3, feature4]);
+        const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2, feature3, feature4]);
 
         expect(graph).toMatch(
             'digraph \{' +
@@ -206,7 +204,7 @@ describe('DotBuilder', () => {
         feature2.resource.relations['isBefore'] = ['f1'];
         feature5.resource.relations['isBefore'] = ['f2'];
 
-        const graph: string = dotBuilder.build([
+        const graph: string = DotBuilder.build(mockProjectConfiguration, [
             feature1, feature2, feature3, feature4, feature5
         ]);
 
@@ -270,7 +268,7 @@ describe('DotBuilder', () => {
         feature13.resource.relations['isBefore'] = ['f8', 'f10'];
         feature14.resource.relations['isBefore'] = ['f13'];
 
-        const graph: string = dotBuilder.build([
+        const graph: string = DotBuilder.build(mockProjectConfiguration, [
             feature1, feature2, feature3, feature4,
             feature5, feature6, feature7, feature8,
             feature9, feature10, feature11, feature12,
@@ -322,7 +320,7 @@ describe('DotBuilder', () => {
         feature2.resource.relations['isBefore'] = ['f1'];
         feature4.resource.relations['isBefore'] = ['f3'];
 
-        const graph: string = dotBuilder.build([feature1, feature2, feature3, feature4]);
+        const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2, feature3, feature4]);
 
         expect(graph).toMatch(
             'digraph \{' +

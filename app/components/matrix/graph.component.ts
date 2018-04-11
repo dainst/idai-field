@@ -6,6 +6,7 @@ import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
 import {DotBuilder} from './dot-builder';
 import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-document';
+import {ProjectConfiguration} from 'idai-components-2/core';
 
 
 type ElementType = 'node'|'edge'|undefined;
@@ -35,8 +36,12 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private static mouseDownProperties: any = null;
 
-    constructor(private dotBuilder: DotBuilder,
-                private renderer: Renderer2) {}
+
+
+    constructor(
+        private renderer: Renderer2,
+        private projectConfiguration: ProjectConfiguration
+    ) {}
 
 
     ngOnInit() {
@@ -75,7 +80,7 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private createGraph(): string {
 
-        const graph: string = this.dotBuilder.build(this.documents);
+        const graph: string = DotBuilder.build(this.projectConfiguration, this.documents);
         return Viz(graph, { format: 'svg', engine: 'dot' }) as string;
     }
 

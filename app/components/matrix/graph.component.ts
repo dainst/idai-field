@@ -33,6 +33,8 @@ export class GraphComponent implements OnInit, OnChanges {
     private static hoverColor: string = '#6e95de';
     private static defaultColor: string = '#000000';
 
+    private static mouseDownProperties: any = null;
+
     constructor(private dotBuilder: DotBuilder,
                 private renderer: Renderer2) {}
 
@@ -84,7 +86,18 @@ export class GraphComponent implements OnInit, OnChanges {
             this.onMouseMove(event);
         });
 
-        this.renderer.listen(this.graphContainer.nativeElement, 'click', event => {
+        this.renderer.listen(this.graphContainer.nativeElement, 'mouseup', event => {
+
+            if (GraphComponent.mouseDownProperties == null) return;
+
+            if ((Math.abs(event.clientX - GraphComponent.mouseDownProperties.x) < 2)
+                && (Math.abs(event.clientY - GraphComponent.mouseDownProperties.y) < 2)) this.onSelect.emit(GraphComponent.mouseDownProperties.target);
+            GraphComponent.mouseDownProperties = null;
+        });
+
+        this.renderer.listen(this.graphContainer.nativeElement, 'mousedown', event => {
+
+            GraphComponent.mouseDownProperties = null;
 
             if (event.path[0]
                 && event.path[0].localName !== 'svg'
@@ -96,16 +109,24 @@ export class GraphComponent implements OnInit, OnChanges {
                         && event.path[0].nextElementSibling.childNodes.length > 0) {
 
                         if (event.path[0].nextElementSibling.childNodes[0].data) {
-                            this.onSelect.emit(event.path[0].nextElementSibling.childNodes[0].data);
+
+                            GraphComponent.mouseDownProperties = {
+                                x: event.clientX,
+                                y: event.clientY,
+                                target: event.path[0].nextElementSibling.childNodes[0].data
+                            }
                         }
                     }
                 } else if (event.path[0].localName === 'text'
                     && event.path[0].innerHTML !== '') {
 
-                    this.onSelect.emit(event.path[0].innerHTML)
+                    GraphComponent.mouseDownProperties = {
+                        x: event.clientX,
+                        y: event.clientY,
+                        target: event.path[0].innerHTML
+                    }
                 }
             }
-
         });
     }
 

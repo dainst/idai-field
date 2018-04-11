@@ -32,7 +32,10 @@ export class Object3DViewerCameraManager extends CameraManager {
 
     public updateMaxCameraDistance(mesh: THREE.Mesh) {
 
-        this.maxCameraDistance = CameraManager.computeDistanceForZoomToFit(this.camera, mesh) * 2;
+        this.maxCameraDistance = CameraManager.computeDistanceForZoomToFit(
+            this.camera,
+            mesh.geometry.boundingSphere
+        ) * 2;
     }
 
 
@@ -64,7 +67,8 @@ export class Object3DViewerCameraManager extends CameraManager {
 
         this.camera.position.set(
             0,
-            mesh.position.y + CameraManager.computeDistanceForZoomToFit(this.camera, mesh),
+            mesh.position.y + CameraManager.computeDistanceForZoomToFit(this.camera,
+                mesh.geometry.boundingSphere),
             0);
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
     }

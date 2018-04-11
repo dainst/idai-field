@@ -174,7 +174,7 @@ export class DocumentsManager {
     public populateDocumentList() {
 
         this.newDocumentsFromRemote = [];
-        this.documents = [];
+        this.documents = undefined as any;
 
         let isRecordedInTarget;
         if (this.viewManager.isInOverview()) {

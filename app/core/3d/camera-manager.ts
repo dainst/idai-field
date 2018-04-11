@@ -93,10 +93,11 @@ export abstract class CameraManager {
     }
 
 
-    protected static computeDistanceForZoomToFit(camera: THREE.PerspectiveCamera, mesh: THREE.Mesh): number {
+    protected static computeDistanceForZoomToFit(camera: THREE.PerspectiveCamera,
+                                                 boundingSphere: THREE.Sphere): number {
 
         const fovInRadians: number = camera.fov * (Math.PI / 180);
-        const size = mesh.geometry.boundingSphere.radius;
+        const size = boundingSphere.radius;
 
         return Math.abs(size / Math.sin(fovInRadians / 2));
     }

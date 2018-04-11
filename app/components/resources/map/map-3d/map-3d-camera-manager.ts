@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {DepthMap} from '../../../../core/3d/depth-map';
 import {CameraManager} from '../../../../core/3d/camera-manager';
 import {SceneManager} from '../../../../core/3d/scene-manager';
+import {GeometriesBounds} from './geometries/geometries-bounds';
 
 
 export type CameraMode = 'perspective'|'orthographic';
@@ -34,7 +35,8 @@ export class Map3DCameraManager extends CameraManager {
     private direction: number = CAMERA_DIRECTION_NORTH;
 
 
-    constructor(private sceneManager: SceneManager) {
+    constructor(private sceneManager: SceneManager,
+                private geometriesBounds: GeometriesBounds) {
 
         super();
     }
@@ -44,6 +46,10 @@ export class Map3DCameraManager extends CameraManager {
 
         this.createPerspectiveCamera(canvasWidth, canvasHeight);
         this.createOrthographicCamera(canvasWidth, canvasHeight);
+
+        this.geometriesBounds.initializationNotification().subscribe(() => {
+           this.focusDefaultBounds();
+        });
     }
 
 
@@ -160,8 +166,23 @@ export class Map3DCameraManager extends CameraManager {
 
         this.resetPivotPoint();
 
-        this.zoomPerspectiveCameraToFit(mesh);
-        this.zoomOrthographicCameraToFit(mesh);
+        this.zoomPerspectiveCameraToFit(new THREE.Vector3(mesh.position.x,
+            Map3DCameraManager.getMinY(mesh),
+            mesh.position.z), mesh.geometry.boundingBox, mesh.geometry.boundingSphere);
+        this.zoomOrthographicCameraToFit(mesh.position, mesh.geometry.boundingBox);
+
+        this.orthographicCameraZoomLevel = this.orthographicCamera.zoom;
+    }
+
+
+    public focusDefaultBounds() {
+
+        this.resetPivotPoint();
+
+        const bounds: THREE.Box3 = this.geometriesBounds.getBounds();
+
+        this.zoomPerspectiveCameraToFit(bounds.getCenter(), bounds);
+        this.zoomOrthographicCameraToFit(bounds.getCenter(), bounds);
 
         this.orthographicCameraZoomLevel = this.orthographicCamera.zoom;
     }
@@ -192,34 +213,31 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
-    private zoomPerspectiveCameraToFit(mesh: THREE.Mesh) {
+    private zoomPerspectiveCameraToFit(position: THREE.Vector3, boundingBox: THREE.Box3,
+                                       boundingSphere?: THREE.Sphere) {
 
-        this.perspectiveCamera.position.set(
-            mesh.position.x,
-            Map3DCameraManager.getMinY(mesh),
-            mesh.position.z
-        );
+        this.perspectiveCamera.position.set(position.x, position.y, position.z);
 
-        const distance: number = CameraManager.computeDistanceForZoomToFit(this.perspectiveCamera, mesh)
-            + mesh.geometry.boundingBox.getSize().y / 2;
+        const distance: number = CameraManager.computeDistanceForZoomToFit(
+            this.perspectiveCamera,
+            boundingSphere ? boundingSphere : boundingBox.getBoundingSphere()
+            ) + boundingBox.getSize().y / 2;
         this.perspectiveCamera.translateZ(distance);
     }
 
 
-    private zoomOrthographicCameraToFit(mesh: THREE.Mesh) {
+    private zoomOrthographicCameraToFit(position: THREE.Vector3, bounds: THREE.Box3) {
 
         const width: number = this.orthographicCamera.right - this.orthographicCamera.left;
         const height: number = this.orthographicCamera.top - this.orthographicCamera.bottom;
 
-        this.orthographicCamera.position.set(mesh.position.x, mesh.position.y + 20, mesh.position.z);
-
-        const boundingBox: THREE.Box3 = mesh.geometry.boundingBox;
+        this.orthographicCamera.position.set(position.x, position.y + 20, position.z);
 
         this.orthographicCamera.zoom = Math.min(
-            width / boundingBox.getSize().x,
-            width / boundingBox.getSize().z,
-            height / boundingBox.getSize().x,
-            height / boundingBox.getSize().z
+            width / bounds.getSize().x,
+            width / bounds.getSize().z,
+            height / bounds.getSize().x,
+            height / bounds.getSize().z
         );
         this.orthographicCamera.updateProjectionMatrix();
     }

@@ -57,7 +57,7 @@ export class PointGeometriesComponent implements DoCheck {
 
     public getMarkers(): Array<Map3DMarker> {
 
-        const markers: Array<any> = [];
+        const markers: Array<Map3DMarker> = [];
 
         if (!this.documents || !this.showMarkers) return markers;
 
@@ -69,6 +69,7 @@ export class PointGeometriesComponent implements DoCheck {
         });
 
         this.performVisibilityTest(markers);
+        this.updateGeometriesBounds(markers);
 
         return markers;
     }
@@ -169,6 +170,13 @@ export class PointGeometriesComponent implements DoCheck {
             this.map3DComponent.getCameraManager().getCamera().clone(),
             this.map3DComponent.getViewer().getDepthMap() as DepthMap
         );
+    }
+
+
+    private updateGeometriesBounds(markers: Array<Map3DMarker>) {
+
+        this.map3DComponent.getGeometriesBounds()
+            .setPoints(markers.map(marker => marker.worldSpacePosition));
     }
 
 

@@ -52,9 +52,23 @@ export class MeshGeometryManager {
     }
 
 
+    public getMesh(document: IdaiFieldDocument): THREE.Mesh|undefined {
+
+        const geometry: MeshGeometry|undefined = this.meshGeometries[document.resource.id as string];
+
+        return geometry ? geometry.mesh : undefined;
+    }
+
+
+    public getMeshes(): Array<THREE.Mesh> {
+
+        return Object.values(this.meshGeometries).map(geometry => geometry.mesh);
+    }
+
+
     public getRaycasterObjects(): Array<THREE.Object3D> {
 
-        return Object.values(this.meshGeometries).map(line => line.raycasterObject);
+        return Object.values(this.meshGeometries).map(geometry => geometry.raycasterObject);
     }
 
 
@@ -75,14 +89,6 @@ export class MeshGeometryManager {
             = Object.values(this.meshGeometries).find(line => line.raycasterObject == raycasterObject);
 
         return geometry ? geometry.document: undefined;
-    }
-
-
-    public getMesh(document: IdaiFieldDocument): THREE.Mesh|undefined {
-
-        const geometry: MeshGeometry|undefined = this.meshGeometries[document.resource.id as string];
-
-        return geometry ? geometry.mesh : undefined;
     }
 
 

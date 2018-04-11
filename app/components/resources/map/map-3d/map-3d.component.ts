@@ -11,6 +11,7 @@ import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
 import {Map3DCameraManager} from './map-3d-camera-manager';
 import {IntersectionHelper} from '../../../../core/3d/intersection-helper';
 import {SceneManager} from '../../../../core/3d/scene-manager';
+import {GeometriesBounds} from './geometries/geometries-bounds';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     private controls: Map3DControls;
     private cameraManager: Map3DCameraManager;
     private sceneManager: SceneManager;
+    private geometriesBounds: GeometriesBounds;
 
     private removeMouseMoveEventListener: Function;
     private removeMouseUpEventListener: Function;
@@ -52,6 +54,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     public getControls = () => this.controls;
     public getCameraManager = () => this.cameraManager;
     public getSceneManager = () => this.sceneManager;
+    public getGeometriesBounds = () => this.geometriesBounds;
 
     public onMouseDown = (event: MouseEvent) => this.setControlState(this.controls.onMouseDown(event));
     public onWheel = (event: WheelEvent) => this.controls.onWheel(event);
@@ -69,6 +72,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
         if (!this.viewer) this.initialize();
 
+        if (changes['mainTypeDocument']) this.geometriesBounds.reset();
         if (changes['selectedDocument']) this.controls.setSelectedDocument(this.selectedDocument);
     }
 
@@ -84,7 +88,8 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     private initialize() {
 
         this.sceneManager = new SceneManager();
-        this.cameraManager = new Map3DCameraManager(this.sceneManager);
+        this.geometriesBounds = new GeometriesBounds();
+        this.cameraManager = new Map3DCameraManager(this.sceneManager, this.geometriesBounds);
         this.viewer = new Viewer3D(this.container.nativeElement, this.cameraManager, this.sceneManager, true);
         this.meshGeometryManager = new MeshGeometryManager(this.viewer, this.cameraManager, this.sceneManager,
             this.projectConfiguration);

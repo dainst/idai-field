@@ -78,7 +78,7 @@ export class MeshPreparationUtility {
 
         const geometry = new THREE.Geometry();
         geometry.vertices = this.getVertices(bufferGeometry, offset);
-        geometry.faces = this.getFaces(geometry.vertices);
+        geometry.faces = this.getFaces(geometry.vertices, bufferGeometry.groups);
         geometry.faceVertexUvs = this.getUV(bufferGeometry);
         geometry.uvsNeedUpdate = true;
 
@@ -143,15 +143,27 @@ export class MeshPreparationUtility {
     }
 
 
-    private static getFaces(vertices: Array<THREE.Vector3>): Array<THREE.Face3> {
+    private static getFaces(vertices: Array<THREE.Vector3>, groups: Array<any>): Array<THREE.Face3> {
 
         const faces: Array<THREE.Face3> = [];
 
         for (let i = 0; i < vertices.length; i += 3) {
-            faces.push(new THREE.Face3(i, i + 1, i + 2));
+            const face: THREE.Face3 = new THREE.Face3(i, i + 1, i + 2);
+            face.materialIndex = this.getMaterialIndex(i, groups);
+            faces.push(face);
         }
 
         return faces;
+    }
+
+
+    private static getMaterialIndex(firstFaceIndex: number, groups: Array<any>): number {
+
+        const group = groups.find(group => {
+            return firstFaceIndex >= group.start && firstFaceIndex < group.start + group.count;
+        });
+
+        return group.materialIndex;
     }
 
 

@@ -12,6 +12,7 @@ import {UploadStatus} from './upload-status';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {NewIdaiFieldImageDocument} from "../../core/model/new-idai-field-image-document";
+import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/field/idai-field-image-document-read-datastore';
 
 export interface ImageUploadResult {
 
@@ -37,7 +38,8 @@ export class ImageUploader {
         private persistenceManager: PersistenceManager,
         private projectConfiguration: ProjectConfiguration,
         private settingsService: SettingsService,
-        private uploadStatus: UploadStatus
+        private uploadStatus: UploadStatus,
+        private imageDocumentDatastore: IdaiFieldImageDocumentReadDatastore
     ) {}
 
 
@@ -158,8 +160,13 @@ export class ImageUploader {
             reader.onloadend = (that => {
                 return () => {
                     that.createImageDocument(file, type, depictsRelationTarget)
-                        .then(doc => that.imagestore.create(doc.resource.id, reader.result, true))
-                        .then(() => resolve())
+                        .then(doc => that.imagestore.create(doc.resource.id, reader.result, true).then(() =>
+                            // to refresh the thumbnail in cache, which is done to prevent a conflict afterwards
+                            this.imageDocumentDatastore.get(doc.resource.id, { skip_cache: true })
+                        ))
+                        .then(() =>
+                            resolve()
+                        )
                         .catch(error => {
                             console.error(error);
                             reject([M.IMAGESTORE_ERROR_WRITE, file.name]);

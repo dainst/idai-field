@@ -15,6 +15,13 @@ via a JSON based configuration.
  
 Geo information can be imported or created directly in app.
 
+## Harris Matrix
+
+![idai-field](img/README-FEATURES-2.png)
+
+A harris style matrix is automatically be generated for every trench, 
+based on its stratigraphical units and their temporal relations. 
+
 ## Image management
 
 ![idai-field](img/README-FEATURES-5.png)

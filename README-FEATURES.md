@@ -15,6 +15,22 @@ via a JSON based configuration.
  
 Geo information can be imported or created directly in app.
 
+## Image management
+
+![idai-field](img/README-FEATURES-5.png)
+
+Enables you to import photos or drawings and associate 
+them with resources. Also lets you import 
+maps to provide a visual context to your resources. 
+
+## Synchronization
+
+![idai-field](img/README-FEATURES-6.png) ![idai-field](img/README-FEATURES-7.png)
+
+Multiple clients can be synced to each other to edit the same data on the field site.
+Syncing can also be done to a database server to collect the excavations records
+on a single central system later on.
+
 ## Table view
 
 ![idai-field](img/README-FEATURES-3.png)
@@ -27,11 +43,3 @@ Using the list view, one can batch edit multiple items quickly.
 
 Nesting resources in resources, as for example finds in contexts, 
 makes navigation and finding resources easy.
-
-## Image management
-
-![idai-field](img/README-FEATURES-5.png)
-
-Enables you to import photos or drawings and associate 
-them with resources. Also lets you import 
-maps to provide a visual context to your resources. 

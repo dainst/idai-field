@@ -17,7 +17,7 @@ Geo information can be imported or created directly in app.
 
 ## Harris Matrix
 
-![idai-field](img/README-FEATURES-2.png)
+![idai-field](img/README-FEATURES-8.png)
 
 A harris style matrix is automatically be generated for every trench, 
 based on its stratigraphical units and their temporal relations. 

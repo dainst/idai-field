@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as THREE from 'three';
-import {MeshLoader} from '../../../../../core-3d/mesh-loader';
+import {MeshLoader} from '../../../../../core-3d/mesh-loading/mesh-loader';
 import {LayerMeshManager} from '../layer-mesh-manager';
 
 

@@ -3,7 +3,7 @@ import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, SimpleCha
 import * as THREE from 'three';
 import {Viewer3D} from '../core-3d/viewer-3d';
 import {Model3DViewerControls, Model3DViewerAction} from './model-3d-viewer-controls';
-import {MeshLoader} from '../core-3d/mesh-loader';
+import {MeshLoader} from '../core-3d/mesh-loading/mesh-loader';
 import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
 import {Model3DViewerCameraManager} from './model-3d-viewer-camera-manager';
 import {SceneManager} from '../core-3d/scene-manager';

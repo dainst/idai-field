@@ -3,7 +3,7 @@ import {Layer3DManager} from './layer-3d-manager';
 import {Layer3DMeshManager} from './layer-3d-mesh-manager';
 import {Map3DComponent} from '../../map-3d.component';
 import {LayersComponent} from '../layers.component';
-import {MeshLoadingProgress} from '../../../../../core-3d/mesh-loading-progress';
+import {MeshLoadingProgress} from '../../../../../core-3d/mesh-loading/mesh-loading-progress';
 
 
 @Component({

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {Viewer3D} from './viewer-3d';
-import {CameraManager} from './camera-manager';
+import {Viewer3D} from '../viewer-3d';
+import {CameraManager} from '../camera-manager';
 
 
 /**

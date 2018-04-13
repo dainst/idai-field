@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {DepthMap} from './depth-map';
+import {DepthMap} from './helpers/depth-map';
 import {CameraManager} from './camera-manager';
 import {SceneManager} from './scene-manager';
 

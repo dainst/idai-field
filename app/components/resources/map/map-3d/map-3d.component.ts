@@ -9,7 +9,7 @@ import {Map3DControlState} from './map-3d-control-state';
 import {Viewer3D} from '../../../core-3d/viewer-3d';
 import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
 import {Map3DCameraManager} from './map-3d-camera-manager';
-import {IntersectionHelper} from '../../../core-3d/intersection-helper';
+import {IntersectionHelper} from '../../../core-3d/helpers/intersection-helper';
 import {SceneManager} from '../../../core-3d/scene-manager';
 import {GeometriesBounds} from './geometries/geometries-bounds';
 

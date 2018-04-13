@@ -5,7 +5,7 @@ import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Map3DComponent} from '../map-3d.component';
 import {LayerManager, ListDiffResult} from '../../layer-manager';
 import {LayerMeshManager} from './layer-mesh-manager';
-import {MeshLoadingProgress} from '../../../../core-3d/mesh-loading-progress';
+import {MeshLoadingProgress} from '../../../../core-3d/mesh-loading/mesh-loading-progress';
 
 
 /**

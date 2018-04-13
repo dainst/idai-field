@@ -23,8 +23,8 @@ $roboto-font-path: '../fonts/';
 @import 'components/imagegrid/image-grid';
 @import 'components/mediaoverview/media-overview';
 @import 'components/upload/upload';
-@import 'components/core-3d/mesh-loading-progress-bar';
-@import 'components/core-3d/zoom-buttons';
+@import 'components/core-3d/mesh-loading/mesh-loading-progress-bar';
+@import 'components/core-3d/zoom-buttons/zoom-buttons';
 @import 'components/model-3d-viewer/model-3d-viewer';
 @import 'components/view-3d/view-3d';
 

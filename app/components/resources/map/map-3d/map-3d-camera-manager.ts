@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {DepthMap} from '../../../core-3d/depth-map';
+import {DepthMap} from '../../../core-3d/helpers/depth-map';
 import {CameraManager} from '../../../core-3d/camera-manager';
 import {SceneManager} from '../../../core-3d/scene-manager';
 import {GeometriesBounds} from './geometries/geometries-bounds';

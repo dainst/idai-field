@@ -2,9 +2,9 @@ import * as THREE from 'three';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Map3DControlState} from './map-3d-control-state';
 import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
-import {IntersectionHelper} from '../../../core-3d/intersection-helper';
+import {IntersectionHelper} from '../../../core-3d/helpers/intersection-helper';
 import {Map3DCameraManager} from './map-3d-camera-manager';
-import {VisibilityHelper} from '../../../core-3d/visibility-helper';
+import {VisibilityHelper} from '../../../core-3d/helpers/visibility-helper';
 import {getPointVector, has3DLineGeometry, has3DPointGeometry,
     has3DPolygonGeometry} from '../../../../util/util-3d';
 

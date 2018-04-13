@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import * as THREE from 'three';
-import {SettingsService} from '../../core/settings/settings-service';
+import {SettingsService} from '../../../core/settings/settings-service';
 import {MeshPreparationUtility} from './mesh-preparation-utility';
-import {MeshLoadingProgress} from '../../components/core-3d/mesh-loading-progress';
+import {MeshLoadingProgress} from './mesh-loading-progress';
 
 const ColladaLoader = require('three-collada-loader');
 

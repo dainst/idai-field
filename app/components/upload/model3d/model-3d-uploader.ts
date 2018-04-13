@@ -9,7 +9,7 @@ import {DocumentReadDatastore} from "../../../core/datastore/document-read-datas
 import {Uploader} from '../uploader';
 import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
 import {Model3DThumbnailCreatorModalComponent} from './model-3d-thumbnail-creator-modal.component';
-import {Store3D} from '../../../core/3d/store-3d';
+import {Store3D} from '../../core-3d/store-3d';
 
 
 @Injectable()

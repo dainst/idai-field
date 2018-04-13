@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as THREE from 'three';
-import {MeshLoadingProgress} from '../../components/core-3d/mesh-loading-progress';
+import {MeshLoadingProgress} from './mesh-loading-progress';
 
 
 @Injectable()

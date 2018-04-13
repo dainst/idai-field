@@ -2,8 +2,8 @@ import * as THREE from 'three';
 import {Component, ViewChild, ElementRef, Input, Output, EventEmitter, DoCheck} from '@angular/core';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Map3DComponent} from '../map-3d.component';
-import {DepthMap} from '../../../../../core/3d/depth-map';
-import {VisibilityHelper} from '../../../../../core/3d/visibility-helper';
+import {DepthMap} from '../../../../core-3d/depth-map';
+import {VisibilityHelper} from '../../../../core-3d/visibility-helper';
 import {has3DPointGeometry, getPointVector} from '../../../../../util/util-3d';
 
 

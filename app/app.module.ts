@@ -41,9 +41,6 @@ import {IdaiFieldDocumentDatastore} from './core/datastore/idai-field-document-d
 import {PersistenceManager} from './core/persist/persistence-manager';
 import {DocumentDatastore} from './core/datastore/document-datastore';
 import {Core3DModule} from './components/core-3d/core-3d.module';
-import {MeshLoader} from './core/3d/mesh-loader';
-import {MeshPreparationUtility} from './core/3d/mesh-preparation-utility';
-import {Store3D} from './core/3d/store-3d';
 import {Model3DViewerModule} from './components/model-3d-viewer/model-3d-viewer';
 
 
@@ -144,10 +141,7 @@ let pconf: any = undefined;
         },
         { provide: MD, useClass: M},
         DoceditActiveTabService,
-        StateSerializer,
-        MeshLoader,
-        MeshPreparationUtility,
-        Store3D
+        StateSerializer
     ],
     bootstrap: [ AppComponent ]
 })

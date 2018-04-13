@@ -5,7 +5,7 @@ import {SettingsService} from '../../../core/settings/settings-service';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {M} from '../../../m';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
-import {Store3D} from '../../../core/3d/store-3d';
+import {Store3D} from '../../core-3d/store-3d';
 import {TypeUtility} from '../../../common/type-utility';
 import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
 

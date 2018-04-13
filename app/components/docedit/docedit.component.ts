@@ -15,7 +15,7 @@ import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
-import {Store3D} from '../../core/3d/store-3d';
+import {Store3D} from '../core-3d/store-3d';
 
 
 @Component({

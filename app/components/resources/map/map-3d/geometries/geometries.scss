@@ -2,8 +2,8 @@
  * @author Thomas Kleinke
  */
 
-@import 'point-geometries';
-@import 'mesh-geometries';
+@import 'point-geometries/point-geometries';
+@import 'mesh-geometries/mesh-geometries';
 
 point-geometries,
 mesh-geometries {

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Map3DControlState} from './map-3d-control-state';
-import {MeshGeometryManager} from './geometries/mesh-geometry-manager';
+import {MeshGeometryManager} from './geometries/mesh-geometries/mesh-geometry-manager';
 import {IntersectionHelper} from '../../../core-3d/helpers/intersection-helper';
 import {Map3DCameraManager} from './map-3d-camera-manager';
 import {VisibilityHelper} from '../../../core-3d/helpers/visibility-helper';

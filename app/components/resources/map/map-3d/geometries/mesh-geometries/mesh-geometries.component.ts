@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {Component, Input, OnChanges, SimpleChange, SimpleChanges} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Map3DComponent} from '../map-3d.component';
+import {Map3DComponent} from '../../map-3d.component';
 import {MeshGeometryManager} from './mesh-geometry-manager';
 
 

@@ -4,8 +4,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/documents';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {WidgetsModule} from '../../widgets/widgets.module';
-import {Object3DViewerComponent} from '../object-3d-viewer/object-3d-viewer.component';
-import {MeshOptionsMenuComponent} from '../object-3d-viewer/mesh-options-menu.component';
+import {Model3DViewerComponent} from './model-3d-viewer.component';
+import {MeshOptionsMenuComponent} from './mesh-options-menu.component';
 import {Core3DModule} from '../core-3d/core-3d.module';
 
 
@@ -19,12 +19,12 @@ import {Core3DModule} from '../core-3d/core-3d.module';
         Core3DModule
     ],
     declarations: [
-        Object3DViewerComponent,
+        Model3DViewerComponent,
         MeshOptionsMenuComponent
     ],
     exports: [
-        Object3DViewerComponent
+        Model3DViewerComponent
     ]
 })
 
-export class Object3DViewerModule {}
+export class Model3DViewerModule {}

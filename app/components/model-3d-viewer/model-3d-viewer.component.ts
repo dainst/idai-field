@@ -2,30 +2,30 @@ import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, SimpleCha
     Renderer2} from '@angular/core';
 import * as THREE from 'three';
 import {Viewer3D} from '../../core/3d/viewer-3d';
-import {Object3DViewerControls, Object3DViewerAction} from './object-3d-viewer-controls';
+import {Model3DViewerControls, Model3DViewerAction} from './model-3d-viewer-controls';
 import {MeshLoader} from '../../core/3d/mesh-loader';
 import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
-import {Object3DViewerCameraManager} from './object-3d-viewer-camera-manager';
+import {Model3DViewerCameraManager} from './model-3d-viewer-camera-manager';
 import {SceneManager} from '../../core/3d/scene-manager';
 
 
 @Component({
     moduleId: module.id,
-    selector: 'object-3d-viewer',
-    templateUrl: './object-3d-viewer.html'
+    selector: 'model-3d-viewer',
+    templateUrl: './model-3d-viewer.html'
 })
 /**
  * @author Thomas Kleinke
  */
-export class Object3DViewerComponent implements OnChanges, OnDestroy {
+export class Model3DViewerComponent implements OnChanges, OnDestroy {
 
     @Input() document: IdaiField3DDocument;
 
     @ViewChild('container') container: ElementRef;
 
     private viewer: Viewer3D;
-    private controls: Object3DViewerControls;
-    private cameraManager: Object3DViewerCameraManager;
+    private controls: Model3DViewerControls;
+    private cameraManager: Model3DViewerCameraManager;
     private sceneManager: SceneManager;
 
     private mesh: THREE.Mesh;
@@ -60,7 +60,7 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
     }
 
 
-    public isCurrentAction(action: Object3DViewerAction) {
+    public isCurrentAction(action: Model3DViewerAction) {
 
         return this.controls.getCurrentAction() == action;
     }
@@ -75,10 +75,10 @@ export class Object3DViewerComponent implements OnChanges, OnDestroy {
 
     private initialize() {
 
-        this.cameraManager = new Object3DViewerCameraManager();
+        this.cameraManager = new Model3DViewerCameraManager();
         this.sceneManager = new SceneManager();
         this.viewer = new Viewer3D(this.container.nativeElement, this.cameraManager, this.sceneManager);
-        this.controls = new Object3DViewerControls(this.cameraManager);
+        this.controls = new Model3DViewerControls(this.cameraManager);
 
         this.listenToMouseEvents();
     }

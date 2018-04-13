@@ -64,7 +64,7 @@ export class RoutingService {
         // TODO we really have two separate public methods instead of this check
         if (this.typeUtility.isImageType(documentToSelect.resource.type)) {
             this.jumpToImageTypeRelationTarget(documentToSelect);
-        } else if (documentToSelect.resource.type == 'Object3D') {
+        } else if (documentToSelect.resource.type == 'Model3D') {
             this.jumpTo3DTypeRelationTarget(documentToSelect);
         } else {
             this.jumpToResourceTypeRelationTarget(

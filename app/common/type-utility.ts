@@ -25,7 +25,7 @@ export class TypeUtility {
 
     public is3DType(typeName: string): boolean {
 
-        return typeName == 'Object3D';
+        return typeName == 'Model3D';
     }
 
 
@@ -58,7 +58,7 @@ export class TypeUtility {
 
     public get3DTypeNames(): string[] {
 
-        return ['Object3D'];
+        return ['Model3D'];
     }
 
 

@@ -8,7 +8,7 @@ import {PersistenceManager} from "../../../core/persist/persistence-manager";
 import {DocumentReadDatastore} from "../../../core/datastore/document-read-datastore";
 import {Uploader} from '../uploader';
 import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
-import {Object3DThumbnailCreatorModalComponent} from './object-3d-thumbnail-creator-modal.component';
+import {Model3DThumbnailCreatorModalComponent} from './model-3d-thumbnail-creator-modal.component';
 import {Store3D} from '../../../core/3d/store-3d';
 
 
@@ -16,7 +16,7 @@ import {Store3D} from '../../../core/3d/store-3d';
 /**
  * @author Thomas Kleinke
  */
-export class Object3DUploader extends Uploader {
+export class Model3DUploader extends Uploader {
 
     public static supportedFileTypes: Array<string> = ['dae'];
 
@@ -36,7 +36,7 @@ export class Object3DUploader extends Uploader {
 
     protected async determineType(fileCount: number, relationTarget?: Document): Promise<IdaiType> {
 
-        return this.projectConfiguration.getTypesMap()['Object3D'];
+        return this.projectConfiguration.getTypesMap()['Model3D'];
     }
 
 
@@ -55,7 +55,7 @@ export class Object3DUploader extends Uploader {
     private createThumbnail(document: IdaiField3DDocument)
             : Promise<{ blob: Blob|null, width: number, height: number }> {
 
-        const modal: NgbModalRef = this.modalService.open(Object3DThumbnailCreatorModalComponent,
+        const modal: NgbModalRef = this.modalService.open(Model3DThumbnailCreatorModalComponent,
             {
                 backdrop: 'static',
                 keyboard: false,

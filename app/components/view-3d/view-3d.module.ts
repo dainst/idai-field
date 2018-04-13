@@ -6,7 +6,7 @@ import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {view3DRouting} from './view-3d.routing';
 import {View3DComponent} from './view-3d.component';
-import {Object3DViewerModule} from '../object-3d-viewer/object-3d-viewer';
+import {Model3DViewerModule} from '../model-3d-viewer/model-3d-viewer';
 
 
 @NgModule({
@@ -16,7 +16,7 @@ import {Object3DViewerModule} from '../object-3d-viewer/object-3d-viewer';
         WidgetsModule,
         IdaiDocumentsModule,
         IdaiWidgetsModule,
-        Object3DViewerModule,
+        Model3DViewerModule,
         view3DRouting
     ],
     declarations: [

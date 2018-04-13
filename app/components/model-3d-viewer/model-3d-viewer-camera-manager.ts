@@ -6,7 +6,7 @@ import {CameraManager} from '../../core/3d/camera-manager';
 /**
  * @author Thomas Kleinke
  */
-export class Object3DViewerCameraManager extends CameraManager {
+export class Model3DViewerCameraManager extends CameraManager {
 
     private camera: THREE.PerspectiveCamera;
     private maxCameraDistance: number = 1;

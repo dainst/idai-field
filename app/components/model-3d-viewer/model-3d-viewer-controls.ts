@@ -1,16 +1,16 @@
 import * as THREE from 'three';
-import {Object3DViewerCameraManager} from './object-3d-viewer-camera-manager';
+import {Model3DViewerCameraManager} from './model-3d-viewer-camera-manager';
 
 
-export type Object3DViewerAction = 'drag'|'rotate'|'none';
+export type Model3DViewerAction = 'drag'|'rotate'|'none';
 
 
 /**
  * @author Thomas Kleinke
  */
-export class Object3DViewerControls {
+export class Model3DViewerControls {
     
-    private currentAction: Object3DViewerAction;
+    private currentAction: Model3DViewerAction;
 
     private lastXPosition: number;
     private lastYPosition: number;
@@ -20,10 +20,10 @@ export class Object3DViewerControls {
     private originalRotation: THREE.Quaternion;
 
 
-    constructor(private cameraManager: Object3DViewerCameraManager) {}
+    constructor(private cameraManager: Model3DViewerCameraManager) {}
 
 
-    public getCurrentAction(): Object3DViewerAction {
+    public getCurrentAction(): Model3DViewerAction {
 
         return this.currentAction;
     }

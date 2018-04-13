@@ -5,13 +5,13 @@ import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './object-3d-thumbnail-creator-modal.html'
+    templateUrl: './model-3d-thumbnail-creator-modal.html'
 })
 
 /**
  * @author Thomas Kleinke
  */
-export class Object3DThumbnailCreatorModalComponent {
+export class Model3DThumbnailCreatorModalComponent {
 
     public document: IdaiField3DDocument;
 

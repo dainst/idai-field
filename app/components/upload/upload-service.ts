@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {ImageUploader} from './image/image-uploader';
-import {Object3DUploader} from './object3d/object-3d-uploader';
+import {Model3DUploader} from './model3d/model-3d-uploader';
 import {UploadResult} from './upload-result';
 import {ExtensionUtil} from '../../util/extension-util';
 import {M} from '../../m';
@@ -15,7 +15,7 @@ import {Uploader} from './uploader';
 export class UploadService {
 
     constructor(private imageUploader: ImageUploader,
-                private object3DUploader: Object3DUploader) {}
+                private model3DUploader: Model3DUploader) {}
 
 
     public startUpload(event: Event, relationTarget?: Document): Promise<UploadResult> {
@@ -45,14 +45,14 @@ export class UploadService {
             return ExtensionUtil.isSupported(file, ImageUploader.supportedFileTypes);
         }).length;
 
-        const object3DFileCount: number = files.filter(file => {
-            return ExtensionUtil.isSupported(file, Object3DUploader.supportedFileTypes);
+        const model3DFileCount: number = files.filter(file => {
+            return ExtensionUtil.isSupported(file, Model3DUploader.supportedFileTypes);
         }).length;
 
-        if (imageFileCount > 0 && object3DFileCount == 0) {
+        if (imageFileCount > 0 && model3DFileCount == 0) {
             return this.imageUploader;
-        } else if (object3DFileCount > 0 && imageFileCount == 0) {
-            return this.object3DUploader;
+        } else if (model3DFileCount > 0 && imageFileCount == 0) {
+            return this.model3DUploader;
         } else {
             return undefined;
         }
@@ -61,7 +61,7 @@ export class UploadService {
 
     private static getSupportedFileTypes(): Array<string> {
 
-        return ImageUploader.supportedFileTypes.concat(Object3DUploader.supportedFileTypes);
+        return ImageUploader.supportedFileTypes.concat(Model3DUploader.supportedFileTypes);
     }
 
 

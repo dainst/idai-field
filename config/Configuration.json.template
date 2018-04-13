@@ -505,7 +505,7 @@
                 "Image",
                 "Drawing",
                 "Photo",
-                "Object3D"
+                "Model3D"
             ],
             "range": [
                 "Trench",
@@ -583,7 +583,7 @@
                 "Image",
                 "Drawing",
                 "Photo",
-                "Object3D"
+                "Model3D"
             ],
             "inverse": "depicts",
             "visible": false,
@@ -10831,7 +10831,7 @@
                 "de": "3D-Objekt",
                 "en": "3D Object"
             },
-            "type": "Object3D"
+            "type": "Model3D"
         }
     ],
     "views": [

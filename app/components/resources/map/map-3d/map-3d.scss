@@ -7,14 +7,10 @@
   width: 100%;
   height: calc(100vh - 113px);
   overflow: hidden;
-  cursor: -webkit-grab;
+  cursor: default;
 
   &.drag {
     cursor: -webkit-grabbing;
-  }
-
-  &.rotate {
-    cursor: none;
   }
 
   &.hover:not(.drag):not(.rotate) {

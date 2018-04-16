@@ -6,7 +6,7 @@
 
 #model-3d-viewer {
   overflow: hidden;
-  cursor: -webkit-grab;
+  cursor: default;
 
   &.drag {
     cursor: -webkit-grabbing;

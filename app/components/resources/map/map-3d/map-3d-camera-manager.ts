@@ -91,7 +91,7 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
-    public drag(deltaX: number, deltaY: number): { xChange: number, zChange: number } {
+    public drag(deltaX: number, deltaY: number) {
 
         this.resetPivotPoint();
 
@@ -99,8 +99,6 @@ export class Map3DCameraManager extends CameraManager {
 
         Map3DCameraManager.translate(this.perspectiveCamera, xChange, zChange);
         Map3DCameraManager.translate(this.orthographicCamera, xChange, zChange);
-
-        return { xChange, zChange };
     }
 
 
@@ -412,14 +410,14 @@ export class Map3DCameraManager extends CameraManager {
 
         switch(this.direction) {
             case CAMERA_DIRECTION_WEST:
-                return { xChange: deltaY, zChange: -deltaX };
-            case CAMERA_DIRECTION_SOUTH:
-                return { xChange: -deltaX, zChange: -deltaY };
-            case CAMERA_DIRECTION_EAST:
                 return { xChange: -deltaY, zChange: deltaX };
+            case CAMERA_DIRECTION_SOUTH:
+                return { xChange: deltaX, zChange: deltaY };
+            case CAMERA_DIRECTION_EAST:
+                return { xChange: deltaY, zChange: -deltaX };
             case CAMERA_DIRECTION_NORTH:
             default:
-                return { xChange: deltaX, zChange: deltaY };
+                return { xChange: -deltaX, zChange: -deltaY };
         }
     }
 

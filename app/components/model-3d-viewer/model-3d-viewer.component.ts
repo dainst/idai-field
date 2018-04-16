@@ -95,7 +95,7 @@ export class Model3DViewerComponent implements OnChanges, OnDestroy {
         this.removeMouseUpEventListener = this.renderer.listen(
             'document',
             'mouseup',
-            (event: MouseEvent) => this.controls.onMouseUp(event)
+            (event: MouseEvent) => this.controls.onMouseUp()
         );
     }
 

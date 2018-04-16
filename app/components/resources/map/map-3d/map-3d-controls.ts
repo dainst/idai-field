@@ -18,12 +18,7 @@ const BUTTON_ZOOM_VALUE: number = 3.5;
 export class Map3DControls {
     
     private state: Map3DControlState = { action: 'none' };
-
-    private dragCounter: number;
-    private noSelection: boolean = false;
-
-    private lastXPosition: number;
-    private lastYPosition: number;
+    private preventSelection: boolean = false;
 
 
     constructor(private cameraManager: Map3DCameraManager,
@@ -33,15 +28,12 @@ export class Map3DControls {
 
     public onMouseDown(event: MouseEvent): Map3DControlState {
 
-        this.lastXPosition = event.clientX;
-        this.lastYPosition = event.clientY;
-
         switch (event.which) {
             case 1:  // Left mouse button
-                this.beginDragAction();
+                this.beginChangeAngleAction();
                 break;
             case 3:  // Right mouse button
-                this.beginChangeAngleAction();
+                this.beginDragAction();
                 break;
         }
 
@@ -53,7 +45,7 @@ export class Map3DControls {
 
     public onMouseUp(event: MouseEvent): Map3DControlState {
 
-        if (this.state.action == 'drag') this.updateSelectedDocument(event.clientX, event.clientY);
+        if (this.state.action == 'changeAngle') this.updateSelectedDocument(event.clientX, event.clientY);
 
         this.resetAction();
 
@@ -63,14 +55,8 @@ export class Map3DControls {
 
     public onMouseMove(event: MouseEvent): Map3DControlState {
 
-        const deltaX = this.lastXPosition - event.clientX;
-        const deltaY = this.lastYPosition - event.clientY;
-
-        this.performAction(deltaX, deltaY);
+        this.performAction(event.movementX, event.movementY);
         this.updateHoverDocument(event.clientX, event.clientY);
-
-        this.lastXPosition = event.clientX;
-        this.lastYPosition = event.clientY;
 
         return this.state;
     }
@@ -136,7 +122,6 @@ export class Map3DControls {
     private beginDragAction() {
 
         this.state.action = 'drag';
-        this.dragCounter = 0;
     }
 
 
@@ -154,26 +139,23 @@ export class Map3DControls {
 
     private drag(mouseDeltaX: number, mouseDeltaY: number) {
 
-        const {xChange, zChange} = this.cameraManager.drag(mouseDeltaX / 100, mouseDeltaY / 100);
-
-        // Prevent selection of mesh geometries if a distinguishable drag action is performed
-        this.dragCounter++;
-        if (this.dragCounter > 10 || xChange > 5 || xChange < -5 || zChange > 5 || zChange < -5) {
-            this.noSelection = true;
-        }
+        this.cameraManager.drag(mouseDeltaX / 100, mouseDeltaY / 100);
     }
 
 
     private changeAngle(mouseDeltaY: number) {
 
-        this.cameraManager.changeAngle(-mouseDeltaY / 100);
+        if (mouseDeltaY == 0) return;
+
+        this.cameraManager.changeAngle(mouseDeltaY / 100);
+        this.preventSelection = true;
     }
 
 
     private updateSelectedDocument(xPosition: number, yPosition: number) {
 
-        if (this.noSelection) {
-            this.noSelection = false;
+        if (this.preventSelection) {
+            this.preventSelection = false;
             return;
         }
 

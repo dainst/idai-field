@@ -11,12 +11,7 @@ export type Model3DViewerAction = 'drag'|'rotate'|'none';
 export class Model3DViewerControls {
     
     private currentAction: Model3DViewerAction;
-
-    private lastXPosition: number;
-    private lastYPosition: number;
-
     private mesh: THREE.Mesh;
-
     private originalRotation: THREE.Quaternion;
 
 
@@ -42,16 +37,13 @@ export class Model3DViewerControls {
 
     public onMouseDown(event: MouseEvent) {
 
-        this.lastXPosition = event.clientX;
-        this.lastYPosition = event.clientY;
-
         switch (event.which) {
             case 1:  // Left mouse button
-                this.beginDragAction();
+                this.beginRotateAction();
                 break;
 
             case 3:  // Right mouse button
-                this.beginRotateAction();
+                this.beginDragAction();
                 break;
         }
 
@@ -59,7 +51,7 @@ export class Model3DViewerControls {
     }
 
 
-    public onMouseUp(event: MouseEvent) {
+    public onMouseUp() {
 
         this.resetAction();
     }
@@ -67,13 +59,7 @@ export class Model3DViewerControls {
 
     public onMouseMove(event: MouseEvent) {
 
-        const deltaX = this.lastXPosition - event.clientX;
-        const deltaY = this.lastYPosition - event.clientY;
-
-        this.performAction(deltaX, deltaY);
-
-        this.lastXPosition = event.clientX;
-        this.lastYPosition = event.clientY;
+        this.performAction(event.movementX, event.movementY);
     }
 
 
@@ -146,7 +132,7 @@ export class Model3DViewerControls {
 
     private drag(deltaX: number, deltaY: number) {
 
-        this.cameraManager.drag(deltaX / 1000, -deltaY / 1000);
+        this.cameraManager.drag(-deltaX / 1000, deltaY / 1000);
     }
 
 
@@ -154,8 +140,8 @@ export class Model3DViewerControls {
 
         if (!this.mesh) return;
 
-        this.rotateMeshAroundWorldAxis(new THREE.Vector3(1, 0, 0), deltaY / 100);
-        this.rotateMeshAroundWorldAxis(new THREE.Vector3(0, 0, 1), deltaX / 100);
+        this.rotateMeshAroundWorldAxis(new THREE.Vector3(1, 0, 0), -deltaY / 100);
+        this.rotateMeshAroundWorldAxis(new THREE.Vector3(0, 0, 1), -deltaX / 100);
     }
 
 

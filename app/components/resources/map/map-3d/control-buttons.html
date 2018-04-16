@@ -4,12 +4,12 @@
 
 <div id="change-camera-mode-button"
      class="btn btn-light"
-     [class.activated]="getCameraMode() == 'perspective'"
-     (click)="changeCameraMode()">
+     [class.activated]="getCameraProjectionMode() == 'perspective'"
+     (click)="changeCameraProjectionMode()">
     <span>3D</span>
 </div>
 
-<div *ngIf="getCameraMode() == 'perspective'"
+<div *ngIf="getCameraProjectionMode() == 'perspective'"
      id="reset-camera-angle-button"
      class="btn btn-light"
      [class.activated]="isDefaultAngle()"

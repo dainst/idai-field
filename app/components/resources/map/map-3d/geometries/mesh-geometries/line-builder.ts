@@ -76,7 +76,7 @@ export class LineBuilder {
 
     private createMaterial(document: IdaiFieldDocument, selected: boolean): THREE.Material {
 
-        return this.cameraManager.getMode() == 'perspective' ?
+        return this.cameraManager.getProjectionMode() == 'perspective' ?
             this.createMaterialForPerspectiveCameraMode(document, selected) :
             this.createMaterialForOrthographicCameraMode(document, selected);
     }

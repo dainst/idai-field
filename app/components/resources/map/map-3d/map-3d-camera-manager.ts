@@ -5,7 +5,7 @@ import {SceneManager} from '../../../core-3d/scene-manager';
 import {GeometriesBounds} from './geometries/geometries-bounds';
 
 
-export type CameraMode = 'perspective'|'orthographic';
+export type ProjectionMode = 'perspective'|'orthographic';
 
 const CAMERA_DIRECTION_NORTH: number = 0;
 const CAMERA_DIRECTION_WEST: number = 1;
@@ -22,7 +22,7 @@ const defaultAngle: number = -Math.PI / 3;
  */
 export class Map3DCameraManager extends CameraManager {
 
-    private mode: CameraMode = 'perspective';
+    private projectionMode: ProjectionMode = 'perspective';
 
     private perspectiveCamera: THREE.PerspectiveCamera;
     private orthographicCamera: THREE.OrthographicCamera;
@@ -53,24 +53,24 @@ export class Map3DCameraManager extends CameraManager {
     }
 
 
-    public getMode(): CameraMode {
+    public getProjectionMode(): ProjectionMode {
 
-        return this.mode;
+        return this.projectionMode;
     }
 
 
-    public setMode(mode: CameraMode) {
+    public setProjectionMode(projectionMode: ProjectionMode) {
 
-        if (mode == this.mode || this.isAnimationRunning()) return;
+        if (projectionMode == this.projectionMode || this.isAnimationRunning()) return;
 
-        if (mode == 'orthographic') this.resetOrthographicZoom();
-        this.mode = mode;
+        if (projectionMode == 'orthographic') this.resetOrthographicZoom();
+        this.projectionMode = projectionMode;
     }
 
 
     public getCamera(): THREE.PerspectiveCamera|THREE.OrthographicCamera {
 
-        return this.mode == 'perspective' ? this.perspectiveCamera : this.orthographicCamera;
+        return this.projectionMode == 'perspective' ? this.perspectiveCamera : this.orthographicCamera;
     }
 
 
@@ -102,7 +102,7 @@ export class Map3DCameraManager extends CameraManager {
 
     public changeAngle(delta: number) {
 
-        if (this.mode == 'orthographic') return;
+        if (this.projectionMode == 'orthographic') return;
 
         const angleChange: number = this.getAllowedAngleChange(delta);
 
@@ -114,8 +114,8 @@ export class Map3DCameraManager extends CameraManager {
 
         if (this.isAnimationRunning()) return;
 
-        if (this.mode == 'orthographic') {
-            this.setMode('perspective');
+        if (this.projectionMode == 'orthographic') {
+            this.setProjectionMode('perspective');
             animate = false;
         }
 
@@ -136,14 +136,14 @@ export class Map3DCameraManager extends CameraManager {
         this.direction = Map3DCameraManager.getNextDirection(this.direction, clockwise);
         const rotationInRadians: number = clockwise ? Math.PI / 2 : -Math.PI / 2;
 
-        this.rotatePerspectiveCamera(rotationInRadians, this.mode == 'perspective');
-        this.rotateOrthographicCamera(rotationInRadians, this.mode == 'orthographic');
+        this.rotatePerspectiveCamera(rotationInRadians, this.projectionMode == 'perspective');
+        this.rotateOrthographicCamera(rotationInRadians, this.projectionMode == 'orthographic');
     }
 
 
     public zoom(value: number, camera?: THREE.Camera) {
 
-        if (this.mode == 'perspective') {
+        if (this.projectionMode == 'perspective') {
             this.zoomPerspectiveCamera(value, camera as THREE.PerspectiveCamera);
         } else {
             this.zoomOrthographicCamera(value, camera as THREE.OrthographicCamera);
@@ -197,7 +197,6 @@ export class Map3DCameraManager extends CameraManager {
 
         this.orthographicCameraZoomLevel = this.orthographicCamera.zoom;
     }
-
 
 
     private zoomPerspectiveCamera(value: number, camera: THREE.PerspectiveCamera = this.perspectiveCamera) {

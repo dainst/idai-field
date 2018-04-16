@@ -162,7 +162,7 @@ export class PointGeometriesComponent implements DoCheck {
 
     private isVisible(marker: Map3DMarker) {
 
-        if (this.map3DComponent.getCameraManager().getMode() == 'orthographic') return true;
+        if (this.map3DComponent.getCameraManager().getProjectionMode() == 'orthographic') return true;
 
         return VisibilityHelper.isVisible(
             marker.worldSpacePosition,

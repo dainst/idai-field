@@ -1,6 +1,6 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {Map3DComponent} from './map-3d.component';
-import {CameraMode} from './map-3d-camera-manager';
+import {ProjectionMode} from './map-3d-camera-manager';
 
 
 @Component({
@@ -21,7 +21,7 @@ export class ControlButtonsComponent {
     constructor(private map3DComponent: Map3DComponent) {}
 
 
-    public getCameraMode = () => this.map3DComponent.getCameraManager().getMode();
+    public getCameraProjectionMode = () => this.map3DComponent.getCameraManager().getProjectionMode();
     public isDefaultAngle = () => this.map3DComponent.getCameraManager().isDefaultAngle();
 
 
@@ -43,14 +43,14 @@ export class ControlButtonsComponent {
     }
 
 
-    public changeCameraMode() {
+    public changeCameraProjectionMode() {
 
         if (this.map3DComponent.getCameraManager().isAnimationRunning()) return;
 
-        const currentMode: CameraMode = this.map3DComponent.getCameraManager().getMode();
-        const newMode: CameraMode = currentMode == 'perspective' ? 'orthographic' : 'perspective';
+        const currentMode: ProjectionMode = this.map3DComponent.getCameraManager().getProjectionMode();
+        const newMode: ProjectionMode = currentMode == 'perspective' ? 'orthographic' : 'perspective';
 
-        this.map3DComponent.getCameraManager().setMode(newMode);
+        this.map3DComponent.getCameraManager().setProjectionMode(newMode);
         this.onCameraModeChanged.emit();
     }
 

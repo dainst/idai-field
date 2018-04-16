@@ -5,19 +5,20 @@ import {SceneManager} from '../../../core-3d/scene-manager';
 import {GeometriesBounds} from './geometries/geometries-bounds';
 
 
-export type ProjectionMode = 'perspective'|'orthographic';
-
 const CAMERA_DIRECTION_NORTH: number = 0;
 const CAMERA_DIRECTION_WEST: number = 1;
 const CAMERA_DIRECTION_SOUTH: number = 2;
 const CAMERA_DIRECTION_EAST: number = 3;
 
-const minAngle: number = -1.5607963267948966;
-const maxAngle: number = -Math.PI / 6;
-const defaultAngle: number = -Math.PI / 3;
+const PERSPECTIVE_MIN_ANGLE: number = -1.5607963267948966;
+const PERSPECTIVE_MAX_ANGLE: number = -Math.PI / 6;
+const PERSPECTIVE_DEFAULT_ANGLE: number = -Math.PI / 3;
 
 const ORTHOGRAPHIC_MIN_ZOOM: number = 0.01;
 const ORTHOGRAPHIC_MAX_ZOOM: number = 100;
+
+
+export type ProjectionMode = 'perspective'|'orthographic';
 
 
 /**
@@ -122,13 +123,13 @@ export class Map3DCameraManager extends CameraManager {
             animate = false;
         }
 
-        this.applyAngleChange(defaultAngle - this.perspectiveCameraAngle, animate);
+        this.applyAngleChange(PERSPECTIVE_DEFAULT_ANGLE - this.perspectiveCameraAngle, animate);
     }
 
 
     public isDefaultAngle(): boolean {
 
-        return this.perspectiveCameraAngle == defaultAngle;
+        return this.perspectiveCameraAngle == PERSPECTIVE_DEFAULT_ANGLE;
     }
 
 
@@ -426,13 +427,13 @@ export class Map3DCameraManager extends CameraManager {
     private getAllowedAngleChange(delta: number): number {
 
         if (delta < 0) {
-            return this.perspectiveCameraAngle + delta >= minAngle ?
+            return this.perspectiveCameraAngle + delta >= PERSPECTIVE_MIN_ANGLE ?
                 delta :
-                minAngle - this.perspectiveCameraAngle;
+                PERSPECTIVE_MIN_ANGLE - this.perspectiveCameraAngle;
         } else {
-            return this.perspectiveCameraAngle + delta <= maxAngle ?
+            return this.perspectiveCameraAngle + delta <= PERSPECTIVE_MAX_ANGLE ?
                 delta :
-                maxAngle - this.perspectiveCameraAngle;
+                PERSPECTIVE_MAX_ANGLE - this.perspectiveCameraAngle;
         }
     }
 

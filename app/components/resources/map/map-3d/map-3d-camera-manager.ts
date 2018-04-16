@@ -16,6 +16,9 @@ const minAngle: number = -1.5607963267948966;
 const maxAngle: number = -Math.PI / 6;
 const defaultAngle: number = -Math.PI / 3;
 
+const ORTHOGRAPHIC_MIN_ZOOM: number = 0.01;
+const ORTHOGRAPHIC_MAX_ZOOM: number = 100;
+
 
 /**
  * @author Thomas Kleinke
@@ -207,8 +210,14 @@ export class Map3DCameraManager extends CameraManager {
 
     private zoomOrthographicCamera(value: number, camera: THREE.OrthographicCamera = this.orthographicCamera) {
 
-        camera.zoom -= value / 2;
-        if (camera.zoom < 0) camera.zoom = 0;
+        camera.zoom -= value * camera.zoom / 7;
+
+        if (camera.zoom < ORTHOGRAPHIC_MIN_ZOOM) {
+            camera.zoom = ORTHOGRAPHIC_MIN_ZOOM;
+        } else if (camera.zoom > ORTHOGRAPHIC_MAX_ZOOM) {
+            camera.zoom = ORTHOGRAPHIC_MAX_ZOOM;
+        }
+
         camera.updateProjectionMatrix();
     }
 

@@ -10786,22 +10786,20 @@
             "type": "Metal"
         },
         {
+            "type": "Model3D",
+            "label": "3D-Modell",
+            "labels": {
+                "de": "3D-Modell",
+                "en": "3D Model"
+            },
             "fields": [
                 {
-                    "description": "Bearbeiter bzw. Bearbeiterin der Ressouce.",
-                    "descriptions": {
-                        "de": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-                    },
-                    "editable": true,
-                    "inputType": "input",
-                    "label": "Bearbeiter/Bearbeiterin",
+                    "name": "hasCreator",
+                    "label": "Ersteller/Erstellerin",
                     "labels": {
-                        "de": "Bearbeiter/Bearbeiterin",
-                        "en": "Processor",
-                        "it": "Responsabile"
-                    },
-                    "name": "hasProcessor",
-                    "visible": true
+                        "de": "Ersteller/Erstellerin",
+                        "en": "Creator"
+                    }
                 },
                 {
                     "name": "georeferenced",
@@ -10809,29 +10807,23 @@
                     "inputType": "boolean"
                 },
                 {
+                    "name": "originalFilename",
                     "editable": false,
-                    "visible": false,
-                    "name": "originalFilename"
+                    "visible": false
                 },
                 {
-                    "editable": false,
-                    "visible": false,
+                    "name": "thumbnailWidth",
                     "inputType": "unsignedInt",
-                    "name": "thumbnailWidth"
+                    "editable": false,
+                    "visible": false
                 },
                 {
-                    "editable": false,
-                    "visible": false,
+                    "name": "thumbnailHeight",
                     "inputType": "unsignedInt",
-                    "name": "thumbnailHeight"
+                    "editable": false,
+                    "visible": false
                 }
-            ],
-            "label": "3D-Objekt",
-            "labels": {
-                "de": "3D-Objekt",
-                "en": "3D Object"
-            },
-            "type": "Model3D"
+            ]
         }
     ],
     "views": [

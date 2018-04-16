@@ -29,19 +29,11 @@ export class DepthMap {
 
         if (!this.ready) throw 'Called update before depth map was ready';
 
-        const defaultOverrideMaterial: THREE.Material = this.scene.overrideMaterial;
         const defaultRenderTarget: THREE.RenderTarget = this.renderer.getRenderTarget();
 
-        this.scene.overrideMaterial = this.material;
-        this.renderer.setRenderTarget(this.renderTarget);
-
-        this.camera.layers.disable(DepthMap.NO_DEPTH_MAPPING_LAYER);
-
+        this.startRenderingToDepthMap();
         this.renderer.render(this.scene, this.camera, this.renderTarget);
-
-        this.scene.overrideMaterial = defaultOverrideMaterial;
-        this.renderer.setRenderTarget(defaultRenderTarget);
-        this.camera.layers.enable(DepthMap.NO_DEPTH_MAPPING_LAYER);
+        this.stopRenderingToDepthMap(defaultRenderTarget);
     }
 
 
@@ -73,6 +65,22 @@ export class DepthMap {
     public setReady(ready: boolean) {
 
         this.ready = ready;
+    }
+
+
+    private startRenderingToDepthMap() {
+
+        this.renderer.setRenderTarget(this.renderTarget);
+        this.scene.overrideMaterial = this.material;
+        this.camera.layers.disable(DepthMap.NO_DEPTH_MAPPING_LAYER);
+    }
+
+
+    private stopRenderingToDepthMap(defaultRenderTarget: THREE.RenderTarget) {
+
+        this.renderer.setRenderTarget(defaultRenderTarget);
+        this.scene.overrideMaterial = null as any;
+        this.camera.layers.enable(DepthMap.NO_DEPTH_MAPPING_LAYER);
     }
 
 

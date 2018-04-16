@@ -25,8 +25,8 @@ export class Model3DViewerComponent implements OnChanges, OnDestroy {
 
     private viewer: Viewer3D;
     private controls: Model3DViewerControls;
-    private cameraManager: Model3DViewerCameraManager;
-    private sceneManager: SceneManager;
+    private cameraManager: Model3DViewerCameraManager = new Model3DViewerCameraManager();
+    private sceneManager: SceneManager = new SceneManager();
 
     private mesh: THREE.Mesh;
 
@@ -75,8 +75,6 @@ export class Model3DViewerComponent implements OnChanges, OnDestroy {
 
     private initialize() {
 
-        this.cameraManager = new Model3DViewerCameraManager();
-        this.sceneManager = new SceneManager();
         this.viewer = new Viewer3D(this.container.nativeElement, this.cameraManager, this.sceneManager);
         this.controls = new Model3DViewerControls(this.cameraManager);
 

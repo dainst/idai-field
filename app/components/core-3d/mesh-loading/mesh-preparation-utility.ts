@@ -65,7 +65,7 @@ export class MeshPreparationUtility {
 
             setTimeout(() => {
                 const result: any = adjustmentFunction(mesh, parameter1, parameter2, parameter3);
-                this.meshLoadingProgress.setAdjustingProgress(mesh.name, stepNumber, 5);
+                this.meshLoadingProgress.setPreparationProgress(mesh.name, stepNumber, 5);
                 resolve(result);
             });
         });

@@ -6,7 +6,7 @@ import {Observer} from 'rxjs/Observer';
 export interface MeshLoadingProgressState {
 
     loadingProgress: number;
-    adjustingProgress: number;
+    preparationProgress: number;
 }
 
 
@@ -35,22 +35,22 @@ export class MeshLoadingProgress {
     }
 
 
-    public setLoadingProgress(meshId: string, loaded: number, total: number) {
+    public setLoadingProgress(meshId: string, current: number, total: number) {
 
         if (!this.progressStates[meshId]) this.progressStates[meshId] = {
             loadingProgress: 0,
-            adjustingProgress: 0
+            preparationProgress: 0
         };
 
-        this.progressStates[meshId].loadingProgress = (loaded / total) * 100;
+        this.progressStates[meshId].loadingProgress = (current / total) * 100;
 
         this.notifyObservers();
     }
 
 
-    public setAdjustingProgress(meshId: string, adjusted: number, total: number) {
+    public setPreparationProgress(meshId: string, current: number, total: number) {
 
-        this.progressStates[meshId].adjustingProgress = (adjusted / total) * 100;
+        this.progressStates[meshId].preparationProgress = (current / total) * 100;
 
         this.notifyObservers();
     }
@@ -83,7 +83,7 @@ export class MeshLoadingProgress {
 
         if (!progressState) return 0;
 
-        return Math.round((progressState.loadingProgress + progressState.adjustingProgress) / 2);
+        return Math.round((progressState.loadingProgress + progressState.preparationProgress) / 2);
     }
 
 

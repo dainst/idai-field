@@ -50,6 +50,8 @@ export class MeshOptionsMenuComponent extends MenuComponent implements OnChanges
         this.smoothShading = !this.smoothShading;
 
         MeshOptionsMenuComponent.setFlatShading(this.mesh.material, !this.smoothShading);
+        MeshOptionsMenuComponent.setFlatShading((this.mesh.children[0] as THREE.Mesh).material,
+            !this.smoothShading);
 
         if (this.meshMaterial) {
             MeshOptionsMenuComponent.setFlatShading(this.meshMaterial, !this.smoothShading);

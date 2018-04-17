@@ -8,16 +8,16 @@ let EC = protractor.ExpectedConditions;
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class DoceditImageTabPage {
+export class DoceditMediaTabPage {
 
     // click
 
-    public static clickDeleteImages() {
+    public static clickDeleteMediaResources() {
 
-        return common.click(element(by.id('delete-images')));
+        return common.click(element(by.id('delete-media-resources')));
     }
 
-    public static clickInsertImage = function() {
+    public static clickInsertMediaResource = function() {
 
         common.click(element(by.id('create-depicts-relations-btn')));
     };

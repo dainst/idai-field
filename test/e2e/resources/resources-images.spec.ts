@@ -2,9 +2,9 @@ import {browser, by, element, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from './resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
-import {ImagePickerModalPage} from '../widgets/image-picker-modal.page';
+import {MediaResourcePickerModalPage} from '../widgets/image-picker-modal.page';
 import {ThumbnailViewPage} from '../widgets/thumbnail-view.page';
-import {DoceditImageTabPage} from '../docedit/docedit-image-tab.page';
+import {DoceditMediaTabPage} from '../docedit/docedit-media-tab.page';
 let EC = protractor.ExpectedConditions;
 
 const delays = require('../config/delays');
@@ -36,27 +36,27 @@ describe('resources/images --', function() {
     });
 
 
-    function gotoImageTab() {
+    function goToMediaTab() {
 
         NavbarPage.clickNavigateToMediaOverview();
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.openEditByDoubleClickResource('testf1');
-        DoceditPage.clickImagesTab();
+        DoceditPage.clickMediaTab();
 
     }
 
     function addTwoImages() {
 
-        gotoImageTab();
-        DoceditImageTabPage.clickInsertImage();
-        ImagePickerModalPage.getCells().get(0).click();
-        ImagePickerModalPage.getCells().get(1).click();
-        ImagePickerModalPage.clickAddImages();
+        goToMediaTab();
+        DoceditMediaTabPage.clickInsertMediaResource();
+        MediaResourcePickerModalPage.getCells().get(0).click();
+        MediaResourcePickerModalPage.getCells().get(1).click();
+        MediaResourcePickerModalPage.clickAddMediaResources();
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortSleep * 80);
     }
 
-    it('create links for images', done => {
+    fit('create links for images', done => {
 
         addTwoImages();
         ThumbnailViewPage.getThumbs().then(thumbs => {
@@ -68,10 +68,10 @@ describe('resources/images --', function() {
     it('delete links to one image', done => {
 
         addTwoImages();
-        gotoImageTab();
-        DoceditImageTabPage.getCells().get(0).click();
-        DoceditImageTabPage.clickDeleteImages();
-        DoceditImageTabPage.getCells().then(cells => {
+        goToMediaTab();
+        DoceditMediaTabPage.getCells().get(0).click();
+        DoceditMediaTabPage.clickDeleteMediaResources();
+        DoceditMediaTabPage.getCells().then(cells => {
             expect(cells.length).toBe(1);
         });
         DoceditPage.clickSaveDocument();
@@ -85,11 +85,11 @@ describe('resources/images --', function() {
     it('delete links to two images', done => {
 
         addTwoImages();
-        gotoImageTab();
-        DoceditImageTabPage.getCells().get(0).click();
-        DoceditImageTabPage.getCells().get(1).click();
-        DoceditImageTabPage.clickDeleteImages();
-        DoceditImageTabPage.getCells().then(cells => {
+        goToMediaTab();
+        DoceditMediaTabPage.getCells().get(0).click();
+        DoceditMediaTabPage.getCells().get(1).click();
+        DoceditMediaTabPage.clickDeleteMediaResources();
+        DoceditMediaTabPage.getCells().then(cells => {
             expect(cells.length).toBe(0);
         });
         DoceditPage.clickSaveDocument();

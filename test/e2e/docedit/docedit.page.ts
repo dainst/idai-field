@@ -27,9 +27,9 @@ export class DoceditPage {
         common.click(element(by.id('docedit-relations-tab')));
     };
 
-    public static clickImagesTab = function() {
+    public static clickMediaTab = function() {
 
-        common.click(element(by.id('docedit-images-tab')));
+        common.click(element(by.id('docedit-media-tab')));
     };
 
     public static clickConflictsTab = function() {

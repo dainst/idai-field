@@ -68,8 +68,7 @@ export abstract class Uploader {
         let promise: Promise<any> = Promise.resolve();
 
         for (let file of files) {
-            if (!ExtensionUtil.isSupported(file,
-                    (<typeof Uploader>this.constructor).supportedFileTypes)) {
+            if (!ExtensionUtil.isSupported(file, (<typeof Uploader>this.constructor).supportedFileTypes)) {
                 this.uploadStatus.setTotalFiles(this.uploadStatus.getTotalFiles() - 1);
             } else {
                 promise = promise.then(() => this.isDuplicateFilename(file.name))

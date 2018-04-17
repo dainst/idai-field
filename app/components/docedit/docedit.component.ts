@@ -15,7 +15,7 @@ import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
-import {Store3D} from '../core-3d/store-3d';
+import {Model3DStore} from '../core-3d/model-3d-store';
 
 
 @Component({
@@ -73,7 +73,7 @@ export class DoceditComponent {
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
         private imagestore: Imagestore,
-        private store3D: Store3D,
+        private model3DStore: Model3DStore,
         private typeUtility: TypeUtility,
         private activeTabService: DoceditActiveTabService,
         configLoader: ConfigLoader) {
@@ -362,7 +362,7 @@ export class DoceditComponent {
                 return [M.IMAGESTORE_ERROR_DELETE, document.resource.id];
             });
         } else if (this.typeUtility.is3DType(document.resource.type)) {
-            return this.store3D.remove(document.resource.id);
+            return this.model3DStore.remove(document.resource.id);
         } else {
             return Promise.resolve();
         }

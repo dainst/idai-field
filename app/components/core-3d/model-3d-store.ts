@@ -14,7 +14,7 @@ const path = require('path');
 /**
  * @author Thomas Kleinke
  */
-export class Store3D {
+export class Model3DStore {
 
     constructor(private settingsService: SettingsService,
                 private pouchdbManager: PouchdbManager,
@@ -78,8 +78,8 @@ export class Store3D {
 
     private async copyImageFiles(file: File, directoryPath: string): Promise<any> {
 
-        for (let imageFileName of Store3D.getImageFileNames(file)) {
-            await this.copyFile(Store3D.getImageFilePath(imageFileName, file),
+        for (let imageFileName of Model3DStore.getImageFileNames(file)) {
+            await this.copyFile(Model3DStore.getImageFilePath(imageFileName, file),
                 directoryPath + '/' + imageFileName);
         }
     }

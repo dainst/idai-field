@@ -6,7 +6,7 @@ import {MeshLoadingProgress} from './mesh-loading/mesh-loading-progress';
 import {ZoomButtonsComponent} from './zoom-buttons/zoom-buttons.component';
 import {MeshPreparationUtility} from './mesh-loading/mesh-preparation-utility';
 import {MeshLoader} from './mesh-loading/mesh-loader';
-import {Store3D} from './store-3d';
+import {Model3DStore} from './model-3d-store';
 
 @NgModule({
     imports: [
@@ -19,7 +19,7 @@ import {Store3D} from './store-3d';
     ],
     providers: [
         MeshLoadingProgress,
-        Store3D,
+        Model3DStore,
         MeshLoader,
         MeshPreparationUtility
     ],

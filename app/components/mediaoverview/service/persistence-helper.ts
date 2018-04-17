@@ -5,7 +5,7 @@ import {SettingsService} from '../../../core/settings/settings-service';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {M} from '../../../m';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
-import {Store3D} from '../../core-3d/store-3d';
+import {Model3DStore} from '../../core-3d/model-3d-store';
 import {TypeUtility} from '../../../common/type-utility';
 import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
 
@@ -22,7 +22,7 @@ export class PersistenceHelper {
         private persistenceManager: PersistenceManager,
         private settingsService: SettingsService,
         private imagestore: Imagestore,
-        private store3D: Store3D,
+        private model3DStore: Model3DStore,
         private typeUtility: TypeUtility
     ) {}
 
@@ -110,7 +110,7 @@ export class PersistenceHelper {
                 return [M.IMAGESTORE_ERROR_DELETE, document.resource.id];
             });
         } else if (this.typeUtility.is3DType(document.resource.type)) {
-            return this.store3D.remove(document.resource.id as string);
+            return this.model3DStore.remove(document.resource.id as string);
         } else {
             return Promise.resolve();
         }

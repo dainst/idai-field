@@ -9,7 +9,7 @@ import {DocumentReadDatastore} from "../../../core/datastore/document-read-datas
 import {Uploader} from '../uploader';
 import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
 import {Model3DThumbnailCreatorModalComponent} from './model-3d-thumbnail-creator-modal.component';
-import {Store3D} from '../../core-3d/store-3d';
+import {Model3DStore} from '../../core-3d/model-3d-store';
 
 
 @Injectable()
@@ -22,7 +22,7 @@ export class Model3DUploader extends Uploader {
 
 
     public constructor(
-        private store3D: Store3D,
+        private model3DStore: Model3DStore,
         private persistenceManager: PersistenceManager,
         private projectConfiguration: ProjectConfiguration,
         private settingsService: SettingsService,
@@ -43,12 +43,12 @@ export class Model3DUploader extends Uploader {
     protected async uploadFile(file: File, type: IdaiType, relationTarget?: Document): Promise<any> {
 
         const document: IdaiField3DDocument = await this.create3DDocument(file, type);
-        await this.store3D.save(file, document);
+        await this.model3DStore.save(file, document);
 
         const {blob, width, height} = await this.createThumbnail(document);
         const updatedDocument: IdaiField3DDocument = await this.complete(document, width, height,
             relationTarget);
-        await this.store3D.saveThumbnail(updatedDocument, blob);
+        await this.model3DStore.saveThumbnail(updatedDocument, blob);
     }
 
 

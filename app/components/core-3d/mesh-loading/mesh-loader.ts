@@ -32,9 +32,11 @@ export class MeshLoader {
                 },
                 (event: ProgressEvent) => {
                     this.loadingProgress.setLoadingProgress(id, event.loaded, event.total);
+                },
+                (err: any) => {
+                    console.error('Failed to load file ' + id);
+                    reject(err);
                 });
-
-            // TODO Error handling
         });
     }
 

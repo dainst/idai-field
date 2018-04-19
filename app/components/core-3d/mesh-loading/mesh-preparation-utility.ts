@@ -79,7 +79,7 @@ export class MeshPreparationUtility {
         const geometry = new THREE.Geometry();
         geometry.vertices = this.getVertices(bufferGeometry, offset);
         geometry.faces = this.getFaces(geometry.vertices, bufferGeometry.groups);
-        geometry.faceVertexUvs = this.getUV(bufferGeometry);
+        geometry.faceVertexUvs = this.getUVs(bufferGeometry);
         geometry.uvsNeedUpdate = true;
 
         return geometry;
@@ -167,18 +167,18 @@ export class MeshPreparationUtility {
     }
 
 
-    private static getUV(bufferGeometry: THREE.BufferGeometry): Array<Array<Array<THREE.Vector2>>> {
+    private static getUVs(bufferGeometry: THREE.BufferGeometry): Array<Array<Array<THREE.Vector2>>> {
 
         const attribute = bufferGeometry.getAttribute('uv');
-        const uv = attribute.array;
+        const uvs = attribute.array;
 
         const result: Array<Array<Array<THREE.Vector2>>> = [[]];
 
-        for (let i = 0; i < uv.length; i += 6) {
+        for (let i = 0; i < uvs.length; i += 6) {
             result[0].push([
-                new THREE.Vector2(uv[i], uv[i + 1]),
-                new THREE.Vector2(uv[i + 2], uv[i + 3]),
-                new THREE.Vector2(uv[i + 4], uv[i + 5])
+                new THREE.Vector2(uvs[i], uvs[i + 1]),
+                new THREE.Vector2(uvs[i + 2], uvs[i + 3]),
+                new THREE.Vector2(uvs[i + 4], uvs[i + 5])
             ]);
         }
 

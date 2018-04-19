@@ -51,19 +51,19 @@ export class MeshLoader {
 
     private async extractMesh(colladaModel: THREE.ColladaModel, id: string): Promise<THREE.Mesh> {
 
-        const scene: THREE.Scene = colladaModel.scene;
+        const group: THREE.Group = colladaModel.scene;
 
-        const mesh: THREE.Mesh = MeshLoader.getMesh(scene);
+        const mesh: THREE.Mesh = MeshLoader.getMesh(group);
         mesh.name = id;
 
-        await this.meshEditingUtility.performDefaultAdjustments(mesh, scene);
+        await this.meshEditingUtility.performDefaultAdjustments(mesh, group);
 
         return mesh;
     }
 
 
-    private static getMesh(scene: THREE.Scene): THREE.Mesh {
+    private static getMesh(group: THREE.Group): THREE.Mesh {
 
-        return scene.children.find(object => object instanceof THREE.Mesh) as THREE.Mesh;
+        return group.children.find(object => object instanceof THREE.Mesh) as THREE.Mesh;
     }
 }

@@ -12,7 +12,7 @@ export class MeshPreparationUtility {
     constructor(private meshLoadingProgress: MeshLoadingProgress) {}
 
 
-    public performDefaultAdjustments(mesh: THREE.Mesh, scene: THREE.Scene): Promise<any> {
+    public performDefaultAdjustments(mesh: THREE.Mesh, group: THREE.Group): Promise<any> {
 
         return new Promise<any>(async resolve => {
 
@@ -29,8 +29,8 @@ export class MeshPreparationUtility {
                 MeshPreparationUtility.createBackSideMesh.bind(MeshPreparationUtility), mesh, geometry);
 
             await this.performAdjustment(4,
-                MeshPreparationUtility.applySceneMatrix.bind(MeshPreparationUtility), mesh, backSideMesh,
-                position, scene);
+                MeshPreparationUtility.applyGroupMatrix.bind(MeshPreparationUtility), mesh, backSideMesh,
+                position, group);
 
             await this.performAdjustment(5,
                 MeshPreparationUtility.centerGeometry.bind(MeshPreparationUtility), mesh);
@@ -112,14 +112,14 @@ export class MeshPreparationUtility {
     }
 
 
-    private static applySceneMatrix(mesh: THREE.Mesh, backSideMesh: THREE.Mesh, position: THREE.Vector3,
-                                    scene: THREE.Scene) {
+    private static applyGroupMatrix(mesh: THREE.Mesh, backSideMesh: THREE.Mesh, position: THREE.Vector3,
+                                    group: THREE.Group) {
 
-        scene.updateMatrix();
+        group.updateMatrix();
 
-        mesh.geometry.applyMatrix(scene.matrix);
-        backSideMesh.geometry.applyMatrix(scene.matrix);
-        position.applyMatrix4(scene.matrix);
+        mesh.geometry.applyMatrix(group.matrix);
+        backSideMesh.geometry.applyMatrix(group.matrix);
+        position.applyMatrix4(group.matrix);
     }
 
 

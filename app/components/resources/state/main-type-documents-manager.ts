@@ -50,9 +50,9 @@ export class MainTypeDocumentsManager {
     }
 
 
-    public isRecordedInSelectedOperationTypeDocument(document: IdaiFieldDocument|undefined): boolean {
+    public isRecordedInSelectedOperationTypeDocument(
+        document: IdaiFieldDocument): boolean {
 
-        if (document) return false;
         if (!this.resourcesState.getMainTypeDocument()) return false;
 
         const operationTypeDocumentForDocument
@@ -63,7 +63,8 @@ export class MainTypeDocumentsManager {
             return false;
         }
 
-        return (operationTypeDocumentForDocument.resource.id != (this.resourcesState.getMainTypeDocument() as any).resource.id);
+        return (operationTypeDocumentForDocument.resource.id ===
+            (this.resourcesState.getMainTypeDocument() as any).resource.id);
     }
 
 

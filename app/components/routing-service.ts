@@ -50,7 +50,7 @@ export class RoutingService {
         const viewName = this.viewFacade.getMainTypeHomeViewName(document.resource.type);
         if (viewName == this.viewFacade.getCurrentViewName()) return;
 
-        await this.router.navigate(['resources', viewName, document.resource.id]);
+        await this.router.navigate(['resources', viewName]);
         await this.viewFacade.selectMainTypeDocument(document);
     }
 

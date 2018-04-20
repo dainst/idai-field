@@ -243,7 +243,7 @@ export class ViewFacade {
         if (!this.documentsManager.getSelectedDocument()) return false;
 
         return this.mainTypeDocumentsManager.isRecordedInSelectedOperationTypeDocument(
-            this.documentsManager.getSelectedDocument()
+            this.documentsManager.getSelectedDocument() as IdaiFieldDocument
         );
     }
 

@@ -58,6 +58,7 @@ export class MeshPreparationUtility {
 
         return new Promise<any>(resolve => {
 
+            // The timeout is necessary for Angular to notice changes in meshLoadingProgress
             setTimeout(() => {
                 const result: any = adjustmentFunction(mesh, parameter1, parameter2);
                 this.meshLoadingProgress.setPreparationProgress(mesh.name, stepNumber, 5);

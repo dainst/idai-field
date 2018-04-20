@@ -22,8 +22,6 @@ export class MainTypeDocumentsManager {
     
     public getDocuments = () => this.documents;
 
-    public select = (document: IdaiFieldDocument) => this.navigationPathManager.setMainTypeDocument(document);
-
 
     public async populate(): Promise<void> {
 
@@ -45,26 +43,8 @@ export class MainTypeDocumentsManager {
             selectedDocument, this.documents);
 
         if (operationTypeDocument && operationTypeDocument != this.resourcesState.getMainTypeDocument()) {
-            this.select(operationTypeDocument);
+            this.navigationPathManager.setMainTypeDocument(operationTypeDocument);
         }
-    }
-
-
-    public isRecordedInSelectedOperationTypeDocument(
-        document: IdaiFieldDocument): boolean {
-
-        if (!this.resourcesState.getMainTypeDocument()) return false;
-
-        const operationTypeDocumentForDocument
-            = MainTypeDocumentsManager.getMainTypeDocumentForDocument(document, this.documents);
-
-        if (!operationTypeDocumentForDocument) {
-            console.error('Could not find main type document for selected document', document);
-            return false;
-        }
-
-        return (operationTypeDocumentForDocument.resource.id ===
-            (this.resourcesState.getMainTypeDocument() as any).resource.id);
     }
 
 
@@ -100,7 +80,6 @@ export class MainTypeDocumentsManager {
                 this.resourcesState.setMainTypeDocument(document);
             } catch(e) {
                 this.resourcesState.removeActiveLayersIds();
-                this.navigationPathManager.setMainTypeDocument(undefined);
                 this.selectFirstOperationTypeDocumentFromList();
             }
         }

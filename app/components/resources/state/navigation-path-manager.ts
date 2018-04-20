@@ -86,12 +86,9 @@ export class NavigationPathManager {
     }
 
 
-    public setMainTypeDocument(selectedMainTypeDocumentResource: IdaiFieldDocument|undefined) {
+    public setMainTypeDocument(selectedMainTypeDocumentResource: IdaiFieldDocument) {
 
-        if (selectedMainTypeDocumentResource) {
-            this.resourcesState.setMainTypeDocument(selectedMainTypeDocumentResource);
-        }
-
+        this.resourcesState.setMainTypeDocument(selectedMainTypeDocumentResource);
         this.notify();
     }
 

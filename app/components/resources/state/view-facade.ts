@@ -183,13 +183,8 @@ export class ViewFacade {
     public async selectMainTypeDocument(mainTypeDocument: Document): Promise<void> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument');
-        this.mainTypeDocumentsManager.select(mainTypeDocument as IdaiFieldDocument);
-
+        this.navigationPathManager.setMainTypeDocument(mainTypeDocument as IdaiFieldDocument);
         await this.populateDocumentList();
-
-        if (!this.isSelectedDocumentRecordedInSelectedMainTypeDocument()) {
-            this.documentsManager.deselect();
-        }
     }
 
 
@@ -228,23 +223,12 @@ export class ViewFacade {
 
         if (!this.isInOverview()) {
             await this.populateMainTypeDocuments();
-            const selectedMainTypeDocument: IdaiFieldDocument|undefined = this.getSelectedMainTypeDocument();
-            if (selectedMainTypeDocument) mainTypeResource = selectedMainTypeDocument;
+            mainTypeResource = this.getSelectedMainTypeDocument();
         } else {
             mainTypeResource = this.getProjectDocument() as any;
         }
 
-        this.navigationPathManager.setMainTypeDocument(mainTypeResource);
-    }
-
-
-    private isSelectedDocumentRecordedInSelectedMainTypeDocument(): boolean {
-
-        if (!this.documentsManager.getSelectedDocument()) return false;
-
-        return this.mainTypeDocumentsManager.isRecordedInSelectedOperationTypeDocument(
-            this.documentsManager.getSelectedDocument() as IdaiFieldDocument
-        );
+        if (mainTypeResource) this.navigationPathManager.setMainTypeDocument(mainTypeResource);
     }
 
 

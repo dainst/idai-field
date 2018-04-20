@@ -308,6 +308,20 @@ export function main() {
         });
 
 
+        // there was a problem ...
+        it('operations view: previous selection gets restored when coming from overview', async () => {
+
+            await viewFacade.selectView('excavation');
+            await viewFacade.setSelectedDocument(featureDocument2);
+
+            await viewFacade.selectView('project');
+            await viewFacade.selectView('excavation');
+            await viewFacade.selectMainTypeDocument(trenchDocument1); // ... with this deleting the selection
+
+            expect(viewFacade.getSelectedDocument()).toBe(featureDocument2);
+        });
+
+
         it('operations view: show only documents with liesWithin relation to a specific resource', async done => {
 
             await viewFacade.selectView('excavation');

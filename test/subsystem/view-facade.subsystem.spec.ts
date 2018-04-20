@@ -79,8 +79,6 @@ export function main() {
             featureDocument1 = Static.ifDoc('Feature 1','feature1','Feature', 'feature1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument1.resource.relations['includes'] = [findDocument1.resource.id, findDocument2.resource.id];
-
-            featureDocument1.resource.relations['includes'] = [findDocument2.resource.id];
             findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
             findDocument2.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
@@ -267,6 +265,7 @@ export function main() {
         it('operations view: query matches selection', async done => {
 
             await viewFacade.selectView('excavation');
+            await viewFacade.moveInto(featureDocument1);
             await viewFacade.setSelectedDocument(findDocument1);
             await viewFacade.setSearchString('find1');
             expect(viewFacade.getSelectedDocument()).toBe(findDocument1);
@@ -284,10 +283,23 @@ export function main() {
         });
 
 
+        it('operations view: previous selection gets restored', async () => {
+
+            await viewFacade.selectView('excavation');
+            await viewFacade.moveInto(featureDocument1);
+            await viewFacade.setSelectedDocument(findDocument1);
+
+            await viewFacade.moveInto(undefined);
+            expect(viewFacade.getSelectedDocument()).toBeUndefined();
+            await viewFacade.moveInto(featureDocument1);
+            expect(viewFacade.getSelectedDocument()).toBe(findDocument1);
+        });
+
+
         it('operations view: show only documents with liesWithin relation to a specific resource', async done => {
 
             await viewFacade.selectView('excavation');
-            await viewFacade.moveInto(featureDocument1 as any);
+            await viewFacade.moveInto(featureDocument1);
 
             let documents = await viewFacade.getDocuments();
             expect(documents.length).toBe(2);

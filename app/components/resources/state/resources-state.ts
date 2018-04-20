@@ -81,6 +81,24 @@ export class ResourcesState {
     }
 
 
+    public setSelectedDocument(document: IdaiFieldDocument) {
+
+        this.withNavPath(
+            navPath => this.getRootSegment(navPath).selected = document,
+            navPath => navPath.selected = document
+        );
+    }
+
+
+    public getSelectedDocument() {
+
+        return this.withNavPath(
+            navPath => this.getRootSegment(navPath).selected,
+            navPath => navPath.selected
+        );
+    }
+
+
     public setQueryString(q: string) {
 
         this.withNavPath(

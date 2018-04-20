@@ -242,7 +242,8 @@ export class NavigationPathManager {
                     ? navigationPath.rootDocument
                     : undefined,
                 q: navigationPath.q,
-                types: navigationPath.types
+                types: navigationPath.types,
+                selected: navigationPath.selected
             }
             : navigationPath;
     }
@@ -279,7 +280,8 @@ export class NavigationPathManager {
                 : oldNavigationPath.elements,
             rootDocument: newRootDocument,
             q: oldNavigationPath.q,
-            types: oldNavigationPath.types
+            types: oldNavigationPath.types,
+            selected: oldNavigationPath.selected
         };
     }
 

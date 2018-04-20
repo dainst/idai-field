@@ -228,8 +228,6 @@ export class ViewFacade {
     private async setupView(viewName: string): Promise<void> {
 
         await this.resourcesState.initialize(viewName);
-
-        this.documentsManager.deselect();
         await this.documentsManager.populateProjectDocument()
     }
 

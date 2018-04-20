@@ -23,7 +23,6 @@ import {includedIn, subtract, isNot} from 'tsfun';
 export class DocumentsManager {
 
     public projectDocument: Document;
-    private selectedDocument: IdaiFieldDocument|undefined;
     private documents: Array<Document>;
     private newDocumentsFromRemote: Array<Document> = [];
 
@@ -45,7 +44,7 @@ export class DocumentsManager {
 
     public getDocuments = () => this.documents;
 
-    public getSelectedDocument = () => this.selectedDocument;
+    public getSelectedDocument = () => this.resourcesState.getSelectedDocument();
 
     public removeFromDocuments = (document: Document) => this.documents = subtract([document])(this.documents);
 
@@ -70,9 +69,8 @@ export class DocumentsManager {
     public async setQueryString(q: string) {
 
         this.resourcesState.setQueryString(q);
-
         await this.populateDocumentList();
-        if (!this.documents.find(hasEqualId(this.selectedDocument))) this.deselect();
+        if (!this.documents.find(hasEqualId(this.resourcesState.getSelectedDocument()))) this.deselect();
     }
 
 
@@ -81,7 +79,7 @@ export class DocumentsManager {
         this.resourcesState.setTypeFilters(types);
 
         await this.populateDocumentList();
-        if (!this.documents.find(hasEqualId(this.selectedDocument))) this.deselect();
+        if (!this.documents.find(hasEqualId(this.resourcesState.getSelectedDocument()))) this.deselect();
     }
 
 
@@ -90,7 +88,7 @@ export class DocumentsManager {
         await this.navigationPathManager.moveInto(document);
 
         await this.populateDocumentList();
-        if (!this.documents.find(hasEqualId(this.selectedDocument))) this.deselect();
+        if (!this.documents.find(hasEqualId(this.resourcesState.getSelectedDocument()))) this.deselect();
     }
 
 
@@ -102,7 +100,7 @@ export class DocumentsManager {
 
     public deselect() {
 
-        if (this.selectedDocument) {
+        if (this.resourcesState.getSelectedDocument()) {
 
             this.selectAndNotify(undefined);
             this.documents = this.documents.filter(hasId);
@@ -118,39 +116,35 @@ export class DocumentsManager {
     }
 
 
-    public async setSelected(document: IdaiFieldDocument): Promise<any> {
+    public async setSelected(documentToSelect: IdaiFieldDocument): Promise<any> {
 
-        if (document == this.selectedDocument) return;
-
-        this.selectAndNotify(document);
+        // if (document == this.resourcesState.getSelectedDocument()) return;
 
         this.documents = this.documents.filter(hasId);
         this.newDocumentsFromRemote =
-            subtract([document as Document])(this.newDocumentsFromRemote);
+            subtract([documentToSelect as Document])(this.newDocumentsFromRemote);
 
-        return this.performUpdates(document);
+        if (!(await this.createUpdatedDocumentList()).find(hasEqualId(documentToSelect))) {
+            await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
+            await this.populateDocumentList();
+        }
+        this.resourcesState.setSelectedDocument(documentToSelect);
+        this.selectAndNotify(documentToSelect);
     }
 
 
     private selectAndNotify(document: IdaiFieldDocument|undefined) {
 
-        if (this.selectedDocument) ObserverUtil.notify(this.deselectionObservers, this.selectedDocument);
-        this.selectedDocument = document;
-    }
-
-
-    private async performUpdates(document: IdaiFieldDocument) {
-
-        if ((await this.createUpdatedDocumentList()).find(hasEqualId(document))) return;
-
-        await this.makeSureSelectedDocumentAppearsInList();
-        await this.populateDocumentList();
+        if (this.resourcesState.getSelectedDocument()) {
+            ObserverUtil.notify(this.deselectionObservers, this.resourcesState.getSelectedDocument());
+        }
+        this.resourcesState.setSelectedDocument(document);
     }
 
 
     private async adjustQuerySettingsIfNecessary() {
 
-        if (!(await this.createUpdatedDocumentList()).find(hasEqualId(this.selectedDocument))) {
+        if (!(await this.createUpdatedDocumentList()).find(hasEqualId(this.resourcesState.getSelectedDocument()))) {
 
             this.resourcesState.setQueryString('');
             this.resourcesState.setTypeFilters(undefined as any);
@@ -217,13 +211,13 @@ export class DocumentsManager {
     }
 
 
-    private async makeSureSelectedDocumentAppearsInList() {
+    private async makeSureSelectedDocumentAppearsInList(documentToSelect: IdaiFieldDocument) {
 
         this.mainTypeDocumentsManager
-            .selectLinkedOperationTypeDocumentForSelectedDocument(this.selectedDocument);
+            .selectLinkedOperationTypeDocumentForSelectedDocument(documentToSelect);
 
         await this.navigationPathManager
-            .updateNavigationPathForDocument(this.selectedDocument as IdaiFieldDocument);
+            .updateNavigationPathForDocument(documentToSelect);
 
         await this.adjustQuerySettingsIfNecessary();
     }

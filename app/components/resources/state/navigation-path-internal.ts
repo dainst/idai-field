@@ -10,14 +10,16 @@ export interface NavigationPathInternal extends NavigationPathBase<NavigationPat
 
     q?: string; // top level query string
     types?: string[]; // top level query types
+    selected?: IdaiFieldDocument // top level selected document
 }
 
 
 export interface NavigationPathSegment {
 
-    document: IdaiFieldDocument;
+    document: IdaiFieldDocument; // nav path document
     q?: string;
     types?: Array<string>;
+    selected?: IdaiFieldDocument; // selected doc in list
 }
 
 

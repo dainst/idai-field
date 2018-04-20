@@ -32,7 +32,7 @@ export class MeshPreparationUtility {
                 MeshPreparationUtility.centerGeometry.bind(MeshPreparationUtility), mesh);
 
             await this.performAdjustment(5,
-                MeshPreparationUtility.createBackSideMesh.bind(MeshPreparationUtility), mesh);
+                MeshPreparationUtility.addBackSideMesh.bind(MeshPreparationUtility), mesh);
 
             mesh.position.add(position);
 
@@ -89,7 +89,7 @@ export class MeshPreparationUtility {
     }
 
 
-    private static createBackSideMesh(mesh: THREE.Mesh): THREE.Mesh {
+    private static addBackSideMesh(mesh: THREE.Mesh) {
 
         const backSideMesh = new THREE.Mesh();
         backSideMesh.geometry = mesh.geometry;
@@ -99,8 +99,6 @@ export class MeshPreparationUtility {
         });
 
         mesh.add(backSideMesh);
-
-        return backSideMesh;
     }
 
 

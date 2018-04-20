@@ -1,7 +1,6 @@
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
-import {Query} from 'idai-components-2/core';
-import {Document} from 'idai-components-2/core';
+import {Document, Query} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {NavigationPathManager} from './navigation-path-manager';
@@ -12,8 +11,7 @@ import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-s
 import {ResourcesState} from './resources-state';
 import {ObserverUtil} from '../../../util/observer-util';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
-import {includedIn, subtract, isNot} from 'tsfun';
-import {ObjectUtil} from '../../../util/object-util';
+import {includedIn, isNot, subtract} from 'tsfun';
 
 
 /**

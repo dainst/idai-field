@@ -55,20 +55,6 @@ export class ViewFacade {
     }
 
 
-    /**
-     * Sets the this.documentsManager.selectedDocument
-     * and if necessary, also
-     * a) selects the operation type document,
-     * this.documntsManager.selectedDocument is recorded in, accordingly and
-     * b) invalidates query settings in order to make sure
-     * this.documentsManager.selectedDocument is part of the search hits of the document list.
-     *
-     * @param document exits immediately if this is
-     *   a) the same as this.documentsManager.selectedDocument or
-     *   b) the same as this.mainTypeManager.selectedMainTypeDocument or
-     *   c) undefined
-     * @returns {Document}
-     */
     public setSelectedDocument = (document: Document) => this.documentsManager.setSelected(document as IdaiFieldDocument);
 
     public addNewDocument = (document: IdaiFieldDocument) => this.documentsManager.addNewDocument(document);

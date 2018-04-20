@@ -67,8 +67,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setQueryString = (q: string) => this.viewFacade.setSearchString(q);
 
-    public setTypeFilters = (types: string[]) => this.viewFacade.setTypeFilters(types);
-
     public getQueryString = () => this.viewFacade.getQueryString();
 
     public getTypeFilters = () => this.viewFacade.getFilterTypes();
@@ -82,6 +80,12 @@ export class ResourcesComponent implements AfterViewChecked {
 
         if (this.viewFacade.isInOverview()) return this.viewFacade.getProjectDocument();
         return this.viewFacade.getSelectedMainTypeDocument();
+    }
+
+
+    public setTypeFilters(types: string[]|undefined) {
+
+        this.viewFacade.setTypeFilters(types ? types : []);
     }
 
 

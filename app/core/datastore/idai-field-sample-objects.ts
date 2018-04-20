@@ -88,7 +88,7 @@ export const DOCS: Array<Document> = [
             "relations": {
                 "isRecordedIn": [ "t1" ],
                 "liesWithin": [ "c1" ],
-                "isDepictedIn": [ "brandlehm"]
+                "isDepictedIn": [ "object_brandlehm"]
             },
             "geometry": {
                 "type": "Point",

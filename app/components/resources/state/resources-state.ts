@@ -108,17 +108,12 @@ export class ResourcesState {
     }
 
 
-    /**
-     * @param types set undefined to erase types for current element
-     */
-    public setTypeFilters(types: string[]|undefined) {
+    public setTypeFilters(types: string[]) {
 
         this.withNavPath(
-                navPath => !types ? delete this.getRootSegment(navPath).types
-                        : this.getRootSegment(navPath).types = types,
-                navPath => !types ? delete navPath.types
-                        : navPath.types = types
-            );
+            navPath => this.getRootSegment(navPath).types = types,
+            navPath => navPath.types = types
+        );
     }
 
 
@@ -139,12 +134,12 @@ export class ResourcesState {
     }
 
 
-    public getTypeFilters(): string[]|undefined {
+    public getTypeFilters(): string[] {
 
         return this.withNavPath(
                 navPath => this.getRootSegment(navPath).types,
                 navPath => navPath.types
-            ) as string[]|undefined;
+            ) as string[];
     }
 
 

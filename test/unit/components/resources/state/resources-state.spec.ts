@@ -46,16 +46,16 @@ describe('ResourcesState', () => {
 
         resourcesState.setNavigationPathInternal({
             elements: [{
-                document: featureDocument1, q: ''
+                document: featureDocument1, q: '', types: []
             }],
-            rootDocument: featureDocument1, q: ''
+            rootDocument: featureDocument1, q: '', types: []
         });
 
         resourcesState.setTypeFilters(['Find']);
         resourcesState.setQueryString('abc');
 
         resourcesState.initialize('survey');
-        expect(resourcesState.getTypeFilters()).toEqual(undefined);
+        expect(resourcesState.getTypeFilters()).toEqual([]);
         expect(resourcesState.getQueryString()).toEqual('');
         resourcesState.initialize('excavation');
 
@@ -78,7 +78,7 @@ describe('ResourcesState', () => {
                 types: ['Find1'],
                 q: 'abc'
             }],
-            rootDocument: featureDocument1, q: ''
+            rootDocument: featureDocument1, q: '', types: []
         });
         resourcesState.setTypeFilters(undefined);
         resourcesState.setQueryString('');
@@ -97,7 +97,7 @@ describe('ResourcesState', () => {
 
         resourcesState.setNavigationPathInternal({
             elements: [{
-                document: featureDocument1, q: ''
+                document: featureDocument1, q: '', types: []
             }],
             types: ['Find1'],
             q: 'abc'

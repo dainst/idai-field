@@ -13,6 +13,7 @@ import {ResourcesState} from './resources-state';
 import {ObserverUtil} from '../../../util/observer-util';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {includedIn, subtract, isNot} from 'tsfun';
+import {ObjectUtil} from '../../../util/object-util';
 
 
 /**
@@ -211,7 +212,7 @@ export class DocumentsManager {
         if (!(await this.updatedDocumentListContainsSelectedDocument(documentToSelect))) {
 
             this.resourcesState.setQueryString('');
-            this.resourcesState.setTypeFilters(undefined as any);
+            this.resourcesState.setTypeFilters([]);
         }
     }
 
@@ -228,7 +229,9 @@ export class DocumentsManager {
         return {
             q: this.resourcesState.getQueryString(),
             constraints: this.makeConstraints(mainTypeDocumentResourceId),
-            types: this.resourcesState.getTypeFilters()
+            types: (this.resourcesState.getTypeFilters().length > 0)
+                ? this.resourcesState.getTypeFilters()
+                : undefined
         };
     }
 

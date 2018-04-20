@@ -25,15 +25,14 @@ export class MeshPreparationUtility {
             await this.performAdjustment(2,
                 MeshPreparationUtility.setGeometry.bind(MeshPreparationUtility), mesh, geometry);
 
-            const backSideMesh: THREE.Mesh = await this.performAdjustment(3,
-                MeshPreparationUtility.createBackSideMesh.bind(MeshPreparationUtility), mesh, geometry);
+            await this.performAdjustment(3,
+                MeshPreparationUtility.applyGroupMatrix.bind(MeshPreparationUtility), mesh, position, group);
 
             await this.performAdjustment(4,
-                MeshPreparationUtility.applyGroupMatrix.bind(MeshPreparationUtility), mesh, backSideMesh,
-                position, group);
+                MeshPreparationUtility.centerGeometry.bind(MeshPreparationUtility), mesh);
 
             await this.performAdjustment(5,
-                MeshPreparationUtility.centerGeometry.bind(MeshPreparationUtility), mesh);
+                MeshPreparationUtility.createBackSideMesh.bind(MeshPreparationUtility), mesh);
 
             mesh.position.add(position);
 
@@ -51,20 +50,16 @@ export class MeshPreparationUtility {
         mesh.position.add(center);
 
         mesh.geometry.translate(-center.x, -center.y, -center.z);
-
-        for (let child of mesh.children) {
-            if (child instanceof THREE.Mesh) child.geometry.translate(-center.x, -center.y, -center.z);
-        }
     }
 
 
     private async performAdjustment(stepNumber: number, adjustmentFunction: Function, mesh: THREE.Mesh,
-                                    parameter1?: any, parameter2?: any, parameter3?: any): Promise<any> {
+                                    parameter1?: any, parameter2?: any): Promise<any> {
 
         return new Promise<any>(resolve => {
 
             setTimeout(() => {
-                const result: any = adjustmentFunction(mesh, parameter1, parameter2, parameter3);
+                const result: any = adjustmentFunction(mesh, parameter1, parameter2);
                 this.meshLoadingProgress.setPreparationProgress(mesh.name, stepNumber, 5);
                 resolve(result);
             });
@@ -94,14 +89,13 @@ export class MeshPreparationUtility {
     }
 
 
-    private static createBackSideMesh(mesh: THREE.Mesh, geometry: THREE.Geometry): THREE.Mesh {
-
-        this.flipNormals(geometry);
+    private static createBackSideMesh(mesh: THREE.Mesh): THREE.Mesh {
 
         const backSideMesh = new THREE.Mesh();
-        backSideMesh.geometry = new THREE.BufferGeometry().fromGeometry(geometry);
+        backSideMesh.geometry = mesh.geometry;
         backSideMesh.material = new THREE.MeshPhongMaterial({
-            color: new THREE.Color(0xffffff)
+            color: new THREE.Color(0xffffff),
+            side: THREE.BackSide
         });
 
         mesh.add(backSideMesh);
@@ -110,13 +104,11 @@ export class MeshPreparationUtility {
     }
 
 
-    private static applyGroupMatrix(mesh: THREE.Mesh, backSideMesh: THREE.Mesh, position: THREE.Vector3,
-                                    group: THREE.Group) {
+    private static applyGroupMatrix(mesh: THREE.Mesh, position: THREE.Vector3, group: THREE.Group) {
 
         group.updateMatrix();
 
         mesh.geometry.applyMatrix(group.matrix);
-        backSideMesh.geometry.applyMatrix(group.matrix);
         position.applyMatrix4(group.matrix);
     }
 
@@ -194,29 +186,6 @@ export class MeshPreparationUtility {
         const vertices: any = (mesh.geometry as THREE.BufferGeometry).getAttribute('position').array;
 
         return new THREE.Vector3(vertices[0], vertices[1], vertices[2]);
-    }
-
-
-    private static flipNormals(geometry: THREE.Geometry) {
-
-        this.flipWindingOrderOfFaces(geometry);
-        this.computeNormals(geometry);
-    }
-
-
-    private static flipWindingOrderOfFaces(geometry: THREE.Geometry) {
-
-        for (let face of geometry.faces) {
-            let a: number = face.a;
-            face.a = face.c;
-            face.c = a;
-        }
-
-        for (let faceUvs of geometry.faceVertexUvs[0]) {
-            let firstUv: THREE.Vector2 = faceUvs[0];
-            faceUvs[0] = faceUvs[2];
-            faceUvs[2] = firstUv;
-        }
     }
 
 

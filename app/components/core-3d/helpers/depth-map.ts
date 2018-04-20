@@ -96,7 +96,8 @@ export class DepthMap {
     private static createMaterial(): THREE.MeshDepthMaterial {
 
         return new THREE.MeshDepthMaterial({
-            depthPacking: THREE.RGBADepthPacking
+            depthPacking: THREE.RGBADepthPacking,
+            side: THREE.DoubleSide
         } as THREE.MeshDepthMaterialParameters);
     }
 }

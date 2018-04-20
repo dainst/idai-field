@@ -172,18 +172,6 @@ export function main() {
         });
 
 
-        it('deselect on switching views', async done => {
-
-            await viewFacade.selectView('project');
-            await viewFacade.setSelectedDocument(trenchDocument1);
-            expect(viewFacade.getSelectedDocument()).toEqual(trenchDocument1);
-
-            await viewFacade.selectView('excavation');
-            expect(viewFacade.getSelectedDocument()).toEqual(undefined);
-            done();
-        });
-
-
         it('operations overview: populate document list', async done => {
 
             await viewFacade.selectView('project');
@@ -283,6 +271,18 @@ export function main() {
         });
 
 
+        it('deselect on switching views', async done => {
+
+            await viewFacade.selectView('project');
+            await viewFacade.setSelectedDocument(trenchDocument1);
+            expect(viewFacade.getSelectedDocument()).toEqual(trenchDocument1);
+
+            await viewFacade.selectView('excavation');
+            expect(viewFacade.getSelectedDocument()).toEqual(undefined);
+            done();
+        });
+
+
         it('operations view: previous selection gets restored', async () => {
 
             await viewFacade.selectView('excavation');
@@ -293,6 +293,18 @@ export function main() {
             expect(viewFacade.getSelectedDocument()).toBeUndefined();
             await viewFacade.moveInto(featureDocument1);
             expect(viewFacade.getSelectedDocument()).toBe(findDocument1);
+        });
+
+
+        it('operations view: previous selection gets restored on view change', async () => {
+
+            await viewFacade.selectView('excavation');
+            await viewFacade.setSelectedDocument(featureDocument2);
+
+            await viewFacade.selectView('project');
+            expect(viewFacade.getSelectedDocument()).toBeUndefined();
+            await viewFacade.selectView('excavation');
+            expect(viewFacade.getSelectedDocument()).toBe(featureDocument2);
         });
 
 

@@ -127,7 +127,8 @@ describe('resources/state --', function() {
     });
 
 
-    it('switch views after click on relation link', () => {
+    // xitted because currently there is no relation which allows to jump between views
+    xit('switch views after click on relation link', () => {
 
         ResourcesPage.performCreateResource('b1', 'building');
 
@@ -136,7 +137,7 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.performCreateResource('floor1', 'feature-floor');
-        ResourcesPage.performCreateRelation('floor1', 'a1', 1);
+        ResourcesPage.performCreateRelation('floor1', 'a1', 5);
 
         RelationsViewPage.clickRelation(0);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
@@ -175,7 +176,8 @@ describe('resources/state --', function() {
     });
 
 
-    it('select correct main type document after click on relation link', () => {
+    // xitted because currently there is no relation which allows to jump between views
+    xit('select correct main type document after click on relation link', () => {
 
         ResourcesPage.performCreateResource('b1', 'building');
         ResourcesPage.performCreateResource('b2', 'building');
@@ -185,7 +187,7 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('a1', 'feature-architecture');
         ResourcesPage.performSelectOperation(1); // building1
         ResourcesPage.performCreateResource('f1', 'feature-floor');
-        ResourcesPage.performCreateRelation('f1', 'a1', 1);
+        ResourcesPage.performCreateRelation('f1', 'a1', 5);
 
         RelationsViewPage.clickRelation(0);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('a1'));

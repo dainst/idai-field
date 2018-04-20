@@ -69,32 +69,21 @@ export class DocumentsManager {
     public async setQueryString(q: string) {
 
         this.resourcesState.setQueryString(q);
-        await this.populateDocumentList();
-        if (!this.documents.find(hasEqualId(this.resourcesState.getSelectedDocument()))) this.deselect();
+        await this.populateAndDeselectIfNecessary();
     }
 
 
     public async setTypeFilters(types: string[]) {
 
         this.resourcesState.setTypeFilters(types);
-
-        await this.populateDocumentList();
-        if (!this.documents.find(hasEqualId(this.resourcesState.getSelectedDocument()))) this.deselect();
+        await this.populateAndDeselectIfNecessary();
     }
 
 
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
         await this.navigationPathManager.moveInto(document);
-
-        await this.populateDocumentList();
-        if (!this.documents.find(hasEqualId(this.resourcesState.getSelectedDocument()))) this.deselect();
-    }
-
-
-    public async setSelectedById(resourceId: string) {
-
-        await this.setSelected(await this.datastore.get(resourceId));
+        await this.populateAndDeselectIfNecessary();
     }
 
 
@@ -118,8 +107,6 @@ export class DocumentsManager {
 
     public async setSelected(documentToSelect: IdaiFieldDocument): Promise<any> {
 
-        // if (document == this.resourcesState.getSelectedDocument()) return;
-
         this.documents = this.documents.filter(hasId);
         this.newDocumentsFromRemote =
             subtract([documentToSelect as Document])(this.newDocumentsFromRemote);
@@ -128,7 +115,6 @@ export class DocumentsManager {
             await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
             await this.populateDocumentList();
         }
-        this.resourcesState.setSelectedDocument(documentToSelect);
         this.selectAndNotify(documentToSelect);
     }
 
@@ -142,13 +128,10 @@ export class DocumentsManager {
     }
 
 
-    private async adjustQuerySettingsIfNecessary() {
+    private async populateAndDeselectIfNecessary() {
 
-        if (!(await this.createUpdatedDocumentList()).find(hasEqualId(this.resourcesState.getSelectedDocument()))) {
-
-            this.resourcesState.setQueryString('');
-            this.resourcesState.setTypeFilters(undefined as any);
-        }
+        await this.populateDocumentList();
+        if (!this.documents.find(hasEqualId(this.resourcesState.getSelectedDocument()))) this.deselect();
     }
 
 
@@ -219,17 +202,24 @@ export class DocumentsManager {
         await this.navigationPathManager
             .updateNavigationPathForDocument(documentToSelect);
 
-        await this.adjustQuerySettingsIfNecessary();
+        await this.adjustQuerySettingsIfNecessary(documentToSelect);
     }
 
 
-    private async fetchDocuments(query: Query): Promise<any> {
+    private async adjustQuerySettingsIfNecessary(documentToSelect: Document) {
 
-        try {
-            return (await this.datastore.find(query)).documents;
-        } catch (errWithParams) {
-            DocumentsManager.handleFindErr(errWithParams, query);
+        if (!(await this.updatedDocumentListContainsSelectedDocument(documentToSelect))) {
+
+            this.resourcesState.setQueryString('');
+            this.resourcesState.setTypeFilters(undefined as any);
         }
+    }
+
+
+    private async updatedDocumentListContainsSelectedDocument(documentToSelect: Document) {
+
+        return (await this.createUpdatedDocumentList())
+            .find(hasEqualId(documentToSelect))
     }
 
 
@@ -240,6 +230,16 @@ export class DocumentsManager {
             constraints: this.makeConstraints(mainTypeDocumentResourceId),
             types: this.resourcesState.getTypeFilters()
         };
+    }
+
+
+    private async fetchDocuments(query: Query): Promise<any> {
+
+        try {
+            return (await this.datastore.find(query)).documents;
+        } catch (errWithParams) {
+            DocumentsManager.handleFindErr(errWithParams, query);
+        }
     }
 
 

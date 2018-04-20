@@ -99,8 +99,6 @@ export class ViewFacade {
 
     public setMode = (mode: 'map' | 'list') => this.resourcesState.setMode(mode);
 
-    public setSelectedDocumentById = (id: string) => this.documentsManager.setSelectedById(id);
-
     public isNewDocumentFromRemote = (document: Document) => this.documentsManager.isNewDocumentFromRemote(document);
 
     public remove = (document: Document) => this.documentsManager.removeFromDocuments(document);
@@ -177,6 +175,12 @@ export class ViewFacade {
         }
 
         return mainTypeDocuments;
+    }
+
+
+    public async setSelectedDocumentById(resourceId: string) {
+
+        await this.documentsManager.setSelected(await this.datastore.get(resourceId));
     }
 
 

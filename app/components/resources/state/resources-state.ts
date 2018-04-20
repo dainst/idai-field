@@ -102,11 +102,9 @@ export class ResourcesState {
     public setQueryString(q: string) {
 
         this.withNavPath(
-                navPath => !q ? this.getRootSegment(navPath).q = ''
-                    : this.getRootSegment(navPath).q = q,
-                navPath => !q ? navPath.q = ''
-                    : navPath.q = q
-            );
+            navPath => this.getRootSegment(navPath).q = q,
+            navPath => navPath.q = q
+        );
     }
 
 

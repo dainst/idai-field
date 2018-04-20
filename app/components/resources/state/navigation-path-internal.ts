@@ -8,7 +8,7 @@ import {NavigationPathBase} from './navigation-path';
  */
 export interface NavigationPathInternal extends NavigationPathBase<NavigationPathSegment> {
 
-    q?: string; // top level query string
+    q: string; // top level query string
     types?: string[]; // top level query types
     selected?: IdaiFieldDocument // top level selected document
 }
@@ -17,7 +17,7 @@ export interface NavigationPathInternal extends NavigationPathBase<NavigationPat
 export interface NavigationPathSegment {
 
     document: IdaiFieldDocument; // nav path document
-    q?: string;
+    q: string;
     types?: Array<string>;
     selected?: IdaiFieldDocument; // selected doc in list
 }

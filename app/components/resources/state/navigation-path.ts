@@ -10,7 +10,7 @@ export interface NavigationPath extends NavigationPathBase<IdaiFieldDocument> {}
 
 export class NavigationPath {
 
-    public static empty = () => { return { elements: [] }}
+    public static empty = () => { return { elements: [], q: '' }}
 }
 
 

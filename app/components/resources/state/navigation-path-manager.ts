@@ -260,7 +260,7 @@ export class NavigationPathManager {
 
                 return elements.concat([(index > -1 ?
                         currentNavigationPath.elements[index] :
-                        {document: document}
+                        {document: document, q: ''}
                     )]);
 
             }, Array<NavigationPathSegment>())
@@ -295,6 +295,6 @@ export class NavigationPathManager {
             : (oldRootDocument
                     ? takeUntil(isSegmentOf(oldRootDocument))(oldSegments)
                     : []
-                ).concat([{document: newRootDocument}]);
+                ).concat([{document: newRootDocument, q: ''}]);
     }
 }

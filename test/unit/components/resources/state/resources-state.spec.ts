@@ -46,9 +46,9 @@ describe('ResourcesState', () => {
 
         resourcesState.setNavigationPathInternal({
             elements: [{
-                document: featureDocument1
+                document: featureDocument1, q: ''
             }],
-            rootDocument: featureDocument1
+            rootDocument: featureDocument1, q: ''
         });
 
         resourcesState.setTypeFilters(['Find']);
@@ -78,10 +78,10 @@ describe('ResourcesState', () => {
                 types: ['Find1'],
                 q: 'abc'
             }],
-            rootDocument: featureDocument1
+            rootDocument: featureDocument1, q: ''
         });
         resourcesState.setTypeFilters(undefined);
-        resourcesState.setQueryString(undefined);
+        resourcesState.setQueryString('');
         expect(resourcesState.getTypeFilters()).toEqual(undefined);
         expect(resourcesState.getQueryString()).toEqual('');
     });
@@ -97,13 +97,13 @@ describe('ResourcesState', () => {
 
         resourcesState.setNavigationPathInternal({
             elements: [{
-                document: featureDocument1
+                document: featureDocument1, q: ''
             }],
             types: ['Find1'],
             q: 'abc'
         });
         resourcesState.setTypeFilters(undefined);
-        resourcesState.setQueryString(undefined);
+        resourcesState.setQueryString('');
         expect(resourcesState.getTypeFilters()).toEqual(undefined);
         expect(resourcesState.getQueryString()).toEqual('');
     });

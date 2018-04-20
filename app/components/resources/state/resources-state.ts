@@ -124,11 +124,10 @@ export class ResourcesState {
 
     public getQueryString(): string {
 
-        const q = this.withNavPath(
-                navPath => this.getRootSegment(navPath).q,
-                navPath => navPath.q
-            );
-        return q ? q : '';
+        return this.withNavPath(
+            navPath => this.getRootSegment(navPath).q,
+            navPath => navPath.q
+        );
     }
 
 

@@ -47,7 +47,7 @@ export class Layer2DMeshBuilder {
 
     private createMaterial(imageResourceId: string): THREE.Material {
 
-        return new THREE.MeshPhongMaterial({
+        return new THREE.MeshLambertMaterial({
             color: 0xffffff,
             map: new THREE.TextureLoader().load(this.getFilePath(imageResourceId)),
         });

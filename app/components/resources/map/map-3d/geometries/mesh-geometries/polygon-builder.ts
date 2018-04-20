@@ -49,7 +49,7 @@ export class PolygonBuilder {
 
     private createMaterial(document: IdaiFieldDocument, selected: boolean): THREE.Material {
 
-        return new THREE.MeshPhongMaterial({
+        return new THREE.MeshLambertMaterial({
             color: this.projectConfiguration.getColorForType(document.resource.type),
             side: THREE.DoubleSide,
             transparent: true,

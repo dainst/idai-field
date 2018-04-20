@@ -81,7 +81,7 @@ export class ResourcesState {
     }
 
 
-    public setSelectedDocument(document: IdaiFieldDocument) {
+    public setSelectedDocument(document: IdaiFieldDocument|undefined) {
 
         this.withNavPath(
             navPath => this.getRootSegment(navPath).selected = document,

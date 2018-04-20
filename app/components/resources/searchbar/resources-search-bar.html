@@ -11,7 +11,7 @@
                id="object-search"
                placeholder="Suchen...">
         <search-suggestions [q]="q"
-                            [types]="types"
+                            [types]="(types && types.length > 0) ? types : undefined"
                             [maxSuggestions]="5"
                             [visible]="suggestionsVisible">
         </search-suggestions>

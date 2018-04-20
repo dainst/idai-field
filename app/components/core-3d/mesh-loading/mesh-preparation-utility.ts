@@ -199,13 +199,18 @@ export class MeshPreparationUtility {
 
     private static flipNormals(geometry: THREE.Geometry) {
 
+        this.flipWindingOrderOfFaces(geometry);
+        this.computeNormals(geometry);
+    }
+
+
+    private static flipWindingOrderOfFaces(geometry: THREE.Geometry) {
+
         for (let face of geometry.faces) {
             let a: number = face.a;
             face.a = face.c;
             face.c = a;
         }
-
-        this.computeNormals(geometry);
 
         for (let faceUvs of geometry.faceVertexUvs[0]) {
             let firstUv: THREE.Vector2 = faceUvs[0];

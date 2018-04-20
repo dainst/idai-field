@@ -94,7 +94,7 @@ export class MeshPreparationUtility {
         const backSideMesh = new THREE.Mesh();
         backSideMesh.geometry = mesh.geometry;
         backSideMesh.material = new THREE.MeshPhongMaterial({
-            color: new THREE.Color(0xffffff),
+            color: new THREE.Color(0x333333),
             side: THREE.BackSide
         });
 

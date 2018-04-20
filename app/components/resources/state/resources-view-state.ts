@@ -8,8 +8,6 @@ import {NavigationPathInternal} from './navigation-path-internal';
 export interface ResourcesViewState {
 
     mainTypeDocument?: IdaiFieldDocument;
-    types?: string[]; // query types in overview // TODO remove
-    q: string; // query string in overview       // TODO remove
     layerIds: {[mainTypeDocumentId: string]: string[]};
     navigationPaths: {[mainTypeDocumentId: string]: NavigationPathInternal};
 }
@@ -20,7 +18,6 @@ export class ResourcesViewState {
     public static default() {
 
         return {
-            q: '',
             mode: 'map',
             navigationPaths: {},
             layerIds: {}
@@ -41,6 +38,5 @@ export class ResourcesViewState {
         }
 
         viewState.navigationPaths = {};
-        viewState.q = '';
     }
 }

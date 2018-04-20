@@ -3,7 +3,7 @@ import {ResourcesViewState} from './resources-view-state';
 import {NavigationPath} from './navigation-path';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {OperationViews} from './operation-views';
-import {NavigationPathInternal, NavigationPathSegment, toDocument} from './navigation-path-internal';
+import {NavigationPathInternal, NavigationPathSegment} from './navigation-path-internal';
 import {StateSerializer} from "../../../common/state-serializer";
 
 

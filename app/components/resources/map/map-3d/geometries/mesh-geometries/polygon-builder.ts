@@ -38,7 +38,7 @@ export class PolygonBuilder {
         const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(position.x, position.y, position.z);
 
-        MeshPreparationUtility.centerGeometry(mesh);
+        MeshPreparationUtility.center(mesh);
 
         mesh.layers.set(DepthMap.NO_DEPTH_MAPPING_LAYER);
         mesh.add(this.createOutline(document, geometry));

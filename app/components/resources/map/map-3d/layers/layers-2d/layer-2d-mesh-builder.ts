@@ -95,7 +95,7 @@ export class Layer2DMeshBuilder {
         const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(position.x, position.y, position.z);
 
-        MeshPreparationUtility.centerGeometry(mesh);
+        MeshPreparationUtility.center(mesh);
 
         return mesh;
     }

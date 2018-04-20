@@ -29,7 +29,7 @@ export class MeshPreparationUtility {
                 MeshPreparationUtility.applyGroupMatrix.bind(MeshPreparationUtility), mesh, position, group);
 
             await this.performAdjustment(4,
-                MeshPreparationUtility.centerGeometry.bind(MeshPreparationUtility), mesh);
+                MeshPreparationUtility.center.bind(MeshPreparationUtility), mesh);
 
             await this.performAdjustment(5,
                 MeshPreparationUtility.addBackSideMesh.bind(MeshPreparationUtility), mesh);
@@ -41,7 +41,7 @@ export class MeshPreparationUtility {
     }
 
 
-    public static centerGeometry(mesh: THREE.Mesh) {
+    public static center(mesh: THREE.Mesh) {
 
         mesh.geometry.computeBoundingSphere();
         mesh.geometry.computeBoundingBox();
@@ -76,7 +76,6 @@ export class MeshPreparationUtility {
         geometry.vertices = this.getVertices(bufferGeometry, offset);
         geometry.faces = this.getFaces(bufferGeometry, geometry.vertices);
         geometry.faceVertexUvs = this.getUVs(bufferGeometry);
-        geometry.uvsNeedUpdate = true;
 
         return geometry;
     }

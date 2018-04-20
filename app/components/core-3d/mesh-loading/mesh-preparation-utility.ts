@@ -23,7 +23,7 @@ export class MeshPreparationUtility {
                 mesh, position);
 
             await this.performAdjustment(2,
-                MeshPreparationUtility.prepareGeometry.bind(MeshPreparationUtility), mesh, geometry);
+                MeshPreparationUtility.setGeometry.bind(MeshPreparationUtility), mesh, geometry);
 
             const backSideMesh: THREE.Mesh = await this.performAdjustment(3,
                 MeshPreparationUtility.createBackSideMesh.bind(MeshPreparationUtility), mesh, geometry);
@@ -78,7 +78,7 @@ export class MeshPreparationUtility {
 
         const geometry = new THREE.Geometry();
         geometry.vertices = this.getVertices(bufferGeometry, offset);
-        geometry.faces = this.getFaces(geometry.vertices, bufferGeometry.groups);
+        geometry.faces = this.getFaces(bufferGeometry, geometry.vertices);
         geometry.faceVertexUvs = this.getUVs(bufferGeometry);
         geometry.uvsNeedUpdate = true;
 
@@ -86,11 +86,9 @@ export class MeshPreparationUtility {
     }
 
 
-    private static prepareGeometry(mesh: THREE.Mesh, geometry: THREE.Geometry) {
+    private static setGeometry(mesh: THREE.Mesh, geometry: THREE.Geometry) {
 
-        geometry.computeFaceNormals();
-        geometry.mergeVertices();
-        geometry.computeVertexNormals();
+        if (!this.hasVertexNormals(geometry)) this.computeNormals(geometry);
 
         mesh.geometry = new THREE.BufferGeometry().fromGeometry(geometry);
     }
@@ -126,15 +124,13 @@ export class MeshPreparationUtility {
     private static getVertices(bufferGeometry: THREE.BufferGeometry,
                                offset: THREE.Vector3): Array<THREE.Vector3> {
 
-        const attribute = bufferGeometry.getAttribute('position');
-        const vertices = attribute.array;
-
+        const positions = bufferGeometry.getAttribute('position').array;
         const result: Array<THREE.Vector3> = [];
 
-        for (let i = 0; i < vertices.length; i += 3) {
-            const x: number = vertices[i] - offset.x;
-            const y: number = vertices[i + 1] - offset.y;
-            const z: number = vertices[i + 2] - offset.z;
+        for (let i = 0; i < positions.length; i += 3) {
+            const x: number = positions[i] - offset.x;
+            const y: number = positions[i + 1] - offset.y;
+            const z: number = positions[i + 2] - offset.z;
 
             result.push(new THREE.Vector3(x, y, z));
         }
@@ -143,13 +139,20 @@ export class MeshPreparationUtility {
     }
 
 
-    private static getFaces(vertices: Array<THREE.Vector3>, groups: Array<any>): Array<THREE.Face3> {
+    private static getFaces(bufferGeometry: THREE.BufferGeometry, vertices: Array<THREE.Vector3>): Array<THREE.Face3> {
 
+        const normalsAttribute = bufferGeometry.getAttribute('normal');
+        const normals = normalsAttribute ? normalsAttribute.array : undefined;
         const faces: Array<THREE.Face3> = [];
 
         for (let i = 0; i < vertices.length; i += 3) {
-            const face: THREE.Face3 = new THREE.Face3(i, i + 1, i + 2);
-            face.materialIndex = this.getMaterialIndex(i, groups);
+            const vertexNormals: Array<THREE.Vector3>|undefined = normals ? [
+                new THREE.Vector3(normals[i * 3], normals[i * 3 + 1], normals[i * 3 + 2]),
+                new THREE.Vector3(normals[i * 3 + 3], normals[i * 3 + 4], normals[i * 3 + 5]),
+                new THREE.Vector3(normals[i * 3 + 6], normals[i * 3 + 7], normals[i * 3 + 8])
+            ] : undefined;
+            const face: THREE.Face3 = new THREE.Face3(i, i + 1, i + 2, vertexNormals);
+            face.materialIndex = this.getMaterialIndex(i, bufferGeometry.groups);
             faces.push(face);
         }
 
@@ -202,13 +205,29 @@ export class MeshPreparationUtility {
             face.c = a;
         }
 
-        geometry.computeFaceNormals();
-        geometry.computeVertexNormals();
+        this.computeNormals(geometry);
 
         for (let faceUvs of geometry.faceVertexUvs[0]) {
             let firstUv: THREE.Vector2 = faceUvs[0];
             faceUvs[0] = faceUvs[2];
             faceUvs[2] = firstUv;
         }
+    }
+
+
+    private static hasVertexNormals(geometry: THREE.Geometry): boolean {
+
+        return geometry.faces &&
+            geometry.faces.length > 0 &&
+            geometry.faces[0].vertexNormals &&
+            geometry.faces[0].vertexNormals.length > 0;
+    }
+
+
+    private static computeNormals(geometry: THREE.Geometry) {
+
+        geometry.mergeVertices();
+        geometry.computeFaceNormals();
+        geometry.computeVertexNormals();
     }
 }

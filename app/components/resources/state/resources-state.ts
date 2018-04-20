@@ -126,20 +126,20 @@ export class ResourcesState {
     }
 
 
+    public getTypeFilters(): string[] {
+
+        return this.withNavPath(
+            navPath => this.getRootSegment(navPath).types,
+            navPath => navPath.types
+        );
+    }
+
+
     private getRootSegment(navigationPath: NavigationPathInternal) {
 
         return navigationPath.elements.find(element =>
             element.document.resource.id ==
                 (navigationPath.rootDocument as IdaiFieldDocument).resource.id)as NavigationPathSegment;
-    }
-
-
-    public getTypeFilters(): string[] {
-
-        return this.withNavPath(
-                navPath => this.getRootSegment(navPath).types,
-                navPath => navPath.types
-            ) as string[];
     }
 
 

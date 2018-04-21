@@ -160,7 +160,7 @@ export class Map3DCameraManager extends CameraManager {
         const clonedCamera: THREE.PerspectiveCamera|THREE.OrthographicCamera = this.getCamera().clone();
         this.zoom(value, clonedCamera);
 
-        this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
+        this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom, true);
     }
 
 

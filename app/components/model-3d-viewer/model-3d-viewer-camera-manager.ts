@@ -59,7 +59,7 @@ export class Model3DViewerCameraManager extends CameraManager {
         const clonedCamera: THREE.PerspectiveCamera = this.getCamera().clone();
         this.zoom(this.getAllowedZoomValue(value), clonedCamera);
 
-        this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom);
+        this.startAnimation(clonedCamera.position, clonedCamera.quaternion, clonedCamera.zoom, true);
     }
 
 

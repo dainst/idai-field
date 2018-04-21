@@ -40,7 +40,7 @@ export abstract class CameraManager {
 
 
     public startAnimation(targetPosition: THREE.Vector3, targetQuaternion: THREE.Quaternion,
-                          targetZoom: number) {
+                          targetZoom: number, linear: boolean = false) {
 
         if (this.cameraAnimation) return;
 
@@ -53,7 +53,7 @@ export abstract class CameraManager {
 
         new TWEEN.Tween(this.cameraAnimation)
             .to({ progress: 1, zoom: targetZoom }, ANIMATION_DURATION_IN_MILLISECONDS)
-            .easing(TWEEN.Easing.Linear.None)
+            .easing(linear ? TWEEN.Easing.Linear.None : TWEEN.Easing.Circular.In)
             .start();
     }
 

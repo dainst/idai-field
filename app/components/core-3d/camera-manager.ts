@@ -2,6 +2,8 @@ import * as THREE from 'three';
 
 const TWEEN = require('tweenjs');
 
+const ANIMATION_DURATION_IN_MILLISECONDS: number = 300;
+
 
 /**
  * @author Thomas Kleinke
@@ -50,7 +52,7 @@ export abstract class CameraManager {
         };
 
         new TWEEN.Tween(this.cameraAnimation)
-            .to({ progress: 1, zoom: targetZoom }, 300)
+            .to({ progress: 1, zoom: targetZoom }, ANIMATION_DURATION_IN_MILLISECONDS)
             .easing(TWEEN.Easing.Linear.None)
             .start();
     }

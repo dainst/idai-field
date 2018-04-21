@@ -23,7 +23,6 @@ export class Viewer3D {
                 createDepthMap: boolean = false) {
 
         this.initialize(createDepthMap);
-        this.resize();
         this.animate();
     }
 

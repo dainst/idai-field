@@ -41,7 +41,7 @@ import {IdaiFieldDocumentDatastore} from './core/datastore/idai-field-document-d
 import {PersistenceManager} from './core/persist/persistence-manager';
 import {DocumentDatastore} from './core/datastore/document-datastore';
 import {Core3DModule} from './components/core-3d/core-3d.module';
-import {Model3DViewerModule} from './components/model-3d-viewer/model-3d-viewer';
+import {Model3DViewerModule} from './components/model-3d-viewer/model-3d-viewer.module';
 
 
 const remote = require('electron').remote;

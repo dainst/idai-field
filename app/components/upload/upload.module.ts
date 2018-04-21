@@ -7,7 +7,7 @@ import {UploadModalComponent} from './upload-modal.component';
 import {ImageTypePickerModalComponent} from './image/image-type-picker-modal.component';
 import {Model3DUploader} from './model3d/model-3d-uploader';
 import {Model3DThumbnailCreatorModalComponent} from './model3d/model-3d-thumbnail-creator-modal.component';
-import {Model3DViewerModule} from '../model-3d-viewer/model-3d-viewer';
+import {Model3DViewerModule} from '../model-3d-viewer/model-3d-viewer.module';
 import {UploadService} from './upload-service';
 
 

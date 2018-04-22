@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import {DepthMap} from '../core-3d/helpers/depth-map';
 import {CameraManager} from '../core-3d/camera-manager';
 
 
@@ -67,8 +66,7 @@ export class Model3DViewerCameraManager extends CameraManager {
 
         this.camera.position.set(
             0,
-            mesh.position.y + CameraManager.computeDistanceForZoomToFit(this.camera,
-                mesh.geometry.boundingSphere),
+            CameraManager.computeDistanceForZoomToFit(this.camera, mesh.geometry.boundingSphere),
             0);
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
     }
@@ -78,7 +76,6 @@ export class Model3DViewerCameraManager extends CameraManager {
 
         this.camera = new THREE.PerspectiveCamera(75, canvasWidth / canvasHeight, 0.1, 1000);
         this.camera.position.set(0, 0, 0);
-        this.camera.layers.enable(DepthMap.NO_DEPTH_MAPPING_LAYER);
     }
 
 

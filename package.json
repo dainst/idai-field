@@ -7,7 +7,7 @@
   "author": "German Archaeological Institute",
   "scripts": {
     "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/*",
-    "build": "gulp create-configs && gulp copy-fonts-convert-sass && tsc -p app/tsconfig.json && tsc -p test/tsconfig.json",
+    "build": "gulp copy-fonts-convert-sass && tsc -p app/tsconfig.json && tsc -p test/tsconfig.json",
     "clean": "git clean -xdf app test",
     "convert-sass": "gulp convert-sass",
     "start": "electron . dev",

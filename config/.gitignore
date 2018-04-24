@@ -2,10 +2,10 @@
 
 # Explicitely mention files which should be part of the repo.
 
-!Configuration.json.template
-!Hidden.json.template
-!Hidden-Custom.json.template
-!Language.json.template
-!Language-Custom.json.template
+!Configuration.json
+!Hidden.json
+!Hidden-Custom.json
+!Language.json
+!Language-Custom.json
 !README.md
 

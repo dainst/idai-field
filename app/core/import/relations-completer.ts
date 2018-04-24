@@ -7,7 +7,6 @@ import {DocumentDatastore} from "../datastore/document-datastore";
 /**
  * @author Thomas Kleinke
  */
-@Injectable()
 export class RelationsCompleter {
 
     constructor(private datastore: DocumentDatastore,

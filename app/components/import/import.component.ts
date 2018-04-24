@@ -65,7 +65,6 @@ export class ImportComponent {
         private remoteChangesStream: RemoteChangesStream,
         private validator: Validator,
         private http: Http,
-        private relationsCompleter: RelationsCompleter,
         private settingsService: SettingsService,
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
@@ -99,7 +98,7 @@ export class ImportComponent {
             ImportComponent.createParser(this.format),
             ImportComponent.createImportStrategy(this.format,
                 this.validator, this.datastore, this.settingsService, this.projectConfiguration, this.mainTypeDocumentId),
-            ImportComponent.createRelationsStrategy(this.format, this.relationsCompleter),
+            ImportComponent.createRelationsStrategy(this.format, new RelationsCompleter(this.datastore, this.projectConfiguration)),
             ImportComponent.createRollbackStrategy(this.format, this.datastore));
         this.remoteChangesStream.setAutoCacheUpdate(true);
 

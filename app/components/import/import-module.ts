@@ -3,8 +3,6 @@ import {ImportComponent} from './import.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {UploadModalComponent} from './upload-modal.component';
-import {Import} from '../../core/import/import';
-import {RelationsCompleter} from '../../core/import/relations-completer';
 
 @NgModule({
     imports: [
@@ -20,9 +18,6 @@ import {RelationsCompleter} from '../../core/import/relations-completer';
     ],
     entryComponents: [
         UploadModalComponent
-    ],
-    providers: [
-        RelationsCompleter
     ]
 })
 

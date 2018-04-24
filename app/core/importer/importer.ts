@@ -61,7 +61,7 @@ export class Importer {
                            rollbackStrategy: RollbackStrategy, datastore: DocumentDatastore,
                            remoteChangesStream: RemoteChangesStream): Promise<ImportReport> {
 
-        const importDeps: ImportDeps = {
+        const importDeps = {
 
             importStrategy: importStrategy,
             relationsStrategy: relationsStrategy,

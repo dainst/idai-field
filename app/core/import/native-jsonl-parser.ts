@@ -23,7 +23,7 @@ export class NativeJsonlParser extends AbstractParser {
 
     private static makeDoc(line: string) {
         
-        let resource = JSON.parse(line);
+        const resource = JSON.parse(line);
         if (!resource.relations) resource.relations = {};
 
         return { resource: resource };
@@ -32,8 +32,8 @@ export class NativeJsonlParser extends AbstractParser {
 
     private static parseContent(content: string, observer: any, makeDocFun: Function) {
 
-        let lines = content.split('\n');
-        let len = lines.length;
+        const lines = content.split('\n');
+        const len = lines.length;
 
         for (let i = 0; i < len; i++) {
 

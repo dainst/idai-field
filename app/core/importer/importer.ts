@@ -44,7 +44,7 @@ export class Importer {
               relationsStrategy: RelationsStrategy,
               rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
 
-        return new Promise<any>(async resolve => {
+        return new Promise<ImportReport>(async resolve => {
 
             const importReport = {
                 errors: [],
@@ -63,7 +63,7 @@ export class Importer {
 
                 importReport.errors.push(msgWithParams as never);
             }
-            this.finishImport(importReport, relationsStrategy, rollbackStrategy, resolve);
+            resolve(await this.finishImport(importReport, relationsStrategy, rollbackStrategy));
         });
     }
 
@@ -71,12 +71,11 @@ export class Importer {
     private async finishImport(
         importReport: ImportReport,
         relationsStrategy: RelationsStrategy,
-        rollbackStrategy: RollbackStrategy,
-        resolve: Function): Promise<void> {
+        rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
 
         if (importReport.errors.length > 0) {
             await Importer.performRollback(importReport, rollbackStrategy);
-            return resolve(importReport);
+            return importReport;
         }
 
         try {
@@ -96,7 +95,7 @@ export class Importer {
                 });
         }
 
-        resolve(importReport);
+        return importReport;
     }
 
 

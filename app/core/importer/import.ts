@@ -21,7 +21,7 @@ export interface ImportReport {
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-export class Importer {
+export module Import {
 
     /**
      * The importer uses the reader and parser, to get documents, which
@@ -38,7 +38,7 @@ export class Importer {
      * 3. Error validating a resource.
      * 4. The file is unreadable.
      */
-    public go(reader: Reader,
+    export function go(reader: Reader,
               parser: Parser,
               importStrategy: ImportStrategy,
               relationsStrategy: RelationsStrategy,
@@ -53,22 +53,22 @@ export class Importer {
             };
 
             try {
-                const [docsToUpdate, warnings] = await Importer.parseFileContent(
+                const [docsToUpdate, warnings] = await parseFileContent(
                     parser, await reader.go());
                 importReport.warnings = warnings as never[];
 
-                await Importer.update(docsToUpdate, importReport, importStrategy);
+                await update(docsToUpdate, importReport, importStrategy);
 
             } catch (msgWithParams) {
 
                 importReport.errors.push(msgWithParams as never);
             }
-            resolve(await Importer.finishImport(importReport, relationsStrategy, rollbackStrategy));
+            resolve(await finishImport(importReport, relationsStrategy, rollbackStrategy));
         });
     }
 
 
-    private static async finishImport(
+    async function finishImport(
         importReport: ImportReport,
         relationsStrategy: RelationsStrategy,
         rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
@@ -91,7 +91,7 @@ export class Importer {
 
         if (importReport.errors.length !== 0) {
             try {
-                await Importer.performRollback(importReport, rollbackStrategy)
+                await performRollback(importReport, rollbackStrategy)
             } catch (msgWithParams) {
                 importReport.errors.push(msgWithParams);
             }
@@ -100,7 +100,7 @@ export class Importer {
     }
 
 
-    private static async parseFileContent(
+    async function parseFileContent(
         parser: Parser,
         fileContent: string): Promise<[Document[],string[][]]> {
 
@@ -113,7 +113,7 @@ export class Importer {
     }
 
 
-    private static async update(
+    async function update(
         docsToUpdate: Document[],
         importReport: ImportReport,
         importStrategy: ImportStrategy): Promise<void> {
@@ -131,7 +131,7 @@ export class Importer {
     }
 
 
-    private static async performRollback(importReport: ImportReport, rollbackStrategy: RollbackStrategy): Promise<void> {
+    async function performRollback(importReport: ImportReport, rollbackStrategy: RollbackStrategy): Promise<void> {
 
         try {
             await rollbackStrategy.rollback(importReport.importedResourcesIds);

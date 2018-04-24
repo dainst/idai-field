@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs/Observable';
-import {Importer} from '../../../../app/core/importer/importer';
+import {Import} from '../../../../app/core/importer/import';
 
 
 /**
@@ -35,7 +35,7 @@ describe('Importer', () => {
         mockImportStrategy.importDoc.and.returnValue(Promise.reject(['constraintviolation']));
         mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
 
-        const importReport = await new Importer().go(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
+        const importReport = await Import.go(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
                 mockRollbackStrategy);
         expect(importReport['errors'][0][0]).toBe('constraintviolation');
         done();
@@ -56,7 +56,7 @@ describe('Importer', () => {
             mockRelationsStrategy.completeInverseRelations.and.returnValue(Promise.resolve(undefined));
             mockRelationsStrategy.resetInverseRelations.and.returnValue(Promise.resolve(undefined));
             mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
-            new Importer().go(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
+            Import.go(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
                     mockRollbackStrategy)
                 .then(importReport => {
                     expect(mockImportStrategy.importDoc).toHaveBeenCalledTimes(2);

@@ -4,7 +4,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {Importer, ImportReport} from '../../core/importer/importer';
+import {Import, ImportReport} from '../../core/importer/import';
 import {Reader} from '../../core/importer/reader';
 import {FileSystemReader} from '../../core/importer/file-system-reader';
 import {HttpReader} from '../../core/importer/http-reader';
@@ -94,7 +94,7 @@ export class ImportComponent {
         }, 200);
 
         this.remoteChangesStream.setAutoCacheUpdate(false);
-        const importReport = await new Importer().go(
+        const importReport = await Import.go(
             reader,
             ImportComponent.createParser(this.format),
             ImportComponent.createImportStrategy(this.format,

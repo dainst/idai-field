@@ -63,38 +63,39 @@ export class Importer {
 
                 importReport.errors.push(msgWithParams as never);
             }
-            resolve(await this.finishImport(importReport, relationsStrategy, rollbackStrategy));
+            resolve(await Importer.finishImport(importReport, relationsStrategy, rollbackStrategy));
         });
     }
 
 
-    private async finishImport(
+    private static async finishImport(
         importReport: ImportReport,
         relationsStrategy: RelationsStrategy,
         rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
 
-        if (importReport.errors.length > 0) {
-            await Importer.performRollback(importReport, rollbackStrategy);
-            return importReport;
-        }
+        if (importReport.errors.length === 0) {
 
-        try {
+            try {
+                await relationsStrategy.completeInverseRelations(importReport.importedResourcesIds);
 
-            await relationsStrategy.completeInverseRelations(importReport.importedResourcesIds);
+            } catch (msgWithParams) {
 
-        } catch (msgWithParams) {
-
-            importReport.errors.push(msgWithParams);
-
-            await relationsStrategy.resetInverseRelations(importReport.importedResourcesIds).then(
-
-                () => Importer.performRollback(importReport, rollbackStrategy),
-                msgWithParams => {
+                importReport.errors.push(msgWithParams);
+                try {
+                    await relationsStrategy.resetInverseRelations(importReport.importedResourcesIds)
+                } catch (e) {
                     importReport.errors.push(msgWithParams);
-                    return Importer.performRollback(importReport, rollbackStrategy);
-                });
+                }
+            }
         }
 
+        if (importReport.errors.length !== 0) {
+            try {
+                await Importer.performRollback(importReport, rollbackStrategy)
+            } catch (msgWithParams) {
+                importReport.errors.push(msgWithParams);
+            }
+        }
         return importReport;
     }
 

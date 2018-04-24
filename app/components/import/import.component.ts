@@ -32,6 +32,8 @@ import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stre
 import {Validator} from '../../core/model/validator';
 
 
+type ImportFormat = 'native' | 'idig' | 'geojson';
+
 @Component({
     moduleId: module.id,
     templateUrl: './import.html'
@@ -48,7 +50,7 @@ import {Validator} from '../../core/model/validator';
 export class ImportComponent {
 
     public sourceType: string = 'file';
-    public format: string = 'native';
+    public format: ImportFormat = 'native';
     public file: File|undefined;
     public url: string|undefined;
     public mainTypeDocuments: Array<Document> = [];
@@ -77,22 +79,13 @@ export class ImportComponent {
     }
 
     
-    public startImport() {
+    public async startImport() {
+
+        this.messages.removeAllMessages();
 
         const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.file as any,
             this.url as any, this.http);
-        const parser: Parser|undefined = ImportComponent.createParser(this.format);
-        const importStrategy: ImportStrategy|undefined = ImportComponent.createImportStrategy(this.format,
-            this.validator, this.datastore, this.settingsService, this.projectConfiguration, this.mainTypeDocumentId);
-        const relationsStrategy: RelationsStrategy|undefined
-            = ImportComponent.createRelationsStrategy(this.format, this.relationsCompleter);
-        const rollbackStrategy: RollbackStrategy|undefined
-            = ImportComponent.createRollbackStrategy(this.format, this.datastore);
-
-        this.messages.removeAllMessages();
-        if (!reader || !parser || !importStrategy || !rollbackStrategy) {
-            return this.messages.add([M.IMPORT_GENERIC_START_ERROR]);
-        }
+        if (!reader) return this.messages.add([M.IMPORT_GENERIC_START_ERROR]);
 
         let uploadModalRef: any = undefined;
         let uploadReady = false;
@@ -100,13 +93,19 @@ export class ImportComponent {
             if (!uploadReady) uploadModalRef = this.modalService.open(UploadModalComponent,
                 { backdrop: 'static', keyboard: false });
         }, 200);
-        this.importer.importResources(reader, parser, importStrategy, relationsStrategy as any, rollbackStrategy,
-            this.datastore, this.remoteChangesStream)
-            .then(importReport => {
-                uploadReady = true;
-                if(uploadModalRef) uploadModalRef.close();
-                this.showImportResult(importReport)
-            });
+
+        const importReport = await this.importer.importResources(
+            reader,
+            ImportComponent.createParser(this.format),
+            ImportComponent.createImportStrategy(this.format,
+                this.validator, this.datastore, this.settingsService, this.projectConfiguration, this.mainTypeDocumentId),
+            ImportComponent.createRelationsStrategy(this.format, this.relationsCompleter),
+            ImportComponent.createRollbackStrategy(this.format, this.datastore),
+            this.datastore, this.remoteChangesStream);
+
+        uploadReady = true;
+        if(uploadModalRef) uploadModalRef.close();
+        this.showImportResult(importReport);
     }
 
 
@@ -124,63 +123,59 @@ export class ImportComponent {
     public reset(): void {
 
         this.messages.removeAllMessages();
-
         this.file = undefined;
         this.url = undefined;
     }
     
 
-    private static createImportStrategy(format: string, validator: Validator, datastore: DocumentDatastore,
+    private static createImportStrategy(format: ImportFormat, validator: Validator, datastore: DocumentDatastore,
                                         settingsService: SettingsService, projectConfiguration: ProjectConfiguration,
-                                        mainTypeDocumentId: string): ImportStrategy|undefined {
+                                        mainTypeDocumentId: string): ImportStrategy {
 
         switch (format) {
-            case 'native':
-                return new DefaultImportStrategy(validator, datastore, settingsService, projectConfiguration,
-                    mainTypeDocumentId);
             case 'idig':
                 return new DefaultImportStrategy(validator, datastore, settingsService, projectConfiguration);
             case 'geojson':
                 return new MergeGeometriesImportStrategy(validator, datastore as any, settingsService);
+            default: // 'native'
+                return new DefaultImportStrategy(validator, datastore, settingsService, projectConfiguration,
+                    mainTypeDocumentId);
         }
     }
 
     
-    private static createRelationsStrategy(format: string, relationsCompleter: RelationsCompleter): RelationsStrategy|undefined {
+    private static createRelationsStrategy(format: ImportFormat, relationsCompleter: RelationsCompleter): RelationsStrategy {
 
         switch (format) {
-            case 'native':
-                return new DefaultRelationsStrategy(relationsCompleter);
             case 'idig':
                 return new DefaultRelationsStrategy(relationsCompleter);
             case 'geojson':
                 return new NoRelationsStrategy();
+            default: // 'native'
+                return new DefaultRelationsStrategy(relationsCompleter);
         }
     }
     
 
-    private static createRollbackStrategy(format: string, datastore: DocumentDatastore): RollbackStrategy|undefined {
+    private static createRollbackStrategy(format: ImportFormat, datastore: DocumentDatastore): RollbackStrategy {
 
         switch (format) {
-            case 'native':
-                return new DefaultRollbackStrategy(datastore);
             case 'idig':
                 return new DefaultRollbackStrategy(datastore);
             case 'geojson':
                 return new NoRollbackStrategy();
+            default: // 'native'
+                return new DefaultRollbackStrategy(datastore);
         }
     }
 
 
     public selectFile(event: any) {
 
-        let files = event.target.files;
-
-        if (!files || files.length == 0) {
-            this.file = undefined;
-        } else {
-            this.file = files[0];
-        }
+        const files = event.target.files;
+        this.file = (!files || files.length == 0)
+            ? undefined
+            : files[0];
     }
 
 
@@ -207,9 +202,7 @@ export class ImportComponent {
 
     private showMessages(messages: string[][]) {
 
-        for (let msgWithParams of messages) {
-            this.messages.add(msgWithParams);
-        }
+        messages.forEach(msgWithParams => this.messages.add(msgWithParams));
     }
 
 
@@ -224,15 +217,15 @@ export class ImportComponent {
     }
 
 
-    private static createParser(format: string): Parser|undefined {
+    private static createParser(format: ImportFormat): Parser {
 
         switch (format) {
-            case 'native':
-                return new NativeJsonlParser();
             case 'idig':
                 return new IdigCsvParser();
             case 'geojson':
                 return new GeojsonParser();
+            default: // 'native'
+                return new NativeJsonlParser();
         }
     }
 }

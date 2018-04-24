@@ -3,8 +3,8 @@ import {ImportComponent} from './import.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {UploadModalComponent} from './upload-modal.component';
-import {Import} from '../../core/importer/import';
-import {RelationsCompleter} from '../../core/importer/relations-completer';
+import {Import} from '../../core/import/import';
+import {RelationsCompleter} from '../../core/import/relations-completer';
 
 @NgModule({
     imports: [

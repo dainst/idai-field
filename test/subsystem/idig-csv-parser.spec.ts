@@ -1,5 +1,5 @@
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {IdigCsvParser} from '../../app/core/importer/idig-csv-parser';
+import {IdigCsvParser} from '../../app/core/import/idig-csv-parser';
 import {M} from '../../app/m';
 
 /**

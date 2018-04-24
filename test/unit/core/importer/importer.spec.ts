@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs/Observable';
-import {Import} from '../../../../app/core/importer/import';
+import {Import} from '../../../../app/core/import/import';
 
 
 /**

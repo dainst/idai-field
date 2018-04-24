@@ -126,48 +126,6 @@ export class ImportComponent {
         this.file = undefined;
         this.url = undefined;
     }
-    
-
-    private static createImportStrategy(format: ImportFormat, validator: Validator, datastore: DocumentDatastore,
-                                        settingsService: SettingsService, projectConfiguration: ProjectConfiguration,
-                                        mainTypeDocumentId: string): ImportStrategy {
-
-        switch (format) {
-            case 'idig':
-                return new DefaultImportStrategy(validator, datastore, settingsService, projectConfiguration);
-            case 'geojson':
-                return new MergeGeometriesImportStrategy(validator, datastore as any, settingsService);
-            default: // 'native'
-                return new DefaultImportStrategy(validator, datastore, settingsService, projectConfiguration,
-                    mainTypeDocumentId);
-        }
-    }
-
-    
-    private static createRelationsStrategy(format: ImportFormat, relationsCompleter: RelationsCompleter): RelationsStrategy {
-
-        switch (format) {
-            case 'idig':
-                return new DefaultRelationsStrategy(relationsCompleter);
-            case 'geojson':
-                return new NoRelationsStrategy();
-            default: // 'native'
-                return new DefaultRelationsStrategy(relationsCompleter);
-        }
-    }
-    
-
-    private static createRollbackStrategy(format: ImportFormat, datastore: DocumentDatastore): RollbackStrategy {
-
-        switch (format) {
-            case 'idig':
-                return new DefaultRollbackStrategy(datastore);
-            case 'geojson':
-                return new NoRollbackStrategy();
-            default: // 'native'
-                return new DefaultRollbackStrategy(datastore);
-        }
-    }
 
 
     public selectFile(event: any) {
@@ -226,6 +184,48 @@ export class ImportComponent {
                 return new GeojsonParser();
             default: // 'native'
                 return new NativeJsonlParser();
+        }
+    }
+
+
+    private static createImportStrategy(format: ImportFormat, validator: Validator, datastore: DocumentDatastore,
+                                        settingsService: SettingsService, projectConfiguration: ProjectConfiguration,
+                                        mainTypeDocumentId: string): ImportStrategy {
+
+        switch (format) {
+            case 'idig':
+                return new DefaultImportStrategy(validator, datastore, settingsService, projectConfiguration);
+            case 'geojson':
+                return new MergeGeometriesImportStrategy(validator, datastore as any, settingsService);
+            default: // 'native'
+                return new DefaultImportStrategy(validator, datastore, settingsService, projectConfiguration,
+                    mainTypeDocumentId);
+        }
+    }
+
+
+    private static createRelationsStrategy(format: ImportFormat, relationsCompleter: RelationsCompleter): RelationsStrategy {
+
+        switch (format) {
+            case 'idig':
+                return new DefaultRelationsStrategy(relationsCompleter);
+            case 'geojson':
+                return new NoRelationsStrategy();
+            default: // 'native'
+                return new DefaultRelationsStrategy(relationsCompleter);
+        }
+    }
+
+
+    private static createRollbackStrategy(format: ImportFormat, datastore: DocumentDatastore): RollbackStrategy {
+
+        switch (format) {
+            case 'idig':
+                return new DefaultRollbackStrategy(datastore);
+            case 'geojson':
+                return new NoRollbackStrategy();
+            default: // 'native'
+                return new DefaultRollbackStrategy(datastore);
         }
     }
 }

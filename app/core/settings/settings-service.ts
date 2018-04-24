@@ -62,27 +62,20 @@ export class SettingsService {
 
         const CONFIGURATIONDIRPATH = remote.getGlobal('configurationDirPath');
 
-
         await this.updateSettings(await this.settingsSerializer.load());
         await this.pouchdbManager.loadProjectDb(this.getSelectedProject() as any);
         await this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false);
         if (this.settings.isSyncActive) await this.startSync();
 
-
-        let pconf: ProjectConfiguration|undefined;
         try {
-            pconf = await this.appConfigurator.go(CONFIGURATIONDIRPATH);
+            return await this.appConfigurator.go(CONFIGURATIONDIRPATH);
         } catch (msgsWithParams) {
-            msgsWithParams.forEach((msg: any) => {
-                console.error('err in project configuration', msg)
-            });
+            msgsWithParams.forEach((msg: any) => console.error('err in project configuration', msg));
             if (msgsWithParams.length > 1) {
                 console.error('num errors in project configuration', msgsWithParams.length);
             }
             throw "could not boot project";
         }
-
-        return pconf;
     }
 
 

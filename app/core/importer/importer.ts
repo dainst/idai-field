@@ -43,7 +43,6 @@ export class Importer {
     private docsToUpdate: Array<Document>;
     private objectReaderFinished: boolean;
     private importReport: ImportReport;
-    private resolvePromise: (any: any) => any;
 
     private initState() {
 
@@ -92,17 +91,16 @@ export class Importer {
 
         return new Promise<any>(async resolve => {
 
-            this.resolvePromise = resolve;
             this.initState();
 
             remoteChangesStream.setAutoCacheUpdate(false);
 
             try {
                 const fileContent = await reader.go();
-                await this.parseFileContent(parser, fileContent, importDeps);
+                await this.parseFileContent(parser, fileContent, importDeps, resolve);
             } catch (msgWithParams) {
                 this.importReport.errors.push(msgWithParams);
-                await this.finishImport(importDeps);
+                await this.finishImport(importDeps, resolve);
             }
         });
     }
@@ -111,25 +109,26 @@ export class Importer {
     private async parseFileContent(
         parser: Parser,
         fileContent: string,
-        importDeps: ImportDeps) {
+        importDeps: ImportDeps,
+        resolve: Function) {
 
         await parser.parse(fileContent).subscribe(resultDocument => {
 
             if (this.importReport.errors.length > 0) return;
 
-            if (!this.inUpdateDocumentLoop) this.update(resultDocument, importDeps);
+            if (!this.inUpdateDocumentLoop) this.update(resultDocument, importDeps, resolve);
             else this.docsToUpdate.push(resultDocument);
 
         }, msgWithParams => {
             this.importReport.errors.push(msgWithParams);
 
             this.objectReaderFinished = true;
-            if (!this.inUpdateDocumentLoop) this.finishImport(importDeps);
+            if (!this.inUpdateDocumentLoop) this.finishImport(importDeps, resolve);
 
         }, () => {
             this.importReport.warnings = parser.getWarnings();
             this.objectReaderFinished = true;
-            if (!this.inUpdateDocumentLoop) this.finishImport(importDeps);
+            if (!this.inUpdateDocumentLoop) this.finishImport(importDeps, resolve);
         });
     }
 
@@ -145,7 +144,8 @@ export class Importer {
      */
     private async update(
         doc: Document,
-        importDeps: ImportDeps) {
+        importDeps: ImportDeps,
+        resolve: Function) {
 
         this.inUpdateDocumentLoop = true;
 
@@ -160,62 +160,58 @@ export class Importer {
 
                 if (this.docsToUpdate.length > 0) {
 
-                    return this.update(this.docsToUpdate[0], importDeps);
+                    return this.update(this.docsToUpdate[0], importDeps, resolve);
 
                 } else {
-                    this.finishImport(importDeps);
+                    this.finishImport(importDeps, resolve);
                 }
 
             }, msgWithParams => {
 
                 this.importReport.errors.push(msgWithParams);
-                return this.finishImport(importDeps);
+                return this.finishImport(importDeps, resolve);
             });
     }
 
 
-    private finishImport(importDeps: ImportDeps): Promise<any> {
+    private async finishImport(importDeps: ImportDeps, resolve: Function): Promise<void> {
 
         this.inUpdateDocumentLoop = false;
 
         if (this.importReport.errors.length > 0) {
-            return this.performRollback(importDeps.rollbackStrategy).then(
-                () => importDeps.remoteChangesStream.setAutoCacheUpdate(true)
-            );
-        } else {
-            return importDeps.relationsStrategy.completeInverseRelations(this.importReport.importedResourcesIds).then(
-                () => {
-                    importDeps.remoteChangesStream.setAutoCacheUpdate(true);
-                    this.resolvePromise(this.importReport);
-                }, msgWithParams => {
-                    this.importReport.errors.push(msgWithParams);
-                    return importDeps.relationsStrategy.resetInverseRelations(this.importReport.importedResourcesIds).then(
-                        () => {
-                            return this.performRollback(importDeps.rollbackStrategy).then(
-                                () => importDeps.remoteChangesStream.setAutoCacheUpdate(true)
-                            );
-                        }, msgWithParams => {
-                            this.importReport.errors.push(msgWithParams);
-                            return this.performRollback(importDeps.rollbackStrategy).then(
-                                () => importDeps.remoteChangesStream.setAutoCacheUpdate(true)
-                            );
-                        });
-                }
-            )
+            await this.performRollback(importDeps.rollbackStrategy);
+            importDeps.remoteChangesStream.setAutoCacheUpdate(true);
+            return resolve(this.importReport);
         }
+
+        try {
+
+            await importDeps.relationsStrategy.completeInverseRelations(this.importReport.importedResourcesIds);
+
+        } catch (msgWithParams) {
+            this.importReport.errors.push(msgWithParams);
+
+            await importDeps.relationsStrategy.resetInverseRelations(this.importReport.importedResourcesIds).then(
+
+                () => this.performRollback(importDeps.rollbackStrategy),
+                msgWithParams => {
+                    this.importReport.errors.push(msgWithParams);
+                    return this.performRollback(importDeps.rollbackStrategy);
+                });
+        }
+
+        importDeps.remoteChangesStream.setAutoCacheUpdate(true);
+        resolve(this.importReport);
     }
 
 
-    private performRollback(rollbackStrategy: RollbackStrategy): Promise<any> {
+    private async performRollback(rollbackStrategy: RollbackStrategy): Promise<void> {
 
-        return rollbackStrategy.rollback(this.importReport.importedResourcesIds).then(
-            () => {
-                this.resolvePromise(this.importReport);
-            }, err => {
-                console.error(err);
-                this.importReport.errors.push([M.IMPORT_FAILURE_ROLLBACKERROR]);
-                this.resolvePromise(this.importReport);
-            }
-        );
+        try {
+            await rollbackStrategy.rollback(this.importReport.importedResourcesIds);
+        } catch (err) {
+            console.error(err);
+            this.importReport.errors.push([M.IMPORT_FAILURE_ROLLBACKERROR]);
+        }
     }
 }

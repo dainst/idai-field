@@ -60,15 +60,13 @@ export class SettingsService {
 
     public async bootProject(): Promise<ProjectConfiguration> {
 
-        const CONFIGURATIONDIRPATH = remote.getGlobal('configurationDirPath');
-
         await this.updateSettings(await this.settingsSerializer.load());
-        await this.pouchdbManager.loadProjectDb(this.getSelectedProject() as any);
-        await this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false);
+        await this.pouchdbManager.loadProjectDb(this.getSelectedProject());
+        await this.setProjectSettings(this.settings.dbs, this.getSelectedProject(), false);
         if (this.settings.isSyncActive) await this.startSync();
 
         try {
-            return await this.appConfigurator.go(CONFIGURATIONDIRPATH);
+            return await this.appConfigurator.go(remote.getGlobal('configurationDirPath'));
         } catch (msgsWithParams) {
             msgsWithParams.forEach((msg: any) => console.error('err in project configuration', msg));
             if (msgsWithParams.length > 1) {
@@ -79,9 +77,11 @@ export class SettingsService {
     }
 
 
-    public getSelectedProject(): string|undefined {
+    public getSelectedProject(): string {
         
-        if (this.settings.dbs && this.settings.dbs.length > 0) return this.settings.dbs[0];
+        return (this.settings.dbs && this.settings.dbs.length > 0)
+            ? this.settings.dbs[0]
+            : 'test';
     }
 
 

@@ -39,13 +39,7 @@ export class Importer {
     private importReport: ImportReport;
     private resolvePromise: (any: any) => any;
 
-    private importStrategy: ImportStrategy;
-    private relationsStrategy: RelationsStrategy;
-    private rollbackStrategy: RollbackStrategy;
-
-
-    private initState(importStrategy: ImportStrategy, relationsStrategy: RelationsStrategy,
-                      rollbackStrategy: RollbackStrategy) {
+    private initState() {
 
         this.docsToUpdate = [];
         this.inUpdateDocumentLoop = false;
@@ -57,10 +51,6 @@ export class Importer {
             warnings: [],
             importedResourcesIds: []
         };
-
-        this.importStrategy = importStrategy;
-        this.relationsStrategy = relationsStrategy;
-        this.rollbackStrategy = rollbackStrategy;
     }
 
 
@@ -89,30 +79,39 @@ export class Importer {
                            rollbackStrategy: RollbackStrategy, datastore: DocumentDatastore,
                            remoteChangesStream: RemoteChangesStream): Promise<ImportReport> {
 
-        return new Promise<any>(resolve => {
+        return new Promise<any>(async resolve => {
 
             this.resolvePromise = resolve;
-            this.initState(importStrategy, relationsStrategy, rollbackStrategy);
+            this.initState();
 
             remoteChangesStream.setAutoCacheUpdate(false);
 
-            reader.go()
-                .then(fileContent => this.parseFileContent(parser, fileContent, remoteChangesStream))
-                .catch(msgWithParams => {
-                    this.importReport.errors.push(msgWithParams);
-                    this.finishImport(remoteChangesStream);
-                });
+            try {
+                const fileContent = await reader.go();
+                await this.parseFileContent(
+                    parser, fileContent, importStrategy, relationsStrategy, rollbackStrategy, remoteChangesStream);
+            } catch (msgWithParams) {
+                this.importReport.errors.push(msgWithParams);
+                await this.finishImport(relationsStrategy, rollbackStrategy, remoteChangesStream);
+            }
         });
     }
 
 
-    private parseFileContent(parser: Parser, fileContent: string, remoteChangesStream: RemoteChangesStream) {
+    private async parseFileContent(
+        parser: Parser,
+        fileContent: string,
+        importStrategy: ImportStrategy,
+        relationsStrategy: RelationsStrategy,
+        rollbackStrategy: RollbackStrategy,
+        remoteChangesStream: RemoteChangesStream) {
 
-        parser.parse(fileContent).subscribe(resultDocument => {
+        await parser.parse(fileContent).subscribe(resultDocument => {
 
             if (this.currentImportWithError) return;
 
-            if (!this.inUpdateDocumentLoop) this.update(resultDocument, remoteChangesStream);
+            if (!this.inUpdateDocumentLoop) this.update(
+                resultDocument, importStrategy, relationsStrategy, rollbackStrategy, remoteChangesStream);
             else this.docsToUpdate.push(resultDocument);
 
         }, msgWithParams => {
@@ -120,12 +119,12 @@ export class Importer {
 
             this.objectReaderFinished = true;
             this.currentImportWithError = true;
-            if (!this.inUpdateDocumentLoop) this.finishImport(remoteChangesStream);
+            if (!this.inUpdateDocumentLoop) this.finishImport(relationsStrategy, rollbackStrategy, remoteChangesStream);
 
         }, () => {
             this.importReport.warnings = parser.getWarnings();
             this.objectReaderFinished = true;
-            if (!this.inUpdateDocumentLoop) this.finishImport(remoteChangesStream);
+            if (!this.inUpdateDocumentLoop) this.finishImport(relationsStrategy, rollbackStrategy, remoteChangesStream);
         });
     }
 
@@ -139,11 +138,17 @@ export class Importer {
      * @param doc
      * @param importStrategy
      */
-    private update(doc: Document, remoteChangesStream: RemoteChangesStream) {
+    private async update(
+        doc: Document,
+        importStrategy: ImportStrategy,
+        relationsStrategy: RelationsStrategy,
+        rollbackStrategy: RollbackStrategy,
+        remoteChangesStream: RemoteChangesStream) {
 
         this.inUpdateDocumentLoop = true;
 
-        this.importStrategy.importDoc(doc)
+        await importStrategy.importDoc(doc)
+
             .then(() => {
 
                 this.importReport.importedResourcesIds.push(doc.resource.id as any);
@@ -152,41 +157,54 @@ export class Importer {
                 if (index > -1) this.docsToUpdate.splice(index, 1);
 
                 if (this.docsToUpdate.length > 0) {
-                    return this.update(this.docsToUpdate[0], remoteChangesStream);
+
+                    return this.update(
+                        this.docsToUpdate[0],
+                        importStrategy,
+                        relationsStrategy,
+                        rollbackStrategy,
+                        remoteChangesStream);
+
                 } else {
-                    this.finishImport(remoteChangesStream);
+                    this.finishImport(relationsStrategy, rollbackStrategy, remoteChangesStream);
                 }
+
             }, msgWithParams => {
+
+
                 this.importReport.errors.push(msgWithParams);
                 this.currentImportWithError = true;
-                this.finishImport(remoteChangesStream);
+                return this.finishImport(relationsStrategy, rollbackStrategy, remoteChangesStream);
             });
     }
 
 
-    private finishImport(remoteChangesStream: RemoteChangesStream): Promise<any> {
+    private finishImport(
+        relationsStrategy: RelationsStrategy,
+        rollbackStrategy: RollbackStrategy,
+        remoteChangesStream: RemoteChangesStream): Promise<any> {
 
         this.inUpdateDocumentLoop = false;
 
         if (this.importReport.errors.length > 0) {
-            return this.performRollback().then(
+            return this.performRollback(rollbackStrategy).then(
                 () => remoteChangesStream.setAutoCacheUpdate(true)
             );
         } else {
-            return this.relationsStrategy.completeInverseRelations(this.importReport.importedResourcesIds).then(
+            return relationsStrategy.completeInverseRelations(this.importReport.importedResourcesIds).then(
                 () => {
                     remoteChangesStream.setAutoCacheUpdate(true);
                     this.resolvePromise(this.importReport);
                 }, msgWithParams => {
                     this.importReport.errors.push(msgWithParams);
-                    return this.relationsStrategy.resetInverseRelations(this.importReport.importedResourcesIds).then(
+                    return relationsStrategy.resetInverseRelations(this.importReport.importedResourcesIds).then(
                         () => {
-                            return this.performRollback().then(
+                            return this.performRollback(rollbackStrategy).then(
                                 () => remoteChangesStream.setAutoCacheUpdate(true)
                             );
                         }, msgWithParams => {
                             this.importReport.errors.push(msgWithParams);
-                            return this.performRollback().then(
+                            return this.performRollback(rollbackStrategy).then(
                                 () => remoteChangesStream.setAutoCacheUpdate(true)
                             );
                         });
@@ -196,9 +214,9 @@ export class Importer {
     }
 
 
-    private performRollback(): Promise<any> {
+    private performRollback(rollbackStrategy: RollbackStrategy): Promise<any> {
 
-        return this.rollbackStrategy.rollback(this.importReport.importedResourcesIds).then(
+        return rollbackStrategy.rollback(this.importReport.importedResourcesIds).then(
             () => {
                 this.resolvePromise(this.importReport);
             }, err => {

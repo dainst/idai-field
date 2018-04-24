@@ -28,6 +28,7 @@ describe('Importer', () => {
         importer = new Importer();
     });
 
+
     it('should import until constraint violation is detected',
         function (done) {
             mockParser.parse.and.callFake(function() {return Observable.create(observer => {
@@ -48,6 +49,7 @@ describe('Importer', () => {
                 })
         }
     );
+
 
     it('should import as long as no error is detected',
         function (done) {

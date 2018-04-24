@@ -41,7 +41,6 @@ export class Importer {
 
     private inUpdateDocumentLoop = false;
     private docsToUpdate: Array<Document> = [];
-    private objectReaderFinished = false;
     private importReport: ImportReport;
 
 
@@ -106,14 +105,12 @@ export class Importer {
             else this.docsToUpdate.push(resultDocument);
 
         }, msgWithParams => {
-            this.importReport.errors.push(msgWithParams);
 
-            this.objectReaderFinished = true;
+            this.importReport.errors.push(msgWithParams);
             if (!this.inUpdateDocumentLoop) this.finishImport(importDeps, resolve);
 
         }, () => {
             this.importReport.warnings = parser.getWarnings();
-            this.objectReaderFinished = true;
             if (!this.inUpdateDocumentLoop) this.finishImport(importDeps, resolve);
         });
     }

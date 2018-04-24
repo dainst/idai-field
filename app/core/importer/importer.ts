@@ -81,8 +81,10 @@ export class Importer {
             remoteChangesStream.setAutoCacheUpdate(false);
 
             try {
+
                 const fileContent = await reader.go();
                 await this.parseFileContent(parser, fileContent, importDeps, resolve);
+
             } catch (msgWithParams) {
                 this.importReport.errors.push(msgWithParams);
                 await this.finishImport(importDeps, resolve);
@@ -104,12 +106,10 @@ export class Importer {
             if (!this.inUpdateDocumentLoop) this.update(resultDocument, importDeps, resolve);
             else this.docsToUpdate.push(resultDocument);
 
-        }, msgWithParams => {
+        },
+        () => {},
+        () => {
 
-            this.importReport.errors.push(msgWithParams);
-            if (!this.inUpdateDocumentLoop) this.finishImport(importDeps, resolve);
-
-        }, () => {
             this.importReport.warnings = parser.getWarnings();
             if (!this.inUpdateDocumentLoop) this.finishImport(importDeps, resolve);
         });

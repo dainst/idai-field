@@ -39,23 +39,10 @@ type ImportDeps = {
  */
 export class Importer {
 
-    private inUpdateDocumentLoop: boolean;
-    private docsToUpdate: Array<Document>;
-    private objectReaderFinished: boolean;
+    private inUpdateDocumentLoop = false;
+    private docsToUpdate: Array<Document> = [];
+    private objectReaderFinished = false;
     private importReport: ImportReport;
-
-    private initState() {
-
-        this.docsToUpdate = [];
-        this.inUpdateDocumentLoop = false;
-        this.objectReaderFinished = false;
-
-        this.importReport = {
-            errors: [],
-            warnings: [],
-            importedResourcesIds: []
-        };
-    }
 
 
     /**
@@ -69,11 +56,6 @@ export class Importer {
      * 2. Error reading a json line.
      * 3. Error validating a resource.
      * 4. The file is unreadable.
-     *
-     * @param reader
-     * @param parser
-     * @param importStrategy
-     * @returns {Promise<any>} a promise returning the <code>importReport</code>.
      */
     public importResources(reader: Reader, parser: Parser, importStrategy: ImportStrategy,
                            relationsStrategy: RelationsStrategy,
@@ -91,7 +73,11 @@ export class Importer {
 
         return new Promise<any>(async resolve => {
 
-            this.initState();
+            this.importReport = {
+                errors: [],
+                warnings: [],
+                importedResourcesIds: []
+            };
 
             remoteChangesStream.setAutoCacheUpdate(false);
 

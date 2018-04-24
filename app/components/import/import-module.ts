@@ -22,7 +22,6 @@ import {RelationsCompleter} from '../../core/importer/relations-completer';
         UploadModalComponent
     ],
     providers: [
-        Importer,
         RelationsCompleter
     ]
 })

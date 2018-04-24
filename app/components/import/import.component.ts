@@ -61,7 +61,6 @@ export class ImportComponent {
 
     constructor(
         private messages: Messages,
-        private importer: Importer,
         private datastore: DocumentDatastore,
         private remoteChangesStream: RemoteChangesStream,
         private validator: Validator,
@@ -94,7 +93,7 @@ export class ImportComponent {
                 { backdrop: 'static', keyboard: false });
         }, 200);
 
-        const importReport = await this.importer.importResources(
+        const importReport = await new Importer().importResources(
             reader,
             ImportComponent.createParser(this.format),
             ImportComponent.createImportStrategy(this.format,

@@ -121,9 +121,6 @@ export class Importer {
      * is not empty.
      *
      * Triggers a datastore update of <code>doc</code> on every call.
-     *
-     * @param doc
-     * @param importStrategy
      */
     private async update(
         doc: Document,

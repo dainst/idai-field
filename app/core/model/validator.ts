@@ -65,13 +65,9 @@ export class Validator {
     }
 
     /**
-     * @param doc
-     * @returns {Promise<void>} resolves with () or rejects with msgsWithParams in case of validation error
+     * @throws msgsWithParams in case of validation error
      */
-    protected validateCustom(doc: Document): Promise<any> {
-
-        return Promise.resolve();
-    }
+    protected async validateCustom(doc: Document): Promise<any> {}
 
 
     public async validateRelationTargets(document: Document, relationName: string): Promise<string[]> {

@@ -1,6 +1,4 @@
-import {Injectable} from '@angular/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
-import {Document, Resource} from 'idai-components-2/core';
+import {Document, ProjectConfiguration, Resource} from 'idai-components-2/core';
 import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";
 

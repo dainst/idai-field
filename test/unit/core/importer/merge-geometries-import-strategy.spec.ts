@@ -44,25 +44,21 @@ describe('MergeGeometriesImportStrategy Tests ---', () => {
     });
 
 
-    it('should merge geometry', async (done) => {
+    it('should merge geometry', async done => {
 
-        strategy.importDoc(docToMerge)
-            .then(() => {
-                let importedDoc = mockDatastore.update.calls.mostRecent().args[0];
-                expect(importedDoc.resource).toEqual({
-                    id: '1',
-                    identifier: 'i1',
-                    shortDescription: 'sd1',
-                    geometry: { a: 'b' }
-                });
-                expect(importedDoc.modified).toBeDefined();
-                expect(importedDoc.modified.length).toBe(1);
-                expect(importedDoc.modified[0].user).toEqual('testuser');
-                expect(importedDoc.modified[0].date).toBeDefined();
-                done();
-            }, err => {
-                fail('should not fail ' + err);
-                done();
-            })
+        await strategy.importDoc(docToMerge);
+
+        const importedDoc = mockDatastore.update.calls.mostRecent().args[0];
+        expect(importedDoc.resource).toEqual({
+            id: '1',
+            identifier: 'i1',
+            shortDescription: 'sd1',
+            geometry: { a: 'b' }
+        });
+        expect(importedDoc.modified).toBeDefined();
+        expect(importedDoc.modified.length).toBe(1);
+        expect(importedDoc.modified[0].user).toEqual('testuser');
+        expect(importedDoc.modified[0].date).toBeDefined();
+        done();
     })
 });

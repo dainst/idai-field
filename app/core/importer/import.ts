@@ -91,9 +91,10 @@ export module Import {
 
         if (importReport.errors.length !== 0) {
             try {
-                await performRollback(importReport, rollbackStrategy)
-            } catch (msgWithParams) {
-                importReport.errors.push(msgWithParams);
+                await rollbackStrategy.rollback(importReport.importedResourcesIds);
+            } catch (err) {
+                console.error("rollback error", err);
+                importReport.errors.push([M.IMPORT_FAILURE_ROLLBACKERROR]);
             }
         }
         return importReport;
@@ -127,17 +128,6 @@ export module Import {
             } catch (msgWithParams) {
                 importReport.errors.push(msgWithParams);
             }
-        }
-    }
-
-
-    async function performRollback(importReport: ImportReport, rollbackStrategy: RollbackStrategy): Promise<void> {
-
-        try {
-            await rollbackStrategy.rollback(importReport.importedResourcesIds);
-        } catch (err) {
-            console.error(err);
-            importReport.errors.push([M.IMPORT_FAILURE_ROLLBACKERROR]);
         }
     }
 }

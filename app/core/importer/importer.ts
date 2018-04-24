@@ -42,7 +42,6 @@ export class Importer {
     private inUpdateDocumentLoop: boolean;
     private docsToUpdate: Array<Document>;
     private objectReaderFinished: boolean;
-    private currentImportWithError: boolean;
     private importReport: ImportReport;
     private resolvePromise: (any: any) => any;
 
@@ -51,7 +50,6 @@ export class Importer {
         this.docsToUpdate = [];
         this.inUpdateDocumentLoop = false;
         this.objectReaderFinished = false;
-        this.currentImportWithError = false;
 
         this.importReport = {
             errors: [],
@@ -117,7 +115,7 @@ export class Importer {
 
         await parser.parse(fileContent).subscribe(resultDocument => {
 
-            if (this.currentImportWithError) return;
+            if (this.importReport.errors.length > 0) return;
 
             if (!this.inUpdateDocumentLoop) this.update(resultDocument, importDeps);
             else this.docsToUpdate.push(resultDocument);
@@ -126,7 +124,6 @@ export class Importer {
             this.importReport.errors.push(msgWithParams);
 
             this.objectReaderFinished = true;
-            this.currentImportWithError = true;
             if (!this.inUpdateDocumentLoop) this.finishImport(importDeps);
 
         }, () => {
@@ -156,16 +153,14 @@ export class Importer {
 
             .then(() => {
 
-                this.importReport.importedResourcesIds.push(doc.resource.id as any);
+                this.importReport.importedResourcesIds.push(doc.resource.id);
 
                 let index = this.docsToUpdate.indexOf(doc);
                 if (index > -1) this.docsToUpdate.splice(index, 1);
 
                 if (this.docsToUpdate.length > 0) {
 
-                    return this.update(
-                        this.docsToUpdate[0],
-                        importDeps);
+                    return this.update(this.docsToUpdate[0], importDeps);
 
                 } else {
                     this.finishImport(importDeps);
@@ -173,9 +168,7 @@ export class Importer {
 
             }, msgWithParams => {
 
-
                 this.importReport.errors.push(msgWithParams);
-                this.currentImportWithError = true;
                 return this.finishImport(importDeps);
             });
     }

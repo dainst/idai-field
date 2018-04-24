@@ -9,46 +9,37 @@ describe('Importer', () => {
 
     let mockReader;
     let mockParser;
-    let importer: Importer;
     let mockImportStrategy;
     let mockRelationsStrategy;
     let mockRollbackStrategy;
-    let mockChangesStream;
 
     beforeEach(() => {
         mockReader = jasmine.createSpyObj('reader', ['go']);
         mockReader.go.and.callFake(function() {return Promise.resolve();});
-        mockParser = jasmine.createSpyObj('parser', ['parse']);
+        mockParser = jasmine.createSpyObj('parser', ['parse','getWarnings']);
 
         mockImportStrategy = jasmine.createSpyObj('importStrategy', ['importDoc']);
         mockRelationsStrategy = jasmine.createSpyObj('relationsStrategy',
             ['completeInverseRelations', 'resetInverseRelations']);
         mockRollbackStrategy = jasmine.createSpyObj('rollbackStrategy', ['rollback']);
-        mockChangesStream = jasmine.createSpyObj('changesStream', ['setAutoCacheUpdate']);
-        importer = new Importer();
     });
 
 
-    it('should import until constraint violation is detected',
-        function (done) {
-            mockParser.parse.and.callFake(function() {return Observable.create(observer => {
-                observer.next({ resource: {type: 'Find', id: 'abc1', relations: {} }});
-                observer.complete();
-            })});
+    it('should import until constraint violation is detected', async done => {
 
-            mockImportStrategy.importDoc.and.returnValue(Promise.reject(['constraintviolation']));
-            mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
-            importer.importResources(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
-                    mockRollbackStrategy, null, mockChangesStream)
-                .then(importReport=>{
-                    expect(importReport['errors'][0][0]).toBe('constraintviolation');
-                    done();
-                }, () => {
-                    fail();
-                    done();
-                })
-        }
-    );
+        mockParser.parse.and.callFake(function() {return Observable.create(observer => {
+            observer.next({ resource: {type: 'Find', id: 'abc1', relations: {} }});
+            observer.complete();
+        })});
+
+        mockImportStrategy.importDoc.and.returnValue(Promise.reject(['constraintviolation']));
+        mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
+
+        const importReport = await new Importer().go(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
+                mockRollbackStrategy);
+        expect(importReport['errors'][0][0]).toBe('constraintviolation');
+        done();
+    });
 
 
     it('should import as long as no error is detected',
@@ -65,8 +56,8 @@ describe('Importer', () => {
             mockRelationsStrategy.completeInverseRelations.and.returnValue(Promise.resolve(undefined));
             mockRelationsStrategy.resetInverseRelations.and.returnValue(Promise.resolve(undefined));
             mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
-            importer.importResources(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
-                    mockRollbackStrategy, null, mockChangesStream)
+            new Importer().go(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
+                    mockRollbackStrategy)
                 .then(importReport => {
                     expect(mockImportStrategy.importDoc).toHaveBeenCalledTimes(2);
                     expect(importReport.importedResourcesIds.length).toBe(1);

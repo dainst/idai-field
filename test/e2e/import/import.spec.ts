@@ -2,7 +2,6 @@ import {browser, by, element, protractor} from 'protractor';
 import {ImportPage} from './import.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {NavbarPage} from '../navbar.page';
-import {RelationsViewPage} from '../widgets/relations-view.page';
 
 const common = require('../common.js');
 const delays = require('../config/delays');

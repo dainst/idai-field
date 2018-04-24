@@ -80,7 +80,7 @@ export class ImportComponent {
     
     public async startImport() {
 
-        this.messages.removeAllMessages();
+        // this.messages.removeAllMessages();
 
         const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.file as any,
             this.url as any, this.http);
@@ -93,14 +93,15 @@ export class ImportComponent {
                 { backdrop: 'static', keyboard: false });
         }, 200);
 
-        const importReport = await new Importer().importResources(
+        this.remoteChangesStream.setAutoCacheUpdate(false);
+        const importReport = await new Importer().go(
             reader,
             ImportComponent.createParser(this.format),
             ImportComponent.createImportStrategy(this.format,
                 this.validator, this.datastore, this.settingsService, this.projectConfiguration, this.mainTypeDocumentId),
             ImportComponent.createRelationsStrategy(this.format, this.relationsCompleter),
-            ImportComponent.createRollbackStrategy(this.format, this.datastore),
-            this.datastore, this.remoteChangesStream);
+            ImportComponent.createRollbackStrategy(this.format, this.datastore));
+        this.remoteChangesStream.setAutoCacheUpdate(true);
 
         uploadReady = true;
         if(uploadModalRef) uploadModalRef.close();
@@ -191,7 +192,9 @@ export class ImportComponent {
 
     private showSuccessMessage(importedResourcesIds: string[]) {
 
-        if (importedResourcesIds.length == 1) {
+        console.log("showSuccessMessage",importedResourcesIds)
+
+        if (importedResourcesIds.length === 1) {
             this.messages.add([M.IMPORT_SUCCESS_SINGLE]);
         } else if (importedResourcesIds.length > 1) {
             this.messages.add([M.IMPORT_SUCCESS_MULTIPLE, importedResourcesIds.length.toString()]);

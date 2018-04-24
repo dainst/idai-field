@@ -192,8 +192,6 @@ export class ImportComponent {
 
     private showSuccessMessage(importedResourcesIds: string[]) {
 
-        console.log("showSuccessMessage",importedResourcesIds)
-
         if (importedResourcesIds.length === 1) {
             this.messages.add([M.IMPORT_SUCCESS_SINGLE]);
         } else if (importedResourcesIds.length > 1) {

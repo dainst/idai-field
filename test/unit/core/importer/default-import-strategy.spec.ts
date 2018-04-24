@@ -12,6 +12,7 @@ describe('DefaultImportStrategy', () => {
     let mockConfigLoader;
     let importStrategy: ImportStrategy;
 
+
     beforeEach(() => {
         mockDatastore = jasmine.createSpyObj('datastore', ['create']);
         mockValidator = jasmine.createSpyObj('validator', ['validate']);
@@ -27,38 +28,38 @@ describe('DefaultImportStrategy', () => {
             mockConfigLoader);
     });
 
-    it('should resolve on success', (done) => {
 
-        importStrategy.importDoc({ resource: {type: undefined, id: undefined, relations: undefined } })
-            .then(
-                () => done(),
-                () => { fail(); done() }
-            )
+    it('should resolve on success', async done => {
+
+        await importStrategy.importDoc({ resource: {type: undefined, id: undefined, relations: undefined } })
+        done();
     });
 
-    it('should reject on err in validator', (done) => {
+
+    it('should reject on err in validator', async done => {
 
         mockValidator.validate.and.callFake(function() { return Promise.reject(['abc']); });
-        importStrategy.importDoc({resource: {type: undefined, id: undefined, relations: undefined } })
-            .then(
-                () => { fail(); done() },
-                err => {
-                    expect(err[0]).toBe('abc');
-                    done();
-                }
-            )
+
+        try {
+            await importStrategy.importDoc({resource: {type: undefined, id: undefined, relations: undefined}})
+            fail();
+        } catch (err) {
+            expect(err[0]).toBe('abc');
+        }
+        done();
     });
 
-    it('should reject on err in datastore', (done) => {
+
+    it('should reject on err in datastore', async done => {
 
         mockDatastore.create.and.callFake(function() { return Promise.reject(['abc']); });
-        importStrategy.importDoc({ resource: { type: undefined, id: undefined, relations: undefined } })
-            .then(
-                () => done(),
-                err => {
-                    expect(err[0]).toBe('abc');
-                    done();
-                }
-            )
+
+        try {
+            await importStrategy.importDoc({resource: {type: undefined, id: undefined, relations: undefined}})
+            fail();
+        } catch (err) {
+            expect(err[0]).toBe('abc');
+        }
+        done();
     });
 });

@@ -14,13 +14,6 @@ export interface ImportReport {
     importedResourcesIds: string[]
 }
 
-type ImportDeps = {
-
-    importStrategy: ImportStrategy,
-    relationsStrategy: RelationsStrategy,
-    rollbackStrategy: RollbackStrategy
-}
-
 
 /**
  * @author Thomas Kleinke
@@ -51,13 +44,6 @@ export class Importer {
               relationsStrategy: RelationsStrategy,
               rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
 
-        const importDeps = {
-
-            importStrategy: importStrategy,
-            relationsStrategy: relationsStrategy,
-            rollbackStrategy: rollbackStrategy
-        };
-
         return new Promise<any>(async resolve => {
 
             const importReport = {
@@ -71,41 +57,42 @@ export class Importer {
                     parser, await reader.go());
                 importReport.warnings = warnings as never[];
 
-                await Importer.update(docsToUpdate, importReport, importDeps);
+                await Importer.update(docsToUpdate, importReport, importStrategy);
 
             } catch (msgWithParams) {
 
                 importReport.errors.push(msgWithParams as never);
             }
-            this.finishImport(importReport, importDeps, resolve);
+            this.finishImport(importReport, relationsStrategy, rollbackStrategy, resolve);
         });
     }
 
 
     private async finishImport(
         importReport: ImportReport,
-        importDeps: ImportDeps,
+        relationsStrategy: RelationsStrategy,
+        rollbackStrategy: RollbackStrategy,
         resolve: Function): Promise<void> {
 
         if (importReport.errors.length > 0) {
-            await Importer.performRollback(importReport, importDeps.rollbackStrategy);
+            await Importer.performRollback(importReport, rollbackStrategy);
             return resolve(importReport);
         }
 
         try {
 
-            await importDeps.relationsStrategy.completeInverseRelations(importReport.importedResourcesIds);
+            await relationsStrategy.completeInverseRelations(importReport.importedResourcesIds);
 
         } catch (msgWithParams) {
 
             importReport.errors.push(msgWithParams);
 
-            await importDeps.relationsStrategy.resetInverseRelations(importReport.importedResourcesIds).then(
+            await relationsStrategy.resetInverseRelations(importReport.importedResourcesIds).then(
 
-                () => Importer.performRollback(importReport, importDeps.rollbackStrategy),
+                () => Importer.performRollback(importReport, rollbackStrategy),
                 msgWithParams => {
                     importReport.errors.push(msgWithParams);
-                    return Importer.performRollback(importReport, importDeps.rollbackStrategy);
+                    return Importer.performRollback(importReport, rollbackStrategy);
                 });
         }
 
@@ -129,13 +116,13 @@ export class Importer {
     private static async update(
         docsToUpdate: Document[],
         importReport: ImportReport,
-        importDeps: ImportDeps): Promise<void> {
+        importStrategy: ImportStrategy): Promise<void> {
 
         for (let docToUpdate of docsToUpdate) {
             if (importReport.errors.length !== 0) return;
 
             try {
-                await importDeps.importStrategy.importDoc(docToUpdate);
+                await importStrategy.importDoc(docToUpdate);
                 importReport.importedResourcesIds.push(docToUpdate.resource.id);
             } catch (msgWithParams) {
                 importReport.errors.push(msgWithParams);

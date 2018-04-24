@@ -100,31 +100,36 @@ export class Importer {
             this.remoteChangesStream = remoteChangesStream;
             this.remoteChangesStream.setAutoCacheUpdate(false);
 
-            reader.go().then(fileContent => {
-
-                parser.parse(fileContent).subscribe(resultDocument => {
-
-                    if (this.currentImportWithError) return;
-
-                    if (!this.inUpdateDocumentLoop) this.update(resultDocument);
-                    else this.docsToUpdate.push(resultDocument);
-
-                }, msgWithParams => {
+            reader.go()
+                .then(fileContent => this.parseFileContent(parser, fileContent))
+                .catch(msgWithParams => {
                     this.importReport.errors.push(msgWithParams);
-
-                    this.objectReaderFinished = true;
-                    this.currentImportWithError = true;
-                    if (!this.inUpdateDocumentLoop) this.finishImport();
-
-                }, () => {
-                    this.importReport.warnings = parser.getWarnings();
-                    this.objectReaderFinished = true;
-                    if (!this.inUpdateDocumentLoop) this.finishImport();
+                    this.finishImport();
                 });
-            }).catch(msgWithParams => {
-                this.importReport.errors.push(msgWithParams);
-                this.finishImport();
-            });
+        });
+    }
+
+
+    private parseFileContent(parser: Parser, fileContent: string) {
+
+        parser.parse(fileContent).subscribe(resultDocument => {
+
+            if (this.currentImportWithError) return;
+
+            if (!this.inUpdateDocumentLoop) this.update(resultDocument);
+            else this.docsToUpdate.push(resultDocument);
+
+        }, msgWithParams => {
+            this.importReport.errors.push(msgWithParams);
+
+            this.objectReaderFinished = true;
+            this.currentImportWithError = true;
+            if (!this.inUpdateDocumentLoop) this.finishImport();
+
+        }, () => {
+            this.importReport.warnings = parser.getWarnings();
+            this.objectReaderFinished = true;
+            if (!this.inUpdateDocumentLoop) this.finishImport();
         });
     }
 

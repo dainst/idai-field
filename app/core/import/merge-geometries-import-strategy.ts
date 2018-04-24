@@ -14,7 +14,7 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
 
     constructor(private validator: Validator,
                 private datastore: DocumentDatastore,
-                private settingsService: SettingsService) { }
+                private username: string) { }
 
 
     importDoc(doc: Document): Promise<any> {
@@ -36,7 +36,7 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
                 existingDocument.resource.geometry = document.resource.geometry;
 
                 if (!existingDocument.modified) existingDocument.modified = [];
-                existingDocument.modified.push({ user: this.settingsService.getUsername(), date: new Date() });
+                existingDocument.modified.push({ user: this.username, date: new Date() });
 
                 return this.validator.validate(existingDocument);
             }, () => {

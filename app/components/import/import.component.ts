@@ -32,7 +32,7 @@ import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stre
 import {Validator} from '../../core/model/validator';
 
 
-type ImportFormat = 'native' | 'idig' | 'geojson';
+type ImportFormat = 'native' | 'idig' | 'geojson' | 'meninxfind';
 
 @Component({
     moduleId: module.id,
@@ -54,7 +54,7 @@ export class ImportComponent {
     public file: File|undefined;
     public url: string|undefined;
     public mainTypeDocuments: Array<Document> = [];
-    public mainTypeDocumentId: string = '';
+    public mainTypeDocumentId?: string;
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
@@ -178,6 +178,8 @@ export class ImportComponent {
     private static createParser(format: ImportFormat): Parser {
 
         switch (format) {
+            case 'meninxfind':
+                return new NativeJsonlParser();
             case 'idig':
                 return new IdigCsvParser();
             case 'geojson':
@@ -190,15 +192,17 @@ export class ImportComponent {
 
     private static createImportStrategy(format: ImportFormat, validator: Validator, datastore: DocumentDatastore,
                                         settingsService: SettingsService, projectConfiguration: ProjectConfiguration,
-                                        mainTypeDocumentId: string): ImportStrategy {
+                                        mainTypeDocumentId?: string): ImportStrategy {
 
         switch (format) {
+            case 'meninxfind':
+                return new DefaultImportStrategy(validator, datastore, projectConfiguration, settingsService.getUsername());
             case 'idig':
-                return new DefaultImportStrategy(validator, datastore, settingsService, projectConfiguration);
+                return new DefaultImportStrategy(validator, datastore, projectConfiguration, settingsService.getUsername());
             case 'geojson':
-                return new MergeGeometriesImportStrategy(validator, datastore as any, settingsService);
+                return new MergeGeometriesImportStrategy(validator, datastore, settingsService.getUsername());
             default: // 'native'
-                return new DefaultImportStrategy(validator, datastore, settingsService, projectConfiguration,
+                return new DefaultImportStrategy(validator, datastore, projectConfiguration, settingsService.getUsername(),
                     mainTypeDocumentId);
         }
     }
@@ -207,6 +211,8 @@ export class ImportComponent {
     private static createRelationsStrategy(format: ImportFormat, relationsCompleter: RelationsCompleter): RelationsStrategy {
 
         switch (format) {
+            case 'meninxfind':
+                return new NoRelationsStrategy();
             case 'idig':
                 return new DefaultRelationsStrategy(relationsCompleter);
             case 'geojson':

@@ -15,8 +15,8 @@ export class DefaultImportStrategy implements ImportStrategy {
 
     constructor(private validator: Validator,
                 private datastore: DocumentDatastore,
-                private settingsService: SettingsService,
                 private projectConfiguration: ProjectConfiguration,
+                private username: string,
                 private mainTypeDocumentId?: string) { }
 
 
@@ -29,8 +29,8 @@ export class DefaultImportStrategy implements ImportStrategy {
             await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
         }
 
-        document.created = { user: this.settingsService.getUsername(), date: new Date() };
-        document.modified = [{ user: this.settingsService.getUsername(), date: new Date() }];
+        document.created = { user: this.username, date: new Date() };
+        document.modified = [{ user: this.username, date: new Date() }];
 
         await this.validator.validate(document);
         await this.datastore.create(document);

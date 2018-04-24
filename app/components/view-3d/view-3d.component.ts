@@ -65,7 +65,7 @@ export class View3DComponent implements OnInit {
         this.doceditActiveTabService.setActiveTab(tabName);
 
         const doceditModalRef
-            = this.modalService.open(DoceditComponent,{size: 'lg', backdrop: 'static'});
+            = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
         const doceditModalComponent = doceditModalRef.componentInstance;
         doceditModalComponent.setDocument(this.document);
 

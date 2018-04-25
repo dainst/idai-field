@@ -1,4 +1,5 @@
 import {Document, ProjectConfiguration} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ImportStrategy} from './import-strategy';
 import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";
@@ -22,7 +23,9 @@ export class DefaultImportStrategy implements ImportStrategy {
     /**
      * @throws errorWithParams
      */
-    public async importDoc(document: Document): Promise<void> {
+    public async importDoc(
+            document: Document // TODO use IdaiFieldDocument and make sure it is properly converted
+        ): Promise<void> {
 
         if (this.mainTypeDocumentId) {
             await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
@@ -32,7 +35,20 @@ export class DefaultImportStrategy implements ImportStrategy {
         document.modified = [{ user: this.username, date: new Date() }];
 
         await this.validator.validate(document);
-        await this.datastore.create(document);
+
+        let exists = true;
+        try {
+            await this.datastore.get(document.resource.id);
+        } catch (_) {
+            exists = false;
+        }
+
+        if (this.overwriteIfExists && exists) {
+            await this.datastore.update(document);
+        } else {
+            // throws if !overwriteIfExists an exists
+            await this.datastore.create(document);
+        }
     }
 
 

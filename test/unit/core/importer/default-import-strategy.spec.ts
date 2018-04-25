@@ -8,40 +8,79 @@ describe('DefaultImportStrategy', () => {
 
     let mockDatastore;
     let mockValidator;
-    let mockSettingsService;
-    let mockConfigLoader;
     let importStrategy: ImportStrategy;
 
 
     beforeEach(() => {
-        mockDatastore = jasmine.createSpyObj('datastore', ['create']);
+
+        mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get']);
         mockValidator = jasmine.createSpyObj('validator', ['validate']);
-        mockSettingsService = jasmine.createSpyObj('settingsService', ['getUsername']);
-        mockConfigLoader = jasmine.createSpyObj('configLoader', ['getProjectConfiguration']);
 
-        mockValidator.validate.and.callFake(function() { return Promise.resolve(); });
-        mockDatastore.create.and.callFake(function(a) { return Promise.resolve(a); });
-        mockSettingsService.getUsername.and.callFake(function() { return 'testuser'; });
-        mockConfigLoader.getProjectConfiguration.and.callFake(function() { return null; });
+        mockValidator.validate.and.returnValue(Promise.resolve());
+        mockDatastore.create.and.callFake((a) => Promise.resolve(a));
 
-        importStrategy = new DefaultImportStrategy(mockValidator, mockDatastore, mockSettingsService,
-            mockConfigLoader);
+        importStrategy = new DefaultImportStrategy(
+            mockValidator,
+            mockDatastore,
+            null,
+            'user1');
     });
 
 
     it('should resolve on success', async done => {
 
-        await importStrategy.importDoc({ resource: {type: undefined, id: undefined, relations: undefined } })
+        await importStrategy.importDoc(
+            { resource: {type: undefined, id: undefined, relations: undefined } });
+
+        expect(mockDatastore.create).toHaveBeenCalled();
         done();
     });
 
 
+    it('overwrite if exists', async done => {
+
+        mockDatastore.get.and.returnValue(Promise.resolve({}));
+
+        await new DefaultImportStrategy(
+            mockValidator,
+            mockDatastore,
+            null,
+            'user1',
+            true).importDoc(
+            { resource: {type: undefined, id: undefined, relations: undefined } });
+
+        expect(mockDatastore.create).not.toHaveBeenCalled();
+        expect(mockDatastore.update).toHaveBeenCalled();
+        done();
+    });
+
+
+    it('does not overwrite if exists', async done => {
+
+        mockDatastore.get.and.returnValue(Promise.resolve({}));
+
+        await new DefaultImportStrategy(
+            mockValidator,
+            mockDatastore,
+            null,
+            'user1',
+            false).importDoc(
+            { resource: {type: undefined, id: undefined, relations: undefined } });
+
+        expect(mockDatastore.create).toHaveBeenCalled();
+        expect(mockDatastore.update).not.toHaveBeenCalled();
+        done();
+    });
+
+
+
     it('should reject on err in validator', async done => {
 
-        mockValidator.validate.and.callFake(function() { return Promise.reject(['abc']); });
+        mockValidator.validate.and.returnValue(Promise.reject(['abc']));
 
         try {
-            await importStrategy.importDoc({resource: {type: undefined, id: undefined, relations: undefined}})
+            await importStrategy.importDoc(
+                {resource: {type: undefined, id: undefined, relations: undefined}});
             fail();
         } catch (err) {
             expect(err[0]).toBe('abc');
@@ -52,10 +91,11 @@ describe('DefaultImportStrategy', () => {
 
     it('should reject on err in datastore', async done => {
 
-        mockDatastore.create.and.callFake(function() { return Promise.reject(['abc']); });
+        mockDatastore.create.and.returnValue(Promise.reject(['abc']));
 
         try {
-            await importStrategy.importDoc({resource: {type: undefined, id: undefined, relations: undefined}})
+            await importStrategy.importDoc(
+                {resource: {type: undefined, id: undefined, relations: undefined}});
             fail();
         } catch (err) {
             expect(err[0]).toBe('abc');

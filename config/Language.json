@@ -1,1774 +1,1813 @@
 {
-   "types": {
-      "Trench": {
-         "label": "Schnitt",
-         "fields": {
-            "hasDairy": {
-               "label": "Tagebuch",
-               "description": "Verweis auf Grabungstagebuch."
-            },
-            "hasResearchQuestion": {
-               "label": "Fragestellung",
-               "description": "Fragestellung bzw. Hintergrund der Freilegung der Fläche, z.B. 'Spezifizierung und Datierung der im Magnetogramm entdeckten Struktur zur...'"
-            },
-            "hasSpatialLocation": {
-               "label": "Lage",
-               "description": "Beschreibung der räumlichen Lage der Ausgrabung/der Stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
-            },
-            "hasTrenchComment": {
-               "label": "Schnittkommentar",
-               "description": "Schnittkommenter zur Auswertung und Dokumentation, Bericht für die Grabungsleitung."
-            },
-            "hasDimensionLength": {
-               "label": "Länge",
-               "description": "Angabe der Länge."
-            },
-            "hasDimensionVerticalExtent": {
-               "label": "Niveau",
-               "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-            },
-            "hasDimensionWidth": {
-               "label": "Breite",
-               "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
-            },
-            "hasExcavationType": {
-               "label": "Ausgrabungsart",
-               "description": "Art der durchgeführten Ausgrabung."
-            },
-            "hasOrientation": {
-               "label": "Orientierung",
-               "description": "Ausrichtung nach Himmelsrichtung des Profils."
-            }
-         }
-      },
-      "Glass": {
-         "label": "Glas",
-         "fields": {
-            "hasDecorationDescription": {
-               "label": "Beschreibung Dekoration",
-               "description": "Weiteres beschreibungsfeld zur näheren Ausführung der Dekoration."
-            },
-            "hasColor": {
-               "label": "Farbe und Intensität",
-               "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
-            },
-            "hasDecorationTechniqueGlass": {
-               "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik",
-               "description": "Technik, mit welcher Dekor auf das Glas angebracht wurde, z.B. 'Bemalung (Emaille)'"
-            },
-            "hasFormDescription": {
-               "label": "Beschreibung der Form",
-               "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
-            },
-            "hasManufactoringMethodGlass": {
-               "label": "Herstellungstechnik",
-               "description": "Verwendete Technik zur hertsellung des Objektes. Erkennbare Bearbeitungsspuren."
-            },
-            "hasObjectTypeGlass": {
-               "label": "Ansprache bzw. Art des Objektes",
-               "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
-            },
-            "hasProvinience": {
-               "label": "Provenienz",
-               "description": "Herkunftsort"
-            },
-            "hasTransparency": {
-               "label": "Transparenz",
-               "description": "Wie durchscheinend ist das Objekt?"
-            },
-            "hasVesselFormGlass": {
-               "label": "Gefäß-Grundform",
-               "description": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
-            },
-            "hasVesselFormGlassSpecific": {
-               "label": "Form",
-               "description": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
-            }
-         }
-      },
-      "Drilling": {
-         "label": "Bohrung",
-         "fields": {
-            "hasDimensionDiameter": {
-               "label": "Durchmesser",
-               "description": "Angabe des Objektdurchmessers"
-            },
-            "hasDimensionHeight": {
-               "label": "Höhe",
-               "description": "Angabe der Objekthöhe"
-            },
-            "hasDimensionVerticalExtent": {
-               "label": "Niveau",
-               "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-            },
-            "hasDrillingEquipment": {
-               "label": "Bohrausrüstung",
-               "description": "Welche Art des Bohrers wurde verwendet?"
-            }
-         }
-      },
-      "FeatureGroup": {
-         "label": "Befundgruppe",
-         "fields": {
-            "hasDescription": {
-               "label": "Beschreibung",
-               "description": "Freies Beschreibungsfeld"
-            },
-            "hasProcessor": {
-               "label": "Bearbeiter/Bearbeiterin",
-               "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-            },
-            "hasCampaign": {
-               "label": "Kampagne"
-            },
-            "hasPeriodBeginning": {
-               "label": "Grobdatierung (von)"
-            },
-            "hasPeriodEnd": {
-               "label": "Grobdatierung (bis)"
-            }
-         }
-      },
-      "Mollusk": {
-         "label": "Molluske",
-         "fields": {}
-      },
-      "Planum": {
-         "label": "Planum",
-         "fields": {
-            "hasArea": {
-               "label": "Fläche in m2",
-               "description": "Flächenangabe in Quadratmetern"
-            },
-            "hasDimensionLength": {
-               "label": "Länge",
-               "description": "Angabe der Länge."
-            },
-            "hasDimensionVerticalExtent": {
-               "label": "Niveau",
-               "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-            },
-            "hasDimensionWidth": {
-               "label": "Breite",
-               "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
-            },
-            "hasHorizontalLocation": {
-               "label": "Horizontallage",
-               "description": "Ausrichtung des Planums"
-            },
-            "hasOrientation": {
-               "label": "Orientierung",
-               "description": "Ausrichtung nach Himmelsrichtung des Profils."
-            },
-            "hasPlanumForm": {
-               "label": "Form Planum",
-               "description": "Form des angelegten Planums"
-            }
-         }
-      },
-      "Brick": {
-         "label": "Ziegel",
-         "fields": {
-            "hasFeatureText": {
-               "label": "Stempeltexts",
-               "description": "Beschreibung zu besonderen Merkmalen zum Stempeltext."
-            },
-            "hasBrickForm": {
-               "label": "Ziegelform bzw. Verwendung"
-            },
-            "hasBrickUsage": {
-               "label": "Verwendung der Ziegel in der Architektur"
-            },
-            "hasClayColorOutside": {
-               "label": "Aussen: Tonfarbe und -intensität"
-            },
-            "hasCoatColorInside": {
-               "label": "Überzug Innen: Farbe und Intensität"
-            },
-            "hasCoatColorOutside": {
-               "label": "Überzug Aussen: Farbe und Intensität"
-            },
-            "hasDecorationTechniqueBrick": {
-               "label": "Besonderheiten der Oberfläche bzw. Dekoration"
-            },
-            "hasFormDescription": {
-               "label": "Beschreibung der Form",
-               "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
-            },
-            "hasManufactoring": {
-               "label": "Materialbeschreibung"
-            },
-            "hasManufactoringMethodBrick": {
-               "label": "Herstellungstechnik"
-            },
-            "hasProvinience": {
-               "label": "Provenienz",
-               "description": "Herkunftsort"
-            },
-            "hasSpecificType": {
-               "label": "Format",
-               "description": "Format der Steine & Ziegel, sofern erkennbar. z.B. 'Dachziegel'"
-            },
-            "hasTemper": {
-               "label": "Magerungsart",
-               "description": "Grundsätzliche Art der Magerung, z.B. 'Organische Partikel'"
-            }
-         }
-      },
-      "Project": {
-         "label": "Projekt",
-         "fields": {
-            "hasContactMail": {
-               "label": "Mailadresse der Kontaktperson",
-               "description": "Des Projektes bzw. der Kontaktperson"
-            },
-            "hasContactPerson": {
-               "label": "Kontaktperson",
-               "description": "Kontaktperson des Projekts"
-            },
-            "hasDescription": {
-               "label": "Beschreibung",
-               "description": "Freies Beschreibungsfeld"
-            },
-            "hasEPSGId": {
-               "label": "EPSG Code",
-               "description": "Angabe des EPSG Codes (siehe www.spacialreference.org, z.B. 3004)"
-            },
-            "hasExternalReference": {
-               "label": "Projekt Homepage",
-               "description": "Externe Referenz(en) des Projektes"
-            },
-            "hasGazId": {
-               "label": "Gazetteer ID",
-               "description": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
-            },
-            "hasInstitution": {
-               "label": "Institution",
-               "description": "Für das Projekt verantwortliche Institution"
-            },
-            "hasLatitude": {
-               "label": "Latitude",
-               "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind möglich"
-            },
-            "hasLongitude": {
-               "label": "Longitude",
-               "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind möglich"
-            },
-            "hasProjectURI": {
-               "label": "Projekt URL",
-               "description": "Hinweis auf eine externe Projektseite mit weiteren Informationen. z.B. http://www.klass-archaeologie.uni-muenchen.de/forschung/projekte1/d-projekte-laufend/meninx/index.html"
-            },
-            "hasSupervisor": {
-               "label": "Leiter/Leiterin",
-               "description": "Leitende Person einer Kampagne oder Maßnahme."
-            }
-         }
-      },
-      "Burial": {
-         "label": "Bestattung",
-         "fields": {
-            "hasAgeDetermination": {
-               "label": "Altersbestimmung"
-            },
-            "hasAgeDeterminationBasis": {
-               "label": "Grundlage der Altersbestimmung"
-            },
-            "hasBodyHeightAndRobustness": {
-               "label": "Körperhöhe und Robustizität"
-            },
-            "hasBurialRite": {
-               "label": "Behandlung der Toten"
-            },
-            "hasConditionComment": {
-               "label": "Beschreibung des Erhaltungszustandes",
-               "description": "Kommentar zum Erhaltungszustand"
-            },
-            "hasDietReconstruction": {
-               "label": "Rekonstruktion der Ernährung"
-            },
-            "hasFindingPlace": {
-               "label": "Fundort",
-               "description": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)."
-            },
-            "hasPalaeopathologicalReport": {
-               "label": "Paläopathologischer Befund"
-            },
-            "hasPublicationDatingFinds": {
-               "label": "Datierung (Funde)",
-               "description": "Z.B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
-            },
-            "hasPublicationDatingStratigraphy": {
-               "label": "Datierung (Stratigraphie)",
-               "description": "z.B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
-            },
-            "hasSexDetermination": {
-               "label": "Geschlechtsbestimmung"
-            },
-            "hasSexDeterminationBasis": {
-               "label": "Grundlage der Geschlechtsbestimmung"
-            },
-            "hasAmountIndividuals": {
-               "label": "Bestattungsart - Anzahl"
-            },
-            "hasBurialCharacteristic": {
-               "label": "Bestattungsfolge (Primär/Sekundär)"
-            },
-            "hasBurialDocumentation": {
-               "label": "Dokumentation",
-               "description": "Welche Form(en) der Dokumentation kamen zum Einsatz?"
-            },
-            "hasGraveFeature": {
-               "label": "Bestattungsform"
-            },
-            "hasPositionArms": {
-               "label": "Position der Arme"
-            },
-            "hasPositionLegs": {
-               "label": "Position der Beine"
-            },
-            "hasPositioningIndividuals": {
-               "label": "Lage des/der Verstorbenen"
-            }
-         }
-      },
-      "Building": {
-         "label": "Bauaufnahme",
-         "fields": {
-            "hasBuildingHistory": {
-               "label": "Baugeschichte",
-               "description": "Historische Abhandlung des Bauwerks."
-            },
-            "hasBuildingResearchHistory": {
-               "label": "Forschungsgeschichte",
-               "description": "Vorgeschichte aller am Bauwerk vorgenommenen Forschungen einschließlich Grabungen."
-            },
-            "hasConditionComment": {
-               "label": "Beschreibung des Erhaltungszustandes",
-               "description": "Kommentar zum Erhaltungszustand"
-            },
-            "hasExcavationHistory": {
-               "label": "Ausgrabgsgeschichte",
-               "description": "Abhandlung über die Grabungsprojekte auf der Fundstelle."
-            },
-            "hasHistory": {
-               "label": "Geschichte",
-               "description": "Historische Vergangenheit des Bauwerks."
-            },
-            "hasRestauration": {
-               "label": "Restaurierung",
-               "description": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?"
-            },
-            "hasArchitecturalOrders": {
-               "label": "Bauordnung",
-               "description": "Angabe der architektonischen Säulenordnung."
-            },
-            "hasBuildingCategory": {
-               "label": "Bautyp",
-               "description": "Bautyp (bspw.: Altar, Brücke)"
-            },
-            "hasBuildingCategorySpecific": {
-               "label": "Bautyp Spezial",
-               "description": "Spezieller Bautyp (bspw.: Ehrenbogen, Hoftempel)"
-            },
-            "hasBuildingTechnique": {
-               "label": "Bautechnik",
-               "description": "Bezeichnung der verwendeten Technik bei der Errichtung des Bauwerks."
-            },
-            "hasBuildingType": {
-               "label": "Art des Bauwerks",
-               "description": "Welche Art Bauwerk liegt vor?"
-            },
-            "hasCondition": {
-               "label": "Erhaltungszustand",
-               "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
-            },
-            "hasConditionAmount": {
-               "label": "Erhaltener Anteil",
-               "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
-            },
-            "hasContext": {
-               "label": "Kontext",
-               "description": "In Welchem Kontext liegt das Bauwerk?"
-            },
-            "hasDimensionLength": {
-               "label": "Länge",
-               "description": "Angabe der Länge."
-            },
-            "hasMaterial": {
-               "label": "Material",
-               "description": "Material, aus welchem der Einschluss ist, z.B. 'Holzkohle'"
-            }
-         }
-      },
-      "SurveyUnit": {
-         "label": "Planquadrat",
-         "fields": {
-            "hasArea": {
-               "label": "Fläche in m2",
-               "description": "Flächenangabe in Quadratmetern"
-            },
-            "hasFinds": {
-               "label": "Fundmaterial",
-               "description": "Ja/Nein Feld zum Vorhandensein von Fundmaterial."
-            },
-            "hasDimensionLength": {
-               "label": "Länge",
-               "description": "Angabe der Länge."
-            },
-            "hasDimensionWidth": {
-               "label": "Breite",
-               "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
-            }
-         }
-      },
-      "Wood": {
-         "label": "Holz",
-         "fields": {
-            "hasColorWood": {
-               "label": "Farbe Holz",
-               "description": "Farbe des Fundes oder der Holzstruktur"
-            },
-            "hasObjectTypeWood": {
-               "label": "Ansprache bzw. Art des Objektes",
-               "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
-            },
-            "hasTypeOfWood": {
-               "label": "Holzart",
-               "description": "Holzartenbestimmung am Objekt"
-            }
-         }
-      },
-      "Architecture": {
-         "label": "Architektur",
-         "fields": {
-            "hasConditionComment": {
-               "label": "Beschreibung des Erhaltungszustandes",
-               "description": "Kommentar zum Erhaltungszustand"
-            },
-            "hasConstructionDetailsDescription": {
-               "label": "Beschreibung Konstruktionsdetails",
-               "description": "Nähere beschreibung zur Konstruktion der Fundamente/Ecken/Lagen o.Ä."
-            },
-            "hasDiscriptionOfBuildingTechnique": {
-               "label": "Beschreibung der Bautechnik",
-               "description": "Nähere Beschreibung der Bautechnik wie Feldsteinmauerwerk oder Ziegelmauer."
-            },
-            "hasGrouting": {
-               "label": "Verfugung",
-               "description": "Ist die Mauer verfugt"
-            },
-            "hasLayerAmount": {
-               "label": "Lagenanzahl",
-               "description": "Anzahl der Mauerlagen."
-            },
-            "hasLayerHight": {
-               "label": "Lagenhöhe",
-               "description": "Anzahl der Mauerlagen."
-            },
-            "hasMarkDescription": {
-               "label": "Werkzeichen Beschreibung",
-               "description": "Erklärungen und Erkenntnisse zum Vorhandenen Werkzeichen."
-            },
-            "hasMaterialCharacteristic": {
-               "label": "Materialcharakteristik",
-               "description": "Charackteristische Materilaeigenschaften."
-            },
-            "hasMaterialForm": {
-               "label": "Materialform",
-               "description": "Weitere Beschreibung zu Ziegeln/Steinen/ etc..."
-            },
-            "hasMuralCrown": {
-               "label": "Mauerkrone",
-               "description": "Kurze definition des Zustandes der Mauerkrone."
-            },
-            "hasBlockProcessing": {
-               "label": "Art der Steinblöcke"
-            },
-            "hasBlockTreatment": {
-               "label": "Steinblockbearbeitung",
-               "description": "Bearbeitung des Blockes/Bearbeitungsspuren"
-            },
-            "hasBrickwork": {
-               "label": "Mauerwerksverband"
-            },
-            "hasCondition": {
-               "label": "Erhaltungszustand",
-               "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
-            },
-            "hasConditionAmount": {
-               "label": "Erhaltener Anteil",
-               "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
-            },
-            "hasConstruction": {
-               "label": "Konstruktion",
-               "description": "Welche Art der Mauerkonstruktion liegt vor?"
-            },
-            "hasMark": {
-               "label": "Steinmetzzeichen",
-               "description": "Auflistung möglicher Steinmetzzeichen (z.B. A, AC etc.)"
-            },
-            "hasMortarBinder": {
-               "label": "Mörtelzuschlag",
-               "description": "Wie hoch ist der Zuschlag von Fremdmaterial?"
-            },
-            "hasMortarColor": {
-               "label": "Mörtelfarbe"
-            },
-            "hasMortarConsistency": {
-               "label": "Mörtelkonsistenz"
-            },
-            "hasOrientation": {
-               "label": "Orientierung",
-               "description": "Ausrichtung nach Himmelsrichtung des Profils."
-            },
-            "hasWallClassification": {
-               "label": "Klassifikation Mauer"
-            },
-            "hasWallType": {
-               "label": "Mauertyp",
-               "description": "Typ des Mauerwerks"
-            }
-         }
-      },
-      "Operation": {
-         "label": "Maßnahme",
-         "fields": {
-            "hasArea": {
-               "label": "Fläche in m2",
-               "description": "Flächenangabe in Quadratmetern"
-            },
-            "hasBeginningDate": {
-               "label": "Startdatum",
-               "description": "Datum an dem die Maßnahme beginnt"
-            },
-            "hasDescription": {
-               "label": "Beschreibung",
-               "description": "Freies Beschreibungsfeld"
-            },
-            "hasDiaryAbstract": {
-               "label": "Projektverlauf",
-               "description": "Darstellung des Projekt- oder Grabungsverlaufs, ggfs. Zusammenfassung des Tagebuchs."
-            },
-            "hasEndDate": {
-               "label": "Enddatum",
-               "description": "Ende des Projektes."
-            },
-            "hasProcessor": {
-               "label": "Bearbeiter/Bearbeiterin",
-               "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-            },
-            "hasSupervisor": {
-               "label": "Leiter/Leiterin",
-               "description": "Leitende Person einer Kampagne oder Maßnahme."
-            },
-            "hasCampaign": {
-               "label": "Kampagne"
-            },
-            "hasDating": {
-               "label": "Datierung"
-            },
-            "hasPeriodBeginning": {
-               "label": "Grobdatierung (von)"
-            },
-            "hasPeriodEnd": {
-               "label": "Grobdatierung (bis)"
-            }
-         }
-      },
-      "Place": {
-         "label": "Ort",
-         "fields": {
-            "hasGazId": {
-               "label": "Gazetteer ID",
-               "description": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
-            },
-            "hasPlaceName": {
-               "label": "Ortsname",
-               "description": "Name der Ortschaft bzw. Gemarkung"
-            },
-            "hasPlaceType": {
-               "label": "Ortstyp",
-               "description": "Angabe des Verortung in einer Provinz o.Ä."
-            },
-            "isAncient": {
-               "label": "Ortsbezeichnung",
-               "description": "Ist der Name des Ortes antik oder modern? (Siehe auch Gazetteer-Dokumentation)"
-            }
-         }
-      },
-      "Layer": {
-         "label": "Erdbefund",
-         "fields": {
-            "hasAppearance": {
-               "label": "Entstehung",
-               "description": "Beschreibung der Entstehung der Schicht, z.B. 'Versturz der östlichen Lehmziegelmauer'"
-            },
-            "hasNatural": {
-               "label": "Natürlich",
-               "description": "Natürliche Schicht, z.B. bei Erosion: Ja."
-            },
-            "hasConsistency": {
-               "label": "Konsistenz"
-            },
-            "hasDimensionThickness": {
-               "label": "Stärke",
-               "description": "Dicke bzw. Stärke des Objektes"
-            },
-            "hasDistinguishingCriteria": {
-               "label": "Unterscheidungskriterium",
-               "description": "Welches Kriterium wurde zur Abgrenzung der stratigrafischen Einheit gewählt?"
-            },
-            "hasLayerClassification": {
-               "label": "Bezeichnung bzw. Klassifikation Schicht"
-            },
-            "hasSoilType": {
-               "label": "Bodenart",
-               "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
-            }
-         }
-      },
-      "Feature": {
-         "label": "Stratigrafische Einheit",
-         "fields": {
-            "hasArea": {
-               "label": "Fläche in m2",
-               "description": "Flächenangabe in Quadratmetern"
-            },
-            "hasBeginningDate": {
-               "label": "Startdatum",
-               "description": "Datum an dem die Maßnahme beginnt"
-            },
-            "hasComparison": {
-               "label": "Vergleich(e)",
-               "description": "Vergleich mit ähnlichen Befunden/Objekten/Inschriften etc. mit Angabe einer Referenz."
-            },
-            "hasDairy": {
-               "label": "Tagebuch",
-               "description": "Verweis auf Grabungstagebuch."
-            },
-            "hasDescription": {
-               "label": "Beschreibung",
-               "description": "Freies Beschreibungsfeld"
-            },
-            "hasDisturbance": {
-               "label": "Störung",
-               "description": "Befund gestört: Ja/Nein"
-            },
-            "hasFeatureAmount": {
-               "label": "Befundanteil",
-               "description": "Prozentuale Menge des Einschlusses im Vergleich zum Gesamtbefund, je nach Grabungsmethodik Einteilung prozentual ('5-10%') oder textuell ('wenig')."
-            },
-            "hasProcessor": {
-               "label": "Bearbeiter/Bearbeiterin",
-               "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-            },
-            "hasColor": {
-               "label": "Farbe und Intensität",
-               "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
-            },
-            "hasDating": {
-               "label": "Datierung"
-            },
-            "hasDimensionLength": {
-               "label": "Länge",
-               "description": "Angabe der Länge."
-            },
-            "hasDimensionVerticalExtent": {
-               "label": "Niveau",
-               "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-            },
-            "hasDimensionWidth": {
-               "label": "Breite",
-               "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
-            },
-            "hasFeatureBorders": {
-               "label": "Grenzen der Stratigrafischen Einheit",
-               "description": "Bestimmung der Grenzen des Befundes (z.B. unscharf, klar...)"
-            },
-            "hasFeatureForm": {
-               "label": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
-               "description": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
-            },
-            "hasPeriodBeginning": {
-               "label": "Grobdatierung (von)"
-            },
-            "hasPeriodEnd": {
-               "label": "Grobdatierung (bis)"
-            }
-         }
-      },
-      "Floor": {
-         "label": "Fußboden",
-         "fields": {
-            "hasConditionComment": {
-               "label": "Beschreibung des Erhaltungszustandes",
-               "description": "Kommentar zum Erhaltungszustand"
-            },
-            "hasCondition": {
-               "label": "Erhaltungszustand",
-               "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
-            },
-            "hasConditionAmount": {
-               "label": "Erhaltener Anteil",
-               "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
-            },
-            "hasConsistency": {
-               "label": "Konsistenz"
-            },
-            "hasDistinguishingCriteria": {
-               "label": "Unterscheidungskriterium",
-               "description": "Welches Kriterium wurde zur Abgrenzung der stratigrafischen Einheit gewählt?"
-            },
-            "hasFloorClassification": {
-               "label": "Klassifikation Fußboden"
-            },
-            "hasLayerClassification": {
-               "label": "Bezeichnung bzw. Klassifikation Schicht"
-            },
-            "hasMortarBinder": {
-               "label": "Mörtelzuschlag",
-               "description": "Wie hoch ist der Zuschlag von Fremdmaterial?"
-            }
-         }
-      },
-      "Inscription": {
-         "label": "Inschrift",
-         "fields": {
-            "hasComparison": {
-               "label": "Vergleich(e)",
-               "description": "Vergleich mit ähnlichen Befunden/Objekten/Inschriften etc. mit Angabe einer Referenz."
-            },
-            "hasConditionComment": {
-               "label": "Beschreibung des Erhaltungszustandes",
-               "description": "Kommentar zum Erhaltungszustand"
-            },
-            "hasContent": {
-               "label": "Abschrift der Inschrift"
-            },
-            "hasDescription": {
-               "label": "Beschreibung",
-               "description": "Freies Beschreibungsfeld"
-            },
-            "hasLanguage": {
-               "label": "Sprache"
-            },
-            "hasProcessor": {
-               "label": "Bearbeiter/Bearbeiterin",
-               "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-            },
-            "hasCondition": {
-               "label": "Erhaltungszustand",
-               "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
-            },
-            "hasConditionAmount": {
-               "label": "Erhaltener Anteil",
-               "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
-            },
-            "hasDating": {
-               "label": "Datierung"
-            },
-            "hasDimensionWidth": {
-               "label": "Breite",
-               "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
-            },
-            "hasObjectTypeInscription": {
-               "label": "Ansprache bzw. Art der Inschrift"
-            },
-            "hasPeriodBeginning": {
-               "label": "Grobdatierung (von)"
-            },
-            "hasPeriodEnd": {
-               "label": "Grobdatierung (bis)"
-            }
-         }
-      },
-      "Findspot": {
-         "label": "Fundplatz",
-         "fields": {
-            "hasBuildingHistory": {
-               "label": "Baugeschichte",
-               "description": "Historische Abhandlung des Bauwerks."
-            },
-            "hasBuildingResearchHistory": {
-               "label": "Forschungsgeschichte",
-               "description": "Vorgeschichte aller am Bauwerk vorgenommenen Forschungen einschließlich Grabungen."
-            },
-            "hasDescription": {
-               "label": "Beschreibung",
-               "description": "Freies Beschreibungsfeld"
-            },
-            "hasExcavationHistory": {
-               "label": "Ausgrabgsgeschichte",
-               "description": "Abhandlung über die Grabungsprojekte auf der Fundstelle."
-            },
-            "hasFindSituation": {
-               "label": "Fundumstände",
-               "description": "Nähere Beschreibung unter welchen Bedingungen und von wem ein Fundplatz entdeckt wurde."
-            },
-            "hasModernIntervention": {
-               "label": "Moderne Eingriffe",
-               "description": "Beschreibung ob Fundplatz rezent beschädigungen ausgesetzt war. Z.B.\nSteinbruch/Grube/Mine, Überbauung, Aufschüttung, Raubgrabung, Ackerbau, Wiederaufforstung, Abraumhalden"
-            },
-            "hasProcessor": {
-               "label": "Bearbeiter/Bearbeiterin",
-               "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-            },
-            "hasCampaign": {
-               "label": "Kampagne"
-            },
-            "hasFindspotClassification": {
-               "label": "Klassifikation Fundstelle"
-            },
-            "hasPeriodBeginning": {
-               "label": "Grobdatierung (von)"
-            },
-            "hasPeriodEnd": {
-               "label": "Grobdatierung (bis)"
-            },
-            "hasSiteClassification": {
-               "label": "Klassifikation Fundplatz"
-            }
-         }
-      },
-      "Image": {
-         "label": "Abbildung",
-         "fields": {
-            "hasCaption": {
-               "label": "Beschriftung",
-               "description": "Feld der Abbildungsbeschriftung."
-            },
-            "hasDescription": {
-               "label": "Beschreibung",
-               "description": "Freies Beschreibungsfeld"
-            },
-            "hasDraughtsmen": {
-               "label": "Bildersteller/Bilderstellerin",
-               "description": "Ersteller der Abbildung, Fotograf/Fotografin bzw. Zeichner/Zeichnerin"
-            },
-            "hasProcessor": {
-               "label": "Bearbeiter/Bearbeiterin",
-               "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-            },
-            "hasCampaign": {
-               "label": "Kampagne"
-            },
-            "hasPictureObject": {
-               "label": "Abbildungsgegenstand",
-               "description": "Inhalt des Bildes, z.B. 'Arbeitsfoto'"
-            }
-         }
-      },
-      "Pottery": {
-         "label": "Keramik",
-         "fields": {
-            "hasAmountRimSherds": {
-               "label": "Anzahl Wand-Scherben"
-            },
-            "hasAmountSherdsBase": {
-               "label": "Anzahl Bodenscherben"
-            },
-            "hasAmountSherdsHandles": {
-               "label": "Anzahl Henkel"
-            },
-            "hasAmountSherdsLip": {
-               "label": "Anzahl der Ausgüsse"
-            },
-            "hasAmountSherdsPedestal": {
-               "label": "Anzahl Fuß-Scherben"
-            },
-            "hasAmountSherdsRimBase": {
-               "label": "Anzahl Rand-Boden Scherben"
-            },
-            "hasAmountSherdsRimShoulder": {
-               "label": "Anzahl Rand-Schulter Scherben"
-            },
-            "hasAmountSherdsShoulder": {
-               "label": "Anzahl Schulter-Scherben"
-            },
-            "hasAmountSherdsxOther": {
-               "label": "Anzahl anderer Scherben"
-            },
-            "hasAmountSherdsxPercent": {
-               "label": "Qantifizierung in Prozent",
-               "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
-            },
-            "hasAmountShertsLid": {
-               "label": "Anzahl Deckel"
-            },
-            "hasClayColorBreakMunsell": {
-               "label": "Farbe des Bruches Munsell"
-            },
-            "hasClayColorInsideMunsell": {
-               "label": "Farbe Innen Munsell"
-            },
-            "hasClayColorOutsideMunsell": {
-               "label": "Farbe Außen Munsell"
-            },
-            "hasCoat": {
-               "label": "Überzug"
-            },
-            "hasDecorationDescription": {
-               "label": "Beschreibung Dekoration",
-               "description": "Weiteres beschreibungsfeld zur näheren Ausführung der Dekoration."
-            },
-            "hasPotteryBreakStructure": {
-               "label": "Bemerkungen zum Bruch (Struktur, Porösität etc.)",
-               "description": "Beschreibung der Struktur und der Porösität des Bruches."
-            },
-            "hasPotteryResidueAnalysis": {
-               "label": "Rückstandsanalyse",
-               "description": "Angabe zur Rückstandsanalys"
-            },
-            "hasPotterySample": {
-               "label": "Probe",
-               "description": "Angaben zu entnommener Probe"
-            },
-            "hasPurpose": {
-               "label": "Verwendung",
-               "description": "Zweck bzw. Verwendung des Objekts."
-            },
-            "hasTypeNumber": {
-               "label": "Typnummer",
-               "description": "Nummer aus dem Typenkatalog."
-            },
-            "hasClayColorBreak": {
-               "label": "Bruch: Tonfarbe und -intensität"
-            },
-            "hasClayColorInside": {
-               "label": "Innen: Tonfarbe und -intensität"
-            },
-            "hasClayColorOutside": {
-               "label": "Aussen: Tonfarbe und -intensität"
-            },
-            "hasClayHardness": {
-               "label": "Tonhärte (Mohssche Härteskala)",
-               "description": "Möglicherweise Mohsche Härtetabelle Einfügen?"
-            },
-            "hasCoatColorInside": {
-               "label": "Überzug Innen: Farbe und Intensität"
-            },
-            "hasCoatColorOutside": {
-               "label": "Überzug Aussen: Farbe und Intensität"
-            },
-            "hasCoatInside": {
-               "label": "Überzug Innen"
-            },
-            "hasCoatInsideType": {
-               "label": "Bearbeitung Innen"
-            },
-            "hasCoatOutside": {
-               "label": "Überzug Außen"
-            },
-            "hasCoatOutsideType": {
-               "label": "Bearbeitung Außen"
-            },
-            "hasDecorationTechniquePottery": {
-               "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik"
-            },
-            "hasFormDescription": {
-               "label": "Beschreibung der Form",
-               "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
-            },
-            "hasManufactoring": {
-               "label": "Materialbeschreibung"
-            },
-            "hasManufactoringMethodPottery": {
-               "label": "Herstellungstechnik"
-            },
-            "hasMaterialType": {
-               "label": "Materialklasse",
-               "description": "Welcher Machart ist das vorgefundene Objekt?"
-            },
-            "hasObjectTypePottery": {
-               "label": "Art des Objektes",
-               "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
-            },
-            "hasPotteryTypeSpecific": {
-               "label": "Keramikart Ware"
-            },
-            "hasProvinience": {
-               "label": "Provenienz",
-               "description": "Herkunftsort"
-            },
-            "hasTemper": {
-               "label": "Magerungsart",
-               "description": "Grundsätzliche Art der Magerung, z.B. 'Organische Partikel'"
-            },
-            "hasTemperAmount": {
-               "label": "Menge der Einschlüsse"
-            },
-            "hasTemperParticles": {
-               "label": "Magerungs Körnung",
-               "description": "Größe der Magerungspartikel."
-            },
-            "hasTemperTypeClay": {
-               "label": "Tongruppe"
-            },
-            "hasVesselFormPottery": {
-               "label": "Gefäß-Grundform",
-               "description": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
-            },
-            "hasVesselFormPotterySpecific": {
-               "label": "Form",
-               "description": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
-            }
-         }
-      },
-      "DrillCoreLayer": {
-         "label": "Bohrkernschicht",
-         "fields": {
-            "hasFinds": {
-               "label": "Fundmaterial",
-               "description": "Ja/Nein Feld zum Vorhandensein von Fundmaterial."
-            },
-            "hasDimensionThickness": {
-               "label": "Stärke",
-               "description": "Dicke bzw. Stärke des Objektes"
-            },
-            "hasDimensionVerticalExtent": {
-               "label": "Niveau",
-               "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-            },
-            "hasSoilType": {
-               "label": "Bodenart",
-               "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
-            }
-         }
-      },
-      "Grave": {
-         "label": "Grab",
-         "fields": {
-            "hasBibliography": {
-               "label": "Bibliographie"
-            },
-            "hasConditionComment": {
-               "label": "Beschreibung des Erhaltungszustandes",
-               "description": "Kommentar zum Erhaltungszustand"
-            },
-            "hasFindingPlace": {
-               "label": "Fundort",
-               "description": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)."
-            },
-            "hasPublicationDatingFinds": {
-               "label": "Datierung (Funde)",
-               "description": "Z.B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
-            },
-            "hasPublicationDatingStratigraphy": {
-               "label": "Datierung (Stratigraphie)",
-               "description": "z.B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
-            },
-            "hasSpatialLocation": {
-               "label": "Lage",
-               "description": "Beschreibung der räumlichen Lage der Ausgrabung/der Stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
-            },
-            "hasCondition": {
-               "label": "Erhaltungszustand",
-               "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
-            },
-            "hasConditionAmount": {
-               "label": "Erhaltener Anteil",
-               "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
-            },
-            "hasDistinguishingCriteria": {
-               "label": "Unterscheidungskriterium",
-               "description": "Welches Kriterium wurde zur Abgrenzung der stratigrafischen Einheit gewählt?"
-            },
-            "hasGraveType": {
-               "label": "Grabtyp",
-               "description": "Bezeichnet die Art des Grabes"
-            },
-            "hasGraveTypeSpecific": {
-               "label": "Grabtyp speziell"
-            },
-            "hasSoilType": {
-               "label": "Bodenart",
-               "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
-            },
-            "hasTombBuilding": {
-               "label": "Grabbau"
-            }
-         }
-      },
-      "Bone": {
-         "label": "Knochen",
-         "fields": {
-            "hasBiologicalAge": {
-               "label": "Altersklasse",
-               "description": "Alter des Menschens oder Tieres zum Todeszeitpunkt (Beispielsweise Infans I)"
-            },
-            "hasBoneClassification": {
-               "label": "Knochen Klassifikation"
-            },
-            "hasBoneType": {
-               "label": "Grobe Einordnung der Knochen"
-            },
-            "hasBurningGrade": {
-               "label": "Verbrennungsgrad der Knochen (nach Wahl 1982)"
-            },
-            "hasGender": {
-               "label": "Geschlecht",
-               "description": "Geschlecht des Menschens oder Tieres."
-            },
-            "hasObjectTypeBone": {
-               "label": "Ansprache bzw. Art des Objektes",
-               "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
-            },
-            "hasSpecies": {
-               "label": "Tierart",
-               "description": "Vorliegende Tierart."
-            }
-         }
-      },
-      "Room": {
-         "label": "Raum",
-         "fields": {
-            "hasArea": {
-               "label": "Fläche in m2",
-               "description": "Flächenangabe in Quadratmetern"
-            },
-            "hasConditionComment": {
-               "label": "Beschreibung des Erhaltungszustandes",
-               "description": "Kommentar zum Erhaltungszustand"
-            },
-            "hasDescription": {
-               "label": "Beschreibung",
-               "description": "Freies Beschreibungsfeld"
-            },
-            "hasProcessor": {
-               "label": "Bearbeiter/Bearbeiterin",
-               "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-            },
-            "hasCampaign": {
-               "label": "Kampagne"
-            },
-            "hasCondition": {
-               "label": "Erhaltungszustand",
-               "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
-            },
-            "hasConditionAmount": {
-               "label": "Erhaltener Anteil",
-               "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
-            },
-            "hasDating": {
-               "label": "Datierung"
-            },
-            "hasDimensionHeight": {
-               "label": "Höhe",
-               "description": "Angabe der Objekthöhe"
-            },
-            "hasDimensionLength": {
-               "label": "Länge",
-               "description": "Angabe der Länge."
-            },
-            "hasDimensionVerticalExtent": {
-               "label": "Niveau",
-               "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-            },
-            "hasDimensionWidth": {
-               "label": "Breite",
-               "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
-            },
-            "hasPeriodBeginning": {
-               "label": "Grobdatierung (von)"
-            },
-            "hasPeriodEnd": {
-               "label": "Grobdatierung (bis)"
-            }
-         }
-      },
-      "ProcessUnit": {
-         "label": "Arbeitsgang",
-         "fields": {
-            "hasDate": {
-               "label": "Datum",
-               "description": "Datum der Durchführung"
-            },
-            "hasDescription": {
-               "label": "Beschreibung",
-               "description": "Freies Beschreibungsfeld"
-            },
-            "hasProcessor": {
-               "label": "Bearbeiter/Bearbeiterin",
-               "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-            },
-            "hasOperationClassification": {
-               "label": "Klassifikation Arbeitsgang"
-            }
-         }
-      },
-      "Terracotta": {
-         "label": "Terrakotta",
-         "fields": {
-            "hasClayColorBreak": {
-               "label": "Bruch: Tonfarbe und -intensität"
-            },
-            "hasClayColorInside": {
-               "label": "Innen: Tonfarbe und -intensität"
-            },
-            "hasClayColorOutside": {
-               "label": "Aussen: Tonfarbe und -intensität"
-            },
-            "hasClayStructure": {
-               "label": "Struktur",
-               "description": "Welcher Art ist die Terrakottastruktur?"
-            },
-            "hasCoatColorInside": {
-               "label": "Überzug Innen: Farbe und Intensität"
-            },
-            "hasCoatColorOutside": {
-               "label": "Überzug Aussen: Farbe und Intensität"
-            },
-            "hasDecorationTechniquePottery": {
-               "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik"
-            },
-            "hasFormDescription": {
-               "label": "Beschreibung der Form",
-               "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
-            },
-            "hasManufactoringMethodPottery": {
-               "label": "Herstellungstechnik"
-            },
-            "hasProvinience": {
-               "label": "Provenienz",
-               "description": "Herkunftsort"
-            },
-            "hasSurfaceCondition": {
-               "label": "Oberflächenzustand",
-               "description": "Angabe zum Zustand der Oberfläche, z.B. 'abblätternd'"
-            },
-            "hasTemper": {
-               "label": "Magerungsart",
-               "description": "Grundsätzliche Art der Magerung, z.B. 'Organische Partikel'"
-            },
-            "hasTemperAmount": {
-               "label": "Menge der Einschlüsse"
-            },
-            "hasTemperParticles": {
-               "label": "Magerungs Körnung",
-               "description": "Größe der Magerungspartikel."
-            },
-            "hasTerracottaType": {
-               "label": "Art der Terrakotta",
-               "description": "Massivität des Terrakottaobjekts, z.B. 'Innen hohl'."
-            },
-            "hasVesselFormTerracotta": {
-               "label": "Gefäß-Grundform",
-               "description": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
-            },
-            "hasVesselFormTerracottaSpecific": {
-               "label": "Form",
-               "description": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
-            }
-         }
-      },
-      "Wall_surface": {
-         "label": "Wandoberfläche",
-         "fields": {
-            "hasArea": {
-               "label": "Fläche in m2",
-               "description": "Flächenangabe in Quadratmetern"
-            },
-            "hasConditionComment": {
-               "label": "Beschreibung des Erhaltungszustandes",
-               "description": "Kommentar zum Erhaltungszustand"
-            },
-            "hasConstructionDetailsDescription": {
-               "label": "Beschreibung Konstruktionsdetails",
-               "description": "Nähere beschreibung zur Konstruktion der Fundamente/Ecken/Lagen o.Ä."
-            },
-            "hasDescription": {
-               "label": "Beschreibung",
-               "description": "Freies Beschreibungsfeld"
-            },
-            "hasMarkDescription": {
-               "label": "Werkzeichen Beschreibung",
-               "description": "Erklärungen und Erkenntnisse zum Vorhandenen Werkzeichen."
-            },
-            "hasPlasterDecoration": {
-               "label": "Putzdekoration",
-               "description": "Beschreibung der Dekoration des Putzes"
-            },
-            "hasPlasterOlder": {
-               "label": "Älterer Putz",
-               "description": "Beschreibung der älteren Putzschichten."
-            },
-            "hasProcessor": {
-               "label": "Bearbeiter/Bearbeiterin",
-               "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-            },
-            "hasSurfaceDecoration": {
-               "label": "Oberflächendekoration",
-               "description": "Z.B. Bemalung oder sonstige Verzierungen."
-            },
-            "hasWallConstructionTechnique": {
-               "label": "Mauertechnik",
-               "description": "Beschreibung zu möglichen Bindern/Abfolge von Lagen o.Ä."
-            },
-            "hasBlockTreatment": {
-               "label": "Steinblockbearbeitung",
-               "description": "Bearbeitung des Blockes/Bearbeitungsspuren"
-            },
-            "hasBuildingTechnique": {
-               "label": "Bautechnik",
-               "description": "Bezeichnung der verwendeten Technik bei der Errichtung des Bauwerks."
-            },
-            "hasColor": {
-               "label": "Farbe und Intensität",
-               "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
-            },
-            "hasCondition": {
-               "label": "Erhaltungszustand",
-               "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
-            },
-            "hasConditionAmount": {
-               "label": "Erhaltener Anteil",
-               "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
-            },
-            "hasConstructionDetails": {
-               "label": "Konstruktionsdetails",
-               "description": "Welcher Art ist die Mauerkonstruktion?"
-            },
-            "hasDating": {
-               "label": "Datierung"
-            },
-            "hasDimensionHeight": {
-               "label": "Höhe",
-               "description": "Angabe der Objekthöhe"
-            },
-            "hasDimensionWidth": {
-               "label": "Breite",
-               "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
-            },
-            "hasJointsCondition": {
-               "label": "Fugenerhaltung",
-               "description": "Aktueller Erhaltungszustand der Dachziegeln"
-            },
-            "hasJointsDecoration": {
-               "label": "Fugengestaltung",
-               "description": "Auswahl, nach der genauen gestaltung und dem Erhalt der Mauerfugen."
-            },
-            "hasMark": {
-               "label": "Steinmetzzeichen",
-               "description": "Auflistung möglicher Steinmetzzeichen (z.B. A, AC etc.)"
-            },
-            "hasPeriodBeginning": {
-               "label": "Grobdatierung (von)"
-            },
-            "hasPeriodEnd": {
-               "label": "Grobdatierung (bis)"
-            },
-            "hasPlasterComponents": {
-               "label": "Putz-Komponenten"
-            },
-            "hasWallOrientation": {
-               "label": "Wandorientierung",
-               "description": "Orientierung der Wand (beispielsweise: Süd-Südwest)"
-            },
-            "isRoomSide": {
-               "label": "Raumseite",
-               "description": "Welche Seite des Raumes wird beschrieben/welche Ausrichtung hat er?"
-            },
-            "isWallSide": {
-               "label": "Wandseite",
-               "description": "Angabe der Blickrichtung nach..."
-            }
-         }
-      },
-      "Other": {
-         "label": "Sonstiges",
-         "fields": {
-            "hasNatural": {
-               "label": "Natürlich",
-               "description": "Natürliche Schicht, z.B. bei Erosion: Ja."
-            },
-            "hasConsistency": {
-               "label": "Konsistenz"
-            },
-            "hasDistinguishingCriteria": {
-               "label": "Unterscheidungskriterium",
-               "description": "Welches Kriterium wurde zur Abgrenzung der stratigrafischen Einheit gewählt?"
-            },
-            "hasOtherClassification": {
-               "label": "Klassifikation Sonstiges"
-            },
-            "hasSoilType": {
-               "label": "Bodenart",
-               "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
-            }
-         }
-      },
-      "Sample": {
-         "label": "Probe",
-         "fields": {
-            "hasLabNumber": {
-               "label": "Labornummer",
-               "description": "Nummer der Probe, vergeben im untersuchenden Labor."
-            },
-            "hasWeight": {
-               "label": "Gewicht (g)",
-               "description": "Gewicht in Gramm"
-            },
-            "hasSampleType": {
-               "label": "Art der Probe",
-               "description": "Welche Probe wird genommen?\nWelche Untersuchungen sollen vorgenommen werden?"
-            },
-            "hasSoilType": {
-               "label": "Bodenart",
-               "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
-            }
-         }
-      },
-      "Drawing": {
-         "label": "Zeichnung",
-         "fields": {
-            "hasDrawingMaterial": {
-               "label": "Zeichenmaterial",
-               "description": "Verwendetes Material/Programm zum anfertigen der Zeichnung?"
-            },
-            "hasDrawingTool": {
-               "label": "Zeichenwerkzeug",
-               "description": "Mit welcher Art Werkzeug wurde gezeichnet?"
-            },
-            "hasDrawingType": {
-               "label": "Art der Zeichnung",
-               "description": "Beispielsweise Handzeichnung oder CAD Zeichnung"
-            },
-            "hasScale": {
-               "label": "Maßstab",
-               "description": "Verwendeter Maßstab?"
-            }
-         }
-      },
-      "Survey": {
-         "label": "Survey Areal",
-         "fields": {
-            "hasResearchMethod": {
-               "label": "Untersuchungsmethode",
-               "description": "Welche Surveymethode findet Anwendung?"
-            }
-         }
-      },
-      "Stone": {
-         "label": "Stein",
-         "fields": {
-            "hasPurpose": {
-               "label": "Verwendung",
-               "description": "Zweck bzw. Verwendung des Objekts."
-            },
-            "hasTreatment": {
-               "label": "Bearbeitung",
-               "description": "Beschreibungsfeld zum Vorhandensein von Antiken Bearbeitungspuren, z.B. 'Steinmetzzeichen auf Standfuß'"
-            },
-            "hasWorkmanship": {
-               "label": "Ausführung",
-               "description": "Beschreibung der Quallität, in welcher ein bearbeiteter Stein, welcher z.B. als Träger einer innschrift verwendet wurde, vorliegt."
-            },
-            "hasArchitectureElement": {
-               "label": "Architektonisches Element"
-            },
-            "hasColor": {
-               "label": "Farbe und Intensität",
-               "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
-            },
-            "hasFormDescription": {
-               "label": "Beschreibung der Form",
-               "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
-            },
-            "hasMaterial": {
-               "label": "Material",
-               "description": "Material, aus welchem der Einschluss ist, z.B. 'Holzkohle'"
-            },
-            "hasObjectTypeStone": {
-               "label": "Art des Objektes",
-               "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
-            },
-            "hasOrigin": {
-               "label": "Materialherkunft",
-               "description": "Herkunftsort des Materials, z.B. 'Chimtou'"
-            },
-            "hasProvinience": {
-               "label": "Provenienz",
-               "description": "Herkunftsort"
-            },
-            "hasTemperAmount": {
-               "label": "Menge der Einschlüsse"
-            }
-         }
-      },
-      "Coin": {
-         "label": "Münze",
-         "fields": {
-            "hasFrontSideDescription": {
-               "label": "Beschreibung Vorderseite",
-               "description": "Weitere Beschreibung der Vorderseite der Münze"
-            },
-            "hasPreservedDiameter": {
-               "label": "Erhaltener Durchmesser",
-               "description": "Durchmesser der Münze in mm."
-            },
-            "hasReverseSideDescription": {
-               "label": "Beschreibung Rückseite",
-               "description": "Weitere Beschreibung der Rückseite der Münze"
-            },
-            "hasDenomination": {
-               "label": "Nominalwert (Stückelung)",
-               "description": "Name der Münzeinheit, z.B. 'Tetradrachme'"
-            },
-            "hasManufacturingMethodCoin": {
-               "label": "Herstellungstechnik"
-            },
-            "hasMetalMaterial": {
-               "label": "Material"
-            },
-            "hasMint": {
-               "label": "Münzstätte",
-               "description": "Ortsangabe, wo die Münze geprägt wurde, z.B. 'Antiochia'"
-            },
-            "hasMintingRuler": {
-               "label": "Prägeherr",
-               "description": "Person oder Körperschaft, die für die Prägung der Münze verantwortlich ist, z.B. 'Kaiser Nero'"
-            },
-            "hasProvinience": {
-               "label": "Provenienz",
-               "description": "Herkunftsort"
-            },
-            "hasStampPositoning": {
-               "label": "Stempelstellung",
-               "description": "Verdrehung des Stempels der Rückseite im Verhältnis zur Vorderseite. Angabe in 1-12h analog zur Uhr. z.B. '12' bei gleicher Stellung."
-            }
-         }
-      },
-      "Find": {
-         "label": "Fund",
-         "fields": {
-            "hasAmount": {
-               "label": "Anzahl (gesamt)",
-               "description": "Anzahl der aufgehobenen bzw. inventarisierten Fundstücke."
-            },
-            "hasBibliography": {
-               "label": "Bibliographie"
-            },
-            "hasCatalogueNr": {
-               "label": "Katalognummer",
-               "description": "Nummer vergeben bei der Aufnahme des Fundstücks in einen Katalog."
-            },
-            "hasComparison": {
-               "label": "Vergleich(e)",
-               "description": "Vergleich mit ähnlichen Befunden/Objekten/Inschriften etc. mit Angabe einer Referenz."
-            },
-            "hasConditionComment": {
-               "label": "Beschreibung des Erhaltungszustandes",
-               "description": "Kommentar zum Erhaltungszustand"
-            },
-            "hasConditionPercent": {
-               "label": "Erhaltung in Prozent",
-               "description": "Erhaltene Menge in Prozent"
-            },
-            "hasDate": {
-               "label": "Datum",
-               "description": "Datum der Durchführung"
-            },
-            "hasDescription": {
-               "label": "Beschreibung",
-               "description": "Freies Beschreibungsfeld"
-            },
-            "hasProcessor": {
-               "label": "Bearbeiter/Bearbeiterin",
-               "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-            },
-            "hasPublicationMaterialSummary": {
-               "label": "Material",
-               "description": "Ausführliche Beschreibung zur Publikation"
-            },
-            "hasRestauration": {
-               "label": "Restaurierung",
-               "description": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?"
-            },
-            "hasStorageInventNr.": {
-               "label": "Inventarnummer",
-               "description": "Nummer vergeben während der Inventarisierung in einer Sammlung oder einem Depot."
-            },
-            "hasWeight": {
-               "label": "Gewicht (g)",
-               "description": "Gewicht in Gramm"
-            },
-            "hasCondition": {
-               "label": "Erhaltungszustand",
-               "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
-            },
-            "hasConditionAmount": {
-               "label": "Erhaltener Anteil",
-               "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
-            },
-            "hasDating": {
-               "label": "Datierung"
-            },
-            "hasDimensionDiameter": {
-               "label": "Durchmesser",
-               "description": "Angabe des Objektdurchmessers"
-            },
-            "hasDimensionHeight": {
-               "label": "Höhe",
-               "description": "Angabe der Objekthöhe"
-            },
-            "hasDimensionLength": {
-               "label": "Länge",
-               "description": "Angabe der Länge."
-            },
-            "hasDimensionPerimeter": {
-               "label": "Umfang",
-               "description": "Angabe des Umfangs des Objektes"
-            },
-            "hasDimensionThickness": {
-               "label": "Stärke",
-               "description": "Dicke bzw. Stärke des Objektes"
-            },
-            "hasDimensionVerticalExtent": {
-               "label": "Niveau",
-               "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-            },
-            "hasDimensionWidth": {
-               "label": "Breite",
-               "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
-            },
-            "hasDimensionxOther": {
-               "label": "Andere Maße",
-               "description": "Andere Maße können hier eingegeben werden. Bitte kommentieren."
-            },
-            "hasPeriodBeginning": {
-               "label": "Grobdatierung (von)"
-            },
-            "hasPeriodEnd": {
-               "label": "Grobdatierung (bis)"
-            },
-            "hasStoragePlace": {
-               "label": "Aufbewahrungsort",
-               "description": "Aufbewahrungsort des Fundes"
-            }
-         }
-      },
-      "PlasterFragment": {
-         "label": "Putzfragment",
-         "fields": {
-            "hasArea": {
-               "label": "Fläche in m2",
-               "description": "Flächenangabe in Quadratmetern"
-            },
-            "hasComposition": {
-               "label": "Beschreibungsfeld zum Aufbau des Putzes"
-            },
-            "hasDecoration": {
-               "label": "Bemalung",
-               "description": "Beschreibung der Bemalung des Putzes"
-            },
-            "hasDecorationPattern": {
-               "label": "Dekoration",
-               "description": "Dekorationsmuster des Putzes, z.B. 'marmoriert'"
-            },
-            "hasColor": {
-               "label": "Farbe und Intensität",
-               "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
-            },
-            "hasPlasterComponents": {
-               "label": "Putz-Komponenten"
-            }
-         }
-      },
-      "Photo": {
-         "label": "Foto",
-         "fields": {
-            "hasOriginalType": {
-               "label": "Vorlagenart",
-               "description": "Ursprungsformat des Bildes; bei Digitalisaten ursprüngliches analoges Format, z.B. 'Glasnegativ'"
-            }
-         }
-      },
-      "Profile": {
-         "label": "Profil",
-         "fields": {
-            "hasDimensionHeight": {
-               "label": "Höhe",
-               "description": "Angabe der Objekthöhe"
-            },
-            "hasDimensionVerticalExtent": {
-               "label": "Niveau",
-               "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
-            },
-            "hasOrientation": {
-               "label": "Orientierung",
-               "description": "Ausrichtung nach Himmelsrichtung des Profils."
-            }
-         }
-      },
-      "Metal": {
-         "label": "Metall",
-         "fields": {
-            "hasMaterialDescription": {
-               "label": "Materialbeschreibung",
-               "description": "Beschreibung des verwendeten Materials. Möglicherweise exakte Beschreibung des Metalls oder der Legierung."
-            },
-            "hasDecorationTechniqueMetal": {
-               "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik"
-            },
-            "hasFormDescription": {
-               "label": "Beschreibung der Form",
-               "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
-            },
-            "hasManufactoringMethodMetal": {
-               "label": "Herstellungstechnik"
-            },
-            "hasMetalMaterial": {
-               "label": "Material"
-            },
-            "hasObjectTypeMetal": {
-               "label": "Ansprache bzw. Art des Objektes",
-               "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
-            },
-            "hasProvinience": {
-               "label": "Provenienz",
-               "description": "Herkunftsort"
-            },
-            "hasVesselFormMetal": {
-               "label": "Gefäß-Grundform",
-               "description": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
-            },
-            "hasVesselFormMetalSpecific": {
-               "label": "Form",
-               "description": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
-            }
-         }
+  "types": {
+    "Trench": {
+      "label": "Schnitt",
+      "fields": {
+        "hasDairy": {
+          "label": "Tagebuch",
+          "description": "Verweis auf Grabungstagebuch."
+        },
+        "hasResearchQuestion": {
+          "label": "Fragestellung",
+          "description": "Fragestellung bzw. Hintergrund der Freilegung der Fläche, z.B. 'Spezifizierung und Datierung der im Magnetogramm entdeckten Struktur zur...'"
+        },
+        "hasSpatialLocation": {
+          "label": "Lage",
+          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der Stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
+        },
+        "hasTrenchComment": {
+          "label": "Schnittkommentar",
+          "description": "Schnittkommenter zur Auswertung und Dokumentation, Bericht für die Grabungsleitung."
+        },
+        "hasDimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge."
+        },
+        "hasDimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+        },
+        "hasDimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
+        },
+        "hasExcavationType": {
+          "label": "Ausgrabungsart",
+          "description": "Art der durchgeführten Ausgrabung."
+        },
+        "hasOrientation": {
+          "label": "Orientierung",
+          "description": "Ausrichtung nach Himmelsrichtung des Profils."
+        }
       }
-   },
-   "relations": {
-      "isRecordedIn": {
-         "label": "Gehört zu"
-      },
-      "liesWithin": {
-         "label": "Liegt in"
-      },
-      "includes": {
-         "label": "Enthält"
-      },
-      "isAbove": {
-         "label": "Liegt über"
-      },
-      "isBelow": {
-         "label": "Liegt unter"
-      },
-      "cuts": {
-         "label": "Schneidet"
-      },
-      "isCutBy": {
-         "label": "Wird geschnitten von"
-      },
-      "bears": {
-         "label": "Trägt"
-      },
-      "isFoundOn": {
-         "label": "ist aufgebracht auf"
-      },
-      "borders": {
-         "label": "Grenzt an"
+    },
+    "Glass": {
+      "label": "Glas",
+      "fields": {
+        "hasDecorationDescription": {
+          "label": "Beschreibung Dekoration",
+          "description": "Weiteres beschreibungsfeld zur näheren Ausführung der Dekoration."
+        },
+        "hasColor": {
+          "label": "Farbe und Intensität",
+          "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
+        },
+        "hasDecorationTechniqueGlass": {
+          "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik",
+          "description": "Technik, mit welcher Dekor auf das Glas angebracht wurde, z.B. 'Bemalung (Emaille)'"
+        },
+        "hasFormDescription": {
+          "label": "Beschreibung der Form",
+          "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
+        },
+        "hasManufactoringMethodGlass": {
+          "label": "Herstellungstechnik",
+          "description": "Verwendete Technik zur hertsellung des Objektes. Erkennbare Bearbeitungsspuren."
+        },
+        "hasObjectTypeGlass": {
+          "label": "Ansprache bzw. Art des Objektes",
+          "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
+        },
+        "hasProvinience": {
+          "label": "Provenienz",
+          "description": "Herkunftsort"
+        },
+        "hasTransparency": {
+          "label": "Transparenz",
+          "description": "Wie durchscheinend ist das Objekt?"
+        },
+        "hasVesselFormGlass": {
+          "label": "Gefäß-Grundform",
+          "description": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
+        },
+        "hasVesselFormGlassSpecific": {
+          "label": "Form",
+          "description": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
+        }
       }
-   }
+    },
+    "Drilling": {
+      "label": "Bohrung",
+      "fields": {
+        "hasDimensionDiameter": {
+          "label": "Durchmesser",
+          "description": "Angabe des Objektdurchmessers"
+        },
+        "hasDimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        },
+        "hasDimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+        },
+        "hasDrillingEquipment": {
+          "label": "Bohrausrüstung",
+          "description": "Welche Art des Bohrers wurde verwendet?"
+        }
+      }
+    },
+    "FeatureGroup": {
+      "label": "Befundgruppe",
+      "fields": {
+        "hasDescription": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasProcessor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+        },
+        "hasCampaign": {
+          "label": "Kampagne"
+        },
+        "hasPeriodBeginning": {
+          "label": "Grobdatierung (von)"
+        },
+        "hasPeriodEnd": {
+          "label": "Grobdatierung (bis)"
+        }
+      }
+    },
+    "Mollusk": {
+      "label": "Molluske",
+      "fields": {}
+    },
+    "Planum": {
+      "label": "Planum",
+      "fields": {
+        "hasArea": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "hasDimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge."
+        },
+        "hasDimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+        },
+        "hasDimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
+        },
+        "hasHorizontalLocation": {
+          "label": "Horizontallage",
+          "description": "Ausrichtung des Planums"
+        },
+        "hasOrientation": {
+          "label": "Orientierung",
+          "description": "Ausrichtung nach Himmelsrichtung des Profils."
+        },
+        "hasPlanumForm": {
+          "label": "Form Planum",
+          "description": "Form des angelegten Planums"
+        }
+      }
+    },
+    "Brick": {
+      "label": "Ziegel",
+      "fields": {
+        "hasFeatureText": {
+          "label": "Stempeltexts",
+          "description": "Beschreibung zu besonderen Merkmalen zum Stempeltext."
+        },
+        "hasBrickForm": {
+          "label": "Ziegelform bzw. Verwendung"
+        },
+        "hasBrickUsage": {
+          "label": "Verwendung der Ziegel in der Architektur"
+        },
+        "hasClayColorOutside": {
+          "label": "Aussen: Tonfarbe und -intensität"
+        },
+        "hasCoatColorInside": {
+          "label": "Überzug Innen: Farbe und Intensität"
+        },
+        "hasCoatColorOutside": {
+          "label": "Überzug Aussen: Farbe und Intensität"
+        },
+        "hasDecorationTechniqueBrick": {
+          "label": "Besonderheiten der Oberfläche bzw. Dekoration"
+        },
+        "hasFormDescription": {
+          "label": "Beschreibung der Form",
+          "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
+        },
+        "hasManufactoring": {
+          "label": "Materialbeschreibung"
+        },
+        "hasManufactoringMethodBrick": {
+          "label": "Herstellungstechnik"
+        },
+        "hasProvinience": {
+          "label": "Provenienz",
+          "description": "Herkunftsort"
+        },
+        "hasSpecificType": {
+          "label": "Format",
+          "description": "Format der Steine & Ziegel, sofern erkennbar. z.B. 'Dachziegel'"
+        },
+        "hasTemper": {
+          "label": "Magerungsart",
+          "description": "Grundsätzliche Art der Magerung, z.B. 'Organische Partikel'"
+        }
+      }
+    },
+    "Project": {
+      "label": "Projekt",
+      "fields": {
+        "hasContactMail": {
+          "label": "Mailadresse der Kontaktperson",
+          "description": "Des Projektes bzw. der Kontaktperson"
+        },
+        "hasContactPerson": {
+          "label": "Kontaktperson",
+          "description": "Kontaktperson des Projekts"
+        },
+        "hasDescription": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasEPSGId": {
+          "label": "EPSG Code",
+          "description": "Angabe des EPSG Codes (siehe www.spacialreference.org, z.B. 3004)"
+        },
+        "hasExternalReference": {
+          "label": "Projekt Homepage",
+          "description": "Externe Referenz(en) des Projektes"
+        },
+        "hasGazId": {
+          "label": "Gazetteer ID",
+          "description": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
+        },
+        "hasInstitution": {
+          "label": "Institution",
+          "description": "Für das Projekt verantwortliche Institution"
+        },
+        "hasLatitude": {
+          "label": "Latitude",
+          "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind möglich"
+        },
+        "hasLongitude": {
+          "label": "Longitude",
+          "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind möglich"
+        },
+        "hasProjectURI": {
+          "label": "Projekt URL",
+          "description": "Hinweis auf eine externe Projektseite mit weiteren Informationen. z.B. http://www.klass-archaeologie.uni-muenchen.de/forschung/projekte1/d-projekte-laufend/meninx/index.html"
+        },
+        "hasSupervisor": {
+          "label": "Leiter/Leiterin",
+          "description": "Leitende Person einer Kampagne oder Maßnahme."
+        }
+      }
+    },
+    "Burial": {
+      "label": "Bestattung",
+      "fields": {
+        "hasAgeDetermination": {
+          "label": "Altersbestimmung"
+        },
+        "hasAgeDeterminationBasis": {
+          "label": "Grundlage der Altersbestimmung"
+        },
+        "hasBodyHeightAndRobustness": {
+          "label": "Körperhöhe und Robustizität"
+        },
+        "hasBurialRite": {
+          "label": "Behandlung der Toten"
+        },
+        "hasConditionComment": {
+          "label": "Beschreibung des Erhaltungszustandes",
+          "description": "Kommentar zum Erhaltungszustand"
+        },
+        "hasDietReconstruction": {
+          "label": "Rekonstruktion der Ernährung"
+        },
+        "hasFindingPlace": {
+          "label": "Fundort",
+          "description": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)."
+        },
+        "hasPalaeopathologicalReport": {
+          "label": "Paläopathologischer Befund"
+        },
+        "hasPublicationDatingFinds": {
+          "label": "Datierung (Funde)",
+          "description": "Z.B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
+        },
+        "hasPublicationDatingStratigraphy": {
+          "label": "Datierung (Stratigraphie)",
+          "description": "z.B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
+        },
+        "hasSexDetermination": {
+          "label": "Geschlechtsbestimmung"
+        },
+        "hasSexDeterminationBasis": {
+          "label": "Grundlage der Geschlechtsbestimmung"
+        },
+        "hasAmountIndividuals": {
+          "label": "Bestattungsart - Anzahl"
+        },
+        "hasBurialCharacteristic": {
+          "label": "Bestattungsfolge (Primär/Sekundär)"
+        },
+        "hasBurialDocumentation": {
+          "label": "Dokumentation",
+          "description": "Welche Form(en) der Dokumentation kamen zum Einsatz?"
+        },
+        "hasGraveFeature": {
+          "label": "Bestattungsform"
+        },
+        "hasPositionArms": {
+          "label": "Position der Arme"
+        },
+        "hasPositionLegs": {
+          "label": "Position der Beine"
+        },
+        "hasPositioningIndividuals": {
+          "label": "Lage des/der Verstorbenen"
+        }
+      }
+    },
+    "Building": {
+      "label": "Bauaufnahme",
+      "fields": {
+        "hasBuildingHistory": {
+          "label": "Baugeschichte",
+          "description": "Historische Abhandlung des Bauwerks."
+        },
+        "hasBuildingResearchHistory": {
+          "label": "Forschungsgeschichte",
+          "description": "Vorgeschichte aller am Bauwerk vorgenommenen Forschungen einschließlich Grabungen."
+        },
+        "hasConditionComment": {
+          "label": "Beschreibung des Erhaltungszustandes",
+          "description": "Kommentar zum Erhaltungszustand"
+        },
+        "hasExcavationHistory": {
+          "label": "Ausgrabgsgeschichte",
+          "description": "Abhandlung über die Grabungsprojekte auf der Fundstelle."
+        },
+        "hasHistory": {
+          "label": "Geschichte",
+          "description": "Historische Vergangenheit des Bauwerks."
+        },
+        "hasRestauration": {
+          "label": "Restaurierung",
+          "description": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?"
+        },
+        "hasArchitecturalOrders": {
+          "label": "Bauordnung",
+          "description": "Angabe der architektonischen Säulenordnung."
+        },
+        "hasBuildingCategory": {
+          "label": "Bautyp",
+          "description": "Bautyp (bspw.: Altar, Brücke)"
+        },
+        "hasBuildingCategorySpecific": {
+          "label": "Bautyp Spezial",
+          "description": "Spezieller Bautyp (bspw.: Ehrenbogen, Hoftempel)"
+        },
+        "hasBuildingTechnique": {
+          "label": "Bautechnik",
+          "description": "Bezeichnung der verwendeten Technik bei der Errichtung des Bauwerks."
+        },
+        "hasBuildingType": {
+          "label": "Art des Bauwerks",
+          "description": "Welche Art Bauwerk liegt vor?"
+        },
+        "hasCondition": {
+          "label": "Erhaltungszustand",
+          "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
+        },
+        "hasConditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
+        },
+        "hasContext": {
+          "label": "Kontext",
+          "description": "In Welchem Kontext liegt das Bauwerk?"
+        },
+        "hasDimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge."
+        },
+        "hasMaterial": {
+          "label": "Material",
+          "description": "Material, aus welchem der Einschluss ist, z.B. 'Holzkohle'"
+        }
+      }
+    },
+    "SurveyUnit": {
+      "label": "Planquadrat",
+      "fields": {
+        "hasArea": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "hasFinds": {
+          "label": "Fundmaterial",
+          "description": "Ja/Nein Feld zum Vorhandensein von Fundmaterial."
+        },
+        "hasDimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge."
+        },
+        "hasDimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
+        }
+      }
+    },
+    "Wood": {
+      "label": "Holz",
+      "fields": {
+        "hasColorWood": {
+          "label": "Farbe Holz",
+          "description": "Farbe des Fundes oder der Holzstruktur"
+        },
+        "hasObjectTypeWood": {
+          "label": "Ansprache bzw. Art des Objektes",
+          "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
+        },
+        "hasTypeOfWood": {
+          "label": "Holzart",
+          "description": "Holzartenbestimmung am Objekt"
+        }
+      }
+    },
+    "Architecture": {
+      "label": "Architektur",
+      "fields": {
+        "hasBibliography": {
+          "label": "Bibliographie"
+        },
+        "hasConditionComment": {
+          "label": "Beschreibung des Erhaltungszustandes",
+          "description": "Kommentar zum Erhaltungszustand"
+        },
+        "hasConstructionDetailsDescription": {
+          "label": "Beschreibung Konstruktionsdetails",
+          "description": "Nähere beschreibung zur Konstruktion der Fundamente/Ecken/Lagen o.Ä."
+        },
+        "hasDiscriptionOfBuildingTechnique": {
+          "label": "Beschreibung der Bautechnik",
+          "description": "Nähere Beschreibung der Bautechnik wie Feldsteinmauerwerk oder Ziegelmauer."
+        },
+        "hasFindingPlace": {
+          "label": "Fundort",
+          "description": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)."
+        },
+        "hasGrouting": {
+          "label": "Verfugung",
+          "description": "Ist die Mauer verfugt"
+        },
+        "hasLayerAmount": {
+          "label": "Lagenanzahl",
+          "description": "Anzahl der Mauerlagen."
+        },
+        "hasLayerHight": {
+          "label": "Lagenhöhe",
+          "description": "Anzahl der Mauerlagen."
+        },
+        "hasMarkDescription": {
+          "label": "Werkzeichen Beschreibung",
+          "description": "Erklärungen und Erkenntnisse zum Vorhandenen Werkzeichen."
+        },
+        "hasMaterialCharacteristic": {
+          "label": "Materialcharakteristik",
+          "description": "Charackteristische Materilaeigenschaften."
+        },
+        "hasMaterialForm": {
+          "label": "Materialform",
+          "description": "Weitere Beschreibung zu Ziegeln/Steinen/ etc..."
+        },
+        "hasMuralCrown": {
+          "label": "Mauerkrone",
+          "description": "Kurze definition des Zustandes der Mauerkrone."
+        },
+        "hasPublicationDatingFinds": {
+          "label": "Datierung (Funde)",
+          "description": "Z.B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
+        },
+        "hasPublicationDatingScientific": {
+          "label": "Datierung (Naturwissenschaftlich)",
+          "description": "Beschreibung zur Publikation, Hinweis auf vorhandene Datierungen."
+        },
+        "hasPublicationDatingStratigraphy": {
+          "label": "Datierung (Stratigraphie)",
+          "description": "z.B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
+        },
+        "hasPublicationRemark": {
+          "label": {},
+          "description": "Anmerkung zur Publikation"
+        },
+        "hasSpatialLocation": {
+          "label": "Lage",
+          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der Stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
+        },
+        "hasBlockProcessing": {
+          "label": "Art der Steinblöcke"
+        },
+        "hasBlockTreatment": {
+          "label": "Steinblockbearbeitung",
+          "description": "Bearbeitung des Blockes/Bearbeitungsspuren"
+        },
+        "hasBrickwork": {
+          "label": "Mauerwerksverband"
+        },
+        "hasCondition": {
+          "label": "Erhaltungszustand",
+          "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
+        },
+        "hasConditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
+        },
+        "hasConstruction": {
+          "label": "Konstruktion",
+          "description": "Welche Art der Mauerkonstruktion liegt vor?"
+        },
+        "hasMark": {
+          "label": "Steinmetzzeichen",
+          "description": "Auflistung möglicher Steinmetzzeichen (z.B. A, AC etc.)"
+        },
+        "hasMortarBinder": {
+          "label": "Mörtelzuschlag",
+          "description": "Wie hoch ist der Zuschlag von Fremdmaterial?"
+        },
+        "hasMortarColor": {
+          "label": "Mörtelfarbe"
+        },
+        "hasMortarConsistency": {
+          "label": "Mörtelkonsistenz"
+        },
+        "hasOrientation": {
+          "label": "Orientierung",
+          "description": "Ausrichtung nach Himmelsrichtung des Profils."
+        },
+        "hasWallClassification": {
+          "label": "Klassifikation Mauer"
+        },
+        "hasWallType": {
+          "label": "Mauertyp",
+          "description": "Typ des Mauerwerks"
+        }
+      }
+    },
+    "Operation": {
+      "label": "Maßnahme",
+      "fields": {
+        "hasArea": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "hasBeginningDate": {
+          "label": "Startdatum",
+          "description": "Datum an dem die Maßnahme beginnt"
+        },
+        "hasDescription": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasDiaryAbstract": {
+          "label": "Projektverlauf",
+          "description": "Darstellung des Projekt- oder Grabungsverlaufs, ggfs. Zusammenfassung des Tagebuchs."
+        },
+        "hasEndDate": {
+          "label": "Enddatum",
+          "description": "Ende des Projektes."
+        },
+        "hasProcessor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+        },
+        "hasSupervisor": {
+          "label": "Leiter/Leiterin",
+          "description": "Leitende Person einer Kampagne oder Maßnahme."
+        },
+        "hasCampaign": {
+          "label": "Kampagne"
+        },
+        "hasDating": {
+          "label": "Datierung"
+        },
+        "hasPeriodBeginning": {
+          "label": "Grobdatierung (von)"
+        },
+        "hasPeriodEnd": {
+          "label": "Grobdatierung (bis)"
+        }
+      }
+    },
+    "Place": {
+      "label": "Ort",
+      "fields": {
+        "hasGazId": {
+          "label": "Gazetteer ID",
+          "description": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
+        },
+        "hasPlaceName": {
+          "label": "Ortsname",
+          "description": "Name der Ortschaft bzw. Gemarkung"
+        },
+        "hasPlaceType": {
+          "label": "Ortstyp",
+          "description": "Angabe des Verortung in einer Provinz o.Ä."
+        },
+        "isAncient": {
+          "label": "Ortsbezeichnung",
+          "description": "Ist der Name des Ortes antik oder modern? (Siehe auch Gazetteer-Dokumentation)"
+        }
+      }
+    },
+    "Layer": {
+      "label": "Erdbefund",
+      "fields": {
+        "hasAppearance": {
+          "label": "Entstehung",
+          "description": "Beschreibung der Entstehung der Schicht, z.B. 'Versturz der östlichen Lehmziegelmauer'"
+        },
+        "hasNatural": {
+          "label": "Natürlich",
+          "description": "Natürliche Schicht, z.B. bei Erosion: Ja."
+        },
+        "hasConsistency": {
+          "label": "Konsistenz"
+        },
+        "hasDimensionThickness": {
+          "label": "Stärke",
+          "description": "Dicke bzw. Stärke des Objektes"
+        },
+        "hasDistinguishingCriteria": {
+          "label": "Unterscheidungskriterium",
+          "description": "Welches Kriterium wurde zur Abgrenzung der stratigrafischen Einheit gewählt?"
+        },
+        "hasLayerClassification": {
+          "label": "Bezeichnung bzw. Klassifikation Schicht"
+        },
+        "hasSoilType": {
+          "label": "Bodenart",
+          "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
+        }
+      }
+    },
+    "Feature": {
+      "label": "Stratigrafische Einheit",
+      "fields": {
+        "hasArea": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "hasBeginningDate": {
+          "label": "Startdatum",
+          "description": "Datum an dem die Maßnahme beginnt"
+        },
+        "hasComparison": {
+          "label": "Vergleich(e)",
+          "description": "Vergleich mit ähnlichen Befunden/Objekten/Inschriften etc. mit Angabe einer Referenz."
+        },
+        "hasDairy": {
+          "label": "Tagebuch",
+          "description": "Verweis auf Grabungstagebuch."
+        },
+        "hasDescription": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasDisturbance": {
+          "label": "Störung",
+          "description": "Befund gestört: Ja/Nein"
+        },
+        "hasFeatureAmount": {
+          "label": "Befundanteil",
+          "description": "Prozentuale Menge des Einschlusses im Vergleich zum Gesamtbefund, je nach Grabungsmethodik Einteilung prozentual ('5-10%') oder textuell ('wenig')."
+        },
+        "hasProcessor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+        },
+        "hasColor": {
+          "label": "Farbe und Intensität",
+          "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
+        },
+        "hasDating": {
+          "label": "Datierung"
+        },
+        "hasDimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge."
+        },
+        "hasDimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+        },
+        "hasDimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
+        },
+        "hasFeatureBorders": {
+          "label": "Grenzen der Stratigrafischen Einheit",
+          "description": "Bestimmung der Grenzen des Befundes (z.B. unscharf, klar...)"
+        },
+        "hasFeatureForm": {
+          "label": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
+          "description": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
+        },
+        "hasPeriodBeginning": {
+          "label": "Grobdatierung (von)"
+        },
+        "hasPeriodEnd": {
+          "label": "Grobdatierung (bis)"
+        }
+      }
+    },
+    "Floor": {
+      "label": "Fußboden",
+      "fields": {
+        "hasConditionComment": {
+          "label": "Beschreibung des Erhaltungszustandes",
+          "description": "Kommentar zum Erhaltungszustand"
+        },
+        "hasCondition": {
+          "label": "Erhaltungszustand",
+          "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
+        },
+        "hasConditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
+        },
+        "hasConsistency": {
+          "label": "Konsistenz"
+        },
+        "hasDistinguishingCriteria": {
+          "label": "Unterscheidungskriterium",
+          "description": "Welches Kriterium wurde zur Abgrenzung der stratigrafischen Einheit gewählt?"
+        },
+        "hasFloorClassification": {
+          "label": "Klassifikation Fußboden"
+        },
+        "hasLayerClassification": {
+          "label": "Bezeichnung bzw. Klassifikation Schicht"
+        },
+        "hasMortarBinder": {
+          "label": "Mörtelzuschlag",
+          "description": "Wie hoch ist der Zuschlag von Fremdmaterial?"
+        }
+      }
+    },
+    "Inscription": {
+      "label": "Inschrift",
+      "fields": {
+        "hasComparison": {
+          "label": "Vergleich(e)",
+          "description": "Vergleich mit ähnlichen Befunden/Objekten/Inschriften etc. mit Angabe einer Referenz."
+        },
+        "hasConditionComment": {
+          "label": "Beschreibung des Erhaltungszustandes",
+          "description": "Kommentar zum Erhaltungszustand"
+        },
+        "hasContent": {
+          "label": "Abschrift der Inschrift"
+        },
+        "hasDescription": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasLanguage": {
+          "label": "Sprache"
+        },
+        "hasProcessor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+        },
+        "hasCondition": {
+          "label": "Erhaltungszustand",
+          "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
+        },
+        "hasConditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
+        },
+        "hasDating": {
+          "label": "Datierung"
+        },
+        "hasDimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
+        },
+        "hasObjectTypeInscription": {
+          "label": "Ansprache bzw. Art der Inschrift"
+        },
+        "hasPeriodBeginning": {
+          "label": "Grobdatierung (von)"
+        },
+        "hasPeriodEnd": {
+          "label": "Grobdatierung (bis)"
+        }
+      }
+    },
+    "Findspot": {
+      "label": "Fundplatz",
+      "fields": {
+        "hasBuildingHistory": {
+          "label": "Baugeschichte",
+          "description": "Historische Abhandlung des Bauwerks."
+        },
+        "hasBuildingResearchHistory": {
+          "label": "Forschungsgeschichte",
+          "description": "Vorgeschichte aller am Bauwerk vorgenommenen Forschungen einschließlich Grabungen."
+        },
+        "hasDescription": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasExcavationHistory": {
+          "label": "Ausgrabgsgeschichte",
+          "description": "Abhandlung über die Grabungsprojekte auf der Fundstelle."
+        },
+        "hasFindSituation": {
+          "label": "Fundumstände",
+          "description": "Nähere Beschreibung unter welchen Bedingungen und von wem ein Fundplatz entdeckt wurde."
+        },
+        "hasModernIntervention": {
+          "label": "Moderne Eingriffe",
+          "description": "Beschreibung ob Fundplatz rezent beschädigungen ausgesetzt war. Z.B.\nSteinbruch/Grube/Mine, Überbauung, Aufschüttung, Raubgrabung, Ackerbau, Wiederaufforstung, Abraumhalden"
+        },
+        "hasProcessor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+        },
+        "hasCampaign": {
+          "label": "Kampagne"
+        },
+        "hasFindspotClassification": {
+          "label": "Klassifikation Fundstelle"
+        },
+        "hasPeriodBeginning": {
+          "label": "Grobdatierung (von)"
+        },
+        "hasPeriodEnd": {
+          "label": "Grobdatierung (bis)"
+        },
+        "hasSiteClassification": {
+          "label": "Klassifikation Fundplatz"
+        }
+      }
+    },
+    "Image": {
+      "label": "Abbildung",
+      "fields": {
+        "hasCaption": {
+          "label": "Beschriftung",
+          "description": "Feld der Abbildungsbeschriftung."
+        },
+        "hasDescription": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasDraughtsmen": {
+          "label": "Bildersteller/Bilderstellerin",
+          "description": "Ersteller der Abbildung, Fotograf/Fotografin bzw. Zeichner/Zeichnerin"
+        },
+        "hasProcessor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+        },
+        "hasCampaign": {
+          "label": "Kampagne"
+        },
+        "hasPictureObject": {
+          "label": "Abbildungsgegenstand",
+          "description": "Inhalt des Bildes, z.B. 'Arbeitsfoto'"
+        }
+      }
+    },
+    "Pottery": {
+      "label": "Keramik",
+      "fields": {
+        "hasAmountRimSherds": {
+          "label": "Anzahl Wand-Scherben"
+        },
+        "hasAmountSherdsBase": {
+          "label": "Anzahl Bodenscherben"
+        },
+        "hasAmountSherdsHandles": {
+          "label": "Anzahl Henkel"
+        },
+        "hasAmountSherdsLip": {
+          "label": "Anzahl der Ausgüsse"
+        },
+        "hasAmountSherdsPedestal": {
+          "label": "Anzahl Fuß-Scherben"
+        },
+        "hasAmountSherdsRimBase": {
+          "label": "Anzahl Rand-Boden Scherben"
+        },
+        "hasAmountSherdsRimShoulder": {
+          "label": "Anzahl Rand-Schulter Scherben"
+        },
+        "hasAmountSherdsShoulder": {
+          "label": "Anzahl Schulter-Scherben"
+        },
+        "hasAmountSherdsxOther": {
+          "label": "Anzahl anderer Scherben"
+        },
+        "hasAmountSherdsxPercent": {
+          "label": "Qantifizierung in Prozent",
+          "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
+        },
+        "hasAmountShertsLid": {
+          "label": "Anzahl Deckel"
+        },
+        "hasClayColorBreakMunsell": {
+          "label": "Farbe des Bruches Munsell"
+        },
+        "hasClayColorInsideMunsell": {
+          "label": "Farbe Innen Munsell"
+        },
+        "hasClayColorOutsideMunsell": {
+          "label": "Farbe Außen Munsell"
+        },
+        "hasCoat": {
+          "label": "Überzug"
+        },
+        "hasDecorationDescription": {
+          "label": "Beschreibung Dekoration",
+          "description": "Weiteres beschreibungsfeld zur näheren Ausführung der Dekoration."
+        },
+        "hasPotteryBreakStructure": {
+          "label": "Bemerkungen zum Bruch (Struktur, Porösität etc.)",
+          "description": "Beschreibung der Struktur und der Porösität des Bruches."
+        },
+        "hasPotteryResidueAnalysis": {
+          "label": "Rückstandsanalyse",
+          "description": "Angabe zur Rückstandsanalys"
+        },
+        "hasPotterySample": {
+          "label": "Probe",
+          "description": "Angaben zu entnommener Probe"
+        },
+        "hasPurpose": {
+          "label": "Verwendung",
+          "description": "Zweck bzw. Verwendung des Objekts."
+        },
+        "hasTypeNumber": {
+          "label": "Typnummer",
+          "description": "Nummer aus dem Typenkatalog."
+        },
+        "hasClayColorBreak": {
+          "label": "Bruch: Tonfarbe und -intensität"
+        },
+        "hasClayColorInside": {
+          "label": "Innen: Tonfarbe und -intensität"
+        },
+        "hasClayColorOutside": {
+          "label": "Aussen: Tonfarbe und -intensität"
+        },
+        "hasClayHardness": {
+          "label": "Tonhärte (Mohssche Härteskala)",
+          "description": "Möglicherweise Mohsche Härtetabelle Einfügen?"
+        },
+        "hasCoatColorInside": {
+          "label": "Überzug Innen: Farbe und Intensität"
+        },
+        "hasCoatColorOutside": {
+          "label": "Überzug Aussen: Farbe und Intensität"
+        },
+        "hasCoatInside": {
+          "label": "Überzug Innen"
+        },
+        "hasCoatInsideType": {
+          "label": "Bearbeitung Innen"
+        },
+        "hasCoatOutside": {
+          "label": "Überzug Außen"
+        },
+        "hasCoatOutsideType": {
+          "label": "Bearbeitung Außen"
+        },
+        "hasDecorationTechniquePottery": {
+          "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik"
+        },
+        "hasFormDescription": {
+          "label": "Beschreibung der Form",
+          "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
+        },
+        "hasManufactoring": {
+          "label": "Materialbeschreibung"
+        },
+        "hasManufactoringMethodPottery": {
+          "label": "Herstellungstechnik"
+        },
+        "hasMaterialType": {
+          "label": "Materialklasse",
+          "description": "Welcher Machart ist das vorgefundene Objekt?"
+        },
+        "hasObjectTypePottery": {
+          "label": "Art des Objektes",
+          "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
+        },
+        "hasPotteryTypeSpecific": {
+          "label": "Keramikart Ware"
+        },
+        "hasProvinience": {
+          "label": "Provenienz",
+          "description": "Herkunftsort"
+        },
+        "hasTemper": {
+          "label": "Magerungsart",
+          "description": "Grundsätzliche Art der Magerung, z.B. 'Organische Partikel'"
+        },
+        "hasTemperAmount": {
+          "label": "Menge der Einschlüsse"
+        },
+        "hasTemperParticles": {
+          "label": "Magerungs Körnung",
+          "description": "Größe der Magerungspartikel."
+        },
+        "hasTemperTypeClay": {
+          "label": "Tongruppe"
+        },
+        "hasVesselFormPottery": {
+          "label": "Gefäß-Grundform",
+          "description": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
+        },
+        "hasVesselFormPotterySpecific": {
+          "label": "Form",
+          "description": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
+        }
+      }
+    },
+    "DrillCoreLayer": {
+      "label": "Bohrkernschicht",
+      "fields": {
+        "hasFinds": {
+          "label": "Fundmaterial",
+          "description": "Ja/Nein Feld zum Vorhandensein von Fundmaterial."
+        },
+        "hasDimensionThickness": {
+          "label": "Stärke",
+          "description": "Dicke bzw. Stärke des Objektes"
+        },
+        "hasDimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+        },
+        "hasSoilType": {
+          "label": "Bodenart",
+          "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
+        }
+      }
+    },
+    "Grave": {
+      "label": "Grab",
+      "fields": {
+        "hasBibliography": {
+          "label": "Bibliographie"
+        },
+        "hasConditionComment": {
+          "label": "Beschreibung des Erhaltungszustandes",
+          "description": "Kommentar zum Erhaltungszustand"
+        },
+        "hasFindingPlace": {
+          "label": "Fundort",
+          "description": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)."
+        },
+        "hasPublicationDatingFinds": {
+          "label": "Datierung (Funde)",
+          "description": "Z.B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
+        },
+        "hasPublicationDatingScientific": {
+          "label": "Datierung (Naturwissenschaftlich)",
+          "description": "Beschreibung zur Publikation, Hinweis auf vorhandene Datierungen."
+        },
+        "hasPublicationDatingStratigraphy": {
+          "label": "Datierung (Stratigraphie)",
+          "description": "z.B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
+        },
+        "hasPublicationRemark": {
+          "label": {},
+          "description": "Anmerkung zur Publikation"
+        },
+        "hasSpatialLocation": {
+          "label": "Lage",
+          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der Stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
+        },
+        "hasCondition": {
+          "label": "Erhaltungszustand",
+          "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
+        },
+        "hasConditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
+        },
+        "hasDistinguishingCriteria": {
+          "label": "Unterscheidungskriterium",
+          "description": "Welches Kriterium wurde zur Abgrenzung der stratigrafischen Einheit gewählt?"
+        },
+        "hasGraveType": {
+          "label": "Grabtyp",
+          "description": "Bezeichnet die Art des Grabes"
+        },
+        "hasGraveTypeSpecific": {
+          "label": "Grabtyp speziell"
+        },
+        "hasSoilType": {
+          "label": "Bodenart",
+          "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
+        },
+        "hasTombBuilding": {
+          "label": "Grabbau"
+        }
+      }
+    },
+    "Bone": {
+      "label": "Knochen",
+      "fields": {
+        "hasBiologicalAge": {
+          "label": "Altersklasse",
+          "description": "Alter des Menschens oder Tieres zum Todeszeitpunkt (Beispielsweise Infans I)"
+        },
+        "hasBoneClassification": {
+          "label": "Knochen Klassifikation"
+        },
+        "hasBoneType": {
+          "label": "Grobe Einordnung der Knochen"
+        },
+        "hasBurningGrade": {
+          "label": "Verbrennungsgrad der Knochen (nach Wahl 1982)"
+        },
+        "hasGender": {
+          "label": "Geschlecht",
+          "description": "Geschlecht des Menschens oder Tieres."
+        },
+        "hasObjectTypeBone": {
+          "label": "Ansprache bzw. Art des Objektes",
+          "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
+        },
+        "hasSpecies": {
+          "label": "Tierart",
+          "description": "Vorliegende Tierart."
+        }
+      }
+    },
+    "Room": {
+      "label": "Raum",
+      "fields": {
+        "hasArea": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "hasConditionComment": {
+          "label": "Beschreibung des Erhaltungszustandes",
+          "description": "Kommentar zum Erhaltungszustand"
+        },
+        "hasDescription": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasProcessor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+        },
+        "hasCampaign": {
+          "label": "Kampagne"
+        },
+        "hasCondition": {
+          "label": "Erhaltungszustand",
+          "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
+        },
+        "hasConditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
+        },
+        "hasDating": {
+          "label": "Datierung"
+        },
+        "hasDimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        },
+        "hasDimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge."
+        },
+        "hasDimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+        },
+        "hasDimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
+        },
+        "hasPeriodBeginning": {
+          "label": "Grobdatierung (von)"
+        },
+        "hasPeriodEnd": {
+          "label": "Grobdatierung (bis)"
+        }
+      }
+    },
+    "ProcessUnit": {
+      "label": "Arbeitsgang",
+      "fields": {
+        "hasDate": {
+          "label": "Datum",
+          "description": "Datum der Durchführung"
+        },
+        "hasDescription": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasProcessor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+        },
+        "hasOperationClassification": {
+          "label": "Klassifikation Arbeitsgang"
+        }
+      }
+    },
+    "Terracotta": {
+      "label": "Terrakotta",
+      "fields": {
+        "hasClayColorBreak": {
+          "label": "Bruch: Tonfarbe und -intensität"
+        },
+        "hasClayColorInside": {
+          "label": "Innen: Tonfarbe und -intensität"
+        },
+        "hasClayColorOutside": {
+          "label": "Aussen: Tonfarbe und -intensität"
+        },
+        "hasClayStructure": {
+          "label": "Struktur",
+          "description": "Welcher Art ist die Terrakottastruktur?"
+        },
+        "hasCoatColorInside": {
+          "label": "Überzug Innen: Farbe und Intensität"
+        },
+        "hasCoatColorOutside": {
+          "label": "Überzug Aussen: Farbe und Intensität"
+        },
+        "hasDecorationTechniquePottery": {
+          "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik"
+        },
+        "hasFormDescription": {
+          "label": "Beschreibung der Form",
+          "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
+        },
+        "hasManufactoringMethodPottery": {
+          "label": "Herstellungstechnik"
+        },
+        "hasProvinience": {
+          "label": "Provenienz",
+          "description": "Herkunftsort"
+        },
+        "hasSurfaceCondition": {
+          "label": "Oberflächenzustand",
+          "description": "Angabe zum Zustand der Oberfläche, z.B. 'abblätternd'"
+        },
+        "hasTemper": {
+          "label": "Magerungsart",
+          "description": "Grundsätzliche Art der Magerung, z.B. 'Organische Partikel'"
+        },
+        "hasTemperAmount": {
+          "label": "Menge der Einschlüsse"
+        },
+        "hasTemperParticles": {
+          "label": "Magerungs Körnung",
+          "description": "Größe der Magerungspartikel."
+        },
+        "hasTerracottaType": {
+          "label": "Art der Terrakotta",
+          "description": "Massivität des Terrakottaobjekts, z.B. 'Innen hohl'."
+        },
+        "hasVesselFormTerracotta": {
+          "label": "Gefäß-Grundform",
+          "description": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
+        },
+        "hasVesselFormTerracottaSpecific": {
+          "label": "Form",
+          "description": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
+        }
+      }
+    },
+    "Wall_surface": {
+      "label": "Wandoberfläche",
+      "fields": {
+        "hasArea": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "hasConditionComment": {
+          "label": "Beschreibung des Erhaltungszustandes",
+          "description": "Kommentar zum Erhaltungszustand"
+        },
+        "hasConstructionDetailsDescription": {
+          "label": "Beschreibung Konstruktionsdetails",
+          "description": "Nähere beschreibung zur Konstruktion der Fundamente/Ecken/Lagen o.Ä."
+        },
+        "hasDescription": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasMarkDescription": {
+          "label": "Werkzeichen Beschreibung",
+          "description": "Erklärungen und Erkenntnisse zum Vorhandenen Werkzeichen."
+        },
+        "hasPlasterDecoration": {
+          "label": "Putzdekoration",
+          "description": "Beschreibung der Dekoration des Putzes"
+        },
+        "hasPlasterOlder": {
+          "label": "Älterer Putz",
+          "description": "Beschreibung der älteren Putzschichten."
+        },
+        "hasProcessor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+        },
+        "hasSurfaceDecoration": {
+          "label": "Oberflächendekoration",
+          "description": "Z.B. Bemalung oder sonstige Verzierungen."
+        },
+        "hasWallConstructionTechnique": {
+          "label": "Mauertechnik",
+          "description": "Beschreibung zu möglichen Bindern/Abfolge von Lagen o.Ä."
+        },
+        "hasBlockTreatment": {
+          "label": "Steinblockbearbeitung",
+          "description": "Bearbeitung des Blockes/Bearbeitungsspuren"
+        },
+        "hasBuildingTechnique": {
+          "label": "Bautechnik",
+          "description": "Bezeichnung der verwendeten Technik bei der Errichtung des Bauwerks."
+        },
+        "hasColor": {
+          "label": "Farbe und Intensität",
+          "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
+        },
+        "hasCondition": {
+          "label": "Erhaltungszustand",
+          "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
+        },
+        "hasConditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
+        },
+        "hasConstructionDetails": {
+          "label": "Konstruktionsdetails",
+          "description": "Welcher Art ist die Mauerkonstruktion?"
+        },
+        "hasDating": {
+          "label": "Datierung"
+        },
+        "hasDimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        },
+        "hasDimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
+        },
+        "hasJointsCondition": {
+          "label": "Fugenerhaltung",
+          "description": "Aktueller Erhaltungszustand der Dachziegeln"
+        },
+        "hasJointsDecoration": {
+          "label": "Fugengestaltung",
+          "description": "Auswahl, nach der genauen gestaltung und dem Erhalt der Mauerfugen."
+        },
+        "hasMark": {
+          "label": "Steinmetzzeichen",
+          "description": "Auflistung möglicher Steinmetzzeichen (z.B. A, AC etc.)"
+        },
+        "hasPeriodBeginning": {
+          "label": "Grobdatierung (von)"
+        },
+        "hasPeriodEnd": {
+          "label": "Grobdatierung (bis)"
+        },
+        "hasPlasterComponents": {
+          "label": "Putz-Komponenten"
+        },
+        "hasWallOrientation": {
+          "label": "Wandorientierung",
+          "description": "Orientierung der Wand (beispielsweise: Süd-Südwest)"
+        },
+        "isRoomSide": {
+          "label": "Raumseite",
+          "description": "Welche Seite des Raumes wird beschrieben/welche Ausrichtung hat er?"
+        },
+        "isWallSide": {
+          "label": "Wandseite",
+          "description": "Angabe der Blickrichtung nach..."
+        }
+      }
+    },
+    "Other": {
+      "label": "Sonstiges",
+      "fields": {
+        "hasNatural": {
+          "label": "Natürlich",
+          "description": "Natürliche Schicht, z.B. bei Erosion: Ja."
+        },
+        "hasConsistency": {
+          "label": "Konsistenz"
+        },
+        "hasDistinguishingCriteria": {
+          "label": "Unterscheidungskriterium",
+          "description": "Welches Kriterium wurde zur Abgrenzung der stratigrafischen Einheit gewählt?"
+        },
+        "hasOtherClassification": {
+          "label": "Klassifikation Sonstiges"
+        },
+        "hasSoilType": {
+          "label": "Bodenart",
+          "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
+        }
+      }
+    },
+    "Sample": {
+      "label": "Probe",
+      "fields": {
+        "hasLabNumber": {
+          "label": "Labornummer",
+          "description": "Nummer der Probe, vergeben im untersuchenden Labor."
+        },
+        "hasWeight": {
+          "label": "Gewicht (g)",
+          "description": "Gewicht in Gramm"
+        },
+        "hasSampleType": {
+          "label": "Art der Probe",
+          "description": "Welche Probe wird genommen?\nWelche Untersuchungen sollen vorgenommen werden?"
+        },
+        "hasSoilType": {
+          "label": "Bodenart",
+          "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
+        }
+      }
+    },
+    "Drawing": {
+      "label": "Zeichnung",
+      "fields": {
+        "hasDrawingMaterial": {
+          "label": "Zeichenmaterial",
+          "description": "Verwendetes Material/Programm zum anfertigen der Zeichnung?"
+        },
+        "hasDrawingTool": {
+          "label": "Zeichenwerkzeug",
+          "description": "Mit welcher Art Werkzeug wurde gezeichnet?"
+        },
+        "hasDrawingType": {
+          "label": "Art der Zeichnung",
+          "description": "Beispielsweise Handzeichnung oder CAD Zeichnung"
+        },
+        "hasScale": {
+          "label": "Maßstab",
+          "description": "Verwendeter Maßstab?"
+        }
+      }
+    },
+    "Survey": {
+      "label": "Survey Areal",
+      "fields": {
+        "hasResearchMethod": {
+          "label": "Untersuchungsmethode",
+          "description": "Welche Surveymethode findet Anwendung?"
+        }
+      }
+    },
+    "Stone": {
+      "label": "Stein",
+      "fields": {
+        "hasPurpose": {
+          "label": "Verwendung",
+          "description": "Zweck bzw. Verwendung des Objekts."
+        },
+        "hasTreatment": {
+          "label": "Bearbeitung",
+          "description": "Beschreibungsfeld zum Vorhandensein von Antiken Bearbeitungspuren, z.B. 'Steinmetzzeichen auf Standfuß'"
+        },
+        "hasWorkmanship": {
+          "label": "Ausführung",
+          "description": "Beschreibung der Quallität, in welcher ein bearbeiteter Stein, welcher z.B. als Träger einer innschrift verwendet wurde, vorliegt."
+        },
+        "hasArchitectureElement": {
+          "label": "Architektonisches Element"
+        },
+        "hasColor": {
+          "label": "Farbe und Intensität",
+          "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
+        },
+        "hasFormDescription": {
+          "label": "Beschreibung der Form",
+          "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
+        },
+        "hasMaterial": {
+          "label": "Material",
+          "description": "Material, aus welchem der Einschluss ist, z.B. 'Holzkohle'"
+        },
+        "hasObjectTypeStone": {
+          "label": "Art des Objektes",
+          "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
+        },
+        "hasOrigin": {
+          "label": "Materialherkunft",
+          "description": "Herkunftsort des Materials, z.B. 'Chimtou'"
+        },
+        "hasProvinience": {
+          "label": "Provenienz",
+          "description": "Herkunftsort"
+        },
+        "hasTemperAmount": {
+          "label": "Menge der Einschlüsse"
+        }
+      }
+    },
+    "Coin": {
+      "label": "Münze",
+      "fields": {
+        "hasFrontSideDescription": {
+          "label": "Beschreibung Vorderseite",
+          "description": "Weitere Beschreibung der Vorderseite der Münze"
+        },
+        "hasPreservedDiameter": {
+          "label": "Erhaltener Durchmesser",
+          "description": "Durchmesser der Münze in mm."
+        },
+        "hasReverseSideDescription": {
+          "label": "Beschreibung Rückseite",
+          "description": "Weitere Beschreibung der Rückseite der Münze"
+        },
+        "hasDenomination": {
+          "label": "Nominalwert (Stückelung)",
+          "description": "Name der Münzeinheit, z.B. 'Tetradrachme'"
+        },
+        "hasManufacturingMethodCoin": {
+          "label": "Herstellungstechnik"
+        },
+        "hasMetalMaterial": {
+          "label": "Material"
+        },
+        "hasMint": {
+          "label": "Münzstätte",
+          "description": "Ortsangabe, wo die Münze geprägt wurde, z.B. 'Antiochia'"
+        },
+        "hasMintingRuler": {
+          "label": "Prägeherr",
+          "description": "Person oder Körperschaft, die für die Prägung der Münze verantwortlich ist, z.B. 'Kaiser Nero'"
+        },
+        "hasProvinience": {
+          "label": "Provenienz",
+          "description": "Herkunftsort"
+        },
+        "hasStampPositoning": {
+          "label": "Stempelstellung",
+          "description": "Verdrehung des Stempels der Rückseite im Verhältnis zur Vorderseite. Angabe in 1-12h analog zur Uhr. z.B. '12' bei gleicher Stellung."
+        }
+      }
+    },
+    "Find": {
+      "label": "Fund",
+      "fields": {
+        "hasAmount": {
+          "label": "Anzahl (gesamt)",
+          "description": "Anzahl der aufgehobenen bzw. inventarisierten Fundstücke."
+        },
+        "hasBibliography": {
+          "label": "Bibliographie"
+        },
+        "hasCatalogueNr": {
+          "label": "Katalognummer",
+          "description": "Nummer vergeben bei der Aufnahme des Fundstücks in einen Katalog."
+        },
+        "hasComparison": {
+          "label": "Vergleich(e)",
+          "description": "Vergleich mit ähnlichen Befunden/Objekten/Inschriften etc. mit Angabe einer Referenz."
+        },
+        "hasConditionComment": {
+          "label": "Beschreibung des Erhaltungszustandes",
+          "description": "Kommentar zum Erhaltungszustand"
+        },
+        "hasConditionPercent": {
+          "label": "Erhaltung in Prozent",
+          "description": "Erhaltene Menge in Prozent"
+        },
+        "hasDate": {
+          "label": "Datum",
+          "description": "Datum der Durchführung"
+        },
+        "hasDescription": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasProcessor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+        },
+        "hasPublicationMaterialSummary": {
+          "label": "Material",
+          "description": "Ausführliche Beschreibung zur Publikation"
+        },
+        "hasPublicationRemark": {
+          "label": {},
+          "description": "Anmerkung zur Publikation"
+        },
+        "hasRestauration": {
+          "label": "Restaurierung",
+          "description": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?"
+        },
+        "hasStorageInventNr.": {
+          "label": "Inventarnummer",
+          "description": "Nummer vergeben während der Inventarisierung in einer Sammlung oder einem Depot."
+        },
+        "hasWeight": {
+          "label": "Gewicht (g)",
+          "description": "Gewicht in Gramm"
+        },
+        "hasCondition": {
+          "label": "Erhaltungszustand",
+          "description": "Beschreibung des Erhaltungszustandes (z.B. sehr gut)"
+        },
+        "hasConditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
+        },
+        "hasDating": {
+          "label": "Datierung"
+        },
+        "hasDimensionDiameter": {
+          "label": "Durchmesser",
+          "description": "Angabe des Objektdurchmessers"
+        },
+        "hasDimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        },
+        "hasDimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge."
+        },
+        "hasDimensionPerimeter": {
+          "label": "Umfang",
+          "description": "Angabe des Umfangs des Objektes"
+        },
+        "hasDimensionThickness": {
+          "label": "Stärke",
+          "description": "Dicke bzw. Stärke des Objektes"
+        },
+        "hasDimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+        },
+        "hasDimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
+        },
+        "hasDimensionxOther": {
+          "label": "Andere Maße",
+          "description": "Andere Maße können hier eingegeben werden. Bitte kommentieren."
+        },
+        "hasPeriodBeginning": {
+          "label": "Grobdatierung (von)"
+        },
+        "hasPeriodEnd": {
+          "label": "Grobdatierung (bis)"
+        },
+        "hasStoragePlace": {
+          "label": "Aufbewahrungsort",
+          "description": "Aufbewahrungsort des Fundes"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "label": "Putzfragment",
+      "fields": {
+        "hasArea": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "hasComposition": {
+          "label": "Beschreibungsfeld zum Aufbau des Putzes"
+        },
+        "hasDecoration": {
+          "label": "Bemalung",
+          "description": "Beschreibung der Bemalung des Putzes"
+        },
+        "hasDecorationPattern": {
+          "label": "Dekoration",
+          "description": "Dekorationsmuster des Putzes, z.B. 'marmoriert'"
+        },
+        "hasColor": {
+          "label": "Farbe und Intensität",
+          "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
+        },
+        "hasPlasterComponents": {
+          "label": "Putz-Komponenten"
+        }
+      }
+    },
+    "Photo": {
+      "label": "Foto",
+      "fields": {
+        "hasOriginalType": {
+          "label": "Vorlagenart",
+          "description": "Ursprungsformat des Bildes; bei Digitalisaten ursprüngliches analoges Format, z.B. 'Glasnegativ'"
+        }
+      }
+    },
+    "Profile": {
+      "label": "Profil",
+      "fields": {
+        "hasDimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        },
+        "hasDimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+        },
+        "hasOrientation": {
+          "label": "Orientierung",
+          "description": "Ausrichtung nach Himmelsrichtung des Profils."
+        }
+      }
+    },
+    "Metal": {
+      "label": "Metall",
+      "fields": {
+        "hasMaterialDescription": {
+          "label": "Materialbeschreibung",
+          "description": "Beschreibung des verwendeten Materials. Möglicherweise exakte Beschreibung des Metalls oder der Legierung."
+        },
+        "hasDecorationTechniqueMetal": {
+          "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik"
+        },
+        "hasFormDescription": {
+          "label": "Beschreibung der Form",
+          "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)."
+        },
+        "hasManufactoringMethodMetal": {
+          "label": "Herstellungstechnik"
+        },
+        "hasMetalMaterial": {
+          "label": "Material"
+        },
+        "hasObjectTypeMetal": {
+          "label": "Ansprache bzw. Art des Objektes",
+          "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"
+        },
+        "hasProvinience": {
+          "label": "Provenienz",
+          "description": "Herkunftsort"
+        },
+        "hasVesselFormMetal": {
+          "label": "Gefäß-Grundform",
+          "description": "Hier wird die Grundform des Gefäßes angegeben (Teller, Schale etc.)"
+        },
+        "hasVesselFormMetalSpecific": {
+          "label": "Form",
+          "description": "Hier wird die spezielle Form des Gefäßes angegeben (bspw. Kylix)"
+        }
+      }
+    }
+  },
+  "relations": {
+    "isRecordedIn": {
+      "label": "Gehört zu"
+    },
+    "liesWithin": {
+      "label": "Liegt in"
+    },
+    "includes": {
+      "label": "Enthält"
+    },
+    "isAbove": {
+      "label": "Liegt über"
+    },
+    "isBelow": {
+      "label": "Liegt unter"
+    },
+    "cuts": {
+      "label": "Schneidet"
+    },
+    "isCutBy": {
+      "label": "Wird geschnitten von"
+    },
+    "bears": {
+      "label": "Trägt"
+    },
+    "isFoundOn": {
+      "label": "ist aufgebracht auf"
+    },
+    "borders": {
+      "label": "Grenzt an"
+    }
+  }
 }

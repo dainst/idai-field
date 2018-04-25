@@ -1,53 +1,53 @@
 {
-  "Architecture": [
-    "hasMarkDescription",
-    "hasMark"
-  ],
-  "Brick": [
-    "hasSpecificType"
-  ],
-  "Building": [
-    "hasBuildingHistory",
-    "hasExcavationHistory",
-    "hasHistory",
-    "hasArchitecturalOrders"
-  ],
-  "Feature": [
-    "hasFeatureAmount"
-  ],
-  "Find": [
-    "hasCatalogueNr"
-  ],
-  "Findspot": [
-    "hasBuildingHistory",
-    "hasExcavationHistory"
-  ],
-  "Image": [
-    "hasCaption"
-  ],
-  "Layer": [
-    "hasAppearance"
-  ],
-  "Metal": [
-    "hasMaterialDescription"
-  ],
-  "Part": [
-    "hasSpecificType"
-  ],
-  "Photo": [
-    "hasOriginalType"
-  ],
-  "Planum": [
-    "hasHorizontalLocation"
-  ],
-  "Trench": [
-    "hasResearchQuestion"
-  ],
-  "Wall_surface": [
-    "hasMarkDescription",
-    "hasMark",
-    "hasPlasterDecoration",
-    "hasPlasterOlder",
-    "hasSurfaceDecoration"
-  ]
+    "Architecture": [
+        "hasMarkDescription",
+        "hasMark"
+    ],
+    "Brick": [
+        "hasSpecificType"
+    ],
+    "Building": [
+        "hasBuildingHistory",
+        "hasExcavationHistory",
+        "hasHistory",
+        "hasArchitecturalOrders"
+    ],
+    "Feature": [
+        "hasFeatureAmount"
+    ],
+    "Find": [
+        "hasCatalogueNr"
+    ],
+    "Findspot": [
+        "hasBuildingHistory",
+        "hasExcavationHistory"
+    ],
+    "Image": [
+        "hasCaption"
+    ],
+    "Layer": [
+        "hasAppearance"
+    ],
+    "Metal": [
+        "hasMaterialDescription"
+    ],
+    "Part": [
+        "hasSpecificType"
+    ],
+    "Photo": [
+        "hasOriginalType"
+    ],
+    "Planum": [
+        "hasHorizontalLocation"
+    ],
+    "Trench": [
+        "hasResearchQuestion"
+    ],
+    "Wall_surface": [
+        "hasMarkDescription",
+        "hasMark",
+        "hasPlasterDecoration",
+        "hasPlasterOlder",
+        "hasSurfaceDecoration"
+    ]
 }

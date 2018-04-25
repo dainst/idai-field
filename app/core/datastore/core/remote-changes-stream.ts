@@ -43,11 +43,10 @@ export class RemoteChangesStream {
 
     private welcomeRemoteDocument(document: Document) {
 
-        this.indexFacade.put(document); // TODO put after convert
-
         if (!this.autoCacheUpdate) return;
 
         const convertedDocument = this.typeConverter.convert(document);
+        this.indexFacade.put(convertedDocument);
 
         // explicitly assign by value in order for changes to be detected by angular
         if (this.documentCache.get(convertedDocument.resource.id)) {

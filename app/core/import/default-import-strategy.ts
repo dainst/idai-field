@@ -1,7 +1,5 @@
-import {Document} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
+import {Document, ProjectConfiguration} from 'idai-components-2/core';
 import {ImportStrategy} from './import-strategy';
-import {SettingsService} from '../settings/settings-service';
 import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
@@ -17,6 +15,7 @@ export class DefaultImportStrategy implements ImportStrategy {
                 private datastore: DocumentDatastore,
                 private projectConfiguration: ProjectConfiguration,
                 private username: string,
+                private overwriteIfExists = false,
                 private mainTypeDocumentId?: string) { }
 
 

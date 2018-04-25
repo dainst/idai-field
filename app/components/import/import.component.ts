@@ -196,14 +196,17 @@ export class ImportComponent {
 
         switch (format) {
             case 'meninxfind':
-                return new DefaultImportStrategy(validator, datastore, projectConfiguration, settingsService.getUsername());
+                return new DefaultImportStrategy(validator, datastore,
+                    projectConfiguration, settingsService.getUsername(), true);
             case 'idig':
-                return new DefaultImportStrategy(validator, datastore, projectConfiguration, settingsService.getUsername());
+                return new DefaultImportStrategy(validator, datastore,
+                    projectConfiguration, settingsService.getUsername());
             case 'geojson':
                 return new MergeGeometriesImportStrategy(validator, datastore, settingsService.getUsername());
             default: // 'native'
-                return new DefaultImportStrategy(validator, datastore, projectConfiguration, settingsService.getUsername(),
-                    mainTypeDocumentId);
+                return new DefaultImportStrategy(validator, datastore,
+                    projectConfiguration, settingsService.getUsername(),
+                    false, mainTypeDocumentId);
         }
     }
 

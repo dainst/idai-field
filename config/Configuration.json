@@ -71,7 +71,8 @@
         "Architecture",
         "Drilling",
         "Sample",
-        "Burial"
+        "Burial",
+        "Inscription"
       ],
       "inverse": "includes",
       "name": "liesWithin",

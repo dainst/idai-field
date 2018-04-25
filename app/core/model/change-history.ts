@@ -95,6 +95,7 @@ export module ChangeHistory {
 
     function isSameAction(action1: Action, action2: Action): boolean {
 
+        // TODO make action.date non optional
         return ((action1.date as any).getTime() === (action2.date as any).getTime()
             && action1.user === action2.user);
     }

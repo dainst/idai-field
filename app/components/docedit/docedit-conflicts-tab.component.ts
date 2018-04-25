@@ -5,7 +5,7 @@ import {Messages} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/core';
 import {IdaiFieldDiffUtility} from '../../core/model/idai-field-diff-utility';
-import {ChangeHistoryUtil} from '../../core/model/change-history-util';
+import {ChangeHistory} from '../../core/model/change-history';
 import {M} from '../../m';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
@@ -144,7 +144,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
             }
         }
 
-        ChangeHistoryUtil.mergeChangeHistories(this.document, this.selectedRevision);
+        ChangeHistory.mergeChangeHistories(this.document, this.selectedRevision);
 
         this.persistenceManager.addOldVersion(this.selectedRevision);
 

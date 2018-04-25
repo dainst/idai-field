@@ -3,7 +3,7 @@ import {Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {ConflictResolver} from './conflict-resolver';
 import {RevisionHelper} from './revision-helper';
-import {ChangeHistoryUtil} from '../../model/change-history-util';
+import {ChangeHistory} from '../../model/change-history';
 import {M} from '../../../m';
 import {PouchdbProxy} from './pouchdb-proxy';
 
@@ -75,7 +75,7 @@ export class ConflictResolvingExtension {
             document, conflictedRevision, previousRevision);
 
         if (updatedDocument) {
-            ChangeHistoryUtil.mergeChangeHistories(document, conflictedRevision);
+            ChangeHistory.mergeChangeHistories(document, conflictedRevision);
 
             return this.db.put(updatedDocument, { force: true }).then(() => {
                 if (!updatedDocument['unresolvedConflicts']) {
@@ -119,7 +119,7 @@ export class ConflictResolvingExtension {
         const result: Array<Document> = [];
 
         for (let revisionDocument of revisionsDocuments) {
-            if (ChangeHistoryUtil.getLastModified(revisionDocument).user == userName) {
+            if (ChangeHistory.getLastModified(revisionDocument).user == userName) {
                 result.push(revisionDocument);
             }
         }

@@ -3,19 +3,18 @@ import {Document, Action} from 'idai-components-2/core';
 /**
  * @author Thomas Kleinke
  */
-export class ChangeHistoryUtil {
+export module ChangeHistory {
 
     /**
-     *
      * Merges the change histories of two documents.
      *
      * Only the mainDocument is changed. Its change history merges with the change history (created & modified actions)
      * of the secondDocument.
      */
-    public static mergeChangeHistories(mainDocument: Document, secondDocument: Document) {
+    export function mergeChangeHistories(mainDocument: Document, secondDocument: Document) {
 
-        const changeHistory: Array<Action> = ChangeHistoryUtil.getCombinedChangeHistory([mainDocument, secondDocument]);
-        ChangeHistoryUtil.sortChangeHistory(changeHistory);
+        const changeHistory: Array<Action> = getCombinedChangeHistory([mainDocument, secondDocument]);
+        sortChangeHistory(changeHistory);
 
         if (changeHistory.length == 0) return;
 
@@ -26,23 +25,21 @@ export class ChangeHistoryUtil {
 
     // TODO make sure callers which work with date get a string instead of a date
     // as soon as document model is changed
-    public static getLastModified(document: Document): Action {
+    export function getLastModified(document: Document): Action {
 
-        if (document.modified && document.modified.length > 0) {
-            return document.modified[document.modified.length - 1];
-        } else {
-            return document.created as Action;
-        }
+        return (document.modified && document.modified.length > 0)
+            ? document.modified[document.modified.length - 1]
+            : document.created as Action;
     }
 
 
-    public static isRemoteChange(document: Document, conflictedRevisions: Array<Document>,
+    export function isRemoteChange(document: Document, conflictedRevisions: Array<Document>,
                                  username: string): boolean {
 
-        let latestAction: Action = ChangeHistoryUtil.getLastModified(document);
+        let latestAction: Action = ChangeHistory.getLastModified(document);
 
         for (let revision of conflictedRevisions) {
-            const latestRevisionAction: Action = ChangeHistoryUtil.getLastModified(revision);
+            const latestRevisionAction: Action = ChangeHistory.getLastModified(revision);
             if (new Date(latestRevisionAction.date as any) > new Date(latestAction.date as any)) {
                 latestAction = latestRevisionAction;
             }
@@ -52,19 +49,19 @@ export class ChangeHistoryUtil {
     }
 
 
-    private static getCombinedChangeHistory(documents: Array<Document>): Array<Action> {
+    function getCombinedChangeHistory(documents: Array<Document>): Array<Action> {
 
         const changeHistory: Array<Action> = [];
 
         for (let document of documents) {
-            ChangeHistoryUtil.addActionsToChangeHistory(changeHistory, document);
+            addActionsToChangeHistory(changeHistory, document);
         }
 
         return changeHistory;
     }
 
 
-    private static sortChangeHistory(changeHistory: Array<Action>) {
+    function sortChangeHistory(changeHistory: Array<Action>) {
 
         changeHistory.sort((action1, action2) => {
             const date1 = new Date(action1.date as any);
@@ -77,15 +74,15 @@ export class ChangeHistoryUtil {
     }
 
 
-    private static addActionsToChangeHistory(changeHistory: Array<Action>, document: Document) {
+    function addActionsToChangeHistory(changeHistory: Array<Action>, document: Document) {
 
-        if (document.created && !ChangeHistoryUtil.isInChangeHistory(document.created, changeHistory)) {
+        if (document.created && !isInChangeHistory(document.created, changeHistory)) {
             changeHistory.push(document.created);
         }
 
         if (document.modified) {
             for (let action of document.modified) {
-                if (!ChangeHistoryUtil.isInChangeHistory(action, changeHistory)) {
+                if (!isInChangeHistory(action, changeHistory)) {
                     changeHistory.push(action);
                 }
             }
@@ -93,17 +90,17 @@ export class ChangeHistoryUtil {
     }
 
 
-    private static isInChangeHistory(action: Action, changeHistory: Array<Action>): boolean {
+    function isInChangeHistory(action: Action, changeHistory: Array<Action>): boolean {
 
         for (let actionToCompare of changeHistory) {
-            if (ChangeHistoryUtil.isSameAction(action, actionToCompare)) return true;
+            if (isSameAction(action, actionToCompare)) return true;
         }
 
         return false;
     }
 
 
-    private static isSameAction(action1: Action, action2: Action): boolean {
+    function isSameAction(action1: Action, action2: Action): boolean {
 
         // TODO Datastore should make sure every date is an instance of Date
         const date1: Date = action1.date instanceof Date ? action1.date : new Date((action1 as any).date);

@@ -5,7 +5,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {NavigationPathManager} from './navigation-path-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
-import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
+import {ChangeHistory} from '../../../core/model/change-history';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {ResourcesState} from './resources-state';
@@ -177,7 +177,7 @@ export class DocumentsManager {
         return currentDocuments
             .filter(isNot(includedIn(oldDocuments)))
             .filter(async document =>
-                ChangeHistoryUtil.isRemoteChange(
+                ChangeHistory.isRemoteChange(
                     document,
                     await this.datastore.getConflictedRevisions(document.resource.id),
                     this.settingsService.getUsername())

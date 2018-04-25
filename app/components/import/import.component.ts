@@ -30,6 +30,7 @@ import {ModelUtil} from '../../core/model/model-util';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
 import {Validator} from '../../core/model/validator';
+import {MeninxCsvParser} from '../../core/import/meninx-csv-parser';
 
 
 type ImportFormat = 'native' | 'idig' | 'geojson' | 'meninxfind';
@@ -178,7 +179,7 @@ export class ImportComponent {
 
         switch (format) {
             case 'meninxfind':
-                return new NativeJsonlParser();
+                return new MeninxCsvParser();
             case 'idig':
                 return new IdigCsvParser();
             case 'geojson':

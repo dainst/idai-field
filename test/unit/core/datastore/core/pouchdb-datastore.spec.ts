@@ -32,7 +32,7 @@ describe('PouchdbDatastore', () => {
         pouchdbProxy.get.and.callFake((arg) => {
             return Promise.resolve({resource: {
                 id: arg, type: 'some', relations: []}, created: {date:'2011/01/01'},
-                modified: [] // TODO extend isValid to check for existing modified
+                modified: []
             });
         });
         pouchdbProxy.remove.and.returnValue(Promise.resolve(undefined));

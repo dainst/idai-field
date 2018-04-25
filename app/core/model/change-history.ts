@@ -31,8 +31,10 @@ export module ChangeHistory {
     }
 
 
-    export function isRemoteChange(document: Document, conflictedRevisions: Array<Document>,
-                                 username: string): boolean {
+    export function isRemoteChange(
+        document: Document,
+        conflictedRevisions: Array<Document>,
+        username: string): boolean {
 
         let latestAction: Action = ChangeHistory.getLastModified(document);
 
@@ -49,13 +51,9 @@ export module ChangeHistory {
 
     function getCombinedChangeHistory(documents: Array<Document>): Array<Action> {
 
-        const changeHistory: Array<Action> = [];
-
-        for (let document of documents) {
-            addActionsToChangeHistory(changeHistory, document);
-        }
-
-        return changeHistory;
+        return documents.reduce(
+            (changeHistory: Array<Action>, document) =>
+                addActionsToChangeHistory(changeHistory, document), []);
     }
 
 
@@ -79,10 +77,9 @@ export module ChangeHistory {
         }
 
         if (document.modified) {
-            for (let action of document.modified) {
-                if (!isInChangeHistory(action, changeHistory)) {
-                    changeHistory.push(action);
-                }
+            document.modified
+                .filter(action => !isInChangeHistory(action, changeHistory))
+                .forEach(action => changeHistory.push(action));
             }
         }
     }
@@ -90,19 +87,16 @@ export module ChangeHistory {
 
     function isInChangeHistory(action: Action, changeHistory: Array<Action>): boolean {
 
-        for (let actionToCompare of changeHistory) {
-            if (isSameAction(action, actionToCompare)) return true;
-        }
-
-        return false;
+        return changeHistory
+            .find(actionToCompare => isSameAction(action, actionToCompare));
     }
 
 
     function isSameAction(action1: Action, action2: Action): boolean {
 
         // TODO Datastore should make sure every date is an instance of Date
-        const date1: Date = action1.date instanceof Date ? action1.date : new Date((action1 as any).date);
-        const date2: Date = action2.date instanceof Date ? action2.date : new Date((action2 as any).date);
+        const date1: Date = action1.date instanceof Date ? action1.date : new Date(action1.date);
+        const date2: Date = action2.date instanceof Date ? action2.date : new Date(action2.date);
 
         return date1.getTime() == date2.getTime() && action1.user == action2.user;
     }

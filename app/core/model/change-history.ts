@@ -23,8 +23,6 @@ export module ChangeHistory {
     }
 
 
-    // TODO make sure callers which work with date get a string instead of a date
-    // as soon as document model is changed
     export function getLastModified(document: Document): Action {
 
         return (document.modified && document.modified.length > 0)

@@ -10,9 +10,6 @@ import {LayerMeshManager} from '../layer-mesh-manager';
  */
 export class Layer3DMeshManager extends LayerMeshManager {
 
-    private meshes: { [resourceId: string]: THREE.Mesh } = {};
-
-
     constructor(private meshLoader: MeshLoader) {
 
         super();

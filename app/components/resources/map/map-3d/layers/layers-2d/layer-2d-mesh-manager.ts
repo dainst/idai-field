@@ -10,9 +10,6 @@ import {Layer2DMeshBuilder} from './layer-2d-mesh-builder';
  */
 export class Layer2DMeshManager extends LayerMeshManager {
 
-    private meshes: { [resourceId: string]: THREE.Mesh } = {};
-
-
     constructor(private meshBuilder: Layer2DMeshBuilder) {
 
         super();

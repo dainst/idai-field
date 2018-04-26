@@ -83,6 +83,8 @@ export class PouchdbDatastore {
      */
     public async update(document: Document): Promise<Document> {
 
+        // TODO add param username and do adjust modified here. add also a parameter for the revisions to squash during update, so that the removeRevision can get eliminated. change history is also merged here. test all of that
+
         if (!Document.isValid(document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
         try {

@@ -141,8 +141,6 @@ export class DoceditConflictsTabComponent implements OnChanges {
             }
         }
 
-        ChangeHistory.mergeChangeHistories(this.document, this.selectedRevision);
-
         this.markRevisionAsInspected(this.selectedRevision);
         if (this.conflictedRevisions.length > 0) {
             this.setSelectedRevision(this.conflictedRevisions[0]);

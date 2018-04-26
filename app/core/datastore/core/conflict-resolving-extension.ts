@@ -75,7 +75,7 @@ export class ConflictResolvingExtension {
             document, conflictedRevision, previousRevision);
 
         if (updatedDocument) {
-            ChangeHistory.mergeChangeHistories(document, conflictedRevision);
+            // ChangeHistory.mergeChangeHistories(document, conflictedRevision);
 
             return this.db.put(updatedDocument, { force: true }).then(() => {
                 if (!updatedDocument['unresolvedConflicts']) {

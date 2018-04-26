@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Query} from 'idai-components-2/core';
+import {Action, Query} from 'idai-components-2/core';
 import {Document, NewDocument, Resource} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {M} from '../../m';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ObjectUtil} from '../../util/object-util';
+import {ChangeHistory} from '../model/change-history';
+import {ChangeHistoryMerge} from './change-history-merge';
 
 
 @Injectable()
@@ -69,19 +71,30 @@ export class PersistenceManager {
 
         const oldVersions = [ObjectUtil.cloneObject(oldVersion)].concat(revisionsToSquash);
 
-        const persistedDocument = await this.persistIt(document as Document, user);
+        // const documentToSave = ObjectUtil.cloneObject(document);
+        const documentToSave = document; // TODO clone it instead
 
-        await this.removeRevisions(document.resource.id, revisionsToSquash);
+        PersistenceManager.squashRevisionHistory(documentToSave as Document, revisionsToSquash);
+        const persistedDocument = await this.persistIt(documentToSave as Document, user);
+        await this.removeRevisions(documentToSave.resource.id, revisionsToSquash);
 
         let connectedDocs;
         try {
-            connectedDocs = await Promise.all(this.getConnectedDocs(document as Document, oldVersions as Document[]))
+            connectedDocs = await Promise.all(this.getConnectedDocs(documentToSave as Document, oldVersions as Document[]))
         } catch (_) {
             throw [M.PERSISTENCE_ERROR_TARGETNOTFOUND];
         }
-        await this.updateDocs(document as Document, connectedDocs, true, user);
+        await this.updateDocs(documentToSave as Document, connectedDocs, true, user);
 
         return persistedDocument;
+    }
+
+
+    private static squashRevisionHistory(document: Document, revisionsToSquash: Document[]) {
+
+        for (let revision of revisionsToSquash) {
+            ChangeHistoryMerge.mergeChangeHistories(document, revision);
+        }
     }
 
 

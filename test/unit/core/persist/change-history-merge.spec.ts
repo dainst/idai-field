@@ -1,10 +1,10 @@
 import {Document} from 'idai-components-2/core';
-import {ChangeHistory} from '../../../app/core/model/change-history';
+import {ChangeHistoryMerge} from '../../../../app/core/persist/change-history-merge';
 
 /**
  * @author Thomas Kleinke
  */
-describe('ChangeHistoryUtil', () => {
+describe('ChangeHistoryMerge', () => {
 
     let document1Revision1: Document;
     let document1Revision2: Document;
@@ -125,25 +125,34 @@ describe('ChangeHistoryUtil', () => {
     });
 
 
-    it('detect remote change', () => {
+    it('merges two change histories', () => {
 
-        expect(ChangeHistory.isRemoteChange(document1Revision1, [], 'user1'))
-            .toBe(false);
-        expect(ChangeHistory.isRemoteChange(document1Revision1, [], 'user2'))
-            .toBe(true);
+        ChangeHistoryMerge.mergeChangeHistories(document1Revision1, document1Revision2);
+
+        expect(document1Revision1.created.user).toEqual('user1');
+        expect(document1Revision1.created.date).toEqual(new Date('2018-01-01T01:00:00.00Z'));
+
+        expect(document1Revision1.modified.length).toBe(4);
+        expect(document1Revision1.modified[0].user).toEqual('user1');
+        expect(document1Revision1.modified[0].date).toEqual(new Date('2018-01-02T07:00:00.00Z'));
+        expect(document1Revision1.modified[1].user).toEqual('user2');
+        expect(document1Revision1.modified[1].date).toEqual(new Date('2018-01-02T12:00:00.00Z'));
+        expect(document1Revision1.modified[2].user).toEqual('user1');
+        expect(document1Revision1.modified[2].date).toEqual(new Date('2018-01-02T14:00:00.00Z'));
+        expect(document1Revision1.modified[3].user).toEqual('user2');
+        expect(document1Revision1.modified[3].date).toEqual(new Date('2018-01-02T15:00:00.00Z'));
     });
 
 
-    it('detect remote change for conflicted document', () => {
+    it('merges two change histories of separately created documents', () => {
 
-        expect(ChangeHistory.isRemoteChange(document1Revision1,
-            [document1Revision2, document1Revision3],
-            'user1')).toBe(true);
-        expect(ChangeHistory.isRemoteChange(document1Revision1,
-            [document1Revision2, document1Revision3],
-            'user2')).toBe(false);
-        expect(ChangeHistory.isRemoteChange(document1Revision1,
-            [document1Revision2, document1Revision3],
-            'user3')).toBe(true);
+        ChangeHistoryMerge.mergeChangeHistories(document2Revision1, document2Revision2);
+
+        expect(document2Revision1.created.user).toEqual('user2');
+        expect(document2Revision1.created.date).toEqual(new Date('2018-01-01T01:00:00.00Z'));
+
+        expect(document2Revision1.modified.length).toBe(1);
+        expect(document2Revision1.modified[0].user).toEqual('user1');
+        expect(document2Revision1.modified[0].date).toEqual(new Date('2018-01-01T02:00:00.00Z'));
     });
 });

@@ -93,7 +93,6 @@ export class ResourcesMapComponent {
         const selectedDoc = this.viewFacade.getSelectedDocument();
         if (!selectedDoc) return;
 
-        this.persistenceManager.setOldVersions([selectedDoc]);
         this.persistenceManager.persist(selectedDoc, this.settingsService.getUsername())
             .catch(msgWithParams => this.messages.add(msgWithParams));
     }

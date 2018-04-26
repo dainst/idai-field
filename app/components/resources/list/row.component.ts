@@ -85,10 +85,8 @@ export class RowComponent implements AfterViewInit {
             return;
         }
 
-        const oldVersion = JSON.parse(JSON.stringify(this.document));
         try {
-            await this.persistenceManager.persist(this.document, this.settingsService.getUsername(),
-                [oldVersion]);
+            await this.persistenceManager.persist(this.document, this.settingsService.getUsername());
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);
         }

@@ -209,7 +209,7 @@ export class ImageUploader {
                     doc.resource.relations['depicts'] = [depictsRelationTarget.resource.id];
                 }
 
-                this.persistenceManager.persist(doc as Document, this.settingsService.getUsername(), [doc as Document])
+                this.persistenceManager.persist(doc, this.settingsService.getUsername())
                     .then((result: any) => resolve(result))
                     .catch((error: any) => reject(error));
             };

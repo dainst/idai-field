@@ -307,8 +307,6 @@ describe('resources/syncing --', function() {
     });
 
 
-    // FLAKY
-
     it('detect an eventual conflict and mark the corresponding resource list item', async done => {
 
         const nr = '7';

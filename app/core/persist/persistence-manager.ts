@@ -5,6 +5,7 @@ import {ProjectConfiguration} from 'idai-components-2/core';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {M} from '../../m';
 import {DocumentDatastore} from '../datastore/document-datastore';
+import {ObjectUtil} from '../../util/object-util';
 
 
 @Injectable()
@@ -20,30 +21,11 @@ import {DocumentDatastore} from '../datastore/document-datastore';
  * @author Thomas Kleinke
  */
 export class PersistenceManager {
-    
-    private oldVersions: Array<NewDocument> = [];
 
     constructor(
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration
     ) {}
-
-
-    /**
-     * Package private.
-     * @param oldVersions
-     */
-    setOldVersions(oldVersions: Array<Document>) {
-
-        this.oldVersions = [];
-        for (let oldVersion of oldVersions) this.addOldVersion(oldVersion);
-    }
-
-
-    public addOldVersion(oldVersion: Document) {
-
-        this.oldVersions.push(JSON.parse(JSON.stringify(oldVersion)));
-    }
 
 
     /**
@@ -78,24 +60,41 @@ export class PersistenceManager {
      *   objects could not get stored properly, the promise will get rejected
      *   with msgWithParams.
      */
-    public persist(document: NewDocument, user: string = 'anonymous',
-                   oldVersions: Array<NewDocument> = this.oldVersions): Promise<any> {
+    public async persist(
+        document: NewDocument, user: string = 'anonymous',
+        oldVersion: NewDocument = document,
+        revisionsToSquash: Document[] = [],
+        ): Promise<any> {
 
-        if (document == undefined) return Promise.resolve();
+        const oldVersions = [ObjectUtil.cloneObject(oldVersion)].concat(revisionsToSquash);
 
-        let persistedDocument: Document;
+        const persistedDocument = await this.persistIt(document as Document, user);
 
-        return this.persistIt(document as Document, user)
-            .then(persistedDoc => {
-                persistedDocument = persistedDoc;
-                return Promise.all(this.getConnectedDocs(document as Document, oldVersions as Document[]))
-                    .catch(() => Promise.reject([M.PERSISTENCE_ERROR_TARGETNOTFOUND]));
-            })
-            .then(connectedDocs => this.updateDocs(document as Document, connectedDocs, true, user))
-            .then(() => {
-                this.oldVersions = [document];
-                return Promise.resolve(persistedDocument);
-            });
+        await this.removeRevisions(document.resource.id, revisionsToSquash);
+
+        let connectedDocs;
+        try {
+            connectedDocs = await Promise.all(this.getConnectedDocs(document as Document, oldVersions as Document[]))
+        } catch (_) {
+            throw [M.PERSISTENCE_ERROR_TARGETNOTFOUND];
+        }
+        await this.updateDocs(document as Document, connectedDocs, true, user);
+
+        return persistedDocument;
+    }
+
+
+    private async removeRevisions(resourceId: string|undefined, revisionsToSquash: Document[]): Promise<any> {
+
+        if (!resourceId) return;
+
+        try {
+            for (let revision of revisionsToSquash) {
+                await this.datastore.removeRevision(resourceId, revision['_rev']);
+            }
+        } catch (err) {
+            console.error("error while removing revision", err);
+        }
     }
 
 
@@ -126,7 +125,7 @@ export class PersistenceManager {
      *     [DatastoreErrors.GENERIC_DELETE_ERROR] - if cannot delete for another reason
      */
     public remove(document: Document, user: string = 'anonymous',
-                  oldVersions: Array<NewDocument> = this.oldVersions): Promise<any> {
+                  oldVersion: Document = document): Promise<any> {
 
         if (document == undefined) return Promise.resolve();
 
@@ -138,7 +137,7 @@ export class PersistenceManager {
                     promise = promise.then(() => this.removeDocument(doc, user, []));
                 }
 
-                return promise.then(() => this.removeDocument(document, user, oldVersions as Document[]));
+                return promise.then(() => this.removeDocument(document, user, [oldVersion]));
             });
     }
 
@@ -147,8 +146,7 @@ export class PersistenceManager {
 
         return Promise.all(this.getConnectedDocs(document, oldVersions))
             .then(connectedDocs => this.updateDocs(document, connectedDocs, false, user))
-            .then(() => this.datastore.remove(document))
-            .then(() => { this.oldVersions = []; });
+            .then(() => this.datastore.remove(document));
     }
 
 

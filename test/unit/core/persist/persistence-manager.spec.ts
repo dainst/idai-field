@@ -71,7 +71,6 @@ describe('PersistenceManager', () => {
         mockDatastore = jasmine.createSpyObj('mockDatastore',
             ['get', 'find', 'create', 'update', 'refresh', 'remove']);
         persistenceManager = new PersistenceManager(mockDatastore, projectConfiguration);
-        persistenceManager.setOldVersions([{ resource: {} }]);
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.find.and.callFake(findFunction);
         mockDatastore.update.and.callFake(successFunction);
@@ -208,8 +207,7 @@ describe('PersistenceManager', () => {
 
         relatedDoc.resource.relations['Contains']=['1'];
 
-        persistenceManager.setOldVersions([oldVersion]);
-        persistenceManager.persist(doc).then(()=>{
+        persistenceManager.persist(doc, 'u', oldVersion).then(()=>{
 
             expect(mockDatastore.update).toHaveBeenCalledWith(doc);
             expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc);

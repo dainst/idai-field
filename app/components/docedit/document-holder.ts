@@ -27,13 +27,15 @@ export class DocumentHolder {
      * that are conflict resolved. They will be be removed from document
      * as soon as it gets saved.
      */
-    public inspectedRevisionsIds: string[];
+    public inspectedRevisions: Document[];
 
     /**
      * Holds a cloned version of the <code>document</code> set via {@link DocumentHolder#setDocument}.
      * On clonedDocument changes can be made which can be either saved or discarded later.
      */
     public clonedDocument: Document;
+
+    private oldVersion: Document;
 
 
     constructor(
@@ -66,9 +68,9 @@ export class DocumentHolder {
 
     public setClonedDocument(document: Document) {
 
-        this.persistenceManager.setOldVersions([document]);
+        this.oldVersion = ObjectUtil.cloneObject(document);
         this.clonedDocument = ObjectUtil.cloneObject(document);
-        this.inspectedRevisionsIds = [];
+        this.inspectedRevisions = [];
     };
 
 
@@ -77,9 +79,13 @@ export class DocumentHolder {
         this.clonedDocument = await this.cleanup(this.clonedDocument);
 
         await this.validator.validate(this.clonedDocument);
-        await this.persistenceManager.persist(this.clonedDocument, this.settingsService.getUsername());
+        await this.persistenceManager.persist(
+            this.clonedDocument,
+            this.settingsService.getUsername(),
+            this.oldVersion,
+            this.inspectedRevisions
+        );
 
-        await this.removeInspectedRevisions();
         await this.fetchLatestRevision();
         this.documentEditChangeMonitor.reset();
     }
@@ -131,19 +137,6 @@ export class DocumentHolder {
             this.clonedDocument = await this.datastore.get(this.clonedDocument.resource.id as any, {skip_cache: true});
         } catch (e) {
             throw [M.DATASTORE_NOT_FOUND];
-        }
-    }
-
-
-    private async removeInspectedRevisions(): Promise<any> {
-
-        try {
-            for (let revisionId of this.inspectedRevisionsIds) {
-                await this.datastore.removeRevision(this.clonedDocument.resource.id, revisionId);
-                this.inspectedRevisionsIds = this.inspectedRevisionsIds.filter(item => item !== revisionId);
-            }
-        } catch (err) {
-            console.error("error while removing revision",err);
         }
     }
 

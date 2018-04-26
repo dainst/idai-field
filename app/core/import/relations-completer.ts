@@ -165,7 +165,7 @@ export class RelationsCompleter {
             } else {
                 relations.splice(relations.indexOf(resource.id as any), 1);
                 targetDocument.resource.relations[relationName] = relations;
-                this.datastore.update(targetDocument).then(
+                this.datastore. update(targetDocument).then(
                     doc => resolve(),
                     err => reject(err)
                 );

@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/field';
-import {Action} from 'idai-components-2/core';
+import {Action, Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from 'idai-components-2/core';
@@ -23,7 +23,7 @@ const moment = require('moment');
 export class DoceditConflictsTabComponent implements OnChanges {
 
     @Input() document: IdaiFieldDocument;
-    @Input() inspectedRevisionsIds: string[];
+    @Input() inspectedRevisions: Document[];
 
     private conflictedRevisions: Array<IdaiFieldDocument> = [];
     private selectedRevision: IdaiFieldDocument|undefined;
@@ -43,7 +43,9 @@ export class DoceditConflictsTabComponent implements OnChanges {
     async ngOnChanges() {
 
         for (let revisionId of (this.document as any)['_conflicts']) {
-            if (this.inspectedRevisionsIds.includes(revisionId)) continue;
+            if (this.inspectedRevisions
+                    .map(_ => _.resource.id)
+                    .includes(revisionId)) continue;
 
             try {
                 this.conflictedRevisions.push(await this.datastore.getRevision(this.document.resource.id, revisionId));
@@ -141,8 +143,6 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
         ChangeHistory.mergeChangeHistories(this.document, this.selectedRevision);
 
-        this.persistenceManager.addOldVersion(this.selectedRevision);
-
         this.markRevisionAsInspected(this.selectedRevision);
         if (this.conflictedRevisions.length > 0) {
             this.setSelectedRevision(this.conflictedRevisions[0]);
@@ -159,8 +159,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
         let index = this.conflictedRevisions.indexOf(revision);
         this.conflictedRevisions.splice(index, 1);
-
-        this.inspectedRevisionsIds.push((revision as any)['_rev']);
+        this.inspectedRevisions.push(revision);
     }
 
 

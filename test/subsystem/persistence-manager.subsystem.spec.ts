@@ -93,7 +93,7 @@ export function main() {
                 await datastore.create(document2);
                 await datastore.create(document3);
 
-                await persistenceManager.remove(document1,'user',[document1]);
+                await persistenceManager.remove(document1,'user');
 
                 const docs = (await datastore.find({})).documents;
 

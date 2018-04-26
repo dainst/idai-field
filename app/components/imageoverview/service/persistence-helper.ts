@@ -38,7 +38,7 @@ export class PersistenceHelper {
                     () => this.imagestore.remove(resourceId),
                     msgWithParams => reject(msgWithParams)
                 ).then(
-                    () => this.persistenceManager.remove(document, this.settingsService.getUsername(), [document]),
+                    () => this.persistenceManager.remove(document, this.settingsService.getUsername()),
                     err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier])
                 ).then(() => {
                     this.imageOverviewFacade.remove(document);
@@ -69,8 +69,7 @@ export class PersistenceHelper {
                 }
 
                 promise = promise.then(
-                    () => this.persistenceManager.persist(imageDocument, this.settingsService.getUsername(),
-                        [oldVersion]),
+                    () => this.persistenceManager.persist(imageDocument, this.settingsService.getUsername(), oldVersion),
                     msgWithParams => reject(msgWithParams)
                 );
             }

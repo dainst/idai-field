@@ -185,7 +185,7 @@ export class DocumentHolder {
         // since we work with Document (and for a reason, we support IdaiFieldImageDocument as well in the docedit package)
         delete document.resource.relations['liesWithin'];
 
-        return Promise.reject([M.DOCEDIT_LIESWITHIN_RELATION_REMOVED_WARNING]);
+        return [M.DOCEDIT_LIESWITHIN_RELATION_REMOVED_WARNING];
     }
 
 

@@ -2,9 +2,9 @@
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ObjectUtil {
+export module ObjectUtil {
 
-    public static getElForPathIn(object: any, path: string) {
+    export function getElForPathIn(object: any, path: string) {
 
         let result = object;
         for (let segment of path.split('.')) {
@@ -15,9 +15,9 @@ export class ObjectUtil {
     }
 
 
-    public static takeOrMake(object: Object, path: string, val: any) {
+    export function takeOrMake(object: Object, path: string, val: any) {
 
-        if (ObjectUtil.getElForPathIn(object, path)) return ObjectUtil.getElForPathIn(object, path);
+        if (getElForPathIn(object, path)) return getElForPathIn(object, path);
         let result: any = object;
         let last;
         let lastSegment: any;
@@ -37,7 +37,7 @@ export class ObjectUtil {
      * @param {O} object
      * @returns {O}
      */
-    public static cloneObject<O>(object: O): O {
+    export function cloneObject<O>(object: O): O {
 
         return (function convertDates<O>(original: any, plain: any) {
 
@@ -56,13 +56,13 @@ export class ObjectUtil {
     }
 
 
-    public static isEmpty(object: Object): boolean {
+    export function isEmpty(object: Object): boolean {
 
         return Object.keys(object).length == 0;
     }
 
 
-    public static getDuplicateValues(array: any[]): any[] {
+    export function getDuplicateValues(array: any[]): any[] {
 
         const temp: any[] = [];
         const result: any[] = [];
@@ -79,7 +79,7 @@ export class ObjectUtil {
     }
 
 
-    public static findDifferingFieldsInObject(object1: Object, object2: Object, fieldsToIgnore?: string[]): string[] {
+    export function findDifferingFieldsInObject(object1: Object, object2: Object, fieldsToIgnore?: string[]): string[] {
 
         const differingFieldsNames: string[] = [];
 
@@ -97,7 +97,7 @@ export class ObjectUtil {
     }
 
 
-    public static compare(value1: any, value2: any): boolean {
+    export function compare(value1: any, value2: any): boolean {
 
         if (!value1 && !value2) return true;
         if ((value1 && !value2) || (!value1 && value2)) return false;
@@ -108,59 +108,59 @@ export class ObjectUtil {
         if (type1 != type2) {
             return false;
         } else if (type1 == 'object') {
-            return this.compareObjects(value1, value2);
+            return compareObjects(value1, value2);
         } else if (type1 == 'array') {
-            return this.compareArrays(value1, value2);
+            return compareArrays(value1, value2);
         } else {
-            return this.compareFields(value1, value2);
+            return compareFields(value1, value2);
         }
     }
 
 
-    private static compareObjects(object1: Object, object2: Object): boolean {
+    export function compareObjects(object1: Object, object2: Object): boolean {
 
         return JSON.stringify(object1) == JSON.stringify(object2);
     }
 
 
-    private static compareFields(field1: any, field2: any): boolean {
+    export function compareFields(field1: any, field2: any): boolean {
 
         if (field1 instanceof Array && !(field2 instanceof Array)) return false;
         if (!(field1 instanceof Array) && field2 instanceof Array) return false;
 
-        if (field1 instanceof Array) return this.compareArrays(field1, field2);
+        if (field1 instanceof Array) return compareArrays(field1, field2);
 
         return field1 === field2;
     }
 
 
-    private static compareArrays(array1: any[], array2: any[]): boolean {
+    export function compareArrays(array1: any[], array2: any[]): boolean {
 
         if (array1.length != array2.length) return false;
 
         for (let element of array1) {
-            if (!ObjectUtil.isInArray(array2, element)) return false;
+            if (!isInArray(array2, element)) return false;
         }
 
         for (let element of array2) {
-            if (!ObjectUtil.isInArray(array1, element)) return false;
+            if (!isInArray(array1, element)) return false;
         }
 
         return true;
     }
 
 
-    private static isInArray(array: any[], value: any): boolean {
+    export function isInArray(array: any[], value: any): boolean {
 
         for (let element of array) {
-            if (ObjectUtil.compareObjects(element, value)) return true;
+            if (compareObjects(element, value)) return true;
         }
 
         return false;
     }
 
 
-    private static getType(value: any): string {
+    export function getType(value: any): string {
 
         return typeof value == 'object'
             ? value instanceof Array

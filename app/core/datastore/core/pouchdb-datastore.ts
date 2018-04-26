@@ -202,8 +202,8 @@ export class PouchdbDatastore {
 
     private resetDocOnErr(original: Document) {
 
-        const created = JSON.parse(JSON.stringify(original.created));
-        const modified = JSON.parse(JSON.stringify(original.modified));
+        const created = JSON.parse(JSON.stringify(original.created)); // TODO make sure we have dates again
+        const modified = JSON.parse(JSON.stringify(original.modified)); // TODO make sure we have dates again
         const id = original.resource.id;
         return function(document: Document) {
             delete (document as any)['_id'];

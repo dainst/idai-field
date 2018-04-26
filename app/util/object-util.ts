@@ -39,7 +39,7 @@ export class ObjectUtil {
      */
     public static cloneObject<O>(object: O): O {
 
-        return (function convertDates<O>(original: O, plain: O) {
+        return (function convertDates<O>(original: any, plain: any) {
 
             for (let key of Object.keys(original)) {
 
@@ -52,7 +52,7 @@ export class ObjectUtil {
             }
             return plain;
 
-        })(object, JSON.parse(JSON.stringify(object)));
+        })(object, JSON.parse(JSON.stringify(object))) as O;
     }
 
 

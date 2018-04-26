@@ -81,7 +81,7 @@ export class PouchdbDatastore {
      */
     public async update(document: Document, username: string): Promise<Document> {
 
-        // TODO adjust modified here. add also a parameter for the revisions to squash during update, so that the removeRevision can get eliminated. change history is also merged here. test all of that
+        // TODO  add also a parameter for the revisions to squash during update, so that the removeRevision can get eliminated. change history is also merged here. test all of that
 
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
         if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
@@ -93,6 +93,7 @@ export class PouchdbDatastore {
 
         const resetFun = this.resetDocOnErr(document);
         (document as any)['_id'] = document.resource.id;
+        document.modified.push({ user: username, date: new Date() }); // TODO test
 
         try {
             return await this.performPut(document);

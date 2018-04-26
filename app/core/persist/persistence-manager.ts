@@ -1,12 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Action, Query} from 'idai-components-2/core';
-import {Document, NewDocument, Resource} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
+import {Document, NewDocument, ProjectConfiguration, Resource} from 'idai-components-2/core';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {M} from '../../m';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ObjectUtil} from '../../util/object-util';
-import {ChangeHistory} from '../model/change-history';
 import {ChangeHistoryMerge} from './change-history-merge';
 
 
@@ -210,21 +207,10 @@ export class PersistenceManager {
     }
 
 
-    /**
-     * Saves the document to the local datastore.
-     * @param document
-     * @param username
-     */
-    private persistIt(document: Document, username: string): Promise<any> {
-        
-        if (document.resource.id) {
-            if (!document.modified || document.modified.constructor !== Array)
-                document.modified = [];
-            document.modified.push({ user: username, date: new Date() });
+    private persistIt(document: Document|NewDocument, username: string): Promise<Document> {
 
-            return this.datastore.update(document, username);
-        } else {
-            return this.datastore.create(document, username);
-        }
+        return document.resource.id
+            ? this.datastore.update(document as Document, username)
+            : this.datastore.create(document, username);
     }
 }

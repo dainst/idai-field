@@ -149,7 +149,7 @@ describe('PouchdbDatastore', () => {
         await datastore.create(Static.doc('id1'), 'u');
         await datastore.create(doc2, 'u');
         try {
-            await datastore.update(doc2);
+            await datastore.update(doc2, 'u');
         } catch (e) {
             fail(e);
         }
@@ -160,7 +160,7 @@ describe('PouchdbDatastore', () => {
     it('should not update if resource id not present', async done => {
 
         try {
-            await datastore.update(Static.doc('sd1'));
+            await datastore.update(Static.doc('sd1'), 'u');
             fail();
         } catch (expected) {
             expect(expected[0]).toBe(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
@@ -175,7 +175,7 @@ describe('PouchdbDatastore', () => {
         delete doc.created;
 
         try {
-            await datastore.update(doc);
+            await datastore.update(doc, 'u');
             fail();
         } catch (expected) {
             expect(expected[0]).toBe(DatastoreErrors.INVALID_DOCUMENT);
@@ -189,7 +189,7 @@ describe('PouchdbDatastore', () => {
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
         try {
-            await datastore.update(Static.doc('sd1', 'identifier1', 'Find', 'id1'));
+            await datastore.update(Static.doc('sd1', 'identifier1', 'Find', 'id1'), 'u');
             fail();
         } catch (expectedErr) {
             expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NOT_FOUND);

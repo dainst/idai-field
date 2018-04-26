@@ -53,7 +53,7 @@ export abstract class CachedDatastore<T extends Document>
     public async update(document: Document, username: string): Promise<T> {
 
         this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
-        return this.updateIndex(await this.datastore.update(document));
+        return this.updateIndex(await this.datastore.update(document, username));
     }
 
 

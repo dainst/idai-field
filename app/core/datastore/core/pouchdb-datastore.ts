@@ -63,7 +63,7 @@ export class PouchdbDatastore {
         } catch (_) {}
         if (exists) throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
 
-        const resetFun = this.resetDocOnErr(document as Document);
+        const resetFun = this.resetDocOnErr(document as Document); // TODO do that before creating the actions
         if (!document.resource.id) document.resource.id = this.idGenerator.generateId();
         (document as any)['_id'] = document.resource.id;
 

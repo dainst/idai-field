@@ -52,10 +52,6 @@ export class PouchdbDatastore {
 
         if (!Document.isValid(document as Document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
 
-        // TODO write test for date creation
-        (document as any)['created'] = { user: username, date: new Date() };
-        (document as any)['modified'] = [{ user: username, date: new Date() }];
-
         let exists = false;
         if (document.resource.id) try {
             await this.db.get(document.resource.id);
@@ -63,9 +59,11 @@ export class PouchdbDatastore {
         } catch (_) {}
         if (exists) throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
 
-        const resetFun = this.resetDocOnErr(document as Document); // TODO do that before creating the actions
+        const resetFun = this.resetDocOnErr(document as Document);
         if (!document.resource.id) document.resource.id = this.idGenerator.generateId();
         (document as any)['_id'] = document.resource.id;
+        (document as any)['created'] = { user: username, date: new Date() }; // TODO write test for date creation
+        (document as any)['modified'] = [{ user: username, date: new Date() }];
 
         try {
             return await this.performPut(document);

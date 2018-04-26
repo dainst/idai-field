@@ -1,9 +1,8 @@
-import {ProjectConfiguration} from 'idai-components-2/core'
+import {ProjectConfiguration, Document} from 'idai-components-2/core'
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/field';
 import {M} from '../../m';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
 import {Validator} from './validator';
-import {ModelUtil} from './model-util';
 import {Validations} from './validations';
 
 
@@ -22,7 +21,7 @@ export class IdaiFieldValidator extends Validator {
     public async validateRelationTargets(document: IdaiFieldDocument,
                                          relationName: string): Promise<string[]> {
 
-        if (!ModelUtil.hasRelations(document, relationName)) return [];
+        if (!Document.hasRelations(document, relationName)) return [];
 
         const invalidRelationTargetIds: string[] = [];
 

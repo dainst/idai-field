@@ -40,7 +40,7 @@ export class IndexItem {
             if (showWarnings) console.warn("no identifier, will not index");
             return undefined;
         }
-        const lastModified: Action = ChangeHistory.getLastModified(document);
+        const lastModified: Action = Document.getLastModified(document);
         if (!lastModified) {
             if (showWarnings) console.warn('no created/modified action, will not index', document);
             return undefined;

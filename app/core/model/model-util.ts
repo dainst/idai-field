@@ -21,20 +21,6 @@ export class ModelUtil {
 
         return getAtIndex(targetIds, index);
     }
-
-
-    public static hasRelationTarget(document: Document, relationName: string, targetId: string): boolean {
-
-        if (!document.resource.relations[relationName]) return false;
-
-        return document.resource.relations[relationName].indexOf(targetId) > -1;
-    }
-
-
-    public static hasRelations(document: Document, relationName: string): boolean {
-
-        return document.resource.relations[relationName] && document.resource.relations[relationName].length > 0;
-    }
 }
 
 

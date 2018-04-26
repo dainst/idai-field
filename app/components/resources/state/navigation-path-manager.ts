@@ -1,5 +1,6 @@
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
+import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ResourcesState} from './resources-state';
 import {NavigationPath} from './navigation-path';
@@ -123,7 +124,7 @@ export class NavigationPathManager {
 
         const navigationPath = this.getNavigationPath();
 
-        if (navigationPath.rootDocument && ModelUtil.hasRelationTarget(document, 'liesWithin',
+        if (navigationPath.rootDocument && Document.hasRelationTarget(document, 'liesWithin',
                 navigationPath.rootDocument.resource.id)) {
             return true;
         }
@@ -131,9 +132,9 @@ export class NavigationPathManager {
         const mainTypeDocument = this.resourcesState.getMainTypeDocument();
 
         return (!navigationPath.rootDocument && mainTypeDocument != undefined
-                && ModelUtil.hasRelationTarget(document, 'isRecordedIn',
+                && Document.hasRelationTarget(document, 'isRecordedIn',
                     mainTypeDocument.resource.id )
-                && !ModelUtil.hasRelations(document, 'liesWithin'));
+                && !Document.hasRelations(document, 'liesWithin'));
     }
 
 
@@ -181,7 +182,7 @@ export class NavigationPathManager {
         return (await this.datastore.find({
             q: '',
             constraints: { 'id:match': segment.document.resource.id }
-        })).totalCount != 0;
+        })).totalCount !== 0;
     }
 
 
@@ -190,10 +191,10 @@ export class NavigationPathManager {
         const index: number = segments.indexOf(segment);
         const mainTypeDocument = this.resourcesState.getMainTypeDocument();
 
-        return (index == 0)
-            ? mainTypeDocument != undefined && ModelUtil.hasRelationTarget(segment.document,
+        return (index === 0)
+            ? mainTypeDocument !== undefined && Document.hasRelationTarget(segment.document,
                 'isRecordedIn', mainTypeDocument.resource.id)
-            : ModelUtil.hasRelationTarget(segment.document,
+            : Document.hasRelationTarget(segment.document,
                 'liesWithin', segments[index - 1].document.resource.id);
     }
 

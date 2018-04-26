@@ -61,7 +61,8 @@ export class PersistenceManager {
      *   with msgWithParams.
      */
     public async persist(
-        document: NewDocument, user: string = 'anonymous',
+        document: NewDocument,
+        user: string = 'anonymous',
         oldVersion: NewDocument = document,
         revisionsToSquash: Document[] = [],
         ): Promise<any> {
@@ -90,7 +91,7 @@ export class PersistenceManager {
 
         try {
             for (let revision of revisionsToSquash) {
-                await this.datastore.removeRevision(resourceId, revision['_rev']);
+                await this.datastore.removeRevision(resourceId, (revision as any)['_rev']);
             }
         } catch (err) {
             console.error("error while removing revision", err);

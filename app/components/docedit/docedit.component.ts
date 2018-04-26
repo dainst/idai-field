@@ -60,7 +60,12 @@ export class DoceditComponent {
 
     public async setDocument(document: IdaiFieldDocument) {
 
+        console.log("document",(document.created as any).date)
+        console.log("document",(document.created as any).date instanceof Date)
+
         this.documentHolder.setClonedDocument(document);
+
+
 
         this.showDoceditImagesTab = (!
             (this.typeUtility.getSubtypes('Image'))[this.documentHolder.getClonedDocument().resource.type]

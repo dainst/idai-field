@@ -25,11 +25,11 @@ export class DoceditConflictsTabComponent implements OnChanges {
     @Input() document: IdaiFieldDocument;
     @Input() inspectedRevisionsIds: string[];
 
-    private conflictedRevisions: Array<IdaiFieldDocument>;
+    private conflictedRevisions: Array<IdaiFieldDocument> = [];
     private selectedRevision: IdaiFieldDocument|undefined;
     private differingFields: any[];
     private relationTargets: { [targetId: string]: IdaiFieldDocument };
-    private ready: boolean;
+    private ready = false;
 
 
     constructor(
@@ -40,31 +40,26 @@ export class DoceditConflictsTabComponent implements OnChanges {
         private persistenceManager: PersistenceManager) {}
 
 
-    ngOnChanges() {
-
-        this.ready = false;
-        this.conflictedRevisions = [];
-        this.selectedRevision = undefined;
-        let promises: Array<Promise<any>> = [];
+    async ngOnChanges() {
 
         for (let revisionId of (this.document as any)['_conflicts']) {
-            if (this.inspectedRevisionsIds.indexOf(revisionId) > -1) continue;
+            if (this.inspectedRevisionsIds.includes(revisionId)) continue;
 
-            promises.push(this.datastore.getRevision(this.document.resource.id as any, revisionId).then(
-                revision => this.conflictedRevisions.push(revision),
-                () => this.messages.add([M.DATASTORE_NOT_FOUND])
-            ));
+            try {
+                this.conflictedRevisions.push(await this.datastore.getRevision(this.document.resource.id, revisionId));
+            } catch (_) {
+                console.error("revision not found " + this.document.resource.id + " " + revisionId);
+                this.messages.add([M.DATASTORE_NOT_FOUND])
+            }
         }
 
-        Promise.all(promises).then(() => {
-            if (this.conflictedRevisions.length > 0) {
-                this.sortRevisions(this.conflictedRevisions);
-                this.setSelectedRevision(this.conflictedRevisions[0]);
-            } else {
-                this.differingFields = [];
-            }
-            this.ready = true;
-        });
+        if (this.conflictedRevisions.length > 0) {
+            this.sortRevisions(this.conflictedRevisions);
+            this.setSelectedRevision(this.conflictedRevisions[0]);
+        } else {
+            this.differingFields = [];
+        }
+        this.ready = true;
     }
 
 

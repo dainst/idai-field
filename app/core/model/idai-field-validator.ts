@@ -41,7 +41,7 @@ export class IdaiFieldValidator extends Validator {
             }
         });
 
-        return Promise.resolve(documents.length == 1);
+        return documents.length === 1;
     }
 
     
@@ -50,20 +50,12 @@ export class IdaiFieldValidator extends Validator {
      * @returns {Promise<void>}
      * @returns {Promise<void>} resolves with () or rejects with msgsWithParams in case of validation error
      */
-    protected async validateCustom(doc: IdaiFieldDocument): Promise<any> {
+    protected async validateCustom(doc: IdaiFieldDocument): Promise<void> {
 
-        try {
-            await this.validateIdentifier(doc);
+        await this.validateIdentifier(doc);
 
-            let msgWithParams = await IdaiFieldValidator.validateGeometry(doc.resource.geometry as any);
-            if (!msgWithParams) {
-                return Promise.resolve();
-            } else {
-                return Promise.reject(msgWithParams);
-            }
-        } catch(msgWithParams) {
-            return Promise.reject(msgWithParams);
-        }
+        const msgWithParams = await IdaiFieldValidator.validateGeometry(doc.resource.geometry as any);
+        if (msgWithParams) throw msgWithParams;
     }
     
 
@@ -127,6 +119,6 @@ export class IdaiFieldValidator extends Validator {
 
     private static isDuplicate(result: any, doc: any) {
 
-        return result.resource.id != doc.resource.id;
+        return result.resource.id !== doc.resource.id;
     }
 }

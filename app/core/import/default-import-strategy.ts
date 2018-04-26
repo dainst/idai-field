@@ -1,4 +1,4 @@
-import {Document, ProjectConfiguration} from 'idai-components-2/core';
+import {Document, ProjectConfiguration, NewDocument} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ImportStrategy} from './import-strategy';
 import {M} from '../../m';
@@ -24,7 +24,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      * @throws errorWithParams
      */
     public async importDoc(
-            document: Document // TODO use IdaiFieldDocument and make sure it is properly converted
+            document: NewDocument // TODO use IdaiFieldDocument and make sure it is properly converted
         ): Promise<void> {
 
         if (this.mainTypeDocumentId) {
@@ -34,17 +34,18 @@ export class DefaultImportStrategy implements ImportStrategy {
         document.created = { user: this.username, date: new Date() };
         document.modified = [{ user: this.username, date: new Date() }];
 
-        await this.validator.validate(document);
+        await this.validator.validate(document as Document);
 
-        let exists = true;
-        try {
-            await this.datastore.get(document.resource.id);
-        } catch (_) {
-            exists = false;
+        let exists = false;
+        if (document.resource.id) {
+            try {
+                await this.datastore.get(document.resource.id);
+                exists = true;
+            } catch (_) {}
         }
 
         if (this.overwriteIfExists && exists) {
-            await this.datastore.update(document);
+            await this.datastore.update(document as Document);
         } else {
             // throws if !overwriteIfExists an exists
             await this.datastore.create(document);
@@ -52,7 +53,7 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
-    private async setMainTypeDocumentRelation(document: Document, mainTypeDocumentId: string): Promise<void> {
+    private async setMainTypeDocumentRelation(document: NewDocument, mainTypeDocumentId: string): Promise<void> {
 
         const mainTypeDocument = await this.datastore.get(mainTypeDocumentId);
 

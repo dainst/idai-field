@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs/Observable';
-import {Document} from 'idai-components-2/core';
+import {NewDocument} from 'idai-components-2/core';
 import {M} from '../../m';
 import {AbstractParser} from './abstract-parser';
 import {Observer} from 'rxjs/Observer';
@@ -11,17 +11,17 @@ import {Observer} from 'rxjs/Observer';
 export class NativeJsonlParser extends AbstractParser {
 
 
-    public parse(content: string): Observable<Document> {
+    public parse(content: string): Observable<NewDocument> {
         
         this.warnings = [];
-        return Observable.create((observer: Observer<Document>) => {
+        return Observable.create((observer: Observer<NewDocument>) => {
             NativeJsonlParser.parseContent(content, observer);
             observer.complete();
         });
     }
 
 
-    private static parseContent(content: string, observer: Observer<Document>) {
+    private static parseContent(content: string, observer: Observer<NewDocument>) {
 
         const lines = content.split('\n');
         const len = lines.length;
@@ -39,7 +39,7 @@ export class NativeJsonlParser extends AbstractParser {
     }
 
 
-    private static makeDoc(line: string) {
+    private static makeDoc(line: string): NewDocument {
 
         const resource = JSON.parse(line);
         if (!resource.relations) resource.relations = {};

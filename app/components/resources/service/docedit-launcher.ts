@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2/core';
+import {Document, NewDocument} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {DocumentEditChangeMonitor} from 'idai-components-2/core';
 import {DoceditComponent} from '../../docedit/docedit.component';
@@ -23,7 +23,7 @@ export class DoceditLauncher {
     ) {}
 
 
-    public async editDocument(document: Document, activeTabName?: string): Promise<any> {
+    public async editDocument(document: Document|NewDocument, activeTabName?: string): Promise<any> {
 
         if (activeTabName) this.doceditActiveTabService.setActiveTab(activeTabName);
 

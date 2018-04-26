@@ -18,7 +18,7 @@ export module ChangeHistory {
 
         if (changeHistory.length == 0) return;
 
-        mainDocument.created = changeHistory.shift();
+        mainDocument.created = changeHistory.shift() as Action;
         mainDocument.modified = changeHistory;
     }
 
@@ -87,15 +87,12 @@ export module ChangeHistory {
 
     function isInChangeHistory(action: Action, changeHistory: Array<Action>): boolean {
 
-        return (changeHistory
-            .find(actionToCompare => isSameAction(action, actionToCompare))
-            != undefined);
+        return changeHistory.find(_ => isSameAction(action, _)) != undefined;
     }
 
 
     function isSameAction(action1: Action, action2: Action): boolean {
 
-        // TODO make action.date non optional
         return ((action1.date as any).getTime() === (action2.date as any).getTime()
             && action1.user === action2.user);
     }

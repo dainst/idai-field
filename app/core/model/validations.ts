@@ -1,10 +1,10 @@
 import {FieldDefinition, ProjectConfiguration, RelationDefinition} from 'idai-components-2/core';
-import {Resource} from 'idai-components-2/core';
+import {Resource, NewResource} from 'idai-components-2/core';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../util/number-util';
 
 export module Validations {
 
-    export function getMissingProperties(resource: Resource, projectConfiguration: ProjectConfiguration) {
+    export function getMissingProperties(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration) {
 
         const missingFields: string[] = [];
         const fieldDefinitions: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
@@ -26,7 +26,7 @@ export module Validations {
      * @param projectConfiguration
      * @returns {boolean} true if the type of the resource is valid, otherwise false
      */
-    export function validateType(resource: Resource, projectConfiguration: ProjectConfiguration): boolean {
+    export function validateType(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): boolean {
 
         if (!resource.type) return false;
         return projectConfiguration.getTypesList()
@@ -34,9 +34,9 @@ export module Validations {
     }
 
 
-    export function validateFields(resource: Resource, projectConfiguration: ProjectConfiguration): Array<string> {
+    export function validateFields(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): Array<string> {
 
-            const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
+        const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
         const defaultFields: Array<FieldDefinition> = [{ name: 'relations' }];
 
         const fields: Array<any> = projectFields.concat(defaultFields);
@@ -66,7 +66,7 @@ export module Validations {
      * @returns {string[]} the names of invalid relation fields if one or more of the fields are invalid, otherwise
      * <code>undefined</code>
      */
-    export function validateRelations(resource: Resource, projectConfiguration: ProjectConfiguration): string[] {
+    export function validateRelations(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[] {
 
         const fields: Array<RelationDefinition> = projectConfiguration.getRelationDefinitions(resource.type) as any;
         const invalidFields: Array<any> = [];
@@ -90,7 +90,7 @@ export module Validations {
     }
 
 
-    export function validateNumericValues(resource: Resource, projectConfiguration: ProjectConfiguration): string[]|undefined {
+    export function validateNumericValues(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[]|undefined {
 
         const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
         const numericInputTypes: string[] = ['unsignedInt', 'float', 'unsignedFloat'];

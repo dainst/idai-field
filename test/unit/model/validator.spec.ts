@@ -1,6 +1,7 @@
 import {ProjectConfiguration, ConfigLoader} from 'idai-components-2/core';
 import {Validator} from '../../../app/core/model/validator';
 import {M} from '../../../app/m';
+import {Document} from 'idai-components-2/core';
 
 /**
  * @author Daniel de Oliveira

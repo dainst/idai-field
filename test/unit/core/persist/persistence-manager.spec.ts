@@ -82,7 +82,7 @@ describe('PersistenceManager', () => {
             'id' :'1', 'identifier': 'ob1',
             'type': 'object',
             'relations' : {}
-        }};
+        }} as any;
 
         relatedDoc = { 'resource' : {
             'id': '2' , 'identifier': 'ob2',

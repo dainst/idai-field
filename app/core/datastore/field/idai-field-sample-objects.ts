@@ -1,6 +1,6 @@
-import {Document} from 'idai-components-2/core';
+import {NewDocument} from 'idai-components-2/core';
 
-export const DOCS: Document[] = [
+export const DOCS: NewDocument[] = [
     {
         "resource": {
             "id": "test",

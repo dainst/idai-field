@@ -5,6 +5,8 @@ import {ImageGridConstruction} from './image-grid-builder';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
+import {NewIdaiFieldImageDocument} from '../../core/model/new-idai-field-image-document';
+import {NewIdaiFieldImageResource} from '../../core/model/new-idai-field-image-resource';
 
 
 @Component({
@@ -171,10 +173,10 @@ export class ImageGridComponent implements OnChanges {
 
         if (!this.documents) this.documents = [];
 
-        this.documents.unshift(<IdaiFieldImageDocument>{
+        this.documents.unshift({
             id: 'droparea',
             resource: { id: 'droparea', identifier: '', shortDescription:'', type: '', originalFilename: '',
                 width: 1, height: 1, relations: { depicts: [] } }
-        });
+        } as any);
     }
 }

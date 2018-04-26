@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {Document} from 'idai-components-2/core';
+import {Document, NewDocument} from 'idai-components-2/core';
 import {M} from '../../m';
 import {Validations} from './validations';
 
@@ -18,7 +18,7 @@ export class Validator {
      * @param doc
      * @returns resolves with () or rejects with msgsWithParams
      */
-    public validate(doc: Document): Promise<any> {
+    public validate(doc: Document|NewDocument): Promise<any> {
 
         let resource = doc.resource;
 
@@ -67,7 +67,7 @@ export class Validator {
     /**
      * @throws msgsWithParams in case of validation error
      */
-    protected async validateCustom(doc: Document): Promise<any> {}
+    protected async validateCustom(doc: Document|NewDocument): Promise<any> {}
 
 
     public async validateRelationTargets(document: Document, relationName: string): Promise<string[]> {

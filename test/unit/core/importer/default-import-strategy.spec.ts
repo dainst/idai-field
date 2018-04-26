@@ -8,7 +8,7 @@ describe('DefaultImportStrategy', () => {
 
     let mockDatastore;
     let mockValidator;
-    let importStrategy: ImportStrategy;
+    let importStrategy: DefaultImportStrategy;
 
 
     beforeEach(() => {
@@ -47,7 +47,7 @@ describe('DefaultImportStrategy', () => {
             null,
             'user1',
             true).importDoc(
-            { resource: {type: undefined, id: undefined, relations: undefined } });
+            { resource: {type: undefined, id: '1', relations: undefined } });
 
         expect(mockDatastore.create).not.toHaveBeenCalled();
         expect(mockDatastore.update).toHaveBeenCalled();

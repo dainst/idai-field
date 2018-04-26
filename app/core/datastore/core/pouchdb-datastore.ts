@@ -92,11 +92,9 @@ export class PouchdbDatastore {
             return await this.performPut(document);
         } catch (err) {
             resetFun(document);
-            if (err.name && err.name == 'conflict') {
-                throw [DatastoreErrors.SAVE_CONFLICT];
-            } else {
-                throw [DatastoreErrors.GENERIC_ERROR, err];
-            }
+            throw err.name && err.name == 'conflict'
+                ? [DatastoreErrors.SAVE_CONFLICT]
+                : [DatastoreErrors.GENERIC_ERROR, err];
         }
     }
 

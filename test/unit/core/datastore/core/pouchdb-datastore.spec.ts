@@ -172,6 +172,7 @@ describe('PouchdbDatastore', () => {
     it('should not update if created not present', async done => {
 
         const doc = Static.doc('sd1');
+        doc.resource.id = "1";
         delete doc.created;
 
         try {

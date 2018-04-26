@@ -29,8 +29,8 @@ export class IdaiFieldSampleDataLoader implements SampleDataLoader {
 
         let promises = [] as any;
         for (let doc of DOCS) {
-            doc.created = { user: 'sample_data', date: new Date() };
-            doc.modified = [{ user: 'sample_data', date: new Date() }];
+            (doc as any)['created'] = { user: 'sample_data', date: new Date() };
+            (doc as any)['modified'] = [{ user: 'sample_data', date: new Date() }];
             (doc as any)['_id'] = doc.resource.id;
             promises.push(db.put(doc, { force: true }) as never);
             setTimeout(() => {}, 15);

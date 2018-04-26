@@ -50,11 +50,11 @@ export class PouchdbDatastore {
      */
     public async create(document: NewDocument, username: string): Promise<Document> {
 
-        // TODO put after validation, allow for missing created and modified in validation, write test for date creation
+        if (!Document.isValid(document as Document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
+
+        // TODO write test for date creation
         (document as any)['created'] = { user: username, date: new Date() };
         (document as any)['modified'] = [{ user: username, date: new Date() }];
-
-        if (!Document.isValid(document as Document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
 
         let exists = false;
         if (document.resource.id) try {
@@ -85,8 +85,8 @@ export class PouchdbDatastore {
 
         // TODO adjust modified here. add also a parameter for the revisions to squash during update, so that the removeRevision can get eliminated. change history is also merged here. test all of that
 
-        if (!Document.isValid(document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
+        if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
         try {
             await this.db.get(document.resource.id);
         } catch (e) {

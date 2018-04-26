@@ -31,18 +31,13 @@ export class DefaultImportStrategy implements ImportStrategy {
             await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
         }
 
-        document.created = { user: this.username, date: new Date() };
-        document.modified = [{ user: this.username, date: new Date() }];
-
         await this.validator.validate(document as Document);
 
         let exists = false;
-        if (document.resource.id) {
-            try {
-                await this.datastore.get(document.resource.id);
-                exists = true;
-            } catch (_) {}
-        }
+        if (document.resource.id) try {
+            await this.datastore.get(document.resource.id);
+            exists = true;
+        } catch (_) {}
 
         if (this.overwriteIfExists && exists) {
             await this.datastore.update(document as Document, this.username);

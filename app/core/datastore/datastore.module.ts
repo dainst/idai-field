@@ -7,8 +7,6 @@ import {PouchdbDatastore} from './core/pouchdb-datastore';
 import {ConstraintIndexer} from './index/constraint-indexer';
 import {FulltextIndexer} from './index/fulltext-indexer';
 import {AppState} from '../settings/app-state';
-import {ConflictResolvingExtension} from './core/conflict-resolving-extension';
-import {ConflictResolver} from './core/conflict-resolver';
 import {PouchdbServerDatastore} from './pouchdb-server-datastore';
 import {PouchdbManager} from './core/pouchdb-manager';
 import {IdaiFieldDocumentDatastore} from './field/idai-field-document-datastore';
@@ -19,7 +17,6 @@ import {IdaiFieldImageDocumentReadDatastore} from './field/idai-field-image-docu
 import {TypeConverter} from './core/type-converter';
 import {IdaiFieldSampleDataLoader} from './field/idai-field-sample-data-loader';
 import {SampleDataLoader} from './core/sample-data-loader';
-import {IdaiFieldConflictResolver} from '../model/idai-field-conflict-resolver';
 import {DocumentDatastore} from './document-datastore';
 import {DocumentReadDatastore} from './document-read-datastore';
 import {IdaiFieldTypeConverter} from './field/idai-field-type-converter';
@@ -53,9 +50,7 @@ import {IdaiFieldFeatureDocument} from '../model/idai-field-feature-document';
             deps: [SampleDataLoader, IndexFacade]
         },
 
-        { provide: ConflictResolver, useClass: IdaiFieldConflictResolver },
         { provide: TypeConverter, useClass: IdaiFieldTypeConverter },
-        ConflictResolvingExtension,
 
         {
             provide: FulltextIndexer,

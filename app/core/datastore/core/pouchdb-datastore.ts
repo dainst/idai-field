@@ -51,12 +51,14 @@ export class PouchdbDatastore {
     public async create(document: NewDocument): Promise<Document> {
 
         if (!Document.isValid(document as Document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
+
+        let exists = false;
         if (document.resource.id) try {
             await this.db.get(document.resource.id);
-            throw 'exists';
-        } catch (expected) {
-            if (expected === 'exists') throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS]
-        }
+            exists = true;
+        } catch (_) {}
+        if (exists) throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
+
         const resetFun = this.resetDocOnErr(document as Document);
         if (!document.resource.id) document.resource.id = this.idGenerator.generateId();
         (document as any)['_id'] = document.resource.id;

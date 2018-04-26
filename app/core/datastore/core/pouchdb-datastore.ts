@@ -48,7 +48,11 @@ export class PouchdbDatastore {
      * @throws [INVALID_DOCUMENT] - in case either the document given as param or
      *   the document fetched directly after db.put is not valid
      */
-    public async create(document: NewDocument): Promise<Document> {
+    public async create(document: NewDocument, username: string): Promise<Document> {
+
+        // TODO put after validation, allow for missing created and modified in validation, write test for date creation
+        (document as any)['created'] = { user: username, date: new Date() };
+        (document as any)['modified'] = [{ user: username, date: new Date() }];
 
         if (!Document.isValid(document as Document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
 

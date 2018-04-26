@@ -224,9 +224,6 @@ export class PersistenceManager {
 
             return this.datastore.update(document, username);
         } else {
-            document.created = { user: username, date: new Date() };
-            document.modified = [{ user: username, date: new Date() }];
-
             return this.datastore.create(document, username);
         }
     }

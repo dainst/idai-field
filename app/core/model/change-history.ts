@@ -40,12 +40,12 @@ export module ChangeHistory {
 
         for (let revision of conflictedRevisions) {
             const latestRevisionAction: Action = ChangeHistory.getLastModified(revision);
-            if (new Date(latestRevisionAction.date as any) > new Date(latestAction.date as any)) {
+            if (latestRevisionAction.date > latestAction.date) {
                 latestAction = latestRevisionAction;
             }
         }
 
-        return latestAction && latestAction.user != username;
+        return latestAction && latestAction.user !== username;
     }
 
 
@@ -61,11 +61,8 @@ export module ChangeHistory {
     function sortChangeHistory(changeHistory: Array<Action>) {
 
         changeHistory.sort((action1, action2) => {
-            const date1 = new Date(action1.date as any);
-            const date2 = new Date(action2.date as any);
-
-            if (date1 < date2) return -1;
-            if (date2 < date1) return 1;
+            if (action1.date < action2.date) return -1;
+            if (action2.date < action1.date) return 1;
             return 0;
         });
     }
@@ -87,7 +84,7 @@ export module ChangeHistory {
 
     function isInChangeHistory(action: Action, changeHistory: Array<Action>): boolean {
 
-        return changeHistory.find(_ => isSameAction(action, _)) != undefined;
+        return changeHistory.find(_ => isSameAction(action, _)) !== undefined;
     }
 
 

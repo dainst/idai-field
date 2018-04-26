@@ -162,14 +162,10 @@ export class ObjectUtil {
 
     private static getType(value: any): string {
 
-        if (typeof value == 'object') {
-            if (value instanceof Array) {
-                return 'array';
-            } else {
-                return 'object';
-            }
-        } else {
-            return 'flat';
-        }
+        return typeof value == 'object'
+            ? value instanceof Array
+                ? 'array'
+                : 'object'
+            : 'flat';
     }
 }

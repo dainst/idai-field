@@ -152,11 +152,7 @@ export module ObjectUtil {
 
     export function isInArray(array: any[], value: any): boolean {
 
-        for (let element of array) {
-            if (compareObjects(element, value)) return true;
-        }
-
-        return false;
+        return array.find(element => compareObjects(element, value)) != undefined;
     }
 
 

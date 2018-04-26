@@ -89,9 +89,9 @@ export function main() {
                 document3 = Static.doc('find2','find2','Find','f2');
                 document3.resource.relations['Contains'] = ['f1'];
                 
-                await datastore.create(document1);
-                await datastore.create(document2);
-                await datastore.create(document3);
+                await datastore.create(document1, 'u');
+                await datastore.create(document2, 'u');
+                await datastore.create(document3, 'u');
 
                 await persistenceManager.remove(document1,'user');
 

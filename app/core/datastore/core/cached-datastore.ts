@@ -39,7 +39,7 @@ export abstract class CachedDatastore<T extends Document>
      * @throws if document is not of type T, determined by resource.type
      * @throws if resource.type is unknown
      */
-    public async create(document: NewDocument): Promise<T> {
+    public async create(document: NewDocument, username: string): Promise<T> {
 
         this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
         return this.updateIndex(await this.datastore.create(document));
@@ -50,7 +50,7 @@ export abstract class CachedDatastore<T extends Document>
      * Implements {@link Datastore#update}
      * @throws if document is not of type T, determined by resource.type
      */
-    public async update(document: Document): Promise<T> {
+    public async update(document: Document, username: string): Promise<T> {
 
         this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
         return this.updateIndex(await this.datastore.update(document));

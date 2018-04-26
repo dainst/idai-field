@@ -41,7 +41,7 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
                 return this.validator.validate(existingDocument);
             }, () => {
                 return Promise.reject([M.ALL_FIND_ERROR]);
-            }).then(() => this.datastore.update(existingDocument),
+            }).then(() => this.datastore.update(existingDocument, this.username),
                 msgWithParams => Promise.reject(msgWithParams));
     }
 }

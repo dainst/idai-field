@@ -132,7 +132,7 @@ describe('CachedDatastore', () => {
         await ds.create({resource: { // trigger caching of document
             id: '1',
             relations: {}
-        }} as any);
+        }} as any, 'u');
         mockIndexFacade.perform.and.returnValues(['1']);
 
         const documents = (await ds.find({})).documents; // fetch from cache
@@ -147,12 +147,12 @@ describe('CachedDatastore', () => {
         await ds.create({resource: {
             id: '1',
             relations: {}
-        }} as any);
+        }} as any, 'u');
 
         await ds.create({resource: {
             id: '2',
             relations: {}
-        }} as any);
+        }} as any, 'u');
 
         mockIndexFacade.perform.and.returnValues(['1', '2']);
 
@@ -202,7 +202,7 @@ describe('CachedDatastore', () => {
         await ds.update({resource: { // trigger caching of document
             id: '1',
             relations: {}
-        }} as any);
+        }} as any, 'u');
         const document = await ds.get('1'); // fetch from cache
         verifyIsIdaiFieldDocument(document);
         done();
@@ -215,12 +215,12 @@ describe('CachedDatastore', () => {
             id: '1',
             val: 'a',
             relations: {}
-        }} as any);
+        }} as any, 'u');
         await ds.update({resource: { // trigger caching and reassigning of document
             id: '1',
             val: 'b',
             relations: {}
-        }} as any);
+        }} as any, 'u');
         const document = await ds.get('1'); // fetch from cache
         expect(document.resource['val']).toEqual('b');
         verifyIsIdaiFieldDocument(document);
@@ -235,7 +235,7 @@ describe('CachedDatastore', () => {
         await ds.create({resource: { // trigger caching of document
             id: '1',
             relations: {}
-        }} as any);
+        }} as any, 'u');
 
         const document = await ds.get('1'); // fetch from cache
         verifyIsIdaiFieldDocument(document);
@@ -247,7 +247,7 @@ describe('CachedDatastore', () => {
 
         let doc1 = Static.doc('sd1', 'identifier1');
 
-        await ds.create(doc1);
+        await ds.create(doc1, 'u');
         try {
             const documents = (await ds.find({ q: 'sd1' })).documents; // mockdb returns other instance
             expect((documents[0]).resource['identifier']).toBe('identifier1');
@@ -267,10 +267,10 @@ describe('CachedDatastore', () => {
         let doc1 = Static.doc('sd1', 'identifier1');
         let doc2;
 
-        await ds.create(doc1);
+        await ds.create(doc1, 'u');
         doc2 = Static.doc('sd1', 'identifier_');
         doc2.resource.id = '1';
-        await ds.update(doc2);
+        await ds.update(doc2, 'u');
 
         const result = await ds.find({q: 'sd1'}); // mockdb returns other instance
         expect((result.documents[0])['_rev']).toBe('2');

@@ -64,7 +64,7 @@ export class PersistenceManager {
      */
     public async persist(
         document: NewDocument,
-        user: string = 'anonymous',
+        username: string,
         oldVersion: NewDocument = document,
         revisionsToSquash: Document[] = [],
         ): Promise<any> {
@@ -75,7 +75,7 @@ export class PersistenceManager {
         const documentToSave = document; // TODO clone it instead
 
         PersistenceManager.squashRevisionHistory(documentToSave as Document, revisionsToSquash);
-        const persistedDocument = await this.persistIt(documentToSave as Document, user);
+        const persistedDocument = await this.persistIt(documentToSave as Document, username);
         await this.removeRevisions(documentToSave.resource.id, revisionsToSquash);
 
         let connectedDocs;
@@ -84,7 +84,7 @@ export class PersistenceManager {
         } catch (_) {
             throw [M.PERSISTENCE_ERROR_TARGETNOTFOUND];
         }
-        await this.updateDocs(documentToSave as Document, connectedDocs, true, user);
+        await this.updateDocs(documentToSave as Document, connectedDocs, true, username);
 
         return persistedDocument;
     }
@@ -138,7 +138,8 @@ export class PersistenceManager {
      *     [DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR] - if document has a resource id, but does not exist in the db
      *     [DatastoreErrors.GENERIC_DELETE_ERROR] - if cannot delete for another reason
      */
-    public remove(document: Document, user: string = 'anonymous',
+    public remove(document: Document,
+                  username: string,
                   oldVersion: Document = document): Promise<any> {
 
         if (document == undefined) return Promise.resolve();
@@ -148,10 +149,10 @@ export class PersistenceManager {
                 let promise: Promise<any> = Promise.resolve();
 
                 for (let doc of recordedInDocs) {
-                    promise = promise.then(() => this.removeDocument(doc, user, []));
+                    promise = promise.then(() => this.removeDocument(doc, username, []));
                 }
 
-                return promise.then(() => this.removeDocument(document, user, [oldVersion]));
+                return promise.then(() => this.removeDocument(document, username, [oldVersion]));
             });
     }
 
@@ -201,36 +202,32 @@ export class PersistenceManager {
     }
 
 
-    private getRecordedInDocs(document: Document): Promise<Array<Document>> {
+    private async getRecordedInDocs(document: Document): Promise<Array<Document>> {
 
-        const query: Query = {
-            q: '',
+        return (await this.datastore.find({
             constraints: { 'isRecordedIn:contain': document.resource.id }
-        } as any;
-
-        return this.datastore.find(query)
-            .then(result => result.documents);
+        })).documents;
     }
 
 
     /**
      * Saves the document to the local datastore.
      * @param document
-     * @param user
+     * @param username
      */
-    private persistIt(document: Document, user: string): Promise<any> {
+    private persistIt(document: Document, username: string): Promise<any> {
         
         if (document.resource.id) {
             if (!document.modified || document.modified.constructor !== Array)
                 document.modified = [];
-            document.modified.push({ user: user, date: new Date() });
+            document.modified.push({ user: username, date: new Date() });
 
-            return this.datastore.update(document);
+            return this.datastore.update(document, username);
         } else {
-            document.created = { user: user, date: new Date() };
-            document.modified = [{ user: user, date: new Date() }];
+            document.created = { user: username, date: new Date() };
+            document.modified = [{ user: username, date: new Date() }];
 
-            return this.datastore.create(document);
+            return this.datastore.create(document, username);
         }
     }
 }

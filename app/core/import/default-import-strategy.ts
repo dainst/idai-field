@@ -45,10 +45,10 @@ export class DefaultImportStrategy implements ImportStrategy {
         }
 
         if (this.overwriteIfExists && exists) {
-            await this.datastore.update(document as Document);
+            await this.datastore.update(document as Document, this.username);
         } else {
             // throws if !overwriteIfExists an exists
-            await this.datastore.create(document);
+            await this.datastore.create(document, this.username);
         }
     }
 

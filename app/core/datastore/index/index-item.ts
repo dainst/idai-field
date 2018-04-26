@@ -1,5 +1,4 @@
-import {Document, Action} from 'idai-components-2/core';
-import {ChangeHistory} from '../../model/change-history';
+import {Action, Document} from 'idai-components-2/core';
 import {SortUtil} from '../../../util/sort-util';
 
 

@@ -85,13 +85,13 @@ export function main() {
             featureDocument2 = Static.ifDoc('Feature 2','feature2','Feature', 'feature2');
             featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
-            await idaiFieldDocumentDatastore.create(projectDocument);
-            await idaiFieldDocumentDatastore.create(trenchDocument1);
-            await idaiFieldDocumentDatastore.create(trenchDocument2);
-            await idaiFieldDocumentDatastore.create(findDocument1);
-            await idaiFieldDocumentDatastore.create(findDocument2);
-            await idaiFieldDocumentDatastore.create(featureDocument1);
-            await idaiFieldDocumentDatastore.create(featureDocument2);
+            await idaiFieldDocumentDatastore.create(projectDocument, 'u');
+            await idaiFieldDocumentDatastore.create(trenchDocument1, 'u');
+            await idaiFieldDocumentDatastore.create(trenchDocument2, 'u');
+            await idaiFieldDocumentDatastore.create(findDocument1, 'u');
+            await idaiFieldDocumentDatastore.create(findDocument2, 'u');
+            await idaiFieldDocumentDatastore.create(featureDocument1, 'u');
+            await idaiFieldDocumentDatastore.create(featureDocument2, 'u');
             done();
         });
 
@@ -208,7 +208,7 @@ export function main() {
 
             const findDocument3 = Static.ifDoc('Find 3','find3','Find', 'find3');
             findDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];
-            await idaiFieldDocumentDatastore.create(findDocument3);
+            await idaiFieldDocumentDatastore.create(findDocument3, 'u');
 
             await viewFacade.selectView('excavation');
             await viewFacade.selectMainTypeDocument(trenchDocument2);
@@ -347,12 +347,12 @@ export function main() {
             const featureDocument1a = Static.ifDoc('Feature 1a','feature1a','Feature', 'feature1a');
             featureDocument1a.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument1a.resource.relations['liesWithin'] = [featureDocument1.resource.id];
-            await idaiFieldDocumentDatastore.create(featureDocument1a);
+            await idaiFieldDocumentDatastore.create(featureDocument1a, 'u');
 
             const featureDocument1b = Static.ifDoc('Feature 1b','feature1b','Feature', 'feature1b');
             featureDocument1a.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument1a.resource.relations['liesWithin'] = [featureDocument1.resource.id];
-            await idaiFieldDocumentDatastore.create(featureDocument1b);
+            await idaiFieldDocumentDatastore.create(featureDocument1b, 'u');
 
             await viewFacade.selectView('excavation');
 

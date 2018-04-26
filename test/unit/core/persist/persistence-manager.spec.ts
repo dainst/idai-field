@@ -101,8 +101,8 @@ describe('PersistenceManager', () => {
 
     it('should save the base object', done => {
 
-        persistenceManager.persist(doc).then(() => {
-            expect(mockDatastore.update).toHaveBeenCalledWith(doc);
+        persistenceManager.persist(doc, 'u').then(() => {
+            expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u');
             done();
         }, err => { fail(err); done(); });
     });
@@ -112,9 +112,9 @@ describe('PersistenceManager', () => {
 
         doc.resource.relations['BelongsTo'] = ['2'];
 
-        persistenceManager.persist(doc).then(() => {
+        persistenceManager.persist(doc, 'u').then(() => {
 
-            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc);
+            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u');
             expect(relatedDoc.resource.relations['Contains'][0]).toBe('1');
             done();
 
@@ -126,9 +126,9 @@ describe('PersistenceManager', () => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
 
-        persistenceManager.persist(doc).then(() => {
+        persistenceManager.persist(doc, 'u').then(() => {
 
-            expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc);
+            expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc, 'u');
             done();
 
         }, err => { fail(err); done(); });
@@ -140,9 +140,9 @@ describe('PersistenceManager', () => {
         doc.resource.relations['BelongsTo']=['2'];
         relatedDoc.resource.relations['Contains']=['1'];
 
-        persistenceManager.remove(doc).then(() => {
+        persistenceManager.remove(doc, 'u').then(() => {
 
-            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc);
+            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u');
             expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
             done();
 
@@ -154,7 +154,7 @@ describe('PersistenceManager', () => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
 
-        persistenceManager.remove(doc).then(() => {
+        persistenceManager.remove(doc, 'u').then(() => {
 
             expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc);
             done();
@@ -171,9 +171,9 @@ describe('PersistenceManager', () => {
 
         findResult = [relatedDoc];
 
-        persistenceManager.remove(doc).then(() => {
+        persistenceManager.remove(doc, 'u').then(() => {
             expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
-            expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc);
+            expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u');
             expect(anotherRelatedDoc.resource.relations['BelongsTo']).toBeUndefined();
             done();
         }, err => { fail(err); done(); });
@@ -184,11 +184,11 @@ describe('PersistenceManager', () => {
 
         doc.resource.relations['BelongsTo'] = ['2', '3'];
 
-        persistenceManager.persist(doc).then(() => {
+        persistenceManager.persist(doc, 'u').then(() => {
 
             // expect(mockDatastore.update).toHaveBeenCalledWith(relatedObject);
             // right now it is not possible to test both objects due to problems with the return val of promise.all
-            expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc);
+            expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u');
             // expect(relatedObject['Contains'][0]).toBe('1');
             expect(anotherRelatedDoc['resource']['relations']['Contains'][0]).toBe('1');
             done();
@@ -209,8 +209,8 @@ describe('PersistenceManager', () => {
 
         persistenceManager.persist(doc, 'u', oldVersion).then(()=>{
 
-            expect(mockDatastore.update).toHaveBeenCalledWith(doc);
-            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc);
+            expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u');
+            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u');
 
             expect(doc.resource.relations['BelongsTo']).toBe(undefined);
             expect(relatedDoc.resource.relations['Contains']).toBe(undefined);

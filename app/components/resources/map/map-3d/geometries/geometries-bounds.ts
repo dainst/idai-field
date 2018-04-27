@@ -15,27 +15,20 @@ export class GeometriesBounds {
     private meshes: Array<THREE.Mesh>|undefined;
 
     private observers: Array<Observer<void>> = [];
+    private notified: boolean = false;
 
 
     public setPoints(points: Array<THREE.Vector3>) {
 
-        if (this.points || !this.meshes) {
-            this.points = points;
-        } else {
-            this.points = points;
-            this.notifyObservers();
-        }
+        this.points = points;
+        if (!this.notified) this.notifyIfInitialized();
     }
 
 
     public setMeshes(meshes: Array<THREE.Mesh>) {
 
-        if (this.meshes || !this.points) {
-            this.meshes = meshes;
-        } else {
-            this.meshes = meshes;
-            this.notifyObservers();
-        }
+        this.meshes = meshes;
+        if (!this.notified) this.notifyIfInitialized();
     }
 
 
@@ -56,6 +49,7 @@ export class GeometriesBounds {
 
         this.points = undefined;
         this.meshes = undefined;
+        this.notified = false;
     }
 
 
@@ -64,6 +58,15 @@ export class GeometriesBounds {
         return new Observable<void>((observer: Observer<any>) => {
             this.observers.push(observer);
         });
+    }
+
+
+    private notifyIfInitialized() {
+
+        if (this.points && this.meshes) {
+            this.notified = true;
+            this.notifyObservers();
+        }
     }
 
 

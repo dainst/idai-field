@@ -98,7 +98,7 @@ export class PouchdbDatastore {
         document.modified.push({ user: username, date: new Date() });
 
         try {
-            if (squashRevisionsIds) await this.removeRevisions(document.resource.id, squashRevisionsIds);
+            if (squashRevisionsIds) await this.removeRevisions(document.resource.id, squashRevisionsIds); // TODO put before try
             return await this.performPut(document);
         } catch (err) {
             resetFun(document);

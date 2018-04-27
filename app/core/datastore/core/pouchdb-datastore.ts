@@ -1,7 +1,6 @@
 import {Observable} from 'rxjs/Observable';
 import {DatastoreErrors, Document, NewDocument} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
-import {ChangeHistory} from '../../model/change-history';
 import {ObserverUtil} from '../../../util/observer-util';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {ChangeHistoryMerge} from './change-history-merge';

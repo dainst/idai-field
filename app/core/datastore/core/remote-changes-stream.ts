@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
-import {Document} from 'idai-components-2/core';
+import {Action, Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
 import {ObserverUtil} from '../../../util/observer-util';
 import {SettingsService} from '../../settings/settings-service';
-import {ChangeHistory} from '../../model/change-history';
 
 
 @Injectable()
@@ -20,6 +19,7 @@ export class RemoteChangesStream {
 
     private autoCacheUpdate: boolean = true;
     private observers: Array<Observer<Document>> = [];
+
 
     constructor(
         private datastore: PouchdbDatastore,
@@ -40,7 +40,7 @@ export class RemoteChangesStream {
                 console.warn('Failed to fetch conflicted revisions for document', document.resource.id);
             }
 
-            if (ChangeHistory.isRemoteChange(
+            if (RemoteChangesStream.isRemoteChange(
                     document,
                     conflictedRevisions,
                     this.settingsService.getUsername())) {
@@ -53,10 +53,27 @@ export class RemoteChangesStream {
         });
     }
 
-
     public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
     public setAutoCacheUpdate = (autoCacheUpdate: boolean) => this.autoCacheUpdate = autoCacheUpdate;
+
+
+    private static isRemoteChange(
+        document: Document,
+        conflictedRevisions: Array<Document>,
+        username: string): boolean {
+
+        let latestAction: Action = Document.getLastModified(document);
+
+        for (let revision of conflictedRevisions) {
+            const latestRevisionAction: Action = Document.getLastModified(revision);
+            if (latestRevisionAction.date > latestAction.date) {
+                latestAction = latestRevisionAction;
+            }
+        }
+
+        return latestAction && latestAction.user !== username;
+    }
 
 
     private welcomeRemoteDocument(document: Document) {

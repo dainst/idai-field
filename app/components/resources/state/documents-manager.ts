@@ -5,7 +5,6 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {MainTypeDocumentsManager} from './main-type-documents-manager';
 import {NavigationPathManager} from './navigation-path-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
-import {ChangeHistory} from '../../../core/model/change-history';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {ResourcesState} from './resources-state';
@@ -146,7 +145,7 @@ export class DocumentsManager {
         const oldDocuments = this.documents;
         await this.populateDocumentList();
 
-        this.newDocumentsFromRemote = this.getNewRemoteDocuments(this.documents, oldDocuments);
+        this.newDocumentsFromRemote = this.documents.filter(isNot(includedIn(oldDocuments)));
     }
 
 
@@ -167,21 +166,6 @@ export class DocumentsManager {
         return (await this.fetchDocuments(
                     this.makeDocsQuery(isRecordedInTarget.resource.id))
             ).filter(hasId);
-    }
-
-
-    private getNewRemoteDocuments(
-        currentDocuments: Array<Document>,
-        oldDocuments: Array<Document>) {
-
-        return currentDocuments
-            .filter(isNot(includedIn(oldDocuments)))
-            .filter(async document =>
-                ChangeHistory.isRemoteChange(
-                    document,
-                    await this.datastore.getConflictedRevisions(document.resource.id),
-                    this.settingsService.getUsername())
-            );
     }
 
 

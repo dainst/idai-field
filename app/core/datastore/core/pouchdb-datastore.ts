@@ -86,7 +86,19 @@ export class PouchdbDatastore {
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
         if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
 
-        const clonedDocument = await this.updateModifiedDates(document, username, squashRevisionsIds);
+        const clonedDocument = ObjectUtil.cloneObject(document);
+        try {
+            const existingDoc = await this.fetch(clonedDocument.resource.id);
+            clonedDocument.created = existingDoc.created;
+            clonedDocument.modified = existingDoc.modified;
+        } catch (e) {
+            throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
+        }
+        if (squashRevisionsIds) {
+            this.mergeModifiedDates(clonedDocument, squashRevisionsIds);
+            await this.removeRevisions(clonedDocument.resource.id, squashRevisionsIds);
+        }
+        clonedDocument.modified.push({ user: username, date: new Date() });
         (clonedDocument as any)['_id'] = clonedDocument.resource.id;
 
         try {
@@ -153,26 +165,6 @@ export class PouchdbDatastore {
 
 
     protected async setupServer() {}
-
-
-    private async updateModifiedDates(document: Document, username: string, squashRevisionsIds?: string[]) {
-
-        const clonedDocument = ObjectUtil.cloneObject(document);
-
-        try {
-            const existingDoc = await this.fetch(clonedDocument.resource.id);
-            clonedDocument.created = existingDoc.created;
-            clonedDocument.modified = existingDoc.modified;
-        } catch (e) {
-            throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
-        }
-        if (squashRevisionsIds) {
-            this.mergeModifiedDates(clonedDocument, squashRevisionsIds);
-            await this.removeRevisions(clonedDocument.resource.id, squashRevisionsIds);
-        }
-        clonedDocument.modified.push({ user: username, date: new Date() });
-        return clonedDocument;
-    }
 
 
     private async performPut(document: any) {

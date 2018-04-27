@@ -96,8 +96,7 @@ export class RowComponent implements AfterViewInit {
     private async restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
 
         try {
-            const old = await this.datastore.get(document.resource.id as any, {skip_cache: true});
-            document.resource.identifier = old.resource.identifier;
+            Object.assign(this.document, await this.datastore.get(document.resource.id as any, {skip_cache: true}));
         } catch(_) {
             this.messages.add([M.DATASTORE_NOT_FOUND]);
         }

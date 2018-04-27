@@ -25,7 +25,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      */
     public async importDoc(
             document: NewDocument // TODO use IdaiFieldDocument and make sure it is properly converted
-        ): Promise<void> {
+        ): Promise<Document> {
 
         if (this.mainTypeDocumentId) {
             await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
@@ -40,10 +40,10 @@ export class DefaultImportStrategy implements ImportStrategy {
         } catch (_) {}
 
         if (this.overwriteIfExists && exists) {
-            await this.datastore.update(document as Document, this.username);
+            return await this.datastore.update(document as Document, this.username);
         } else {
             // throws if !overwriteIfExists an exists
-            await this.datastore.create(document, this.username);
+            return await this.datastore.create(document, this.username);
         }
     }
 

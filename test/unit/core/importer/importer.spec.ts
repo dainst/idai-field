@@ -42,8 +42,8 @@ describe('Importer', () => {
     });
 
 
-    it('should import as long as no error is detected',
-        function (done) {
+    it('should import as long as no error is detected', async done => {
+
             mockParser.parse.and.callFake(function() {return Observable.create(observer => {
                 observer.next({resource: {type: 'Find', id: 'abc1', relations: {} }});
                 observer.next({resource: {type: 'Find', id: 'abc2', relations: {} }});
@@ -51,22 +51,23 @@ describe('Importer', () => {
                 observer.complete();
             })});
 
-            mockImportStrategy.importDoc.and.returnValues(Promise.resolve(undefined),
+            mockImportStrategy.importDoc.and.returnValues(Promise.resolve({resource: {type: 'Find', id: 'abc1', relations: {} }}),
                 Promise.reject(['constraintviolation']));
             mockRelationsStrategy.completeInverseRelations.and.returnValue(Promise.resolve(undefined));
             mockRelationsStrategy.resetInverseRelations.and.returnValue(Promise.resolve(undefined));
             mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
-            Import.go(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
-                    mockRollbackStrategy)
-                .then(importReport => {
-                    expect(mockImportStrategy.importDoc).toHaveBeenCalledTimes(2);
-                    expect(importReport.importedResourcesIds.length).toBe(1);
-                    expect(importReport.importedResourcesIds[0]).toEqual('abc1');
-                    done();
-                }, () => {
-                    fail();
-                    done();
-                })
+
+            const importReport = await Import.go(
+                mockReader,
+                mockParser,
+                mockImportStrategy,
+                mockRelationsStrategy,
+                mockRollbackStrategy);
+
+            expect(mockImportStrategy.importDoc).toHaveBeenCalledTimes(2);
+            expect(importReport.importedResourcesIds.length).toBe(1);
+            expect(importReport.importedResourcesIds[0]).toEqual('abc1');
+            done();
         }
     );
 });

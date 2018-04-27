@@ -109,30 +109,6 @@ export class PouchdbDatastore {
     }
 
 
-    private async mergeModifiedDates(document: Document, squashRevisionsIds: string[]) {
-
-        for (let revisionId of squashRevisionsIds) {
-            ChangeHistoryMerge.mergeChangeHistories(
-                document,
-                await this.fetchRevision(document.resource.id, revisionId)
-            );
-        }
-    }
-
-
-    private async removeRevisions(resourceId: string|undefined, squashRevisionsIds: string[]): Promise<any> {
-
-        if (!resourceId) return;
-
-        try {
-            for (let revisionId of squashRevisionsIds) await this.db.remove(resourceId, revisionId);
-        } catch (err) {
-            console.error("error while removing revision", err);
-            throw [DatastoreErrors.GENERIC_ERROR, err];
-        }
-    }
-
-
     /**
      * @throws [DOCUMENT_NOT_FOUND]
      */
@@ -215,6 +191,30 @@ export class PouchdbDatastore {
             modified
                 ? document.modified = modified
                 : delete document.modified;
+        }
+    }
+
+
+    private async mergeModifiedDates(document: Document, squashRevisionsIds: string[]) {
+
+        for (let revisionId of squashRevisionsIds) {
+            ChangeHistoryMerge.mergeChangeHistories(
+                document,
+                await this.fetchRevision(document.resource.id, revisionId)
+            );
+        }
+    }
+
+
+    private async removeRevisions(resourceId: string|undefined, squashRevisionsIds: string[]): Promise<any> {
+
+        if (!resourceId) return;
+
+        try {
+            for (let revisionId of squashRevisionsIds) await this.db.remove(resourceId, revisionId);
+        } catch (err) {
+            console.error("error while removing revision", err);
+            throw [DatastoreErrors.GENERIC_ERROR, err];
         }
     }
 

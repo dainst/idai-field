@@ -46,19 +46,17 @@ describe('RemoteChangesStream', () => {
 
     it('should put to index facade and reassign to cache', async done => {
 
-        fun(doc).then(() => {
-            expect(indexFacade.put).toHaveBeenCalledWith(doc);
-            expect(documentCache.reassign).toHaveBeenCalledWith(doc);
-            done();
-        });
+        await fun(doc);
+        expect(indexFacade.put).toHaveBeenCalledWith(doc);
+        expect(documentCache.reassign).toHaveBeenCalledWith(doc);
+        done();
     });
 
 
     it('send through type converter', async done => {
 
-        fun(doc).then(() => {
-            expect(typeConverter.convert).toHaveBeenCalledWith(doc);
-            done();
-        });
+        await fun(doc);
+        expect(typeConverter.convert).toHaveBeenCalledWith(doc);
+        done();
     });
 });

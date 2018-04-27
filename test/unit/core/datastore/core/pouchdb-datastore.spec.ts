@@ -14,7 +14,8 @@ describe('PouchdbDatastore', () => {
     let datastore: PouchdbDatastore;
     let pouchdbProxy: any;
 
-    function createPouchdbDatastore() {
+
+    beforeEach(() => {
 
         let idGenerator = jasmine.createSpyObj('idGenerator', ['generateId']);
         idGenerator.generateId.and.returnValue(1);
@@ -30,27 +31,7 @@ describe('PouchdbDatastore', () => {
             new AppState(),
             idGenerator,
             false);
-    }
-
-
-
-    beforeEach(() => createPouchdbDatastore());
-
-
-    const expectErr = function(promise, expectedMsgWithParams, done) {
-
-        promise().then(
-            result => {
-                fail('rejection with '+ expectedMsgWithParams
-                    + ' expected but resolved with ' + result);
-                done();
-            },
-            msgWithParams => {
-                expect(msgWithParams).toEqual(expectedMsgWithParams);
-                done();
-            }
-        );
-    };
+    });
 
 
     // create
@@ -101,16 +82,21 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('should not create a document with the resource.id of an alredy existing doc', done => {
+    it('should not create a document with the resource.id of an alredy existing doc', async done => {
 
         const docToCreate1: Document = Static.doc('sd1');
         docToCreate1.resource.id = 'a1';
         const docToCreate2: Document = Static.doc('sd1');
         docToCreate2.resource.id = 'a1';
 
-        expectErr(()=>{return datastore.create(docToCreate1, 'u')
-                .then(() => datastore.create(docToCreate2, 'u'))
-            }, [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS],done);
+        try {
+            await datastore.create(docToCreate1, 'u');
+            await datastore.create(docToCreate2, 'u');
+            fail();
+        } catch (expected) {
+            expect(expected[0]).toEqual(DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS);
+        }
+        done();
     });
 
 
@@ -272,13 +258,17 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('should reject with keyOfM in when trying to get a non existing document', done => {
+    it('should reject with keyOfM in when trying to get a non existing document', async done => {
 
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
-        expectErr(async () => {
-                await datastore.fetch('nonexisting');
-            }, [DatastoreErrors.DOCUMENT_NOT_FOUND], done);
+        try {
+            await datastore.fetch('nonexisting');
+            fail();
+        } catch (expected) {
+            expect(expected[0]).toEqual(DatastoreErrors.DOCUMENT_NOT_FOUND);
+        }
+        done();
     });
 
 
@@ -292,20 +282,30 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('should throw when no resource id', done => {
+    it('should throw when no resource id', async done => {
 
-        expectErr(() => { return datastore.remove(Static.doc('sd2')) },
-            [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID], done);
+        try {
+            await datastore.remove(Static.doc('sd2'));
+            fail();
+        } catch (expected) {
+            expect(expected[0]).toEqual(DatastoreErrors.DOCUMENT_NO_RESOURCE_ID);
+        }
+        done();
     });
 
 
-    it('should throw when trying to remove and not existent', done => {
+    it('should throw when trying to remove and not existent', async done => {
 
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
         const d = Static.doc('sd1');
         d['resource']['id'] = 'hoax';
-        expectErr(() => { return datastore.remove(d)}, [DatastoreErrors.DOCUMENT_NOT_FOUND], done);
-
+        try {
+            await datastore.remove(d);
+            fail();
+        } catch (expected) {
+            expect(expected[0]).toEqual(DatastoreErrors.DOCUMENT_NOT_FOUND);
+        }
+        done();
     });
 });

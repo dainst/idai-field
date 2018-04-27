@@ -1,6 +1,5 @@
 import {PouchdbDatastore} from '../../../../../app/core/datastore/core/pouchdb-datastore';
-import {AppState} from '../../../../../app/core/settings/app-state';
-import {Document, DatastoreErrors} from 'idai-components-2/core';
+import {DatastoreErrors, Document} from 'idai-components-2/core';
 import {Static} from '../../../static';
 
 
@@ -35,7 +34,7 @@ describe('PouchdbDatastore', () => {
 
     // create
 
-    it('create an id', async done => {
+    it('create: create an id', async done => {
 
         try {
             const result = await datastore.create(Static.doc('sd1'), 'u');
@@ -47,7 +46,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('should create a document and take the existing resource.id', async done => {
+    it('create: should create a document and take the existing resource.id', async done => {
 
         let called = false;
         pouchdbProxy.get.and.callFake(async doc => {
@@ -55,12 +54,13 @@ describe('PouchdbDatastore', () => {
                 called = true;
                 throw undefined;
             }
-            return {resource: {
-                    id: doc, type: 'some', relations: []}, created: {date:'2011/01/01'},
+            return {
+                resource: {
+                    id: doc, type: 'some', relations: []},
+                created: {date:'2011/01/01'},
                 modified: [{date:'2011/01/01'}]
             };
         });
-
 
         const docToCreate: Document = Static.doc('sd1');
         docToCreate.resource.id = 'a1';
@@ -81,7 +81,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('should not create a document with the resource.id of an alredy existing doc', async done => {
+    it('create: should not create a document with the resource.id of an alredy existing doc', async done => {
 
         const docToCreate1: Document = Static.doc('sd1');
         docToCreate1.resource.id = 'a1';
@@ -99,17 +99,16 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    xit('should not create if created not present', async done => { // TODO decide how to adjust it
+    it('create: create dates', async done => {
 
         const doc = Static.doc('sd1');
         delete doc.created;
 
-        try {
-            await datastore.create(doc, 'u');
-            fail();
-        } catch (expected) {
-            expect(expected[0]).toBe(DatastoreErrors.INVALID_DOCUMENT);
-        }
+        const result = await datastore.create(doc, 'u');
+        expect(result.created.user).toEqual('u');
+        expect(result.created.date instanceof Date).toBeTruthy();
+        expect(Array.isArray(result.modified)).toBeTruthy();
+        expect(result.modified.length).toBe(0);
         done();
     });
 

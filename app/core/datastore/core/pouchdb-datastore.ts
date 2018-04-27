@@ -59,15 +59,15 @@ export class PouchdbDatastore {
 
         if (!document.resource.id) document.resource.id = this.idGenerator.generateId();
         (document as any)['_id'] = document.resource.id;
-        (document as any)['created'] = { user: username, date: new Date() }; // TODO write test for date creation
-        (document as any)['modified'] = [{ user: username, date: new Date() }]; // TODO do not set modified immediately
+        (document as any)['created'] = { user: username, date: new Date() };
+        (document as any)['modified'] = [];
 
         try {
             return await this.performPut(document);
         } catch (err) {
             delete (document as any)['_id'];
             delete (document as any)['created'];
-            delete (document as any)['modified']; // TODO _rev a well?
+            delete (document as any)['modified'];
             throw [DatastoreErrors.GENERIC_ERROR, err];
         }
     }

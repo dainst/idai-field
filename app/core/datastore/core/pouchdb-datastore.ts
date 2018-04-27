@@ -86,14 +86,16 @@ export class PouchdbDatastore {
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
         if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
 
-        const clonedDocument = ObjectUtil.cloneObject(document);
+        let existingDoc;
         try {
-            const existingDoc = await this.fetch(clonedDocument.resource.id);
-            clonedDocument.created = existingDoc.created;
-            clonedDocument.modified = existingDoc.modified;
+            existingDoc = await this.fetch(document.resource.id);
         } catch (e) {
             throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
         }
+
+        const clonedDocument = ObjectUtil.cloneObject(document);
+        clonedDocument.created = existingDoc.created;
+        clonedDocument.modified = existingDoc.modified;
         if (squashRevisionsIds) {
             this.mergeModifiedDates(clonedDocument, squashRevisionsIds);
             await this.removeRevisions(clonedDocument.resource.id, squashRevisionsIds);
@@ -104,7 +106,7 @@ export class PouchdbDatastore {
         try {
             return await this.performPut(clonedDocument);
         } catch (err) {
-            throw err.name && err.name == 'conflict'
+            throw err.name && err.name === 'conflict'
                 ? [DatastoreErrors.SAVE_CONFLICT]
                 : [DatastoreErrors.GENERIC_ERROR, err];
         }

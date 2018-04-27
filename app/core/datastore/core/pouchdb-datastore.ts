@@ -4,6 +4,7 @@ import {IdGenerator} from './id-generator';
 import {ObserverUtil} from '../../../util/observer-util';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {ChangeHistoryMerge} from './change-history-merge';
+import {ObjectUtil} from '../../../util/object-util';
 
 /**
  * @author Sebastian Cuy
@@ -42,32 +43,31 @@ export class PouchdbDatastore {
 
 
     /**
-     * @returns {Promise<Document>} newest revision of the document fetched from db
+     * @returns newest revision of the document fetched from db
      * @throws [INVALID_DOCUMENT] - in case either the document given as param or
      *   the document fetched directly after db.put is not valid
      */
     public async create(document: NewDocument, username: string): Promise<Document> {
 
-        if (!Document.isValid(document as Document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
+        const clonedDocument = ObjectUtil.cloneObject(document);
+
+        if (!Document.isValid(clonedDocument as Document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
 
         let exists = false;
-        if (document.resource.id) try {
-            await this.db.get(document.resource.id);
+        if (clonedDocument.resource.id) try {
+            await this.db.get(clonedDocument.resource.id);
             exists = true;
         } catch (_) {}
         if (exists) throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
 
-        if (!document.resource.id) document.resource.id = this.idGenerator.generateId();
-        (document as any)['_id'] = document.resource.id;
-        (document as any)['created'] = { user: username, date: new Date() };
-        (document as any)['modified'] = [];
+        if (!clonedDocument.resource.id) clonedDocument.resource.id = this.idGenerator.generateId();
+        (clonedDocument as any)['_id'] = clonedDocument.resource.id;
+        (clonedDocument as any)['created'] = { user: username, date: new Date() };
+        (clonedDocument as any)['modified'] = [];
 
         try {
-            return await this.performPut(document);
+            return await this.performPut(clonedDocument);
         } catch (err) {
-            delete (document as any)['_id'];
-            delete (document as any)['created'];
-            delete (document as any)['modified'];
             throw [DatastoreErrors.GENERIC_ERROR, err];
         }
     }

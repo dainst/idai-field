@@ -116,15 +116,10 @@ describe('PouchdbDatastore', () => {
 
     it('update: should update an existing document with no identifier conflict', async done => {
 
-        const doc2 = Static.doc('id2');
-
+        let doc2 = Static.doc('id2');
         await datastore.create(Static.doc('id1'), 'u');
-        await datastore.create(doc2, 'u');
-        try {
-            await datastore.update(doc2, 'u');
-        } catch (e) {
-            fail(e);
-        }
+        doc2 = await datastore.create(doc2, 'u');
+        await datastore.update(doc2, 'u');
         done();
     });
 

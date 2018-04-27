@@ -34,8 +34,8 @@ export function main() {
             image0 = Static.doc('Image','Image','Image','image0');
             trench0 = Static.doc('Trench','Trench','Trench','trench0');
 
-            await h.idaiFieldImageDocumentDatastore.create(image0);
-            await h.idaiFieldDocumentDatastore.create(trench0);
+            image0 = await h.idaiFieldImageDocumentDatastore.create(image0);
+            trench0 = await h.idaiFieldDocumentDatastore.create(trench0);
             done();
         });
 
@@ -93,13 +93,8 @@ export function main() {
 
         it('IdaiFieldImageDocumentDatastore - add relations with update', async done => {
 
-            try {
-                delete image0.resource.relations.depicts;
-                expect((await h.idaiFieldImageDocumentDatastore.
-                update(image0)).resource.relations.depicts).toEqual([]);
-            } catch (err) {
-                fail(err);
-            }
+            delete image0.resource.relations.depicts;
+            expect((await h.idaiFieldImageDocumentDatastore.update(image0)).resource.relations.depicts).toEqual([]);
             done();
         });
 

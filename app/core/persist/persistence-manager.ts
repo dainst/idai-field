@@ -72,8 +72,8 @@ export class PersistenceManager {
         const documentToSave = document; // TODO clone it instead
 
         PersistenceManager.squashRevisionHistory(documentToSave as Document, revisionsToSquash);
-        const persistedDocument = await this.persistIt(documentToSave as Document, username);
-        await this.removeRevisions(documentToSave.resource.id, revisionsToSquash);
+        const persistedDocument = await this.persistIt(documentToSave as Document, username, revisionsToSquash);
+
 
         let connectedDocs;
         try {
@@ -95,18 +95,7 @@ export class PersistenceManager {
     }
 
 
-    private async removeRevisions(resourceId: string|undefined, revisionsToSquash: Document[]): Promise<any> {
 
-        if (!resourceId) return;
-
-        try {
-            for (let revision of revisionsToSquash) {
-                await this.datastore.removeRevision(resourceId, (revision as any)['_rev']);
-            }
-        } catch (err) {
-            console.error("error while removing revision", err);
-        }
-    }
 
 
     private async updateDocs(document: Document, connectedDocs: Array<Document>, setInverseRelations: boolean, user: string) {
@@ -207,10 +196,11 @@ export class PersistenceManager {
     }
 
 
-    private persistIt(document: Document|NewDocument, username: string): Promise<Document> {
+    private persistIt(document: Document|NewDocument, username: string, revisionsToSquash?: Document[]): Promise<Document> {
 
         return document.resource.id
-            ? this.datastore.update(document as Document, username)
+            ? this.datastore.update(document as Document, username,
+                (revisionsToSquash && revisionsToSquash.length > 0) ? revisionsToSquash : undefined)
             : this.datastore.create(document, username);
     }
 }

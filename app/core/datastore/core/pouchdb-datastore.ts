@@ -79,9 +79,10 @@ export class PouchdbDatastore {
      * @throws [INVALID_DOCUMENT] - in case either the document given as param or
      *   the document fetched directly after db.put is not valid
      */
-    public async update(document: Document, username: string): Promise<Document> {
-
-        // TODO  add also a parameter for the revisions to squash during update, so that the removeRevision can get eliminated. change history is also merged here. test all of that
+    public async update(
+        document: Document,
+        username: string,
+        squashRevisions?: Document[]): Promise<Document> {
 
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
         if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
@@ -96,12 +97,27 @@ export class PouchdbDatastore {
         document.modified.push({ user: username, date: new Date() }); // TODO test
 
         try {
+            if (squashRevisions) await this.removeRevisions(document.resource.id, squashRevisions);
             return await this.performPut(document);
         } catch (err) {
             resetFun(document);
             throw err.name && err.name == 'conflict'
                 ? [DatastoreErrors.SAVE_CONFLICT]
                 : [DatastoreErrors.GENERIC_ERROR, err];
+        }
+    }
+
+
+    private async removeRevisions(resourceId: string|undefined, revisionsToSquash: Document[]): Promise<any> {
+
+        if (!resourceId) return;
+
+        try {
+            for (let revision of revisionsToSquash) {
+                await this.removeRevision(resourceId, (revision as any)['_rev']);
+            }
+        } catch (err) {
+            console.error("error while removing revision", err);
         }
     }
 
@@ -129,7 +145,7 @@ export class PouchdbDatastore {
     }
 
 
-    public async removeRevision(docId: string, revisionId: string): Promise<any> {
+    private async removeRevision(docId: string, revisionId: string): Promise<any> {
 
         try {
             await this.db.remove(docId, revisionId);
@@ -201,14 +217,23 @@ export class PouchdbDatastore {
 
     private resetDocOnErr(original: Document) {
 
-        const created = JSON.parse(JSON.stringify(original.created)); // TODO make sure we have dates again
-        const modified = JSON.parse(JSON.stringify(original.modified)); // TODO make sure we have dates again
+        const created = original.created
+            ? JSON.parse(JSON.stringify(original.created)) // TODO make sure we have dates again
+            : undefined;
+        const modified = original.modified
+            ? JSON.parse(JSON.stringify(original.modified))
+            : undefined;
+
         const id = original.resource.id;
         return function(document: Document) {
             delete (document as any)['_id'];
             document.resource.id = id;
-            document.created = created;
-            document.modified = modified;
+            created
+                ? document.created = created
+                : delete document.created;
+            modified
+                ? document.modified = modified
+                : delete document.modified;
         }
     }
 

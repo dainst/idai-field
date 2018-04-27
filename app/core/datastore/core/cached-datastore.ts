@@ -50,16 +50,10 @@ export abstract class CachedDatastore<T extends Document>
      * Implements {@link Datastore#update}
      * @throws if document is not of type T, determined by resource.type
      */
-    public async update(document: Document, username: string): Promise<T> {
+    public async update(document: Document, username: string, squashRevisions?: Document[]): Promise<T> {
 
         this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
-        return this.updateIndex(await this.datastore.update(document, username));
-    }
-
-
-    public async removeRevision(docId: string, revisionId: string): Promise<T> {
-
-        return this.updateIndex(await this.datastore.removeRevision(docId, revisionId));
+        return this.updateIndex(await this.datastore.update(document, username, squashRevisions));
     }
 
 

@@ -102,7 +102,7 @@ describe('PersistenceManager', () => {
     it('should save the base object', done => {
 
         persistenceManager.persist(doc, 'u').then(() => {
-            expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u');
+            expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
             done();
         }, err => { fail(err); done(); });
     });
@@ -114,7 +114,7 @@ describe('PersistenceManager', () => {
 
         persistenceManager.persist(doc, 'u').then(() => {
 
-            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u');
+            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
             expect(relatedDoc.resource.relations['Contains'][0]).toBe('1');
             done();
 
@@ -128,7 +128,7 @@ describe('PersistenceManager', () => {
 
         persistenceManager.persist(doc, 'u').then(() => {
 
-            expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc, 'u');
+            expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc, 'u', undefined);
             done();
 
         }, err => { fail(err); done(); });
@@ -142,7 +142,7 @@ describe('PersistenceManager', () => {
 
         persistenceManager.remove(doc, 'u').then(() => {
 
-            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u');
+            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
             expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
             done();
 
@@ -173,7 +173,7 @@ describe('PersistenceManager', () => {
 
         persistenceManager.remove(doc, 'u').then(() => {
             expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
-            expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u');
+            expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
             expect(anotherRelatedDoc.resource.relations['BelongsTo']).toBeUndefined();
             done();
         }, err => { fail(err); done(); });
@@ -188,7 +188,7 @@ describe('PersistenceManager', () => {
 
             // expect(mockDatastore.update).toHaveBeenCalledWith(relatedObject);
             // right now it is not possible to test both objects due to problems with the return val of promise.all
-            expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u');
+            expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
             // expect(relatedObject['Contains'][0]).toBe('1');
             expect(anotherRelatedDoc['resource']['relations']['Contains'][0]).toBe('1');
             done();
@@ -209,8 +209,8 @@ describe('PersistenceManager', () => {
 
         persistenceManager.persist(doc, 'u', oldVersion).then(()=>{
 
-            expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u');
-            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u');
+            expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
+            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
 
             expect(doc.resource.relations['BelongsTo']).toBe(undefined);
             expect(relatedDoc.resource.relations['Contains']).toBe(undefined);

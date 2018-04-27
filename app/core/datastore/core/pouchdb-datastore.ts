@@ -76,14 +76,14 @@ export class PouchdbDatastore {
 
 
     /**
-     * @returns {Promise<Document>} newest revision of the document fetched from db
+     * @returns newest revision of the document fetched from db
      * @throws [INVALID_DOCUMENT] - in case either the document given as param or
      *   the document fetched directly after db.put is not valid
      */
     public async update(
         document: Document,
         username: string,
-        squashRevisions?: Document[]) // TODO give only ids as params, to make sure the change histories come directly from within the datastore
+        squashRevisionsIds?: string[])
     : Promise<Document> {
 
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
@@ -97,11 +97,11 @@ export class PouchdbDatastore {
         const resetFun = this.resetDocOnErr(document);
         (document as any)['_id'] = document.resource.id;
 
-        if (squashRevisions) PouchdbDatastore.mergeModifiedDates(document, squashRevisions);
+        if (squashRevisionsIds) this.mergeModifiedDates(document, squashRevisionsIds);
         document.modified.push({ user: username, date: new Date() });
 
         try {
-            if (squashRevisions) await this.removeRevisions(document.resource.id, squashRevisions);
+            if (squashRevisionsIds) await this.removeRevisions(document.resource.id, squashRevisionsIds);
             return await this.performPut(document);
         } catch (err) {
             resetFun(document);
@@ -112,22 +112,23 @@ export class PouchdbDatastore {
     }
 
 
-    private static mergeModifiedDates(document: Document, revisionsToSquash: Document[]) {
+    private async mergeModifiedDates(document: Document, squashRevisionsIds: string[]) {
 
-        for (let revision of revisionsToSquash) {
-            ChangeHistoryMerge.mergeChangeHistories(document, revision);
+        for (let revisionId of squashRevisionsIds) {
+            ChangeHistoryMerge.mergeChangeHistories(
+                document,
+                await this.fetchRevision(document.resource.id, revisionId)
+            );
         }
     }
 
 
-    private async removeRevisions(resourceId: string|undefined, revisionsToSquash: Document[]): Promise<any> {
+    private async removeRevisions(resourceId: string|undefined, squashRevisionsIds: string[]): Promise<any> {
 
         if (!resourceId) return;
 
         try {
-            for (let revision of revisionsToSquash) {
-                await this.db.remove(resourceId, (revision as any)['_rev']);
-            }
+            for (let revisionId of squashRevisionsIds) await this.db.remove(resourceId, revisionId);
         } catch (err) {
             console.error("error while removing revision", err);
             throw [DatastoreErrors.GENERIC_ERROR, err];

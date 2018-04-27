@@ -13,6 +13,7 @@ describe('PouchdbDatastore', () => {
 
     let datastore: PouchdbDatastore;
     let pouchdbProxy: any;
+    let res;
 
 
     beforeEach(() => {
@@ -21,7 +22,6 @@ describe('PouchdbDatastore', () => {
         idGenerator.generateId.and.returnValue(1);
 
         pouchdbProxy = jasmine.createSpyObj('pouchdbProxy', ['get', 'put', 'remove']);
-        let res;
         pouchdbProxy.put.and.callFake(async doc => res = doc);
         pouchdbProxy.get.and.callFake(async () => res);
         pouchdbProxy.remove.and.returnValue(Promise.resolve(undefined));
@@ -183,7 +183,7 @@ describe('PouchdbDatastore', () => {
         rev['_rev'] = 'r-1';
 
         try {
-            const result = await datastore.update(doc, 'u3', [rev]);
+            const result = await datastore.update(doc, 'u3', ['r-1']);
             expect(pouchdbProxy.remove).toHaveBeenCalledWith('1', 'r-1');
 
         } catch (e) {
@@ -201,12 +201,20 @@ describe('PouchdbDatastore', () => {
         doc.created = doc.modified[0];
         doc.resource.id = '1';
 
-        const rev = Static.doc('sd1');
-        rev.modified[0] = {user: 'u2', date: new Date('2018-04-27T11:07:05.760Z')};
-        rev.created = rev.modified[0];
-        rev['_rev'] = 'r-1';
+        pouchdbProxy.get.and.callFake(async (resourceId: string, params?: any) => {
+            if (params && params.rev) {
+                const rev = Static.doc('sd1');
+                rev.modified[0] = {user: 'u2', date: new Date('2018-04-27T11:07:05.760Z')};
+                rev.created = rev.modified[0];
+                rev.resource.id = '1';
+                rev['_rev'] = 'r-1';
+                return rev;
+            } else {
+                return res;
+            }
+        });
 
-        const result = await datastore.update(doc, 'u3', [rev]);
+        const result = await datastore.update(doc, 'u3', ['r-1']);
 
         expect(result.created.user).toEqual('u1');
         expect(result.modified.length).toBe(2); // TODO should be 3 and the first one should be the same as created

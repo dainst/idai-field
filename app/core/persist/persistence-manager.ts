@@ -185,8 +185,12 @@ export class PersistenceManager {
     private persistIt(document: Document|NewDocument, username: string, revisionsToSquash?: Document[]): Promise<Document> {
 
         return document.resource.id
-            ? this.datastore.update(document as Document, username,
-                (revisionsToSquash && revisionsToSquash.length > 0) ? revisionsToSquash : undefined)
+            ? this.datastore.update(
+                document as Document,
+                username,
+                revisionsToSquash && revisionsToSquash.length > 0
+                    ? revisionsToSquash.map(_ => (_ as any)['_rev'])
+                    : undefined)
             : this.datastore.create(document, username);
     }
 }

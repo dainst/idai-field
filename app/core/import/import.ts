@@ -123,8 +123,7 @@ export module Import {
             if (importReport.errors.length !== 0) return;
 
             try {
-                const resourceId = (await importStrategy.importDoc(docToUpdate)).resource.id;
-                importReport.importedResourcesIds.push(resourceId);
+                importReport.importedResourcesIds.push((await importStrategy.importDoc(docToUpdate)).resource.id);
             } catch (msgWithParams) {
                 importReport.errors.push(msgWithParams);
             }

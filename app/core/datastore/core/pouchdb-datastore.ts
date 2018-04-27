@@ -232,18 +232,11 @@ export class PouchdbDatastore {
 
     private async handleNonDeletionChange(changeId: string): Promise<void> {
 
-        let document: Document;
         try {
-            document = await this.fetch(changeId);
+            ObserverUtil.notify(this.changesObservers, await this.fetch(changeId));
         } catch (e) {
             console.warn('Document from remote change not found or not valid', changeId);
             throw e;
-        }
-
-        try { // TODO remove unnecessary try catch block
-            ObserverUtil.notify(this.changesObservers, document);
-        } catch (e) {
-            console.error('Error while notifying observers');
         }
     }
 

@@ -69,7 +69,6 @@ export function main() {
                     result.datastore, result.indexFacade, result.documentCache,
                     new IdaiFieldTypeConverter(new TypeUtility(projectConfiguration)));
 
-                result.appState.setCurrentUser('anonymous');
                 persistenceManager = new PersistenceManager(datastore, projectConfiguration);
                 // persistenceManager.setOldVersions([{ resource: {} }]);
             }

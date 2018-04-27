@@ -12,6 +12,8 @@ describe('RemoteChangesStream', () => {
     let indexFacade;
     let typeConverter;
     let documentCache;
+    let settingsService;
+    let fun;
 
     beforeEach(() => {
 
@@ -20,14 +22,16 @@ describe('RemoteChangesStream', () => {
         indexFacade = jasmine.createSpyObj('MockIndexFacade', ['put', 'get', 'remove']);
         typeConverter = jasmine.createSpyObj('MockTypeConverter', ['convert']);
         documentCache = jasmine.createSpyObj('MockTypeConverter', ['get', 'reassign']);
+        settingsService = jasmine.createSpyObj('MockSettingsService', ['getUsername']);
 
+        settingsService.getUsername.and.returnValue('localuser');
         typeConverter.convert.and.returnValue(doc);
         indexFacade.put.and.returnValue(doc);
         documentCache.get.and.returnValue(1); // just to trigger reassignment
 
-        datastore = jasmine.createSpyObj('MockDatastore', ['remoteChangesNotifications', 'remoteDeletedNotifications']);
+        datastore = jasmine.createSpyObj('MockDatastore', ['remoteChangesNotifications', 'remoteDeletedNotifications', 'fetchConflictedRevisions']);
+        datastore.fetchConflictedRevisions.and.returnValue(Promise.resolve([]));
 
-        let fun;
         datastore.remoteChangesNotifications.and.returnValue({subscribe: (func: Function) => fun = func});
         datastore.remoteDeletedNotifications.and.returnValue({subscribe: (func: Function) => undefined});
 
@@ -35,21 +39,26 @@ describe('RemoteChangesStream', () => {
             datastore,
             indexFacade,
             documentCache,
-            typeConverter);
-
-        fun(doc);
+            typeConverter,
+            settingsService);
     });
 
 
-    it('should put to index facade and reassign to cache', async () => {
+    it('should put to index facade and reassign to cache', async done => {
 
-        expect(indexFacade.put).toHaveBeenCalledWith(doc);
-        expect(documentCache.reassign).toHaveBeenCalledWith(doc);
+        fun(doc).then(() => {
+            expect(indexFacade.put).toHaveBeenCalledWith(doc);
+            expect(documentCache.reassign).toHaveBeenCalledWith(doc);
+            done();
+        });
     });
 
 
-    it('send through type converter', async () => {
+    it('send through type converter', async done => {
 
-        expect(typeConverter.convert).toHaveBeenCalledWith(doc);
+        fun(doc).then(() => {
+            expect(typeConverter.convert).toHaveBeenCalledWith(doc);
+            done();
+        });
     });
 });

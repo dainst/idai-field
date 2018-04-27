@@ -5,29 +5,14 @@ import {Injectable} from '@angular/core';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class AppState {
+export class AppState { // TODO remove
 
-    private currentUser: string;
     private imagestorePath: string;
-
-
-    public getCurrentUser(): string {
-
-        return this.currentUser;
-    }
-
-
-    public setCurrentUser(name: string) {
-
-        this.currentUser = name;
-    }
-
 
     public getImagestorePath(): string {
 
         return this.imagestorePath;
     }
-
 
     public setImagestorePath(imagestorePath: string) {
 

@@ -104,7 +104,6 @@ export class SettingsService {
                 Promise.reject('malformed_address');
         }
 
-        this.appState.setCurrentUser(settings.username);
         this.appState.setImagestorePath(settings.imagestorePath);
 
         return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject() as any)

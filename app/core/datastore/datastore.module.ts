@@ -1,12 +1,10 @@
 import {NgModule} from '@angular/core';
-import {Document} from 'idai-components-2/core';
-import {ReadDatastore, Datastore} from 'idai-components-2/core';
+import {Datastore, Document, ReadDatastore} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {DocumentCache} from './core/document-cache';
 import {PouchdbDatastore} from './core/pouchdb-datastore';
 import {ConstraintIndexer} from './index/constraint-indexer';
 import {FulltextIndexer} from './index/fulltext-indexer';
-import {AppState} from '../settings/app-state';
 import {PouchdbServerDatastore} from './pouchdb-server-datastore';
 import {PouchdbManager} from './core/pouchdb-manager';
 import {IdaiFieldDocumentDatastore} from './field/idai-field-document-datastore';
@@ -87,13 +85,12 @@ import {IdaiFieldFeatureDocument} from '../model/idai-field-feature-document';
         {
             provide: PouchdbDatastore,
             useFactory: function(pouchdbManager: PouchdbManager,
-                                 appState: AppState,
                                  idGenerator: IdGenerator): PouchdbDatastore {
 
                 return new PouchdbServerDatastore(pouchdbManager.getDbProxy(), // Provides fauxton
-                    appState, idGenerator);
+                    idGenerator);
             },
-            deps: [PouchdbManager, AppState, IdGenerator]
+            deps: [PouchdbManager, IdGenerator]
         },
 
 

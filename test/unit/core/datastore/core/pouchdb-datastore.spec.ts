@@ -28,7 +28,6 @@ describe('PouchdbDatastore', () => {
 
         datastore = new PouchdbDatastore(
             pouchdbProxy,
-            new AppState(),
             idGenerator,
             false);
     });

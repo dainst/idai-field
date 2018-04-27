@@ -1,7 +1,6 @@
 import {Observable} from 'rxjs/Observable';
 import {DatastoreErrors, Document, NewDocument} from 'idai-components-2/core';
 import {IdGenerator} from './id-generator';
-import {AppState} from '../../settings/app-state';
 import {ChangeHistory} from '../../model/change-history';
 import {ObserverUtil} from '../../../util/observer-util';
 import {PouchdbProxy} from './pouchdb-proxy';
@@ -29,7 +28,6 @@ export class PouchdbDatastore {
 
     constructor(
         private db: PouchdbProxy,
-        private appState: AppState,
         private idGenerator: IdGenerator,
         setupChangesEmitterAndServer = true
         ) {
@@ -278,18 +276,6 @@ export class PouchdbDatastore {
         } catch (e) {
             console.warn('Document from remote change not found or not valid', changeId);
             throw e;
-        }
-
-        let conflictedRevisions: Array<Document>;
-        try {
-            conflictedRevisions = await this.fetchConflictedRevisions(changeId);
-        } catch (e) {
-            console.warn('Failed to fetch conflicted revisions for document', changeId);
-            throw e;
-        }
-
-        if (!ChangeHistory.isRemoteChange(document, conflictedRevisions, this.appState.getCurrentUser())) {
-            return;
         }
 
         try {

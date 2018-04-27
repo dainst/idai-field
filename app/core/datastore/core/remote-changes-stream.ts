@@ -7,6 +7,8 @@ import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
 import {ObserverUtil} from '../../../util/observer-util';
+import {SettingsService} from '../../settings/settings-service';
+import {ChangeHistory} from '../../model/change-history';
 
 
 @Injectable()
@@ -23,12 +25,28 @@ export class RemoteChangesStream {
         private datastore: PouchdbDatastore,
         private indexFacade: IndexFacade,
         private documentCache: DocumentCache<Document>,
-        private typeConverter: TypeConverter<Document>) {
+        private typeConverter: TypeConverter<Document>,
+        private settingsService: SettingsService
+    ) {
 
-        datastore.remoteChangesNotifications().subscribe(document => {
+        datastore.remoteChangesNotifications().subscribe(async document => {
 
-            if (!document || ! document.resource) return;
-            this.welcomeRemoteDocument(document);
+            if (!document || !document.resource) return;
+
+            let conflictedRevisions: Document[] = [];
+            try {
+                conflictedRevisions = await datastore.fetchConflictedRevisions(document.resource.id);
+            } catch (e) {
+                console.warn('Failed to fetch conflicted revisions for document', document.resource.id);
+            }
+
+            if (ChangeHistory.isRemoteChange(
+                    document,
+                    conflictedRevisions,
+                    this.settingsService.getUsername())) {
+
+                this.welcomeRemoteDocument(document);
+            }
         });
         datastore.remoteDeletedNotifications().subscribe(document => {
             this.indexFacade.remove(document); // TODO what about the deletions? shouldn't we also notify the observers?

@@ -283,6 +283,7 @@ export class ResourcesPage {
 
 
     public static performCreateResourceInList(identifier: string, typeName: string) {
+
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType(typeName);
         ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);

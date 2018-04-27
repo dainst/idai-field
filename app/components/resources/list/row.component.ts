@@ -86,7 +86,7 @@ export class RowComponent implements AfterViewInit {
         }
 
         try {
-            await this.persistenceManager.persist(this.document, this.settingsService.getUsername());
+            Object.assign(this.document, await this.persistenceManager.persist(this.document, this.settingsService.getUsername()));
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);
         }

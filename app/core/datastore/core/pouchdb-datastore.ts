@@ -57,7 +57,6 @@ export class PouchdbDatastore {
         } catch (_) {}
         if (exists) throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
 
-        const resetFun = this.resetDocOnErr(document as Document);
         if (!document.resource.id) document.resource.id = this.idGenerator.generateId();
         (document as any)['_id'] = document.resource.id;
         (document as any)['created'] = { user: username, date: new Date() }; // TODO write test for date creation
@@ -66,7 +65,9 @@ export class PouchdbDatastore {
         try {
             return await this.performPut(document);
         } catch (err) {
-            resetFun(document as Document);
+            delete (document as any)['_id'];
+            delete (document as any)['created'];
+            delete (document as any)['modified']; // TODO _rev a well?
             throw [DatastoreErrors.GENERIC_ERROR, err];
         }
     }
@@ -174,23 +175,15 @@ export class PouchdbDatastore {
 
     private resetDocOnErr(original: Document) {
 
-        const created = original.created
-            ? JSON.parse(JSON.stringify(original.created)) // TODO make sure we have dates again
-            : undefined;
-        const modified = original.modified
-            ? JSON.parse(JSON.stringify(original.modified))
-            : undefined;
+        const created = JSON.parse(JSON.stringify(original.created)); // TODO make sure we have dates again
+        const modified = JSON.parse(JSON.stringify(original.modified));
 
         const id = original.resource.id;
         return function(document: Document) {
-            delete (document as any)['_id'];
+            delete (document as any)['_id']; // TODO this one probably not, but maybe _ref and others ...
             document.resource.id = id;
-            created
-                ? document.created = created
-                : delete document.created;
-            modified
-                ? document.modified = modified
-                : delete document.modified;
+            document.created = created;
+            document.modified = modified;
         }
     }
 

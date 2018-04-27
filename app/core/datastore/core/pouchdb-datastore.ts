@@ -84,25 +84,29 @@ export class PouchdbDatastore {
         squashRevisionsIds?: string[])
     : Promise<Document> {
 
-        if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
-        if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
+        const clonedDocument = ObjectUtil.cloneObject(document);
+
+        if (!clonedDocument.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
+        if (!Document.isValid(clonedDocument)) throw [DatastoreErrors.INVALID_DOCUMENT];
+
         try {
-            await this.db.get(document.resource.id);
+            const existingDoc = await this.fetch(clonedDocument.resource.id);
+            clonedDocument.created = existingDoc.created;
+            clonedDocument.modified = existingDoc.modified;
         } catch (e) {
             throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
         }
+        if (squashRevisionsIds) {
+            this.mergeModifiedDates(clonedDocument, squashRevisionsIds);
+            await this.removeRevisions(clonedDocument.resource.id, squashRevisionsIds);
+        }
+        clonedDocument.modified.push({ user: username, date: new Date() });
 
-        const resetFun = this.resetDocOnErr(document);
-        (document as any)['_id'] = document.resource.id;
-
-        if (squashRevisionsIds) this.mergeModifiedDates(document, squashRevisionsIds);
-        document.modified.push({ user: username, date: new Date() });
+        (clonedDocument as any)['_id'] = clonedDocument.resource.id;
 
         try {
-            if (squashRevisionsIds) await this.removeRevisions(document.resource.id, squashRevisionsIds); // TODO put before try
-            return await this.performPut(document);
+            return await this.performPut(clonedDocument);
         } catch (err) {
-            resetFun(document);
             throw err.name && err.name == 'conflict'
                 ? [DatastoreErrors.SAVE_CONFLICT]
                 : [DatastoreErrors.GENERIC_ERROR, err];
@@ -157,7 +161,7 @@ export class PouchdbDatastore {
      * @throws [DOCUMENT_NOT_FOUND]
      * @throws [INVALID_DOCUMENT]
      */
-    public fetchRevision(resourceId: string, revisionId: string): Promise<Document> { // TODO remove convenience method and call fetch directly
+    public fetchRevision(resourceId: string, revisionId: string): Promise<Document> {
 
         return this.fetch(resourceId, { rev: revisionId });
     }
@@ -170,21 +174,6 @@ export class PouchdbDatastore {
 
         document['_rev'] = (await this.db.put(document, { force: true })).rev;
         return this.fetch(document.resource.id);
-    }
-
-
-    private resetDocOnErr(original: Document) {
-
-        const created = JSON.parse(JSON.stringify(original.created)); // TODO make sure we have dates again
-        const modified = JSON.parse(JSON.stringify(original.modified));
-
-        const id = original.resource.id;
-        return function(document: Document) {
-            delete (document as any)['_id']; // TODO this one probably not, but maybe _ref and others ...
-            document.resource.id = id;
-            document.created = created;
-            document.modified = modified;
-        }
     }
 
 

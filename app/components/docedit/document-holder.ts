@@ -79,7 +79,7 @@ export class DocumentHolder {
         this.clonedDocument = await this.cleanup(this.clonedDocument);
 
         await this.validator.validate(this.clonedDocument);
-        await this.persistenceManager.persist(
+        this.clonedDocument = await this.persistenceManager.persist(
             this.clonedDocument,
             this.settingsService.getUsername(),
             this.oldVersion,

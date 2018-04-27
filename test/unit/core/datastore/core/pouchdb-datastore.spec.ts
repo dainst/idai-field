@@ -190,10 +190,9 @@ describe('PouchdbDatastore', () => {
     it('update: should merge modified dates of squash revisions', async done => {
 
         const doc = Static.doc('sd1');
-        doc.modified[0] = {user: 'u1', date: new Date('2018-04-26T11:07:05.760Z')};
-        doc.created = doc.modified[0];
         doc.resource.id = '1';
 
+        let i = 0;
         pouchdbProxy.get.and.callFake(async (resourceId: string, params?: any) => {
             if (params && params.rev) {
                 const rev = Static.doc('sd1');
@@ -202,6 +201,13 @@ describe('PouchdbDatastore', () => {
                 rev.resource.id = '1';
                 rev['_rev'] = 'r-1';
                 return rev;
+            } else if (i === 0) {
+                i = i + 1;
+                const existingDoc = Static.doc('sd1');
+                existingDoc.created = {user: 'u1', date: new Date('2018-04-26T11:07:05.760Z')};
+                existingDoc.modified = [];
+                existingDoc.resource.id = '1';
+                return existingDoc;
             } else {
                 return res;
             }
@@ -210,10 +216,9 @@ describe('PouchdbDatastore', () => {
         const result = await datastore.update(doc, 'u3', ['r-1']);
 
         expect(result.created.user).toEqual('u1');
-        expect(result.modified.length).toBe(2); // TODO should be 3 and the first one should be the same as created
+        expect(result.modified.length).toBe(2);
         expect(result.modified[0].user).toEqual('u2');
         expect(result.modified[1].user).toEqual('u3');
-
         done();
     });
 
@@ -224,15 +229,24 @@ describe('PouchdbDatastore', () => {
         const doc = Static.doc('id2');
         doc.resource.id = '1';
 
-        try {
-            const result = await datastore.update(doc, 'u', );
-            expect(result.modified.length).toBe(2);
-            expect(result.modified[1].user).toEqual('u');
-            expect(result.modified[1].date instanceof Date).toBeTruthy();
-        } catch (e) {
-            fail(e);
-        }
+        let i = 0;
+        pouchdbProxy.get.and.callFake(async () => {
+            if (i === 0) {
+                i = i + 1;
+                const existingDoc = Static.doc('sd1');
+                existingDoc.created = {user: 'u1', date: new Date('2018-04-26T11:07:05.760Z')};
+                existingDoc.modified = [];
+                existingDoc.resource.id = '1';
+                return existingDoc;
+            } else {
+                return res;
+            }
+        });
 
+        const result = await datastore.update(doc, 'u', );
+        expect(result.modified.length).toBe(1);
+        expect(result.modified[0].user).toEqual('u');
+        expect(result.modified[0].date instanceof Date).toBeTruthy();
         done();
     });
 

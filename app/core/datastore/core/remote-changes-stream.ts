@@ -29,13 +29,18 @@ export class RemoteChangesStream {
         private settingsService: SettingsService
     ) {
 
-        datastore.remoteChangesNotifications().subscribe(async document => {
+        datastore.deletedNotifications().subscribe(document => {
+            this.indexFacade.remove(document); // TODO what about the deletions? shouldn't we also notify the observers?
+        });
+
+
+        datastore.changesNotifications().subscribe(async document => {
 
             if (!document || !document.resource) return;
 
             let conflictedRevisions: Document[] = [];
             try {
-                conflictedRevisions = await datastore.fetchConflictedRevisions(document.resource.id);
+                conflictedRevisions = await this.fetchConflictedRevisions(document.resource.id);
             } catch (e) {
                 console.warn('Failed to fetch conflicted revisions for document', document.resource.id);
             }
@@ -48,14 +53,43 @@ export class RemoteChangesStream {
                 this.welcomeRemoteDocument(document);
             }
         });
-        datastore.remoteDeletedNotifications().subscribe(document => {
-            this.indexFacade.remove(document); // TODO what about the deletions? shouldn't we also notify the observers?
-        });
     }
 
     public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
     public setAutoCacheUpdate = (autoCacheUpdate: boolean) => this.autoCacheUpdate = autoCacheUpdate;
+
+
+    private async fetchConflictedRevisions(resourceId: string): Promise<Array<Document>> {
+
+        const conflictedRevisions: Array<Document> = [];
+
+        const document = await this.datastore.fetch(resourceId);
+
+        if ((document as any)['_conflicts']) {
+            for (let revisionId of (document as any)['_conflicts']) {
+                conflictedRevisions.push(await this.datastore.fetchRevision(document.resource.id, revisionId));
+            }
+        }
+
+        return conflictedRevisions;
+    }
+
+
+    private welcomeRemoteDocument(document: Document) {
+
+        if (!this.autoCacheUpdate) return;
+
+        const convertedDocument = this.typeConverter.convert(document);
+        this.indexFacade.put(convertedDocument);
+
+        // explicitly assign by value in order for changes to be detected by angular
+        if (this.documentCache.get(convertedDocument.resource.id)) {
+            this.documentCache.reassign(convertedDocument);
+        }
+
+        ObserverUtil.notify(this.observers, convertedDocument);
+    }
 
 
     private static isRemoteChange(
@@ -73,21 +107,5 @@ export class RemoteChangesStream {
         }
 
         return latestAction && latestAction.user !== username;
-    }
-
-
-    private welcomeRemoteDocument(document: Document) {
-
-        if (!this.autoCacheUpdate) return;
-
-        const convertedDocument = this.typeConverter.convert(document);
-        this.indexFacade.put(convertedDocument);
-
-        // explicitly assign by value in order for changes to be detected by angular
-        if (this.documentCache.get(convertedDocument.resource.id)) {
-            this.documentCache.reassign(convertedDocument);
-        }
-
-        ObserverUtil.notify(this.observers, convertedDocument);
     }
 }

@@ -1,9 +1,9 @@
-/**
- * @author Daniel de Oliveira
- */
 import {RemoteChangesStream} from '../../../../app/core/datastore/core/remote-changes-stream';
 import {Static} from '../../static';
 
+/**
+ * @author Daniel de Oliveira
+ */
 describe('RemoteChangesStream', () => {
 
     let rcs;
@@ -29,11 +29,11 @@ describe('RemoteChangesStream', () => {
         indexFacade.put.and.returnValue(doc);
         documentCache.get.and.returnValue(1); // just to trigger reassignment
 
-        datastore = jasmine.createSpyObj('MockDatastore', ['remoteChangesNotifications', 'remoteDeletedNotifications', 'fetchConflictedRevisions']);
+        datastore = jasmine.createSpyObj('MockDatastore', ['changesNotifications', 'deletedNotifications', 'fetchConflictedRevisions']);
         datastore.fetchConflictedRevisions.and.returnValue(Promise.resolve([]));
 
-        datastore.remoteChangesNotifications.and.returnValue({subscribe: (func: Function) => fun = func});
-        datastore.remoteDeletedNotifications.and.returnValue({subscribe: (func: Function) => undefined});
+        datastore.changesNotifications.and.returnValue({subscribe: (func: Function) => fun = func});
+        datastore.deletedNotifications.and.returnValue({subscribe: (func: Function) => undefined});
 
         rcs = new RemoteChangesStream(
             datastore,

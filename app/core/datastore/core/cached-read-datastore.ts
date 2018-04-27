@@ -101,13 +101,6 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     }
 
 
-    public async getConflictedRevisions(docId: string): Promise<Array<T>> {
-
-        return (await this.datastore.fetchConflictedRevisions(docId))
-            .map(document => this.typeConverter.convert(document));
-    }
-
-
     /**
      * @param query
      * @return an array of the resource ids of the documents the query matches.

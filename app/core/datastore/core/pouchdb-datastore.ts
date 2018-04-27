@@ -14,8 +14,8 @@ export class PouchdbDatastore {
 
     public ready = () => this.db.ready();
 
-    private remoteChangesObservers = [];
-    private remoteDeletedObservers = [];
+    private changesObservers = [];
+    private deletedObservers = [];
 
     // There is an issue where docs pop up in }).on('change',
     // despite them beeing deleted in remove before. When they
@@ -36,9 +36,9 @@ export class PouchdbDatastore {
         }
     }
 
-    public remoteChangesNotifications = (): Observable<Document> => ObserverUtil.register(this.remoteChangesObservers);
+    public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.changesObservers);
 
-    public remoteDeletedNotifications = (): Observable<Document> => ObserverUtil.register(this.remoteDeletedObservers);
+    public deletedNotifications = (): Observable<Document> => ObserverUtil.register(this.deletedObservers);
 
 
     /**
@@ -180,25 +180,9 @@ export class PouchdbDatastore {
      * @throws [DOCUMENT_NOT_FOUND]
      * @throws [INVALID_DOCUMENT]
      */
-    public fetchRevision(resourceId: string, revisionId: string): Promise<Document> {
+    public fetchRevision(resourceId: string, revisionId: string): Promise<Document> { // TODO remove convenience method and call fetch directly
 
         return this.fetch(resourceId, { rev: revisionId });
-    }
-
-
-    public async fetchConflictedRevisions(resourceId: string): Promise<Array<Document>> {
-
-        const conflictedRevisions: Array<Document> = [];
-
-        const document = await this.fetch(resourceId);
-
-        if ((document as any)['_conflicts']) {
-            for (let revisionId of (document as any)['_conflicts']) {
-                conflictedRevisions.push(await this.fetchRevision(document.resource.id, revisionId));
-            }
-        }
-
-        return conflictedRevisions;
     }
 
 
@@ -252,7 +236,7 @@ export class PouchdbDatastore {
                 if (change.id.indexOf('_design') == 0) return; // starts with _design
 
                 if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
-                    ObserverUtil.notify(this.remoteDeletedObservers, {resource: {id: change.id}} as Document);
+                    ObserverUtil.notify(this.deletedObservers, {resource: {id: change.id}} as Document);
                     return;
                 }
 
@@ -278,7 +262,7 @@ export class PouchdbDatastore {
         }
 
         try {
-            ObserverUtil.notify(this.remoteChangesObservers, document);
+            ObserverUtil.notify(this.changesObservers, document);
         } catch (e) {
             console.error('Error while notifying observers');
         }

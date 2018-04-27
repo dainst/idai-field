@@ -261,7 +261,7 @@ export class PouchdbDatastore {
             throw e;
         }
 
-        try {
+        try { // TODO remove unnecessary try catch block
             ObserverUtil.notify(this.changesObservers, document);
         } catch (e) {
             console.error('Error while notifying observers');

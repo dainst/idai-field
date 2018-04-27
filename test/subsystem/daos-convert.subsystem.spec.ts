@@ -101,13 +101,9 @@ export function main() {
 
         it('IdaiFieldDocumentDatastore - add relations with update', async done => {
 
-            try {
-                delete trench0.resource.relations.isRecordedIn;
-                expect((await h.idaiFieldDocumentDatastore.
-                update(trench0)).resource.relations.isRecordedIn).toEqual([]);
-            } catch (err) {
-                fail(err);
-            }
+            delete trench0.resource.relations.isRecordedIn;
+            expect((await h.idaiFieldDocumentDatastore.
+            update(trench0)).resource.relations.isRecordedIn).toEqual([]);
             done();
         });
 
@@ -116,36 +112,28 @@ export function main() {
 
         it('get - add relations for IdaiFieldDocument', async done => {
 
-            try {
-                expect((await h.idaiFieldDocumentDatastore.get('trench0', { skip_cache: true })).
-                    resource.relations.isRecordedIn).toEqual([]);
-                expect((await h.idaiFieldDocumentDatastore.get('trench0', { skip_cache: false })).
-                    resource.relations.isRecordedIn).toEqual([]);
-                expect((await h.documentDatastore.get('trench0', { skip_cache: true })).
-                    resource.relations.isRecordedIn).toEqual([]);
-                expect((await h.documentDatastore.get('trench0', { skip_cache: false })).
-                    resource.relations.isRecordedIn).toEqual([]);
-            } catch (err) {
-                fail();
-            }
+            expect((await h.idaiFieldDocumentDatastore.get('trench0', { skip_cache: true })).
+                resource.relations.isRecordedIn).toEqual([]);
+            expect((await h.idaiFieldDocumentDatastore.get('trench0', { skip_cache: false })).
+                resource.relations.isRecordedIn).toEqual([]);
+            expect((await h.documentDatastore.get('trench0', { skip_cache: true })).
+                resource.relations.isRecordedIn).toEqual([]);
+            expect((await h.documentDatastore.get('trench0', { skip_cache: false })).
+                resource.relations.isRecordedIn).toEqual([]);
             done();
         });
 
 
         it('get - add relations for IdaiFieldImageDocument', async done => {
 
-            try {
-                expect((await h.idaiFieldImageDocumentDatastore.get('image0', { skip_cache: true })).
-                    resource.relations.depicts).toEqual([]);
-                expect((await h.idaiFieldImageDocumentDatastore.get('image0', { skip_cache: false })).
-                    resource.relations.depicts).toEqual([]);
-                expect((await h.documentDatastore.get('image0', { skip_cache: true })).
-                    resource.relations.depicts).toEqual([]);
-                expect((await h.documentDatastore.get('image0', { skip_cache: false })).
-                    resource.relations.depicts).toEqual([]);
-            } catch (err) {
-                fail();
-            }
+            expect((await h.idaiFieldImageDocumentDatastore.get('image0', { skip_cache: true })).
+                resource.relations.depicts).toEqual([]);
+            expect((await h.idaiFieldImageDocumentDatastore.get('image0', { skip_cache: false })).
+                resource.relations.depicts).toEqual([]);
+            expect((await h.documentDatastore.get('image0', { skip_cache: true })).
+                resource.relations.depicts).toEqual([]);
+            expect((await h.documentDatastore.get('image0', { skip_cache: false })).
+                resource.relations.depicts).toEqual([]);
             done();
         });
 
@@ -154,14 +142,10 @@ export function main() {
 
         it('find - add relations for IdaiFieldDocument', async done => {
 
-            try {
-                expect((await h.idaiFieldDocumentDatastore.find({})). // result coming from cache
-                    documents[0].resource.relations.isRecordedIn).toEqual([]);
-                expect((await h.idaiFieldImageDocumentDatastore.find({})). // result coming from cache
-                    documents[0].resource.relations.depicts).toEqual([]);
-            } catch (err) {
-                fail();
-            }
+            expect((await h.idaiFieldDocumentDatastore.find({})). // result coming from cache
+                documents[0].resource.relations.isRecordedIn).toEqual([]);
+            expect((await h.idaiFieldImageDocumentDatastore.find({})). // result coming from cache
+                documents[0].resource.relations.depicts).toEqual([]);
             done();
         });
     });

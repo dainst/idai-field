@@ -80,8 +80,7 @@ export class PouchdbDatastore {
     public async update(
         document: Document,
         username: string,
-        squashRevisionsIds?: string[])
-    : Promise<Document> {
+        squashRevisionsIds?: string[]): Promise<Document> {
 
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
         if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];

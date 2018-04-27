@@ -52,6 +52,7 @@ export class PolygonBuilder {
         return new THREE.MeshLambertMaterial({
             color: this.projectConfiguration.getColorForType(document.resource.type),
             side: THREE.DoubleSide,
+            flatShading: true,
             transparent: true,
             opacity: selected ? 0.8 : 0.4
         });
@@ -80,8 +81,8 @@ export class PolygonBuilder {
         const geometry: THREE.Geometry = new THREE.Geometry();
         geometry.vertices = PolygonBuilder.getVertices(document, position);
         geometry.faces = PolygonBuilder.getFaces(document);
-        geometry.computeVertexNormals();
         geometry.computeFaceNormals();
+        geometry.computeVertexNormals();
 
         return new THREE.BufferGeometry().fromGeometry(geometry);
     }

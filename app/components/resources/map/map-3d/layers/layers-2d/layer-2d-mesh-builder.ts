@@ -50,6 +50,7 @@ export class Layer2DMeshBuilder {
         return new THREE.MeshLambertMaterial({
             color: 0xffffff,
             map: new THREE.TextureLoader().load(this.getFilePath(imageResourceId)),
+            flatShading: true
         });
     }
 

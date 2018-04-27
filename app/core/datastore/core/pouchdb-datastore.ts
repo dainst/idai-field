@@ -83,7 +83,8 @@ export class PouchdbDatastore {
     public async update(
         document: Document,
         username: string,
-        squashRevisions?: Document[]): Promise<Document> {
+        squashRevisions?: Document[]) // TODO give only ids as params, to make sure the change histories come directly from within the datastore
+    : Promise<Document> {
 
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
         if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
@@ -191,7 +192,7 @@ export class PouchdbDatastore {
 
         const conflictedRevisions: Array<Document> = [];
 
-        const document: Document = await this.fetch(resourceId);
+        const document = await this.fetch(resourceId);
 
         if ((document as any)['_conflicts']) {
             for (let revisionId of (document as any)['_conflicts']) {
@@ -199,14 +200,11 @@ export class PouchdbDatastore {
             }
         }
 
-        return Promise.resolve(conflictedRevisions);
+        return conflictedRevisions;
     }
 
 
-    protected setupServer() {
-
-        return Promise.resolve();
-    }
+    protected async setupServer() {}
 
 
     private async performPut(document: any) {

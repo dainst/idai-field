@@ -104,14 +104,16 @@ export class Layer2DMeshBuilder {
     private static async createVertices(georeference: IdaiFieldGeoreference,
                                         offset: THREE.Vector3): Promise<Array<THREE.Vector3>> {
 
-        const vertices: Array<THREE.Vector3> = [];
+        const bottomLeft: THREE.Vector3
+            = Layer2DMeshBuilder.getVector(georeference.bottomLeftCoordinates).sub(offset);
+        const topLeft: THREE.Vector3
+            = Layer2DMeshBuilder.getVector(georeference.topLeftCoordinates).sub(offset);
+        const topRight: THREE.Vector3
+            = Layer2DMeshBuilder.getVector(georeference.topRightCoordinates).sub(offset);
+        const bottomRight: THREE.Vector3
+            = Layer2DMeshBuilder.getBottomRightVector(bottomLeft, topLeft, topRight);
 
-        vertices.push(Layer2DMeshBuilder.getVector(georeference.bottomLeftCoordinates).sub(offset));
-        vertices.push(Layer2DMeshBuilder.getVector(georeference.topLeftCoordinates).sub(offset));
-        vertices.push(Layer2DMeshBuilder.getVector(georeference.topRightCoordinates).sub(offset));
-        vertices.push(Layer2DMeshBuilder.getBottomRightVector(georeference).sub(offset));
-
-        return vertices;
+        return [bottomLeft, topLeft, topRight, bottomRight];
     }
 
 
@@ -156,12 +158,11 @@ export class Layer2DMeshBuilder {
     }
 
 
-    private static getBottomRightVector(georeference: IdaiFieldGeoreference): THREE.Vector3 {
+    private static getBottomRightVector(bottomLeft: THREE.Vector3, topLeft: THREE.Vector3,
+                                        topRight: THREE.Vector3): THREE.Vector3 {
 
-        return getPointVector([
-            georeference.topRightCoordinates[1],
-            georeference.bottomLeftCoordinates[0],
-            0
-        ]);
+        const direction: THREE.Vector3 = new THREE.Vector3().subVectors(topRight, topLeft);
+
+        return new THREE.Vector3().addVectors(bottomLeft, direction);
     }
 }

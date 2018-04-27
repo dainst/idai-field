@@ -67,18 +67,15 @@ export class PersistenceManager {
 
         const oldVersions = [ObjectUtil.cloneObject(oldVersion)].concat(revisionsToSquash);
 
-        // const documentToSave = ObjectUtil.cloneObject(document);
-        const documentToSave = document; // TODO clone it instead
-
-        const persistedDocument = await this.persistIt(documentToSave as Document, username, revisionsToSquash);
+        const persistedDocument = await this.persistIt(document as Document, username, revisionsToSquash);
 
         let connectedDocs;
         try {
-            connectedDocs = await Promise.all(this.getConnectedDocs(documentToSave as Document, oldVersions as Document[]))
+            connectedDocs = await Promise.all(this.getConnectedDocs(document as Document, oldVersions as Document[]))
         } catch (_) {
             throw [M.PERSISTENCE_ERROR_TARGETNOTFOUND];
         }
-        await this.updateDocs(documentToSave as Document, connectedDocs, true, username);
+        await this.updateDocs(document as Document, connectedDocs, true, username);
 
         return persistedDocument;
     }

@@ -60,7 +60,7 @@ export class PouchdbDatastore {
         if (!document.resource.id) document.resource.id = this.idGenerator.generateId();
         (document as any)['_id'] = document.resource.id;
         (document as any)['created'] = { user: username, date: new Date() }; // TODO write test for date creation
-        (document as any)['modified'] = [{ user: username, date: new Date() }];
+        (document as any)['modified'] = [{ user: username, date: new Date() }]; // TODO do not set modified immediately
 
         try {
             return await this.performPut(document);

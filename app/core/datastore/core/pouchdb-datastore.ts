@@ -94,7 +94,8 @@ export class PouchdbDatastore {
 
         const resetFun = this.resetDocOnErr(document);
         (document as any)['_id'] = document.resource.id;
-        document.modified.push({ user: username, date: new Date() }); // TODO test
+
+        document.modified.push({ user: username, date: new Date() });
 
         try {
             if (squashRevisions) await this.removeRevisions(document.resource.id, squashRevisions);

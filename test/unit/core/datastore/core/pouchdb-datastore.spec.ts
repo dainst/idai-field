@@ -142,7 +142,7 @@ describe('PouchdbDatastore', () => {
 
     // update
 
-    it('should update an existing document with no identifier conflict', async done => {
+    it('update: should update an existing document with no identifier conflict', async done => {
 
         const doc2 = Static.doc('id2');
 
@@ -157,7 +157,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('should not update if resource id not present', async done => {
+    it('update: should not update if resource id not present', async done => {
 
         try {
             await datastore.update(Static.doc('sd1'), 'u');
@@ -169,10 +169,10 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('should not update if created not present', async done => {
+    it('update: should not update if created not present', async done => {
 
         const doc = Static.doc('sd1');
-        doc.resource.id = "1";
+        doc.resource.id = '1';
         delete doc.created;
 
         try {
@@ -185,7 +185,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('should not update if not existent', async done => {
+    it('update: should not update if not existent', async done => {
 
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
@@ -195,6 +195,48 @@ describe('PouchdbDatastore', () => {
         } catch (expectedErr) {
             expect(expectedErr[0]).toBe(DatastoreErrors.DOCUMENT_NOT_FOUND);
         }
+        done();
+    });
+
+
+
+    it('update: should squash old revisions', async done => {
+
+        const doc = Static.doc('id2');
+        doc.resource.id = '1';
+        const rev = Static.doc('id2');
+        rev['_rev'] = 'r-1';
+
+        try {
+            await datastore.update(doc, 'u', [rev]);
+            expect(pouchdbProxy.remove).toHaveBeenCalledWith('1', 'r-1')
+
+        } catch (e) {
+            fail(e);
+        }
+
+        done();
+    });
+
+
+    it('update: add modified date', async done => {
+
+        let res;
+        pouchdbProxy.put.and.callFake(async doc => res = doc);
+        pouchdbProxy.get.and.callFake(async () => res);
+
+        const doc = Static.doc('id2');
+        doc.resource.id = '1';
+
+        try {
+            const result = await datastore.update(doc, 'u', );
+            expect(result.modified.length).toBe(2);
+            expect(result.modified[1].user).toEqual('u');
+            expect(result.modified[1].date instanceof Date).toBeTruthy();
+        } catch (e) {
+            fail(e);
+        }
+
         done();
     });
 

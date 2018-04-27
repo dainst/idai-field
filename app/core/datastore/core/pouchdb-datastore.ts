@@ -169,7 +169,7 @@ export class PouchdbDatastore {
 
     private async performPut(document: any) {
 
-        document['_rev'] = (await this.db.put(document, { force: true })).rev;
+        await this.db.put(document, { force: true });
         return this.fetch(document.resource.id);
     }
 

@@ -17,6 +17,8 @@ describe('RemoteChangesStream', () => {
 
     beforeEach(() => {
 
+        spyOn(console, 'warn'); // suppress console.warn
+
         doc = Static.doc('sd1', 'ident1', 'type1', 'id1');
 
         indexFacade = jasmine.createSpyObj('MockIndexFacade', ['put', 'get', 'remove']);

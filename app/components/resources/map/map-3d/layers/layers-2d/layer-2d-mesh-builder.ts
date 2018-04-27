@@ -26,7 +26,7 @@ export class Layer2DMeshBuilder {
         const position: THREE.Vector3 = Layer2DMeshBuilder.getPosition(georeference, height);
         const offset: THREE.Vector3 = Layer2DMeshBuilder.getGeometryOffset(georeference);
 
-        const geometry: THREE.Geometry
+        const geometry: THREE.BufferGeometry
             = await Layer2DMeshBuilder.createGeometry(georeference, offset);
         const material: THREE.Material = this.createMaterial(imageResourceId);
 
@@ -75,7 +75,7 @@ export class Layer2DMeshBuilder {
 
 
     private static async createGeometry(georeference: IdaiFieldGeoreference,
-                                        offset: THREE.Vector3): Promise<THREE.Geometry> {
+                                        offset: THREE.Vector3): Promise<THREE.BufferGeometry> {
 
         const geometry: THREE.Geometry = new THREE.Geometry();
 
@@ -86,11 +86,12 @@ export class Layer2DMeshBuilder {
         geometry.computeFaceNormals();
         geometry.computeVertexNormals();
 
-        return geometry;
+        return new THREE.BufferGeometry().fromGeometry(geometry);
     }
 
 
-    private static createMesh(geometry: THREE.Geometry, material: THREE.Material, position: THREE.Vector3) {
+    private static createMesh(geometry: THREE.BufferGeometry, material: THREE.Material,
+                              position: THREE.Vector3) {
 
         const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(position.x, position.y, position.z);

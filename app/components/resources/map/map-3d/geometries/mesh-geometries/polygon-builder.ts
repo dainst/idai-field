@@ -32,7 +32,7 @@ export class PolygonBuilder {
     private createMesh(document: IdaiFieldDocument, selected: boolean): THREE.Mesh {
 
         const position: THREE.Vector3 = PolygonBuilder.getPosition(document);
-        const geometry: THREE.Geometry = PolygonBuilder.createGeometry(document, position);
+        const geometry: THREE.BufferGeometry = PolygonBuilder.createGeometry(document, position);
         const material: THREE.Material = this.createMaterial(document, selected);
 
         const mesh: THREE.Mesh = new THREE.Mesh(geometry, material);
@@ -58,10 +58,10 @@ export class PolygonBuilder {
     }
 
 
-    private createOutline(document: IdaiFieldDocument, geometry: THREE.Geometry): THREE.LineSegments {
+    private createOutline(document: IdaiFieldDocument, geometry: THREE.BufferGeometry): THREE.LineSegments {
 
         const edgesGeometry: THREE.EdgesGeometry
-            = new THREE.EdgesGeometry(new THREE.BufferGeometry().fromGeometry(geometry), 180);
+            = new THREE.EdgesGeometry(geometry, 180);
 
         const edgesMaterial: THREE.LineBasicMaterial = new THREE.LineBasicMaterial({
             color: this.projectConfiguration.getColorForType(document.resource.type)
@@ -74,7 +74,8 @@ export class PolygonBuilder {
     }
 
 
-    private static createGeometry(document: IdaiFieldDocument, position: THREE.Vector3): THREE.Geometry {
+    private static createGeometry(document: IdaiFieldDocument, position: THREE.Vector3)
+            : THREE.BufferGeometry {
 
         const geometry: THREE.Geometry = new THREE.Geometry();
         geometry.vertices = PolygonBuilder.getVertices(document, position);
@@ -82,7 +83,7 @@ export class PolygonBuilder {
         geometry.computeVertexNormals();
         geometry.computeFaceNormals();
 
-        return geometry;
+        return new THREE.BufferGeometry().fromGeometry(geometry);
     }
 
 

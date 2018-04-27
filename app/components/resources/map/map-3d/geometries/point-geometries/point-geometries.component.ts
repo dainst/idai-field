@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import {Component, ViewChild, ElementRef, Input, Output, EventEmitter, DoCheck} from '@angular/core';
+import {Component, ViewChild, ElementRef, Input, Output, EventEmitter, DoCheck, OnChanges,
+    SimpleChanges} from '@angular/core';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Map3DComponent} from '../../map-3d.component';
 import {DepthMap} from '../../../../../core-3d/helpers/depth-map';
@@ -24,7 +25,7 @@ export interface Map3DMarker {
 /**
  * @author Thomas Kleinke
  */
-export class PointGeometriesComponent implements DoCheck {
+export class PointGeometriesComponent implements DoCheck, OnChanges {
 
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
@@ -55,6 +56,12 @@ export class PointGeometriesComponent implements DoCheck {
     }
 
 
+    public ngOnChanges(changes: SimpleChanges) {
+
+        if (changes['documents']) this.updateGeometriesBounds();
+    }
+
+
     public getMarkers(): Array<Map3DMarker> {
 
         const markers: Array<Map3DMarker> = [];
@@ -69,7 +76,6 @@ export class PointGeometriesComponent implements DoCheck {
         });
 
         this.performVisibilityTest(markers);
-        this.updateGeometriesBounds(markers);
 
         return markers;
     }
@@ -173,10 +179,13 @@ export class PointGeometriesComponent implements DoCheck {
     }
 
 
-    private updateGeometriesBounds(markers: Array<Map3DMarker>) {
+    private updateGeometriesBounds() {
 
-        this.map3DComponent.getGeometriesBounds()
-            .setPoints(markers.map(marker => marker.worldSpacePosition));
+        this.map3DComponent.getGeometriesBounds().setPoints(
+            PointGeometriesComponent.get3DPointGeometries(this.documents).map(document => {
+                return PointGeometriesComponent.getWorldSpacePosition(document);
+            })
+        );
     }
 
 

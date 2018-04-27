@@ -4,7 +4,6 @@ import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {M} from '../../m';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ObjectUtil} from '../../util/object-util';
-import {ChangeHistoryMerge} from './change-history-merge';
 
 
 @Injectable()
@@ -71,9 +70,7 @@ export class PersistenceManager {
         // const documentToSave = ObjectUtil.cloneObject(document);
         const documentToSave = document; // TODO clone it instead
 
-        PersistenceManager.squashRevisionHistory(documentToSave as Document, revisionsToSquash);
         const persistedDocument = await this.persistIt(documentToSave as Document, username, revisionsToSquash);
-
 
         let connectedDocs;
         try {
@@ -85,17 +82,6 @@ export class PersistenceManager {
 
         return persistedDocument;
     }
-
-
-    private static squashRevisionHistory(document: Document, revisionsToSquash: Document[]) {
-
-        for (let revision of revisionsToSquash) {
-            ChangeHistoryMerge.mergeChangeHistories(document, revision);
-        }
-    }
-
-
-
 
 
     private async updateDocs(document: Document, connectedDocs: Array<Document>, setInverseRelations: boolean, user: string) {

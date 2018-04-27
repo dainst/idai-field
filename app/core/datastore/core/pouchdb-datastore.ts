@@ -5,6 +5,7 @@ import {AppState} from '../../settings/app-state';
 import {ChangeHistory} from '../../model/change-history';
 import {ObserverUtil} from '../../../util/observer-util';
 import {PouchdbProxy} from './pouchdb-proxy';
+import {ChangeHistoryMerge} from './change-history-merge';
 
 /**
  * @author Sebastian Cuy
@@ -95,6 +96,7 @@ export class PouchdbDatastore {
         const resetFun = this.resetDocOnErr(document);
         (document as any)['_id'] = document.resource.id;
 
+        if (squashRevisions) PouchdbDatastore.mergeModifiedDates(document, squashRevisions);
         document.modified.push({ user: username, date: new Date() });
 
         try {
@@ -109,16 +111,25 @@ export class PouchdbDatastore {
     }
 
 
+    private static mergeModifiedDates(document: Document, revisionsToSquash: Document[]) {
+
+        for (let revision of revisionsToSquash) {
+            ChangeHistoryMerge.mergeChangeHistories(document, revision);
+        }
+    }
+
+
     private async removeRevisions(resourceId: string|undefined, revisionsToSquash: Document[]): Promise<any> {
 
         if (!resourceId) return;
 
         try {
             for (let revision of revisionsToSquash) {
-                await this.removeRevision(resourceId, (revision as any)['_rev']);
+                await this.db.remove(resourceId, (revision as any)['_rev']);
             }
         } catch (err) {
             console.error("error while removing revision", err);
+            throw [DatastoreErrors.GENERIC_ERROR, err];
         }
     }
 
@@ -142,17 +153,6 @@ export class PouchdbDatastore {
             await this.db.remove(docFromGet)
         } catch (genericerror) {
             throw [DatastoreErrors.GENERIC_ERROR, genericerror];
-        }
-    }
-
-
-    private async removeRevision(docId: string, revisionId: string): Promise<any> {
-
-        try {
-            await this.db.remove(docId, revisionId);
-            return await this.fetch(docId);
-        } catch (genericerr) {
-            throw [DatastoreErrors.GENERIC_ERROR, genericerr];
         }
     }
 

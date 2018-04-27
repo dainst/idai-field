@@ -14,32 +14,20 @@ describe('PouchdbDatastore', () => {
     let datastore: PouchdbDatastore;
     let pouchdbProxy: any;
 
-
     function createPouchdbDatastore() {
-
-
-        const appState = new AppState();
 
         let idGenerator = jasmine.createSpyObj('idGenerator', ['generateId']);
         idGenerator.generateId.and.returnValue(1);
 
-
         pouchdbProxy = jasmine.createSpyObj('pouchdbProxy', ['get', 'put', 'remove']);
-        pouchdbProxy.put.and.callFake((arg) => {
-           arg['_rev'] = '1';
-           return Promise.resolve(arg);
-        });
-        pouchdbProxy.get.and.callFake((arg) => {
-            return Promise.resolve({resource: {
-                id: arg, type: 'some', relations: []}, created: {date:'2011/01/01'},
-                modified: [{date:'2011/01/01'}]
-            });
-        });
+        let res;
+        pouchdbProxy.put.and.callFake(async doc => res = doc);
+        pouchdbProxy.get.and.callFake(async () => res);
         pouchdbProxy.remove.and.returnValue(Promise.resolve(undefined));
 
         datastore = new PouchdbDatastore(
             pouchdbProxy,
-            appState,
+            new AppState(),
             idGenerator,
             false);
     }
@@ -82,15 +70,15 @@ describe('PouchdbDatastore', () => {
     it('should create a document and take the existing resource.id', async done => {
 
         let called = false;
-        pouchdbProxy.get.and.callFake((arg) => {
+        pouchdbProxy.get.and.callFake(async doc => {
             if (!called) {
                 called = true;
-                return Promise.reject(undefined);
+                throw undefined;
             }
-            return Promise.resolve({resource: {
-                    id: arg, type: 'some', relations: []}, created: {date:'2011/01/01'},
+            return {resource: {
+                    id: doc, type: 'some', relations: []}, created: {date:'2011/01/01'},
                 modified: [{date:'2011/01/01'}]
-            });
+            };
         });
 
 
@@ -202,14 +190,15 @@ describe('PouchdbDatastore', () => {
 
     it('update: should squash old revisions', async done => {
 
-        const doc = Static.doc('id2');
+        const doc = Static.doc('sd1');
         doc.resource.id = '1';
-        const rev = Static.doc('id2');
+
+        const rev = Static.doc('sd1');
         rev['_rev'] = 'r-1';
 
         try {
-            await datastore.update(doc, 'u', [rev]);
-            expect(pouchdbProxy.remove).toHaveBeenCalledWith('1', 'r-1')
+            const result = await datastore.update(doc, 'u3', [rev]);
+            expect(pouchdbProxy.remove).toHaveBeenCalledWith('1', 'r-1');
 
         } catch (e) {
             fail(e);
@@ -219,11 +208,31 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('update: add modified date', async done => {
+    it('update: should merge modified dates of squash revisions', async done => {
 
-        let res;
-        pouchdbProxy.put.and.callFake(async doc => res = doc);
-        pouchdbProxy.get.and.callFake(async () => res);
+        const doc = Static.doc('sd1');
+        doc.modified[0] = {user: 'u1', date: new Date('2018-04-26T11:07:05.760Z')};
+        doc.created = doc.modified[0];
+        doc.resource.id = '1';
+
+        const rev = Static.doc('sd1');
+        rev.modified[0] = {user: 'u2', date: new Date('2018-04-27T11:07:05.760Z')};
+        rev.created = rev.modified[0];
+        rev['_rev'] = 'r-1';
+
+        const result = await datastore.update(doc, 'u3', [rev]);
+
+        expect(result.created.user).toEqual('u1');
+        expect(result.modified.length).toBe(2); // TODO should be 3 and the first one should be the same as created
+        expect(result.modified[0].user).toEqual('u2');
+        expect(result.modified[1].user).toEqual('u3');
+
+        done();
+    });
+
+
+
+    it('update: add modified date', async done => {
 
         const doc = Static.doc('id2');
         doc.resource.id = '1';
@@ -245,6 +254,13 @@ describe('PouchdbDatastore', () => {
 
 
     it('should get if existent', async done => {
+
+        pouchdbProxy.get.and.callFake(async resourceId => {
+            return {resource: {
+                id: resourceId, type: 'some', relations: []}, created: {date:'2011/01/01'},
+                modified: [{date:'2011/01/01'}]
+            };
+        });
 
         try {
             const result = await datastore.fetch('id5');

@@ -239,6 +239,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     private sortRevisions(revisions: Array<IdaiFieldDocument>) {
 
         revisions.sort((a: IdaiFieldDocument, b: IdaiFieldDocument) => {
+            // TODO what if no modified date, only created?
             const date1: Date = new Date((a.modified as any)[(a.modified as any).length-1].date);
             const date2: Date = new Date((b.modified as any)[(b.modified as any).length-1].date);
             if (date1 < date2) {

@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 
 

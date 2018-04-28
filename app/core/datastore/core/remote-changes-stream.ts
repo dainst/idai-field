@@ -30,7 +30,8 @@ export class RemoteChangesStream {
     ) {
 
         datastore.deletedNotifications().subscribe(document => {
-            this.indexFacade.remove(document); // TODO what about the deletions? shouldn't we also notify the observers?
+            this.documentCache.remove(document.resource.id);
+            this.indexFacade.remove(document);
         });
 
 

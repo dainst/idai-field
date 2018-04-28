@@ -13,8 +13,6 @@ import {IdaiFieldImageDocumentDatastore} from './field/idai-field-image-document
 import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {IdaiFieldImageDocumentReadDatastore} from './field/idai-field-image-document-read-datastore';
 import {TypeConverter} from './core/type-converter';
-import {IdaiFieldSampleDataLoader} from './field/idai-field-sample-data-loader';
-import {SampleDataLoader} from './core/sample-data-loader';
 import {DocumentDatastore} from './document-datastore';
 import {DocumentReadDatastore} from './document-read-datastore';
 import {IdaiFieldTypeConverter} from './field/idai-field-type-converter';
@@ -35,17 +33,12 @@ import {IdaiFieldFeatureDocument} from '../model/idai-field-feature-document';
     providers: [
         RemoteChangesStream,
 
-        { provide: SampleDataLoader, useClass: IdaiFieldSampleDataLoader },
-
         { provide: PouchdbManager, useFactory: function(
-            sampleDataLoader: SampleDataLoader,
             indexFacade: IndexFacade
         ){
-            return new PouchdbManager(
-                sampleDataLoader,
-                indexFacade);
+            return new PouchdbManager(indexFacade);
         },
-            deps: [SampleDataLoader, IndexFacade]
+            deps: [IndexFacade]
         },
 
         { provide: TypeConverter, useClass: IdaiFieldTypeConverter },

@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2/core';
-import {IdaiType, ProjectConfiguration} from 'idai-components-2/core';
+import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2/core';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
-import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../../m';
 import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../../util/extension-util';
@@ -13,6 +11,7 @@ import {PersistenceManager} from '../../core/persist/persistence-manager';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {NewIdaiFieldImageDocument} from "../../core/model/new-idai-field-image-document";
 import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/field/idai-field-image-document-read-datastore';
+import {UsernameProvider} from '../../core/settings/username-provider';
 
 export interface ImageUploadResult {
 
@@ -37,7 +36,7 @@ export class ImageUploader {
         private modalService: NgbModal,
         private persistenceManager: PersistenceManager,
         private projectConfiguration: ProjectConfiguration,
-        private settingsService: SettingsService,
+        private usernameProvider: UsernameProvider,
         private uploadStatus: UploadStatus,
         private imageDocumentDatastore: IdaiFieldImageDocumentReadDatastore
     ) {}
@@ -209,7 +208,7 @@ export class ImageUploader {
                     doc.resource.relations['depicts'] = [depictsRelationTarget.resource.id];
                 }
 
-                this.persistenceManager.persist(doc, this.settingsService.getUsername())
+                this.persistenceManager.persist(doc, this.usernameProvider.getUsername())
                     .then((result: any) => resolve(result))
                     .catch((error: any) => reject(error));
             };

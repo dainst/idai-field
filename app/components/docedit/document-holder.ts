@@ -1,18 +1,20 @@
 import {Injectable} from '@angular/core';
-import {Document} from 'idai-components-2/core';
-import {DocumentEditChangeMonitor} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
-import {DatastoreErrors} from 'idai-components-2/core';
+import {
+    DatastoreErrors,
+    Document,
+    DocumentEditChangeMonitor,
+    ProjectConfiguration
+} from 'idai-components-2/core';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
 import {ObjectUtil} from '../../util/object-util';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';
-import {SettingsService} from '../../core/settings/settings-service';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {flow, includedIn, isNot} from 'tsfun';
 import {Validations} from '../../core/model/validations';
 import {TypeUtility} from '../../core/model/type-utility';
+import {UsernameProvider} from '../../core/settings/username-provider';
 
 
 @Injectable()
@@ -44,7 +46,7 @@ export class DocumentHolder {
         private validator: Validator,
         private imagestore: Imagestore,
         private typeUtility: TypeUtility,
-        private settingsService: SettingsService,
+        private usernameProvider: UsernameProvider,
         private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private datastore: DocumentDatastore) {
     }
@@ -81,7 +83,7 @@ export class DocumentHolder {
         await this.validator.validate(this.clonedDocument);
         this.clonedDocument = await this.persistenceManager.persist(
             this.clonedDocument,
-            this.settingsService.getUsername(),
+            this.usernameProvider.getUsername(),
             this.oldVersion,
             this.inspectedRevisions
         );
@@ -157,7 +159,7 @@ export class DocumentHolder {
     private async removeWithPersistenceManager(): Promise<any> {
 
         try {
-            await this.persistenceManager.remove(this.clonedDocument, this.settingsService.getUsername())
+            await this.persistenceManager.remove(this.clonedDocument, this.usernameProvider.getUsername())
         } catch(removeError) {
             if (removeError != DatastoreErrors.DOCUMENT_NOT_FOUND) {
                 throw [M.DOCEDIT_DELETE_ERROR];

@@ -7,7 +7,7 @@ import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
 import {ObserverUtil} from '../../../util/observer-util';
-import {SettingsService} from '../../settings/settings-service';
+import {UsernameProvider} from '../../settings/username-provider';
 
 
 @Injectable()
@@ -26,7 +26,7 @@ export class RemoteChangesStream {
         private indexFacade: IndexFacade,
         private documentCache: DocumentCache<Document>,
         private typeConverter: TypeConverter<Document>,
-        private settingsService: SettingsService
+        private usernameProvider: UsernameProvider
     ) {
 
         datastore.deletedNotifications().subscribe(document => {
@@ -40,7 +40,7 @@ export class RemoteChangesStream {
 
             if (await this.isRemoteChange(
                     document,
-                    this.settingsService.getUsername())) {
+                    this.usernameProvider.getUsername())) {
 
                 this.welcomeRemoteDocument(document);
             }

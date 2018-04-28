@@ -5,7 +5,6 @@ import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
 import {IdaiFieldTypeConverter} from "../../app/core/datastore/field/idai-field-type-converter";
 import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
 import {IndexFacade} from '../../app/core/datastore/index/index-facade';
-import {AppState} from '../../app/core/settings/app-state';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 import {FulltextIndexer} from '../../app/core/datastore/index/fulltext-indexer';
@@ -73,15 +72,14 @@ export class DAOsSpecHelper {
 
         const documentCache = new DocumentCache<IdaiFieldDocument>();
         const indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
-        const pouchdbManager = new PouchdbManager
-        (undefined, indexFacade);
+        const pouchdbManager = new PouchdbManager(indexFacade);
 
 
         const datastore = new PouchdbDatastore(
             pouchdbManager.getDbProxy(),
             new IdGenerator(),
             false);
-        pouchdbManager.loadProjectDb(dbname);
+        pouchdbManager.loadProjectDb(dbname, undefined);
 
         return {
             datastore: datastore,

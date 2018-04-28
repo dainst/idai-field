@@ -1,9 +1,7 @@
 import {Component} from '@angular/core';
 import {Http} from '@angular/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2/core';
-import {Messages} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
+import {Document, Messages, ProjectConfiguration} from 'idai-components-2/core';
 import {Import, ImportReport} from '../../core/import/import';
 import {Reader} from '../../core/import/reader';
 import {FileSystemReader} from '../../core/import/file-system-reader';
@@ -31,6 +29,7 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
 import {Validator} from '../../core/model/validator';
 import {MeninxCsvParser} from '../../core/import/meninx-csv-parser';
+import {UsernameProvider} from '../../core/settings/username-provider';
 
 
 type ImportFormat = 'native' | 'idig' | 'geojson' | 'meninxfind';
@@ -66,7 +65,7 @@ export class ImportComponent {
         private remoteChangesStream: RemoteChangesStream,
         private validator: Validator,
         private http: Http,
-        private settingsService: SettingsService,
+        private usernameProvider: UsernameProvider,
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
         private modalService: NgbModal
@@ -98,8 +97,8 @@ export class ImportComponent {
             reader,
             ImportComponent.createParser(this.format),
             ImportComponent.createImportStrategy(this.format,
-                this.validator, this.datastore, this.settingsService, this.projectConfiguration, this.mainTypeDocumentId),
-            ImportComponent.createRelationsStrategy(this.format, new RelationsCompleter(this.datastore, this.projectConfiguration, this.settingsService)),
+                this.validator, this.datastore, this.usernameProvider, this.projectConfiguration, this.mainTypeDocumentId),
+            ImportComponent.createRelationsStrategy(this.format, new RelationsCompleter(this.datastore, this.projectConfiguration, this.usernameProvider)),
             ImportComponent.createRollbackStrategy(this.format, this.datastore));
         this.remoteChangesStream.setAutoCacheUpdate(true);
 
@@ -191,21 +190,21 @@ export class ImportComponent {
 
 
     private static createImportStrategy(format: ImportFormat, validator: Validator, datastore: DocumentDatastore,
-                                        settingsService: SettingsService, projectConfiguration: ProjectConfiguration,
+                                        usernameProvider: UsernameProvider, projectConfiguration: ProjectConfiguration,
                                         mainTypeDocumentId?: string): ImportStrategy {
 
         switch (format) {
             case 'meninxfind':
                 return new DefaultImportStrategy(validator, datastore,
-                    projectConfiguration, settingsService.getUsername(), true);
+                    projectConfiguration, usernameProvider.getUsername(), true);
             case 'idig':
                 return new DefaultImportStrategy(validator, datastore,
-                    projectConfiguration, settingsService.getUsername());
+                    projectConfiguration, usernameProvider.getUsername());
             case 'geojson':
-                return new MergeGeometriesImportStrategy(validator, datastore, settingsService.getUsername());
+                return new MergeGeometriesImportStrategy(validator, datastore, usernameProvider.getUsername());
             default: // 'native'
                 return new DefaultImportStrategy(validator, datastore,
-                    projectConfiguration, settingsService.getUsername(),
+                    projectConfiguration, usernameProvider.getUsername(),
                     false, mainTypeDocumentId);
         }
     }

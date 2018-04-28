@@ -1,13 +1,12 @@
 import {Component, Input} from '@angular/core';
-import {Document} from 'idai-components-2/core';
-import {Messages} from 'idai-components-2/core';
+import {Document, Messages} from 'idai-components-2/core';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/field';
-import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../state/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
 import {NavigationPath} from '../state/navigation-path';
+import {UsernameProvider} from '../../../core/settings/username-provider';
 
 
 @Component({
@@ -32,7 +31,7 @@ export class ResourcesMapComponent {
         public viewFacade: ViewFacade,
         public resourcesComponent: ResourcesComponent,
         private persistenceManager: PersistenceManager,
-        private settingsService: SettingsService,
+        private usernameProvider: UsernameProvider,
         private messages: Messages
     ) {
         this.parentDocument = this.getParentDocument(this.viewFacade.getNavigationPath());
@@ -93,7 +92,7 @@ export class ResourcesMapComponent {
         const selectedDoc = this.viewFacade.getSelectedDocument();
         if (!selectedDoc) return;
 
-        this.persistenceManager.persist(selectedDoc, this.settingsService.getUsername())
+        this.persistenceManager.persist(selectedDoc, this.usernameProvider.getUsername())
             .catch(msgWithParams => this.messages.add(msgWithParams));
     }
 

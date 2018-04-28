@@ -25,7 +25,6 @@ import {SettingsService} from './core/settings/settings-service';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
 import {PouchDbFsImagestore} from './core/imagestore/pouch-db-fs-imagestore';
-import {AppState} from './core/settings/app-state';
 import {ProjectsComponent} from './components/navbar/projects.component';
 import {ImportModule} from './components/import/import-module';
 import {ExportModule} from './components/export/export.module';
@@ -41,6 +40,7 @@ import {MatrixModule} from './components/matrix/matrix.module';
 import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
 import {TaskbarConflictsComponent} from './components/navbar/taskbar-conflicts.component';
 import {TypeUtility} from './core/model/type-utility';
+import {UsernameProvider} from './core/settings/username-provider';
 
 
 const remote = require('electron').remote;
@@ -85,8 +85,8 @@ let pconf: any = undefined;
             useFactory: (settingsService: SettingsService) =>
                  () => settingsService.bootProject().then(proconf => pconf = proconf)
         },
-        AppState,
         SettingsService,
+        { provide: UsernameProvider, useExisting: SettingsService },
         {
             provide: Messages,
             useFactory: function(md: MD) {

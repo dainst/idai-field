@@ -3,7 +3,6 @@ import * as fs from 'fs';
 import {DOCS} from './idai-field-sample-objects';
 import {Converter} from '../../imagestore/converter';
 import {SampleDataLoader} from '../core/sample-data-loader';
-import {AppState} from '../../settings/app-state';
 
 
 @Injectable()
@@ -15,8 +14,7 @@ import {AppState} from '../../settings/app-state';
 export class IdaiFieldSampleDataLoader implements SampleDataLoader {
 
 
-    constructor(private converter: Converter,
-                private appState: AppState) { }
+    constructor(private converter: Converter, private imagestorePath: string) { }
 
 
     public go(db: any, project: string): Promise<any> {
@@ -55,7 +53,7 @@ export class IdaiFieldSampleDataLoader implements SampleDataLoader {
         let path = process.cwd() + base;
         if (!fs.existsSync(path)) path = process.resourcesPath + base;
 
-        return this.loadDirectory(db, path, this.appState.getImagestorePath() + project);
+        return this.loadDirectory(db, path, this.imagestorePath + project);
     }
 
 

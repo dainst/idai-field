@@ -22,10 +22,10 @@ export class PouchdbManager {
     private dbProxy: PouchdbProxy;
     private syncHandles = [];
 
+    private sampleDataLoader: SampleDataLoader;
     private resolveDbReady: Function;
 
-    constructor(private sampleDataLoader: SampleDataLoader,
-                private indexFacade: IndexFacade) {
+    constructor(private indexFacade: IndexFacade) {
 
         const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
         this.dbProxy = new PouchdbProxy(dbReady);
@@ -55,17 +55,19 @@ export class PouchdbManager {
             await this.dbHandle.close();
             this.dbHandle = undefined;
         }
-        this.loadProjectDb('test');
+        if (this.sampleDataLoader) this.loadProjectDb('test', this.sampleDataLoader);
     }
 
 
-    public async loadProjectDb(name: string) {
+    public async loadProjectDb(name: string, sampleDataLoader: SampleDataLoader) {
 
         let db = await PouchdbManager.createPouchDBObject(name);
-        if (name === 'test') {
+
+        if (name === 'test' && sampleDataLoader) {
+            this.sampleDataLoader = sampleDataLoader;
             await db.destroy();
             db = await PouchdbManager.createPouchDBObject(name);
-            await this.sampleDataLoader.go(db, name);
+            await sampleDataLoader.go(db, name);
         }
 
         this.indexFacade.clear();

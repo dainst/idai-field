@@ -1,11 +1,10 @@
-import {Component, Input, ViewChild, ElementRef} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {Messages} from 'idai-components-2/core';
 import {M} from '../../m';
 import {IdaiFieldGeoreference} from '../../core/model/idai-field-georeference';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {SettingsService} from '../../core/settings/settings-service';
 import {PersistenceManager} from "../../core/persist/persistence-manager";
-import {ObjectUtil} from '../../util/object-util';
+import {UsernameProvider} from '../../core/settings/username-provider';
 
 
 @Component({
@@ -26,7 +25,7 @@ export class GeoreferenceViewComponent {
         private persistenceManager: PersistenceManager,
         private messages: Messages,
         private modalService: NgbModal,
-        private settingsService: SettingsService
+        private usernameProvider: UsernameProvider
     ) {}
 
 
@@ -110,7 +109,7 @@ export class GeoreferenceViewComponent {
     private async save(): Promise<any> {
 
         try {
-            return await this.persistenceManager.persist(this.document, this.settingsService.getUsername())
+            return await this.persistenceManager.persist(this.document, this.usernameProvider.getUsername())
         } catch (err) {
             console.error(err);
             throw [M.APP_GENERIC_SAVE_ERROR];

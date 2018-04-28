@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {ObjectUtil} from '../../../util/object-util';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
-import {SettingsService} from '../../../core/settings/settings-service';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {M} from '../../../m';
 import {PersistenceManager} from "../../../core/persist/persistence-manager";
+import {UsernameProvider} from '../../../core/settings/username-provider';
 
 @Injectable()
 /**
@@ -19,7 +18,7 @@ export class PersistenceHelper {
     constructor(
         private imageOverviewFacade: ImageOverviewFacade,
         private persistenceManager: PersistenceManager,
-        private settingsService: SettingsService,
+        private usernameProvider: UsernameProvider,
         private imagestore: Imagestore
     ) {}
 
@@ -38,7 +37,7 @@ export class PersistenceHelper {
                     () => this.imagestore.remove(resourceId),
                     msgWithParams => reject(msgWithParams)
                 ).then(
-                    () => this.persistenceManager.remove(document, this.settingsService.getUsername()),
+                    () => this.persistenceManager.remove(document, this.usernameProvider.getUsername()),
                     err => reject([M.IMAGESTORE_ERROR_DELETE, document.resource.identifier])
                 ).then(() => {
                     this.imageOverviewFacade.remove(document);
@@ -69,7 +68,7 @@ export class PersistenceHelper {
                 }
 
                 promise = promise.then(
-                    () => this.persistenceManager.persist(imageDocument, this.settingsService.getUsername(), oldVersion),
+                    () => this.persistenceManager.persist(imageDocument, this.usernameProvider.getUsername(), oldVersion),
                     msgWithParams => reject(msgWithParams)
                 );
             }
@@ -91,7 +90,7 @@ export class PersistenceHelper {
             document.resource.relations.depicts = [];
 
             promises.push(this.persistenceManager.persist(
-                document, this.settingsService.getUsername(),
+                document, this.usernameProvider.getUsername(),
                 oldVersion) as never);
         }
         return Promise.all(promises);

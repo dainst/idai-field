@@ -1,7 +1,7 @@
 import {Document, ProjectConfiguration, Resource} from 'idai-components-2/core';
 import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";
-import {SettingsService} from '../settings/settings-service';
+import {UsernameProvider} from '../settings/username-provider';
 
 /**
  * @author Thomas Kleinke
@@ -11,7 +11,7 @@ export class RelationsCompleter {
     constructor(
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
-        private settingsService: SettingsService) {}
+        private usernameProvider: UsernameProvider) {}
 
 
     /**
@@ -148,7 +148,7 @@ export class RelationsCompleter {
             if (relations.indexOf(resource.id as any) == -1) {
                 relations.push(resource.id as any);
                 targetDocument.resource.relations[relationName] = relations;
-                this.datastore.update(targetDocument, this.settingsService.getUsername()).then(
+                this.datastore.update(targetDocument, this.usernameProvider.getUsername()).then(
                     doc => resolve(),
                     err => reject(err)
                 );
@@ -167,7 +167,7 @@ export class RelationsCompleter {
             } else {
                 relations.splice(relations.indexOf(resource.id as any), 1);
                 targetDocument.resource.relations[relationName] = relations;
-                this.datastore.update(targetDocument, this.settingsService.getUsername()).then(
+                this.datastore.update(targetDocument, this.usernameProvider.getUsername()).then(
                     doc => resolve(),
                     err => reject(err)
                 );

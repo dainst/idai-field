@@ -1,15 +1,14 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {Messages} from 'idai-components-2/core';
-import {IdaiType} from 'idai-components-2/core';
+import {IdaiType, Messages} from 'idai-components-2/core';
 import {M} from '../../../m';
-import {SettingsService} from '../../../core/settings/settings-service';
 import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../state/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {NavigationService} from '../navigation/navigation-service';
 import {Validator} from '../../../core/model/validator';
+import {UsernameProvider} from '../../../core/settings/username-provider';
 
 
 const RETURN_KEY = 13;
@@ -40,7 +39,7 @@ export class RowComponent implements AfterViewInit {
         public viewFacade: ViewFacade,
         private messages: Messages,
         private persistenceManager: PersistenceManager,
-        private settingsService: SettingsService,
+        private usernameProvider: UsernameProvider,
         private validator: Validator,
         private datastore: IdaiFieldDocumentReadDatastore,
         private navigationService: NavigationService
@@ -86,7 +85,7 @@ export class RowComponent implements AfterViewInit {
         }
 
         try {
-            Object.assign(this.document, await this.persistenceManager.persist(this.document, this.settingsService.getUsername()));
+            Object.assign(this.document, await this.persistenceManager.persist(this.document, this.usernameProvider.getUsername()));
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);
         }

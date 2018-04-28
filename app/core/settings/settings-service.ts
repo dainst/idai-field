@@ -6,11 +6,12 @@ import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
 import {Observable} from 'rxjs/Rx';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
-import {AppState} from './app-state';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
 import {M} from '../../m';
 import {Observer} from 'rxjs/Observer';
 import {unique} from 'tsfun';
+import {IdaiFieldSampleDataLoader} from '../datastore/field/idai-field-sample-data-loader';
+import {Converter} from '../imagestore/converter';
 
 const remote = require('electron').remote;
 
@@ -39,9 +40,9 @@ export class SettingsService {
 
     constructor(private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager,
-                private appState: AppState,
                 private messages: Messages,
-                private appConfigurator: IdaiFieldAppConfigurator) {
+                private appConfigurator: IdaiFieldAppConfigurator,
+                private converter: Converter) {
     }
 
 
@@ -61,7 +62,11 @@ export class SettingsService {
     public async bootProject(): Promise<ProjectConfiguration> {
 
         await this.updateSettings(await this.settingsSerializer.load());
-        await this.pouchdbManager.loadProjectDb(this.getSelectedProject());
+
+        await this.pouchdbManager.loadProjectDb(
+            this.getSelectedProject(),
+            new IdaiFieldSampleDataLoader(this.converter, this.settings.imagestorePath));
+
         await this.setProjectSettings(this.settings.dbs, this.getSelectedProject(), false);
         if (this.settings.isSyncActive) await this.startSync();
 
@@ -103,8 +108,6 @@ export class SettingsService {
             if (!SettingsService.validateAddress(this.settings.syncTarget.address))
                 Promise.reject('malformed_address');
         }
-
-        this.appState.setImagestorePath(settings.imagestorePath);
 
         return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject() as any)
             .catch((errWithParams: any) => {

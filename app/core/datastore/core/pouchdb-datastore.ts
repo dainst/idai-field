@@ -60,6 +60,7 @@ export class PouchdbDatastore {
 
         const clonedDocument = ObjectUtil.cloneObject(document);
         if (!clonedDocument.resource.id) clonedDocument.resource.id = this.idGenerator.generateId();
+        (clonedDocument as any)['_id'] = clonedDocument.resource.id;
         (clonedDocument as any)['created'] = { user: username, date: new Date() };
         (clonedDocument as any)['modified'] = [];
 
@@ -99,6 +100,7 @@ export class PouchdbDatastore {
             await this.removeRevisions(clonedDocument.resource.id, squashRevisionsIds);
         }
         clonedDocument.modified.push({ user: username, date: new Date() });
+        (clonedDocument as any)['_id'] = clonedDocument.resource.id;
 
         try {
             return await this.performPut(clonedDocument);

@@ -27,17 +27,20 @@ export class ProjectsComponent implements OnInit {
 
     private modalRef: NgbModalRef;
 
+
     constructor(private settingsService: SettingsService,
                 private modalService: NgbModal,
                 private messages: Messages,
                 private pouchdbManager: PouchdbManager) {
     }
 
+
     ngOnInit() {
 
-        this.selectedProject = this.settingsService.getSelectedProject() as any;
-           this.projects = this.settingsService.getSettings().dbs.slice(0);
+        this.selectedProject = this.settingsService.getSelectedProject();
+        this.projects = this.settingsService.getSettings().dbs.slice(0);
     }
+
 
     public reset() {
 
@@ -45,19 +48,23 @@ export class ProjectsComponent implements OnInit {
         this.newProject = '';
     }
 
+
     public openModal() {
 
         this.modalRef = this.modalService.open(this.modalTemplate);
     }
 
-    public selectProject() {
 
-        return this.switchProjectDb();
+    public async selectProject() {
+
+        await this.settingsService.setProjectSettings(this.projects, this.selectedProject);
+        this.reload();
     }
 
-    public createProject() {
 
-        if (this.newProject == '') {
+    public async createProject() {
+
+        if (this.newProject === '') {
             return this.messages.add([M.RESOURCES_ERROR_NO_PROJECT_NAME]);
         }
 
@@ -67,27 +74,38 @@ export class ProjectsComponent implements OnInit {
 
         this.projects.unshift(this.newProject);
         this.selectedProject = this.newProject;
-        this.switchProjectDb(true);
+
+        await this.settingsService.setProjectSettings(this.projects, this.selectedProject);
+        await this.pouchdbManager.createDb(
+            this.selectedProject,
+            ProjectsComponent.makeProjectDoc(this.selectedProject, this.settingsService.getUsername()),
+            remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create
+        );
+        this.reload();
     }
+
 
     public deleteProject() {
 
         if (!this.canDeleteProject()) return;
 
-        return this.settingsService.deleteProject(this.selectedProject).then(() => {
+        return this.settingsService.deleteProject(this.selectedProject).then(async () => {
             this.projects.splice(this.projects.indexOf(this.selectedProject), 1);
             this.selectedProject = this.projects[0];
-            return this.switchProjectDb();
+
+            await this.settingsService.setProjectSettings(this.projects, this.selectedProject);
+            this.reload();
         });
     }
 
-    public editProject() {
 
-        (this.pouchdbManager.getDbProxy() as any).get(this.selectedProject).then((document: any) => {
-            const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
-            doceditRef.componentInstance.setDocument(document);
-        });
+    public async editProject() {
+
+        const document = await (this.pouchdbManager.getDbProxy() as any).get(this.selectedProject);
+        const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
+        doceditRef.componentInstance.setDocument(document);
     }
+
 
     private canDeleteProject() {
 
@@ -105,15 +123,29 @@ export class ProjectsComponent implements OnInit {
         return true;
     }
 
-    private switchProjectDb(create = false) {
 
-        return this.settingsService.setProjectSettings(
-                this.projects, this.selectedProject, create)
-            .then(() => {
-                // we have to reload manually since protractor's selectors apparently aren't reliably working as they should after a reload. so we will do this by hand in the E2Es
-                if (!remote.getGlobal('switches') || !remote.getGlobal('switches').prevent_reload) {
-                    window.location.reload();
-                }
-            });
+    // we have to reload manually since protractor's selectors apparently aren't reliably working as they should after a reload. so we will do this by hand in the E2Es
+    private reload() {
+
+        if (!remote.getGlobal('switches') || !remote.getGlobal('switches').prevent_reload) {
+            window.location.reload();
+        }
+    }
+
+
+    private static makeProjectDoc(name: string, username: string) {
+
+        return {
+            _id: name,
+            resource: {
+                type: 'Project',
+                identifier: name,
+                id: name,
+                coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
+                relations: {}
+            },
+            created: { user: username, date: new Date() },
+            modified: [{ user: username, date: new Date() }]
+        };
     }
 }

@@ -121,13 +121,6 @@ export class SettingsService {
         this.settings.dbs = unique([selectedProject].concat(projects));
 
         await this.settingsSerializer.store(this.settings);
-
-        if (create) {
-            await this.pouchdbManager.createDb(
-                selectedProject,
-                SettingsService.makeProjectDoc(selectedProject, this.settings.username)
-            );
-        }
     }
 
 
@@ -195,23 +188,6 @@ export class SettingsService {
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         this.pouchdbManager.stopSync();
         this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
-    }
-
-
-    private static makeProjectDoc(name: string, username: string) {
-
-        return {
-            _id: name,
-            resource: {
-                type: 'Project',
-                identifier: name,
-                id: name,
-                coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
-                relations: {}
-            },
-            created: { user: username, date: new Date() },
-            modified: [{ user: username, date: new Date() }]
-        };
     }
 
 

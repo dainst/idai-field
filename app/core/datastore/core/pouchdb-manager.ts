@@ -25,6 +25,7 @@ export class PouchdbManager {
     private sampleDataLoader: SampleDataLoader;
     private resolveDbReady: Function;
 
+
     constructor(private indexFacade: IndexFacade) {
 
         const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
@@ -119,27 +120,26 @@ export class PouchdbManager {
 
     /**
      * Creates a new database. Unless specified specifically
-     * with remote.getGlobal('switches').destroy_before_create set to true,
+     * with destroyBeforeCreate set to true,
      * a possible existing database with the specified name will get used
      * and not overwritten.
-     *
      */
-    public async createDb(name: string, doc: any) {
+    public async createDb(name: string, doc: any, destroyBeforeCreate: boolean) {
 
         let db = PouchdbManager.createPouchDBObject(name);
 
-        let promise = Promise.resolve();
-        if (remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create) {
-            promise = db.destroy().then(() =>
-                db = PouchdbManager.createPouchDBObject(name)
-            );
+        if (destroyBeforeCreate) {
+            await db.destroy();
+            db = PouchdbManager.createPouchDBObject(name)
         }
 
-        await promise;
-        return db.get(name)
+        try {
+            db.get(name)
+        } catch (_) {
             // create project only if it does not exist,
             // which can happen if the db already existed
-            .catch(() => db.put(doc));
+            db.put(doc);
+        }
     }
 
 

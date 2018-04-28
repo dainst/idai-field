@@ -33,13 +33,13 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     @ViewChild('container') container: ElementRef;
 
-    public meshGeometryManager: MeshGeometryManager;
     public controlState: Map3DControlState;
 
     private viewer: Viewer3D;
     private controls: Map3DControls;
     private cameraManager: Map3DCameraManager;
     private sceneManager: SceneManager = new SceneManager();
+    private meshGeometryManager: MeshGeometryManager;
     private geometriesBounds: GeometriesBounds = new GeometriesBounds();
 
     private removeMouseMoveEventListener: Function;
@@ -54,6 +54,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     public getControls = () => this.controls;
     public getCameraManager = () => this.cameraManager;
     public getSceneManager = () => this.sceneManager;
+    public getMeshGeometryManager = () => this.meshGeometryManager;
     public getGeometriesBounds = () => this.geometriesBounds;
 
     public onMouseDown = (event: MouseEvent) => this.setControlState(this.controls.onMouseDown(event));

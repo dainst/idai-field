@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import {Component, Input, OnChanges, SimpleChange, SimpleChanges} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
 import {Map3DComponent} from '../../map-3d.component';
-import {MeshGeometryManager} from './mesh-geometry-manager';
 
 
 @Component({
@@ -18,7 +17,6 @@ export class MeshGeometriesComponent implements OnChanges {
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
     @Input() hoverDocument: IdaiFieldDocument;
-    @Input() meshGeometryManager: MeshGeometryManager;
 
     public showLineGeometries: boolean = true;
     public showPolygonGeometries: boolean = true;
@@ -38,7 +36,8 @@ export class MeshGeometriesComponent implements OnChanges {
 
         if (!this.hoverDocument) return;
 
-        const mesh: THREE.Mesh|undefined = this.meshGeometryManager.getMesh(this.hoverDocument);
+        const mesh: THREE.Mesh|undefined
+            = this.map3DComponent.getMeshGeometryManager().getMesh(this.hoverDocument);
         if (!mesh) return;
 
         const centerPosition: THREE.Vector3 = mesh.geometry.boundingSphere.center.clone().add(mesh.position);
@@ -63,14 +62,16 @@ export class MeshGeometriesComponent implements OnChanges {
 
     private async update() {
 
-        await this.meshGeometryManager.update(
+        await this.map3DComponent.getMeshGeometryManager().update(
             this.documents ? this.documents : [],
             this.showLineGeometries,
             this.showPolygonGeometries
         );
 
         if (this.documents) {
-            this.map3DComponent.getGeometriesBounds().setMeshes(this.meshGeometryManager.getMeshes());
+            this.map3DComponent.getGeometriesBounds().setMeshes(
+                this.map3DComponent.getMeshGeometryManager().getMeshes()
+            );
         }
 
         this.map3DComponent.getCameraManager().resetPivotPoint();
@@ -80,11 +81,17 @@ export class MeshGeometriesComponent implements OnChanges {
     private async updateSelected(selecedDocumentChange: SimpleChange) {
 
         if (selecedDocumentChange.previousValue) {
-            await this.meshGeometryManager.updateSelected(selecedDocumentChange.previousValue, false);
+            await this.map3DComponent.getMeshGeometryManager().updateSelected(
+                selecedDocumentChange.previousValue,
+                false
+            );
         }
 
         if (selecedDocumentChange.currentValue) {
-            await this.meshGeometryManager.updateSelected(selecedDocumentChange.currentValue, true);
+            await this.map3DComponent.getMeshGeometryManager().updateSelected(
+                selecedDocumentChange.currentValue,
+                true
+            );
         }
     }
 }

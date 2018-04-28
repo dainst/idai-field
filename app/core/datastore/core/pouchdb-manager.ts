@@ -134,11 +134,11 @@ export class PouchdbManager {
         }
 
         try {
-            db.get(name)
+            await db.get(name)
         } catch (_) {
             // create project only if it does not exist,
             // which can happen if the db already existed
-            db.put(doc);
+            await db.put(doc);
         }
     }
 

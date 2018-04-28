@@ -45,8 +45,6 @@ export class LineBuilder {
             geometry.vertices.push(getPointVector(point).sub(position));
         });
 
-        geometry.computeLineDistances();
-
         return geometry;
     }
 

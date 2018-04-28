@@ -1,5 +1,5 @@
 /**
- * @author Daniel de
+ * @author Daniel de Oliveira
  */
 export abstract class UsernameProvider {
 

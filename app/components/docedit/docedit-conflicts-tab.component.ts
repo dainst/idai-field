@@ -68,57 +68,11 @@ export class DoceditConflictsTabComponent implements OnChanges {
     public setSelectedRevision(revision: IdaiFieldDocument) {
 
         this.selectedRevision = revision;
-        this.createDiff(revision).then(
-            differingFields => {
-                this.differingFields = differingFields;
-                this.fetchRelationTargets();
-            }
-        );
-    }
 
+        this.differingFields = DoceditConflictsTabComponent.createDiff(
+            this.document, revision, this.projectConfiguration);
 
-    private createDiff(revision: IdaiFieldDocument): Promise<any[]> {
-
-        let differingFields: any[] = [];
-
-        let differingFieldsNames: string[]
-            = IdaiFieldDiffUtility.findDifferingFields(this.document.resource, revision.resource);
-        let differingRelationsNames: string[]
-            = IdaiFieldDiffUtility.findDifferingRelations(this.document.resource, revision.resource);
-
-            for (let fieldName of differingFieldsNames) {
-                let type: string;
-                let label: string;
-
-                if (fieldName == 'geometry') {
-                    type = 'geometry';
-                    label = 'Geometrie';
-                } else if (fieldName == 'georeference') {
-                    type = 'georeference';
-                    label = 'Georeferenz';
-                } else {
-                    type = 'field';
-                    label = this.projectConfiguration.getFieldDefinitionLabel(this.document.resource.type, fieldName);
-                }
-
-                differingFields.push({
-                    name: fieldName,
-                    label: label,
-                    type: type,
-                    rightSideWinning: false
-                });
-            }
-
-            for (let relationName of differingRelationsNames) {
-                differingFields.push({
-                    name: relationName,
-                    label: this.projectConfiguration.getRelationDefinitionLabel(relationName),
-                    type: 'relation',
-                    rightSideWinning: false
-                });
-            }
-
-            return Promise.resolve(differingFields);
+        this.fetchRelationTargets();
     }
 
     
@@ -275,19 +229,72 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
         const fieldContent: any = revision.resource[field.name];
 
-        if (fieldContent instanceof Array) {
-            let contentString: string = '';
-            for (let element of fieldContent) {
-                if (element.hasLabel) {
-                    contentString += '<div>' + element.hasLabel + '</div>';
-                } else {
-                    if (contentString.length > 0) contentString += ', ';
-                    contentString += element;
-                }
+        return fieldContent instanceof Array
+            ? this.getContentStringFor(fieldContent)
+            : fieldContent;
+    }
+
+
+    public getContentStringFor(fieldContent: any[]): string {
+
+        let contentString: string = '';
+        for (let element of fieldContent) {
+            if (element.hasLabel) {
+                contentString += '<div>' + element.hasLabel + '</div>';
+            } else {
+                if (contentString.length > 0) contentString += ', ';
+                contentString += element;
             }
-            return contentString;
-        } else {
-            return fieldContent;
         }
+        return contentString;
+    }
+
+
+    private static createDiff(
+        document: IdaiFieldDocument,
+        revision: IdaiFieldDocument,
+        projectConfiguration: ProjectConfiguration
+    ): any[] {
+
+        let differingFields: any[] = [];
+
+        let differingFieldsNames: string[]
+            = IdaiFieldDiffUtility.findDifferingFields(document.resource, revision.resource);
+        let differingRelationsNames: string[]
+            = IdaiFieldDiffUtility.findDifferingRelations(document.resource, revision.resource);
+
+        for (let fieldName of differingFieldsNames) {
+            let type: string;
+            let label: string;
+
+            if (fieldName == 'geometry') {
+                type = 'geometry';
+                label = 'Geometrie';
+            } else if (fieldName == 'georeference') {
+                type = 'georeference';
+                label = 'Georeferenz';
+            } else {
+                type = 'field';
+                label = projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);
+            }
+
+            differingFields.push({
+                name: fieldName,
+                label: label,
+                type: type,
+                rightSideWinning: false
+            });
+        }
+
+        for (let relationName of differingRelationsNames) {
+            differingFields.push({
+                name: relationName,
+                label: projectConfiguration.getRelationDefinitionLabel(relationName),
+                type: 'relation',
+                rightSideWinning: false
+            });
+        }
+
+        return differingFields;
     }
 }

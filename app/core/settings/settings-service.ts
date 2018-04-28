@@ -59,6 +59,14 @@ export class SettingsService {
     public getUsername = () => this.settings.username;
 
 
+    public getSelectedProject(): string {
+
+        return this.settings.dbs && this.settings.dbs.length > 0
+            ? this.settings.dbs[0]
+            : 'test';
+    }
+
+
     public async bootProject(): Promise<ProjectConfiguration> {
 
         await this.updateSettings(await this.settingsSerializer.load());
@@ -67,7 +75,6 @@ export class SettingsService {
             this.getSelectedProject(),
             new IdaiFieldSampleDataLoader(this.converter, this.settings.imagestorePath));
 
-        await this.setProjectSettings(this.settings.dbs, this.getSelectedProject(), false);
         if (this.settings.isSyncActive) await this.startSync();
 
         try {
@@ -82,23 +89,11 @@ export class SettingsService {
     }
 
 
-    public getSelectedProject(): string {
-        
-        return (this.settings.dbs && this.settings.dbs.length > 0)
-            ? this.settings.dbs[0]
-            : 'test';
-    }
-
-
     /**
      * Sets, validates and persists the settings state.
      * Project settings have to be set separately.
-     *
-     * @param settings
-     * @return Promise encoding string
-     *   'malformed_address'
      */
-    public updateSettings(settings: Settings): Promise<any> {
+    public async updateSettings(settings: Settings) {
 
         settings = JSON.parse(JSON.stringify(settings)); // deep copy
         this.settings = SettingsService.initSettings(settings);
@@ -106,7 +101,7 @@ export class SettingsService {
         if (this.settings.syncTarget.address) {
             this.settings.syncTarget.address = this.settings.syncTarget.address.trim();
             if (!SettingsService.validateAddress(this.settings.syncTarget.address))
-                Promise.reject('malformed_address');
+                throw 'malformed_address';
         }
 
         return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject() as any)
@@ -121,21 +116,11 @@ export class SettingsService {
     }
 
 
-    /**
-     * Sets project settings
-     *
-     * @param projects
-     * @param selectedProject
-     * @param storeSettings if set to false, settings get not persisted
-     * @param create
-     * @returns {any}
-     */
-    public async setProjectSettings(projects: string[], selectedProject: string,
-                              storeSettings: boolean = true, create: boolean = false): Promise<any> {
+    public async setProjectSettings(projects: string[], selectedProject: string, create: boolean = false) {
 
         this.settings.dbs = unique([selectedProject].concat(projects));
 
-        if (storeSettings) await this.settingsSerializer.store(this.settings);
+        await this.settingsSerializer.store(this.settings);
 
         if (create) {
             await this.pouchdbManager.createDb(

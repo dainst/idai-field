@@ -108,7 +108,7 @@ export class ProjectsComponent implements OnInit {
     private switchProjectDb(create = false) {
 
         return this.settingsService.setProjectSettings(
-                this.projects, this.selectedProject, true, create)
+                this.projects, this.selectedProject, create)
             .then(() => {
                 // we have to reload manually since protractor's selectors apparently aren't reliably working as they should after a reload. so we will do this by hand in the E2Es
                 if (!remote.getGlobal('switches') || !remote.getGlobal('switches').prevent_reload) {

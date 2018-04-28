@@ -112,12 +112,11 @@ export class LineBuilder {
 
     private static createRaycasterObject(geometry: THREE.Geometry, position: THREE.Vector3): THREE.Object3D {
 
-        const rayCasterMaterial: THREE.LineDashedMaterial = new THREE.LineDashedMaterial({
-            dashSize: 0,
-            gapSize: 10
+        const raycasterMaterial: THREE.LineBasicMaterial = new THREE.LineBasicMaterial({
+            visible: false
         });
 
-        const raycasterObject: THREE.Object3D = new THREE.Line(geometry, rayCasterMaterial);
+        const raycasterObject: THREE.Object3D = new THREE.Line(geometry, raycasterMaterial);
         raycasterObject.position.set(position.x, position.y, position.z);
 
         return raycasterObject;

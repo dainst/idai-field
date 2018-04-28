@@ -31,8 +31,8 @@ describe('RemoteChangesStream', () => {
         indexFacade.put.and.returnValue(doc);
         documentCache.get.and.returnValue(1); // just to trigger reassignment
 
-        datastore = jasmine.createSpyObj('MockDatastore', ['changesNotifications', 'deletedNotifications', 'fetchConflictedRevisions']);
-        datastore.fetchConflictedRevisions.and.returnValue(Promise.resolve([]));
+        datastore = jasmine.createSpyObj('MockDatastore', ['changesNotifications', 'deletedNotifications', 'fetch']);
+        datastore.fetch.and.returnValue(Promise.resolve(doc));
 
         datastore.changesNotifications.and.returnValue({subscribe: (func: Function) => fun = func});
         datastore.deletedNotifications.and.returnValue({subscribe: (func: Function) => undefined});

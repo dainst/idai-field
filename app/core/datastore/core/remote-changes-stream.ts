@@ -30,6 +30,7 @@ export class RemoteChangesStream {
     ) {
 
         datastore.deletedNotifications().subscribe(document => {
+
             this.documentCache.remove(document.resource.id);
             this.indexFacade.remove(document);
         });
@@ -37,16 +38,8 @@ export class RemoteChangesStream {
 
         datastore.changesNotifications().subscribe(async document => {
 
-            let conflictedRevisions: Document[] = [];
-            try {
-                conflictedRevisions = await this.fetchConflictedRevisions(document.resource.id);
-            } catch (e) {
-                console.warn('Failed to fetch conflicted revisions for document', document.resource.id);
-            }
-
-            if (RemoteChangesStream.isRemoteChange(
+            if (await this.isRemoteChange(
                     document,
-                    conflictedRevisions,
                     this.settingsService.getUsername())) {
 
                 this.welcomeRemoteDocument(document);
@@ -57,22 +50,6 @@ export class RemoteChangesStream {
     public notifications = (): Observable<Document> => ObserverUtil.register(this.observers);
 
     public setAutoCacheUpdate = (autoCacheUpdate: boolean) => this.autoCacheUpdate = autoCacheUpdate;
-
-
-    private async fetchConflictedRevisions(resourceId: string): Promise<Array<Document>> {
-
-        const conflictedRevisions: Array<Document> = [];
-
-        const document = await this.datastore.fetch(resourceId);
-
-        if ((document as any)['_conflicts']) {
-            for (let revisionId of (document as any)['_conflicts']) {
-                conflictedRevisions.push(await this.datastore.fetchRevision(document.resource.id, revisionId));
-            }
-        }
-
-        return conflictedRevisions;
-    }
 
 
     private welcomeRemoteDocument(document: Document) {
@@ -91,12 +68,19 @@ export class RemoteChangesStream {
     }
 
 
-    private static isRemoteChange(
+    private async isRemoteChange(
         document: Document,
-        conflictedRevisions: Array<Document>,
-        username: string): boolean {
+        username: string): Promise<boolean> {
 
         let latestAction: Action = Document.getLastModified(document);
+
+        let conflictedRevisions: Document[] = [];
+        try {
+            conflictedRevisions = await this.fetchConflictedRevisions(document.resource.id);
+        } catch (e) {
+            console.warn('Failed to fetch conflicted revisions for document', document.resource.id);
+            return false;
+        }
 
         for (let revision of conflictedRevisions) {
             const latestRevisionAction: Action = Document.getLastModified(revision);
@@ -106,5 +90,21 @@ export class RemoteChangesStream {
         }
 
         return latestAction && latestAction.user !== username;
+    }
+
+
+    private async fetchConflictedRevisions(resourceId: string): Promise<Array<Document>> {
+
+        const conflictedRevisions: Array<Document> = [];
+
+        const document = await this.datastore.fetch(resourceId);
+
+        if ((document as any)['_conflicts']) {
+            for (let revisionId of (document as any)['_conflicts']) {
+                conflictedRevisions.push(await this.datastore.fetchRevision(document.resource.id, revisionId));
+            }
+        }
+
+        return conflictedRevisions;
     }
 }

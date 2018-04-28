@@ -36,8 +36,6 @@ export class RemoteChangesStream {
 
         datastore.changesNotifications().subscribe(async document => {
 
-            if (!document || !document.resource) return;
-
             let conflictedRevisions: Document[] = [];
             try {
                 conflictedRevisions = await this.fetchConflictedRevisions(document.resource.id);

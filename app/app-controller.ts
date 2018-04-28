@@ -31,11 +31,14 @@ export class AppController {
             if (!remote.getGlobal('switches').provide_reset) return resolve();
 
             const control = express();
-            control.post('/reset', (req: any, res: any) => {
-                this.pouchdbManager.resetForE2E();
+            control.post('/reset', async (req: any, res: any) => {
+
                 this.resourcesState.resetForE2E();
-                this.documentCache.resetForE2E();
                 this.imagesState.resetForE2E();
+
+                this.documentCache.resetForE2E();
+                await this.pouchdbManager.resetForE2E();
+
                 res.send('done');
             });
             control.listen(3003, function() {

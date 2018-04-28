@@ -48,18 +48,18 @@ export class PouchdbManager {
 
     public async resetForE2E() {
 
-        const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
+        const dbReady = new Promise(resolve => this.resolveDbReady = resolve);
         Object.assign(this.dbProxy, new PouchdbProxy(dbReady));
 
         if (this.dbHandle) {
             await this.dbHandle.close();
             this.dbHandle = undefined;
         }
-        if (this.sampleDataLoader) this.loadProjectDb('test', this.sampleDataLoader);
+        if (this.sampleDataLoader) await this.loadProjectDb('test', this.sampleDataLoader);
     }
 
 
-    public async loadProjectDb(name: string, sampleDataLoader: SampleDataLoader) {
+    public async loadProjectDb(name: string, sampleDataLoader?: SampleDataLoader) {
 
         let db = await PouchdbManager.createPouchDBObject(name);
 

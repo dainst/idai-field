@@ -70,9 +70,7 @@ export class PointGeometriesComponent implements DoCheck, OnChanges {
 
         PointGeometriesComponent.get3DPointGeometries(this.documents).forEach(document => {
            const marker: Map3DMarker|undefined = this.getMarker(document);
-           if (marker) {
-               markers.push(marker);
-           }
+           if (marker) markers.push(marker);
         });
 
         this.performVisibilityTest(markers);

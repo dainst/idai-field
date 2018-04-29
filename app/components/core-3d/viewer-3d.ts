@@ -52,10 +52,8 @@ export class Viewer3D {
         const projectedPosition: THREE.Vector3 = position.clone().project(this.cameraManager.getCamera());
 
         const canvasCoordinates: THREE.Vector2 = new THREE.Vector2();
-        canvasCoordinates.x
-            = Math.round((projectedPosition.x + 1) * canvas.width / 2);
-        canvasCoordinates.y
-            = Math.round((-projectedPosition.y + 1) * canvas.height / 2);
+        canvasCoordinates.x = Math.round((projectedPosition.x + 1) * canvas.width / 2);
+        canvasCoordinates.y = Math.round((-projectedPosition.y + 1) * canvas.height / 2);
 
         return canvasCoordinates;
     }

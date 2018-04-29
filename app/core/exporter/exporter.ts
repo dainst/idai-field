@@ -1,32 +1,25 @@
 import {Injectable} from '@angular/core';
-import {Serializer} from './serializer';
-import {Datastore} from 'idai-components-2/core';
 import {M} from '../../m';
+import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 
-const remote = require('electron').remote;
-const fs = remote.require('fs');
+const fs = require('electron').remote.require('fs');
 
 @Injectable()
 /**
  * @author Thomas Kleinke
- **/
+ * @author Daniel de Oliveira
+ */
 export class Exporter {
 
-    constructor(private datastore: Datastore) {}
+    constructor(private pouchdbManager: PouchdbManager) {}
 
+    public async exportResources(filePath: string): Promise<any> {
 
-    public exportResources(filePath: string, serializer: Serializer): Promise<any> {
-
-        return this.datastore.find({}).then(
-            result => {
-                fs.writeFile(filePath, serializer.serialize(result.documents), (err: any) => {
-                    if (err) {
-                        return Promise.reject([M.EXPORT_WRITE_ERROR, filePath]);
-                    } else {
-                        return Promise.resolve();
-                    }
-                });
-            }, () => Promise.reject([M.ALL_FIND_ERROR])
-        );
+        try {
+            const result = await this.pouchdbManager.getCompleteChanges();
+            fs.writeFileSync(filePath, JSON.stringify(result));
+        } catch (_) {
+            throw [M.EXPORT_WRITE_ERROR, filePath];
+        }
     }
 }

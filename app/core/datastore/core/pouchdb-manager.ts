@@ -143,6 +143,17 @@ export class PouchdbManager {
     }
 
 
+    public async getCompleteChanges() {
+
+        return this.dbHandle.changes({
+            since: 0,
+            include_docs: true,
+            attachments: true,
+            conflicts: true
+        });
+    }
+
+
     private static async fetchAll(db:any, forEach: Function) {
 
         await db

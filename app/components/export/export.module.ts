@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {ExportComponent} from './export.component';
-import {Exporter} from '../../core/exporter/exporter';
 
 @NgModule({
     imports: [
@@ -14,9 +13,6 @@ import {Exporter} from '../../core/exporter/exporter';
     ],
     exports: [
         ExportComponent
-    ],
-    providers: [
-        Exporter
     ]
 })
 

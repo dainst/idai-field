@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {Messages} from 'idai-components-2/core';
 import {Exporter} from '../../core/exporter/exporter';
+import {Serializer} from '../../core/exporter/serializer';
+import {NativeJsonlSerializer} from '../../core/exporter/native-jsonl-serializer';
 import {M} from '../../m';
 
 const {dialog} = require('electron').remote;
@@ -35,7 +37,7 @@ export class ExportComponent {
                 this.running = true;
                 this.messages.add([M.EXPORT_START]);
 
-                return this.exporter.exportResources(filePath).then(
+                return this.exporter.exportResources(filePath, this.getSerializer() as any).then(
                     () => {
                         this.running = false;
                         this.messages.add([M.EXPORT_SUCCESS]);
@@ -60,11 +62,20 @@ export class ExportComponent {
     }
 
 
+    private getSerializer(): Serializer|undefined {
+
+        switch (this.format) {
+            case 'native':
+                return new NativeJsonlSerializer();
+        }
+    }
+
+
     private getFileFilters(): Array<any>|undefined {
 
         switch (this.format) {
             case 'native':
-                return [ { name: 'Text', extensions: [ 'txt' ] } ];
+                return [ { name: 'JSON Lines', extensions: [ 'jsonl' ] } ];
         }
     }
 }

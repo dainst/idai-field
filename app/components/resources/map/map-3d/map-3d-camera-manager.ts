@@ -93,6 +93,8 @@ export class Map3DCameraManager extends CameraManager {
 
     public drag(deltaX: number, deltaY: number) {
 
+        if (this.isAnimationRunning()) return;
+
         this.resetPivotPoint();
 
         const { xChange, zChange } = this.getDragValues(deltaX, deltaY);
@@ -104,7 +106,7 @@ export class Map3DCameraManager extends CameraManager {
 
     public changeAngle(delta: number) {
 
-        if (this.projectionMode == 'orthographic') return;
+        if (this.projectionMode == 'orthographic' || this.isAnimationRunning()) return;
 
         const angleChange: number = this.getAllowedAngleChange(delta);
 
@@ -145,6 +147,8 @@ export class Map3DCameraManager extends CameraManager {
 
     public zoom(value: number, camera?: THREE.Camera) {
 
+        if (this.isAnimationRunning()) return;
+
         if (this.projectionMode == 'perspective') {
             this.zoomPerspectiveCamera(value, camera as THREE.PerspectiveCamera);
         } else {
@@ -166,6 +170,8 @@ export class Map3DCameraManager extends CameraManager {
 
     public focusPoint(point: THREE.Vector3) {
 
+        if (this.isAnimationRunning()) return;
+
         this.resetPivotPoint();
 
         Map3DCameraManager.focusPoint(this.perspectiveCamera, point, 3);
@@ -176,6 +182,8 @@ export class Map3DCameraManager extends CameraManager {
 
 
     public focusMesh(mesh: THREE.Mesh) {
+
+        if (this.isAnimationRunning()) return;
 
         this.resetPivotPoint();
 

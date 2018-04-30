@@ -27,7 +27,7 @@ import {WidgetsModule} from './widgets/widgets.module';
 import {PouchDbFsImagestore} from './core/imagestore/pouch-db-fs-imagestore';
 import {ProjectsComponent} from './components/navbar/projects.component';
 import {ImportModule} from './components/import/import-module';
-import {ExportModule} from './components/export/export.module';
+import {BackupModule} from './components/backup/backup.module';
 import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-service';
 import {ImageViewModule} from './components/imageview/image-view.module';
 import {AppController} from './app-controller';
@@ -63,7 +63,7 @@ let pconf: any = undefined;
         IdaiWidgetsModule,
         WidgetsModule,
         ImportModule,
-        ExportModule,
+        BackupModule,
         DatastoreModule,
         MatrixModule
     ],

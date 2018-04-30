@@ -1,0 +1,47 @@
+<div id="export">
+
+    <header class="bg-light">
+
+
+
+
+    </header>
+
+    <main>
+
+        <h3>Backup erstellen</h3>
+
+        <br>
+        <button *ngIf="!running" id="exportStartButton"
+                class="btn btn-primary"
+                [ngClass]="{ 'disabled': running }"
+                (click)="running || dump()">
+            <span class="mdi mdi-file-export" style="color: white"></span>
+            Backup erstellen
+        </button>
+
+        <hr>
+
+        <h3>Backup einlesen</h3>
+
+        <br>
+        <label>Pfad</label>
+        <input type="text" class="form-control" id="path"
+               [(ngModel)]="path" name="path">
+
+
+        <label>Projekt</label>
+        <input type="text" class="form-control" id="proj"
+               [(ngModel)]="proj" name="proj">
+
+        <br>
+        <br>
+        <button *ngIf="!running" id="importStartButton"
+                class="btn btn-primary"
+                [ngClass]="{ 'disabled': running }"
+                (click)="running || readDump()">
+            <span class="mdi mdi-file-export" style="color: white"></span>
+            Backup einlesen
+        </button>
+    </main>
+</div>

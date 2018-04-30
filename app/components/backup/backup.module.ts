@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-import {ExportComponent} from './export.component';
-import {Exporter} from '../../core/exporter/exporter';
+import {BackupComponent} from './backup.component';
+import {Backup} from './backup';
 
 @NgModule({
     imports: [
@@ -10,14 +10,14 @@ import {Exporter} from '../../core/exporter/exporter';
         FormsModule
     ],
     declarations: [
-        ExportComponent,
+        BackupComponent,
     ],
     exports: [
-        ExportComponent
+        BackupComponent
     ],
     providers: [
-        Exporter
+        Backup
     ]
 })
 
-export class ExportModule {}
+export class BackupModule {}

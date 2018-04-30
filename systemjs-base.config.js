@@ -73,7 +73,13 @@ config.map = {
     'os': '@node/os',
     'buffer': '@node/buffer',
     'viz.js': 'node_modules/viz.js/viz.js',
-    'svg-pan-zoom': 'node_modules/svg-pan-zoom/dist/svg-pan-zoom.js'
+    'svg-pan-zoom': 'node_modules/svg-pan-zoom/dist/svg-pan-zoom.js',
+    'stream': '@node/stream',
+    'util': '@node/util',
+    'string_decoder': '@node/string_decoder',
+    'memorystream': 'node_modules/memorystream/index.js',
+    'pouchdb-load': 'node_modules/pouchdb-load/dist/pouchdb.load.js',
+    'pouchdb-replication-stream': 'node_modules/pouchdb-replication-stream/dist/pouchdb.replication-stream.js'
 };
 
 config.meta=  {

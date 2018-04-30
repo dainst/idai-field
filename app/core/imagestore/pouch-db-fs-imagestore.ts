@@ -100,7 +100,7 @@ export class PouchDbFsImagestore implements Imagestore {
                 return Promise.reject([ImagestoreErrors.EMPTY]);
             }
 
-            if (thumb && data.size == 2) return Promise.reject('thumb broken');
+            if (thumb && (data.size == 0 || data.size == 2)) return Promise.reject('thumb broken');
 
             blobUrls[key] = this.blobMaker.makeBlob(data);
 

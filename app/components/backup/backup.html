@@ -3,8 +3,6 @@
     <header class="bg-light">
 
 
-
-
     </header>
 
     <main>
@@ -12,10 +10,10 @@
         <h3>Backup erstellen</h3>
 
         <br>
-        <button *ngIf="!running" id="exportStartButton"
+        <button id="exportStartButton"
                 class="btn btn-primary"
                 [ngClass]="{ 'disabled': running }"
-                (click)="running || dump()">
+                (click)="dump()">
             <span class="mdi mdi-file-export" style="color: white"></span>
             Backup erstellen
         </button>
@@ -36,10 +34,10 @@
 
         <br>
         <br>
-        <button *ngIf="!running" id="importStartButton"
+        <button id="importStartButton"
                 class="btn btn-primary"
                 [ngClass]="{ 'disabled': running }"
-                (click)="running || readDump()">
+                (click)="readDump()">
             <span class="mdi mdi-file-export" style="color: white"></span>
             Backup einlesen
         </button>

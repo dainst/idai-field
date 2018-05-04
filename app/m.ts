@@ -50,10 +50,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_FAILURE_MISSING_RELATION_TARGET: string = 'importer/failure/missingrelationtarget';
     public static IMPORT_FAILURE_INVALID_MAIN_TYPE_DOCUMENT: string = 'importer/failure/invalidmaintypedocument';
 
-    // Export Package
-    public static EXPORT_START: string = 'exporter/start';
-    public static EXPORT_SUCCESS: string = 'exporter/success';
-    public static EXPORT_WRITE_ERROR: string = 'exporter/writeerror';
+    // Backup Package
+    public static BACKUP_DUMP_SUCCESS: string = 'backup/dumpsuccess';
+    public static BACKUP_DUMP_ERROR: string = 'backup/dumperror';
+    public static BACKUP_READ_DUMP_SUCCESS: string = 'backup/readdumpsuccess';
+    public static BACKUP_READ_DUMP_ERROR: string = 'backup/readdumperror';
 
     // Datastore Package
 
@@ -285,22 +286,28 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [ '?', '?' ],
             hidden: false
         };
-        this.msgs[M.EXPORT_START]={
-            content: 'Starte Export...',
-            level: 'info',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.EXPORT_SUCCESS]={
-            content: 'Die Ressourcen wurden erfolgreich exportiert.',
+        this.msgs[M.BACKUP_DUMP_SUCCESS]={
+            content: 'Datenbank erfolgreich gesichert',
             level: 'success',
             params: [],
             hidden: false
         };
-        this.msgs[M.EXPORT_WRITE_ERROR]={
-            content: 'Beim Export ist ein Fehler aufgetreten: Die Datei {0} konnte nicht geschrieben werden.',
-            level: 'error',
-            params: [ '' ],
+        this.msgs[M.BACKUP_DUMP_ERROR]={
+            content: 'Fehler beim Sichern der Datenbank',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.BACKUP_READ_DUMP_SUCCESS]={
+            content: 'Datenbank erfolgreich eingelesen',
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.BACKUP_READ_DUMP_ERROR]={
+            content: 'Fehler beim Einlesen der Datenbank',
+            level: 'danger',
+            params: [],
             hidden: false
         };
         this.msgs[M.MODEL_VALIDATION_ERROR_IDEXISTS]={

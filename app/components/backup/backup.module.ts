@@ -3,6 +3,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {BackupComponent} from './backup.component';
 import {Backup} from './backup';
+import {DumpModalComponent} from './dump-modal.component';
+import {ReadDumpModalComponent} from './read-dump-modal.component';
 
 @NgModule({
     imports: [
@@ -11,12 +13,18 @@ import {Backup} from './backup';
     ],
     declarations: [
         BackupComponent,
+        DumpModalComponent,
+        ReadDumpModalComponent
     ],
     exports: [
         BackupComponent
     ],
     providers: [
         Backup
+    ],
+    entryComponents: [
+        DumpModalComponent,
+        ReadDumpModalComponent
     ]
 })
 

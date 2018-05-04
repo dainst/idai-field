@@ -92,13 +92,11 @@ export class BackupComponent {
 
     private chooseFilepath(): Promise<string> {
 
-        return new Promise<string>((resolve) => {
+        return new Promise<string>(async resolve => {
 
-            dialog.showSaveDialog(
-                { filters: [ { name: 'Text', extensions: [ 'txt' ] } ] },
-                    filePath => {
-                resolve(filePath);
-            });
+            const filePath = await dialog.showSaveDialog(
+                { filters: [ { name: 'Text', extensions: [ 'txt' ] } ] });
+            resolve(filePath);
         });
     }
 }

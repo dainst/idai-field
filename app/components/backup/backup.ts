@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 
-const remote = require('electron').remote;
-const fs = remote.require('fs');
+import * as fs from 'fs';
 
 const PouchDB = require('pouchdb');
 const replicationStream = require('pouchdb-replication-stream');

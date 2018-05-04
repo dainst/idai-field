@@ -5,12 +5,14 @@ import {ImagestoreErrors} from '../../app/core/imagestore/imagestore-errors';
 
 // override nodes require function in order to make special
 // systemjs requires starting with '@node' work
+/* TODO take out this block and move test file to another folder
 const Module = require('module');
 const originalRequire = Module.prototype.require;
 Module.prototype.require = function() {
     if (arguments[0].startsWith('@node')) arguments[0] = arguments[0].substring(6);
     return originalRequire.apply(this, arguments);
 };
+*/
 
 import {PouchDbFsImagestore} from '../../app/core/imagestore/pouch-db-fs-imagestore';
 

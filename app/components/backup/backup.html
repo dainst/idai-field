@@ -2,44 +2,54 @@
 
     <header class="bg-light">
 
+        <button id="exportStartButton"
+                class="btn btn-primary"
+                [ngClass]="{ 'disabled': running }"
+                (click)="dump()"
+                ngbTooltip="Erstellt ein Backup des aktuell geöffneten Projektes. Aus diesem kann die entsprechende Datenbank zu einem späteren Zeitpunkt wiederhergestellt werden."
+                placement="bottom">
+            <span class="mdi mdi-file-export" style="color: white"></span>
+            Backup erstellen
+        </button>
 
     </header>
 
     <main>
 
-        <h3>Backup erstellen</h3>
+        <div class="form-group row">
 
-        <br>
-        <button id="exportStartButton"
-                class="btn btn-primary"
-                [ngClass]="{ 'disabled': running }"
-                (click)="dump()">
-            <span class="mdi mdi-file-export" style="color: white"></span>
-            Backup erstellen
-        </button>
+            <div class="col-lg-6 mx-lg-auto">
 
-        <hr>
+                <h3>Backup einlesen</h3>
 
-        <h3>Backup einlesen</h3>
+                Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank /
+                eines Zielprojektes ein. Der Name des Zielprojektes darf nicht mit
+                dem aktuell geöffneten Projekt übereinstimmen.
+                <b>Achtung: </b> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene
+                Zieldatenbank mit dem angegebenem Namen vollständig überschrieben.
 
-        <br>
-        <label>Pfad</label>
-        <input type="text" class="form-control" id="path"
-               [(ngModel)]="path" name="path">
+                <br>
+                <br>
+                <label>Pfad</label>
+                <input type="text" class="form-control" id="path"
+                       [(ngModel)]="path" name="path">
 
 
-        <label>Projekt</label>
-        <input type="text" class="form-control" id="proj"
-               [(ngModel)]="proj" name="proj">
+                <label>Projekt</label>
+                <input type="text" class="form-control" id="proj"
+                       [(ngModel)]="proj" name="proj">
 
-        <br>
-        <br>
-        <button id="importStartButton"
-                class="btn btn-primary"
-                [ngClass]="{ 'disabled': running }"
-                (click)="readDump()">
-            <span class="mdi mdi-file-export" style="color: white"></span>
-            Backup einlesen
-        </button>
+                <br>
+                <br>
+                <button id="importStartButton"
+                        class="btn btn-primary"
+                        [ngClass]="{ 'disabled': running }"
+                        (click)="readDump()">
+                    <span class="mdi mdi-file-export" style="color: white"></span>
+                    Backup einlesen
+                </button>
+
+            </div>
+        </div>
     </main>
 </div>

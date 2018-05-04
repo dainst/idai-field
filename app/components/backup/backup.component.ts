@@ -3,7 +3,6 @@ import {Messages} from 'idai-components-2/core';
 import {M} from '../../m';
 import {Backup} from './backup';
 import {SettingsService} from '../../core/settings/settings-service';
-import {UploadModalComponent} from '../import/upload-modal.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DumpModalComponent} from './dump-modal.component';
 import {ReadDumpModalComponent} from './read-dump-modal.component';

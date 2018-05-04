@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {BackupComponent} from './backup.component';
-import {Backup} from './backup';
 import {DumpModalComponent} from './dump-modal.component';
 import {ReadDumpModalComponent} from './read-dump-modal.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -20,9 +19,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ],
     exports: [
         BackupComponent
-    ],
-    providers: [
-        Backup
     ],
     entryComponents: [
         DumpModalComponent,

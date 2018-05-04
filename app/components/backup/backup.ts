@@ -1,21 +1,16 @@
-import {Injectable} from '@angular/core';
-
 import * as fs from 'fs';
 
 const PouchDB = require('pouchdb');
 const replicationStream = require('pouchdb-replication-stream');
 const MemoryStream = require('memorystream');
 
-@Injectable()
+
 /**
  * @author Daniel de Oliveira
  **/
-export class Backup {
+export module Backup {
 
-    constructor() {}
-
-
-    public async dump(filePath: string, project: string) {
+    export async function dump(filePath: string, project: string) {
 
         PouchDB.plugin(replicationStream.plugin);
         PouchDB.adapter('writableStream', replicationStream.adapters.writableStream);
@@ -34,7 +29,7 @@ export class Backup {
     }
 
 
-    public async readDump(filePath: string, project: string) {
+    export async function readDump(filePath: string, project: string) {
 
         const db2 = new PouchDB(project);
         PouchDB.plugin(require('pouchdb-load'));

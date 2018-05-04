@@ -23,8 +23,7 @@ describe('Backup', () => {
         await db.put({'_id' : 'a1', a: {b: 'c'}});
         await db.put({'_id' : 'a2', a: {b: 'd'}});
 
-        const b = new Backup();
-        await b.dump(backupFilePath, 'unittest');
+        await Backup.dump(backupFilePath, 'unittest');
 
         const data = fs.readFileSync(backupFilePath);
         const docs = JSON.parse(data.toString().split('\n')[1])['docs'];
@@ -33,6 +32,7 @@ describe('Backup', () => {
         expect(docs[1].a.b).toEqual('d');
         expect(docs[0]['_id']).toEqual('a1');
         expect(docs[1]['_id']).toEqual('a2');
+        db.close();
         done();
     });
 });

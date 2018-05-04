@@ -29,7 +29,6 @@ export class BackupComponent {
     constructor(
         private messages: Messages,
         private modalService: NgbModal,
-        private backup: Backup,
         private settingsService: SettingsService
     ) {}
 
@@ -48,7 +47,7 @@ export class BackupComponent {
 
         this.running = true;
         try {
-            await this.backup.dump(filePath, this.settingsService.getSelectedProject());
+            await Backup.dump(filePath, this.settingsService.getSelectedProject());
             this.messages.add([M.BACKUP_DUMP_SUCCESS]);
         } catch (err) {
             this.messages.add([M.BACKUP_DUMP_ERROR]);
@@ -78,7 +77,7 @@ export class BackupComponent {
 
         this.running = true;
         try {
-            await this.backup.readDump(this.path, this.proj);
+            await Backup.readDump(this.path, this.proj);
             this.messages.add([M.BACKUP_READ_DUMP_SUCCESS]);
         } catch (err) {
             this.messages.add([M.BACKUP_READ_DUMP_ERROR]);

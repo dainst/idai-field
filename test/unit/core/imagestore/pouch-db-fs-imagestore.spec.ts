@@ -1,27 +1,14 @@
-import {ImagestoreErrors} from '../../app/core/imagestore/imagestore-errors';
+import {ImagestoreErrors} from '../../../../app/core/imagestore/imagestore-errors';
+import {PouchDbFsImagestore} from '../../../../app/core/imagestore/pouch-db-fs-imagestore';
+import {PouchdbManager} from '../../../../app/core/datastore/core/pouchdb-manager';
+import {IndexFacade} from "../../../../app/core/datastore/index/index-facade";
 /**
  * @author Sebastian Cuy
  */
 
-// override nodes require function in order to make special
-// systemjs requires starting with '@node' work
-/* TODO take out this block and move test file to another folder
-const Module = require('module');
-const originalRequire = Module.prototype.require;
-Module.prototype.require = function() {
-    if (arguments[0].startsWith('@node')) arguments[0] = arguments[0].substring(6);
-    return originalRequire.apply(this, arguments);
-};
-*/
-
-import {PouchDbFsImagestore} from '../../app/core/imagestore/pouch-db-fs-imagestore';
-
 import fs = require('fs');
 import rimraf = require('rimraf');
 import PouchDB = require('pouchdb');
-import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
-import {DocumentCache} from '../../app/core/datastore/core/document-cache';
-import {IndexFacade} from "../../app/core/datastore/index/index-facade";
 
 // helper functions for converting strings to ArrayBuffers and vice versa
 function str2ab(str: string): ArrayBuffer {
@@ -33,15 +20,13 @@ function str2ab(str: string): ArrayBuffer {
     return buf;
 }
 
-function ab2str(buf: ArrayBuffer): string {
-    return String.fromCharCode.apply(null, new Uint8Array(buf));
-}
 
 describe('PouchDbFsImagestore', () => {
 
     let store: PouchDbFsImagestore;
     let manager: PouchdbManager;
     const storeProjectPath = 'store/unittest/';
+
 
     beforeEach(() => {
         const mockBlobMaker = jasmine.createSpyObj('blobProxy',['makeBlob']);
@@ -60,11 +45,13 @@ describe('PouchDbFsImagestore', () => {
         store.setPath('store/', 'unittest');
     });
 
+
     afterEach(done => {
         rimraf(storeProjectPath, () => {
             return new PouchDB('unittest').destroy().then(done);
         });
     });
+
 
     it('should create a file', (done) => {
 
@@ -82,6 +69,7 @@ describe('PouchDbFsImagestore', () => {
         });
     });
 
+
     it('should read a file', (done) => {
 
         store.create('test_read', str2ab('qwer'))
@@ -95,6 +83,7 @@ describe('PouchDbFsImagestore', () => {
                 done();
             });
     });
+
 
     it('should update a file', (done) => {
 
@@ -112,6 +101,7 @@ describe('PouchDbFsImagestore', () => {
                 done();
             });
     });
+
 
     it('should remove a file', (done) => {
 
@@ -151,5 +141,4 @@ describe('PouchDbFsImagestore', () => {
                 done();
             });
     });
-
 });

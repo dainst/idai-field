@@ -17,15 +17,17 @@ export module Backup {
 
         let dumpedString = '';
         const stream = new MemoryStream();
-        stream.on('data', function(chunk: any) {
-            dumpedString += chunk.toString();
-        });
+        stream.on('data', (chunk: any) => {
+
+            dumpedString +=
+                chunk.toString()
+                    .replace(/"data"[\s\S]+?,/g,'\"data\":\"\",')
+        }); // TODO note that this regex is a too general. we want to get rid of this asap anyway, as soon as the thumbnail thing is fixed in pouchdb-replication stream.
 
         const db = new PouchDB(project);
 
         await db.dump(stream, {attachments:false});
-        fs.writeFileSync(filePath, dumpedString
-            .replace('\"data\":{}','\"data\":\"\"'));
+        fs.writeFileSync(filePath, dumpedString);
     }
 
 

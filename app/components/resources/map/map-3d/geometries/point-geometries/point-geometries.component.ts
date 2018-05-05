@@ -16,6 +16,7 @@ export interface Map3DMarker {
     canvasPosition: THREE.Vector2;
     worldSpacePosition: THREE.Vector3;
     visible: boolean;
+    visibilityChange: number;
 }
 
 
@@ -111,7 +112,8 @@ export class PointGeometriesComponent implements OnChanges, OnInit {
             document: document,
             canvasPosition: canvasPosition,
             worldSpacePosition: worldSpacePosition,
-            visible: true
+            visible: true,
+            visibilityChange: 0
         };
 
         this.cachedMarkers[document.resource.id as string] = marker;
@@ -147,6 +149,8 @@ export class PointGeometriesComponent implements OnChanges, OnInit {
      * Only one marker per method call is tested for visibility in order to avoid performance issues.
      * As the method is called every time the depth map is updated, all markers are usually tested in
      * a very short time.
+     * The 'visible' value is only changed after several consecutive identical check results in order to
+     * prevent marker flickering.
      */
     private performVisibilityTest(markers: Array<Map3DMarker>) {
 
@@ -155,7 +159,15 @@ export class PointGeometriesComponent implements OnChanges, OnInit {
         this.increaseVisibilityTestCounter();
 
         const index: number = this.visibilityTestCounter % markers.length;
-        markers[index].visible = this.isVisible(markers[index]);
+        markers[index].visibilityChange += this.isVisible(markers[index]) ? 1 : -1;
+
+        if (markers[index].visibilityChange == -3) {
+            markers[index].visible = false;
+            markers[index].visibilityChange = 0;
+        } else if (markers[index].visibilityChange == 3) {
+            markers[index].visible = true;
+            markers[index].visibilityChange = 0;
+        }
     }
 
 

@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import {Observable} from 'rxjs/Observable';
+import {Observer} from 'rxjs/Observer';
 
 const getDepthInWorldSpace = require('read-depth');
 
@@ -14,6 +16,8 @@ export class DepthMap {
     private renderTarget: THREE.WebGLRenderTarget;
 
     private ready: boolean = false;
+
+    private observers: Array<Observer<void>> = [];
 
 
     constructor(private renderer: THREE.WebGLRenderer,
@@ -34,6 +38,8 @@ export class DepthMap {
         this.startRenderingToDepthMap();
         this.renderer.render(this.scene, this.camera, this.renderTarget);
         this.stopRenderingToDepthMap(defaultRenderTarget);
+
+        this.notifyObservers();
     }
 
 
@@ -65,6 +71,20 @@ export class DepthMap {
     public setReady(ready: boolean) {
 
         this.ready = ready;
+    }
+
+
+    public updateNotification(): Observable<void> {
+
+        return new Observable<void>((observer: Observer<any>) => {
+            this.observers.push(observer);
+        });
+    }
+
+
+    private notifyObservers() {
+
+        this.observers.forEach(observer => observer.next(undefined));
     }
 
 

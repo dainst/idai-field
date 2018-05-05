@@ -1,6 +1,8 @@
 import * as THREE from 'three';
-import {Component, ViewChild, ElementRef, Input, Output, EventEmitter, DoCheck, OnChanges,
-    SimpleChanges} from '@angular/core';
+import {
+    Component, ViewChild, ElementRef, Input, Output, EventEmitter, OnChanges,
+    SimpleChanges, OnInit
+} from '@angular/core';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
 import {Map3DComponent} from '../../map-3d.component';
 import {DepthMap} from '../../../../../core-3d/helpers/depth-map';
@@ -25,7 +27,7 @@ export interface Map3DMarker {
 /**
  * @author Thomas Kleinke
  */
-export class PointGeometriesComponent implements DoCheck, OnChanges {
+export class PointGeometriesComponent implements OnChanges, OnInit {
 
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
@@ -50,15 +52,17 @@ export class PointGeometriesComponent implements DoCheck, OnChanges {
     public onWheel = (event: WheelEvent) => this.map3DComponent.onWheel(event);
 
 
-    public ngDoCheck() {
-
-        this.increaseVisibilityTestCounter();
-    }
-
-
     public ngOnChanges(changes: SimpleChanges) {
 
         if (changes['documents']) this.updateGeometriesBounds();
+    }
+
+
+    public ngOnInit() {
+
+        (this.map3DComponent.getViewer().getDepthMap() as DepthMap).updateNotification().subscribe(() => {
+            this.performVisibilityTest(Object.values(this.cachedMarkers));
+        });
     }
 
 
@@ -72,8 +76,6 @@ export class PointGeometriesComponent implements DoCheck, OnChanges {
            const marker: Map3DMarker|undefined = this.getMarker(document);
            if (marker) markers.push(marker);
         });
-
-        this.performVisibilityTest(markers);
 
         return markers;
     }
@@ -141,6 +143,22 @@ export class PointGeometriesComponent implements DoCheck, OnChanges {
     }
 
 
+    /**
+     * Only one marker per method call is tested for visibility in order to avoid performance issues.
+     * As the method is called every time the depth map is updated, all markers are usually tested in
+     * a very short time.
+     */
+    private performVisibilityTest(markers: Array<Map3DMarker>) {
+
+        if (markers.length == 0) return;
+
+        this.increaseVisibilityTestCounter();
+
+        const index: number = this.visibilityTestCounter % markers.length;
+        markers[index].visible = this.isVisible(markers[index]);
+    }
+
+
     private increaseVisibilityTestCounter() {
 
         if (this.visibilityTestCounter > 100000) {
@@ -148,19 +166,6 @@ export class PointGeometriesComponent implements DoCheck, OnChanges {
         } else {
             this.visibilityTestCounter++;
         }
-    }
-
-
-    /**
-     * Only one marker per Angular change detection run is tested for visibility in order to avoid
-     * performance issues.
-     */
-    private performVisibilityTest(markers: Array<Map3DMarker>) {
-
-        if (markers.length == 0) return;
-
-        const index: number = this.visibilityTestCounter % markers.length;
-        markers[index].visible = this.isVisible(markers[index]);
     }
 
 

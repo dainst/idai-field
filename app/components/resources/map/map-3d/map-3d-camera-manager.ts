@@ -244,10 +244,10 @@ export class Map3DCameraManager extends CameraManager {
 
     private zoomOrthographicCameraToFit(position: THREE.Vector3, bounds: THREE.Box3) {
 
+        this.orthographicCamera.position.set(position.x, position.y + 20, position.z);
+
         const width: number = this.orthographicCamera.right - this.orthographicCamera.left;
         const height: number = this.orthographicCamera.top - this.orthographicCamera.bottom;
-
-        this.orthographicCamera.position.set(position.x, position.y + 20, position.z);
 
         this.orthographicCamera.zoom = Math.min(
             width / bounds.getSize().x,
@@ -416,6 +416,10 @@ export class Map3DCameraManager extends CameraManager {
 
     private getDragValues(deltaX: number, deltaY: number): { xChange: number, zChange: number } {
 
+        const dragFactor: number = this.getDragFactor();
+        deltaX *= dragFactor;
+        deltaY *= dragFactor;
+
         switch(this.direction) {
             case CAMERA_DIRECTION_WEST:
                 return { xChange: -deltaY, zChange: deltaX };
@@ -427,6 +431,16 @@ export class Map3DCameraManager extends CameraManager {
             default:
                 return { xChange: -deltaX, zChange: -deltaY };
         }
+    }
+
+
+    private getDragFactor(): number {
+
+        const factor: number = this.projectionMode == 'perspective' ?
+            Math.abs(this.perspectiveCamera.position.y) / 5 :
+            4 / this.orthographicCamera.zoom;
+
+        return Math.max(factor, 1);
     }
 
 

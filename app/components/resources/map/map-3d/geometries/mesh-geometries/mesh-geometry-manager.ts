@@ -47,8 +47,11 @@ export class MeshGeometryManager {
 
     public async updateSelected(document: IdaiFieldDocument, selected: boolean) {
 
-        this.remove(document);
-        this.add(document, selected);
+        // Use timeout to make sure canvas size has been updated
+        setTimeout(() => {
+            this.remove(document);
+            this.add(document, selected);
+        }, 20);
     }
 
 

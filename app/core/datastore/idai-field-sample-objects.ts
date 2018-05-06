@@ -16,7 +16,7 @@ export const DOCS: Array<Document> = [
     {
         "resource": {
             "id": "t1",
-            "identifier": "T1",
+            "identifier": "S1",
             "shortDescription": "Schnitt",
             "relations": {
                 "isRecordedIn": [ "test" ],
@@ -48,7 +48,7 @@ export const DOCS: Array<Document> = [
     {
         "resource": {
             "id": "o1",
-            "identifier": "S1",
+            "identifier": "L1",
             "shortDescription": "Markierungslinie 1",
             "relations": {
                 "isRecordedIn": [ "t1" ]
@@ -94,7 +94,7 @@ export const DOCS: Array<Document> = [
     {
         "resource": {
             "id": "o2",
-            "identifier": "S2",
+            "identifier": "L2",
             "shortDescription": "Markierungslinie 2",
             "relations": {
                 "isRecordedIn": [ "t1" ]
@@ -410,7 +410,7 @@ export const DOCS: Array<Document> = [
     {
         "resource": {
             "id": "su1",
-            "identifier": "SU1",
+            "identifier": "SE1",
             "shortDescription": "Stratigraphische Einheit",
             "relations": {
                 "isRecordedIn": [ "t1" ]
@@ -754,7 +754,7 @@ export const DOCS: Array<Document> = [
         "resource": {
             "id": "example_model",
             "identifier": "Beispiel-Modell",
-            "shortDescription": "Partially excavated Ancient Greek (IV-III B.C.) villa Ortli in Crimea.",
+            "shortDescription": "Villa Ortli (Crimea)",
             "type": "Model3D",
             "thumbnailWidth": 1130,
             "thumbnailHeight": 970,

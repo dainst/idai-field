@@ -754,7 +754,7 @@ export const DOCS: Array<Document> = [
         "resource": {
             "id": "example_model",
             "identifier": "Beispiel-Modell",
-            "shortDescription": "Beispiel",
+            "shortDescription": "Partially excavated Ancient Greek (IV-III B.C.) villa Ortli in Crimea.",
             "type": "Model3D",
             "thumbnailWidth": 1130,
             "thumbnailHeight": 970,

@@ -36,10 +36,26 @@ export const DOCS: Array<Document> = [
             "geometry": {
                 "type": "Polygon",
                 "coordinates": [[
-                    [-1.5, -8, 0.79],
-                    [1.3515625, -7.984375, 0.64],
-                    [1.3125, -5.195312, 0.655],
-                    [-1.46875, -5.226562, 0.67]
+                    [
+                        -1.5,
+                        -8,
+                        0.79
+                    ],
+                    [
+                        1.3515625,
+                        -7.984375,
+                        0.64
+                    ],
+                    [
+                        1.3125,
+                        -5.195312,
+                        0.655
+                    ],
+                    [
+                        -1.46875,
+                        -5.226562,
+                        0.67
+                    ]
                 ]]
             },
             "type": "Layer"
@@ -754,7 +770,7 @@ export const DOCS: Array<Document> = [
         "resource": {
             "id": "example_model",
             "identifier": "Beispiel-Modell",
-            "shortDescription": "Villa Ortli (Crimea)",
+            "shortDescription": "Villa Ortli",
             "type": "Model3D",
             "thumbnailWidth": 1130,
             "thumbnailHeight": 970,

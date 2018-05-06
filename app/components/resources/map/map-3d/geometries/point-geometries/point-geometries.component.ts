@@ -34,6 +34,7 @@ export class PointGeometriesComponent implements OnChanges, OnInit {
     @Input() selectedDocument: IdaiFieldDocument;
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+    @Output() onSetHoverDocument: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     @ViewChild('container') container: ElementRef;
 
@@ -47,6 +48,7 @@ export class PointGeometriesComponent implements OnChanges, OnInit {
     constructor(private map3DComponent: Map3DComponent) {}
 
 
+    public setHoverDocument = (document: IdaiFieldDocument) => this.onSetHoverDocument.emit(document)
     public select = (document: IdaiFieldDocument) => this.onSelectDocument.emit(document);
     public isSelected = (document: IdaiFieldDocument) => this.selectedDocument == document;
 

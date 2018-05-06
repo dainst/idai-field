@@ -26,6 +26,8 @@ mesh-geometries {
 
   .map-3d-label:before {
     position: absolute;
+    margin: -5px;
+    padding: 5px;
     content: attr(data-outline-text);
     -webkit-text-stroke: 0.2em #000;
     left: 0;

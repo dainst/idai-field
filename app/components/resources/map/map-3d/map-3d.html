@@ -10,6 +10,7 @@
 
     <point-geometries [documents]="documents"
                       [selectedDocument]="selectedDocument"
+                      (onSetHoverDocument)="setHoverDocument($event)"
                       (onSelectDocument)="select($event)">
     </point-geometries>
 

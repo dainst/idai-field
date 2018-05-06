@@ -165,6 +165,8 @@ export class Map3DControls {
 
     private updateHoverDocument(xPosition: number, yPosition: number) {
 
+        if (this.state.hoverDocument && has3DPointGeometry(this.state.hoverDocument)) return;
+
         this.state.hoverDocument = this.getDocumentOfGeometryAtMousePosition(xPosition, yPosition);
     }
 

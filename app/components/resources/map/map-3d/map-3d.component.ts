@@ -63,6 +63,8 @@ export class Map3DComponent implements OnChanges, OnDestroy {
     public zoomIn = () => this.controls.zoomIn();
     public zoomOut = () => this.controls.zoomOut();
 
+    public setHoverDocument = (document: IdaiFieldDocument|undefined) =>
+        this.controlState.hoverDocument = document;
     public select = (document: IdaiFieldDocument|undefined) => this.onSelectDocument.emit(document);
 
     public recreateLineGeometries = () =>

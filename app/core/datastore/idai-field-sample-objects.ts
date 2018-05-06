@@ -694,9 +694,9 @@ export const DOCS: Array<Document> = [
     },
     {
         "resource": {
-            "id": "o25",
+            "id": "i1",
             "identifier": "PE07-So-07_Z001.jpg",
-            "shortDescription": "Test Layer 1",
+            "shortDescription": "Plan",
             "type": "Drawing",
             "originalFilename" : "PE07-So-07_Z001.jpg",
             "height" : 2423,
@@ -705,29 +705,49 @@ export const DOCS: Array<Document> = [
                 "depicts": []
             },
             "georeference": {
-                "bottomLeftCoordinates": [0.0, 0.0],
-                "topLeftCoordinates": [5.0, 0.0],
-                "topRightCoordinates": [5.0, 10.0]
-            }
+                "bottomLeftCoordinates": [
+                    -20.0,
+                    6.0
+                ],
+                "topLeftCoordinates": [
+                    0,
+                    6.0
+                ],
+                "topRightCoordinates": [
+                    0.0,
+                    35.0
+                ]
+            },
+            "georeferenceHeight": 0.63
         }
     },
     {
         "resource": {
-            "id": "o26",
-            "identifier": "mapLayerTest2.png",
-            "shortDescription": "Test Layer 2",
+            "id": "i2",
+            "identifier": "Magnetogramm.jpg",
+            "shortDescription": "Magnetogramm",
             "type": "Image",
+            "originalFilename": "Magnetogramm.jpg",
+            "width": 2441,
+            "height": 2261,
             "relations": {
                 "depicts": []
             },
-            "originalFilename" : "mapLayerTest2.png",
-            "height" : 782,
-            "width" : 748,
             "georeference": {
-                    "bottomLeftCoordinates": [0.0, 0.0],
-                    "topLeftCoordinates": [0.5, 0.0],
-                    "topRightCoordinates": [0.5, 0.5]
-                }
+                "topLeftCoordinates": [
+                    3729226.750779353,
+                    32678051.9331935
+                ],
+                "topRightCoordinates": [
+                    3729226.750779353,
+                    32678407.80318279
+                ],
+                "bottomLeftCoordinates": [
+                    3728897.597007078,
+                    32678051.9331935
+                ]
+            },
+            "georeferenceHeight": 12.5
         }
     },
     {

@@ -1,13 +1,20 @@
 import {BackupComponent} from '../../../../app/components/backup/backup.component';
 import {M} from '../../../../app/m';
+import PouchDB = require('pouchdb');
 
 /**
  * @author Daniel de Oliviera
  */
 describe('BackupComponent', () => {
 
+    const unittestdb = 'unittestdb';
+
     let c: BackupComponent;
     let messages: any;
+
+
+    afterEach(done => new PouchDB(unittestdb).destroy().then(done));
+
 
     beforeEach(() => {
 
@@ -40,11 +47,24 @@ describe('BackupComponent', () => {
 
     it('filenotexists', async done => {
 
-        c.proj = 'abc';
+        c.proj = unittestdb;
         c.path = './store/backup_test_file.txt';
         await c.readDump();
 
         expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST]);
+        done();
+    });
+
+
+    it('cannotreaddb', async done => {
+
+        spyOn(console, 'error');
+
+        c.proj = unittestdb;
+        c.path = './package.json';
+        await c.readDump();
+
+        expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_DUMP_ERROR]);
         done();
     });
 });

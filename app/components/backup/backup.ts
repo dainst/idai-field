@@ -40,10 +40,7 @@ export module Backup {
 
         const db2 = new PouchDB(project);
         PouchDB.plugin(require('pouchdb-load'));
-        try {
-            await db2.load(filePath);
-        } catch (e) {
-            console.log("err",e)
-        }
+
+        await db2.load(filePath);
     }
 }

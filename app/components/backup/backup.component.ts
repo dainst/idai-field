@@ -23,9 +23,10 @@ export class BackupComponent {
 
     private static TIMEOUT = 200;
 
+    private running = false;
+
     public path: string;
     public proj: string;
-    private running = false;
 
 
     constructor(

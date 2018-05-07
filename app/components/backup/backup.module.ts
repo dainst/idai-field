@@ -6,6 +6,7 @@ import {DumpModalComponent} from './dump-modal.component';
 import {ReadDumpModalComponent} from './read-dump-modal.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DialogProvider} from './dialog-provider';
+import {ConcreteDialogProvider} from './concrete-dialog-provider';
 
 @NgModule({
     imports: [
@@ -22,7 +23,7 @@ import {DialogProvider} from './dialog-provider';
         BackupComponent
     ],
     providers: [
-        DialogProvider,
+        { provide: DialogProvider, useClass: ConcreteDialogProvider }
     ],
     entryComponents: [
         DumpModalComponent,

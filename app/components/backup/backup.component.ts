@@ -68,8 +68,7 @@ export class BackupComponent {
         if (this.running) return;
         if (!this.proj) return this.messages.add([M.BACKUP_READ_DUMP_ERROR_NO_PROJECT_NAME]);
         if (this.proj === this.settingsService.getSelectedProject()) {
-            console.log("err - cannot be the same");
-            return;
+            return this.messages.add([M.BACKUP_READ_DUMP_ERROR_SAME_PROJECT_NAME]);
         }
 
         if (!this.path) return this.messages.add([M.BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST]);

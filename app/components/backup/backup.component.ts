@@ -82,7 +82,7 @@ export class BackupComponent {
         this.running = true;
         try {
             await Backup.readDump(this.path, this.proj);
-            await this.settingsService.addProject(this.proj);
+            await this.settingsService.addProject(this.proj); // TODO test
             this.messages.add([M.BACKUP_READ_DUMP_SUCCESS]);
         } catch (err) {
             if (err === Backup.FILE_NOT_EXIST) {
@@ -97,7 +97,7 @@ export class BackupComponent {
     }
 
 
-    private chooseFilepath(): Promise<string> {
+    private chooseFilepath(): Promise<string> { // TODO make filepath provider instead dialogprovider, so that dump becomes testable
 
         return new Promise<string>(async resolve => {
 

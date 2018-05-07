@@ -6,8 +6,9 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DumpModalComponent} from './dump-modal.component';
 import {ReadDumpModalComponent} from './read-dump-modal.component';
+import {DialogProvider} from './dialog-provider';
 
-const {dialog} = require('electron').remote;
+
 
 
 @Component({
@@ -20,6 +21,7 @@ const {dialog} = require('electron').remote;
  */
 export class BackupComponent {
 
+    private static TIMEOUT = 200;
 
     public path: string;
     public proj: string;
@@ -27,8 +29,9 @@ export class BackupComponent {
 
 
     constructor(
-        private messages: Messages,
+        private dialogProvider: DialogProvider,
         private modalService: NgbModal,
+        private messages: Messages,
         private settingsService: SettingsService
     ) {}
 
@@ -43,7 +46,7 @@ export class BackupComponent {
         setTimeout(() => {
             if (this.running) uploadModalRef = this.modalService.open(DumpModalComponent,
                 { backdrop: 'static', keyboard: false });
-        }, 200);
+        }, BackupComponent.TIMEOUT);
 
         this.running = true;
         try {
@@ -62,26 +65,31 @@ export class BackupComponent {
     public async readDump() {
 
         if (this.running) return;
-        if (!this.proj) return;
+        if (!this.proj) return this.messages.add([M.BACKUP_READ_DUMP_ERROR_NO_PROJECT_NAME]);
         if (this.proj === this.settingsService.getSelectedProject()) {
             console.log("err - cannot be the same");
             return;
         }
-        if (!this.path) return;
+
+        if (!this.path) return this.messages.add([M.BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST]);
 
         let uploadModalRef: any = undefined;
         setTimeout(() => {
             if (this.running) uploadModalRef = this.modalService.open(ReadDumpModalComponent,
                 { backdrop: 'static', keyboard: false });
-        }, 200);
+        }, BackupComponent.TIMEOUT);
 
         this.running = true;
         try {
             await Backup.readDump(this.path, this.proj);
             this.messages.add([M.BACKUP_READ_DUMP_SUCCESS]);
         } catch (err) {
-            this.messages.add([M.BACKUP_READ_DUMP_ERROR]);
-            console.error("err while read dump", err);
+            if (err === Backup.FILE_NOT_EXIST) {
+                this.messages.add([M.BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST]);
+            } else {
+                this.messages.add([M.BACKUP_READ_DUMP_ERROR]);
+                console.error("err while read dump", err);
+            }
         }
         if(uploadModalRef) uploadModalRef.close();
         this.running = false;
@@ -92,7 +100,7 @@ export class BackupComponent {
 
         return new Promise<string>(async resolve => {
 
-            const filePath = await dialog.showSaveDialog(
+            const filePath = await this.dialogProvider.getDialog().showSaveDialog(
                 { filters: [ { name: 'Text', extensions: [ 'txt' ] } ] });
             resolve(filePath);
         });

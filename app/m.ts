@@ -55,6 +55,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_DUMP_ERROR: string = 'backup/dumperror';
     public static BACKUP_READ_DUMP_SUCCESS: string = 'backup/readdumpsuccess';
     public static BACKUP_READ_DUMP_ERROR: string = 'backup/readdumperror';
+    public static BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST: string = 'backup/readdumperror/filenotexist';
+    public static BACKUP_READ_DUMP_ERROR_NO_PROJECT_NAME: string = 'backup/readdumperror/noprojectname';
 
     // Datastore Package
 
@@ -306,6 +308,18 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.BACKUP_READ_DUMP_ERROR]={
             content: 'Fehler beim Einlesen der Datenbank',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST]={
+            content: 'Fehler. Die angegebene Datei existiert nicht',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.BACKUP_READ_DUMP_ERROR_NO_PROJECT_NAME]={
+            content: 'Geben Sie einen Projektnamen an, um fortzufahren',
             level: 'danger',
             params: [],
             hidden: false

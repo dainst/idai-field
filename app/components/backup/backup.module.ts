@@ -5,6 +5,7 @@ import {BackupComponent} from './backup.component';
 import {DumpModalComponent} from './dump-modal.component';
 import {ReadDumpModalComponent} from './read-dump-modal.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {DialogProvider} from './dialog-provider';
 
 @NgModule({
     imports: [
@@ -19,6 +20,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ],
     exports: [
         BackupComponent
+    ],
+    providers: [
+        DialogProvider,
     ],
     entryComponents: [
         DumpModalComponent,

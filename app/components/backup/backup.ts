@@ -10,6 +10,8 @@ const MemoryStream = require('memorystream');
  **/
 export module Backup {
 
+    export const FILE_NOT_EXIST = 'filenotexist';
+
     export async function dump(filePath: string, project: string) {
 
         PouchDB.plugin(replicationStream.plugin);
@@ -32,6 +34,9 @@ export module Backup {
 
 
     export async function readDump(filePath: string, project: string) {
+
+        if (!fs.existsSync(filePath)) throw FILE_NOT_EXIST;
+        if (!fs.lstatSync(filePath).isFile()) throw FILE_NOT_EXIST;
 
         const db2 = new PouchDB(project);
         PouchDB.plugin(require('pouchdb-load'));

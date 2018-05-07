@@ -12,7 +12,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/project --', function() {
+fdescribe('resources/project --', function() {
 
     const appDataPath = browser.params.appDataPath;
 
@@ -142,7 +142,7 @@ describe('resources/project --', function() {
     });
 
 
-    it('do not create a project of an already existing name', () => {
+    it('do not create a project of an already existing name', () => { // TODO test with unit test against component
 
         ProjectPage.clickProjectsBadge();
         ProjectPage.clickCreateProject();
@@ -153,7 +153,7 @@ describe('resources/project --', function() {
     });
 
 
-    it ('do not delete last project', () => {
+    it ('do not delete last project', () => { // TODO test with unit test against component
 
         ProjectPage.clickProjectsBadge();
 

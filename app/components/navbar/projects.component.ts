@@ -18,7 +18,6 @@ const remote = require('electron').remote;
  */
 export class ProjectsComponent implements OnInit {
 
-    public projects: string[];
     public selectedProject: string;
     public newProject: string = '';
     public projectToDelete: string = '';
@@ -31,14 +30,16 @@ export class ProjectsComponent implements OnInit {
     constructor(private settingsService: SettingsService,
                 private modalService: NgbModal,
                 private messages: Messages,
-                private pouchdbManager: PouchdbManager) {
+                private pouchdbManager: PouchdbManager) { // TODO access pouchdbmanager only via settingsservice, fetch project doc via db
     }
+
+
+    public getProjects = () => this.settingsService.getDbs();
 
 
     ngOnInit() {
 
         this.selectedProject = this.settingsService.getSelectedProject();
-        this.projects = this.settingsService.getSettings().dbs.slice(0);
     }
 
 
@@ -57,45 +58,32 @@ export class ProjectsComponent implements OnInit {
 
     public async selectProject() {
 
-        await this.settingsService.setProjectSettings(this.projects, this.selectedProject);
+        await this.settingsService.selectProject(this.selectedProject);
         this.reload();
     }
 
 
     public async createProject() {
 
-        if (this.newProject === '') {
-            return this.messages.add([M.RESOURCES_ERROR_NO_PROJECT_NAME]);
-        }
-
-        if (this.projects.indexOf(this.newProject) > -1) {
+        if (this.newProject === '') return this.messages.add([M.RESOURCES_ERROR_NO_PROJECT_NAME]);
+        if (this.getProjects().indexOf(this.newProject) > -1) {
             return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_EXISTS, this.newProject]);
         }
 
-        this.projects.unshift(this.newProject);
-        this.selectedProject = this.newProject;
-
-        await this.settingsService.setProjectSettings(this.projects, this.selectedProject);
-        await this.pouchdbManager.createDb(
-            this.selectedProject,
-            ProjectsComponent.makeProjectDoc(this.selectedProject, this.settingsService.getUsername()),
+        await this.settingsService.createProject(
+            this.newProject,
             remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create
         );
         this.reload();
     }
 
 
-    public deleteProject() {
+    public async deleteProject() {
 
         if (!this.canDeleteProject()) return;
-
-        return this.settingsService.deleteProject(this.selectedProject).then(async () => {
-            this.projects.splice(this.projects.indexOf(this.selectedProject), 1);
-            this.selectedProject = this.projects[0];
-
-            await this.settingsService.setProjectSettings(this.projects, this.selectedProject);
-            this.reload();
-        });
+        await this.settingsService.deleteProject(this.selectedProject);
+        this.selectedProject = this.getProjects()[0];
+        this.reload();
     }
 
 
@@ -116,7 +104,7 @@ export class ProjectsComponent implements OnInit {
             this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_NOT_SAME]);
             return false;
         }
-        if (this.projects.length < 2) {
+        if (this.getProjects().length < 2) {
             this.messages.add([M.RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST]);
             return false;
         }
@@ -130,22 +118,5 @@ export class ProjectsComponent implements OnInit {
         if (!remote.getGlobal('switches') || !remote.getGlobal('switches').prevent_reload) {
             window.location.reload();
         }
-    }
-
-
-    private static makeProjectDoc(name: string, username: string) {
-
-        return {
-            _id: name,
-            resource: {
-                type: 'Project',
-                identifier: name,
-                id: name,
-                coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
-                relations: {}
-            },
-            created: { user: username, date: new Date() },
-            modified: [{ user: username, date: new Date() }]
-        };
     }
 }

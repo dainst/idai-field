@@ -21,7 +21,7 @@ describe('BackupComponent', () => {
         const dialogProvider = jasmine.createSpyObj('dialogProvider', ['getDialog']);
         const modalService = jasmine.createSpyObj('modalService', ['open']);
         messages = jasmine.createSpyObj('messages', ['add']);
-        const settingsService = jasmine.createSpyObj('settingsService', ['getSelectedProject']);
+        const settingsService = jasmine.createSpyObj('settingsService', ['getSelectedProject', 'addProject']);
 
         c = new BackupComponent(
             dialogProvider,

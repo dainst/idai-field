@@ -13,6 +13,7 @@ import {unique} from 'tsfun';
 import {IdaiFieldSampleDataLoader} from '../datastore/field/idai-field-sample-data-loader';
 import {Converter} from '../imagestore/converter';
 
+
 const remote = require('electron').remote;
 
 @Injectable()
@@ -54,9 +55,9 @@ export class SettingsService {
      */
     public getSettings = (): Settings => JSON.parse(JSON.stringify(this.settings)); // deep copy
 
-    public deleteProject = (name: string) => this.pouchdbManager.destroyDb(name);
-
     public getUsername = () => this.settings.username;
+
+    public getDbs = () => this.settings.dbs;
 
 
     public getSelectedProject(): string {
@@ -89,6 +90,40 @@ export class SettingsService {
     }
 
 
+    public async addProject(name: string) {
+
+        this.settings.dbs = unique(this.settings.dbs.concat([name]));
+        await this.settingsSerializer.store(this.settings);
+    }
+
+
+    public async selectProject(name: string) {
+
+        this.settings.dbs = unique([name].concat(this.settings.dbs));
+        await this.settingsSerializer.store(this.settings);
+    }
+
+
+    public async deleteProject(name: string) {
+
+        await this.pouchdbManager.destroyDb(name);
+        this.settings.dbs.splice(this.settings.dbs.indexOf(name), 1);
+        await this.settingsSerializer.store(this.settings);
+    }
+
+
+    public async createProject(name: string, destroyBeforeCreate: boolean) {
+
+        await this.selectProject(name);
+
+        await this.pouchdbManager.createDb(
+            name,
+            SettingsService.makeProjectDoc(name, this.getUsername()),
+            destroyBeforeCreate
+        );
+    }
+
+
     /**
      * Sets, validates and persists the settings state.
      * Project settings have to be set separately.
@@ -116,14 +151,6 @@ export class SettingsService {
     }
 
 
-    public async setProjectSettings(projects: string[], selectedProject: string, create: boolean = false) {
-
-        this.settings.dbs = unique([selectedProject].concat(projects));
-
-        await this.settingsSerializer.store(this.settings);
-    }
-
-
     public startSync(): Promise<any> {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
@@ -134,7 +161,7 @@ export class SettingsService {
 
         console.log('SettingsService.startSync()');
 
-        return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject() as any).then(syncState => {
+        return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject()).then(syncState => {
 
             // avoid issuing 'connected' too early
             const msg = setTimeout(() => this.syncStatusObservers.forEach((o: Observer<any>) => o.next('connected')), 500);
@@ -159,7 +186,7 @@ export class SettingsService {
                 || !(this.settings.dbs.length > 0))
             return Promise.resolve();
 
-        return new Promise<any>((resolve) => {
+        return new Promise<any>(resolve => {
                 setTimeout(() => {
                     this.startSync().then(() => resolve());
                 }, 1000);
@@ -235,5 +262,22 @@ export class SettingsService {
             }
         }
         return settings;
+    }
+
+
+    private static makeProjectDoc(name: string, username: string) {
+
+        return {
+            _id: name,
+            resource: {
+                type: 'Project',
+                identifier: name,
+                id: name,
+                coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
+                relations: {}
+            },
+            created: { user: username, date: new Date() },
+            modified: [{ user: username, date: new Date() }]
+        };
     }
 }

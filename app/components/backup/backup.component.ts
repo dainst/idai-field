@@ -82,6 +82,7 @@ export class BackupComponent {
         this.running = true;
         try {
             await Backup.readDump(this.path, this.proj);
+            await this.settingsService.addProject(this.proj);
             this.messages.add([M.BACKUP_READ_DUMP_SUCCESS]);
         } catch (err) {
             if (err === Backup.FILE_NOT_EXIST) {

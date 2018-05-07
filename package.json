@@ -35,7 +35,8 @@
     "npmRebuild": false,
     "extraResources": [
       "config",
-      "test/test-data/imagestore-samples"
+      "test/test-data/imagestore-samples",
+      "test/test-data/model3DStore-samples"
     ]
   },
   "repository": {

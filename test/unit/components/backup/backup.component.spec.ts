@@ -1,27 +1,34 @@
 import {BackupComponent} from '../../../../app/components/backup/backup.component';
 import {M} from '../../../../app/m';
 import PouchDB = require('pouchdb');
+import fs = require('fs');
+import rimraf = require('rimraf');
 
 /**
  * @author Daniel de Oliviera
  */
 describe('BackupComponent', () => {
 
+    const backupFilePath = 'store/backup_test_file.txt';
     const unittestdb = 'unittestdb';
 
     let c: BackupComponent;
     let messages: any;
+    let settingsService: any;
 
 
-    afterEach(done => new PouchDB(unittestdb).destroy().then(done));
+    afterEach(done => rimraf(backupFilePath,
+        () => new PouchDB(unittestdb).destroy().then(done)));
 
 
     beforeEach(() => {
 
-        const dialogProvider = jasmine.createSpyObj('dialogProvider', ['getDialog']);
+        spyOn(console, 'warn');
+
+        const dialogProvider = jasmine.createSpyObj('dialogProvider', ['chooseFilepath']);
         const modalService = jasmine.createSpyObj('modalService', ['open']);
         messages = jasmine.createSpyObj('messages', ['add']);
-        const settingsService = jasmine.createSpyObj('settingsService', ['getSelectedProject', 'addProject']);
+        settingsService = jasmine.createSpyObj('settingsService', ['getSelectedProject', 'addProject']);
 
         c = new BackupComponent(
             dialogProvider,
@@ -30,11 +37,27 @@ describe('BackupComponent', () => {
             settingsService
         );
 
-        settingsService.getSelectedProject.and.returnValue('testproject');
+        settingsService.getSelectedProject.and.returnValue('selectedproject');
+        dialogProvider.chooseFilepath.and.returnValue(Promise.resolve(backupFilePath));
     });
 
 
-    it('project not specified', async done => {
+    it('dump', async done => {
+
+        const db = new PouchDB(unittestdb);
+        await db.put({'_id' : 'a1', a: {b: 'c'}});
+        await db.close();
+
+        settingsService.getSelectedProject.and.returnValue(unittestdb);
+        await c.dump();
+        const data = fs.readFileSync(backupFilePath);
+        const docs = JSON.parse(data.toString().split('\n')[1])['docs'];
+        expect(docs[0].a.b).toEqual('c');
+        done();
+    });
+
+
+    it('readDump: project not specified', async done => {
 
         c.proj = '';
         c.path = './store/backup_test_file.txt';
@@ -45,7 +68,7 @@ describe('BackupComponent', () => {
     });
 
 
-    it('filenotexists', async done => {
+    it('readDump: filenotexists', async done => {
 
         c.proj = unittestdb;
         c.path = './store/backup_test_file.txt';
@@ -56,7 +79,7 @@ describe('BackupComponent', () => {
     });
 
 
-    it('cannotreaddb', async done => {
+    it('reaadDump: cannotreaddb', async done => {
 
         spyOn(console, 'error');
 

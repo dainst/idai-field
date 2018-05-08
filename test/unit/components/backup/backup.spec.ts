@@ -13,6 +13,9 @@ describe('Backup', () => {
     const backupFilePath = 'store/backup_test_file.txt';
 
 
+    beforeEach(() => spyOn(console, 'warn'));
+
+
     afterEach(done => rimraf(backupFilePath,
         () => new PouchDB('unittest').destroy().then(done)));
 

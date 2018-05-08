@@ -55,8 +55,6 @@ describe('PouchDbFsImagestore', () => {
 
     it('should create a file', (done) => {
 
-        console.log('should create a file');
-
         store.create('test_create', str2ab('asdf')).then(() => {
             fs.readFile(storeProjectPath + 'test_create', (err, data) => {
                 if (err) fail(err);

@@ -38,7 +38,10 @@ export module Backup {
         if (!fs.existsSync(filePath)) throw FILE_NOT_EXIST;
         if (!fs.lstatSync(filePath).isFile()) throw FILE_NOT_EXIST;
 
-        const db2 = new PouchDB(project); // TODO destroy before load and unit test it
+        const db = new PouchDB(project);
+        await db.destroy(); // to prevent pouchdb-load's incremental loading and force a true overwrite of the old db
+
+        const db2 = new PouchDB(project);
         PouchDB.plugin(require('pouchdb-load'));
 
         await db2.load(filePath);

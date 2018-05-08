@@ -40,7 +40,7 @@ export class BackupComponent {
     public async dump() {
 
         if (this.running) return;
-        const filePath = await this.chooseFilepath();
+        const filePath = await this.dialogProvider.chooseFilepath();
         if (!filePath) return;
 
         let uploadModalRef: any = undefined;
@@ -94,16 +94,5 @@ export class BackupComponent {
         }
         if(uploadModalRef) uploadModalRef.close();
         this.running = false;
-    }
-
-
-    private chooseFilepath(): Promise<string> { // TODO make filepath provider instead dialogprovider, so that dump becomes testable
-
-        return new Promise<string>(async resolve => {
-
-            const filePath = await this.dialogProvider.getDialog().showSaveDialog(
-                { filters: [ { name: 'Text', extensions: [ 'txt' ] } ] });
-            resolve(filePath);
-        });
     }
 }

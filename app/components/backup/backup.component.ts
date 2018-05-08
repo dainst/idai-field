@@ -7,6 +7,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {DumpModalComponent} from './dump-modal.component';
 import {ReadDumpModalComponent} from './read-dump-modal.component';
 import {DialogProvider} from './dialog-provider';
+import {BackupProvider} from './backup-provider';
 
 
 
@@ -33,7 +34,8 @@ export class BackupComponent {
         private dialogProvider: DialogProvider,
         private modalService: NgbModal,
         private messages: Messages,
-        private settingsService: SettingsService
+        private settingsService: SettingsService,
+        private backupProvider: BackupProvider
     ) {}
 
 
@@ -51,7 +53,7 @@ export class BackupComponent {
 
         this.running = true;
         try {
-            await Backup.dump(filePath, this.settingsService.getSelectedProject());
+            await this.backupProvider.dump(filePath, this.settingsService.getSelectedProject());
             this.messages.add([M.BACKUP_DUMP_SUCCESS]);
         } catch (err) {
             this.messages.add([M.BACKUP_DUMP_ERROR]);
@@ -81,8 +83,8 @@ export class BackupComponent {
 
         this.running = true;
         try {
-            await Backup.readDump(this.path, this.proj);
-            await this.settingsService.addProject(this.proj); // TODO test
+            await this.backupProvider.readDump(this.path, this.proj);
+            await this.settingsService.addProject(this.proj);
             this.messages.add([M.BACKUP_READ_DUMP_SUCCESS]);
         } catch (err) {
             if (err === Backup.FILE_NOT_EXIST) {

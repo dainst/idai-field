@@ -24,7 +24,11 @@ export module Backup {
             dumpedString +=
                 chunk.toString()
                     .replace(/"data"[\s\S]+?,/g,'\"data\":\"\",')
-        }); // TODO note that this regex is a too general. we want to get rid of this asap anyway, as soon as the thumbnail thing is fixed in pouchdb-replication stream.
+
+            // note that this regex is a too general
+            // we want to get rid of this asap anyway, as soon as the thumbnail thing is fixed in pouchdb-replication stream
+            // see #8404 in redmine
+        });
 
         const db = new PouchDB(project);
 

@@ -24,35 +24,25 @@
                     <label class="control-label col-form-label"
                            for="username-input">Name des Bearbeiters
                     </label>
-                    <span placement="right" ngbTooltip="Dieser Name wird in der Bearbeitungshistorie gespeichert, damit Änderungen an Datensätzen einer Person zugeordnet werden können. In der Regel sollte hier der volle Name des aktuellen Datenbanknutzers eingetragen werden." class="mdi mdi-information-outline"></span>
                     <input id="username-input"
                            [ngModel]="settings.username"
                            (ngModelChange)="settings.username = $event"
                            class="form-control">
                 </div>
 
-                <div class="form-group" style="margin-bottom: 0;">
+                <br>
+                Dieser Name wird in der Bearbeitungshistorie gespeichert,
+                damit Änderungen an Datensätzen einer Person zugeordnet werden können.
+                Diese Einstellung ist sehr <b>wichtig</b> bei der Datenbanksynchronisation,
+                sowohl zwischen Nutzern als auch zum IdaiField-Server, da dass System so eventuell Konflikte
+                besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme
+                gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers
+                einzutragen.
 
-                    <label class="control-label col-form-label"
-                           for="imagestorepath-input">Pfad zum Bilderverzeichnis
-                    </label>
-                    <div class="input-group">
-                        <input id="imagestorepath-input"
-                               [ngModel]="settings.imagestorePath"
-                               (ngModelChange)="settings.imagestorePath = $event"
-                               class="form-control">
-                        <span class="input-group-btn">
-                            <input id="imagestorepath-file" type="file" webkitdirectory directory
-                                   (change)="settings.imagestorePath = $event.target.files[0].path + '/'"
-                                   style="display: none">
-                            <label for="imagestorepath-file" class="btn btn-secondary">
-                                <span class="mdi mdi-folder"></span>
-                            </label>
-                        </span>
-                    </div>
-                </div>
+                <hr>
 
-                <h5 style="margin-top: 32px;">Synchronisierungseinstellungen</h5>
+
+                <h5 style="margin-top: 32px;">Synchronisation</h5>
 
                 <div class="row" style="margin: 15px 0 0;">
                     <div class="col-auto mr-auto">
@@ -96,6 +86,41 @@
                         Diese Adresse kann in anderen iDAI.field-Clients eingetragen werden, um
                         eine Synchronisationsverbindung zu diesem Client herzustellen.
                     </div>
+                </div>
+
+
+                <hr>
+
+                <h5 style="margin-top: 32px;">Bilder</h5>
+
+                <div class="form-group" style="margin-bottom: 0;">
+
+
+                    <label class="control-label col-form-label"
+                           for="imagestorepath-input">Pfad
+                    </label>
+                    <div class="input-group">
+                        <input id="imagestorepath-input"
+                               [ngModel]="settings.imagestorePath"
+                               (ngModelChange)="settings.imagestorePath = $event"
+                               class="form-control">
+                        <span class="input-group-btn">
+                            <input id="imagestorepath-file" type="file" webkitdirectory directory
+                                   (change)="settings.imagestorePath = $event.target.files[0].path + '/'"
+                                   style="display: none">
+                            <label for="imagestorepath-file" class="btn btn-secondary">
+                                <span class="mdi mdi-folder"></span>
+                            </label>
+                        </span>
+                    </div>
+                    <br>
+                    Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Er kann verändert werden,
+                    wenn das von IdaiField genutzte Bilderverzeichnis auf einem Netzwerk-Gerät (NAS) liegt, welches
+                    von verschiedenen Nutzern geteilt wird. IdaiField legt unterhalb dieses Pfades für jedes Projekt
+                    ein Unterverzeichnis an. Die in Vereichnissen abgelegten Bilddateien werden vollständig durch IdaiField
+                    verwaltet. Bilddateien sollten vom Nutzer nicht per Hand hier abgelegt werden, sondern per Drag und Drop
+                    in die Bilderübersicht (oder in die Einzeldatenansicht im Bilder-Tab) gezogen werden bzw. dort gelöscht
+                    werden.
                 </div>
             </div>
         </div>

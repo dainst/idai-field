@@ -56,10 +56,8 @@ export class PersistenceManager {
      * the other documents back relation gets not set. If no other relation gets
      * persisted on that document, it does not get updated at all.
      *
-     * @returns {Promise<string>} If all objects could get stored,
-     *   the promise will resolve to <code>undefined</code>. If one or more
-     *   objects could not get stored properly, the promise will get rejected
-     *   with msgWithParams.
+     * @returns a copy of the updated document
+     * @throws msgWithParams
      */
     public async persist(
         document: NewDocument,
@@ -72,12 +70,7 @@ export class PersistenceManager {
 
         const persistedDocument = await this.persistIt(document as Document, username, revisionsToSquash);
 
-        let connectedDocs;
-        try {
-            connectedDocs = await this.getExistingConnectedDocs([document as Document].concat(oldVersions as Document[]))
-        } catch (_) {
-            throw [M.PERSISTENCE_ERROR_TARGETNOTFOUND];
-        }
+        const connectedDocs = await this.getExistingConnectedDocs([document as Document].concat(oldVersions as Document[]));
         await this.updateConnectedDocs(document as Document, connectedDocs, true, username);
 
         return persistedDocument;

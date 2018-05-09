@@ -118,10 +118,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST: string = 'resources/error/oneprojectmustexist';
     public static RESOURCES_ERROR_PROJECT_DELETED: string = 'resources/error/projectdeleted';
 
-    // Persist Package
-
-    public static PERSISTENCE_ERROR_TARGETNOTFOUND: string = 'persist/error/targetnotfound';
-
     // Validation
 
     public static VALIDATION_ERROR_MISSINGPROPERTY: string = 'validation/error/missingproperty';
@@ -618,16 +614,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.PERSISTENCE_ERROR_TARGETNOTFOUND]={
-            content: 'Die Ressource wurde erfolgreich gespeichert. Relationen wurden aufgrund fehlender Zielressourcen '
-            + 'nicht aktualisiert.',
-            level: 'warning',
-            params: [],
-            hidden: false
-        };
-
-
-
         this.msgs[M.VALIDATION_ERROR_INVALIDTYPE]={
             content: 'Ungültige Typdefinition: \'{0}\'',
             level: 'danger',

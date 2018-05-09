@@ -197,7 +197,7 @@ describe('PersistenceManager', () => {
     });
 
 
-    fit('remove: should remove an operation type resource, another related resource gets relation updated', async done => {
+    it('remove: should remove an operation type resource, another related resource gets relation updated', async done => {
 
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
         relatedDoc.resource.relations['Contains'] = ['3'];

@@ -257,6 +257,3 @@ describe('PersistenceManager', () => {
         done();
     });
 });
-
-
-// also to review: find consistent way for error msgs, M is still in use

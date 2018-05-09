@@ -133,6 +133,11 @@ export class PersistenceManager {
             try {
                 connectedDocuments.push(await this.datastore.get(id));
             } catch (_) {
+                // this can be either due to deletion order, for example when
+                // deleting multiple docs recordedIn some other, but related to one another
+                // or it can be due to 'really' missing documents. missing documents mean
+                // an inconsistent database state, which can for example result
+                // of docs not yet replicated
                 console.warn('connected document not found', id);
             }
         }

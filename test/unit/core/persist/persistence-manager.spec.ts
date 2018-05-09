@@ -31,6 +31,7 @@ describe('PersistenceManager', () => {
     });
 
     let mockDatastore;
+    let mockTypeUtility;
     let persistenceManager;
     const id = 'abc';
 
@@ -63,9 +64,11 @@ describe('PersistenceManager', () => {
 
     beforeEach(() => {
 
-        mockDatastore = jasmine.createSpyObj('mockDatastore',
-            ['get', 'find', 'create', 'update', 'refresh', 'remove']);
-        persistenceManager = new PersistenceManager(mockDatastore, projectConfiguration);
+        mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'find', 'create', 'update', 'refresh', 'remove']);
+        mockTypeUtility = jasmine.createSpyObj('mockTypeUtility', ['isSubtype']);
+        mockTypeUtility.isSubtype.and.returnValue(true);
+
+        persistenceManager = new PersistenceManager(mockDatastore, projectConfiguration, mockTypeUtility);
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.find.and.callFake(findFunction);
         mockDatastore.update.and.returnValue(Promise.resolve('ok'));

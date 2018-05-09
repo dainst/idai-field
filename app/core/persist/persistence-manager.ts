@@ -5,6 +5,7 @@ import {M} from '../../m';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ObjectUtil} from '../../util/object-util';
 import {unique} from 'tsfun';
+import {TypeUtility} from '../model/type-utility';
 
 
 @Injectable()
@@ -23,7 +24,8 @@ export class PersistenceManager {
 
     constructor(
         private datastore: DocumentDatastore,
-        private projectConfiguration: ProjectConfiguration
+        private projectConfiguration: ProjectConfiguration,
+        private typeUtility: TypeUtility
     ) {}
 
 
@@ -109,9 +111,11 @@ export class PersistenceManager {
                   username: string,
                   oldVersion: Document = document): Promise<void> {
 
-        // TODO test if it is really an operation type document
-        for (let doc of (await this.getDocsRecordedIn(document))) {
-            await this.removeDocument(doc, username);
+        // dont rely on isRecordedIn alone. Make sure it is really an operation subtype
+        if (this.typeUtility.isSubtype(document.resource.type, "Operation")) {
+            for (let doc of (await this.getDocsRecordedIn(document))) {
+                await this.removeDocument(doc, username);
+            }
         }
         await this.removeDocument(document, username, oldVersion);
     }

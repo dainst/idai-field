@@ -17,12 +17,16 @@ import {TypeUtility} from '../../app/core/model/type-utility';
  */
 export function main() {
 
-
     const projectConfiguration = new ProjectConfiguration({
         'types': [
             {
-                'type': 'Trench',
+                'type': 'Operation',
                 'fields': []
+            },
+            {
+                'type': 'Trench',
+                'fields': [],
+                'parent': 'Operation'
             },
             {
                 'type': 'Find',
@@ -64,13 +68,18 @@ export function main() {
             () => {
                 spyOn(console, 'debug'); // suppress console.debug
 
+                const typeUtility = new TypeUtility(projectConfiguration);
+
                 const result = DAOsSpecHelper.createPouchdbDatastore('testdb');
                 datastore = new IdaiFieldDocumentDatastore(
                     result.datastore, result.indexFacade, result.documentCache,
-                    new IdaiFieldTypeConverter(new TypeUtility(projectConfiguration)));
+                    new IdaiFieldTypeConverter(typeUtility));
 
-                persistenceManager = new PersistenceManager(datastore, projectConfiguration);
-                // persistenceManager.setOldVersions([{ resource: {} }]);
+                persistenceManager = new PersistenceManager(
+                    datastore,
+                    projectConfiguration,
+                    typeUtility
+                );
             }
         );
 
@@ -108,10 +117,7 @@ export function main() {
         // it('hierarchie with more than 2 layers')
 
 
-
         // also to review: different handling of oldversions (deep copied vs. regular use)
-        // also to review: what about oldVersions of nested/isRecordedIn docs
-        // also to review: which type of datastore to use
         // also to review: find consistent way for error msgs, M is still in use
     })
 }

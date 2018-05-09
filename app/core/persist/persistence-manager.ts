@@ -4,6 +4,7 @@ import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {M} from '../../m';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ObjectUtil} from '../../util/object-util';
+import {unique} from 'tsfun';
 
 
 @Injectable()
@@ -71,7 +72,7 @@ export class PersistenceManager {
 
         let connectedDocs;
         try {
-            connectedDocs = await Promise.all(this.getConnectedDocs(document as Document, oldVersions as Document[]))
+            connectedDocs = await this.getExistingConnectedDocs([document as Document].concat(oldVersions as Document[]))
         } catch (_) {
             throw [M.PERSISTENCE_ERROR_TARGETNOTFOUND];
         }
@@ -108,6 +109,7 @@ export class PersistenceManager {
                   username: string,
                   oldVersion: Document = document): Promise<void> {
 
+        // TODO test if it is really an operation type document
         for (let doc of (await this.getDocsRecordedIn(document))) {
             await this.removeDocument(doc, username);
         }
@@ -117,30 +119,32 @@ export class PersistenceManager {
 
     private async removeDocument(document: Document, user: string, oldVersion: Document = document): Promise<any> {
 
-        const connectedDocs = await Promise.all(this.getConnectedDocs(document, [oldVersion]));
-
+        const connectedDocs = await this.getExistingConnectedDocs([document].concat([oldVersion]));
         await this.updateDocs(document, connectedDocs, false, user);
+
         this.datastore.remove(document);
     }
 
 
-    private getConnectedDocs(document: Document, oldVersions: Array<Document>): Array<Promise<Document>> {
+    private async getExistingConnectedDocs(documents: Array<Document>) {
 
-        const promisesToGetObjects: Promise<Document>[] = [];
-        const ids: string[] = [];
+        const connectedDocuments: Array<Document> = [];
+        for (let id of this.getUniqueConnectedDocumentsIds(documents)) {
 
-        const documents = [document].concat(oldVersions);
+            try {
+                connectedDocuments.push(await this.datastore.get(id));
 
-        for (let doc of documents) {
-            for (let id of this.extractRelatedObjectIDs(doc.resource)) {
-                if (ids.indexOf(id) == -1) {
-                    promisesToGetObjects.push(this.datastore.get(id));
-                    ids.push(id);
-                }
-            }
+            } catch (notexistent) {} // ignore
         }
+        return connectedDocuments;
+    }
 
-        return promisesToGetObjects;
+
+    private getUniqueConnectedDocumentsIds(documents: Array<Document>) {
+
+        return unique(documents.reduce((acc: Array<string>, doc) => {
+            return acc.concat(this.extractRelatedObjectIDs(doc.resource))
+        }, []));
     }
 
 

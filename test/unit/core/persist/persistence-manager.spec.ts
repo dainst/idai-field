@@ -194,7 +194,7 @@ describe('PersistenceManager', () => {
     });
 
 
-    it('remove: should remove a main type resource', async done => {
+    it('remove: should remove an operation type resource', async done => {
 
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
         relatedDoc.resource.relations['Contains'] = ['3'];
@@ -206,6 +206,21 @@ describe('PersistenceManager', () => {
         expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
         expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
         expect(anotherRelatedDoc.resource.relations['BelongsTo']).toBeUndefined();
+        done();
+    });
+
+
+    it('remove: where a connected document does not exist anymore', async done => {
+
+        doc.resource.relations['BelongsTo']=['nonexistent'];
+
+        mockDatastore.get.and.returnValue(Promise.reject('not exists'));
+
+        await persistenceManager.remove(doc, 'u');
+
+        expect(mockDatastore.update).not.toHaveBeenCalled();
+        expect(mockDatastore.remove).toHaveBeenCalledWith(doc);
+        expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
         done();
     });
 });

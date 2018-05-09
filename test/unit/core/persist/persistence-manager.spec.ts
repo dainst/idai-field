@@ -189,7 +189,7 @@ describe('PersistenceManager', () => {
 
         await persistenceManager.remove(doc, 'u');
 
-        expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc);
+        expect(mockDatastore.update).not.toHaveBeenCalled();
         done();
     });
 

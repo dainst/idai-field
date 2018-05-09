@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Document, NewDocument, ProjectConfiguration, Resource} from 'idai-components-2/core';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
-import {M} from '../../m';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ObjectUtil} from '../../util/object-util';
 import {subtract} from 'tsfun';

@@ -99,38 +99,28 @@ export class PersistenceManager {
      * Also removes all documents with an 'isRecordedIn' relation pointing to this document.
      * Deletes all corresponding inverse relations.
      *
-     * @param document
-     * @param oldVersions
-     * @return {any}
-     *   Rejects with
-     *     [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID] - if document has no resource id
-     *     [DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR] - if document has a resource id, but does not exist in the db
-     *     [DatastoreErrors.GENERIC_DELETE_ERROR] - if cannot delete for another reason
+     * @throws
+     *   [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID] - if document has no resource id
+     *   [DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR] - if document has a resource id, but does not exist in the db
+     *   [DatastoreErrors.GENERIC_DELETE_ERROR] - if cannot delete for another reason
      */
-    public remove(document: Document,
+    public async remove(document: Document,
                   username: string,
-                  oldVersion: Document = document): Promise<any> {
+                  oldVersion: Document = document): Promise<void> {
 
-        if (document == undefined) return Promise.resolve();
-
-        return this.getRecordedInDocs(document)
-            .then(recordedInDocs => {
-                let promise: Promise<any> = Promise.resolve();
-
-                for (let doc of recordedInDocs) {
-                    promise = promise.then(() => this.removeDocument(doc, username, []));
-                }
-
-                return promise.then(() => this.removeDocument(document, username, [oldVersion]));
-            });
+        for (let doc of (await this.getDocsRecordedIn(document))) {
+            await this.removeDocument(doc, username);
+        }
+        await this.removeDocument(document, username, oldVersion);
     }
 
 
-    private removeDocument(document: Document, user: string, oldVersions: Array<Document>): Promise<any> {
+    private async removeDocument(document: Document, user: string, oldVersion: Document = document): Promise<any> {
 
-        return Promise.all(this.getConnectedDocs(document, oldVersions))
-            .then(connectedDocs => this.updateDocs(document, connectedDocs, false, user))
-            .then(() => this.datastore.remove(document));
+        const connectedDocs = await Promise.all(this.getConnectedDocs(document, [oldVersion]));
+
+        await this.updateDocs(document, connectedDocs, false, user);
+        this.datastore.remove(document);
     }
 
 
@@ -171,7 +161,7 @@ export class PersistenceManager {
     }
 
 
-    private async getRecordedInDocs(document: Document): Promise<Array<Document>> {
+    private async getDocsRecordedIn(document: Document): Promise<Array<Document>> {
 
         return (await this.datastore.find({
             constraints: { 'isRecordedIn:contain': document.resource.id }

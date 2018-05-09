@@ -161,7 +161,9 @@ export class DocumentHolder {
         try {
             await this.persistenceManager.remove(this.clonedDocument, this.usernameProvider.getUsername())
         } catch(removeError) {
-            if (removeError != DatastoreErrors.DOCUMENT_NOT_FOUND) {
+
+            console.log("error: removeWithPersistenceManager",removeError);
+            if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) {
                 throw [M.DOCEDIT_DELETE_ERROR];
             }
         }

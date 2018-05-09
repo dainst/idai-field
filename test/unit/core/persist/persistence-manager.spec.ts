@@ -61,11 +61,6 @@ describe('PersistenceManager', () => {
     };
 
 
-    let successFunction = function() {
-        return Promise.resolve('ok');
-    };
-
-
     beforeEach(() => {
 
         mockDatastore = jasmine.createSpyObj('mockDatastore',
@@ -73,9 +68,9 @@ describe('PersistenceManager', () => {
         persistenceManager = new PersistenceManager(mockDatastore, projectConfiguration);
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.find.and.callFake(findFunction);
-        mockDatastore.update.and.callFake(successFunction);
-        mockDatastore.create.and.callFake(successFunction);
-        mockDatastore.remove.and.callFake(successFunction);
+        mockDatastore.update.and.returnValue(Promise.resolve('ok'));
+        mockDatastore.create.and.returnValue(Promise.resolve('ok'));
+        mockDatastore.remove.and.returnValue(Promise.resolve('ok'));
 
         doc = { 'resource' : {
             'id' :'1', 'identifier': 'ob1',
@@ -135,51 +130,6 @@ describe('PersistenceManager', () => {
     });
 
 
-    it('should remove a document', done => {
-
-        doc.resource.relations['BelongsTo']=['2'];
-        relatedDoc.resource.relations['Contains']=['1'];
-
-        persistenceManager.remove(doc, 'u').then(() => {
-
-            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
-            expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
-            done();
-
-        }, err => { fail(err); done(); });
-    });
-
-
-    it('should remove a document with a one way relation', done => {
-
-        doc.resource.relations['isRecordedIn'] = ['2'];
-
-        persistenceManager.remove(doc, 'u').then(() => {
-
-            expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc);
-            done();
-
-        }, err => { fail(err); done(); });
-    });
-
-
-    it('should remove a main type resource', done => {
-
-        relatedDoc.resource.relations['isRecordedIn'] = ['1'];
-        relatedDoc.resource.relations['Contains'] = ['3'];
-        anotherRelatedDoc.resource.relations['BelongsTo'] = ['2'];
-
-        findResult = [relatedDoc];
-
-        persistenceManager.remove(doc, 'u').then(() => {
-            expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
-            expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
-            expect(anotherRelatedDoc.resource.relations['BelongsTo']).toBeUndefined();
-            done();
-        }, err => { fail(err); done(); });
-    });
-
-
     it('should add two relations of the same type', done => {
 
         doc.resource.relations['BelongsTo'] = ['2', '3'];
@@ -218,4 +168,44 @@ describe('PersistenceManager', () => {
 
         }, err => { fail(err); done(); });
     });
-})
+
+
+    it('remove: should remove a document', async done => {
+
+        doc.resource.relations['BelongsTo']=['2'];
+        relatedDoc.resource.relations['Contains']=['1'];
+
+        await persistenceManager.remove(doc, 'u');
+
+        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
+        expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
+        done();
+    });
+
+
+    it('remove: should remove a document with a one way relation', async done => {
+
+        doc.resource.relations['isRecordedIn'] = ['2'];
+
+        await persistenceManager.remove(doc, 'u');
+
+        expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc);
+        done();
+    });
+
+
+    it('remove: should remove a main type resource', async done => {
+
+        relatedDoc.resource.relations['isRecordedIn'] = ['1'];
+        relatedDoc.resource.relations['Contains'] = ['3'];
+        anotherRelatedDoc.resource.relations['BelongsTo'] = ['2'];
+
+        findResult = [relatedDoc];
+
+        await persistenceManager.remove(doc, 'u');
+        expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
+        expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
+        expect(anotherRelatedDoc.resource.relations['BelongsTo']).toBeUndefined();
+        done();
+    });
+});

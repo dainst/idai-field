@@ -132,7 +132,9 @@ export class PersistenceManager {
 
             try {
                 connectedDocuments.push(await this.datastore.get(id));
-            } catch (notexistent) {} // ignore
+            } catch (_) {
+                console.warn('connected document not found', id);
+            }
         }
         return connectedDocuments;
     }

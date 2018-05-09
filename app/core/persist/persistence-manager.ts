@@ -152,18 +152,10 @@ export class PersistenceManager {
 
     private extractRelatedObjectIDs(resource: Resource): Array<string> {
 
-        const relatedObjectIDs = [] as any;
-
-        for (let prop in resource.relations) {
-            if (!resource.relations.hasOwnProperty(prop)) continue;
-            if (!this.projectConfiguration.isRelationProperty(prop)) continue;
-
-            for (let id of resource.relations[prop]) {
-                relatedObjectIDs.push(id as never);
-            }
-        }
-
-        return relatedObjectIDs;
+        return Object.keys(resource.relations)
+            .filter(prop => resource.relations.hasOwnProperty(prop))
+            .filter(prop => this.projectConfiguration.isRelationProperty(prop))
+            .reduce((ids: Array<string>, prop) => ids.concat(resource.relations[prop]), []);
     }
 
 

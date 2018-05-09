@@ -239,9 +239,6 @@ describe('PersistenceManager', () => {
         expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
         expect(mockDatastore.remove).toHaveBeenCalledWith(anotherRelatedDoc);
         expect(mockDatastore.remove).toHaveBeenCalledWith(doc);
-
-
-        expect(anotherRelatedDoc.resource.relations['BelongsTo']).toBeUndefined();
         done();
     });
 

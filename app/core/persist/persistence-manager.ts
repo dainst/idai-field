@@ -146,9 +146,9 @@ export class PersistenceManager {
 
     private getUniqueConnectedDocumentsIds(documents: Array<Document>) {
 
-        return unique(documents.reduce((acc: Array<string>, doc) => {
-            return acc.concat(this.extractRelatedObjectIDs(doc.resource))
-        }, []));
+        return unique(documents.reduce((acc: Array<string>, doc) =>
+            acc.concat(this.extractRelatedObjectIDs(doc.resource))
+        , []));
     }
 
 

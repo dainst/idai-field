@@ -197,7 +197,7 @@ describe('PersistenceManager', () => {
     });
 
 
-    it('remove: should remove an operation type resource', async done => {
+    fit('remove: should remove an operation type resource, another related resource gets relation updated', async done => {
 
         relatedDoc.resource.relations['isRecordedIn'] = ['1'];
         relatedDoc.resource.relations['Contains'] = ['3'];
@@ -227,3 +227,10 @@ describe('PersistenceManager', () => {
         done();
     });
 });
+
+
+// it('hierarchie with more than 2 layers')
+
+
+// also to review: different handling of oldversions (deep copied vs. regular use)
+// also to review: find consistent way for error msgs, M is still in use

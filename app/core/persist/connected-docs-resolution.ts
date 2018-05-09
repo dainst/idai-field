@@ -50,7 +50,7 @@ export module ConnectedDocsResolution {
 
         Object.keys(targetDocument.resource.relations)
             .filter(relation => projectConfiguration.isRelationProperty(relation))
-            .filter(relation => (!(keepAllNoInverseRelations && relation == 'isRecordedIn')))
+            .filter(relation => (!(keepAllNoInverseRelations && relation === 'isRecordedIn')))
             .forEach(relation =>
                 removeRelation(
                     resourceId, targetDocument.resource.relations, relation)
@@ -65,7 +65,7 @@ export module ConnectedDocsResolution {
 
         Object.keys(document.resource.relations)
             .filter(relation => projectConfiguration.isRelationProperty(relation))
-            .filter(relation => relation != "isRecordedIn")
+            .filter(relation => relation !== "isRecordedIn")
             .forEach(relation => {
 
                 const inverse = projectConfiguration.getInverseRelations(relation);

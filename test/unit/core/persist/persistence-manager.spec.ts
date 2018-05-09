@@ -203,11 +203,44 @@ describe('PersistenceManager', () => {
         relatedDoc.resource.relations['Contains'] = ['3'];
         anotherRelatedDoc.resource.relations['BelongsTo'] = ['2'];
 
-        findResult = [relatedDoc];
+        findResult /* for isRecordedIn "1" */ = [relatedDoc];
 
         await persistenceManager.remove(doc, 'u');
         expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
         expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
+        expect(mockDatastore.remove).not.toHaveBeenCalledWith(anotherRelatedDoc);
+        expect(anotherRelatedDoc.resource.relations['BelongsTo']).toBeUndefined();
+        done();
+    });
+
+
+    it('remove: should remove an operation type resource, with two dependent resources', async done => {
+
+        relatedDoc.resource.relations['isRecordedIn'] = ['1'];
+        relatedDoc.resource.relations['Contains'] = ['3'];
+
+        anotherRelatedDoc.resource.relations['BelongsTo'] = ['2']; // when anotherRelatedDoc gets deleted, relatedDoc is already gone
+        anotherRelatedDoc.resource.relations['isRecordedIn'] = ['1'];
+
+        findResult /* for isRecordedIn "1" */ = [relatedDoc, anotherRelatedDoc];
+
+        mockDatastore.get.and.returnValues(
+            Promise.resolve(doc), // for being related to relatedDoc
+            Promise.resolve(anotherRelatedDoc), // for beeing related to relatedDoc
+            Promise.reject('not exists') // for relatedDoc already deleted, but still linked from anotherRelatedDoc
+        );
+
+        await persistenceManager.remove(doc, 'u');
+
+        // do not update for beeing related to relatedDoc
+        expect(mockDatastore.update).not.toHaveBeenCalledWith(doc, 'u');
+        // this gets updates for beeing related to relatedDoc
+        expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
+        expect(mockDatastore.remove).toHaveBeenCalledWith(relatedDoc);
+        expect(mockDatastore.remove).toHaveBeenCalledWith(anotherRelatedDoc);
+        expect(mockDatastore.remove).toHaveBeenCalledWith(doc);
+
+
         expect(anotherRelatedDoc.resource.relations['BelongsTo']).toBeUndefined();
         done();
     });
@@ -229,8 +262,4 @@ describe('PersistenceManager', () => {
 });
 
 
-// it('hierarchie with more than 2 layers')
-
-
-// also to review: different handling of oldversions (deep copied vs. regular use)
 // also to review: find consistent way for error msgs, M is still in use

@@ -4,7 +4,7 @@ import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {M} from '../../m';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ObjectUtil} from '../../util/object-util';
-import {unique} from 'tsfun';
+import {subtract} from 'tsfun';
 import {TypeUtility} from '../model/type-utility';
 
 
@@ -66,7 +66,7 @@ export class PersistenceManager {
         username: string,
         oldVersion: NewDocument = document,
         revisionsToSquash: Document[] = [],
-        ): Promise<any> {
+        ): Promise<Document> {
 
         const oldVersions = [ObjectUtil.cloneObject(oldVersion)].concat(revisionsToSquash);
 
@@ -78,15 +78,17 @@ export class PersistenceManager {
         } catch (_) {
             throw [M.PERSISTENCE_ERROR_TARGETNOTFOUND];
         }
-        await this.updateDocs(document as Document, connectedDocs, true, username);
+        await this.updateConnectedDocs(document as Document, connectedDocs, true, username);
 
         return persistedDocument;
     }
 
 
-    private async updateDocs(document: Document, connectedDocs: Array<Document>, setInverseRelations: boolean, user: string) {
+    private async updateConnectedDocs(document: Document, connectedDocs: Array<Document>, setInverseRelations: boolean, user: string) {
 
         for (let docToUpdate of
+
+            // Note that this does not update a document for beeing target of isRecordedIn
             ConnectedDocsResolution.determineDocsToUpdate(
                 this.projectConfiguration, document, connectedDocs,
                 setInverseRelations)) {
@@ -109,24 +111,25 @@ export class PersistenceManager {
      */
     public async remove(document: Document,
                   username: string,
-                  oldVersion: Document = document): Promise<void> {
+                  oldVersion: Document = document) {
 
         // dont rely on isRecordedIn alone. Make sure it is really an operation subtype
         if (this.typeUtility.isSubtype(document.resource.type, "Operation")) {
-            for (let doc of (await this.getDocsRecordedIn(document))) {
-                await this.removeDocument(doc, username);
+            for (let recordedInDoc of (await this.getDocsRecordedIn(document))) {
+                await this.removeDocument(recordedInDoc, username);
             }
         }
         await this.removeDocument(document, username, oldVersion);
     }
 
 
-    private async removeDocument(document: Document, user: string, oldVersion: Document = document): Promise<any> {
+    private async removeDocument(
+        document: Document,
+        user: string, oldVersion: Document = document) {
 
         const connectedDocs = await this.getExistingConnectedDocs([document].concat([oldVersion]));
-        await this.updateDocs(document, connectedDocs, false, user);
-
-        this.datastore.remove(document);
+        await this.updateConnectedDocs(document, connectedDocs, false, user);
+        await this.datastore.remove(document);
     }
 
 
@@ -137,7 +140,6 @@ export class PersistenceManager {
 
             try {
                 connectedDocuments.push(await this.datastore.get(id));
-
             } catch (notexistent) {} // ignore
         }
         return connectedDocuments;
@@ -146,9 +148,13 @@ export class PersistenceManager {
 
     private getUniqueConnectedDocumentsIds(documents: Array<Document>) {
 
-        return unique(documents.reduce((acc: Array<string>, doc) =>
-            acc.concat(this.extractRelatedObjectIDs(doc.resource))
-        , []));
+        return subtract
+            (documents.map(_ => _.resource.id))
+            (
+                documents.reduce((acc: Array<string>, doc) =>
+                    acc.concat(this.extractRelatedObjectIDs(doc.resource))
+                , [])
+            );
     }
 
 
@@ -158,7 +164,7 @@ export class PersistenceManager {
 
         for (let prop in resource.relations) {
             if (!resource.relations.hasOwnProperty(prop)) continue;
-            if (!(this.projectConfiguration as any).isRelationProperty(prop)) continue;
+            if (!this.projectConfiguration.isRelationProperty(prop)) continue;
 
             for (let id of resource.relations[prop]) {
                 relatedObjectIDs.push(id as never);

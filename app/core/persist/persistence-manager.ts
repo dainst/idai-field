@@ -46,11 +46,14 @@ export class PersistenceManager {
         revisionsToSquash: Document[] = [],
         ): Promise<Document> {
 
-        const oldVersions = [ObjectUtil.cloneObject(oldVersion)].concat(revisionsToSquash);
 
         const persistedDocument = await this.persistIt(document as Document, username, revisionsToSquash);
 
-        const connectedDocs = await this.getExistingConnectedDocs([document as Document].concat(oldVersions as Document[]));
+        const allVersions = [document]
+            .concat([ObjectUtil.cloneObject(oldVersion)])
+            .concat(revisionsToSquash);
+
+        const connectedDocs = await this.getExistingConnectedDocs(allVersions as Document[]);
         await this.updateConnectedDocs(document as Document, connectedDocs, true, username);
 
         return persistedDocument;

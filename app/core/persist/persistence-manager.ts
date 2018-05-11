@@ -35,12 +35,14 @@ export class PersistenceManager {
      * On top of that, one oldVersion and some revisionsToSquash can be specified.
      * These are compared with document to determine which relations have been removed.
      *
+     * @param document an existing or a new document
+     * @param oldVersion to be used only if document is an existing document.
      * @param revisionsToSquash these revisions get deleted while updating document
      * @returns a copy of the updated document
      * @throws msgWithParams
      */
     public async persist(
-        document: NewDocument,
+        document: NewDocument, // or Document
         username: string,
         oldVersion: NewDocument = document,
         revisionsToSquash: Document[] = [],

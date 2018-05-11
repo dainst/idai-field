@@ -46,11 +46,10 @@ export class PersistenceManager {
         revisionsToSquash: Document[] = [],
         ): Promise<Document> {
 
-
         const persistedDocument = await this.persistIt(document as Document, username, revisionsToSquash);
 
         const allVersions = [document]
-            .concat([ObjectUtil.cloneObject(oldVersion)])
+            .concat(oldVersion)
             .concat(revisionsToSquash);
 
         const connectedDocs = await this.getExistingConnectedDocs(allVersions as Document[]);
@@ -160,13 +159,21 @@ export class PersistenceManager {
 
     private persistIt(document: Document|NewDocument, username: string, revisionsToSquash?: Document[]): Promise<Document> {
 
+        const squashRevisionIds = revisionsToSquash && revisionsToSquash.length > 0
+            ? revisionsToSquash
+                .filter(_ => {
+                    if ((_ as any)['_rev']) return true;
+                    console.log("_rev field not found", _);
+                    return false;
+                })
+                .map(_ => (_ as any)['_rev'])
+            : undefined;
+
         return document.resource.id
             ? this.datastore.update(
                 document as Document,
                 username,
-                revisionsToSquash && revisionsToSquash.length > 0
-                    ? revisionsToSquash.map(_ => (_ as any)['_rev'])
-                    : undefined)
+                squashRevisionIds)
             : this.datastore.create(document, username);
     }
 }

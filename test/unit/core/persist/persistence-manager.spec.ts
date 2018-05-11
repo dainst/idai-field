@@ -43,7 +43,7 @@ describe('PersistenceManager', () => {
 
     let getFunction = function(id) {
         return new Promise(resolve => {
-            if (id == relatedDoc['resource']['id']) {
+            if (id === relatedDoc['resource']['id']) {
                 resolve(relatedDoc);
             }
             else {
@@ -152,7 +152,7 @@ describe('PersistenceManager', () => {
     });
 
 
-    it('should delete a relation which is not present in the new version of the doc anymore', done => {
+    it('delete a relation which was present in old version', async done => {
 
         const oldVersion = { 'resource' : {
             'id' :'1', 'identifier': 'ob1',
@@ -160,18 +160,44 @@ describe('PersistenceManager', () => {
             'relations' : { 'BelongsTo' : [ '2' ] }
         }};
 
-        relatedDoc.resource.relations['Contains']=['1'];
+        relatedDoc.resource.relations['Contains'] = ['1'];
 
-        persistenceManager.persist(doc, 'u', oldVersion).then(()=>{
+        await persistenceManager.persist(doc, 'u', oldVersion);
 
-            expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
-            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
+        expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
+        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
 
-            expect(doc.resource.relations['BelongsTo']).toBe(undefined);
-            expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
-            done();
+        expect(doc.resource.relations['BelongsTo']).toBe(undefined);
+        expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
+        done();
+    });
 
-        }, err => { fail(err); done(); });
+
+    it('delete a relation which was present in conflicting revision', async done => {
+
+        const squashVersion = { 'resource' : {
+                'id' :'1', 'identifier': 'ob1',
+                'type': 'object',
+                'relations' : { 'BelongsTo' : [ '2' ] }
+            }, '_rev' : '1-a' };
+
+        relatedDoc.resource.relations['Contains'] = ['1'];
+
+        await persistenceManager.persist(doc, 'u', doc, [squashVersion]);
+
+        expect(mockDatastore.update).toHaveBeenCalledWith(
+                jasmine.objectContaining({
+                  resource : jasmine.objectContaining({ id: '1' })
+                }), 'u', ['1-a']);
+
+        expect(mockDatastore.update).toHaveBeenCalledWith(
+            jasmine.objectContaining({
+                resource : jasmine.objectContaining({ id: '2' })
+            }), 'u', undefined);
+
+        expect(doc.resource.relations['BelongsTo']).toBe(undefined);
+        expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
+        done();
     });
 
 

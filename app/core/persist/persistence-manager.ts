@@ -9,13 +9,9 @@ import {TypeUtility} from '../model/type-utility';
 
 @Injectable()
 /**
- * With a document to persist, it determines which other documents are 
- * affected by being related to the document in its current or previous state.
- * When persisting, it maintains a consistent state of relations between the objects
- * by also persisting the related documents with updated target relations.
+ * When persisting or deleting, PersistenceManager maintains a consistent state of relations between the
+ * objects by updating related documents relations.
  *
- * Also adds created and modified actions to persisted documents.
- * 
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -29,32 +25,17 @@ export class PersistenceManager {
 
 
     /**
-     * Persists the loaded object and all the objects that are or have been in relation
+     * Persists document and all the objects that are or have been in relation
      * with the object before the method call.
      *
-     * If the document is
+     * If the document is { resource: { id: 1, relations: { includes: [2] } } },
+     * this means that also another document is updated, namely { resource: { id: 2 } } }.
+     * which gets updated to { resource: { id: 2, relations: { belongsTo: [1] } } }.
      *
-     *   { resource: { id: 1, relations: { includes: [2] } } },
+     * On top of that, one oldVersion and some revisionsToSquash can be specified.
+     * These are compared with document to determine which relations have been removed.
      *
-     * this means that also another document is updated, namely
-     *
-     *   { resource: { id: 2 } } },
-     *
-     * which gets updated to
-     *
-     *   { resource: { id: 2, relations: { belongsTo: [1] } } }.
-     *
-     * This happens based on a configuration which includes
-     *
-     *   { name: includes, inverse: belongsTo }.
-     *
-     * If the configuration looks like this
-     *
-     *   { name: includes, inverse: NO-INVERSE }
-     *
-     * the other documents back relation gets not set. If no other relation gets
-     * persisted on that document, it does not get updated at all.
-     *
+     * @param revisionsToSquash these revisions get deleted while updating document
      * @returns a copy of the updated document
      * @throws msgWithParams
      */

@@ -9,7 +9,7 @@
   position: fixed;
   width: 100%;
   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
-  z-index:1001;
+  z-index: 1001;
 
   .btn-group {
     top: 4px;
@@ -20,6 +20,11 @@
   #selected-trench-label {
     position: absolute;
     left: 43px;
+  }
+
+  #trench-selector-placeholder {
+    height: 41px;
+    z-index: 1001;
   }
 }
 

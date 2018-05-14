@@ -11,9 +11,7 @@
         <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">{{getDocumentLabel(selectedTrench)}}</div>
     </div>
 
-    <div *ngIf="!showTrenchSelector()">
-        <div style="height: 41px; z-index: 1001;"></div>
-    </div>
+    <div *ngIf="!showTrenchSelector()" id="trench-selector-placeholder"></div>
 </div>
 
 <div id="matrix-container">

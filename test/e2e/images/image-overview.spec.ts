@@ -20,6 +20,7 @@ describe('images/image-overview --', function() {
 
     let i = 0;
 
+
     beforeEach(() => {
 
         if (i > 0) {

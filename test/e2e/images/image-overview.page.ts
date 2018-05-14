@@ -7,25 +7,25 @@ let delays = require('../config/delays');
 
 let common = require('../common.js');
 
-export class ImageOverviewPage {
+export module ImageOverviewPage {
 
-    public static selectedClass = 'selected';
+    export const selectedClass = 'selected';
 
 
-    public static get() {
+    export function get() {
 
         browser.get('#/images');
     }
 
 
-    public static getAndWaitForImageCells() {
+    export function getAndWaitForImageCells() {
 
         ImageOverviewPage.get();
         ImageOverviewPage.waitForCells();
-    };
+    }
 
 
-    public static waitForCells() {
+    export function waitForCells() {
 
         return browser.wait(EC.presenceOf(element(by.css('.cell'))), delays.ECWaitTime, 'Waiting for image cells.');
     }
@@ -33,67 +33,67 @@ export class ImageOverviewPage {
 
     // click
 
-    public static clickCell(index) {
+    export function clickCell(index) {
 
         return ImageOverviewPage.getCell(index).click();
-    };
+    }
 
 
-    public static chooseImageSubtype(index) {
+    export function chooseImageSubtype(index) {
 
         return common.click(element(by.id('choose-image-subtype-option-' + index)));
-    };
+    }
 
 
-    public static clickDeselectButton() {
+    export function clickDeselectButton() {
 
         return common.click(element(by.id('deselect-images')));
-    };
+    }
 
 
-    public static clickDeleteButton() {
+    export function clickDeleteButton() {
 
         return common.click(element(by.id('delete-images')));
-    };
+    }
 
 
-    public static clickConfirmUnlinkButton() {
+    export function clickConfirmUnlinkButton() {
 
         return common.click(element(by.id('remove-link-confirm')));
-    };
+    }
 
 
-    public static clickLinkButton() {
+    export function clickLinkButton() {
 
         return common.click(element(by.id('create-link-btn')));
-    };
+    }
 
 
-    public static clickUnlinkButton() {
+    export function clickUnlinkButton() {
 
         return common.click(element(by.id('remove-link-btn')));
-    };
+    }
 
 
-    public static clickConfirmDeleteButton() {
+    export function clickConfirmDeleteButton() {
 
         return common.click(element(by.id('delete-images-confirm')));
-    };
+    }
 
 
-    public static clickCancelDeleteButton() {
+    export function clickCancelDeleteButton() {
 
         return common.click(element(by.id('delete-images-cancel')));
-    };
+    }
 
-    public static clickSelectMainTypeDocumentFilterOption(optionIndex: number) {
+    export function clickSelectMainTypeDocumentFilterOption(optionIndex: number) {
 
         browser.wait(EC.presenceOf(element(by.id('main-type-document-filter-select'))), delays.ECWaitTime);
         element.all(by.css('#main-type-document-filter-select option')).get(optionIndex).click();
-    };
+    }
 
 
-    public static clickIncreaseGridSizeButton() {
+    export function clickIncreaseGridSizeButton() {
 
         common.click(element(by.id('increase-grid-size-button')));
     }
@@ -101,103 +101,103 @@ export class ImageOverviewPage {
 
     // double click
 
-    public static doubleClickCell(index) {
+    export function doubleClickCell(index) {
 
         return browser.actions().doubleClick(ImageOverviewPage.getCell(index)).perform();
-    };
+    }
 
 
     // mouse moves
 
-    public static clickUploadArea = function() {
+    export function clickUploadArea() {
 
         return browser.actions()
             .mouseMove(element(by.css('.droparea')), {x: 10, y: 10})
             .click()
             .perform();
-    };
+    }
 
 
     // send keys
 
-    public static uploadImage(filePath) {
+    export function uploadImage(filePath) {
 
         return element(by.id('file')).sendKeys(filePath);
-    };
+    }
 
 
     // text
 
-    public static getCellImageName(index) {
+    export function getCellImageName(index) {
 
         return ImageOverviewPage.getCell(index).getAttribute('id').then(id => id.substring('resource-'.length));
-    };
+    }
 
 
-    public static getGridSizeSliderValue() {
+    export function getGridSizeSliderValue() {
 
         return element(by.id('grid-size-slider')).getAttribute('value');
     }
 
     // elements
 
-    public static getLinkModalListEntries() {
+    export function getLinkModalListEntries() {
 
         browser.wait(EC.presenceOf(element(by.css('.resource-picker ul'))), delays.ECWaitTime);
         return element.all(by.css('.resource-picker ul li'));
     }
 
 
-    public static getAllCells() {
+    export function getAllCells() {
 
         return element.all(by.css('.cell'));
-    };
+    }
 
 
-    public static getCell(index) {
+    export function getCell(index) {
 
         return ImageOverviewPage.getAllCells().get(index);
-    };
+    }
 
 
-    public static getCellByIdentifier(identifier: string) {
+    export function getCellByIdentifier(identifier: string) {
 
         return element(by.id('resource-' + identifier));
-    };
+    }
 
 
-    public static getDeleteConfirmationModal() {
+    export function getDeleteConfirmationModal() {
 
         return element(by.css('.modal-dialog'));
-    };
+    }
 
 
-    public static getLinkModal() {
+    export function getLinkModal() {
 
         return element(by.id('link-modal'));
-    };
+    }
 
 
-    public static typeInIdentifierInLinkModal(identifier) {
+    export function typeInIdentifierInLinkModal(identifier) {
 
         return common.typeIn(ImageOverviewPage.getLinkModal().element(by.id('object-search')), identifier);
-    };
+    }
 
 
-    public static getSuggestedResourcesInLinkModalByIdentifier(identifier) {
+    export function getSuggestedResourcesInLinkModalByIdentifier(identifier) {
 
         return ImageOverviewPage.getLinkModal().element(by.id('resource-'+identifier))
-    };
+    }
 
 
     // sequences
 
-    public static createDepictsRelation(identifier) {
+    export function createDepictsRelation(identifier) {
 
         const imageToConnect = ImageOverviewPage.getCell(0);
 
         imageToConnect.click();
-        expect(imageToConnect.getAttribute('class')).toMatch(ImageOverviewPage.selectedClass);
+        expect(imageToConnect.getAttribute('class')).toMatch(selectedClass);
         ImageOverviewPage.clickLinkButton();
         ImageOverviewPage.typeInIdentifierInLinkModal(identifier);
         ImageOverviewPage.getSuggestedResourcesInLinkModalByIdentifier(identifier).click();

@@ -3,8 +3,6 @@ import {ImageOverviewPage} from './image-overview.page';
 import {NavbarPage} from "../navbar.page";
 import {SearchBarPage} from '../widgets/search-bar.page';
 
-const path = require('path');
-
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 const request = require('request');
@@ -101,17 +99,6 @@ describe('images/image-overview/link --', function() {
     });
 
 
-    it('filter types in overview', async done => {
-
-        ImageOverviewPage.clickCell(0);
-        ImageOverviewPage.clickLinkButton();
-        ImageOverviewPage.getLinkModalListEntries().then(esBefore => expect(esBefore.length).toBeGreaterThan(2));
-        SearchBarPage.clickChooseTypeFilter('operation-trench');
-        ImageOverviewPage.getLinkModalListEntries().then(esAfter => expect(esAfter.length).toBe(2));
-        done();
-    });
-
-
     it('use main type document filter', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
@@ -133,5 +120,16 @@ describe('images/image-overview/link --', function() {
             delays.ECWaitTime);
         browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
             delays.ECWaitTime);
+    });
+
+
+    it('filter types in overview', async done => {
+
+        ImageOverviewPage.clickCell(0);
+        ImageOverviewPage.clickLinkButton();
+        ImageOverviewPage.getLinkModalListEntries().then(esBefore => expect(esBefore.length).toBeGreaterThan(2));
+        SearchBarPage.clickChooseTypeFilter('operation-trench');
+        ImageOverviewPage.getLinkModalListEntries().then(esAfter => expect(esAfter.length).toBe(2));
+        done();
     });
 });

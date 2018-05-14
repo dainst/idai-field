@@ -1,6 +1,7 @@
 import {by, browser, protractor} from 'protractor';
 import {ImageOverviewPage} from './image-overview.page';
 import {NavbarPage} from "../navbar.page";
+import {SearchBarPage} from '../widgets/search-bar.page';
 
 const path = require('path');
 
@@ -66,11 +67,13 @@ describe('images/image-overview/link --', function() {
         i++;
     });
 
+
     it('link an image to a resource', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
         expectLinkBadgePresence(true);
     });
+
 
     it('link two images to a resource', () => {
 
@@ -78,6 +81,7 @@ describe('images/image-overview/link --', function() {
         expectLinkBadgePresence(true, 2);
         browser.sleep(delays.shortRest);
     });
+
 
     it('unlink an image from a resource', () => {
 
@@ -87,6 +91,7 @@ describe('images/image-overview/link --', function() {
         expectLinkBadgePresence(false);
     });
 
+
     it('unlink two images from a resource', () => {
 
         createTwo();
@@ -94,6 +99,18 @@ describe('images/image-overview/link --', function() {
         browser.sleep(delays.shortRest);
         expectLinkBadgePresence(false, 2);
     });
+
+
+    it('filter types in overview', async done => {
+
+        ImageOverviewPage.clickCell(0);
+        ImageOverviewPage.clickLinkButton();
+        ImageOverviewPage.getLinkModalListEntries().then(esBefore => expect(esBefore.length).toBeGreaterThan(2));
+        SearchBarPage.clickChooseTypeFilter('operation-trench');
+        ImageOverviewPage.getLinkModalListEntries().then(esAfter => expect(esAfter.length).toBe(2));
+        done();
+    });
+
 
     it('use main type document filter', () => {
 

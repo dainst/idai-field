@@ -11,10 +11,12 @@ export class ImageOverviewPage {
 
     public static selectedClass = 'selected';
 
+
     public static get() {
 
         browser.get('#/images');
     }
+
 
     public static getAndWaitForImageCells() {
 
@@ -22,10 +24,12 @@ export class ImageOverviewPage {
         ImageOverviewPage.waitForCells();
     };
 
+
     public static waitForCells() {
 
         return browser.wait(EC.presenceOf(element(by.css('.cell'))), delays.ECWaitTime, 'Waiting for image cells.');
     }
+
 
     // click
 
@@ -34,40 +38,48 @@ export class ImageOverviewPage {
         return ImageOverviewPage.getCell(index).click();
     };
 
+
     public static chooseImageSubtype(index) {
 
         return common.click(element(by.id('choose-image-subtype-option-' + index)));
     };
+
 
     public static clickDeselectButton() {
 
         return common.click(element(by.id('deselect-images')));
     };
 
+
     public static clickDeleteButton() {
 
         return common.click(element(by.id('delete-images')));
     };
+
 
     public static clickConfirmUnlinkButton() {
 
         return common.click(element(by.id('remove-link-confirm')));
     };
 
+
     public static clickLinkButton() {
 
         return common.click(element(by.id('create-link-btn')));
     };
+
 
     public static clickUnlinkButton() {
 
         return common.click(element(by.id('remove-link-btn')));
     };
 
+
     public static clickConfirmDeleteButton() {
 
         return common.click(element(by.id('delete-images-confirm')));
     };
+
 
     public static clickCancelDeleteButton() {
 
@@ -80,10 +92,12 @@ export class ImageOverviewPage {
         element.all(by.css('#main-type-document-filter-select option')).get(optionIndex).click();
     };
 
+
     public static clickIncreaseGridSizeButton() {
 
         common.click(element(by.id('increase-grid-size-button')));
     }
+
 
     // double click
 
@@ -91,6 +105,7 @@ export class ImageOverviewPage {
 
         return browser.actions().doubleClick(ImageOverviewPage.getCell(index)).perform();
     };
+
 
     // mouse moves
 
@@ -102,12 +117,14 @@ export class ImageOverviewPage {
             .perform();
     };
 
+
     // send keys
 
     public static uploadImage(filePath) {
 
         return element(by.id('file')).sendKeys(filePath);
     };
+
 
     // text
 
@@ -116,6 +133,7 @@ export class ImageOverviewPage {
         return ImageOverviewPage.getCell(index).getAttribute('id').then(id => id.substring('resource-'.length));
     };
 
+
     public static getGridSizeSliderValue() {
 
         return element(by.id('grid-size-slider')).getAttribute('value');
@@ -123,40 +141,54 @@ export class ImageOverviewPage {
 
     // elements
 
+    public static getLinkModalListEntries() {
+
+        browser.wait(EC.presenceOf(element(by.css('.resource-picker ul'))), delays.ECWaitTime);
+        return element.all(by.css('.resource-picker ul li'));
+    }
+
+
     public static getAllCells() {
 
         return element.all(by.css('.cell'));
     };
+
 
     public static getCell(index) {
 
         return ImageOverviewPage.getAllCells().get(index);
     };
 
+
     public static getCellByIdentifier(identifier: string) {
 
         return element(by.id('resource-' + identifier));
     };
+
 
     public static getDeleteConfirmationModal() {
 
         return element(by.css('.modal-dialog'));
     };
 
+
     public static getLinkModal() {
 
         return element(by.id('link-modal'));
     };
+
 
     public static typeInIdentifierInLinkModal(identifier) {
 
         return common.typeIn(ImageOverviewPage.getLinkModal().element(by.id('object-search')), identifier);
     };
 
+
     public static getSuggestedResourcesInLinkModalByIdentifier(identifier) {
 
         return ImageOverviewPage.getLinkModal().element(by.id('resource-'+identifier))
     };
+
 
     // sequences
 

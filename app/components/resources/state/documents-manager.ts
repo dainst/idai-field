@@ -110,7 +110,12 @@ export class DocumentsManager {
             subtract([documentToSelect as Document])(this.newDocumentsFromRemote);
 
         if (!(await this.createUpdatedDocumentList()).find(hasEqualId(documentToSelect))) {
-            await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
+
+            if (documentToSelect) {
+                await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
+            } else {
+                console.error("documentToSelect undefined in setSelected"); // see #8317
+            }
             await this.populateDocumentList();
         }
         this.selectAndNotify(documentToSelect);

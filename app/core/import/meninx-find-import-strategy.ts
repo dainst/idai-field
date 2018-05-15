@@ -22,13 +22,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         importDoc: NewDocument // TODO use IdaiFieldDocument and make sure it is properly converted
     ): Promise<Document> {
 
-        console.log("import with meninx find import strategy");
         // await this.validator.validate(document as Document); // will throw identifier conflict if document exists
-
-        // find the id of the stratigraphical unit (lies Within)
-
-
-        // TODO find the id of the operation type resource
 
         try {
             const trenchIdentifier = '' + importDoc.resource.identifier[0] + '000';

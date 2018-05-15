@@ -19,20 +19,23 @@ export class MeninxFindCsvParser extends AbstractParser {
                 result.errors.forEach( (e: any) => errorCallback(e) );
                 result.data.forEach( (object: any, i:any) => {
 
-                    const doc = {
-                        resource: {
-                            identifier: object.se + '-' + object.id,
-                            shortDescription: object.description,
-                            type: 'Find',
-                            relations: {
-                                liesWithin: [
-                                    object.se
-                                ]
-                            }
-                        }
-                    };
+                    if (object.se && object.id) {
 
-                    observer.next(doc as any);
+                        observer.next({
+                            resource: {
+                                identifier: object.se + '-' + object.id,
+                                shortDescription: object.description,
+                                type: 'Find',
+                                relations: {
+                                    liesWithin: [
+                                        object.se
+                                    ]
+                                }
+                            }
+                        } as any);
+
+                    } else {/* skip doc with no id (or no se) */}
+
                 });
                 observer.complete();
             };

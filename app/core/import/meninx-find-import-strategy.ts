@@ -19,7 +19,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
      * @throws errorWithParams
      */
     public async importDoc(
-        document: NewDocument // TODO use IdaiFieldDocument and make sure it is properly converted
+        importDoc: NewDocument // TODO use IdaiFieldDocument and make sure it is properly converted
     ): Promise<Document> {
 
         console.log("import with meninx find import strategy");
@@ -27,32 +27,63 @@ export class MeninxFindImportStrategy implements ImportStrategy {
 
         // find the id of the stratigraphical unit (lies Within)
 
-        try {
-            const liesWithinResource = await this.datastore.get(document.resource.relations['liesWithin'][0]);
-            document.resource.relations['liesWithin'][0] = liesWithinResource.resource.id;
-        } catch (err) {
-            console.log("liesWithin err", err);
-            // TODO throw error
-        }
 
         // TODO find the id of the operation type resource
 
+        try {
+            const trenchIdentifier = '' + importDoc.resource.identifier[0] + '000';
+            const existing = await this.datastore.find({q: trenchIdentifier, types: ['Trench']});
+            importDoc.resource.relations['isRecordedIn'] = [existing.documents[0].resource.id];
+        } catch (err) {
+            console.log("isRecordedIn err", err);
+            // TODO throw
+        }
+
+        try {
+            const liesWithinIdentifier = importDoc.resource.relations['liesWithin'][0];
+            const existing = await this.datastore.find({q: liesWithinIdentifier, types: [
+                    "Feature",
+                    "DrillCoreLayer",
+                    "Floor",
+                    "Grave",
+                    "Layer",
+                    "Other",
+                    "Architecture",
+                    "SurveyUnit",
+                    "Planum",
+                    "Room",
+                    "Burial"
+                ]});
+
+            importDoc.resource.relations['liesWithin'] = [existing.documents[0].resource.id];
+        } catch (err) {
+            console.log("liesWithin err", err);
+            // TODO throw
+        }
+
+        let updateDoc: NewDocument|Document = importDoc;
+
         let exists = false;
         try {
-            const existing = await this.datastore.find({q: document.resource.identifier});
-            console.log("existing", existing);
+            const existing = await this.datastore.find({q: importDoc.resource.identifier});
 
-            // TODO merge existing properties and new document into one
-            // TODO map fields of csv into existin document
             if (existing.documents.length > 0) {
+
                 exists = true;
+                updateDoc = existing.documents[0];
+
+                // merge fields of document into doc
+                if (importDoc.resource.shortDescription) updateDoc.resource.shortDescription = importDoc.resource.shortDescription;
+                if (importDoc.resource.type) updateDoc.resource.type = importDoc.resource.type;
+                updateDoc.resource.relations['liesWithin'] = importDoc.resource.relations['liesWithin'];
+                updateDoc.resource.relations['isRecordedIn'] = importDoc.resource.relations['isRecordedIn']
             }
         } catch (err) {}
 
-        console.log("will " + exists ? ' update' : 'create',document);
+        console.log("will " + exists ? ' update' : 'create',updateDoc);
 
         return exists
-            ? await this.datastore.update(document as Document, this.username)
-            : await this.datastore.create(document, this.username);
+            ? await this.datastore.update(updateDoc as Document, this.username)
+            : await this.datastore.create(updateDoc, this.username);
     }
 }

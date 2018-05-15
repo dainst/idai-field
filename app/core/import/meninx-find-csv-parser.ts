@@ -7,7 +7,7 @@ import {M} from '../../m';
 /**
  * @author Daniel de Oliveira
  */
-export class MeninxCsvParser extends AbstractParser {
+export class MeninxFindCsvParser extends AbstractParser {
 
     public parse(content: string): Observable<Document> {
 
@@ -21,12 +21,16 @@ export class MeninxCsvParser extends AbstractParser {
 
                     const doc = {
                         resource: {
-                            id: object.id,
+                            id: object.se + '-' + object.id,
+                            identifier: object.se + '-' + object.id,
                             shortDescription: object.description,
                             type: 'Find',
                             relations: {
                                 liesWithin: [
-                                    object.feature
+                                    object.se
+                                ],
+                                isRecordedIn: [
+                                    't1'
                                 ]
                             }
                         }

@@ -26,6 +26,7 @@ export class DefaultImportStrategy implements ImportStrategy {
             document: NewDocument // TODO use IdaiFieldDocument and make sure it is properly converted
         ): Promise<Document> {
 
+
         if (this.mainTypeDocumentId) {
             await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
         }

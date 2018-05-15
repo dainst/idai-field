@@ -28,8 +28,9 @@ import {ModelUtil} from '../../core/model/model-util';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
 import {Validator} from '../../core/model/validator';
-import {MeninxCsvParser} from '../../core/import/meninx-csv-parser';
+import {MeninxFindCsvParser} from '../../core/import/meninx-find-csv-parser';
 import {UsernameProvider} from '../../core/settings/username-provider';
+import {MeninxFindImportStrategy} from '../../core/import/meninx-find-import-strategy';
 
 
 type ImportFormat = 'native' | 'idig' | 'geojson' | 'meninxfind';
@@ -78,8 +79,6 @@ export class ImportComponent {
 
     
     public async startImport() {
-
-        // this.messages.removeAllMessages();
 
         const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.file as any,
             this.url as any, this.http);
@@ -178,7 +177,7 @@ export class ImportComponent {
 
         switch (format) {
             case 'meninxfind':
-                return new MeninxCsvParser();
+                return new MeninxFindCsvParser();
             case 'idig':
                 return new IdigCsvParser();
             case 'geojson':
@@ -195,8 +194,8 @@ export class ImportComponent {
 
         switch (format) {
             case 'meninxfind':
-                return new DefaultImportStrategy(validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername(), true);
+                return new MeninxFindImportStrategy(validator, datastore,
+                    projectConfiguration, usernameProvider.getUsername());
             case 'idig':
                 return new DefaultImportStrategy(validator, datastore,
                     projectConfiguration, usernameProvider.getUsername());
@@ -228,10 +227,12 @@ export class ImportComponent {
     private static createRollbackStrategy(format: ImportFormat, datastore: DocumentDatastore): RollbackStrategy {
 
         switch (format) {
-            case 'idig':
-                return new DefaultRollbackStrategy(datastore);
+            case 'meninxfind':
+                return new NoRollbackStrategy();
             case 'geojson':
                 return new NoRollbackStrategy();
+            case 'idig':
+                return new DefaultRollbackStrategy(datastore);
             default: // 'native'
                 return new DefaultRollbackStrategy(datastore);
         }

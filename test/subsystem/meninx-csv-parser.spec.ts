@@ -1,4 +1,4 @@
-import {MeninxCsvParser} from '../../app/core/import/meninx-csv-parser';
+import {MeninxFindCsvParser} from '../../app/core/import/meninx-find-csv-parser';
 
 /**
  * @author Daniel de Oliveira
@@ -9,18 +9,18 @@ export function main() {
 
         it('abc', async done => {
 
-            const fileContent = 'feature,id,description\n'
-                + 'context1,imported1,hallohallo\n'
-                + 'context1,imported2,hallohallo\n';
+            const fileContent = 'se,id,description\n'
+                + '1001,1,hallohallo1\n'
+                + '1001,2,hallohallo2\n';
 
             const documents = [];
-            new MeninxCsvParser().parse(fileContent).forEach(document => {
+            new MeninxFindCsvParser().parse(fileContent).forEach(document => {
                 documents.push(document);
             }).then(() => {
-                expect(documents[0].resource.id).toEqual('imported1');
-                expect(documents[1].resource.id).toEqual('imported2');
-                expect(documents[0].resource.relations.liesWithin[0]).toEqual('context1');
-                expect(documents[1].resource.relations.liesWithin[0]).toEqual('context1');
+                expect(documents[0].resource.id).toEqual('1001-1');
+                expect(documents[1].resource.id).toEqual('1001-2');
+                expect(documents[0].resource.relations.liesWithin[0]).toEqual('1001');
+                expect(documents[1].resource.relations.liesWithin[0]).toEqual('1001');
                 done();
             });
         });

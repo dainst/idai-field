@@ -8,11 +8,12 @@ import {Document} from "idai-components-2/core";
  */
 export abstract class AbstractParser implements Parser {
 
-    protected warnings: string[][]; // array of msgWithParams
+    protected warnings: string[][] = []; // array of msgWithParams
 
     abstract parse(content: string): Observable<Document>;
 
     public getWarnings(): string[][] {
+
         return this.warnings;
     }
 

@@ -21,16 +21,12 @@ export class MeninxFindCsvParser extends AbstractParser {
 
                     const doc = {
                         resource: {
-                            id: object.se + '-' + object.id,
                             identifier: object.se + '-' + object.id,
                             shortDescription: object.description,
                             type: 'Find',
                             relations: {
                                 liesWithin: [
                                     object.se
-                                ],
-                                isRecordedIn: [
-                                    't1'
                                 ]
                             }
                         }

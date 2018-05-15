@@ -5,7 +5,6 @@ import {Validator} from '../model/validator';
 
 /**
  * @author Daniel de Oliveira
- * @author Thomas Kleinke
  */
 export class MeninxFindImportStrategy implements ImportStrategy {
 
@@ -23,20 +22,37 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         document: NewDocument // TODO use IdaiFieldDocument and make sure it is properly converted
     ): Promise<Document> {
 
-        console.log("import with meninx find import strategy")
-        await this.validator.validate(document as Document);
+        console.log("import with meninx find import strategy");
+        // await this.validator.validate(document as Document); // will throw identifier conflict if document exists
+
+        // find the id of the stratigraphical unit (lies Within)
+
+        try {
+            const liesWithinResource = await this.datastore.get(document.resource.relations['liesWithin'][0]);
+            document.resource.relations['liesWithin'][0] = liesWithinResource.resource.id;
+        } catch (err) {
+            console.log("liesWithin err", err);
+            // TODO throw error
+        }
+
+        // TODO find the id of the operation type resource
 
         let exists = false;
-        if (document.resource.id) try {
-            await this.datastore.get(document.resource.id);
-            exists = true;
-        } catch (_) {}
+        try {
+            const existing = await this.datastore.find({q: document.resource.identifier});
+            console.log("existing", existing);
 
-        if (exists) {
-            return await this.datastore.update(document as Document, this.username);
-        } else {
-            // throws if !overwriteIfExists and exists
-            return await this.datastore.create(document, this.username);
-        }
+            // TODO merge existing properties and new document into one
+            // TODO map fields of csv into existin document
+            if (existing.documents.length > 0) {
+                exists = true;
+            }
+        } catch (err) {}
+
+        console.log("will " + exists ? ' update' : 'create',document);
+
+        return exists
+            ? await this.datastore.update(document as Document, this.username)
+            : await this.datastore.create(document, this.username);
     }
 }

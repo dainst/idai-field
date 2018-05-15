@@ -61,7 +61,6 @@ export module Import {
 
             } catch (msgWithParams) {
 
-                console.error("msgWithParams",msgWithParams)
                 importReport.errors.push(msgWithParams as never);
             }
             resolve(await finishImport(importReport, relationsStrategy, rollbackStrategy));

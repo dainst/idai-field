@@ -17,8 +17,8 @@ export function main() {
             new MeninxFindCsvParser().parse(fileContent).forEach(document => {
                 documents.push(document);
             }).then(() => {
-                expect(documents[0].resource.id).toEqual('1001-1');
-                expect(documents[1].resource.id).toEqual('1001-2');
+                expect(documents[0].resource.identifier).toEqual('1001-1');
+                expect(documents[1].resource.identifier).toEqual('1001-2');
                 expect(documents[0].resource.relations.liesWithin[0]).toEqual('1001');
                 expect(documents[1].resource.relations.liesWithin[0]).toEqual('1001');
                 done();

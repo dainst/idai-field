@@ -21,7 +21,6 @@ import {RollbackStrategy} from '../../core/import/rollback-strategy';
 import {DefaultRollbackStrategy} from '../../core/import/default-rollback-strategy';
 import {NoRollbackStrategy} from '../../core/import/no-rollback-strategy';
 import {RelationsCompleter} from '../../core/import/relations-completer';
-import {SettingsService} from '../../core/settings/settings-service';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/state/view-facade';
 import {ModelUtil} from '../../core/model/model-util';

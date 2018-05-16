@@ -30,9 +30,7 @@ export class RoutingService {
                 private location: Location,
                 private typeUtility: TypeUtility,
                 private projectConfiguration: ProjectConfiguration,
-                private datastore: DocumentReadDatastore
-    ) {
-    }
+                private datastore: DocumentReadDatastore) {}
 
 
     // For ResourcesComponent
@@ -84,9 +82,9 @@ export class RoutingService {
     public getMainTypeNameForDocument(document: Document): Promise<string> {
 
         const relations = document.resource.relations['isRecordedIn'];
-        return (relations && relations.length > 0) ?
-            this.datastore.get(relations[0]).then(mainTypeDocument => mainTypeDocument.resource.type) :
-            RoutingService.handleNoRelationdInGetMainTypeNameForDocument(
+        return (relations && relations.length > 0)
+            ? this.datastore.get(relations[0]).then(mainTypeDocument => mainTypeDocument.resource.type)
+            : RoutingService.handleNoRelationdInGetMainTypeNameForDocument( // TODO check if latest changes lead to problems here
                 this.projectConfiguration.getRelationDefinitions(document.resource.type));
     }
 
@@ -153,7 +151,7 @@ export class RoutingService {
             if (relationDefinitions) {
                 
                 for (let relationDefinition of relationDefinitions) {
-                    if (relationDefinition.name == 'isRecordedIn') {
+                    if (relationDefinition.name === 'isRecordedIn') {
                         mainTypeName = relationDefinition.range[0];
                         break;
                     }

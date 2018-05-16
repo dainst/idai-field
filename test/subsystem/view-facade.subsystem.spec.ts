@@ -34,6 +34,9 @@ export function main() {
 
         const pc = {
             types: [
+                { 'type': 'Place', 'fields': [] },
+                { 'type': 'Survey', 'fields': [] },
+                { 'type': 'Building', 'fields': [] },
                 { 'type': 'Trench', 'fields': [] },
                 { 'type': 'Image', 'fields': [] },
                 { 'type': 'Find', 'fields': [] },

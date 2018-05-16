@@ -106,10 +106,13 @@ export class GeoreferenceViewComponent {
     }
 
 
-    private async save(): Promise<any> {
+    private async save(): Promise<void> {
 
         try {
-            return await this.persistenceManager.persist(this.document, this.usernameProvider.getUsername())
+            Object.assign(
+                this.document,
+                await this.persistenceManager.persist(this.document, this.usernameProvider.getUsername())
+            );
         } catch (err) {
             console.error(err);
             throw [M.APP_GENERIC_SAVE_ERROR];

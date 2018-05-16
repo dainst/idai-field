@@ -4,12 +4,13 @@ import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {subtract} from 'tsfun';
 import {TypeUtility} from '../model/type-utility';
+import {ObjectUtil} from '../../util/object-util';
 
 
 @Injectable()
 /**
  * When persisting or deleting, PersistenceManager maintains a consistent state of relations between the
- * objects by updating related documents relations.
+ * documents by updating related documents relations.
  *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
@@ -47,8 +48,16 @@ export class PersistenceManager {
         revisionsToSquash: Document[] = [],
         ): Promise<Document> {
 
-        const persistedDocument = await this.persistIt(document as Document, username, revisionsToSquash);
+        // doc itself
+        const doc = ObjectUtil.cloneObject(document);
+        // we do this for some time until all operation type docs and places have been updated accordingly
+        // later we can take this out. we do not create isRecordedIn relations for these documents any longer
+        if (['Place', 'Survey', 'Trench', 'Building'].includes(document.resource.type)) {
+            delete doc.resource.relations.isRecordedIn;
+        }
+        const persistedDocument = await this.persistIt(doc as Document, username, revisionsToSquash);
 
+        // related documents
         const allVersions = [document]
             .concat(oldVersion)
             .concat(revisionsToSquash);
@@ -89,7 +98,7 @@ export class PersistenceManager {
                   username: string,
                   oldVersion: Document = document) {
 
-        // dont rely on isRecordedIn alone. Make sure it is really an operation subtype
+        // don't rely on isRecordedIn alone. Make sure it is really an operation subtype
         if (this.typeUtility.isSubtype(document.resource.type, "Operation")) {
             for (let recordedInDoc of (await this.getDocsRecordedIn(document))) {
                 await this.removeDocument(recordedInDoc, username);

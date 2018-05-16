@@ -134,19 +134,23 @@ export class DoceditComponent {
         ref.componentInstance.setDocument(this.documentHolder.getClonedDocument());
         ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.getClonedDocument()));
         const decision = await ref.result;
-        if (decision == 'delete') this.deleteDoc();
+        if (decision === 'delete') this.deleteDoc();
     }
 
 
 
-    private async fetchParentLabel(document: IdaiFieldDocument) {
+    private async fetchParentLabel(document: IdaiFieldDocument) { // TODO could be an image type document
 
-        return document.resource.id
+        return !document.resource.relations.isRecordedIn
+                || document.resource.relations.isRecordedIn.length === 0
+            ? 'Projekt'
+            : document.resource.id
                 ? undefined
                 : (await this.datastore.get(
                         document.resource.relations.liesWithin
                             ? document.resource.relations.liesWithin[0]
-                            : document.resource.relations.isRecordedIn[0])
+                            : document.resource.relations.isRecordedIn[0]
+                        )
                 ).resource.identifier;
     }
 

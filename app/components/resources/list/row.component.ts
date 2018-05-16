@@ -85,7 +85,10 @@ export class RowComponent implements AfterViewInit {
         }
 
         try {
-            Object.assign(this.document, await this.persistenceManager.persist(this.document, this.usernameProvider.getUsername()));
+            Object.assign(
+                this.document,
+                await this.persistenceManager.persist(this.document, this.usernameProvider.getUsername())
+            );
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);
         }
@@ -95,7 +98,10 @@ export class RowComponent implements AfterViewInit {
     private async restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
 
         try {
-            Object.assign(this.document, await this.datastore.get(document.resource.id as any, {skip_cache: true}));
+            Object.assign(
+                this.document,
+                await this.datastore.get(document.resource.id as any, {skip_cache: true})
+            );
         } catch(_) {
             this.messages.add([M.DATASTORE_NOT_FOUND]);
         }

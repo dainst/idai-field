@@ -71,7 +71,7 @@ export class PlusButtonComponent implements OnChanges {
 
     public reset() {
 
-        if (this.getButtonType() == 'singleType') {
+        if (this.getButtonType() === 'singleType') {
             this.type = this.typesTreeList[0].name;
         } else {
             this.type = undefined;
@@ -81,10 +81,10 @@ export class PlusButtonComponent implements OnChanges {
 
     public getButtonType(): string {
 
-        if (this.typesTreeList.length == 0) return 'none';
+        if (this.typesTreeList.length === 0) return 'none';
 
-        if (this.typesTreeList.length == 1
-                && (!this.typesTreeList[0].children || this.typesTreeList[0].children.length == 0)) {
+        if (this.typesTreeList.length === 1
+                && (!this.typesTreeList[0].children || this.typesTreeList[0].children.length === 0)) {
             return 'singleType';
         }
 
@@ -145,7 +145,11 @@ export class PlusButtonComponent implements OnChanges {
 
         let relations: Relations = {};
 
-        if (this.isRecordedIn) relations['isRecordedIn'] = [this.isRecordedIn.resource.id] as any;
+        if (this.isRecordedIn && (this.type && !['Place', 'Survey', 'Trench', 'Building'].includes(this.type))) { // TODO use type utility to determine operation subtypes
+            relations['isRecordedIn'] = [this.isRecordedIn.resource.id] as any;
+        } else {
+            relations['isRecordedIn'] = [];
+        }
         if (this.liesWithin) relations['liesWithin'] = [this.liesWithin.resource.id] as any;
 
         return relations;
@@ -154,10 +158,10 @@ export class PlusButtonComponent implements OnChanges {
 
     private isAllowedType(type: IdaiType, projectConfiguration: ProjectConfiguration): boolean {
 
-        if (type.name == 'Image') return false;
+        if (type.name === 'Image') return false;
 
         if (this.isRecordedIn) {
-            if (this.isRecordedIn.resource.type == 'Project' && type.isAbstract) {
+            if (this.isRecordedIn.resource.type === 'Project' && type.isAbstract) {
                 return false;
             }
             if (!projectConfiguration.isAllowedRelationDomainType(type.name,

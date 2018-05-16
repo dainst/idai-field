@@ -57,7 +57,7 @@ export class DocumentsManager {
     public async populateProjectDocument(): Promise<void> {
 
         try {
-            this.projectDocument = await this.datastore.get(this.settingsService.getSelectedProject() as any);
+            this.projectDocument = await this.datastore.get(this.settingsService.getSelectedProject());
         } catch (_) {
             console.log('cannot find project document')
         }
@@ -166,19 +166,20 @@ export class DocumentsManager {
     public async createUpdatedDocumentList(): Promise<Array<Document>> {
 
         const isRecordedInTarget = this.makeIsRecordedInTarget();
-        if (!isRecordedInTarget) return [];
+        if (!isRecordedInTarget && !this.resourcesState.isInOverview()) return [];
 
-        return (await this.fetchDocuments(
-                    this.makeDocsQuery(isRecordedInTarget.resource.id))
-            ).filter(hasId);
+        const docsQuery = this.makeDocsQuery(isRecordedInTarget);
+        return (await this.fetchDocuments(docsQuery)).filter(hasId);
     }
 
 
-    private makeIsRecordedInTarget(): Document|undefined {
+    private makeIsRecordedInTarget(): string|undefined {
 
         return this.resourcesState.isInOverview()
-            ? this.projectDocument
-            : this.resourcesState.getMainTypeDocument();
+            ? undefined
+            : this.resourcesState.getMainTypeDocument()
+                ? (this.resourcesState.getMainTypeDocument() as any).resource.id
+                : undefined;
     }
 
 
@@ -211,29 +212,39 @@ export class DocumentsManager {
     }
 
 
-    private makeDocsQuery(mainTypeDocumentResourceId: string): Query {
+    private makeDocsQuery(mainTypeDocumentResourceId: string|undefined): Query {
 
-        return {
+        const q =  {
             q: this.resourcesState.getQueryString(),
             constraints: this.makeConstraints(mainTypeDocumentResourceId),
             types: (this.resourcesState.getTypeFilters().length > 0)
                 ? this.resourcesState.getTypeFilters()
                 : undefined
         };
+
+        if (!mainTypeDocumentResourceId
+            && this.resourcesState.isInOverview()
+            && !q.types) {
+
+            q.types = ['Place', 'Trench', 'Survey', 'Building']; // TODO fetch types from project configuration
+        }
+
+        return q;
     }
 
 
-    private async fetchDocuments(query: Query): Promise<any> {
+    private async fetchDocuments(query: Query): Promise<Document[]> {
 
         try {
             return (await this.datastore.find(query)).documents;
         } catch (errWithParams) {
             DocumentsManager.handleFindErr(errWithParams, query);
+            return [];
         }
     }
 
 
-    private makeConstraints(mainTypeDocumentResourceId: string): { [name: string]: string}  {
+    private makeConstraints(mainTypeDocumentResourceId: string|undefined): { [name: string]: string}  {
 
         const rootDoc = this.navigationPathManager.getNavigationPath().rootDocument;
 
@@ -242,7 +253,9 @@ export class DocumentsManager {
             ? { 'liesWithin:contain': rootDoc.resource.id}
             : { 'liesWithin:exist': 'UNKNOWN' };
 
-        constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;
+        if (mainTypeDocumentResourceId) {
+            constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;
+        }
         return constraints;
     }
 
@@ -250,6 +263,6 @@ export class DocumentsManager {
     private static handleFindErr(errWithParams: Array<string>, query: Query) {
 
         console.error('Error with find. Query:', query);
-        if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
+        if (errWithParams.length === 2) console.error('Error with find. Cause:', errWithParams[1]);
     }
 }

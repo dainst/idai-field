@@ -154,7 +154,7 @@ export class ViewFacade {
         let mainTypeDocuments: Array<Document> = [];
 
         for (let viewMainType of viewMainTypes) {
-            if (viewMainType == 'Project') continue;
+            if (viewMainType === 'Project') continue;
 
             mainTypeDocuments = mainTypeDocuments.concat(
                 (await this.datastore.find({ q: '', types: [viewMainType] })).documents);
@@ -173,10 +173,7 @@ export class ViewFacade {
     public getCurrentFilterType()  {
 
         const filterTypes = this.resourcesState.getTypeFilters();
-        if (!filterTypes) return undefined;
-
-        return (filterTypes.length > 0 ?
-            filterTypes[0] : undefined);
+        return filterTypes && filterTypes.length > 0 ? filterTypes[0] : undefined;
     }
 
 

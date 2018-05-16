@@ -16,7 +16,7 @@ export const DOCS: NewDocument[] = [
             "identifier": "trench1",
             "shortDescription": "Goldener Schnitt",
             "relations": {
-                "isRecordedIn": [ "test" ]
+                "isRecordedIn": []
             },
             "geometry": {
                 "type": "Polygon",
@@ -36,7 +36,7 @@ export const DOCS: NewDocument[] = [
             "identifier": "trench2",
             "shortDescription": "Matrix Schnitt",
             "relations": {
-                "isRecordedIn": [ "test" ]
+                "isRecordedIn": []
             },
             "type": "Trench"
         }

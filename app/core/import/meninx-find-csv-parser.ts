@@ -27,7 +27,7 @@ export class MeninxFindCsvParser extends AbstractParser {
                             resource: {
                                 identifier: object.se + '-' + object.id,
                                 shortDescription: object.description,
-                                type: 'Find',
+                                type: 'Find', // TODO set / override type in meninx find import strategy
                                 relations: {
                                     liesWithin: [
                                         object.se

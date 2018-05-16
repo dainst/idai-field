@@ -19,7 +19,9 @@ export class MeninxFindCsvParser extends AbstractParser {
                 result.errors.forEach( (e: any) => errorCallback(e) );
                 result.data.forEach( (object: any, i:any) => {
 
-                    if (object.se && object.id) {
+                    if (object.se
+                        && object.se.length === 4
+                        && object.id) {
 
                         observer.next({
                             resource: {

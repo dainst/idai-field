@@ -33,8 +33,8 @@ export class MeninxFindImportStrategy implements ImportStrategy {
             throw [M.IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE, trenchIdentifier];
         }
 
+        const liesWithinIdentifier = importDoc.resource.relations['liesWithin'][0];
         try {
-            const liesWithinIdentifier = importDoc.resource.relations['liesWithin'][0];
             const existing = await this.datastore.find({q: liesWithinIdentifier, types: [
                     "Feature",
                     "DrillCoreLayer",
@@ -51,8 +51,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
 
             importDoc.resource.relations['liesWithin'] = [existing.documents[0].resource.id];
         } catch (err) {
-            console.log("liesWithin err", err);
-            // TODO throw
+            throw [M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE, liesWithinIdentifier]; // TODO should we create one then?
         }
 
         let updateDoc: NewDocument|Document = importDoc;

@@ -50,6 +50,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_FAILURE_MISSING_RELATION_TARGET = 'importer/failure/missingrelationtarget';
     public static IMPORT_FAILURE_INVALID_MAIN_TYPE_DOCUMENT = 'importer/failure/invalidmaintypedocument';
     public static IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE = 'importer/failure/nooperationassignable';
+    public static IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE = 'importer/failure/nofeatureassignable';
 
     // Backup Package
     public static BACKUP_DUMP_SUCCESS: string = 'backup/dumpsuccess';
@@ -393,6 +394,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE] = {
             content: "Beim Import ist ein Fehler aufgetreten: Ressource konnte keiner Maßnahme mit dem Bezeichner \"{0}\" zugeordnet werden.",
+            level: 'danger',
+            params: ["?"],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE] = {
+            content: "Beim Import ist ein Fehler aufgetreten: Ressource konnte keiner Stratigraphischen Einheit mit dem Bezeichner \"{0}\" zugeordnet werden.",
             level: 'danger',
             params: ["?"],
             hidden: false

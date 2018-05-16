@@ -42,6 +42,14 @@ export class ResourcesMapComponent {
     }
 
 
+    public getIsRecordedInTarget() {
+
+        return this.resourcesComponent.getSelectedOperationTypeDocument() !== undefined
+            ? this.resourcesComponent.getSelectedOperationTypeDocument()
+            : this.viewFacade.getProjectDocument()
+    }
+
+
     public async select(document: IdaiFieldDocument|undefined) {
 
         this.resourcesComponent.setScrollTarget(document);
@@ -110,6 +118,6 @@ export class ResourcesMapComponent {
 
         return navigationPath.rootDocument ?
             navigationPath.rootDocument :
-            this.resourcesComponent.getIsRecordedInTarget();
+            this.getIsRecordedInTarget();
     }
 }

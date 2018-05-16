@@ -28,27 +28,28 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Import Package
 
-    public static IMPORT_START: string = 'importer/start';
-    public static IMPORT_GENERIC_START_ERROR: string = 'importer/genericstarterror';
-    public static IMPORT_SUCCESS_SINGLE: string = 'importer/success/single';
-    public static IMPORT_SUCCESS_MULTIPLE: string = 'importer/success/multiple';
-    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER: string = 'importer/warning/geojsonduplicateidentifier';
-    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS: string = 'importer/warning/geojsonduplicateidentifiers';
-    public static IMPORT_FAILURE_FILEUNREADABLE: string = 'importer/failure/fileunreadable';
-    public static IMPORT_FAILURE_INVALIDJSON: string = 'importer/failure/invalidjson';
-    public static IMPORT_FAILURE_INVALIDJSONL: string = 'importer/failure/invalidjsonl';
-    public static IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT: string = 'importer/failure/invalidgeojsonimportstruct';
-    public static IMPORT_FAILURE_MISSING_IDENTIFIER: string = 'importer/failure/missingidentifier';
-    public static IMPORT_FAILURE_IDENTIFIER_FORMAT: string = 'importer/failure/identifierforma';
-    public static IMPORT_FAILURE_INVALIDCSV: string = 'importer/failure/invalidcsv';
-    public static IMPORT_FAILURE_GENERICCSVERROR: string = 'importer/failure/genericcsverror';
-    public static IMPORT_FAILURE_MANDATORYCSVFIELDMISSING: string = 'importer/failure/mandatorycsvfieldmissing';
-    public static IMPORT_FAILURE_GENERICDATASTOREERROR: string = 'importer/failure/genericdatastoreerrror';
-    public static IMPORT_FAILURE_INVALIDGEOMETRY: string = 'importer/failure/invalidgeometry';
-    public static IMPORT_FAILURE_ROLLBACKERROR: string = 'importer/failure/rollbackerror';
-    public static IMPORT_FAILURE_MISSING_RESOURCE: string = 'importer/failure/missingresource';
-    public static IMPORT_FAILURE_MISSING_RELATION_TARGET: string = 'importer/failure/missingrelationtarget';
-    public static IMPORT_FAILURE_INVALID_MAIN_TYPE_DOCUMENT: string = 'importer/failure/invalidmaintypedocument';
+    public static IMPORT_START= 'importer/start';
+    public static IMPORT_GENERIC_START_ERROR= 'importer/genericstarterror';
+    public static IMPORT_SUCCESS_SINGLE= 'importer/success/single';
+    public static IMPORT_SUCCESS_MULTIPLE= 'importer/success/multiple';
+    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER= 'importer/warning/geojsonduplicateidentifier';
+    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS= 'importer/warning/geojsonduplicateidentifiers';
+    public static IMPORT_FAILURE_FILEUNREADABLE = 'importer/failure/fileunreadable';
+    public static IMPORT_FAILURE_INVALIDJSON = 'importer/failure/invalidjson';
+    public static IMPORT_FAILURE_INVALIDJSONL = 'importer/failure/invalidjsonl';
+    public static IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT = 'importer/failure/invalidgeojsonimportstruct';
+    public static IMPORT_FAILURE_MISSING_IDENTIFIER = 'importer/failure/missingidentifier';
+    public static IMPORT_FAILURE_IDENTIFIER_FORMAT = 'importer/failure/identifierforma';
+    public static IMPORT_FAILURE_INVALIDCSV = 'importer/failure/invalidcsv';
+    public static IMPORT_FAILURE_GENERICCSVERROR = 'importer/failure/genericcsverror';
+    public static IMPORT_FAILURE_MANDATORYCSVFIELDMISSING = 'importer/failure/mandatorycsvfieldmissing';
+    public static IMPORT_FAILURE_GENERICDATASTOREERROR = 'importer/failure/genericdatastoreerrror';
+    public static IMPORT_FAILURE_INVALIDGEOMETRY = 'importer/failure/invalidgeometry';
+    public static IMPORT_FAILURE_ROLLBACKERROR = 'importer/failure/rollbackerror';
+    public static IMPORT_FAILURE_MISSING_RESOURCE = 'importer/failure/missingresource';
+    public static IMPORT_FAILURE_MISSING_RELATION_TARGET = 'importer/failure/missingrelationtarget';
+    public static IMPORT_FAILURE_INVALID_MAIN_TYPE_DOCUMENT = 'importer/failure/invalidmaintypedocument';
+    public static IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE = 'importer/failure/nooperationassignable';
 
     // Backup Package
     public static BACKUP_DUMP_SUCCESS: string = 'backup/dumpsuccess';
@@ -386,6 +387,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_FAILURE_MISSING_RELATION_TARGET] = {
             content: "Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der "
             + "ID {0} konnte nicht gefunden werden.",
+            level: 'danger',
+            params: ["?"],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE] = {
+            content: "Beim Import ist ein Fehler aufgetreten: Ressource konnte keiner Maßnahme mit dem Bezeichner \"{0}\" zugeordnet werden.",
             level: 'danger',
             params: ["?"],
             hidden: false

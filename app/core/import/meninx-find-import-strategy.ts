@@ -2,6 +2,7 @@ import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2/cor
 import {ImportStrategy} from './import-strategy';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
+import {M} from '../../m';
 
 /**
  * @author Daniel de Oliveira
@@ -24,13 +25,12 @@ export class MeninxFindImportStrategy implements ImportStrategy {
 
         // await this.validator.validate(document as Document); // will throw identifier conflict if document exists
 
+        const trenchIdentifier = '' + importDoc.resource.identifier[0] + '000';
         try {
-            const trenchIdentifier = '' + importDoc.resource.identifier[0] + '000';
             const existing = await this.datastore.find({q: trenchIdentifier, types: ['Trench']});
             importDoc.resource.relations['isRecordedIn'] = [existing.documents[0].resource.id];
         } catch (err) {
-            console.log("isRecordedIn err", err);
-            // TODO throw
+            throw [M.IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE, trenchIdentifier];
         }
 
         try {

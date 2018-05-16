@@ -5,6 +5,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {Messages} from 'idai-components-2/core';
 import {ResourcesComponent} from './resources.component';
 import {M} from '../../m';
+import {TypeUtility} from '../../core/model/type-utility';
 
 
 @Component({
@@ -20,7 +21,7 @@ import {M} from '../../m';
 export class PlusButtonComponent implements OnChanges {
 
     @Input() placement: string = 'bottom'; // top | bottom | left | right
-    @Input() isRecordedIn: IdaiFieldDocument;
+    @Input() isRecordedIn: IdaiFieldDocument | undefined; // undefined when in resources overview
     @Input() liesWithin: IdaiFieldDocument;
     @Input() preselectedType: string;
     @Input() preselectedGeometryType: string;
@@ -40,7 +41,8 @@ export class PlusButtonComponent implements OnChanges {
         private elementRef: ElementRef,
         private resourcesComponent: ResourcesComponent,
         private projectConfiguration: ProjectConfiguration,
-        private messages: Messages) {
+        private messages: Messages,
+        private typeUtility: TypeUtility) {
 
         this.resourcesComponent.listenToClickEvents().subscribe(event => {
             this.handleClick(event);
@@ -71,15 +73,13 @@ export class PlusButtonComponent implements OnChanges {
 
     public reset() {
 
-        if (this.getButtonType() === 'singleType') {
-            this.type = this.typesTreeList[0].name;
-        } else {
-            this.type = undefined;
-        }
+        this.type = this.getButtonType() === 'singleType'
+            ? this.typesTreeList[0].name
+            : this.type = undefined;
     }
 
 
-    public getButtonType(): string {
+    public getButtonType(): 'singleType' | 'multipleTypes' | 'none' {
 
         if (this.typesTreeList.length === 0) return 'none';
 
@@ -116,9 +116,7 @@ export class PlusButtonComponent implements OnChanges {
             target = target.parentNode;
         } while (target);
 
-        if (!inside) {
-            this.popover.close();
-        }
+        if (!inside) this.popover.close();
     }
 
 
@@ -131,9 +129,12 @@ export class PlusButtonComponent implements OnChanges {
             if (type) this.typesTreeList.push(type);
             else this.messages.add([M.RESOURCES_ERROR_TYPE_NOT_FOUND, this.preselectedType]);
         } else {
+
             for (let type of projectConfiguration.getTypesList()) {
+
                 if (this.isAllowedType(type, projectConfiguration)
                         && (!type.parentType || !this.isAllowedType(type.parentType, projectConfiguration))) {
+
                     this.typesTreeList.push(type);
                 }
             }
@@ -143,38 +144,35 @@ export class PlusButtonComponent implements OnChanges {
 
     private createRelations(): Relations {
 
-        let relations: Relations = {};
+        const relations: Relations = {};
+        relations['isRecordedIn'] = this.isRecordedIn
+            ? [this.isRecordedIn.resource.id]
+            : [];
 
-        if (this.isRecordedIn && (this.type && !['Place', 'Survey', 'Trench', 'Building'].includes(this.type))) { // TODO use type utility to determine operation subtypes
-            relations['isRecordedIn'] = [this.isRecordedIn.resource.id] as any;
-        } else {
-            relations['isRecordedIn'] = [];
-        }
-        if (this.liesWithin) relations['liesWithin'] = [this.liesWithin.resource.id] as any;
-
+        if (this.liesWithin) relations['liesWithin'] = [this.liesWithin.resource.id];
         return relations;
+    }
+
+
+    private getOverviewTypes() {
+
+        return Object.keys(this.typeUtility.getSubtypes('Operation'))
+            .concat(['Place'])
+            .filter(el => el !== 'Operation');
     }
 
 
     private isAllowedType(type: IdaiType, projectConfiguration: ProjectConfiguration): boolean {
 
         if (type.name === 'Image') return false;
+        if (!this.isRecordedIn) return this.getOverviewTypes().includes(type.name);
 
-        if (this.isRecordedIn) {
-            if (this.isRecordedIn.resource.type === 'Project' && type.isAbstract) {
-                return false;
-            }
-            if (!projectConfiguration.isAllowedRelationDomainType(type.name,
-                    this.isRecordedIn.resource.type, 'isRecordedIn')) {
-                return false;
-            }
-        }
+        if (!projectConfiguration.isAllowedRelationDomainType(type.name,
+                this.isRecordedIn.resource.type, 'isRecordedIn')) return false;
 
-        if (this.liesWithin && !projectConfiguration.isAllowedRelationDomainType(type.name,
-                this.liesWithin.resource.type, 'liesWithin')) {
-            return false;
-        }
-
-        return true;
+        return this.liesWithin
+                ? projectConfiguration.isAllowedRelationDomainType(
+                    type.name, this.liesWithin.resource.type, 'liesWithin')
+                : true;
     }
 }

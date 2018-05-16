@@ -34,7 +34,7 @@ export class NavigationComponent {
 
     public async chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {
 
-        this.viewFacade.selectMainTypeDocument(document);
+        this.viewFacade.selectOperationTypeDocument(document);
         if (!this.viewFacade.getSelectedDocument()) { // if deselection happened during selectMainTypeDocument
             this.viewFacade.setActiveDocumentViewTab(undefined);
         }

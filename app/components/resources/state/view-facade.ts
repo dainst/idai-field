@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {MainTypeDocumentsManager} from './main-type-documents-manager';
+import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
 import {NavigationPathManager} from './navigation-path-manager';
 import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
@@ -25,7 +25,7 @@ import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-s
 export class ViewFacade {
 
     private navigationPathManager: NavigationPathManager;
-    private mainTypeDocumentsManager: MainTypeDocumentsManager;
+    private operationTypeDocumentsManager: OperationTypeDocumentsManager;
     private documentsManager: DocumentsManager;
 
 
@@ -39,7 +39,7 @@ export class ViewFacade {
             resourcesState,
             datastore
         );
-        this.mainTypeDocumentsManager = new MainTypeDocumentsManager(
+        this.operationTypeDocumentsManager = new OperationTypeDocumentsManager(
             datastore,
             this.navigationPathManager,
             resourcesState
@@ -49,7 +49,7 @@ export class ViewFacade {
             remoteChangesStream,
             settingsService,
             this.navigationPathManager,
-            this.mainTypeDocumentsManager,
+            this.operationTypeDocumentsManager,
             resourcesState
         );
     }
@@ -116,33 +116,30 @@ export class ViewFacade {
 
     public getMainTypeHomeViewName(mainTypeName: string): string|undefined {
 
-        return (mainTypeName == 'Project')
+        return (mainTypeName === 'Project')
             ? 'project'
             : this.resourcesState.getViewNameForOperationSubtype(mainTypeName);
     }
 
 
-    public getMainTypeLabel(): string {
+    public getOperationTypeLabel(): string {
 
-        if (this.isInOverview()) throw ViewFacade.err('getMainTypeLabel');
-
-        return (this.resourcesState.getView() == 'project')
-            ? 'Projekt'
-            : this.resourcesState.getLabelForName(this.resourcesState.getView());
+        if (this.isInOverview()) throw ViewFacade.err('getOperationTypeLabel');
+        return this.resourcesState.getLabelForName(this.resourcesState.getView());
     }
 
 
-    public getSelectedMainTypeDocument(): IdaiFieldDocument|undefined {
+    public getSelectedOperationTypeDocument(): IdaiFieldDocument|undefined {
 
-        if (this.isInOverview()) throw ViewFacade.err('getSelectedMainTypeDocument');
+        if (this.isInOverview()) throw ViewFacade.err('getSelectedOperationTypeDocument');
         return this.resourcesState.getMainTypeDocument();
     }
 
 
-    public getMainTypeDocuments(): Array<IdaiFieldDocument> {
+    public getOperationTypeDocuments(): Array<IdaiFieldDocument> {
 
-        if (this.isInOverview()) throw ViewFacade.err('getMainTypeDocuments');
-        return this.mainTypeDocumentsManager.getDocuments();
+        if (this.isInOverview()) throw ViewFacade.err('getOperationTypeDocuments');
+        return this.operationTypeDocumentsManager.getDocuments();
     }
 
 
@@ -177,10 +174,10 @@ export class ViewFacade {
     }
 
 
-    public async selectMainTypeDocument(mainTypeDocument: Document): Promise<void> {
+    public async selectOperationTypeDocument(operationTypeDocument: Document): Promise<void> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument');
-        this.navigationPathManager.setMainTypeDocument(mainTypeDocument as IdaiFieldDocument);
+        this.navigationPathManager.setMainTypeDocument(operationTypeDocument as IdaiFieldDocument);
         await this.populateDocumentList();
     }
 
@@ -192,10 +189,10 @@ export class ViewFacade {
      *   b) the first element of the operation type documents it is not set
      *      and operation type documents length > 1
      */
-    public async populateMainTypeDocuments(): Promise<void> {
+    public async populateOperationTypeDocuments(): Promise<void> {
 
-        if (this.isInOverview()) throw ViewFacade.err('populateMainTypeDocuments');
-        await this.mainTypeDocumentsManager.populate();
+        if (this.isInOverview()) throw ViewFacade.err('populateOperationTypeDocuments');
+        await this.operationTypeDocumentsManager.populate();
     }
 
 
@@ -213,8 +210,8 @@ export class ViewFacade {
         let mainTypeResource: IdaiFieldDocument|undefined;
 
         if (!this.isInOverview()) {
-            await this.populateMainTypeDocuments();
-            mainTypeResource = this.getSelectedMainTypeDocument();
+            await this.populateOperationTypeDocuments();
+            mainTypeResource = this.getSelectedOperationTypeDocument();
         } else {
             mainTypeResource = this.getProjectDocument() as any;
         }

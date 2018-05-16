@@ -75,17 +75,14 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setScrollTarget = (doc: IdaiFieldDocument|undefined) => this.scrollTarget = doc;
 
-
-    public getIsRecordedInTarget() {
-
-        if (this.viewFacade.isInOverview()) return this.viewFacade.getProjectDocument();
-        return this.viewFacade.getSelectedMainTypeDocument();
-    }
+    public setTypeFilters = (types: string[]|undefined) => this.viewFacade.setTypeFilters(types ? types : []);
 
 
-    public setTypeFilters(types: string[]|undefined) {
+    public getSelectedOperationTypeDocument() {
 
-        this.viewFacade.setTypeFilters(types ? types : []);
+        return this.viewFacade.isInOverview()
+            ? undefined
+            : this.viewFacade.getSelectedOperationTypeDocument();
     }
 
 

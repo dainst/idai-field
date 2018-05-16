@@ -9,7 +9,7 @@ import {ResourcesState} from './resources-state';
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  */
-export class MainTypeDocumentsManager {
+export class OperationTypeDocumentsManager {
 
     private documents: Array<IdaiFieldDocument>;
 
@@ -26,7 +26,7 @@ export class MainTypeDocumentsManager {
     public async populate(): Promise<void> {
 
         this.documents = await this.fetchDocuments(
-            MainTypeDocumentsManager.makeMainTypeQuery(this.resourcesState.getViewType()));
+            OperationTypeDocumentsManager.makeMainTypeQuery(this.resourcesState.getViewType()));
 
         if (this.documents.length === 0) return this.resourcesState.setMainTypeDocument(undefined);
 
@@ -39,7 +39,7 @@ export class MainTypeDocumentsManager {
 
         if (!this.documents || this.documents.length === 0) return;
 
-        const operationTypeDocument = MainTypeDocumentsManager.getMainTypeDocumentForDocument(
+        const operationTypeDocument = OperationTypeDocumentsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
 
         if (operationTypeDocument && operationTypeDocument != this.resourcesState.getMainTypeDocument()) {
@@ -54,7 +54,7 @@ export class MainTypeDocumentsManager {
             const result = await this.datastore.find(query as any);
             if (result) return result.documents;
         } catch (errWithParams) {
-            MainTypeDocumentsManager.handleFindErr(errWithParams, query);
+            OperationTypeDocumentsManager.handleFindErr(errWithParams, query);
         }
     }
 

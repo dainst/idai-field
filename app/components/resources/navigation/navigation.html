@@ -1,10 +1,10 @@
 <div id="navigation" class="row">
 
-    <div *ngIf="!this.viewFacade.isInOverview() && viewFacade.getSelectedMainTypeDocument()" class="btn-group">
+    <div *ngIf="!this.viewFacade.isInOverview() && viewFacade.getSelectedOperationTypeDocument()" class="btn-group">
         <div class="btn-group" ngbDropdown placement="bottom-left" role="group" id="operation-document-selector">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
             <div class="dropdown-menu" ngbDropdownMenu>
-                <button *ngFor="let document of viewFacade.getMainTypeDocuments()" class="dropdown-item"
+                <button *ngFor="let document of viewFacade.getOperationTypeDocuments()" class="dropdown-item"
                         (click)="chooseOperationTypeDocumentOption(document)">
                     {{getDocumentLabel(document)}}
                 </button>
@@ -14,7 +14,7 @@
         <div id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
                 [class.root-document]="!navigationPath.rootDocument"
                 (click)="moveInto(undefined)">
-            {{viewFacade.getSelectedMainTypeDocument().resource.identifier}}
+            {{viewFacade.getSelectedOperationTypeDocument().resource.identifier}}
         </div>
 
         <div *ngFor="let document of navigationPath.elements" class="btn btn-outline-primary navigation-button"

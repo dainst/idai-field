@@ -143,7 +143,7 @@ export function main() {
                 layerIds: {'t1': ['layerid1']}
             }});
             await viewFacade.selectView('excavation');
-            await viewFacade.selectMainTypeDocument(trenchDocument1);
+            await viewFacade.selectOperationTypeDocument(trenchDocument1);
 
             expect(viewFacade.getActiveLayersIds()).toEqual(['layerid1']);
             done();
@@ -168,7 +168,7 @@ export function main() {
             );
 
             await viewFacade.selectView('excavation');
-            await viewFacade.selectMainTypeDocument(trenchDocument1);
+            await viewFacade.selectOperationTypeDocument(trenchDocument1);
 
             expect(viewFacade.getActiveLayersIds()).toEqual(['o25']);
             done();
@@ -214,7 +214,7 @@ export function main() {
             await idaiFieldDocumentDatastore.create(findDocument3, 'u');
 
             await viewFacade.selectView('excavation');
-            await viewFacade.selectMainTypeDocument(trenchDocument2);
+            await viewFacade.selectOperationTypeDocument(trenchDocument2);
             expect(viewFacade.getDocuments().length).toBe(1);
             expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find3');
             done();
@@ -319,7 +319,7 @@ export function main() {
 
             await viewFacade.selectView('project');
             await viewFacade.selectView('excavation');
-            await viewFacade.selectMainTypeDocument(trenchDocument1); // ... with this deleting the selection
+            await viewFacade.selectOperationTypeDocument(trenchDocument1); // ... with this deleting the selection
 
             expect(viewFacade.getSelectedDocument()).toBe(featureDocument2);
         });

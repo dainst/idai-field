@@ -15,7 +15,7 @@
             <div class="type-label">{{type.label}}</div>
         </div>
         <ul *ngIf="type.children" class="type-children-list">
-            <li *ngFor="let childType of type.children; let childIndex = index"
+            <li *ngFor="let childType of type.children"
                 class="list-group-item popover-item"
                 [ngClass]="{ 'selected-type': selectedTypes && selectedTypes.indexOf(type.name) > -1,
                              'selected-child-type': selectedTypes && selectedTypes.indexOf(type.name) == -1

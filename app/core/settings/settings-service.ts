@@ -79,7 +79,10 @@ export class SettingsService {
         if (this.settings.isSyncActive) await this.startSync();
 
         try {
-            return await this.appConfigurator.go(remote.getGlobal('configurationDirPath'));
+            return await this.appConfigurator.go(
+                remote.getGlobal('configurationDirPath'),
+                this.getSelectedProject() == 'meninx-project'
+            );
         } catch (msgsWithParams) {
             msgsWithParams.forEach((msg: any) => console.error('err in project configuration', msg));
             if (msgsWithParams.length > 1) {

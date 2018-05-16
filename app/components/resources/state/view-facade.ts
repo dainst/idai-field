@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {MainTypeDocumentsManager} from './main-type-documents-manager';
+import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
 import {NavigationPathManager} from './navigation-path-manager';
 import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
@@ -25,7 +25,7 @@ import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-s
 export class ViewFacade {
 
     private navigationPathManager: NavigationPathManager;
-    private mainTypeDocumentsManager: MainTypeDocumentsManager;
+    private operationTypeDocumentsManager: OperationTypeDocumentsManager;
     private documentsManager: DocumentsManager;
 
 
@@ -39,7 +39,7 @@ export class ViewFacade {
             resourcesState,
             datastore
         );
-        this.mainTypeDocumentsManager = new MainTypeDocumentsManager(
+        this.operationTypeDocumentsManager = new OperationTypeDocumentsManager(
             datastore,
             this.navigationPathManager,
             resourcesState
@@ -49,7 +49,7 @@ export class ViewFacade {
             remoteChangesStream,
             settingsService,
             this.navigationPathManager,
-            this.mainTypeDocumentsManager,
+            this.operationTypeDocumentsManager,
             resourcesState
         );
     }
@@ -139,7 +139,7 @@ export class ViewFacade {
     public getOperationTypeDocuments(): Array<IdaiFieldDocument> {
 
         if (this.isInOverview()) throw ViewFacade.err('getOperationTypeDocuments');
-        return this.mainTypeDocumentsManager.getDocuments();
+        return this.operationTypeDocumentsManager.getDocuments();
     }
 
 
@@ -192,7 +192,7 @@ export class ViewFacade {
     public async populateOperationTypeDocuments(): Promise<void> {
 
         if (this.isInOverview()) throw ViewFacade.err('populateOperationTypeDocuments');
-        await this.mainTypeDocumentsManager.populate();
+        await this.operationTypeDocumentsManager.populate();
     }
 
 

@@ -2,7 +2,7 @@ import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
 import {Document, Query} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {MainTypeDocumentsManager} from './main-type-documents-manager';
+import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
 import {NavigationPathManager} from './navigation-path-manager';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
@@ -33,7 +33,7 @@ export class DocumentsManager {
         private remoteChangesStream: RemoteChangesStream,
         private settingsService: SettingsService,
         private navigationPathManager: NavigationPathManager,
-        private mainTypeDocumentsManager: MainTypeDocumentsManager,
+        private mainTypeDocumentsManager: OperationTypeDocumentsManager,
         private resourcesState: ResourcesState
     ) {
         remoteChangesStream.notifications().subscribe(document => this.handleChange(document));

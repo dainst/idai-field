@@ -20,7 +20,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
      * @throws errorWithParams
      */
     public async importDoc(
-        importDoc: NewDocument // TODO use IdaiFieldDocument and make sure it is properly converted
+        importDoc: NewDocument
     ): Promise<Document> {
 
         // await this.validator.validate(document as Document); // will throw identifier conflict if document exists

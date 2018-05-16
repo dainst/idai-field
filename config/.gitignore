@@ -3,9 +3,9 @@
 # Explicitely mention files which should be part of the repo.
 
 !Configuration.json
+!Fields-Custom.json
 !Hidden.json
 !Hidden-Custom.json
 !Language.json
 !Language-Custom.json
 !README.md
-

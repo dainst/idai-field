@@ -4,7 +4,6 @@ import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {subtract} from 'tsfun';
 import {TypeUtility} from '../model/type-utility';
-import {ObjectUtil} from '../../util/object-util';
 
 
 @Injectable()
@@ -48,16 +47,8 @@ export class PersistenceManager {
         revisionsToSquash: Document[] = [],
         ): Promise<Document> {
 
-        // doc itself
-        const doc = ObjectUtil.cloneObject(document);
-        // we do this for some time until all operation type docs and places have been updated accordingly
-        // later we can take this out. we do not create isRecordedIn relations for these documents any longer
-        if (['Place', 'Survey', 'Trench', 'Building'].includes(document.resource.type)) {
-            delete doc.resource.relations.isRecordedIn;
-        }
-        const persistedDocument = await this.persistIt(doc as Document, username, revisionsToSquash);
+        const persistedDocument = await this.persistIt(document as Document, username, revisionsToSquash);
 
-        // related documents
         const allVersions = [document]
             .concat(oldVersion)
             .concat(revisionsToSquash);

@@ -84,7 +84,11 @@ export class SettingsService {
                 this.getSelectedProject() == 'meninx-project'
             );
         } catch (msgsWithParams) {
-            msgsWithParams.forEach((msg: any) => console.error('err in project configuration', msg));
+            if (msgsWithParams.length > 0) {
+                msgsWithParams.forEach((msg: any) => console.error('err in project configuration', msg));
+            } else { // should not happen normally
+                console.error(msgsWithParams);
+            }
             if (msgsWithParams.length > 1) {
                 console.error('num errors in project configuration', msgsWithParams.length);
             }

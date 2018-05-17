@@ -271,11 +271,11 @@ export class SettingsService {
     private static makeProjectDoc(name: string, username: string) {
 
         return {
-            _id: name,
+            _id: 'project',
             resource: {
                 type: 'Project',
                 identifier: name,
-                id: name,
+                id: 'project',
                 coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
                 relations: {}
             },

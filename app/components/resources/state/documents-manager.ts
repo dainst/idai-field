@@ -46,7 +46,7 @@ export class DocumentsManager {
 
     public removeFromDocuments = (document: Document) => this.documents = subtract([document])(this.documents);
 
-    public isNewDocumentFromRemote = (document: Document) => this.newDocumentsFromRemote.indexOf(document) > -1;
+    public isNewDocumentFromRemote = (document: Document) => this.newDocumentsFromRemote.includes(document);
 
     public deselectionNotifications = (): Observable<Document> => ObserverUtil.register(this.deselectionObservers);
 
@@ -56,11 +56,19 @@ export class DocumentsManager {
 
     public async populateProjectDocument(): Promise<void> {
 
-        try {
-            this.projectDocument = await this.datastore.get(this.settingsService.getSelectedProject());
+        try { // new
+            this.projectDocument = await this.datastore.get('project');
         } catch (_) {
-            console.log('cannot find project document')
+            console.warn("didn't find new style project document, try old method")
         }
+
+        if (!this.projectDocument) {
+            try { // old
+                this.projectDocument = await this.datastore.get(this.settingsService.getSelectedProject());
+            } catch (_) {}
+        }
+
+        if (!this.projectDocument) console.log('cannot find project document'); // TODO throw
     }
 
 

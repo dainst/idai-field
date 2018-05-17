@@ -69,7 +69,7 @@ export function main() {
                 datastore, indexFacade, documentCache,
                 new IdaiFieldTypeConverter(new TypeUtility(new ProjectConfiguration(pc))));
 
-            const projectDocument = Static.doc('testdb','testdb','Project','testdb');
+            const projectDocument = Static.doc('testdb','testdb','Project','project');
             trenchDocument1 = Static.ifDoc('trench1','trench1','Trench','t1');
             trenchDocument1.resource.relations['isRecordedIn'] = ['testdb'];
             trenchDocument2 = Static.ifDoc('trench2','trench2','Trench','t2');

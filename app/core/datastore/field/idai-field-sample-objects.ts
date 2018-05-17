@@ -3,7 +3,7 @@ import {NewDocument} from 'idai-components-2/core';
 export const DOCS: NewDocument[] = [
     {
         "resource": {
-            "id": "test",
+            "id": "project",
             "identifier": "test",
             "shortDescription": "Testprojekt",
             "relations": {},

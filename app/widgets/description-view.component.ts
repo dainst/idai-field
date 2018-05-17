@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {ProjectConfiguration} from "idai-components-2/core";
+import {ProjectConfiguration, FieldDefinition} from 'idai-components-2/core';
 
 
 @Component({
@@ -11,6 +11,7 @@ import {ProjectConfiguration} from "idai-components-2/core";
 /**
  * @author Jan G. Wieners
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export class DescriptionViewComponent {
 
@@ -24,7 +25,15 @@ export class DescriptionViewComponent {
     ngOnChanges() {
 
         if (!this.document) return;
+
         this.typeLabel = this.projectConfiguration.getLabelForType(
             this.document.resource.type);
+    }
+
+
+    public getLabel(fieldName: string): string {
+
+        return this.projectConfiguration.getTypesMap()[this.document.resource.type]
+            .fields.find((field: FieldDefinition) => field.name == fieldName).label;
     }
 }

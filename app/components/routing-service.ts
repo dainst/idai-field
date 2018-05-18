@@ -71,6 +71,8 @@ export class RoutingService {
             return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
         } else {
             const mainTypeName = await this.getMainTypeNameForDocument(document);
+            if (!mainTypeName) return;
+
             const viewName = this.viewFacade.getMainTypeHomeViewName(mainTypeName);
             await this.router.navigate(['resources', viewName]); // indirect away first to reload the resources component, in case you are already there
             return this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
@@ -78,7 +80,7 @@ export class RoutingService {
     }
 
 
-    public async getMainTypeNameForDocument(document: Document): Promise<string> {
+    public async getMainTypeNameForDocument(document: Document): Promise<string|undefined> {
 
         if (this.typeUtility.isSubtype(document.resource.type, 'Operation')
                 || document.resource.type === 'Place') return 'Project';
@@ -86,9 +88,11 @@ export class RoutingService {
         if (!document.resource.relations['isRecordedIn']
             || document.resource.relations['isRecordedIn'].length === 0) return 'Project';
 
-        return this.datastore
-            .get(document.resource.relations['isRecordedIn'][0])
-            .then(target => target.resource.type);
+        try {
+            return (await this.datastore.get(document.resource.relations['isRecordedIn'][0])).resource.type
+        } catch (_) {
+            console.error("targetDocument does not exist",document.resource.relations['isRecordedIn'][0]);
+        }
     }
 
 
@@ -111,8 +115,10 @@ export class RoutingService {
     private async jumpToResourceTypeRelationTarget(documentToSelect: Document, tab?: string,
                                                    comingFromOutsideResourcesComponent: boolean = false) {
 
-        const viewName = await this.viewFacade.getMainTypeHomeViewName(
-            await this.getMainTypeNameForDocument(documentToSelect));
+        const mainTypeName = await this.getMainTypeNameForDocument(documentToSelect);
+        if (!mainTypeName) return;
+
+        const viewName = await this.viewFacade.getMainTypeHomeViewName(mainTypeName);
 
         if (comingFromOutsideResourcesComponent || viewName != this.viewFacade.getCurrentViewName()) {
             this.router.navigate(tab ?

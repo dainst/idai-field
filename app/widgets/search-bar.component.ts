@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiType} from 'idai-components-2/core';
+import {TypeUtility} from '../core/model/type-utility';
 
 @Component({
     moduleId: module.id,
@@ -40,7 +41,7 @@ export class SearchBarComponent implements OnChanges {
     private filterOptions: Array<IdaiType> = [];
 
 
-    constructor(private projectConfiguration: ProjectConfiguration) {}
+    constructor(private projectConfiguration: ProjectConfiguration, private typeUtility: TypeUtility) {}
 
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -80,19 +81,22 @@ export class SearchBarComponent implements OnChanges {
 
         this.filterOptions = [];
 
+        if (this.relationRangeType === 'Project') {
+            return this.projectConfiguration.getTypesList()
+                .filter(type => type.name !== 'Operation')
+                .filter(type => type.name === 'Place'
+                    || this.typeUtility.isSubtype(type.name, 'Operation'))
+                .forEach(type => this.addFilterOption(type));
+        }
+
+
         for (let type of this.projectConfiguration.getTypesTreeList()) {
 
-            if (this.parentType && type.name != this.parentType) continue;
+            if (this.parentType && type.name !== this.parentType) continue;
 
             if ((!this.relationName && !this.relationRangeType)
                     || this.projectConfiguration.isAllowedRelationDomainType(type.name, this.relationRangeType,
                     this.relationName)) {
-
-                if (this.relationRangeType === 'Project' && type.isAbstract) {
-
-                    this.addFilterOptionsFor(type);
-                    continue;
-                }
 
                 this.addFilterOption(type);
 

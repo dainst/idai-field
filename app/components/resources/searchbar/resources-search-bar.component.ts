@@ -1,6 +1,7 @@
 import {Component, ElementRef} from '@angular/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
+import {TypeUtility} from '../../../core/model/type-utility';
 
 @Component({
     moduleId: module.id,
@@ -19,9 +20,9 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
 
     constructor(private elementRef: ElementRef,
-                projectConfiguration: ProjectConfiguration) {
+                projectConfiguration: ProjectConfiguration, typeUtility: TypeUtility) {
 
-        super(projectConfiguration);
+        super(projectConfiguration, typeUtility);
     }
 
 

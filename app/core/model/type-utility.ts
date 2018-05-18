@@ -42,6 +42,17 @@ export class TypeUtility {
     }
 
 
+    public getOverviewTypes(): IdaiType[] {
+
+        return this.projectConfiguration.getTypesList()
+            .filter(type => type.name !== 'Operation')
+            .filter(type => this.isSubtype(type.name, 'Operation'))
+            .concat([
+                this.projectConfiguration.getTypesList()
+                    .filter(type => type.name === 'Place')][0]);
+    }
+
+
     public getNonImageTypeNames(): string[] {
 
         return this.projectConfiguration.getTypesList()

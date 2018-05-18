@@ -82,11 +82,7 @@ export class SearchBarComponent implements OnChanges {
         this.filterOptions = [];
 
         if (this.relationRangeType === 'Project') {
-            return this.projectConfiguration.getTypesList()
-                .filter(type => type.name !== 'Operation')
-                .filter(type => type.name === 'Place'
-                    || this.typeUtility.isSubtype(type.name, 'Operation'))
-                .forEach(type => this.addFilterOption(type));
+            return this.typeUtility.getOverviewTypes().forEach(_ => this.addFilterOption(_));
         }
 
 

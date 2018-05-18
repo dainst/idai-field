@@ -1,6 +1,7 @@
 import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {PersistenceManager} from "../../../../app/core/persist/persistence-manager";
+import {ObjectUtil} from '../../../../app/util/object-util';
 
 /**
  * @author Daniel de Oliveira
@@ -73,8 +74,8 @@ describe('PersistenceManager', () => {
         persistenceManager = new PersistenceManager(mockDatastore, projectConfiguration, mockTypeUtility);
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.find.and.callFake(findFunction);
-        mockDatastore.update.and.returnValue(Promise.resolve('ok'));
-        mockDatastore.create.and.returnValue(Promise.resolve('ok'));
+        mockDatastore.update.and.returnValue(Promise.resolve(doc));
+        mockDatastore.create.and.returnValue(Promise.resolve(doc));
         mockDatastore.remove.and.returnValue(Promise.resolve('ok'));
 
         doc = { 'resource' : {
@@ -99,56 +100,69 @@ describe('PersistenceManager', () => {
     });
 
 
-    it('should save the base object', done => {
+    it('should save the base object', async done => {
 
-        persistenceManager.persist(doc, 'u').then(() => {
-            expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
-            done();
-        }, err => { fail(err); done(); });
+        mockDatastore.update.and.returnValue(Promise.resolve(doc));
+        await persistenceManager.persist(doc, 'u');
+        expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
+        done();
     });
 
 
-    it('should save the related document', done => {
+    it('should save the related document', async done => {
 
         doc.resource.relations['BelongsTo'] = ['2'];
+        mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        persistenceManager.persist(doc, 'u').then(() => {
+        await persistenceManager.persist(doc, 'u');
 
-            expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
-            expect(relatedDoc.resource.relations['Contains'][0]).toBe('1');
-            done();
-
-        }, err => { fail(err); done(); });
+        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
+        expect(relatedDoc.resource.relations['Contains'][0]).toBe('1');
+        done();
     });
 
 
-    it('should save an object with a one way relation', done => {
+    it('should save the related document for a new document', async done => {
+
+        doc.resource.relations['BelongsTo'] = ['2'];
+        const clonedDoc = ObjectUtil.cloneObject(doc);
+        delete doc.resource.id; // make it a 'new' document
+
+        mockDatastore.create.and.returnValue(Promise.resolve(clonedDoc)); // has resourceId, simulates create
+
+        await persistenceManager.persist(doc, 'u');
+
+        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
+        expect(relatedDoc.resource.relations['Contains'][0]).toBe('1'); // the '1' comes from clonedDoc.resource.id
+        done();
+    });
+
+
+    it('should save an object with a one way relation', async done => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
+        mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        persistenceManager.persist(doc, 'u').then(() => {
+        await persistenceManager.persist(doc, 'u');
 
-            expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc, 'u', undefined);
-            done();
-
-        }, err => { fail(err); done(); });
+        expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc, 'u', undefined);
+        done();
     });
 
 
-    it('should add two relations of the same type', done => {
+    it('should add two relations of the same type', async done => {
 
         doc.resource.relations['BelongsTo'] = ['2', '3'];
+        mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        persistenceManager.persist(doc, 'u').then(() => {
+        await persistenceManager.persist(doc, 'u');
 
-            // expect(mockDatastore.update).toHaveBeenCalledWith(relatedObject);
-            // right now it is not possible to test both objects due to problems with the return val of promise.all
-            expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
-            // expect(relatedObject['Contains'][0]).toBe('1');
-            expect(anotherRelatedDoc['resource']['relations']['Contains'][0]).toBe('1');
-            done();
-
-        }, err => { fail(err); done(); });
+        // expect(mockDatastore.update).toHaveBeenCalledWith(relatedObject);
+        // right now it is not possible to test both objects due to problems with the return val of promise.all
+        expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
+        // expect(relatedObject['Contains'][0]).toBe('1');
+        expect(anotherRelatedDoc['resource']['relations']['Contains'][0]).toBe('1');
+        done();
     });
 
 
@@ -161,6 +175,7 @@ describe('PersistenceManager', () => {
         }};
 
         relatedDoc.resource.relations['Contains'] = ['1'];
+        mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
         await persistenceManager.persist(doc, 'u', oldVersion);
 

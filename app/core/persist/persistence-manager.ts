@@ -49,12 +49,12 @@ export class PersistenceManager {
 
         const persistedDocument = await this.persistIt(document as Document, username, revisionsToSquash);
 
-        const allVersions = [document]
-            .concat(oldVersion)
+        const allVersions = [persistedDocument]
+            .concat(oldVersion as Document)
             .concat(revisionsToSquash);
 
         const connectedDocs = await this.getExistingConnectedDocs(allVersions as Document[]);
-        await this.updateConnectedDocs(document as Document, connectedDocs, true, username);
+        await this.updateConnectedDocs(persistedDocument as Document, connectedDocs, true, username);
 
         return persistedDocument;
     }

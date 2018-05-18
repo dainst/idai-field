@@ -3,8 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
-import {Document} from 'idai-components-2/core';
-import {ProjectConfiguration, RelationDefinition} from 'idai-components-2/core';
+import {Document, ProjectConfiguration} from 'idai-components-2/core';
 import {ViewFacade} from './resources/state/view-facade';
 import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 import {TypeUtility} from '../core/model/type-utility';
@@ -79,13 +78,17 @@ export class RoutingService {
     }
 
 
-    public getMainTypeNameForDocument(document: Document): Promise<string> {
+    public async getMainTypeNameForDocument(document: Document): Promise<string> {
 
-        const relations = document.resource.relations['isRecordedIn'];
-        return (relations && relations.length > 0)
-            ? this.datastore.get(relations[0]).then(mainTypeDocument => mainTypeDocument.resource.type)
-            : RoutingService.handleNoRelationdInGetMainTypeNameForDocument( // TODO check if latest changes lead to problems here
-                this.projectConfiguration.getRelationDefinitions(document.resource.type));
+        if (this.typeUtility.isSubtype(document.resource.type, 'Operation')
+                || document.resource.type === 'Place') return 'Project';
+
+        if (!document.resource.relations['isRecordedIn']
+            || document.resource.relations['isRecordedIn'].length === 0) return 'Project';
+
+        return this.datastore
+            .get(document.resource.relations['isRecordedIn'][0])
+            .then(target => target.resource.type);
     }
 
 
@@ -139,26 +142,5 @@ export class RoutingService {
                     'got msgWithParams in GeneralRoutingService#setRoute: ', msgWithParams);
             }
         });
-    }
-
-
-    private static async handleNoRelationdInGetMainTypeNameForDocument(
-        relationDefinitions: Array<RelationDefinition>|undefined) {
-
-        try {
-            let mainTypeName: string = '';
-
-            if (relationDefinitions) {
-                
-                for (let relationDefinition of relationDefinitions) {
-                    if (relationDefinition.name === 'isRecordedIn') {
-                        mainTypeName = relationDefinition.range[0];
-                        break;
-                    }
-                }
-            }
-            return Promise.resolve(mainTypeName);
-
-        } catch (e) {}
     }
 }

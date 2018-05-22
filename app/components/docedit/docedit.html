@@ -48,7 +48,7 @@
             <div *ngIf="documentHolder.clonedDocument" class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <ngb-tabset (tabChange)="changeActiveTab($event)" activeId="docedit-{{activeTabService.getActiveTab()}}-tab">
+                        <ngb-tabset (tabChange)="changeActiveTab($event)" activeId="{{getActiveTab()}}">
                             <ngb-tab id="docedit-fields-tab">
                                 <ng-template ngbTabTitle>
                                     <span class="mdi mdi-format-list-bulleted"></span>

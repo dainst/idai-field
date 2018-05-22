@@ -14,6 +14,7 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
 import {DatastoreErrors} from 'idai-components-2/core';
 import {TypeUtility} from '../../core/model/type-utility';
+import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
 
 
 @Component({
@@ -58,7 +59,19 @@ export class DoceditComponent {
         this.documentHolder.getClonedDocument().resource.type, false, 'editable');
 
 
-    public async setDocument(document: IdaiFieldDocument) {
+    public getActiveTab() {
+
+        return 'docedit-' + this.activeTabService.getActiveTab() + '-tab';
+    }
+
+
+    public changeActiveTab(event: any) {
+
+        this.activeTabService.setActiveTab(event.nextId.replace('docedit-','').replace('-tab',''));
+    };
+
+
+    public async setDocument(document: IdaiFieldDocument|IdaiFieldImageDocument) {
 
         this.documentHolder.setClonedDocument(document);
 
@@ -104,12 +117,6 @@ export class DoceditComponent {
     }
 
 
-    public changeActiveTab(event: any) {
-
-        this.activeTabService.setActiveTab(event.nextId.replace('docedit-','').replace('-tab',''));
-    };
-
-
     public changeType(newType: string) {
 
         const {invalidFields, invalidRelations} = this.documentHolder.changeType(newType);
@@ -139,7 +146,7 @@ export class DoceditComponent {
 
 
 
-    private async fetchParentLabel(document: IdaiFieldDocument) { // TODO could be an image type document
+    private async fetchParentLabel(document: IdaiFieldDocument|IdaiFieldImageDocument) {
 
         return !document.resource.relations.isRecordedIn
                 || document.resource.relations.isRecordedIn.length === 0
@@ -147,9 +154,9 @@ export class DoceditComponent {
             : document.resource.id
                 ? undefined
                 : (await this.datastore.get(
-                        document.resource.relations.liesWithin
-                            ? document.resource.relations.liesWithin[0]
-                            : document.resource.relations.isRecordedIn[0]
+                        document.resource.relations['liesWithin']
+                            ? document.resource.relations['liesWithin'][0]
+                            : document.resource.relations['isRecordedIn'][0]
                         )
                 ).resource.identifier;
     }

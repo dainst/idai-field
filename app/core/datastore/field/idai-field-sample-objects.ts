@@ -34,7 +34,7 @@ export const DOCS: NewDocument[] = [
         "resource": {
             "id": "t2",
             "identifier": "trench2",
-            "shortDescription": "Matrix Schnitt",
+            "shortDescription": "Matrix-Schnitt",
             "relations": {
                 "isRecordedIn": []
             },

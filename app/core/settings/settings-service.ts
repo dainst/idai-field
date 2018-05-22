@@ -78,10 +78,12 @@ export class SettingsService {
 
         if (this.settings.isSyncActive) await this.startSync();
 
+        const applyMeninxConfiguration = this.getSelectedProject().indexOf('meninx-project') === 0;
+
         try {
             return await this.appConfigurator.go(
                 remote.getGlobal('configurationDirPath'),
-                this.getSelectedProject() == 'meninx-project'
+                applyMeninxConfiguration
             );
         } catch (msgsWithParams) {
             if (msgsWithParams.length > 0) {

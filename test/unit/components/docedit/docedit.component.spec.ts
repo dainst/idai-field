@@ -12,6 +12,8 @@ describe('DoceditComponent', () => {
 
     beforeEach(() => {
 
+        const typeUtility = jasmine.createSpyObj('typeUtility', ['getSubtypes']);
+        typeUtility.getSubtypes.and.returnValue({'Object':[]});
         const documentHolder = jasmine.createSpyObj('documentHolder', ['setClonedDocument', 'getClonedDocument']);
         const projectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getFieldDefinitionLabel']);
         activeTabService = new DoceditActiveTabService();
@@ -22,7 +24,7 @@ describe('DoceditComponent', () => {
             documentHolder,
             undefined,
             undefined,
-            undefined,
+            typeUtility,
             activeTabService,
             projectConfiguration
         );
@@ -36,7 +38,8 @@ describe('DoceditComponent', () => {
         docedit.setDocument({
             resource: {
                 type: 'Object',
-                id: '1'
+                id: '1',
+                relations: {}
             }
         });
 
@@ -50,8 +53,9 @@ describe('DoceditComponent', () => {
 
         docedit.setDocument({
             resource: {
-                type: 'Object'
+                type: 'Object',
                 // no id -> new
+                relations: {}
             }
         });
 

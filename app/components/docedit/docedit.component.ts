@@ -75,8 +75,10 @@ export class DoceditComponent {
 
         this.documentHolder.setClonedDocument(document);
 
+        if (!document.resource.id) this.activeTabService.setActiveTab('fields');
+
         this.showDoceditImagesTab = (!
-            (this.typeUtility.getSubtypes('Image'))[this.documentHolder.getClonedDocument().resource.type]
+            (this.typeUtility.getSubtypes('Image'))[document.resource.type]
         );
 
         this.getFieldDefinitionLabel = (fieldName: string) =>

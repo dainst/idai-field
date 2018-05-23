@@ -65,7 +65,7 @@ export class ProjectsComponent implements OnInit {
     public async createProject() {
 
         if (this.newProject === '') return this.messages.add([M.RESOURCES_ERROR_NO_PROJECT_NAME]);
-        if (this.getProjects().indexOf(this.newProject) > -1) {
+        if (this.getProjects().includes(this.newProject)) {
             return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_EXISTS, this.newProject]);
         }
 
@@ -96,10 +96,10 @@ export class ProjectsComponent implements OnInit {
 
     private canDeleteProject() {
 
-        if (!this.projectToDelete || (this.projectToDelete == '')) {
+        if (!this.projectToDelete || (this.projectToDelete === '')) {
             return false;
         }
-        if (this.projectToDelete != this.selectedProject) {
+        if (this.projectToDelete !== this.selectedProject) {
             this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_NOT_SAME]);
             return false;
         }

@@ -140,27 +140,4 @@ describe('resources/project --', function() {
         NavbarPage.clickNavigateToProject();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('abc_t1'));
     });
-
-
-    it('do not create a project of an already existing name', () => { // TODO test with unit test against component
-
-        ProjectPage.clickProjectsBadge();
-        ProjectPage.clickCreateProject();
-        ProjectPage.typeInProjectName('test');
-        ProjectPage.clickConfirmProjectOperation();
-
-        expect(NavbarPage.getMessageText()).toContain('existiert bereits');
-    });
-
-
-    it ('do not delete last project', () => { // TODO test with unit test against component
-
-        ProjectPage.clickProjectsBadge();
-
-        ProjectPage.clickDeleteProject();
-        ProjectPage.typeInProjectName('test');
-        ProjectPage.clickConfirmProjectOperation();
-
-        expect(NavbarPage.getMessageText()).toContain('vorhanden sein');
-    });
 });

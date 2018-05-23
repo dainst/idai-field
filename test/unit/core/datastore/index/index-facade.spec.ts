@@ -196,7 +196,7 @@ describe('IndexFacade', () => {
     });
 
 
-    it('should sort by last modified descending', () => {
+    it('should sort by last modified descending', async done => {
 
         const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
         const doc3 = Static.doc('bla3', 'blub3', 'type3','id3');
@@ -222,6 +222,7 @@ describe('IndexFacade', () => {
             expect(result.length).toBe(2);
             expect(result[0]).toBe('id2');
             expect(result[1]).toBe('id3');
+            done();
         },100)
     });
 });

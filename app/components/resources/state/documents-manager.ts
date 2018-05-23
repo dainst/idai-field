@@ -56,6 +56,8 @@ export class DocumentsManager {
 
     public async populateProjectDocument(): Promise<void> {
 
+        delete this.projectDocument; // making sure we start fresh
+
         try { // new
             this.projectDocument = await this.datastore.get('project');
         } catch (_) {
@@ -65,10 +67,10 @@ export class DocumentsManager {
         if (!this.projectDocument) {
             try { // old
                 this.projectDocument = await this.datastore.get(this.settingsService.getSelectedProject());
-            } catch (_) {}
+            } catch (_) {
+                throw ['documentsmanager/cantfindprojectdocument'];
+            }
         }
-
-        if (!this.projectDocument) console.log('cannot find project document'); // TODO throw
     }
 
 

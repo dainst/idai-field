@@ -59,7 +59,7 @@ export class ProjectsComponent implements OnInit {
     public async selectProject() {
 
         await this.settingsService.selectProject(this.selectedProject);
-        this.reload();
+        ProjectsComponent.reload();
     }
 
 
@@ -74,7 +74,7 @@ export class ProjectsComponent implements OnInit {
             this.newProject,
             remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create
         );
-        this.reload();
+        ProjectsComponent.reload();
     }
 
 
@@ -83,7 +83,7 @@ export class ProjectsComponent implements OnInit {
         if (!this.canDeleteProject()) return;
         await this.settingsService.deleteProject(this.selectedProject);
         this.selectedProject = this.getProjects()[0];
-        this.reload();
+        ProjectsComponent.reload();
     }
 
 
@@ -113,7 +113,7 @@ export class ProjectsComponent implements OnInit {
 
 
     // we have to reload manually since protractor's selectors apparently aren't reliably working as they should after a reload. so we will do this by hand in the E2Es
-    private reload() {
+    private static reload() {
 
         if (!remote.getGlobal('switches') || !remote.getGlobal('switches').prevent_reload) {
             window.location.reload();

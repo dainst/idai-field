@@ -67,8 +67,6 @@ export class ViewFacade {
 
     public getMode = () => this.resourcesState.getMode();
 
-    public getProjectDocument = () => this.settingsService.getProjectDocument(); // TODO, see if we can get rid of this
-
     public getFilterTypes = () => this.resourcesState.getTypeFilters();
 
     public getSelectedDocument = () => this.documentsManager.getSelectedDocument();
@@ -212,7 +210,7 @@ export class ViewFacade {
             await this.populateOperationTypeDocuments();
             mainTypeResource = this.getSelectedOperationTypeDocument();
         } else {
-            mainTypeResource = this.getProjectDocument() as any;
+            mainTypeResource = this.settingsService.getProjectDocument() as any;
         }
 
         this.navigationPathManager.setMainTypeDocument(mainTypeResource);

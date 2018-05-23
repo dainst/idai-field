@@ -7,6 +7,7 @@ import {ViewFacade} from '../state/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
 import {NavigationPath} from '../state/navigation-path';
 import {UsernameProvider} from '../../../core/settings/username-provider';
+import {SettingsService} from '../../../core/settings/settings-service';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class ResourcesMapComponent {
         public resourcesComponent: ResourcesComponent,
         private persistenceManager: PersistenceManager,
         private usernameProvider: UsernameProvider,
+        private settingsService: SettingsService,
         private messages: Messages
     ) {
         this.parentDocument = this.getParentDocument(this.viewFacade.getNavigationPath());
@@ -46,7 +48,7 @@ export class ResourcesMapComponent {
 
         return this.resourcesComponent.getSelectedOperationTypeDocument() !== undefined
             ? this.resourcesComponent.getSelectedOperationTypeDocument()
-            : this.viewFacade.getProjectDocument()
+            : this.settingsService.getProjectDocument()
     }
 
 

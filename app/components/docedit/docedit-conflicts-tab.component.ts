@@ -179,9 +179,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     public setWinningSide(rightSideWinning: boolean) {
 
-        for (let field of this.differingFields) {
-            field.rightSideWinning = rightSideWinning;
-        }
+        for (let field of this.differingFields) field.rightSideWinning = rightSideWinning;
     }
 
 
@@ -191,20 +189,14 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    private sortRevisions(revisions: Array<IdaiFieldDocument>) {
+    private sortRevisions(revisions: Array<Document>) {
 
-        revisions.sort((a: IdaiFieldDocument, b: IdaiFieldDocument) => {
-            // TODO what if no modified date, only created?
-            const date1: Date = new Date((a.modified as any)[(a.modified as any).length-1].date);
-            const date2: Date = new Date((b.modified as any)[(b.modified as any).length-1].date);
-            if (date1 < date2) {
-                return -1;
-            } else if (date1 > date2) {
-                return 1;
-            } else {
-                return 0;
-            }
-        });
+        revisions.sort((a: Document, b: Document) =>
+            Document.getLastModified(a) < Document.getLastModified(b)
+                ? -1
+                : Document.getLastModified(a) > Document.getLastModified(b)
+                    ? 1
+                    : 0);
     }
 
 

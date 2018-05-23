@@ -20,7 +20,6 @@ import {includedIn, isNot, subtract} from 'tsfun';
  */
 export class DocumentsManager {
 
-    public projectDocument: Document;
     private documents: Array<Document>;
     private newDocumentsFromRemote: Array<Document> = [];
 
@@ -52,29 +51,6 @@ export class DocumentsManager {
 
     public populateDocumentsNotifactions = (): Observable<Array<Document>> =>
         ObserverUtil.register(this.populateDocumentsObservers);
-
-
-    /**
-     * @throws msgWithParams if neither an old nor a new style project document can be found
-     */
-    public async populateProjectDocument(): Promise<void> {
-
-        delete this.projectDocument; // making sure we start fresh
-
-        try { // new
-            this.projectDocument = await this.datastore.get('project');
-        } catch (_) {
-            console.warn("didn't find new style project document, try old method")
-        }
-
-        if (!this.projectDocument) {
-            try { // old
-                this.projectDocument = await this.datastore.get(this.settingsService.getSelectedProject());
-            } catch (_) {
-                throw ['documentsmanager/cantfindprojectdocument'];
-            }
-        }
-    }
 
 
     public async setQueryString(q: string) {

@@ -67,7 +67,7 @@ export class ViewFacade {
 
     public getMode = () => this.resourcesState.getMode();
 
-    public getProjectDocument = () => this.documentsManager.projectDocument;
+    public getProjectDocument = () => this.settingsService.getProjectDocument(); // TODO, see if we can get rid of this
 
     public getFilterTypes = () => this.resourcesState.getTypeFilters();
 
@@ -199,7 +199,6 @@ export class ViewFacade {
     public async selectView(viewName: string): Promise<void> {
 
         await this.resourcesState.initialize(viewName);
-        await this.documentsManager.populateProjectDocument();
         await this.setupMainTypeDocument();
         await this.populateDocumentList();
     }

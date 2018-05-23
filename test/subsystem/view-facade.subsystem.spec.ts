@@ -1,5 +1,4 @@
-import {Document} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
+import {ProjectConfiguration, Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {ViewFacade} from '../../app/components/resources/state/view-facade';
@@ -51,6 +50,7 @@ export function main() {
         let changesStream;
         let settingsService;
 
+        let projectDocument: Document;
         let trenchDocument1: IdaiFieldDocument;
         let trenchDocument2: IdaiFieldDocument;
         let findDocument1: IdaiFieldDocument;
@@ -69,7 +69,7 @@ export function main() {
                 datastore, indexFacade, documentCache,
                 new IdaiFieldTypeConverter(new TypeUtility(new ProjectConfiguration(pc))));
 
-            const projectDocument = Static.doc('testdb','testdb','Project','project');
+            projectDocument = Static.doc('testdb','testdb','Project','project');
             trenchDocument1 = Static.ifDoc('trench1','trench1','Trench','t1');
             trenchDocument1.resource.relations['isRecordedIn'] = ['testdb'];
             trenchDocument2 = Static.ifDoc('trench2','trench2','Trench','t2');
@@ -102,9 +102,10 @@ export function main() {
         beforeEach(() => {
 
             settingsService =
-                jasmine.createSpyObj('settingsService', ['getUsername', 'getSelectedProject']);
+                jasmine.createSpyObj('settingsService', ['getUsername', 'getSelectedProject', 'getProjectDocument']);
             settingsService.getUsername.and.returnValue('user');
             settingsService.getSelectedProject.and.returnValue('testdb');
+            settingsService.getProjectDocument.and.returnValue(projectDocument);
 
             stateSerializer = jasmine.createSpyObj('stateSerializer', ['load', 'store']);
             stateSerializer.load.and.returnValue(Promise.resolve({}));

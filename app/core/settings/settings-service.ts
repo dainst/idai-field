@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Messages, ProjectConfiguration} from 'idai-components-2/core';
+import {Messages, ProjectConfiguration, Document} from 'idai-components-2/core';
 import {IdaiFieldAppConfigurator} from 'idai-components-2/field';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
@@ -37,6 +37,7 @@ export class SettingsService {
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
     private currentSyncUrl = '';
     private currentSyncTimeout: any;
+    private projectDocument: Document;
 
 
     constructor(private imagestore: Imagestore,
@@ -59,6 +60,7 @@ export class SettingsService {
 
     public getDbs = () => this.settings.dbs;
 
+    public getProjectDocument = () => this.projectDocument;
 
     public getSelectedProject(): string {
 
@@ -77,6 +79,29 @@ export class SettingsService {
             new IdaiFieldSampleDataLoader(this.converter, this.settings.imagestorePath));
 
         if (this.settings.isSyncActive) await this.startSync();
+
+
+        // set project document
+
+        delete this.projectDocument; // making sure we start fresh
+
+        try { // new
+            this.projectDocument = await this.pouchdbManager.getDbProxy().get('project');
+        } catch (_) {
+            console.warn('didn\'t find new style project document, try old method');
+        }
+
+        if (!this.projectDocument) {
+            try { // old
+                this.projectDocument = await this.pouchdbManager.getDbProxy().get(this.getSelectedProject());
+            } catch (_) {
+                this.selectProject('test'); // load alternative at next startup
+                console.error('didn\'t find old style project document either');
+                throw 'could not boot project';
+            }
+        }
+
+        // config
 
         const applyMeninxConfiguration = this.getSelectedProject().indexOf('meninx-project') === 0;
 

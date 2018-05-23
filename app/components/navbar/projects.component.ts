@@ -29,8 +29,7 @@ export class ProjectsComponent implements OnInit {
 
     constructor(private settingsService: SettingsService,
                 private modalService: NgbModal,
-                private messages: Messages,
-                private pouchdbManager: PouchdbManager) { // TODO access pouchdbmanager only via settingsservice, fetch project doc via db
+                private messages: Messages) {
     }
 
 
@@ -89,7 +88,7 @@ export class ProjectsComponent implements OnInit {
 
     public async editProject() {
 
-        const document = await (this.pouchdbManager.getDbProxy() as any).get(this.selectedProject);
+        const document = this.settingsService.getProjectDocument();
         const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
         doceditRef.componentInstance.setDocument(document);
     }

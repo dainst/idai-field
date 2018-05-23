@@ -23,6 +23,7 @@ export class ResourcesState {
     constructor(
         private serializer: StateSerializer,
         private views: OperationViews,
+        private additionalOverviewTypeNames: string[],
         private project: string,
         private suppressLoadMapInTestProject: boolean = false
     ) {}
@@ -41,12 +42,15 @@ export class ResourcesState {
         this.setActiveDocumentViewTab(undefined);
     }
 
+    public getOverviewTypeNames = () => this.views.get()
+        .map(_ => _.operationSubtype)
+        .concat(this.additionalOverviewTypeNames);
 
     public resetForE2E = () => this.viewStates = ResourcesState.makeDefaults();
 
     public getActiveDocumentViewTab = () => this.activeDocumentViewTab;
 
-    public getViewType = () => this.isInOverview() ? 'Project' : this.getTypeForName(this.getView());
+    public getViewType = () => this.isInOverview() ? 'Project' : this.getOperationSubtypeForViewName(this.getView());
 
     public isInOverview = () => this.getView() == 'project';
 
@@ -58,7 +62,7 @@ export class ResourcesState {
 
     public getLabelForName = (name: string) => this.views.getLabelForName(name);
 
-    public getTypeForName = (name: string) => this.views.getTypeForName(name);
+    public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
 
     public getMainTypeDocument = (): IdaiFieldDocument|undefined => this.viewStates[this.view].mainTypeDocument;
 

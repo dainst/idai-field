@@ -125,7 +125,7 @@ export class ViewFacade {
     public getOperationTypeLabel(): string {
 
         if (this.isInOverview()) throw ViewFacade.err('getOperationTypeLabel');
-        return this.resourcesState.getLabelForName(this.resourcesState.getView());
+        return this.resourcesState.getLabelForName(this.resourcesState.getView()) as string; // cast ok, we are not in overview
     }
 
 

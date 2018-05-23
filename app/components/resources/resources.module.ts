@@ -83,19 +83,16 @@ const remote = require('electron').remote;
                 const views: ViewDefinition[] = [
                     {
                         "label": "Ausgrabung",
-                        "mainType": "Trench",
                         "name": "excavation",
                         "operationSubtype": "Trench"
                     },
                     {
                         "label": "Bauaufnahme",
-                        "mainType": "Building",
                         "name": "Building",
                         "operationSubtype": "Building"
                     },
                     {
                         "label": "Survey",
-                        "mainType": "Survey",
                         "name": "survey",
                         "operationSubtype": "Survey"
                     }
@@ -110,6 +107,7 @@ const remote = require('electron').remote;
                 return new ResourcesState(
                     stateSerializer,
                     new OperationViews(views),
+                    ['Place'],
                     project,
                     remote.getGlobal('switches').suppress_map_load_for_test
                 );

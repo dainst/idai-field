@@ -26,7 +26,9 @@ export class OperationTypeDocumentsManager {
     public async populate(): Promise<void> {
 
         this.documents = await this.fetchDocuments(
-            OperationTypeDocumentsManager.makeMainTypeQuery(this.resourcesState.getViewType()));
+            OperationTypeDocumentsManager.makeMainTypeQuery(
+                this.resourcesState.getViewType() as string // cast ok because we populate only when not in overview
+            ));
 
         if (this.documents.length === 0) return this.resourcesState.setMainTypeDocument(undefined);
 

@@ -10,6 +10,7 @@ import {OperationViews} from '../../app/components/resources/state/operation-vie
 import {Static} from '../unit/static';
 import {DAOsSpecHelper} from './daos-spec-helper';
 import {TypeUtility} from '../../app/core/model/type-utility';
+import {ViewDefinition} from '../../app/components/resources/state/view-definition';
 
 /**
  * This is a subsystem test.
@@ -23,9 +24,8 @@ export function main() {
 
     describe('ViewFacade/Subsystem', () => {
 
-        const viewsList = [
+        const viewsList: ViewDefinition[] = [
             {
-                'mainTypeLabel': 'Schnitt',
                 'label': 'Ausgrabung',
                 'operationSubtype': 'Trench',
                 'name': 'excavation'
@@ -155,6 +155,7 @@ export function main() {
             resourcesState = new ResourcesState(
                 stateSerializer,
                 new OperationViews(viewsList),
+                [],
                 'test',
                 false
             );

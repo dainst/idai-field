@@ -7,5 +7,4 @@ export interface ViewDefinition {
     name: string;
     label: string;
     operationSubtype: string;
-    mainType: string;
 }

@@ -8,7 +8,7 @@ export class OperationViews {
 
 
     constructor(
-        private _: any
+        private _: ViewDefinition[]
     ) {
         if (!_) _ = [];
     }
@@ -23,11 +23,11 @@ export class OperationViews {
     public getLabelForName(name: string) {
 
         const view = this.namedView(name);
-        return (view) ? view.mainTypeLabel : undefined;
+        return (view) ? view.label : undefined;
     }
 
 
-    public getTypeForName(name: string) {
+    public getOperationSubtypeForViewName(name: string): string|undefined {
 
         const view = this.namedView(name);
         return (view) ? view.operationSubtype : undefined;

@@ -239,7 +239,7 @@ export class DocumentsManager {
             && this.resourcesState.isInOverview()
             && !q.types) {
 
-            q.types = ['Place', 'Trench', 'Survey', 'Building']; // TODO fetch types from project configuration
+            q.types = this.resourcesState.getOverviewTypeNames();
         }
 
         return q;

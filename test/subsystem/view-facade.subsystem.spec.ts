@@ -118,6 +118,7 @@ export function main() {
             resourcesState = new ResourcesState(
                 stateSerializer,
                 new OperationViews(viewsList),
+                [],
                 undefined,
                 undefined
             );

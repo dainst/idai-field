@@ -123,8 +123,6 @@ export class DocumentHolder {
 
     private async cleanup(document: Document): Promise<Document> {
 
-        await this.removeInvalidLiesWithinRelationTargets(document);
-
         return flow(
             document,
             Document.removeRelations(this.validateRelationFields()),
@@ -167,22 +165,6 @@ export class DocumentHolder {
                 throw [M.DOCEDIT_DELETE_ERROR];
             }
         }
-    }
-
-
-    private async removeInvalidLiesWithinRelationTargets(document: Document): Promise<any> {
-
-        const invalidRelationTargetIds: string[]
-            = await this.validator.validateRelationTargets(document, 'liesWithin');
-
-        if (invalidRelationTargetIds.length == 0) return;
-
-        // TODO remove only the invalid targets, use 'relations['liesWithin'] = subtract(invalidRelationTargetIds)(relations['liesWithin'])' from tsfun
-        // maybe the procedure of modifieing liesWithin does not belong here (nor to docedit.component)
-        // since we work with Document (and for a reason, we support IdaiFieldImageDocument as well in the docedit package)
-        delete document.resource.relations['liesWithin'];
-
-        return [M.DOCEDIT_LIESWITHIN_RELATION_REMOVED_WARNING];
     }
 
 

@@ -54,6 +54,9 @@ export class DocumentsManager {
         ObserverUtil.register(this.populateDocumentsObservers);
 
 
+    /**
+     * @throws msgWithParams if neither an old nor a new style project document can be found
+     */
     public async populateProjectDocument(): Promise<void> {
 
         delete this.projectDocument; // making sure we start fresh

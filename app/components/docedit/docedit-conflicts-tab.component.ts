@@ -202,18 +202,10 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     public getRevisionLabel(revision: IdaiFieldDocument): string {
 
-        const revision_: any = revision;
-
-        let latestAction: Action;
-        if (revision_['modified'] && revision_['modified'].length > 0) {
-            latestAction = revision_['modified'][revision_['modified'].length - 1];
-        } else {
-            latestAction = revision_['created'] as any;
-        }
-        const date: Date = new Date(latestAction.date as any);
         moment.locale('de');
-
-        return latestAction.user + ' - ' + moment(date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
+        return Document.getLastModified(revision).user
+            + ' - '
+            + moment(Document.getLastModified(revision).date).format('DD. MMMM YYYY HH:mm:ss [Uhr]');
     }
 
 

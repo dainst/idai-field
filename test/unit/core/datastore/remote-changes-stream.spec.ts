@@ -1,6 +1,7 @@
 import {RemoteChangesStream} from '../../../../app/core/datastore/core/remote-changes-stream';
 
 /**
+ * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
 describe('RemoteChangesStream', () => {

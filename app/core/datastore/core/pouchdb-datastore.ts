@@ -96,7 +96,7 @@ export class PouchdbDatastore {
         clonedDocument.created = existingDoc.created;
         clonedDocument.modified = existingDoc.modified;
         if (squashRevisionsIds) {
-            this.mergeModifiedDates(clonedDocument, squashRevisionsIds);
+            await this.mergeModifiedDates(clonedDocument, squashRevisionsIds);
             await this.removeRevisions(clonedDocument.resource.id, squashRevisionsIds);
         }
         clonedDocument.modified.push({ user: username, date: new Date() });

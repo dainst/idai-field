@@ -18,10 +18,10 @@ import {BackupProvider} from './backup-provider';
  */
 export class BackupCreationComponent {
 
-    private static TIMEOUT = 200;
-
-    private running = false;
+    private running: boolean = false;
     private modalRef: NgbModalRef|undefined;
+
+    private static TIMEOUT: number = 200;
 
 
     constructor(

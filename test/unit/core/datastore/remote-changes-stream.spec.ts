@@ -93,7 +93,7 @@ describe('RemoteChangesStream', () => {
 
     it('detect that it is local change', async done => {
 
-        doc.modified[1] = {
+        doc.modified[0] = {
             user: 'localuser', // same user
             date: new Date('2018-02-08T01:00:00.00Z')
         };

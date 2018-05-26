@@ -1,7 +1,8 @@
 import {Backup} from './backup';
 
 /**
- * This is just to make BackupComponent's Backup mockable.
+ * This is just to make BackupCreationComponent's / BackupLoadingComponent's
+ * Backup mockable.
  * We cannot create a component via a factor like a service, but
  * we also do not want to have a class instead of a module without
  * a special necessity.

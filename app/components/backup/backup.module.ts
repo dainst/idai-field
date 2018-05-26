@@ -1,10 +1,11 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
-import {BackupComponent} from './backup.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {BackupCreationComponent} from './backup-creation.component';
+import {BackupLoadingComponent} from './backup-loading.component';
 import {DumpModalComponent} from './dump-modal.component';
 import {ReadDumpModalComponent} from './read-dump-modal.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DialogProvider} from './dialog-provider';
 import {ConcreteDialogProvider} from './concrete-dialog-provider';
 import {BackupProvider} from './backup-provider';
@@ -16,12 +17,14 @@ import {BackupProvider} from './backup-provider';
         NgbModule.forRoot()
     ],
     declarations: [
-        BackupComponent,
+        BackupCreationComponent,
+        BackupLoadingComponent,
         DumpModalComponent,
         ReadDumpModalComponent
     ],
     exports: [
-        BackupComponent
+        BackupCreationComponent,
+        BackupLoadingComponent
     ],
     providers: [
         { provide: DialogProvider, useClass: ConcreteDialogProvider },

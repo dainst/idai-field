@@ -1,4 +1,4 @@
-import {BackupComponent} from '../../../../app/components/backup/backup.component';
+import {BackupLoadingComponent} from '../../../../app/components/backup/backup-loading.component';
 import {M} from '../../../../app/m';
 import PouchDB = require('pouchdb');
 import {Backup} from '../../../../app/components/backup/backup';
@@ -6,12 +6,12 @@ import {Backup} from '../../../../app/components/backup/backup';
 /**
  * @author Daniel de Oliviera
  */
-describe('BackupComponent', () => {
+describe('BackupLoadingComponent', () => {
 
     const backupFilePath = 'store/backup_test_file.txt';
     const unittestdb = 'unittestdb';
 
-    let c: BackupComponent;
+    let c: BackupLoadingComponent;
     let messages: any;
     let settingsService: any;
     let backupProvider: any;
@@ -30,8 +30,7 @@ describe('BackupComponent', () => {
         settingsService = jasmine.createSpyObj('settingsService', ['getSelectedProject', 'addProject']);
         backupProvider = jasmine.createSpyObj('backupProvider', ['dump', 'readDump']);
 
-        c = new BackupComponent(
-            dialogProvider,
+        c = new BackupLoadingComponent(
             modalService,
             messages,
             settingsService,
@@ -43,48 +42,39 @@ describe('BackupComponent', () => {
     });
 
 
-    it('dump', async done => {
+    it('load backup: project not specified', async done => {
 
-        await c.dump();
-        expect(backupProvider.dump).toHaveBeenCalledWith(backupFilePath, 'selectedproject');
-
-        done();
-    });
-
-
-    it('readDump: project not specified', async done => {
-
-        c.proj = '';
+        c.projectName = '';
         c.path = './store/backup_test_file.txt';
-        await c.readDump();
+        await c.loadBackup();
 
         expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_DUMP_ERROR_NO_PROJECT_NAME]);
         done();
     });
 
 
-    it('readDump: filenotexists', async done => {
+    it('load backup: filenotexists', async done => {
 
-        c.proj = unittestdb;
+        c.projectName = unittestdb;
         c.path = './store/backup_test_file.txt';
 
         backupProvider.readDump.and.returnValue(Promise.reject(Backup.FILE_NOT_EXIST));
-        await c.readDump();
+        await c.loadBackup();
 
         expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST]);
         done();
     });
 
 
-    it('readDump: cannotreaddb', async done => {
+    it('load backup: cannotreaddb', async done => {
 
         spyOn(console, 'error');
 
-        c.proj = unittestdb;
+        c.projectName = unittestdb;
         c.path = './package.json';
 
         backupProvider.readDump.and.returnValue(Promise.reject('reason'));
-        await c.readDump();
+        await c.loadBackup();
 
         expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_DUMP_ERROR]);
         done();
@@ -93,9 +83,9 @@ describe('BackupComponent', () => {
 
     it('readDump: show success message', async done => {
 
-        c.proj = unittestdb;
+        c.projectName = unittestdb;
         c.path = './package.json';
-        await c.readDump();
+        await c.loadBackup();
 
         expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_DUMP_SUCCESS]);
         done();
@@ -104,9 +94,9 @@ describe('BackupComponent', () => {
 
     it('readDump: create new project via settings', async done => {
 
-        c.proj = unittestdb;
+        c.projectName = unittestdb;
         c.path = './package.json';
-        await c.readDump();
+        await c.loadBackup();
 
         expect(settingsService.addProject).toHaveBeenCalledWith(unittestdb);
         done();

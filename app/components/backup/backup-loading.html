@@ -1,0 +1,42 @@
+<div id="backup-loading">
+    <header class="bg-light">
+        <button id="importStartButton"
+                class="btn btn-primary"
+                [ngClass]="{ 'disabled': running }"
+                (click)="loadBackup()">
+            <span class="mdi mdi-file-export" style="color: white"></span>
+            Backup einlesen
+        </button>
+    </header>
+
+    <main>
+        <div class="form-group row">
+            <div class="col-lg-6 mx-lg-auto">
+                Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank /
+                eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten
+                Projekt übereinstimmen.
+
+                <br><br>
+
+                Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten
+                errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.
+
+                <br><br>
+
+                <b>Achtung:</b> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene
+                Zieldatenbank mit dem angegebenen Namen <b>vollständig überschrieben</b>.
+
+                <br>
+                <br>
+                <label>Pfad</label>
+                <input type="text" class="form-control" id="path"
+                       [(ngModel)]="path" name="path">
+
+
+                <label>Projekt</label>
+                <input type="text" class="form-control" id="projectName"
+                       [(ngModel)]="projectName" name="projectName">
+            </div>
+        </div>
+    </main>
+</div>

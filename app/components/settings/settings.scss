@@ -19,8 +19,11 @@
   }
 
   main {
+    height: calc(100vh - 115px);
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: 7px;
-    margin-top: 70px;
+    margin-top: 58px;
   }
 
   #save-settings-button:active,

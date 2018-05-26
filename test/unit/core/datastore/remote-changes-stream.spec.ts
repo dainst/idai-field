@@ -6,7 +6,6 @@ import {RemoteChangesStream} from '../../../../app/core/datastore/core/remote-ch
  */
 describe('RemoteChangesStream', () => {
 
-
     let rcs;
     let doc;
     let datastore;
@@ -32,9 +31,6 @@ describe('RemoteChangesStream', () => {
             modified: [
                 {
                     user: 'remoteuser',
-                    date: new Date('2018-01-01T01:00:00.00Z')
-                }, {
-                    user: 'remoteuser',
                     date: new Date('2018-01-02T07:00:00.00Z')
                 }
             ]
@@ -52,7 +48,8 @@ describe('RemoteChangesStream', () => {
         indexFacade.put.and.returnValue(doc);
         documentCache.get.and.returnValue(1); // just to trigger reassignment
 
-        datastore = jasmine.createSpyObj('MockDatastore', ['changesNotifications', 'deletedNotifications', 'fetch', 'fetchRevision']);
+        datastore = jasmine.createSpyObj('MockDatastore', ['changesNotifications', 'deletedNotifications',
+            'fetch', 'fetchRevision']);
         datastore.fetch.and.returnValue(Promise.resolve(doc));
 
         datastore.changesNotifications.and.returnValue({subscribe: (func: Function) => fun = func});
@@ -129,7 +126,7 @@ describe('RemoteChangesStream', () => {
             ]
         };
 
-        datastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource : { id:'1' }}));
+        datastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource: { id: '1' }}));
         datastore.fetchRevision.and.returnValue(Promise.resolve(rev2));
 
         typeConverter.convert.and.returnValue(doc);
@@ -155,12 +152,12 @@ describe('RemoteChangesStream', () => {
             modified: [
                 {
                     user: 'localuser',
-                    date: new Date('2018-01-20T15:00:00.00Z')
+                    date: new Date('2018-01-02T15:00:00.00Z')
                 }
             ]
         };
 
-        datastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource : { id:'1' }}));
+        datastore.fetch.and.returnValue(Promise.resolve({'_conflicts': ['first'], resource: { id: '1' }}));
         datastore.fetchRevision.and.returnValue(Promise.resolve(rev2));
 
         typeConverter.convert.and.returnValue(doc);

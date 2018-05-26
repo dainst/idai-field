@@ -306,25 +306,25 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.BACKUP_READ_DUMP_ERROR]={
-            content: 'Fehler beim Einlesen der Datenbank',
+            content: 'Fehler beim Einlesen der Backup-Datei.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST]={
-            content: 'Fehler. Die angegebene Datei existiert nicht',
+            content: 'Die angegebene Datei existiert nicht.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.BACKUP_READ_DUMP_ERROR_NO_PROJECT_NAME]={
-            content: 'Geben Sie einen Projektnamen an, um fortzufahren',
+            content: 'Geben Sie einen Projektnamen an, um fortzufahren.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.BACKUP_READ_DUMP_ERROR_SAME_PROJECT_NAME]={
-            content: 'Wählen Sie als Ziel eine anderes als das gerade ausgewählte Projekt',
+            content: 'Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.',
             level: 'danger',
             params: [],
             hidden: false

@@ -29,9 +29,18 @@
                 <br>
                 <br>
                 <label>Pfad</label>
-                <input type="text" class="form-control" id="path"
-                       [(ngModel)]="path" name="path">
-
+                <div class="input-group">
+                    <input [(ngModel)]="path"
+                           class="form-control">
+                    <span class="input-group-btn">
+                        <input id="path-file-input" type="file"
+                               (change)="path = $event.target.files[0].path"
+                               style="display: none">
+                        <label for="path-file-input" class="btn btn-secondary">
+                            <span class="mdi mdi-folder"></span>
+                        </label>
+                    </span>
+                </div>
 
                 <label>Projekt</label>
                 <input type="text" class="form-control" id="projectName"

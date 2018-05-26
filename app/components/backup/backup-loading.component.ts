@@ -39,12 +39,8 @@ export class BackupLoadingComponent {
 
         if (this.running) return;
 
-        if (!this.projectName) return this.messages.add([M.BACKUP_READ_DUMP_ERROR_NO_PROJECT_NAME]);
-        if (this.projectName === this.settingsService.getSelectedProject()) {
-            return this.messages.add([M.BACKUP_READ_DUMP_ERROR_SAME_PROJECT_NAME]);
-        }
-
-        if (!this.path) return this.messages.add([M.BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST]);
+        const errorMessage: string|undefined = this.validateInputs();
+        if (errorMessage) return this.messages.add([errorMessage]);
 
         this.running = true;
         this.openModal();
@@ -53,6 +49,16 @@ export class BackupLoadingComponent {
 
         this.running = false;
         this.closeModal();
+    }
+
+
+    private validateInputs(): string|undefined {
+
+        if (!this.projectName) return M.BACKUP_READ_DUMP_ERROR_NO_PROJECT_NAME;
+        if (this.projectName === this.settingsService.getSelectedProject()) {
+            return M.BACKUP_READ_DUMP_ERROR_SAME_PROJECT_NAME;
+        }
+        if (!this.path) return M.BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST;
     }
 
 

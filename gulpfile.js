@@ -16,7 +16,7 @@ gulp.task('convert-sass', function () {
                 'node_modules/roboto-fontface/css/roboto/sass',
                 'node_modules/idai-components-2/src/scss',
                 'node_modules/bootstrap/scss',
-                'node_modules/mdi/scss/'
+                'node_modules/@mdi/font/scss/'
             ], precision: 8
         }))
         .pipe(concat('app.css'))
@@ -27,7 +27,7 @@ gulp.task('copy-fonts-convert-sass', ['convert-sass'], function () {
     // fonts
     gulp.src([
         'node_modules/roboto-fontface/fonts/**/*',
-        'node_modules/mdi/fonts/**/*'
+        'node_modules/@mdi/font/fonts/**/*'
     ])
     .pipe(gulp.dest('fonts'));
 });

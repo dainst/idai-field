@@ -288,25 +288,25 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.BACKUP_DUMP_SUCCESS]={
-            content: 'Datenbank erfolgreich gesichert',
+            content: 'Die Datenbank wurde erfolgreich gesichert.',
             level: 'success',
             params: [],
             hidden: false
         };
         this.msgs[M.BACKUP_DUMP_ERROR]={
-            content: 'Fehler beim Sichern der Datenbank',
+            content: 'Beim Sichern der Datenbank ist ein Fehler aufgetreten.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.BACKUP_READ_DUMP_SUCCESS]={
-            content: 'Datenbank erfolgreich eingelesen',
+            content: 'Das Backup wurde erfolgreich eingelesen.',
             level: 'success',
             params: [],
             hidden: false
         };
         this.msgs[M.BACKUP_READ_DUMP_ERROR]={
-            content: 'Fehler beim Einlesen der Backup-Datei.',
+            content: 'Beim Einlesen der Backup-Datei ist ein Fehler aufgetreten.',
             level: 'danger',
             params: [],
             hidden: false

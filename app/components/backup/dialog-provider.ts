@@ -5,4 +5,7 @@
  *
  * @author Daniel de Oliveira
  */
-export class DialogProvider { public chooseFilepath = (): Promise<string> => { return Promise.resolve(''); } }
+export class DialogProvider {
+
+    public chooseFilepath = (): Promise<string> => { return Promise.resolve(''); }
+}

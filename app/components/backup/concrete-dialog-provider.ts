@@ -10,7 +10,7 @@ export class ConcreteDialogProvider {
         return new Promise<string>(async resolve => {
 
             const filePath = await dialog.showSaveDialog(
-                { filters: [ { name: 'Text', extensions: [ 'txt' ] } ] });
+                { filters: [ { name: 'JSON Lines', extensions: [ 'jsonl' ] } ] });
             resolve(filePath);
         });
     }

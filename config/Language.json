@@ -1783,15 +1783,35 @@
     }
   },
   "relations": {
-    "isRecordedIn": {},
-    "liesWithin": {},
-    "includes": {},
-    "isAbove": {},
-    "isBelow": {},
-    "cuts": {},
-    "isCutBy": {},
-    "bears": {},
-    "isFoundOn": {},
-    "borders": {}
+    "isRecordedIn": {
+      "label": "Gehört zu"
+    },
+    "liesWithin": {
+      "label": "Liegt in"
+    },
+    "includes": {
+      "label": "Enthält"
+    },
+    "isAbove": {
+      "label": "Liegt über"
+    },
+    "isBelow": {
+      "label": "Liegt unter"
+    },
+    "cuts": {
+      "label": "Schneidet"
+    },
+    "isCutBy": {
+      "label": "Wird geschnitten von"
+    },
+    "bears": {
+      "label": "Trägt"
+    },
+    "isFoundOn": {
+      "label": "ist aufgebracht auf"
+    },
+    "borders": {
+      "label": "Grenzt an"
+    }
   }
 }

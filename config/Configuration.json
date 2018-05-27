@@ -436,7 +436,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -904,7 +904,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -929,7 +929,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -954,7 +954,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -1772,7 +1772,7 @@
             "rot",
             "rotbraun",
             "schwarz",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -2107,6 +2107,10 @@
         },
         {
           "inputType": "input",
+          "name": "hasEndDate"
+        },
+        {
+          "inputType": "input",
           "name": "hasFeatureAmount"
         },
         {
@@ -2135,7 +2139,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -2807,7 +2811,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -2832,7 +2836,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -2857,7 +2861,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -2895,7 +2899,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -2920,7 +2924,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -3791,7 +3795,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -3816,7 +3820,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -3841,7 +3845,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -3876,7 +3880,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -3901,7 +3905,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -4226,7 +4230,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -4733,7 +4737,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {
@@ -5638,7 +5642,7 @@
             "schwarz",
             "türkis",
             "violett",
-            "weiss"
+            "weiß"
           ]
         },
         {

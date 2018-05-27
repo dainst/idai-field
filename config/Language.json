@@ -170,7 +170,7 @@
       "label": "Ziegel",
       "fields": {
         "hasFeatureText": {
-          "label": "Stempeltexts",
+          "label": "Stempeltext(e)",
           "description": "Beschreibung zu besonderen Merkmalen zum Stempeltext."
         },
         "hasBrickForm": {
@@ -180,13 +180,13 @@
           "label": "Verwendung der Ziegel in der Architektur"
         },
         "hasClayColorOutside": {
-          "label": "Aussen: Tonfarbe und -intensität"
+          "label": "Außen: Tonfarbe und -intensität"
         },
         "hasCoatColorInside": {
           "label": "Überzug Innen: Farbe und Intensität"
         },
         "hasCoatColorOutside": {
-          "label": "Überzug Aussen: Farbe und Intensität"
+          "label": "Überzug Außen: Farbe und Intensität"
         },
         "hasDecorationTechniqueBrick": {
           "label": "Besonderheiten der Oberfläche bzw. Dekoration"
@@ -681,6 +681,10 @@
           "label": "Störung",
           "description": "Befund gestört: Ja/Nein"
         },
+        "hasEndDate": {
+          "label": "Enddatum",
+          "description": "Ende des Projektes."
+        },
         "hasFeatureAmount": {
           "label": "Befundanteil",
           "description": "Prozentuale Menge des Einschlusses im Vergleich zum Gesamtbefund, je nach Grabungsmethodik Einteilung prozentual ('5-10%') oder textuell ('wenig')."
@@ -965,7 +969,7 @@
           "label": "Innen: Tonfarbe und -intensität"
         },
         "hasClayColorOutside": {
-          "label": "Aussen: Tonfarbe und -intensität"
+          "label": "Außen: Tonfarbe und -intensität"
         },
         "hasClayHardness": {
           "label": "Tonhärte (Mohssche Härteskala)",
@@ -975,7 +979,7 @@
           "label": "Überzug Innen: Farbe und Intensität"
         },
         "hasCoatColorOutside": {
-          "label": "Überzug Aussen: Farbe und Intensität"
+          "label": "Überzug Außen: Farbe und Intensität"
         },
         "hasCoatInside": {
           "label": "Überzug Innen"
@@ -1241,7 +1245,7 @@
           "label": "Innen: Tonfarbe und -intensität"
         },
         "hasClayColorOutside": {
-          "label": "Aussen: Tonfarbe und -intensität"
+          "label": "Außen: Tonfarbe und -intensität"
         },
         "hasClayStructure": {
           "label": "Struktur",
@@ -1251,7 +1255,7 @@
           "label": "Überzug Innen: Farbe und Intensität"
         },
         "hasCoatColorOutside": {
-          "label": "Überzug Aussen: Farbe und Intensität"
+          "label": "Überzug Außen: Farbe und Intensität"
         },
         "hasDecorationTechniquePottery": {
           "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik"
@@ -1779,35 +1783,15 @@
     }
   },
   "relations": {
-    "isRecordedIn": {
-      "label": "Gehört zu"
-    },
-    "liesWithin": {
-      "label": "Liegt in"
-    },
-    "includes": {
-      "label": "Enthält"
-    },
-    "isAbove": {
-      "label": "Liegt über"
-    },
-    "isBelow": {
-      "label": "Liegt unter"
-    },
-    "cuts": {
-      "label": "Schneidet"
-    },
-    "isCutBy": {
-      "label": "Wird geschnitten von"
-    },
-    "bears": {
-      "label": "Trägt"
-    },
-    "isFoundOn": {
-      "label": "ist aufgebracht auf"
-    },
-    "borders": {
-      "label": "Grenzt an"
-    }
+    "isRecordedIn": {},
+    "liesWithin": {},
+    "includes": {},
+    "isAbove": {},
+    "isBelow": {},
+    "cuts": {},
+    "isCutBy": {},
+    "bears": {},
+    "isFoundOn": {},
+    "borders": {}
   }
 }

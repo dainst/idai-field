@@ -1,14 +1,12 @@
 {
   "types": {
     "Trench": {
-      "fields": [
-        {
-          "inputType": "unsignedFloat",
-          "name": "hasLevel"
+      "fields": {
+        "hasLevel": {
+          "inputType": "unsignedFloat"
         },
-        {
+        "hasSoilType": {
           "inputType": "dropdown",
-          "name": "hasSoilType",
           "valuelist": [
             "Lehm",
             "Mergel",
@@ -17,80 +15,69 @@
             "Ton"
           ]
         }
-      ]
+      }
     },
     "Drilling": {
-      "fields": [
-        {
+      "fields": {
+        "hasDimensionHight": {
           "inputType": "dimension",
-          "name": "hasDimensionHight",
           "position_values": [
             "Maximale Ausdehnung",
             "Minimale Ausdehnung"
           ]
         }
-      ]
+      }
     },
     "FeatureGroup": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "ShortDescription"
+      "fields": {
+        "ShortDescription": {
+          "inputType": "input"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasIdentify"
+        "hasIdentify": {
+          "inputType": "unsignedInt"
         },
-        {
-          "inputType": "unsignedFloat",
-          "name": "hasLevel"
+        "hasLevel": {
+          "inputType": "unsignedFloat"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasNumber"
+        "hasNumber": {
+          "inputType": "unsignedInt"
         }
-      ]
+      }
     },
     "Building": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "ShortDescription"
+      "fields": {
+        "ShortDescription": {
+          "inputType": "input"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasIdentify"
+        "hasIdentify": {
+          "inputType": "unsignedInt"
         },
-        [
-          {
-            "inputType": "checkboxes",
-            "name": "hasMaterial",
-            "valuelist": [
-              "Andesit",
-              "Basalt",
-              "Flint",
-              "Granit",
-              "Kalk",
-              "Kalkmörtel",
-              "Kalkstein",
-              "Kreide",
-              "Marmor",
-              "Pophyr",
-              "Quarz",
-              "Sandstein",
-              "Sinter",
-              "Trachyt",
-              "Tuff"
-            ]
-          }
-        ]
-      ]
+        "hasMaterial": {
+          "inputType": "checkboxes",
+          "valuelist": [
+            "Andesit",
+            "Basalt",
+            "Flint",
+            "Granit",
+            "Kalk",
+            "Kalkmörtel",
+            "Kalkstein",
+            "Kreide",
+            "Marmor",
+            "Pophyr",
+            "Quarz",
+            "Sandstein",
+            "Sinter",
+            "Trachyt",
+            "Tuff"
+          ]
+        }
+      }
     },
     "Architecture": {
-      "fields": [
-        {
+      "fields": {
+        "hasColor": {
           "inputType": "checkboxes",
-          "name": "hasColor",
           "valuelist": [
             "beige",
             "blass-",
@@ -113,79 +100,67 @@
             "weiß"
           ]
         },
-        {
+        "hasDimensionHight": {
           "inputType": "dimension",
-          "name": "hasDimensionHight",
           "position_values": [
             "Maximale Ausdehnung",
             "Minimale Ausdehnung"
           ]
         },
-        {
+        "hasDimensionLength": {
           "inputType": "dimension",
-          "name": "hasDimensionLength",
           "position_values": [
             "Maximale Ausdehnung",
             "Minimale Ausdehnung"
           ]
         },
-        {
+        "hasDimensionWidth": {
           "inputType": "dimension",
-          "name": "hasDimensionWidth",
           "position_values": [
             "Maximale Ausdehnung",
             "Minimale Ausdehnung"
           ]
         },
-        [
-          {
-            "inputType": "radio",
-            "name": "hasBlockTreatment",
-            "valuelist": [
-              "fein geglättet",
-              "gespitzt",
-              "grob behauen",
-              "grob geglättet",
-              "unbehauen"
-            ]
-          }
-        ]
-      ]
+        "hasBlockTreatment": {
+          "inputType": "radio",
+          "valuelist": [
+            "fein geglättet",
+            "gespitzt",
+            "grob behauen",
+            "grob geglättet",
+            "unbehauen"
+          ]
+        }
+      }
     },
     "Operation": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "ShortDescription"
+      "fields": {
+        "ShortDescription": {
+          "inputType": "input"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasIdentify"
+        "hasIdentify": {
+          "inputType": "unsignedInt"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasNumber"
+        "hasNumber": {
+          "inputType": "unsignedInt"
         },
-        {
+        "hasCRS": {
           "inputType": "multiselect",
-          "name": "hasCRS",
           "valuelist": [
             "Gauß Krüger",
             "UTM",
             "WGS 84 (4326)"
           ]
         },
-        {
-          "inputType": "input",
-          "name": "hasPlace"
+        "hasPlace": {
+          "inputType": "input"
         }
-      ]
+      }
     },
     "Layer": {
-      "fields": [
-        {
+      "fields": {
+        "hasFeatureForm": {
           "inputType": "checkboxes",
-          "name": "hasFeatureForm",
           "valuelist": [
             "U-förmig",
             "annähernd",
@@ -198,124 +173,98 @@
             "wannenförmig"
           ]
         },
-        [
-          {
-            "inputType": "checkboxes",
-            "name": "hasConsistency",
-            "valuelist": [
-              "fest",
-              "locker",
-              "hart",
-              "porös",
-              "pulvrig",
-              "lehmig",
-              "sandig"
-            ]
-          }
-        ]
-      ]
+        "hasConsistency": {
+          "inputType": "checkboxes",
+          "valuelist": [
+            "fest",
+            "locker",
+            "hart",
+            "porös",
+            "pulvrig",
+            "lehmig",
+            "sandig"
+          ]
+        }
+      }
     },
     "Feature": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "ShortDescription"
+      "fields": {
+        "ShortDescription": {
+          "inputType": "input"
         },
-        {
-          "inputType": "input",
-          "name": "hasColorSoil"
+        "hasColorSoil": {
+          "inputType": "input"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasIdentify"
+        "hasIdentify": {
+          "inputType": "unsignedInt"
         },
-        {
-          "inputType": "unsignedFloat",
-          "name": "hasLevel"
+        "hasLevel": {
+          "inputType": "unsignedFloat"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasNumber"
+        "hasNumber": {
+          "inputType": "unsignedInt"
         },
-        {
+        "hasDimensionHight": {
           "inputType": "dimension",
-          "name": "hasDimensionHight",
           "position_values": [
             "Maximale Ausdehnung",
             "Minimale Ausdehnung"
           ]
         },
-        [
-          {
-            "inputType": "input",
-            "name": "hasComparison"
-          }
-        ]
-      ]
+        "hasComparison": {
+          "inputType": "input"
+        }
+      }
     },
     "Inscription": {
-      "fields": [
-        {
-          "inputType": "unsignedInt",
-          "name": "hasIdentify"
+      "fields": {
+        "hasIdentify": {
+          "inputType": "unsignedInt"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasNumber"
+        "hasNumber": {
+          "inputType": "unsignedInt"
         },
-        [
-          {
-            "inputType": "input",
-            "name": "hasComparison"
-          }
-        ]
-      ]
+        "hasComparison": {
+          "inputType": "input"
+        }
+      }
     },
     "Findspot": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "ShortDescription"
+      "fields": {
+        "ShortDescription": {
+          "inputType": "input"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasIdentify"
+        "hasIdentify": {
+          "inputType": "unsignedInt"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasNumber"
+        "hasNumber": {
+          "inputType": "unsignedInt"
         },
-        {
-          "inputType": "input",
-          "name": "hasPlace"
+        "hasPlace": {
+          "inputType": "input"
         }
-      ]
+      }
     },
     "Image": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "ShortDescription"
+      "fields": {
+        "ShortDescription": {
+          "inputType": "input"
         },
-        {
-          "inputType": "input",
-          "name": "hasFilename"
+        "hasFilename": {
+          "inputType": "input"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasIdentify"
+        "hasIdentify": {
+          "inputType": "unsignedInt"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasNumber"
+        "hasNumber": {
+          "inputType": "unsignedInt"
         }
-      ]
+      }
     },
     "Pottery": {
-      "fields": [
-        {
+      "fields": {
+        "hasWare": {
           "inputType": "checkboxes",
-          "name": "hasWare",
           "valuelist": [
             "Drehscheibenkeramik",
             "Kochware",
@@ -323,165 +272,153 @@
             "schwarze Lepnaja Keramik"
           ]
         },
-        [
-          {
-            "inputType": "checkboxes",
-            "name": "hasTemperTypeClay",
-            "valuelist": [
-              "T1",
-              "T2",
-              "T3",
-              "T4",
-              "T5",
-              "T6",
-              "T7",
-              "T8",
-              "T9",
-              "T10",
-              "T11",
-              "T12",
-              "T13",
-              "T14",
-              "T15",
-              "T16",
-              "T17",
-              "T18",
-              "T19",
-              "T20",
-              "T21",
-              "T22",
-              "T23",
-              "T24",
-              "T25",
-              "T26",
-              "T27",
-              "T28",
-              "T29",
-              "T30"
-            ]
-          }
-        ],
-        [
-          {
-            "inputType": "radio",
-            "name": "hasPotteryTypeSpecific",
-            "valuelist": [
-              "African Cooking Ware",
-              "Africana da cucina",
-              "Aretina schwarz",
-              "ARS A",
-              "ARS A/D",
-              "ARS C",
-              "ARS D",
-              "ARS E",
-              "Attisch farbig aufgehöhte Schwarzglanzton Ware",
-              "Attische Keramik",
-              "Attisch Rotfigurige Keramik",
-              "Attisch Schwarzfigurige Keramik",
-              "Attisch Schwarzglanzton Ware",
-              "Bemalte Keramik",
-              "Bemalte Ware (floral)",
-              "Bemalte Ware (linear)",
-              "Bichrome Ware",
-              "Campana A",
-              "Campana B",
-              "Campana B Imitation",
-              "Campana B-oid",
-              "Campana C",
-              "Dünnwandige Feinkeramik",
-              "Glasierte Keramik",
-              "Glattwandige Ware",
-              "Handgemachte Keramik",
-              "Korinthische Keramik",
-              "Küchenware",
-              "Ostgriechische Keramik",
-              "Pantellerian Ware",
-              "Prähistorische Keramik",
-              "Red Slip Ware",
-              "Schlichte Ware",
-              "Schwarzglanzton Ware",
-              "Terra sigillata",
-              "Terra sigillata Focea",
-              "Terra sigillata Italica",
-              "unbestimmt"
-            ]
-          },
-          {
-            "inputType": "checkboxes",
-            "name": "hasCoatOutsideType",
-            "valuelist": [
-              "Überzug",
-              "Glasur",
-              "Bemalung",
-              "poliert",
-              "geglättet",
-              "verstrichen",
-              "Anderes"
-            ]
-          },
-          {
-            "inputType": "checkboxes",
-            "name": "hasCoatInsideType",
-            "valuelist": [
-              "Überzug",
-              "Glasur",
-              "Bemalung",
-              "poliert",
-              "geglättet",
-              "verstrichen",
-              "Anderes"
-            ]
-          },
-          {
-            "inputType": "checkboxes",
-            "name": "hasTemper",
-            "valuelist": [
-              "Quarz",
-              "Kalk",
-              "Muschelgrus",
-              "Vulkanische Partikel",
-              "Glimmer",
-              "Steinchen",
-              "Mineralische Partikel",
-              "Schamotte",
-              "Organische Partikel",
-              "Stroh/Spreu",
-              "Vacua",
-              "Sonstige"
-            ]
-          },
-          {
-            "inputType": "radio",
-            "name": "hasTemperAmount",
-            "valuelist": [
-              "nicht erkennbar",
-              "keine Einschlüsse",
-              "vereinzelt",
-              "wenig",
-              "mittel",
-              "viel",
-              "sehr viel"
-            ]
-          },
-          {
-            "inputType": "radio",
-            "name": "hasTemperParticles",
-            "valuelist": [
-              "sehr fein",
-              "fein",
-              "mittel",
-              "grob",
-              "sehr grob"
-            ]
-          }
-        ]
-      ]
+        "hasTemperTypeClay": {
+          "inputType": "checkboxes",
+          "valuelist": [
+            "T1",
+            "T2",
+            "T3",
+            "T4",
+            "T5",
+            "T6",
+            "T7",
+            "T8",
+            "T9",
+            "T10",
+            "T11",
+            "T12",
+            "T13",
+            "T14",
+            "T15",
+            "T16",
+            "T17",
+            "T18",
+            "T19",
+            "T20",
+            "T21",
+            "T22",
+            "T23",
+            "T24",
+            "T25",
+            "T26",
+            "T27",
+            "T28",
+            "T29",
+            "T30"
+          ]
+        },
+        "hasPotteryTypeSpecific": {
+          "inputType": "radio",
+          "valuelist": [
+            "African Cooking Ware",
+            "Africana da cucina",
+            "Aretina schwarz",
+            "ARS A",
+            "ARS A/D",
+            "ARS C",
+            "ARS D",
+            "ARS E",
+            "Attisch farbig aufgehöhte Schwarzglanzton Ware",
+            "Attische Keramik",
+            "Attisch Rotfigurige Keramik",
+            "Attisch Schwarzfigurige Keramik",
+            "Attisch Schwarzglanzton Ware",
+            "Bemalte Keramik",
+            "Bemalte Ware (floral)",
+            "Bemalte Ware (linear)",
+            "Bichrome Ware",
+            "Campana A",
+            "Campana B",
+            "Campana B Imitation",
+            "Campana B-oid",
+            "Campana C",
+            "Dünnwandige Feinkeramik",
+            "Glasierte Keramik",
+            "Glattwandige Ware",
+            "Handgemachte Keramik",
+            "Korinthische Keramik",
+            "Küchenware",
+            "Ostgriechische Keramik",
+            "Pantellerian Ware",
+            "Prähistorische Keramik",
+            "Red Slip Ware",
+            "Schlichte Ware",
+            "Schwarzglanzton Ware",
+            "Terra sigillata",
+            "Terra sigillata Focea",
+            "Terra sigillata Italica",
+            "unbestimmt"
+          ]
+        },
+        "hasCoatOutsideType": {
+          "inputType": "checkboxes",
+          "valuelist": [
+            "Überzug",
+            "Glasur",
+            "Bemalung",
+            "poliert",
+            "geglättet",
+            "verstrichen",
+            "Anderes"
+          ]
+        },
+        "hasCoatInsideType": {
+          "inputType": "checkboxes",
+          "valuelist": [
+            "Überzug",
+            "Glasur",
+            "Bemalung",
+            "poliert",
+            "geglättet",
+            "verstrichen",
+            "Anderes"
+          ]
+        },
+        "hasTemper": {
+          "inputType": "checkboxes",
+          "valuelist": [
+            "Quarz",
+            "Kalk",
+            "Muschelgrus",
+            "Vulkanische Partikel",
+            "Glimmer",
+            "Steinchen",
+            "Mineralische Partikel",
+            "Schamotte",
+            "Organische Partikel",
+            "Stroh/Spreu",
+            "Vacua",
+            "Sonstige"
+          ]
+        },
+        "hasTemperAmount": {
+          "inputType": "radio",
+          "valuelist": [
+            "nicht erkennbar",
+            "keine Einschlüsse",
+            "vereinzelt",
+            "wenig",
+            "mittel",
+            "viel",
+            "sehr viel"
+          ]
+        },
+        "hasTemperParticles": {
+          "inputType": "radio",
+          "valuelist": [
+            "sehr fein",
+            "fein",
+            "mittel",
+            "grob",
+            "sehr grob"
+          ]
+        }
+      }
     },
     "Grave": {
-      "fields": [
-        {
+      "fields": {
+        "hasFeatureForm": {
           "inputType": "checkboxes",
-          "name": "hasFeatureForm",
           "valuelist": [
             "U-förmig",
             "annähernd",
@@ -494,9 +431,8 @@
             "wannenförmig"
           ]
         },
-        {
+        "hasGraveFeature": {
           "inputType": "checkboxes",
-          "name": "hasGraveFeature",
           "valuelist": [
             "Brandbestattung",
             "Körperbestattung",
@@ -504,13 +440,12 @@
             "Sekundäre Bestattung"
           ]
         }
-      ]
+      }
     },
     "Bone": {
-      "fields": [
-        {
+      "fields": {
+        "hasWhatHadBones": {
           "inputType": "radio",
-          "name": "hasWhatHadBones",
           "valuelist": [
             "Elfenbein",
             "Horn",
@@ -518,90 +453,75 @@
             "Tierknochen"
           ]
         }
-      ]
+      }
     },
     "Room": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "ShortDescription"
+      "fields": {
+        "ShortDescription": {
+          "inputType": "input"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasIdentify"
+        "hasIdentify": {
+          "inputType": "unsignedInt"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasNumber"
+        "hasNumber": {
+          "inputType": "unsignedInt"
         },
-        {
+        "hasDimensionHight": {
           "inputType": "dimension",
-          "name": "hasDimensionHight",
           "position_values": [
             "Maximale Ausdehnung",
             "Minimale Ausdehnung"
           ]
         }
-      ]
+      }
     },
     "ProcessUnit": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "ShortDescription"
+      "fields": {
+        "ShortDescription": {
+          "inputType": "input"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasIdentify"
+        "hasIdentify": {
+          "inputType": "unsignedInt"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasNumber"
+        "hasNumber": {
+          "inputType": "unsignedInt"
         }
-      ]
+      }
     },
     "Wall_surface": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "ShortDescription"
+      "fields": {
+        "ShortDescription": {
+          "inputType": "input"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasIdentify"
+        "hasIdentify": {
+          "inputType": "unsignedInt"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasNumber"
+        "hasNumber": {
+          "inputType": "unsignedInt"
         },
-        {
+        "hasDimensionHight": {
           "inputType": "dimension",
-          "name": "hasDimensionHight",
           "position_values": [
             "Maximale Ausdehnung",
             "Minimale Ausdehnung"
           ]
         },
-        [
-          {
-            "inputType": "radio",
-            "name": "hasBlockTreatment",
-            "valuelist": [
-              "fein geglättet",
-              "gespitzt",
-              "grob behauen",
-              "grob geglättet",
-              "unbehauen"
-            ]
-          }
-        ]
-      ]
+        "hasBlockTreatment": {
+          "inputType": "radio",
+          "valuelist": [
+            "fein geglättet",
+            "gespitzt",
+            "grob behauen",
+            "grob geglättet",
+            "unbehauen"
+          ]
+        }
+      }
     },
     "Other": {
-      "fields": [
-        {
+      "fields": {
+        "hasFeatureForm": {
           "inputType": "checkboxes",
-          "name": "hasFeatureForm",
           "valuelist": [
             "U-förmig",
             "annähernd",
@@ -614,75 +534,65 @@
             "wannenförmig"
           ]
         },
-        [
-          {
-            "inputType": "checkboxes",
-            "name": "hasConsistency",
-            "valuelist": [
-              "Durch Brand versiegelt",
-              "Oberfläche abgewaschen",
-              "Oberfläche verhärtet",
-              "fest",
-              "hart",
-              "lehmig",
-              "locker",
-              "porös",
-              "sandig"
-            ]
-          }
-        ]
-      ]
+        "hasConsistency": {
+          "inputType": "checkboxes",
+          "valuelist": [
+            "Durch Brand versiegelt",
+            "Oberfläche abgewaschen",
+            "Oberfläche verhärtet",
+            "fest",
+            "hart",
+            "lehmig",
+            "locker",
+            "porös",
+            "sandig"
+          ]
+        }
+      }
     },
     "Stone": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "hasCarrier"
+      "fields": {
+        "hasCarrier": {
+          "inputType": "input"
         },
-        [
-          {
-            "inputType": "checkboxes",
-            "name": "hasMaterial",
-            "valuelist": [
-              "Andesit",
-              "Basalt",
-              "Flint",
-              "Granit",
-              "Kalk",
-              "Kalkmörtel",
-              "Kalkstein",
-              "Kreide",
-              "Marmor",
-              "Pophyr",
-              "Quarz",
-              "Sandstein",
-              "Sinter",
-              "Trachyt",
-              "Tuff"
-            ]
-          }
-        ]
-      ]
+        "hasMaterial": {
+          "inputType": "checkboxes",
+          "valuelist": [
+            "Andesit",
+            "Basalt",
+            "Flint",
+            "Granit",
+            "Kalk",
+            "Kalkmörtel",
+            "Kalkstein",
+            "Kreide",
+            "Marmor",
+            "Pophyr",
+            "Quarz",
+            "Sandstein",
+            "Sinter",
+            "Trachyt",
+            "Tuff"
+          ]
+        }
+      }
     },
     "Coin": {
-      "fields": [
-        {
+      "fields": {
+        "hasFrontLegend": {
           "inputType": "dropdown",
-          "name": "hasFrontLegend",
           "valuelist": [
             "DN Constantin"
           ]
         },
-        {
+        "hasFrontSideMotive": {
           "inputType": "dropdown",
-          "name": "hasFrontSideMotive",
           "valuelist": [
             "behelmte Athenabüste"
           ]
         },
-        {
+        "hasNominal": {
           "inputType": "dropdown",
-          "name": "hasNominal",
           "valuelist": [
             "As",
             "Aureus",
@@ -708,108 +618,92 @@
             "Triens"
           ]
         },
-        {
+        "hasReverseSideLegend": {
           "inputType": "dropdown",
-          "name": "hasReverseSideLegend",
           "valuelist": [
             "DN Constantin"
           ]
         },
-        {
+        "hasReverseSideMotive": {
           "inputType": "dropdown",
-          "name": "hasReverseSideMotive",
           "valuelist": [
             "behelmte Athenabüste"
           ]
         },
-        [
-          {
-            "inputType": "checkboxes",
-            "name": "hasMetalMaterial",
-            "valuelist": [
-              "Aluminium",
-              "Billon",
-              "Blei",
-              "Bronze",
-              "Eisen",
-              "Gold",
-              "Kupfer",
-              "Messing",
-              "Silber",
-              "Unsicher bzw. unbestimmbar",
-              "Zinn"
-            ]
-          }
-        ]
-      ]
+        "hasMetalMaterial": {
+          "inputType": "checkboxes",
+          "valuelist": [
+            "Aluminium",
+            "Billon",
+            "Blei",
+            "Bronze",
+            "Eisen",
+            "Gold",
+            "Kupfer",
+            "Messing",
+            "Silber",
+            "Unsicher bzw. unbestimmbar",
+            "Zinn"
+          ]
+        }
+      }
     },
     "Find": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "ShortDescription"
+      "fields": {
+        "ShortDescription": {
+          "inputType": "input"
         },
-        {
-          "inputType": "unsignedInt",
-          "name": "hasIdentify"
+        "hasIdentify": {
+          "inputType": "unsignedInt"
         },
-        {
+        "hasDimensionHight": {
           "inputType": "dimension",
-          "name": "hasDimensionHight",
           "position_values": [
             "Maximale Ausdehnung",
             "Minimale Ausdehnung"
           ]
         },
-        [
-          {
-            "inputType": "input",
-            "name": "hasComparison"
-          }
-        ]
-      ]
+        "hasComparison": {
+          "inputType": "input"
+        }
+      }
     },
     "PlasterFragment": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "composition/hasStructure"
+      "fields": {
+        "composition/hasStructure": {
+          "inputType": "input"
         }
-      ]
+      }
     },
     "Profile": {
-      "fields": [
-        {
+      "fields": {
+        "hasDimensionHight": {
           "inputType": "dimension",
-          "name": "hasDimensionHight",
           "position_values": [
             "Maximale Ausdehnung",
             "Minimale Ausdehnung"
           ]
         }
-      ]
+      }
     },
     "Place": {
-      "fields": [
-        {
-          "inputType": "input",
-          "name": "hasGazId"
+      "fields": {
+        "hasGazId": {
+          "inputType": "input"
         }
-      ]
+      }
     },
     "Sample": {
-      "fields": [
-        {
-          "inputType": "unsignedInt",
-          "name": "hasLabNumber"
+      "fields": {
+        "hasLabNumber": {
+          "inputType": "unsignedInt"
         }
-      ]
+      }
     },
     "Brick": {
-      "fields": [
-        {
+      "fields": {
+        "hasManufactoring": {
           "inputType": "checkboxes",
-          "name": "hasManufactoring",
           "valuelist": [
             "Gebrannt",
             "Hart gebrannt",
@@ -819,13 +713,12 @@
             "Weich gebrannt"
           ]
         }
-      ]
+      }
     },
     "Floor": {
-      "fields": [
-        {
+      "fields": {
+        "hasConsistency": {
           "inputType": "checkboxes",
-          "name": "hasConsistency",
           "valuelist": [
             "Durch Brand versiegelt",
             "Oberfläche abgewaschen",
@@ -838,24 +731,22 @@
             "sandig"
           ]
         }
-      ]
+      }
     },
     "Terracotta": {
-      "fields": [
-        {
+      "fields": {
+        "hasTerracottaType": {
           "inputType": "radio",
-          "name": "hasTerracottaType",
           "valuelist": [
             "Kalypter"
           ]
         }
-      ]
+      }
     },
     "Survey": {
-      "fields": [
-        {
+      "fields": {
+        "hasResearchMethod": {
           "inputType": "checkboxes",
-          "name": "hasResearchMethod",
           "valuelist": [
             "Befliegung",
             "Begehung",
@@ -872,13 +763,12 @@
             "Tauchgang"
           ]
         }
-      ]
+      }
     },
     "Metal": {
-      "fields": [
-        {
+      "fields": {
+        "hasMetalMaterial": {
           "inputType": "checkboxes",
-          "name": "hasMetalMaterial",
           "valuelist": [
             "Aluminium",
             "Billon",
@@ -893,7 +783,7 @@
             "Zinn"
           ]
         }
-      ]
+      }
     }
   }
 }

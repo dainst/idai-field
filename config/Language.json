@@ -501,7 +501,7 @@
           "description": "z.B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
         },
         "hasPublicationRemark": {
-          "label": {},
+          "label": "Anmerkung",
           "description": "Anmerkung zur Publikation"
         },
         "hasSpatialLocation": {
@@ -1093,7 +1093,7 @@
           "description": "z.B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
         },
         "hasPublicationRemark": {
-          "label": {},
+          "label": "Anmerkung",
           "description": "Anmerkung zur Publikation"
         },
         "hasSpatialLocation": {
@@ -1620,7 +1620,7 @@
           "description": "Ausführliche Beschreibung zur Publikation"
         },
         "hasPublicationRemark": {
-          "label": {},
+          "label": "Anmerkung",
           "description": "Anmerkung zur Publikation"
         },
         "hasRestauration": {

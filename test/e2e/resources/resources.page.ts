@@ -181,7 +181,6 @@ export class ResourcesPage {
 
     public static getListItemEl(identifier) {
 
-        browser.wait(EC.visibilityOf(element(by.id('resource-' + identifier))), delays.ECWaitTime);
         return element(by.id('resource-' + identifier));
     }
 

@@ -136,12 +136,7 @@ describe('resources/syncing --', function() {
         return db.put(testDocument).then(result => {
             testDocument['_rev'] = result.rev;
             return browser.sleep(delays.shortRest * 10);
-        })
-            .then(() => NavbarPage.clickNavigateToExcavation())
-            .then(() => browser.sleep(delays.shortRest * 10))
-            .then(() => {
-                return Promise.resolve(testDocument);
-            });
+        }).then(() => testDocument);
     }
 
 
@@ -162,6 +157,8 @@ describe('resources/syncing --', function() {
     function createEventualConflict(nr) {
 
         return createOneDocument(nr)
+            .then(() => NavbarPage.clickNavigateToExcavation())
+            .then(() => browser.sleep(delays.shortRest * 10))
             .then(() => createAlternateDocument(nr));
     }
 
@@ -187,15 +184,15 @@ describe('resources/syncing --', function() {
     });
 
 
-    it('open conflict resolver via conflict button in document view', done => {
+    it('open conflict resolver via conflict button in document view', async done => {
 
         const nr = '9';
 
-        createEventualConflict(nr).then(() => {
-            ResourcesPage.clickSelectResource('testf' + nr);
-            DetailSidebarPage.clickSolveConflicts();
-            browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime).then(done);
-        });
+        await createEventualConflict(nr);
+        ResourcesPage.clickSelectResource('testf' + nr);
+        DetailSidebarPage.clickSolveConflicts();
+        await browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
+        done();
     });
 
 
@@ -212,23 +209,26 @@ describe('resources/syncing --', function() {
     });
 
 
-    it('show resource created in other db', done => {
+    it('show resource created in other db', async done => {
 
-        const nr = '3';
+        const nr = '4';
 
-        return createOneDocument(nr)
-            .then(() => {
-                ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
-                    expect(text).toContain('Testfund3');
-                    done();
-                })
-            });
+        NavbarPage.clickNavigateToExcavation();
+        await createOneDocument(nr);
+        await browser.sleep(delays.shortRest * 20);
+
+        const el = await ResourcesPage.getListItemEl('testf' + nr);
+        expect(el.getText()).toContain('Testfund' + nr);
+        expect(await ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('new-from-remote');
+        expect(el.getAttribute('class')).toContain('new-from-remote');
+        done();
     });
+
 
 
     it('show changes made in other db', async (done) => {
 
-        const nr = '4';
+        const nr = '5';
 
         let retries = 0;
         const waitForText = () => {
@@ -248,6 +248,8 @@ describe('resources/syncing --', function() {
         };
 
         const testDocument = await createOneDocument(nr);
+        await NavbarPage.clickNavigateToExcavation();
+        await browser.sleep(delays.shortRest * 10);
         testDocument.resource.shortDescription = 'altered';
         await updateTestDoc(testDocument);
 
@@ -260,8 +262,10 @@ describe('resources/syncing --', function() {
 
     it('resolve a save conflict via conflict resolver', async done => {
 
-        const nr = '5';
+        const nr = '6';
         let testDocument = await createOneDocument(nr);
+        await NavbarPage.clickNavigateToExcavation();
+        await browser.sleep(delays.shortRest * 10);
 
         ResourcesPage.clickSelectResource('testf' + nr);
         await DetailSidebarPage.performEditDocument();
@@ -312,6 +316,9 @@ describe('resources/syncing --', function() {
         const nr = '7';
 
         await createOneDocument(nr);
+        await NavbarPage.clickNavigateToExcavation();
+        await browser.sleep(delays.shortRest * 10);
+
         expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).not.toContain('conflicted');
         await createAlternateDocument(nr);
         expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class')).toContain('conflicted');

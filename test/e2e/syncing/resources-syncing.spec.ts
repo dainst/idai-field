@@ -171,7 +171,7 @@ describe('resources/syncing --', function() {
     }
 
 
-    it('show resource created in other db', async done => {
+    xit('show resource created in other db', async done => {
 
         const nr = '4';
 

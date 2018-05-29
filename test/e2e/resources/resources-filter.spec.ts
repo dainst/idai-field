@@ -17,7 +17,7 @@ describe('resources/filter --', () => {
     beforeEach(() => ResourcesPage.get());
 
 
-    it('select all filter', () => {
+    fit('select all filter', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-floor');

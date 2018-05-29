@@ -77,10 +77,12 @@ export class ResourcesState {
 
     public setMainTypeDocument(resourceId: string|undefined) {
 
-        if (resourceId && !this.viewStates[this.view].navigationPaths[resourceId]) {
+        if (!resourceId) return;
+
+        if (!this.viewStates[this.view].navigationPaths[resourceId]) {
             this.viewStates[this.view].navigationPaths[resourceId] = NavigationPath.empty();
-            this.viewStates[this.view].mainTypeDocumentResourceId = resourceId;
         }
+        this.viewStates[this.view].mainTypeDocumentResourceId = resourceId;
     }
 
 

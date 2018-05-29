@@ -4,7 +4,6 @@ import {OperationTypeDocumentsManager} from './operation-type-documents-manager'
 import {NavigationPathManager} from './navigation-path-manager';
 import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
-import {SettingsService} from '../../../core/settings/settings-service';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 
@@ -32,7 +31,6 @@ export class ViewFacade {
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
-        private settingsService: SettingsService, // TODO review if dependency is necessary
         private resourcesState: ResourcesState
     ) {
         this.navigationPathManager = new NavigationPathManager(
@@ -129,7 +127,13 @@ export class ViewFacade {
     public getSelectedOperationTypeDocument(): IdaiFieldDocument|undefined {
 
         if (this.isInOverview()) throw ViewFacade.err('getSelectedOperationTypeDocument');
-        return this.resourcesState.getMainTypeDocument();
+        if (!this.operationTypeDocumentsManager.getDocuments()) return undefined;
+
+        const selectedOperationTypeDocument = this.operationTypeDocumentsManager.getDocuments()
+            .filter(_ => _.resource.id === this.resourcesState.getMainTypeDocumentResourceId());
+        return selectedOperationTypeDocument.length > 0
+            ? selectedOperationTypeDocument[0]
+            : undefined;
     }
 
 
@@ -174,7 +178,7 @@ export class ViewFacade {
     public async selectOperationTypeDocument(operationTypeDocument: Document): Promise<void> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument');
-        this.navigationPathManager.setMainTypeDocument(operationTypeDocument as IdaiFieldDocument);
+        this.navigationPathManager.setMainTypeDocument(operationTypeDocument.resource.id);
         await this.populateDocumentList();
     }
 
@@ -203,16 +207,16 @@ export class ViewFacade {
 
     private async setupMainTypeDocument(): Promise<void> {
 
-        let mainTypeResource: IdaiFieldDocument|undefined;
+        let mainTypeResourceid: string|undefined;
 
         if (!this.isInOverview()) {
             await this.populateOperationTypeDocuments();
-            mainTypeResource = this.getSelectedOperationTypeDocument();
+            mainTypeResourceid = this.resourcesState.getMainTypeDocumentResourceId();
         } else {
-            mainTypeResource = this.settingsService.getProjectDocument() as any;
+            mainTypeResourceid = 'project';
         }
 
-        this.navigationPathManager.setMainTypeDocument(mainTypeResource);
+        this.navigationPathManager.setMainTypeDocument(mainTypeResourceid);
     }
 
 

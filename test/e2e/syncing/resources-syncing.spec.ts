@@ -168,24 +168,6 @@ describe('resources/syncing --', function() {
     }
 
 
-    it('show resource created in other db', async done => {
-
-        const nr = '4';
-
-        NavbarPage.clickNavigateToExcavation();
-        await browser.sleep(delays.shortRest);
-        await createOneDocument(nr);
-
-        const el = await ResourcesPage.getListItemEl('testf' + nr);
-        browser.wait(EC.presenceOf(el), delays.ECWaitTime);
-
-        expect(el.getText()).toContain('Testfund' + nr);
-        expect(await ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('new-from-remote');
-        expect(el.getAttribute('class')).toContain('new-from-remote');
-        done();
-    });
-
-
     it('open conflict resolver via taskbar', async done => {
 
         const nr = '8';
@@ -207,6 +189,24 @@ describe('resources/syncing --', function() {
         ResourcesPage.clickSelectResource('testf' + nr);
         DetailSidebarPage.clickSolveConflicts();
         await browser.wait(EC.visibilityOf(element(by.id('conflict-resolver'))), delays.ECWaitTime);
+        done();
+    });
+
+
+    it('show resource created in other db', async done => {
+
+        const nr = '4';
+
+        NavbarPage.clickNavigateToExcavation();
+        await browser.sleep(delays.shortRest);
+        await createOneDocument(nr);
+
+        const el = await ResourcesPage.getListItemEl('testf' + nr);
+        browser.wait(EC.presenceOf(el), delays.ECWaitTime);
+
+        expect(el.getText()).toContain('Testfund' + nr);
+        expect(await ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('new-from-remote');
+        expect(el.getAttribute('class')).toContain('new-from-remote');
         done();
     });
 

@@ -101,14 +101,14 @@ const remote = require('electron').remote;
                     (view as any)['mainTypeLabel'] = projectConfiguration.getLabelForType(view.operationSubtype) as any;
                 }
 
-                const project = settingsService.getSelectedProject();
-                if (!project) throw 'project not set';
+                const projectName = settingsService.getSelectedProject();
+                if (!projectName) throw 'project not set';
 
                 return new ResourcesState(
                     stateSerializer,
                     new OperationViews(views),
                     ['Place'],
-                    project,
+                    projectName,
                     remote.getGlobal('switches').suppress_map_load_for_test
                 );
             },
@@ -120,14 +120,12 @@ const remote = require('electron').remote;
                 projectConfiguration: ProjectConfiguration,
                 datastore: IdaiFieldDocumentDatastore,
                 changesStream: RemoteChangesStream,
-                settingsService: SettingsService,
                 resourcesState: ResourcesState
             ) {
 
                 return new ViewFacade(
                     datastore,
                     changesStream,
-                    settingsService,
                     resourcesState
                 );
             },
@@ -135,7 +133,6 @@ const remote = require('electron').remote;
                 ProjectConfiguration,
                 IdaiFieldDocumentDatastore,
                 RemoteChangesStream,
-                SettingsService,
                 ResourcesState]
         },
     ],

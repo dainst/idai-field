@@ -42,7 +42,7 @@ describe('ResourcesState', () => {
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
         resourcesState.initialize('excavation');
-        resourcesState.setMainTypeDocument(trenchDocument1);
+        resourcesState.setMainTypeDocument(trenchDocument1.resource.id);
 
         resourcesState.setNavigationPathInternal({
             elements: [{
@@ -70,7 +70,7 @@ describe('ResourcesState', () => {
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
 
         resourcesState.initialize('excavation');
-        resourcesState.setMainTypeDocument(trenchDocument1);
+        resourcesState.setMainTypeDocument(trenchDocument1.resource.id);
 
         resourcesState.setNavigationPathInternal({
             elements: [{
@@ -93,7 +93,7 @@ describe('ResourcesState', () => {
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
 
         resourcesState.initialize('excavation');
-        resourcesState.setMainTypeDocument(trenchDocument1);
+        resourcesState.setMainTypeDocument(trenchDocument1.resource.id);
 
         resourcesState.setNavigationPathInternal({
             elements: [{

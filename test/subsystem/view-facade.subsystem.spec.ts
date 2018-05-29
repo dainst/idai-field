@@ -128,7 +128,6 @@ export function main() {
             viewFacade = new ViewFacade(
                 idaiFieldDocumentDatastore,
                 changesStream,
-                settingsService,
                 resourcesState
             );
         });
@@ -166,7 +165,6 @@ export function main() {
             viewFacade = new ViewFacade(
                 idaiFieldDocumentDatastore,
                 changesStream,
-                settingsService,
                 resourcesState
             );
 

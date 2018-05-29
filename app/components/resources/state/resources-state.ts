@@ -64,7 +64,7 @@ export class ResourcesState {
 
     public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
 
-    public getMainTypeDocument = (): IdaiFieldDocument|undefined => this.viewStates[this.view].mainTypeDocument;
+    public getMainTypeDocumentResourceId = (): string|undefined => this.viewStates[this.view].mainTypeDocumentResourceId;
 
     public getMode = () => this.mode;
 
@@ -75,13 +75,12 @@ export class ResourcesState {
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.activeDocumentViewTab = activeDocumentViewTab;
 
 
-    public setMainTypeDocument(document: IdaiFieldDocument|undefined) {
+    public setMainTypeDocument(resourceId: string|undefined) {
 
-        if (document && !this.viewStates[this.view].navigationPaths[document.resource.id]) {
-            this.viewStates[this.view].navigationPaths[document.resource.id] = NavigationPath.empty();
+        if (resourceId && !this.viewStates[this.view].navigationPaths[resourceId]) {
+            this.viewStates[this.view].navigationPaths[resourceId] = NavigationPath.empty();
+            this.viewStates[this.view].mainTypeDocumentResourceId = resourceId;
         }
-
-        this.viewStates[this.view].mainTypeDocument = document;
     }
 
 
@@ -149,41 +148,41 @@ export class ResourcesState {
 
     public setActiveLayersIds(activeLayersIds: string[]) {
 
-        const mainTypeDocument = this.getMainTypeDocument();
-        if (!mainTypeDocument) return;
+        const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
+        if (!mainTypeDocumentResourceId) return;
 
-        this.viewStates[this.view].layerIds[mainTypeDocument.resource.id] = activeLayersIds.slice(0);
+        this.viewStates[this.view].layerIds[mainTypeDocumentResourceId] = activeLayersIds.slice(0);
         this.serialize();
     }
 
 
     public getActiveLayersIds(): string[] {
 
-        const mainTypeDocument = this.getMainTypeDocument();
-        if (!mainTypeDocument) return [];
+        const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
+        if (!mainTypeDocumentResourceId) return [];
 
-        const layersIds = this.viewStates[this.view].layerIds[mainTypeDocument.resource.id];
+        const layersIds = this.viewStates[this.view].layerIds[mainTypeDocumentResourceId];
         return layersIds ? layersIds : [];
     }
 
 
     public removeActiveLayersIds() {
 
-        const mainTypeDocument = this.getMainTypeDocument();
-        if (!mainTypeDocument) return;
+        const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
+        if (!mainTypeDocumentResourceId) return;
 
-        delete this.viewStates[this.view].layerIds[mainTypeDocument.resource.id];
+        delete this.viewStates[this.view].layerIds[mainTypeDocumentResourceId];
         this.serialize();
     }
 
 
     public getNavigationPathInternal(): NavigationPathInternal {
 
-        const mainTypeDocument = this.getMainTypeDocument();
-        if (!mainTypeDocument) return NavigationPath.empty();
+        const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
+        if (!mainTypeDocumentResourceId) return NavigationPath.empty();
 
         const navigationPaths = this.viewStates[this.view].navigationPaths;
-        const path = (navigationPaths as any)[mainTypeDocument.resource.id];
+        const path = (navigationPaths as any)[mainTypeDocumentResourceId];
 
         return path ? path : NavigationPath.empty();
     }
@@ -191,10 +190,10 @@ export class ResourcesState {
 
     public setNavigationPathInternal(navigationPathInternal: NavigationPathInternal) {
 
-        const mainTypeDocument = this.getMainTypeDocument();
-        if (!mainTypeDocument) return;
+        const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
+        if (!mainTypeDocumentResourceId) return;
 
-        this.viewStates[this.view].navigationPaths[mainTypeDocument.resource.id] = navigationPathInternal;
+        this.viewStates[this.view].navigationPaths[mainTypeDocumentResourceId] = navigationPathInternal;
     }
 
 

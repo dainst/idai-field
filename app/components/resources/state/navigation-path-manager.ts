@@ -87,10 +87,10 @@ export class NavigationPathManager {
     }
 
 
-    public setMainTypeDocument(selectedMainTypeDocumentResource: IdaiFieldDocument|undefined) {
+    public setMainTypeDocument(selectedMainTypeDocumentResourceId: string|undefined) {
 
-        if (selectedMainTypeDocumentResource) {
-            this.resourcesState.setMainTypeDocument(selectedMainTypeDocumentResource);
+        if (selectedMainTypeDocumentResourceId) {
+            this.resourcesState.setMainTypeDocument(selectedMainTypeDocumentResourceId);
         }
 
         this.notify();
@@ -108,7 +108,7 @@ export class NavigationPathManager {
     public getNavigationPath(): NavigationPath {
 
         if (this.resourcesState.isInOverview()) return NavigationPath.empty();
-        if (!this.resourcesState.getMainTypeDocument()) return NavigationPath.empty();
+        if (!this.resourcesState.getMainTypeDocumentResourceId()) return NavigationPath.empty();
 
         return {
             elements: this.resourcesState.getNavigationPathInternal().elements.map(toDocument),
@@ -132,11 +132,11 @@ export class NavigationPathManager {
             return true;
         }
 
-        const mainTypeDocument = this.resourcesState.getMainTypeDocument();
+        const mainTypeDocumentResourceId = this.resourcesState.getMainTypeDocumentResourceId();
 
-        return (!navigationPath.rootDocument && mainTypeDocument != undefined
+        return (!navigationPath.rootDocument && mainTypeDocumentResourceId != undefined
                 && Document.hasRelationTarget(document, 'isRecordedIn',
-                    mainTypeDocument.resource.id )
+                    mainTypeDocumentResourceId )
                 && !Document.hasRelations(document, 'liesWithin'));
     }
 
@@ -192,11 +192,11 @@ export class NavigationPathManager {
     private hasValidRelation(segment: NavigationPathSegment, segments: Array<NavigationPathSegment>): boolean {
 
         const index: number = segments.indexOf(segment);
-        const mainTypeDocument = this.resourcesState.getMainTypeDocument();
+        const mainTypeDocumentResourceId = this.resourcesState.getMainTypeDocumentResourceId();
 
         return (index === 0)
-            ? mainTypeDocument !== undefined && Document.hasRelationTarget(segment.document,
-                'isRecordedIn', mainTypeDocument.resource.id)
+            ? mainTypeDocumentResourceId !== undefined && Document.hasRelationTarget(segment.document,
+                'isRecordedIn', mainTypeDocumentResourceId)
             : Document.hasRelationTarget(segment.document,
                 'liesWithin', segments[index - 1].document.resource.id);
     }

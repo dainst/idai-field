@@ -44,8 +44,8 @@ export class OperationTypeDocumentsManager {
         const operationTypeDocument = OperationTypeDocumentsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
 
-        if (operationTypeDocument && operationTypeDocument != this.resourcesState.getMainTypeDocument()) {
-            this.navigationPathManager.setMainTypeDocument(operationTypeDocument);
+        if (operationTypeDocument && operationTypeDocument.resource.id !== this.resourcesState.getMainTypeDocumentResourceId()) {
+            this.navigationPathManager.setMainTypeDocument(operationTypeDocument.resource.id);
         }
     }
 
@@ -64,7 +64,7 @@ export class OperationTypeDocumentsManager {
     private selectFirstOperationTypeDocumentFromList() {
 
         if (this.documents && this.documents.length > 0) {
-            this.resourcesState.setMainTypeDocument(this.documents[0]);
+            this.resourcesState.setMainTypeDocument(this.documents[0].resource.id);
         } else {
             console.warn('cannot set selectedMainTypeDocument because mainTypeDocuments is empty')
         }
@@ -73,13 +73,13 @@ export class OperationTypeDocumentsManager {
 
     private async restoreLastSelectedOperationTypeDocument(): Promise<void> {
 
-        const mainTypeDocument = this.resourcesState.getMainTypeDocument();
-        if (!mainTypeDocument) {
+        const mainTypeDocumentResourceId = this.resourcesState.getMainTypeDocumentResourceId();
+        if (!mainTypeDocumentResourceId) {
             this.selectFirstOperationTypeDocumentFromList();
         } else {
             try {
-                const document = await this.datastore.get(mainTypeDocument.resource.id);
-                this.resourcesState.setMainTypeDocument(document);
+                const document = await this.datastore.get(mainTypeDocumentResourceId);
+                this.resourcesState.setMainTypeDocument(document.resource.id);
             } catch(e) {
                 this.resourcesState.removeActiveLayersIds();
                 this.selectFirstOperationTypeDocumentFromList();

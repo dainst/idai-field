@@ -63,7 +63,7 @@ describe('NavigationPathManager', () => {
 
         trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
         await resourcesState.initialize('excavation');
-        resourcesState.setMainTypeDocument(trenchDocument1);
+        resourcesState.setMainTypeDocument(trenchDocument1.resource.id);
     });
 
 

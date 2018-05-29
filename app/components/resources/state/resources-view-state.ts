@@ -7,7 +7,8 @@ import {NavigationPathInternal} from './navigation-path-internal';
  */
 export interface ResourcesViewState {
 
-    mainTypeDocument?: IdaiFieldDocument;
+    //mainTypeDocument?: IdaiFieldDocument;
+    mainTypeDocumentResourceId?: string;
     layerIds: {[mainTypeDocumentId: string]: string[]};
     navigationPaths: {[mainTypeDocumentId: string]: NavigationPathInternal};
 }

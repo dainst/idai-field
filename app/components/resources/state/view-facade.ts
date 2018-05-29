@@ -32,7 +32,7 @@ export class ViewFacade {
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
-        private settingsService: SettingsService,
+        private settingsService: SettingsService, // TODO review if dependency is necessary
         private resourcesState: ResourcesState
     ) {
         this.navigationPathManager = new NavigationPathManager(
@@ -47,7 +47,6 @@ export class ViewFacade {
         this.documentsManager = new DocumentsManager(
             datastore,
             remoteChangesStream,
-            settingsService,
             this.navigationPathManager,
             this.operationTypeDocumentsManager,
             resourcesState

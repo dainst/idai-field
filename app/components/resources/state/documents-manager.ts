@@ -30,7 +30,6 @@ export class DocumentsManager {
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
-        private settingsService: SettingsService, // TODO remove dependency
         private navigationPathManager: NavigationPathManager,
         private mainTypeDocumentsManager: OperationTypeDocumentsManager,
         private resourcesState: ResourcesState

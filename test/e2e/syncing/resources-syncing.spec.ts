@@ -104,10 +104,7 @@ describe('resources/syncing --', function() {
     });
 
 
-    afterAll(done => {
-
-        tearDownTestDB().then(done);
-    });
+    afterAll(done => tearDownTestDB().then(done));
 
 
     beforeEach(done => {
@@ -171,15 +168,17 @@ describe('resources/syncing --', function() {
     }
 
 
-    xit('show resource created in other db', async done => {
+    it('show resource created in other db', async done => {
 
         const nr = '4';
 
         NavbarPage.clickNavigateToExcavation();
+        await browser.sleep(delays.shortRest);
         await createOneDocument(nr);
-        await browser.sleep(delays.shortRest * 20);
 
         const el = await ResourcesPage.getListItemEl('testf' + nr);
+        browser.wait(EC.presenceOf(el), delays.ECWaitTime);
+
         expect(el.getText()).toContain('Testfund' + nr);
         expect(await ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('new-from-remote');
         expect(el.getAttribute('class')).toContain('new-from-remote');

@@ -10,7 +10,7 @@ import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-s
 import {ResourcesState} from './resources-state';
 import {ObserverUtil} from '../../../util/observer-util';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
-import {includedIn, isNot, subtract} from 'tsfun';
+import {subtract, unique} from 'tsfun';
 
 
 /**
@@ -21,7 +21,7 @@ import {includedIn, isNot, subtract} from 'tsfun';
 export class DocumentsManager {
 
     private documents: Array<Document>;
-    private newDocumentsFromRemote: Array<Document> = [];
+    private newDocumentsFromRemote: Array<string /* resourceId */> = [];
 
     private deselectionObservers: Array<Observer<Document>> = [];
     private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
@@ -30,7 +30,7 @@ export class DocumentsManager {
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
-        private settingsService: SettingsService,
+        private settingsService: SettingsService, // TODO remove dependency
         private navigationPathManager: NavigationPathManager,
         private mainTypeDocumentsManager: OperationTypeDocumentsManager,
         private resourcesState: ResourcesState
@@ -45,12 +45,17 @@ export class DocumentsManager {
 
     public removeFromDocuments = (document: Document) => this.documents = subtract([document])(this.documents);
 
-    public isNewDocumentFromRemote = (document: Document) => this.newDocumentsFromRemote.includes(document);
-
     public deselectionNotifications = (): Observable<Document> => ObserverUtil.register(this.deselectionObservers);
 
     public populateDocumentsNotifactions = (): Observable<Array<Document>> =>
         ObserverUtil.register(this.populateDocumentsObservers);
+
+
+    public isNewDocumentFromRemote = (document: Document) => {
+
+        if (!document.resource.id) return false;
+        return this.newDocumentsFromRemote.includes(document.resource.id);
+    };
 
 
     public async setQueryString(q: string) {
@@ -95,8 +100,11 @@ export class DocumentsManager {
     public async setSelected(documentToSelect: IdaiFieldDocument): Promise<any> {
 
         this.documents = this.documents.filter(hasId);
-        this.newDocumentsFromRemote =
-            subtract([documentToSelect as Document])(this.newDocumentsFromRemote);
+
+        if (documentToSelect.resource.id) {
+            this.newDocumentsFromRemote =
+                subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
+        }
 
         if (!(await this.createUpdatedDocumentList()).find(hasEqualId(documentToSelect))) {
 
@@ -136,16 +144,14 @@ export class DocumentsManager {
             return this.mainTypeDocumentsManager.populate();
         }
 
-        const oldDocuments = this.documents;
-        await this.populateDocumentList();
-
-        this.newDocumentsFromRemote = this.documents.filter(isNot(includedIn(oldDocuments)));
+        this.newDocumentsFromRemote = unique(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
+        await this.populateDocumentList(true);
     }
 
 
-    public async populateDocumentList() {
+    public async populateDocumentList(skipResetRemoteDocs = false) {
 
-        this.newDocumentsFromRemote = [];
+        if (!skipResetRemoteDocs) this.newDocumentsFromRemote = [];
         this.documents = await this.createUpdatedDocumentList();
 
         ObserverUtil.notify(this.populateDocumentsObservers, this.documents);

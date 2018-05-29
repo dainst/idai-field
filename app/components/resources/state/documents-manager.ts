@@ -4,7 +4,6 @@ import {Document, Query} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
 import {NavigationPathManager} from './navigation-path-manager';
-import {SettingsService} from '../../../core/settings/settings-service';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {ResourcesState} from './resources-state';

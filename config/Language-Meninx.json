@@ -69,9 +69,6 @@
         "hasCRS": {
           "label": "Koordinatenreferenzsystem (CRS)",
           "description": "Welches Koordinatensystem wird verwendet? (UTM, Gauß Krüger...)"
-        },
-        "hasPlace": {
-          "label": "Ort"
         }
       }
     },
@@ -129,10 +126,6 @@
         "hasNumber": {
           "label": "Nummer",
           "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
-        },
-        "hasPlace": {
-          "label": "Ort",
-          "description": "Ortsangabe"
         }
       }
     },

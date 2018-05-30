@@ -132,9 +132,6 @@
           "UTM",
           "WGS 84 (4326)"
         ]
-      },
-      "hasPlace": {
-        "inputType": "input"
       }
     }
   },
@@ -205,9 +202,6 @@
     "fields": {
       "hasNumber": {
         "inputType": "unsignedInt"
-      },
-      "hasPlace": {
-        "inputType": "input"
       }
     }
   },

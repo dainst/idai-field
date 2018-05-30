@@ -368,21 +368,6 @@
       }
     }
   },
-  "Brick": {
-    "fields": {
-      "hasManufactoring": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Gebrannt",
-          "Hart gebrannt",
-          "Luftgetrocknet",
-          "Oberfläche glatt",
-          "Oberfläche rau",
-          "Weich gebrannt"
-        ]
-      }
-    }
-  },
   "Survey": {
     "fields": {
       "hasResearchMethod": {

@@ -525,22 +525,6 @@
         "valuelist": [
           "behelmte Athenabüste"
         ]
-      },
-      "hasMetalMaterial": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Aluminium",
-          "Billon",
-          "Blei",
-          "Bronze",
-          "Eisen",
-          "Gold",
-          "Kupfer",
-          "Messing",
-          "Silber",
-          "Unsicher bzw. unbestimmbar",
-          "Zinn"
-        ]
       }
     }
   },
@@ -641,26 +625,6 @@
           "Seismik",
           "Sonar",
           "Tauchgang"
-        ]
-      }
-    }
-  },
-  "Metal": {
-    "fields": {
-      "hasMetalMaterial": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Aluminium",
-          "Billon",
-          "Blei",
-          "Bronze",
-          "Eisen",
-          "Gold",
-          "Kupfer",
-          "Messing",
-          "Silber",
-          "Unsicher bzw. unbestimmbar",
-          "Zinn"
         ]
       }
     }

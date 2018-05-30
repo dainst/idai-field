@@ -1760,9 +1760,6 @@
         "hasManufactoringMethodMetal": {
           "label": "Herstellungstechnik"
         },
-        "hasMetalMaterial": {
-          "label": "Material"
-        },
         "hasObjectTypeMetal": {
           "label": "Ansprache bzw. Art des Objektes",
           "description": "Zuweisung des Typs (Beispielsweise Spielstein, Schmuck, Gefäß, Gerät etc.)"

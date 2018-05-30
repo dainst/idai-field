@@ -276,16 +276,6 @@
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"
         ]
-      },
-      "hasBlockTreatment": {
-        "inputType": "radio",
-        "valuelist": [
-          "fein geglättet",
-          "gespitzt",
-          "grob behauen",
-          "grob geglättet",
-          "unbehauen"
-        ]
       }
     }
   },

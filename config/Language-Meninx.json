@@ -30,10 +30,6 @@
           "label": "Kurzbeschreibung",
           "description": "Beschreibung des Projekts."
         },
-        "hasIdentify": {
-          "label": "Identifikator",
-          "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
-        },
         "hasLevel": {
           "label": "Niveau",
           "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
@@ -49,10 +45,6 @@
         "ShortDescription": {
           "label": "Kurzbeschreibung",
           "description": "Beschreibung des Projekts."
-        },
-        "hasIdentify": {
-          "label": "Identifikator",
-          "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
         }
       }
     },
@@ -81,10 +73,6 @@
         "ShortDescription": {
           "label": "Kurzbeschreibung",
           "description": "Beschreibung des Projekts."
-        },
-        "hasIdentify": {
-          "label": "Identifikator",
-          "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
         },
         "hasNumber": {
           "label": "Nummer",
@@ -127,10 +115,6 @@
         "hasComparison": {
           "label": "Vergleich"
         },
-        "hasIdentify": {
-          "label": "Identifikator",
-          "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
-        },
         "hasLevel": {
           "label": "Niveau",
           "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
@@ -150,10 +134,6 @@
         "hasComparison": {
           "label": "Vergleich"
         },
-        "hasIdentify": {
-          "label": "Identifikator",
-          "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
-        },
         "hasNumber": {
           "label": "Nummer",
           "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
@@ -165,10 +145,6 @@
         "ShortDescription": {
           "label": "Kurzbeschreibung",
           "description": "Beschreibung des Projekts."
-        },
-        "hasIdentify": {
-          "label": "Identifikator",
-          "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
         },
         "hasNumber": {
           "label": "Nummer",
@@ -189,10 +165,6 @@
         "hasFilename": {
           "label": "Dateiname",
           "description": "Dateiname des Fotos. der Zeichnung(wenn digital)"
-        },
-        "hasIdentify": {
-          "label": "Identifikator",
-          "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
         },
         "hasNumber": {
           "label": "Nummer",
@@ -307,10 +279,6 @@
           "label": "Kurzbeschreibung",
           "description": "Beschreibung des Projekts."
         },
-        "hasIdentify": {
-          "label": "Identifikator",
-          "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
-        },
         "hasNumber": {
           "label": "Nummer",
           "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
@@ -326,10 +294,6 @@
         "ShortDescription": {
           "label": "Kurzbeschreibung",
           "description": "Beschreibung des Projekts."
-        },
-        "hasIdentify": {
-          "label": "Identifikator",
-          "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
         },
         "hasNumber": {
           "label": "Nummer",
@@ -355,10 +319,6 @@
         "ShortDescription": {
           "label": "Kurzbeschreibung",
           "description": "Beschreibung des Projekts."
-        },
-        "hasIdentify": {
-          "label": "Identifikator",
-          "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
         },
         "hasNumber": {
           "label": "Nummer",
@@ -422,10 +382,6 @@
         "ShortDescription": {
           "label": "Kurzbeschreibung",
           "description": "Beschreibung des Projekts."
-        },
-        "hasIdentify": {
-          "label": "Identifikator",
-          "description": "Allgemeine Identifikationsnummer der Kampagne oder des Vorgangs."
         },
         "hasDescription": {
           "label": "Erhaltung: Beschreibung"

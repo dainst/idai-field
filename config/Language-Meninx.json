@@ -52,14 +52,6 @@
         }
       }
     },
-    "Layer": {
-      "fields": {
-        "hasFeatureForm": {
-          "label": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
-          "description": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
-        }
-      }
-    },
     "Feature": {
       "fields": {
         "hasColorSoil": {

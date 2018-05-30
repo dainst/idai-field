@@ -274,10 +274,6 @@
           "label": "Motiv Vorderseite",
           "description": "Motiv, welches auf der Vorderseite der Münze dargestellt ist, z.B. 'Behelmte Athenabüste'"
         },
-        "hasNominal": {
-          "label": "Nominal",
-          "description": "Name der Münzeinheit, z.B. 'Tetradrachme'"
-        },
         "hasReverseSideLegend": {
           "label": "Legende Rückseite",
           "description": "Legende, mit welcher die Rückseite der Münze beschriftet ist, z.B. 'DN CONSTAN'"

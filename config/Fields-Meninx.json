@@ -398,33 +398,6 @@
           "behelmte Athenabüste"
         ]
       },
-      "hasNominal": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "As",
-          "Aureus",
-          "Denar",
-          "Didrachme",
-          "Drachme",
-          "Dupondius",
-          "Follis",
-          "Maiorina",
-          "Multipla",
-          "Nummus",
-          "Quadrans",
-          "Quadrigatus",
-          "Quinar",
-          "Semis",
-          "Semissis",
-          "Sesterz",
-          "Solidus",
-          "Statemon",
-          "Stater",
-          "Tetradrachme",
-          "Tremissis",
-          "Triens"
-        ]
-      },
       "hasReverseSideLegend": {
         "inputType": "dropdown",
         "valuelist": [

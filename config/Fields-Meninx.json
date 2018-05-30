@@ -341,27 +341,5 @@
         ]
       }
     }
-  },
-  "Survey": {
-    "fields": {
-      "hasResearchMethod": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Befliegung",
-          "Begehung",
-          "Bohrung",
-          "Geoelektrik",
-          "Geomagnetik",
-          "Georadar",
-          "LIDAR",
-          "Luft- oder Satellitenbilder",
-          "Quadranten",
-          "Regelmäßig",
-          "Seismik",
-          "Sonar",
-          "Tauchgang"
-        ]
-      }
-    }
   }
 }

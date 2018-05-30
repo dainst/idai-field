@@ -3,16 +3,6 @@
     "fields": {
       "hasLevel": {
         "inputType": "unsignedFloat"
-      },
-      "hasSoilType": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Lehm",
-          "Mergel",
-          "Sand",
-          "Schluff",
-          "Ton"
-        ]
       }
     }
   },

@@ -9,10 +9,6 @@
         "hasSpatialLocation": {
           "label": "Lage im Raum",
           "description": "Beschreibung der Lage der Ausgrabung im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
-        },
-        "hasSoilType": {
-          "label": "Bodenart",
-          "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
         }
       }
     },

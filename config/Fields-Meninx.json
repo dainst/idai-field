@@ -6,17 +6,6 @@
       }
     }
   },
-  "Drilling": {
-    "fields": {
-      "hasDimensionHight": {
-        "inputType": "dimension",
-        "position_values": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      }
-    }
-  },
   "Architecture": {
     "fields": {
       "hasColor": {
@@ -43,13 +32,6 @@
           "weiß"
         ]
       },
-      "hasDimensionHight": {
-        "inputType": "dimension",
-        "position_values": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      },
       "hasDimensionLength": {
         "inputType": "dimension",
         "position_values": [
@@ -74,12 +56,8 @@
       "hasLevel": {
         "inputType": "unsignedFloat"
       },
-      "hasDimensionHight": {
-        "inputType": "dimension",
-        "position_values": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
+      "hasDimensionHeight": {
+        "inputType": "dimension"
       }
     }
   },
@@ -257,28 +235,6 @@
       }
     }
   },
-  "Room": {
-    "fields": {
-      "hasDimensionHight": {
-        "inputType": "dimension",
-        "position_values": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      }
-    }
-  },
-  "Wall_surface": {
-    "fields": {
-      "hasDimensionHight": {
-        "inputType": "dimension",
-        "position_values": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      }
-    }
-  },
   "Coin": {
     "fields": {
       "hasFrontLegend": {
@@ -309,26 +265,8 @@
   },
   "Find": {
     "fields": {
-      "hasDimensionHight": {
-        "inputType": "dimension",
-        "position_values": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      },
       "hasComparison": {
         "inputType": "input"
-      }
-    }
-  },
-  "Profile": {
-    "fields": {
-      "hasDimensionHight": {
-        "inputType": "dimension",
-        "position_values": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
       }
     }
   }

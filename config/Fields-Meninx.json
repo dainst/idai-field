@@ -286,9 +286,6 @@
   },
   "Wall_surface": {
     "fields": {
-      "hasNumber": {
-        "inputType": "unsignedInt"
-      },
       "hasDimensionHight": {
         "inputType": "dimension",
         "position_values": [

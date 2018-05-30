@@ -52,13 +52,6 @@
         }
       }
     },
-    "Place": {
-      "fields": {
-        "hasGazId": {
-          "description": "ID Nummer des Ortslexikons. Nummerierung zur zugehörigen Ortsbezeichnung."
-        }
-      }
-    },
     "Layer": {
       "fields": {
         "hasFeatureForm": {

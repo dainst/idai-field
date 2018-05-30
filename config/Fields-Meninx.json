@@ -434,13 +434,6 @@
       }
     }
   },
-  "Place": {
-    "fields": {
-      "hasGazId": {
-        "inputType": "input"
-      }
-    }
-  },
   "Sample": {
     "fields": {
       "hasLabNumber": {

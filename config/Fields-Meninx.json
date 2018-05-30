@@ -182,9 +182,6 @@
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"
         ]
-      },
-      "hasComparison": {
-        "inputType": "input"
       }
     }
   },

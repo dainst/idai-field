@@ -112,9 +112,6 @@
     },
     "Inscription": {
       "fields": {
-        "hasComparison": {
-          "label": "Vergleich"
-        },
         "hasNumber": {
           "label": "Nummer",
           "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."

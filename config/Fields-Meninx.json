@@ -86,22 +86,6 @@
       }
     }
   },
-  "Layer": {
-    "fields": {
-      "hasConsistency": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "fest",
-          "locker",
-          "hart",
-          "porös",
-          "pulvrig",
-          "lehmig",
-          "sandig"
-        ]
-      }
-    }
-  },
   "Feature": {
     "fields": {
       "hasColorSoil": {

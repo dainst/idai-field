@@ -325,24 +325,6 @@
       }
     }
   },
-  "Other": {
-    "fields": {
-      "hasConsistency": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Durch Brand versiegelt",
-          "Oberfläche abgewaschen",
-          "Oberfläche verhärtet",
-          "fest",
-          "hart",
-          "lehmig",
-          "locker",
-          "porös",
-          "sandig"
-        ]
-      }
-    }
-  },
   "Coin": {
     "fields": {
       "hasFrontLegend": {

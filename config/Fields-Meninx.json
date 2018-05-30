@@ -198,13 +198,6 @@
       }
     }
   },
-  "Findspot": {
-    "fields": {
-      "hasNumber": {
-        "inputType": "unsignedInt"
-      }
-    }
-  },
   "Image": {
     "fields": {
       "hasFilename": {

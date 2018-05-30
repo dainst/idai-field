@@ -121,14 +121,6 @@
         }
       }
     },
-    "Findspot": {
-      "fields": {
-        "hasNumber": {
-          "label": "Nummer",
-          "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
-        }
-      }
-    },
     "Image": {
       "fields": {
         "hasFilename": {

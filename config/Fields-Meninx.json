@@ -222,19 +222,6 @@
       }
     }
   },
-  "Grave": {
-    "fields": {
-      "hasGraveFeature": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Brandbestattung",
-          "Körperbestattung",
-          "Primäre Bestattung",
-          "Sekundäre Bestattung"
-        ]
-      }
-    }
-  },
   "Coin": {
     "fields": {
       "hasFrontLegend": {

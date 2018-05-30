@@ -123,10 +123,6 @@
     },
     "Image": {
       "fields": {
-        "hasFilename": {
-          "label": "Dateiname",
-          "description": "Dateiname des Fotos. der Zeichnung(wenn digital)"
-        },
         "hasNumber": {
           "label": "Nummer",
           "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."

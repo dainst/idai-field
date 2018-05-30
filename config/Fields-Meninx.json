@@ -200,9 +200,6 @@
   },
   "Image": {
     "fields": {
-      "hasFilename": {
-        "inputType": "input"
-      },
       "hasNumber": {
         "inputType": "unsignedInt"
       }

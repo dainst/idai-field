@@ -37,30 +37,6 @@
       }
     }
   },
-  "Building": {
-    "fields": {
-      "hasMaterial": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Andesit",
-          "Basalt",
-          "Flint",
-          "Granit",
-          "Kalk",
-          "Kalkmörtel",
-          "Kalkstein",
-          "Kreide",
-          "Marmor",
-          "Pophyr",
-          "Quarz",
-          "Sandstein",
-          "Sinter",
-          "Trachyt",
-          "Tuff"
-        ]
-      }
-    }
-  },
   "Architecture": {
     "fields": {
       "hasColor": {

@@ -27,16 +27,6 @@
       }
     }
   },
-  "FeatureGroup": {
-    "fields": {
-      "hasLevel": {
-        "inputType": "unsignedFloat"
-      },
-      "hasNumber": {
-        "inputType": "unsignedInt"
-      }
-    }
-  },
   "Architecture": {
     "fields": {
       "hasColor": {

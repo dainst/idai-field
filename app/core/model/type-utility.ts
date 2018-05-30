@@ -10,15 +10,15 @@ import {IdaiType, ProjectConfiguration} from 'idai-components-2/core'
  */
 export class TypeUtility {
 
-
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     public isSubtype(typeName: string, superTypeName: string): boolean {
 
         const type = this.projectConfiguration.getTypesMap()[typeName];
-        if (!type) throw 'Unknown type "'+typeName+'"';
-        return (type.name === superTypeName || (type.parentType && type.parentType.name && type.parentType.name == superTypeName));
+        if (!type) throw 'Unknown type "' + typeName + '"';
+        return (type.name === superTypeName)
+            || (type.parentType && type.parentType.name && type.parentType.name == superTypeName);
     }
 
 
@@ -42,14 +42,13 @@ export class TypeUtility {
     }
 
 
-    public getOverviewTypes(): IdaiType[] {
+    public getOverviewTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
-            .filter(type => type.name !== 'Operation')
-            .filter(type => this.isSubtype(type.name, 'Operation'))
-            .concat([
-                this.projectConfiguration.getTypesList()
-                    .filter(type => type.name === 'Place')][0]);
+            .filter(type => {
+                return type.name === 'Place'
+                    || (type.name !== 'Operation' && this.isSubtype(type.name, 'Operation'));
+            });
     }
 
 

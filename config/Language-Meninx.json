@@ -58,10 +58,6 @@
     },
     "Operation": {
       "fields": {
-        "hasNumber": {
-          "label": "Nummer",
-          "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
-        },
         "hasCRS": {
           "label": "Koordinatenreferenzsystem (CRS)",
           "description": "Welches Koordinatensystem wird verwendet? (UTM, Gauß Krüger...)"

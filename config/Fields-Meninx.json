@@ -98,9 +98,6 @@
   },
   "Operation": {
     "fields": {
-      "hasNumber": {
-        "inputType": "unsignedInt"
-      },
       "hasCRS": {
         "inputType": "multiselect",
         "valuelist": [

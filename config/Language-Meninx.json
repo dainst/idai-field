@@ -57,10 +57,6 @@
           "label": "Niveau",
           "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
         },
-        "hasNumber": {
-          "label": "Nummer",
-          "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
-        },
         "hasDimensionHight": {
           "label": "Höhe",
           "description": "Angabe der Objekthöhe"

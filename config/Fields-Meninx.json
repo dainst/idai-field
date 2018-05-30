@@ -29,9 +29,6 @@
   },
   "FeatureGroup": {
     "fields": {
-      "hasIdentify": {
-        "inputType": "unsignedInt"
-      },
       "hasLevel": {
         "inputType": "unsignedFloat"
       },
@@ -42,9 +39,6 @@
   },
   "Building": {
     "fields": {
-      "hasIdentify": {
-        "inputType": "unsignedInt"
-      },
       "hasMaterial": {
         "inputType": "checkboxes",
         "valuelist": [
@@ -128,9 +122,6 @@
   },
   "Operation": {
     "fields": {
-      "hasIdentify": {
-        "inputType": "unsignedInt"
-      },
       "hasNumber": {
         "inputType": "unsignedInt"
       },
@@ -182,9 +173,6 @@
       "hasColorSoil": {
         "inputType": "input"
       },
-      "hasIdentify": {
-        "inputType": "unsignedInt"
-      },
       "hasLevel": {
         "inputType": "unsignedFloat"
       },
@@ -205,9 +193,6 @@
   },
   "Inscription": {
     "fields": {
-      "hasIdentify": {
-        "inputType": "unsignedInt"
-      },
       "hasNumber": {
         "inputType": "unsignedInt"
       },
@@ -218,9 +203,6 @@
   },
   "Findspot": {
     "fields": {
-      "hasIdentify": {
-        "inputType": "unsignedInt"
-      },
       "hasNumber": {
         "inputType": "unsignedInt"
       },
@@ -233,9 +215,6 @@
     "fields": {
       "hasFilename": {
         "inputType": "input"
-      },
-      "hasIdentify": {
-        "inputType": "unsignedInt"
       },
       "hasNumber": {
         "inputType": "unsignedInt"
@@ -438,9 +417,6 @@
   },
   "Room": {
     "fields": {
-      "hasIdentify": {
-        "inputType": "unsignedInt"
-      },
       "hasNumber": {
         "inputType": "unsignedInt"
       },
@@ -455,9 +431,6 @@
   },
   "ProcessUnit": {
     "fields": {
-      "hasIdentify": {
-        "inputType": "unsignedInt"
-      },
       "hasNumber": {
         "inputType": "unsignedInt"
       }
@@ -465,9 +438,6 @@
   },
   "Wall_surface": {
     "fields": {
-      "hasIdentify": {
-        "inputType": "unsignedInt"
-      },
       "hasNumber": {
         "inputType": "unsignedInt"
       },
@@ -622,9 +592,6 @@
   },
   "Find": {
     "fields": {
-      "hasIdentify": {
-        "inputType": "unsignedInt"
-      },
       "hasDimensionHight": {
         "inputType": "dimension",
         "position_values": [

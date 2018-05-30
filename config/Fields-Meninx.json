@@ -86,18 +86,6 @@
       }
     }
   },
-  "Operation": {
-    "fields": {
-      "hasCRS": {
-        "inputType": "multiselect",
-        "valuelist": [
-          "Gauß Krüger",
-          "UTM",
-          "WGS 84 (4326)"
-        ]
-      }
-    }
-  },
   "Layer": {
     "fields": {
       "hasConsistency": {

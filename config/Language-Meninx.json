@@ -44,14 +44,6 @@
         }
       }
     },
-    "Operation": {
-      "fields": {
-        "hasCRS": {
-          "label": "Koordinatenreferenzsystem (CRS)",
-          "description": "Welches Koordinatensystem wird verwendet? (UTM, Gauß Krüger...)"
-        }
-      }
-    },
     "Feature": {
       "fields": {
         "hasColorSoil": {

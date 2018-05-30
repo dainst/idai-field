@@ -331,19 +331,6 @@
       }
     }
   },
-  "Bone": {
-    "fields": {
-      "hasWhatHadBones": {
-        "inputType": "radio",
-        "valuelist": [
-          "Elfenbein",
-          "Horn",
-          "Menschenknochen",
-          "Tierknochen"
-        ]
-      }
-    }
-  },
   "Room": {
     "fields": {
       "hasNumber": {

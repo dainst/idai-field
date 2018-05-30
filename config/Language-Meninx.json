@@ -216,13 +216,6 @@
         }
       }
     },
-    "Bone": {
-      "fields": {
-        "hasWhatHadBones": {
-          "label": "Grobe Einordnung der Knochen"
-        }
-      }
-    },
     "Room": {
       "fields": {
         "hasNumber": {

@@ -126,9 +126,6 @@
     "fields": {
       "hasNumber": {
         "inputType": "unsignedInt"
-      },
-      "hasComparison": {
-        "inputType": "input"
       }
     }
   },

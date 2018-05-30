@@ -113,20 +113,6 @@
   },
   "Layer": {
     "fields": {
-      "hasFeatureForm": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "U-förmig",
-          "annähernd",
-          "kesselförmig",
-          "oval",
-          "rechteckig",
-          "rund",
-          "trichterförmig",
-          "unregelmäßig",
-          "wannenförmig"
-        ]
-      },
       "hasConsistency": {
         "inputType": "checkboxes",
         "valuelist": [

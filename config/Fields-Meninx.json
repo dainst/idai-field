@@ -29,9 +29,6 @@
   },
   "FeatureGroup": {
     "fields": {
-      "ShortDescription": {
-        "inputType": "input"
-      },
       "hasIdentify": {
         "inputType": "unsignedInt"
       },
@@ -45,9 +42,6 @@
   },
   "Building": {
     "fields": {
-      "ShortDescription": {
-        "inputType": "input"
-      },
       "hasIdentify": {
         "inputType": "unsignedInt"
       },
@@ -134,9 +128,6 @@
   },
   "Operation": {
     "fields": {
-      "ShortDescription": {
-        "inputType": "input"
-      },
       "hasIdentify": {
         "inputType": "unsignedInt"
       },
@@ -188,9 +179,6 @@
   },
   "Feature": {
     "fields": {
-      "ShortDescription": {
-        "inputType": "input"
-      },
       "hasColorSoil": {
         "inputType": "input"
       },
@@ -230,9 +218,6 @@
   },
   "Findspot": {
     "fields": {
-      "ShortDescription": {
-        "inputType": "input"
-      },
       "hasIdentify": {
         "inputType": "unsignedInt"
       },
@@ -246,9 +231,6 @@
   },
   "Image": {
     "fields": {
-      "ShortDescription": {
-        "inputType": "input"
-      },
       "hasFilename": {
         "inputType": "input"
       },
@@ -456,9 +438,6 @@
   },
   "Room": {
     "fields": {
-      "ShortDescription": {
-        "inputType": "input"
-      },
       "hasIdentify": {
         "inputType": "unsignedInt"
       },
@@ -476,9 +455,6 @@
   },
   "ProcessUnit": {
     "fields": {
-      "ShortDescription": {
-        "inputType": "input"
-      },
       "hasIdentify": {
         "inputType": "unsignedInt"
       },
@@ -489,9 +465,6 @@
   },
   "Wall_surface": {
     "fields": {
-      "ShortDescription": {
-        "inputType": "input"
-      },
       "hasIdentify": {
         "inputType": "unsignedInt"
       },
@@ -649,9 +622,6 @@
   },
   "Find": {
     "fields": {
-      "ShortDescription": {
-        "inputType": "input"
-      },
       "hasIdentify": {
         "inputType": "unsignedInt"
       },

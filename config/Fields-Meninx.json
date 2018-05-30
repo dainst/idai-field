@@ -96,13 +96,6 @@
       }
     }
   },
-  "Inscription": {
-    "fields": {
-      "hasNumber": {
-        "inputType": "unsignedInt"
-      }
-    }
-  },
   "Image": {
     "fields": {
       "hasNumber": {

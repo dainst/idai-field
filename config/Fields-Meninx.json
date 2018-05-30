@@ -345,13 +345,6 @@
       }
     }
   },
-  "ProcessUnit": {
-    "fields": {
-      "hasNumber": {
-        "inputType": "unsignedInt"
-      }
-    }
-  },
   "Wall_surface": {
     "fields": {
       "hasNumber": {

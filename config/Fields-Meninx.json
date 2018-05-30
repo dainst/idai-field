@@ -361,13 +361,6 @@
       }
     }
   },
-  "Sample": {
-    "fields": {
-      "hasLabNumber": {
-        "inputType": "unsignedInt"
-      }
-    }
-  },
   "Survey": {
     "fields": {
       "hasResearchMethod": {

@@ -475,9 +475,6 @@
   },
   "Stone": {
     "fields": {
-      "hasCarrier": {
-        "inputType": "input"
-      },
       "hasMaterial": {
         "inputType": "checkboxes",
         "valuelist": [

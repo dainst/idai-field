@@ -283,14 +283,6 @@
         }
       }
     },
-    "Stone": {
-      "fields": {
-        "hasCarrier": {
-          "label": "Träger",
-          "description": "Spezifizierung, ob das Steinobjekt mit einem Relief oder einer Inschrift verziert ist, z.B. 'Inschriftenträger'"
-        }
-      }
-    },
     "Coin": {
       "fields": {
         "hasFrontLegend": {

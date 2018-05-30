@@ -275,16 +275,6 @@
         }
       }
     },
-    "PlasterFragment": {
-      "fields": {
-        "composition/hasStructure": {
-          "label": "Beschreibungsfeld zum Aufbau des Putzes"
-        },
-        "hasColor": {
-          "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: Beispielsweise blass hell rot orange."
-        }
-      }
-    },
     "Profile": {
       "fields": {
         "hasDimensionHight": {

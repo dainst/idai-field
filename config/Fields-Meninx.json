@@ -416,13 +416,6 @@
       }
     }
   },
-  "PlasterFragment": {
-    "fields": {
-      "composition/hasStructure": {
-        "inputType": "input"
-      }
-    }
-  },
   "Profile": {
     "fields": {
       "hasDimensionHight": {

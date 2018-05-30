@@ -36,10 +36,6 @@
         }
       }
     },
-    "Building": {
-      "fields": {
-      }
-    },
     "Architecture": {
       "fields": {
         "hasColor": {

@@ -26,10 +26,6 @@
     },
     "FeatureGroup": {
       "fields": {
-        "ShortDescription": {
-          "label": "Kurzbeschreibung",
-          "description": "Beschreibung des Projekts."
-        },
         "hasLevel": {
           "label": "Niveau",
           "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
@@ -42,10 +38,6 @@
     },
     "Building": {
       "fields": {
-        "ShortDescription": {
-          "label": "Kurzbeschreibung",
-          "description": "Beschreibung des Projekts."
-        }
       }
     },
     "Architecture": {
@@ -70,10 +62,6 @@
     },
     "Operation": {
       "fields": {
-        "ShortDescription": {
-          "label": "Kurzbeschreibung",
-          "description": "Beschreibung des Projekts."
-        },
         "hasNumber": {
           "label": "Nummer",
           "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
@@ -104,10 +92,6 @@
     },
     "Feature": {
       "fields": {
-        "ShortDescription": {
-          "label": "Kurzbeschreibung",
-          "description": "Beschreibung des Projekts."
-        },
         "hasColorSoil": {
           "label": "Farbe des Bodens",
           "description": "Farbe des Sediments."
@@ -142,10 +126,6 @@
     },
     "Findspot": {
       "fields": {
-        "ShortDescription": {
-          "label": "Kurzbeschreibung",
-          "description": "Beschreibung des Projekts."
-        },
         "hasNumber": {
           "label": "Nummer",
           "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
@@ -158,10 +138,6 @@
     },
     "Image": {
       "fields": {
-        "ShortDescription": {
-          "label": "Kurzbeschreibung",
-          "description": "Beschreibung des Projekts."
-        },
         "hasFilename": {
           "label": "Dateiname",
           "description": "Dateiname des Fotos. der Zeichnung(wenn digital)"
@@ -275,10 +251,6 @@
     },
     "Room": {
       "fields": {
-        "ShortDescription": {
-          "label": "Kurzbeschreibung",
-          "description": "Beschreibung des Projekts."
-        },
         "hasNumber": {
           "label": "Nummer",
           "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
@@ -291,10 +263,6 @@
     },
     "ProcessUnit": {
       "fields": {
-        "ShortDescription": {
-          "label": "Kurzbeschreibung",
-          "description": "Beschreibung des Projekts."
-        },
         "hasNumber": {
           "label": "Nummer",
           "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
@@ -316,10 +284,6 @@
     },
     "Wall_surface": {
       "fields": {
-        "ShortDescription": {
-          "label": "Kurzbeschreibung",
-          "description": "Beschreibung des Projekts."
-        },
         "hasNumber": {
           "label": "Nummer",
           "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
@@ -379,10 +343,6 @@
     },
     "Find": {
       "fields": {
-        "ShortDescription": {
-          "label": "Kurzbeschreibung",
-          "description": "Beschreibung des Projekts."
-        },
         "hasDescription": {
           "label": "Erhaltung: Beschreibung"
         },

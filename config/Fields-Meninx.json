@@ -653,16 +653,6 @@
       }
     }
   },
-  "Terracotta": {
-    "fields": {
-      "hasTerracottaType": {
-        "inputType": "radio",
-        "valuelist": [
-          "Kalypter"
-        ]
-      }
-    }
-  },
   "Survey": {
     "fields": {
       "hasResearchMethod": {

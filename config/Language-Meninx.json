@@ -96,9 +96,6 @@
         "hasTemperAmount": {
           "label": "Magerung: Menge"
         },
-        "hasTemperParticles": {
-          "label": "Magerung: Körnung"
-        },
         "hasPotteryResidueAnalysis": {
           "label": "Probe: Rückstandsanalyse",
           "description": "Angabe zur Rückstandsanalyse"

@@ -133,16 +133,6 @@
           "viel",
           "sehr viel"
         ]
-      },
-      "hasTemperParticles": {
-        "inputType": "radio",
-        "valuelist": [
-          "sehr fein",
-          "fein",
-          "mittel",
-          "grob",
-          "sehr grob"
-        ]
       }
     }
   },

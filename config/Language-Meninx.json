@@ -29,14 +29,6 @@
         "hasDimensionHight": {
           "label": "Höhe",
           "description": "Angabe der Objekthöhe"
-        },
-        "hasDimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge."
-        },
-        "hasDimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
         }
       }
     },

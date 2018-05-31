@@ -191,34 +191,6 @@
       }
     }
   },
-  "Coin": {
-    "fields": {
-      "hasFrontLegend": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "DN Constantin"
-        ]
-      },
-      "hasFrontSideMotive": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "behelmte Athenabüste"
-        ]
-      },
-      "hasReverseSideLegend": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "DN Constantin"
-        ]
-      },
-      "hasReverseSideMotive": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "behelmte Athenabüste"
-        ]
-      }
-    }
-  },
   "Find": {
     "fields": {
       "hasComparison": {

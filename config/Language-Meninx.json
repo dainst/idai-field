@@ -177,26 +177,6 @@
         }
       }
     },
-    "Coin": {
-      "fields": {
-        "hasFrontLegend": {
-          "label": "Legende Vorderseite",
-          "description": "Legende, mit welcher die Vorderseite der Münze beschriftet ist, z.B. 'DN CONSTAN'"
-        },
-        "hasFrontSideMotive": {
-          "label": "Motiv Vorderseite",
-          "description": "Motiv, welches auf der Vorderseite der Münze dargestellt ist, z.B. 'Behelmte Athenabüste'"
-        },
-        "hasReverseSideLegend": {
-          "label": "Legende Rückseite",
-          "description": "Legende, mit welcher die Rückseite der Münze beschriftet ist, z.B. 'DN CONSTAN'"
-        },
-        "hasReverseSideMotive": {
-          "label": "Motiv Rückseite",
-          "description": "Motiv, welches auf der Rückseite der Münze dargestellt ist, z.B. 'Behelmte Athenabüste'"
-        }
-      }
-    },
     "Find": {
       "fields": {
         "hasDescription": {

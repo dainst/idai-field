@@ -2,13 +2,20 @@
  * @author Thomas Kleinke
  */
 
-#document-view-button-solve-conflicts {
-  position: relative;
-  right: 10px;
-  bottom: 1px;
-  box-shadow: none;
-}
+#document-detail-sidebar {
 
-#back-to-map {
-  box-shadow: none;
+  .tab-view-container {
+    height: calc(100vh - 189px);
+  }
+
+  #document-view-button-solve-conflicts {
+    position: relative;
+    right: 10px;
+    bottom: 1px;
+    box-shadow: none;
+  }
+
+  #back-to-map {
+    box-shadow: none;
+  }
 }

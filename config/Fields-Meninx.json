@@ -11,15 +11,6 @@
   },
   "Pottery": {
     "fields": {
-      "hasWare": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Drehscheibenkeramik",
-          "Kochware",
-          "Transportware",
-          "schwarze Lepnaja Keramik"
-        ]
-      },
       "hasTemperTypeClay": {
         "inputType": "checkboxes",
         "valuelist": [

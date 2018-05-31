@@ -1067,7 +1067,7 @@
         },
         "hasDimensionWidth": {
           "inputType": "dimension",
-          "position_values": [
+          "positionValues": [
             "Maximale Ausdehnung",
             "Minimale Ausdehnung"
           ]

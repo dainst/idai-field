@@ -25,10 +25,6 @@
         "hasColor": {
           "label": "Farbe und Intensität",
           "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
-        },
-        "hasDimensionHight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
         }
       }
     },

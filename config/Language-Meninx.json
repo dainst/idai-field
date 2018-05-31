@@ -1,21 +1,5 @@
 {
   "types": {
-    "Trench": {
-      "fields": {
-        "hasSpatialLocation": {
-          "label": "Lage im Raum",
-          "description": "Beschreibung der Lage der Ausgrabung im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
-        }
-      }
-    },
-    "Drilling": {
-      "fields": {
-        "hasDimensionHight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        }
-      }
-    },
     "Feature": {
       "fields": {
         "hasComparison": {
@@ -27,27 +11,6 @@
         }
       }
     },
-    "Room": {
-      "fields": {
-        "hasDimensionHight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        }
-      }
-    },
-    "Terracotta": {
-      "fields": {
-        "hasTemper": {
-          "label": "Magerung: Art"
-        },
-        "hasTemperAmount": {
-          "label": "Magerung: Menge"
-        },
-        "hasVesselFormTerracotta": {
-          "label": "Gefäß: Grundform"
-        }
-      }
-    },
     "Wall_surface": {
       "fields": {
         "hasDimensionHight": {
@@ -56,34 +19,11 @@
         }
       }
     },
-    "Other": {
-      "fields": {
-        "hasFeatureForm": {
-          "label": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
-          "description": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
-        }
-      }
-    },
-    "Sample": {
-      "fields": {
-        "hasSampleType": {
-          "description": "Welche Probe wird genommen? - Welche Untersuchungen sollen vorgenommen werden?"
-        }
-      }
-    },
     "Find": {
       "fields": {
         "hasComparison": {
           "label": "Variante",
           "description": "Variante von ähnlichen Typen/Objekten/Inschriften etc. mit Angabe einer Referenz."
-        }
-      }
-    },
-    "Profile": {
-      "fields": {
-        "hasDimensionHight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
         }
       }
     }

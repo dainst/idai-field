@@ -179,16 +179,6 @@
     },
     "Find": {
       "fields": {
-        "hasDescription": {
-          "label": "Erhaltung: Beschreibung"
-        },
-        "hasDimensionHight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        },
-        "hasRestauration": {
-          "label": "Restauriert"
-        },
         "hasComparison": {
           "label": "Variante",
           "description": "Variante von ähnlichen Typen/Objekten/Inschriften etc. mit Angabe einer Referenz."

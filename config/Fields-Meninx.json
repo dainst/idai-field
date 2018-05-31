@@ -1,9 +1,6 @@
 {
   "Feature": {
     "fields": {
-      "hasColorSoil": {
-        "inputType": "input"
-      },
       "hasDimensionHeight": {
         "inputType": "dimension"
       }

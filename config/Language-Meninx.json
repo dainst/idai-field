@@ -18,10 +18,6 @@
     },
     "Feature": {
       "fields": {
-        "hasColorSoil": {
-          "label": "Farbe des Bodens",
-          "description": "Farbe des Sediments."
-        },
         "hasComparison": {
           "label": "Vergleich"
         },

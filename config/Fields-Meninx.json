@@ -1,11 +1,4 @@
 {
-  "Trench": {
-    "fields": {
-      "hasLevel": {
-        "inputType": "unsignedFloat"
-      }
-    }
-  },
   "Architecture": {
     "fields": {
       "hasColor": {
@@ -38,9 +31,6 @@
     "fields": {
       "hasColorSoil": {
         "inputType": "input"
-      },
-      "hasLevel": {
-        "inputType": "unsignedFloat"
       },
       "hasDimensionHeight": {
         "inputType": "dimension"

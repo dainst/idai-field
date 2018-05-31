@@ -2,10 +2,6 @@
   "types": {
     "Trench": {
       "fields": {
-        "hasLevel": {
-          "label": "Niveau",
-          "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
-        },
         "hasSpatialLocation": {
           "label": "Lage im Raum",
           "description": "Beschreibung der Lage der Ausgrabung im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
@@ -36,10 +32,6 @@
         },
         "hasComparison": {
           "label": "Vergleich"
-        },
-        "hasLevel": {
-          "label": "Niveau",
-          "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
         },
         "hasDimensionHight": {
           "label": "Höhe",

@@ -1414,9 +1414,6 @@
     },
     "Place": {
       "fields": {
-        "hasGazId": {
-          "inputType": "unsignedInt"
-        },
         "hasPlaceName": {
           "inputType": "input"
         },

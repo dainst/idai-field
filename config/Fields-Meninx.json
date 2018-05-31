@@ -31,20 +31,6 @@
           "violett",
           "weiß"
         ]
-      },
-      "hasDimensionLength": {
-        "inputType": "dimension",
-        "position_values": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      },
-      "hasDimensionWidth": {
-        "inputType": "dimension",
-        "position_values": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
       }
     }
   },

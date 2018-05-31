@@ -1,32 +1,4 @@
 {
-  "Architecture": {
-    "fields": {
-      "hasColor": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
-      }
-    }
-  },
   "Feature": {
     "fields": {
       "hasColorSoil": {

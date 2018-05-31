@@ -17,13 +17,22 @@
           "inputType": "text"
         },
         "hasDimensionLength": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionVerticalExtent": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Oberkante",
+          "Unterkante"]
         },
         "hasDimensionWidth": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasExcavationType": {
           "inputType": "radio",
@@ -278,13 +287,22 @@
       "parent": "ProcessUnit",
       "fields": {
         "hasDimensionDiameter": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionHeight": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionVerticalExtent": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Oberkante",
+          "Unterkante"]
         },
         "hasDrillingEquipment": {
           "inputType": "radio",
@@ -383,13 +401,22 @@
           "inputType": "unsignedFloat"
         },
         "hasDimensionLength": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionVerticalExtent": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Oberkante",
+          "Unterkante"]
         },
         "hasDimensionWidth": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasHorizontalLocation": {
           "inputType": "dropdown",
@@ -992,7 +1019,10 @@
           ]
         },
         "hasDimensionLength": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasMaterial": {
           "inputType": "checkboxes",
@@ -1030,7 +1060,10 @@
           "inputType": "boolean"
         },
         "hasDimensionLength": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionWidth": {
           "inputType": "dimension",
@@ -1473,7 +1506,10 @@
           ]
         },
         "hasDimensionThickness": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDistinguishingCriteria": {
           "inputType": "radio",
@@ -1582,13 +1618,22 @@
           ]
         },
         "hasDimensionLength": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionVerticalExtent": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Oberkante",
+          "Unterkante"]
         },
         "hasDimensionWidth": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasFeatureBorders": {
           "inputType": "checkboxes",
@@ -1838,8 +1883,18 @@
           ]
         },
         "hasDimensionWidth": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
+        "hasDimensionHeight": {
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+        },
+        
         "hasObjectTypeInscription": {
           "inputType": "checkboxes",
           "valuelist": [
@@ -2603,10 +2658,16 @@
           "inputType": "boolean"
         },
         "hasDimensionThickness": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionVerticalExtent": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Oberkante",
+          "Unterkante"]
         },
         "hasSoilType": {
           "inputType": "dropdown",
@@ -2918,16 +2979,28 @@
           ]
         },
         "hasDimensionHeight": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionLength": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionVerticalExtent": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Oberkante",
+          "Unterkante"]
         },
         "hasDimensionWidth": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasPeriodBeginning": {
           "inputType": "dropdown",
@@ -3493,10 +3566,16 @@
           ]
         },
         "hasDimensionHeight": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionWidth": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasJointsCondition": {
           "inputType": "radio",
@@ -4592,28 +4671,52 @@
           ]
         },
         "hasDimensionDiameter": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionHeight": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionLength": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionPerimeter": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionThickness": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionVerticalExtent": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Oberkante",
+          "Unterkante"]
         },
         "hasDimensionWidth": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionxOther": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasPeriodBeginning": {
           "inputType": "dropdown",
@@ -4763,10 +4866,16 @@
       "parent": "ProcessUnit",
       "fields": {
         "hasDimensionHeight": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
         },
         "hasDimensionVerticalExtent": {
-          "inputType": "dimension"
+          "inputType": "dimension", 
+          "positionValues": [
+          "Oberkante",
+          "Unterkante"]
         },
         "hasOrientation": {
           "inputType": "dropdown",

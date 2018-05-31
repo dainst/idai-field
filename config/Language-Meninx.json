@@ -2,9 +2,6 @@
   "types": {
     "Feature": {
       "fields": {
-        "hasComparison": {
-          "label": "Vergleich"
-        },
         "hasDimensionHight": {
           "label": "Höhe",
           "description": "Angabe der Objekthöhe"
@@ -16,14 +13,6 @@
         "hasDimensionHight": {
           "label": "Höhe",
           "description": "Angabe der Objekthöhe"
-        }
-      }
-    },
-    "Find": {
-      "fields": {
-        "hasComparison": {
-          "label": "Variante",
-          "description": "Variante von ähnlichen Typen/Objekten/Inschriften etc. mit Angabe einer Referenz."
         }
       }
     }

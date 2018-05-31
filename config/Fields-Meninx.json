@@ -87,12 +87,5 @@
         ]
       }
     }
-  },
-  "Find": {
-    "fields": {
-      "hasComparison": {
-        "inputType": "input"
-      }
-    }
   }
 }

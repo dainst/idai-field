@@ -23,14 +23,15 @@
                     <span class="mdi mdi-format-list-bulleted"></span>
                 </ng-template>
                 <ng-template ngbTabContent>
-
-                    <button class="btn btn-link edit-button"
+                    <button class="btn btn-light btn-block edit-button"
                             (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'fields')">
-                        <span class="mdi mdi-pencil"></span>
+                        <span>Metadaten editieren</span>
                     </button>
 
-                    <description-view [document]="viewFacade.getSelectedDocument()"></description-view>
-                    <fields-view [resource]="viewFacade.getSelectedDocument().resource"></fields-view>
+                    <div class="tab-view-container">
+                        <description-view [document]="viewFacade.getSelectedDocument()"></description-view>
+                        <fields-view [resource]="viewFacade.getSelectedDocument().resource"></fields-view>
+                    </div>
                 </ng-template>
             </ngb-tab>
 
@@ -39,11 +40,12 @@
                     <span class="mdi mdi-map" [class.empty-tab]="!viewFacade.getSelectedDocument().resource.geometry"></span>
                 </ng-template>
                 <ng-template ngbTabContent>
-
-                    <geometry-view [document]="viewFacade.getSelectedDocument()"
-                                   (onEditGeometry)="resourcesComponent.isEditingGeometry = true;"
-                                   (onCreateGeometry)="resourcesComponent.createGeometry($event)">
-                    </geometry-view>
+                    <div class="tab-view-container">
+                        <geometry-view [document]="viewFacade.getSelectedDocument()"
+                                       (onEditGeometry)="resourcesComponent.isEditingGeometry = true;"
+                                       (onCreateGeometry)="resourcesComponent.createGeometry($event)">
+                        </geometry-view>
+                    </div>
                 </ng-template>
             </ngb-tab>
 
@@ -52,24 +54,25 @@
                     <span class="mdi mdi-sitemap" [class.empty-tab]="!hasVisibleRelations()"></span>
                 </ng-template>
                 <ng-template ngbTabContent>
-
-                    <button class="btn btn-link edit-button"
+                    <button class="btn btn-light btn-block edit-button"
                             (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'relations')">
-                        <span class="mdi mdi-pencil"></span>
+                        <span>Relationen editieren</span>
                     </button>
 
-                    <div *ngIf="!hasVisibleRelations()" class="empty-tab-info">
-                        <br><br>
-                        Öffnen Sie das Bearbeitungsformular per Klick auf den Stift,
-                        um Relationen zwischen dieser und anderen Ressourcen hinzuzufügen.
-                        <br><br><br><br><br><br><br><br><br>
+                    <div class="tab-view-container">
+                        <div *ngIf="!hasVisibleRelations()" class="empty-tab-info">
+                            <br><br>
+                            Öffnen Sie das Bearbeitungsformular per Klick auf den Stift,
+                            um Relationen zwischen dieser und anderen Ressourcen hinzuzufügen.
+                            <br><br><br><br><br><br><br><br><br>
+                        </div>
+                        <relations-view *ngIf="hasVisibleRelations()" [resource]="viewFacade.getSelectedDocument().resource"
+                                        (onRelationTargetClicked)="jumpToRelationTarget($event)"
+                                        [hideRelations]="relationsToHide">
+                        </relations-view>
                     </div>
-                    <relations-view *ngIf="hasVisibleRelations()" [resource]="viewFacade.getSelectedDocument().resource"
-                                    (onRelationTargetClicked)="jumpToRelationTarget($event)"
-                                    [hideRelations]="relationsToHide">
-                    </relations-view>
                 </ng-template>
-            </ngb-tab>s
+            </ngb-tab>
 
             <ngb-tab id="document-view-images-tab">
                 <ng-template ngbTabTitle>
@@ -78,23 +81,25 @@
                 </ng-template>
                 <ng-template ngbTabContent>
                     <div (drop)="uploadImages($event, viewFacade.getSelectedDocument())">
-                        <small>
-                            <button class="btn btn-link float-right align-middle edit-button"
-                                    (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'images')">
-                                <span class="mdi mdi-pencil"></span>
-                            </button>
-                        </small>
+                        <button class="btn btn-light btn-block edit-button"
+                                (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'images')">
+                            <span>Bildverknüpfungen editieren</span>
+                        </button>
 
-                        <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn'] || viewFacade.getSelectedDocument().resource.relations['isDepictedIn'].length == 0" class="empty-tab-info">
-                            <br><br>
-                            Ziehen Sie Bilder per Drag'n'Drop in diesen Reiter, um sie hinzuzufügen, oder klicken
-                            Sie auf den Stift, um bereits vorhandene Bilder zu verknüpfen.
-                            <br><br><br><br><br><br><br><br><br>
+                        <div class="tab-view-container">
+                            <div *ngIf="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn']
+                                    || viewFacade.getSelectedDocument().resource.relations['isDepictedIn'].length == 0"
+                                 class="empty-tab-info">
+                                <br><br>
+                                Ziehen Sie Bilder per Drag'n'Drop in diesen Reiter, um sie hinzuzufügen, oder klicken
+                                Sie auf den Stift, um bereits vorhandene Bilder zu verknüpfen.
+                                <br><br><br><br><br><br><br><br><br>
+                            </div>
+                            <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
+                                            [imageIds]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
+                                            (onRelationTargetClicked)="jumpToRelationTarget($event)">
+                            </thumbnail-view>
                         </div>
-                        <thumbnail-view *ngIf="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
-                                        [imageIds]="viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"
-                                        (onRelationTargetClicked)="jumpToRelationTarget($event)">
-                        </thumbnail-view>
                     </div>
                 </ng-template>
             </ngb-tab>

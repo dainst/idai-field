@@ -1,4 +1,4 @@
-<div class="row image-view detail-sidebar-container">
+<div class="row image-view detail-sidebar-container bg-light">
     <div *ngIf="image.document" id="image-container" class="col-md-9 px-0">
         <div *ngIf="image.imgSrc" class="d-flex align-items-center justify-content-center">
             <img id="original-image" [src]="image.imgSrc">
@@ -33,14 +33,16 @@
                         <span class="mdi mdi-format-list-bulleted"></span>
                     </ng-template>
                     <ng-template ngbTabContent>
-                        <button class="btn btn-link edit-button"
-                                id="document-view-button-edit-document"
+                        <button id="document-view-button-edit-document"
+                                class="btn btn-light btn-block edit-button"
                                 (click)="startEdit()">
-                            <span class="mdi mdi-pencil"></span>
+                            <span>Metadaten editieren</span>
                         </button>
 
-                        <description-view [document]="image.document"></description-view>
-                        <fields-view [resource]="image.document.resource"></fields-view>
+                        <div class="tab-view-container">
+                            <description-view [document]="image.document"></description-view>
+                            <fields-view [resource]="image.document.resource"></fields-view>
+                        </div>
                     </ng-template>
                 </ngb-tab>
 
@@ -58,17 +60,18 @@
                         <span class="mdi mdi-sitemap" [class.empty-tab]="!hasRelations()"></span>
                     </ng-template>
                     <ng-template ngbTabContent>
-
-                        <button class="btn btn-link edit-button"
-                                id="document-view-button-edit-document"
+                        <button id="document-view-button-edit-document"
+                                class="btn btn-light btn-block edit-button"
                                 (click)="startEdit('relations')">
-                            <span class="mdi mdi-pencil"></span>
+                            <span>Relationen editieren</span>
                         </button>
 
-                        <div *ngIf="!hasRelations()" class="empty-tab-info">Keine Relationen vorhanden.</div>
-                        <relations-view *ngIf="hasRelations()" [resource]="image.document.resource"
-                                        (onRelationTargetClicked)="jumpToRelationTarget($event)">
-                        </relations-view>
+                        <div class="tab-view-container">
+                            <div *ngIf="!hasRelations()" class="empty-tab-info">Keine Relationen vorhanden.</div>
+                            <relations-view *ngIf="hasRelations()" [resource]="image.document.resource"
+                                            (onRelationTargetClicked)="jumpToRelationTarget($event)">
+                            </relations-view>
+                        </div>
                     </ng-template>
                 </ngb-tab>
             </ngb-tabset>

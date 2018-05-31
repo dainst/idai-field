@@ -10,9 +10,9 @@
 .detail-sidebar {
   $buttoncolor: #657faa;
 
-  .tab-content {
-    padding-top: 1em;
-    height: calc(100vh - 172px);
+  .tab-view-container {
+    padding-top: 7px;
+    height: calc(100vh - 189px);
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -62,18 +62,18 @@
   }
 
   .edit-button {
-    font-size: 20px;
-    float: right;
-    color: $buttoncolor !important;
-    margin-top: -12px;
-    position: absolute;
-    right: -8px;
-    top: 68px;
-    box-shadow: none !important;
+    background-color: #fff;
+    padding: 1px;
+    border-top: 0;
+    border-color: #ddd;
+
+    span {
+      font-size: 12px;
+    }
   }
 
   .edit-button:hover {
-    color: lighten($buttoncolor, 10%) !important;
+    background-color: darken(#fff, 10%) !important;
   }
 
   .close-button {
@@ -81,7 +81,7 @@
     color: $buttoncolor !important;
     position: absolute;
     top: 11px;
-    right: -2px;
+    right: 0;
     padding: 5px;
   }
 

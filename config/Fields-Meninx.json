@@ -122,23 +122,6 @@
           "Anderes"
         ]
       },
-      "hasTemper": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Quarz",
-          "Kalk",
-          "Muschelgrus",
-          "Vulkanische Partikel",
-          "Glimmer",
-          "Steinchen",
-          "Mineralische Partikel",
-          "Schamotte",
-          "Organische Partikel",
-          "Stroh/Spreu",
-          "Vacua",
-          "Sonstige"
-        ]
-      },
       "hasTemperAmount": {
         "inputType": "radio",
         "valuelist": [

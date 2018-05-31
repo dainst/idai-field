@@ -93,9 +93,6 @@
         "hasPotteryBreakStructure": {
           "label": "Bruch: Struktur, Härte, Porosität"
         },
-        "hasTemper": {
-          "label": "Magerung: Art"
-        },
         "hasTemperAmount": {
           "label": "Magerung: Menge"
         },

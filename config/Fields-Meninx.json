@@ -1,84 +1,13 @@
 {
-  "Trench": {
-    "fields": {
-      "hasLevel": {
-        "inputType": "unsignedFloat"
-      }
-    }
-  },
-  "Architecture": {
-    "fields": {
-      "hasColor": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "beige",
-          "blass-",
-          "blau",
-          "braun",
-          "cremefarben",
-          "dunkel-",
-          "gelb",
-          "grau",
-          "grün",
-          "hell-",
-          "leuchtend-",
-          "ocker",
-          "orange",
-          "rosa",
-          "rot",
-          "schwarz",
-          "türkis",
-          "violett",
-          "weiß"
-        ]
-      },
-      "hasDimensionLength": {
-        "inputType": "dimension",
-        "position_values": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      },
-      "hasDimensionWidth": {
-        "inputType": "dimension",
-        "position_values": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      }
-    }
-  },
   "Feature": {
     "fields": {
-      "hasColorSoil": {
-        "inputType": "input"
-      },
-      "hasLevel": {
-        "inputType": "unsignedFloat"
-      },
       "hasDimensionHeight": {
         "inputType": "dimension"
       }
     }
   },
-  "Image": {
-    "fields": {
-      "hasNumber": {
-        "inputType": "unsignedInt"
-      }
-    }
-  },
   "Pottery": {
     "fields": {
-      "hasWare": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Drehscheibenkeramik",
-          "Kochware",
-          "Transportware",
-          "schwarze Lepnaja Keramik"
-        ]
-      },
       "hasTemperTypeClay": {
         "inputType": "checkboxes",
         "valuelist": [
@@ -155,97 +84,6 @@
           "Terra sigillata Focea",
           "Terra sigillata Italica",
           "unbestimmt"
-        ]
-      },
-      "hasCoatOutsideType": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Überzug",
-          "Glasur",
-          "Bemalung",
-          "poliert",
-          "geglättet",
-          "verstrichen",
-          "Anderes"
-        ]
-      },
-      "hasCoatInsideType": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Überzug",
-          "Glasur",
-          "Bemalung",
-          "poliert",
-          "geglättet",
-          "verstrichen",
-          "Anderes"
-        ]
-      },
-      "hasTemper": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Quarz",
-          "Kalk",
-          "Muschelgrus",
-          "Vulkanische Partikel",
-          "Glimmer",
-          "Steinchen",
-          "Mineralische Partikel",
-          "Schamotte",
-          "Organische Partikel",
-          "Stroh/Spreu",
-          "Vacua",
-          "Sonstige"
-        ]
-      },
-      "hasTemperAmount": {
-        "inputType": "radio",
-        "valuelist": [
-          "nicht erkennbar",
-          "keine Einschlüsse",
-          "vereinzelt",
-          "wenig",
-          "mittel",
-          "viel",
-          "sehr viel"
-        ]
-      },
-      "hasTemperParticles": {
-        "inputType": "radio",
-        "valuelist": [
-          "sehr fein",
-          "fein",
-          "mittel",
-          "grob",
-          "sehr grob"
-        ]
-      }
-    }
-  },
-  "Coin": {
-    "fields": {
-      "hasFrontLegend": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "DN Constantin"
-        ]
-      },
-      "hasFrontSideMotive": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "behelmte Athenabüste"
-        ]
-      },
-      "hasReverseSideLegend": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "DN Constantin"
-        ]
-      },
-      "hasReverseSideMotive": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "behelmte Athenabüste"
         ]
       }
     }

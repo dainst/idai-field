@@ -1,184 +1,13 @@
 {
   "types": {
-    "Trench": {
-      "fields": {
-        "hasLevel": {
-          "label": "Niveau",
-          "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
-        },
-        "hasSpatialLocation": {
-          "label": "Lage im Raum",
-          "description": "Beschreibung der Lage der Ausgrabung im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
-        }
-      }
-    },
-    "Drilling": {
-      "fields": {
-        "hasDimensionHight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        }
-      }
-    },
-    "Architecture": {
-      "fields": {
-        "hasColor": {
-          "label": "Farbe und Intensität",
-          "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
-        },
-        "hasDimensionHight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        },
-        "hasDimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge."
-        },
-        "hasDimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
-        }
-      }
-    },
     "Feature": {
       "fields": {
-        "hasColorSoil": {
-          "label": "Farbe des Bodens",
-          "description": "Farbe des Sediments."
-        },
         "hasComparison": {
           "label": "Vergleich"
         },
-        "hasLevel": {
-          "label": "Niveau",
-          "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
-        },
         "hasDimensionHight": {
           "label": "Höhe",
           "description": "Angabe der Objekthöhe"
-        }
-      }
-    },
-    "Image": {
-      "fields": {
-        "hasNumber": {
-          "label": "Nummer",
-          "description": "Entsprechende Vorgangsnummer bzw. Befundnummer oder Profilnummer oder Bohrungsnummer etc..."
-        }
-      }
-    },
-    "Pottery": {
-      "fields": {
-        "hasAmountShertsLid": {
-          "label": "Anzahl Scherben: Rand"
-        },
-        "hasAmountSherdsRimShoulder": {
-          "label": "Anzahl Scherben: Rand-Schulter"
-        },
-        "hasAmountSherdsRimBase": {
-          "label": "Anzahl Scherben: Rand-Boden"
-        },
-        "hasAmountSherdsShoulder": {
-          "label": "Anzahl Scherben: Schulter"
-        },
-        "hasAmountRimSherds": {
-          "label": "Anzahl Scherben: Wand"
-        },
-        "hasAmountSherdsBase": {
-          "label": "Anzahl Scherben: Boden"
-        },
-        "hasAmountSherdsPedestal": {
-          "label": "Anzahl Scherben: Fuß"
-        },
-        "hasAmountSherdsHandles": {
-          "label": "Anzahl Scherben: Henkel"
-        },
-        "hasAmountSherdsxOther": {
-          "label": "Anzahl Scherben: andere"
-        },
-        "hasVesselFormPottery": {
-          "label": "Gefäß: Grundform"
-        },
-        "hasTypeNumber": {
-          "label": "Typ"
-        },
-        "hasPotteryTypeSpecific": {
-          "label": "Ware / Klasse"
-        },
-        "hasCoatOutsideType": {
-          "label": "Oberfläche: Bearbeitung außen"
-        },
-        "hasCoatInsideType": {
-          "label": "Oberfläche: Bearbeitung innen"
-        },
-        "hasClayColorOutsideMunsell": {
-          "label": "Oberfläche außen: Farbe Munsell"
-        },
-        "hasClayColorInsideMunsell": {
-          "label": "Oberfläche innen: Farbe Munsell"
-        },
-        "hasDecorationTechniquePottery": {
-          "label": "Oberfläche: Dekor"
-        },
-        "hasDecorationDescription": {
-          "label": "Oberfläche: Bemerkungen"
-        },
-        "hasClayColorBreakMunsell": {
-          "label": "Bruch: Farbe Munsell"
-        },
-        "hasPotteryBreakStructure": {
-          "label": "Bruch: Struktur, Härte, Porosität"
-        },
-        "hasTemper": {
-          "label": "Magerung: Art"
-        },
-        "hasTemperAmount": {
-          "label": "Magerung: Menge"
-        },
-        "hasTemperParticles": {
-          "label": "Magerung: Körnung"
-        },
-        "hasPotteryResidueAnalysis": {
-          "label": "Probe: Rückstandsanalyse",
-          "description": "Angabe zur Rückstandsanalyse"
-        },
-        "hasPotterySample": {
-          "label": "Probe: Keramik"
-        },
-        "hasWare": {
-          "label": "Ware"
-        }
-      }
-    },
-    "Grave": {
-      "fields": {
-        "hasFeatureForm": {
-          "label": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
-          "description": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
-        },
-        "hasGraveFeature": {
-          "label": "Merkmal des Grabes"
-        }
-      }
-    },
-    "Room": {
-      "fields": {
-        "hasDimensionHight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        }
-      }
-    },
-    "Terracotta": {
-      "fields": {
-        "hasTemper": {
-          "label": "Magerung: Art"
-        },
-        "hasTemperAmount": {
-          "label": "Magerung: Menge"
-        },
-        "hasVesselFormTerracotta": {
-          "label": "Gefäß: Grundform"
         }
       }
     },
@@ -190,64 +19,11 @@
         }
       }
     },
-    "Other": {
-      "fields": {
-        "hasFeatureForm": {
-          "label": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
-          "description": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
-        }
-      }
-    },
-    "Sample": {
-      "fields": {
-        "hasSampleType": {
-          "description": "Welche Probe wird genommen? - Welche Untersuchungen sollen vorgenommen werden?"
-        }
-      }
-    },
-    "Coin": {
-      "fields": {
-        "hasFrontLegend": {
-          "label": "Legende Vorderseite",
-          "description": "Legende, mit welcher die Vorderseite der Münze beschriftet ist, z.B. 'DN CONSTAN'"
-        },
-        "hasFrontSideMotive": {
-          "label": "Motiv Vorderseite",
-          "description": "Motiv, welches auf der Vorderseite der Münze dargestellt ist, z.B. 'Behelmte Athenabüste'"
-        },
-        "hasReverseSideLegend": {
-          "label": "Legende Rückseite",
-          "description": "Legende, mit welcher die Rückseite der Münze beschriftet ist, z.B. 'DN CONSTAN'"
-        },
-        "hasReverseSideMotive": {
-          "label": "Motiv Rückseite",
-          "description": "Motiv, welches auf der Rückseite der Münze dargestellt ist, z.B. 'Behelmte Athenabüste'"
-        }
-      }
-    },
     "Find": {
       "fields": {
-        "hasDescription": {
-          "label": "Erhaltung: Beschreibung"
-        },
-        "hasDimensionHight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        },
-        "hasRestauration": {
-          "label": "Restauriert"
-        },
         "hasComparison": {
           "label": "Variante",
           "description": "Variante von ähnlichen Typen/Objekten/Inschriften etc. mit Angabe einer Referenz."
-        }
-      }
-    },
-    "Profile": {
-      "fields": {
-        "hasDimensionHight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
         }
       }
     }

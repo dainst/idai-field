@@ -1,4 +1,4 @@
-import {IdaiFieldRelations} from "idai-components-2/field";
+import {IdaiFieldRelations} from 'idai-components-2/field';
 
 /**
  * @author Daniel de Oliveira

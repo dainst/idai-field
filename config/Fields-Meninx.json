@@ -97,18 +97,6 @@
           "Terra sigillata Italica",
           "unbestimmt"
         ]
-      },
-      "hasCoatOutsideType": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Überzug",
-          "Glasur",
-          "Bemalung",
-          "poliert",
-          "geglättet",
-          "verstrichen",
-          "Anderes"
-        ]
       }
     }
   },

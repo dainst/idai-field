@@ -69,9 +69,6 @@
         "hasPotteryTypeSpecific": {
           "label": "Ware / Klasse"
         },
-        "hasCoatOutsideType": {
-          "label": "Oberfläche: Bearbeitung außen"
-        },
         "hasClayColorOutsideMunsell": {
           "label": "Oberfläche außen: Farbe Munsell"
         },

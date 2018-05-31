@@ -121,18 +121,6 @@
           "verstrichen",
           "Anderes"
         ]
-      },
-      "hasTemperAmount": {
-        "inputType": "radio",
-        "valuelist": [
-          "nicht erkennbar",
-          "keine Einschlüsse",
-          "vereinzelt",
-          "wenig",
-          "mittel",
-          "viel",
-          "sehr viel"
-        ]
       }
     }
   },

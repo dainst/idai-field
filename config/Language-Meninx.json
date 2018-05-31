@@ -93,9 +93,6 @@
         "hasPotteryBreakStructure": {
           "label": "Bruch: Struktur, Härte, Porosität"
         },
-        "hasTemperAmount": {
-          "label": "Magerung: Menge"
-        },
         "hasPotteryResidueAnalysis": {
           "label": "Probe: Rückstandsanalyse",
           "description": "Angabe zur Rückstandsanalyse"

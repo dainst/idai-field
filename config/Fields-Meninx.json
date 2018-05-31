@@ -109,18 +109,6 @@
           "verstrichen",
           "Anderes"
         ]
-      },
-      "hasCoatInsideType": {
-        "inputType": "checkboxes",
-        "valuelist": [
-          "Überzug",
-          "Glasur",
-          "Bemalung",
-          "poliert",
-          "geglättet",
-          "verstrichen",
-          "Anderes"
-        ]
       }
     }
   },

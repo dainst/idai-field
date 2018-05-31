@@ -72,9 +72,6 @@
         "hasCoatOutsideType": {
           "label": "Oberfläche: Bearbeitung außen"
         },
-        "hasCoatInsideType": {
-          "label": "Oberfläche: Bearbeitung innen"
-        },
         "hasClayColorOutsideMunsell": {
           "label": "Oberfläche außen: Farbe Munsell"
         },

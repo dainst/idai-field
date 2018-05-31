@@ -37,13 +37,6 @@
       }
     }
   },
-  "Image": {
-    "fields": {
-      "hasNumber": {
-        "inputType": "unsignedInt"
-      }
-    }
-  },
   "Pottery": {
     "fields": {
       "hasWare": {

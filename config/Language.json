@@ -394,6 +394,10 @@
           "label": "Länge",
           "description": "Angabe der Länge."
         },
+        "hasDimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite."
+        },
         "hasMaterial": {
           "label": "Material",
           "description": "Material, aus welchem der Einschluss ist, z.B. 'Holzkohle'"

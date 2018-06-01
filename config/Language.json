@@ -853,54 +853,6 @@
         }
       }
     },
-    "Findspot": {
-      "label": "Fundplatz",
-      "fields": {
-        "hasBuildingHistory": {
-          "label": "Baugeschichte",
-          "description": "Historische Abhandlung des Bauwerks."
-        },
-        "hasBuildingResearchHistory": {
-          "label": "Forschungsgeschichte",
-          "description": "Vorgeschichte aller am Bauwerk vorgenommenen Forschungen einschließlich Grabungen."
-        },
-        "hasDescription": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "hasExcavationHistory": {
-          "label": "Ausgrabungsgeschichte",
-          "description": "Abhandlung über die Grabungsprojekte auf der Fundstelle."
-        },
-        "hasFindSituation": {
-          "label": "Fundumstände",
-          "description": "Nähere Beschreibung unter welchen Bedingungen und von wem ein Fundplatz entdeckt wurde."
-        },
-        "hasModernIntervention": {
-          "label": "Moderne Eingriffe",
-          "description": "Beschreibung ob Fundplatz rezent beschädigungen ausgesetzt war. Z.B.\nSteinbruch/Grube/Mine, Überbauung, Aufschüttung, Raubgrabung, Ackerbau, Wiederaufforstung, Abraumhalden"
-        },
-        "hasProcessor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
-        },
-        "hasCampaign": {
-          "label": "Kampagne"
-        },
-        "hasFindspotClassification": {
-          "label": "Klassifikation Fundstelle"
-        },
-        "hasPeriodBeginning": {
-          "label": "Grobdatierung (von)"
-        },
-        "hasPeriodEnd": {
-          "label": "Grobdatierung (bis)"
-        },
-        "hasSiteClassification": {
-          "label": "Klassifikation Fundplatz"
-        }
-      }
-    },
     "Image": {
       "label": "Abbildung",
       "fields": {

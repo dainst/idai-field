@@ -11,7 +11,7 @@ import {BlobMaker} from '../../core/imagestore/blob-maker';
 export module ImageGridConstruction {
 
     // nr of pixels between the right end of the screenspace and the grid
-    const paddingRight: number = 20;
+    const paddingRight: number = 14;
 
 
     /**

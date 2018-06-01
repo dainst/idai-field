@@ -13,7 +13,7 @@
         },
         "hasSpatialLocation": {
           "label": "Lage",
-          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der Stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
+          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
         },
         "hasTrenchComment": {
           "label": "Schnittkommentar",
@@ -220,7 +220,7 @@
       "fields": {
         "hasContactMail": {
           "label": "Mailadresse der Kontaktperson",
-          "description": "Des Projektes bzw. der Kontaktperson"
+          "description": "Mailadresse des Projekts bzw. der Kontaktperson"
         },
         "hasContactPerson": {
           "label": "Kontaktperson",
@@ -235,8 +235,8 @@
           "description": "Angabe des EPSG-Codes (siehe www.spacialreference.org, z.B. 3004)"
         },
         "hasExternalReference": {
-          "label": "Projekt Homepage",
-          "description": "Externe Referenz(en) des Projektes"
+          "label": "Projekt-Homepage",
+          "description": "Externe Referenz(en) des Projekts"
         },
         "hasGazId": {
           "label": "Gazetteer-ID",
@@ -255,7 +255,7 @@
           "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind möglich"
         },
         "hasProjectURI": {
-          "label": "Projekt URL",
+          "label": "Projekt-URL",
           "description": "Hinweis auf eine externe Projektseite mit weiteren Informationen. z.B. http://www.klass-archaeologie.uni-muenchen.de/forschung/projekte1/d-projekte-laufend/meninx/index.html"
         },
         "hasSupervisor": {

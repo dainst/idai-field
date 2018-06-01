@@ -10,7 +10,8 @@
                  class="droparea-container"
                  [style.width.px]="cell['calculatedWidth']"
                  [style.height.px]="cell['calculatedHeight']">
-                <drop-area (onImagesUploaded)="onImagesUploaded.emit()">
+                <drop-area [depictsRelationTarget]="dropAreaDepictsRelationTarget"
+                           (onImagesUploaded)="onImagesUploaded.emit($event)">
                 </drop-area>
             </div>
 

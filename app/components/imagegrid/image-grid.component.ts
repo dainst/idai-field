@@ -1,12 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
-import {Messages} from 'idai-components-2/core';
+import {Messages, Document} from 'idai-components-2/core';
 import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
 import {ImageGridConstruction} from './image-grid-builder';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
-import {NewIdaiFieldImageDocument} from '../../core/model/new-idai-field-image-document';
-import {NewIdaiFieldImageResource} from '../../core/model/new-idai-field-image-resource';
+import {ImageUploadResult} from '../imageupload/image-uploader';
 
 
 @Component({
@@ -28,13 +27,14 @@ export class ImageGridComponent implements OnChanges {
     @Input() showLinkBadges: boolean = true;
     @Input() showIdentifier: boolean = true;
     @Input() showShortDescription: boolean = true;
-    @Input() showDropArea: boolean = false;
     @Input() showGeoIcon: boolean = false;
     @Input() showTooltips: boolean = false;
+    @Input() showDropArea: boolean = false;
+    @Input() dropAreaDepictsRelationTarget: Document;
 
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
-    @Output() onImagesUploaded: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onImagesUploaded: EventEmitter<ImageUploadResult> = new EventEmitter<ImageUploadResult>();
 
     public resourceIdentifiers: {[id: string]: string} = {};
     public moreRowsMsg: string|undefined = undefined;

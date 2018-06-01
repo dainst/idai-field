@@ -1,6 +1,6 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter, Input} from '@angular/core';
+import {Messages, Document} from 'idai-components-2/core';
 import {ImageUploader, ImageUploadResult} from '../imageupload/image-uploader';
-import {Messages} from 'idai-components-2/core';
 
 @Component({
     selector: 'drop-area',
@@ -14,7 +14,9 @@ import {Messages} from 'idai-components-2/core';
  */
 export class DropAreaComponent {
 
-    @Output() onImagesUploaded: EventEmitter<any> = new EventEmitter<any>();
+    @Input() depictsRelationTarget: Document|undefined;
+
+    @Output() onImagesUploaded: EventEmitter<ImageUploadResult> = new EventEmitter<ImageUploadResult>();
 
     private dragOverActive = false;
 
@@ -42,23 +44,29 @@ export class DropAreaComponent {
     }
 
 
-    public onDrop(event: any) {
+    public async onDrop(event: any) {
 
         event.preventDefault();
-        this.imageUploader.startUpload(event).then(uploadResult => this.handleUploadResult(uploadResult));
+
+        const uploadResult: ImageUploadResult
+            = await this.imageUploader.startUpload(event, this.depictsRelationTarget);
+        this.handleUploadResult(uploadResult);
+
         this.onDragLeave(event);
     }
 
 
-    public onSelectImages(event: any) {
+    public async onSelectImages(event: any) {
 
-        this.imageUploader.startUpload(event).then(uploadResult => this.handleUploadResult(uploadResult));
+        const uploadResult: ImageUploadResult
+            = await this.imageUploader.startUpload(event, this.depictsRelationTarget);
+        this.handleUploadResult(uploadResult);
     }
 
 
     private handleUploadResult(uploadResult: ImageUploadResult) {
 
-        if (uploadResult.uploadedImages > 0) this.onImagesUploaded.emit();
+        if (uploadResult.uploadedImages > 0) this.onImagesUploaded.emit(uploadResult);
 
         for (let msgWithParams of uploadResult.messages) {
             this.messages.add(msgWithParams);

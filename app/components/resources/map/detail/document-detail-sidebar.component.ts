@@ -1,15 +1,11 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {Messages} from 'idai-components-2/core';
 import {ResourcesComponent} from '../../resources.component';
 import {ObjectUtil} from '../../../../util/object-util';
 import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../state/view-facade';
-import {ImageUploader} from '../../../imageupload/image-uploader';
-import {M} from '../../../../m';
 
 
 @Component({
@@ -38,37 +34,15 @@ export class DocumentViewSidebarComponent {
         public resourcesComponent: ResourcesComponent,
         private routingService: RoutingService,
         private projectConfiguration: ProjectConfiguration,
-        private viewFacade: ViewFacade,
-        private imageUploader: ImageUploader,
-        private messages: Messages
+        private viewFacade: ViewFacade
     ) { }
-
-
-    public async uploadImages(event: Event, document: IdaiFieldDocument) {
-
-        const uploadResult = await this.imageUploader.startUpload(event, document);
-
-        if (uploadResult.uploadedImages > 0) {
-            this.viewFacade.setActiveDocumentViewTab('images');
-            this.viewFacade.setSelectedDocument(document);
-        }
-
-        for (let msgWithParams of uploadResult.messages) {
-            this.messages.add(msgWithParams);
-        }
-
-        if (uploadResult.uploadedImages == 1) {
-            this.messages.add([M.RESOURCES_SUCCESS_IMAGE_UPLOADED, document.resource.identifier]);
-        } else if (uploadResult.uploadedImages > 1) {
-            this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString(),
-                document.resource.identifier]);
-        }
-    }
 
 
     public onTabChange(event: any) {
 
-        this.viewFacade.setActiveDocumentViewTab(event['nextId'].replace('document-view-', '').replace('-tab', ''));
+        this.viewFacade.setActiveDocumentViewTab(event['nextId']
+            .replace('document-view-', '')
+            .replace('-tab', ''));
     }
 
 

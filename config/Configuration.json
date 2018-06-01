@@ -1024,6 +1024,12 @@
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
+        "hasDimensionWidth": {
+          "inputType": "dimension", 
+          "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+        },
         "hasMaterial": {
           "inputType": "checkboxes",
           "valuelist": [

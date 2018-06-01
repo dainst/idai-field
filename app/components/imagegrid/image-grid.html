@@ -9,7 +9,7 @@
             <div *ngIf="cell['document'].id == 'droparea'"
                  class="droparea-container"
                  [style.width.px]="cell['calculatedWidth']"
-                 [style.height.px]="cell['calculatedHeight']">
+                 [style.height.px]="cell['calculatedHeight'] + 25">
                 <drop-area [depictsRelationTarget]="dropAreaDepictsRelationTarget"
                            (onImagesUploaded)="onImagesUploaded.emit($event)">
                 </drop-area>

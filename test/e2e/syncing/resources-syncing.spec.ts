@@ -23,7 +23,7 @@ const common = require('../common');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-xdescribe('resources/syncing --', function() {
+describe('resources/syncing --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;

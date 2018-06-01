@@ -1469,6 +1469,109 @@
             "Antik",
             "Modern"
           ]
+        },
+        "hasBuildingHistory": {
+          "inputType": "input"
+        },
+        "hasBuildingResearchHistory": {
+          "inputType": "text"
+        },
+        "hasDescription": {
+          "inputType": "text"
+        },
+        "hasExcavationHistory": {
+          "inputType": "text"
+        },
+        "hasFindSituation": {
+          "inputType": "text"
+        },
+        "hasModernIntervention": {
+          "inputType": "input"
+        },
+        "hasFindspotClassification": {
+          "inputType": "dropdown",
+          "valuelist": [
+            "Einzelmauer",
+            "Felsabarbeitung",
+            "Funderfassung",
+            "Fundsammlung",
+            "Grab",
+            "Nekropole",
+            "Spolie in rezenter Mauer",
+            "Steinbruch",
+            "Straße/Platz",
+            "Wein- bzw. Ölpresse",
+            "einzelnes Steindenkmal",
+            "ländliches Gebäude",
+            "urbanes Gebäude"
+          ]
+        },
+        "hasPeriodBeginning": {
+          "inputType": "dropdown",
+          "valuelist": [
+            "Archaisch",
+            "Bronzezeitlich",
+            "Byzantinisch",
+            "Eisenzeitlich",
+            "Frühbronzezeitlich",
+            "Frühbyzantinisch",
+            "Frühhellenistisch",
+            "Frühkaiserzeitlich",
+            "Frühklassisch",
+            "Geometrisch",
+            "Hellenistisch",
+            "Kaiserzeitlich",
+            "Klassisch",
+            "Neolithisch",
+            "Neuzeitlich",
+            "Osmanisch",
+            "Pleistozän",
+            "Rezent",
+            "Römisch",
+            "Spätantik",
+            "Spätbronzezeitlich",
+            "Spätbyzantinisch",
+            "Späthellenistisch",
+            "Spätkaiserzeitlich",
+            "Spätklassisch"
+          ]
+        },
+        "hasPeriodEnd": {
+          "inputType": "dropdown",
+          "valuelist": [
+            "Archaisch",
+            "Bronzezeitlich",
+            "Byzantinisch",
+            "Eisenzeitlich",
+            "Frühbronzezeitlich",
+            "Frühbyzantinisch",
+            "Frühhellenistisch",
+            "Frühkaiserzeitlich",
+            "Frühklassisch",
+            "Geometrisch",
+            "Hellenistisch",
+            "Kaiserzeitlich",
+            "Klassisch",
+            "Neolithisch",
+            "Neuzeitlich",
+            "Osmanisch",
+            "Pleistozän",
+            "Rezent",
+            "Römisch",
+            "Spätantik",
+            "Spätbronzezeitlich",
+            "Spätbyzantinisch",
+            "Späthellenistisch",
+            "Spätkaiserzeitlich",
+            "Spätklassisch"
+          ]
+        },
+        "hasSiteClassification": {
+          "inputType": "dropdown",
+          "valuelist": [
+            "Bestattungsplatz",
+            "Siedlung"
+          ]
         }
       }
     },
@@ -1975,122 +2078,6 @@
             "Späthellenistisch",
             "Spätkaiserzeitlich",
             "Spätklassisch"
-          ]
-        }
-      }
-    },
-    "Findspot": {
-      "fields": {
-        "hasBuildingHistory": {
-          "inputType": "input"
-        },
-        "hasBuildingResearchHistory": {
-          "inputType": "input"
-        },
-        "hasDescription": {
-          "inputType": "text"
-        },
-        "hasExcavationHistory": {
-          "inputType": "input"
-        },
-        "hasFindSituation": {
-          "inputType": "input"
-        },
-        "hasModernIntervention": {
-          "inputType": "input"
-        },
-        "hasProcessor": {
-          "inputType": "input"
-        },
-        "hasCampaign": {
-          "inputType": "input",
-          "valuelist": [
-            "Campaign"
-          ]
-        },
-        "hasFindspotClassification": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Einzelmauer",
-            "Felsabarbeitung",
-            "Funderfassung",
-            "Fundsammlung",
-            "Grab",
-            "Nekropole",
-            "Spolie in rezenter Mauer",
-            "Steinbruch",
-            "Straße/Platz",
-            "Wein- bzw. Ölpresse",
-            "einzelnes Steindenkmal",
-            "ländliches Gebäude",
-            "urbanes Gebäude"
-          ]
-        },
-        "hasPeriodBeginning": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Archaisch",
-            "Bronzezeitlich",
-            "Byzantinisch",
-            "Eisenzeitlich",
-            "Frühbronzezeitlich",
-            "Frühbyzantinisch",
-            "Frühhellenistisch",
-            "Frühkaiserzeitlich",
-            "Frühklassisch",
-            "Geometrisch",
-            "Hellenistisch",
-            "Kaiserzeitlich",
-            "Klassisch",
-            "Neolithisch",
-            "Neuzeitlich",
-            "Osmanisch",
-            "Pleistozän",
-            "Rezent",
-            "Römisch",
-            "Spätantik",
-            "Spätbronzezeitlich",
-            "Spätbyzantinisch",
-            "Späthellenistisch",
-            "Spätkaiserzeitlich",
-            "Spätklassisch"
-          ]
-        },
-        "hasPeriodEnd": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Archaisch",
-            "Bronzezeitlich",
-            "Byzantinisch",
-            "Eisenzeitlich",
-            "Frühbronzezeitlich",
-            "Frühbyzantinisch",
-            "Frühhellenistisch",
-            "Frühkaiserzeitlich",
-            "Frühklassisch",
-            "Geometrisch",
-            "Hellenistisch",
-            "Kaiserzeitlich",
-            "Klassisch",
-            "Neolithisch",
-            "Neuzeitlich",
-            "Osmanisch",
-            "Pleistozän",
-            "Rezent",
-            "Römisch",
-            "Spätantik",
-            "Spätbronzezeitlich",
-            "Spätbyzantinisch",
-            "Späthellenistisch",
-            "Spätkaiserzeitlich",
-            "Spätklassisch"
-          ]
-        },
-        "hasSiteClassification": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Bestattungsplatz",
-            "Siedlung"
           ]
         }
       }

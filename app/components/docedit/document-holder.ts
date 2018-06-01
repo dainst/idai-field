@@ -29,7 +29,7 @@ export class DocumentHolder {
      * that are conflict resolved. They will be be removed from document
      * as soon as it gets saved.
      */
-    public inspectedRevisions: Document[];
+    public inspectedRevisions: Array<Document>;
 
     /**
      * Holds a cloned version of the <code>document</code> set via {@link DocumentHolder#setDocument}.
@@ -125,7 +125,7 @@ export class DocumentHolder {
 
         return flow(
             document,
-            Document.removeRelations(this.validateRelationFields()),
+            Document.removeRelations(this.validateRelationFields().concat(this.getEmptyRelationFields())),
             Document.removeFields(this.validateFields())
         )
     }
@@ -134,7 +134,10 @@ export class DocumentHolder {
     private async fetchLatestRevision() {
 
         try {
-            this.clonedDocument = await this.datastore.get(this.clonedDocument.resource.id as any, {skip_cache: true});
+            this.clonedDocument = await this.datastore.get(
+                this.clonedDocument.resource.id as any,
+                { skip_cache: true }
+            );
         } catch (e) {
             throw [M.DATASTORE_NOT_FOUND];
         }
@@ -160,7 +163,7 @@ export class DocumentHolder {
             await this.persistenceManager.remove(this.clonedDocument, this.usernameProvider.getUsername())
         } catch(removeError) {
 
-            console.log("error: removeWithPersistenceManager",removeError);
+            console.log('Error: removeWithPersistenceManager', removeError);
             if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) {
                 throw [M.DOCEDIT_DELETE_ERROR];
             }
@@ -168,7 +171,7 @@ export class DocumentHolder {
     }
 
 
-    private validateFields(): Array<string>  {
+    private validateFields(): Array<string> {
 
         return Validations.validateFields(this.clonedDocument.resource, this.projectConfiguration);
     }
@@ -177,5 +180,13 @@ export class DocumentHolder {
     private validateRelationFields(): Array<string> {
 
         return Validations.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
+    }
+
+
+    private getEmptyRelationFields(): Array<string> {
+
+        return Object.keys(this.clonedDocument.resource.relations).filter(relationName => {
+            return this.clonedDocument.resource.relations[relationName].length === 0;
+        });
     }
 }

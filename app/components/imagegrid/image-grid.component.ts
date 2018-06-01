@@ -30,6 +30,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() showGeoIcon: boolean = false;
     @Input() showTooltips: boolean = false;
     @Input() showDropArea: boolean = false;
+    @Input() compressDropArea: boolean = false;
     @Input() dropAreaDepictsRelationTarget: Document;
 
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
@@ -176,7 +177,7 @@ export class ImageGridComponent implements OnChanges {
         this.documents.unshift({
             id: 'droparea',
             resource: { id: 'droparea', identifier: '', shortDescription:'', type: '', originalFilename: '',
-                width: 1, height: 1, relations: { depicts: [] } }
+                width: 1, height: this.compressDropArea ? 0.25 : 1, relations: { depicts: [] } }
         } as any);
     }
 }

@@ -59,9 +59,10 @@ export class ThumbnailViewComponent implements OnChanges {
 
     private updateGrid() {
 
+        this.documents = [];
+
         if (!Document.hasRelations(this.document, 'isDepictedIn')) return;
 
-        this.documents = [];
         let promise = Promise.resolve();
         for (let id of this.document.resource.relations['isDepictedIn']) {
             promise = promise.then(() => this.datastore.get(id))

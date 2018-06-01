@@ -34,6 +34,9 @@
     "Planum": ["hasArea", "hasHorizontalLocation", "hasOrientation", "hasPlanumForm", "hasDimensionLength", "hasDimensionWidth", "hasDimensionVerticalExtent"],
     "Drilling": ["hasDrillingEquipment", "hasDimensionDiameter", "hasDimensionHeight", "hasDimensionVerticalExtent"],
     "Sample": ["hasSoilType", "hasSampleType", "hasWeight", "hasLabNumber"],
-    "SurveyUnit": ["hasArea", "hasDimensionLength", "hasDimensionWidth", "hasFinds"]
+    "SurveyUnit": ["hasArea", "hasDimensionLength", "hasDimensionWidth", "hasFinds"],
+    "Image": ["hasDescription", "hasCaption", "hasDraughtsmen", "hasProcessor", "hasCampaign", "hasPictureObject"],
+    "Drawing": ["hasDrawingMaterial", "hasDrawingTool", "hasDrawingType", "hasScale"],
+    "Photo": ["hasOriginalType"]
   }
 }

@@ -5,7 +5,7 @@
     "Trench": ["hasDairy", "hasResearchQuestion", "hasTrenchComment", "hasExcavationType", "hasSpatialLocation", "hasOrientation", "hasDimensionLength", "hasDimensionVerticalExtent", "hasDimensionWidth"],
     "Building": ["hasMaterial", "hasContext", "hasCondition", "hasConditionAmount", "hasConditionComment", "hasRestauration", "hasDimensionLength", "hasBuildingType", "hasBuildingTechnique", "hasBuildingCategory", "hasBuildingCategorySpecific", "hasArchitecturalOrders", "hasBuildingHistory", "hasBuildingResearchHistory", "hasExcavationHistory", "hasHistory"],
     "Survey": ["hasResearchMethod"],
-    "Place": ["hasPlaceName", "hasPlaceType", "isAncient"],
+    "Place": ["hasGazId", "hasPlaceName", "hasPlaceType", "isAncient"],
     "Feature": ["hasDairy", "hasDescription", "hasProcessor", "hasBeginningDate", "hasEndDate", "hasPeriodBeginning", "hasPeriodEnd", "hasArea", "hasColor", "hasDisturbance", "hasFeatureForm", "hasFeatureBorders", "hasComparison", "hasDating", "hasFeatureAmount", "hasDimensionLength", "hasDimensionVerticalExtent", "hasDimensionWidth"],
     "Layer": ["hasDimensionThickness", "hasDistinguishingCriteria", "hasLayerClassification", "hasNatural", "hasSoilType", "hasAppearance", "hasConsistency"],
     "Grave": ["hasSpatialLocation", "hasSoilType", "hasCondition", "hasConditionAmount", "hasConditionComment", "hasDistinguishingCriteria", "hasGraveType", "hasGraveTypeSpecific", "hasTombBuilding", "hasFindingPlace", "hasBibliography", "hasPublicationDatingFinds", "hasPublicationDatingStratigraphy", "hasPublicationDatingScientific", "hasPublicationRemark"],

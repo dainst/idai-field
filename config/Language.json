@@ -240,7 +240,7 @@
         },
         "hasGazId": {
           "label": "Gazetteer-ID",
-          "description": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
+          "description": "ID-Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
         },
         "hasInstitution": {
           "label": "Institution",
@@ -388,7 +388,7 @@
         },
         "hasContext": {
           "label": "Kontext",
-          "description": "In Welchem Kontext liegt das Bauwerk?"
+          "description": "In welchem Kontext liegt das Bauwerk?"
         },
         "hasDimensionLength": {
           "label": "Länge",
@@ -607,7 +607,7 @@
       "fields": {
         "hasGazId": {
           "label": "Gazetteer-ID",
-          "description": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
+          "description": "ID-Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
         },
         "hasPlaceName": {
           "label": "Ortsname",

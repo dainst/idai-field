@@ -231,15 +231,15 @@
           "description": "Freies Beschreibungsfeld"
         },
         "hasEPSGId": {
-          "label": "EPSG Code",
-          "description": "Angabe des EPSG Codes (siehe www.spacialreference.org, z.B. 3004)"
+          "label": "EPSG-Code",
+          "description": "Angabe des EPSG-Codes (siehe www.spacialreference.org, z.B. 3004)"
         },
         "hasExternalReference": {
           "label": "Projekt Homepage",
           "description": "Externe Referenz(en) des Projektes"
         },
         "hasGazId": {
-          "label": "Gazetteer ID",
+          "label": "Gazetteer-ID",
           "description": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
         },
         "hasInstitution": {
@@ -506,7 +506,7 @@
         },
         "hasSpatialLocation": {
           "label": "Lage",
-          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der Stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
+          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
         },
         "hasBlockProcessing": {
           "label": "Art der Steinblöcke"
@@ -606,7 +606,7 @@
       "label": "Ort",
       "fields": {
         "hasGazId": {
-          "label": "Gazetteer ID",
+          "label": "Gazetteer-ID",
           "description": "ID Nummer des Ortslexikons. Nummerierung der zugehörigen Ortsbezeichnung."
         },
         "hasPlaceName": {
@@ -713,12 +713,12 @@
           "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
         },
         "hasFeatureBorders": {
-          "label": "Grenzen der Stratigrafischen Einheit",
+          "label": "Grenzen der stratigrafischen Einheit",
           "description": "Bestimmung der Grenzen des Befundes (z.B. unscharf, klar...)"
         },
         "hasFeatureForm": {
-          "label": "Form der Stratigrafischen Einheit (im Planum bzw. Profil)",
-          "description": "Form der Stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
+          "label": "Form der stratigrafischen Einheit (im Planum bzw. Profil)",
+          "description": "Form der stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
         },
         "hasPeriodBeginning": {
           "label": "Grobdatierung (von)"
@@ -1098,7 +1098,7 @@
         },
         "hasSpatialLocation": {
           "label": "Lage",
-          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der Stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
+          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigrafischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
         },
         "hasCondition": {
           "label": "Erhaltungszustand",

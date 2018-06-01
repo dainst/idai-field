@@ -347,7 +347,7 @@
           "description": "Kommentar zum Erhaltungszustand"
         },
         "hasExcavationHistory": {
-          "label": "Ausgrabgsgeschichte",
+          "label": "Ausgrabungsgeschichte",
           "description": "Abhandlung über die Grabungsprojekte auf der Fundstelle."
         },
         "hasHistory": {
@@ -829,7 +829,7 @@
           "description": "Freies Beschreibungsfeld"
         },
         "hasExcavationHistory": {
-          "label": "Ausgrabgsgeschichte",
+          "label": "Ausgrabungsgeschichte",
           "description": "Abhandlung über die Grabungsprojekte auf der Fundstelle."
         },
         "hasFindSituation": {

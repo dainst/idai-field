@@ -76,8 +76,9 @@
 
             <ngb-tab id="document-view-images-tab">
                 <ng-template ngbTabTitle>
-                            <span class="mdi mdi-image"
-                                  [class.empty-tab]="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn']"></span>
+                    <span class="mdi mdi-image"
+                          [class.empty-tab]="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn']">
+                    </span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <button class="btn btn-light btn-block edit-button"

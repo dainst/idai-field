@@ -26,10 +26,13 @@
     cursor: pointer;
   }
 
+  .list-edit-button {
+    cursor: pointer;
+  }
+
   .move-into-button:hover {
     color: darken(#868e96, 5%);
     background-color: darken(#fff, 5%);
-    transition: color .4s ease;
     transition: background-color .4s ease;
   }
 

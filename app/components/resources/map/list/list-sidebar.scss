@@ -54,7 +54,6 @@
     .move-into-button:hover {
       color: darken(#868e96, 10%);
       background-color: darken($list-item-hover-color, 10%);
-      transition: color .65s ease;
       transition: background-color .65s ease;
     }
   }

@@ -4,7 +4,7 @@ Here is a short overview of iDAI.field's key features.
 
 ## Metadata editor
 
-![idai-field](img/README-FEATURES-1_.png) 
+![idai-field](img/README-FEATURES-1.png) 
 
 Available types and their fields can be defined 
 via a JSON based configuration.

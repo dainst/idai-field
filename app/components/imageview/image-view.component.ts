@@ -91,7 +91,10 @@ export class ImageViewComponent implements OnInit {
         if (!this.image) return false;
         if (!this.image.document) return false;
 
-        return !ObjectUtil.isEmpty(this.image.document.resource.relations);
+        const relations: any = this.image.document.resource.relations;
+        if (ObjectUtil.isEmpty(relations)) return false;
+
+        return Object.keys(relations).filter(name => relations[name].length > 0).length > 0;
     }
 
 

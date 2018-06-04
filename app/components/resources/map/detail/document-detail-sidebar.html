@@ -23,10 +23,10 @@
                     <span class="mdi mdi-format-list-bulleted"></span>
                 </ng-template>
                 <ng-template ngbTabContent>
-                    <button class="btn btn-light btn-block edit-button"
+                    <div class="btn btn-light btn-block edit-button"
                             (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'fields')">
                         <span>Metadaten bearbeiten</span>
-                    </button>
+                    </div>
 
                     <div class="tab-view-container">
                         <description-view [document]="viewFacade.getSelectedDocument()"></description-view>
@@ -54,10 +54,10 @@
                     <span class="mdi mdi-sitemap" [class.empty-tab]="!hasVisibleRelations()"></span>
                 </ng-template>
                 <ng-template ngbTabContent>
-                    <button class="btn btn-light btn-block edit-button"
+                    <div class="btn btn-light btn-block edit-button"
                             (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'relations')">
                         <span>Relationen bearbeiten</span>
-                    </button>
+                    </div>
 
                     <div class="tab-view-container">
                         <relations-view *ngIf="hasVisibleRelations()" [resource]="viewFacade.getSelectedDocument().resource"
@@ -75,10 +75,10 @@
                     </span>
                 </ng-template>
                 <ng-template ngbTabContent>
-                    <button class="btn btn-light btn-block edit-button"
+                    <div class="btn btn-light btn-block edit-button"
                             (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'images')">
                         <span>Bildverknüpfungen bearbeiten</span>
-                    </button>
+                    </div>
 
                     <div class="tab-view-container">
                         <thumbnail-view [document]="viewFacade.getSelectedDocument()"

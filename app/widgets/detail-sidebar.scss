@@ -61,18 +61,17 @@
   }
 
   .edit-button {
-    background-color: #fff;
-    padding: 1px;
-    border-top: 0;
-    border-color: #ddd;
+    @extend .btn-light;
+    margin-top: 5px;
+
+    &:before {
+      @extend .mdi;
+      @extend .mdi-pencil;
+    }
 
     span {
-      font-size: 12px;
+      font-size: 14px;
     }
-  }
-
-  .edit-button:hover {
-    background-color: darken(#fff, 10%) !important;
   }
 
   .close-button {

@@ -2,7 +2,7 @@
   "types": {
     "Feature": {
       "fields": {
-        "hasDimensionHight": {
+        "hasDimensionHeight": {
           "label": "Höhe",
           "description": "Angabe der Objekthöhe"
         }
@@ -10,7 +10,7 @@
     },
     "Wall_surface": {
       "fields": {
-        "hasDimensionHight": {
+        "hasDimensionHeight": {
           "label": "Höhe",
           "description": "Angabe der Objekthöhe"
         }

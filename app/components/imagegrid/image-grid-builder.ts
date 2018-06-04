@@ -10,9 +10,6 @@ import {BlobMaker} from '../../core/imagestore/blob-maker';
  */
 export module ImageGridConstruction {
 
-    // nr of pixels between the right end of the screenspace and the grid
-    const paddingRight: number = 14;
-
 
     /**
      * @param documents
@@ -25,7 +22,8 @@ export module ImageGridConstruction {
     export function calcGrid(
         documents: Array<Document>,
         nrOfColumns: number,
-        gridWidth: number): any {
+        gridWidth: number,
+        paddingRight: number): any {
 
         if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');
 
@@ -34,7 +32,7 @@ export module ImageGridConstruction {
         const rows = [] as any;
         for (let i = 0; i < nrOfRows(documents, nrOfColumns); i++) {
             rows.push(
-                calcRow(documents, i, calculatedHeight(documents, i, nrOfColumns, gridWidth)
+                calcRow(documents, i, calculatedHeight(documents, i, nrOfColumns, gridWidth, paddingRight)
                     , nrOfColumns) as never);
         }
 
@@ -66,7 +64,7 @@ export module ImageGridConstruction {
 
     function calculatedHeight(
         documents: Array<Document>,
-        rowIndex: any, nrOfColumns: any, gridWidth: any) {
+        rowIndex: any, nrOfColumns: any, gridWidth: any, paddingRight: number) {
 
         const rowWidth = Math.ceil(gridWidth - paddingRight);
         return rowWidth / calcNaturalRowWidth(documents, nrOfColumns, rowIndex);

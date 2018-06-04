@@ -20,7 +20,7 @@ describe('ImageGridConstruction', () => {
 
     it('should keep the aspect ration of an image', ()=> {
 
-        const rows = ImageGridConstruction.calcGrid(documents as any,4,800);
+        const rows = ImageGridConstruction.calcGrid(documents as any,4,800, 20);
 
         expect(rows[0][0].calculatedWidth).toBe(rows[0][0].calculatedHeight * 2);
     });
@@ -28,6 +28,6 @@ describe('ImageGridConstruction', () => {
 
     it('should throw when nrOfColumns not integer', () => {
 
-        expect(function(){ImageGridConstruction.calcGrid([],4.1,0)}).toThrow();
+        expect(function(){ImageGridConstruction.calcGrid([],4.1,0, 20)}).toThrow();
     });
 });

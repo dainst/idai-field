@@ -32,6 +32,7 @@ export class ImageGridComponent implements OnChanges {
     @Input() showDropArea: boolean = false;
     @Input() compressDropArea: boolean = false;
     @Input() dropAreaDepictsRelationTarget: Document;
+    @Input() paddingRight: number;
 
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
@@ -107,7 +108,9 @@ export class ImageGridComponent implements OnChanges {
         if (!this.documents) return;
 
         const rows = ImageGridConstruction.calcGrid(
-            this.documents, this.nrOfColumns, this.el.nativeElement.children[0].clientWidth);
+            this.documents, this.nrOfColumns, this.el.nativeElement.children[0].clientWidth,
+            this.paddingRight
+        );
 
         this.moreRowsMsg = undefined;
         await this.loadImages(rows);

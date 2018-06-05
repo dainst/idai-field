@@ -70,18 +70,7 @@ export class SettingsService {
     }
 
 
-    public async bootProject(): Promise<ProjectConfiguration> {
-
-        await this.updateSettings(await this.settingsSerializer.load());
-
-        await this.pouchdbManager.loadProjectDb(
-            this.getSelectedProject(),
-            new IdaiFieldSampleDataLoader(this.converter, this.settings.imagestorePath));
-
-        if (this.settings.isSyncActive) await this.startSync();
-
-
-        // set project document
+    public async loadProjectDocument(isBoot = false): Promise<void> {
 
         delete this.projectDocument; // making sure we start fresh
 
@@ -95,11 +84,27 @@ export class SettingsService {
             try { // old
                 this.projectDocument = await this.pouchdbManager.getDbProxy().get(this.getSelectedProject());
             } catch (_) {
-                this.selectProject('test'); // load alternative at next startup
-                console.error('didn\'t find old style project document either');
-                throw 'could not boot project';
+                if (isBoot) {
+                    this.selectProject('test'); // load alternative at next startup
+                    console.error('didn\'t find old style project document either');
+                    throw 'could not boot project';
+                }
             }
         }
+    }
+
+
+    public async bootProject(): Promise<ProjectConfiguration> {
+
+        await this.updateSettings(await this.settingsSerializer.load());
+
+        await this.pouchdbManager.loadProjectDb(
+            this.getSelectedProject(),
+            new IdaiFieldSampleDataLoader(this.converter, this.settings.imagestorePath));
+
+        if (this.settings.isSyncActive) await this.startSync();
+
+        this.loadProjectDocument(true);
 
         // config
 

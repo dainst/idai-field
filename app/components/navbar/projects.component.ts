@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild, TemplateRef} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2/core';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../../m';
 import {DoceditComponent} from "../docedit/docedit.component";
-import {PouchdbManager} from "../../core/datastore/core/pouchdb-manager";
+
 const remote = require('electron').remote;
 
 @Component({
@@ -89,8 +89,14 @@ export class ProjectsComponent implements OnInit {
     public async editProject() {
 
         const document = this.settingsService.getProjectDocument();
+
         const doceditRef = this.modalService.open(DoceditComponent, { size: 'lg', backdrop: 'static' });
         doceditRef.componentInstance.setDocument(document);
+
+        await doceditRef.result.then(
+            () => this.settingsService.loadProjectDocument(),
+            closeReason => {}
+        );
     }
 
 

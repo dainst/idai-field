@@ -35,7 +35,7 @@ export class ResourcesComponent implements AfterViewChecked {
     constructor(route: ActivatedRoute,
                 private viewFacade: ViewFacade,
                 private routingService: RoutingService,
-                private doceditProxy: DoceditLauncher,
+                private doceditLauncher: DoceditLauncher,
                 private renderer: Renderer2,
                 private messages: Messages,
                 private loading: Loading
@@ -124,7 +124,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.quitGeometryEditing(document);
 
-        const result = await this.doceditProxy.editDocument(document, activeTabName);
+        const result = await this.doceditLauncher.editDocument(document, activeTabName);
         if (result['tab']) this.viewFacade.setActiveDocumentViewTab(result['tab']);
         if (result['updateScrollTarget']) this.scrollTarget = result['document'];
     }

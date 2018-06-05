@@ -61,7 +61,7 @@
     "angular2-uuid": "1.1.0",
     "bootstrap": "4.0.0-beta",
     "es6-shim": "0.35.0",
-    "express": "~4.15.0",
+    "express": "4.15.0",
     "express-pouchdb-dainst": "1000.0.3",
     "idai-components-2": "1.15.22",
     "ip": "1.1.5",

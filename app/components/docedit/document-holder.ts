@@ -125,7 +125,8 @@ export class DocumentHolder {
 
         return flow(
             document,
-            Document.removeRelations(this.validateRelationFields().concat(this.getEmptyRelationFields())),
+            Document.removeRelations(this.validateRelationFields()),
+            Document.removeRelations(this.getEmptyRelationFields()),
             Document.removeFields(this.validateFields())
         )
     }
@@ -135,8 +136,7 @@ export class DocumentHolder {
 
         try {
             this.clonedDocument = await this.datastore.get(
-                this.clonedDocument.resource.id as any,
-                { skip_cache: true }
+                this.clonedDocument.resource.id, { skip_cache: true }
             );
         } catch (e) {
             throw [M.DATASTORE_NOT_FOUND];

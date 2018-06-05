@@ -80,6 +80,7 @@ export class DocumentHolder {
 
         this.clonedDocument = await this.cleanup(this.clonedDocument);
 
+
         await this.validator.validate(this.clonedDocument);
         this.clonedDocument = await this.persistenceManager.persist(
             this.clonedDocument,
@@ -127,7 +128,8 @@ export class DocumentHolder {
             document,
             Document.removeRelations(this.validateRelationFields()),
             Document.removeRelations(this.getEmptyRelationFields()),
-            Document.removeFields(this.validateFields())
+            Document.removeFields(this.validateFields()),
+            Document.removeFields(this.getEmptyFields())
         )
     }
 
@@ -139,6 +141,7 @@ export class DocumentHolder {
                 this.clonedDocument.resource.id, { skip_cache: true }
             );
         } catch (e) {
+
             throw [M.DATASTORE_NOT_FOUND];
         }
     }
@@ -163,7 +166,7 @@ export class DocumentHolder {
             await this.persistenceManager.remove(this.clonedDocument, this.usernameProvider.getUsername())
         } catch(removeError) {
 
-            console.log('Error: removeWithPersistenceManager', removeError);
+            console.log('Error: removeWithPersistenceManager', removeError); // TODO log to error
             if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) {
                 throw [M.DOCEDIT_DELETE_ERROR];
             }
@@ -185,8 +188,18 @@ export class DocumentHolder {
 
     private getEmptyRelationFields(): Array<string> {
 
-        return Object.keys(this.clonedDocument.resource.relations).filter(relationName => {
-            return this.clonedDocument.resource.relations[relationName].length === 0;
-        });
+        return Object.keys(this.clonedDocument.resource.relations).filter(relationName =>
+                this.clonedDocument.resource.relations[relationName].length === 0
+            );
+    }
+
+
+    private getEmptyFields(): Array<string> {
+
+        return Object.keys(this.clonedDocument.resource)
+            .filter(_ =>
+                (typeof(this.clonedDocument.resource[_]) === 'string')
+                && this.clonedDocument.resource[_].length === 0
+            );
     }
 }

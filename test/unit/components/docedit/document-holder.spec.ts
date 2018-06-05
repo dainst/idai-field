@@ -6,41 +6,57 @@ import {ProjectConfiguration} from 'idai-components-2/core';
  */
 describe('DocumentHolder', () => {
 
-    it('remove empty relations', async done => {
+    let docHolder;
+    let d;
+    let datastore;
+
+    beforeEach(() => {
 
         const pconf = new ProjectConfiguration({
-            types: [],
+            types: [{
+                type: 'A',
+                fields: [{name: 'id'},{name: 'type'},{name:'emptyfield'}]
+            }],
             relations: [
                 {
-                    "domain": ["A"],
-                    "inverse": "bears",
-                    "name": "isFoundOn",
-                    "range": ["Find"]
+                    'domain': ['A'],
+                    'inverse': 'bears',
+                    'name': 'isFoundOn',
+                    'range': ['Find']
+                },
+                {
+                    'domain': ['A'],
+                    'inverse': 'bears',
+                    'name': 'isFoundOn2',
+                    'range': ['Find']
                 }
             ]
         });
 
-        const d = {
+        d = {
             resource: {
-                type: "A",
-                id: "1",
+                type: 'A',
+                id: '1',
+                emptyfield: '',
+                undeffield: 'some',
                 relations: {
-                    'isFoundOn' : []
+                    'isFoundOn' : [],
+                    'isFoundOn2' : ['1'],
+                    'undefrel' : ['2']
                 }
             },
             modified: [],
-            created: {user: "a", date: new Date()}
+            created: {user: 'a', date: new Date()}
         };
 
         const validator = jasmine.createSpyObj('Validator', ['validate']);
         const pacman = jasmine.createSpyObj('PersistenceManager', ['persist']);
-        pacman.persist.and.returnValue(Promise.resolve(d));
+        pacman.persist.and.callFake((doc,b,c,d) => Promise.resolve(doc));
         const usernameProvider = jasmine.createSpyObj('UsernameProvider', ['getUsername']);
         const cmon = jasmine.createSpyObj('DocumentEditChangesMonitor', ['reset']);
-        const datastore = jasmine.createSpyObj('Datastore', ['get']);
-        datastore.get.and.returnValue(Promise.resolve(d));
+        datastore = jasmine.createSpyObj('Datastore', ['get']);
 
-        const docHolder = new DocumentHolder(
+        docHolder = new DocumentHolder(
             pconf,
             pacman,
             validator,
@@ -50,11 +66,30 @@ describe('DocumentHolder', () => {
             cmon,
             datastore
         );
+    });
+
+
+    it('remove empty and undefined relations', async done => {
 
         docHolder.clonedDocument = d;
+        datastore.get.and.callFake((a,b) => docHolder.clonedDocument);
         await docHolder.save();
 
-        expect(Object.keys(docHolder.clonedDocument.resource.relations).length).toBe(0);
+        expect(Object.keys(docHolder.clonedDocument.resource.relations).length).toBe(1);
+        expect(Object.keys(docHolder.clonedDocument.resource.relations)[0]).toBe('isFoundOn2');
+        done();
+    });
+
+
+    it('remove empty and undefined fields', async done => {
+
+        docHolder.clonedDocument = d;
+        datastore.get.and.callFake((_,__) => docHolder.clonedDocument);
+        await docHolder.save();
+
+        expect(docHolder.clonedDocument.resource.undeffield).toBeUndefined();
+        expect(docHolder.clonedDocument.resource.emptyfield).toBeUndefined();
+        expect(docHolder.clonedDocument.resource.type).not.toBeUndefined();
         done();
     });
 });

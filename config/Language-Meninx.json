@@ -2,6 +2,10 @@
   "types": {
     "Feature": {
       "fields": {
+        "hasColorSoil": {
+          "label": "Farbe des Bodens",
+          "description": "Farbe des Sediments"
+        },
         "hasDimensionHeight": {
           "label": "Höhe",
           "description": "Angabe der Objekthöhe"

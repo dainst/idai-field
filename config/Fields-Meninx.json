@@ -2,7 +2,11 @@
   "Feature": {
     "fields": {
       "hasDimensionHeight": {
-        "inputType": "dimension"
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"
+        ]
       }
     }
   },

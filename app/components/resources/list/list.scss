@@ -12,23 +12,31 @@
     cursor: default;
     margin-top: 2px;
     display: grid;
-    grid-template-columns: 1fr 1fr 2fr 1fr;
+    grid-template-columns: 4fr 6fr 9fr 1fr 6px;
     grid-gap: 1px;
     color: rgb(73, 80, 87);
     background: rgb(221, 221, 221);
     font-size: 16px;
     font-weight: 500;
     border: solid 1px rgb(221, 221, 221);
+    border-bottom: none;
 
     div {
-      padding: 4px;
+      padding: 5px 5px 5px 10px;
       background: white;
+    }
+
+    #header-placeholder {
+      border-right: solid 1px rgb(221, 221, 221);
+      margin-left: -1px;
+      margin-right: -1px;
+      padding: 3px;
     }
   }
 
   #list-body {
     height: calc(100vh - 175px);
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
     border: solid 1px rgb(221, 221, 221);
 

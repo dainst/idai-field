@@ -6,20 +6,25 @@
 
   div {
     background-color: white;
-    padding: 2px;
 
     div {
       font-size: 14px;
-      padding-left: 8px;
-      padding-top: 4px;
       display: inline-block;
     }
   }
 
+  .label-field {
+    padding: 6px 5px 0 10px;
+  }
+
+  .input-field {
+    padding: 4px 5px 0 2px;
+  }
+
   .move-into-button {
     position: relative;
-    top: 4px;
-    right: 2px;
+    top: -2px;
+    right: -1px;
     padding: 2px 2px 2px 4px;
     color: #868e96;
     background-color: #fff;

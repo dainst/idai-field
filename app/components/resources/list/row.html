@@ -1,6 +1,6 @@
 <div id="{{makeId()}}"
      class="row-wrapper">
-    <div>
+    <div class="label-field">
         <div [class.text-info]="!document.resource.id">
             <i>{{getLabel()}}</i>
        </div>
@@ -12,7 +12,7 @@
         </button>
 
     </div>
-    <div>
+    <div class="input-field">
         <input #identifierInput [(ngModel)]="document.resource.identifier"
                (focus)="startEditing(document.resource.identifier)"
                (blur)="stopEditing(document.resource.identifier)"
@@ -20,7 +20,7 @@
                (dblclick)="$event.stopPropagation();" class="form-control form-control-sm identifier-input">
 
     </div>
-    <div>
+    <div class="input-field">
         <input [(ngModel)]="document.resource.shortDescription"
                (focus)="startEditing(document.resource.shortDescription)"
                (blur)="stopEditing(document.resource.shortDescription)"

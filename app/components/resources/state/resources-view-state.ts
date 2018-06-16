@@ -1,4 +1,3 @@
-import {IdaiFieldDocument} from 'idai-components-2/field';
 import {NavigationPathInternal} from './navigation-path-internal';
 
 

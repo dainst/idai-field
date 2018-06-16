@@ -4,7 +4,7 @@ import {NavigationPath} from './navigation-path';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {OperationViews} from './operation-views';
 import {NavigationPathInternal, NavigationPathSegment} from './navigation-path-internal';
-import {StateSerializer} from "../../../common/state-serializer";
+import {StateSerializer} from '../../../common/state-serializer';
 
 
 @Injectable()
@@ -14,9 +14,10 @@ import {StateSerializer} from "../../../common/state-serializer";
  */
 export class ResourcesState {
 
+    public loaded: boolean = false;
+
     private viewStates: { [viewName: string]: ResourcesViewState } = ResourcesState.makeDefaults();
     private view: string = 'project';
-    public loaded = false;
     private activeDocumentViewTab: string|undefined;
     private mode: 'map' | 'list' = 'map';
 
@@ -41,6 +42,7 @@ export class ResourcesState {
         if (!this.viewStates[this.view]) this.viewStates[this.view] = ResourcesViewState.default();
         this.setActiveDocumentViewTab(undefined);
     }
+
 
     public getOverviewTypeNames = () => this.views.get()
         .map(_ => _.operationSubtype)
@@ -205,7 +207,9 @@ export class ResourcesState {
 
         for (let viewName of Object.keys(this.viewStates)) {
             objectToSerialize[viewName] = {} as any;
-            if (this.viewStates[viewName].layerIds) objectToSerialize[viewName].layerIds = this.viewStates[viewName].layerIds;
+            if (this.viewStates[viewName].layerIds) {
+                objectToSerialize[viewName].layerIds = this.viewStates[viewName].layerIds;
+            }
         }
 
         return objectToSerialize;
@@ -233,6 +237,7 @@ export class ResourcesState {
                 : await this.serializer.load();
 
         ResourcesState.complete(resourcesViewStates);
+
         return resourcesViewStates;
     }
 

@@ -264,7 +264,7 @@ export class NavigationPathManager {
                         {document: document, q: '', types: []}
                     )]);
 
-            }, Array<NavigationPathSegment>())
+            }, Array<NavigationPathSegment>());
     }
 
 

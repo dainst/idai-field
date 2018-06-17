@@ -22,7 +22,7 @@ import {DoceditLauncher} from './service/docedit-launcher';
 import {ViewFacade} from './state/view-facade';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {SettingsService} from '../../core/settings/settings-service';
-import {ListSidebarComponent} from './map/list/list-sidebar.component';
+import {SidebarListComponent} from './map/list/sidebar-list.component';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/field/idai-field-document-datastore';
 import {LayerManager} from './map/map/layer-manager';
 import {LayerImageProvider} from './map/map/layer-image-provider';
@@ -61,7 +61,7 @@ const remote = require('electron').remote;
         PlusButtonComponent,
         ThumbnailViewComponent,
         DocumentViewSidebarComponent,
-        ListSidebarComponent,
+        SidebarListComponent,
         NavigationComponent,
         ResourcesSearchBarComponent,
         SearchSuggestionsComponent

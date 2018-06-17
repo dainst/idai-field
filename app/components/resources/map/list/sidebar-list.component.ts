@@ -10,7 +10,7 @@ import {BaseList} from '../../base-list';
 @Component({
     selector: 'sidebar-list',
     moduleId: module.id,
-    templateUrl: './list-sidebar.html'
+    templateUrl: './sidebar-list.html'
 })
 /**
  * @author Daniel de Oliveira
@@ -18,7 +18,7 @@ import {BaseList} from '../../base-list';
  * @author Sebastian Cuy
  */
 
-export class ListSidebarComponent extends BaseList {
+export class SidebarListComponent extends BaseList {
 
     @Input() activeTab: string;
 

@@ -23,13 +23,19 @@ export class NavigationComponent {
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
-        })
+        });
     }
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
     public moveInto = (document: IdaiFieldDocument|undefined) => this.viewFacade.moveInto(document);
+
+
+    public getNavigationPath(): NavigationPath {
+
+        return this.viewFacade.getIgnoreHierarchy() ? { elements: [] } : this.navigationPath;
+    }
 
 
     public async chooseOperationTypeDocumentOption(document: IdaiFieldDocument) {

@@ -13,6 +13,7 @@ export class OperationTypeDocumentsManager {
 
     private documents: Array<IdaiFieldDocument>;
 
+
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private navigationPathManager: NavigationPathManager,

@@ -70,9 +70,7 @@ export class NavigationPathManager {
         this.resourcesState.setNavigationPathInternal(
 
             NavigationPathManager.makeNewNavigationPath(
-                await this.validateAndRepair(
-                    this.resourcesState.getNavigationPathInternal()
-                ),
+                await this.validateAndRepair(this.resourcesState.getNavigationPathInternal()),
                 document
             )
         );

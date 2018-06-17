@@ -12,7 +12,8 @@
                                       [relationName]="'isRecordedIn'"
                                       [relationRangeType]="viewFacade.getCurrentViewMainType()"
                                       (onQueryStringChanged)="setQueryString($event)"
-                                      (onTypesChanged)="setTypeFilters($event)">
+                                      (onTypesChanged)="setTypeFilters($event)"
+                                      (onQuerySubmitted)="showSearchResults()">
                 </resources-search-bar>
             </div>
 

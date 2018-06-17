@@ -35,6 +35,7 @@ export class SearchBarComponent implements OnChanges {
 
     @Output() onTypesChanged = new EventEmitter<string[]>();
     @Output() onQueryStringChanged = new EventEmitter<string>();
+    @Output() onQuerySubmitted = new EventEmitter<undefined>();
 
     @ViewChild('p') protected popover: any;
 
@@ -71,9 +72,13 @@ export class SearchBarComponent implements OnChanges {
     }
 
 
-    public emitQueryString() {
+    public onKeyUp(event: KeyboardEvent) {
 
-        this.onQueryStringChanged.emit(this.q);
+        if (event.keyCode === 13) { // Return key
+            this.onQuerySubmitted.emit();
+        } else {
+            this.onQueryStringChanged.emit(this.q);
+        }
     }
 
 

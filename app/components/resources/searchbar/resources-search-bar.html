@@ -3,7 +3,7 @@
     <span id="input-wrapper">
         <input #searchInput
                [(ngModel)]="q"
-               (keyup)="emitQueryString()"
+               (keyup)="onKeyUp($event)"
                (focus)="showSuggestions()"
                name="searchInput"
                type="text"

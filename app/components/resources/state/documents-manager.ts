@@ -22,6 +22,8 @@ export class DocumentsManager {
     private documents: Array<Document>;
     private newDocumentsFromRemote: Array<string /* resourceId */> = [];
 
+    private ignoreHierarchy: boolean = false;
+
     private deselectionObservers: Array<Observer<Document>> = [];
     private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
 
@@ -40,6 +42,10 @@ export class DocumentsManager {
     public getDocuments = () => this.documents;
 
     public getSelectedDocument = () => this.resourcesState.getSelectedDocument();
+
+    public getIgnoreHierarchy = () => this.ignoreHierarchy;
+
+    public setIgnoreHierarchy = (ignoreHierarchy: boolean) => this.ignoreHierarchy = ignoreHierarchy;
 
     public removeFromDocuments = (document: Document) => this.documents = subtract([document])(this.documents);
 
@@ -207,7 +213,7 @@ export class DocumentsManager {
 
     private makeDocsQuery(mainTypeDocumentResourceId: string|undefined): Query {
 
-        const q =  {
+        const q: Query = {
             q: this.resourcesState.getQueryString(),
             constraints: this.makeConstraints(mainTypeDocumentResourceId),
             types: (this.resourcesState.getTypeFilters().length > 0)
@@ -217,7 +223,7 @@ export class DocumentsManager {
 
         if (!mainTypeDocumentResourceId
             && this.resourcesState.isInOverview()
-            && !q.types) {
+            && !q.types && !this.ignoreHierarchy) {
 
             q.types = this.resourcesState.getOverviewTypeNames();
         }
@@ -241,14 +247,16 @@ export class DocumentsManager {
 
         const rootDoc = this.navigationPathManager.getNavigationPath().rootDocument;
 
-        const constraints: { [name: string]: string} =
-            rootDoc
-            ? { 'liesWithin:contain': rootDoc.resource.id}
-            : { 'liesWithin:exist': 'UNKNOWN' };
+        const constraints: { [name: string]: string} = this.ignoreHierarchy
+            ? {}
+            : rootDoc
+                ? { 'liesWithin:contain': rootDoc.resource.id }
+                : { 'liesWithin:exist': 'UNKNOWN' };
 
         if (mainTypeDocumentResourceId) {
             constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;
         }
+
         return constraints;
     }
 

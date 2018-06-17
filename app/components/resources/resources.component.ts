@@ -155,6 +155,13 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
+    public async showSearchResults () {
+
+        this.viewFacade.setIgnoreHierarchy(true);
+        await this.viewFacade.populateDocumentList();
+    }
+
+
     private async selectDocumentFromParams(id: string, menu: string, tab: string) {
 
         await this.viewFacade.setSelectedDocumentById(id);

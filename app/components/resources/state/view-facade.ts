@@ -108,6 +108,10 @@ export class ViewFacade {
 
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesState.setActiveDocumentViewTab(activeDocumentViewTab);
 
+    public getIgnoreHierarchy = () => this.documentsManager.getIgnoreHierarchy();
+
+    public setIgnoreHierarchy = (ignoreHierarchy: boolean) => this.documentsManager.setIgnoreHierarchy(ignoreHierarchy);
+
 
     public getMainTypeHomeViewName(mainTypeName: string): string|undefined {
 

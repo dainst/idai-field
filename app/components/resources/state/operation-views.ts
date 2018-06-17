@@ -1,15 +1,14 @@
+import {ViewDefinition} from './view-definition';
+
+
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-import {ViewDefinition} from './view-definition';
-
 export class OperationViews {
 
+    constructor(private _: ViewDefinition[]) {
 
-    constructor(
-        private _: ViewDefinition[]
-    ) {
         if (!_) _ = [];
     }
 

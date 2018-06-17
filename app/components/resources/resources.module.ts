@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/core';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/detail/geometry-view.component';
 import {EditableMapComponent} from './map/map/editable-map.component';
@@ -20,7 +21,6 @@ import {DocumentViewSidebarComponent} from './map/detail/document-detail-sidebar
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {ViewFacade} from './state/view-facade';
-import {ProjectConfiguration} from 'idai-components-2/core';
 import {SettingsService} from '../../core/settings/settings-service';
 import {SidebarListComponent} from './map/list/sidebar-list.component';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/field/idai-field-document-datastore';
@@ -33,9 +33,10 @@ import {NavigationService} from './navigation/navigation-service';
 import {OperationViews} from './state/operation-views';
 import {ResourcesSearchBarComponent} from './searchbar/resources-search-bar.component';
 import {SearchSuggestionsComponent} from './searchbar/search-suggestions.component';
-import {StandardStateSerializer} from "../../common/standard-state-serializer";
-import {StateSerializer} from "../../common/state-serializer";
+import {StandardStateSerializer} from '../../common/standard-state-serializer';
+import {StateSerializer} from '../../common/state-serializer';
 import {ViewDefinition} from './state/view-definition';
+import {Loading} from '../../widgets/loading';
 
 const remote = require('electron').remote;
 
@@ -120,20 +121,24 @@ const remote = require('electron').remote;
                 projectConfiguration: ProjectConfiguration,
                 datastore: IdaiFieldDocumentDatastore,
                 changesStream: RemoteChangesStream,
-                resourcesState: ResourcesState
+                resourcesState: ResourcesState,
+                loading: Loading
             ) {
 
                 return new ViewFacade(
                     datastore,
                     changesStream,
-                    resourcesState
+                    resourcesState,
+                    loading
                 );
             },
             deps: [
                 ProjectConfiguration,
                 IdaiFieldDocumentDatastore,
                 RemoteChangesStream,
-                ResourcesState]
+                ResourcesState,
+                Loading
+            ]
         },
     ],
     exports: [

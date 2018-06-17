@@ -40,10 +40,7 @@ export class ResourcesComponent implements AfterViewChecked {
                 private messages: Messages,
                 private loading: Loading
     ) {
-        loading.start();
         routingService.routeParams(route).subscribe(async (params: any) => {
-            loading.stop();
-            
             if (params['id']) {
                 // The timeout is needed to prevent buggy map behavior after following a relation link from
                 // image component to resources component and after following a conflict resolver link from

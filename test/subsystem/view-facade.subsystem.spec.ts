@@ -49,6 +49,7 @@ export function main() {
         let stateSerializer;
         let changesStream;
         let settingsService;
+        let loading;
 
         let projectDocument: Document;
         let trenchDocument1: IdaiFieldDocument;
@@ -125,10 +126,13 @@ export function main() {
             );
             resourcesState.loaded = true;
 
+            loading = jasmine.createSpyObj('loading', ['start', 'stop']);
+
             viewFacade = new ViewFacade(
                 idaiFieldDocumentDatastore,
                 changesStream,
-                resourcesState
+                resourcesState,
+                loading
             );
         });
 
@@ -165,7 +169,8 @@ export function main() {
             viewFacade = new ViewFacade(
                 idaiFieldDocumentDatastore,
                 changesStream,
-                resourcesState
+                resourcesState,
+                loading
             );
 
             await viewFacade.selectView('excavation');

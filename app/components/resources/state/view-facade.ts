@@ -6,6 +6,7 @@ import {DocumentsManager} from './documents-manager';
 import {ResourcesState} from './resources-state';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
+import {Loading} from '../../../widgets/loading';
 
 /**
  * Manages an overview of operation type resources
@@ -31,7 +32,8 @@ export class ViewFacade {
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
-        private resourcesState: ResourcesState
+        private resourcesState: ResourcesState,
+        private loading: Loading
     ) {
         this.navigationPathManager = new NavigationPathManager(
             resourcesState,
@@ -47,7 +49,8 @@ export class ViewFacade {
             remoteChangesStream,
             this.navigationPathManager,
             this.operationTypeDocumentsManager,
-            resourcesState
+            resourcesState,
+            loading
         );
     }
 

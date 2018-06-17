@@ -8,6 +8,7 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {ResourcesState} from './resources-state';
 import {ObserverUtil} from '../../../util/observer-util';
+import {Loading} from '../../../widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {subtract, unique} from 'tsfun';
 
@@ -33,7 +34,8 @@ export class DocumentsManager {
         private remoteChangesStream: RemoteChangesStream,
         private navigationPathManager: NavigationPathManager,
         private mainTypeDocumentsManager: OperationTypeDocumentsManager,
-        private resourcesState: ResourcesState
+        private resourcesState: ResourcesState,
+        private loading: Loading
     ) {
         remoteChangesStream.notifications().subscribe(document => this.handleChange(document));
     }
@@ -155,9 +157,13 @@ export class DocumentsManager {
 
     public async populateDocumentList(skipResetRemoteDocs = false) {
 
+        this.loading.start();
+
         if (!skipResetRemoteDocs) this.newDocumentsFromRemote = [];
+        this.documents = [];
         this.documents = await this.createUpdatedDocumentList();
 
+        this.loading.stop();
         ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
     }
 

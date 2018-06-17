@@ -37,14 +37,14 @@ export class SidebarListComponent extends BaseList {
     public showMoveIntoOption = (document: IdaiFieldDocument) => this.navigationService.showMoveIntoOption(document);
 
 
-    public select(document: IdaiFieldDocument, autoScroll: boolean = false) {
+    public async select(document: IdaiFieldDocument, autoScroll: boolean = false) {
 
         this.resourcesComponent.isEditingGeometry = false;
 
         if (!document) {
             this.viewFacade.deselect();
         } else {
-            this.viewFacade.setSelectedDocument(document);
+            await this.viewFacade.setSelectedDocument(document);
         }
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);

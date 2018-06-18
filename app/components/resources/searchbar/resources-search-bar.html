@@ -1,4 +1,4 @@
-<form id="search-bar" class="form-inline">
+<form *ngIf="!querySubmitted" id="search-bar" class="form-inline">
 
     <span id="input-wrapper">
         <input #searchInput
@@ -41,3 +41,8 @@
         </ng-template>
     </span>
 </form>
+
+<div *ngIf="querySubmitted" class="btn btn-primary" (click)="editQuery()">
+    <type-icon *ngIf="types && types.length > 0" [type]="types[0]" size="25"></type-icon>
+    <span>{{q}}</span>
+</div>

@@ -152,9 +152,9 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
-    public async showSearchResults () {
+    public async showSearchResults(querySubmitted: boolean) {
 
-        this.viewFacade.setIgnoreHierarchy(true);
+        this.viewFacade.setIgnoreHierarchy(querySubmitted);
         await this.viewFacade.populateDocumentList();
     }
 

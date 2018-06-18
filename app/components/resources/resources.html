@@ -11,9 +11,10 @@
                                       [types]="getTypeFilters()"
                                       [relationName]="'isRecordedIn'"
                                       [relationRangeType]="viewFacade.getCurrentViewMainType()"
+                                      [querySubmitted]="viewFacade.getIgnoreHierarchy()"
                                       (onQueryStringChanged)="setQueryString($event)"
                                       (onTypesChanged)="setTypeFilters($event)"
-                                      (onQuerySubmitted)="showSearchResults()">
+                                      (onQuerySubmitted)="showSearchResults($event)">
                 </resources-search-bar>
             </div>
 

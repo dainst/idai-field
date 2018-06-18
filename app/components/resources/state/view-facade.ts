@@ -186,6 +186,7 @@ export class ViewFacade {
 
         if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument');
         this.navigationPathManager.setMainTypeDocument(operationTypeDocument.resource.id);
+        this.setIgnoreHierarchy(false);
         await this.populateDocumentList();
     }
 
@@ -208,6 +209,7 @@ export class ViewFacade {
 
         await this.resourcesState.initialize(viewName);
         await this.setupMainTypeDocument();
+        this.setIgnoreHierarchy(false);
         await this.populateDocumentList();
     }
 

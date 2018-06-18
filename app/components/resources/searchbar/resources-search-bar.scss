@@ -5,3 +5,14 @@
   position: relative;
   width: 100%;
 }
+
+#edit-query-button {
+  position: relative;
+  top: 3px;
+  padding: 4px 12px;
+
+  #query-label {
+    position: relative;
+    top: -3px;
+  }
+}

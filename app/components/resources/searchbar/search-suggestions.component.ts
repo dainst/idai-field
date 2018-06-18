@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {Document} from 'idai-components-2/core';
+import {Document, Query, Constraint} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {Query} from 'idai-components-2/core';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RoutingService} from '../../routing-service';
 import {ViewFacade} from '../state/view-facade';
@@ -68,7 +67,21 @@ export class SearchSuggestionsComponent implements OnChanges {
 
         const query: Query = { q: this.q };
         if (this.types) query.types = this.types;
+        query.constraints = this.makeConstraints();
 
         return query;
+    }
+
+
+    private makeConstraints(): { [name: string]: Constraint|string} {
+
+        if (this.viewFacade.isInOverview()) return {};
+
+        const operationTypeDocument: IdaiFieldDocument|undefined
+            = this.viewFacade.getSelectedOperationTypeDocument();
+
+        return operationTypeDocument
+            ? { 'isRecordedIn:contain': operationTypeDocument.resource.id }
+            : {};
     }
 }

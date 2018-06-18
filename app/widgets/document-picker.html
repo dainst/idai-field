@@ -1,5 +1,4 @@
-<div class="resource-picker">
-
+<div id="document-picker">
     <search-bar [showFiltersMenu]="true"
                 [relationName]="relationName"
                 [relationRangeType]="relationRangeType"
@@ -16,7 +15,7 @@
         </li>
     </ul>
 
-    <div id="resource-picker-placeholder" *ngIf="!documents || documents.length == 0">
+    <div id="document-picker-placeholder" *ngIf="!documents || documents.length == 0">
         <br>
         <loading-icon></loading-icon>
         <span *ngIf="!fetchDocsRunning">Keine Ziele gefunden</span>

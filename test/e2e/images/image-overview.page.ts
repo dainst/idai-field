@@ -143,8 +143,8 @@ export module ImageOverviewPage {
 
     export function getLinkModalListEntries() {
 
-        browser.wait(EC.presenceOf(element(by.css('.resource-picker ul'))), delays.ECWaitTime);
-        return element.all(by.css('.resource-picker ul li'));
+        browser.wait(EC.presenceOf(element(by.css('#document-picker ul'))), delays.ECWaitTime);
+        return element.all(by.css('#document-picker ul li'));
     }
 
 

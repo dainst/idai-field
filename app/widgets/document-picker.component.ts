@@ -3,6 +3,7 @@ import {Query} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldDocumentDatastore} from '../core/datastore/field/idai-field-document-datastore';
+import {Loading} from './loading';
 
 @Component({
     selector: 'document-picker',
@@ -22,40 +23,41 @@ export class DocumentPickerComponent implements OnChanges {
     @Output() documentSelected: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     public documents: Array<IdaiFieldDocument>;
-    protected query: Query = {};
+    public fetchDocsRunning = false;
 
-    private fetchDocsRunning = false;
+    protected query: Query = {};
 
 
     constructor(private datastore: IdaiFieldDocumentDatastore,
-                private projectConfiguration: ProjectConfiguration) {
+                private projectConfiguration: ProjectConfiguration,
+                private loading: Loading) {
 
         this.query = {};
         this.fetchDocuments();
     }
 
 
-    ngOnChanges() {
+    async ngOnChanges() {
 
-        this.fetchDocuments();
+        await this.fetchDocuments();
     }
 
 
-    public setQueryString(q: string) {
+    public async setQueryString(q: string) {
 
         this.query.q = q;
-        this.fetchDocuments();
+        await this.fetchDocuments();
     }
 
 
-    public setQueryTypes(types: string[]) {
+    public async setQueryTypes(types: string[]) {
 
         if (types && types.length > 0) {
             this.query.types = types;
         } else {
             delete this.query.types;
         }
-        this.fetchDocuments();
+        await this.fetchDocuments();
     }
 
 
@@ -68,12 +70,17 @@ export class DocumentPickerComponent implements OnChanges {
         if (this.fetchDocsRunning) return;
         this.fetchDocsRunning = true;
 
+        this.documents = [];
+        this.loading.start();
+
         try {
             const result = await this.datastore.find(this.query);
             this.documents = this.filterNotAllowedRelationDomainTypes(result.documents);
             this.fetchDocsRunning = false;
         } catch (err) {
             console.error(err);
+        } finally {
+            this.loading.stop();
         }
     }
 

@@ -16,8 +16,9 @@
         </li>
     </ul>
 
-    <div *ngIf="!documents || documents.length == 0">
+    <div id="resource-picker-placeholder" *ngIf="!documents || documents.length == 0">
         <br>
-        Keine Ziele gefunden
+        <loading-icon></loading-icon>
+        <span *ngIf="!fetchDocsRunning">Keine Ziele gefunden</span>
     </div>
 </div>

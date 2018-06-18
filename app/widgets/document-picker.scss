@@ -35,3 +35,12 @@
     color: #999;
   }
 }
+
+#resource-picker-placeholder {
+  height: 51px;
+
+  loading-icon {
+    position: relative;
+    top: 34px;
+  }
+}

@@ -19,6 +19,14 @@
           "description": "Angabe der Objekthöhe"
         }
       }
+    },
+    "Inscription": {
+      "fields": {
+        "hasDimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        }
+      }
     }
   }
 }

@@ -7,6 +7,7 @@ import {M} from '../../m';
 /**
  * @author Daniel de Oliveira
  */
+
 export class MeninxFindImportStrategy implements ImportStrategy {
 
 
@@ -57,6 +58,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         let updateDoc: NewDocument|Document = importDoc;
 
         let exists = false;
+
         try {
             const existing = await this.datastore.find({q: importDoc.resource.identifier});
 
@@ -66,10 +68,42 @@ export class MeninxFindImportStrategy implements ImportStrategy {
                 updateDoc = existing.documents[0];
 
                 // merge fields of document into doc
-                if (importDoc.resource.shortDescription) updateDoc.resource.shortDescription = importDoc.resource.shortDescription;
-                if (importDoc.resource.type) updateDoc.resource.type = importDoc.resource.type;
+                if (importDoc.resource.shortDescription.length > 0) updateDoc.resource.shortDescription = importDoc.resource.shortDescription;
+                if (importDoc.resource.hasVesselFormPottery.length > 0) updateDoc.resource.hasVesselFormPottery = importDoc.resource.hasVesselFormPottery;
+                if (importDoc.resource.hasTypeNumber.length > 0) updateDoc.resource.hasTypeNumber = importDoc.resource.hasTypeNumber;
+                if (importDoc.resource.type.length > 0) updateDoc.resource.type = importDoc.resource.type;
+
+                if (importDoc.resource.sherdTypeCheck === 'B') updateDoc.resource.hasAmountSherdsRimShoulder = importDoc.resource.amount;
+                if (importDoc.resource.sherdTypeCheck === 'C') updateDoc.resource.hasAmountSherdsRimBase = importDoc.resource.amount;
+                if (importDoc.resource.sherdTypeCheck === 'P') updateDoc.resource.hasAmountRimSherds = importDoc.resource.amount;
+                if (importDoc.resource.sherdTypeCheck === 'F') updateDoc.resource.hasAmountSherdsBase = importDoc.resource.amount;
+                if (importDoc.resource.sherdTypeCheck === 'A') updateDoc.resource.hasAmountSherdsHandles = importDoc.resource.amount;;
+
+
+                if (importDoc.resource.hasDecorationTechniquePottery.length > 0) updateDoc.resource.hasDecorationTechniquePottery = importDoc.resource.hasDecorationTechniquePottery;
+                if (importDoc.resource.hasComment.length > 0) updateDoc.resource.hasComment = importDoc.resource.hasComment;
+                if (importDoc.resource.hasProvinience.length > 0) updateDoc.resource.hasProvinience = importDoc.resource.hasProvinience;
+
                 updateDoc.resource.relations['liesWithin'] = importDoc.resource.relations['liesWithin'];
                 updateDoc.resource.relations['isRecordedIn'] = importDoc.resource.relations['isRecordedIn']
+
+            } else {
+
+            if (importDoc.resource.sherdTypeCheck === 'B') importDoc.resource.hasAmountSherdsRimShoulder = importDoc.resource.amount;
+            if (importDoc.resource.sherdTypeCheck === 'C') importDoc.resource.hasAmountSherdsRimBase = importDoc.resource.amount;
+            if (importDoc.resource.sherdTypeCheck === 'P') importDoc.resource.hasAmountRimSherds = importDoc.resource.amount;
+            if (importDoc.resource.sherdTypeCheck === 'F') importDoc.resource.hasAmountSherdsBase = importDoc.resource.amount;
+            if (importDoc.resource.sherdTypeCheck === 'A') importDoc.resource.hasAmountSherdsHandles = importDoc.resource.amount;
+            delete importDoc.resource.amount && delete importDoc.resource.sherdTypeCheck;
+
+            if (importDoc.resource.shortDescription === "") delete importDoc.resource.shortDescription;
+            if (importDoc.resource.hasVesselFormPottery === "") delete importDoc.resource.hasVesselFormPottery;
+            if (importDoc.resource.hasTypeNumber === "") delete importDoc.resource.hasTypeNumber;
+            if (importDoc.resource.hasTypeNumber === "") delete importDoc.resource.hasTypeNumber;
+            if (importDoc.resource.hasDecorationTechniquePottery === "") delete importDoc.resource.hasDecorationTechniquePottery;
+            if (importDoc.resource.hasComment === "") delete importDoc.resource.hasComment;
+            if (importDoc.resource.hasProvinience === "") delete importDoc.resource.hasProvinience;
+
             }
         } catch (err) {}
 

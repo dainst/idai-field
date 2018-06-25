@@ -7,6 +7,8 @@ import {M} from '../../m';
 /**
  * @author Daniel de Oliveira
  */
+
+
 export class MeninxFindCsvParser extends AbstractParser {
 
     public parse(content: string): Observable<Document> {
@@ -19,6 +21,7 @@ export class MeninxFindCsvParser extends AbstractParser {
                 result.errors.forEach( (e: any) => errorCallback(e) );
                 result.data.forEach( (object: any, i:any) => {
 
+
                     if (object.se
                         && object.se.length === 4
                         && object.id) {
@@ -26,8 +29,15 @@ export class MeninxFindCsvParser extends AbstractParser {
                         observer.next({
                             resource: {
                                 identifier: object.se + '-' + object.id,
-                                shortDescription: object.description,
-                                type: 'Find', // TODO set / override type in meninx find import strategy
+                                shortDescription: object.category,
+                                hasVesselFormPottery: object.form,
+                                hasTypeNumber: object.type,
+                                sherdTypeCheck: object.state,
+                                amount: object.nbr,
+                                hasDecorationTechniquePottery: object.Decor,
+                                hasComment: object.comment,
+                                hasProvinience: object.provenience,
+                                type: "Pottery", // TODO: check if really just pottery
                                 relations: {
                                     liesWithin: [
                                         object.se

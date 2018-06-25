@@ -242,13 +242,17 @@ export class NavigationPathManager {
         const repairedNavigationPath = ObjectUtil.cloneObject(navigationPath);
 
         repairedNavigationPath.elements = takeWhile(differentFrom(invalidSegment))(navigationPath.elements);
-        if (navigationPath.rootDocument === invalidSegment.document) repairedNavigationPath.rootDocument = undefined;
+        repairedNavigationPath.rootDocument = navigationPath.rootDocument !== invalidSegment.document
+            ? navigationPath.rootDocument
+            : undefined;
+
         return repairedNavigationPath;
     }
 
 
     private static makeNavigationPathElements(newNavigationPath: NavigationPath,
                                        currentNavigationPath: NavigationPathInternal) {
+
 
         return newNavigationPath.elements.reduce((elements, document) => {
 
@@ -265,15 +269,15 @@ export class NavigationPathManager {
 
 
     private static makeNewNavigationPath(
-        oldNavPath: NavigationPathInternal,
+        oldNavigationPath: NavigationPathInternal,
         newRootDocument: IdaiFieldDocument|undefined): NavigationPathInternal {
 
-        const newNavigationPath = ObjectUtil.cloneObject(oldNavPath);
+        const newNavigationPath = ObjectUtil.cloneObject(oldNavigationPath);
 
         if (newRootDocument) {
             newNavigationPath.elements = this.rebuildElements(
-                oldNavPath.elements,
-                oldNavPath.rootDocument,
+                oldNavigationPath.elements,
+                oldNavigationPath.rootDocument,
                 newRootDocument);
         }
         newNavigationPath.rootDocument = newRootDocument;

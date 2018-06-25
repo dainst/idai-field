@@ -76,6 +76,22 @@ export class ResourcesState {
 
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.activeDocumentViewTab = activeDocumentViewTab;
 
+    public setSelectedDocument = (document: IdaiFieldDocument|undefined) => NavigationPathInternal.setSelectedDocument(this.getNavigationPathInternal(), document);
+
+    public getSelectedDocument = () => NavigationPathInternal.getSelectedDocument(this.getNavigationPathInternal());
+
+    public setQueryString = (q: string) => NavigationPathInternal.setQueryString(this.getNavigationPathInternal(), q);
+
+    public setTypeFilters = (types: string[]) => NavigationPathInternal.setTypeFilters(this.getNavigationPathInternal(), types);
+
+    public getQueryString = (): string => NavigationPathInternal.getQuerySring(this.getNavigationPathInternal());
+
+    public getTypeFilters = (): string[] => NavigationPathInternal.getTypeFilters(this.getNavigationPathInternal());
+
+    public setDisplayHierarchy = (displayHierarchy: boolean) => this.getNavigationPathInternal().displayHierarchy = displayHierarchy;
+
+    public getDisplayHierarchy = (): boolean => this.getNavigationPathInternal().displayHierarchy;
+
 
     public setMainTypeDocument(resourceId: string|undefined) {
 
@@ -85,86 +101,6 @@ export class ResourcesState {
             this.viewStates[this.view].navigationPaths[resourceId] = NavigationPath.empty();
         }
         this.viewStates[this.view].mainTypeDocumentResourceId = resourceId;
-    }
-
-
-    public setSelectedDocument(document: IdaiFieldDocument|undefined) {
-
-        this.withNavPath(
-            navPath => this.getRootSegment(navPath).selected = document,
-            navPath => navPath.selected = document,
-            navPath => navPath.selected = document
-        );
-    }
-
-
-    public getSelectedDocument() {
-
-        return this.withNavPath(
-            navPath => this.getRootSegment(navPath).selected,
-            navPath => navPath.selected,
-            navPath => navPath.selected
-        );
-    }
-
-
-    public setQueryString(q: string) {
-
-        this.withNavPath(
-            navPath => this.getRootSegment(navPath).q = q,
-            navPath => navPath.qWithHierarchy = q,
-            navPath => navPath.qWithoutHierarchy = q
-        );
-    }
-
-
-    public setTypeFilters(types: string[]) {
-
-        this.withNavPath(
-            navPath => this.getRootSegment(navPath).types = types,
-            navPath => navPath.typesWithHierarchy = types,
-            navPath => navPath.typesWithoutHierarchy = types
-        );
-    }
-
-
-    public getQueryString(): string {
-
-        return this.withNavPath(
-            navPath => this.getRootSegment(navPath).q,
-            navPath => navPath.qWithHierarchy,
-            navPath => navPath.qWithoutHierarchy
-        );
-    }
-
-
-    public getTypeFilters(): string[] {
-
-        return this.withNavPath(
-            navPath => this.getRootSegment(navPath).types,
-            navPath => navPath.typesWithHierarchy,
-            navPath => navPath.typesWithoutHierarchy
-        );
-    }
-
-
-    public setDisplayHierarchy(displayHierarchy: boolean) {
-
-        this.getNavigationPathInternal().displayHierarchy = displayHierarchy;
-    }
-
-
-    public getDisplayHierarchy(): boolean {
-
-        return this.getNavigationPathInternal().displayHierarchy;
-    }
-
-
-    private getRootSegment(navigationPath: NavigationPathInternal) {
-
-        return navigationPath.elements.find(element =>
-            element.document.resource.id ==
-                (navigationPath.rootDocument as IdaiFieldDocument).resource.id) as NavigationPathSegment;
     }
 
 
@@ -231,20 +167,6 @@ export class ResourcesState {
         }
 
         return objectToSerialize;
-    }
-
-
-    private withNavPath(doWhenHierarchyIsDisplayedAndRootExists: (n: NavigationPathInternal) => any,
-                        doWhenHierarchyIsDisplayedAndRootDoesNotExist: (n: NavigationPathInternal) => any,
-                        doWhenHierarchyIsNotDisplayed: (n: NavigationPathInternal) => any) {
-
-        const navigationPath = this.getNavigationPathInternal();
-
-        return !navigationPath.displayHierarchy
-            ? doWhenHierarchyIsNotDisplayed(navigationPath)
-            : navigationPath.rootDocument
-                ? doWhenHierarchyIsDisplayedAndRootExists(navigationPath)
-                : doWhenHierarchyIsDisplayedAndRootDoesNotExist(navigationPath);
     }
 
 

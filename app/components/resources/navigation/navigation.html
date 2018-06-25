@@ -1,11 +1,11 @@
 <div id="navigation" class="row">
 
-    <div class="btn btn-primary" (click)="toggleDisplayHierarchy()">
-        <span *ngIf="navigationPath.displayHierarchy" class="mdi mdi-file-tree"></span>
-        <span *ngIf="!navigationPath.displayHierarchy" class="mdi mdi-view-sequential"></span>
-    </div>
-
     <div *ngIf="!this.viewFacade.isInOverview() && viewFacade.getSelectedOperationTypeDocument()" class="btn-group">
+        <div class="btn btn-primary" (click)="toggleDisplayHierarchy()">
+            <span *ngIf="navigationPath.displayHierarchy" class="mdi mdi-file-tree"></span>
+            <span *ngIf="!navigationPath.displayHierarchy" class="mdi mdi-view-sequential"></span>
+        </div>
+
         <div class="btn-group" ngbDropdown placement="bottom-left" role="group" id="operation-document-selector">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
             <div class="dropdown-menu" ngbDropdownMenu>

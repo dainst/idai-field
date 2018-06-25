@@ -11,7 +11,7 @@ import {NavigationPath} from './state/navigation-path';
 
 export class BaseList {
 
-    public navigationPath: NavigationPath = { elements: [] };
+    public navigationPath: NavigationPath = { elements: [], displayHierarchy: true };
 
     constructor(
         public resourcesComponent: ResourcesComponent,

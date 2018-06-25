@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
 import {TypeUtility} from '../../../core/model/type-utility';
@@ -15,10 +15,6 @@ import {TypeUtility} from '../../../core/model/type-utility';
  * @author Thomas Kleinke
  */
 export class ResourcesSearchBarComponent extends SearchBarComponent {
-
-    @Input() querySubmitted: boolean = false;
-
-    @Output() onQuerySubmitted = new EventEmitter<boolean>();
 
     private suggestionsVisible: boolean = false;
 
@@ -44,17 +40,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
     public onKeyUp(event: KeyboardEvent) {
 
-        if (event.keyCode === 13) { // Return key
-            this.onQuerySubmitted.emit(true);
-        } else {
-            this.onQueryStringChanged.emit(this.q);
-        }
-    }
-
-
-    public editQuery() {
-
-        this.onQuerySubmitted.emit(false);
+        this.onQueryStringChanged.emit(this.q);
     }
 
 

@@ -110,12 +110,14 @@ export class NavigationPathManager {
 
         return {
             elements: this.resourcesState.getNavigationPathInternal().elements.map(toDocument),
-            rootDocument: this.resourcesState.getNavigationPathInternal().rootDocument
+            rootDocument: this.resourcesState.getNavigationPathInternal().rootDocument,
+            displayHierarchy: this.resourcesState.getNavigationPathInternal().displayHierarchy
         }
     }
 
 
-    private notify() {
+    // TODO Check if this can be private
+    public notify() {
 
         ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath());
     }
@@ -153,7 +155,11 @@ export class NavigationPathManager {
         if (elements.length == 0) {
             await this.moveInto(undefined);
         } else {
-            this.setNavigationPath({ elements: elements, rootDocument: elements[elements.length - 1]});
+            this.setNavigationPath({
+                elements: elements,
+                rootDocument: elements[elements.length - 1],
+                displayHierarchy: true  // TODO This is unnecessary, try to get rid of it
+            });
         }
     }
 
@@ -214,8 +220,11 @@ export class NavigationPathManager {
                 ),
 
             rootDocument: newNavigationPath.rootDocument,
-            q: currentNavigationPath.q,
-            types: currentNavigationPath.types
+            displayHierarchy: currentNavigationPath.displayHierarchy,
+            qWithHierarchy: currentNavigationPath.qWithHierarchy,
+            typesWithHierarchy: currentNavigationPath.typesWithHierarchy,
+            qWithoutHierarchy: currentNavigationPath.qWithoutHierarchy,
+            typesWithoutHierarchy: currentNavigationPath.typesWithoutHierarchy
         });
 
         this.notify();
@@ -240,8 +249,11 @@ export class NavigationPathManager {
                 rootDocument: navigationPath.rootDocument != invalidSegment.document
                     ? navigationPath.rootDocument
                     : undefined,
-                q: navigationPath.q,
-                types: navigationPath.types,
+                displayHierarchy: navigationPath.displayHierarchy,
+                qWithHierarchy: navigationPath.qWithHierarchy,
+                typesWithHierarchy: navigationPath.typesWithHierarchy,
+                qWithoutHierarchy: navigationPath.qWithoutHierarchy,
+                typesWithoutHierarchy: navigationPath.typesWithoutHierarchy,
                 selected: navigationPath.selected
             }
             : navigationPath;
@@ -259,7 +271,7 @@ export class NavigationPathManager {
 
                 return elements.concat([(index > -1 ?
                         currentNavigationPath.elements[index] :
-                        {document: document, q: '', types: []}
+                        { document: document, q: '', types: [] }
                     )]);
 
             }, Array<NavigationPathSegment>());
@@ -278,8 +290,11 @@ export class NavigationPathManager {
                     newRootDocument)
                 : oldNavigationPath.elements,
             rootDocument: newRootDocument,
-            q: oldNavigationPath.q,
-            types: oldNavigationPath.types,
+            displayHierarchy: oldNavigationPath.displayHierarchy,
+            qWithHierarchy: oldNavigationPath.qWithHierarchy,
+            typesWithHierarchy: oldNavigationPath.typesWithHierarchy,
+            qWithoutHierarchy: oldNavigationPath.qWithoutHierarchy,
+            typesWithoutHierarchy: oldNavigationPath.typesWithoutHierarchy,
             selected: oldNavigationPath.selected
         };
     }

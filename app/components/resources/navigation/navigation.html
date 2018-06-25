@@ -1,5 +1,10 @@
 <div id="navigation" class="row">
 
+    <div class="btn btn-primary" (click)="toggleDisplayHierarchy()">
+        <span *ngIf="navigationPath.displayHierarchy" class="mdi mdi-file-tree"></span>
+        <span *ngIf="!navigationPath.displayHierarchy" class="mdi mdi-view-sequential"></span>
+    </div>
+
     <div *ngIf="!this.viewFacade.isInOverview() && viewFacade.getSelectedOperationTypeDocument()" class="btn-group">
         <div class="btn-group" ngbDropdown placement="bottom-left" role="group" id="operation-document-selector">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
@@ -12,13 +17,13 @@
         </div>
 
         <div id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
-                [class.root-document]="!getNavigationPath().rootDocument"
+                [class.root-document]="!navigationPath.rootDocument"
                 (click)="moveInto(undefined)">
             {{viewFacade.getSelectedOperationTypeDocument().resource.identifier}}
         </div>
 
-        <div *ngFor="let document of getNavigationPath().elements" class="btn btn-outline-primary navigation-button"
-             [class.root-document]="document == getNavigationPath().rootDocument" (click)="moveInto(document)">
+        <div *ngFor="let document of getElements()" class="btn btn-outline-primary navigation-button"
+             [class.root-document]="document == navigationPath.rootDocument" (click)="moveInto(document)">
             {{document.resource.identifier}}
         </div>
     </div>

@@ -16,7 +16,7 @@ import {NavigationPath} from '../state/navigation-path';
  */
 export class NavigationComponent {
 
-    public navigationPath: NavigationPath = { elements: [] };
+    public navigationPath: NavigationPath = { elements: [], displayHierarchy: true };
 
 
     constructor(public viewFacade: ViewFacade) {
@@ -32,9 +32,17 @@ export class NavigationComponent {
     public moveInto = (document: IdaiFieldDocument|undefined) => this.viewFacade.moveInto(document);
 
 
-    public getNavigationPath(): NavigationPath {
+    public async toggleDisplayHierarchy() {
 
-        return this.viewFacade.getIgnoreHierarchy() ? { elements: [] } : this.navigationPath;
+        await this.viewFacade.setDisplayHierarchy(!this.viewFacade.getDisplayHierarchy());
+    }
+
+
+    public getElements(): Array<IdaiFieldDocument> {
+
+        return this.navigationPath.displayHierarchy
+            ? this.navigationPath.elements
+            : [];
     }
 
 

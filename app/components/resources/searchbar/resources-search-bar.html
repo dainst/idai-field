@@ -41,9 +41,3 @@
         </ng-template>
     </span>
 </form>
-
-<div *ngIf="querySubmitted" id="edit-query-button" class="btn btn-primary" (click)="editQuery()">
-    <type-icon *ngIf="types && types.length > 0" [type]="types[0]" size="30"></type-icon>
-    <span id="query-label">{{q}}</span>
-    <span class="mdi mdi-close-circle-outline mdi-18px"></span>
-</div>

@@ -111,9 +111,9 @@ export class ViewFacade {
 
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesState.setActiveDocumentViewTab(activeDocumentViewTab);
 
-    public getIgnoreHierarchy = () => this.documentsManager.getIgnoreHierarchy();
+    public getDisplayHierarchy = () => this.resourcesState.getDisplayHierarchy();
 
-    public setIgnoreHierarchy = (ignoreHierarchy: boolean) => this.documentsManager.setIgnoreHierarchy(ignoreHierarchy);
+    public setDisplayHierarchy = (displayHierarchy: boolean) => this.documentsManager.setDisplayHierarchy(displayHierarchy);
 
 
     public getMainTypeHomeViewName(mainTypeName: string): string|undefined {
@@ -186,7 +186,6 @@ export class ViewFacade {
 
         if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument');
         this.navigationPathManager.setMainTypeDocument(operationTypeDocument.resource.id);
-        this.setIgnoreHierarchy(false);
         await this.populateDocumentList();
     }
 
@@ -209,7 +208,6 @@ export class ViewFacade {
 
         await this.resourcesState.initialize(viewName);
         await this.setupMainTypeDocument();
-        this.setIgnoreHierarchy(false);
         await this.populateDocumentList();
     }
 

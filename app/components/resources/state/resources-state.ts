@@ -92,6 +92,7 @@ export class ResourcesState {
 
         this.withNavPath(
             navPath => this.getRootSegment(navPath).selected = document,
+            navPath => navPath.selected = document,
             navPath => navPath.selected = document
         );
     }
@@ -101,6 +102,7 @@ export class ResourcesState {
 
         return this.withNavPath(
             navPath => this.getRootSegment(navPath).selected,
+            navPath => navPath.selected,
             navPath => navPath.selected
         );
     }
@@ -110,7 +112,8 @@ export class ResourcesState {
 
         this.withNavPath(
             navPath => this.getRootSegment(navPath).q = q,
-            navPath => navPath.q = q
+            navPath => navPath.qWithHierarchy = q,
+            navPath => navPath.qWithoutHierarchy = q
         );
     }
 
@@ -119,7 +122,8 @@ export class ResourcesState {
 
         this.withNavPath(
             navPath => this.getRootSegment(navPath).types = types,
-            navPath => navPath.types = types
+            navPath => navPath.typesWithHierarchy = types,
+            navPath => navPath.typesWithoutHierarchy = types
         );
     }
 
@@ -128,7 +132,8 @@ export class ResourcesState {
 
         return this.withNavPath(
             navPath => this.getRootSegment(navPath).q,
-            navPath => navPath.q
+            navPath => navPath.qWithHierarchy,
+            navPath => navPath.qWithoutHierarchy
         );
     }
 
@@ -137,8 +142,21 @@ export class ResourcesState {
 
         return this.withNavPath(
             navPath => this.getRootSegment(navPath).types,
-            navPath => navPath.types
+            navPath => navPath.typesWithHierarchy,
+            navPath => navPath.typesWithoutHierarchy
         );
+    }
+
+
+    public setDisplayHierarchy(displayHierarchy: boolean) {
+
+        this.getNavigationPathInternal().displayHierarchy = displayHierarchy;
+    }
+
+
+    public getDisplayHierarchy(): boolean {
+
+        return this.getNavigationPathInternal().displayHierarchy;
     }
 
 
@@ -146,7 +164,7 @@ export class ResourcesState {
 
         return navigationPath.elements.find(element =>
             element.document.resource.id ==
-                (navigationPath.rootDocument as IdaiFieldDocument).resource.id)as NavigationPathSegment;
+                (navigationPath.rootDocument as IdaiFieldDocument).resource.id) as NavigationPathSegment;
     }
 
 
@@ -216,14 +234,17 @@ export class ResourcesState {
     }
 
 
-    private withNavPath(doWhenRootExists: (n: NavigationPathInternal) => any,
-                        doWhenRootNotExists: (n: NavigationPathInternal) => any) {
+    private withNavPath(doWhenHierarchyIsDisplayedAndRootExists: (n: NavigationPathInternal) => any,
+                        doWhenHierarchyIsDisplayedAndRootDoesNotExist: (n: NavigationPathInternal) => any,
+                        doWhenHierarchyIsNotDisplayed: (n: NavigationPathInternal) => any) {
 
         const navigationPath = this.getNavigationPathInternal();
 
-        return navigationPath.rootDocument
-            ? doWhenRootExists(navigationPath)
-            : doWhenRootNotExists(navigationPath);
+        return !navigationPath.displayHierarchy
+            ? doWhenHierarchyIsNotDisplayed(navigationPath)
+            : navigationPath.rootDocument
+                ? doWhenHierarchyIsDisplayedAndRootExists(navigationPath)
+                : doWhenHierarchyIsDisplayedAndRootDoesNotExist(navigationPath);
     }
 
 

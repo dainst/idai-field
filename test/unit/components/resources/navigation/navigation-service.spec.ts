@@ -10,7 +10,7 @@ describe('NavigationService', () => {
 
     beforeEach(() => {
 
-        viewFacade = jasmine.createSpyObj('vf', ['isInOverview', 'moveInto', 'getIgnoreHierarchy']);
+        viewFacade = jasmine.createSpyObj('vf', ['isInOverview', 'moveInto', 'getDisplayHierarchy']);
         projectConfiguration = jasmine.createSpyObj('pc', ['getRelationDefinitions']);
 
         navigationService = new NavigationService(

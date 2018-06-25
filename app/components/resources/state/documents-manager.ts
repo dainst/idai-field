@@ -11,6 +11,7 @@ import {ObserverUtil} from '../../../util/observer-util';
 import {Loading} from '../../../widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {subtract, unique} from 'tsfun';
+import {NavigationPath} from './navigation-path';
 
 
 /**
@@ -22,8 +23,6 @@ export class DocumentsManager {
 
     private documents: Array<Document>;
     private newDocumentsFromRemote: Array<string /* resourceId */> = [];
-
-    private ignoreHierarchy: boolean = false;
 
     private deselectionObservers: Array<Observer<Document>> = [];
     private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
@@ -44,10 +43,6 @@ export class DocumentsManager {
     public getDocuments = () => this.documents;
 
     public getSelectedDocument = () => this.resourcesState.getSelectedDocument();
-
-    public getIgnoreHierarchy = () => this.ignoreHierarchy;
-
-    public setIgnoreHierarchy = (ignoreHierarchy: boolean) => this.ignoreHierarchy = ignoreHierarchy;
 
     public removeFromDocuments = (document: Document) => this.documents = subtract([document])(this.documents);
 
@@ -74,6 +69,14 @@ export class DocumentsManager {
     public async setTypeFilters(types: string[]) {
 
         this.resourcesState.setTypeFilters(types);
+        await this.populateAndDeselectIfNecessary();
+    }
+
+
+    public async setDisplayHierarchy(displayHierarchy: boolean) {
+
+        this.resourcesState.setDisplayHierarchy(displayHierarchy);
+        this.navigationPathManager.notify();
         await this.populateAndDeselectIfNecessary();
     }
 
@@ -229,7 +232,7 @@ export class DocumentsManager {
 
         if (!mainTypeDocumentResourceId
             && this.resourcesState.isInOverview()
-            && !q.types && !this.ignoreHierarchy) {
+            && !q.types) {
 
             q.types = this.resourcesState.getOverviewTypeNames();
         }
@@ -251,9 +254,10 @@ export class DocumentsManager {
 
     private makeConstraints(mainTypeDocumentResourceId: string|undefined): { [name: string]: string}  {
 
-        const rootDoc = this.navigationPathManager.getNavigationPath().rootDocument;
+        const navigationPath: NavigationPath = this.navigationPathManager.getNavigationPath();
+        const rootDoc = navigationPath.rootDocument;
 
-        const constraints: { [name: string]: string} = this.ignoreHierarchy
+        const constraints: { [name: string]: string} = !navigationPath.displayHierarchy
             ? {}
             : rootDoc
                 ? { 'liesWithin:contain': rootDoc.resource.id }

@@ -8,9 +8,11 @@ import {NavigationPathBase} from './navigation-path';
  */
 export interface NavigationPathInternal extends NavigationPathBase<NavigationPathSegment> {
 
-    q: string; // top level query string
-    types: string[]; // top level query types
-    selected?: IdaiFieldDocument // top level selected document
+    qWithHierarchy: string;
+    qWithoutHierarchy: string;
+    typesWithHierarchy: string[];
+    typesWithoutHierarchy: string[];
+    selected?: IdaiFieldDocument; // TODO separate with/without hierarchy
 }
 
 

@@ -17,6 +17,7 @@ describe('NavigationService', () => {
             projectConfiguration, undefined, viewFacade);
 
         viewFacade.isInOverview.and.returnValue(false);
+        viewFacade.getDisplayHierarchy.and.returnValue(true);
     });
 
 

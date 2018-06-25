@@ -273,12 +273,12 @@ export class NavigationPathManager {
 
         const newNavigationPath = ObjectUtil.cloneObject(oldNavigationPath);
 
-        newNavigationPath.elements = newRootDocument
-                ? this.rebuildElements(
-                    oldNavigationPath.elements,
-                    oldNavigationPath.rootDocument,
-                    newRootDocument)
-                : oldNavigationPath.elements;
+        if (newRootDocument) {
+            newNavigationPath.elements = this.rebuildElements(
+                oldNavigationPath.elements,
+                oldNavigationPath.rootDocument,
+                newRootDocument);
+        }
         newNavigationPath.rootDocument = newRootDocument;
 
         return newNavigationPath;

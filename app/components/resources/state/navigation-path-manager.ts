@@ -15,6 +15,7 @@ import {
     toDocument,
     toResourceId
 } from './navigation-path-internal';
+import {ObjectUtil} from '../../../util/object-util';
 
 
 /**
@@ -210,23 +211,16 @@ export class NavigationPathManager {
 
         const currentNavigationPath = this.resourcesState.getNavigationPathInternal();
 
-        this.resourcesState.setNavigationPathInternal({
+        const newNavigationPathInternal = ObjectUtil.cloneObject(currentNavigationPath);
+        newNavigationPathInternal.elements = this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)
+            ? currentNavigationPath.elements
+            : NavigationPathManager.makeNavigationPathElements(
+                newNavigationPath,
+                currentNavigationPath
+            );
+        newNavigationPathInternal.rootDocument = newNavigationPath.rootDocument;
 
-            elements: this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)
-                ? currentNavigationPath.elements
-                : NavigationPathManager.makeNavigationPathElements(
-                    newNavigationPath,
-                    currentNavigationPath
-                ),
-
-            rootDocument: newNavigationPath.rootDocument,
-            displayHierarchy: currentNavigationPath.displayHierarchy,
-            qWithHierarchy: currentNavigationPath.qWithHierarchy,
-            typesWithHierarchy: currentNavigationPath.typesWithHierarchy,
-            qWithoutHierarchy: currentNavigationPath.qWithoutHierarchy,
-            typesWithoutHierarchy: currentNavigationPath.typesWithoutHierarchy
-        });
-
+        this.resourcesState.setNavigationPathInternal(newNavigationPathInternal);
         this.notify();
     }
 
@@ -242,21 +236,16 @@ export class NavigationPathManager {
     private async validateAndRepair(navigationPath: NavigationPathInternal): Promise<NavigationPathInternal> {
 
         const invalidSegment = await this.findInvalidSegment(navigationPath);
+        if (!invalidSegment) return navigationPath;
 
-        return invalidSegment
-            ? {
-                elements: takeWhile(differentFrom(invalidSegment))(navigationPath.elements),
-                rootDocument: navigationPath.rootDocument != invalidSegment.document
-                    ? navigationPath.rootDocument
-                    : undefined,
-                displayHierarchy: navigationPath.displayHierarchy,
-                qWithHierarchy: navigationPath.qWithHierarchy,
-                typesWithHierarchy: navigationPath.typesWithHierarchy,
-                qWithoutHierarchy: navigationPath.qWithoutHierarchy,
-                typesWithoutHierarchy: navigationPath.typesWithoutHierarchy,
-                selected: navigationPath.selected
-            }
-            : navigationPath;
+        const repairedNavigationPath = ObjectUtil.cloneObject(navigationPath);
+
+        repairedNavigationPath.elements = takeWhile(differentFrom(invalidSegment))(navigationPath.elements);
+        repairedNavigationPath.rootDocument = navigationPath.rootDocument !== invalidSegment.document
+            ? navigationPath.rootDocument
+            : undefined;
+
+        return repairedNavigationPath;
     }
 
 
@@ -282,21 +271,17 @@ export class NavigationPathManager {
         oldNavigationPath: NavigationPathInternal,
         newRootDocument: IdaiFieldDocument|undefined): NavigationPathInternal {
 
-        return {
-            elements: newRootDocument
+        const newNavigationPath = ObjectUtil.cloneObject(oldNavigationPath);
+
+        newNavigationPath.elements = newRootDocument
                 ? this.rebuildElements(
                     oldNavigationPath.elements,
                     oldNavigationPath.rootDocument,
                     newRootDocument)
-                : oldNavigationPath.elements,
-            rootDocument: newRootDocument,
-            displayHierarchy: oldNavigationPath.displayHierarchy,
-            qWithHierarchy: oldNavigationPath.qWithHierarchy,
-            typesWithHierarchy: oldNavigationPath.typesWithHierarchy,
-            qWithoutHierarchy: oldNavigationPath.qWithoutHierarchy,
-            typesWithoutHierarchy: oldNavigationPath.typesWithoutHierarchy,
-            selected: oldNavigationPath.selected
-        };
+                : oldNavigationPath.elements;
+        newNavigationPath.rootDocument = newRootDocument;
+
+        return newNavigationPath;
     }
 
 

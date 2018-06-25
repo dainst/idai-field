@@ -1,5 +1,6 @@
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {NavigationPathBase} from './navigation-path';
+import {ObjectUtil} from '../../../util/object-util';
 
 
 /**
@@ -26,6 +27,16 @@ export interface NavigationPathSegment {
 
 
 export module NavigationPathInternal {
+
+
+    export function shallowCopy(navPath: NavigationPathInternal) {
+
+        const newNavPath = ObjectUtil.cloneObject(navPath);
+        newNavPath.elements = navPath.elements;
+        newNavPath.rootDocument = navPath.rootDocument;
+        return newNavPath;
+    }
+
 
     export function setSelectedDocument(navigationPath: NavigationPathInternal, document: IdaiFieldDocument|undefined) {
 

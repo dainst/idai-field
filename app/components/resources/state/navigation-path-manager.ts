@@ -210,7 +210,7 @@ export class NavigationPathManager {
     private setNavigationPath(newNavigationPath: NavigationPath) {
 
         const currentNavigationPath = this.resourcesState.getNavigationPathInternal();
-        const newNavigationPathInternal = NavigationPathManager.shallowCopy(currentNavigationPath);
+        const newNavigationPathInternal = NavigationPathInternal.shallowCopy(currentNavigationPath);
 
         if (!this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)) {
             newNavigationPathInternal.elements =  NavigationPathManager.makeNavigationPathElements(
@@ -238,7 +238,7 @@ export class NavigationPathManager {
         const invalidSegment = await this.findInvalidSegment(navigationPath);
         if (!invalidSegment) return navigationPath;
 
-        const repairedNavigationPath = NavigationPathManager.shallowCopy(navigationPath);
+        const repairedNavigationPath = NavigationPathInternal.shallowCopy(navigationPath);
 
         repairedNavigationPath.elements = takeWhile(differentFrom(invalidSegment))(navigationPath.elements);
         if (navigationPath.rootDocument === invalidSegment.document) repairedNavigationPath.rootDocument = undefined;
@@ -269,7 +269,7 @@ export class NavigationPathManager {
         oldNavigationPath: NavigationPathInternal,
         newRootDocument: IdaiFieldDocument|undefined): NavigationPathInternal {
 
-        const newNavigationPath = NavigationPathManager.shallowCopy(oldNavigationPath);
+        const newNavigationPath = NavigationPathInternal.shallowCopy(oldNavigationPath);
 
         if (newRootDocument) {
             newNavigationPath.elements = this.rebuildElements(
@@ -293,14 +293,5 @@ export class NavigationPathManager {
                     ? takeUntil(isSegmentOf(oldRootDocument))(oldSegments)
                     : []
                 ).concat([{document: newRootDocument, q: '', types: []}]);
-    }
-
-
-    private static shallowCopy(navPath: NavigationPathInternal) {
-
-        const newNavPath = ObjectUtil.cloneObject(navPath);
-        newNavPath.elements = navPath.elements;
-        newNavPath.rootDocument = navPath.rootDocument;
-        return newNavPath;
     }
 }

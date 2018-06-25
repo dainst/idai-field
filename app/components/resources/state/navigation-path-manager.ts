@@ -212,13 +212,14 @@ export class NavigationPathManager {
         const currentNavigationPath = this.resourcesState.getNavigationPathInternal();
 
         const newNavigationPathInternal = ObjectUtil.cloneObject(currentNavigationPath);
-        newNavigationPathInternal.elements = this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)
-            ? currentNavigationPath.elements
-            : NavigationPathManager.makeNavigationPathElements(
+
+
+        if (!this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)) {
+            newNavigationPathInternal.elements = NavigationPathManager.makeNavigationPathElements(
                 newNavigationPath,
                 currentNavigationPath
             );
-        newNavigationPathInternal.rootDocument = newNavigationPath.rootDocument;
+        }
 
         this.resourcesState.setNavigationPathInternal(newNavigationPathInternal);
         this.notify();

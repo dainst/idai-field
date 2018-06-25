@@ -210,14 +210,14 @@ export class NavigationPathManager {
     private setNavigationPath(newNavigationPath: NavigationPath) {
 
         const currentNavigationPath = this.resourcesState.getNavigationPathInternal();
+        const newNavigationPathInternal = NavigationPathManager.shallowCopy(currentNavigationPath);
 
-        const newNavigationPathInternal = ObjectUtil.cloneObject(currentNavigationPath);
-        newNavigationPathInternal.elements = this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)
-            ? currentNavigationPath.elements
-            : NavigationPathManager.makeNavigationPathElements(
+        if (!this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)) {
+            newNavigationPathInternal.elements =  NavigationPathManager.makeNavigationPathElements(
                 newNavigationPath,
                 currentNavigationPath
             );
+        }
         newNavigationPathInternal.rootDocument = newNavigationPath.rootDocument;
 
         this.resourcesState.setNavigationPathInternal(newNavigationPathInternal);
@@ -238,12 +238,10 @@ export class NavigationPathManager {
         const invalidSegment = await this.findInvalidSegment(navigationPath);
         if (!invalidSegment) return navigationPath;
 
-        const repairedNavigationPath = ObjectUtil.cloneObject(navigationPath);
+        const repairedNavigationPath = NavigationPathManager.shallowCopy(navigationPath);
 
         repairedNavigationPath.elements = takeWhile(differentFrom(invalidSegment))(navigationPath.elements);
-        repairedNavigationPath.rootDocument = navigationPath.rootDocument !== invalidSegment.document
-            ? navigationPath.rootDocument
-            : undefined;
+        if (navigationPath.rootDocument === invalidSegment.document) repairedNavigationPath.rootDocument = undefined;
 
         return repairedNavigationPath;
     }
@@ -271,14 +269,14 @@ export class NavigationPathManager {
         oldNavigationPath: NavigationPathInternal,
         newRootDocument: IdaiFieldDocument|undefined): NavigationPathInternal {
 
-        const newNavigationPath = ObjectUtil.cloneObject(oldNavigationPath);
+        const newNavigationPath = NavigationPathManager.shallowCopy(oldNavigationPath);
 
-        newNavigationPath.elements = newRootDocument
-                ? this.rebuildElements(
-                    oldNavigationPath.elements,
-                    oldNavigationPath.rootDocument,
-                    newRootDocument)
-                : oldNavigationPath.elements;
+        if (newRootDocument) {
+            newNavigationPath.elements = this.rebuildElements(
+                oldNavigationPath.elements,
+                oldNavigationPath.rootDocument,
+                newRootDocument);
+        }
         newNavigationPath.rootDocument = newRootDocument;
 
         return newNavigationPath;
@@ -295,5 +293,14 @@ export class NavigationPathManager {
                     ? takeUntil(isSegmentOf(oldRootDocument))(oldSegments)
                     : []
                 ).concat([{document: newRootDocument, q: '', types: []}]);
+    }
+
+
+    private static shallowCopy(navPath: NavigationPathInternal) {
+
+        const newNavPath = ObjectUtil.cloneObject(navPath);
+        newNavPath.elements = navPath.elements;
+        newNavPath.rootDocument = navPath.rootDocument;
+        return newNavPath;
     }
 }

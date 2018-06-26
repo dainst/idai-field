@@ -1,7 +1,7 @@
 import {ResourcesComponent} from './resources.component';
 import {ViewFacade} from './state/view-facade';
 import {Loading} from '../../widgets/loading';
-import {FlatNavigationPath} from './state/navpath/flat-navigation-path';
+import {NavigationPath} from './state/navpath/navigation-path';
 
 /**
  * A base class for all lists, e.g. sidebarList and List components
@@ -11,7 +11,7 @@ import {FlatNavigationPath} from './state/navpath/flat-navigation-path';
 
 export class BaseList {
 
-    public navigationPath: FlatNavigationPath = { segments: [] };
+    public navigationPath: NavigationPath = NavigationPath.empty();
 
     constructor(
         public resourcesComponent: ResourcesComponent,
@@ -26,7 +26,8 @@ export class BaseList {
 
     public getSelectedSegmentDoc() {
 
-        return FlatNavigationPath.getSelectedSegmentDoc(this.navigationPath);
+        const segment = NavigationPath.getSelectedSegment(this.navigationPath);
+        return segment ? segment.document : undefined;
     }
 
 

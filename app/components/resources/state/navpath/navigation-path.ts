@@ -1,20 +1,26 @@
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {NavigationPathBase} from './navigation-path-base';
 import {ObjectUtil} from '../../../../util/object-util';
 import {NavigationPathContext} from './navigation-path-context';
-import {isSegmentWith, NavigationPathSegment, toDocument, toResourceId} from './navigation-path-segment';
+import {isSegmentWith, NavigationPathSegment, toResourceId} from './navigation-path-segment';
 import {takeUntil} from 'tsfun';
-import {FlatNavigationPath} from './flat-navigation-path';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export interface NavigationPath extends NavigationPathBase<NavigationPathSegment> {
+export interface NavigationPath {
 
     hierarchyContext: NavigationPathContext;
     flatContext: NavigationPathContext;
+
+    segments: Array<NavigationPathSegment>;
+
+    /**
+     * The selected segment is 'identified' by this id.
+     * It corresponds with segment[_].document.resource.id.
+     */
+    selectedSegmentId?: string;
 }
 
 
@@ -30,12 +36,10 @@ export module NavigationPath {
     }
 
 
-    export function toFlatNavigationPath(navigationPath: NavigationPath): FlatNavigationPath {
+    export function getSelectedSegment(navigationPath: NavigationPath) {
 
-        return {
-            segments: navigationPath.segments.map(toDocument),
-            selectedSegmentId: navigationPath.selectedSegmentId
-        }
+        return navigationPath.segments.find(element =>
+            element.document.resource.id === navigationPath.selectedSegmentId) as NavigationPathSegment;
     }
 
 
@@ -132,12 +136,5 @@ export module NavigationPath {
                     ? takeUntil(isSegmentWith(oldSelectedSegmentId))(oldSegments)
                     : []
             ).concat([{document: newSelectedSegmentDoc, q: '', types: []}]);
-    }
-
-
-    function getSelectedSegment(navigationPath: NavigationPath) {
-
-        return navigationPath.segments.find(element =>
-            element.document.resource.id === navigationPath.selectedSegmentId) as NavigationPathSegment;
     }
 }

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ViewFacade} from '../state/view-facade';
 import {ModelUtil} from '../../../core/model/model-util';
-import {FlatNavigationPath} from '../state/navpath/flat-navigation-path';
+import {NavigationPath} from '../state/navpath/navigation-path';
 
 
 @Component({
@@ -16,7 +16,7 @@ import {FlatNavigationPath} from '../state/navpath/flat-navigation-path';
  */
 export class NavigationComponent {
 
-    public navigationPath: FlatNavigationPath = { segments: [] };
+    public navigationPath: NavigationPath = NavigationPath.empty();
 
 
     constructor(public viewFacade: ViewFacade) {
@@ -37,7 +37,7 @@ export class NavigationComponent {
     public getSegments(): Array<IdaiFieldDocument> {
 
         return this.viewFacade.getDisplayHierarchy()
-            ? this.navigationPath.segments
+            ? this.navigationPath.segments.map(_ => _.document)
             : [];
     }
 

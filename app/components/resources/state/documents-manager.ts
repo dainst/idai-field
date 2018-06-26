@@ -253,7 +253,7 @@ export class DocumentsManager {
 
     private makeConstraints(mainTypeDocumentResourceId: string|undefined): { [name: string]: string}  {
 
-        const navigationPath = this.navigationPathManager.getFlatNavigationPath();
+        const navigationPath = this.navigationPathManager.getNavigationPath();
 
         const constraints: { [name: string]: string} = !this.resourcesState.getDisplayHierarchy()
             ? {}

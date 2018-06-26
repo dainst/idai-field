@@ -5,9 +5,9 @@ import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../state/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
-import {FlatNavigationPath} from '../state/navpath/flat-navigation-path';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
+import {NavigationPath} from '../state/navpath/navigation-path';
 
 
 @Component({
@@ -116,11 +116,13 @@ export class ResourcesMapComponent {
     }
 
 
-    private getParentDocument(navigationPath: FlatNavigationPath): Document|undefined {
+    private getParentDocument(navigationPath: NavigationPath): Document|undefined {
 
         if (!navigationPath.selectedSegmentId) return this.getIsRecordedInTarget();
 
-        return navigationPath.segments
-            .find(_ => _.resource.id === navigationPath.selectedSegmentId);
+        const segment = navigationPath.segments
+            .find(_ => _.document.resource.id === navigationPath.selectedSegmentId);
+
+        return segment ? segment.document : undefined;
     }
 }

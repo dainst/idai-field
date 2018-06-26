@@ -16,9 +16,6 @@ export const isSegmentWith
     = (resourceId: string) => (segment: NavigationPathSegment) => resourceId === segment.document.resource.id;
 
 
-export const toDocument = (segment: NavigationPathSegment) => segment.document;
-
-
 export const toResourceId = (seg: NavigationPathSegment) => seg.document.resource.id;
 
 

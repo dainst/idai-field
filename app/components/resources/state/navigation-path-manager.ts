@@ -3,7 +3,6 @@ import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ResourcesState} from './resources-state';
-import {FlatNavigationPath} from './navpath/flat-navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
@@ -23,7 +22,7 @@ import {SegmentValidator} from './segment-validator';
  */
 export class NavigationPathManager {
 
-    private navigationPathObservers: Array<Observer<FlatNavigationPath>> = [];
+    private navigationPathObservers: Array<Observer<NavigationPath>> = [];
     private segmentValidator: SegmentValidator;
 
     constructor(private resourcesState: ResourcesState,
@@ -33,7 +32,7 @@ export class NavigationPathManager {
     }
 
 
-    public navigationPathNotifications = (): Observable<FlatNavigationPath> =>
+    public navigationPathNotifications = (): Observable<NavigationPath> =>
         ObserverUtil.register(this.navigationPathObservers);
 
 
@@ -91,7 +90,9 @@ export class NavigationPathManager {
 
     public async rebuildNavigationPath() {
 
-        await this.moveInto(FlatNavigationPath.getSelectedSegmentDoc(this.getFlatNavigationPath()));
+        const segment = NavigationPath.getSelectedSegment(this.getNavigationPath());
+
+        await this.moveInto(segment ? segment.document : undefined);
     }
 
 
@@ -108,25 +109,25 @@ export class NavigationPathManager {
     }
 
 
-    // TODO use only from outside. Calls inside this class should always go to this.resourcesState.getNavigationPath()
-    public getFlatNavigationPath(): FlatNavigationPath {
+    // TODO unit test that it returns a clone
+    public getNavigationPath(): NavigationPath {
 
         if (this.resourcesState.isInOverview()) return NavigationPath.empty();
         if (!this.resourcesState.getMainTypeDocumentResourceId()) return NavigationPath.empty();
 
-        return NavigationPath.toFlatNavigationPath(this.resourcesState.getNavigationPath());
+        return ObjectUtil.cloneObject(this.resourcesState.getNavigationPath());
     }
 
 
     private notify() {
 
-        ObserverUtil.notify(this.navigationPathObservers, this.getFlatNavigationPath());
+        ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath());
     }
 
 
     private isPartOfNavigationPath(document: IdaiFieldDocument): boolean {
 
-        const navigationPath = this.getFlatNavigationPath();
+        const navigationPath = this.getNavigationPath();
 
         if (navigationPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
                 navigationPath.selectedSegmentId)) {

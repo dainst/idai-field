@@ -48,8 +48,9 @@ describe('ResourcesState', () => {
             elements: [{
                 document: featureDocument1, q: '', types: []
             }],
-            rootDocument: featureDocument1, qWithHierarchy: '', qWithoutHierarchy: '',
-            typesWithHierarchy: [], typesWithoutHierarchy: []
+            rootDocument: featureDocument1,
+            flatContext: { q: '', types: []},
+            hierarchyContext: { q: '', types: []},
         });
 
         resourcesState.setTypeFilters(['Find']);
@@ -79,8 +80,9 @@ describe('ResourcesState', () => {
                 types: ['Find1'],
                 q: 'abc'
             }],
-            rootDocument: featureDocument1,  qWithHierarchy: '', qWithoutHierarchy: '',
-            typesWithHierarchy: [], typesWithoutHierarchy: []
+            rootDocument: featureDocument1,
+            flatContext: { q: '', types: []},
+            hierarchyContext: { q: '', types: []},
         });
         resourcesState.setTypeFilters(undefined);
         resourcesState.setQueryString('');
@@ -101,8 +103,8 @@ describe('ResourcesState', () => {
             elements: [{
                 document: featureDocument1, q: '', types: []
             }],
-            qWithHierarchy: 'abc', qWithoutHierarchy: '',
-            typesWithHierarchy: ['Find1'], typesWithoutHierarchy: []
+            flatContext: { q: '', types: []},
+            hierarchyContext: { q: 'abc', types: ['Find1']},
         });
         resourcesState.setTypeFilters(undefined);
         resourcesState.setQueryString('');

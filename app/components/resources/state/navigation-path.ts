@@ -1,6 +1,7 @@
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {NavigationPathBase} from './navigation-path-base';
 import {ObjectUtil} from '../../../util/object-util';
+import {NavigationPathContext} from './navigation-path-context';
 
 
 /**
@@ -9,20 +10,15 @@ import {ObjectUtil} from '../../../util/object-util';
  */
 export interface NavigationPath extends NavigationPathBase<NavigationPathSegment> {
 
-    qWithHierarchy: string;
-    qWithoutHierarchy: string;
-    typesWithHierarchy: string[];
-    typesWithoutHierarchy: string[];
+    hierarchyContext: NavigationPathContext;
+    flatContext: NavigationPathContext;
     selected?: IdaiFieldDocument; // TODO separate with/without hierarchy
 }
 
 
-export interface NavigationPathSegment {
+export interface NavigationPathSegment extends NavigationPathContext {
 
     document: IdaiFieldDocument; // nav path document
-    q: string;
-    types: Array<string>;
-    selected?: IdaiFieldDocument; // selected doc in list
 }
 
 
@@ -33,10 +29,8 @@ export module NavigationPath {
 
         return {
             elements: [],
-            qWithHierarchy: '',
-            qWithoutHierarchy: '',
-            typesWithHierarchy: [],
-            typesWithoutHierarchy: []
+            hierarchyContext: { q: '', types: []},
+            flatContext: { q: '', types: []}
         };
     }
 
@@ -88,8 +82,8 @@ export module NavigationPath {
             navigationPath,
             displayHierarchy,
             navPath => getRootSegment(navPath).q = q,
-            navPath => navPath.qWithHierarchy = q,
-            navPath => navPath.qWithoutHierarchy = q
+            navPath => navPath.hierarchyContext.q = q,
+            navPath => navPath.flatContext.q = q
         );
     }
 
@@ -102,8 +96,8 @@ export module NavigationPath {
             navigationPath,
             displayHierarchy,
             navPath => getRootSegment(navPath).q,
-            navPath => navPath.qWithHierarchy,
-            navPath => navPath.qWithoutHierarchy
+            navPath => navPath.hierarchyContext.q,
+            navPath => navPath.flatContext.q
         );
     }
 
@@ -117,8 +111,8 @@ export module NavigationPath {
             navigationPath,
             displayHierarchy,
             navPath => getRootSegment(navPath).types = types,
-            navPath => navPath.typesWithHierarchy = types,
-            navPath => navPath.typesWithoutHierarchy = types
+            navPath => navPath.hierarchyContext.types = types,
+            navPath => navPath.flatContext.types = types
         );
     }
 
@@ -131,8 +125,8 @@ export module NavigationPath {
             navigationPath,
             displayHierarchy,
             navPath => getRootSegment(navPath).types,
-            navPath => navPath.typesWithHierarchy,
-            navPath => navPath.typesWithoutHierarchy
+            navPath => navPath.hierarchyContext.types,
+            navPath => navPath.flatContext.types
         );
     }
 
@@ -140,15 +134,15 @@ export module NavigationPath {
     function withNavPath(
         navigationPath: NavigationPath,
         displayHierarchy: boolean,
-        doWhenHierarchyIsDisplayedAndRootExists: (n: NavigationPath) => any,
-        doWhenHierarchyIsDisplayedAndRootDoesNotExist: (n: NavigationPath) => any,
-        doWhenHierarchyIsNotDisplayed: (n: NavigationPath) => any) {
+        doInHierarchyContextWhenRootExists: (n: NavigationPath) => any,
+        doInHierarchyContextWhenRootNotExist: (n: NavigationPath) => any,
+        doInFlatContext: (n: NavigationPath) => any) {
 
         return !displayHierarchy
-            ? doWhenHierarchyIsNotDisplayed(navigationPath)
+            ? doInFlatContext(navigationPath)
             : navigationPath.rootDocument
-                ? doWhenHierarchyIsDisplayedAndRootExists(navigationPath)
-                : doWhenHierarchyIsDisplayedAndRootDoesNotExist(navigationPath);
+                ? doInHierarchyContextWhenRootExists(navigationPath)
+                : doInHierarchyContextWhenRootNotExist(navigationPath);
     }
 
 

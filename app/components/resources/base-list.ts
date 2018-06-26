@@ -24,6 +24,12 @@ export class BaseList {
     }
 
 
+    public getSelectedSegmentDoc() {
+
+        return FlatNavigationPath.getSelectedSegmentDoc(this.navigationPath);
+    }
+
+
     public showPlusButton(): boolean {
 
         return (!this.resourcesComponent.isEditingGeometry && this.resourcesComponent.ready

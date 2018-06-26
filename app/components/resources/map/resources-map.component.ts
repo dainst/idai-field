@@ -118,8 +118,8 @@ export class ResourcesMapComponent {
 
     private getParentDocument(navigationPath: NavigationPathOut): Document|undefined {
 
-        return navigationPath.rootDocument ?
-            navigationPath.rootDocument :
+        return navigationPath.selectedSegment ?
+            navigationPath.selectedSegment :
             this.getIsRecordedInTarget();
     }
 }

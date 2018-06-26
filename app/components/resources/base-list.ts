@@ -11,7 +11,7 @@ import {NavigationPathOut} from './state/navigation-path-base';
 
 export class BaseList {
 
-    public navigationPath: NavigationPathOut = { elements: [] };
+    public navigationPath: NavigationPathOut = { segments: [] };
 
     constructor(
         public resourcesComponent: ResourcesComponent,

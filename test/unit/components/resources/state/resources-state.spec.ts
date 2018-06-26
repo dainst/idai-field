@@ -45,10 +45,10 @@ describe('ResourcesState', () => {
         resourcesState.setMainTypeDocument(trenchDocument1.resource.id);
 
         resourcesState.setNavigationPath({
-            elements: [{
+            segments: [{
                 document: featureDocument1, q: '', types: []
             }],
-            rootDocument: featureDocument1,
+            selectedSegment: featureDocument1,
             flatContext: { q: '', types: []},
             hierarchyContext: { q: '', types: []},
         });
@@ -75,12 +75,12 @@ describe('ResourcesState', () => {
         resourcesState.setMainTypeDocument(trenchDocument1.resource.id);
 
         resourcesState.setNavigationPath({
-            elements: [{
+            segments: [{
                 document: featureDocument1,
                 types: ['Find1'],
                 q: 'abc'
             }],
-            rootDocument: featureDocument1,
+            selectedSegment: featureDocument1,
             flatContext: { q: '', types: []},
             hierarchyContext: { q: '', types: []},
         });
@@ -100,7 +100,7 @@ describe('ResourcesState', () => {
         resourcesState.setMainTypeDocument(trenchDocument1.resource.id);
 
         resourcesState.setNavigationPath({
-            elements: [{
+            segments: [{
                 document: featureDocument1, q: '', types: []
             }],
             flatContext: { q: '', types: []},

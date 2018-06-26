@@ -10,6 +10,12 @@ export interface NavigationPathOut extends NavigationPathBase<IdaiFieldDocument>
 
 export interface NavigationPathBase<A> {
 
-    elements: Array<A>;
-    rootDocument?: IdaiFieldDocument;
+    segments: Array<A>;
+
+    /**
+     * The selected segment is 'identified' by its document.
+     * In case of NavigationPathOut each segment 'is' document.
+     * In case of NavigationPath each segment 'has a' document.
+     */
+    selectedSegment?: IdaiFieldDocument;
 }

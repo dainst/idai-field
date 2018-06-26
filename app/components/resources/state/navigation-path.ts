@@ -28,7 +28,7 @@ export module NavigationPath {
     export function empty() {
 
         return {
-            elements: [],
+            segments: [],
             hierarchyContext: { q: '', types: []},
             flatContext: { q: '', types: []}
         };
@@ -38,8 +38,8 @@ export module NavigationPath {
     export function shallowCopy(navPath: NavigationPath) {
 
         const newNavPath = ObjectUtil.cloneObject(navPath);
-        newNavPath.elements = navPath.elements;
-        newNavPath.rootDocument = navPath.rootDocument;
+        newNavPath.segments = navPath.segments;
+        newNavPath.selectedSegment = navPath.selectedSegment;
         return newNavPath;
     }
 
@@ -140,7 +140,7 @@ export module NavigationPath {
 
         return !displayHierarchy
             ? doInFlatContext(navigationPath)
-            : navigationPath.rootDocument
+            : navigationPath.selectedSegment
                 ? doInHierarchyContextWhenRootExists(navigationPath)
                 : doInHierarchyContextWhenRootNotExist(navigationPath);
     }
@@ -148,9 +148,9 @@ export module NavigationPath {
 
     function getRootSegment(navigationPath: NavigationPath) {
 
-        return navigationPath.elements.find(element =>
+        return navigationPath.segments.find(element =>
             element.document.resource.id ==
-            (navigationPath.rootDocument as IdaiFieldDocument).resource.id) as NavigationPathSegment;
+            (navigationPath.selectedSegment as IdaiFieldDocument).resource.id) as NavigationPathSegment;
     }
 }
 

@@ -21,13 +21,13 @@
         </div>
 
         <div id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
-                [class.root-document]="!navigationPath.rootDocument"
+                [class.root-document]="!navigationPath.selectedSegment"
                 (click)="moveInto(undefined)">
             {{viewFacade.getSelectedOperationTypeDocument().resource.identifier}}
         </div>
 
-        <div *ngFor="let document of getElements()" class="btn btn-outline-primary navigation-button"
-             [class.root-document]="document == navigationPath.rootDocument" (click)="moveInto(document)">
+        <div *ngFor="let document of getSegments()" class="btn btn-outline-primary navigation-button"
+             [class.root-document]="document === navigationPath.selectedSegment" (click)="moveInto(document)">
             {{document.resource.identifier}}
         </div>
     </div>

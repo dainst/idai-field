@@ -53,7 +53,7 @@ export class ResourcesState {
 
     public getViewType = () => this.isInOverview() ? 'Project' : this.getOperationSubtypeForViewName(this.getView());
 
-    public isInOverview = () => this.getView() == 'project';
+    public isInOverview = () => this.getView() === 'project';
 
     public getView = () => this.view;
 

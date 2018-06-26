@@ -16,7 +16,7 @@ import {NavigationPathOut} from '../state/navigation-path-base';
  */
 export class NavigationComponent {
 
-    public navigationPath: NavigationPathOut = { elements: [] };
+    public navigationPath: NavigationPathOut = { segments: [] };
 
 
     constructor(public viewFacade: ViewFacade) {
@@ -34,10 +34,10 @@ export class NavigationComponent {
     public toggleDisplayHierarchy = () => this.viewFacade.setDisplayHierarchy(!this.viewFacade.getDisplayHierarchy());
 
 
-    public getElements(): Array<IdaiFieldDocument> {
+    public getSegments(): Array<IdaiFieldDocument> {
 
         return this.viewFacade.getDisplayHierarchy()
-            ? this.navigationPath.elements
+            ? this.navigationPath.segments
             : [];
     }
 

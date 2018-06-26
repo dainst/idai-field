@@ -20,7 +20,7 @@
     <plus-button *ngIf="showPlusButton()"
                  id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
                  [preselectedType]="viewFacade.getCurrentFilterType()"
-                 [liesWithin]="navigationPath.rootDocument"
+                 [liesWithin]="navigationPath.selectedSegment"
                  [isRecordedIn]="resourcesComponent.getSelectedOperationTypeDocument()"
                  [skipFormAndReturnNewDocument]="true"
                  (documentRequested)="createNewDocument($event)"></plus-button>

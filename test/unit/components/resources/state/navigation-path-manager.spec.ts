@@ -76,9 +76,9 @@ describe('NavigationPathManager', () => {
 
         await navigationPathManager.moveInto(featureDocument1);
 
-        expect(navigationPathManager.getNavigationPath().rootDocument).toEqual(featureDocument1);
-        expect(navigationPathManager.getNavigationPath().elements.length).toEqual(1);
-        expect(navigationPathManager.getNavigationPath().elements[0]).toEqual(featureDocument1);
+        expect(navigationPathManager.getNavigationPath().selectedSegment).toEqual(featureDocument1);
+        expect(navigationPathManager.getNavigationPath().segments.length).toEqual(1);
+        expect(navigationPathManager.getNavigationPath().segments[0]).toEqual(featureDocument1);
 
         done();
     });
@@ -94,9 +94,9 @@ describe('NavigationPathManager', () => {
         await navigationPathManager.moveInto(featureDocument1);
         await navigationPathManager.moveInto(undefined);
 
-        expect(navigationPathManager.getNavigationPath().rootDocument).toEqual(undefined);
-        expect(navigationPathManager.getNavigationPath().elements.length).toEqual(1);
-        expect(navigationPathManager.getNavigationPath().elements[0]).toEqual(featureDocument1);
+        expect(navigationPathManager.getNavigationPath().selectedSegment).toEqual(undefined);
+        expect(navigationPathManager.getNavigationPath().segments.length).toEqual(1);
+        expect(navigationPathManager.getNavigationPath().segments[0]).toEqual(featureDocument1);
 
         done();
     });
@@ -120,9 +120,9 @@ describe('NavigationPathManager', () => {
 
         await navigationPathManager.moveInto(undefined);
 
-        expect(navigationPathManager.getNavigationPath().rootDocument).toEqual(undefined);
-        expect(navigationPathManager.getNavigationPath().elements.length).toEqual(1);
-        expect(navigationPathManager.getNavigationPath().elements[0]).toEqual(featureDocument1);
+        expect(navigationPathManager.getNavigationPath().selectedSegment).toEqual(undefined);
+        expect(navigationPathManager.getNavigationPath().segments.length).toEqual(1);
+        expect(navigationPathManager.getNavigationPath().segments[0]).toEqual(featureDocument1);
 
         done();
     });
@@ -147,9 +147,9 @@ describe('NavigationPathManager', () => {
 
         await navigationPathManager.moveInto(featureDocument1);
 
-        expect(navigationPathManager.getNavigationPath().rootDocument).toEqual(featureDocument1);
-        expect(navigationPathManager.getNavigationPath().elements.length).toEqual(1);
-        expect(navigationPathManager.getNavigationPath().elements[0]).toEqual(featureDocument1);
+        expect(navigationPathManager.getNavigationPath().selectedSegment).toEqual(featureDocument1);
+        expect(navigationPathManager.getNavigationPath().segments.length).toEqual(1);
+        expect(navigationPathManager.getNavigationPath().segments[0]).toEqual(featureDocument1);
 
         done();
     });
@@ -178,9 +178,9 @@ describe('NavigationPathManager', () => {
 
         await navigationPathManager.updateNavigationPathForDocument(findDocument2);
 
-        expect(navigationPathManager.getNavigationPath().rootDocument).toEqual(featureDocument2);
-        expect(navigationPathManager.getNavigationPath().elements.length).toEqual(1);
-        expect(navigationPathManager.getNavigationPath().elements[0]).toEqual(featureDocument2);
+        expect(navigationPathManager.getNavigationPath().selectedSegment).toEqual(featureDocument2);
+        expect(navigationPathManager.getNavigationPath().segments.length).toEqual(1);
+        expect(navigationPathManager.getNavigationPath().segments[0]).toEqual(featureDocument2);
 
         done();
     });
@@ -203,10 +203,10 @@ describe('NavigationPathManager', () => {
 
         await navigationPathManager.updateNavigationPathForDocument(featureDocument1);
 
-        expect(navigationPathManager.getNavigationPath().rootDocument).toEqual(undefined);
-        expect(navigationPathManager.getNavigationPath().elements.length).toEqual(2);
-        expect(navigationPathManager.getNavigationPath().elements[0]).toEqual(featureDocument1);
-        expect(navigationPathManager.getNavigationPath().elements[1]).toEqual(findDocument1);
+        expect(navigationPathManager.getNavigationPath().selectedSegment).toEqual(undefined);
+        expect(navigationPathManager.getNavigationPath().segments.length).toEqual(2);
+        expect(navigationPathManager.getNavigationPath().segments[0]).toEqual(featureDocument1);
+        expect(navigationPathManager.getNavigationPath().segments[1]).toEqual(findDocument1);
 
         done();
     });

@@ -88,7 +88,7 @@ export class NavigationPathManager {
 
     public async rebuildNavigationPath() {
 
-        await this.moveInto(this.getNavigationPath().rootDocument);
+        await this.moveInto(this.getNavigationPath().selectedSegment);
     }
 
 
@@ -116,8 +116,8 @@ export class NavigationPathManager {
         if (!this.resourcesState.getMainTypeDocumentResourceId()) return NavigationPath.empty();
 
         return {
-            elements: this.resourcesState.getNavigationPath().elements.map(toDocument),
-            rootDocument: this.resourcesState.getNavigationPath().rootDocument
+            segments: this.resourcesState.getNavigationPath().segments.map(toDocument),
+            selectedSegment: this.resourcesState.getNavigationPath().selectedSegment
         }
     }
 
@@ -132,14 +132,14 @@ export class NavigationPathManager {
 
         const navigationPath = this.getNavigationPath();
 
-        if (navigationPath.rootDocument && Document.hasRelationTarget(document, 'liesWithin',
-                navigationPath.rootDocument.resource.id)) {
+        if (navigationPath.selectedSegment && Document.hasRelationTarget(document, 'liesWithin',
+                navigationPath.selectedSegment.resource.id)) {
             return true;
         }
 
         const mainTypeDocumentResourceId = this.resourcesState.getMainTypeDocumentResourceId();
 
-        return (!navigationPath.rootDocument && mainTypeDocumentResourceId != undefined
+        return (!navigationPath.selectedSegment && mainTypeDocumentResourceId != undefined
                 && Document.hasRelationTarget(document, 'isRecordedIn',
                     mainTypeDocumentResourceId )
                 && !Document.hasRelations(document, 'liesWithin'));
@@ -161,8 +161,8 @@ export class NavigationPathManager {
             await this.moveInto(undefined);
         } else {
             this.setNavigationPath({
-                elements: elements,
-                rootDocument: elements[elements.length - 1]
+                segments: elements,
+                selectedSegment: elements[elements.length - 1]
             });
         }
     }
@@ -170,8 +170,8 @@ export class NavigationPathManager {
 
     private async findInvalidSegment(navigationPath: NavigationPath): Promise<NavigationPathSegment|undefined> {
 
-        for (let segment of navigationPath.elements) {
-            if (!await this.isValidSegment(segment, navigationPath.elements)) {
+        for (let segment of navigationPath.segments) {
+            if (!await this.isValidSegment(segment, navigationPath.segments)) {
                 return segment;
             }
         }
@@ -216,12 +216,12 @@ export class NavigationPathManager {
         const newNavigationPathInternal = NavigationPath.shallowCopy(currentNavigationPath);
 
         if (!this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)) {
-            newNavigationPathInternal.elements =  NavigationPathManager.makeNavigationPathElements(
+            newNavigationPathInternal.segments =  NavigationPathManager.makeNavigationPathElements(
                 newNavigationPath,
                 currentNavigationPath
             );
         }
-        newNavigationPathInternal.rootDocument = newNavigationPath.rootDocument;
+        newNavigationPathInternal.selectedSegment = newNavigationPath.selectedSegment;
 
         this.resourcesState.setNavigationPath(newNavigationPathInternal);
         this.notify();
@@ -230,9 +230,9 @@ export class NavigationPathManager {
 
     private rootDocIncludedInCurrentNavigationPath(newNavigationPath: NavigationPathOut) {
 
-        return !newNavigationPath.rootDocument ||
-            this.resourcesState.getNavigationPath().elements.map(toResourceId)
-                .includes(newNavigationPath.rootDocument.resource.id as string);
+        return !newNavigationPath.selectedSegment ||
+            this.resourcesState.getNavigationPath().segments.map(toResourceId)
+                .includes(newNavigationPath.selectedSegment.resource.id as string);
     }
 
 
@@ -243,8 +243,8 @@ export class NavigationPathManager {
 
         const repairedNavigationPath = NavigationPath.shallowCopy(navigationPath);
 
-        repairedNavigationPath.elements = takeWhile(differentFrom(invalidSegment))(navigationPath.elements);
-        if (navigationPath.rootDocument === invalidSegment.document) repairedNavigationPath.rootDocument = undefined;
+        repairedNavigationPath.segments = takeWhile(differentFrom(invalidSegment))(navigationPath.segments);
+        if (navigationPath.selectedSegment === invalidSegment.document) repairedNavigationPath.selectedSegment = undefined;
 
         return repairedNavigationPath;
     }
@@ -254,13 +254,13 @@ export class NavigationPathManager {
                                        currentNavigationPath: NavigationPath) {
 
 
-        return newNavigationPath.elements.reduce((elements, document) => {
+        return newNavigationPath.segments.reduce((elements, document) => {
 
-                const index = currentNavigationPath.elements
+                const index = currentNavigationPath.segments
                     .map(toResourceId).indexOf(document.resource.id);
 
                 return elements.concat([(index > -1 ?
-                        currentNavigationPath.elements[index] :
+                        currentNavigationPath.segments[index] :
                         { document: document, q: '', types: [] }
                     )]);
 
@@ -275,12 +275,12 @@ export class NavigationPathManager {
         const newNavigationPath = NavigationPath.shallowCopy(oldNavigationPath);
 
         if (newRootDocument) {
-            newNavigationPath.elements = this.rebuildElements(
-                oldNavigationPath.elements,
-                oldNavigationPath.rootDocument,
+            newNavigationPath.segments = this.rebuildElements(
+                oldNavigationPath.segments,
+                oldNavigationPath.selectedSegment,
                 newRootDocument);
         }
-        newNavigationPath.rootDocument = newRootDocument;
+        newNavigationPath.selectedSegment = newRootDocument;
 
         return newNavigationPath;
     }

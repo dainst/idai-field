@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ResourcesState} from './resources-state';
-import {NavigationPathOut} from './navigation-path-base';
+import {FlatNavigationPath} from './navpath/flat-navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
@@ -11,10 +11,10 @@ import {differentFrom, takeUntil, takeWhile} from 'tsfun';
 import {
     isSegmentOf,
     NavigationPath,
-    NavigationPathSegment,
     toDocument,
     toResourceId
-} from './navigation-path';
+} from './navpath/navigation-path';
+import {NavigationPathSegment} from './navpath/navigation-path-segment';
 
 
 /**
@@ -23,14 +23,14 @@ import {
  */
 export class NavigationPathManager {
 
-    private navigationPathObservers: Array<Observer<NavigationPathOut>> = [];
+    private navigationPathObservers: Array<Observer<FlatNavigationPath>> = [];
 
 
     constructor(private resourcesState: ResourcesState,
                 private datastore: IdaiFieldDocumentReadDatastore) {}
 
 
-    public navigationPathNotifications = (): Observable<NavigationPathOut> =>
+    public navigationPathNotifications = (): Observable<FlatNavigationPath> =>
         ObserverUtil.register(this.navigationPathObservers);
 
 
@@ -113,7 +113,7 @@ export class NavigationPathManager {
     }
 
 
-    public getNavigationPath(): NavigationPathOut {
+    public getNavigationPath(): FlatNavigationPath {
 
         if (this.resourcesState.isInOverview()) return NavigationPath.empty();
         if (!this.resourcesState.getMainTypeDocumentResourceId()) return NavigationPath.empty();
@@ -213,7 +213,7 @@ export class NavigationPathManager {
     }
 
 
-    private setNavigationPath(newNavigationPath: NavigationPathOut) {
+    private setNavigationPath(newNavigationPath: FlatNavigationPath) {
 
         const currentNavigationPath = this.resourcesState.getNavigationPath();
         const newNavigationPathInternal = NavigationPath.shallowCopy(currentNavigationPath);
@@ -231,7 +231,7 @@ export class NavigationPathManager {
     }
 
 
-    private rootDocIncludedInCurrentNavigationPath(newNavigationPath: NavigationPathOut) {
+    private rootDocIncludedInCurrentNavigationPath(newNavigationPath: FlatNavigationPath) {
 
         return !newNavigationPath.selectedSegmentId ||
             this.resourcesState.getNavigationPath().segments.map(toResourceId)
@@ -255,7 +255,7 @@ export class NavigationPathManager {
     }
 
 
-    private static makeNavigationPathElements(newNavigationPath: NavigationPathOut,
+    private static makeNavigationPathElements(newNavigationPath: FlatNavigationPath,
                                        currentNavigationPath: NavigationPath) {
 
 

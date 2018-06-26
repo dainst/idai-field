@@ -1,7 +1,8 @@
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {NavigationPathBase} from './navigation-path-base';
-import {ObjectUtil} from '../../../util/object-util';
+import {ObjectUtil} from '../../../../util/object-util';
 import {NavigationPathContext} from './navigation-path-context';
+import {NavigationPathSegment} from './navigation-path-segment';
 
 
 /**
@@ -13,12 +14,6 @@ export interface NavigationPath extends NavigationPathBase<NavigationPathSegment
     hierarchyContext: NavigationPathContext;
     flatContext: NavigationPathContext;
     selected?: IdaiFieldDocument; // TODO separate with/without hierarchy
-}
-
-
-export interface NavigationPathSegment extends NavigationPathContext {
-
-    document: IdaiFieldDocument; // nav path document
 }
 
 

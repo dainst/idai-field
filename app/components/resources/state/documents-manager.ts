@@ -11,7 +11,6 @@ import {ObserverUtil} from '../../../util/observer-util';
 import {Loading} from '../../../widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {subtract, unique} from 'tsfun';
-import {NavigationPathOut} from './navigation-path-base';
 
 
 /**
@@ -253,7 +252,7 @@ export class DocumentsManager {
 
     private makeConstraints(mainTypeDocumentResourceId: string|undefined): { [name: string]: string}  {
 
-        const navigationPath: NavigationPathOut = this.navigationPathManager.getNavigationPath();
+        const navigationPath = this.navigationPathManager.getNavigationPath();
 
         const selectedSegmentDoc = navigationPath.segments
             .find(_ => _.resource.id === navigationPath.selectedSegmentId);

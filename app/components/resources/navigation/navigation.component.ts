@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ViewFacade} from '../state/view-facade';
 import {ModelUtil} from '../../../core/model/model-util';
-import {NavigationPathOut} from '../state/navigation-path-base';
+import {FlatNavigationPath} from '../state/navpath/flat-navigation-path';
 
 
 @Component({
@@ -16,7 +16,7 @@ import {NavigationPathOut} from '../state/navigation-path-base';
  */
 export class NavigationComponent {
 
-    public navigationPath: NavigationPathOut = { segments: [] };
+    public navigationPath: FlatNavigationPath = { segments: [] };
 
 
     constructor(public viewFacade: ViewFacade) {

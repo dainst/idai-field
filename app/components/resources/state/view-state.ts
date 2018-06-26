@@ -1,4 +1,4 @@
-import {NavigationPath} from './navigation-path';
+import {NavigationPath} from './navpath/navigation-path';
 
 
 /**

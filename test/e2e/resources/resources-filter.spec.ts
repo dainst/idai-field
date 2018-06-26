@@ -17,51 +17,6 @@ describe('resources/filter --', () => {
     beforeEach(() => ResourcesPage.get());
 
 
-    it('find it by its identifier', () => {
-
-        ResourcesPage.performCreateResource('1');
-        SearchBarPage.typeInSearchField('1');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')),delays.ECWaitTime);
-    });
-
-
-    it('show suggestion for resource from different context', done => {
-
-        SearchBarPage.typeInSearchField('c');
-        browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesPage.getSuggestions().then(suggestions => {
-            expect(suggestions.length).toBe(1);
-            expect(suggestions[0].getText()).toEqual('context1');
-        });
-
-        done();
-    });
-
-
-    it('do not show suggestions if any resources in current context are found', done => {
-
-        SearchBarPage.typeInSearchField('t');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
-        browser.wait(EC.invisibilityOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
-
-        done();
-    });
-
-
-    it('do not suggest project document', done => {
-
-        SearchBarPage.typeInSearchField('te');
-        browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesPage.getSuggestions().then(suggestions => {
-            expect(suggestions.length).toBe(1);
-            expect(suggestions[0].getText()).toEqual('testf1');
-        });
-
-        done();
-    });
-
-
     it('select all filter', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
@@ -217,5 +172,50 @@ describe('resources/filter --', () => {
         SearchBarPage.clickChooseTypeFilter('processunit');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf2')), delays.ECWaitTime);
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+    });
+
+
+    it('find it by its identifier', () => {
+
+        ResourcesPage.performCreateResource('1');
+        SearchBarPage.typeInSearchField('1');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')),delays.ECWaitTime);
+    });
+
+
+    it('show suggestion for resource from different context', done => {
+
+        SearchBarPage.typeInSearchField('c');
+        browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesPage.getSuggestions().then(suggestions => {
+            expect(suggestions.length).toBe(1);
+            expect(suggestions[0].getText()).toEqual('context1');
+        });
+
+        done();
+    });
+
+
+    it('do not show suggestions if any resources in current context are found', done => {
+
+        SearchBarPage.typeInSearchField('t');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
+
+        done();
+    });
+
+
+    it('do not suggest project document', done => {
+
+        SearchBarPage.typeInSearchField('te');
+        browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesPage.getSuggestions().then(suggestions => {
+            expect(suggestions.length).toBe(1);
+            expect(suggestions[0].getText()).toEqual('testf1');
+        });
+
+        done();
     });
 });

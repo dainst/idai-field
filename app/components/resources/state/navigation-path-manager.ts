@@ -94,6 +94,7 @@ export class NavigationPathManager {
     }
 
 
+    // TODO rename and / or split into multiple methods since it does more than the name says
     private isPartOfNavigationPath(document: IdaiFieldDocument): boolean {
 
         const navigationPath = this.getNavigationPath();

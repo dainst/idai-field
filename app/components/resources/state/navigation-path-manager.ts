@@ -154,12 +154,7 @@ export class NavigationPathManager {
         if (segments.length == 0) {
             await this.moveInto(undefined);
         } else {
-            this.setNavigationPath({
-                segments: segments,
-                selectedSegmentId: segments[segments.length - 1].document.resource.id,
-                hierarchyContext: { q: '', types: []}, // unused
-                flatContext: { q: '', types: []} // unused
-            });
+            this.setNavigationPath(segments, segments[segments.length - 1].document.resource.id);
         }
     }
 
@@ -206,16 +201,16 @@ export class NavigationPathManager {
     }
 
 
-    private setNavigationPath(newNavigationPath: NavigationPath) {
+    private setNavigationPath(newSegments: NavigationPathSegment[], newSelectedSegmentId: string) {
 
         const updatedNavigationPath = ObjectUtil.cloneObject(this.resourcesState.getNavigationPath());
 
         if (!NavigationPathManager.selectedSegmentNotPresentInOldNavPath(
-            newNavigationPath, this.resourcesState.getNavigationPath())) {
+            newSelectedSegmentId, this.resourcesState.getNavigationPath())) {
 
-            updatedNavigationPath.segments = newNavigationPath.segments;
+            updatedNavigationPath.segments = newSegments;
         }
-        updatedNavigationPath.selectedSegmentId = newNavigationPath.selectedSegmentId;
+        updatedNavigationPath.selectedSegmentId = newSelectedSegmentId;
 
         this.resourcesState.setNavigationPath(updatedNavigationPath);
         this.notify();
@@ -237,9 +232,8 @@ export class NavigationPathManager {
     }
 
 
-    private static selectedSegmentNotPresentInOldNavPath(newNavPath: NavigationPath, oldNavPath: NavigationPath) {
+    private static selectedSegmentNotPresentInOldNavPath(selectedSegmentId: string, oldNavPath: NavigationPath) {
 
-        return !newNavPath.selectedSegmentId ||
-            oldNavPath.segments.map(toResourceId).includes(newNavPath.selectedSegmentId);
+        return !selectedSegmentId || oldNavPath.segments.map(toResourceId).includes(selectedSegmentId);
     }
 }

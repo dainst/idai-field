@@ -83,8 +83,8 @@ export class NavigationPathManager {
 
     public async rebuildNavigationPath() {
 
-        const selectedSegmentDoc = this.getNavigationPath().segments
-            .find(_ => _.resource.id === this.getNavigationPath().selectedSegmentId);
+        const selectedSegmentDoc = this.getFlatNavigationPath().segments
+            .find(_ => _.resource.id === this.getFlatNavigationPath().selectedSegmentId);
 
         await this.moveInto(selectedSegmentDoc);
     }
@@ -108,7 +108,7 @@ export class NavigationPathManager {
     }
 
 
-    public getNavigationPath(): FlatNavigationPath {
+    public getFlatNavigationPath(): FlatNavigationPath {
 
         if (this.resourcesState.isInOverview()) return NavigationPath.empty();
         if (!this.resourcesState.getMainTypeDocumentResourceId()) return NavigationPath.empty();
@@ -122,13 +122,13 @@ export class NavigationPathManager {
 
     private notify() {
 
-        ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath());
+        ObserverUtil.notify(this.navigationPathObservers, this.getFlatNavigationPath());
     }
 
 
     private isPartOfNavigationPath(document: IdaiFieldDocument): boolean {
 
-        const navigationPath = this.getNavigationPath();
+        const navigationPath = this.getFlatNavigationPath();
 
         if (navigationPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
                 navigationPath.selectedSegmentId)) {

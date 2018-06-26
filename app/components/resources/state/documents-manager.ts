@@ -252,15 +252,12 @@ export class DocumentsManager {
 
     private makeConstraints(mainTypeDocumentResourceId: string|undefined): { [name: string]: string}  {
 
-        const navigationPath = this.navigationPathManager.getNavigationPath();
-
-        const selectedSegmentDoc = navigationPath.segments
-            .find(_ => _.resource.id === navigationPath.selectedSegmentId);
+        const navigationPath = this.navigationPathManager.getFlatNavigationPath();
 
         const constraints: { [name: string]: string} = !this.resourcesState.getDisplayHierarchy()
             ? {}
-            : selectedSegmentDoc
-                ? { 'liesWithin:contain': selectedSegmentDoc.resource.id }
+            : navigationPath.selectedSegmentId
+                ? { 'liesWithin:contain': navigationPath.selectedSegmentId }
                 : { 'liesWithin:exist': 'UNKNOWN' };
 
         if (mainTypeDocumentResourceId) {

@@ -101,7 +101,7 @@ export class ViewFacade {
 
     public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
 
-    public getNavigationPath = () => this.navigationPathManager.getNavigationPath();
+    public getNavigationPath = () => this.navigationPathManager.getFlatNavigationPath();
 
     public rebuildNavigationPath = () => this.navigationPathManager.rebuildNavigationPath();
 

@@ -2,7 +2,8 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {NavigationPathBase} from './navigation-path-base';
 import {ObjectUtil} from '../../../../util/object-util';
 import {NavigationPathContext} from './navigation-path-context';
-import {NavigationPathSegment} from './navigation-path-segment';
+import {isSegmentOf, NavigationPathSegment, toDocument} from './navigation-path-segment';
+import {takeUntil} from 'tsfun';
 
 
 /**
@@ -35,6 +36,24 @@ export module NavigationPath {
         const newNavPath = ObjectUtil.cloneObject(navPath);
         newNavPath.segments = navPath.segments;
         return newNavPath;
+    }
+
+
+    export function setNewSelectedSegmentDoc(
+        oldNavigationPath: NavigationPath,
+        newSelectedSegmentDoc: IdaiFieldDocument|undefined): NavigationPath {
+
+        const newNavigationPath = NavigationPath.shallowCopy(oldNavigationPath);
+
+        if (newSelectedSegmentDoc) {
+            newNavigationPath.segments = rebuildElements(
+                oldNavigationPath.segments,
+                oldNavigationPath.selectedSegmentId,
+                newSelectedSegmentDoc);
+        }
+        newNavigationPath.selectedSegmentId = newSelectedSegmentDoc ? newSelectedSegmentDoc.resource.id : undefined;
+
+        return newNavigationPath;
     }
 
 
@@ -145,14 +164,17 @@ export module NavigationPath {
         return navigationPath.segments.find(element =>
             element.document.resource.id === navigationPath.selectedSegmentId) as NavigationPathSegment;
     }
+
+
+    function rebuildElements(oldSegments: Array<NavigationPathSegment>,
+                             oldSelectedSegmentId: string|undefined,
+                             newSelectedSegmentDoc: IdaiFieldDocument): Array<NavigationPathSegment> {
+
+        return oldSegments.map(toDocument).includes(newSelectedSegmentDoc)
+            ? oldSegments
+            : (oldSelectedSegmentId
+                    ? takeUntil(isSegmentOf(oldSelectedSegmentId))(oldSegments)
+                    : []
+            ).concat([{document: newSelectedSegmentDoc, q: '', types: []}]);
+    }
 }
-
-
-export const isSegmentOf
-    = (resourceId: string) => (segment: NavigationPathSegment) => resourceId === segment.document.resource.id;
-
-
-export const toDocument = (segment: NavigationPathSegment) => segment.document;
-
-
-export const toResourceId = (seg: NavigationPathSegment) => seg.document.resource.id;

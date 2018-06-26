@@ -7,14 +7,9 @@ import {FlatNavigationPath} from './navpath/flat-navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
-import {differentFrom, takeUntil, takeWhile} from 'tsfun';
-import {
-    isSegmentOf,
-    NavigationPath,
-    toDocument,
-    toResourceId
-} from './navpath/navigation-path';
-import {NavigationPathSegment} from './navpath/navigation-path-segment';
+import {differentFrom, takeWhile} from 'tsfun';
+import {NavigationPath} from './navpath/navigation-path';
+import {NavigationPathSegment, toDocument, toResourceId} from './navpath/navigation-path-segment';
 
 
 /**
@@ -76,7 +71,7 @@ export class NavigationPathManager {
 
         this.resourcesState.setNavigationPath(
 
-            NavigationPathManager.makeNewNavigationPath(
+            NavigationPath.setNewSelectedSegmentDoc(
                 await this.validateAndRepair(this.resourcesState.getNavigationPath()),
                 document
             )
@@ -270,36 +265,5 @@ export class NavigationPathManager {
                     )]);
 
             }, Array<NavigationPathSegment>());
-    }
-
-
-    private static makeNewNavigationPath(
-        oldNavigationPath: NavigationPath,
-        newRootDocument: IdaiFieldDocument|undefined): NavigationPath {
-
-        const newNavigationPath = NavigationPath.shallowCopy(oldNavigationPath);
-
-        if (newRootDocument) {
-            newNavigationPath.segments = this.rebuildElements(
-                oldNavigationPath.segments,
-                oldNavigationPath.selectedSegmentId,
-                newRootDocument);
-        }
-        newNavigationPath.selectedSegmentId = newRootDocument ? newRootDocument.resource.id : undefined;
-
-        return newNavigationPath;
-    }
-
-
-    private static rebuildElements(oldSegments: Array<NavigationPathSegment>,
-                                   oldRootDocumentId: string|undefined,
-                                   newRootDocument: IdaiFieldDocument): Array<NavigationPathSegment> {
-
-        return oldSegments.map(toDocument).includes(newRootDocument)
-            ? oldSegments
-            : (oldRootDocumentId
-                    ? takeUntil(isSegmentOf(oldRootDocumentId))(oldSegments)
-                    : []
-                ).concat([{document: newRootDocument, q: '', types: []}]);
     }
 }

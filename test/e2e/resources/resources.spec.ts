@@ -108,7 +108,7 @@ describe('resources --', () => {
     });
 
 
-    it('docedit modal: should save changes via dialog modal', () => {
+    it('docedit modal: hould save changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -146,7 +146,7 @@ describe('resources --', () => {
     });
 
 
-    it('main types: create a resource', () => {
+    it('main types: should create a new main type resource', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
         ResourcesPage.performCreateMainTypeResource('newTrench');
@@ -166,7 +166,7 @@ describe('resources --', () => {
     });
 
 
-    it('main types: edit a resource', () => {
+    it('main types should edit a main type resource', () => {
 
         NavbarPage.clickNavigateToProject();
         ResourcesPage.openEditByDoubleClickResource('trench1');
@@ -178,7 +178,7 @@ describe('resources --', () => {
     });
 
 
-    it('main types: delete a resource', () => {
+    it('main types: should delete a main type resource', () => {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
@@ -280,7 +280,7 @@ describe('resources --', () => {
     });
 
 
-    it('detail-sidebar: show the relations present in the object', () => {
+    it('detail-sidebar: relations show the relations present in the object', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
@@ -464,52 +464,6 @@ describe('resources --', () => {
             expect(thumbs.length).toBe(0);
             done();
         });
-    });
-
-
-    it('list mode: show newly created resource in list view', () => {
-
-        ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
-        ResourcesPage.getListModeInputFieldValue('1', 0).then(inputValue => expect(inputValue).toEqual('1'));
-    });
-
-
-    it('list mode: save changes on input field blur', () => {
-
-        ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
-        ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
-
-        ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
-        ResourcesPage.getListModeInputField('2', 0).click();
-    });
-
-
-    it('list mode: navigate to child item view in list mode and create a new child object', () => {
-
-        ResourcesPage.performCreateResourceInList('5', 'feature-architecture');
-        ResourcesPage.clickMoveIntoButton('5');
-        ResourcesPage.performCreateResourceInList('child1', 'find');
-        NavbarPage.clickNavigateToProject();
-        NavbarPage.clickNavigateToExcavation();
-
-        ResourcesPage.getListModeInputFieldValue('child1', 0).then(inputValue => expect(inputValue).toEqual('child1'));
-    });
-
-
-    it('list mode: restore identifier from database if a duplicate identifier is typed in', () => {
-
-        ResourcesPage.performCreateResourceInList('1', 'feature-architecture');
-        ResourcesPage.performCreateResourceInList('2', 'feature-architecture');
-        ResourcesPage.performCreateResourceInList('3', 'feature-architecture');
-
-        ResourcesPage.typeInListModeInputField('2', 0, '1');
-        ResourcesPage.getListModeInputField('3', 0).click();
-
-        expect(NavbarPage.getMessageText()).toContain('existiert bereits');
-
-        ResourcesPage.getListModeInputFieldValue('2', 0).then(inputValue => expect(inputValue).toEqual('2'));
-        NavbarPage.clickCloseAllMessages();
-
     });
 
 

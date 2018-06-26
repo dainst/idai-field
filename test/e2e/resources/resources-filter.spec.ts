@@ -186,36 +186,4 @@ describe('resources/filter --', () => {
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
     });
-
-
-    it('list mode: perform a fulltext search', () => {
-
-        ResourcesPage.performCreateResourceInList('context2', 'feature');
-
-        SearchBarPage.typeInSearchField('context1');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-
-        SearchBarPage.typeInSearchField('context2');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
-
-        SearchBarPage.typeInSearchField('abc');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
-    });
-
-
-    it('list mode: perform a type filter search', () => {
-
-        ResourcesPage.performCreateResourceInList('testf2', 'find');
-
-        SearchBarPage.clickChooseTypeFilter('find');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf2')), delays.ECWaitTime);
-
-        SearchBarPage.clickChooseTypeFilter('processunit');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf2')), delays.ECWaitTime);
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-    });
 });

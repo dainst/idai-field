@@ -2,7 +2,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {NavigationPathBase} from './navigation-path-base';
 import {ObjectUtil} from '../../../../util/object-util';
 import {NavigationPathContext} from './navigation-path-context';
-import {isSegmentOf, NavigationPathSegment, toDocument, toResourceId} from './navigation-path-segment';
+import {isSegmentWith, NavigationPathSegment, toDocument, toResourceId} from './navigation-path-segment';
 import {takeUntil} from 'tsfun';
 import {FlatNavigationPath} from './flat-navigation-path';
 
@@ -175,7 +175,7 @@ export module NavigationPath {
         return oldSegments.map(toResourceId).includes(newSelectedSegmentDoc.resource.id)
             ? oldSegments
             : (oldSelectedSegmentId
-                    ? takeUntil(isSegmentOf(oldSelectedSegmentId))(oldSegments)
+                    ? takeUntil(isSegmentWith(oldSelectedSegmentId))(oldSegments)
                     : []
             ).concat([{document: newSelectedSegmentDoc, q: '', types: []}]);
     }

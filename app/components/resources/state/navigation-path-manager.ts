@@ -7,9 +7,12 @@ import {FlatNavigationPath} from './navpath/flat-navigation-path';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
-import {differentFrom, takeWhile} from 'tsfun';
+import {takeWhile} from 'tsfun';
 import {NavigationPath} from './navpath/navigation-path';
-import {NavigationPathSegment, toDocument, toResourceId} from './navpath/navigation-path-segment';
+import {
+    differentFrom, NavigationPathSegment,
+    toResourceId
+} from './navpath/navigation-path-segment';
 import {ObjectUtil} from '../../../util/object-util';
 
 
@@ -239,11 +242,7 @@ export class NavigationPathManager {
 
         const repairedNavigationPath = ObjectUtil.cloneObject(navigationPath);
 
-
-        repairedNavigationPath.segments = takeWhile(
-            (segment: NavigationPathSegment) => segment.document.resource.id !== invalidSegment.document.resource.id // TODO make different from method in navigation path segment
-        )(navigationPath.segments);
-
+        repairedNavigationPath.segments = takeWhile(differentFrom(invalidSegment))(navigationPath.segments);
 
         if (navigationPath.selectedSegmentId === invalidSegment.document.resource.id) {
             repairedNavigationPath.selectedSegmentId = undefined;

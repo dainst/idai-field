@@ -13,6 +13,12 @@
         <div class="btn-group" ngbDropdown placement="bottom-left" role="group" id="operation-document-selector">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
             <div class="dropdown-menu" ngbDropdownMenu>
+
+                <button *ngIf="!viewFacade.getDisplayHierarchy() && !viewFacade.getBypassOperationTypeSelection()" class="dropdown-item" (click)="activateBypassOperationTypeSelection()">
+                    Alle
+                </button>
+
+                <!-- TODO hide a selected operation type -->
                 <button *ngFor="let document of viewFacade.getOperationTypeDocuments()" class="dropdown-item"
                         (click)="chooseOperationTypeDocumentOption(document)">
                     {{getDocumentLabel(document)}}
@@ -20,10 +26,19 @@
             </div>
         </div>
 
-        <div id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
-                [class.root-document]="!navigationPath.selectedSegmentId"
-                (click)="moveInto(undefined)">
+        <div *ngIf="viewFacade.getDisplayHierarchy() || !viewFacade.getBypassOperationTypeSelection()"
+             id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
+             [class.root-document]="!navigationPath.selectedSegmentId"
+             (click)="moveInto(undefined)">
             {{viewFacade.getSelectedOperationTypeDocument().resource.identifier}}
+        </div>
+
+        <div *ngIf="!viewFacade.getDisplayHierarchy() && viewFacade.getBypassOperationTypeSelection()"
+            id="selected-all-operation-type-documents" type="button" class="btn btn-outline-primary navigation-button"
+            [class.root-document]="!navigationPath.selectedSegmentId"
+            (click)="moveInto(undefined)">
+
+            Alle
         </div>
 
         <div *ngFor="let document of getSegments()" class="btn btn-outline-primary navigation-button"

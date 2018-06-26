@@ -7,7 +7,10 @@ import {NavigationPath} from '../navpath/navigation-path';
 export interface ViewState {
 
     mainTypeDocumentResourceId?: string;
+
     displayHierarchy: boolean;
+    bypassOperationTypeSelection: boolean; // true means all mainTypeDocuments are selected. used when displayHierarchy is false.
+
     layerIds: {[mainTypeDocumentId: string]: string[]};
     navigationPaths: {[mainTypeDocumentId: string]: NavigationPath};
 }
@@ -20,6 +23,7 @@ export class ViewState {
         return {
             mode: 'map',
             displayHierarchy: true,
+            bypassOperationTypeSelection: false,
             navigationPaths: {},
             layerIds: {}
         };

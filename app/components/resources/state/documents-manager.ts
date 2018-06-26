@@ -79,6 +79,13 @@ export class DocumentsManager {
     }
 
 
+    public async setBybassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
+
+        this.navigationPathManager.setBypassOperationTypeSelection(bypassOperationTypeSelection);
+        await this.populateAndDeselectIfNecessary();
+    }
+
+
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
         await this.navigationPathManager.moveInto(document);

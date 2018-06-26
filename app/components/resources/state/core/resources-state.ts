@@ -79,6 +79,10 @@ export class ResourcesState {
 
     public getDisplayHierarchy = (): boolean => this.viewStates[this.view].displayHierarchy;
 
+    public setBypassOperationTypeSelection = (bypassOperationTypeSelection: boolean) => this.viewStates[this.view].bypassOperationTypeSelection = bypassOperationTypeSelection;
+
+    public getBypassOperationTypeSelection = () => this.viewStates[this.view].bypassOperationTypeSelection;
+
 
     public setSelectedDocument(document: IdaiFieldDocument|undefined) {
 

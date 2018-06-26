@@ -115,6 +115,8 @@ export class ViewFacade {
 
     public setDisplayHierarchy = (displayHierarchy: boolean) => this.documentsManager.setDisplayHierarchy(displayHierarchy);
 
+    public getBypassOperationTypeSelection = () => this.resourcesState.getBypassOperationTypeSelection();
+
 
     public getMainTypeHomeViewName(mainTypeName: string): string|undefined {
 
@@ -182,9 +184,16 @@ export class ViewFacade {
     }
 
 
+    public setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
+
+        if (this.isInOverview()) throw ViewFacade.err('setBypassOperationTypeSelection');
+        this.documentsManager.setBybassOperationTypeSelection(bypassOperationTypeSelection);
+    }
+
+
     public async selectOperationTypeDocument(operationTypeDocument: Document): Promise<void> {
 
-        if (this.isInOverview()) throw ViewFacade.err('selectMainTypeDocument');
+        if (this.isInOverview()) throw ViewFacade.err('selectOperationTypeDocument');
         this.navigationPathManager.setMainTypeDocument(operationTypeDocument.resource.id);
         await this.populateDocumentList();
     }

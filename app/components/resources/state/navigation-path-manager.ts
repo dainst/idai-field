@@ -35,6 +35,13 @@ export class NavigationPathManager {
     }
 
 
+    public setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
+
+        this.resourcesState.setBypassOperationTypeSelection(bypassOperationTypeSelection);
+        this.notify();
+    }
+
+
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
         const invalidSegment = await SegmentValidator.findInvalidSegment(
@@ -62,6 +69,7 @@ export class NavigationPathManager {
 
     public setMainTypeDocument(selectedMainTypeDocumentResourceId: string|undefined) {
 
+        if (!this.resourcesState.getDisplayHierarchy()) this.resourcesState.setBypassOperationTypeSelection(false);
         if (selectedMainTypeDocumentResourceId) this.resourcesState.setMainTypeDocument(selectedMainTypeDocumentResourceId);
         this.notify();
     }

@@ -13,9 +13,9 @@ export interface NavigationPathBase<A> {
     segments: Array<A>;
 
     /**
-     * The selected segment is 'identified' by its document.
-     * In case of NavigationPathOut each segment 'is' document.
-     * In case of NavigationPath each segment 'has a' document.
+     * The selected segment is 'identified' by this id.
+     * In case of NavigationPathOut it corresponds with segment.resource.id,
+     * in case of NavigationPath with segment.document.resource.id.
      */
     selectedSegmentId?: string;
 }

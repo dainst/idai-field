@@ -73,7 +73,11 @@ export class NavigationPathManager {
      */
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
-        const validatedNavigationPath = await this.validateAndRepair(this.resourcesState.getNavigationPath());
+        const invalidSegment = await this.findInvalidSegment(this.resourcesState.getNavigationPath());
+        const validatedNavigationPath = invalidSegment
+            ? NavigationPathManager.repair(this.resourcesState.getNavigationPath(), invalidSegment)
+            : this.resourcesState.getNavigationPath();
+
         const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
         this.resourcesState.setNavigationPath(updatedNavigationPath);
         this.notify();
@@ -218,10 +222,8 @@ export class NavigationPathManager {
     }
 
 
-    private async validateAndRepair(navigationPath: NavigationPath): Promise<NavigationPath> {
-
-        const invalidSegment = await this.findInvalidSegment(navigationPath);
-        if (!invalidSegment) return navigationPath;
+    private static repair(navigationPath: NavigationPath,
+                          invalidSegment: NavigationPathSegment): NavigationPath {
 
         const repairedNavigationPath = ObjectUtil.cloneObject(navigationPath);
 

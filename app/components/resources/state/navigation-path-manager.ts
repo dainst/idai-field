@@ -114,10 +114,7 @@ export class NavigationPathManager {
         if (this.resourcesState.isInOverview()) return NavigationPath.empty();
         if (!this.resourcesState.getMainTypeDocumentResourceId()) return NavigationPath.empty();
 
-        return {
-            segments: this.resourcesState.getNavigationPath().segments.map(toDocument),
-            selectedSegmentId: this.resourcesState.getNavigationPath().selectedSegmentId
-        }
+        return NavigationPath.toFlatNavigationPath(this.resourcesState.getNavigationPath());
     }
 
 

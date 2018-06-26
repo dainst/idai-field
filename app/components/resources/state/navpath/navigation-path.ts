@@ -4,6 +4,7 @@ import {ObjectUtil} from '../../../../util/object-util';
 import {NavigationPathContext} from './navigation-path-context';
 import {isSegmentOf, NavigationPathSegment, toDocument, toResourceId} from './navigation-path-segment';
 import {takeUntil} from 'tsfun';
+import {FlatNavigationPath} from './flat-navigation-path';
 
 
 /**
@@ -28,6 +29,15 @@ export module NavigationPath {
             hierarchyContext: { q: '', types: []},
             flatContext: { q: '', types: []}
         };
+    }
+
+
+    export function toFlatNavigationPath(navigationPath: NavigationPath): FlatNavigationPath {
+
+        return {
+            segments: navigationPath.segments.map(toDocument),
+            selectedSegmentId: navigationPath.selectedSegmentId
+        }
     }
 
 

@@ -8,7 +8,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
  */
 export interface NavigationPathSegment extends NavigationPathContext {
 
-    document: IdaiFieldDocument; // nav path document
+    document: IdaiFieldDocument;
 }
 
 

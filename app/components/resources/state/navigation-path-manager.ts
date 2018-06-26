@@ -73,14 +73,9 @@ export class NavigationPathManager {
      */
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
-        this.resourcesState.setNavigationPath(
-
-            NavigationPath.setNewSelectedSegmentDoc(
-                await this.validateAndRepair(this.resourcesState.getNavigationPath()),
-                document
-            )
-        );
-
+        const validatedNavigationPath = await this.validateAndRepair(this.resourcesState.getNavigationPath());
+        const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
+        this.resourcesState.setNavigationPath(updatedNavigationPath);
         this.notify();
     }
 
@@ -93,10 +88,7 @@ export class NavigationPathManager {
 
     public setMainTypeDocument(selectedMainTypeDocumentResourceId: string|undefined) {
 
-        if (selectedMainTypeDocumentResourceId) {
-            this.resourcesState.setMainTypeDocument(selectedMainTypeDocumentResourceId);
-        }
-
+        if (selectedMainTypeDocumentResourceId) this.resourcesState.setMainTypeDocument(selectedMainTypeDocumentResourceId);
         this.notify();
     }
 

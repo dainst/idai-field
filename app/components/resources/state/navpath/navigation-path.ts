@@ -43,21 +43,54 @@ export module NavigationPath {
     }
 
 
+    /**
+     * Moves the 'selectedSegment' within or adds a 'selectedDocument' to a navigation path.
+     *
+     * Let's say document1 corresponds to segment1 etc.
+     * and we have a navigation path with an optional root (V)
+     *
+     *               V
+     * SEGMENT1, SEGMENT2, SEGMENT3
+     *
+     * setNewSelectedSegmentDoc(navpah, document4) changes the situation to
+     *
+     *                             V
+     * NP: SEGMENT1, SEGMENT2, SEGMENT4
+     *
+     * from there, setNewSelectedSegmentDoc(navpath, document5) changes the situation to
+     *
+     *                                   V
+     * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
+     *
+     * from there, setNewSelectedSegmentDoc(navpath, document1) changes the situation to
+     *
+     *     V
+     * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
+     *
+     * from there, setNewSelectedSegmentDoc(navpath, undefined) changes the situation to
+     *
+     * (NO SELECTED SEGMENT)
+     * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
+     *
+     * @param navigationPath
+     * @param newSelectedSegmentDoc
+     * @return a new path object with updated state
+     */
     export function setNewSelectedSegmentDoc(
-        oldNavigationPath: NavigationPath,
+        navigationPath: NavigationPath,
         newSelectedSegmentDoc: IdaiFieldDocument|undefined): NavigationPath {
 
-        const newNavigationPath = ObjectUtil.cloneObject(oldNavigationPath);
+        const updatedNavigationPath = ObjectUtil.cloneObject(navigationPath);
 
         if (newSelectedSegmentDoc) {
-            newNavigationPath.segments = rebuildElements(
-                oldNavigationPath.segments,
-                oldNavigationPath.selectedSegmentId,
+            updatedNavigationPath.segments = rebuildElements(
+                navigationPath.segments,
+                navigationPath.selectedSegmentId,
                 newSelectedSegmentDoc);
         }
-        newNavigationPath.selectedSegmentId = newSelectedSegmentDoc ? newSelectedSegmentDoc.resource.id : undefined;
+        updatedNavigationPath.selectedSegmentId = newSelectedSegmentDoc ? newSelectedSegmentDoc.resource.id : undefined;
 
-        return newNavigationPath;
+        return updatedNavigationPath;
     }
 
 

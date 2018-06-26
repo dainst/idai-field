@@ -43,37 +43,6 @@ export class NavigationPathManager {
     }
 
 
-    /**
-     * Moves the 'root' within or adds a 'root' to a navigation path.
-     *
-     * Let's say document1 corresponds to segment1 etc.
-     * and we have a navigation path with an optional root (V)
-     *
-     *               V
-     * SEGMENT1, SEGMENT2, SEGMENT3
-     *
-     * moveInto(document4) changes the situation to
-     * 
-     *                             V
-     * NP: SEGMENT1, SEGMENT2, SEGMENT4
-     *
-     * from there, moveInto(document5) changes the situation to
-     *
-     *                                   V
-     * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
-     *
-     * from there, moveInto(document1) changes the situation to
-     *
-     *     V
-     * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
-     *
-     * from there, moveInto(undefined) changes the situation to
-     *
-     * (NO ROOT)
-     * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
-     *
-     * @param document set undefined to make rootElement of navigation path undefined
-     */
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
         const invalidSegment = await this.segmentValidator.findInvalidSegment(

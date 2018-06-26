@@ -66,6 +66,13 @@ describe('resources --', () => {
     }
 
 
+    it('basic operations: create a new object of first listed type ', () => {
+
+        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+    });
+
+
     it('basic operations: should delete a resource', () => {
 
         ResourcesPage.performCreateResource('1');
@@ -312,13 +319,6 @@ describe('resources --', () => {
     });
 
 
-    it('messages: create a new object of first listed type ', () => {
-
-        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
-        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
-    });
-
-
     it('messages: show the success msg also on route change', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
@@ -363,16 +363,6 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
 
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
-    });
-
-
-    it('relations: create links for relations', () => {
-
-        ResourcesPage.performCreateLink();
-        ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('2'));
-        RelationsViewPage.clickRelation(0);
-        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('1'));
     });
 
 

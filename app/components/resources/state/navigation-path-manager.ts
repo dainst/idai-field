@@ -12,8 +12,8 @@ import {
     toResourceId
 } from './navpath/navigation-path-segment';
 import {ObjectUtil} from '../../../util/object-util';
-import {SegmentValidator} from './navigation-path-segment-validator';
 import {ResourcesState} from './core/resources-state';
+import {SegmentValidator} from './navpath/navigation-path-segment-validator';
 
 
 /**
@@ -23,13 +23,9 @@ import {ResourcesState} from './core/resources-state';
 export class NavigationPathManager {
 
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
-    private segmentValidator: SegmentValidator;
 
     constructor(private resourcesState: ResourcesState,
-                private datastore: IdaiFieldDocumentReadDatastore) {
-
-        this.segmentValidator = new SegmentValidator(datastore);
-    }
+                private datastore: IdaiFieldDocumentReadDatastore) {}
 
 
     public navigationPathNotifications = (): Observable<NavigationPath> =>
@@ -45,8 +41,12 @@ export class NavigationPathManager {
 
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
-        const invalidSegment = await this.segmentValidator.findInvalidSegment(
-            this.resourcesState.getMainTypeDocumentResourceId(), this.resourcesState.getNavigationPath());
+        const invalidSegment = await SegmentValidator.findInvalidSegment(
+            this.resourcesState.getMainTypeDocumentResourceId(),
+            this.resourcesState.getNavigationPath(),
+            async (resourceId: string) => (await this.datastore.find({ q: '',
+                        constraints: { 'id:match': resourceId }})).totalCount !== 0);
+
         const validatedNavigationPath = invalidSegment
             ? NavigationPathManager.shorten(this.resourcesState.getNavigationPath(), invalidSegment)
             : this.resourcesState.getNavigationPath();

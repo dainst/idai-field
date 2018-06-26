@@ -103,9 +103,7 @@ export class NavigationPathManager {
 
     public async updateNavigationPathForDocument(document: IdaiFieldDocument) {
 
-        if (!this.isPartOfNavigationPath(document)) {
-            await this.createNavigationPathForDocument(document);
-        }
+        if (!this.isPartOfNavigationPath(document)) await this.createNavigationPathForDocument(document);
     }
 
 
@@ -144,21 +142,27 @@ export class NavigationPathManager {
 
     private async createNavigationPathForDocument(document: IdaiFieldDocument) {
 
-        const elements: Array<IdaiFieldDocument> = [];
+        const segments: Array<NavigationPathSegment> = [];
 
         let currentResourceId = ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
         while (currentResourceId) {
-            const currentDocument: IdaiFieldDocument = await this.datastore.get(currentResourceId);
-            elements.unshift(currentDocument);
-            currentResourceId = ModelUtil.getRelationTargetId(currentDocument, 'liesWithin', 0);
+            const currentSegment: NavigationPathSegment = {
+                document: await this.datastore.get(currentResourceId),
+                q: '',
+                types: []
+            };
+            segments.unshift(currentSegment);
+            currentResourceId = ModelUtil.getRelationTargetId(currentSegment.document, 'liesWithin', 0);
         }
 
-        if (elements.length == 0) {
+        if (segments.length == 0) {
             await this.moveInto(undefined);
         } else {
             this.setNavigationPath({
-                segments: elements,
-                selectedSegmentId: elements[elements.length - 1].resource.id
+                segments: segments,
+                selectedSegmentId: segments[segments.length - 1].document.resource.id,
+                hierarchyContext: { q: '', types: []}, // unused
+                flatContext: { q: '', types: []} // unused
             });
         }
     }
@@ -206,29 +210,19 @@ export class NavigationPathManager {
     }
 
 
-    private setNavigationPath(newNavigationPath: FlatNavigationPath) {
+    private setNavigationPath(newNavigationPath: NavigationPath) {
 
-        const currentNavigationPath = this.resourcesState.getNavigationPath();
-        const newNavigationPathInternal = ObjectUtil.cloneObject(currentNavigationPath);
+        const updatedNavigationPath = ObjectUtil.cloneObject(this.resourcesState.getNavigationPath());
 
-        if (!this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)) {
-            newNavigationPathInternal.segments =  NavigationPathManager.makeNavigationPathElements(
-                newNavigationPath,
-                currentNavigationPath
-            );
+        if (!NavigationPathManager.selectedSegmentNotPresentInOldNavPath(
+            newNavigationPath, this.resourcesState.getNavigationPath())) {
+
+            updatedNavigationPath.segments = newNavigationPath.segments;
         }
-        newNavigationPathInternal.selectedSegmentId = newNavigationPath.selectedSegmentId;
+        updatedNavigationPath.selectedSegmentId = newNavigationPath.selectedSegmentId;
 
-        this.resourcesState.setNavigationPath(newNavigationPathInternal);
+        this.resourcesState.setNavigationPath(updatedNavigationPath);
         this.notify();
-    }
-
-
-    private rootDocIncludedInCurrentNavigationPath(newNavigationPath: FlatNavigationPath) {
-
-        return !newNavigationPath.selectedSegmentId ||
-            this.resourcesState.getNavigationPath().segments.map(toResourceId)
-                .includes(newNavigationPath.selectedSegmentId);
     }
 
 
@@ -249,20 +243,9 @@ export class NavigationPathManager {
     }
 
 
-    private static makeNavigationPathElements(newNavigationPath: FlatNavigationPath,
-                                       currentNavigationPath: NavigationPath) {
+    private static selectedSegmentNotPresentInOldNavPath(newNavPath: NavigationPath, oldNavPath: NavigationPath) {
 
-
-        return newNavigationPath.segments.reduce((elements, document) => {
-
-                const index = currentNavigationPath.segments
-                    .map(toResourceId).indexOf(document.resource.id);
-
-                return elements.concat([(index > -1 ?
-                        currentNavigationPath.segments[index] :
-                        { document: document, q: '', types: [] }
-                    )]);
-
-            }, Array<NavigationPathSegment>());
+        return !newNavPath.selectedSegmentId ||
+            oldNavPath.segments.map(toResourceId).includes(newNavPath.selectedSegmentId);
     }
 }

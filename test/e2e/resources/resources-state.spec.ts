@@ -140,11 +140,11 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateRelation('floor1', 'a1', 5);
 
         RelationsViewPage.clickRelation(0);
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
+        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahmen'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
 
         RelationsViewPage.clickRelation(0);
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
+        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Schnitte'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
     });
 
@@ -160,18 +160,18 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToProject();
         ResourcesPage.clickMoveIntoButton('b1');
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahme'));
+        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahmen'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
         
         NavbarPage.clickNavigateToProject();
         ResourcesPage.clickMoveIntoButton('trench1');
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
+        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Schnitte'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
         //
         NavbarPage.clickNavigateToProject();
         ResourcesPage.performCreateResource('t2', 'trench');
         ResourcesPage.clickMoveIntoButton('t2');
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
+        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Schnitte'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('t2'));
     });
 

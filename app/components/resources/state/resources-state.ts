@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ResourcesViewState} from './resources-view-state';
-import {NavigationPath} from './navigation-path';
+import {NavigationPathOut} from './navigation-path-base';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {OperationViews} from './operation-views';
-import {NavigationPathInternal, NavigationPathSegment} from './navigation-path-internal';
+import {NavigationPath, NavigationPathSegment} from './navigation-path';
 import {StateSerializer} from '../../../common/state-serializer';
 
 
@@ -68,29 +68,54 @@ export class ResourcesState {
 
     public getMainTypeDocumentResourceId = (): string|undefined => this.viewStates[this.view].mainTypeDocumentResourceId;
 
-    public getMode = () => this.mode;
-
-    public setMode = (mode: 'map' | 'list') => this.mode = mode;
-
     private serialize = () => this.serializer.store(this.createObjectToSerialize());
 
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.activeDocumentViewTab = activeDocumentViewTab;
 
-    public setSelectedDocument = (document: IdaiFieldDocument|undefined) => NavigationPathInternal.setSelectedDocument(this.getNavigationPathInternal(), document);
+    public getMode = () => this.mode;
 
-    public getSelectedDocument = () => NavigationPathInternal.getSelectedDocument(this.getNavigationPathInternal());
+    public setMode = (mode: 'map' | 'list') => this.mode = mode;
 
-    public setQueryString = (q: string) => NavigationPathInternal.setQueryString(this.getNavigationPathInternal(), q);
+    public setDisplayHierarchy = (displayHierarchy: boolean) => this.viewStates[this.view].displayHierarchy = displayHierarchy;
 
-    public setTypeFilters = (types: string[]) => NavigationPathInternal.setTypeFilters(this.getNavigationPathInternal(), types);
+    public getDisplayHierarchy = (): boolean => this.viewStates[this.view].displayHierarchy;
 
-    public getQueryString = (): string => NavigationPathInternal.getQuerySring(this.getNavigationPathInternal());
 
-    public getTypeFilters = (): string[] => NavigationPathInternal.getTypeFilters(this.getNavigationPathInternal());
+    public setSelectedDocument(document: IdaiFieldDocument|undefined) {
 
-    public setDisplayHierarchy = (displayHierarchy: boolean) => this.getNavigationPathInternal().displayHierarchy = displayHierarchy;
+        NavigationPath.setSelectedDocument(this.getNavigationPathInternal(),
+            this.viewStates[this.view].displayHierarchy ,document)
+    }
 
-    public getDisplayHierarchy = (): boolean => this.getNavigationPathInternal().displayHierarchy;
+    public getSelectedDocument() {
+
+        return NavigationPath.getSelectedDocument(this.getNavigationPathInternal(),
+            this.viewStates[this.view].displayHierarchy);
+    }
+
+    public setQueryString(q: string) {
+
+        NavigationPath.setQueryString(this.getNavigationPathInternal(),
+            this.viewStates[this.view].displayHierarchy, q);
+    }
+
+    public setTypeFilters(types: string[]) {
+
+        NavigationPath.setTypeFilters(this.getNavigationPathInternal(),
+            this.viewStates[this.view].displayHierarchy, types);
+    }
+
+    public getQueryString(): string {
+
+        return NavigationPath.getQuerySring(this.getNavigationPathInternal(),
+            this.viewStates[this.view].displayHierarchy);
+    }
+
+    public getTypeFilters(): string[] {
+
+        return NavigationPath.getTypeFilters(this.getNavigationPathInternal(),
+            this.viewStates[this.view].displayHierarchy);
+    }
 
 
     public setMainTypeDocument(resourceId: string|undefined) {
@@ -134,7 +159,7 @@ export class ResourcesState {
     }
 
 
-    public getNavigationPathInternal(): NavigationPathInternal {
+    public getNavigationPathInternal(): NavigationPath {
 
         const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
         if (!mainTypeDocumentResourceId) return NavigationPath.empty();
@@ -146,7 +171,7 @@ export class ResourcesState {
     }
 
 
-    public setNavigationPathInternal(navigationPathInternal: NavigationPathInternal) {
+    public setNavigationPathInternal(navigationPathInternal: NavigationPath) {
 
         const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
         if (!mainTypeDocumentResourceId) return;

@@ -1,7 +1,7 @@
 import {ResourcesComponent} from './resources.component';
 import {ViewFacade} from './state/view-facade';
 import {Loading} from '../../widgets/loading';
-import {NavigationPath} from './state/navigation-path';
+import {NavigationPathOut} from './state/navigation-path-base';
 
 /**
  * A base class for all lists, e.g. sidebarList and List components
@@ -11,7 +11,7 @@ import {NavigationPath} from './state/navigation-path';
 
 export class BaseList {
 
-    public navigationPath: NavigationPath = { elements: [], displayHierarchy: true };
+    public navigationPath: NavigationPathOut = { elements: [] };
 
     constructor(
         public resourcesComponent: ResourcesComponent,

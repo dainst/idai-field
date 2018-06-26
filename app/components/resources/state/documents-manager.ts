@@ -11,7 +11,7 @@ import {ObserverUtil} from '../../../util/observer-util';
 import {Loading} from '../../../widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {subtract, unique} from 'tsfun';
-import {NavigationPath} from './navigation-path';
+import {NavigationPathOut} from './navigation-path-base';
 
 
 /**
@@ -254,10 +254,10 @@ export class DocumentsManager {
 
     private makeConstraints(mainTypeDocumentResourceId: string|undefined): { [name: string]: string}  {
 
-        const navigationPath: NavigationPath = this.navigationPathManager.getNavigationPath();
+        const navigationPath: NavigationPathOut = this.navigationPathManager.getNavigationPath();
         const rootDoc = navigationPath.rootDocument;
 
-        const constraints: { [name: string]: string} = !navigationPath.displayHierarchy
+        const constraints: { [name: string]: string} = !this.resourcesState.getDisplayHierarchy()
             ? {}
             : rootDoc
                 ? { 'liesWithin:contain': rootDoc.resource.id }

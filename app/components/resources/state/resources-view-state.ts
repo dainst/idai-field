@@ -1,4 +1,4 @@
-import {NavigationPathInternal} from './navigation-path-internal';
+import {NavigationPath} from './navigation-path';
 
 
 /**
@@ -7,8 +7,9 @@ import {NavigationPathInternal} from './navigation-path-internal';
 export interface ResourcesViewState {
 
     mainTypeDocumentResourceId?: string;
+    displayHierarchy: boolean;
     layerIds: {[mainTypeDocumentId: string]: string[]};
-    navigationPaths: {[mainTypeDocumentId: string]: NavigationPathInternal};
+    navigationPaths: {[mainTypeDocumentId: string]: NavigationPath};
 }
 
 
@@ -18,6 +19,7 @@ export class ResourcesViewState {
 
         return {
             mode: 'map',
+            displayHierarchy: true,
             navigationPaths: {},
             layerIds: {}
         };
@@ -36,6 +38,7 @@ export class ResourcesViewState {
             }
         }
 
+        viewState.displayHierarchy = true;
         viewState.navigationPaths = {};
     }
 }

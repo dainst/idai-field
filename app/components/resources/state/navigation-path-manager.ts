@@ -3,19 +3,18 @@ import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ResourcesState} from './resources-state';
-import {NavigationPath} from './navigation-path';
+import {NavigationPathOut} from './navigation-path-base';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
 import {differentFrom, takeUntil, takeWhile} from 'tsfun';
 import {
     isSegmentOf,
-    NavigationPathInternal,
+    NavigationPath,
     NavigationPathSegment,
     toDocument,
     toResourceId
-} from './navigation-path-internal';
-import {ObjectUtil} from '../../../util/object-util';
+} from './navigation-path';
 
 
 /**
@@ -24,14 +23,14 @@ import {ObjectUtil} from '../../../util/object-util';
  */
 export class NavigationPathManager {
 
-    private navigationPathObservers: Array<Observer<NavigationPath>> = [];
+    private navigationPathObservers: Array<Observer<NavigationPathOut>> = [];
 
 
     constructor(private resourcesState: ResourcesState,
                 private datastore: IdaiFieldDocumentReadDatastore) {}
 
 
-    public navigationPathNotifications = (): Observable<NavigationPath> =>
+    public navigationPathNotifications = (): Observable<NavigationPathOut> =>
         ObserverUtil.register(this.navigationPathObservers);
 
 
@@ -104,15 +103,14 @@ export class NavigationPathManager {
     }
 
 
-    public getNavigationPath(): NavigationPath {
+    public getNavigationPath(): NavigationPathOut {
 
         if (this.resourcesState.isInOverview()) return NavigationPath.empty();
         if (!this.resourcesState.getMainTypeDocumentResourceId()) return NavigationPath.empty();
 
         return {
             elements: this.resourcesState.getNavigationPathInternal().elements.map(toDocument),
-            rootDocument: this.resourcesState.getNavigationPathInternal().rootDocument,
-            displayHierarchy: this.resourcesState.getNavigationPathInternal().displayHierarchy
+            rootDocument: this.resourcesState.getNavigationPathInternal().rootDocument
         }
     }
 
@@ -158,14 +156,13 @@ export class NavigationPathManager {
         } else {
             this.setNavigationPath({
                 elements: elements,
-                rootDocument: elements[elements.length - 1],
-                displayHierarchy: true  // TODO This is unnecessary, try to get rid of it
+                rootDocument: elements[elements.length - 1]
             });
         }
     }
 
 
-    private async findInvalidSegment(navigationPath: NavigationPathInternal): Promise<NavigationPathSegment|undefined> {
+    private async findInvalidSegment(navigationPath: NavigationPath): Promise<NavigationPathSegment|undefined> {
 
         for (let segment of navigationPath.elements) {
             if (!await this.isValidSegment(segment, navigationPath.elements)) {
@@ -207,10 +204,10 @@ export class NavigationPathManager {
     }
 
 
-    private setNavigationPath(newNavigationPath: NavigationPath) {
+    private setNavigationPath(newNavigationPath: NavigationPathOut) {
 
         const currentNavigationPath = this.resourcesState.getNavigationPathInternal();
-        const newNavigationPathInternal = NavigationPathInternal.shallowCopy(currentNavigationPath);
+        const newNavigationPathInternal = NavigationPath.shallowCopy(currentNavigationPath);
 
         if (!this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)) {
             newNavigationPathInternal.elements =  NavigationPathManager.makeNavigationPathElements(
@@ -225,7 +222,7 @@ export class NavigationPathManager {
     }
 
 
-    private rootDocIncludedInCurrentNavigationPath(newNavigationPath: NavigationPath) {
+    private rootDocIncludedInCurrentNavigationPath(newNavigationPath: NavigationPathOut) {
 
         return !newNavigationPath.rootDocument ||
             this.resourcesState.getNavigationPathInternal().elements.map(toResourceId)
@@ -233,12 +230,12 @@ export class NavigationPathManager {
     }
 
 
-    private async validateAndRepair(navigationPath: NavigationPathInternal): Promise<NavigationPathInternal> {
+    private async validateAndRepair(navigationPath: NavigationPath): Promise<NavigationPath> {
 
         const invalidSegment = await this.findInvalidSegment(navigationPath);
         if (!invalidSegment) return navigationPath;
 
-        const repairedNavigationPath = NavigationPathInternal.shallowCopy(navigationPath);
+        const repairedNavigationPath = NavigationPath.shallowCopy(navigationPath);
 
         repairedNavigationPath.elements = takeWhile(differentFrom(invalidSegment))(navigationPath.elements);
         if (navigationPath.rootDocument === invalidSegment.document) repairedNavigationPath.rootDocument = undefined;
@@ -247,8 +244,8 @@ export class NavigationPathManager {
     }
 
 
-    private static makeNavigationPathElements(newNavigationPath: NavigationPath,
-                                       currentNavigationPath: NavigationPathInternal) {
+    private static makeNavigationPathElements(newNavigationPath: NavigationPathOut,
+                                       currentNavigationPath: NavigationPath) {
 
 
         return newNavigationPath.elements.reduce((elements, document) => {
@@ -266,10 +263,10 @@ export class NavigationPathManager {
 
 
     private static makeNewNavigationPath(
-        oldNavigationPath: NavigationPathInternal,
-        newRootDocument: IdaiFieldDocument|undefined): NavigationPathInternal {
+        oldNavigationPath: NavigationPath,
+        newRootDocument: IdaiFieldDocument|undefined): NavigationPath {
 
-        const newNavigationPath = NavigationPathInternal.shallowCopy(oldNavigationPath);
+        const newNavigationPath = NavigationPath.shallowCopy(oldNavigationPath);
 
         if (newRootDocument) {
             newNavigationPath.elements = this.rebuildElements(

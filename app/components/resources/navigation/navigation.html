@@ -1,13 +1,13 @@
 <div id="navigation" class="row">
 
-    <div *ngIf="!this.viewFacade.isInOverview() && viewFacade.getSelectedOperationTypeDocument()" class="btn-group">
+    <div *ngIf="!viewFacade.isInOverview() && viewFacade.getSelectedOperationTypeDocument()" class="btn-group">
         <div class="btn"
-             [class.btn-primary]="!navigationPath.displayHierarchy"
-             [class.btn-outline-primary]="navigationPath.displayHierarchy"
+             [class.btn-primary]="!viewFacade.getDisplayHierarchy()"
+             [class.btn-outline-primary]="viewFacade.getDisplayHierarchy()"
              (click)="toggleDisplayHierarchy()">
 
-            <span *ngIf="navigationPath.displayHierarchy" class="mdi mdi-file-tree"></span>
-            <span *ngIf="!navigationPath.displayHierarchy" class="mdi mdi-view-sequential"></span>
+            <span *ngIf="viewFacade.getDisplayHierarchy()" class="mdi mdi-file-tree"></span>
+            <span *ngIf="!viewFacade.getDisplayHierarchy()" class="mdi mdi-view-sequential"></span>
         </div>
 
         <div class="btn-group" ngbDropdown placement="bottom-left" role="group" id="operation-document-selector">

@@ -49,7 +49,7 @@ describe('ResourcesState', () => {
                 document: featureDocument1, q: '', types: []
             }],
             rootDocument: featureDocument1, qWithHierarchy: '', qWithoutHierarchy: '',
-            typesWithHierarchy: [], typesWithoutHierarchy: [], displayHierarchy: true
+            typesWithHierarchy: [], typesWithoutHierarchy: []
         });
 
         resourcesState.setTypeFilters(['Find']);
@@ -80,7 +80,7 @@ describe('ResourcesState', () => {
                 q: 'abc'
             }],
             rootDocument: featureDocument1,  qWithHierarchy: '', qWithoutHierarchy: '',
-            typesWithHierarchy: [], typesWithoutHierarchy: [], displayHierarchy: true
+            typesWithHierarchy: [], typesWithoutHierarchy: []
         });
         resourcesState.setTypeFilters(undefined);
         resourcesState.setQueryString('');
@@ -102,7 +102,7 @@ describe('ResourcesState', () => {
                 document: featureDocument1, q: '', types: []
             }],
             qWithHierarchy: 'abc', qWithoutHierarchy: '',
-            typesWithHierarchy: ['Find1'], typesWithoutHierarchy: [], displayHierarchy: true
+            typesWithHierarchy: ['Find1'], typesWithoutHierarchy: []
         });
         resourcesState.setTypeFilters(undefined);
         resourcesState.setQueryString('');

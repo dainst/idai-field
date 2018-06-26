@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ViewFacade} from '../state/view-facade';
 import {ModelUtil} from '../../../core/model/model-util';
-import {NavigationPath} from '../state/navigation-path';
+import {NavigationPathOut} from '../state/navigation-path-base';
 
 
 @Component({
@@ -16,7 +16,7 @@ import {NavigationPath} from '../state/navigation-path';
  */
 export class NavigationComponent {
 
-    public navigationPath: NavigationPath = { elements: [], displayHierarchy: true };
+    public navigationPath: NavigationPathOut = { elements: [] };
 
 
     constructor(public viewFacade: ViewFacade) {
@@ -31,16 +31,12 @@ export class NavigationComponent {
 
     public moveInto = (document: IdaiFieldDocument|undefined) => this.viewFacade.moveInto(document);
 
-
-    public async toggleDisplayHierarchy() {
-
-        await this.viewFacade.setDisplayHierarchy(!this.viewFacade.getDisplayHierarchy());
-    }
+    public toggleDisplayHierarchy = () => this.viewFacade.setDisplayHierarchy(!this.viewFacade.getDisplayHierarchy());
 
 
     public getElements(): Array<IdaiFieldDocument> {
 
-        return this.navigationPath.displayHierarchy
+        return this.viewFacade.getDisplayHierarchy()
             ? this.navigationPath.elements
             : [];
     }

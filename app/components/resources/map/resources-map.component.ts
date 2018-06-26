@@ -5,7 +5,7 @@ import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../state/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
-import {NavigationPath} from '../state/navigation-path';
+import {NavigationPathOut} from '../state/navigation-path-base';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
 
@@ -116,7 +116,7 @@ export class ResourcesMapComponent {
     }
 
 
-    private getParentDocument(navigationPath: NavigationPath): Document|undefined {
+    private getParentDocument(navigationPath: NavigationPathOut): Document|undefined {
 
         return navigationPath.rootDocument ?
             navigationPath.rootDocument :

@@ -372,7 +372,7 @@ export function main() {
             let navigationPath = await viewFacade.getNavigationPath();
             expect(navigationPath.segments.length).toEqual(1);
             expect(navigationPath.segments[0]).toEqual(featureDocument1);
-            expect(navigationPath.selectedSegment).toEqual(featureDocument1);
+            expect(navigationPath.selectedSegmentId).toEqual(featureDocument1.resource.id);
 
             await viewFacade.moveInto(featureDocument1a as any);
 
@@ -380,7 +380,7 @@ export function main() {
             expect(navigationPath.segments.length).toEqual(2);
             expect(navigationPath.segments[0]).toEqual(featureDocument1);
             expect(navigationPath.segments[1]).toEqual(featureDocument1a);
-            expect(navigationPath.selectedSegment).toEqual(featureDocument1a);
+            expect(navigationPath.selectedSegmentId).toEqual(featureDocument1a.resource.id);
 
             await viewFacade.moveInto(featureDocument1 as any);
 
@@ -388,7 +388,7 @@ export function main() {
             expect(navigationPath.segments.length).toEqual(2);
             expect(navigationPath.segments[0]).toEqual(featureDocument1);
             expect(navigationPath.segments[1]).toEqual(featureDocument1a);
-            expect(navigationPath.selectedSegment).toEqual(featureDocument1);
+            expect(navigationPath.selectedSegmentId).toEqual(featureDocument1.resource.id);
 
             await viewFacade.moveInto(featureDocument1a as any);
 
@@ -396,7 +396,7 @@ export function main() {
             expect(navigationPath.segments.length).toEqual(2);
             expect(navigationPath.segments[0]).toEqual(featureDocument1);
             expect(navigationPath.segments[1]).toEqual(featureDocument1a);
-            expect(navigationPath.selectedSegment).toEqual(featureDocument1a);
+            expect(navigationPath.selectedSegmentId).toEqual(featureDocument1a.resource.id);
 
             await viewFacade.moveInto(featureDocument1 as any);
             await viewFacade.moveInto(featureDocument1b as any);
@@ -405,7 +405,7 @@ export function main() {
             expect(navigationPath.segments.length).toEqual(2);
             expect(navigationPath.segments[0]).toEqual(featureDocument1);
             expect(navigationPath.segments[1]).toEqual(featureDocument1b);
-            expect(navigationPath.selectedSegment).toEqual(featureDocument1b);
+            expect(navigationPath.selectedSegmentId).toEqual(featureDocument1b.resource.id);
 
             done();
         });

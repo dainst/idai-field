@@ -118,8 +118,9 @@ export class ResourcesMapComponent {
 
     private getParentDocument(navigationPath: NavigationPathOut): Document|undefined {
 
-        return navigationPath.selectedSegment ?
-            navigationPath.selectedSegment :
-            this.getIsRecordedInTarget();
+        if (!navigationPath.selectedSegmentId) return this.getIsRecordedInTarget();
+
+        return navigationPath.segments
+            .find(_ => _.resource.id === navigationPath.selectedSegmentId);
     }
 }

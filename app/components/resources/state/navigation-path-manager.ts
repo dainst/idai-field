@@ -88,7 +88,10 @@ export class NavigationPathManager {
 
     public async rebuildNavigationPath() {
 
-        await this.moveInto(this.getNavigationPath().selectedSegment);
+        const selectedSegmentDoc = this.getNavigationPath().segments
+            .find(_ => _.resource.id === this.getNavigationPath().selectedSegmentId);
+
+        await this.moveInto(selectedSegmentDoc);
     }
 
 
@@ -117,7 +120,7 @@ export class NavigationPathManager {
 
         return {
             segments: this.resourcesState.getNavigationPath().segments.map(toDocument),
-            selectedSegment: this.resourcesState.getNavigationPath().selectedSegment
+            selectedSegmentId: this.resourcesState.getNavigationPath().selectedSegmentId
         }
     }
 
@@ -132,14 +135,14 @@ export class NavigationPathManager {
 
         const navigationPath = this.getNavigationPath();
 
-        if (navigationPath.selectedSegment && Document.hasRelationTarget(document, 'liesWithin',
-                navigationPath.selectedSegment.resource.id)) {
+        if (navigationPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
+                navigationPath.selectedSegmentId)) {
             return true;
         }
 
         const mainTypeDocumentResourceId = this.resourcesState.getMainTypeDocumentResourceId();
 
-        return (!navigationPath.selectedSegment && mainTypeDocumentResourceId != undefined
+        return (!navigationPath.selectedSegmentId && mainTypeDocumentResourceId != undefined
                 && Document.hasRelationTarget(document, 'isRecordedIn',
                     mainTypeDocumentResourceId )
                 && !Document.hasRelations(document, 'liesWithin'));
@@ -162,7 +165,7 @@ export class NavigationPathManager {
         } else {
             this.setNavigationPath({
                 segments: elements,
-                selectedSegment: elements[elements.length - 1]
+                selectedSegmentId: elements[elements.length - 1].resource.id
             });
         }
     }
@@ -221,7 +224,7 @@ export class NavigationPathManager {
                 currentNavigationPath
             );
         }
-        newNavigationPathInternal.selectedSegment = newNavigationPath.selectedSegment;
+        newNavigationPathInternal.selectedSegmentId = newNavigationPath.selectedSegmentId;
 
         this.resourcesState.setNavigationPath(newNavigationPathInternal);
         this.notify();
@@ -230,9 +233,9 @@ export class NavigationPathManager {
 
     private rootDocIncludedInCurrentNavigationPath(newNavigationPath: NavigationPathOut) {
 
-        return !newNavigationPath.selectedSegment ||
+        return !newNavigationPath.selectedSegmentId ||
             this.resourcesState.getNavigationPath().segments.map(toResourceId)
-                .includes(newNavigationPath.selectedSegment.resource.id as string);
+                .includes(newNavigationPath.selectedSegmentId);
     }
 
 
@@ -244,7 +247,9 @@ export class NavigationPathManager {
         const repairedNavigationPath = NavigationPath.shallowCopy(navigationPath);
 
         repairedNavigationPath.segments = takeWhile(differentFrom(invalidSegment))(navigationPath.segments);
-        if (navigationPath.selectedSegment === invalidSegment.document) repairedNavigationPath.selectedSegment = undefined;
+        if (navigationPath.selectedSegmentId === invalidSegment.document.resource.id) {
+            repairedNavigationPath.selectedSegmentId = undefined;
+        }
 
         return repairedNavigationPath;
     }
@@ -277,23 +282,23 @@ export class NavigationPathManager {
         if (newRootDocument) {
             newNavigationPath.segments = this.rebuildElements(
                 oldNavigationPath.segments,
-                oldNavigationPath.selectedSegment,
+                oldNavigationPath.selectedSegmentId,
                 newRootDocument);
         }
-        newNavigationPath.selectedSegment = newRootDocument;
+        newNavigationPath.selectedSegmentId = newRootDocument ? newRootDocument.resource.id : undefined;
 
         return newNavigationPath;
     }
 
 
     private static rebuildElements(oldSegments: Array<NavigationPathSegment>,
-                                   oldRootDocument: IdaiFieldDocument|undefined,
+                                   oldRootDocumentId: string|undefined,
                                    newRootDocument: IdaiFieldDocument): Array<NavigationPathSegment> {
 
         return oldSegments.map(toDocument).includes(newRootDocument)
             ? oldSegments
-            : (oldRootDocument
-                    ? takeUntil(isSegmentOf(oldRootDocument))(oldSegments)
+            : (oldRootDocumentId
+                    ? takeUntil(isSegmentOf(oldRootDocumentId))(oldSegments)
                     : []
                 ).concat([{document: newRootDocument, q: '', types: []}]);
     }

@@ -17,5 +17,5 @@ export interface NavigationPathBase<A> {
      * In case of NavigationPathOut each segment 'is' document.
      * In case of NavigationPath each segment 'has a' document.
      */
-    selectedSegment?: IdaiFieldDocument;
+    selectedSegmentId?: string;
 }

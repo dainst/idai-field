@@ -39,7 +39,6 @@ export module NavigationPath {
 
         const newNavPath = ObjectUtil.cloneObject(navPath);
         newNavPath.segments = navPath.segments;
-        newNavPath.selectedSegment = navPath.selectedSegment;
         return newNavPath;
     }
 
@@ -140,7 +139,7 @@ export module NavigationPath {
 
         return !displayHierarchy
             ? doInFlatContext(navigationPath)
-            : navigationPath.selectedSegment
+            : navigationPath.selectedSegmentId
                 ? doInHierarchyContextWhenRootExists(navigationPath)
                 : doInHierarchyContextWhenRootNotExist(navigationPath);
     }
@@ -149,14 +148,13 @@ export module NavigationPath {
     function getRootSegment(navigationPath: NavigationPath) {
 
         return navigationPath.segments.find(element =>
-            element.document.resource.id ==
-            (navigationPath.selectedSegment as IdaiFieldDocument).resource.id) as NavigationPathSegment;
+            element.document.resource.id === navigationPath.selectedSegmentId) as NavigationPathSegment;
     }
 }
 
 
 export const isSegmentOf
-    = (document: IdaiFieldDocument) => (segment: NavigationPathSegment) => document == segment.document;
+    = (resourceId: string) => (segment: NavigationPathSegment) => resourceId === segment.document.resource.id;
 
 
 export const toDocument = (segment: NavigationPathSegment) => segment.document;

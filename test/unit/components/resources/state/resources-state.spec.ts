@@ -48,7 +48,7 @@ describe('ResourcesState', () => {
             segments: [{
                 document: featureDocument1, q: '', types: []
             }],
-            selectedSegment: featureDocument1,
+            selectedSegmentId: featureDocument1.resource.id,
             flatContext: { q: '', types: []},
             hierarchyContext: { q: '', types: []},
         });
@@ -80,7 +80,7 @@ describe('ResourcesState', () => {
                 types: ['Find1'],
                 q: 'abc'
             }],
-            selectedSegment: featureDocument1,
+            selectedSegmentId: featureDocument1.resource.id,
             flatContext: { q: '', types: []},
             hierarchyContext: { q: '', types: []},
         });

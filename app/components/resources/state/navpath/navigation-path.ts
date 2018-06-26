@@ -20,7 +20,6 @@ export interface NavigationPath extends NavigationPathBase<NavigationPathSegment
 
 export module NavigationPath {
 
-
     export function empty() {
 
         return {
@@ -63,27 +62,15 @@ export module NavigationPath {
         displayHierarchy: boolean,
         document: IdaiFieldDocument|undefined) {
 
-        withNavPath(
-            navigationPath,
-            displayHierarchy,
-            navPath => getSelectedSegmentDoc(navPath).selected = document,
-            navPath => navPath.hierarchyContext.selected = document,
-            navPath => navPath.flatContext.selected = document
-        );
+        getContext(navigationPath, displayHierarchy).selected = document;
     }
 
 
     export function getSelectedDocument(
         navigationPath: NavigationPath,
-        displayHierarchy: boolean) {
+        displayHierarchy: boolean): IdaiFieldDocument|undefined {
 
-        return withNavPath(
-            navigationPath,
-            displayHierarchy,
-            navPath => getSelectedSegmentDoc(navPath).selected,
-            navPath => navPath.hierarchyContext.selected,
-            navPath => navPath.flatContext.selected
-        );
+        return getContext(navigationPath, displayHierarchy).selected;
     }
 
 
@@ -92,13 +79,7 @@ export module NavigationPath {
         displayHierarchy: boolean,
         q: string) {
 
-        withNavPath(
-            navigationPath,
-            displayHierarchy,
-            navPath => getSelectedSegmentDoc(navPath).q = q,
-            navPath => navPath.hierarchyContext.q = q,
-            navPath => navPath.flatContext.q = q
-        );
+        getContext(navigationPath, displayHierarchy).q = q;
     }
 
 
@@ -106,13 +87,7 @@ export module NavigationPath {
         navigationPath: NavigationPath,
         displayHierarchy: boolean) {
 
-        return withNavPath(
-            navigationPath,
-            displayHierarchy,
-            navPath => getSelectedSegmentDoc(navPath).q,
-            navPath => navPath.hierarchyContext.q,
-            navPath => navPath.flatContext.q
-        );
+        return getContext(navigationPath, displayHierarchy).q;
     }
 
 
@@ -121,13 +96,7 @@ export module NavigationPath {
         displayHierarchy: boolean,
         types: string[]) {
 
-        withNavPath(
-            navigationPath,
-            displayHierarchy,
-            navPath => getSelectedSegmentDoc(navPath).types = types,
-            navPath => navPath.hierarchyContext.types = types,
-            navPath => navPath.flatContext.types = types
-        );
+        getContext(navigationPath, displayHierarchy).types = types;
     }
 
 
@@ -135,28 +104,21 @@ export module NavigationPath {
         navigationPath: NavigationPath,
         displayHierarchy: boolean) {
 
-        return withNavPath(
-            navigationPath,
-            displayHierarchy,
-            navPath => getSelectedSegmentDoc(navPath).types,
-            navPath => navPath.hierarchyContext.types,
-            navPath => navPath.flatContext.types
-        );
+        return getContext(navigationPath, displayHierarchy).types;
     }
 
 
-    function withNavPath(
+    function getContext(
         navigationPath: NavigationPath,
-        displayHierarchy: boolean,
-        doInHierarchyContextWhenRootExists: (n: NavigationPath) => any,
-        doInHierarchyContextWhenRootNotExist: (n: NavigationPath) => any,
-        doInFlatContext: (n: NavigationPath) => any) {
+        displayHierarchy: boolean): NavigationPathContext {
+
+        if (!displayHierarchy) return navigationPath.flatContext;
 
         return !displayHierarchy
-            ? doInFlatContext(navigationPath)
+            ? navigationPath.flatContext
             : navigationPath.selectedSegmentId
-                ? doInHierarchyContextWhenRootExists(navigationPath)
-                : doInHierarchyContextWhenRootNotExist(navigationPath);
+                ? getSelectedSegment(navigationPath)
+                : navigationPath.hierarchyContext;
     }
 
 
@@ -173,7 +135,7 @@ export module NavigationPath {
     }
 
 
-    function getSelectedSegmentDoc(navigationPath: NavigationPath) {
+    function getSelectedSegment(navigationPath: NavigationPath) {
 
         return navigationPath.segments.find(element =>
             element.document.resource.id === navigationPath.selectedSegmentId) as NavigationPathSegment;

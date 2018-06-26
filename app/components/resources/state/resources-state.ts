@@ -86,7 +86,7 @@ export class ResourcesState {
             this.viewStates[this.view].displayHierarchy ,document)
     }
 
-    public getSelectedDocument() {
+    public getSelectedDocument(): IdaiFieldDocument|undefined {
 
         return NavigationPath.getSelectedDocument(this.getNavigationPath(),
             this.viewStates[this.view].displayHierarchy);

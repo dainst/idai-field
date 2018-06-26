@@ -129,7 +129,8 @@ export class DocumentsManager {
     private selectAndNotify(document: IdaiFieldDocument|undefined) {
 
         if (this.resourcesState.getSelectedDocument()) {
-            ObserverUtil.notify(this.deselectionObservers, this.resourcesState.getSelectedDocument());
+            ObserverUtil.notify(this.deselectionObservers,
+                this.resourcesState.getSelectedDocument() as Document|undefined);
         }
         this.resourcesState.setSelectedDocument(document);
     }

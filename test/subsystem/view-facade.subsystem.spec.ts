@@ -300,8 +300,9 @@ export function main() {
 
             await viewFacade.moveInto(undefined);
             expect(viewFacade.getSelectedDocument()).toBeUndefined();
+
             await viewFacade.moveInto(featureDocument1);
-            expect(viewFacade.getSelectedDocument()).toBe(findDocument1);
+            expect(viewFacade.getSelectedDocument().resource.id).toBe(findDocument1.resource.id);
         });
 
 

@@ -10,6 +10,7 @@ import {ObserverUtil} from '../../../util/observer-util';
 import {differentFrom, takeWhile} from 'tsfun';
 import {NavigationPath} from './navpath/navigation-path';
 import {NavigationPathSegment, toDocument, toResourceId} from './navpath/navigation-path-segment';
+import {ObjectUtil} from '../../../util/object-util';
 
 
 /**
@@ -211,7 +212,7 @@ export class NavigationPathManager {
     private setNavigationPath(newNavigationPath: FlatNavigationPath) {
 
         const currentNavigationPath = this.resourcesState.getNavigationPath();
-        const newNavigationPathInternal = NavigationPath.shallowCopy(currentNavigationPath);
+        const newNavigationPathInternal = ObjectUtil.cloneObject(currentNavigationPath);
 
         if (!this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)) {
             newNavigationPathInternal.segments =  NavigationPathManager.makeNavigationPathElements(
@@ -239,9 +240,14 @@ export class NavigationPathManager {
         const invalidSegment = await this.findInvalidSegment(navigationPath);
         if (!invalidSegment) return navigationPath;
 
-        const repairedNavigationPath = NavigationPath.shallowCopy(navigationPath);
+        const repairedNavigationPath = ObjectUtil.cloneObject(navigationPath);
 
-        repairedNavigationPath.segments = takeWhile(differentFrom(invalidSegment))(navigationPath.segments);
+
+        repairedNavigationPath.segments = takeWhile(
+            (segment: NavigationPathSegment) => segment.document.resource.id !== invalidSegment.document.resource.id // TODO make different from method in navigation path segment
+        )(navigationPath.segments);
+
+
         if (navigationPath.selectedSegmentId === invalidSegment.document.resource.id) {
             repairedNavigationPath.selectedSegmentId = undefined;
         }

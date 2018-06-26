@@ -2,7 +2,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {NavigationPathBase} from './navigation-path-base';
 import {ObjectUtil} from '../../../../util/object-util';
 import {NavigationPathContext} from './navigation-path-context';
-import {isSegmentOf, NavigationPathSegment, toDocument} from './navigation-path-segment';
+import {isSegmentOf, NavigationPathSegment, toDocument, toResourceId} from './navigation-path-segment';
 import {takeUntil} from 'tsfun';
 
 
@@ -31,19 +31,11 @@ export module NavigationPath {
     }
 
 
-    export function shallowCopy(navPath: NavigationPath) {
-
-        const newNavPath = ObjectUtil.cloneObject(navPath);
-        newNavPath.segments = navPath.segments;
-        return newNavPath;
-    }
-
-
     export function setNewSelectedSegmentDoc(
         oldNavigationPath: NavigationPath,
         newSelectedSegmentDoc: IdaiFieldDocument|undefined): NavigationPath {
 
-        const newNavigationPath = NavigationPath.shallowCopy(oldNavigationPath);
+        const newNavigationPath = ObjectUtil.cloneObject(oldNavigationPath);
 
         if (newSelectedSegmentDoc) {
             newNavigationPath.segments = rebuildElements(
@@ -170,7 +162,7 @@ export module NavigationPath {
                              oldSelectedSegmentId: string|undefined,
                              newSelectedSegmentDoc: IdaiFieldDocument): Array<NavigationPathSegment> {
 
-        return oldSegments.map(toDocument).includes(newSelectedSegmentDoc)
+        return oldSegments.map(toResourceId).includes(newSelectedSegmentDoc.resource.id)
             ? oldSegments
             : (oldSelectedSegmentId
                     ? takeUntil(isSegmentOf(oldSelectedSegmentId))(oldSegments)

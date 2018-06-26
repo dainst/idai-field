@@ -66,7 +66,7 @@ export module NavigationPath {
         withNavPath(
             navigationPath,
             displayHierarchy,
-            navPath => getRootSegment(navPath).selected = document,
+            navPath => getSelectedSegmentDoc(navPath).selected = document,
             navPath => navPath.hierarchyContext.selected = document,
             navPath => navPath.flatContext.selected = document
         );
@@ -80,7 +80,7 @@ export module NavigationPath {
         return withNavPath(
             navigationPath,
             displayHierarchy,
-            navPath => getRootSegment(navPath).selected,
+            navPath => getSelectedSegmentDoc(navPath).selected,
             navPath => navPath.hierarchyContext.selected,
             navPath => navPath.flatContext.selected
         );
@@ -95,7 +95,7 @@ export module NavigationPath {
         withNavPath(
             navigationPath,
             displayHierarchy,
-            navPath => getRootSegment(navPath).q = q,
+            navPath => getSelectedSegmentDoc(navPath).q = q,
             navPath => navPath.hierarchyContext.q = q,
             navPath => navPath.flatContext.q = q
         );
@@ -109,7 +109,7 @@ export module NavigationPath {
         return withNavPath(
             navigationPath,
             displayHierarchy,
-            navPath => getRootSegment(navPath).q,
+            navPath => getSelectedSegmentDoc(navPath).q,
             navPath => navPath.hierarchyContext.q,
             navPath => navPath.flatContext.q
         );
@@ -124,7 +124,7 @@ export module NavigationPath {
         withNavPath(
             navigationPath,
             displayHierarchy,
-            navPath => getRootSegment(navPath).types = types,
+            navPath => getSelectedSegmentDoc(navPath).types = types,
             navPath => navPath.hierarchyContext.types = types,
             navPath => navPath.flatContext.types = types
         );
@@ -138,7 +138,7 @@ export module NavigationPath {
         return withNavPath(
             navigationPath,
             displayHierarchy,
-            navPath => getRootSegment(navPath).types,
+            navPath => getSelectedSegmentDoc(navPath).types,
             navPath => navPath.hierarchyContext.types,
             navPath => navPath.flatContext.types
         );
@@ -160,13 +160,6 @@ export module NavigationPath {
     }
 
 
-    function getRootSegment(navigationPath: NavigationPath) {
-
-        return navigationPath.segments.find(element =>
-            element.document.resource.id === navigationPath.selectedSegmentId) as NavigationPathSegment;
-    }
-
-
     function rebuildElements(oldSegments: Array<NavigationPathSegment>,
                              oldSelectedSegmentId: string|undefined,
                              newSelectedSegmentDoc: IdaiFieldDocument): Array<NavigationPathSegment> {
@@ -177,5 +170,12 @@ export module NavigationPath {
                     ? takeUntil(isSegmentWith(oldSelectedSegmentId))(oldSegments)
                     : []
             ).concat([{document: newSelectedSegmentDoc, q: '', types: []}]);
+    }
+
+
+    function getSelectedSegmentDoc(navigationPath: NavigationPath) {
+
+        return navigationPath.segments.find(element =>
+            element.document.resource.id === navigationPath.selectedSegmentId) as NavigationPathSegment;
     }
 }

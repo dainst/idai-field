@@ -87,10 +87,7 @@ export class NavigationPathManager {
 
     public async rebuildNavigationPath() {
 
-        const selectedSegmentDoc = this.getFlatNavigationPath().segments
-            .find(_ => _.resource.id === this.getFlatNavigationPath().selectedSegmentId);
-
-        await this.moveInto(selectedSegmentDoc);
+        await this.moveInto(FlatNavigationPath.getSelectedSegmentDoc(this.getFlatNavigationPath()));
     }
 
 

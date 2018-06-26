@@ -7,5 +7,5 @@ export interface NavigationPathContext {
 
     q: string;
     types: string[];
-    selected?: IdaiFieldDocument; // TODO instead of undefined, make the mainType selected
+    selected?: IdaiFieldDocument;
 }

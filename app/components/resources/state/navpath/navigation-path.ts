@@ -15,7 +15,6 @@ export interface NavigationPath extends NavigationPathBase<NavigationPathSegment
 
     hierarchyContext: NavigationPathContext;
     flatContext: NavigationPathContext;
-    selected?: IdaiFieldDocument; // TODO separate with/without hierarchy
 }
 
 
@@ -68,8 +67,8 @@ export module NavigationPath {
             navigationPath,
             displayHierarchy,
             navPath => getRootSegment(navPath).selected = document,
-            navPath => navPath.selected = document,
-            navPath => navPath.selected = document
+            navPath => navPath.hierarchyContext.selected = document,
+            navPath => navPath.flatContext.selected = document
         );
     }
 
@@ -82,8 +81,8 @@ export module NavigationPath {
             navigationPath,
             displayHierarchy,
             navPath => getRootSegment(navPath).selected,
-            navPath => navPath.selected,
-            navPath => navPath.selected
+            navPath => navPath.hierarchyContext.selected,
+            navPath => navPath.flatContext.selected
         );
     }
 

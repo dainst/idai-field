@@ -40,6 +40,12 @@ export class NavigationComponent {
     }
 
 
+    public deactivateBypassOperationTypeSelection() {
+
+        this.viewFacade.setBypassOperationTypeSelection(false);
+    }
+
+
     public getSegments(): Array<IdaiFieldDocument> {
 
         return this.viewFacade.getDisplayHierarchy()

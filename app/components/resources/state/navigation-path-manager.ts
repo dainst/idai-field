@@ -80,7 +80,7 @@ export class NavigationPathManager {
         const invalidSegment = await this.segmentValidator.findInvalidSegment(
             this.resourcesState.getMainTypeDocumentResourceId(), this.resourcesState.getNavigationPath());
         const validatedNavigationPath = invalidSegment
-            ? NavigationPathManager.repair(this.resourcesState.getNavigationPath(), invalidSegment)
+            ? NavigationPathManager.shorten(this.resourcesState.getNavigationPath(), invalidSegment)
             : this.resourcesState.getNavigationPath();
 
         const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
@@ -179,18 +179,17 @@ export class NavigationPathManager {
     }
 
 
-    private static repair(navigationPath: NavigationPath,
-                          invalidSegment: NavigationPathSegment): NavigationPath {
+    private static shorten(navigationPath: NavigationPath,
+                           firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
-        const repairedNavigationPath = ObjectUtil.cloneObject(navigationPath);
+        const shortenedNavigationPath = ObjectUtil.cloneObject(navigationPath);
+        shortenedNavigationPath.segments = takeWhile(differentFrom(firstToBeExcluded))(navigationPath.segments);
 
-        repairedNavigationPath.segments = takeWhile(differentFrom(invalidSegment))(navigationPath.segments);
-
-        if (navigationPath.selectedSegmentId === invalidSegment.document.resource.id) {
-            repairedNavigationPath.selectedSegmentId = undefined;
+        if (navigationPath.selectedSegmentId === firstToBeExcluded.document.resource.id) { // TODO should be: if selectedSegmentId is not contained in the surviving segments
+            shortenedNavigationPath.selectedSegmentId = undefined;
         }
 
-        return repairedNavigationPath;
+        return shortenedNavigationPath;
     }
 
 

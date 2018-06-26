@@ -4,7 +4,7 @@ import {NavigationPath} from './navigation-path';
 /**
  * @author Thomas Kleinke
  */
-export interface ResourcesViewState {
+export interface ViewState {
 
     mainTypeDocumentResourceId?: string;
     displayHierarchy: boolean;
@@ -13,7 +13,7 @@ export interface ResourcesViewState {
 }
 
 
-export class ResourcesViewState {
+export class ViewState {
 
     public static default() {
 
@@ -26,7 +26,7 @@ export class ResourcesViewState {
     };
 
 
-    public static complete(viewState: ResourcesViewState) {
+    public static complete(viewState: ViewState) {
 
         if (!viewState.layerIds || Array.isArray(viewState.layerIds)) {
             viewState.layerIds = {};

@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {ResourcesViewState} from './resources-view-state';
-import {NavigationPathOut} from './navigation-path-base';
+import {ViewState} from './view-state';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {OperationViews} from './operation-views';
-import {NavigationPath, NavigationPathSegment} from './navigation-path';
+import {NavigationPath} from './navigation-path';
 import {StateSerializer} from '../../../common/state-serializer';
 
 
@@ -16,7 +15,7 @@ export class ResourcesState {
 
     public loaded: boolean = false;
 
-    private viewStates: { [viewName: string]: ResourcesViewState } = ResourcesState.makeDefaults();
+    private viewStates: { [viewName: string]: ViewState } = ResourcesState.makeDefaults();
     private view: string = 'project';
     private activeDocumentViewTab: string|undefined;
     private mode: 'map' | 'list' = 'map';
@@ -39,7 +38,7 @@ export class ResourcesState {
 
         this.view = viewName;
 
-        if (!this.viewStates[this.view]) this.viewStates[this.view] = ResourcesViewState.default();
+        if (!this.viewStates[this.view]) this.viewStates[this.view] = ViewState.default();
         this.setActiveDocumentViewTab(undefined);
     }
 
@@ -180,9 +179,9 @@ export class ResourcesState {
     }
 
 
-    private createObjectToSerialize() : { [viewName: string]: ResourcesViewState } {
+    private createObjectToSerialize() : { [viewName: string]: ViewState } {
 
-        const objectToSerialize: { [viewName: string]: ResourcesViewState } = {};
+        const objectToSerialize: { [viewName: string]: ViewState } = {};
 
         for (let viewName of Object.keys(this.viewStates)) {
             objectToSerialize[viewName] = {} as any;
@@ -195,7 +194,7 @@ export class ResourcesState {
     }
 
 
-    private async load(): Promise<{ [viewName: string]: ResourcesViewState }> {
+    private async load(): Promise<{ [viewName: string]: ViewState }> {
 
         const resourcesViewStates =
             this.project === 'test'
@@ -224,18 +223,18 @@ export class ResourcesState {
     }
 
 
-    private static makeDefaults(): { [viewName: string]: ResourcesViewState } {
+    private static makeDefaults(): { [viewName: string]: ViewState } {
 
         return {
-            excavation: ResourcesViewState.default(),
-            project: ResourcesViewState.default()
+            excavation: ViewState.default(),
+            project: ViewState.default()
         }
     }
 
 
-    public static complete(viewStates: { [viewName: string]: ResourcesViewState }) {
+    public static complete(viewStates: { [viewName: string]: ViewState }) {
 
         Object.keys(viewStates)
-            .forEach(viewName => ResourcesViewState.complete(viewStates[viewName]));
+            .forEach(viewName => ViewState.complete(viewStates[viewName]));
     }
 }

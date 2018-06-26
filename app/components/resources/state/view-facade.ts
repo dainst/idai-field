@@ -3,10 +3,10 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
 import {NavigationPathManager} from './navigation-path-manager';
 import {DocumentsManager} from './documents-manager';
-import {ResourcesState} from './resources-state';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {Loading} from '../../../widgets/loading';
+import {ResourcesState} from './core/resources-state';
 
 /**
  * Manages an overview of operation type resources

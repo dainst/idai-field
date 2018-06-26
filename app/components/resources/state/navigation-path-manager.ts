@@ -2,7 +2,6 @@ import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {ResourcesState} from './resources-state';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
@@ -13,7 +12,8 @@ import {
     toResourceId
 } from './navpath/navigation-path-segment';
 import {ObjectUtil} from '../../../util/object-util';
-import {SegmentValidator} from './segment-validator';
+import {SegmentValidator} from './navigation-path-segment-validator';
+import {ResourcesState} from './core/resources-state';
 
 
 /**

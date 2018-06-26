@@ -7,10 +7,10 @@ const remote = require('electron').remote;
 const expressPouchDB = require('express-pouchdb');
 
 import {Document} from 'idai-components-2/core';
-import {ResourcesState} from "./components/resources/state/resources-state";
 import {PouchdbManager} from "./core/datastore/core/pouchdb-manager";
 import {DocumentCache} from "./core/datastore/core/document-cache";
 import {ImagesState} from "./components/imageoverview/view/images-state";
+import {ResourcesState} from './components/resources/state/core/resources-state';
 
 @Injectable()
 /**

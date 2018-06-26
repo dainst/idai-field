@@ -2,7 +2,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {Query} from 'idai-components-2/core';
 import {NavigationPathManager} from './navigation-path-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
-import {ResourcesState} from './resources-state';
+import {ResourcesState} from './core/resources-state';
 
 /**
  * @author Thomas Kleinke

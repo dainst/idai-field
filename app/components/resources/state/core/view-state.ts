@@ -1,9 +1,9 @@
-import {NavigationPath} from './navpath/navigation-path';
-
-
 /**
  * @author Thomas Kleinke
  */
+import {NavigationPath} from '../navpath/navigation-path';
+
+
 export interface ViewState {
 
     mainTypeDocumentResourceId?: string;

@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {ViewState} from './view-state';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {OperationViews} from './operation-views';
-import {StateSerializer} from '../../../common/state-serializer';
-import {NavigationPath} from './navpath/navigation-path';
+import {StateSerializer} from '../../../../common/state-serializer';
+import {NavigationPath} from '../navpath/navigation-path';
 
 
 @Injectable()

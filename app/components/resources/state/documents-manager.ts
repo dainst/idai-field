@@ -6,11 +6,11 @@ import {OperationTypeDocumentsManager} from './operation-type-documents-manager'
 import {NavigationPathManager} from './navigation-path-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
-import {ResourcesState} from './resources-state';
 import {ObserverUtil} from '../../../util/observer-util';
 import {Loading} from '../../../widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {subtract, unique} from 'tsfun';
+import {ResourcesState} from './core/resources-state';
 
 
 /**

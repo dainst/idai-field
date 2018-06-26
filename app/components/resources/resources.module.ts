@@ -14,7 +14,6 @@ import {RowComponent} from './list/row.component';
 import {PlusButtonComponent} from './plus-button.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {DoceditModule} from '../docedit/docedit.module';
-import {ResourcesState} from './state/resources-state';
 import {ThumbnailViewComponent} from './map/detail/thumbnail-view.component';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {DocumentViewSidebarComponent} from './map/detail/document-detail-sidebar.component';
@@ -30,13 +29,14 @@ import {LayerMenuComponent} from './map/map/layer-menu.component';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
 import {NavigationComponent} from './navigation/navigation.component';
 import {NavigationService} from './navigation/navigation-service';
-import {OperationViews} from './state/operation-views';
 import {ResourcesSearchBarComponent} from './searchbar/resources-search-bar.component';
 import {SearchSuggestionsComponent} from './searchbar/search-suggestions.component';
 import {StandardStateSerializer} from '../../common/standard-state-serializer';
 import {StateSerializer} from '../../common/state-serializer';
-import {ViewDefinition} from './state/view-definition';
 import {Loading} from '../../widgets/loading';
+import {ResourcesState} from './state/core/resources-state';
+import {ViewDefinition} from './state/core/view-definition';
+import {OperationViews} from './state/core/operation-views';
 
 const remote = require('electron').remote;
 

@@ -94,58 +94,42 @@ export module NavigationPath {
     }
 
 
-    export function setSelectedDocument(
-        navigationPath: NavigationPath,
-        displayHierarchy: boolean,
-        document: IdaiFieldDocument|undefined) {
+    export function setSelectedDocument(navPath: NavigationPath, displayHierarchy: boolean, document: IdaiFieldDocument|undefined) {
 
-        getContext(navigationPath, displayHierarchy).selected = document;
+        getContext(navPath, displayHierarchy).selected = document;
     }
 
 
-    export function getSelectedDocument(
-        navigationPath: NavigationPath,
-        displayHierarchy: boolean): IdaiFieldDocument|undefined {
+    export function getSelectedDocument(navPath: NavigationPath, displayHierarchy: boolean): IdaiFieldDocument|undefined {
 
-        return getContext(navigationPath, displayHierarchy).selected;
+        return getContext(navPath, displayHierarchy).selected;
     }
 
 
-    export function setQueryString(
-        navigationPath: NavigationPath,
-        displayHierarchy: boolean,
-        q: string) {
+    export function setQueryString(navPath: NavigationPath, displayHierarchy: boolean, q: string) {
 
-        getContext(navigationPath, displayHierarchy).q = q;
+        getContext(navPath, displayHierarchy).q = q;
     }
 
 
-    export function getQuerySring(
-        navigationPath: NavigationPath,
-        displayHierarchy: boolean) {
+    export function getQuerySring(navPath: NavigationPath, displayHierarchy: boolean) {
 
-        return getContext(navigationPath, displayHierarchy).q;
+        return getContext(navPath, displayHierarchy).q;
     }
 
 
-    export function setTypeFilters(
-        navigationPath: NavigationPath,
-        displayHierarchy: boolean,
-        types: string[]) {
+    export function setTypeFilters(navPath: NavigationPath, displayHierarchy: boolean, types: string[]) {
 
-        getContext(navigationPath, displayHierarchy).types = types;
+        getContext(navPath, displayHierarchy).types = types;
     }
 
 
-    export function getTypeFilters(
-        navigationPath: NavigationPath,
-        displayHierarchy: boolean) {
+    export function getTypeFilters(navPath: NavigationPath, displayHierarchy: boolean) {
 
-        return getContext(navigationPath, displayHierarchy).types;
+        return getContext(navPath, displayHierarchy).types;
     }
 
-    export function shorten(navigationPath: NavigationPath,
-        firstToBeExcluded: NavigationPathSegment): NavigationPath {
+    export function shorten(navigationPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
         const shortenedNavigationPath = ObjectUtil.cloneObject(navigationPath);
         shortenedNavigationPath.segments = takeWhile(differentFrom(firstToBeExcluded))(navigationPath.segments);
@@ -158,24 +142,22 @@ export module NavigationPath {
     }
 
 
-    export function segmentNotPresent(navigationPath: NavigationPath, segmentId: string) {
+    export function segmentNotPresent(navPath: NavigationPath, segmentId: string) {
 
-        return !segmentId || navigationPath.segments.map(toResourceId).includes(segmentId);
+        return !segmentId || navPath.segments.map(toResourceId).includes(segmentId);
     }
 
 
 
-    function getContext(
-        navigationPath: NavigationPath,
-        displayHierarchy: boolean): NavigationPathContext {
+    function getContext(navPath: NavigationPath, displayHierarchy: boolean): NavigationPathContext {
 
-        if (!displayHierarchy) return navigationPath.flatContext;
+        if (!displayHierarchy) return navPath.flatContext;
 
         return !displayHierarchy
-            ? navigationPath.flatContext
-            : navigationPath.selectedSegmentId
-                ? getSelectedSegment(navigationPath)
-                : navigationPath.hierarchyContext;
+            ? navPath.flatContext
+            : navPath.selectedSegmentId
+                ? getSelectedSegment(navPath)
+                : navPath.hierarchyContext;
     }
 
 

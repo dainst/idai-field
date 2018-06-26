@@ -108,6 +108,7 @@ export class NavigationPathManager {
     }
 
 
+    // TODO use only from outside. Calls inside this class should always go to this.resourcesState.getNavigationPath()
     public getFlatNavigationPath(): FlatNavigationPath {
 
         if (this.resourcesState.isInOverview()) return NavigationPath.empty();

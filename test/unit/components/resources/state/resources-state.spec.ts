@@ -44,7 +44,7 @@ describe('ResourcesState', () => {
         resourcesState.initialize('excavation');
         resourcesState.setMainTypeDocument(trenchDocument1.resource.id);
 
-        resourcesState.setNavigationPathInternal({
+        resourcesState.setNavigationPath({
             elements: [{
                 document: featureDocument1, q: '', types: []
             }],
@@ -73,7 +73,7 @@ describe('ResourcesState', () => {
         resourcesState.initialize('excavation');
         resourcesState.setMainTypeDocument(trenchDocument1.resource.id);
 
-        resourcesState.setNavigationPathInternal({
+        resourcesState.setNavigationPath({
             elements: [{
                 document: featureDocument1,
                 types: ['Find1'],
@@ -97,7 +97,7 @@ describe('ResourcesState', () => {
         resourcesState.initialize('excavation');
         resourcesState.setMainTypeDocument(trenchDocument1.resource.id);
 
-        resourcesState.setNavigationPathInternal({
+        resourcesState.setNavigationPath({
             elements: [{
                 document: featureDocument1, q: '', types: []
             }],

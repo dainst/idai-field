@@ -75,8 +75,7 @@ export class DocumentsManager {
 
     public async setDisplayHierarchy(displayHierarchy: boolean) {
 
-        this.resourcesState.setDisplayHierarchy(displayHierarchy);
-        this.navigationPathManager.notify();
+        this.navigationPathManager.setDisplayHierarchy(displayHierarchy);
         await this.populateAndDeselectIfNecessary();
     }
 

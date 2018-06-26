@@ -34,6 +34,13 @@ export class NavigationPathManager {
         ObserverUtil.register(this.navigationPathObservers);
 
 
+    public setDisplayHierarchy(displayHierarchy: boolean) {
+
+        this.resourcesState.setDisplayHierarchy(displayHierarchy);
+        this.notify();
+    }
+
+
     /**
      * Moves the 'root' within or adds a 'root' to a navigation path.
      *
@@ -67,10 +74,10 @@ export class NavigationPathManager {
      */
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
-        this.resourcesState.setNavigationPathInternal(
+        this.resourcesState.setNavigationPath(
 
             NavigationPathManager.makeNewNavigationPath(
-                await this.validateAndRepair(this.resourcesState.getNavigationPathInternal()),
+                await this.validateAndRepair(this.resourcesState.getNavigationPath()),
                 document
             )
         );
@@ -109,14 +116,13 @@ export class NavigationPathManager {
         if (!this.resourcesState.getMainTypeDocumentResourceId()) return NavigationPath.empty();
 
         return {
-            elements: this.resourcesState.getNavigationPathInternal().elements.map(toDocument),
-            rootDocument: this.resourcesState.getNavigationPathInternal().rootDocument
+            elements: this.resourcesState.getNavigationPath().elements.map(toDocument),
+            rootDocument: this.resourcesState.getNavigationPath().rootDocument
         }
     }
 
 
-    // TODO Check if this can be private
-    public notify() {
+    private notify() {
 
         ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath());
     }
@@ -206,7 +212,7 @@ export class NavigationPathManager {
 
     private setNavigationPath(newNavigationPath: NavigationPathOut) {
 
-        const currentNavigationPath = this.resourcesState.getNavigationPathInternal();
+        const currentNavigationPath = this.resourcesState.getNavigationPath();
         const newNavigationPathInternal = NavigationPath.shallowCopy(currentNavigationPath);
 
         if (!this.rootDocIncludedInCurrentNavigationPath(newNavigationPath)) {
@@ -217,7 +223,7 @@ export class NavigationPathManager {
         }
         newNavigationPathInternal.rootDocument = newNavigationPath.rootDocument;
 
-        this.resourcesState.setNavigationPathInternal(newNavigationPathInternal);
+        this.resourcesState.setNavigationPath(newNavigationPathInternal);
         this.notify();
     }
 
@@ -225,7 +231,7 @@ export class NavigationPathManager {
     private rootDocIncludedInCurrentNavigationPath(newNavigationPath: NavigationPathOut) {
 
         return !newNavigationPath.rootDocument ||
-            this.resourcesState.getNavigationPathInternal().elements.map(toResourceId)
+            this.resourcesState.getNavigationPath().elements.map(toResourceId)
                 .includes(newNavigationPath.rootDocument.resource.id as string);
     }
 

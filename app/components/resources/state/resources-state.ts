@@ -82,37 +82,37 @@ export class ResourcesState {
 
     public setSelectedDocument(document: IdaiFieldDocument|undefined) {
 
-        NavigationPath.setSelectedDocument(this.getNavigationPathInternal(),
+        NavigationPath.setSelectedDocument(this.getNavigationPath(),
             this.viewStates[this.view].displayHierarchy ,document)
     }
 
     public getSelectedDocument() {
 
-        return NavigationPath.getSelectedDocument(this.getNavigationPathInternal(),
+        return NavigationPath.getSelectedDocument(this.getNavigationPath(),
             this.viewStates[this.view].displayHierarchy);
     }
 
     public setQueryString(q: string) {
 
-        NavigationPath.setQueryString(this.getNavigationPathInternal(),
+        NavigationPath.setQueryString(this.getNavigationPath(),
             this.viewStates[this.view].displayHierarchy, q);
     }
 
     public setTypeFilters(types: string[]) {
 
-        NavigationPath.setTypeFilters(this.getNavigationPathInternal(),
+        NavigationPath.setTypeFilters(this.getNavigationPath(),
             this.viewStates[this.view].displayHierarchy, types);
     }
 
     public getQueryString(): string {
 
-        return NavigationPath.getQuerySring(this.getNavigationPathInternal(),
+        return NavigationPath.getQuerySring(this.getNavigationPath(),
             this.viewStates[this.view].displayHierarchy);
     }
 
     public getTypeFilters(): string[] {
 
-        return NavigationPath.getTypeFilters(this.getNavigationPathInternal(),
+        return NavigationPath.getTypeFilters(this.getNavigationPath(),
             this.viewStates[this.view].displayHierarchy);
     }
 
@@ -158,7 +158,7 @@ export class ResourcesState {
     }
 
 
-    public getNavigationPathInternal(): NavigationPath {
+    public getNavigationPath(): NavigationPath {
 
         const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
         if (!mainTypeDocumentResourceId) return NavigationPath.empty();
@@ -170,7 +170,7 @@ export class ResourcesState {
     }
 
 
-    public setNavigationPathInternal(navigationPathInternal: NavigationPath) {
+    public setNavigationPath(navigationPathInternal: NavigationPath) {
 
         const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
         if (!mainTypeDocumentResourceId) return;

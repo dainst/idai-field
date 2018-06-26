@@ -14,6 +14,7 @@ import {
     toResourceId
 } from './navpath/navigation-path-segment';
 import {ObjectUtil} from '../../../util/object-util';
+import {SegmentValidator} from './segment-validator';
 
 
 /**
@@ -23,10 +24,13 @@ import {ObjectUtil} from '../../../util/object-util';
 export class NavigationPathManager {
 
     private navigationPathObservers: Array<Observer<FlatNavigationPath>> = [];
-
+    private segmentValidator: SegmentValidator;
 
     constructor(private resourcesState: ResourcesState,
-                private datastore: IdaiFieldDocumentReadDatastore) {}
+                private datastore: IdaiFieldDocumentReadDatastore) {
+
+        this.segmentValidator = new SegmentValidator(datastore);
+    }
 
 
     public navigationPathNotifications = (): Observable<FlatNavigationPath> =>
@@ -73,7 +77,8 @@ export class NavigationPathManager {
      */
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
-        const invalidSegment = await this.findInvalidSegment(this.resourcesState.getNavigationPath());
+        const invalidSegment = await this.segmentValidator.findInvalidSegment(
+            this.resourcesState.getMainTypeDocumentResourceId(), this.resourcesState.getNavigationPath());
         const validatedNavigationPath = invalidSegment
             ? NavigationPathManager.repair(this.resourcesState.getNavigationPath(), invalidSegment)
             : this.resourcesState.getNavigationPath();
@@ -142,13 +147,11 @@ export class NavigationPathManager {
 
         let currentResourceId = ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
         while (currentResourceId) {
-            const currentSegment: NavigationPathSegment = {
-                document: await this.datastore.get(currentResourceId),
-                q: '',
-                types: []
-            };
-            segments.unshift(currentSegment);
-            currentResourceId = ModelUtil.getRelationTargetId(currentSegment.document, 'liesWithin', 0);
+
+            const currentSegmentDoc = await this.datastore.get(currentResourceId);
+            currentResourceId = ModelUtil.getRelationTargetId(currentSegmentDoc, 'liesWithin', 0);
+
+            segments.unshift( {document: currentSegmentDoc, q: '', types: []});
         }
 
         if (segments.length == 0) {
@@ -159,53 +162,11 @@ export class NavigationPathManager {
     }
 
 
-    private async findInvalidSegment(navigationPath: NavigationPath): Promise<NavigationPathSegment|undefined> {
-
-        for (let segment of navigationPath.segments) {
-            if (!await this.isValidSegment(segment, navigationPath.segments)) {
-                return segment;
-            }
-        }
-
-        return undefined;
-    }
-
-
-    private async isValidSegment(segment: NavigationPathSegment,
-                                 segments: Array<NavigationPathSegment>): Promise<boolean> {
-
-        return await this.hasExistingDocument(segment)
-            && this.hasValidRelation(segment, segments);
-    }
-
-
-    private async hasExistingDocument(segment: NavigationPathSegment): Promise<boolean> {
-
-        return (await this.datastore.find({
-            q: '',
-            constraints: { 'id:match': segment.document.resource.id }
-        })).totalCount !== 0;
-    }
-
-
-    private hasValidRelation(segment: NavigationPathSegment, segments: Array<NavigationPathSegment>): boolean {
-
-        const index: number = segments.indexOf(segment);
-        const mainTypeDocumentResourceId = this.resourcesState.getMainTypeDocumentResourceId();
-
-        return (index === 0)
-            ? mainTypeDocumentResourceId !== undefined && Document.hasRelationTarget(segment.document,
-                'isRecordedIn', mainTypeDocumentResourceId)
-            : Document.hasRelationTarget(segment.document,
-                'liesWithin', segments[index - 1].document.resource.id);
-    }
-
-
     private setNavigationPath(newSegments: NavigationPathSegment[], newSelectedSegmentId: string) {
 
         const updatedNavigationPath = ObjectUtil.cloneObject(this.resourcesState.getNavigationPath());
 
-        if (!NavigationPathManager.selectedSegmentNotPresentInOldNavPath(
+        if (!NavigationPathManager.segmentNotPresentInOldNavPath(
             newSelectedSegmentId, this.resourcesState.getNavigationPath())) {
 
             updatedNavigationPath.segments = newSegments;
@@ -232,8 +193,8 @@ export class NavigationPathManager {
     }
 
 
-    private static selectedSegmentNotPresentInOldNavPath(selectedSegmentId: string, oldNavPath: NavigationPath) {
+    private static segmentNotPresentInOldNavPath(segmentId: string, oldNavPath: NavigationPath) {
 
-        return !selectedSegmentId || oldNavPath.segments.map(toResourceId).includes(selectedSegmentId);
+        return !segmentId || oldNavPath.segments.map(toResourceId).includes(segmentId);
     }
 }

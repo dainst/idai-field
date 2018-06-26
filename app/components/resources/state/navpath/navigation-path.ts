@@ -1,8 +1,8 @@
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ObjectUtil} from '../../../../util/object-util';
 import {NavigationPathContext} from './navigation-path-context';
-import {isSegmentWith, NavigationPathSegment, toResourceId} from './navigation-path-segment';
-import {takeUntil} from 'tsfun';
+import {differentFrom, isSegmentWith, NavigationPathSegment, toResourceId} from './navigation-path-segment';
+import {takeUntil, takeWhile} from 'tsfun';
 
 
 /**
@@ -143,6 +143,26 @@ export module NavigationPath {
 
         return getContext(navigationPath, displayHierarchy).types;
     }
+
+    export function shorten(navigationPath: NavigationPath,
+        firstToBeExcluded: NavigationPathSegment): NavigationPath {
+
+        const shortenedNavigationPath = ObjectUtil.cloneObject(navigationPath);
+        shortenedNavigationPath.segments = takeWhile(differentFrom(firstToBeExcluded))(navigationPath.segments);
+
+        if (navigationPath.selectedSegmentId === firstToBeExcluded.document.resource.id) { // TODO should be: if selectedSegmentId is not contained in the surviving segments
+            shortenedNavigationPath.selectedSegmentId = undefined;
+        }
+
+        return shortenedNavigationPath;
+    }
+
+
+    export function segmentNotPresent(navigationPath: NavigationPath, segmentId: string) {
+
+        return !segmentId || navigationPath.segments.map(toResourceId).includes(segmentId);
+    }
+
 
 
     function getContext(

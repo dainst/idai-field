@@ -5,12 +5,8 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
-import {takeWhile} from 'tsfun';
 import {NavigationPath} from './navpath/navigation-path';
-import {
-    differentFrom, NavigationPathSegment,
-    toResourceId
-} from './navpath/navigation-path-segment';
+import {NavigationPathSegment} from './navpath/navigation-path-segment';
 import {ObjectUtil} from '../../../util/object-util';
 import {ResourcesState} from './core/resources-state';
 import {SegmentValidator} from './navpath/navigation-path-segment-validator';
@@ -48,7 +44,7 @@ export class NavigationPathManager {
                         constraints: { 'id:match': resourceId }})).totalCount !== 0);
 
         const validatedNavigationPath = invalidSegment
-            ? NavigationPathManager.shorten(this.resourcesState.getNavigationPath(), invalidSegment)
+            ? NavigationPath.shorten(this.resourcesState.getNavigationPath(), invalidSegment)
             : this.resourcesState.getNavigationPath();
 
         const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
@@ -60,7 +56,6 @@ export class NavigationPathManager {
     public async rebuildNavigationPath() {
 
         const segment = NavigationPath.getSelectedSegment(this.getNavigationPath());
-
         await this.moveInto(segment ? segment.document : undefined);
     }
 
@@ -138,8 +133,8 @@ export class NavigationPathManager {
 
         const updatedNavigationPath = ObjectUtil.cloneObject(this.resourcesState.getNavigationPath());
 
-        if (!NavigationPathManager.segmentNotPresentInOldNavPath(
-            newSelectedSegmentId, this.resourcesState.getNavigationPath())) {
+        if (!NavigationPath.segmentNotPresent(
+            this.resourcesState.getNavigationPath(), newSelectedSegmentId)) {
 
             updatedNavigationPath.segments = newSegments;
         }
@@ -147,25 +142,5 @@ export class NavigationPathManager {
 
         this.resourcesState.setNavigationPath(updatedNavigationPath);
         this.notify();
-    }
-
-
-    private static shorten(navigationPath: NavigationPath,
-                           firstToBeExcluded: NavigationPathSegment): NavigationPath {
-
-        const shortenedNavigationPath = ObjectUtil.cloneObject(navigationPath);
-        shortenedNavigationPath.segments = takeWhile(differentFrom(firstToBeExcluded))(navigationPath.segments);
-
-        if (navigationPath.selectedSegmentId === firstToBeExcluded.document.resource.id) { // TODO should be: if selectedSegmentId is not contained in the surviving segments
-            shortenedNavigationPath.selectedSegmentId = undefined;
-        }
-
-        return shortenedNavigationPath;
-    }
-
-
-    private static segmentNotPresentInOldNavPath(segmentId: string, oldNavPath: NavigationPath) {
-
-        return !segmentId || oldNavPath.segments.map(toResourceId).includes(segmentId);
     }
 }

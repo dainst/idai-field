@@ -89,6 +89,13 @@
   .new-from-remote {
     background-color: #d7ffd9;
   }
+
+  #document-limit-info {
+    padding: 10px;
+    font-style: italic;
+    user-select: none;
+    cursor: default;
+  }
 }
 
 #create-document-button .circular-button {

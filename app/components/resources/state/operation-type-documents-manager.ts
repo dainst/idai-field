@@ -2,7 +2,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {Query} from 'idai-components-2/core';
 import {NavigationPathManager} from './navigation-path-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
-import {ResourcesState} from './core/resources-state';
+import {ResourcesStateManager} from './resources-state-manager';
 
 /**
  * @author Thomas Kleinke
@@ -17,7 +17,7 @@ export class OperationTypeDocumentsManager {
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private navigationPathManager: NavigationPathManager,
-        private resourcesState: ResourcesState
+        private resourcesState: ResourcesStateManager
     ) {}
 
     

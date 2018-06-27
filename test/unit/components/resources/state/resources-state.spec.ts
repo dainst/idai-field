@@ -1,6 +1,6 @@
-import {ResourcesState} from '../../../../../app/components/resources/state/core/resources-state';
 import {OperationViews} from '../../../../../app/components/resources/state/core/operation-views';
 import {Static} from '../../../static';
+import {ResourcesStateManager} from '../../../../../app/components/resources/state/resources-state-manager';
 
 
 /**
@@ -18,13 +18,13 @@ describe('ResourcesState', () => {
     ];
 
 
-    let resourcesState: ResourcesState;
+    let resourcesState: ResourcesStateManager;
 
 
     beforeEach(() => {
 
         const mockSerializer = jasmine.createSpyObj('serializer', ['store']);
-        resourcesState = new ResourcesState(
+        resourcesState = new ResourcesStateManager(
             mockSerializer,
             new OperationViews(viewsList),
             undefined,

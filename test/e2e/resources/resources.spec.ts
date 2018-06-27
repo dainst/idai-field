@@ -19,7 +19,7 @@ const delays = require('../config/delays');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources --', () => {
+fdescribe('resources --', () => {
 
     let i = 0;
 

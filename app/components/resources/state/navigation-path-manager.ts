@@ -8,8 +8,8 @@ import {ObserverUtil} from '../../../util/observer-util';
 import {NavigationPath} from './navpath/navigation-path';
 import {NavigationPathSegment} from './navpath/navigation-path-segment';
 import {ObjectUtil} from '../../../util/object-util';
-import {ResourcesState} from './core/resources-state';
 import {SegmentValidator} from './navpath/navigation-path-segment-validator';
+import {ResourcesStateManager} from './resources-state-manager';
 
 
 /**
@@ -20,7 +20,7 @@ export class NavigationPathManager {
 
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
-    constructor(private resourcesState: ResourcesState,
+    constructor(private resourcesState: ResourcesStateManager,
                 private datastore: IdaiFieldDocumentReadDatastore) {}
 
 

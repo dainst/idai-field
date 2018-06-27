@@ -10,7 +10,7 @@ import {ObserverUtil} from '../../../util/observer-util';
 import {Loading} from '../../../widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {subtract, unique} from 'tsfun';
-import {ResourcesState} from './core/resources-state';
+import {ResourcesStateManager} from './resources-state-manager';
 
 
 /**
@@ -32,7 +32,7 @@ export class DocumentsManager {
         private remoteChangesStream: RemoteChangesStream,
         private navigationPathManager: NavigationPathManager,
         private mainTypeDocumentsManager: OperationTypeDocumentsManager,
-        private resourcesState: ResourcesState,
+        private resourcesState: ResourcesStateManager,
         private loading: Loading
     ) {
         remoteChangesStream.notifications().subscribe(document => this.handleChange(document));

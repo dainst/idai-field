@@ -10,7 +10,7 @@ import {Document} from 'idai-components-2/core';
 import {PouchdbManager} from "./core/datastore/core/pouchdb-manager";
 import {DocumentCache} from "./core/datastore/core/document-cache";
 import {ImagesState} from "./components/imageoverview/view/images-state";
-import {ResourcesState} from './components/resources/state/core/resources-state';
+import {ResourcesStateManager} from './components/resources/state/resources-state-manager';
 
 @Injectable()
 /**
@@ -20,7 +20,7 @@ export class AppController {
 
     constructor(
         private pouchdbManager: PouchdbManager,
-        private resourcesState: ResourcesState,
+        private resourcesState: ResourcesStateManager,
         private documentCache: DocumentCache<Document>,
         private imagesState: ImagesState) {
     }

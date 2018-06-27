@@ -2,7 +2,6 @@ import {ProjectConfiguration, Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {ViewFacade} from '../../app/components/resources/state/view-facade';
-import {ResourcesState} from '../../app/components/resources/state/core/resources-state';
 import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/field/idai-field-document-datastore';
 import {IdaiFieldTypeConverter} from '../../app/core/datastore/field/idai-field-type-converter';
 import {OperationViews} from '../../app/components/resources/state/core/operation-views';
@@ -11,6 +10,7 @@ import {DAOsSpecHelper} from './daos-spec-helper';
 import {TypeUtility} from '../../app/core/model/type-utility';
 import {ViewDefinition} from '../../app/components/resources/state/core/view-definition';
 import {toResourceId} from '../../app/components/resources/state/navpath/navigation-path-segment';
+import {ResourcesStateManager} from '../../app/components/resources/state/resources-state-manager';
 
 /**
  * This is a subsystem test.
@@ -46,7 +46,7 @@ export function main() {
         };
 
         let viewFacade: ViewFacade;
-        let resourcesState: ResourcesState;
+        let resourcesState: ResourcesStateManager;
         let stateSerializer;
         let changesStream;
         let settingsService;
@@ -118,7 +118,7 @@ export function main() {
                 subscribe: () => {}
             });
 
-            resourcesState = new ResourcesState(
+            resourcesState = new ResourcesStateManager(
                 stateSerializer,
                 new OperationViews(viewsList),
                 [],
@@ -158,7 +158,7 @@ export function main() {
 
         it('reload predefined layer ids on startup in test/demo project', async done => {
 
-            resourcesState = new ResourcesState(
+            resourcesState = new ResourcesStateManager(
                 stateSerializer,
                 new OperationViews(viewsList),
                 [],

@@ -1,9 +1,9 @@
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {Query} from 'idai-components-2/core';
-import {ResourcesState} from '../../../../../app/components/resources/state/core/resources-state';
 import {OperationViews} from '../../../../../app/components/resources/state/core/operation-views';
 import {NavigationPathManager} from '../../../../../app/components/resources/state/navigation-path-manager';
 import {Static} from '../../../static';
+import {ResourcesStateManager} from '../../../../../app/components/resources/state/resources-state-manager';
 
 
 /**
@@ -22,7 +22,7 @@ describe('NavigationPathManager', () => {
     ];
 
 
-    let resourcesState: ResourcesState;
+    let resourcesState: ResourcesStateManager;
     let navigationPathManager: NavigationPathManager;
     let mockDatastore: any;
 
@@ -41,7 +41,7 @@ describe('NavigationPathManager', () => {
     beforeEach(() => {
 
         const mockSerializer = jasmine.createSpyObj('serializer', ['store']);
-        resourcesState = new ResourcesState(
+        resourcesState = new ResourcesStateManager(
             mockSerializer,
             new OperationViews(viewsList),
             undefined,

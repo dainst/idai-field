@@ -34,7 +34,7 @@ import {SearchSuggestionsComponent} from './searchbar/search-suggestions.compone
 import {StandardStateSerializer} from '../../common/standard-state-serializer';
 import {StateSerializer} from '../../common/state-serializer';
 import {Loading} from '../../widgets/loading';
-import {ResourcesState} from './state/core/resources-state';
+import {ResourcesStateManager} from './state/resources-state-manager';
 import {ViewDefinition} from './state/core/view-definition';
 import {OperationViews} from './state/core/operation-views';
 
@@ -70,13 +70,13 @@ const remote = require('electron').remote;
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },
         NavigationService,
-        ResourcesState,
+        ResourcesStateManager,
         RoutingService,
         DoceditLauncher,
         LayerManager,
         LayerImageProvider,
         {
-            provide: ResourcesState,
+            provide: ResourcesStateManager,
             useFactory: (stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService) => {
@@ -105,7 +105,7 @@ const remote = require('electron').remote;
                 const projectName = settingsService.getSelectedProject();
                 if (!projectName) throw 'project not set';
 
-                return new ResourcesState(
+                return new ResourcesStateManager(
                     stateSerializer,
                     new OperationViews(views),
                     ['Place'],
@@ -121,14 +121,14 @@ const remote = require('electron').remote;
                 projectConfiguration: ProjectConfiguration,
                 datastore: IdaiFieldDocumentDatastore,
                 changesStream: RemoteChangesStream,
-                resourcesState: ResourcesState,
+                resourcesStateManager: ResourcesStateManager,
                 loading: Loading
             ) {
 
                 return new ViewFacade(
                     datastore,
                     changesStream,
-                    resourcesState,
+                    resourcesStateManager,
                     loading
                 );
             },
@@ -136,7 +136,7 @@ const remote = require('electron').remote;
                 ProjectConfiguration,
                 IdaiFieldDocumentDatastore,
                 RemoteChangesStream,
-                ResourcesState,
+                ResourcesStateManager,
                 Loading
             ]
         },

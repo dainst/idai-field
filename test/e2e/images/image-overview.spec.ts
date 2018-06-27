@@ -72,6 +72,48 @@ describe('images/image-overview --', function() {
     });
 
 
+    it('delete: delete an image in the grid view', () => {
+
+        ImageOverviewPage.getCellImageName(0).then(identifier => {
+            ImageOverviewPage.getCell(0).click();
+            ImageOverviewPage.clickDeleteButton();
+            ImageOverviewPage.clickConfirmDeleteButton();
+            browser.wait(EC.stalenessOf(ImageOverviewPage.getDeleteConfirmationModal()), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier(identifier)), delays.ECWaitTime);
+        });
+    });
+
+    it('delete: delete two images in the grid view', () => {
+
+        ImageOverviewPage.getCellImageName(0).then(image1Identifier => {
+            ImageOverviewPage.getCellImageName(1).then(image2Identifier => {
+                ImageOverviewPage.getCell(0).click();
+                ImageOverviewPage.getCell(1).click();
+                ImageOverviewPage.clickDeleteButton();
+                ImageOverviewPage.clickConfirmDeleteButton();
+                browser.wait(EC.stalenessOf(ImageOverviewPage.getDeleteConfirmationModal()), delays.ECWaitTime);
+                browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier(image1Identifier)),
+                    delays.ECWaitTime);
+                browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier(image2Identifier)),
+                    delays.ECWaitTime);
+            });
+        });
+    });
+
+    it('delete: cancel an image delete in the modal.', () => {
+
+        const elementToDelete = ImageOverviewPage.getCell(0);
+
+        ImageOverviewPage.getCellImageName(0).then(identifier => {
+            elementToDelete.click();
+            ImageOverviewPage.clickDeleteButton();
+            ImageOverviewPage.clickCancelDeleteButton();
+            browser.wait(EC.stalenessOf(ImageOverviewPage.getDeleteConfirmationModal()), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier(identifier)), delays.ECWaitTime);
+        });
+    });
+
+
     it('deselect cells', () => {
 
         ImageOverviewPage.getAllCells().then(function(cells) {

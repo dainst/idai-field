@@ -31,7 +31,7 @@ export class DocumentsManager {
         private datastore: IdaiFieldDocumentReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
         private navigationPathManager: NavigationPathManager,
-        private mainTypeDocumentsManager: OperationTypeDocumentsManager,
+        private operationTypeDocumentsManager: OperationTypeDocumentsManager,
         private resourcesState: ResourcesStateManager,
         private loading: Loading
     ) {
@@ -156,7 +156,7 @@ export class DocumentsManager {
         if (this.documents.find(hasEqualId(changedDocument))) return;
 
         if (changedDocument.resource.type == this.resourcesState.getViewType()) {
-            return this.mainTypeDocumentsManager.populate();
+            return this.operationTypeDocumentsManager.populate();
         }
 
         this.newDocumentsFromRemote = unique(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
@@ -199,7 +199,7 @@ export class DocumentsManager {
 
     private async makeSureSelectedDocumentAppearsInList(documentToSelect: IdaiFieldDocument) {
 
-        this.mainTypeDocumentsManager
+        this.operationTypeDocumentsManager
             .selectLinkedOperationTypeDocumentForSelectedDocument(documentToSelect);
 
         await this.navigationPathManager

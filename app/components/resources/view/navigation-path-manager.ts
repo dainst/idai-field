@@ -117,7 +117,7 @@ export class NavigationPathManager {
 
     private async createNavigationPathForDocument(document: IdaiFieldDocument) {
 
-        const segments = await this.makeSegments(document);
+        const segments = await NavigationPathManager.makeSegments(document, resourceId => this.datastore.get(resourceId));
         if (segments.length == 0) return await this.moveInto(undefined);
 
         const navPath = NavigationPathManager.replaceSegmentsIfNecessary(
@@ -128,14 +128,14 @@ export class NavigationPathManager {
     }
 
 
-    private async makeSegments(document: IdaiFieldDocument) {
+    private static async makeSegments(document: IdaiFieldDocument, get: (_: string) => Promise<IdaiFieldDocument>) {
 
         const segments: Array<NavigationPathSegment> = [];
 
         let currentResourceId = ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
         while (currentResourceId) {
 
-            const currentSegmentDoc = await this.datastore.get(currentResourceId);
+            const currentSegmentDoc = await get(currentResourceId);
             currentResourceId = ModelUtil.getRelationTargetId(currentSegmentDoc, 'liesWithin', 0);
 
             segments.unshift( {document: currentSegmentDoc, q: '', types: []});

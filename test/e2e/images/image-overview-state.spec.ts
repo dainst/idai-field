@@ -7,7 +7,7 @@ const common = require('../common');
 /**
  * @author Thomas Kleinke
  */
-describe('images/image-overview/state --', () => {
+describe('images/state --', () => {
 
 
     beforeEach(() => ImageOverviewPage.getAndWaitForImageCells());

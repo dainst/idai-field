@@ -10,6 +10,7 @@ import {Static} from '../unit/static';
 import {DAOsSpecHelper} from './daos-spec-helper';
 import {TypeUtility} from '../../app/core/model/type-utility';
 import {ViewDefinition} from '../../app/components/resources/state/core/view-definition';
+import {toResourceId} from '../../app/components/resources/state/navpath/navigation-path-segment';
 
 /**
  * This is a subsystem test.
@@ -352,61 +353,31 @@ export function main() {
         });
 
 
-        it('build path while navigating, first element, then second', async done => {
+        it('operations view: get navigation path, switch between operation type docs', async done => {
 
-            const featureDocument1a = Static.ifDoc('Feature 1a','feature1a','Feature', 'feature1a');
-            featureDocument1a.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-            featureDocument1a.resource.relations['liesWithin'] = [featureDocument1.resource.id];
-            await idaiFieldDocumentDatastore.create(featureDocument1a, 'u');
-
-            const featureDocument1b = Static.ifDoc('Feature 1b','feature1b','Feature', 'feature1b');
-            featureDocument1a.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-            featureDocument1a.resource.relations['liesWithin'] = [featureDocument1.resource.id];
-            await idaiFieldDocumentDatastore.create(featureDocument1b, 'u');
-
+            const featureDocument3 = Static.ifDoc('Feature 3','feature3','Feature', 'feature3');
+            featureDocument3.resource.relations['isRecordedIn'] = [trenchDocument2.resource.id];
+            await idaiFieldDocumentDatastore.create(featureDocument3, 'u');
             await viewFacade.selectView('excavation');
 
-            // --
-
-            await viewFacade.moveInto(featureDocument1 as any);
+            await viewFacade.moveInto(featureDocument1);
 
             let navigationPath = await viewFacade.getNavigationPath();
             expect(navigationPath.segments.length).toEqual(1);
-            expect(navigationPath.segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
+            expect(toResourceId(navigationPath.segments[0])).toEqual(featureDocument1.resource.id);
             expect(navigationPath.selectedSegmentId).toEqual(featureDocument1.resource.id);
 
-            await viewFacade.moveInto(featureDocument1a as any);
+            viewFacade.selectOperationTypeDocument(trenchDocument2);
+            await viewFacade.moveInto(featureDocument3);
 
             navigationPath = await viewFacade.getNavigationPath();
-            expect(navigationPath.segments.length).toEqual(2);
-            expect(navigationPath.segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
-            expect(navigationPath.segments[1].document.resource.id).toEqual(featureDocument1a.resource.id);
-            expect(navigationPath.selectedSegmentId).toEqual(featureDocument1a.resource.id);
+            expect(navigationPath.segments.length).toEqual(1);
+            expect(toResourceId(navigationPath.segments[0])).toEqual(featureDocument3.resource.id);
+            expect(navigationPath.selectedSegmentId).toEqual(featureDocument3.resource.id);
 
-            await viewFacade.moveInto(featureDocument1 as any);
-
+            viewFacade.selectOperationTypeDocument(trenchDocument1);
             navigationPath = await viewFacade.getNavigationPath();
-            expect(navigationPath.segments.length).toEqual(2);
-            expect(navigationPath.segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
-            expect(navigationPath.segments[1].document.resource.id).toEqual(featureDocument1a.resource.id);
             expect(navigationPath.selectedSegmentId).toEqual(featureDocument1.resource.id);
-
-            await viewFacade.moveInto(featureDocument1a as any);
-
-            navigationPath = await viewFacade.getNavigationPath();
-            expect(navigationPath.segments.length).toEqual(2);
-            expect(navigationPath.segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
-            expect(navigationPath.segments[1].document.resource.id).toEqual(featureDocument1a.resource.id);
-            expect(navigationPath.selectedSegmentId).toEqual(featureDocument1a.resource.id);
-
-            await viewFacade.moveInto(featureDocument1 as any);
-            await viewFacade.moveInto(featureDocument1b as any);
-
-            navigationPath = await viewFacade.getNavigationPath();
-            expect(navigationPath.segments.length).toEqual(2);
-            expect(navigationPath.segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
-            expect(navigationPath.segments[1].document.resource.id).toEqual(featureDocument1b.resource.id);
-            expect(navigationPath.selectedSegmentId).toEqual(featureDocument1b.resource.id);
 
             done();
         });

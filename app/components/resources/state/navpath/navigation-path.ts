@@ -26,7 +26,7 @@ export interface NavigationPath {
 
 export module NavigationPath {
 
-    export function empty() {
+    export function empty() { // TODO specify return type
 
         return {
             segments: [],

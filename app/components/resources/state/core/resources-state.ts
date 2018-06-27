@@ -38,7 +38,7 @@ export class ResourcesState {
 
         this.view = viewName;
 
-        if (!this.viewStates[this.view]) this.viewStates[this.view] = ViewState.default();
+        if (!this.getViewState()) this.viewStates[this.view] = ViewState.default();
         this.setActiveDocumentViewTab(undefined);
     }
 
@@ -65,7 +65,7 @@ export class ResourcesState {
 
     public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
 
-    public getMainTypeDocumentResourceId = (): string|undefined => this.viewStates[this.view].mainTypeDocumentResourceId;
+    public getMainTypeDocumentResourceId = (): string|undefined => this.getViewState().mainTypeDocumentResourceId;
 
     private serialize = () => this.serializer.store(this.createObjectToSerialize());
 
@@ -75,20 +75,20 @@ export class ResourcesState {
 
     public setMode = (mode: 'map' | 'list') => this.mode = mode;
 
-    public setDisplayHierarchy = (displayHierarchy: boolean) => this.viewStates[this.view].displayHierarchy = displayHierarchy;
+    public setDisplayHierarchy = (displayHierarchy: boolean) => this.getViewState().displayHierarchy = displayHierarchy;
 
-    public getDisplayHierarchy = (): boolean => this.viewStates[this.view].displayHierarchy;
+    public getDisplayHierarchy = (): boolean => this.getViewState().displayHierarchy;
 
-    public setBypassOperationTypeSelection = (bypassOperationTypeSelection: boolean) => this.viewStates[this.view].bypassOperationTypeSelection = bypassOperationTypeSelection;
+    public setBypassOperationTypeSelection = (bypassOperationTypeSelection: boolean) => this.getViewState().bypassOperationTypeSelection = bypassOperationTypeSelection;
 
-    public getBypassOperationTypeSelection = () => this.viewStates[this.view].bypassOperationTypeSelection;
+    public getBypassOperationTypeSelection = () => this.getViewState().bypassOperationTypeSelection;
 
 
     public setSelectedDocument(document: IdaiFieldDocument|undefined) {
 
         this.setNavigationPath(
             NavigationPath.setSelectedDocument(this.getNavigationPath(),
-                this.viewStates[this.view].displayHierarchy, document)
+                this.getDisplayHierarchy(), document)
         );
     }
 
@@ -97,7 +97,7 @@ export class ResourcesState {
 
         this.setNavigationPath(
             NavigationPath.setQueryString(this.getNavigationPath(),
-                this.viewStates[this.view].displayHierarchy, q)
+                this.getDisplayHierarchy(), q)
         );
     }
 
@@ -106,7 +106,7 @@ export class ResourcesState {
 
         this.setNavigationPath(
             NavigationPath.setTypeFilters(this.getNavigationPath(),
-                this.viewStates[this.view].displayHierarchy, types)
+                this.getDisplayHierarchy(), types)
         );
     }
 
@@ -114,21 +114,21 @@ export class ResourcesState {
     public getSelectedDocument(): IdaiFieldDocument|undefined {
 
         return NavigationPath.getSelectedDocument(this.getNavigationPath(),
-            this.viewStates[this.view].displayHierarchy);
+            this.getDisplayHierarchy());
     }
 
 
     public getQueryString(): string {
 
         return NavigationPath.getQuerySring(this.getNavigationPath(),
-            this.viewStates[this.view].displayHierarchy);
+            this.getDisplayHierarchy());
     }
 
 
     public getTypeFilters(): string[] {
 
         return NavigationPath.getTypeFilters(this.getNavigationPath(),
-            this.viewStates[this.view].displayHierarchy);
+            this.getDisplayHierarchy());
     }
 
 
@@ -136,10 +136,10 @@ export class ResourcesState {
 
         if (!resourceId) return;
 
-        if (!this.viewStates[this.view].navigationPaths[resourceId]) {
-            this.viewStates[this.view].navigationPaths[resourceId] = NavigationPath.empty();
+        if (!this.getViewState().navigationPaths[resourceId]) {
+            this.getViewState().navigationPaths[resourceId] = NavigationPath.empty();
         }
-        this.viewStates[this.view].mainTypeDocumentResourceId = resourceId;
+        this.getViewState().mainTypeDocumentResourceId = resourceId;
     }
 
 
@@ -148,7 +148,7 @@ export class ResourcesState {
         const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
         if (!mainTypeDocumentResourceId) return;
 
-        this.viewStates[this.view].layerIds[mainTypeDocumentResourceId] = activeLayersIds.slice(0);
+        this.getViewState().layerIds[mainTypeDocumentResourceId] = activeLayersIds.slice(0);
         this.serialize();
     }
 
@@ -158,7 +158,7 @@ export class ResourcesState {
         const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
         if (!mainTypeDocumentResourceId) return [];
 
-        const layersIds = this.viewStates[this.view].layerIds[mainTypeDocumentResourceId];
+        const layersIds = this.getViewState().layerIds[mainTypeDocumentResourceId];
         return layersIds ? layersIds : [];
     }
 
@@ -168,7 +168,7 @@ export class ResourcesState {
         const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
         if (!mainTypeDocumentResourceId) return;
 
-        delete this.viewStates[this.view].layerIds[mainTypeDocumentResourceId];
+        delete this.getViewState().layerIds[mainTypeDocumentResourceId];
         this.serialize();
     }
 
@@ -178,7 +178,7 @@ export class ResourcesState {
         const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
         if (!mainTypeDocumentResourceId) return NavigationPath.empty();
 
-        const navigationPaths = this.viewStates[this.view].navigationPaths;
+        const navigationPaths = this.getViewState().navigationPaths;
         const path = (navigationPaths as any)[mainTypeDocumentResourceId];
 
         return path ? path : NavigationPath.empty();
@@ -190,7 +190,13 @@ export class ResourcesState {
         const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
         if (!mainTypeDocumentResourceId) return;
 
-        this.viewStates[this.view].navigationPaths[mainTypeDocumentResourceId] = navigationPathInternal;
+        this.getViewState().navigationPaths[mainTypeDocumentResourceId] = navigationPathInternal;
+    }
+
+
+    private getViewState() {
+
+        return this.viewStates[this.view];
     }
 
 

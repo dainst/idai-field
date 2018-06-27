@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {ResourcesState} from './core/resources-state';
+import {ResourcesState} from './state/resources-state';
 import {StateSerializer} from '../../../common/state-serializer';
-import {OperationViews} from './core/operation-views';
-import {ViewState} from './core/view-state';
+import {OperationViews} from './state/operation-views';
+import {ViewState} from './state/view-state';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ObjectUtil} from '../../../util/object-util';
-import {NavigationPath} from './core/navigation-path';
+import {NavigationPath} from './state/navigation-path';
 
 
 @Injectable()

@@ -7,8 +7,8 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai
 import {ObserverUtil} from '../../../util/observer-util';
 import {ObjectUtil} from '../../../util/object-util';
 import {ResourcesStateManager} from './resources-state-manager';
-import {NavigationPath} from './core/navigation-path';
-import {NavigationPathSegment} from './core/navigation-path-segment';
+import {NavigationPath} from './state/navigation-path';
+import {NavigationPathSegment} from './state/navigation-path-segment';
 
 
 /**

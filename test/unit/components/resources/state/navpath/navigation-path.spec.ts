@@ -1,7 +1,7 @@
 import {Static} from '../../../../static';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {toResourceId} from '../../../../../../app/components/resources/state/core/navigation-path-segment';
-import {NavigationPath} from '../../../../../../app/components/resources/state/core/navigation-path';
+import {toResourceId} from '../../../../../../app/components/resources/state/state/navigation-path-segment';
+import {NavigationPath} from '../../../../../../app/components/resources/state/state/navigation-path';
 
 /**
  * @author Daniel de Oliveira

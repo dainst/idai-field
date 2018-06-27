@@ -35,8 +35,8 @@ import {StandardStateSerializer} from '../../common/standard-state-serializer';
 import {StateSerializer} from '../../common/state-serializer';
 import {Loading} from '../../widgets/loading';
 import {ResourcesStateManager} from './state/resources-state-manager';
-import {ViewDefinition} from './state/core/view-definition';
-import {OperationViews} from './state/core/operation-views';
+import {ViewDefinition} from './state/state/view-definition';
+import {OperationViews} from './state/state/operation-views';
 
 const remote = require('electron').remote;
 

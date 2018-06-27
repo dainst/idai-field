@@ -72,7 +72,7 @@ describe('images --', function() {
     });
 
 
-    it('delete: delete an image in the grid view', () => {
+    it('delete -- delete an image in the grid view', () => {
 
         ImageOverviewPage.getCellImageName(0).then(identifier => {
             ImageOverviewPage.getCell(0).click();
@@ -83,7 +83,7 @@ describe('images --', function() {
         });
     });
 
-    it('delete: delete two images in the grid view', () => {
+    it('delete -- delete two images in the grid view', () => {
 
         ImageOverviewPage.getCellImageName(0).then(image1Identifier => {
             ImageOverviewPage.getCellImageName(1).then(image2Identifier => {
@@ -100,7 +100,7 @@ describe('images --', function() {
         });
     });
 
-    it('delete: cancel an image delete in the modal.', () => {
+    it('delete -- cancel an image delete in the modal.', () => {
 
         const elementToDelete = ImageOverviewPage.getCell(0);
 
@@ -168,14 +168,14 @@ describe('images --', function() {
     });
 
 
-    it('link: link an image to a resource', () => {
+    it('link -- link an image to a resource', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
         expectLinkBadgePresence(true);
     });
 
 
-    it('link: link two images to a resource', () => {
+    it('link -- link two images to a resource', () => {
 
         createTwo();
         expectLinkBadgePresence(true, 2);
@@ -183,7 +183,7 @@ describe('images --', function() {
     });
 
 
-    it('link: unlink an image from a resource', () => {
+    it('link -- unlink an image from a resource', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
         unlink();
@@ -192,7 +192,7 @@ describe('images --', function() {
     });
 
 
-    it('link: unlink two images from a resource', () => {
+    it('link -- unlink two images from a resource', () => {
 
         createTwo();
         unlink();
@@ -201,7 +201,7 @@ describe('images --', function() {
     });
 
 
-    it('link: use main type document filter', () => {
+    it('link -- use main type document filter', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
 
@@ -225,7 +225,7 @@ describe('images --', function() {
     });
 
 
-    it('link: filter types in overview', async done => {
+    it('link -- filter types in overview', async done => {
 
         ImageOverviewPage.clickCell(0);
         ImageOverviewPage.clickLinkButton();

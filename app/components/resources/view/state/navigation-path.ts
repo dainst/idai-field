@@ -36,10 +36,10 @@ export module NavigationPath {
     }
 
 
-    export function getSelectedSegment(navigationPath: NavigationPath) {
+    export function getSelectedSegment(navPath: NavigationPath) {
 
-        return navigationPath.segments.find(element =>
-            element.document.resource.id === navigationPath.selectedSegmentId) as NavigationPathSegment;
+        return navPath.segments.find(element =>
+            element.document.resource.id === navPath.selectedSegmentId) as NavigationPathSegment;
     }
 
 
@@ -72,20 +72,20 @@ export module NavigationPath {
      * (NO SELECTED SEGMENT)
      * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
      *
-     * @param navigationPath
+     * @param navPath
      * @param newSelectedSegmentDoc
      * @return a new path object with updated state
      */
     export function setNewSelectedSegmentDoc(
-        navigationPath: NavigationPath,
+        navPath: NavigationPath,
         newSelectedSegmentDoc: IdaiFieldDocument|undefined): NavigationPath {
 
-        const updatedNavigationPath = ObjectUtil.cloneObject(navigationPath);
+        const updatedNavigationPath = ObjectUtil.cloneObject(navPath);
 
         if (newSelectedSegmentDoc) {
             updatedNavigationPath.segments = rebuildElements(
-                navigationPath.segments,
-                navigationPath.selectedSegmentId,
+                navPath.segments,
+                navPath.selectedSegmentId,
                 newSelectedSegmentDoc);
         }
         updatedNavigationPath.selectedSegmentId = newSelectedSegmentDoc ? newSelectedSegmentDoc.resource.id : undefined;
@@ -136,12 +136,12 @@ export module NavigationPath {
     }
 
 
-    export function shorten(navigationPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
+    export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
-        const shortenedNavigationPath = ObjectUtil.cloneObject(navigationPath);
-        shortenedNavigationPath.segments = takeWhile(differentFrom(firstToBeExcluded))(navigationPath.segments);
+        const shortenedNavigationPath = ObjectUtil.cloneObject(navPath);
+        shortenedNavigationPath.segments = takeWhile(differentFrom(firstToBeExcluded))(navPath.segments);
 
-        if (navigationPath.selectedSegmentId === firstToBeExcluded.document.resource.id) { // TODO should be: if selectedSegmentId is not contained in the surviving segments
+        if (navPath.selectedSegmentId === firstToBeExcluded.document.resource.id) { // TODO should be: if selectedSegmentId is not contained in the surviving segments
             shortenedNavigationPath.selectedSegmentId = undefined;
         }
 
@@ -157,14 +157,14 @@ export module NavigationPath {
 
     export async function findInvalidSegment(
         mainTypeDocumentResourceId: string|undefined,
-        navigationPath: NavigationPath,
+        navPath: NavigationPath,
         exists: (_: string) => Promise<boolean>): Promise<NavigationPathSegment|undefined> {
 
-        for (let segment of navigationPath.segments) {
+        for (let segment of navPath.segments) {
             if (!await NavigationPathSegment.isValid(
                     mainTypeDocumentResourceId,
                     segment,
-                    navigationPath.segments,
+                    navPath.segments,
                     exists)) {
 
                 return segment;

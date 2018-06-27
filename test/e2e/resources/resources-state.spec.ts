@@ -37,10 +37,10 @@ describe('resources/state --', function() {
                 require('request').post('http://localhost:3003/reset', {});
             });
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToExcavation();
-            ResourcesPage.clickMapModeButton();
+            NavbarPage.clickNavigateToExcavation(); // same here
+            ResourcesPage.clickMapModeButton(); // TODO should not be necessary
             NavbarPage.clickNavigateToProject();
-            ResourcesPage.clickMapModeButton();
+            ResourcesPage.clickMapModeButton(); // same here
             browser.sleep(delays.shortRest);
         }
         index++;

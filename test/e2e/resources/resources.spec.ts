@@ -27,7 +27,7 @@ describe('resources --', () => {
     beforeAll(() => {
 
         ResourcesPage.get();
-        browser.sleep(delays.shortRest * 3);
+        browser.sleep(delays.shortRest * 4);
     });
 
 
@@ -37,7 +37,7 @@ describe('resources --', () => {
             require('request').post('http://localhost:3003/reset', {});
             browser.sleep(delays.shortRest);
             NavbarPage.clickNavigateToProject();
-            browser.sleep(delays.shortRest * 4);
+            browser.sleep(delays.shortRest * 3);
             NavbarPage.clickNavigateToExcavation();
         }
         i++;
@@ -66,14 +66,90 @@ describe('resources --', () => {
     }
 
 
-    it('messages: create a new object of first listed type ', () => {
+    it('docview -- show the relations present in the object', () => {
+
+        ResourcesPage.performCreateLink();
+        ResourcesPage.clickSelectResource('1');
+        RelationsViewPage.getRelationName(0).then(value => {
+            expect(value).toBe('Zeitlich nach'); // with the correct relation label
+        });
+        RelationsViewPage.getRelationValue(0).then(value => {
+            expect(value).toBe('2');
+        });
+    });
+
+
+    /**
+     * Addresses an issue where relations were shown double.
+     */
+    it('docview -- show only relations present in the object', () => {
+
+        ResourcesPage.performCreateLink();
+        ResourcesPage.clickSelectResource('1');
+        RelationsViewPage.getRelations().then(function(relations) {
+            expect(relations.length).toBe(1);
+        });
+    });
+
+
+    it('docview -- show the fields present in the object', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture', 'hasArea', '100');
+        ResourcesPage.clickSelectResource('1');
+        FieldsViewPage.getFieldName(0).then(value => {
+            expect(value).toBe('Fläche in m2'); // with the correct field label
+        });
+        FieldsViewPage.getFieldValue(0).then(value => {
+            expect(value).toBe('100');
+        });
+    });
+
+
+    /**
+     * Addresses an issue where fields were shown double.
+     */
+    it('docview -- show only the fields present in the object', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture', 'hasArea', '100');
+        ResourcesPage.clickSelectResource('1');
+        FieldsViewPage.getFields().then(function(items) {
+            expect(items.length).toBe(1);
+        });
+    });
+
+
+    /**
+     * Addresses an issue where relations were still shown after cancelling edit and discarding changes
+     * (they were not saved though).
+     */
+    it('docview -- show no relations after cancelling edit', () => {
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.performCreateResource('2', 'feature-architecture');
+        ResourcesPage.clickSelectResource('1');
+        DetailSidebarPage.performEditDocument();
+        DoceditPage.clickRelationsTab();
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(1);
+        DoceditRelationsTabPage.typeInRelationByIndices(1, 0, '2');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(1, 0, 0);
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickDiscardInModal();
+
+        browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar'))), delays.ECWaitTime);
+        RelationsViewPage.getRelations().then(function(relations) {
+            expect(relations.length).toBe(0);
+        });
+    });
+
+
+    it('messages -- create a new object of first listed type ', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });
 
 
-    it('messages: show the success msg also on route change', () => {
+    it('messages -- show the success msg also on route change', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
         ResourcesPage.openEditByDoubleClickResource('12');
@@ -86,7 +162,7 @@ describe('resources --', () => {
     });
 
 
-    it('messages: warn if identifier is missing', () => {
+    it('messages -- warn if identifier is missing', () => {
 
         browser.sleep(5000);
 
@@ -99,7 +175,7 @@ describe('resources --', () => {
     });
 
 
-    it('messages: warn if an existing identifier is used', () => {
+    it('messages -- warn if an existing identifier is used', () => {
 
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
@@ -111,7 +187,7 @@ describe('resources --', () => {
     });
 
 
-    it('messages: do not warn if two different identifiers start with the same string', () => {
+    it('messages -- do not warn if two different identifiers start with the same string', () => {
 
         ResourcesPage.performCreateResource('120',undefined,undefined,undefined,undefined,false);
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
@@ -120,7 +196,7 @@ describe('resources --', () => {
     });
 
 
-    it('docedit/images: create links for images', done => {
+    it('docedit/images -- create links for images', done => {
 
         addTwoImages();
         ThumbnailViewPage.getThumbs().then(thumbs => {
@@ -130,7 +206,7 @@ describe('resources --', () => {
     });
 
 
-    it('docedit/images: delete links to one image', done => {
+    it('docedit/images -- delete links to one image', done => {
 
         addTwoImages();
         gotoImageTab();
@@ -148,7 +224,7 @@ describe('resources --', () => {
     });
 
 
-    it('docedit/images: delete links to two images', done => {
+    it('docedit/images -- delete links to two images', done => {
 
         addTwoImages();
         gotoImageTab();
@@ -229,7 +305,7 @@ describe('resources --', () => {
     });
 
 
-    it('docedit/savedialog: should save changes via dialog modal', () => {
+    it('docedit/savedialog -- should save changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -241,7 +317,7 @@ describe('resources --', () => {
     });
 
 
-    it('docedit/savedialog: should discard changes via dialog modal', () => {
+    it('docedit/savedialog -- should discard changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -253,7 +329,7 @@ describe('resources --', () => {
     });
 
 
-    it('docedit/savedialog: should cancel dialog modal', () => {
+    it('docedit/savedialog -- should cancel dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -267,7 +343,7 @@ describe('resources --', () => {
     });
 
 
-    it('relations: create links for relations', () => {
+    it('relations -- create links for relations', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
@@ -277,7 +353,7 @@ describe('resources --', () => {
     });
 
 
-    it('relations: create a new relation and the corresponding inverse relation', () => {
+    it('relations -- create a new relation and the corresponding inverse relation', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
@@ -291,7 +367,7 @@ describe('resources --', () => {
     });
 
 
-    it('relations: edit a resource that contains a relation', () => {
+    it('relations -- edit a resource that contains a relation', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
@@ -302,7 +378,7 @@ describe('resources --', () => {
     });
 
 
-    it('relations: delete a relation and the corresponding inverse relation', () => {
+    it('relations -- delete a relation and the corresponding inverse relation', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
@@ -319,7 +395,7 @@ describe('resources --', () => {
     });
 
 
-    it('relations: delete inverse relations when deleting a resource', () => {
+    it('relations -- delete inverse relations when deleting a resource', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
@@ -331,7 +407,7 @@ describe('resources --', () => {
     });
 
 
-    it('maintype: should create a new main type resource', () => {
+    it('maintype -- should create a new main type resource', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
         ResourcesPage.performCreateMainTypeResource('newTrench');
@@ -341,7 +417,7 @@ describe('resources --', () => {
     });
 
 
-    it('maintype: should refresh the resources list when switching main type documents', () => {
+    it('maintype -- should refresh the resources list when switching main type documents', () => {
 
         ResourcesPage.performCreateMainTypeResource('newTrench');
         NavbarPage.clickNavigateToExcavation();
@@ -351,7 +427,7 @@ describe('resources --', () => {
     });
 
 
-    it('maintype: should edit a main type resource', () => {
+    it('maintype -- should edit a main type resource', () => {
 
         NavbarPage.clickNavigateToProject();
         ResourcesPage.openEditByDoubleClickResource('trench1');
@@ -363,7 +439,7 @@ describe('resources --', () => {
     });
 
 
-    it('typechange: should change the type of a resource to a child type', () => {
+    it('typechange -- should change the type of a resource to a child type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature');
         ResourcesPage.clickSelectResource('1');
@@ -376,7 +452,7 @@ describe('resources --', () => {
     });
 
 
-    it('typechange: should delete invalid fields when changing the type of a resource to its parent type', () => {
+    it('typechange -- should delete invalid fields when changing the type of a resource to its parent type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.clickSelectResource('1');
@@ -398,7 +474,7 @@ describe('resources --', () => {
     });
 
 
-    it('typechange: should delete invalid relations when changing the type of a resource to a sibling type', () => {
+    it('typechange -- should delete invalid relations when changing the type of a resource to a sibling type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'wall_surface');

@@ -117,6 +117,19 @@ export class NavigationPathManager {
 
     private async createNavigationPathForDocument(document: IdaiFieldDocument) {
 
+        const segments = await this.makeSegments(document);
+        if (segments.length == 0) return await this.moveInto(undefined);
+
+        const navPath = NavigationPathManager.replaceSegmentsIfNecessary(
+            this.resourcesState.getNavigationPath(), segments, segments[segments.length - 1].document.resource.id);
+
+        this.resourcesState.setNavigationPath(navPath);
+        this.notify();
+    }
+
+
+    private async makeSegments(document: IdaiFieldDocument) {
+
         const segments: Array<NavigationPathSegment> = [];
 
         let currentResourceId = ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
@@ -127,19 +140,7 @@ export class NavigationPathManager {
 
             segments.unshift( {document: currentSegmentDoc, q: '', types: []});
         }
-
-        if (segments.length == 0) {
-
-            await this.moveInto(undefined);
-
-        } else {
-
-            const navPath = NavigationPathManager.replaceSegmentsIfNecessary(
-                this.resourcesState.getNavigationPath(), segments, segments[segments.length - 1].document.resource.id);
-
-            this.resourcesState.setNavigationPath(navPath);
-            this.notify();
-        }
+        return segments;
     }
 
 

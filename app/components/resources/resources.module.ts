@@ -37,6 +37,7 @@ import {Loading} from '../../widgets/loading';
 import {ResourcesStateManager} from './view/resources-state-manager';
 import {ViewDefinition} from './view/state/view-definition';
 import {OperationViews} from './view/state/operation-views';
+import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 
 const remote = require('electron').remote;
 
@@ -77,7 +78,8 @@ const remote = require('electron').remote;
         LayerImageProvider,
         {
             provide: ResourcesStateManager,
-            useFactory: (stateSerializer: StateSerializer,
+            useFactory: (datastore: IdaiFieldDocumentReadDatastore,
+                         stateSerializer: StateSerializer,
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService) => {
 
@@ -106,6 +108,7 @@ const remote = require('electron').remote;
                 if (!projectName) throw 'project not set';
 
                 return new ResourcesStateManager(
+                    datastore,
                     stateSerializer,
                     new OperationViews(views),
                     ['Place'],
@@ -113,7 +116,7 @@ const remote = require('electron').remote;
                     remote.getGlobal('switches').suppress_map_load_for_test
                 );
             },
-            deps: [StateSerializer, ProjectConfiguration, SettingsService]
+            deps: [IdaiFieldDocumentReadDatastore, StateSerializer, ProjectConfiguration, SettingsService]
         },
         {
             provide: ViewFacade,

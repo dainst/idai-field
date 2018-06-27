@@ -6,6 +6,12 @@ import {ViewState} from './state/view-state';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ObjectUtil} from '../../../util/object-util';
 import {NavigationPath} from './state/navigation-path';
+import {ObserverUtil} from '../../../util/observer-util';
+import {Observer} from 'rxjs/Observer';
+import {Observable} from 'rxjs/Observable'
+import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
+
+
 
 
 @Injectable()
@@ -17,14 +23,17 @@ export class ResourcesStateManager {
 
     public loaded: boolean = false;
 
+    private navigationPathObservers: Array<Observer<NavigationPath>> = [];
+
     private _: ResourcesState = ResourcesState.makeDefaults();
 
     constructor(
+        private datastore: IdaiFieldDocumentReadDatastore,
         private serializer: StateSerializer,
         private views: OperationViews,
         private additionalOverviewTypeNames: string[],
         private project: string,
-        private suppressLoadMapInTestProject: boolean = false
+        private suppressLoadMapInTestProject: boolean = false,
     ) {}
 
 
@@ -76,13 +85,26 @@ export class ResourcesStateManager {
 
     public setMode = (mode: 'map' | 'list') => this._.mode = mode;
 
-    public setDisplayHierarchy = (displayHierarchy: boolean) => this.getViewState().displayHierarchy = displayHierarchy;
-
     public getDisplayHierarchy = (): boolean => this.getViewState().displayHierarchy;
 
-    public setBypassOperationTypeSelection = (bypassOperationTypeSelection: boolean) => this.getViewState().bypassOperationTypeSelection = bypassOperationTypeSelection;
-
     public getBypassOperationTypeSelection = () => this.getViewState().bypassOperationTypeSelection;
+
+    public navigationPathNotifications = (): Observable<NavigationPath> =>
+        ObserverUtil.register(this.navigationPathObservers);
+
+
+    public setDisplayHierarchy(displayHierarchy: boolean) {
+
+        this.getViewState().displayHierarchy = displayHierarchy;
+        this.notify();
+    }
+
+
+    public setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
+
+        this.getViewState().bypassOperationTypeSelection = bypassOperationTypeSelection;
+        this.notify();
+    }
 
 
     public setSelectedDocument(document: IdaiFieldDocument|undefined) {
@@ -133,17 +155,6 @@ export class ResourcesStateManager {
     }
 
 
-    public setMainTypeDocument(resourceId: string|undefined) {
-
-        if (!resourceId) return;
-
-        if (!this.getViewState().navigationPaths[resourceId]) {
-            this.getViewState().navigationPaths[resourceId] = NavigationPath.empty();
-        }
-        this.getViewState().mainTypeDocumentResourceId = resourceId;
-    }
-
-
     public setActiveLayersIds(activeLayersIds: string[]) {
 
         const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
@@ -189,6 +200,90 @@ export class ResourcesStateManager {
     public setNavigationPath(navPath: NavigationPath) {
 
         this._ = ResourcesState.updateNavigationPath(this._, navPath);
+    }
+
+
+    public async moveInto(document: IdaiFieldDocument|undefined) {
+
+        const invalidSegment = await NavigationPath.findInvalidSegment(
+            this.getMainTypeDocumentResourceId(),
+            this.getNavigationPath(),
+            async (resourceId: string) => (await this.datastore.find({ q: '',
+                constraints: { 'id:match': resourceId }})).totalCount !== 0);
+
+        const validatedNavigationPath = invalidSegment
+            ? NavigationPath.shorten(this.getNavigationPath(), invalidSegment)
+            : this.getNavigationPath();
+
+        const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
+        this.setNavigationPath(updatedNavigationPath);
+        this.notify();
+    }
+
+
+    public async rebuildNavigationPath() {
+
+        const segment = NavigationPath.getSelectedSegment(this.getNavigationPath2());
+        await this.moveInto(segment ? segment.document : undefined);
+    }
+
+
+    public setMainTypeDocument(resourceId: string|undefined) {
+
+        if (!resourceId) return;
+
+        if (!this.getViewState().navigationPaths[resourceId]) {
+            this.getViewState().navigationPaths[resourceId] = NavigationPath.empty();
+        }
+        this.getViewState().mainTypeDocumentResourceId = resourceId;
+    }
+
+
+    public setMainTypeDocument2(selectedMainTypeDocumentResourceId: string|undefined) {
+
+        if (!this.getDisplayHierarchy()) this.setBypassOperationTypeSelection(false);
+        if (selectedMainTypeDocumentResourceId) this.setMainTypeDocument(selectedMainTypeDocumentResourceId);
+        this.notify();
+    }
+
+
+    public async updateNavigationPathForDocument(document: IdaiFieldDocument) {
+
+        this.setDisplayHierarchy(true);
+
+        if (!NavigationPath.isPartOfNavigationPath(document, this.getNavigationPath(),
+                this.getMainTypeDocumentResourceId())) {
+            await this.createNavigationPathForDocument(document);
+        }
+    }
+
+
+    // TODO unit test that it returns a clone
+    public getNavigationPath2(): NavigationPath {
+
+        if (this.isInOverview()) return NavigationPath.empty();
+        if (!this.getMainTypeDocumentResourceId()) return NavigationPath.empty();
+
+        return ObjectUtil.cloneObject(this.getNavigationPath());
+    }
+
+
+    private notify() {
+
+        ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath2());
+    }
+
+
+    private async createNavigationPathForDocument(document: IdaiFieldDocument) {
+
+        const segments = await NavigationPath.makeSegments(document, resourceId => this.datastore.get(resourceId));
+        if (segments.length == 0) return await this.moveInto(undefined);
+
+        const navPath = NavigationPath.replaceSegmentsIfNecessary(
+            this.getNavigationPath(), segments, segments[segments.length - 1].document.resource.id);
+
+        this.setNavigationPath(navPath);
+        this.notify();
     }
 
 

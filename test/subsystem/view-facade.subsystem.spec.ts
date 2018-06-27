@@ -119,6 +119,7 @@ export function main() {
             });
 
             resourcesState = new ResourcesStateManager(
+                idaiFieldDocumentDatastore,
                 stateSerializer,
                 new OperationViews(viewsList),
                 [],
@@ -159,6 +160,7 @@ export function main() {
         it('reload predefined layer ids on startup in test/demo project', async done => {
 
             resourcesState = new ResourcesStateManager(
+                idaiFieldDocumentDatastore,
                 stateSerializer,
                 new OperationViews(viewsList),
                 [],

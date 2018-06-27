@@ -258,21 +258,32 @@ export class DocumentsManager {
     }
 
 
-    private makeConstraints(mainTypeDocumentResourceId: string|undefined): { [name: string]: string}  {
+    private makeConstraints(mainTypeDocumentResourceId: string|undefined)
+            : { [name: string]: string|string[]}  {
 
         const navigationPath = this.navigationPathManager.getNavigationPath();
 
-        const constraints: { [name: string]: string} = !this.resourcesState.getDisplayHierarchy()
+        const constraints: { [name: string]: string|string[] } = !this.resourcesState.getDisplayHierarchy()
             ? {}
             : navigationPath.selectedSegmentId
                 ? { 'liesWithin:contain': navigationPath.selectedSegmentId }
                 : { 'liesWithin:exist': 'UNKNOWN' };
 
         if (mainTypeDocumentResourceId) {
-            constraints['isRecordedIn:contain'] = mainTypeDocumentResourceId;
+            constraints['isRecordedIn:contain']
+                = this.getIsRecordedInConstraintValues(mainTypeDocumentResourceId);
         }
 
         return constraints;
+    }
+
+
+    private getIsRecordedInConstraintValues(mainTypeDocumentResourceId: string): string|string[] {
+
+        return this.resourcesState.getBypassOperationTypeSelection()
+            && !this.resourcesState.getDisplayHierarchy()
+        ? this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id)
+        : mainTypeDocumentResourceId;
     }
 
 

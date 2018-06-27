@@ -1,5 +1,4 @@
 import {NavigationPathContext} from './navigation-path-context';
-
 import {IdaiFieldDocument} from 'idai-components-2/field';
 
 /**

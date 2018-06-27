@@ -39,7 +39,8 @@ export module SegmentValidator {
     }
 
 
-    function hasValidRelation(mainTypeDocumentResourceId: string|undefined, segment: NavigationPathSegment, segments: Array<NavigationPathSegment>): boolean {
+    function hasValidRelation(mainTypeDocumentResourceId: string|undefined, segment: NavigationPathSegment,
+                              segments: Array<NavigationPathSegment>): boolean {
 
         const index: number = segments.indexOf(segment);
 

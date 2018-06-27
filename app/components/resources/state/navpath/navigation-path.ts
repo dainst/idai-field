@@ -129,6 +129,7 @@ export module NavigationPath {
         return getContext(navPath, displayHierarchy).types;
     }
 
+
     export function shorten(navigationPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
         const shortenedNavigationPath = ObjectUtil.cloneObject(navigationPath);
@@ -146,7 +147,6 @@ export module NavigationPath {
 
         return !segmentId || navPath.segments.map(toResourceId).includes(segmentId);
     }
-
 
 
     function getContext(navPath: NavigationPath, displayHierarchy: boolean): NavigationPathContext {

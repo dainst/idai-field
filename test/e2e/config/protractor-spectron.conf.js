@@ -14,10 +14,10 @@ exports.config = {
         '../syncing/*.spec.js',
         '../project/*.spec.js',
         '../resources/*.spec.js',
-        '../settings/*.spec.js',
         '../images/*.spec.js',
         '../map/*.spec.js',
-        '../import/*.spec.js'
+        '../import/*.spec.js',
+        '../settings/*.spec.js'
     ],
 
     allScriptsTimeout: 110000,

@@ -156,7 +156,7 @@ describe('resources --', () => {
     });
 
 
-    it('should save changes via dialog modal', () => {
+    it('docedit/savedialog: should save changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -168,7 +168,7 @@ describe('resources --', () => {
     });
 
 
-    it('should discard changes via dialog modal', () => {
+    it('docedit/savedialog: should discard changes via dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -180,7 +180,7 @@ describe('resources --', () => {
     });
 
 
-    it('should cancel dialog modal', () => {
+    it('docedit/savedialog: should cancel dialog modal', () => {
 
         ResourcesPage.performCreateResource('1');
         ResourcesPage.clickSelectResource('1');
@@ -194,7 +194,7 @@ describe('resources --', () => {
     });
 
 
-    it('should create a new main type resource', () => {
+    it('maintype: should create a new main type resource', () => {
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
         ResourcesPage.performCreateMainTypeResource('newTrench');
@@ -204,7 +204,7 @@ describe('resources --', () => {
     });
 
 
-    it('should refresh the resources list when switching main type documents', () => {
+    it('maintype: should refresh the resources list when switching main type documents', () => {
 
         ResourcesPage.performCreateMainTypeResource('newTrench');
         NavbarPage.clickNavigateToExcavation();
@@ -214,7 +214,7 @@ describe('resources --', () => {
     });
 
 
-    it('should edit a main type resource', () => {
+    it('maintype: should edit a main type resource', () => {
 
         NavbarPage.clickNavigateToProject();
         ResourcesPage.openEditByDoubleClickResource('trench1');
@@ -226,7 +226,7 @@ describe('resources --', () => {
     });
 
 
-    it('should change the type of a resource to a child type', () => {
+    it('typechange: should change the type of a resource to a child type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature');
         ResourcesPage.clickSelectResource('1');
@@ -239,7 +239,7 @@ describe('resources --', () => {
     });
 
 
-    it('should delete invalid fields when changing the type of a resource to its parent type', () => {
+    it('typechange: should delete invalid fields when changing the type of a resource to its parent type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.clickSelectResource('1');
@@ -261,7 +261,7 @@ describe('resources --', () => {
     });
 
 
-    it('should delete invalid relations when changing the type of a resource to a sibling type', () => {
+    it('typechange: should delete invalid relations when changing the type of a resource to a sibling type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'wall_surface');

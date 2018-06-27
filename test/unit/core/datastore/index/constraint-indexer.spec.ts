@@ -1,4 +1,4 @@
-import {ConstraintIndexer} from "../../../../../app/core/datastore/index/constraint-indexer";
+import {ConstraintIndexer} from '../../../../../app/core/datastore/index/constraint-indexer';
 import {IndexItem} from '../../../../../app/core/datastore/index/index-item';
 
 /**
@@ -31,7 +31,7 @@ describe('ConstraintIndexer', () => {
     function indexItem(id, identifier?): IndexItem {
 
         if (!identifier) identifier = 'identifier' + id;
-        return {id: id, date: '2018-01-01' as any, identifier: identifier};
+        return { id: id, date: '2018-01-01' as any, identifier: identifier };
     }
 
 
@@ -120,7 +120,7 @@ describe('ConstraintIndexer', () => {
 
         ci.put(docs[0]);
 
-        expect(ci.get('liesWithin:contain', '3')).toEqual([ ]);
+        expect(ci.get('liesWithin:contain', '3')).toEqual([]);
     });
 
 

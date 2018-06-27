@@ -1,5 +1,5 @@
 import {Query} from 'idai-components-2/core';
-import {IndexFacade} from "../../../../../app/core/datastore/index/index-facade";
+import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
 import {DAOsSpecHelper} from '../../../../subsystem/daos-spec-helper';
 
@@ -26,7 +26,7 @@ describe('IndexFacade', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         indexFacade.put(doc1);
 
-        const result = indexFacade.perform({q: 'identifier'});
+        const result = indexFacade.perform({ q: 'identifier' });
         expect(result[0]).toBe('id1');
     });
 
@@ -36,7 +36,7 @@ describe('IndexFacade', () => {
         const doc1 = Static.doc('sd1', 'identifier1', 'Find', 'id1');
         indexFacade.put(doc1);
 
-        const result = indexFacade.perform({q: undefined});
+        const result = indexFacade.perform({ q: undefined });
         expect(result[0]).toBe('id1');
     });
 
@@ -68,7 +68,7 @@ describe('IndexFacade', () => {
         indexFacade.put(doc1);
         indexFacade.put(doc2);
 
-        const result = indexFacade.perform({q: 'bla'});
+        const result = indexFacade.perform({ q: 'bla' });
         expect(result.length).toBe(2);
     });
 
@@ -82,7 +82,7 @@ describe('IndexFacade', () => {
         indexFacade.put(doc2);
         indexFacade.put(doc3);
 
-        const result = indexFacade.perform({q: 'blub', types: ['type3']});
+        const result = indexFacade.perform({ q: 'blub', types: ['type3'] });
         expect(result.length).toBe(1);
         expect(result[0]).toBe('id3');
     });
@@ -99,9 +99,9 @@ describe('IndexFacade', () => {
 
 
         const result = indexFacade.perform({
-                q: 'blub',
-                types: ['type2']
-            });
+            q: 'blub',
+            types: ['type2']
+        });
 
         expect(result.length).toBe(2);
         expect(result[0]).not.toBe('id1');
@@ -112,7 +112,6 @@ describe('IndexFacade', () => {
     it('should filter with constraint', () => {
 
         const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
-
         const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
         const doc3 = Static.doc('bla3', 'blub3', 'type2','id3');
         const doc4 = Static.doc('bla4', 'blub4', 'type2','id4');
@@ -143,7 +142,6 @@ describe('IndexFacade', () => {
     it('should filter with multiple constraints', () => {
 
         const doc1 = Static.doc('bla1', 'blub1', 'type1','id1');
-
         const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
         doc2.resource.relations['isRecordedIn'] = ['id1'];
         const doc3 = Static.doc('bla3', 'blub3', 'type2','id3');
@@ -181,7 +179,7 @@ describe('IndexFacade', () => {
         const q: Query = {
             q: 'doc',
             constraints: {
-                'isRecordedIn:contain' : { value: 'id2', type: 'subtract' }
+                'isRecordedIn:contain': { value: 'id2', type: 'subtract' }
             }
         };
 
@@ -202,7 +200,7 @@ describe('IndexFacade', () => {
         const doc3 = Static.doc('bla3', 'blub3', 'type3','id3');
         doc3.resource.relations['isRecordedIn'] = ['id1'];
 
-        setTimeout(()=>{
+        setTimeout(() => {
 
             const doc2 = Static.doc('bla2', 'blub2', 'type2','id2');
             doc2.resource.relations['isRecordedIn'] = ['id1'];
@@ -210,7 +208,7 @@ describe('IndexFacade', () => {
             const q: Query = {
                 q: 'blub',
                 constraints: {
-                    'isRecordedIn:contain' : 'id1'
+                    'isRecordedIn:contain': 'id1'
                 }
             };
 

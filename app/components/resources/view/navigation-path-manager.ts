@@ -129,25 +129,29 @@ export class NavigationPathManager {
         }
 
         if (segments.length == 0) {
+
             await this.moveInto(undefined);
+
         } else {
-            this.setNavigationPath(segments, segments[segments.length - 1].document.resource.id);
+
+            const navPath = NavigationPathManager.replaceSegmentsIfNecessary(
+                this.resourcesState.getNavigationPath(), segments, segments[segments.length - 1].document.resource.id);
+
+            this.resourcesState.setNavigationPath(navPath);
+            this.notify();
         }
     }
 
 
-    private setNavigationPath(newSegments: NavigationPathSegment[], newSelectedSegmentId: string) {
+    private static replaceSegmentsIfNecessary(navPath:NavigationPath,
+                                              newSegments: NavigationPathSegment[],
+                                              newSelectedSegmentId: string): NavigationPath {
 
-        const updatedNavigationPath = ObjectUtil.cloneObject(this.resourcesState.getNavigationPath());
+        const updatedNavigationPath = ObjectUtil.cloneObject(navPath);
 
-        if (!NavigationPath.segmentNotPresent(
-            this.resourcesState.getNavigationPath(), newSelectedSegmentId)) {
+        if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) updatedNavigationPath.segments = newSegments;
 
-            updatedNavigationPath.segments = newSegments;
-        }
         updatedNavigationPath.selectedSegmentId = newSelectedSegmentId;
-
-        this.resourcesState.setNavigationPath(updatedNavigationPath);
-        this.notify();
+        return updatedNavigationPath;
     }
 }

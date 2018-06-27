@@ -173,14 +173,14 @@ export class ResourcesStateManager {
         this.serialize();
     }
 
-
+    // TODO unit test that it returns a clone
     public getNavigationPath(): NavigationPath {
 
         const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
         if (!mainTypeDocumentResourceId) return NavigationPath.empty();
 
         const navigationPaths = this.getViewState().navigationPaths;
-        const path = (navigationPaths as any)[mainTypeDocumentResourceId];
+        const path = ObjectUtil.cloneObject(navigationPaths[mainTypeDocumentResourceId]);
 
         return path ? path : NavigationPath.empty();
     }

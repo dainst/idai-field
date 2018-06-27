@@ -1,8 +1,10 @@
+import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ObjectUtil} from '../../../../util/object-util';
 import {ViewContext} from './view-context';
 import {differentFrom, isSegmentWith, NavigationPathSegment, toResourceId} from './navigation-path-segment';
 import {takeUntil, takeWhile} from 'tsfun';
+import {ModelUtil} from '../../../../core/model/model-util';
 
 
 /**
@@ -173,6 +175,52 @@ export module NavigationPath {
 
         return undefined;
     }
+
+    export function isPartOfNavigationPath(
+        document: IdaiFieldDocument,
+        navPath: NavigationPath,
+        mainTypeDocumentResourceId: string|undefined): boolean {
+
+        if (navPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
+                navPath.selectedSegmentId)) {
+            return true;
+        }
+
+        return (!navPath.selectedSegmentId && mainTypeDocumentResourceId != undefined
+            && Document.hasRelationTarget(document, 'isRecordedIn',
+                mainTypeDocumentResourceId )
+            && !Document.hasRelations(document, 'liesWithin'));
+    }
+
+
+    export async function makeSegments(document: IdaiFieldDocument, get: (_: string) => Promise<IdaiFieldDocument>) {
+
+        const segments: Array<NavigationPathSegment> = [];
+
+        let currentResourceId = ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
+        while (currentResourceId) {
+
+            const currentSegmentDoc = await get(currentResourceId);
+            currentResourceId = ModelUtil.getRelationTargetId(currentSegmentDoc, 'liesWithin', 0);
+
+            segments.unshift( {document: currentSegmentDoc, q: '', types: []});
+        }
+        return segments;
+    }
+
+
+    export function replaceSegmentsIfNecessary(navPath:NavigationPath,
+        newSegments: NavigationPathSegment[],
+        newSelectedSegmentId: string): NavigationPath {
+
+        const updatedNavigationPath = ObjectUtil.cloneObject(navPath);
+
+        if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) updatedNavigationPath.segments = newSegments;
+
+        updatedNavigationPath.selectedSegmentId = newSelectedSegmentId;
+        return updatedNavigationPath;
+    }
+
 
 
     function getViewContext(navPath: NavigationPath, displayHierarchy: boolean): ViewContext {

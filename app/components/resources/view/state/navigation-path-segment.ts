@@ -1,12 +1,12 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {NavigationPathContext} from './navigation-path-context';
+import {ViewContext} from './view-context';
 
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export interface NavigationPathSegment extends NavigationPathContext {
+export interface NavigationPathSegment extends ViewContext {
 
     document: IdaiFieldDocument;
 }

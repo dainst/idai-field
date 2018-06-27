@@ -1,6 +1,6 @@
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ObjectUtil} from '../../../../util/object-util';
-import {NavigationPathContext} from './navigation-path-context';
+import {ViewContext} from './view-context';
 import {differentFrom, isSegmentWith, NavigationPathSegment, toResourceId} from './navigation-path-segment';
 import {takeUntil, takeWhile} from 'tsfun';
 
@@ -11,8 +11,8 @@ import {takeUntil, takeWhile} from 'tsfun';
  */
 export interface NavigationPath {
 
-    hierarchyContext: NavigationPathContext;
-    flatContext: NavigationPathContext;
+    hierarchyContext: ViewContext;
+    flatContext: ViewContext;
 
     segments: Array<NavigationPathSegment>;
 
@@ -97,42 +97,42 @@ export module NavigationPath {
     export function setSelectedDocument(navPath: NavigationPath, displayHierarchy: boolean, document: IdaiFieldDocument|undefined) {
 
         const clone = ObjectUtil.cloneObject(navPath);
-        getContext(clone, displayHierarchy).selected = document;
+        getViewContext(clone, displayHierarchy).selected = document;
         return clone;
     }
 
 
     export function getSelectedDocument(navPath: NavigationPath, displayHierarchy: boolean): IdaiFieldDocument|undefined {
 
-        return getContext(navPath, displayHierarchy).selected;
+        return getViewContext(navPath, displayHierarchy).selected;
     }
 
 
     export function setQueryString(navPath: NavigationPath, displayHierarchy: boolean, q: string) {
 
         const clone = ObjectUtil.cloneObject(navPath);
-        getContext(clone, displayHierarchy).q = q;
+        getViewContext(clone, displayHierarchy).q = q;
         return clone;
     }
 
 
     export function getQuerySring(navPath: NavigationPath, displayHierarchy: boolean) {
 
-        return getContext(navPath, displayHierarchy).q;
+        return getViewContext(navPath, displayHierarchy).q;
     }
 
 
     export function setTypeFilters(navPath: NavigationPath, displayHierarchy: boolean, types: string[]) {
 
         const clone = ObjectUtil.cloneObject(navPath);
-        getContext(clone, displayHierarchy).types = types;
+        getViewContext(clone, displayHierarchy).types = types;
         return clone;
     }
 
 
     export function getTypeFilters(navPath: NavigationPath, displayHierarchy: boolean) {
 
-        return getContext(navPath, displayHierarchy).types;
+        return getViewContext(navPath, displayHierarchy).types;
     }
 
 
@@ -175,7 +175,7 @@ export module NavigationPath {
     }
 
 
-    function getContext(navPath: NavigationPath, displayHierarchy: boolean): NavigationPathContext {
+    function getViewContext(navPath: NavigationPath, displayHierarchy: boolean): ViewContext {
 
         if (!displayHierarchy) return navPath.flatContext;
 

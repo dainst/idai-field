@@ -76,7 +76,9 @@ export class NavigationPathManager {
 
     public async updateNavigationPathForDocument(document: IdaiFieldDocument) {
 
-        if (!this.isPartOfNavigationPath(document)) await this.createNavigationPathForDocument(document);
+        if (!NavigationPathManager.isPartOfNavigationPath(document, this.getNavigationPath(), this.resourcesState.getMainTypeDocumentResourceId())) {
+            await this.createNavigationPathForDocument(document);
+        }
     }
 
 
@@ -96,25 +98,6 @@ export class NavigationPathManager {
     }
 
 
-    // TODO rename and / or split into multiple methods since it does more than the name says
-    private isPartOfNavigationPath(document: IdaiFieldDocument): boolean {
-
-        const navigationPath = this.getNavigationPath();
-
-        if (navigationPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
-                navigationPath.selectedSegmentId)) {
-            return true;
-        }
-
-        const mainTypeDocumentResourceId = this.resourcesState.getMainTypeDocumentResourceId();
-
-        return (!navigationPath.selectedSegmentId && mainTypeDocumentResourceId != undefined
-                && Document.hasRelationTarget(document, 'isRecordedIn',
-                    mainTypeDocumentResourceId )
-                && !Document.hasRelations(document, 'liesWithin'));
-    }
-
-
     private async createNavigationPathForDocument(document: IdaiFieldDocument) {
 
         const segments = await NavigationPathManager.makeSegments(document, resourceId => this.datastore.get(resourceId));
@@ -125,6 +108,23 @@ export class NavigationPathManager {
 
         this.resourcesState.setNavigationPath(navPath);
         this.notify();
+    }
+
+
+    private static isPartOfNavigationPath(
+        document: IdaiFieldDocument,
+        navPath: NavigationPath,
+        mainTypeDocumentResourceId: string|undefined): boolean {
+
+        if (navPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
+                navPath.selectedSegmentId)) {
+            return true;
+        }
+
+        return (!navPath.selectedSegmentId && mainTypeDocumentResourceId != undefined
+            && Document.hasRelationTarget(document, 'isRecordedIn',
+                mainTypeDocumentResourceId )
+            && !Document.hasRelations(document, 'liesWithin'));
     }
 
 

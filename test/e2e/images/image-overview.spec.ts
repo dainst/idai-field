@@ -11,7 +11,7 @@ const path = require('path');
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
-describe('images/image-overview --', function() {
+describe('images --', function() {
 
 
     const resourceId1 = 'tf1';

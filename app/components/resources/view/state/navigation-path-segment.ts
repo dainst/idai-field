@@ -1,12 +1,12 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {NavigationPathContext} from './navigation-path-context';
+import {ViewContext} from './view-context';
 
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export interface NavigationPathSegment extends NavigationPathContext {
+export interface NavigationPathSegment extends ViewContext {
 
     document: IdaiFieldDocument;
 }
@@ -18,9 +18,9 @@ export module NavigationPathSegment {
         mainTypeDocumentResourceId: string|undefined,
         segment: NavigationPathSegment,
         segments: Array<NavigationPathSegment>,
-        hasExisting: (_: string) => Promise<boolean>): Promise<boolean> {
+        exists: (_: string) => Promise<boolean>): Promise<boolean> {
 
-        return await hasExisting(segment.document.resource.id)
+        return await exists(segment.document.resource.id)
             && hasValidRelation(mainTypeDocumentResourceId, segment, segments);
     }
 

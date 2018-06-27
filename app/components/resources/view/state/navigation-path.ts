@@ -1,6 +1,6 @@
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ObjectUtil} from '../../../../util/object-util';
-import {NavigationPathContext} from './navigation-path-context';
+import {ViewContext} from './view-context';
 import {differentFrom, isSegmentWith, NavigationPathSegment, toResourceId} from './navigation-path-segment';
 import {takeUntil, takeWhile} from 'tsfun';
 
@@ -11,8 +11,8 @@ import {takeUntil, takeWhile} from 'tsfun';
  */
 export interface NavigationPath {
 
-    hierarchyContext: NavigationPathContext;
-    flatContext: NavigationPathContext;
+    hierarchyContext: ViewContext;
+    flatContext: ViewContext;
 
     segments: Array<NavigationPathSegment>;
 
@@ -30,16 +30,16 @@ export module NavigationPath {
 
         return {
             segments: [],
-            hierarchyContext: { q: '', types: []},
-            flatContext: { q: '', types: []}
+            hierarchyContext: ViewContext.empty(),
+            flatContext: ViewContext.empty()
         };
     }
 
 
-    export function getSelectedSegment(navigationPath: NavigationPath) {
+    export function getSelectedSegment(navPath: NavigationPath) {
 
-        return navigationPath.segments.find(element =>
-            element.document.resource.id === navigationPath.selectedSegmentId) as NavigationPathSegment;
+        return navPath.segments.find(element =>
+            element.document.resource.id === navPath.selectedSegmentId) as NavigationPathSegment;
     }
 
 
@@ -72,20 +72,20 @@ export module NavigationPath {
      * (NO SELECTED SEGMENT)
      * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
      *
-     * @param navigationPath
+     * @param navPath
      * @param newSelectedSegmentDoc
      * @return a new path object with updated state
      */
     export function setNewSelectedSegmentDoc(
-        navigationPath: NavigationPath,
+        navPath: NavigationPath,
         newSelectedSegmentDoc: IdaiFieldDocument|undefined): NavigationPath {
 
-        const updatedNavigationPath = ObjectUtil.cloneObject(navigationPath);
+        const updatedNavigationPath = ObjectUtil.cloneObject(navPath);
 
         if (newSelectedSegmentDoc) {
             updatedNavigationPath.segments = rebuildElements(
-                navigationPath.segments,
-                navigationPath.selectedSegmentId,
+                navPath.segments,
+                navPath.selectedSegmentId,
                 newSelectedSegmentDoc);
         }
         updatedNavigationPath.selectedSegmentId = newSelectedSegmentDoc ? newSelectedSegmentDoc.resource.id : undefined;
@@ -97,51 +97,51 @@ export module NavigationPath {
     export function setSelectedDocument(navPath: NavigationPath, displayHierarchy: boolean, document: IdaiFieldDocument|undefined) {
 
         const clone = ObjectUtil.cloneObject(navPath);
-        getContext(clone, displayHierarchy).selected = document;
+        getViewContext(clone, displayHierarchy).selected = document;
         return clone;
     }
 
 
     export function getSelectedDocument(navPath: NavigationPath, displayHierarchy: boolean): IdaiFieldDocument|undefined {
 
-        return getContext(navPath, displayHierarchy).selected;
+        return getViewContext(navPath, displayHierarchy).selected;
     }
 
 
     export function setQueryString(navPath: NavigationPath, displayHierarchy: boolean, q: string) {
 
         const clone = ObjectUtil.cloneObject(navPath);
-        getContext(clone, displayHierarchy).q = q;
+        getViewContext(clone, displayHierarchy).q = q;
         return clone;
     }
 
 
     export function getQuerySring(navPath: NavigationPath, displayHierarchy: boolean) {
 
-        return getContext(navPath, displayHierarchy).q;
+        return getViewContext(navPath, displayHierarchy).q;
     }
 
 
     export function setTypeFilters(navPath: NavigationPath, displayHierarchy: boolean, types: string[]) {
 
         const clone = ObjectUtil.cloneObject(navPath);
-        getContext(clone, displayHierarchy).types = types;
+        getViewContext(clone, displayHierarchy).types = types;
         return clone;
     }
 
 
     export function getTypeFilters(navPath: NavigationPath, displayHierarchy: boolean) {
 
-        return getContext(navPath, displayHierarchy).types;
+        return getViewContext(navPath, displayHierarchy).types;
     }
 
 
-    export function shorten(navigationPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
+    export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
-        const shortenedNavigationPath = ObjectUtil.cloneObject(navigationPath);
-        shortenedNavigationPath.segments = takeWhile(differentFrom(firstToBeExcluded))(navigationPath.segments);
+        const shortenedNavigationPath = ObjectUtil.cloneObject(navPath);
+        shortenedNavigationPath.segments = takeWhile(differentFrom(firstToBeExcluded))(navPath.segments);
 
-        if (navigationPath.selectedSegmentId === firstToBeExcluded.document.resource.id) { // TODO should be: if selectedSegmentId is not contained in the surviving segments
+        if (navPath.selectedSegmentId === firstToBeExcluded.document.resource.id) { // TODO should be: if selectedSegmentId is not contained in the surviving segments
             shortenedNavigationPath.selectedSegmentId = undefined;
         }
 
@@ -157,15 +157,15 @@ export module NavigationPath {
 
     export async function findInvalidSegment(
         mainTypeDocumentResourceId: string|undefined,
-        navigationPath: NavigationPath,
-        hasExisting: (_: string) => Promise<boolean>): Promise<NavigationPathSegment|undefined> {
+        navPath: NavigationPath,
+        exists: (_: string) => Promise<boolean>): Promise<NavigationPathSegment|undefined> {
 
-        for (let segment of navigationPath.segments) {
+        for (let segment of navPath.segments) {
             if (!await NavigationPathSegment.isValid(
                     mainTypeDocumentResourceId,
                     segment,
-                    navigationPath.segments,
-                    hasExisting)) {
+                    navPath.segments,
+                    exists)) {
 
                 return segment;
             }
@@ -175,7 +175,7 @@ export module NavigationPath {
     }
 
 
-    function getContext(navPath: NavigationPath, displayHierarchy: boolean): NavigationPathContext {
+    function getViewContext(navPath: NavigationPath, displayHierarchy: boolean): ViewContext {
 
         if (!displayHierarchy) return navPath.flatContext;
 

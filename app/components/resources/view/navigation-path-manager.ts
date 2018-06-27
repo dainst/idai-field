@@ -76,7 +76,9 @@ export class NavigationPathManager {
 
     public async updateNavigationPathForDocument(document: IdaiFieldDocument) {
 
-        if (!this.isPartOfNavigationPath(document)) await this.createNavigationPathForDocument(document);
+        if (!NavigationPathManager.isPartOfNavigationPath(document, this.getNavigationPath(), this.resourcesState.getMainTypeDocumentResourceId())) {
+            await this.createNavigationPathForDocument(document);
+        }
     }
 
 
@@ -96,58 +98,61 @@ export class NavigationPathManager {
     }
 
 
-    // TODO rename and / or split into multiple methods since it does more than the name says
-    private isPartOfNavigationPath(document: IdaiFieldDocument): boolean {
+    private async createNavigationPathForDocument(document: IdaiFieldDocument) {
 
-        const navigationPath = this.getNavigationPath();
+        const segments = await NavigationPathManager.makeSegments(document, resourceId => this.datastore.get(resourceId));
+        if (segments.length == 0) return await this.moveInto(undefined);
 
-        if (navigationPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
-                navigationPath.selectedSegmentId)) {
-            return true;
-        }
+        const navPath = NavigationPathManager.replaceSegmentsIfNecessary(
+            this.resourcesState.getNavigationPath(), segments, segments[segments.length - 1].document.resource.id);
 
-        const mainTypeDocumentResourceId = this.resourcesState.getMainTypeDocumentResourceId();
-
-        return (!navigationPath.selectedSegmentId && mainTypeDocumentResourceId != undefined
-                && Document.hasRelationTarget(document, 'isRecordedIn',
-                    mainTypeDocumentResourceId )
-                && !Document.hasRelations(document, 'liesWithin'));
+        this.resourcesState.setNavigationPath(navPath);
+        this.notify();
     }
 
 
-    private async createNavigationPathForDocument(document: IdaiFieldDocument) {
+    private static isPartOfNavigationPath(
+        document: IdaiFieldDocument,
+        navPath: NavigationPath,
+        mainTypeDocumentResourceId: string|undefined): boolean {
+
+        if (navPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
+                navPath.selectedSegmentId)) {
+            return true;
+        }
+
+        return (!navPath.selectedSegmentId && mainTypeDocumentResourceId != undefined
+            && Document.hasRelationTarget(document, 'isRecordedIn',
+                mainTypeDocumentResourceId )
+            && !Document.hasRelations(document, 'liesWithin'));
+    }
+
+
+    private static async makeSegments(document: IdaiFieldDocument, get: (_: string) => Promise<IdaiFieldDocument>) {
 
         const segments: Array<NavigationPathSegment> = [];
 
         let currentResourceId = ModelUtil.getRelationTargetId(document, 'liesWithin', 0);
         while (currentResourceId) {
 
-            const currentSegmentDoc = await this.datastore.get(currentResourceId);
+            const currentSegmentDoc = await get(currentResourceId);
             currentResourceId = ModelUtil.getRelationTargetId(currentSegmentDoc, 'liesWithin', 0);
 
             segments.unshift( {document: currentSegmentDoc, q: '', types: []});
         }
-
-        if (segments.length == 0) {
-            await this.moveInto(undefined);
-        } else {
-            this.setNavigationPath(segments, segments[segments.length - 1].document.resource.id);
-        }
+        return segments;
     }
 
 
-    private setNavigationPath(newSegments: NavigationPathSegment[], newSelectedSegmentId: string) {
+    private static replaceSegmentsIfNecessary(navPath:NavigationPath,
+                                              newSegments: NavigationPathSegment[],
+                                              newSelectedSegmentId: string): NavigationPath {
 
-        const updatedNavigationPath = ObjectUtil.cloneObject(this.resourcesState.getNavigationPath());
+        const updatedNavigationPath = ObjectUtil.cloneObject(navPath);
 
-        if (!NavigationPath.segmentNotPresent(
-            this.resourcesState.getNavigationPath(), newSelectedSegmentId)) {
+        if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) updatedNavigationPath.segments = newSegments;
 
-            updatedNavigationPath.segments = newSegments;
-        }
         updatedNavigationPath.selectedSegmentId = newSelectedSegmentId;
-
-        this.resourcesState.setNavigationPath(updatedNavigationPath);
-        this.notify();
+        return updatedNavigationPath;
     }
 }

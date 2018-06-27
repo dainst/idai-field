@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {Document, Query, Constraint} from 'idai-components-2/core';
+import {Document, Query} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RoutingService} from '../../routing-service';
@@ -56,16 +56,12 @@ export class SearchSuggestionsComponent implements OnChanges {
         if (this.q.length == 0 || this.documents.length > 0) return this.suggestedDocuments = [];
 
         this.suggestedDocuments = (await this.datastore.find(this.makeQuery())).documents;
-
-        if (this.suggestedDocuments.length > this.maxSuggestions) {
-            this.suggestedDocuments = this.suggestedDocuments.slice(0, this.maxSuggestions);
-        }
     }
 
 
     private makeQuery(): Query {
 
-        const query: Query = { q: this.q };
+        const query: Query = { q: this.q, limit: this.maxSuggestions };
         if (this.types) query.types = this.types;
 
         return query;

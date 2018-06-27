@@ -58,7 +58,7 @@ export class SearchSuggestionsComponent implements OnChanges {
         this.suggestedDocuments = (await this.datastore.find(this.makeQuery())).documents;
 
         if (this.suggestedDocuments.length > this.maxSuggestions) {
-            this.suggestedDocuments.slice(0, this.maxSuggestions);
+            this.suggestedDocuments = this.suggestedDocuments.slice(0, this.maxSuggestions);
         }
     }
 

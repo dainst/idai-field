@@ -73,7 +73,10 @@ export class NavigationPathManager {
 
     public async updateNavigationPathForDocument(document: IdaiFieldDocument) {
 
-        if (!NavigationPath.isPartOfNavigationPath(document, this.getNavigationPath(), this.resourcesState.getMainTypeDocumentResourceId())) {
+        this.resourcesState.setDisplayHierarchy(true);
+
+        if (!NavigationPath.isPartOfNavigationPath(document, this.getNavigationPath(),
+                this.resourcesState.getMainTypeDocumentResourceId())) {
             await this.createNavigationPathForDocument(document);
         }
     }

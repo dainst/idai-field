@@ -28,7 +28,7 @@ export class DocumentsManager {
     private deselectionObservers: Array<Observer<Document>> = [];
     private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
 
-    private static documentLimit: number = 200;
+    private static documentLimit: number = 1000;
 
 
     constructor(

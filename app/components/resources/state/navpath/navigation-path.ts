@@ -96,7 +96,9 @@ export module NavigationPath {
 
     export function setSelectedDocument(navPath: NavigationPath, displayHierarchy: boolean, document: IdaiFieldDocument|undefined) {
 
-        getContext(navPath, displayHierarchy).selected = document;
+        const clone = ObjectUtil.cloneObject(navPath);
+        getContext(clone, displayHierarchy).selected = document;
+        return clone;
     }
 
 
@@ -108,7 +110,9 @@ export module NavigationPath {
 
     export function setQueryString(navPath: NavigationPath, displayHierarchy: boolean, q: string) {
 
-        getContext(navPath, displayHierarchy).q = q;
+        const clone = ObjectUtil.cloneObject(navPath);
+        getContext(clone, displayHierarchy).q = q;
+        return clone;
     }
 
 
@@ -120,7 +124,9 @@ export module NavigationPath {
 
     export function setTypeFilters(navPath: NavigationPath, displayHierarchy: boolean, types: string[]) {
 
-        getContext(navPath, displayHierarchy).types = types;
+        const clone = ObjectUtil.cloneObject(navPath);
+        getContext(clone, displayHierarchy).types = types;
+        return clone;
     }
 
 

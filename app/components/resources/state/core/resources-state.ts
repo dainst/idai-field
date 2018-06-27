@@ -86,9 +86,30 @@ export class ResourcesState {
 
     public setSelectedDocument(document: IdaiFieldDocument|undefined) {
 
-        NavigationPath.setSelectedDocument(this.getNavigationPath(),
-            this.viewStates[this.view].displayHierarchy ,document)
+        this.setNavigationPath(
+            NavigationPath.setSelectedDocument(this.getNavigationPath(),
+                this.viewStates[this.view].displayHierarchy, document)
+        );
     }
+
+
+    public setQueryString(q: string) {
+
+        this.setNavigationPath(
+            NavigationPath.setQueryString(this.getNavigationPath(),
+                this.viewStates[this.view].displayHierarchy, q)
+        );
+    }
+
+
+    public setTypeFilters(types: string[]) {
+
+        this.setNavigationPath(
+            NavigationPath.setTypeFilters(this.getNavigationPath(),
+                this.viewStates[this.view].displayHierarchy, types)
+        );
+    }
+
 
     public getSelectedDocument(): IdaiFieldDocument|undefined {
 
@@ -96,23 +117,13 @@ export class ResourcesState {
             this.viewStates[this.view].displayHierarchy);
     }
 
-    public setQueryString(q: string) {
-
-        NavigationPath.setQueryString(this.getNavigationPath(),
-            this.viewStates[this.view].displayHierarchy, q);
-    }
-
-    public setTypeFilters(types: string[]) {
-
-        NavigationPath.setTypeFilters(this.getNavigationPath(),
-            this.viewStates[this.view].displayHierarchy, types);
-    }
 
     public getQueryString(): string {
 
         return NavigationPath.getQuerySring(this.getNavigationPath(),
             this.viewStates[this.view].displayHierarchy);
     }
+
 
     public getTypeFilters(): string[] {
 

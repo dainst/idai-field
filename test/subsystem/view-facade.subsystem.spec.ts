@@ -266,7 +266,7 @@ export function main() {
             await viewFacade.moveInto(featureDocument1);
             await viewFacade.setSelectedDocument(findDocument1);
             await viewFacade.setSearchString('find1');
-            expect(viewFacade.getSelectedDocument()).toBe(findDocument1);
+            expect(viewFacade.getSelectedDocument().resource.id).toBe(findDocument1.resource.id);
             done();
         });
 

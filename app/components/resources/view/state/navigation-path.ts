@@ -30,8 +30,8 @@ export module NavigationPath {
 
         return {
             segments: [],
-            hierarchyContext: { q: '', types: []},
-            flatContext: { q: '', types: []}
+            hierarchyContext: ViewContext.empty(),
+            flatContext: ViewContext.empty()
         };
     }
 

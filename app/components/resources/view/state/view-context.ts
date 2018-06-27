@@ -9,3 +9,15 @@ export interface ViewContext {
     types: string[];
     selected?: IdaiFieldDocument;
 }
+
+
+export module ViewContext {
+
+    export function empty(): ViewContext {
+
+        return {
+            q: '',
+            types: []
+        }
+    }
+}

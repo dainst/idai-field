@@ -18,9 +18,9 @@ export module NavigationPathSegment {
         mainTypeDocumentResourceId: string|undefined,
         segment: NavigationPathSegment,
         segments: Array<NavigationPathSegment>,
-        hasExisting: (_: string) => Promise<boolean>): Promise<boolean> {
+        exists: (_: string) => Promise<boolean>): Promise<boolean> {
 
-        return await hasExisting(segment.document.resource.id)
+        return await exists(segment.document.resource.id)
             && hasValidRelation(mainTypeDocumentResourceId, segment, segments);
     }
 

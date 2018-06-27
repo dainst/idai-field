@@ -158,14 +158,14 @@ export module NavigationPath {
     export async function findInvalidSegment(
         mainTypeDocumentResourceId: string|undefined,
         navigationPath: NavigationPath,
-        hasExisting: (_: string) => Promise<boolean>): Promise<NavigationPathSegment|undefined> {
+        exists: (_: string) => Promise<boolean>): Promise<NavigationPathSegment|undefined> {
 
         for (let segment of navigationPath.segments) {
             if (!await NavigationPathSegment.isValid(
                     mainTypeDocumentResourceId,
                     segment,
                     navigationPath.segments,
-                    hasExisting)) {
+                    exists)) {
 
                 return segment;
             }

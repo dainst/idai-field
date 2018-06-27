@@ -73,7 +73,7 @@ export class IndexFacade {
     }
 
 
-    private performConstraints(constraints: { [name: string]: Constraint|string }): ResultSets {
+    private performConstraints(constraints: { [name: string]: Constraint|string|string[] }): ResultSets {
 
         return Object.keys(constraints)
             .reduce((resultSets: ResultSets, name: string) => {

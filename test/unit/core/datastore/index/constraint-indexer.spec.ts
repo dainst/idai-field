@@ -3,6 +3,7 @@ import {IndexItem} from '../../../../../app/core/datastore/index/index-item';
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 describe('ConstraintIndexer', () => {
 
@@ -301,5 +302,31 @@ describe('ConstraintIndexer', () => {
         expect(ci.get('depicts:exist', 'UNKNOWN')).toEqual([indexItem('1'), indexItem('2')]);
         expect(ci.get('depicts:contain', '1')).toEqual([indexItem('3')]);
         expect(ci.get('depicts:contain', '2')).toEqual([indexItem('4')]);
+    });
+
+
+    it('get results for multiple constraint values for the same constraint', () => {
+
+        const docs = [
+            doc('1'),
+            doc('2'),
+            doc('3'),
+            doc('4')
+        ];
+        docs[0].resource.relations['depicts'] = [];
+        docs[1].resource.relations['depicts'] = [];
+        docs[2].resource.relations['depicts'] = ['1'];
+        docs[3].resource.relations['depicts'] = ['2'];
+
+        ci = new ConstraintIndexer({
+            'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
+        }, false);
+
+        ci.put(docs[0]);
+        ci.put(docs[1]);
+        ci.put(docs[2]);
+        ci.put(docs[3]);
+
+        expect(ci.get('depicts:contain', ['1', '2'])).toEqual([indexItem('3'), indexItem('4')]);
     });
 });

@@ -78,18 +78,18 @@ export class ConstraintIndexer {
     }
 
 
-    public get(indexName: string, matchTerm: string): Array<IndexItem> {
+    public get(indexName: string, matchTerms: string|string[]): Array<IndexItem> {
 
         const indexDefinition: IndexDefinition = this.indexDefinitions[indexName];
         if (!indexDefinition) throw 'Ignoring unknown constraint "' + indexName + '".';
 
-        const index = this.getIndex(indexDefinition)[indexDefinition.path][matchTerm];
-        if (!index) return [];
+        const matchedDocuments = this.getIndexItems(indexDefinition, matchTerms);
+        if (!matchedDocuments) return [];
 
-        return Object.keys(index).map(id => { return {
+        return Object.keys(matchedDocuments).map(id => { return {
             id: id,
-            date: index[id].date,
-            identifier: index[id].identifier
+            date: matchedDocuments[id].date,
+            identifier: matchedDocuments[id].identifier
         }});
     }
 
@@ -149,6 +149,34 @@ export class ConstraintIndexer {
             case 'match':   return this.matchIndex;
             case 'exist':   return this.existIndex;
         }
+    }
+
+
+    private getIndexItems(indexDefinition: IndexDefinition,
+                          matchTerms: string|string[]): { [id: string]: IndexItem } {
+
+        return Array.isArray(matchTerms)
+            ? this.getIndexItemsForMultipleMatchTerms(indexDefinition, matchTerms)
+            : this.getIndexItemsForSingleMatchTerm(indexDefinition, matchTerms);
+    }
+
+
+    private getIndexItemsForMultipleMatchTerms(indexDefinition: IndexDefinition,
+                                               matchTerms: string[]): { [id: string]: IndexItem } {
+
+        return matchTerms.map(matchTerm => {
+            return this.getIndexItemsForSingleMatchTerm(indexDefinition, matchTerm)
+        }).reduce((result, indexItems) => {
+            Object.keys(indexItems).forEach(id => result[id] = indexItems[id]);
+            return result;
+        }, {});
+    }
+
+
+    private getIndexItemsForSingleMatchTerm(indexDefinition: IndexDefinition,
+                                            matchTerm: string): { [id: string]: IndexItem } {
+
+        return this.getIndex(indexDefinition)[indexDefinition.path][matchTerm];
     }
 
 

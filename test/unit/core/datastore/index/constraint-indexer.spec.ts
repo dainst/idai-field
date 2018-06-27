@@ -166,7 +166,7 @@ describe('ConstraintIndexer', () => {
         }, false);
         ci.put(doc('1'));
         ci.clear();
-        expect(ci.get('identifier:match', 'identifier1')).toEqual([ ]);
+        expect(ci.get('identifier:match', 'identifier1')).toEqual([]);
     });
 
 
@@ -176,7 +176,7 @@ describe('ConstraintIndexer', () => {
             'identifier:contain': { path: 'resource.identifier', type: 'contain' }
         }, false);
 
-        expect(ci.get('identifier:contain', 'identifier1')).toEqual([ ]);
+        expect(ci.get('identifier:contain', 'identifier1')).toEqual([]);
     });
 
 
@@ -186,9 +186,9 @@ describe('ConstraintIndexer', () => {
 
         ci.remove(doc);
 
-        expect(ci.get('identifier:match', 'identifier1')).toEqual([ ]);
-        expect(ci.get('isRecordedIn:contain', '2')).toEqual([ ]);
-        expect(ci.get('liesWithin:contain', '3')).toEqual([ ]);
+        expect(ci.get('identifier:match', 'identifier1')).toEqual([]);
+        expect(ci.get('isRecordedIn:contain', '2')).toEqual([]);
+        expect(ci.get('liesWithin:contain', '3')).toEqual([]);
     });
 
 
@@ -198,8 +198,8 @@ describe('ConstraintIndexer', () => {
 
         ci.remove(doc);
 
-        expect(ci.get('isRecordedIn:contain', '2')).toEqual([ ]);
-        expect(ci.get('isRecordedIn:contain', '3')).toEqual([ ]);
+        expect(ci.get('isRecordedIn:contain', '2')).toEqual([]);
+        expect(ci.get('isRecordedIn:contain', '3')).toEqual([]);
     });
 
 
@@ -212,9 +212,9 @@ describe('ConstraintIndexer', () => {
         doc.resource.identifier = 'identifier2';
         ci.put(doc);
 
-        expect(ci.get('identifier:match', 'identifier1')).toEqual([ ]);
-        expect(ci.get('isRecordedIn:contain', '2')).toEqual([ ]);
-        expect(ci.get('liesWithin:contain', '3')).toEqual([ ]);
+        expect(ci.get('identifier:match', 'identifier1')).toEqual([]);
+        expect(ci.get('isRecordedIn:contain', '2')).toEqual([]);
+        expect(ci.get('liesWithin:contain', '3')).toEqual([]);
 
         expect(ci.get('identifier:match', 'identifier2'))
             .toEqual([indexItem('1','identifier2')]);

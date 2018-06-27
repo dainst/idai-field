@@ -1,20 +1,39 @@
 import {browser, protractor} from 'protractor';
-import {ResourcesPage} from './resources.page';
-import {DoceditPage} from '../docedit/docedit.page';
+import {NavbarPage} from '../navbar.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
+import {ResourcesPage} from './resources.page';
+import {ProjectPage} from '../project.page';
+import {DoceditPage} from '../docedit/docedit.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 
-const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
+const EC = protractor.ExpectedConditions;
 
 
 /**
- * @author Daniel de Oliveira
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
-describe('resources/filter --', () => {
+describe('resources/search --', function() {
 
-    beforeEach(() => ResourcesPage.get());
+    let i = 0;
+
+
+    beforeAll(() => ResourcesPage.get());
+
+
+    beforeEach(async () => {
+        if (i > 0) {
+            NavbarPage.performNavigateToSettings();
+            require('request').post('http://localhost:3003/reset', {});
+            browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToProject();
+            browser.sleep(delays.shortRest * 3);
+            NavbarPage.clickNavigateToExcavation();
+            ResourcesPage.clickMapModeButton();
+        }
+        i++;
+    });
 
 
     it('select all filter', () => {
@@ -117,7 +136,7 @@ describe('resources/filter --', () => {
                     DoceditPage.clickSaveDocument();
                 }
             });
-         
+
             browser.sleep(delays.shortRest);
         };
 
@@ -140,5 +159,51 @@ describe('resources/filter --', () => {
         SearchBarPage.clickChooseTypeFilter('feature');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+    });
+
+
+    it('suggestion -- show suggestion for resource from different context', done => {
+
+        NavbarPage.clickNavigateToProject();
+        browser.sleep(delays.shortRest * 3);
+
+        SearchBarPage.typeInSearchField('c');
+        browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesPage.getSuggestions().then(suggestions => {
+            expect(suggestions.length).toBe(1);
+            expect(suggestions[0].getText()).toEqual('context1');
+        });
+
+        done();
+    });
+
+
+    it('suggestion -- do not show suggestions if any resources in current context are found', done => {
+
+        NavbarPage.clickNavigateToProject();
+        browser.sleep(delays.shortRest * 3);
+
+        SearchBarPage.typeInSearchField('t');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
+
+        done();
+    });
+
+
+    it('suggestion -- do not suggest project document', done => {
+
+        NavbarPage.clickNavigateToProject();
+        browser.sleep(delays.shortRest * 3);
+
+        SearchBarPage.typeInSearchField('te');
+        browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesPage.getSuggestions().then(suggestions => {
+            expect(suggestions.length).toBe(1);
+            expect(suggestions[0].getText()).toEqual('testf1');
+        });
+
+        done();
     });
 });

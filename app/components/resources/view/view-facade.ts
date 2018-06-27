@@ -30,18 +30,18 @@ export class ViewFacade {
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
-        private resourcesState: ResourcesStateManager,
+        private resourcesStateManager: ResourcesStateManager,
         private loading: Loading
     ) {
         this.operationTypeDocumentsManager = new OperationTypeDocumentsManager(
             datastore,
-            resourcesState
+            resourcesStateManager
         );
         this.documentsManager = new DocumentsManager(
             datastore,
             remoteChangesStream,
             this.operationTypeDocumentsManager,
-            resourcesState,
+            resourcesStateManager,
             loading
         );
     }
@@ -51,15 +51,15 @@ export class ViewFacade {
 
     public addNewDocument = (document: IdaiFieldDocument) => this.documentsManager.addNewDocument(document);
 
-    public getCurrentViewName = () => this.resourcesState.getView();
+    public getCurrentViewName = () => this.resourcesStateManager.getView();
 
-    public isInOverview = () => this.resourcesState.isInOverview();
+    public isInOverview = () => this.resourcesStateManager.isInOverview();
 
-    public getOperationSubtypeViews = () => this.resourcesState.getViews();
+    public getOperationSubtypeViews = () => this.resourcesStateManager.getViews();
 
-    public getMode = () => this.resourcesState.getMode();
+    public getMode = () => this.resourcesStateManager.getMode();
 
-    public getFilterTypes = () => this.resourcesState.getTypeFilters();
+    public getFilterTypes = () => this.resourcesStateManager.getTypeFilters();
 
     public getDocuments = () => this.documentsManager.getDocuments();
 
@@ -67,21 +67,21 @@ export class ViewFacade {
 
     public getTotalDocumentCount = () => this.documentsManager.getTotalDocumentCount();
 
-    public getActiveDocumentViewTab = () => this.resourcesState.getActiveDocumentViewTab();
+    public getActiveDocumentViewTab = () => this.resourcesStateManager.getActiveDocumentViewTab();
 
-    public getActiveLayersIds = () => this.resourcesState.getActiveLayersIds();
+    public getActiveLayersIds = () => this.resourcesStateManager.getActiveLayersIds();
 
     public deselect = () => this.documentsManager.deselect();
 
-    public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesState.setActiveLayersIds(activeLayersIds);
+    public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesStateManager.setActiveLayersIds(activeLayersIds);
 
-    public setMode = (mode: 'map' | 'list') => this.resourcesState.setMode(mode);
+    public setMode = (mode: 'map' | 'list') => this.resourcesStateManager.setMode(mode);
 
     public isNewDocumentFromRemote = (document: Document) => this.documentsManager.isNewDocumentFromRemote(document);
 
     public remove = (document: Document) => this.documentsManager.removeFromDocuments(document);
 
-    public getQueryString = () => this.resourcesState.getQueryString();
+    public getQueryString = () => this.resourcesStateManager.getQueryString();
 
     public setSearchString = (q: string) => this.documentsManager.setQueryString(q);
 
@@ -89,41 +89,41 @@ export class ViewFacade {
 
     public moveInto = (document: IdaiFieldDocument|undefined) => this.documentsManager.moveInto(document);
 
-    public navigationPathNotifications = () => this.resourcesState.navigationPathNotifications();
+    public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
 
     public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
 
     public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
 
-    public getNavigationPath = () => this.resourcesState.getNavigationPath2();
+    public getNavigationPath = () => this.resourcesStateManager.getNavigationPath2();
 
-    public rebuildNavigationPath = () => this.resourcesState.rebuildNavigationPath();
+    public rebuildNavigationPath = () => this.resourcesStateManager.rebuildNavigationPath();
 
     public populateDocumentList = () => this.documentsManager.populateDocumentList();
 
-    public getCurrentViewMainType = () => this.resourcesState.getViewType();
+    public getCurrentViewMainType = () => this.resourcesStateManager.getViewType();
 
-    public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesState.setActiveDocumentViewTab(activeDocumentViewTab);
+    public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesStateManager.setActiveDocumentViewTab(activeDocumentViewTab);
 
-    public getDisplayHierarchy = () => this.resourcesState.getDisplayHierarchy();
+    public getDisplayHierarchy = () => this.resourcesStateManager.getDisplayHierarchy();
 
     public setDisplayHierarchy = (displayHierarchy: boolean) => this.documentsManager.setDisplayHierarchy(displayHierarchy);
 
-    public getBypassOperationTypeSelection = () => this.resourcesState.getBypassOperationTypeSelection();
+    public getBypassOperationTypeSelection = () => this.resourcesStateManager.getBypassOperationTypeSelection();
 
 
     public getMainTypeHomeViewName(mainTypeName: string): string|undefined {
 
         return (mainTypeName === 'Project')
             ? 'project'
-            : this.resourcesState.getViewNameForOperationSubtype(mainTypeName);
+            : this.resourcesStateManager.getViewNameForOperationSubtype(mainTypeName);
     }
 
 
     public getOperationTypeLabel(): string {
 
         if (this.isInOverview()) throw ViewFacade.err('getOperationTypeLabel');
-        return this.resourcesState.getLabelForName(this.resourcesState.getView()) as string; // cast ok, we are not in overview
+        return this.resourcesStateManager.getLabelForName(this.resourcesStateManager.getView()) as string; // cast ok, we are not in overview
     }
 
 
@@ -133,7 +133,7 @@ export class ViewFacade {
         if (!this.operationTypeDocumentsManager.getDocuments()) return undefined;
 
         const selectedOperationTypeDocument = this.operationTypeDocumentsManager.getDocuments()
-            .filter(_ => _.resource.id === this.resourcesState.getMainTypeDocumentResourceId());
+            .filter(_ => _.resource.id === this.resourcesStateManager.getMainTypeDocumentResourceId());
         return selectedOperationTypeDocument.length > 0
             ? selectedOperationTypeDocument[0]
             : undefined;
@@ -149,7 +149,7 @@ export class ViewFacade {
 
     public async getAllOperationSubtypeWithViewDocuments(): Promise<Array<Document>> {
 
-        const viewMainTypes = this.resourcesState.getViews()
+        const viewMainTypes = this.resourcesStateManager.getViews()
             .map((view: any) => {return view.operationSubtype});
 
         let mainTypeDocuments: Array<Document> = [];
@@ -173,7 +173,7 @@ export class ViewFacade {
 
     public getCurrentFilterType()  {
 
-        const filterTypes = this.resourcesState.getTypeFilters();
+        const filterTypes = this.resourcesStateManager.getTypeFilters();
         return filterTypes && filterTypes.length > 0 ? filterTypes[0] : undefined;
     }
 
@@ -188,7 +188,7 @@ export class ViewFacade {
     public async selectOperationTypeDocument(operationTypeDocument: Document): Promise<void> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectOperationTypeDocument');
-        this.resourcesState.setMainTypeDocument(operationTypeDocument.resource.id);
+        this.resourcesStateManager.setMainTypeDocument(operationTypeDocument.resource.id);
         await this.populateDocumentList();
     }
 
@@ -209,7 +209,7 @@ export class ViewFacade {
 
     public async selectView(viewName: string): Promise<void> {
 
-        await this.resourcesState.initialize(viewName);
+        await this.resourcesStateManager.initialize(viewName);
         await this.setupMainTypeDocument();
         await this.populateDocumentList();
     }
@@ -221,12 +221,12 @@ export class ViewFacade {
 
         if (!this.isInOverview()) {
             await this.populateOperationTypeDocuments();
-            mainTypeResourceid = this.resourcesState.getMainTypeDocumentResourceId();
+            mainTypeResourceid = this.resourcesStateManager.getMainTypeDocumentResourceId();
         } else {
             mainTypeResourceid = 'project';
         }
 
-        this.resourcesState.setMainTypeDocument(mainTypeResourceid);
+        this.resourcesStateManager.setMainTypeDocument(mainTypeResourceid);
     }
 
 

@@ -7,6 +7,9 @@ import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {FieldsViewPage} from '../widgets/fields-view-page';
 import {RelationsViewPage} from '../widgets/relations-view.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
+import {DoceditImageTabPage} from '../docedit/docedit-image-tab.page';
+import {ThumbnailViewPage} from '../widgets/thumbnail-view.page';
+import {ImagePickerModalPage} from '../widgets/image-picker-modal.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -16,7 +19,7 @@ const delays = require('../config/delays');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources --', () => {
+fdescribe('resources --', () => {
 
     let i = 0;
 
@@ -39,6 +42,28 @@ describe('resources --', () => {
         }
         i++;
     });
+
+
+    function gotoImageTab() {
+
+        NavbarPage.clickNavigateToImages();
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.openEditByDoubleClickResource('context1');
+        DoceditPage.clickImagesTab();
+
+    }
+
+
+    function addTwoImages() {
+
+        gotoImageTab();
+        DoceditImageTabPage.clickInsertImage();
+        ImagePickerModalPage.getCells().get(0).click();
+        ImagePickerModalPage.getCells().get(1).click();
+        ImagePickerModalPage.clickAddImages();
+        DoceditPage.clickSaveDocument();
+        browser.sleep(delays.shortSleep * 80);
+    }
 
 
     it('messages: create a new object of first listed type ', () => {
@@ -92,6 +117,53 @@ describe('resources --', () => {
         ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
 
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+    });
+
+
+    it('docedit/images: create links for images', done => {
+
+        addTwoImages();
+        ThumbnailViewPage.getThumbs().then(thumbs => {
+            expect(thumbs.length).toBe(2);
+            done();
+        });
+    });
+
+
+    it('docedit/images: delete links to one image', done => {
+
+        addTwoImages();
+        gotoImageTab();
+        DoceditImageTabPage.getCells().get(0).click();
+        DoceditImageTabPage.clickDeleteImages();
+        DoceditImageTabPage.getCells().then(cells => {
+            expect(cells.length).toBe(1);
+        });
+        DoceditPage.clickSaveDocument();
+
+        ThumbnailViewPage.getThumbs().then(thumbs => {
+            expect(thumbs.length).toBe(1);
+            done();
+        });
+    });
+
+
+    it('docedit/images: delete links to two images', done => {
+
+        addTwoImages();
+        gotoImageTab();
+        DoceditImageTabPage.getCells().get(0).click();
+        DoceditImageTabPage.getCells().get(1).click();
+        DoceditImageTabPage.clickDeleteImages();
+        DoceditImageTabPage.getCells().then(cells => {
+            expect(cells.length).toBe(0);
+        });
+        DoceditPage.clickSaveDocument();
+
+        ThumbnailViewPage.getThumbs().then(thumbs => {
+            expect(thumbs.length).toBe(0);
+            done();
+        });
     });
 
 

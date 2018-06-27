@@ -1,9 +1,9 @@
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {Query} from 'idai-components-2/core';
-import {OperationViews} from '../../../../../app/components/resources/state/state/operation-views';
-import {NavigationPathManager} from '../../../../../app/components/resources/state/navigation-path-manager';
+import {OperationViews} from '../../../../../app/components/resources/view/state/operation-views';
+import {NavigationPathManager} from '../../../../../app/components/resources/view/navigation-path-manager';
 import {Static} from '../../../static';
-import {ResourcesStateManager} from '../../../../../app/components/resources/state/resources-state-manager';
+import {ResourcesStateManager} from '../../../../../app/components/resources/view/resources-state-manager';
 
 
 /**

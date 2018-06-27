@@ -1,6 +1,6 @@
-import {OperationViews} from '../../../../../app/components/resources/state/state/operation-views';
+import {OperationViews} from '../../../../../app/components/resources/view/state/operation-views';
 import {Static} from '../../../static';
-import {ResourcesStateManager} from '../../../../../app/components/resources/state/resources-state-manager';
+import {ResourcesStateManager} from '../../../../../app/components/resources/view/resources-state-manager';
 
 
 /**

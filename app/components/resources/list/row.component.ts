@@ -3,7 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {IdaiType, Messages} from 'idai-components-2/core';
 import {M} from '../../../m';
 import {ResourcesComponent} from '../resources.component';
-import {ViewFacade} from '../state/view-facade';
+import {ViewFacade} from '../view/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {NavigationService} from '../navigation/navigation-service';

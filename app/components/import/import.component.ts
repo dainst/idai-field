@@ -22,7 +22,7 @@ import {DefaultRollbackStrategy} from '../../core/import/default-rollback-strate
 import {NoRollbackStrategy} from '../../core/import/no-rollback-strategy';
 import {RelationsCompleter} from '../../core/import/relations-completer';
 import {UploadModalComponent} from './upload-modal.component';
-import {ViewFacade} from '../resources/state/view-facade';
+import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';

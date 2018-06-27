@@ -1,7 +1,7 @@
 import {ResourcesComponent} from './resources.component';
-import {ViewFacade} from './state/view-facade';
+import {ViewFacade} from './view/view-facade';
 import {Loading} from '../../widgets/loading';
-import {NavigationPath} from './state/state/navigation-path';
+import {NavigationPath} from './view/state/navigation-path';
 
 /**
  * A base class for all lists, e.g. sidebarList and List components

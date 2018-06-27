@@ -19,7 +19,7 @@ import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {DocumentViewSidebarComponent} from './map/detail/document-detail-sidebar.component';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
-import {ViewFacade} from './state/view-facade';
+import {ViewFacade} from './view/view-facade';
 import {SettingsService} from '../../core/settings/settings-service';
 import {SidebarListComponent} from './map/list/sidebar-list.component';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/field/idai-field-document-datastore';
@@ -34,9 +34,9 @@ import {SearchSuggestionsComponent} from './searchbar/search-suggestions.compone
 import {StandardStateSerializer} from '../../common/standard-state-serializer';
 import {StateSerializer} from '../../common/state-serializer';
 import {Loading} from '../../widgets/loading';
-import {ResourcesStateManager} from './state/resources-state-manager';
-import {ViewDefinition} from './state/state/view-definition';
-import {OperationViews} from './state/state/operation-views';
+import {ResourcesStateManager} from './view/resources-state-manager';
+import {ViewDefinition} from './view/state/view-definition';
+import {OperationViews} from './view/state/operation-views';
 
 const remote = require('electron').remote;
 

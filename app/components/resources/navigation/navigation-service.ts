@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ProjectConfiguration, RelationDefinition} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {RoutingService} from '../../routing-service';
-import {ViewFacade} from '../state/view-facade';
+import {ViewFacade} from '../view/view-facade';
 
 
 @Injectable()

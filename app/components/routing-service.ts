@@ -4,7 +4,7 @@ import {Location} from '@angular/common';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import {Document, ProjectConfiguration} from 'idai-components-2/core';
-import {ViewFacade} from './resources/state/view-facade';
+import {ViewFacade} from './resources/view/view-facade';
 import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
 import {TypeUtility} from '../core/model/type-utility';
 

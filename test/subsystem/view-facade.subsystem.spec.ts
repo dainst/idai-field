@@ -1,16 +1,16 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
-import {ViewFacade} from '../../app/components/resources/state/view-facade';
+import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/field/idai-field-document-datastore';
 import {IdaiFieldTypeConverter} from '../../app/core/datastore/field/idai-field-type-converter';
-import {OperationViews} from '../../app/components/resources/state/state/operation-views';
+import {OperationViews} from '../../app/components/resources/view/state/operation-views';
 import {Static} from '../unit/static';
 import {DAOsSpecHelper} from './daos-spec-helper';
 import {TypeUtility} from '../../app/core/model/type-utility';
-import {ViewDefinition} from '../../app/components/resources/state/state/view-definition';
-import {toResourceId} from '../../app/components/resources/state/state/navigation-path-segment';
-import {ResourcesStateManager} from '../../app/components/resources/state/resources-state-manager';
+import {ViewDefinition} from '../../app/components/resources/view/state/view-definition';
+import {toResourceId} from '../../app/components/resources/view/state/navigation-path-segment';
+import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
 
 /**
  * This is a subsystem test.

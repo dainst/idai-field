@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {ViewFacade} from '../resources/state/view-facade';
-import {ViewDefinition} from '../resources/state/state/view-definition';
+import {ViewFacade} from '../resources/view/view-facade';
+import {ViewDefinition} from '../resources/view/state/view-definition';
 
 @Component({
     moduleId: module.id,

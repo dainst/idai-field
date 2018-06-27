@@ -4,7 +4,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {Messages} from 'idai-components-2/core';
 import {LinkModalComponent} from './link-modal.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
-import {ViewFacade} from '../resources/state/view-facade';
+import {ViewFacade} from '../resources/view/view-facade';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {PersistenceHelper} from './service/persistence-helper';
 

@@ -5,7 +5,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {DocumentEditChangeMonitor} from 'idai-components-2/core';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {DoceditActiveTabService} from '../../docedit/docedit-active-tab-service';
-import {ViewFacade} from '../state/view-facade';
+import {ViewFacade} from '../view/view-facade';
 
 @Injectable()
 /**

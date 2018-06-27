@@ -8,7 +8,7 @@ import {Loading} from '../../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {M} from '../../m';
-import {ViewFacade} from './state/view-facade';
+import {ViewFacade} from './view/view-facade';
 
 
 @Component({

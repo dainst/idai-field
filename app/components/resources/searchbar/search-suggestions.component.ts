@@ -3,7 +3,7 @@ import {Document, Query} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RoutingService} from '../../routing-service';
-import {ViewFacade} from '../state/view-facade';
+import {ViewFacade} from '../view/view-facade';
 
 @Component({
     moduleId: module.id,

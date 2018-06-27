@@ -5,7 +5,7 @@ import {ProjectConfiguration} from 'idai-components-2/core';
 import {ResourcesComponent} from '../../resources.component';
 import {ObjectUtil} from '../../../../util/object-util';
 import {RoutingService} from '../../../routing-service';
-import {ViewFacade} from '../../state/view-facade';
+import {ViewFacade} from '../../view/view-facade';
 
 
 @Component({

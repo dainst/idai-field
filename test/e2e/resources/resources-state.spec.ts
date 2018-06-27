@@ -8,6 +8,7 @@ import {ImageOverviewPage} from '../images/image-overview.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {RelationsViewPage} from '../widgets/relations-view.page';
+import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -35,9 +36,12 @@ describe('resources/state --', function() {
             NavbarPage.performNavigateToSettings().then(() => {
                 require('request').post('http://localhost:3003/reset', {});
             });
-            browser.sleep(delays.shortRest * 3);
+            browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToExcavation();
+            ResourcesPage.clickMapModeButton();
             NavbarPage.clickNavigateToProject();
-            browser.sleep(delays.shortRest * 3);
+            ResourcesPage.clickMapModeButton();
+            browser.sleep(delays.shortRest);
         }
         index++;
     });
@@ -70,6 +74,219 @@ describe('resources/state --', function() {
         ImageOverviewPage.doubleClickCell(0);
         RelationsViewPage.clickRelation(0);
     }
+
+
+    it('search/list -- perform a fulltext search', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickListModeButton();
+
+        ResourcesPage.performCreateResourceInList('context2', 'feature');
+
+        SearchBarPage.typeInSearchField('context1');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+
+        SearchBarPage.typeInSearchField('context2');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
+
+        SearchBarPage.typeInSearchField('abc');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
+    });
+
+
+    it('search/list -- perform a type filter search', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.clickListModeButton();
+
+        ResourcesPage.performCreateResourceInList('testf2', 'find');
+
+        SearchBarPage.clickChooseTypeFilter('find');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf2')), delays.ECWaitTime);
+
+        SearchBarPage.clickChooseTypeFilter('processunit');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf2')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+    });
+
+
+    it('search -- select all filter', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.performCreateResource('2', 'feature-floor');
+        SearchBarPage.clickChooseTypeFilter('inscription');
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+        SearchBarPage.clickChooseTypeFilter('all');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+    });
+
+
+    it('search -- show only resources of the selected type', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.performCreateResource('2', 'feature-floor');
+        SearchBarPage.clickChooseTypeFilter('feature-floor');
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+        SearchBarPage.clickChooseTypeFilter('feature-architecture');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+    });
+
+
+    it('search -- show correct types in plus type menu after choosing type filter', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+
+        const checkTypeOptions = () => {
+
+            SearchBarPage.clickChooseTypeFilter('feature');
+            ResourcesPage.clickCreateResource();
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('inscription')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('processunit')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('processunit-drilling')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('wall_surface')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find-glass')), delays.ECWaitTime);
+
+            SearchBarPage.clickChooseTypeFilter('processunit');
+            ResourcesPage.clickCreateResource();
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit-drilling')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('inscription')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('wall_surface')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find-glass')), delays.ECWaitTime);
+
+            SearchBarPage.clickChooseTypeFilter('all');
+            ResourcesPage.clickCreateResource();
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('inscription')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit-drilling')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('wall_surface')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('find-glass')), delays.ECWaitTime);
+        };
+
+        checkTypeOptions();
+        ResourcesPage.clickListModeButton();
+        checkTypeOptions();
+    });
+
+
+    it('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+        browser.sleep(delays.shortRest * 3);
+
+        const checkTypeIcon = () => {
+
+            SearchBarPage.clickChooseTypeFilter('feature-architecture');
+            ResourcesPage.getCreateDocumentButtonTypeCharacter().then(character => expect(character).toEqual('A'));
+
+            SearchBarPage.clickChooseTypeFilter('feature');
+            browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonTypeIcon()), delays.ECWaitTime);
+
+            SearchBarPage.clickChooseTypeFilter('all');
+            browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonTypeIcon()), delays.ECWaitTime);
+        };
+
+        const createResourceWithPresetType = (identifier: string, selectGeometryType: boolean) => {
+
+            SearchBarPage.clickChooseTypeFilter('feature-layer');
+            ResourcesPage.getCreateDocumentButtonTypeCharacter().then(character => expect(character).toEqual('E'));
+            ResourcesPage.clickCreateResource();
+            if (selectGeometryType) ResourcesPage.clickSelectGeometryType();
+
+            ResourcesPage.isListMode().then(function(isListMode) {
+                if (isListMode) {
+                    ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);
+                } else {
+                    DoceditPage.typeInInputField('identifier', identifier);
+                    ResourcesPage.scrollUp();
+                    DoceditPage.clickSaveDocument();
+                }
+            });
+
+            browser.sleep(delays.shortRest);
+        };
+
+        checkTypeIcon();
+        createResourceWithPresetType('1', true);
+        DetailSidebarPage.getTypeFromDocView().then(character => expect(character).toEqual('Erdbefund'));
+
+        ResourcesPage.clickListModeButton();
+        checkTypeIcon();
+        createResourceWithPresetType('2', false);
+    });
+
+
+    it('search -- filter by parent type', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+        browser.sleep(delays.shortRest * 3);
+
+        ResourcesPage.performCreateResource('1', 'feature-architecture');
+        ResourcesPage.performCreateResource('2', 'inscription');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+        SearchBarPage.clickChooseTypeFilter('feature');
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
+    });
+
+
+    it('search/suggestions -- show suggestion for resource from different context', done => {
+
+        SearchBarPage.typeInSearchField('c');
+        browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesPage.getSuggestions().then(suggestions => {
+            expect(suggestions.length).toBe(1);
+            expect(suggestions[0].getText()).toEqual('context1');
+        });
+
+        done();
+    });
+
+
+    it('search/suggestion -- do not show suggestions if any resources in current context are found', done => {
+
+        SearchBarPage.typeInSearchField('t');
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
+
+        done();
+    });
+
+
+    it('search/suggestions -- do not suggest project document', done => {
+
+        SearchBarPage.typeInSearchField('te');
+        browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesPage.getSuggestions().then(suggestions => {
+            expect(suggestions.length).toBe(1);
+            expect(suggestions[0].getText()).toEqual('testf1');
+        });
+
+        done();
+    });
 
 
     it('basic stuff', () => {
@@ -378,7 +595,6 @@ describe('resources/state --', function() {
     it('keep type filter on switching view modes', () => {
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.clickMapModeButton();
         ResourcesPage.performCreateResource('f2', 'find');
 
         SearchBarPage.clickChooseTypeFilter('feature');

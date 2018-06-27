@@ -47,6 +47,15 @@
       grid-gap: 1px;
       background: rgb(221, 221, 221);
       border-bottom: solid 1px rgb(221, 221, 221);
+
+      #document-limit-info {
+        display: block;
+        padding: 10px;
+        background-color: #f8f9fa;
+        font-style: italic;
+        user-select: none;
+        cursor: default;
+      }
     }
   }
 

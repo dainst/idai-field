@@ -9,7 +9,7 @@ import {Static} from '../unit/static';
 import {DAOsSpecHelper} from './daos-spec-helper';
 import {TypeUtility} from '../../app/core/model/type-utility';
 import {ViewDefinition} from '../../app/components/resources/state/core/view-definition';
-import {toResourceId} from '../../app/components/resources/state/navpath/navigation-path-segment';
+import {toResourceId} from '../../app/components/resources/state/core/navigation-path-segment';
 import {ResourcesStateManager} from '../../app/components/resources/state/resources-state-manager';
 
 /**

@@ -1,34 +1,20 @@
 import {Document} from 'idai-components-2/core';
-import {NavigationPathSegment} from './navigation-path-segment';
-import {NavigationPath} from './navigation-path';
+import {IdaiFieldDocument} from 'idai-components-2/field';
+import {NavigationPathContext} from './navigation-path-context';
 
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export module SegmentValidator {
+export interface NavigationPathSegment extends NavigationPathContext {
 
-    export async function findInvalidSegment(
-        mainTypeDocumentResourceId: string|undefined,
-        navigationPath: NavigationPath,
-        hasExisting: (_: string) => Promise<boolean>): Promise<NavigationPathSegment|undefined> {
-
-        for (let segment of navigationPath.segments) {
-            if (!await isValidSegment(
-                mainTypeDocumentResourceId,
-                    segment,
-                    navigationPath.segments,
-                    hasExisting)) {
-
-                return segment;
-            }
-        }
-
-        return undefined;
-    }
+    document: IdaiFieldDocument;
+}
 
 
-    async function isValidSegment(
+export module NavigationPathSegment {
+
+    export async function isValid(
         mainTypeDocumentResourceId: string|undefined,
         segment: NavigationPathSegment,
         segments: Array<NavigationPathSegment>,
@@ -51,3 +37,14 @@ export module SegmentValidator {
                 'liesWithin', segments[index - 1].document.resource.id);
     }
 }
+
+
+export const isSegmentWith
+    = (resourceId: string) => (segment: NavigationPathSegment) => resourceId === segment.document.resource.id;
+
+
+export const toResourceId = (seg: NavigationPathSegment) => seg.document.resource.id;
+
+
+export const differentFrom = (a: NavigationPathSegment) => (b: NavigationPathSegment) =>
+    a.document.resource.id !== b.document.resource.id;

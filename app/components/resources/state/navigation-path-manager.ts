@@ -5,11 +5,10 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ModelUtil} from '../../../core/model/model-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ObserverUtil} from '../../../util/observer-util';
-import {NavigationPath} from './navpath/navigation-path';
-import {NavigationPathSegment} from './navpath/navigation-path-segment';
 import {ObjectUtil} from '../../../util/object-util';
-import {SegmentValidator} from './navpath/navigation-path-segment-validator';
 import {ResourcesStateManager} from './resources-state-manager';
+import {NavigationPath} from './core/navigation-path';
+import {NavigationPathSegment} from './core/navigation-path-segment';
 
 
 /**
@@ -44,7 +43,7 @@ export class NavigationPathManager {
 
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
-        const invalidSegment = await SegmentValidator.findInvalidSegment(
+        const invalidSegment = await NavigationPath.findInvalidSegment(
             this.resourcesState.getMainTypeDocumentResourceId(),
             this.resourcesState.getNavigationPath(),
             async (resourceId: string) => (await this.datastore.find({ q: '',

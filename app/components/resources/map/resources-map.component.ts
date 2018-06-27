@@ -7,7 +7,7 @@ import {ViewFacade} from '../state/view-facade';
 import {PersistenceManager} from '../../../core/persist/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
-import {NavigationPath} from '../state/navpath/navigation-path';
+import {NavigationPath} from '../state/core/navigation-path';
 
 
 @Component({

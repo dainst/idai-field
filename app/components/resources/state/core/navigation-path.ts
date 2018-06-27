@@ -155,6 +155,26 @@ export module NavigationPath {
     }
 
 
+    export async function findInvalidSegment(
+        mainTypeDocumentResourceId: string|undefined,
+        navigationPath: NavigationPath,
+        hasExisting: (_: string) => Promise<boolean>): Promise<NavigationPathSegment|undefined> {
+
+        for (let segment of navigationPath.segments) {
+            if (!await NavigationPathSegment.isValid(
+                    mainTypeDocumentResourceId,
+                    segment,
+                    navigationPath.segments,
+                    hasExisting)) {
+
+                return segment;
+            }
+        }
+
+        return undefined;
+    }
+
+
     function getContext(navPath: NavigationPath, displayHierarchy: boolean): NavigationPathContext {
 
         if (!displayHierarchy) return navPath.flatContext;

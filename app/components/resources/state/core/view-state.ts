@@ -1,7 +1,7 @@
 /**
  * @author Thomas Kleinke
  */
-import {NavigationPath} from '../navpath/navigation-path';
+import {NavigationPath} from './navigation-path';
 
 
 export interface ViewState {

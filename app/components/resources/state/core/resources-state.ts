@@ -1,6 +1,6 @@
 import {ViewState} from './view-state';
-import {NavigationPath} from '../navpath/navigation-path';
 import {ObjectUtil} from '../../../../util/object-util';
+import {NavigationPath} from './navigation-path';
 
 /**
  * @author Thomas Kleinke

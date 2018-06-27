@@ -1,23 +1,17 @@
 <div id="navigation" class="row">
 
     <div *ngIf="!viewFacade.isInOverview() && viewFacade.getSelectedOperationTypeDocument()" class="btn-group">
-        <div class="btn"
-             [class.btn-primary]="!viewFacade.getDisplayHierarchy()"
-             [class.btn-outline-primary]="viewFacade.getDisplayHierarchy()"
-             (click)="toggleDisplayHierarchy()">
-
+        <div class="btn btn-outline-primary" (click)="toggleDisplayHierarchy()">
             <span *ngIf="viewFacade.getDisplayHierarchy()" class="mdi mdi-file-tree"></span>
             <span *ngIf="!viewFacade.getDisplayHierarchy()" class="mdi mdi-view-sequential"></span>
         </div>
 
         <div class="btn-group" ngbDropdown placement="bottom-left" role="group" id="operation-document-selector">
-
-            <button *ngIf="viewFacade.getDisplayHierarchy() || !viewFacade.getBypassOperationTypeSelection()" class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
-            <button *ngIf="!viewFacade.getDisplayHierarchy() && viewFacade.getBypassOperationTypeSelection()" class="btn btn-primary mdi mdi-checkbox-intermediate" (click)="deactivateBypassOperationTypeSelection()"></button>
+            <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
 
             <div class="dropdown-menu" ngbDropdownMenu>
-
-                <button *ngIf="!viewFacade.getDisplayHierarchy() && !viewFacade.getBypassOperationTypeSelection()" class="dropdown-item" (click)="activateBypassOperationTypeSelection()">
+                <button *ngIf="!viewFacade.getDisplayHierarchy()" class="dropdown-item"
+                        (click)="activateBypassOperationTypeSelection()">
                     Alle
                 </button>
 

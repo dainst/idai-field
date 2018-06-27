@@ -15,7 +15,7 @@ export class OperationTypeDocumentsManager {
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
-        private resourcesState: ResourcesStateManager
+        private resourcesStateManager: ResourcesStateManager
     ) {}
 
     
@@ -26,10 +26,10 @@ export class OperationTypeDocumentsManager {
 
         this.documents = await this.fetchDocuments(
             OperationTypeDocumentsManager.makeMainTypeQuery(
-                this.resourcesState.getViewType() as string // cast ok because we populate only when not in overview
+                this.resourcesStateManager.getViewType() as string // cast ok because we populate only when not in overview
             ));
 
-        if (this.documents.length === 0) return this.resourcesState.setMainTypeDocument(undefined);
+        if (this.documents.length === 0) return this.resourcesStateManager.setMainTypeDocument(undefined);
 
         await this.restoreLastSelectedOperationTypeDocument();
     }
@@ -43,8 +43,8 @@ export class OperationTypeDocumentsManager {
         const operationTypeDocument = OperationTypeDocumentsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
 
-        if (operationTypeDocument && operationTypeDocument.resource.id !== this.resourcesState.getMainTypeDocumentResourceId()) {
-            this.resourcesState.setMainTypeDocument(operationTypeDocument.resource.id);
+        if (operationTypeDocument && operationTypeDocument.resource.id !== this.resourcesStateManager.getMainTypeDocumentResourceId()) {
+            this.resourcesStateManager.setMainTypeDocument(operationTypeDocument.resource.id);
         }
     }
 
@@ -63,7 +63,7 @@ export class OperationTypeDocumentsManager {
     private selectFirstOperationTypeDocumentFromList() {
 
         if (this.documents && this.documents.length > 0) {
-            this.resourcesState.setMainTypeDocument(this.documents[0].resource.id);
+            this.resourcesStateManager.setMainTypeDocument(this.documents[0].resource.id);
         } else {
             console.warn('cannot set selectedMainTypeDocument because mainTypeDocuments is empty')
         }
@@ -72,15 +72,15 @@ export class OperationTypeDocumentsManager {
 
     private async restoreLastSelectedOperationTypeDocument(): Promise<void> {
 
-        const mainTypeDocumentResourceId = this.resourcesState.getMainTypeDocumentResourceId();
+        const mainTypeDocumentResourceId = this.resourcesStateManager.getMainTypeDocumentResourceId();
         if (!mainTypeDocumentResourceId) {
             this.selectFirstOperationTypeDocumentFromList();
         } else {
             try {
                 const document = await this.datastore.get(mainTypeDocumentResourceId);
-                this.resourcesState.setMainTypeDocument(document.resource.id);
+                this.resourcesStateManager.setMainTypeDocument(document.resource.id);
             } catch(e) {
-                this.resourcesState.removeActiveLayersIds();
+                this.resourcesStateManager.removeActiveLayersIds();
                 this.selectFirstOperationTypeDocumentFromList();
             }
         }

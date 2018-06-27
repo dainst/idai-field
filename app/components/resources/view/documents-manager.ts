@@ -35,7 +35,7 @@ export class DocumentsManager {
         private datastore: IdaiFieldDocumentReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
         private operationTypeDocumentsManager: OperationTypeDocumentsManager,
-        private resourcesState: ResourcesStateManager,
+        private resourcesStateManager: ResourcesStateManager,
         private loading: Loading
     ) {
         remoteChangesStream.notifications().subscribe(document => this.handleChange(document));
@@ -44,7 +44,7 @@ export class DocumentsManager {
 
     public getDocuments = () => this.documents;
 
-    public getSelectedDocument = () => this.resourcesState.getSelectedDocument();
+    public getSelectedDocument = () => this.resourcesStateManager.getSelectedDocument();
 
     public getTotalDocumentCount = () => this.totalDocumentCount;
 
@@ -65,46 +65,46 @@ export class DocumentsManager {
 
     public async setQueryString(q: string) {
 
-        this.resourcesState.setQueryString(q);
+        this.resourcesStateManager.setQueryString(q);
         await this.populateAndDeselectIfNecessary();
     }
 
 
     public async setTypeFilters(types: string[]) {
 
-        this.resourcesState.setTypeFilters(types);
+        this.resourcesStateManager.setTypeFilters(types);
         await this.populateAndDeselectIfNecessary();
     }
 
 
     public async setDisplayHierarchy(displayHierarchy: boolean) {
 
-        this.resourcesState.setDisplayHierarchy(displayHierarchy);
+        this.resourcesStateManager.setDisplayHierarchy(displayHierarchy);
         await this.populateAndDeselectIfNecessary();
     }
 
 
     public async setBybassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
 
-        this.resourcesState.setBypassOperationTypeSelection(bypassOperationTypeSelection);
+        this.resourcesStateManager.setBypassOperationTypeSelection(bypassOperationTypeSelection);
         await this.populateAndDeselectIfNecessary();
     }
 
 
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
-        await this.resourcesState.moveInto(document);
+        await this.resourcesStateManager.moveInto(document);
         await this.populateAndDeselectIfNecessary();
     }
 
 
     public deselect() {
 
-        if (this.resourcesState.getSelectedDocument()) {
+        if (this.resourcesStateManager.getSelectedDocument()) {
 
             this.selectAndNotify(undefined);
             this.documents = this.documents.filter(hasId);
-            this.resourcesState.setActiveDocumentViewTab(undefined);
+            this.resourcesStateManager.setActiveDocumentViewTab(undefined);
         }
     }
 
@@ -141,18 +141,18 @@ export class DocumentsManager {
 
     private selectAndNotify(document: IdaiFieldDocument|undefined) {
 
-        if (this.resourcesState.getSelectedDocument()) {
+        if (this.resourcesStateManager.getSelectedDocument()) {
             ObserverUtil.notify(this.deselectionObservers,
-                this.resourcesState.getSelectedDocument() as Document|undefined);
+                this.resourcesStateManager.getSelectedDocument() as Document|undefined);
         }
-        this.resourcesState.setSelectedDocument(document);
+        this.resourcesStateManager.setSelectedDocument(document);
     }
 
 
     private async populateAndDeselectIfNecessary() {
 
         await this.populateDocumentList();
-        if (!this.documents.find(hasEqualId(this.resourcesState.getSelectedDocument()))) this.deselect();
+        if (!this.documents.find(hasEqualId(this.resourcesStateManager.getSelectedDocument()))) this.deselect();
     }
 
 
@@ -161,7 +161,7 @@ export class DocumentsManager {
         if (!this.documents) return;
         if (this.documents.find(hasEqualId(changedDocument))) return;
 
-        if (changedDocument.resource.type == this.resourcesState.getViewType()) {
+        if (changedDocument.resource.type == this.resourcesStateManager.getViewType()) {
             return this.operationTypeDocumentsManager.populate();
         }
 
@@ -189,7 +189,7 @@ export class DocumentsManager {
     public async createUpdatedDocumentList(): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
 
         const isRecordedInTarget = this.makeIsRecordedInTarget();
-        if (!isRecordedInTarget && !this.resourcesState.isInOverview()) {
+        if (!isRecordedInTarget && !this.resourcesStateManager.isInOverview()) {
             return { documents: [], totalCount: 0 };
         }
 
@@ -200,10 +200,10 @@ export class DocumentsManager {
 
     private makeIsRecordedInTarget(): string|undefined {
 
-        return this.resourcesState.isInOverview()
+        return this.resourcesStateManager.isInOverview()
             ? undefined
-            : this.resourcesState.getMainTypeDocumentResourceId()
-                ? this.resourcesState.getMainTypeDocumentResourceId()
+            : this.resourcesStateManager.getMainTypeDocumentResourceId()
+                ? this.resourcesStateManager.getMainTypeDocumentResourceId()
                 : undefined;
     }
 
@@ -213,7 +213,7 @@ export class DocumentsManager {
         this.operationTypeDocumentsManager
             .selectLinkedOperationTypeDocumentForSelectedDocument(documentToSelect);
 
-        await this.resourcesState.updateNavigationPathForDocument(documentToSelect);
+        await this.resourcesStateManager.updateNavigationPathForDocument(documentToSelect);
 
         await this.adjustQuerySettingsIfNecessary(documentToSelect);
     }
@@ -223,8 +223,8 @@ export class DocumentsManager {
 
         if (!(await this.updatedDocumentListContainsSelectedDocument(documentToSelect))) {
 
-            this.resourcesState.setQueryString('');
-            this.resourcesState.setTypeFilters([]);
+            this.resourcesStateManager.setQueryString('');
+            this.resourcesStateManager.setTypeFilters([]);
         }
     }
 
@@ -238,21 +238,21 @@ export class DocumentsManager {
     private makeDocsQuery(mainTypeDocumentResourceId: string|undefined): Query {
 
         const q: Query = {
-            q: this.resourcesState.getQueryString(),
+            q: this.resourcesStateManager.getQueryString(),
             constraints: this.makeConstraints(mainTypeDocumentResourceId),
-            types: (this.resourcesState.getTypeFilters().length > 0)
-                ? this.resourcesState.getTypeFilters()
+            types: (this.resourcesStateManager.getTypeFilters().length > 0)
+                ? this.resourcesStateManager.getTypeFilters()
                 : undefined
         };
 
         if (!mainTypeDocumentResourceId
-            && this.resourcesState.isInOverview()
+            && this.resourcesStateManager.isInOverview()
             && !q.types) {
 
-            q.types = this.resourcesState.getOverviewTypeNames();
+            q.types = this.resourcesStateManager.getOverviewTypeNames();
         }
 
-        if (!this.resourcesState.getDisplayHierarchy()) q.limit = DocumentsManager.documentLimit;
+        if (!this.resourcesStateManager.getDisplayHierarchy()) q.limit = DocumentsManager.documentLimit;
 
         return q;
     }
@@ -272,9 +272,9 @@ export class DocumentsManager {
     private makeConstraints(mainTypeDocumentResourceId: string|undefined)
             : { [name: string]: string|string[]}  {
 
-        const navigationPath = this.resourcesState.getNavigationPath2();
+        const navigationPath = this.resourcesStateManager.getNavigationPath2();
 
-        const constraints: { [name: string]: string|string[] } = !this.resourcesState.getDisplayHierarchy()
+        const constraints: { [name: string]: string|string[] } = !this.resourcesStateManager.getDisplayHierarchy()
             ? {}
             : navigationPath.selectedSegmentId
                 ? { 'liesWithin:contain': navigationPath.selectedSegmentId }
@@ -291,8 +291,8 @@ export class DocumentsManager {
 
     private getIsRecordedInConstraintValues(mainTypeDocumentResourceId: string): string|string[] {
 
-        return this.resourcesState.getBypassOperationTypeSelection()
-            && !this.resourcesState.getDisplayHierarchy()
+        return this.resourcesStateManager.getBypassOperationTypeSelection()
+            && !this.resourcesStateManager.getDisplayHierarchy()
         ? this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id)
         : mainTypeDocumentResourceId;
     }

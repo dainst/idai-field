@@ -19,7 +19,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/state --', function() {
+fdescribe('resources/state --', function() {
 
     const appDataPath = browser.params.appDataPath;
 
@@ -71,6 +71,14 @@ describe('resources/state --', function() {
         ImageOverviewPage.doubleClickCell(0);
         RelationsViewPage.clickRelation(0);
     }
+
+
+    it('switch from image to map view after click on depicts relation link', () => {
+
+        createDepictsRelation();
+        clickDepictsRelationLink();
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+    });
 
 
     it('search/list -- perform a fulltext search', () => {
@@ -303,16 +311,6 @@ describe('resources/state --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('trench1'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench2'));
         ResourcesPage.getListItemIdentifierText(2).then(text => expect(text).toEqual('trench3'));
-    });
-
-
-    it('switch from image to map view after click on depicts relation link', () => {
-
-        ProjectPage.get();
-
-        createDepictsRelation();
-        clickDepictsRelationLink();
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
     });
 
 

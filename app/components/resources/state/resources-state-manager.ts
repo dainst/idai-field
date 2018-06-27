@@ -68,7 +68,7 @@ export class ResourcesStateManager {
 
     public getMainTypeDocumentResourceId = (): string|undefined => this.getViewState().mainTypeDocumentResourceId;
 
-    private serialize = () => this.serializer.store(this.createObjectToSerialize());
+    private serialize = () => this.serializer.store(ResourcesState.createObjectToSerialize(this._));
 
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this._.activeDocumentViewTab = activeDocumentViewTab;
 
@@ -87,7 +87,7 @@ export class ResourcesStateManager {
 
     public setSelectedDocument(document: IdaiFieldDocument|undefined) {
 
-        this._ = this.setNavigationPath(
+        this.setNavigationPath(
             NavigationPath.setSelectedDocument(this.getNavigationPath(),
                 this.getDisplayHierarchy(), document)
         );
@@ -96,7 +96,7 @@ export class ResourcesStateManager {
 
     public setQueryString(q: string) {
 
-        this._ = this.setNavigationPath(
+        this.setNavigationPath(
             NavigationPath.setQueryString(this.getNavigationPath(),
                 this.getDisplayHierarchy(), q)
         );
@@ -105,7 +105,7 @@ export class ResourcesStateManager {
 
     public setTypeFilters(types: string[]) {
 
-        this._ = this.setNavigationPath(
+        this.setNavigationPath(
             NavigationPath.setTypeFilters(this.getNavigationPath(),
                 this.getDisplayHierarchy(), types)
         );
@@ -186,36 +186,15 @@ export class ResourcesStateManager {
     }
 
 
-    public setNavigationPath(navPath: NavigationPath): ResourcesState {
+    public setNavigationPath(navPath: NavigationPath) {
 
-        const clone = ObjectUtil.cloneObject(this._);
-
-        const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
-        if (!mainTypeDocumentResourceId) return clone;
-
-        clone.viewStates[clone.view].navigationPaths[mainTypeDocumentResourceId] = navPath;
-        return clone;
+        this._ = ResourcesState.updateNavigationPath(this._, navPath);
     }
 
 
     private getViewState() {
 
         return this._.viewStates[this._.view];
-    }
-
-
-    private createObjectToSerialize() : { [viewName: string]: ViewState } {
-
-        const objectToSerialize: { [viewName: string]: ViewState } = {};
-
-        for (let viewName of Object.keys(this._.viewStates)) {
-            objectToSerialize[viewName] = {} as any;
-            if (this._.viewStates[viewName].layerIds) {
-                objectToSerialize[viewName].layerIds = this._.viewStates[viewName].layerIds;
-            }
-        }
-
-        return objectToSerialize;
     }
 
 

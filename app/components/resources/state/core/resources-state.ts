@@ -1,5 +1,6 @@
 import {ViewState} from './view-state';
 import {NavigationPath} from '../navpath/navigation-path';
+import {ObjectUtil} from '../../../../util/object-util';
 
 /**
  * @author Thomas Kleinke
@@ -15,6 +16,19 @@ export interface ResourcesState { // 'the' resources state
 
 
 export module ResourcesState {
+
+
+    export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath): ResourcesState {
+
+        const clone = ObjectUtil.cloneObject(state);
+
+        const mainTypeDocumentResourceId = clone.viewStates[clone.view].mainTypeDocumentResourceId;
+        if (!mainTypeDocumentResourceId) return clone;
+
+        clone.viewStates[clone.view].navigationPaths[mainTypeDocumentResourceId] = navPath;
+        return clone;
+    }
+
 
     export function makeSampleDefaults(): ResourcesState {
 
@@ -58,6 +72,21 @@ export module ResourcesState {
 
         Object.keys(state.viewStates)
             .forEach(viewName => ViewState.complete(state.viewStates[viewName]));
+    }
+
+
+    export function createObjectToSerialize(state: ResourcesState) : { [viewName: string]: ViewState } {
+
+        const objectToSerialize: { [viewName: string]: ViewState } = {};
+
+        for (let viewName of Object.keys(state.viewStates)) {
+            objectToSerialize[viewName] = {} as any;
+            if (this._.viewStates[viewName].layerIds) {
+                objectToSerialize[viewName].layerIds = this._.viewStates[viewName].layerIds;
+            }
+        }
+
+        return objectToSerialize;
     }
 }
 

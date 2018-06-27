@@ -55,7 +55,7 @@ export class NavigationPathManager {
             : this.resourcesState.getNavigationPath();
 
         const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
-        this.resourcesState.setState(this.resourcesState.setNavigationPath(updatedNavigationPath));
+        this.resourcesState.setNavigationPath(updatedNavigationPath);
         this.notify();
     }
 
@@ -148,7 +148,7 @@ export class NavigationPathManager {
         }
         updatedNavigationPath.selectedSegmentId = newSelectedSegmentId;
 
-        this.resourcesState.setState(this.resourcesState.setNavigationPath(updatedNavigationPath));
+        this.resourcesState.setNavigationPath(updatedNavigationPath);
         this.notify();
     }
 }

@@ -37,11 +37,8 @@ describe('resources/state --', function() {
                 require('request').post('http://localhost:3003/reset', {});
             });
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToExcavation(); // same here
-            ResourcesPage.clickMapModeButton(); // TODO should not be necessary
             NavbarPage.clickNavigateToProject();
-            ResourcesPage.clickMapModeButton(); // same here
-            browser.sleep(delays.shortRest);
+            browser.sleep(delays.shortRest * 2);
         }
         index++;
     });

@@ -28,6 +28,14 @@ describe('NavigationService', () => {
     });
 
 
+    it('does not display hierarchy', () => {
+
+        viewFacade.isInOverview.and.returnValue(false);
+        viewFacade.getDisplayHierarchy.and.returnValue(false);
+        expect(navigationService.showMoveIntoOption(Static.ifDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(false);
+    });
+
+
     it('has lies within as target', () => {
 
         projectConfiguration.getRelationDefinitions.and.returnValue(

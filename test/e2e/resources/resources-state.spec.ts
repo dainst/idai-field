@@ -19,7 +19,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-fdescribe('resources/state --', function() {
+describe('resources/state --', function() {
 
     const appDataPath = browser.params.appDataPath;
 
@@ -38,7 +38,7 @@ fdescribe('resources/state --', function() {
             });
             browser.sleep(delays.shortRest);
             NavbarPage.clickNavigateToProject();
-            browser.sleep(delays.shortRest * 2);
+            browser.sleep(delays.shortRest * 3);
         }
         index++;
     });

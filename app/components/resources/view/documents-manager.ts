@@ -26,6 +26,8 @@ export class DocumentsManager {
     private deselectionObservers: Array<Observer<Document>> = [];
     private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
 
+    private static documentLimit: number = 100;
+
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
@@ -125,10 +127,11 @@ export class DocumentsManager {
             if (documentToSelect) {
                 await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
             } else {
-                console.error("documentToSelect undefined in setSelected"); // see #8317
+                console.error('documentToSelect undefined in setSelected'); // see #8317
             }
             await this.populateDocumentList();
         }
+
         this.selectAndNotify(documentToSelect);
     }
 
@@ -242,6 +245,8 @@ export class DocumentsManager {
 
             q.types = this.resourcesState.getOverviewTypeNames();
         }
+
+        if (!this.resourcesState.getDisplayHierarchy()) q.limit = DocumentsManager.documentLimit;
 
         return q;
     }

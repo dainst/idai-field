@@ -11,6 +11,7 @@ import {Loading} from '../../../widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {subtract, unique} from 'tsfun';
 import {ResourcesStateManager} from './resources-state-manager';
+import {IdaiFieldFindResult} from '../../../core/datastore/core/cached-read-datastore';
 
 
 /**
@@ -23,10 +24,12 @@ export class DocumentsManager {
     private documents: Array<Document>;
     private newDocumentsFromRemote: Array<string /* resourceId */> = [];
 
+    private totalDocumentCount: number;
+
     private deselectionObservers: Array<Observer<Document>> = [];
     private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
 
-    private static documentLimit: number = 100;
+    private static documentLimit: number = 200;
 
 
     constructor(
@@ -44,6 +47,8 @@ export class DocumentsManager {
     public getDocuments = () => this.documents;
 
     public getSelectedDocument = () => this.resourcesState.getSelectedDocument();
+
+    public getTotalDocumentCount = () => this.totalDocumentCount;
 
     public removeFromDocuments = (document: Document) => this.documents = subtract([document])(this.documents);
 
@@ -122,7 +127,7 @@ export class DocumentsManager {
                 subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
         }
 
-        if (!(await this.createUpdatedDocumentList()).find(hasEqualId(documentToSelect))) {
+        if (!(await this.createUpdatedDocumentList()).documents.find(hasEqualId(documentToSelect))) {
 
             if (documentToSelect) {
                 await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
@@ -173,20 +178,25 @@ export class DocumentsManager {
 
         if (!skipResetRemoteDocs) this.newDocumentsFromRemote = [];
         this.documents = [];
-        this.documents = await this.createUpdatedDocumentList();
+
+        const result: IdaiFieldFindResult<IdaiFieldDocument> = await this.createUpdatedDocumentList();
+        this.documents = result.documents;
+        this.totalDocumentCount = result.totalCount;
 
         this.loading.stop();
         ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
     }
 
 
-    public async createUpdatedDocumentList(): Promise<Array<Document>> {
+    public async createUpdatedDocumentList(): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
 
         const isRecordedInTarget = this.makeIsRecordedInTarget();
-        if (!isRecordedInTarget && !this.resourcesState.isInOverview()) return [];
+        if (!isRecordedInTarget && !this.resourcesState.isInOverview()) {
+            return { documents: [], totalCount: 0 };
+        }
 
         const docsQuery = this.makeDocsQuery(isRecordedInTarget);
-        return (await this.fetchDocuments(docsQuery)).filter(hasId);
+        return (await this.fetchDocuments(docsQuery));
     }
 
 
@@ -205,8 +215,7 @@ export class DocumentsManager {
         this.operationTypeDocumentsManager
             .selectLinkedOperationTypeDocumentForSelectedDocument(documentToSelect);
 
-        await this.navigationPathManager
-            .updateNavigationPathForDocument(documentToSelect);
+        await this.navigationPathManager.updateNavigationPathForDocument(documentToSelect);
 
         await this.adjustQuerySettingsIfNecessary(documentToSelect);
     }
@@ -224,8 +233,7 @@ export class DocumentsManager {
 
     private async updatedDocumentListContainsSelectedDocument(documentToSelect: Document) {
 
-        return (await this.createUpdatedDocumentList())
-            .find(hasEqualId(documentToSelect))
+        return (await this.createUpdatedDocumentList()).documents.find(hasEqualId(documentToSelect));
     }
 
 
@@ -252,13 +260,13 @@ export class DocumentsManager {
     }
 
 
-    private async fetchDocuments(query: Query): Promise<Document[]> {
+    private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
 
         try {
-            return (await this.datastore.find(query)).documents;
+            return this.datastore.find(query);
         } catch (errWithParams) {
             DocumentsManager.handleFindErr(errWithParams, query);
-            return [];
+            return { documents: [], totalCount: 0 };
         }
     }
 

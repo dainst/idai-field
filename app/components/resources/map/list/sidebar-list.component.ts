@@ -49,5 +49,4 @@ export class SidebarListComponent extends BaseList {
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);
     }
-
 }

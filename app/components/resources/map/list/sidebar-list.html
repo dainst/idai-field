@@ -19,6 +19,12 @@
             <document-teaser [document]="document"></document-teaser>
         </div>
     </li>
+
+    <li *ngIf="isDocumentLimitExceeded()">
+        Es werden die ersten {{viewFacade.getDocuments().length}} von {{viewFacade.getTotalDocumentCount()}}
+        Ressourcen angezeigt. Schränken Sie die Suche weiter ein oder wechseln Sie in die Hierarchie-Ansicht,
+        um auf die übrigen Ressourcen zuzugreifen.
+    </li>
 </ul>
 
 <plus-button *ngIf="showPlusButton()"

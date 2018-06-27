@@ -69,9 +69,11 @@ export class ViewFacade {
 
     public getFilterTypes = () => this.resourcesState.getTypeFilters();
 
+    public getDocuments = () => this.documentsManager.getDocuments();
+
     public getSelectedDocument = () => this.documentsManager.getSelectedDocument();
 
-    public getDocuments = () => this.documentsManager.getDocuments();
+    public getTotalDocumentCount = () => this.documentsManager.getTotalDocumentCount();
 
     public getActiveDocumentViewTab = () => this.resourcesState.getActiveDocumentViewTab();
 

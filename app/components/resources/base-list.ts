@@ -1,17 +1,17 @@
+import {Document} from 'idai-components-2/core';
 import {ResourcesComponent} from './resources.component';
 import {ViewFacade} from './view/view-facade';
 import {Loading} from '../../widgets/loading';
 import {NavigationPath} from './view/state/navigation-path';
 
 /**
- * A base class for all lists, e.g. sidebarList and List components
- *
  * @author Philipp Gerth
+ * @author Thomas Kleinke
  */
-
 export class BaseList {
 
     public navigationPath: NavigationPath = NavigationPath.empty();
+
 
     constructor(
         public resourcesComponent: ResourcesComponent,
@@ -42,5 +42,15 @@ export class BaseList {
                 )
             )
         );
+    }
+
+
+    public isDocumentLimitExceeded(): boolean {
+
+        const documents: Array<Document> = this.viewFacade.getDocuments();
+
+        return documents
+            && documents.length > 0
+            && this.viewFacade.getTotalDocumentCount() > documents.length;
     }
 }

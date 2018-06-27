@@ -40,6 +40,60 @@ describe('resources --', () => {
     });
 
 
+    it('messages: create a new object of first listed type ', () => {
+
+        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+    });
+
+
+    it('messages: show the success msg also on route change', () => {
+
+        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
+        ResourcesPage.openEditByDoubleClickResource('12');
+        DoceditPage.typeInInputField('identifier', '34');
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickSaveInModal();
+
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+        NavbarPage.clickCloseAllMessages();
+    });
+
+
+    it('messages: warn if identifier is missing', () => {
+
+        browser.sleep(5000);
+
+        ResourcesPage.performCreateResource('', 'feature', 'shortDescription', 'Text', undefined, false);
+
+        NavbarPage.awaitAlert('identifier', false);
+        NavbarPage.clickCloseAllMessages();
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickDiscardInModal();
+    });
+
+
+    it('messages: warn if an existing identifier is used', () => {
+
+        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
+        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
+
+        NavbarPage.awaitAlert('existiert bereits', false);
+        NavbarPage.clickCloseAllMessages();
+        DoceditPage.clickCloseEdit();
+        ResourcesPage.clickDiscardInModal();
+    });
+
+
+    it('messages: do not warn if two different identifiers start with the same string', () => {
+
+        ResourcesPage.performCreateResource('120',undefined,undefined,undefined,undefined,false);
+        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
+
+        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
+    });
+
+
     it('should delete a main type resource', () => {
 
         NavbarPage.clickNavigateToExcavation();

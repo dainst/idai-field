@@ -79,12 +79,13 @@ export class NavigationPathManager {
     }
 
 
+    // TODO unit test that it returns a clone
     public getNavigationPath(): NavigationPath {
 
         if (this.resourcesState.isInOverview()) return NavigationPath.empty();
         if (!this.resourcesState.getMainTypeDocumentResourceId()) return NavigationPath.empty();
 
-        return this.resourcesState.getNavigationPath();
+        return ObjectUtil.cloneObject(this.resourcesState.getNavigationPath());
     }
 
 

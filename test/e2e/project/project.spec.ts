@@ -1,6 +1,6 @@
 import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
-import {ResourcesPage} from './resources.page';
+import {ResourcesPage} from '../resources/resources.page';
 import {ProjectPage} from '../project.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 

@@ -25,6 +25,7 @@ describe('ResourcesState', () => {
 
         const mockSerializer = jasmine.createSpyObj('serializer', ['store']);
         resourcesState = new ResourcesStateManager(
+            undefined,
             mockSerializer,
             new OperationViews(viewsList),
             undefined,

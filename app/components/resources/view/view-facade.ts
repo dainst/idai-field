@@ -1,7 +1,6 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
-import {NavigationPathManager} from './navigation-path-manager';
 import {DocumentsManager} from './documents-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
@@ -24,7 +23,6 @@ import {ResourcesStateManager} from './resources-state-manager';
  */
 export class ViewFacade {
 
-    private navigationPathManager: NavigationPathManager;
     private operationTypeDocumentsManager: OperationTypeDocumentsManager;
     private documentsManager: DocumentsManager;
 
@@ -35,19 +33,13 @@ export class ViewFacade {
         private resourcesState: ResourcesStateManager,
         private loading: Loading
     ) {
-        this.navigationPathManager = new NavigationPathManager(
-            resourcesState,
-            datastore
-        );
         this.operationTypeDocumentsManager = new OperationTypeDocumentsManager(
             datastore,
-            this.navigationPathManager,
             resourcesState
         );
         this.documentsManager = new DocumentsManager(
             datastore,
             remoteChangesStream,
-            this.navigationPathManager,
             this.operationTypeDocumentsManager,
             resourcesState,
             loading
@@ -95,15 +87,15 @@ export class ViewFacade {
 
     public moveInto = (document: IdaiFieldDocument|undefined) => this.documentsManager.moveInto(document);
 
-    public navigationPathNotifications = () => this.navigationPathManager.navigationPathNotifications();
+    public navigationPathNotifications = () => this.resourcesState.navigationPathNotifications();
 
     public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
 
     public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
 
-    public getNavigationPath = () => this.navigationPathManager.getNavigationPath();
+    public getNavigationPath = () => this.resourcesState.getNavigationPath2();
 
-    public rebuildNavigationPath = () => this.navigationPathManager.rebuildNavigationPath();
+    public rebuildNavigationPath = () => this.resourcesState.rebuildNavigationPath();
 
     public populateDocumentList = () => this.documentsManager.populateDocumentList();
 
@@ -194,7 +186,7 @@ export class ViewFacade {
     public async selectOperationTypeDocument(operationTypeDocument: Document): Promise<void> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectOperationTypeDocument');
-        this.navigationPathManager.setMainTypeDocument(operationTypeDocument.resource.id);
+        this.resourcesState.setMainTypeDocument(operationTypeDocument.resource.id);
         await this.populateDocumentList();
     }
 
@@ -232,7 +224,7 @@ export class ViewFacade {
             mainTypeResourceid = 'project';
         }
 
-        this.navigationPathManager.setMainTypeDocument(mainTypeResourceid);
+        this.resourcesState.setMainTypeDocument(mainTypeResourceid);
     }
 
 

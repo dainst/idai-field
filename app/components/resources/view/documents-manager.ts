@@ -3,7 +3,6 @@ import {Observable} from 'rxjs/Observable';
 import {Document, Query} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
-import {NavigationPathManager} from './navigation-path-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {ObserverUtil} from '../../../util/observer-util';
@@ -32,7 +31,6 @@ export class DocumentsManager {
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
-        private navigationPathManager: NavigationPathManager,
         private operationTypeDocumentsManager: OperationTypeDocumentsManager,
         private resourcesState: ResourcesStateManager,
         private loading: Loading
@@ -76,21 +74,21 @@ export class DocumentsManager {
 
     public async setDisplayHierarchy(displayHierarchy: boolean) {
 
-        this.navigationPathManager.setDisplayHierarchy(displayHierarchy);
+        this.resourcesState.setDisplayHierarchy(displayHierarchy);
         await this.populateAndDeselectIfNecessary();
     }
 
 
     public async setBybassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
 
-        this.navigationPathManager.setBypassOperationTypeSelection(bypassOperationTypeSelection);
+        this.resourcesState.setBypassOperationTypeSelection(bypassOperationTypeSelection);
         await this.populateAndDeselectIfNecessary();
     }
 
 
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
-        await this.navigationPathManager.moveInto(document);
+        await this.resourcesState.moveInto(document);
         await this.populateAndDeselectIfNecessary();
     }
 
@@ -205,8 +203,7 @@ export class DocumentsManager {
         this.operationTypeDocumentsManager
             .selectLinkedOperationTypeDocumentForSelectedDocument(documentToSelect);
 
-        await this.navigationPathManager
-            .updateNavigationPathForDocument(documentToSelect);
+        await this.resourcesState.updateNavigationPathForDocument(documentToSelect);
 
         await this.adjustQuerySettingsIfNecessary(documentToSelect);
     }
@@ -266,7 +263,7 @@ export class DocumentsManager {
     private makeConstraints(mainTypeDocumentResourceId: string|undefined)
             : { [name: string]: string|string[]}  {
 
-        const navigationPath = this.navigationPathManager.getNavigationPath();
+        const navigationPath = this.resourcesState.getNavigationPath2();
 
         const constraints: { [name: string]: string|string[] } = !this.resourcesState.getDisplayHierarchy()
             ? {}

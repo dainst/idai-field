@@ -31,10 +31,9 @@
         </div>
 
         <div *ngIf="!viewFacade.getDisplayHierarchy() && viewFacade.getBypassOperationTypeSelection()"
-            id="selected-all-operation-type-documents" type="button" class="btn btn-primary navigation-button"
-            [class.root-document]="!navigationPath.selectedSegmentId"
-            (click)="moveInto(undefined)">
-
+                id="selected-all-operation-type-documents" type="button" class="btn btn-primary navigation-button"
+                [class.root-document]="!navigationPath.selectedSegmentId"
+                (click)="moveInto(undefined)">
             <em>Alle</em>
         </div>
 

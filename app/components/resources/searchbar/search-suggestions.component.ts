@@ -67,21 +67,7 @@ export class SearchSuggestionsComponent implements OnChanges {
 
         const query: Query = { q: this.q };
         if (this.types) query.types = this.types;
-        query.constraints = this.makeConstraints();
 
         return query;
-    }
-
-
-    private makeConstraints(): { [name: string]: Constraint|string} {
-
-        if (this.viewFacade.isInOverview()) return {};
-
-        const operationTypeDocument: IdaiFieldDocument|undefined
-            = this.viewFacade.getSelectedOperationTypeDocument();
-
-        return operationTypeDocument
-            ? { 'isRecordedIn:contain': operationTypeDocument.resource.id }
-            : {};
     }
 }

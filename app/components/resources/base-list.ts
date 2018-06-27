@@ -31,6 +31,7 @@ export class BaseList {
     }
 
 
+    // TODO unit test this
     public showPlusButton(): boolean {
 
         return (!this.resourcesComponent.isEditingGeometry && this.resourcesComponent.ready

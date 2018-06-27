@@ -13,7 +13,8 @@ exports.config = {
     specs: [
         '../syncing/*.spec.js',
         '../project/*.spec.js',
-        '../resources/*.spec.js',
+        '../resources/resources.spec.js',
+        '../resources/resources-state.spec.js',
         '../images/*.spec.js',
         '../map/*.spec.js',
         '../import/*.spec.js',

@@ -157,6 +157,31 @@ export function main() {
         });
 
 
+        it('context -- keep filter when switching views', async done => {
+
+            await viewFacade.selectView('excavation');
+            viewFacade.setTypeFilters(['Feature']);
+            await viewFacade.selectView('project');
+            expect(viewFacade.getFilterTypes()).toEqual([]);
+            await viewFacade.selectView('excavation');
+            expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
+            done();
+        });
+
+
+        it('context -- keep filter when move into', async done => {
+
+            await viewFacade.selectView('excavation');
+            viewFacade.setTypeFilters(['Feature']);
+            await viewFacade.moveInto(featureDocument1);
+            expect(viewFacade.getFilterTypes()).toEqual([]);
+            await viewFacade.moveInto(undefined);
+            expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
+            done();
+        });
+
+
+
         it('reload predefined layer ids on startup in test/demo project', async done => {
 
             resourcesState = new ResourcesStateManager(

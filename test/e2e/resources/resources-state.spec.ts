@@ -367,29 +367,6 @@ describe('resources/state --', function() {
     });
 
 
-    // xitted because currently there is no relation which allows to jump between views
-    xit('select correct main type document after click on relation link', () => {
-
-        ResourcesPage.performCreateResource('b1', 'building');
-        ResourcesPage.performCreateResource('b2', 'building');
-
-        NavbarPage.clickNavigateToBuilding();
-        TaskbarPage.performSelectOperation(0); // building2
-        ResourcesPage.performCreateResource('a1', 'feature-architecture');
-        TaskbarPage.performSelectOperation(1); // building1
-        ResourcesPage.performCreateResource('f1', 'feature-floor');
-        ResourcesPage.performCreateRelation('f1', 'a1', 5);
-
-        RelationsViewPage.clickRelation(0);
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('a1'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
-
-        RelationsViewPage.clickRelation(0);
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('f1'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b2'));
-    });
-
-
     it('navpath -- show correct navigation path after click on relation link', () => {
 
         NavbarPage.clickNavigateToExcavation();
@@ -501,33 +478,6 @@ describe('resources/state --', function() {
     });
 
 
-    it('autoselect last selected type filter on switching views', () => {
-
-        ResourcesPage.performCreateResource('building', 'building');
-
-        NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.performCreateResource('b-befund');
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performCreateResource('e-befund', 'feature-architecture');
-        ResourcesPage.performCreateResource('e-inschrift', 'feature-floor');
-
-        SearchBarPage.clickChooseTypeFilter('feature-floor');
-        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('F'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('e-befund')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('e-inschrift')), delays.ECWaitTime);
-
-        NavbarPage.clickNavigateToBuilding();
-        browser.wait(EC.stalenessOf(SearchBarPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('b-befund')), delays.ECWaitTime);
-
-        NavbarPage.clickNavigateToExcavation();
-        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('F'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('e-befund')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('e-inschrift')), delays.ECWaitTime);
-    });
-
-
     it('keep mode when switching views', () => {
 
         ResourcesPage.clickListModeButton();
@@ -635,5 +585,28 @@ describe('resources/state --', function() {
         RelationsViewPage.clickRelation(0);
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Schnitte'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
+    });
+
+
+    // xitted because currently there is no relation which allows to jump between views
+    xit('select correct main type document after click on relation link', () => {
+
+        ResourcesPage.performCreateResource('b1', 'building');
+        ResourcesPage.performCreateResource('b2', 'building');
+
+        NavbarPage.clickNavigateToBuilding();
+        TaskbarPage.performSelectOperation(0); // building2
+        ResourcesPage.performCreateResource('a1', 'feature-architecture');
+        TaskbarPage.performSelectOperation(1); // building1
+        ResourcesPage.performCreateResource('f1', 'feature-floor');
+        ResourcesPage.performCreateRelation('f1', 'a1', 5);
+
+        RelationsViewPage.clickRelation(0);
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('a1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
+
+        RelationsViewPage.clickRelation(0);
+        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('f1'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b2'));
     });
 });

@@ -418,16 +418,6 @@ describe('resources --', () => {
     });
 
 
-    it('maintype -- should refresh the resources list when switching main type documents', () => {
-
-        ResourcesPage.performCreateMainTypeResource('newTrench');
-        NavbarPage.clickNavigateToExcavation();
-
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
-        OperationBarPage.performSelectOperation(1);
-    });
-
-
     it('maintype -- should edit a main type resource', () => {
 
         NavbarPage.clickNavigateToProject();

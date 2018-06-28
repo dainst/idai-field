@@ -41,11 +41,11 @@ export class ResourcesStateManager {
 
 
     /**
-     * Clients can get the latest ResourcesState with this method.
+     * Clients can obtain the latest ResourcesState with this method.
      * Its fields are readonly and the ResourcesState's companion module's
      * setter methods return always copies. So the only way to modify
      * the resources state is via the setters of ResourcesStateManager,
-     * which replace the whole resourcesState in a proper transformation
+     * which replace the whole ResourcesState in a proper transformation
      * on every change.
      *
      * @return {ResourcesState}

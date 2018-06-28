@@ -440,49 +440,4 @@ describe('resources/state --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('SI1'));
     });
-
-
-    // xitted because currently there is no relation which allows to jump between views
-    xit('switch views after click on relation link', () => {
-
-        ResourcesPage.performCreateResource('b1', 'building');
-
-        NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.performCreateResource('a1', 'feature-architecture');
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performCreateResource('floor1', 'feature-floor');
-        ResourcesPage.performCreateRelation('floor1', 'a1', 5);
-
-        RelationsViewPage.clickRelation(0);
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahmen'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
-
-        RelationsViewPage.clickRelation(0);
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Schnitte'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
-    });
-
-
-    // xitted because currently there is no relation which allows to jump between views
-    xit('select correct main type document after click on relation link', () => {
-
-        ResourcesPage.performCreateResource('b1', 'building');
-        ResourcesPage.performCreateResource('b2', 'building');
-
-        NavbarPage.clickNavigateToBuilding();
-        OperationBarPage.performSelectOperation(0); // building2
-        ResourcesPage.performCreateResource('a1', 'feature-architecture');
-        OperationBarPage.performSelectOperation(1); // building1
-        ResourcesPage.performCreateResource('f1', 'feature-floor');
-        ResourcesPage.performCreateRelation('f1', 'a1', 5);
-
-        RelationsViewPage.clickRelation(0);
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('a1'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
-
-        RelationsViewPage.clickRelation(0);
-        ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('f1'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b2'));
-    });
 });

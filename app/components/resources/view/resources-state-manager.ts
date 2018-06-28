@@ -40,7 +40,7 @@ export class ResourcesStateManager {
     ) {}
 
 
-    public get = () => this.resourcesState; // TODO return copy
+    public get = () => this.resourcesState;
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
@@ -58,9 +58,9 @@ export class ResourcesStateManager {
 
     public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
 
-    public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesState.activeDocumentViewTab = activeDocumentViewTab;
+    public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesState = ResourcesState.setActiveDocumentViewTab(this.resourcesState, activeDocumentViewTab);
 
-    public setMode = (mode: 'map' | 'list') => this.resourcesState.mode = mode; // TODO make proper transition for whole state object
+    public setMode = (mode: 'map' | 'list') => this.resourcesState = ResourcesState.setMode(this.resourcesState, mode);
 
     public setSelectedDocument = (document: IdaiFieldDocument|undefined) => this.resourcesState = ResourcesState.setSelectedDocument(this.resourcesState, document);
 
@@ -83,7 +83,7 @@ export class ResourcesStateManager {
             this.loaded = true;
         }
 
-        this.resourcesState.view = viewName;
+        this.resourcesState = ResourcesState.setView(this.resourcesState, viewName);
 
         if (!this.resourcesState.viewStates[this.resourcesState.view]) this.resourcesState.viewStates[this.resourcesState.view] = ViewState.default();
         this.setActiveDocumentViewTab(undefined);
@@ -199,7 +199,7 @@ export class ResourcesStateManager {
         if (this.project === 'test' ) {
             if (!this.suppressLoadMapInTestProject) resourcesState = ResourcesState.makeSampleDefaults()
         } else {
-            resourcesState.viewStates = await this.serializer.load();
+            (resourcesState as any).viewStates = await this.serializer.load();
             resourcesState = ResourcesState.complete(resourcesState);
         }
 

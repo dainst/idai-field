@@ -9,10 +9,10 @@ import {NavigationPath} from './navigation-path';
  */
 export interface ResourcesState { // 'the' resources state
 
-    viewStates: { [viewName: string]: ViewState };
-    view: string;
-    mode: 'map' | 'list';
-    activeDocumentViewTab: string|undefined;
+    readonly viewStates: { [viewName: string]: ViewState };
+    readonly view: string;
+    readonly mode: 'map' | 'list';
+    readonly activeDocumentViewTab: string|undefined;
 }
 
 
@@ -82,6 +82,30 @@ export module ResourcesState {
     export function getLayerIds(state: ResourcesState): {[mainTypeDocumentId: string]: string[]} {
 
         return state.viewStates[state.view].layerIds;
+    }
+
+
+    export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined): ResourcesState {
+
+        const cloned: any = ObjectUtil.cloneObject(state);
+        cloned.activeDocumentViewTab = activeDocumentViewTab;
+        return cloned;
+    }
+
+
+    export function setView(state: ResourcesState, view: string): ResourcesState {
+
+        const cloned: any = ObjectUtil.cloneObject(state);
+        cloned.view = view;
+        return cloned;
+    }
+
+
+    export function setMode(state: ResourcesState, mode: 'map' | 'list'): ResourcesState {
+
+        const cloned: any = ObjectUtil.cloneObject(state);
+        cloned.mode = mode;
+        return cloned;
     }
 
 

@@ -467,7 +467,7 @@ export function main() {
             await viewFacade.selectView('project');
             expect(viewFacade.getSelectedDocument()).toBeUndefined();
             await viewFacade.selectView('excavation');
-            expect(viewFacade.getSelectedDocument()).toBe(featureDocument2);
+            expect(viewFacade.getSelectedDocument().resource.id).toBe(featureDocument2.resource.id);
         });
 
 
@@ -481,7 +481,7 @@ export function main() {
             await viewFacade.selectView('excavation');
             await viewFacade.selectOperationTypeDocument(trenchDocument1); // ... with this deleting the selection
 
-            expect(viewFacade.getSelectedDocument()).toBe(featureDocument2);
+            expect(viewFacade.getSelectedDocument().resource.id).toBe(featureDocument2.resource.id);
         });
 
 

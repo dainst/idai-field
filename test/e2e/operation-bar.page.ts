@@ -6,7 +6,7 @@ const common = require('./common');
 /**
  * @author Daniel de Oliveira
  */
-export class TaskbarPage {
+export class OperationBarPage {
 
     public static clickSwitchHierarchyMode() {
 

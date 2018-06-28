@@ -2,7 +2,7 @@ import {browser, by, element, protractor} from 'protractor';
 import {ImportPage} from './import.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {NavbarPage} from '../navbar.page';
-import {TaskbarPage} from '../taskbar.page';
+import {OperationBarPage} from '../operation-bar.page';
 
 const common = require('../common.js');
 const delays = require('../config/delays');
@@ -69,7 +69,7 @@ describe('import --', function() {
         importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToExcavation();
-        TaskbarPage.performSelectOperation(0);
+        OperationBarPage.performSelectOperation(0);
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);

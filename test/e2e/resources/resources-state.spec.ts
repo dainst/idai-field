@@ -9,7 +9,7 @@ import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {RelationsViewPage} from '../widgets/relations-view.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
-import {TaskbarPage} from '../taskbar.page';
+import {OperationBarPage} from '../operation-bar.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -303,9 +303,9 @@ describe('resources/state --', function() {
 
         ResourcesPage.performCreateResource('befund1', 'feature-architecture');
 
-        TaskbarPage.performSelectOperation(1);
+        OperationBarPage.performSelectOperation(1);
 
-        TaskbarPage.performSelectOperation(0); // trench2
+        OperationBarPage.performSelectOperation(0); // trench2
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 
         NavbarPage.clickNavigateToProject();
@@ -438,7 +438,7 @@ describe('resources/state --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
         ResourcesPage.clickMoveIntoButton('SI0');
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('testf1'));
-        TaskbarPage.clickSwitchHierarchyMode();
+        OperationBarPage.clickSwitchHierarchyMode();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('testf1'));
     });
@@ -447,8 +447,8 @@ describe('resources/state --', function() {
     it('navpath/hierarchy - select all ', () => {
 
         NavbarPage.clickNavigateToExcavation();
-        TaskbarPage.clickSwitchHierarchyMode();
-        TaskbarPage.performSelectOperation(0);
+        OperationBarPage.clickSwitchHierarchyMode();
+        OperationBarPage.performSelectOperation(0);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('SI1'));
     });
@@ -483,9 +483,9 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('b2', 'building');
 
         NavbarPage.clickNavigateToBuilding();
-        TaskbarPage.performSelectOperation(0); // building2
+        OperationBarPage.performSelectOperation(0); // building2
         ResourcesPage.performCreateResource('a1', 'feature-architecture');
-        TaskbarPage.performSelectOperation(1); // building1
+        OperationBarPage.performSelectOperation(1); // building1
         ResourcesPage.performCreateResource('f1', 'feature-floor');
         ResourcesPage.performCreateRelation('f1', 'a1', 5);
 

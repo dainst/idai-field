@@ -134,7 +134,7 @@ export const DOCS: NewDocument[] = [
             "shortDescription": "Testfund",
             "relations": {
                 "isRecordedIn": [ "t1" ],
-                "liesWithin": [ "c1" ]
+                "liesWithin": [ "si0" ]
             },
             "geometry": {
                 "type": "Point",

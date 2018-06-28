@@ -78,9 +78,9 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.moveInto(featureDocument1);
 
-        expect(resourcesStateManager.getNavigationPath().selectedSegmentId).toEqual(featureDocument1.resource.id);
-        expect(resourcesStateManager.getNavigationPath().segments.length).toEqual(1);
-        expect(resourcesStateManager.getNavigationPath().segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).selectedSegmentId).toEqual(featureDocument1.resource.id);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments.length).toEqual(1);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
 
         done();
     });
@@ -112,9 +112,9 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.updateNavigationPathForDocument(findDocument2);
 
-        expect(resourcesStateManager.getNavigationPath().selectedSegmentId).toEqual(featureDocument2.resource.id);
-        expect(resourcesStateManager.getNavigationPath().segments.length).toEqual(1);
-        expect(resourcesStateManager.getNavigationPath().segments[0].document.resource.id).toEqual(featureDocument2.resource.id);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).selectedSegmentId).toEqual(featureDocument2.resource.id);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments.length).toEqual(1);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments[0].document.resource.id).toEqual(featureDocument2.resource.id);
 
         done();
     });
@@ -140,10 +140,10 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.updateNavigationPathForDocument(featureDocument1);
 
-        expect(resourcesStateManager.getNavigationPath().selectedSegmentId).toEqual(undefined);
-        expect(resourcesStateManager.getNavigationPath().segments.length).toEqual(2);
-        expect(resourcesStateManager.getNavigationPath().segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
-        expect(resourcesStateManager.getNavigationPath().segments[1].document.resource.id).toEqual(findDocument1.resource.id);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).selectedSegmentId).toEqual(undefined);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments.length).toEqual(2);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments[1].document.resource.id).toEqual(findDocument1.resource.id);
 
         done();
     });
@@ -161,9 +161,9 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.moveInto(featureDocument1);
 
-        expect(resourcesStateManager.getNavigationPath().selectedSegmentId).toEqual(featureDocument1.resource.id);
-        expect(resourcesStateManager.getNavigationPath().segments.length).toEqual(1);
-        expect(resourcesStateManager.getNavigationPath().segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).selectedSegmentId).toEqual(featureDocument1.resource.id);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments.length).toEqual(1);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
 
         done();
     });
@@ -182,9 +182,9 @@ describe('ResourcesStateManager', () => {
         await resourcesStateManager.moveInto(featureDocument1);
         await resourcesStateManager.moveInto(undefined);
 
-        expect(resourcesStateManager.getNavigationPath().selectedSegmentId).toEqual(undefined);
-        expect(resourcesStateManager.getNavigationPath().segments.length).toEqual(1);
-        expect(resourcesStateManager.getNavigationPath().segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).selectedSegmentId).toEqual(undefined);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments.length).toEqual(1);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
 
         done();
     });
@@ -211,9 +211,9 @@ describe('ResourcesStateManager', () => {
 
         await resourcesStateManager.moveInto(undefined);
 
-        expect(resourcesStateManager.getNavigationPath().selectedSegmentId).toEqual(undefined);
-        expect(resourcesStateManager.getNavigationPath().segments.length).toEqual(1);
-        expect(resourcesStateManager.getNavigationPath().segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).selectedSegmentId).toEqual(undefined);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments.length).toEqual(1);
+        expect(ResourcesState.getNavPath(resourcesStateManager.get()).segments[0].document.resource.id).toEqual(featureDocument1.resource.id);
 
         done();
     });

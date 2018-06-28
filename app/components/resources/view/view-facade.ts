@@ -116,7 +116,7 @@ export class ViewFacade {
 
         return this.isInOverview()
             ? NavigationPath.empty()
-            : this.resourcesStateManager.getNavigationPath();
+            : ResourcesState.getNavPath(this.resourcesStateManager.get());
     }
 
 

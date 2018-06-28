@@ -81,11 +81,11 @@ export class ViewFacade {
 
     public remove = (document: Document) => this.documentsManager.removeFromDocuments(document);
 
-    public getQueryString = () => this.resourcesStateManager.getQueryString();
+    public getSearchString = () => this.resourcesStateManager.getQueryString();
 
     public setSearchString = (q: string) => this.documentsManager.setQueryString(q);
 
-    public setTypeFilters = (types: string[]) => this.documentsManager.setTypeFilters(types);
+    public setFilterTypes = (types: string[]) => this.documentsManager.setTypeFilters(types);
 
     public moveInto = (document: IdaiFieldDocument|undefined) => this.documentsManager.moveInto(document);
 

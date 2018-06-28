@@ -171,7 +171,7 @@ export function main() {
         it('context -- keep filter when switching views', async done => {
 
             await viewFacade.selectView('excavation');
-            viewFacade.setTypeFilters(['Feature']);
+            viewFacade.setFilterTypes(['Feature']);
             await viewFacade.selectView('project');
             expect(viewFacade.getFilterTypes()).toEqual([]);
             await viewFacade.selectView('excavation');
@@ -183,11 +183,47 @@ export function main() {
         it('context -- keep filter when move into', async done => {
 
             await viewFacade.selectView('excavation');
-            viewFacade.setTypeFilters(['Feature']);
+            viewFacade.setFilterTypes(['Feature']);
             await viewFacade.moveInto(featureDocument1);
             expect(viewFacade.getFilterTypes()).toEqual([]);
             await viewFacade.moveInto(undefined);
             expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
+            done();
+        });
+
+
+        it('context -- keep query string when switching views', async done => {
+
+            await viewFacade.selectView('excavation');
+            viewFacade.setSearchString('abc');
+            await viewFacade.selectView('project');
+            expect(viewFacade.getSearchString()).toEqual('');
+            await viewFacade.selectView('excavation');
+            expect(viewFacade.getSearchString()).toEqual('abc');
+            done();
+        });
+
+
+        it('context -- keep query string when move into', async done => {
+
+            await viewFacade.selectView('excavation');
+            viewFacade.setSearchString('abc');
+            await viewFacade.moveInto(featureDocument1);
+            expect(viewFacade.getSearchString()).toEqual('');
+            await viewFacade.moveInto(undefined);
+            expect(viewFacade.getSearchString()).toEqual('abc');
+            done();
+        });
+
+
+        it('context -- keep query string on switching mode', async done => {
+
+            await viewFacade.selectView('excavation');
+            viewFacade.setSearchString('abc');
+            viewFacade.setMode('list');
+            expect(viewFacade.getSearchString()).toEqual('abc');
+            viewFacade.setMode('map');
+            expect(viewFacade.getSearchString()).toEqual('abc');
             done();
         });
 
@@ -293,7 +329,7 @@ export function main() {
             await viewFacade.selectView('excavation');
             await viewFacade.setSearchString('feature1');
             await viewFacade.setSelectedDocument(featureDocument2);
-            expect(viewFacade.getQueryString()).toEqual('');
+            expect(viewFacade.getSearchString()).toEqual('');
             expect(viewFacade.getDocuments().length).toBe(2);
             done();
         });
@@ -304,7 +340,7 @@ export function main() {
             await viewFacade.selectView('excavation');
             await viewFacade.setSearchString('feature1');
             await viewFacade.setSelectedDocument(featureDocument1);
-            expect(viewFacade.getQueryString()).toEqual('feature1');
+            expect(viewFacade.getSearchString()).toEqual('feature1');
             expect(viewFacade.getDocuments().length).toBe(1);
             done();
         });

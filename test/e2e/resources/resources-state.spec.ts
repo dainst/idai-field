@@ -468,52 +468,6 @@ describe('resources/state --', function() {
     });
 
 
-    it('restore search bar input field after switching views', () => {
-
-        SearchBarPage.typeInSearchField('xyz');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
-
-        NavbarPage.clickNavigateToExcavation();
-        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-        SearchBarPage.typeInSearchField('abc');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-
-        NavbarPage.clickNavigateToProject();
-        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('xyz'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
-        SearchBarPage.typeInSearchField(' ');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
-
-        NavbarPage.clickNavigateToExcavation();
-        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('abc'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-    });
-
-
-    it('keep query string in search bar input field on switching view modes', () => {
-
-        NavbarPage.clickNavigateToExcavation();
-        SearchBarPage.typeInSearchField('context_');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-
-        ResourcesPage.clickListModeButton();
-        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('context_'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-
-        ResourcesPage.clickMapModeButton();
-        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('context_'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-
-        SearchBarPage.typeInSearchField(' ');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-
-        ResourcesPage.clickListModeButton();
-        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(' '));
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-    });
-
-
     it('keep type filter on switching view modes', () => {
 
         NavbarPage.clickNavigateToExcavation();

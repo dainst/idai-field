@@ -64,7 +64,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setQueryString = (q: string) => this.viewFacade.setSearchString(q);
 
-    public getQueryString = () => this.viewFacade.getQueryString();
+    public getQueryString = () => this.viewFacade.getSearchString();
 
     public getTypeFilters = () => this.viewFacade.getFilterTypes();
 
@@ -72,7 +72,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setScrollTarget = (doc: IdaiFieldDocument|undefined) => this.scrollTarget = doc;
 
-    public setTypeFilters = (types: string[]|undefined) => this.viewFacade.setTypeFilters(types ? types : []);
+    public setTypeFilters = (types: string[]|undefined) => this.viewFacade.setFilterTypes(types ? types : []);
 
 
     public getSelectedOperationTypeDocument() {

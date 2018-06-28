@@ -168,7 +168,25 @@ export function main() {
         });
 
 
-        it('context -- keep filter when switching views', async done => {
+        it('search -- show only resources of the selected type', async done => {
+
+            const findDocument3 = Static.ifDoc('Find 3','find3','Find', 'find3');
+            findDocument3.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
+            await idaiFieldDocumentDatastore.create(findDocument3, 'u');
+
+            await viewFacade.selectView('excavation');
+            expect(viewFacade.getDocuments().map(_ => _.resource.id)).toContain('feature1');
+            expect(viewFacade.getDocuments().map(_ => _.resource.id)).toContain('feature2');
+            expect(viewFacade.getDocuments().map(_ => _.resource.id)).toContain('find3');
+
+            await viewFacade.setFilterTypes(['Find']);
+            expect(viewFacade.getDocuments().length).toBe(1);
+            expect(viewFacade.getDocuments()[0].resource.id).toEqual('find3');
+            done();
+        });
+
+
+        it('ViewContext -- keep filter when switching views', async done => {
 
             await viewFacade.selectView('excavation');
             viewFacade.setFilterTypes(['Feature']);
@@ -180,7 +198,7 @@ export function main() {
         });
 
 
-        it('context -- keep filter when move into', async done => {
+        it('ViewContext -- keep filter when move into', async done => {
 
             await viewFacade.selectView('excavation');
             viewFacade.setFilterTypes(['Feature']);

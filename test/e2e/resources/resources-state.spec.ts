@@ -135,21 +135,6 @@ describe('resources/state --', function() {
     });
 
 
-    it('search -- show only resources of the selected type', () => {
-
-        NavbarPage.clickNavigateToExcavation();
-
-        ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.performCreateResource('2', 'feature-floor');
-        SearchBarPage.clickChooseTypeFilter('feature-floor');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-        SearchBarPage.clickChooseTypeFilter('feature-architecture');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('1')), delays.ECWaitTime);
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('2')), delays.ECWaitTime);
-    });
-
-
     it('search -- show correct types in plus type menu after choosing type filter', () => {
 
         NavbarPage.clickNavigateToExcavation();

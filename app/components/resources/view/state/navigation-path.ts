@@ -118,7 +118,7 @@ export module NavigationPath {
     }
 
 
-    export function getQuerySring(navPath: NavigationPath, displayHierarchy: boolean) {
+    export function getQueryString(navPath: NavigationPath, displayHierarchy: boolean) {
 
         return getViewContext(navPath, displayHierarchy).q;
     }

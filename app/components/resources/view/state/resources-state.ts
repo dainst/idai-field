@@ -21,7 +21,7 @@ export module ResourcesState {
 
     export function getQueryString(state: ResourcesState) {
 
-        return NavigationPath.getQuerySring(getNavigationPath(state), getDisplayHierarchy(state));
+        return NavigationPath.getQueryString(getNavigationPath(state), getDisplayHierarchy(state));
     }
 
 

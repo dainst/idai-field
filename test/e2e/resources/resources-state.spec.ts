@@ -328,25 +328,10 @@ describe('resources/state --', function() {
     });
 
 
-    it('switch views after click on arrow in project-view list for jumping to mainType-view', () => {
-
-        ResourcesPage.performCreateResource('b1', 'building');
-        NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.performCreateResource('a1', 'feature-architecture');
+    it('jump from operation overview to view via move into button', () => {
 
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performCreateResource('f1', 'feature-floor');
 
-        NavbarPage.clickNavigateToProject();
-        ResourcesPage.clickMoveIntoButton('b1');
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahmen'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
-        
-        NavbarPage.clickNavigateToProject();
-        ResourcesPage.clickMoveIntoButton('trench1');
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Schnitte'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
-        //
         NavbarPage.clickNavigateToProject();
         ResourcesPage.performCreateResource('t2', 'trench');
         ResourcesPage.clickMoveIntoButton('t2');

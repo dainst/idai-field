@@ -12,36 +12,43 @@ export class NavbarPage {
         return common.click(element.all(by.css('.nav-link')).get(0));
     }
 
+
     public static clickNavigateToExcavation() {
 
         return common.click(element.all(by.css('.nav-link')).get(2));
     };
+
 
     public static clickNavigateToBuilding() {
 
         return common.click(element.all(by.css('.nav-link')).get(3));
     };
 
+
     public static clickNavigateToImages() {
 
         return common.click(element.all(by.css('.nav-link')).get(6));
     };
+
 
     public static clickConflictsButton() {
 
         return common.click(element(by.id('taskbar-conflicts-button')));
     };
 
+
     public static clickConflictResolverLink(identifier) {
 
         return common.click(element(by.id('taskbar-conflict-' + identifier)));
     };
+
 
     public static clickSelectProject = function(option) {
 
         browser.wait(EC.presenceOf(element(by.id('projectSelectBox'))), delays.ECWaitTime);
         element.all(by.css('#projectSelectBox option')).get(option).click();
     };
+
 
     public static clickCloseAllMessages() {
 
@@ -52,6 +59,7 @@ export class NavbarPage {
             }
         })
     };
+
 
     // await
 

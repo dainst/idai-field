@@ -1,7 +1,7 @@
 <div id="navigation" class="row">
 
     <div *ngIf="!viewFacade.isInOverview() && viewFacade.getSelectedOperationTypeDocument()" class="btn-group">
-        <div class="btn btn-outline-primary" (click)="toggleDisplayHierarchy()">
+        <div id="hierarchy-mode-switch" class="btn btn-outline-primary" (click)="toggleDisplayHierarchy()">
             <span *ngIf="viewFacade.getDisplayHierarchy()" class="mdi mdi-file-tree"></span>
             <span *ngIf="!viewFacade.getDisplayHierarchy()" class="mdi mdi-view-sequential"></span>
         </div>

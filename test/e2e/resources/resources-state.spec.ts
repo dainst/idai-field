@@ -9,6 +9,7 @@ import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {RelationsViewPage} from '../widgets/relations-view.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
+import {TaskbarPage} from '../taskbar.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -302,9 +303,9 @@ describe('resources/state --', function() {
 
         ResourcesPage.performCreateResource('befund1', 'feature-architecture');
 
-        ResourcesPage.performSelectOperation(1);
+        TaskbarPage.performSelectOperation(1);
 
-        ResourcesPage.performSelectOperation(0); // trench2
+        TaskbarPage.performSelectOperation(0); // trench2
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 
         NavbarPage.clickNavigateToProject();
@@ -336,28 +337,6 @@ describe('resources/state --', function() {
         clickDepictsRelationLink();
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
-    });
-
-
-    // xitted because currently there is no relation which allows to jump between views
-    xit('switch views after click on relation link', () => {
-
-        ResourcesPage.performCreateResource('b1', 'building');
-
-        NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.performCreateResource('a1', 'feature-architecture');
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performCreateResource('floor1', 'feature-floor');
-        ResourcesPage.performCreateRelation('floor1', 'a1', 5);
-
-        RelationsViewPage.clickRelation(0);
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahmen'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
-
-        RelationsViewPage.clickRelation(0);
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Schnitte'));
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
     });
 
 
@@ -395,9 +374,9 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('b2', 'building');
 
         NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.performSelectOperation(0); // building2
+        TaskbarPage.performSelectOperation(0); // building2
         ResourcesPage.performCreateResource('a1', 'feature-architecture');
-        ResourcesPage.performSelectOperation(1); // building1
+        TaskbarPage.performSelectOperation(1); // building1
         ResourcesPage.performCreateResource('f1', 'feature-floor');
         ResourcesPage.performCreateRelation('f1', 'a1', 5);
 
@@ -411,7 +390,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('show correct navigation path after click on relation link', () => {
+    it('navpath -- show correct navigation path after click on relation link', () => {
 
         NavbarPage.clickNavigateToExcavation();
 
@@ -431,7 +410,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('update navigation path after changing liesWithin relation', () => {
+    it('navpath -- update navigation path after changing liesWithin relation', () => {
 
         NavbarPage.clickNavigateToExcavation();
 
@@ -455,7 +434,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('update navigation path after deleting resource', () => {
+    it('navpath -- update navigation path after deleting resource', () => {
 
         NavbarPage.clickNavigateToExcavation();
 
@@ -475,6 +454,28 @@ describe('resources/state --', function() {
     });
 
 
+    it('navpath/hierarchy - switch between modes', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+        ResourcesPage.clickMoveIntoButton('context1');
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('testf1'));
+        TaskbarPage.clickSwitchHierarchyMode();
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('testf1'));
+    });
+
+
+    it('navpath/hierarchy - select all ', () => {
+
+        NavbarPage.clickNavigateToExcavation();
+        TaskbarPage.clickSwitchHierarchyMode();
+        TaskbarPage.performSelectOperation(0);
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('SI1'));
+    });
+
 
     it('autoselect last selected main type document on switching views', () => {
 
@@ -484,12 +485,12 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('t2'));
-        ResourcesPage.performSelectOperation(1);
+        TaskbarPage.performSelectOperation(1);
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
 
         NavbarPage.clickNavigateToBuilding();
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
-        ResourcesPage.performSelectOperation(1);
+        TaskbarPage.performSelectOperation(1);
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b2'));
 
         NavbarPage.clickNavigateToExcavation();
@@ -612,5 +613,27 @@ describe('resources/state --', function() {
         ResourcesPage.clickListModeButton();
         browser.wait(EC.stalenessOf(SearchBarPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
+    });
+
+
+    // xitted because currently there is no relation which allows to jump between views
+    xit('switch views after click on relation link', () => {
+
+        ResourcesPage.performCreateResource('b1', 'building');
+
+        NavbarPage.clickNavigateToBuilding();
+        ResourcesPage.performCreateResource('a1', 'feature-architecture');
+
+        NavbarPage.clickNavigateToExcavation();
+        ResourcesPage.performCreateResource('floor1', 'feature-floor');
+        ResourcesPage.performCreateRelation('floor1', 'a1', 5);
+
+        RelationsViewPage.clickRelation(0);
+        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Bauaufnahmen'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
+
+        RelationsViewPage.clickRelation(0);
+        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Schnitte'));
+        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
     });
 });

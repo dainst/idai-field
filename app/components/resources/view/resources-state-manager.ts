@@ -187,7 +187,7 @@ export class ResourcesStateManager {
 
     private serialize() {
 
-        this.serializer.store(ResourcesState.createObjectToSerialize(this.resourcesState));
+        this.serializer.store(ResourcesStateManager.createObjectToSerialize(this.resourcesState));
     }
 
 
@@ -203,5 +203,20 @@ export class ResourcesStateManager {
         }
 
         return resourcesViewStates;
+    }
+
+
+    private static createObjectToSerialize(state: ResourcesState) : { [viewName: string]: ViewState } {
+
+        const objectToSerialize: { [viewName: string]: ViewState } = {};
+
+        for (let viewName of Object.keys(state.viewStates)) {
+            objectToSerialize[viewName] = {} as any;
+            if (ResourcesState.getLayerIds(state)) {
+                objectToSerialize[viewName].layerIds = ResourcesState.getLayerIds(state);
+            }
+        }
+
+        return objectToSerialize;
     }
 }

@@ -1,5 +1,5 @@
 // use higher values to slow down tests for debugging
-var promisesDelay = 30;
+var promisesDelay = 0;
 
 function delayPromises(milliseconds) {
     var executeFunction = browser.driver.controlFlow().execute;

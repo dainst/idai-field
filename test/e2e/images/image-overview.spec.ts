@@ -15,7 +15,7 @@ describe('images --', function() {
 
 
     const resourceId1 = 'tf1';
-    const resourceId2 = 'c1';
+    const resourceId2 = 'si0';
 
     function createTwo() {
 
@@ -175,7 +175,7 @@ describe('images --', function() {
     });
 
 
-    it('link -- link two images to a resource', () => {
+    it('link -- link one image to two resources', () => {
 
         createTwo();
         expectLinkBadgePresence(true, 2);

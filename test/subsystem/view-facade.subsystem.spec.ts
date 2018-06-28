@@ -192,6 +192,18 @@ export function main() {
         });
 
 
+        it('context -- keep filter on switching mode', async done => {
+
+            await viewFacade.selectView('excavation');
+            viewFacade.setFilterTypes(['Feature']);
+            viewFacade.setMode('list');
+            expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
+            viewFacade.setMode('map');
+            expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
+            done();
+        });
+
+
         it('context -- keep query string when switching views', async done => {
 
             await viewFacade.selectView('excavation');

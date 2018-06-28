@@ -468,34 +468,6 @@ describe('resources/state --', function() {
     });
 
 
-    it('keep type filter on switching view modes', () => {
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performCreateResource('f2', 'find');
-
-        SearchBarPage.clickChooseTypeFilter('feature');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-
-        ResourcesPage.clickListModeButton();
-        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('S'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-
-        ResourcesPage.clickMapModeButton();
-        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('S'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-
-        SearchBarPage.clickChooseTypeFilter('all');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
-
-        ResourcesPage.clickListModeButton();
-        browser.wait(EC.stalenessOf(SearchBarPage.getSelectedTypeFilterButton()), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
-    });
-
-
     // xitted because currently there is no relation which allows to jump between views
     xit('switch views after click on relation link', () => {
 

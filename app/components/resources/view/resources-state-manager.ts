@@ -59,7 +59,7 @@ export class ResourcesStateManager {
         .concat(this.additionalOverviewTypeNames);
 
 
-    public get = () => this._;
+    public get = () => this._; // TODO return copy
 
     public resetForE2E = () => this._ = ResourcesState.makeDefaults();
 

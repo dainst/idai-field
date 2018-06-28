@@ -74,7 +74,7 @@ describe('project --', function() {
         browser.sleep(delays.shortRest * 15);
         NavbarPage.clickNavigateToExcavation();
         browser.sleep(delays.shortRest * 5);
-        SearchBarPage.typeInSearchField('con');
+        SearchBarPage.typeInSearchField('SI');
         browser.sleep(delays.shortRest * 5);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));

@@ -89,11 +89,9 @@ describe('resources/state --', function() {
 
         OperationBarPage.performSelectOperation(1);
 
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI1')), delays.ECWaitTime);
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI2')), delays.ECWaitTime);
         SearchBarPage.typeInSearchField('SI1');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI2')), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI1')), delays.ECWaitTime);
     });
 
 
@@ -102,15 +100,11 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.clickListModeButton();
 
-        ResourcesPage.performCreateResourceInList('testf2', 'find');
+        OperationBarPage.performSelectOperation(1);
 
-        SearchBarPage.clickChooseTypeFilter('find');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf2')), delays.ECWaitTime);
-
-        SearchBarPage.clickChooseTypeFilter('processunit');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf2')), delays.ECWaitTime);
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI2')), delays.ECWaitTime);
+        SearchBarPage.clickChooseTypeFilter('feature-architecture');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI2')), delays.ECWaitTime);
     });
 
 

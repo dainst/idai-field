@@ -40,6 +40,16 @@ export class ResourcesStateManager {
     ) {}
 
 
+    /**
+     * Clients can get the latest ResourcesState with this method.
+     * Its fields are readonly and the ResourcesState's companion module's
+     * setter methods return always copies. So the only way to modify
+     * the resources state is via the setters of ResourcesStateManager,
+     * which replace the whole resourcesState in a proper transformation
+     * on every change.
+     *
+     * @return {ResourcesState}
+     */
     public get = () => this.resourcesState;
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();

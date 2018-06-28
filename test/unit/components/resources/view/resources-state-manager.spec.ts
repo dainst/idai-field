@@ -3,6 +3,7 @@ import {Static} from '../../../static';
 import {ResourcesStateManager} from '../../../../../app/components/resources/view/resources-state-manager';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {Query} from 'idai-components-2/core';
+import {ResourcesState} from '../../../../../app/components/resources/view/state/resources-state';
 
 /**
  * @author Daniel de Oliveira
@@ -240,12 +241,12 @@ describe('ResourcesStateManager', () => {
         resourcesStateManager.setQueryString('abc');
 
         resourcesStateManager.initialize('survey');
-        expect(resourcesStateManager.getTypeFilters()).toEqual([]);
-        expect(resourcesStateManager.getQueryString()).toEqual('');
+        expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual([]);
+        expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
         resourcesStateManager.initialize('excavation');
 
-        expect(resourcesStateManager.getTypeFilters()).toEqual(['Find']);
-        expect(resourcesStateManager.getQueryString()).toEqual('abc');
+        expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(['Find']);
+        expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('abc');
     });
 
 
@@ -269,8 +270,8 @@ describe('ResourcesStateManager', () => {
         });
         resourcesStateManager.setTypeFilters(undefined);
         resourcesStateManager.setQueryString('');
-        expect(resourcesStateManager.getTypeFilters()).toEqual(undefined);
-        expect(resourcesStateManager.getQueryString()).toEqual('');
+        expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(undefined);
+        expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
     });
 
 
@@ -291,7 +292,7 @@ describe('ResourcesStateManager', () => {
         });
         resourcesStateManager.setTypeFilters(undefined);
         resourcesStateManager.setQueryString('');
-        expect(resourcesStateManager.getTypeFilters()).toEqual(undefined);
-        expect(resourcesStateManager.getQueryString()).toEqual('');
+        expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(undefined);
+        expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
     });
 });

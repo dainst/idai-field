@@ -11,6 +11,7 @@ import {hasEqualId, hasId} from '../../../core/model/model-util';
 import {subtract, unique} from 'tsfun';
 import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../../core/datastore/core/cached-read-datastore';
+import {ResourcesState} from './state/resources-state';
 
 
 /**
@@ -44,7 +45,7 @@ export class DocumentsManager {
 
     public getDocuments = () => this.documents;
 
-    public getSelectedDocument = () => this.resourcesStateManager.getSelectedDocument();
+    public getSelectedDocument = () => ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
 
     public getTotalDocumentCount = () => this.totalDocumentCount;
 
@@ -100,7 +101,7 @@ export class DocumentsManager {
 
     public deselect() {
 
-        if (this.resourcesStateManager.getSelectedDocument()) {
+        if (ResourcesState.getSelectedDocument(this.resourcesStateManager.get())) {
 
             this.selectAndNotify(undefined);
             this.documents = this.documents.filter(hasId);
@@ -141,9 +142,9 @@ export class DocumentsManager {
 
     private selectAndNotify(document: IdaiFieldDocument|undefined) {
 
-        if (this.resourcesStateManager.getSelectedDocument()) {
+        if (ResourcesState.getSelectedDocument(this.resourcesStateManager.get())) {
             ObserverUtil.notify(this.deselectionObservers,
-                this.resourcesStateManager.getSelectedDocument() as Document|undefined);
+                ResourcesState.getSelectedDocument(this.resourcesStateManager.get()) as Document|undefined);
         }
         this.resourcesStateManager.setSelectedDocument(document);
     }
@@ -152,7 +153,7 @@ export class DocumentsManager {
     private async populateAndDeselectIfNecessary() {
 
         await this.populateDocumentList();
-        if (!this.documents.find(hasEqualId(this.resourcesStateManager.getSelectedDocument()))) this.deselect();
+        if (!this.documents.find(hasEqualId(ResourcesState.getSelectedDocument(this.resourcesStateManager.get())))) this.deselect();
     }
 
 
@@ -238,10 +239,10 @@ export class DocumentsManager {
     private makeDocsQuery(mainTypeDocumentResourceId: string|undefined): Query {
 
         const q: Query = {
-            q: this.resourcesStateManager.getQueryString(),
+            q: ResourcesState.getQueryString(this.resourcesStateManager.get()),
             constraints: this.makeConstraints(mainTypeDocumentResourceId),
-            types: (this.resourcesStateManager.getTypeFilters().length > 0)
-                ? this.resourcesStateManager.getTypeFilters()
+            types: (ResourcesState.getTypeFilters(this.resourcesStateManager.get()).length > 0)
+                ? ResourcesState.getTypeFilters(this.resourcesStateManager.get())
                 : undefined
         };
 

@@ -7,6 +7,7 @@ import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-s
 import {Loading} from '../../../widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
 import {NavigationPath} from './state/navigation-path';
+import {ResourcesState} from './state/resources-state';
 
 /**
  * Manages an overview of operation type resources
@@ -52,7 +53,7 @@ export class ViewFacade {
 
     public addNewDocument = (document: IdaiFieldDocument) => this.documentsManager.addNewDocument(document);
 
-    public getCurrentViewName = () => this.resourcesStateManager.getView();
+    public getCurrentViewName = () => this.resourcesStateManager.get().view;
 
     public isInOverview = () => this.resourcesStateManager.isInOverview();
 
@@ -60,7 +61,7 @@ export class ViewFacade {
 
     public getMode = () => this.resourcesStateManager.getMode();
 
-    public getFilterTypes = () => this.resourcesStateManager.getTypeFilters();
+    public getFilterTypes = () => ResourcesState.getTypeFilters(this.resourcesStateManager.get());
 
     public getDocuments = () => this.documentsManager.getDocuments();
 
@@ -70,7 +71,7 @@ export class ViewFacade {
 
     public getActiveDocumentViewTab = () => this.resourcesStateManager.getActiveDocumentViewTab();
 
-    public getActiveLayersIds = () => this.resourcesStateManager.getActiveLayersIds();
+    public getActiveLayersIds = () => ResourcesState.getActiveLayersIds(this.resourcesStateManager.get());
 
     public deselect = () => this.documentsManager.deselect();
 
@@ -82,7 +83,7 @@ export class ViewFacade {
 
     public remove = (document: Document) => this.documentsManager.removeFromDocuments(document);
 
-    public getSearchString = () => this.resourcesStateManager.getQueryString();
+    public getSearchString = () => ResourcesState.getQueryString(this.resourcesStateManager.get());
 
     public setSearchString = (q: string) => this.documentsManager.setQueryString(q);
 
@@ -130,7 +131,7 @@ export class ViewFacade {
     public getOperationTypeLabel(): string {
 
         if (this.isInOverview()) throw ViewFacade.err('getOperationTypeLabel');
-        return this.resourcesStateManager.getLabelForName(this.resourcesStateManager.getView()) as string; // cast ok, we are not in overview
+        return this.resourcesStateManager.getLabelForName(this.resourcesStateManager.get().view) as string; // cast ok, we are not in overview
     }
 
 
@@ -180,7 +181,7 @@ export class ViewFacade {
 
     public getCurrentFilterType()  {
 
-        const filterTypes = this.resourcesStateManager.getTypeFilters();
+        const filterTypes = ResourcesState.getTypeFilters(this.resourcesStateManager.get());
         return filterTypes && filterTypes.length > 0 ? filterTypes[0] : undefined;
     }
 

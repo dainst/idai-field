@@ -53,17 +53,16 @@ export class ResourcesStateManager {
         .map(_ => _.operationSubtype)
         .concat(this.additionalOverviewTypeNames);
 
-    public setState = (state: ResourcesState) => this._ = state;
+
+    public get = () => this._;
 
     public resetForE2E = () => this._ = ResourcesState.makeDefaults();
 
     public getActiveDocumentViewTab = () => this._.activeDocumentViewTab;
 
-    public getViewType = () => this.isInOverview() ? 'Project' : this.getOperationSubtypeForViewName(this.getView());
+    public getViewType = () => this.isInOverview() ? 'Project' : this.getOperationSubtypeForViewName(this._.view);
 
-    public isInOverview = () => this.getView() === 'project';
-
-    public getView = () => this._.view;
+    public isInOverview = () => this._.view === 'project';
 
     public getViews = () => this.views.get();
 
@@ -87,19 +86,14 @@ export class ResourcesStateManager {
 
     public getBypassOperationTypeSelection = () => ResourcesState.getBypassOperationTypeSelection(this._);
 
-    public getQueryString = (): string => ResourcesState.getQueryString(this._);
-
-    public getTypeFilters = (): string[] => ResourcesState.getTypeFilters(this._);
-
-    public getSelectedDocument = (): IdaiFieldDocument|undefined => ResourcesState.getSelectedDocument(this._);
-
     public setSelectedDocument = (document: IdaiFieldDocument|undefined) => this._ = ResourcesState.setSelectedDocument(this._, document);
 
     public setQueryString = (q: string) => this._ = ResourcesState.setQueryString(this._, q);
 
     public setTypeFilters = (types: string[]) => this._ = ResourcesState.setTypeFilters(this._, types);
 
-    public getActiveLayersIds = (): string[] => ResourcesState.getActiveLayersIds(this._);
+    public getNavigationPath = (): NavigationPath => ResourcesState.getNavPath(this._);
+
 
     public navigationPathNotifications = (): Observable<NavigationPath> =>
         ObserverUtil.register(this.navigationPathObservers);
@@ -107,14 +101,14 @@ export class ResourcesStateManager {
 
     public setDisplayHierarchy(displayHierarchy: boolean) {
 
-        this.getViewState().displayHierarchy = displayHierarchy;
+        this._ = ResourcesState.setDisplayHierarchy(this._, displayHierarchy);
         this.notifyNavigationPathObservers();
     }
 
 
     public setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
 
-        this.getViewState().bypassOperationTypeSelection = bypassOperationTypeSelection;
+        this._ = ResourcesState.setBypassOperationTypeSelection(this._, bypassOperationTypeSelection);
         this.notifyNavigationPathObservers();
     }
 
@@ -133,17 +127,6 @@ export class ResourcesStateManager {
 
         delete this.getViewState().layerIds[mainTypeDocumentResourceId];
         this.serialize();
-    }
-
-
-    public getNavigationPath(): NavigationPath {
-
-        const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
-        if (!mainTypeDocumentResourceId) return NavigationPath.empty();
-
-        const path = this.getViewState().navigationPaths[mainTypeDocumentResourceId];
-
-        return path ? path : NavigationPath.empty();
     }
 
 

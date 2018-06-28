@@ -152,7 +152,7 @@ export module ResourcesState {
     }
 
 
-    function getNavPath(state: ResourcesState): NavigationPath {
+    export function getNavPath(state: ResourcesState): NavigationPath {
 
         const mainTypeDocumentResourceId = state.viewStates[state.view].mainTypeDocumentResourceId;
         if (!mainTypeDocumentResourceId) return NavigationPath.empty();
@@ -168,9 +168,25 @@ export module ResourcesState {
     }
 
 
+    export function setDisplayHierarchy(state: ResourcesState, displayHierarchy: boolean): ResourcesState {
+
+        const cloned = ObjectUtil.cloneObject(state);
+        cloned.viewStates[cloned.view].displayHierarchy = displayHierarchy;
+        return cloned;
+    }
+
+
     export function getBypassOperationTypeSelection(state: ResourcesState): boolean {
 
         return state.viewStates[state.view].bypassOperationTypeSelection;
+    }
+
+
+    export function setBypassOperationTypeSelection(state: ResourcesState, bypassOperationTypeSelection: boolean): ResourcesState {
+
+        const cloned = ObjectUtil.cloneObject(state);
+        cloned.viewStates[cloned.view].bypassOperationTypeSelection = bypassOperationTypeSelection;
+        return cloned;
     }
 }
 

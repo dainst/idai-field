@@ -1,3 +1,4 @@
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ViewState} from './view-state';
 import {ObjectUtil} from '../../../../util/object-util';
 import {NavigationPath} from './navigation-path';
@@ -16,6 +17,67 @@ export interface ResourcesState { // 'the' resources state
 
 
 export module ResourcesState {
+
+
+    export function getQueryString(state: ResourcesState) {
+
+        return NavigationPath.getQuerySring(getNavPath(state), getDisplayHierarchy(state));
+    }
+
+
+    export function getTypeFilters(state: ResourcesState) {
+
+        return NavigationPath.getTypeFilters(getNavPath(state), getDisplayHierarchy(state));
+    }
+
+
+    export function getSelectedDocument(state: ResourcesState) {
+
+        return NavigationPath.getSelectedDocument(getNavPath(state), getDisplayHierarchy(state));
+    }
+
+
+    export function setQueryString(state: ResourcesState, q: string): ResourcesState {
+
+        return updateNavigationPath(state, NavigationPath.setQueryString(getNavPath(state),
+            getDisplayHierarchy(state), q));
+    }
+
+
+    export function setTypeFilters(state: ResourcesState, types: string[]): ResourcesState {
+
+        return updateNavigationPath(state, NavigationPath.setTypeFilters(getNavPath(state),
+            getDisplayHierarchy(state), types));
+    }
+
+
+    export function setSelectedDocument(state: ResourcesState, document: IdaiFieldDocument|undefined): ResourcesState {
+
+        return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavPath(state),
+            state.viewStates[state.view].displayHierarchy, document));
+    }
+
+
+    export function setActiveLayerIds(state: ResourcesState, activeLayersIds: string[]): ResourcesState {
+
+        const cloned = ObjectUtil.cloneObject(state);
+
+        const mainTypeDocumentResourceId = cloned.viewStates[cloned.view].mainTypeDocumentResourceId;
+        if (!mainTypeDocumentResourceId) return cloned;
+
+        cloned.viewStates[cloned.view].layerIds[mainTypeDocumentResourceId] = activeLayersIds.slice(0);
+        return cloned;
+    }
+
+
+    export function getActiveLayersIds(state: ResourcesState): string[] {
+
+        const mainTypeDocumentResourceId = state.viewStates[state.view].mainTypeDocumentResourceId;
+        if (!mainTypeDocumentResourceId) return [];
+
+        const layersIds = state.viewStates[state.view].layerIds[mainTypeDocumentResourceId];
+        return layersIds ? layersIds : [];
+    }
 
 
     export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath): ResourcesState {
@@ -87,6 +149,28 @@ export module ResourcesState {
         }
 
         return objectToSerialize;
+    }
+
+
+    function getNavPath(state: ResourcesState): NavigationPath {
+
+        const mainTypeDocumentResourceId = state.viewStates[state.view].mainTypeDocumentResourceId;
+        if (!mainTypeDocumentResourceId) return NavigationPath.empty();
+
+        const path = state.viewStates[state.view].navigationPaths[mainTypeDocumentResourceId];
+        return path ? path : NavigationPath.empty();
+    }
+
+
+    export function getDisplayHierarchy(state: ResourcesState): boolean {
+
+        return state.viewStates[state.view].displayHierarchy;
+    }
+
+
+    export function getBypassOperationTypeSelection(state: ResourcesState): boolean {
+
+        return state.viewStates[state.view].bypassOperationTypeSelection;
     }
 }
 

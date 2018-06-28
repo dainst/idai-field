@@ -83,9 +83,23 @@ export class ResourcesStateManager {
 
     public setMode = (mode: 'map' | 'list') => this._.mode = mode;
 
-    public getDisplayHierarchy = (): boolean => this.getViewState().displayHierarchy;
+    public getDisplayHierarchy = (): boolean => ResourcesState.getDisplayHierarchy(this._);
 
-    public getBypassOperationTypeSelection = () => this.getViewState().bypassOperationTypeSelection;
+    public getBypassOperationTypeSelection = () => ResourcesState.getBypassOperationTypeSelection(this._);
+
+    public getQueryString = (): string => ResourcesState.getQueryString(this._);
+
+    public getTypeFilters = (): string[] => ResourcesState.getTypeFilters(this._);
+
+    public getSelectedDocument = (): IdaiFieldDocument|undefined => ResourcesState.getSelectedDocument(this._);
+
+    public setSelectedDocument = (document: IdaiFieldDocument|undefined) => this._ = ResourcesState.setSelectedDocument(this._, document);
+
+    public setQueryString = (q: string) => this._ = ResourcesState.setQueryString(this._, q);
+
+    public setTypeFilters = (types: string[]) => this._ = ResourcesState.setTypeFilters(this._, types);
+
+    public getActiveLayersIds = (): string[] => ResourcesState.getActiveLayersIds(this._);
 
     public navigationPathNotifications = (): Observable<NavigationPath> =>
         ObserverUtil.register(this.navigationPathObservers);
@@ -105,71 +119,10 @@ export class ResourcesStateManager {
     }
 
 
-    public setSelectedDocument(document: IdaiFieldDocument|undefined) {
-
-        this.setNavigationPath(
-            NavigationPath.setSelectedDocument(this.getNavigationPath(),
-                this.getDisplayHierarchy(), document)
-        );
-    }
-
-
-    public setQueryString(q: string) {
-
-        this.setNavigationPath(
-            NavigationPath.setQueryString(this.getNavigationPath(),
-                this.getDisplayHierarchy(), q)
-        );
-    }
-
-
-    public setTypeFilters(types: string[]) {
-
-        this.setNavigationPath(
-            NavigationPath.setTypeFilters(this.getNavigationPath(),
-                this.getDisplayHierarchy(), types)
-        );
-    }
-
-
-    public getSelectedDocument(): IdaiFieldDocument|undefined {
-
-        return NavigationPath.getSelectedDocument(this.getNavigationPath(),
-            this.getDisplayHierarchy());
-    }
-
-
-    public getQueryString(): string {
-
-        return NavigationPath.getQuerySring(this.getNavigationPath(),
-            this.getDisplayHierarchy());
-    }
-
-
-    public getTypeFilters(): string[] {
-
-        return NavigationPath.getTypeFilters(this.getNavigationPath(),
-            this.getDisplayHierarchy());
-    }
-
-
     public setActiveLayersIds(activeLayersIds: string[]) {
 
-        const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
-        if (!mainTypeDocumentResourceId) return;
-
-        this.getViewState().layerIds[mainTypeDocumentResourceId] = activeLayersIds.slice(0);
+        this._ = ResourcesState.setActiveLayerIds(this._, activeLayersIds);
         this.serialize();
-    }
-
-
-    public getActiveLayersIds(): string[] {
-
-        const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
-        if (!mainTypeDocumentResourceId) return [];
-
-        const layersIds = this.getViewState().layerIds[mainTypeDocumentResourceId];
-        return layersIds ? layersIds : [];
     }
 
 

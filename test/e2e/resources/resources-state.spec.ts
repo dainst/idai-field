@@ -87,19 +87,13 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.clickListModeButton();
 
-        ResourcesPage.performCreateResourceInList('context2', 'feature');
+        OperationBarPage.performSelectOperation(1);
 
-        SearchBarPage.typeInSearchField('SI0');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-
-        SearchBarPage.typeInSearchField('context2');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
-
-        SearchBarPage.typeInSearchField('abc');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI1')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI2')), delays.ECWaitTime);
+        SearchBarPage.typeInSearchField('SI1');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI2')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI1')), delays.ECWaitTime);
     });
 
 

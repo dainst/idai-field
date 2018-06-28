@@ -28,7 +28,18 @@ export class ResourcesStateManager {
 
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
-    private resourcesState: ResourcesState = ResourcesState.makeDefaults();
+    private resourcesState = ResourcesState.makeDefaults();
+
+    /**
+     * Clients can obtain the latest ResourcesState with this method.
+     * Its fields are readonly and the ResourcesState's companion module's
+     * setter methods return always copies. So the only way to modify
+     * the resources state is via the setters of ResourcesStateManager,
+     * which replace the whole ResourcesState in a proper transformation
+     * on every change.
+     */
+    public get = (): ResourcesState => this.resourcesState;
+
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
@@ -39,18 +50,6 @@ export class ResourcesStateManager {
         private suppressLoadMapInTestProject: boolean = false,
     ) {}
 
-
-    /**
-     * Clients can obtain the latest ResourcesState with this method.
-     * Its fields are readonly and the ResourcesState's companion module's
-     * setter methods return always copies. So the only way to modify
-     * the resources state is via the setters of ResourcesStateManager,
-     * which replace the whole ResourcesState in a proper transformation
-     * on every change.
-     *
-     * @return {ResourcesState}
-     */
-    public get = () => this.resourcesState;
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
@@ -65,16 +64,6 @@ export class ResourcesStateManager {
     public getLabelForName = (name: string) => this.views.getLabelForName(name);
 
     public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
-
-    public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesState = ResourcesState.setActiveDocumentViewTab(this.resourcesState, activeDocumentViewTab);
-
-    public setMode = (mode: 'map' | 'list') => this.resourcesState = ResourcesState.setMode(this.resourcesState, mode);
-
-    public setSelectedDocument = (document: IdaiFieldDocument|undefined) => this.resourcesState = ResourcesState.setSelectedDocument(this.resourcesState, document);
-
-    public setQueryString = (q: string) => this.resourcesState = ResourcesState.setQueryString(this.resourcesState, q);
-
-    public setTypeFilters = (types: string[]) => this.resourcesState = ResourcesState.setTypeFilters(this.resourcesState, types);
 
     public navigationPathNotifications = (): Observable<NavigationPath> =>
         ObserverUtil.register(this.navigationPathObservers);
@@ -97,6 +86,35 @@ export class ResourcesStateManager {
         this.setActiveDocumentViewTab(undefined);
     }
 
+
+    public setActiveDocumentViewTab(activeDocumentViewTab: string|undefined) {
+
+        this.resourcesState = ResourcesState.setActiveDocumentViewTab(this.resourcesState, activeDocumentViewTab);
+    }
+
+
+    public setSelectedDocument(document: IdaiFieldDocument|undefined) {
+
+        this.resourcesState = ResourcesState.setSelectedDocument(this.resourcesState, document);
+    }
+
+
+    public setQueryString(q: string) {
+
+        this.resourcesState = ResourcesState.setQueryString(this.resourcesState, q);
+    }
+
+
+    public setTypeFilters(types: string[]) {
+
+        this.resourcesState = ResourcesState.setTypeFilters(this.resourcesState, types);
+    }
+
+
+    public setMode(mode: 'map' | 'list') {
+
+        this.resourcesState = ResourcesState.setMode(this.resourcesState, mode);
+    }
 
     public setDisplayHierarchy(displayHierarchy: boolean) {
 

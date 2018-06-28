@@ -28,6 +28,9 @@ export class ResourcesStateManager {
 
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
+    public navigationPathNotifications = (): Observable<NavigationPath> =>
+        ObserverUtil.register(this.navigationPathObservers);
+
     private resourcesState = ResourcesState.makeDefaults();
 
     /**
@@ -65,13 +68,6 @@ export class ResourcesStateManager {
 
     public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
 
-    public navigationPathNotifications = (): Observable<NavigationPath> =>
-        ObserverUtil.register(this.navigationPathObservers);
-
-    public getOverviewTypeNames = () => this.views.get()
-        .map(_ => _.operationSubtype)
-        .concat(this.additionalOverviewTypeNames);
-
 
     public async initialize(viewName: string): Promise<any> {
 
@@ -84,6 +80,13 @@ export class ResourcesStateManager {
 
         if (!this.resourcesState.viewStates[this.resourcesState.view]) this.resourcesState.viewStates[this.resourcesState.view] = ViewState.default();
         this.setActiveDocumentViewTab(undefined);
+    }
+
+
+    public getOverviewTypeNames() {
+        return this.views.get()
+            .map(_ => _.operationSubtype)
+            .concat(this.additionalOverviewTypeNames);
     }
 
 

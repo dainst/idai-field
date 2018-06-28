@@ -1,5 +1,4 @@
 import {Static} from '../../../../static';
-import {IdaiFieldDocument} from 'idai-components-2/field';
 import {toResourceId} from '../../../../../../app/components/resources/view/state/navigation-path-segment';
 import {NavigationPath} from '../../../../../../app/components/resources/view/state/navigation-path';
 

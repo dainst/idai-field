@@ -37,6 +37,50 @@ export module ResourcesState {
     }
 
 
+    export function getNavPath(state: ResourcesState): NavigationPath {
+
+        const mainTypeDocumentResourceId = state.viewStates[state.view].mainTypeDocumentResourceId;
+        if (!mainTypeDocumentResourceId) return NavigationPath.empty();
+
+        const path = state.viewStates[state.view].navigationPaths[mainTypeDocumentResourceId];
+        return path ? path : NavigationPath.empty();
+    }
+
+
+    export function getBypassOperationTypeSelection(state: ResourcesState): boolean {
+
+        return state.viewStates[state.view].bypassOperationTypeSelection;
+    }
+
+
+    export function getDisplayHierarchy(state: ResourcesState): boolean {
+
+        return state.viewStates[state.view].displayHierarchy;
+    }
+
+
+    export function getMainTypeDocumentResourceId(state: ResourcesState): string|undefined {
+
+        return state.viewStates[state.view].mainTypeDocumentResourceId;
+    }
+
+
+    export function getActiveLayersIds(state: ResourcesState): string[] {
+
+        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
+        if (!mainTypeDocumentResourceId) return [];
+
+        const layersIds = state.viewStates[state.view].layerIds[mainTypeDocumentResourceId];
+        return layersIds ? layersIds : [];
+    }
+
+
+    export function getLayerIds(state: ResourcesState): {[mainTypeDocumentId: string]: string[]} {
+
+        return state.viewStates[state.view].layerIds;
+    }
+
+
     export function setQueryString(state: ResourcesState, q: string): ResourcesState {
 
         return updateNavigationPath(state, NavigationPath.setQueryString(getNavPath(state),
@@ -79,29 +123,6 @@ export module ResourcesState {
 
         return cloned;
     }
-
-
-    export function getMainTypeDocumentResourceId(state: ResourcesState): string|undefined {
-
-        return state.viewStates[state.view].mainTypeDocumentResourceId;
-    }
-
-
-    export function getActiveLayersIds(state: ResourcesState): string[] {
-
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
-        if (!mainTypeDocumentResourceId) return [];
-
-        const layersIds = state.viewStates[state.view].layerIds[mainTypeDocumentResourceId];
-        return layersIds ? layersIds : [];
-    }
-
-
-    export function getLayerIds(state: ResourcesState) {
-
-        return state.viewStates[state.view].layerIds;
-    }
-
 
 
     export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath): ResourcesState {
@@ -154,26 +175,11 @@ export module ResourcesState {
     }
 
 
-    export function complete(state: ResourcesState ) {
+    export function complete(state: ResourcesState ): ResourcesState {
 
         Object.keys(state.viewStates)
             .forEach(viewName => ViewState.complete(state.viewStates[viewName]));
-    }
-
-
-    export function getNavPath(state: ResourcesState): NavigationPath {
-
-        const mainTypeDocumentResourceId = state.viewStates[state.view].mainTypeDocumentResourceId;
-        if (!mainTypeDocumentResourceId) return NavigationPath.empty();
-
-        const path = state.viewStates[state.view].navigationPaths[mainTypeDocumentResourceId];
-        return path ? path : NavigationPath.empty();
-    }
-
-
-    export function getDisplayHierarchy(state: ResourcesState): boolean {
-
-        return state.viewStates[state.view].displayHierarchy;
+        return state; // TODO return copy
     }
 
 
@@ -182,12 +188,6 @@ export module ResourcesState {
         const cloned = ObjectUtil.cloneObject(state);
         cloned.viewStates[cloned.view].displayHierarchy = displayHierarchy;
         return cloned;
-    }
-
-
-    export function getBypassOperationTypeSelection(state: ResourcesState): boolean {
-
-        return state.viewStates[state.view].bypassOperationTypeSelection;
     }
 
 

@@ -454,20 +454,6 @@ describe('resources/state --', function() {
     });
 
 
-    it('keep mode when switching views', () => {
-
-        ResourcesPage.clickListModeButton();
-        browser.wait(EC.stalenessOf(MapPage.getMapContainer()), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('trench1', 0)), delays.ECWaitTime);
-
-        NavbarPage.clickNavigateToExcavation();
-        browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('SI0', 0)), delays.ECWaitTime);
-
-        NavbarPage.clickNavigateToProject();
-        browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('trench1', 0)), delays.ECWaitTime);
-    });
-
-
     // xitted because currently there is no relation which allows to jump between views
     xit('switch views after click on relation link', () => {
 

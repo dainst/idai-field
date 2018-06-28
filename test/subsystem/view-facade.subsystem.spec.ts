@@ -192,7 +192,7 @@ export function main() {
         });
 
 
-        it('context -- keep filter on switching mode', async done => {
+        it('ViewContext -- keep filter on switching mode', async done => {
 
             await viewFacade.selectView('excavation');
             viewFacade.setFilterTypes(['Feature']);
@@ -204,7 +204,7 @@ export function main() {
         });
 
 
-        it('context -- keep query string when switching views', async done => {
+        it('ViewContext -- keep query string when switching views', async done => {
 
             await viewFacade.selectView('excavation');
             viewFacade.setSearchString('abc');
@@ -216,7 +216,7 @@ export function main() {
         });
 
 
-        it('context -- keep query string when move into', async done => {
+        it('ViewContext -- keep query string when move into', async done => {
 
             await viewFacade.selectView('excavation');
             viewFacade.setSearchString('abc');
@@ -228,7 +228,7 @@ export function main() {
         });
 
 
-        it('context -- keep query string on switching mode', async done => {
+        it('ViewContext -- keep query string on switching mode', async done => {
 
             await viewFacade.selectView('excavation');
             viewFacade.setSearchString('abc');
@@ -251,6 +251,19 @@ export function main() {
             done();
         });
 
+
+        it('ViewState -- keep mode when switching views', async done => {
+
+            await viewFacade.selectView('excavation');
+            expect(viewFacade.getMode()).toEqual('map');
+            viewFacade.setMode('list');
+            await viewFacade.selectView('project');
+            expect(viewFacade.getMode()).toEqual('list');
+            await viewFacade.selectView('excavation');
+            expect(viewFacade.getMode()).toEqual('list');
+
+            done();
+        });
 
 
         it('reload predefined layer ids on startup in test/demo project', async done => {

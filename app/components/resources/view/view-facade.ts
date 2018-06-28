@@ -186,17 +186,17 @@ export class ViewFacade {
     }
 
 
-    public setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
+    public async setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
 
         if (this.isInOverview()) throw ViewFacade.err('setBypassOperationTypeSelection');
-        this.documentsManager.setBybassOperationTypeSelection(bypassOperationTypeSelection);
+        await this.documentsManager.setBypassOperationTypeSelection(bypassOperationTypeSelection);
     }
 
 
     public async selectOperationTypeDocument(operationTypeDocument: Document): Promise<void> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectOperationTypeDocument');
-        if (!this.getDisplayHierarchy()) this.setBypassOperationTypeSelection(false);
+        if (!this.getDisplayHierarchy()) await this.setBypassOperationTypeSelection(false);
         this.resourcesStateManager.setMainTypeDocument(operationTypeDocument.resource.id);
         await this.populateDocumentList();
     }

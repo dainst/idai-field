@@ -99,7 +99,8 @@ export class ResourcesStateManager {
 
     public setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
 
-        this.resourcesState = ResourcesState.setBypassOperationTypeSelection(this.resourcesState, bypassOperationTypeSelection);
+        this.resourcesState = ResourcesState.setBypassOperationTypeSelection(this.resourcesState,
+            bypassOperationTypeSelection);
         this.notifyNavigationPathObservers();
     }
 

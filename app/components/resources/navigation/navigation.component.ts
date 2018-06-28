@@ -34,9 +34,9 @@ export class NavigationComponent {
     public toggleDisplayHierarchy = () => this.viewFacade.setDisplayHierarchy(!this.viewFacade.getDisplayHierarchy());
 
 
-    public activateBypassOperationTypeSelection() {
+    public async activateBypassOperationTypeSelection() {
 
-        this.viewFacade.setBypassOperationTypeSelection(true);
+        await this.viewFacade.setBypassOperationTypeSelection(true);
     }
 
 

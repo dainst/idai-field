@@ -86,7 +86,7 @@ export class DocumentsManager {
     }
 
 
-    public async setBybassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
+    public async setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
 
         this.resourcesStateManager.setBypassOperationTypeSelection(bypassOperationTypeSelection);
         await this.populateAndDeselectIfNecessary();
@@ -196,6 +196,7 @@ export class DocumentsManager {
         }
 
         const docsQuery = this.makeDocsQuery(isRecordedInTarget);
+
         return (await this.fetchDocuments(docsQuery));
     }
 
@@ -272,7 +273,7 @@ export class DocumentsManager {
 
 
     private makeConstraints(mainTypeDocumentResourceId: string|undefined)
-            : { [name: string]: string|string[]}  {
+            : { [name: string]: string|string[]} {
 
         const navigationPath = ResourcesState.getNavPath(this.resourcesStateManager.get());
 

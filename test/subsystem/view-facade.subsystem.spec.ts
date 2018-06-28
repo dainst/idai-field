@@ -258,6 +258,30 @@ export function main() {
         });
 
 
+        it('ViewContext -- optypedoc has different context in different hierarchy mode', async done => {
+
+            await viewFacade.selectView('excavation');
+            await viewFacade.setSearchString('abc');
+            await viewFacade.setDisplayHierarchy(false);
+            expect(viewFacade.getSearchString()).toEqual('');
+            await viewFacade.setDisplayHierarchy(true);
+            expect(viewFacade.getSearchString()).toEqual('abc');
+            done();
+        });
+
+
+        xit('ViewContext -- all optypedocs selection has its own context', async done => {
+
+            await viewFacade.selectView('excavation');
+            await viewFacade.setDisplayHierarchy(false);
+            await viewFacade.setBypassOperationTypeSelection(true);
+            expect(viewFacade.getSearchString()).toEqual('abc');
+            await viewFacade.setBypassOperationTypeSelection(false);
+            expect(viewFacade.getSearchString()).toEqual('');
+            done();
+        });
+
+
         it('ViewState -- restore operation type selection after switching views', async done => {
 
             await viewFacade.selectView('excavation');

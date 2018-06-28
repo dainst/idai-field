@@ -72,8 +72,6 @@ export class ResourcesStateManager {
 
     public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
 
-    public getMainTypeDocumentResourceId = (): string|undefined => this.getViewState().mainTypeDocumentResourceId;
-
     private serialize = () => this.serializer.store(ResourcesState.createObjectToSerialize(this._));
 
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this._.activeDocumentViewTab = activeDocumentViewTab;
@@ -126,7 +124,7 @@ export class ResourcesStateManager {
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
         const invalidSegment = await NavigationPath.findInvalidSegment(
-            this.getMainTypeDocumentResourceId(),
+            ResourcesState.getMainTypeDocumentResourceId(this._),
             this.getNavigationPath(),
             async (resourceId: string) => (await this.datastore.find({ q: '',
                 constraints: { 'id:match': resourceId }})).totalCount !== 0);
@@ -165,7 +163,7 @@ export class ResourcesStateManager {
         this.setDisplayHierarchy(true);
 
         if (!NavigationPath.isPartOfNavigationPath(document, this.getNavigationPath(),
-                this.getMainTypeDocumentResourceId())) {
+                ResourcesState.getMainTypeDocumentResourceId(this._))) {
             await this.createNavigationPathForDocument(document);
         }
     }

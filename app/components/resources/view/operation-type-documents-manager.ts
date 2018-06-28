@@ -2,6 +2,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {Query} from 'idai-components-2/core';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ResourcesStateManager} from './resources-state-manager';
+import {ResourcesState} from './state/resources-state';
 
 /**
  * @author Thomas Kleinke
@@ -43,7 +44,7 @@ export class OperationTypeDocumentsManager {
         const operationTypeDocument = OperationTypeDocumentsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
 
-        if (operationTypeDocument && operationTypeDocument.resource.id !== this.resourcesStateManager.getMainTypeDocumentResourceId()) {
+        if (operationTypeDocument && operationTypeDocument.resource.id !== ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get())) {
             this.resourcesStateManager.setMainTypeDocument(operationTypeDocument.resource.id);
         }
     }
@@ -72,7 +73,7 @@ export class OperationTypeDocumentsManager {
 
     private async restoreLastSelectedOperationTypeDocument(): Promise<void> {
 
-        const mainTypeDocumentResourceId = this.resourcesStateManager.getMainTypeDocumentResourceId();
+        const mainTypeDocumentResourceId = ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
         if (!mainTypeDocumentResourceId) {
             this.selectFirstOperationTypeDocumentFromList();
         } else {

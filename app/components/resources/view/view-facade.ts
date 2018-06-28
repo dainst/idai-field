@@ -141,7 +141,7 @@ export class ViewFacade {
         if (!this.operationTypeDocumentsManager.getDocuments()) return undefined;
 
         const selectedOperationTypeDocument = this.operationTypeDocumentsManager.getDocuments()
-            .filter(_ => _.resource.id === this.resourcesStateManager.getMainTypeDocumentResourceId());
+            .filter(_ => _.resource.id === ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get()));
         return selectedOperationTypeDocument.length > 0
             ? selectedOperationTypeDocument[0]
             : undefined;
@@ -230,7 +230,7 @@ export class ViewFacade {
 
         if (!this.isInOverview()) {
             await this.populateOperationTypeDocuments();
-            mainTypeResourceid = this.resourcesStateManager.getMainTypeDocumentResourceId();
+            mainTypeResourceid = ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
         } else {
             mainTypeResourceid = 'project';
         }

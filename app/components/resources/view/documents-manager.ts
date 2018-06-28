@@ -204,8 +204,8 @@ export class DocumentsManager {
 
         return this.resourcesStateManager.isInOverview()
             ? undefined
-            : this.resourcesStateManager.getMainTypeDocumentResourceId()
-                ? this.resourcesStateManager.getMainTypeDocumentResourceId()
+            : ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get())
+                ? ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get())
                 : undefined;
     }
 

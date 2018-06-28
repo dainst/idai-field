@@ -62,7 +62,7 @@ export module ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
 
-        const mainTypeDocumentResourceId = cloned.viewStates[cloned.view].mainTypeDocumentResourceId;
+        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
         if (!mainTypeDocumentResourceId) return cloned;
 
         cloned.viewStates[cloned.view].layerIds[mainTypeDocumentResourceId] = activeLayersIds.slice(0);
@@ -74,16 +74,22 @@ export module ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
 
-        const mainTypeDocumentResourceId = cloned.viewStates[cloned.view].mainTypeDocumentResourceId;
+        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
         if (mainTypeDocumentResourceId) delete cloned.viewStates[cloned.view].layerIds[mainTypeDocumentResourceId];
 
         return cloned;
     }
 
 
+    export function getMainTypeDocumentResourceId(state: ResourcesState): string|undefined {
+
+        return state.viewStates[state.view].mainTypeDocumentResourceId;
+    }
+
+
     export function getActiveLayersIds(state: ResourcesState): string[] {
 
-        const mainTypeDocumentResourceId = state.viewStates[state.view].mainTypeDocumentResourceId;
+        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
         if (!mainTypeDocumentResourceId) return [];
 
         const layersIds = state.viewStates[state.view].layerIds[mainTypeDocumentResourceId];
@@ -93,13 +99,13 @@ export module ResourcesState {
 
     export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath): ResourcesState {
 
-        const clone = ObjectUtil.cloneObject(state);
+        const cloned = ObjectUtil.cloneObject(state);
 
-        const mainTypeDocumentResourceId = clone.viewStates[clone.view].mainTypeDocumentResourceId;
-        if (!mainTypeDocumentResourceId) return clone;
+        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
+        if (!mainTypeDocumentResourceId) return cloned;
 
-        clone.viewStates[clone.view].navigationPaths[mainTypeDocumentResourceId] = navPath;
-        return clone;
+        cloned.viewStates[cloned.view].navigationPaths[mainTypeDocumentResourceId] = navPath;
+        return cloned;
     }
 
 

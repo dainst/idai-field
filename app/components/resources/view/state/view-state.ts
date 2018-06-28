@@ -1,9 +1,8 @@
+import {NavigationPath} from './navigation-path';
+
 /**
  * @author Thomas Kleinke
  */
-import {NavigationPath} from './navigation-path';
-
-
 export interface ViewState {
 
     mainTypeDocumentResourceId?: string;
@@ -24,7 +23,9 @@ export class ViewState {
             mode: 'map',
             displayHierarchy: true,
             bypassOperationTypeSelection: false,
-            navigationPaths: {},
+            navigationPaths: {
+                '_all': NavigationPath.empty()
+            },
             layerIds: {}
         };
     };

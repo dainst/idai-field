@@ -123,13 +123,13 @@ export class ResourcesStateManager {
 
         const invalidSegment = await NavigationPath.findInvalidSegment(
             ResourcesState.getMainTypeDocumentResourceId(this.resourcesState),
-            ResourcesState.getNavPath(this.resourcesState),
+            ResourcesState.getNavigationPath(this.resourcesState),
             async (resourceId: string) => (await this.datastore.find({ q: '',
                 constraints: { 'id:match': resourceId }})).totalCount !== 0);
 
         const validatedNavigationPath = invalidSegment
-            ? NavigationPath.shorten(ResourcesState.getNavPath(this.resourcesState), invalidSegment)
-            : ResourcesState.getNavPath(this.resourcesState);
+            ? NavigationPath.shorten(ResourcesState.getNavigationPath(this.resourcesState), invalidSegment)
+            : ResourcesState.getNavigationPath(this.resourcesState);
 
         const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
         this.resourcesState = ResourcesState.updateNavigationPath(this.resourcesState, updatedNavigationPath);
@@ -139,7 +139,7 @@ export class ResourcesStateManager {
 
     public async rebuildNavigationPath() {
 
-        const segment = NavigationPath.getSelectedSegment(ResourcesState.getNavPath(this.resourcesState));
+        const segment = NavigationPath.getSelectedSegment(ResourcesState.getNavigationPath(this.resourcesState));
         await this.moveInto(segment ? segment.document : undefined);
     }
 
@@ -160,7 +160,7 @@ export class ResourcesStateManager {
 
         this.setDisplayHierarchy(true);
 
-        if (!NavigationPath.isPartOfNavigationPath(document, ResourcesState.getNavPath(this.resourcesState),
+        if (!NavigationPath.isPartOfNavigationPath(document, ResourcesState.getNavigationPath(this.resourcesState),
                 ResourcesState.getMainTypeDocumentResourceId(this.resourcesState))) {
             await this.createNavigationPathForDocument(document);
         }
@@ -169,7 +169,7 @@ export class ResourcesStateManager {
 
     private notifyNavigationPathObservers() {
 
-        ObserverUtil.notify(this.navigationPathObservers, ObjectUtil.cloneObject(ResourcesState.getNavPath(this.resourcesState)));
+        ObserverUtil.notify(this.navigationPathObservers, ObjectUtil.cloneObject(ResourcesState.getNavigationPath(this.resourcesState)));
     }
 
 
@@ -179,7 +179,7 @@ export class ResourcesStateManager {
         if (segments.length == 0) return await this.moveInto(undefined);
 
         const navPath = NavigationPath.replaceSegmentsIfNecessary(
-            ResourcesState.getNavPath(this.resourcesState), segments, segments[segments.length - 1].document.resource.id);
+            ResourcesState.getNavigationPath(this.resourcesState), segments, segments[segments.length - 1].document.resource.id);
 
         this.resourcesState = ResourcesState.updateNavigationPath(this.resourcesState, navPath);
         this.notifyNavigationPathObservers();

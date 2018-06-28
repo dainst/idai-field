@@ -21,28 +21,32 @@ export module ResourcesState {
 
     export function getQueryString(state: ResourcesState) {
 
-        return NavigationPath.getQuerySring(getNavPath(state), getDisplayHierarchy(state));
+        return NavigationPath.getQuerySring(getNavigationPath(state), getDisplayHierarchy(state));
     }
 
 
     export function getTypeFilters(state: ResourcesState) {
 
-        return NavigationPath.getTypeFilters(getNavPath(state), getDisplayHierarchy(state));
+        return NavigationPath.getTypeFilters(getNavigationPath(state), getDisplayHierarchy(state));
     }
 
 
     export function getSelectedDocument(state: ResourcesState) {
 
-        return NavigationPath.getSelectedDocument(getNavPath(state), getDisplayHierarchy(state));
+        return NavigationPath.getSelectedDocument(getNavigationPath(state), getDisplayHierarchy(state));
     }
 
 
-    export function getNavPath(state: ResourcesState): NavigationPath {
+    export function getNavigationPath(state: ResourcesState): NavigationPath {
 
-        const mainTypeDocumentResourceId = state.viewStates[state.view].mainTypeDocumentResourceId;
+        const viewState: ViewState = state.viewStates[state.view];
+
+        if (isAllSelection(viewState)) return viewState.navigationPaths['_all'];
+
+        const mainTypeDocumentResourceId = viewState.mainTypeDocumentResourceId;
         if (!mainTypeDocumentResourceId) return NavigationPath.empty();
 
-        const path = state.viewStates[state.view].navigationPaths[mainTypeDocumentResourceId];
+        const path = viewState.navigationPaths[mainTypeDocumentResourceId];
         return path ? path : NavigationPath.empty();
     }
 
@@ -83,21 +87,21 @@ export module ResourcesState {
 
     export function setQueryString(state: ResourcesState, q: string): ResourcesState {
 
-        return updateNavigationPath(state, NavigationPath.setQueryString(getNavPath(state),
+        return updateNavigationPath(state, NavigationPath.setQueryString(getNavigationPath(state),
             getDisplayHierarchy(state), q));
     }
 
 
     export function setTypeFilters(state: ResourcesState, types: string[]): ResourcesState {
 
-        return updateNavigationPath(state, NavigationPath.setTypeFilters(getNavPath(state),
+        return updateNavigationPath(state, NavigationPath.setTypeFilters(getNavigationPath(state),
             getDisplayHierarchy(state), types));
     }
 
 
     export function setSelectedDocument(state: ResourcesState, document: IdaiFieldDocument|undefined): ResourcesState {
 
-        return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavPath(state),
+        return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state),
             state.viewStates[state.view].displayHierarchy, document));
     }
 
@@ -129,10 +133,13 @@ export module ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
 
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
+        const mainTypeDocumentResourceId: string|undefined = getMainTypeDocumentResourceId(cloned);
         if (!mainTypeDocumentResourceId) return cloned;
 
-        cloned.viewStates[cloned.view].navigationPaths[mainTypeDocumentResourceId] = navPath;
+        const viewState: ViewState = cloned.viewStates[cloned.view];
+        const navigationPathId: string = isAllSelection(viewState) ? '_all' : mainTypeDocumentResourceId;
+        viewState.navigationPaths[navigationPathId] = navPath;
+
         return cloned;
     }
 
@@ -197,6 +204,12 @@ export module ResourcesState {
         const cloned = ObjectUtil.cloneObject(state);
         cloned.viewStates[cloned.view].bypassOperationTypeSelection = bypassOperationTypeSelection;
         return cloned;
+    }
+
+
+    function isAllSelection(viewState: ViewState): boolean {
+
+        return !viewState.displayHierarchy && viewState.bypassOperationTypeSelection;
     }
 }
 

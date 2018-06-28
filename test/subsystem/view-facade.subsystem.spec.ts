@@ -21,7 +21,6 @@ import {ResourcesStateManager} from '../../app/components/resources/view/resourc
  */
 export function main() {
 
-
     describe('ViewFacade/Subsystem', () => {
 
         const viewsList: ViewDefinition[] = [
@@ -270,12 +269,12 @@ export function main() {
         });
 
 
-        xit('ViewContext -- all optypedocs selection has its own context', async done => {
+        it('ViewContext -- all optypedocs selection has its own context', async done => {
 
             await viewFacade.selectView('excavation');
             await viewFacade.setDisplayHierarchy(false);
             await viewFacade.setBypassOperationTypeSelection(true);
-            expect(viewFacade.getSearchString()).toEqual('abc');
+            await viewFacade.setSearchString('abc');
             await viewFacade.setBypassOperationTypeSelection(false);
             expect(viewFacade.getSearchString()).toEqual('');
             done();

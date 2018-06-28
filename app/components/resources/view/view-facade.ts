@@ -6,6 +6,7 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {Loading} from '../../../widgets/loading';
 import {ResourcesStateManager} from './resources-state-manager';
+import {NavigationPath} from './state/navigation-path';
 
 /**
  * Manages an overview of operation type resources
@@ -95,8 +96,6 @@ export class ViewFacade {
 
     public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
 
-    public getNavigationPath = () => this.resourcesStateManager.getNavigationPath2();
-
     public rebuildNavigationPath = () => this.resourcesStateManager.rebuildNavigationPath();
 
     public populateDocumentList = () => this.documentsManager.populateDocumentList();
@@ -110,6 +109,14 @@ export class ViewFacade {
     public setDisplayHierarchy = (displayHierarchy: boolean) => this.documentsManager.setDisplayHierarchy(displayHierarchy);
 
     public getBypassOperationTypeSelection = () => this.resourcesStateManager.getBypassOperationTypeSelection();
+
+
+    public getNavigationPath() {
+
+        return this.isInOverview()
+            ? NavigationPath.empty()
+            : this.resourcesStateManager.getNavigationPath();
+    }
 
 
     public getMainTypeHomeViewName(mainTypeName: string): string|undefined {

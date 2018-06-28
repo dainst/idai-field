@@ -4,14 +4,12 @@ import {StateSerializer} from '../../../common/state-serializer';
 import {OperationViews} from './state/operation-views';
 import {ViewState} from './state/view-state';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {ObjectUtil} from '../../../util/object-util';
 import {NavigationPath} from './state/navigation-path';
 import {ObserverUtil} from '../../../util/observer-util';
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable'
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
-
-
+import {ObjectUtil} from '../../../util/object-util';
 
 
 @Injectable()
@@ -190,8 +188,7 @@ export class ResourcesStateManager {
         const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
         if (!mainTypeDocumentResourceId) return NavigationPath.empty();
 
-        const navigationPaths = this.getViewState().navigationPaths;
-        const path = (navigationPaths as any)[mainTypeDocumentResourceId];
+        const path = this.getViewState().navigationPaths[mainTypeDocumentResourceId];
 
         return path ? path : NavigationPath.empty();
     }
@@ -223,7 +220,7 @@ export class ResourcesStateManager {
 
     public async rebuildNavigationPath() {
 
-        const segment = NavigationPath.getSelectedSegment(this.getNavigationPath2());
+        const segment = NavigationPath.getSelectedSegment(this.getNavigationPath());
         await this.moveInto(segment ? segment.document : undefined);
     }
 
@@ -251,19 +248,9 @@ export class ResourcesStateManager {
     }
 
 
-    // TODO unit test that it returns a clone
-    public getNavigationPath2(): NavigationPath {
-
-        if (this.isInOverview()) return NavigationPath.empty();
-        if (!this.getMainTypeDocumentResourceId()) return NavigationPath.empty();
-
-        return ObjectUtil.cloneObject(this.getNavigationPath());
-    }
-
-
     private notifyNavigationPathObservers() {
 
-        ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath2());
+        ObserverUtil.notify(this.navigationPathObservers, ObjectUtil.cloneObject(this.getNavigationPath()));
     }
 
 

@@ -96,14 +96,14 @@ export class ResourcesStateManager {
     public setDisplayHierarchy(displayHierarchy: boolean) {
 
         this.getViewState().displayHierarchy = displayHierarchy;
-        this.notify();
+        this.notifyNavigationPathObservers();
     }
 
 
     public setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
 
         this.getViewState().bypassOperationTypeSelection = bypassOperationTypeSelection;
-        this.notify();
+        this.notifyNavigationPathObservers();
     }
 
 
@@ -217,7 +217,7 @@ export class ResourcesStateManager {
 
         const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
         this.setNavigationPath(updatedNavigationPath);
-        this.notify();
+        this.notifyNavigationPathObservers();
     }
 
 
@@ -234,16 +234,9 @@ export class ResourcesStateManager {
 
         if (!this.getViewState().navigationPaths[resourceId]) {
             this.getViewState().navigationPaths[resourceId] = NavigationPath.empty();
+            this.notifyNavigationPathObservers();
         }
         this.getViewState().mainTypeDocumentResourceId = resourceId;
-    }
-
-
-    public setMainTypeDocument2(selectedMainTypeDocumentResourceId: string|undefined) {
-
-        if (!this.getDisplayHierarchy()) this.setBypassOperationTypeSelection(false);
-        if (selectedMainTypeDocumentResourceId) this.setMainTypeDocument(selectedMainTypeDocumentResourceId);
-        this.notify();
     }
 
 
@@ -268,7 +261,7 @@ export class ResourcesStateManager {
     }
 
 
-    private notify() {
+    private notifyNavigationPathObservers() {
 
         ObserverUtil.notify(this.navigationPathObservers, this.getNavigationPath2());
     }
@@ -283,7 +276,7 @@ export class ResourcesStateManager {
             this.getNavigationPath(), segments, segments[segments.length - 1].document.resource.id);
 
         this.setNavigationPath(navPath);
-        this.notify();
+        this.notifyNavigationPathObservers();
     }
 
 

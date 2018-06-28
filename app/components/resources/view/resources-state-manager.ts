@@ -78,11 +78,7 @@ export class ResourcesStateManager {
 
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this._.activeDocumentViewTab = activeDocumentViewTab;
 
-    public getMode = () => this._.mode;
-
     public setMode = (mode: 'map' | 'list') => this._.mode = mode;
-
-    public getDisplayHierarchy = (): boolean => ResourcesState.getDisplayHierarchy(this._);
 
     public getBypassOperationTypeSelection = () => ResourcesState.getBypassOperationTypeSelection(this._);
 

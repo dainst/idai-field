@@ -43,7 +43,8 @@ export class DocumentsManager {
     }
 
 
-    public getDocuments = () => this.documents;
+    public getDocuments = () => this
+        .documents;
 
     public getSelectedDocument = () => ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
 
@@ -253,7 +254,7 @@ export class DocumentsManager {
             q.types = this.resourcesStateManager.getOverviewTypeNames();
         }
 
-        if (!this.resourcesStateManager.getDisplayHierarchy()) q.limit = DocumentsManager.documentLimit;
+        if (!ResourcesState.getDisplayHierarchy(this.resourcesStateManager.get())) q.limit = DocumentsManager.documentLimit;
 
         return q;
     }
@@ -275,7 +276,7 @@ export class DocumentsManager {
 
         const navigationPath = this.resourcesStateManager.getNavigationPath();
 
-        const constraints: { [name: string]: string|string[] } = !this.resourcesStateManager.getDisplayHierarchy()
+        const constraints: { [name: string]: string|string[] } = !ResourcesState.getDisplayHierarchy(this.resourcesStateManager.get())
             ? {}
             : navigationPath.selectedSegmentId
                 ? { 'liesWithin:contain': navigationPath.selectedSegmentId }
@@ -293,7 +294,7 @@ export class DocumentsManager {
     private getIsRecordedInConstraintValues(mainTypeDocumentResourceId: string): string|string[] {
 
         return this.resourcesStateManager.getBypassOperationTypeSelection()
-            && !this.resourcesStateManager.getDisplayHierarchy()
+            && !ResourcesState.getDisplayHierarchy(this.resourcesStateManager.get())
         ? this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id)
         : mainTypeDocumentResourceId;
     }

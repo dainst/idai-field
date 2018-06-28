@@ -59,7 +59,7 @@ export class ViewFacade {
 
     public getOperationSubtypeViews = () => this.resourcesStateManager.getViews();
 
-    public getMode = () => this.resourcesStateManager.getMode();
+    public getMode = () => this.resourcesStateManager.get().mode;
 
     public getFilterTypes = () => ResourcesState.getTypeFilters(this.resourcesStateManager.get());
 
@@ -105,7 +105,7 @@ export class ViewFacade {
 
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesStateManager.setActiveDocumentViewTab(activeDocumentViewTab);
 
-    public getDisplayHierarchy = () => this.resourcesStateManager.getDisplayHierarchy();
+    public getDisplayHierarchy = () => ResourcesState.getDisplayHierarchy(this.resourcesStateManager.get());
 
     public setDisplayHierarchy = (displayHierarchy: boolean) => this.documentsManager.setDisplayHierarchy(displayHierarchy);
 

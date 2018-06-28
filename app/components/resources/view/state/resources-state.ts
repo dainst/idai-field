@@ -177,9 +177,10 @@ export module ResourcesState {
 
     export function complete(state: ResourcesState ): ResourcesState {
 
-        Object.keys(state.viewStates)
-            .forEach(viewName => ViewState.complete(state.viewStates[viewName]));
-        return state; // TODO return copy
+        const cloned = ObjectUtil.cloneObject(state);
+        Object.keys(cloned.viewStates)
+            .forEach(viewName => ViewState.complete(cloned.viewStates[viewName]));
+        return cloned;
     }
 
 

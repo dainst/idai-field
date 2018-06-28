@@ -193,16 +193,16 @@ export class ResourcesStateManager {
 
     private async load(): Promise<ResourcesState> {
 
-        let resourcesViewStates = ResourcesState.makeDefaults();
+        let resourcesState = ResourcesState.makeDefaults();
 
         if (this.project === 'test' ) {
-            if (!this.suppressLoadMapInTestProject) resourcesViewStates = ResourcesState.makeSampleDefaults()
+            if (!this.suppressLoadMapInTestProject) resourcesState = ResourcesState.makeSampleDefaults()
         } else {
-            resourcesViewStates.viewStates = await this.serializer.load();
-            ResourcesState.complete(resourcesViewStates);
+            resourcesState.viewStates = await this.serializer.load();
+            resourcesState = ResourcesState.complete(resourcesState);
         }
 
-        return resourcesViewStates;
+        return resourcesState;
     }
 
 

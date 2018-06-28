@@ -40,25 +40,6 @@ export class ResourcesStateManager {
     ) {}
 
 
-    public async initialize(viewName: string): Promise<any> {
-
-        if (!this.loaded) {
-            this._ = await this.load();
-            this.loaded = true;
-        }
-
-        this._.view = viewName;
-
-        if (!this.getViewState()) this._.viewStates[this._.view] = ViewState.default();
-        this.setActiveDocumentViewTab(undefined);
-    }
-
-
-    public getOverviewTypeNames = () => this.views.get()
-        .map(_ => _.operationSubtype)
-        .concat(this.additionalOverviewTypeNames);
-
-
     public get = () => this._; // TODO return copy
 
     public resetForE2E = () => this._ = ResourcesState.makeDefaults();
@@ -87,9 +68,26 @@ export class ResourcesStateManager {
 
     public setTypeFilters = (types: string[]) => this._ = ResourcesState.setTypeFilters(this._, types);
 
-
     public navigationPathNotifications = (): Observable<NavigationPath> =>
         ObserverUtil.register(this.navigationPathObservers);
+
+    public getOverviewTypeNames = () => this.views.get()
+        .map(_ => _.operationSubtype)
+        .concat(this.additionalOverviewTypeNames);
+
+
+    public async initialize(viewName: string): Promise<any> {
+
+        if (!this.loaded) {
+            this._ = await this.load();
+            this.loaded = true;
+        }
+
+        this._.view = viewName;
+
+        if (!this.getViewState()) this._.viewStates[this._.view] = ViewState.default();
+        this.setActiveDocumentViewTab(undefined);
+    }
 
 
     public setDisplayHierarchy(displayHierarchy: boolean) {

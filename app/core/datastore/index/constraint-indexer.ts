@@ -153,7 +153,7 @@ export class ConstraintIndexer {
 
 
     private getIndexItems(indexDefinition: IndexDefinition,
-                          matchTerms: string|string[]): { [id: string]: IndexItem } {
+                          matchTerms: string|string[]): { [id: string]: IndexItem }|undefined {
 
         return Array.isArray(matchTerms)
             ? this.getIndexItemsForMultipleMatchTerms(indexDefinition, matchTerms)
@@ -162,19 +162,22 @@ export class ConstraintIndexer {
 
 
     private getIndexItemsForMultipleMatchTerms(indexDefinition: IndexDefinition,
-                                               matchTerms: string[]): { [id: string]: IndexItem } {
+                                               matchTerms: string[]): { [id: string]: IndexItem }|undefined {
 
-        return matchTerms.map(matchTerm => {
-            return this.getIndexItemsForSingleMatchTerm(indexDefinition, matchTerm)
-        }).reduce((result, indexItems) => {
+        const result = matchTerms.map(matchTerm => {
+            return this.getIndexItemsForSingleMatchTerm(indexDefinition, matchTerm);
+        }).reduce((result: any, indexItems) => {
+            if (!indexItems) return result;
             Object.keys(indexItems).forEach(id => result[id] = indexItems[id]);
             return result;
         }, {});
+
+        return Object.keys(result).length > 0 ? result : undefined;
     }
 
 
     private getIndexItemsForSingleMatchTerm(indexDefinition: IndexDefinition,
-                                            matchTerm: string): { [id: string]: IndexItem } {
+                                            matchTerm: string): { [id: string]: IndexItem }|undefined {
 
         return this.getIndex(indexDefinition)[indexDefinition.path][matchTerm];
     }

@@ -246,24 +246,21 @@ describe('resources --', () => {
 
     it('should delete a main type resource', () => {
 
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
-        ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBeGreaterThan(0));
-
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.openEditByDoubleClickResource('trench1');
-        DoceditPage.clickDeleteDocument();
-        DoceditPage.typeInIdentifierInConfirmDeletionInputField('trench1');
-        DoceditPage.clickConfirmDeleteInModal();
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickCloseAllMessages();
 
-        ResourcesPage.openEditByDoubleClickResource('trench2');
-        DoceditPage.clickDeleteDocument();
-        DoceditPage.typeInIdentifierInConfirmDeletionInputField('trench2');
-        DoceditPage.clickConfirmDeleteInModal();
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickCloseAllMessages();
+        function del(what: any) {
+
+            ResourcesPage.openEditByDoubleClickResource(what);
+            DoceditPage.clickDeleteDocument();
+            DoceditPage.typeInIdentifierInConfirmDeletionInputField(what);
+            DoceditPage.clickConfirmDeleteInModal();
+            browser.sleep(delays.shortRest);
+            NavbarPage.clickCloseAllMessages();
+        }
+
+        del('trench1');
+        del('trench2');
+
         NavbarPage.clickNavigateToExcavation();
 
         browser.sleep(delays.shortRest);

@@ -187,21 +187,36 @@ export class ResourcesStateManager {
 
     private serialize() {
 
-        this.serializer.store(ResourcesState.createObjectToSerialize(this.resourcesState));
+        this.serializer.store(ResourcesStateManager.createObjectToSerialize(this.resourcesState));
     }
 
 
     private async load(): Promise<ResourcesState> {
 
-        let resourcesViewStates = ResourcesState.makeDefaults();
+        let resourcesState = ResourcesState.makeDefaults();
 
         if (this.project === 'test' ) {
-            if (!this.suppressLoadMapInTestProject) resourcesViewStates = ResourcesState.makeSampleDefaults()
+            if (!this.suppressLoadMapInTestProject) resourcesState = ResourcesState.makeSampleDefaults()
         } else {
-            resourcesViewStates.viewStates = await this.serializer.load();
-            ResourcesState.complete(resourcesViewStates);
+            resourcesState.viewStates = await this.serializer.load();
+            resourcesState = ResourcesState.complete(resourcesState);
         }
 
-        return resourcesViewStates;
+        return resourcesState;
+    }
+
+
+    private static createObjectToSerialize(state: ResourcesState) : { [viewName: string]: ViewState } {
+
+        const objectToSerialize: { [viewName: string]: ViewState } = {};
+
+        for (let viewName of Object.keys(state.viewStates)) {
+            objectToSerialize[viewName] = {} as any;
+            if (ResourcesState.getLayerIds(state)) {
+                objectToSerialize[viewName].layerIds = ResourcesState.getLayerIds(state);
+            }
+        }
+
+        return objectToSerialize;
     }
 }

@@ -263,7 +263,7 @@ export class DocumentsManager {
     private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
 
         try {
-            return this.datastore.find(query);
+            return await this.datastore.find(query);
         } catch (errWithParams) {
             DocumentsManager.handleFindErr(errWithParams, query);
             return { documents: [], totalCount: 0 };

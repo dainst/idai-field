@@ -37,6 +37,50 @@ export module ResourcesState {
     }
 
 
+    export function getNavPath(state: ResourcesState): NavigationPath {
+
+        const mainTypeDocumentResourceId = state.viewStates[state.view].mainTypeDocumentResourceId;
+        if (!mainTypeDocumentResourceId) return NavigationPath.empty();
+
+        const path = state.viewStates[state.view].navigationPaths[mainTypeDocumentResourceId];
+        return path ? path : NavigationPath.empty();
+    }
+
+
+    export function getBypassOperationTypeSelection(state: ResourcesState): boolean {
+
+        return state.viewStates[state.view].bypassOperationTypeSelection;
+    }
+
+
+    export function getDisplayHierarchy(state: ResourcesState): boolean {
+
+        return state.viewStates[state.view].displayHierarchy;
+    }
+
+
+    export function getMainTypeDocumentResourceId(state: ResourcesState): string|undefined {
+
+        return state.viewStates[state.view].mainTypeDocumentResourceId;
+    }
+
+
+    export function getActiveLayersIds(state: ResourcesState): string[] {
+
+        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
+        if (!mainTypeDocumentResourceId) return [];
+
+        const layersIds = state.viewStates[state.view].layerIds[mainTypeDocumentResourceId];
+        return layersIds ? layersIds : [];
+    }
+
+
+    export function getLayerIds(state: ResourcesState): {[mainTypeDocumentId: string]: string[]} {
+
+        return state.viewStates[state.view].layerIds;
+    }
+
+
     export function setQueryString(state: ResourcesState, q: string): ResourcesState {
 
         return updateNavigationPath(state, NavigationPath.setQueryString(getNavPath(state),
@@ -78,22 +122,6 @@ export module ResourcesState {
         if (mainTypeDocumentResourceId) delete cloned.viewStates[cloned.view].layerIds[mainTypeDocumentResourceId];
 
         return cloned;
-    }
-
-
-    export function getMainTypeDocumentResourceId(state: ResourcesState): string|undefined {
-
-        return state.viewStates[state.view].mainTypeDocumentResourceId;
-    }
-
-
-    export function getActiveLayersIds(state: ResourcesState): string[] {
-
-        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
-        if (!mainTypeDocumentResourceId) return [];
-
-        const layersIds = state.viewStates[state.view].layerIds[mainTypeDocumentResourceId];
-        return layersIds ? layersIds : [];
     }
 
 
@@ -147,41 +175,12 @@ export module ResourcesState {
     }
 
 
-    export function complete(state: ResourcesState ) {
+    export function complete(state: ResourcesState ): ResourcesState {
 
-        Object.keys(state.viewStates)
-            .forEach(viewName => ViewState.complete(state.viewStates[viewName]));
-    }
-
-
-    export function createObjectToSerialize(state: ResourcesState) : { [viewName: string]: ViewState } {
-
-        const objectToSerialize: { [viewName: string]: ViewState } = {};
-
-        for (let viewName of Object.keys(state.viewStates)) {
-            objectToSerialize[viewName] = {} as any;
-            if (this._.viewStates[viewName].layerIds) {
-                objectToSerialize[viewName].layerIds = this._.viewStates[viewName].layerIds;
-            }
-        }
-
-        return objectToSerialize;
-    }
-
-
-    export function getNavPath(state: ResourcesState): NavigationPath {
-
-        const mainTypeDocumentResourceId = state.viewStates[state.view].mainTypeDocumentResourceId;
-        if (!mainTypeDocumentResourceId) return NavigationPath.empty();
-
-        const path = state.viewStates[state.view].navigationPaths[mainTypeDocumentResourceId];
-        return path ? path : NavigationPath.empty();
-    }
-
-
-    export function getDisplayHierarchy(state: ResourcesState): boolean {
-
-        return state.viewStates[state.view].displayHierarchy;
+        const cloned = ObjectUtil.cloneObject(state);
+        Object.keys(cloned.viewStates)
+            .forEach(viewName => ViewState.complete(cloned.viewStates[viewName]));
+        return cloned;
     }
 
 
@@ -190,12 +189,6 @@ export module ResourcesState {
         const cloned = ObjectUtil.cloneObject(state);
         cloned.viewStates[cloned.view].displayHierarchy = displayHierarchy;
         return cloned;
-    }
-
-
-    export function getBypassOperationTypeSelection(state: ResourcesState): boolean {
-
-        return state.viewStates[state.view].bypassOperationTypeSelection;
     }
 
 

@@ -28,7 +28,7 @@ export class ResourcesStateManager {
 
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
-    private _: ResourcesState = ResourcesState.makeDefaults();
+    private resourcesState: ResourcesState = ResourcesState.makeDefaults();
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
@@ -40,15 +40,15 @@ export class ResourcesStateManager {
     ) {}
 
 
-    public get = () => this._; // TODO return copy
+    public get = () => this.resourcesState; // TODO return copy
 
-    public resetForE2E = () => this._ = ResourcesState.makeDefaults();
+    public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
-    public getActiveDocumentViewTab = () => this._.activeDocumentViewTab;
+    public getActiveDocumentViewTab = () => this.resourcesState.activeDocumentViewTab;
 
-    public getViewType = () => this.isInOverview() ? 'Project' : this.getOperationSubtypeForViewName(this._.view);
+    public getViewType = () => this.isInOverview() ? 'Project' : this.getOperationSubtypeForViewName(this.resourcesState.view);
 
-    public isInOverview = () => this._.view === 'project';
+    public isInOverview = () => this.resourcesState.view === 'project';
 
     public getViews = () => this.views.get();
 
@@ -58,15 +58,15 @@ export class ResourcesStateManager {
 
     public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
 
-    public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this._.activeDocumentViewTab = activeDocumentViewTab;
+    public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesState.activeDocumentViewTab = activeDocumentViewTab;
 
-    public setMode = (mode: 'map' | 'list') => this._.mode = mode;
+    public setMode = (mode: 'map' | 'list') => this.resourcesState.mode = mode;
 
-    public setSelectedDocument = (document: IdaiFieldDocument|undefined) => this._ = ResourcesState.setSelectedDocument(this._, document);
+    public setSelectedDocument = (document: IdaiFieldDocument|undefined) => this.resourcesState = ResourcesState.setSelectedDocument(this.resourcesState, document);
 
-    public setQueryString = (q: string) => this._ = ResourcesState.setQueryString(this._, q);
+    public setQueryString = (q: string) => this.resourcesState = ResourcesState.setQueryString(this.resourcesState, q);
 
-    public setTypeFilters = (types: string[]) => this._ = ResourcesState.setTypeFilters(this._, types);
+    public setTypeFilters = (types: string[]) => this.resourcesState = ResourcesState.setTypeFilters(this.resourcesState, types);
 
     public navigationPathNotifications = (): Observable<NavigationPath> =>
         ObserverUtil.register(this.navigationPathObservers);
@@ -79,41 +79,41 @@ export class ResourcesStateManager {
     public async initialize(viewName: string): Promise<any> {
 
         if (!this.loaded) {
-            this._ = await this.load();
+            this.resourcesState = await this.load();
             this.loaded = true;
         }
 
-        this._.view = viewName;
+        this.resourcesState.view = viewName;
 
-        if (!this._.viewStates[this._.view]) this._.viewStates[this._.view] = ViewState.default();
+        if (!this.resourcesState.viewStates[this.resourcesState.view]) this.resourcesState.viewStates[this.resourcesState.view] = ViewState.default();
         this.setActiveDocumentViewTab(undefined);
     }
 
 
     public setDisplayHierarchy(displayHierarchy: boolean) {
 
-        this._ = ResourcesState.setDisplayHierarchy(this._, displayHierarchy);
+        this.resourcesState = ResourcesState.setDisplayHierarchy(this.resourcesState, displayHierarchy);
         this.notifyNavigationPathObservers();
     }
 
 
     public setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
 
-        this._ = ResourcesState.setBypassOperationTypeSelection(this._, bypassOperationTypeSelection);
+        this.resourcesState = ResourcesState.setBypassOperationTypeSelection(this.resourcesState, bypassOperationTypeSelection);
         this.notifyNavigationPathObservers();
     }
 
 
     public setActiveLayersIds(activeLayersIds: string[]) {
 
-        this._ = ResourcesState.setActiveLayerIds(this._, activeLayersIds);
+        this.resourcesState = ResourcesState.setActiveLayerIds(this.resourcesState, activeLayersIds);
         this.serialize();
     }
 
 
     public removeActiveLayersIds() {
 
-        this._ = ResourcesState.removeActiveLayersIds(this._);
+        this.resourcesState = ResourcesState.removeActiveLayersIds(this.resourcesState);
         this.serialize();
     }
 
@@ -121,24 +121,24 @@ export class ResourcesStateManager {
     public async moveInto(document: IdaiFieldDocument|undefined) {
 
         const invalidSegment = await NavigationPath.findInvalidSegment(
-            ResourcesState.getMainTypeDocumentResourceId(this._),
-            ResourcesState.getNavPath(this._),
+            ResourcesState.getMainTypeDocumentResourceId(this.resourcesState),
+            ResourcesState.getNavPath(this.resourcesState),
             async (resourceId: string) => (await this.datastore.find({ q: '',
                 constraints: { 'id:match': resourceId }})).totalCount !== 0);
 
         const validatedNavigationPath = invalidSegment
-            ? NavigationPath.shorten(ResourcesState.getNavPath(this._), invalidSegment)
-            : ResourcesState.getNavPath(this._);
+            ? NavigationPath.shorten(ResourcesState.getNavPath(this.resourcesState), invalidSegment)
+            : ResourcesState.getNavPath(this.resourcesState);
 
         const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
-        this._ = ResourcesState.updateNavigationPath(this._, updatedNavigationPath);
+        this.resourcesState = ResourcesState.updateNavigationPath(this.resourcesState, updatedNavigationPath);
         this.notifyNavigationPathObservers();
     }
 
 
     public async rebuildNavigationPath() {
 
-        const segment = NavigationPath.getSelectedSegment(ResourcesState.getNavPath(this._));
+        const segment = NavigationPath.getSelectedSegment(ResourcesState.getNavPath(this.resourcesState));
         await this.moveInto(segment ? segment.document : undefined);
     }
 
@@ -147,11 +147,11 @@ export class ResourcesStateManager {
 
         if (!resourceId) return;
 
-        if (!this._.viewStates[this._.view].navigationPaths[resourceId]) {
-            this._.viewStates[this._.view].navigationPaths[resourceId] = NavigationPath.empty();
+        if (!this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId]) {
+            this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId] = NavigationPath.empty();
             this.notifyNavigationPathObservers();
         }
-        this._.viewStates[this._.view].mainTypeDocumentResourceId = resourceId;
+        this.resourcesState.viewStates[this.resourcesState.view].mainTypeDocumentResourceId = resourceId;
     }
 
 
@@ -159,8 +159,8 @@ export class ResourcesStateManager {
 
         this.setDisplayHierarchy(true);
 
-        if (!NavigationPath.isPartOfNavigationPath(document, ResourcesState.getNavPath(this._),
-                ResourcesState.getMainTypeDocumentResourceId(this._))) {
+        if (!NavigationPath.isPartOfNavigationPath(document, ResourcesState.getNavPath(this.resourcesState),
+                ResourcesState.getMainTypeDocumentResourceId(this.resourcesState))) {
             await this.createNavigationPathForDocument(document);
         }
     }
@@ -168,7 +168,7 @@ export class ResourcesStateManager {
 
     private notifyNavigationPathObservers() {
 
-        ObserverUtil.notify(this.navigationPathObservers, ObjectUtil.cloneObject(ResourcesState.getNavPath(this._)));
+        ObserverUtil.notify(this.navigationPathObservers, ObjectUtil.cloneObject(ResourcesState.getNavPath(this.resourcesState)));
     }
 
 
@@ -178,16 +178,16 @@ export class ResourcesStateManager {
         if (segments.length == 0) return await this.moveInto(undefined);
 
         const navPath = NavigationPath.replaceSegmentsIfNecessary(
-            ResourcesState.getNavPath(this._), segments, segments[segments.length - 1].document.resource.id);
+            ResourcesState.getNavPath(this.resourcesState), segments, segments[segments.length - 1].document.resource.id);
 
-        this._ = ResourcesState.updateNavigationPath(this._, navPath);
+        this.resourcesState = ResourcesState.updateNavigationPath(this.resourcesState, navPath);
         this.notifyNavigationPathObservers();
     }
 
 
     private serialize() {
 
-        this.serializer.store(ResourcesState.createObjectToSerialize(this._));
+        this.serializer.store(ResourcesState.createObjectToSerialize(this.resourcesState));
     }
 
 

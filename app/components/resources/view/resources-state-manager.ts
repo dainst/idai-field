@@ -14,6 +14,11 @@ import {ObjectUtil} from '../../../util/object-util';
 
 @Injectable()
 /**
+ * Holds the reference to the current ResourcesState and replaces it by a modified
+ * version on write access. Serializes parts of it on certain events.
+ *
+ * Holds a reference to the OperationViews
+ *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
@@ -77,8 +82,6 @@ export class ResourcesStateManager {
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this._.activeDocumentViewTab = activeDocumentViewTab;
 
     public setMode = (mode: 'map' | 'list') => this._.mode = mode;
-
-    public getBypassOperationTypeSelection = () => ResourcesState.getBypassOperationTypeSelection(this._);
 
     public setSelectedDocument = (document: IdaiFieldDocument|undefined) => this._ = ResourcesState.setSelectedDocument(this._, document);
 

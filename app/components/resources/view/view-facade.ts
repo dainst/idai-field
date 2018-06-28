@@ -109,7 +109,7 @@ export class ViewFacade {
 
     public setDisplayHierarchy = (displayHierarchy: boolean) => this.documentsManager.setDisplayHierarchy(displayHierarchy);
 
-    public getBypassOperationTypeSelection = () => this.resourcesStateManager.getBypassOperationTypeSelection();
+    public getBypassOperationTypeSelection = () => ResourcesState.getBypassOperationTypeSelection(this.resourcesStateManager.get());
 
 
     public getNavigationPath() {

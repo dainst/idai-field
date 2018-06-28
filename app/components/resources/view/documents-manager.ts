@@ -293,7 +293,7 @@ export class DocumentsManager {
 
     private getIsRecordedInConstraintValues(mainTypeDocumentResourceId: string): string|string[] {
 
-        return this.resourcesStateManager.getBypassOperationTypeSelection()
+        return ResourcesState.getBypassOperationTypeSelection(this.resourcesStateManager.get())
             && !ResourcesState.getDisplayHierarchy(this.resourcesStateManager.get())
         ? this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id)
         : mainTypeDocumentResourceId;

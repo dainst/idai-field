@@ -54,8 +54,6 @@ export class ResourcesStateManager {
 
     public resetForE2E = () => this.resourcesState = ResourcesState.makeDefaults();
 
-    public getActiveDocumentViewTab = () => this.resourcesState.activeDocumentViewTab;
-
     public getViewType = () => this.isInOverview() ? 'Project' : this.getOperationSubtypeForViewName(this.resourcesState.view);
 
     public isInOverview = () => this.resourcesState.view === 'project';

@@ -69,7 +69,7 @@ export class ViewFacade {
 
     public getTotalDocumentCount = () => this.documentsManager.getTotalDocumentCount();
 
-    public getActiveDocumentViewTab = () => this.resourcesStateManager.getActiveDocumentViewTab();
+    public getActiveDocumentViewTab = () => this.resourcesStateManager.get().activeDocumentViewTab;
 
     public getActiveLayersIds = () => ResourcesState.getActiveLayersIds(this.resourcesStateManager.get());
 

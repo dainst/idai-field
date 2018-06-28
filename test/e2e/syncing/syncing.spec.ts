@@ -205,7 +205,7 @@ describe('syncing --', function() {
         browser.wait(EC.presenceOf(el), delays.ECWaitTime);
 
         expect(el.getText()).toContain('Testfund' + nr);
-        expect(await ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('new-from-remote');
+        expect(await ResourcesPage.getListItemEl('SI0').getAttribute('class')).not.toContain('new-from-remote');
         expect(el.getAttribute('class')).toContain('new-from-remote');
         done();
     });

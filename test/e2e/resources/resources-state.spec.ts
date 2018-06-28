@@ -89,16 +89,16 @@ describe('resources/state --', function() {
 
         ResourcesPage.performCreateResourceInList('context2', 'feature');
 
-        SearchBarPage.typeInSearchField('context1');
+        SearchBarPage.typeInSearchField('SI0');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
 
         SearchBarPage.typeInSearchField('context2');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
 
         SearchBarPage.typeInSearchField('abc');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context2')), delays.ECWaitTime);
     });
 
@@ -111,12 +111,12 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResourceInList('testf2', 'find');
 
         SearchBarPage.clickChooseTypeFilter('find');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
         browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf2')), delays.ECWaitTime);
 
         SearchBarPage.clickChooseTypeFilter('processunit');
         browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf2')), delays.ECWaitTime);
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
     });
 
 
@@ -264,7 +264,7 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesPage.getSuggestions().then(suggestions => {
             expect(suggestions.length).toBe(1);
-            expect(suggestions[0].getText()).toEqual('context1');
+            expect(suggestions[0].getText()).toEqual('SI0');
         });
 
         done();
@@ -405,7 +405,7 @@ describe('resources/state --', function() {
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
             expect(navigationButtons.length).toBe(2);
             expect(navigationButtons[0].getText()).toEqual('trench1');
-            expect(navigationButtons[1].getText()).toEqual('context1');
+            expect(navigationButtons[1].getText()).toEqual('SI0');
         });
     });
 
@@ -415,7 +415,7 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.performCreateResource('context2', 'feature');
-        ResourcesPage.clickMoveIntoButton('context1');
+        ResourcesPage.clickMoveIntoButton('SI0');
 
         ResourcesPage.openEditByDoubleClickResource('testf1');
         DoceditPage.clickRelationsTab();
@@ -438,15 +438,15 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
 
-        ResourcesPage.clickMoveIntoButton('context1');
+        ResourcesPage.clickMoveIntoButton('SI0');
         ResourcesPage.clickMainTypeDocumentNavigationButton();
 
-        ResourcesPage.openEditByDoubleClickResource('context1');
+        ResourcesPage.openEditByDoubleClickResource('SI0');
         DoceditPage.clickDeleteDocument();
-        DoceditPage.typeInIdentifierInConfirmDeletionInputField('context1');
+        DoceditPage.typeInIdentifierInConfirmDeletionInputField('SI0');
         DoceditPage.clickConfirmDeleteInModal();
 
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
             expect(navigationButtons.length).toBe(1);
             expect(navigationButtons[0].getText()).toEqual('trench1');
@@ -458,11 +458,11 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
 
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
-        ResourcesPage.clickMoveIntoButton('context1');
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
+        ResourcesPage.clickMoveIntoButton('SI0');
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('testf1'));
         TaskbarPage.clickSwitchHierarchyMode();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('testf1'));
     });
 
@@ -472,7 +472,7 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToExcavation();
         TaskbarPage.clickSwitchHierarchyMode();
         TaskbarPage.performSelectOperation(0);
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('SI1'));
     });
 
@@ -535,7 +535,7 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('trench1', 0)), delays.ECWaitTime);
 
         NavbarPage.clickNavigateToExcavation();
-        browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('context1', 0)), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('SI0', 0)), delays.ECWaitTime);
 
         NavbarPage.clickNavigateToProject();
         browser.wait(EC.presenceOf(ResourcesPage.getListModeInputField('trench1', 0)), delays.ECWaitTime);
@@ -549,9 +549,9 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
         SearchBarPage.typeInSearchField('abc');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
 
         NavbarPage.clickNavigateToProject();
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('xyz'));
@@ -561,7 +561,7 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('abc'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
     });
 
 
@@ -569,7 +569,7 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         SearchBarPage.typeInSearchField('context_');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
 
         ResourcesPage.clickListModeButton();
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('context_'));
@@ -577,14 +577,14 @@ describe('resources/state --', function() {
 
         ResourcesPage.clickMapModeButton();
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('context_'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
 
         SearchBarPage.typeInSearchField(' ');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
 
         ResourcesPage.clickListModeButton();
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(' '));
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
     });
 
 
@@ -595,17 +595,17 @@ describe('resources/state --', function() {
 
         SearchBarPage.clickChooseTypeFilter('feature');
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
 
         ResourcesPage.clickListModeButton();
         SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('S'));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
 
         ResourcesPage.clickMapModeButton();
         SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('S'));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
 
         SearchBarPage.clickChooseTypeFilter('all');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('f2')), delays.ECWaitTime);

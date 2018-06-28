@@ -77,7 +77,7 @@ describe('project --', function() {
         SearchBarPage.typeInSearchField('con');
         browser.sleep(delays.shortRest * 5);
 
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
 
         ProjectPage.clickProjectsBadge();
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
@@ -124,7 +124,7 @@ describe('project --', function() {
         SearchBarPage.typeInSearchField('con');
         browser.sleep(delays.shortRest * 5);
 
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('context1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
 
         ProjectPage.clickProjectsBadge();
 

@@ -2,6 +2,7 @@ import {browser, by, element, protractor} from 'protractor';
 import {ImportPage} from './import.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {NavbarPage} from '../navbar.page';
+import {TaskbarPage} from '../taskbar.page';
 
 const common = require('../common.js');
 const delays = require('../config/delays');
@@ -56,7 +57,7 @@ describe('import --', function() {
         element(by.css('.alert button')).click();
         NavbarPage.clickNavigateToExcavation();
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob1'));
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob2'));
@@ -68,7 +69,7 @@ describe('import --', function() {
         importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(delays.shortRest);
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.performSelectOperation(0);
+        TaskbarPage.performSelectOperation(0);
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);

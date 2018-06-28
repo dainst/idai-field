@@ -107,8 +107,8 @@ export const DOCS: NewDocument[] = [
     },
     {
         "resource": {
-            "id": "c1",
-            "identifier": "context1",
+            "id": "si0",
+            "identifier": "SI0",
             "shortDescription": "Ein Befund",
             "relations": {
                 "isRecordedIn": [ "t1" ],

@@ -10,6 +10,7 @@ import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {DoceditImageTabPage} from '../docedit/docedit-image-tab.page';
 import {ThumbnailViewPage} from '../widgets/thumbnail-view.page';
 import {ImagePickerModalPage} from '../widgets/image-picker-modal.page';
+import {TaskbarPage} from '../taskbar.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -48,7 +49,7 @@ describe('resources --', () => {
 
         NavbarPage.clickNavigateToImages();
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.openEditByDoubleClickResource('context1');
+        ResourcesPage.openEditByDoubleClickResource('SI0');
         DoceditPage.clickImagesTab();
 
     }
@@ -409,10 +410,10 @@ describe('resources --', () => {
 
     it('maintype -- should create a new main type resource', () => {
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
         ResourcesPage.performCreateMainTypeResource('newTrench');
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('newTrench'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
 
@@ -423,7 +424,7 @@ describe('resources --', () => {
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
-        ResourcesPage.performSelectOperation(1);
+        TaskbarPage.performSelectOperation(1);
     });
 
 

@@ -60,7 +60,7 @@ export class ResourcesStateManager {
 
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesState.activeDocumentViewTab = activeDocumentViewTab;
 
-    public setMode = (mode: 'map' | 'list') => this.resourcesState.mode = mode;
+    public setMode = (mode: 'map' | 'list') => this.resourcesState.mode = mode; // TODO make proper transition for whole state object
 
     public setSelectedDocument = (document: IdaiFieldDocument|undefined) => this.resourcesState = ResourcesState.setSelectedDocument(this.resourcesState, document);
 

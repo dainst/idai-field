@@ -152,12 +152,17 @@ export module ResourcesState {
                     layerIds: {'test': ['o25']},
                     displayHierarchy: true,
                     bypassOperationTypeSelection: false,
-                    navigationPaths: {}
+                    navigationPaths: {
+                        '_all': NavigationPath.empty()
+                    }
                 },
                 excavation: {
                     displayHierarchy: true,
                     bypassOperationTypeSelection: false,
-                    navigationPaths: {'t1': NavigationPath.empty()},
+                    navigationPaths: {
+                        't1': NavigationPath.empty(),
+                        '_all': NavigationPath.empty()
+                    },
                     layerIds: {'t1': ['o25']}
                 }
             },

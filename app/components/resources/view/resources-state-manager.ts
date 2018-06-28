@@ -77,8 +77,6 @@ export class ResourcesStateManager {
 
     public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
 
-    private serialize = () => this.serializer.store(ResourcesState.createObjectToSerialize(this._));
-
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this._.activeDocumentViewTab = activeDocumentViewTab;
 
     public setMode = (mode: 'map' | 'list') => this._.mode = mode;
@@ -192,6 +190,12 @@ export class ResourcesStateManager {
     private getViewState() {
 
         return this._.viewStates[this._.view];
+    }
+
+
+    private serialize() {
+
+        this.serializer.store(ResourcesState.createObjectToSerialize(this._));
     }
 
 

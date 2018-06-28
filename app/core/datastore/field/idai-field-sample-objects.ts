@@ -47,8 +47,8 @@ export const DOCS: NewDocument[] = [
             "identifier": "SI1",
             "shortDescription": "Ein Befund",
             "relations": {
-                "isRecordedIn": [ "t2" ],
-                "isAfter": [ "si2", "si5"],
+                "isRecordedIn": ["t2"],
+                "isAfter": ["si2", "si5"],
             },
             "type": "Feature"
         }
@@ -59,7 +59,7 @@ export const DOCS: NewDocument[] = [
             "identifier": "SI2",
             "shortDescription": "Ein Erdbefund",
             "relations": {
-                "isRecordedIn": [ "t2" ],
+                "isRecordedIn": ["t2"],
                 "isBefore": ["si1"],
                 "isAfter": ["si3"]
             },
@@ -72,7 +72,7 @@ export const DOCS: NewDocument[] = [
             "identifier": "SI3",
             "shortDescription": "Architektur",
             "relations": {
-                "isRecordedIn": [ "t2" ],
+                "isRecordedIn": ["t2"],
                 "isBefore": ["si2"],
                 "isAfter": ["si4"],
                 "isContemporaryWith": ["si5"]
@@ -86,7 +86,7 @@ export const DOCS: NewDocument[] = [
             "identifier": "SI4",
             "shortDescription": "Ein Befund",
             "relations": {
-                "isRecordedIn": [ "t2" ],
+                "isRecordedIn": ["t2"],
                 "isBefore": ["si3"],
             },
             "type": "Feature"
@@ -98,7 +98,7 @@ export const DOCS: NewDocument[] = [
             "identifier": "SI5",
             "shortDescription": "Ein Befund",
             "relations": {
-                "isRecordedIn": [ "t2" ],
+                "isRecordedIn": ["t2"],
                 "isBefore": ["si1"],
                 "isContemporaryWith": ["si3"]
             },
@@ -111,8 +111,8 @@ export const DOCS: NewDocument[] = [
             "identifier": "SI0",
             "shortDescription": "Ein Befund",
             "relations": {
-                "isRecordedIn": [ "t1" ],
-                "includes": [ "tf1" ]
+                "isRecordedIn": ["t1"],
+                "includes": ["tf1"]
             },
             "geometry": {
                 "type": "Polygon",
@@ -133,8 +133,8 @@ export const DOCS: NewDocument[] = [
             "identifier": "testf1",
             "shortDescription": "Testfund",
             "relations": {
-                "isRecordedIn": [ "t1" ],
-                "liesWithin": [ "si0" ]
+                "isRecordedIn": ["t1"],
+                "liesWithin": ["si0"]
             },
             "geometry": {
                 "type": "Point",

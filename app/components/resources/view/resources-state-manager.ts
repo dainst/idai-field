@@ -85,7 +85,7 @@ export class ResourcesStateManager {
 
         this._.view = viewName;
 
-        if (!this.getViewState()) this._.viewStates[this._.view] = ViewState.default();
+        if (!this._.viewStates[this._.view]) this._.viewStates[this._.view] = ViewState.default();
         this.setActiveDocumentViewTab(undefined);
     }
 
@@ -147,11 +147,11 @@ export class ResourcesStateManager {
 
         if (!resourceId) return;
 
-        if (!this.getViewState().navigationPaths[resourceId]) {
-            this.getViewState().navigationPaths[resourceId] = NavigationPath.empty();
+        if (!this._.viewStates[this._.view].navigationPaths[resourceId]) {
+            this._.viewStates[this._.view].navigationPaths[resourceId] = NavigationPath.empty();
             this.notifyNavigationPathObservers();
         }
-        this.getViewState().mainTypeDocumentResourceId = resourceId;
+        this._.viewStates[this._.view].mainTypeDocumentResourceId = resourceId;
     }
 
 
@@ -182,12 +182,6 @@ export class ResourcesStateManager {
 
         this._ = ResourcesState.updateNavigationPath(this._, navPath);
         this.notifyNavigationPathObservers();
-    }
-
-
-    private getViewState() {
-
-        return this._.viewStates[this._.view];
     }
 
 

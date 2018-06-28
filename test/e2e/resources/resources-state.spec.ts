@@ -454,30 +454,6 @@ describe('resources/state --', function() {
     });
 
 
-    it('autoselect last selected main type document on switching views', () => {
-
-        ResourcesPage.performCreateResource('t2', 'trench');
-        ResourcesPage.performCreateResource('b1', 'building');
-        ResourcesPage.performCreateResource('b2', 'building');
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('t2'));
-        TaskbarPage.performSelectOperation(1);
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
-
-        NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b1'));
-        TaskbarPage.performSelectOperation(1);
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b2'));
-
-        NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('trench1'));
-
-        NavbarPage.clickNavigateToBuilding();
-        ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('b2'));
-    });
-
-
     it('keep mode when switching views', () => {
 
         ResourcesPage.clickListModeButton();

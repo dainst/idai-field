@@ -62,6 +62,17 @@ export function main() {
         let idaiFieldDocumentDatastore: CachedDatastore<IdaiFieldDocument>;
 
 
+        /*
+         * project
+         * - trench1
+         *   + feature1
+         *      # find1
+         *      # find2
+         *   + feature2
+         * - trench2
+         */
+
+
         beforeEach(async done => {
 
             spyOn(console, 'debug'); // suppress console.debug
@@ -177,6 +188,18 @@ export function main() {
             expect(viewFacade.getFilterTypes()).toEqual([]);
             await viewFacade.moveInto(undefined);
             expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
+            done();
+        });
+
+
+        it('ViewState -- restore operation type selection after switching views', async done => {
+
+            await viewFacade.selectView('excavation');
+            expect(viewFacade.getSelectedOperationTypeDocument().resource.id).toEqual(trenchDocument1.resource.id);
+            await viewFacade.selectOperationTypeDocument(trenchDocument2);
+            await viewFacade.selectView('project');
+            await viewFacade.selectView('excavation');
+            expect(viewFacade.getSelectedOperationTypeDocument().resource.id).toEqual(trenchDocument2.resource.id);
             done();
         });
 

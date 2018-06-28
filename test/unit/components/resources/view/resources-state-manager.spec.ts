@@ -228,15 +228,6 @@ describe('ResourcesStateManager', () => {
         resourcesStateManager.initialize('excavation');
         resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
 
-        resourcesStateManager.setNavigationPath({
-            segments: [{
-                document: featureDocument1, q: '', types: []
-            }],
-            selectedSegmentId: featureDocument1.resource.id,
-            flatContext: { q: '', types: []},
-            hierarchyContext: { q: '', types: []},
-        });
-
         resourcesStateManager.setTypeFilters(['Find']);
         resourcesStateManager.setQueryString('abc');
 
@@ -258,16 +249,6 @@ describe('ResourcesStateManager', () => {
         resourcesStateManager.initialize('excavation');
         resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
 
-        resourcesStateManager.setNavigationPath({
-            segments: [{
-                document: featureDocument1,
-                types: ['Find1'],
-                q: 'abc'
-            }],
-            selectedSegmentId: featureDocument1.resource.id,
-            flatContext: { q: '', types: []},
-            hierarchyContext: { q: '', types: []},
-        });
         resourcesStateManager.setTypeFilters(undefined);
         resourcesStateManager.setQueryString('');
         expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(undefined);
@@ -283,13 +264,6 @@ describe('ResourcesStateManager', () => {
         resourcesStateManager.initialize('excavation');
         resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
 
-        resourcesStateManager.setNavigationPath({
-            segments: [{
-                document: featureDocument1, q: '', types: []
-            }],
-            flatContext: { q: '', types: []},
-            hierarchyContext: { q: 'abc', types: ['Find1']},
-        });
         resourcesStateManager.setTypeFilters(undefined);
         resourcesStateManager.setQueryString('');
         expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(undefined);

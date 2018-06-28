@@ -118,17 +118,8 @@ export class ResourcesStateManager {
 
     public removeActiveLayersIds() {
 
-        const mainTypeDocumentResourceId = this.getMainTypeDocumentResourceId();
-        if (!mainTypeDocumentResourceId) return;
-
-        delete this.getViewState().layerIds[mainTypeDocumentResourceId];
+        this._ = ResourcesState.removeActiveLayersIds(this._);
         this.serialize();
-    }
-
-
-    public setNavigationPath(navPath: NavigationPath) {
-
-        this._ = ResourcesState.updateNavigationPath(this._, navPath);
     }
 
 
@@ -145,7 +136,7 @@ export class ResourcesStateManager {
             : this.getNavigationPath();
 
         const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
-        this.setNavigationPath(updatedNavigationPath);
+        this._ = ResourcesState.updateNavigationPath(this._, updatedNavigationPath);
         this.notifyNavigationPathObservers();
     }
 
@@ -194,7 +185,7 @@ export class ResourcesStateManager {
         const navPath = NavigationPath.replaceSegmentsIfNecessary(
             this.getNavigationPath(), segments, segments[segments.length - 1].document.resource.id);
 
-        this.setNavigationPath(navPath);
+        this._ = ResourcesState.updateNavigationPath(this._, navPath);
         this.notifyNavigationPathObservers();
     }
 

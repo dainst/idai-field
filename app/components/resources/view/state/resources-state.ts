@@ -70,6 +70,17 @@ export module ResourcesState {
     }
 
 
+    export function removeActiveLayersIds(state: ResourcesState): ResourcesState {
+
+        const cloned = ObjectUtil.cloneObject(state);
+
+        const mainTypeDocumentResourceId = cloned.viewStates[cloned.view].mainTypeDocumentResourceId;
+        if (mainTypeDocumentResourceId) delete cloned.viewStates[cloned.view].layerIds[mainTypeDocumentResourceId];
+
+        return cloned;
+    }
+
+
     export function getActiveLayersIds(state: ResourcesState): string[] {
 
         const mainTypeDocumentResourceId = state.viewStates[state.view].mainTypeDocumentResourceId;

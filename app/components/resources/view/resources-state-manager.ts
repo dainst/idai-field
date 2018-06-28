@@ -151,8 +151,8 @@ export class ResourcesStateManager {
         if (!this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId]) {
             this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId] = NavigationPath.empty();
         }
-        this.notifyNavigationPathObservers();
         this.resourcesState.viewStates[this.resourcesState.view].mainTypeDocumentResourceId = resourceId;
+        this.notifyNavigationPathObservers();
     }
 
 

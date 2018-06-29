@@ -43,8 +43,7 @@ export class DocumentsManager {
     }
 
 
-    public getDocuments = () => this
-        .documents;
+    public getDocuments = () => this.documents;
 
     public getSelectedDocument = () => ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
 

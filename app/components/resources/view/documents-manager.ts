@@ -280,7 +280,7 @@ export class DocumentsManager {
 
             q: ResourcesState.getQueryString(state),
 
-            constraints: DocumentsManager.makeConstraints(
+            constraints: DocumentsManager.buildConstraints(
                 isRecordedInTargetIdOrIds,
                 ResourcesState.getNavigationPath(state).selectedSegmentId,
                 displayHierarchy),
@@ -296,7 +296,7 @@ export class DocumentsManager {
     }
 
 
-    private static makeConstraints(
+    private static buildConstraints(
         isRecordedInIdOrIds: string|string[]|undefined,
         liesWithinId: string|undefined,
         addLiesWithinConstraints: boolean): { [name: string]: string|string[]} {

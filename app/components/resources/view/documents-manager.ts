@@ -39,7 +39,7 @@ export class DocumentsManager {
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading
     ) {
-        remoteChangesStream.notifications().subscribe(document => this.handleChange(document));
+        remoteChangesStream.notifications().subscribe(document => this.handleRemoteChange(document));
     }
 
 
@@ -195,7 +195,7 @@ export class DocumentsManager {
     }
 
 
-    private async handleChange(changedDocument: Document) {
+    private async handleRemoteChange(changedDocument: Document) {
 
         if (!this.documents) return;
         if (this.documents.find(hasEqualId(changedDocument))) return;

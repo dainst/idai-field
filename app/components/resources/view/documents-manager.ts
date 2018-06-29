@@ -192,9 +192,7 @@ export class DocumentsManager {
             return { documents: [], totalCount: 0 };
         }
 
-        const docsQuery = this.makeDocsQuery(isRecordedInTarget);
-
-        return (await this.fetchDocuments(docsQuery));
+        return (await this.fetchDocuments(this.makeDocsQuery(isRecordedInTarget)));
     }
 
 
@@ -202,19 +200,14 @@ export class DocumentsManager {
 
         return this.resourcesStateManager.isInOverview()
             ? undefined
-            : ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get())
-                ? ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get())
-                : undefined;
+            : ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
     }
 
 
     private async makeSureSelectedDocumentAppearsInList(documentToSelect: IdaiFieldDocument) {
 
-        this.operationTypeDocumentsManager
-            .selectLinkedOperationTypeDocumentForSelectedDocument(documentToSelect);
-
+        this.operationTypeDocumentsManager.selectLinkedOperationTypeDocumentForSelectedDocument(documentToSelect);
         await this.resourcesStateManager.updateNavigationPathForDocument(documentToSelect);
-
         await this.adjustQuerySettingsIfNecessary(documentToSelect);
     }
 

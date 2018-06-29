@@ -45,8 +45,6 @@ export class DocumentsManager {
 
     public getDocuments = () => this.documents;
 
-    public getSelectedDocument = () => ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
-
     public getTotalDocumentCount = () => this.totalDocumentCount;
 
     public removeFromDocuments = (document: Document) => this.documents = subtract([document])(this.documents);

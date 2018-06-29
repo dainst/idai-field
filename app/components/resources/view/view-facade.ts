@@ -65,7 +65,7 @@ export class ViewFacade {
 
     public getDocuments = () => this.documentsManager.getDocuments();
 
-    public getSelectedDocument = () => this.documentsManager.getSelectedDocument();
+    public getSelectedDocument = () => ResourcesState.getSelectedDocument(this.resourcesStateManager.get())
 
     public getTotalDocumentCount = () => this.documentsManager.getTotalDocumentCount();
 

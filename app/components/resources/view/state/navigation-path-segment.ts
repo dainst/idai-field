@@ -8,7 +8,7 @@ import {ViewContext} from './view-context';
  */
 export interface NavigationPathSegment extends ViewContext {
 
-    document: IdaiFieldDocument;
+    readonly document: IdaiFieldDocument;
 }
 
 

@@ -5,13 +5,13 @@ import {NavigationPath} from './navigation-path';
  */
 export interface ViewState {
 
-    mainTypeDocumentResourceId?: string;
+    readonly mainTypeDocumentResourceId?: string;
 
-    displayHierarchy: boolean;
-    bypassOperationTypeSelection: boolean; // true means all mainTypeDocuments are selected. used when displayHierarchy is false.
+    readonly displayHierarchy: boolean;
+    readonly bypassOperationTypeSelection: boolean; // true means all mainTypeDocuments are selected. used when displayHierarchy is false.
 
-    layerIds: {[mainTypeDocumentId: string]: string[]};
-    navigationPaths: {[mainTypeDocumentId: string]: NavigationPath};
+    readonly layerIds: {[mainTypeDocumentId: string]: string[]};
+    readonly navigationPaths: {[mainTypeDocumentId: string]: NavigationPath};
 }
 
 
@@ -34,7 +34,7 @@ export class ViewState {
     public static complete(viewState: ViewState) {
 
         if (!viewState.layerIds || Array.isArray(viewState.layerIds)) {
-            viewState.layerIds = {};
+            (viewState as any).layerIds = {};
         } else {
             for (let key of Object.keys(viewState.layerIds)) {
                 if (!Array.isArray(viewState.layerIds[key])) {
@@ -43,7 +43,7 @@ export class ViewState {
             }
         }
 
-        viewState.displayHierarchy = true;
-        viewState.navigationPaths = {};
+        (viewState as any).displayHierarchy = true;
+        (viewState as any).navigationPaths = {};
     }
 }

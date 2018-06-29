@@ -180,7 +180,8 @@ export class ResourcesStateManager {
         if (!this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId]) {
             this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId] = NavigationPath.empty();
         }
-        this.resourcesState.viewStates[this.resourcesState.view].mainTypeDocumentResourceId = resourceId;
+
+        this.resourcesState = ResourcesState.setMainTypeDocumentResourceId(this.resourcesState, resourceId);
         this.notifyNavigationPathObservers();
     }
 
@@ -243,7 +244,7 @@ export class ResourcesStateManager {
         for (let viewName of Object.keys(state.viewStates)) {
             objectToSerialize[viewName] = {} as any;
             if (ResourcesState.getLayerIds(state)) {
-                objectToSerialize[viewName].layerIds = ResourcesState.getLayerIds(state);
+                (objectToSerialize[viewName] as any).layerIds = ResourcesState.getLayerIds(state);
             }
         }
 

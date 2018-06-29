@@ -223,15 +223,22 @@ export module ResourcesState {
     export function setDisplayHierarchy(state: ResourcesState, displayHierarchy: boolean): ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
-        cloned.viewStates[cloned.view].displayHierarchy = displayHierarchy;
+        (cloned.viewStates[cloned.view] as any).displayHierarchy = displayHierarchy;
         return cloned;
     }
 
 
+    export function setMainTypeDocumentResourceId(state: ResourcesState, mainTypeDocumentResourceId: string): ResourcesState {
+
+        const cloned = ObjectUtil.cloneObject(state);
+        (cloned.viewStates[cloned.view] as any).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
+        return cloned;
+    }
+
     export function setBypassOperationTypeSelection(state: ResourcesState, bypassOperationTypeSelection: boolean): ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
-        cloned.viewStates[cloned.view].bypassOperationTypeSelection = bypassOperationTypeSelection;
+        (cloned.viewStates[cloned.view] as any).bypassOperationTypeSelection = bypassOperationTypeSelection;
         return cloned;
     }
 

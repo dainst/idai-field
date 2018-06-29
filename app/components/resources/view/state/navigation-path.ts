@@ -13,16 +13,16 @@ import {ModelUtil} from '../../../../core/model/model-util';
  */
 export interface NavigationPath {
 
-    hierarchyContext: ViewContext;
-    flatContext: ViewContext;
+    readonly hierarchyContext: ViewContext;
+    readonly flatContext: ViewContext;
 
-    segments: Array<NavigationPathSegment>;
+    readonly segments: Array<NavigationPathSegment>;
 
     /**
      * The selected segment is 'identified' by this id.
      * It corresponds with segment[_].document.resource.id.
      */
-    selectedSegmentId?: string;
+    readonly selectedSegmentId?: string;
 }
 
 
@@ -85,12 +85,12 @@ export module NavigationPath {
         const updatedNavigationPath = ObjectUtil.cloneObject(navPath);
 
         if (newSelectedSegmentDoc) {
-            updatedNavigationPath.segments = rebuildElements(
+            (updatedNavigationPath as any).segments = rebuildElements(
                 navPath.segments,
                 navPath.selectedSegmentId,
                 newSelectedSegmentDoc);
         }
-        updatedNavigationPath.selectedSegmentId = newSelectedSegmentDoc ? newSelectedSegmentDoc.resource.id : undefined;
+        (updatedNavigationPath as any).selectedSegmentId = newSelectedSegmentDoc ? newSelectedSegmentDoc.resource.id : undefined;
 
         return updatedNavigationPath;
     }
@@ -99,7 +99,7 @@ export module NavigationPath {
     export function setSelectedDocument(navPath: NavigationPath, displayHierarchy: boolean, document: IdaiFieldDocument|undefined) {
 
         const clone = ObjectUtil.cloneObject(navPath);
-        getViewContext(clone, displayHierarchy).selected = document;
+        (getViewContext(clone, displayHierarchy) as any).selected = document;
         return clone;
     }
 
@@ -113,7 +113,7 @@ export module NavigationPath {
     export function setQueryString(navPath: NavigationPath, displayHierarchy: boolean, q: string) {
 
         const clone = ObjectUtil.cloneObject(navPath);
-        getViewContext(clone, displayHierarchy).q = q;
+        (getViewContext(clone, displayHierarchy) as any).q = q;
         return clone;
     }
 
@@ -127,7 +127,7 @@ export module NavigationPath {
     export function setTypeFilters(navPath: NavigationPath, displayHierarchy: boolean, types: string[]) {
 
         const clone = ObjectUtil.cloneObject(navPath);
-        getViewContext(clone, displayHierarchy).types = types;
+        (getViewContext(clone, displayHierarchy) as any).types = types;
         return clone;
     }
 
@@ -141,10 +141,10 @@ export module NavigationPath {
     export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
         const shortenedNavigationPath = ObjectUtil.cloneObject(navPath);
-        shortenedNavigationPath.segments = takeWhile(differentFrom(firstToBeExcluded))(navPath.segments);
+        (shortenedNavigationPath as any).segments = takeWhile(differentFrom(firstToBeExcluded))(navPath.segments);
 
         if (navPath.selectedSegmentId === firstToBeExcluded.document.resource.id) { // TODO should be: if selectedSegmentId is not contained in the surviving segments
-            shortenedNavigationPath.selectedSegmentId = undefined;
+            (shortenedNavigationPath as any).selectedSegmentId = undefined;
         }
 
         return shortenedNavigationPath;
@@ -215,9 +215,9 @@ export module NavigationPath {
 
         const updatedNavigationPath = ObjectUtil.cloneObject(navPath);
 
-        if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) updatedNavigationPath.segments = newSegments;
+        if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) (updatedNavigationPath as any).segments = newSegments;
 
-        updatedNavigationPath.selectedSegmentId = newSelectedSegmentId;
+        (updatedNavigationPath as any).selectedSegmentId = newSelectedSegmentId;
         return updatedNavigationPath;
     }
 

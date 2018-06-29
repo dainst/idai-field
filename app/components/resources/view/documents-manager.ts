@@ -12,7 +12,6 @@ import {subtract, unique} from 'tsfun';
 import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../../core/datastore/core/cached-read-datastore';
 import {ResourcesState} from './state/resources-state';
-import {NavigationPath} from './state/navigation-path';
 
 
 /**

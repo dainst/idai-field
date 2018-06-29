@@ -139,6 +139,46 @@ export class DocumentsManager {
     }
 
 
+    public async populateDocumentList(skipResetRemoteDocs = false) {
+
+        this.loading.start();
+
+        if (!skipResetRemoteDocs) this.newDocumentsFromRemote = [];
+        this.documents = [];
+
+        const result: IdaiFieldFindResult<IdaiFieldDocument> = await this.createUpdatedDocumentList();
+        this.documents = result.documents;
+        this.totalDocumentCount = result.totalCount;
+
+        this.loading.stop();
+        ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
+    }
+
+
+    public async createUpdatedDocumentList(): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
+
+        const isRecordedInTarget = this.makeIsRecordedInTarget();
+        if (!isRecordedInTarget && !this.resourcesStateManager.isInOverview()) {
+            return { documents: [], totalCount: 0 };
+        }
+
+        const state = this.resourcesStateManager.get();
+
+        const isRecordedInTargetIdOrIds = DocumentsManager.chooseIsRecordedInTargetIdOrIds(isRecordedInTarget,
+            () => this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id),
+            ResourcesState.getDisplayHierarchy(state),
+            ResourcesState.getBypassOperationTypeSelection(state));
+
+        return (await this.fetchDocuments(
+                DocumentsManager.buildQuery(
+                    isRecordedInTargetIdOrIds,
+                    state,
+                    this.resourcesStateManager.isInOverview(),
+                    this.resourcesStateManager.getOverviewTypeNames()))
+        );
+    }
+
+
     private selectAndNotify(document: IdaiFieldDocument|undefined) {
 
         if (ResourcesState.getSelectedDocument(this.resourcesStateManager.get())) {
@@ -167,33 +207,6 @@ export class DocumentsManager {
 
         this.newDocumentsFromRemote = unique(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
         await this.populateDocumentList(true);
-    }
-
-
-    public async populateDocumentList(skipResetRemoteDocs = false) {
-
-        this.loading.start();
-
-        if (!skipResetRemoteDocs) this.newDocumentsFromRemote = [];
-        this.documents = [];
-
-        const result: IdaiFieldFindResult<IdaiFieldDocument> = await this.createUpdatedDocumentList();
-        this.documents = result.documents;
-        this.totalDocumentCount = result.totalCount;
-
-        this.loading.stop();
-        ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
-    }
-
-
-    public async createUpdatedDocumentList(): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
-
-        const isRecordedInTarget = this.makeIsRecordedInTarget();
-        if (!isRecordedInTarget && !this.resourcesStateManager.isInOverview()) {
-            return { documents: [], totalCount: 0 };
-        }
-
-        return (await this.fetchDocuments(this.makeDocsQuery(isRecordedInTarget)));
     }
 
 
@@ -229,33 +242,6 @@ export class DocumentsManager {
     }
 
 
-    private makeDocsQuery(mainTypeDocumentResourceId: string|undefined): Query {
-
-        const q: Query = {
-
-            q: ResourcesState.getQueryString(this.resourcesStateManager.get()),
-
-            constraints: DocumentsManager.makeConstraints(
-                            this.getIsRecordedInConstraintValues(mainTypeDocumentResourceId),
-                            ResourcesState.getNavigationPath(this.resourcesStateManager.get()),
-                            ResourcesState.getDisplayHierarchy(this.resourcesStateManager.get())),
-
-            types: (ResourcesState.getTypeFilters(this.resourcesStateManager.get()).length > 0)
-                ? ResourcesState.getTypeFilters(this.resourcesStateManager.get())
-                : undefined
-        };
-
-        if (!mainTypeDocumentResourceId && this.resourcesStateManager.isInOverview() && !q.types) {
-
-            q.types = this.resourcesStateManager.getOverviewTypeNames();
-        }
-
-        if (!ResourcesState.getDisplayHierarchy(this.resourcesStateManager.get())) q.limit = DocumentsManager.documentLimit;
-
-        return q;
-    }
-
-
     private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
 
         try {
@@ -267,31 +253,62 @@ export class DocumentsManager {
     }
 
 
-    private getIsRecordedInConstraintValues(mainTypeDocumentResourceId: string|undefined): string|string[]|undefined {
+    private static chooseIsRecordedInTargetIdOrIds(
+        mainTypeDocumentResourceId: string|undefined,
+        operationTypeDocumentIds: () => string[],
+        displayHierarchy: boolean,
+        bypassOperationTypeSelection: boolean): string|string[]|undefined {
 
         if (!mainTypeDocumentResourceId) return undefined;
-        return ResourcesState.getBypassOperationTypeSelection(this.resourcesStateManager.get())
-            && !ResourcesState.getDisplayHierarchy(this.resourcesStateManager.get())
-        ? this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id)
-        : mainTypeDocumentResourceId;
+
+        return bypassOperationTypeSelection && !displayHierarchy
+            ? operationTypeDocumentIds()
+            : mainTypeDocumentResourceId;
+    }
+
+
+    private static buildQuery(
+        isRecordedInTargetIdOrIds: string|string[]|undefined,
+        state: ResourcesState,
+        isInOverview: boolean,
+        overviewTypeNames: string[]
+    ): Query {
+
+        const displayHierarchy = ResourcesState.getDisplayHierarchy(state);
+        const typeFilters = ResourcesState.getTypeFilters(state);
+
+        return {
+
+            q: ResourcesState.getQueryString(state),
+
+            constraints: DocumentsManager.makeConstraints(
+                isRecordedInTargetIdOrIds,
+                ResourcesState.getNavigationPath(state).selectedSegmentId,
+                displayHierarchy),
+
+            types: (typeFilters.length > 0)
+                ? typeFilters
+                : !isRecordedInTargetIdOrIds && isInOverview
+                    ? overviewTypeNames
+                    : undefined,
+
+            limit: !displayHierarchy ? DocumentsManager.documentLimit : undefined
+        };
     }
 
 
     private static makeConstraints(
-        mainTypeDocumentResourceIdOrIds: string|string[]|undefined,
-        navigationPath: NavigationPath,
-        addLiesWithinConstraints: boolean,): { [name: string]: string|string[]} {
+        isRecordedInIdOrIds: string|string[]|undefined,
+        liesWithinId: string|undefined,
+        addLiesWithinConstraints: boolean): { [name: string]: string|string[]} {
 
         const constraints: { [name: string]: string|string[] } = addLiesWithinConstraints
-            ? navigationPath.selectedSegmentId
-                ? { 'liesWithin:contain': navigationPath.selectedSegmentId }
+            ? liesWithinId
+                ? { 'liesWithin:contain': liesWithinId }
                 : { 'liesWithin:exist': 'UNKNOWN' }
             : {};
 
-        if (mainTypeDocumentResourceIdOrIds) {
-            constraints['isRecordedIn:contain'] = mainTypeDocumentResourceIdOrIds;
-        }
-
+        if (isRecordedInIdOrIds) constraints['isRecordedIn:contain'] = isRecordedInIdOrIds;
         return constraints;
     }
 

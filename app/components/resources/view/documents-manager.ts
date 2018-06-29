@@ -12,6 +12,7 @@ import {subtract, unique} from 'tsfun';
 import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../../core/datastore/core/cached-read-datastore';
 import {ResourcesState} from './state/resources-state';
+import {NavigationPath} from './state/navigation-path';
 
 
 /**
@@ -231,16 +232,20 @@ export class DocumentsManager {
     private makeDocsQuery(mainTypeDocumentResourceId: string|undefined): Query {
 
         const q: Query = {
+
             q: ResourcesState.getQueryString(this.resourcesStateManager.get()),
-            constraints: this.makeConstraints(mainTypeDocumentResourceId),
+
+            constraints: DocumentsManager.makeConstraints(
+                            this.getIsRecordedInConstraintValues(mainTypeDocumentResourceId),
+                            ResourcesState.getNavigationPath(this.resourcesStateManager.get()),
+                            ResourcesState.getDisplayHierarchy(this.resourcesStateManager.get())),
+
             types: (ResourcesState.getTypeFilters(this.resourcesStateManager.get()).length > 0)
                 ? ResourcesState.getTypeFilters(this.resourcesStateManager.get())
                 : undefined
         };
 
-        if (!mainTypeDocumentResourceId
-            && this.resourcesStateManager.isInOverview()
-            && !q.types) {
+        if (!mainTypeDocumentResourceId && this.resourcesStateManager.isInOverview() && !q.types) {
 
             q.types = this.resourcesStateManager.getOverviewTypeNames();
         }
@@ -262,32 +267,32 @@ export class DocumentsManager {
     }
 
 
-    private makeConstraints(mainTypeDocumentResourceId: string|undefined)
-            : { [name: string]: string|string[]} {
+    private getIsRecordedInConstraintValues(mainTypeDocumentResourceId: string|undefined): string|string[]|undefined {
 
-        const navigationPath = ResourcesState.getNavigationPath(this.resourcesStateManager.get());
-
-        const constraints: { [name: string]: string|string[] } = !ResourcesState.getDisplayHierarchy(this.resourcesStateManager.get())
-            ? {}
-            : navigationPath.selectedSegmentId
-                ? { 'liesWithin:contain': navigationPath.selectedSegmentId }
-                : { 'liesWithin:exist': 'UNKNOWN' };
-
-        if (mainTypeDocumentResourceId) {
-            constraints['isRecordedIn:contain']
-                = this.getIsRecordedInConstraintValues(mainTypeDocumentResourceId);
-        }
-
-        return constraints;
-    }
-
-
-    private getIsRecordedInConstraintValues(mainTypeDocumentResourceId: string): string|string[] {
-
+        if (!mainTypeDocumentResourceId) return undefined;
         return ResourcesState.getBypassOperationTypeSelection(this.resourcesStateManager.get())
             && !ResourcesState.getDisplayHierarchy(this.resourcesStateManager.get())
         ? this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id)
         : mainTypeDocumentResourceId;
+    }
+
+
+    private static makeConstraints(
+        mainTypeDocumentResourceIdOrIds: string|string[]|undefined,
+        navigationPath: NavigationPath,
+        addLiesWithinConstraints: boolean,): { [name: string]: string|string[]} {
+
+        const constraints: { [name: string]: string|string[] } = addLiesWithinConstraints
+            ? navigationPath.selectedSegmentId
+                ? { 'liesWithin:contain': navigationPath.selectedSegmentId }
+                : { 'liesWithin:exist': 'UNKNOWN' }
+            : {};
+
+        if (mainTypeDocumentResourceIdOrIds) {
+            constraints['isRecordedIn:contain'] = mainTypeDocumentResourceIdOrIds;
+        }
+
+        return constraints;
     }
 
 

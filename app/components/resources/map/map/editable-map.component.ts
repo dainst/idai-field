@@ -53,7 +53,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         this.editableMarker.unbindTooltip();
         let color = this.typeColors[this.selectedDocument.resource.type];
-        this.editableMarker.setIcon(this.generateMarkerIcon(color, 'active'));
+        this.editableMarker.setIcon(EditableMapComponent.generateMarkerIcon(color, 'active'));
         (this.editableMarker.dragging as any).enable();
         this.editableMarker.setZIndexOffset(1000);
     }
@@ -126,7 +126,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         let color = this.typeColors[this.selectedDocument.resource.type];
         this.editableMarker = L.marker(position, {
-            icon: this.generateMarkerIcon(color, 'active'),
+            icon: EditableMapComponent.generateMarkerIcon(color, 'active'),
             draggable: true,
             zIndexOffset: 1000
         });

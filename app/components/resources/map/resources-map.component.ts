@@ -24,7 +24,7 @@ export class ResourcesMapComponent {
 
     @Input() activeTab: string;
 
-    private parentDocument: Document|undefined;
+    private parentDocuments: Array<Document>;
 
 
     constructor(
@@ -36,10 +36,10 @@ export class ResourcesMapComponent {
         private settingsService: SettingsService,
         private messages: Messages
     ) {
-        this.parentDocument = this.getParentDocument(this.viewFacade.getNavigationPath());
+        this.parentDocuments = this.getParentDocuments(this.viewFacade.getNavigationPath());
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
-            this.parentDocument = this.getParentDocument(path);
+            this.parentDocuments = this.getParentDocuments(path);
         });
     }
 
@@ -116,13 +116,20 @@ export class ResourcesMapComponent {
     }
 
 
-    private getParentDocument(navigationPath: NavigationPath): Document|undefined {
+    private getParentDocuments(navigationPath: NavigationPath): Array<Document> {
 
-        if (!navigationPath.selectedSegmentId) return this.getIsRecordedInTarget();
+        if (!this.viewFacade.getDisplayHierarchy() && this.viewFacade.getBypassOperationTypeSelection()) {
+            return this.viewFacade.getOperationTypeDocuments();
+        }
+
+        if (!navigationPath.selectedSegmentId) {
+            const isRecordedInTarget: Document|undefined = this.getIsRecordedInTarget();
+            return isRecordedInTarget ? [isRecordedInTarget] : [];
+        }
 
         const segment = navigationPath.segments
             .find(_ => _.document.resource.id === navigationPath.selectedSegmentId);
 
-        return segment ? segment.document : undefined;
+        return segment ? [segment.document] : [];
     }
 }

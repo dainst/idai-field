@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ResourcesComponent} from '../../resources.component';
 import {ObjectUtil} from '../../../../util/object-util';
 import {RoutingService} from '../../../routing-service';
@@ -21,11 +21,6 @@ import {ViewFacade} from '../../view/view-facade';
 export class DocumentViewSidebarComponent {
 
     @ViewChild('tabs') tabs: NgbTabset;
-
-    // for clean and refactor safe template, and to help find usages
-    public jumpToRelationTarget = (documentToSelect: Document) => this.routingService.jumpToRelationTarget(
-        documentToSelect, 'relations');
-
 
     public relationsToHide = ['liesWithin', 'isRecordedIn', 'includes'];
 
@@ -59,5 +54,12 @@ export class DocumentViewSidebarComponent {
                 && this.relationsToHide.indexOf(name) === -1
                 && relations[name].length > 0;
         }).length > 0;
+    }
+
+
+    public jumpToRelationTarget(documentToSelect: IdaiFieldDocument) {
+        
+        this.routingService.jumpToRelationTarget(documentToSelect, 'relations');
+        this.resourcesComponent.setScrollTarget(documentToSelect);
     }
 }

@@ -1,4 +1,4 @@
-<div *ngIf="typesTreeList">
+<div *ngIf="typesTreeList && status === 'enabled'">
     <div *ngIf="getButtonType() === 'multipleTypes'"
              class="circular-button green-button"
              [ngbPopover]="newObjectMenu" #popover="ngbPopover"
@@ -25,6 +25,11 @@
             <span class="mdi mdi-plus mdi-18px"></span>
         </div>
     </div>
+</div>
+
+<div *ngIf="status !== 'enabled'" class="circular-button green-button disabled"
+     ngbTooltip="{{getTooltip()}}">
+    <span class="mdi mdi-plus"></span>
 </div>
 
 <ng-template #newObjectMenu>

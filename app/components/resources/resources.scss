@@ -4,14 +4,15 @@
  * @author Thomas Kleinke
  */
 
+@import 'plus-button';
 @import 'navigation/navigation';
 @import 'map/map/map';
 @import 'map/resources-map';
 @import 'map/detail/document-detail-sidebar';
 @import 'map/detail/geometry-view';
+@import 'map/detail/thumbnail-view';
 @import 'list/list';
 @import 'list/row';
-@import 'map/detail/thumbnail-view';
 @import 'searchbar/resources-search-bar';
 @import 'searchbar/search-suggestions';
 

@@ -3,6 +3,7 @@ import {ResourcesComponent} from './resources.component';
 import {ViewFacade} from './view/view-facade';
 import {Loading} from '../../widgets/loading';
 import {NavigationPath} from './view/state/navigation-path';
+import {PlusButtonStatus} from './plus-button.component';
 
 /**
  * @author Philipp Gerth
@@ -32,16 +33,26 @@ export class BaseList {
 
 
     // TODO unit test this
-    public showPlusButton(): boolean {
+    public isPlusButtonShown(): boolean {
 
-        return (!this.resourcesComponent.isEditingGeometry && this.resourcesComponent.ready
-            && !this.loading.showIcons && (this.viewFacade.getSearchString() === '')
-            && (this.viewFacade.isInOverview() || (
-                    this.viewFacade.getSelectedOperationTypeDocument() !== undefined
-                    && this.viewFacade.getDisplayHierarchy()
-                )
-            )
-        );
+        return !this.resourcesComponent.isEditingGeometry
+            && this.resourcesComponent.ready
+            && !this.loading.showIcons
+            && (this.viewFacade.isInOverview()
+                || this.viewFacade.getSelectedOperationTypeDocument() !== undefined);
+    }
+
+
+    // TODO unit test this
+    public getPlusButtonStatus(): PlusButtonStatus {
+
+        if (!this.viewFacade.getDisplayHierarchy()) {
+            return 'disabled-hierarchy';
+        } else if (this.viewFacade.getSearchString() !== '') {
+            return 'disabled-search';
+        } else {
+            return 'enabled';
+        }
     }
 
 

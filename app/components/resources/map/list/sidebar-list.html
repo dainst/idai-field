@@ -27,9 +27,9 @@
     </li>
 </ul>
 
-<plus-button *ngIf="showPlusButton()"
-             id="create-document-button" [placement]="'top'"
+<plus-button *ngIf="isPlusButtonShown()" id="create-document-button" [placement]="'top'"
              [preselectedType]="viewFacade.getCurrentFilterType()"
              [liesWithin]="getSelectedSegmentDoc()"
-             [isRecordedIn]="resourcesComponent.getSelectedOperationTypeDocument()"></plus-button>
+             [isRecordedIn]="resourcesComponent.getSelectedOperationTypeDocument()"
+             [status]="getPlusButtonStatus()"></plus-button>
 <loading-icon></loading-icon>

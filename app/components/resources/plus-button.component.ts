@@ -8,6 +8,9 @@ import {M} from '../../m';
 import {TypeUtility} from '../../core/model/type-utility';
 
 
+export type PlusButtonStatus = 'enabled'|'disabled-search'|'disabled-hierarchy';
+
+
 @Component({
     selector: 'plus-button',
     moduleId: module.id,
@@ -26,12 +29,12 @@ export class PlusButtonComponent implements OnChanges {
     @Input() preselectedType: string;
     @Input() preselectedGeometryType: string;
     @Input() skipFormAndReturnNewDocument: boolean = false;
+    @Input() status: PlusButtonStatus = 'enabled';
 
     @Output() documentRequested: EventEmitter<IdaiFieldDocument> =
         new EventEmitter<IdaiFieldDocument>();
 
     @ViewChild('popover') private popover: any;
-
 
     private typesTreeList: Array<IdaiType>;
     private type: string|undefined;
@@ -96,6 +99,19 @@ export class PlusButtonComponent implements OnChanges {
 
         this.type = type.name;
         if (this.preselectedGeometryType) this.startDocumentCreation();
+    }
+
+
+    public getTooltip(): string {
+
+        switch(this.status) {
+            case 'enabled':
+                return '';
+            case 'disabled-search':
+                return 'Bitte löschen Sie den Suchtext, um neue Ressourcen anlegen zu können.';
+            case 'disabled-hierarchy':
+                return 'Bitte aktivieren Sie die Hierarchieanzeige, um neue Ressourcen anlegen zu können.';
+        }
     }
 
 

@@ -23,12 +23,13 @@
     </div>
 </div>
 <div id="list-background" class="bg-light">
-    <plus-button *ngIf="showPlusButton()"
+    <plus-button *ngIf="isPlusButtonShown()"
                  id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
                  [preselectedType]="viewFacade.getCurrentFilterType()"
                  [liesWithin]="getSelectedSegmentDoc()"
                  [isRecordedIn]="resourcesComponent.getSelectedOperationTypeDocument()"
                  [skipFormAndReturnNewDocument]="true"
+                 [status]="getPlusButtonStatus()"
                  (documentRequested)="createNewDocument($event)"></plus-button>
     <loading-icon></loading-icon>
 </div>

@@ -1,0 +1,12 @@
+/*
+ * @author Thomas Kleinke
+ */
+
+.green-button.disabled {
+  background-color: #ababab;
+  cursor: not-allowed;
+
+  &:hover {
+    background-color: #ababab;
+  }
+}

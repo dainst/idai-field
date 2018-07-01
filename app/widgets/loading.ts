@@ -7,7 +7,6 @@ import {Injectable} from '@angular/core';
  */
 export class Loading {
 
-
     public showIcons: boolean = false;
 
     private loading: number = 0;

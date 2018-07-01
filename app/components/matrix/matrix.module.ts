@@ -5,12 +5,14 @@ import {MatrixViewComponent} from './matrix-view.component';
 import {GraphComponent} from './graph.component';
 import {RouterModule} from '@angular/router';
 import {MatrixState} from './matrix-state';
+import {WidgetsModule} from '../../widgets/widgets.module';
 
 @NgModule({
     imports: [
         BrowserModule,
         NgbModule,
-        RouterModule
+        RouterModule,
+        WidgetsModule
     ],
     declarations: [
         MatrixViewComponent,

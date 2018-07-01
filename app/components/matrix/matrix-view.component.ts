@@ -7,6 +7,7 @@ import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixState} from './matrix-state';
 import {IdaiFieldFeatureDocumentReadDatastore} from '../../core/datastore/field/idai-field-feature-document-read-datastore';
 import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-document';
+import {Loading} from '../../widgets/loading';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class MatrixViewComponent implements OnInit {
         private datastore: IdaiFieldDocumentReadDatastore,
         private featureDatastore: IdaiFieldFeatureDocumentReadDatastore,
         private modalService: NgbModal,
-        private matrixState: MatrixState
+        private matrixState: MatrixState,
+        private loading: Loading
     ) {}
 
 
@@ -46,7 +48,7 @@ export class MatrixViewComponent implements OnInit {
 
     public showGraph = () => !this.noTrenches() && !this.noFeatures();
 
-    public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures();
+    public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures() && !this.loading.showIcons;
 
     public showNoTrenchesWarning = () => this.noTrenches();
 
@@ -105,9 +107,20 @@ export class MatrixViewComponent implements OnInit {
 
         this.selectedTrench = trench;
         this.matrixState.selectedTrenchId = this.selectedTrench.resource.id;
+        this.featureDocuments = [];
+
+        await this.loadFeatureDocuments(trench);
+    }
+
+
+    private async loadFeatureDocuments(trench: IdaiFieldDocument) {
+
+        this.loading.start();
 
         this.featureDocuments = (await this.featureDatastore.find( {
-            constraints: { 'isRecordedIn:contain': this.selectedTrench.resource.id }
+            constraints: { 'isRecordedIn:contain': trench.resource.id }
         })).documents;
+
+        this.loading.stop();
     }
 }

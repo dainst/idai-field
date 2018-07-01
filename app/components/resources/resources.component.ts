@@ -158,8 +158,11 @@ export class ResourcesComponent implements AfterViewChecked {
         this.setScrollTarget(this.viewFacade.getSelectedDocument());
 
         try {
-            if (menu == 'edit') this.editDocument(this.viewFacade.getSelectedDocument(), tab);
-            else await this.viewFacade.setActiveDocumentViewTab(tab)
+            if (menu == 'edit') {
+                await this.editDocument(this.viewFacade.getSelectedDocument(), tab);
+            } else {
+                await this.viewFacade.setActiveDocumentViewTab(tab)
+            }
         } catch (e) {
             this.messages.add([M.DATASTORE_NOT_FOUND]);
         }

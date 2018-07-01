@@ -1,6 +1,6 @@
 <div id="matrix-view" class="row bg-light py-2">
-
-    <div *ngIf="showTrenchSelector()" class="btn-group" ngbDropdown placement="bottom-left" role="group">
+    <div *ngIf="showTrenchSelector()" class="btn-group operation-document-selector"
+         ngbDropdown placement="bottom-left" role="group">
         <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
         <div class="dropdown-menu" ngbDropdownMenu>
             <button *ngFor="let trench of trenches" class="dropdown-item" (click)="selectTrench(trench)">
@@ -8,14 +8,15 @@
             </button>
         </div>
 
-        <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">{{getDocumentLabel(selectedTrench)}}</div>
+        <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">
+            {{getDocumentLabel(selectedTrench)}}
+        </div>
     </div>
 
     <div *ngIf="!showTrenchSelector()" id="trench-selector-placeholder"></div>
 </div>
 
 <div id="matrix-container">
-
     <div *ngIf="showNoTrenchesWarning()"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
         <em>Legen Sie eine Ressource vom Typ 'Schnitt' in der

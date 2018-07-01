@@ -145,3 +145,36 @@ type-switcher-button {
     transition: filter .3s ease;
   }
 }
+
+.btn-outline-primary:active {
+  box-shadow: inset 5px 5px 9px -7px rgba(0, 0, 0, 0.7);
+  color: #5572A1;
+  background-color: #fff;
+  border-color: #5572A1;
+}
+
+.show > .btn-outline-primary.dropdown-toggle {
+  @extend :active;
+  border-color: #5572A1;
+}
+
+.operation-document-selector {
+
+  .dropdown-item {
+    cursor: pointer;
+  }
+
+  .dropdown-item:hover {
+    background-color: $list-item-hover-color;
+  }
+
+  .dropdown-item:active {
+    background-color: darken($list-item-hover-color, 5%);
+    color: #000;
+    outline: 0;
+  }
+
+  hr {
+    margin: 7px 0 9px 0;
+  }
+}

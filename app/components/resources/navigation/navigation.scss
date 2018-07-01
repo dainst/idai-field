@@ -28,13 +28,6 @@
     border-left-color: #5572A1;
   }
 
-  .btn-outline-primary:active {
-    box-shadow: inset 5px 5px 9px -7px rgba(0, 0, 0, 0.7);
-    color: #5572A1;
-    background-color: #fff;
-    border-color: #5572A1;
-  }
-
   .navigation-button:not(:last-child):before, .navigation-button:not(:last-child):after {
     position: absolute;
     top: 50%;
@@ -61,31 +54,5 @@
 
   .root-document ~ .navigation-button:not(:last-child):before {
     border-left-color: lighten(#5572A1, 30%);
-  }
-
-  #operation-document-selector {
-
-    .dropdown-item {
-      cursor: pointer;
-    }
-
-    .dropdown-item:hover {
-      background-color: $list-item-hover-color;
-    }
-
-    .dropdown-item:active {
-      background-color: darken($list-item-hover-color, 5%);
-      color: #000;
-      outline: 0;
-    }
-
-    hr {
-      margin: 7px 0 9px 0;
-    }
-  }
-
-  .show > .btn-outline-primary.dropdown-toggle {
-    @extend :active;
-    border-color: #5572A1;
   }
 }

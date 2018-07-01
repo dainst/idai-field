@@ -37,7 +37,6 @@ export class GraphComponent implements OnInit, OnChanges {
     private static mouseDownProperties: any = null;
 
 
-
     constructor(
         private renderer: Renderer2,
         private projectConfiguration: ProjectConfiguration

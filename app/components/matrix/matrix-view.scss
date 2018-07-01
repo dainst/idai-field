@@ -28,13 +28,12 @@
   }
 }
 
-
 #matrix-container {
   position: absolute;
   padding-top: 58px;
-
-  width: calc(100% - 10px);
-  height: calc(100vh - 61px);
+  width: calc(100% - 15px);
+  height: calc(100vh - 57px);
+  overflow: hidden;
 
   .no-main-type-resource-alert {
     position: absolute;

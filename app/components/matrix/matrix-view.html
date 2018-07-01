@@ -23,13 +23,11 @@
         </em>
     </div>
 
-
     <div *ngIf="showNoResourcesWarning()"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
         <em>Legen Sie für den ausgewählten Schnitt Ressourcen vom Typ 'Stratigrafische Einheit' in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen Relationen.
         </em>
     </div>
-
 
     <graph *ngIf="showGraph()" [documents]="featureDocuments" (onSelect)="select($event)"></graph>
 </div>

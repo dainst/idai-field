@@ -234,7 +234,7 @@ describe('resources/state --', function() {
 
     it('search/suggestion -- do not show suggestions if any resources in current context are found', done => {
 
-        SearchBarPage.typeInSearchField('t');
+        SearchBarPage.typeInSearchField('S');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         browser.wait(EC.invisibilityOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));

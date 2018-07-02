@@ -37,7 +37,7 @@ export class BaseList {
 
         return !this.resourcesComponent.isEditingGeometry
             && this.resourcesComponent.ready
-            && !this.loading.showIcons
+            && !this.loading.isLoading()
             && (this.viewFacade.isInOverview()
                 || this.viewFacade.getSelectedOperationTypeDocument() !== undefined);
     }

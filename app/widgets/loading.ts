@@ -7,69 +7,23 @@ import {Injectable} from '@angular/core';
  */
 export class Loading {
 
-    public showIcons: boolean = false;
-
     private loading: number = 0;
-    private timeoutReference: number|undefined;
-    private showIconsDelay: boolean = false;
 
 
     public start() {
 
         this.loading++;
-        this.updateIconStatus();
     }
 
 
     public stop() {
 
         this.loading--;
-        this.updateIconStatus();
     }
 
 
-    public setShowIconsDelay(showIconsDelay: boolean) {
+    public isLoading(): boolean {
 
-        this.showIconsDelay = showIconsDelay;
-    }
-
-
-    private updateIconStatus() {
-
-        if (this.showIconsDelay) {
-            this.updateIconStatusWithDelay();
-        } else {
-            this.updateIconStatusWithoutDelay();
-        }
-    }
-
-
-    private updateIconStatusWithoutDelay() {
-
-        this.clearTimeout();
-        this.showIcons = this.loading > 0;
-    }
-
-
-    private updateIconStatusWithDelay() {
-
-        if (this.loading && !this.timeoutReference) {
-            this.timeoutReference = window.setTimeout(() => {
-                this.timeoutReference = undefined;
-                this.showIcons = true;
-            }, 1000);
-        } else if (!this.loading) {
-            this.clearTimeout();
-            this.showIcons = false;
-        }
-    }
-
-
-    private clearTimeout() {
-
-        if (this.timeoutReference) {
-            window.clearTimeout(this.timeoutReference);
-            this.timeoutReference = undefined;
-        }
+        return this.loading > 0;
     }
 }

@@ -48,7 +48,7 @@ export class MatrixViewComponent implements OnInit {
 
     public showGraph = () => !this.noTrenches() && !this.noFeatures();
 
-    public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures() && !this.loading.showIcons;
+    public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures() && !this.loading.isLoading();
 
     public showNoTrenchesWarning = () => this.noTrenches();
 

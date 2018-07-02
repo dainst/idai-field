@@ -57,7 +57,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
 
             importDoc.resource.relations['liesWithin'] = [existing.documents[0].resource.id];
         } catch (err) {
-            throw [M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE, liesWithinIdentifier]; // TODO should we create one then?
+            throw [M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE, liesWithinIdentifier];
         }
 
         let updateDoc: NewDocument|Document = importDoc;

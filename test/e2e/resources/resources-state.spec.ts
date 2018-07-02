@@ -78,7 +78,7 @@ describe('resources/state --', function() {
 
         createDepictsRelation();
         clickDepictsRelationLink();
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
     });
 
 
@@ -235,7 +235,7 @@ describe('resources/state --', function() {
     it('search/suggestion -- do not show suggestions if any resources in current context are found', done => {
 
         SearchBarPage.typeInSearchField('t');
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         browser.wait(EC.invisibilityOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
 
@@ -270,33 +270,33 @@ describe('resources/state --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('trench1'));
-        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('trench2'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('S1'));
+        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('S2'));
         ResourcesPage.getListItemIdentifierText(2).then(text => expect(text).toEqual('trench3'));
     });
 
 
     it('invalidate filter (if necessary) when switching from image to map view after click on depicts relation link', () => {
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         SearchBarPage.clickChooseTypeFilter('place');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
 
         createDepictsRelation();
         clickDepictsRelationLink();
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
     });
 
 
     it('invalidate query string (if necessary) when switching from image to map view after click on depicts relation link', () => {
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         SearchBarPage.typeInSearchField('xyz');
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
 
         createDepictsRelation();
         clickDepictsRelationLink();
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('trench1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual(''));
     });
 
@@ -327,7 +327,7 @@ describe('resources/state --', function() {
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('testf1'));
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
             expect(navigationButtons.length).toBe(2);
-            expect(navigationButtons[0].getText()).toEqual('trench1');
+            expect(navigationButtons[0].getText()).toEqual('S1');
             expect(navigationButtons[1].getText()).toEqual('SE0');
         });
     });
@@ -351,7 +351,7 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
             expect(navigationButtons.length).toBe(2);
-            expect(navigationButtons[0].getText()).toEqual('trench1');
+            expect(navigationButtons[0].getText()).toEqual('S1');
             expect(navigationButtons[1].getText()).toEqual('context2');
         });
     });
@@ -372,7 +372,7 @@ describe('resources/state --', function() {
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
             expect(navigationButtons.length).toBe(1);
-            expect(navigationButtons[0].getText()).toEqual('trench1');
+            expect(navigationButtons[0].getText()).toEqual('S1');
         });
     });
 

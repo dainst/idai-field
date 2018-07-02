@@ -28,61 +28,87 @@ export class MeninxFindImportStrategy implements ImportStrategy {
      */
     public async importDoc(importDoc: NewDocument): Promise<Document> {
 
-        const trenchIdentifier = '' + importDoc.resource.identifier[0] + '000';
-        try {
-            const trench = await this.datastore.find({q: trenchIdentifier, types: ['Trench']});
-            importDoc.resource.relations['isRecordedIn'] = [trench.documents[0].resource.id];
-        } catch (err) {
-            throw [M.IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE, trenchIdentifier];
-        }
+        importDoc.resource.relations['isRecordedIn'] =
+            [await this.getIsRecordedInId(importDoc.resource.identifier[0] + '000')];
+        importDoc.resource.relations['liesWithin'] =
+            [await this.getLiesWithinId(importDoc.resource.relations['liesWithin'][0])];
 
-        let liesWithinTargetFindResult: IdaiFieldFindResult<Document>;
-        const liesWithinIdentifier = importDoc.resource.relations['liesWithin'][0];
-        try {
-            liesWithinTargetFindResult = await this.datastore.find({q: liesWithinIdentifier, types: [
-                    "Feature", "DrillCoreLayer", "Floor", "Grave", "Layer", "Other", "Architecture", "SurveyUnit", "Planum", "Room", "Burial"]});
-        } catch (err) {
-            console.error("here")
-            throw [M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE, liesWithinIdentifier];
-        }
 
-        if (liesWithinTargetFindResult.documents.length > 1) throw [M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE, "More than one SU found for identifier" + liesWithinIdentifier];
-        importDoc.resource.relations['liesWithin'] = [liesWithinTargetFindResult.documents[0].resource.id];
+        const updateDoc: NewDocument|Document = importDoc;
 
-        let updateDoc: NewDocument|Document = importDoc;
+
+        const existingOne = this.getExistingDoc(importDoc.resource.identifier);
         let exists = false;
+        if (existingOne) { // new document -> create
 
-        let importDocExistenceFindResult: IdaiFieldFindResult<Document>;
-        try {
-            importDocExistenceFindResult = await this.datastore.find({q: importDoc.resource.identifier});
-        } catch (err) { throw "no find result obtained" }
-
-        let existingOne;
-        if (importDocExistenceFindResult.documents.length > 0) {
-
-            // if more than one (e.g. 1001-3 and 1001-31 for search tearm 1001-3), filter the right one
-            existingOne = importDocExistenceFindResult.documents.find(_ => _.resource.identifier === importDoc.resource.identifier);
-
-            if (existingOne) {
-                updateDoc = existingOne;
-                exists = true;
-                MeninxFindImportStrategy.mergeInto(updateDoc, importDoc as any);
-            }
-        }
-
-        if (importDocExistenceFindResult.documents.length < 1 || !existingOne) { // new document -> create
-
+            exists = true;
+            MeninxFindImportStrategy.mergeInto(updateDoc, importDoc as any);
             MeninxFindImportStrategy.checkTypeOfSherd(importDoc.resource.sherdTypeCheck, importDoc.resource, importDoc.resource.amount);
             delete importDoc.resource.amount && delete importDoc.resource.sherdTypeCheck;
             importDoc.resource = removeEmptyStrings(importDoc.resource);
 
         }
 
+
         if (!exists) console.log('create', updateDoc);
 
         return exists
             ? await this.datastore.update(updateDoc as Document, this.username)
             : await this.datastore.create(updateDoc, this.username);
+    }
+
+
+    private async getExistingDoc(resourceIdentifier: string) {
+
+        let importDocExistenceFindResult: IdaiFieldFindResult<Document>;
+        try {
+            importDocExistenceFindResult = await this.datastore.find(
+                { constraints: { "identifier:match": resourceIdentifier } });
+        } catch (err) { throw "no find result obtained" }
+
+        let existingOne;
+        if (importDocExistenceFindResult.documents.length > 0) {
+
+            // if more than one (e.g. 1001-3 and 1001-31 for search tearm 1001-3), filter the right one
+            existingOne = importDocExistenceFindResult.documents.find(_ => _.resource.identifier === resourceIdentifier);
+            if (importDocExistenceFindResult.documents.length > 1) throw ["More than one doc found for identifier ", resourceIdentifier];
+            return existingOne;
+
+        } else return undefined;
+    }
+
+
+    private async getIsRecordedInId(trenchIdentifier: string) {
+
+        try {
+            const trench = await this.datastore.find({
+                constraints: { "identifier:match": trenchIdentifier},
+                types: ['Trench']});
+            return trench.documents[0].resource.id;
+        } catch (err) {
+            throw [M.IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE, trenchIdentifier];
+        }
+    }
+
+
+    private async getLiesWithinId(liesWithinIdentifier: string) {
+
+        let liesWithinTargetFindResult: IdaiFieldFindResult<Document>;
+        try {
+            liesWithinTargetFindResult = await this.datastore.find({
+                constraints: { "identifier:match": liesWithinIdentifier},
+                types: ["Feature", "DrillCoreLayer", "Floor", "Grave", "Layer", "Other", "Architecture", "SurveyUnit", "Planum", "Room", "Burial"]});
+        } catch (err) {
+            throw [M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE, liesWithinIdentifier];
+        }
+
+        if (liesWithinTargetFindResult.documents.length > 1) {
+            console.error("cannot get liesWithinId for identifier", liesWithinIdentifier);
+            throw [M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE, "More than one SU found for identifier " +
+                liesWithinTargetFindResult.documents.map(_ => _.resource.identifier).join(' -- ')];
+        }
+
+        return liesWithinTargetFindResult.documents[0].resource.id;
     }
 
 

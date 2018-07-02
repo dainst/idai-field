@@ -55,4 +55,18 @@
   .root-document ~ .navigation-button:not(:last-child):before {
     border-left-color: lighten(#5572A1, 30%);
   }
+
+  #hierarchy-mode-switch {
+    padding: 0;
+
+    div {
+      width: 42px;
+      height: 39px;
+
+      .mdi {
+        position: relative;
+        top: 9px;
+      }
+    }
+  }
 }

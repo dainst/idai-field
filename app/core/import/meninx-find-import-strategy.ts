@@ -4,28 +4,16 @@ import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
 import {M} from '../../m';
 
-/**
- * @author Daniel de Oliveira
- */
 
 const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {
    if (obj[prop] === "") { delete obj[prop] }
     }); return obj; };
 
-const checkTypeOfSherd = (typeSherd:any, obj: any, amount: number) => {
-  if (typeSherd === "B") {
-  obj.hasAmountSherdsRimShoulder = amount;
-  } else if (typeSherd === "C"){
-  obj.hasAmountSherdsRimBase = amount;
-  } else if (typeSherd === "P"){
-  obj.hasAmountRimSherds = amount;
-  } else if (typeSherd === "F"){
-  obj.hasAmountSherdsBase = amount;
-  } else if (typeSherd === "A"){
-  obj.hasAmountSherdsHandles = amount;
-  } };
 
-
+/**
+ * @author Daniel de Oliveira
+ * @author Juliane Watson
+ */
 export class MeninxFindImportStrategy implements ImportStrategy {
 
 
@@ -73,49 +61,70 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         }
 
         let updateDoc: NewDocument|Document = importDoc;
-
         let exists = false;
-
 
         try {
             const existing = await this.datastore.find({q: importDoc.resource.identifier});
-
+            let existingOne;
             if (existing.documents.length > 0) {
 
-                exists = true;
-                updateDoc = existing.documents[0];
+                // if more than one (e.g. 1001-3 and 1001-31 for search tearm 1001-3), filter the right one
+                existingOne = existing.documents.find(_ => _.resource.identifier === importDoc.resource.identifier);
 
-                // merge fields of document into doc
+                if (existingOne) {
+                    updateDoc = existingOne;
+                    exists = true;
+                    MeninxFindImportStrategy.mergeInto(updateDoc, importDoc as any);
+                }
+            }
 
-                if (importDoc.resource.shortDescription.length > 0) updateDoc.resource.shortDescription = importDoc.resource.shortDescription;
-                if (importDoc.resource.hasVesselFormPottery.length > 0) updateDoc.resource.hasVesselFormPottery = importDoc.resource.hasVesselFormPottery;
-                if (importDoc.resource.hasTypeNumber.length > 0) updateDoc.resource.hasTypeNumber = importDoc.resource.hasTypeNumber;
-                if (importDoc.resource.type.length > 0) updateDoc.resource.type = importDoc.resource.type;
+            if (existing.documents.length < 1 || !existingOne) { // new document -> create
 
-                checkTypeOfSherd(importDoc.resource.sherdTypeCheck, updateDoc.resource, importDoc.resource.amount);
-
-                if (importDoc.resource.hasDecorationTechniquePottery.length > 0) updateDoc.resource.hasDecorationTechniquePottery = importDoc.resource.hasDecorationTechniquePottery;
-                if (importDoc.resource.hasComment.length > 0) updateDoc.resource.hasComment = importDoc.resource.hasComment;
-                if (importDoc.resource.hasProvinience.length > 0) updateDoc.resource.hasProvinience = importDoc.resource.hasProvinience;
-
-                updateDoc.resource.relations['liesWithin'] = importDoc.resource.relations['liesWithin'];
-                updateDoc.resource.relations['isRecordedIn'] = importDoc.resource.relations['isRecordedIn']
-
-            } else {
-
-            checkTypeOfSherd(importDoc.resource.sherdTypeCheck, importDoc.resource, importDoc.resource.amount);
-            delete importDoc.resource.amount && delete importDoc.resource.sherdTypeCheck;
-            importDoc.resource = removeEmptyStrings(importDoc.resource);
+                MeninxFindImportStrategy.checkTypeOfSherd(importDoc.resource.sherdTypeCheck, importDoc.resource, importDoc.resource.amount);
+                delete importDoc.resource.amount && delete importDoc.resource.sherdTypeCheck;
+                importDoc.resource = removeEmptyStrings(importDoc.resource);
 
             }
 
 
         } catch (err) {}
 
-        console.log("will " + exists ? ' update' : 'create',updateDoc);
+        if (!exists) console.log('create', updateDoc);
 
         return exists
             ? await this.datastore.update(updateDoc as Document, this.username)
             : await this.datastore.create(updateDoc, this.username);
     }
+
+
+    private static mergeInto(updateDoc: Document|NewDocument, importDoc: Document) {
+
+        if (importDoc.resource.shortDescription.length > 0) updateDoc.resource.shortDescription = importDoc.resource.shortDescription;
+        if (importDoc.resource.hasVesselFormPottery.length > 0) updateDoc.resource.hasVesselFormPottery = importDoc.resource.hasVesselFormPottery;
+        if (importDoc.resource.hasTypeNumber.length > 0) updateDoc.resource.hasTypeNumber = importDoc.resource.hasTypeNumber;
+        if (importDoc.resource.type.length > 0) updateDoc.resource.type = importDoc.resource.type;
+
+        MeninxFindImportStrategy.checkTypeOfSherd(importDoc.resource.sherdTypeCheck, updateDoc.resource, importDoc.resource.amount);
+
+        if (importDoc.resource.hasDecorationTechniquePottery.length > 0) updateDoc.resource.hasDecorationTechniquePottery = importDoc.resource.hasDecorationTechniquePottery;
+        if (importDoc.resource.hasComment.length > 0) updateDoc.resource.hasComment = importDoc.resource.hasComment;
+        if (importDoc.resource.hasProvinience.length > 0) updateDoc.resource.hasProvinience = importDoc.resource.hasProvinience;
+
+        updateDoc.resource.relations['liesWithin'] = importDoc.resource.relations['liesWithin'];
+        updateDoc.resource.relations['isRecordedIn'] = importDoc.resource.relations['isRecordedIn']
+    }
+
+
+    private static checkTypeOfSherd(typeSherd:any, obj: any, amount: number) {
+        if (typeSherd === "B") {
+            obj.hasAmountSherdsRimShoulder = amount;
+        } else if (typeSherd === "C"){
+            obj.hasAmountSherdsRimBase = amount;
+        } else if (typeSherd === "P"){
+            obj.hasAmountRimSherds = amount;
+        } else if (typeSherd === "F"){
+            obj.hasAmountSherdsBase = amount;
+        } else if (typeSherd === "A"){
+            obj.hasAmountSherdsHandles = amount;
+        } };
 }

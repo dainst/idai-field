@@ -177,13 +177,13 @@ export class ResourcesStateManager {
 
     public setMainTypeDocument(resourceId: string|undefined) {
 
-        if (!resourceId) return;
+        this.resourcesState = ResourcesState.setMainTypeDocumentResourceId(this.resourcesState, resourceId);
 
-        if (!this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId]) {
-            this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId] = NavigationPath.empty();
+        if (resourceId && !this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId]) {
+            this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId]
+                = NavigationPath.empty();
         }
 
-        this.resourcesState = ResourcesState.setMainTypeDocumentResourceId(this.resourcesState, resourceId);
         this.notifyNavigationPathObservers();
     }
 

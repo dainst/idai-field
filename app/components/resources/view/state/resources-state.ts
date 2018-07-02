@@ -228,7 +228,8 @@ export module ResourcesState {
     }
 
 
-    export function setMainTypeDocumentResourceId(state: ResourcesState, mainTypeDocumentResourceId: string): ResourcesState {
+    export function setMainTypeDocumentResourceId(state: ResourcesState,
+                                                  mainTypeDocumentResourceId: string|undefined): ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
         (cloned.viewStates[cloned.view] as any).mainTypeDocumentResourceId = mainTypeDocumentResourceId;

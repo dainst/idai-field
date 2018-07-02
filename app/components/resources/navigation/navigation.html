@@ -3,9 +3,10 @@
     <div *ngIf="!viewFacade.isInOverview() && viewFacade.getSelectedOperationTypeDocument()" class="btn-group">
         <div id="hierarchy-mode-switch" class="btn btn-outline-primary" (click)="toggleDisplayHierarchy()">
             <div ngbTooltip="Wechsel zwischen hierarchischer Anordnung und Übersicht" placement="right"
-                 container="body">
+                 container="body" triggers="manual" #tooltip="ngbTooltip"
+                 (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()" (click)="tooltip.close()">
                 <span *ngIf="viewFacade.getDisplayHierarchy()" class="mdi mdi-file-tree"></span>
-                <span *ngIf="!viewFacade.getDisplayHierarchy()"class="mdi mdi-view-sequential"></span>
+                <span *ngIf="!viewFacade.getDisplayHierarchy()" class="mdi mdi-view-sequential"></span>
             </div>
         </div>
 

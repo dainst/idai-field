@@ -394,6 +394,7 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         OperationBarPage.clickSwitchHierarchyMode();
+        browser.actions().mouseUp().mouseMove({x: 200, y: 200}).perform(); // avoid tooltip
         OperationBarPage.performSelectOperation(0);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('SI1'));

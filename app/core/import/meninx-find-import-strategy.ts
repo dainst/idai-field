@@ -25,9 +25,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
     /**
      * @throws errorWithParams
      */
-    public async importDoc(
-        importDoc: NewDocument
-    ): Promise<Document> {
+    public async importDoc(importDoc: NewDocument): Promise<Document> {
 
         const trenchIdentifier = '' + importDoc.resource.identifier[0] + '000';
         try {

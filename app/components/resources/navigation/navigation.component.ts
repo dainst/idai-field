@@ -3,6 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ViewFacade} from '../view/view-facade';
 import {ModelUtil} from '../../../core/model/model-util';
 import {NavigationPath} from '../view/state/navigation-path';
+import {Loading} from '../../../widgets/loading';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class NavigationComponent {
     public navigationPath: NavigationPath = NavigationPath.empty();
 
 
-    constructor(public viewFacade: ViewFacade) {
+    constructor(public viewFacade: ViewFacade,
+                private loading: Loading) {
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
@@ -31,7 +33,13 @@ export class NavigationComponent {
 
     public moveInto = (document: IdaiFieldDocument|undefined) => this.viewFacade.moveInto(document);
 
-    public toggleDisplayHierarchy = () => this.viewFacade.setDisplayHierarchy(!this.viewFacade.getDisplayHierarchy());
+
+    public async toggleDisplayHierarchy() {
+
+        if (this.loading.isLoading()) return;
+
+        await this.viewFacade.setDisplayHierarchy(!this.viewFacade.getDisplayHierarchy());
+    }
 
 
     public async activateBypassOperationTypeSelection() {

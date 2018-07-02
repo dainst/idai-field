@@ -36,12 +36,16 @@ export class SearchSuggestionsComponent implements OnChanges {
     }
 
 
-    public jumpToDocument = (document: IdaiFieldDocument) => this.routingService.jumpToRelationTarget(document);
-
-
     async ngOnChanges(changes: SimpleChanges) {
 
         if (changes['visible']) await this.updateSuggestions();
+    }
+
+
+    public async jumpToDocument(document: IdaiFieldDocument) {
+
+        await this.viewFacade.setSearchString('', false);
+        this.routingService.jumpToRelationTarget(document);
     }
 
 

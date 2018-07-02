@@ -62,10 +62,10 @@ export class DocumentsManager {
     };
 
 
-    public async setQueryString(q: string) {
+    public async setQueryString(q: string, populate: boolean = true) {
 
         this.resourcesStateManager.setQueryString(q);
-        await this.populateAndDeselectIfNecessary();
+        if (populate) await this.populateAndDeselectIfNecessary();
     }
 
 

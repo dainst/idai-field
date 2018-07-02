@@ -85,7 +85,7 @@ export class ViewFacade {
 
     public getSearchString = () => ResourcesState.getQueryString(this.resourcesStateManager.get());
 
-    public setSearchString = (q: string) => this.documentsManager.setQueryString(q);
+    public setSearchString = (q: string, populate?: boolean) => this.documentsManager.setQueryString(q, populate);
 
     public setFilterTypes = (types: string[]) => this.documentsManager.setTypeFilters(types);
 

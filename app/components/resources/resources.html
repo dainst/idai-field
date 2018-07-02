@@ -6,7 +6,7 @@
 
     <div class="col-md-6 mr-md-auto">
         <div class="row">
-            <div id="search-bar-container" class="col-md-8">
+            <div id="search-bar-container" class="col-md-9">
                 <resources-search-bar [q]="getQueryString()"
                                       [types]="getTypeFilters()"
                                       [relationName]="'isRecordedIn'"
@@ -16,19 +16,23 @@
                 </resources-search-bar>
             </div>
 
-            <div id="buttons-container" class="col-md-4">
+            <div id="buttons-container" class="col-md-3">
                 <div *ngIf="ready" class="btn-group resources-mode-buttons">
                     <button id="map-mode-button"
                             (click)="switchMode('map')"
+                            ngbTooltip="Kartendarstellung der Ressourcen"
+                            placement="bottom"
                             class="btn btn-primary m-0"
                             [class.active]="currentModeIs('map')">
-                        <span class="mdi mdi-map"></span> Karte
+                        <span class="mdi mdi-map"></span>
                     </button>
                     <button id="list-mode-button"
                             (click)="switchMode('list')"
                             class="btn btn-primary m-0"
+                            ngbTooltip="Listenansicht der Ressourcen"
+                            placement="bottom"
                             [class.active]="currentModeIs('list')">
-                        <span class="mdi mdi-table"></span> Liste
+                        <span class="mdi mdi-table"></span>
                     </button>
                 </div>
             </div>

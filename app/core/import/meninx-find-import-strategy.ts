@@ -4,6 +4,7 @@ import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
 import {M} from '../../m';
 import {IdaiFieldFindResult} from '../datastore/core/cached-read-datastore';
+import {ObjectUtil} from '../../util/object-util';
 
 
 const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {
@@ -111,23 +112,25 @@ export class MeninxFindImportStrategy implements ImportStrategy {
     }
 
 
-    private static mergeInto(updateDoc: Document|NewDocument, importDoc: Document) {
+    private static mergeInto(mergeTarget: Document|NewDocument, mergeSource: Document) {
 
-        if (importDoc.resource.shortDescription.length > 0) updateDoc.resource.shortDescription = importDoc.resource.shortDescription;
-        if (importDoc.resource.hasVesselFormPottery.length > 0) updateDoc.resource.hasVesselFormPottery = importDoc.resource.hasVesselFormPottery;
-        if (importDoc.resource.hasTypeNumber.length > 0) updateDoc.resource.hasTypeNumber = importDoc.resource.hasTypeNumber;
-        if (importDoc.resource.type.length > 0) updateDoc.resource.type = importDoc.resource.type;
+        const mergedDoc = ObjectUtil.cloneObject(mergeTarget);
 
-        MeninxFindImportStrategy.checkTypeOfSherd(importDoc.resource.sherdTypeCheck, updateDoc.resource, importDoc.resource.amount);
+        if (mergeSource.resource.shortDescription.length > 0) mergedDoc.resource.shortDescription = mergeSource.resource.shortDescription;
+        if (mergeSource.resource.hasVesselFormPottery.length > 0) mergedDoc.resource.hasVesselFormPottery = mergeSource.resource.hasVesselFormPottery;
+        if (mergeSource.resource.hasTypeNumber.length > 0) mergedDoc.resource.hasTypeNumber = mergeSource.resource.hasTypeNumber;
+        if (mergeSource.resource.type.length > 0) mergedDoc.resource.type = mergeSource.resource.type;
 
-        if (importDoc.resource.hasDecorationTechniquePottery.length > 0) updateDoc.resource.hasDecorationTechniquePottery = importDoc.resource.hasDecorationTechniquePottery;
-        if (importDoc.resource.hasComment.length > 0) updateDoc.resource.hasComment = importDoc.resource.hasComment;
-        if (importDoc.resource.hasProvinience.length > 0) updateDoc.resource.hasProvinience = importDoc.resource.hasProvinience;
+        MeninxFindImportStrategy.checkTypeOfSherd(mergeSource.resource.sherdTypeCheck, mergedDoc.resource, mergeSource.resource.amount);
 
-        updateDoc.resource.relations['liesWithin'] = importDoc.resource.relations['liesWithin'];
-        updateDoc.resource.relations['isRecordedIn'] = importDoc.resource.relations['isRecordedIn'];
+        if (mergeSource.resource.hasDecorationTechniquePottery.length > 0) mergedDoc.resource.hasDecorationTechniquePottery = mergeSource.resource.hasDecorationTechniquePottery;
+        if (mergeSource.resource.hasComment.length > 0) mergedDoc.resource.hasComment = mergeSource.resource.hasComment;
+        if (mergeSource.resource.hasProvinience.length > 0) mergedDoc.resource.hasProvinience = mergeSource.resource.hasProvinience;
 
-        return updateDoc;
+        mergedDoc.resource.relations['liesWithin'] = mergeSource.resource.relations['liesWithin'];
+        mergedDoc.resource.relations['isRecordedIn'] = mergeSource.resource.relations['isRecordedIn'];
+
+        return mergedDoc;
     }
 
 

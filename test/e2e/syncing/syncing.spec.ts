@@ -23,7 +23,7 @@ const common = require('../common');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-xdescribe('syncing --', function() {
+describe('syncing --', function() {
 
     const remoteSiteAddress = 'http://localhost:3001';
     const configPath = browser.params.configPath;
@@ -211,7 +211,7 @@ xdescribe('syncing --', function() {
     });
 
 
-    it('resource created in client should be synced to other db', done => {
+    xit('resource created in client should be synced to other db', done => {
 
         NavbarPage.clickNavigateToExcavation()
             .then(() => {
@@ -224,7 +224,7 @@ xdescribe('syncing --', function() {
     });
 
 
-    it('show changes made in other db', async (done) => {
+    xit('show changes made in other db', async (done) => {
 
         const nr = '5';
 
@@ -258,7 +258,7 @@ xdescribe('syncing --', function() {
     });
 
 
-    it('resolve a save conflict via conflict resolver', async done => {
+    xit('resolve a save conflict via conflict resolver', async done => {
 
         const nr = '6';
         let testDocument = await createOneDocument(nr);
@@ -281,7 +281,7 @@ xdescribe('syncing --', function() {
     });
 
 
-    it('resolve an eventual conflict via conflict resolver', done => {
+    xit('resolve an eventual conflict via conflict resolver', done => {
 
         const nr = '10';
 
@@ -309,7 +309,7 @@ xdescribe('syncing --', function() {
     });
 
 
-    it('detect an eventual conflict and mark the corresponding resource list item', async done => {
+    xit('detect an eventual conflict and mark the corresponding resource list item', async done => {
 
         const nr = '7';
 

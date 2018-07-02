@@ -13,7 +13,7 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 't1',
-            'identifier': 'trench1',
+            'identifier': 'S1',
             'shortDescription': 'Goldener Schnitt',
             'relations': {
                 'isRecordedIn': []
@@ -33,7 +33,7 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 't2',
-            'identifier': 'trench2',
+            'identifier': 'S2',
             'shortDescription': 'Matrix-Schnitt',
             'relations': {
                 'isRecordedIn': []
@@ -44,7 +44,7 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'si1',
-            'identifier': 'SI1',
+            'identifier': 'SE1',
             'shortDescription': 'Ein Befund',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -56,7 +56,7 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'si2',
-            'identifier': 'SI2',
+            'identifier': 'SE2',
             'shortDescription': 'Ein Erdbefund',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -69,7 +69,7 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'si3',
-            'identifier': 'SI3',
+            'identifier': 'SE3',
             'shortDescription': 'Architektur',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -83,7 +83,7 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'si4',
-            'identifier': 'SI4',
+            'identifier': 'SE4',
             'shortDescription': 'Ein Befund',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -95,7 +95,7 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'si5',
-            'identifier': 'SI5',
+            'identifier': 'SE5',
             'shortDescription': 'Ein Befund',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -108,7 +108,7 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'si0',
-            'identifier': 'SI0',
+            'identifier': 'SE0',
             'shortDescription': 'Ein Befund',
             'relations': {
                 'isRecordedIn': ['t1'],

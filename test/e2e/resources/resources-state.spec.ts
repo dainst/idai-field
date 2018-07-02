@@ -89,9 +89,9 @@ describe('resources/state --', function() {
 
         OperationBarPage.performSelectOperation(1);
 
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI2')), delays.ECWaitTime);
-        SearchBarPage.typeInSearchField('SI1');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI2')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
+        SearchBarPage.typeInSearchField('SE1');
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
     });
 
 
@@ -102,9 +102,9 @@ describe('resources/state --', function() {
 
         OperationBarPage.performSelectOperation(1);
 
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SI2')), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
         SearchBarPage.clickChooseTypeFilter('feature-architecture');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SI2')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('SE2')), delays.ECWaitTime);
     });
 
 
@@ -221,11 +221,11 @@ describe('resources/state --', function() {
 
     it('search/suggestions -- show suggestion for resource from different context', done => {
 
-        SearchBarPage.typeInSearchField('SI0');
+        SearchBarPage.typeInSearchField('SE0');
         browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesPage.getSuggestions().then(suggestions => {
             expect(suggestions.length).toBe(1);
-            expect(suggestions[0].getText()).toEqual('SI0');
+            expect(suggestions[0].getText()).toEqual('SE0');
         });
 
         done();
@@ -328,7 +328,7 @@ describe('resources/state --', function() {
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
             expect(navigationButtons.length).toBe(2);
             expect(navigationButtons[0].getText()).toEqual('trench1');
-            expect(navigationButtons[1].getText()).toEqual('SI0');
+            expect(navigationButtons[1].getText()).toEqual('SE0');
         });
     });
 
@@ -338,7 +338,7 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.performCreateResource('context2', 'feature');
-        ResourcesPage.clickMoveIntoButton('SI0');
+        ResourcesPage.clickMoveIntoButton('SE0');
 
         ResourcesPage.openEditByDoubleClickResource('testf1');
         DoceditPage.clickRelationsTab();
@@ -361,15 +361,15 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
 
-        ResourcesPage.clickMoveIntoButton('SI0');
+        ResourcesPage.clickMoveIntoButton('SE0');
         ResourcesPage.clickMainTypeDocumentNavigationButton();
 
-        ResourcesPage.openEditByDoubleClickResource('SI0');
+        ResourcesPage.openEditByDoubleClickResource('SE0');
         DoceditPage.clickDeleteDocument();
-        DoceditPage.typeInIdentifierInConfirmDeletionInputField('SI0');
+        DoceditPage.typeInIdentifierInConfirmDeletionInputField('SE0');
         DoceditPage.clickConfirmDeleteInModal();
 
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
         ResourcesPage.getNavigationButtons().then(navigationButtons => {
             expect(navigationButtons.length).toBe(1);
             expect(navigationButtons[0].getText()).toEqual('trench1');
@@ -381,11 +381,11 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
 
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
-        ResourcesPage.clickMoveIntoButton('SI0');
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
+        ResourcesPage.clickMoveIntoButton('SE0');
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('testf1'));
         OperationBarPage.clickSwitchHierarchyMode();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('testf1'));
     });
 
@@ -396,7 +396,7 @@ describe('resources/state --', function() {
         OperationBarPage.clickSwitchHierarchyMode();
         browser.actions().mouseUp().mouseMove({x: 200, y: 200}).perform(); // avoid tooltip
         OperationBarPage.performSelectOperation(0);
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
-        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('SI1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
+        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('SE1'));
     });
 });

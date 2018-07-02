@@ -21,7 +21,7 @@
                     <button id="map-mode-button"
                             (click)="switchMode('map')"
                             ngbTooltip="Kartendarstellung der Ressourcen"
-                            placement="bottom"
+                            placement="left"
                             class="btn btn-primary m-0"
                             [class.active]="currentModeIs('map')">
                         <span class="mdi mdi-map"></span>
@@ -30,7 +30,7 @@
                             (click)="switchMode('list')"
                             class="btn btn-primary m-0"
                             ngbTooltip="Listendarstellung der Ressourcen"
-                            placement="bottom"
+                            placement="left"
                             [class.active]="currentModeIs('list')">
                         <span class="mdi mdi-table"></span>
                     </button>

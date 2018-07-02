@@ -153,7 +153,6 @@ describe('resources/state --', function() {
 
         checkTypeOptions();
         ResourcesPage.clickListModeButton();
-        browser.actions().mouseUp().mouseMove({x: 200, y: 200}).perform(); // avoid tooltip
         checkTypeOptions();
     });
 

@@ -82,6 +82,7 @@ export class ResourcesPage {
     public static clickListModeButton() {
 
         common.click(element(by.id('list-mode-button')));
+        browser.actions().mouseUp().mouseMove({x: 200, y: 200}).perform(); // avoid tooltip
     }
 
 

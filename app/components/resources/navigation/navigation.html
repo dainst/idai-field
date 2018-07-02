@@ -2,8 +2,13 @@
 
     <div *ngIf="!viewFacade.isInOverview() && viewFacade.getSelectedOperationTypeDocument()" class="btn-group">
         <div id="hierarchy-mode-switch" class="btn btn-outline-primary" (click)="toggleDisplayHierarchy()">
-            <span *ngIf="viewFacade.getDisplayHierarchy()" class="mdi mdi-file-tree"></span>
-            <span *ngIf="!viewFacade.getDisplayHierarchy()" class="mdi mdi-view-sequential"></span>
+            <div ngbTooltip="Wechsel zwischen hierarchischer Anordnung und Übersicht" placement="right" container="body">
+                <span *ngIf="viewFacade.getDisplayHierarchy()"
+                      class="mdi mdi-file-tree"
+                      ></span>
+                <span *ngIf="!viewFacade.getDisplayHierarchy()"
+                      class="mdi mdi-view-sequential"></span>
+            </div>
         </div>
 
         <div class="btn-group operation-document-selector" ngbDropdown placement="bottom-left" role="group">

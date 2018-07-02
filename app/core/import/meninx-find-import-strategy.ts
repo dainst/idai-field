@@ -30,35 +30,25 @@ export class MeninxFindImportStrategy implements ImportStrategy {
      */
     public async importDoc(importDoc: NewDocument): Promise<Document> {
 
-        importDoc.resource.relations['isRecordedIn'] =
-            [await this.getIsRecordedInId(importDoc.resource.identifier[0] + '000')];
-        importDoc.resource.relations['liesWithin'] =
-            [await this.getLiesWithinId(importDoc.resource.relations['liesWithin'][0])];
-
-
-        let updateDoc: NewDocument|Document;
-        let exists = false;
-
         const existingDoc = await this.getExistingDoc(importDoc.resource.identifier);
-        if (existingDoc) {
 
-            exists = true;
-            updateDoc = MeninxFindImportStrategy.mergeInto(existingDoc, importDoc as any);
+        const updateDoc: NewDocument|Document = existingDoc
+            ? MeninxFindImportStrategy.mergeInto(existingDoc, importDoc as any)
+            : importDoc;
 
-        } else {
-
-            updateDoc = importDoc;
-
-            MeninxFindImportStrategy.checkTypeOfSherd(updateDoc.resource.sherdTypeCheck, updateDoc.resource, updateDoc.resource.amount);
-            delete updateDoc.resource.amount;
-            delete updateDoc.resource.sherdTypeCheck;
-        }
-
+        MeninxFindImportStrategy.checkTypeOfSherd(importDoc.resource.sherdTypeCheck, updateDoc.resource, importDoc.resource.amount);
+        delete updateDoc.resource.amount;
+        delete updateDoc.resource.sherdTypeCheck;
 
         updateDoc.resource = removeEmptyStrings(updateDoc.resource);
-        console.log(exists ? 'update' : 'create', updateDoc);
+        updateDoc.resource.relations['isRecordedIn'] =
+            [await this.getIsRecordedInId(importDoc.resource.identifier[0] + '000')];
+        updateDoc.resource.relations['liesWithin'] =
+            [await this.getLiesWithinId(importDoc.resource.relations['liesWithin'][0])];
 
-        return exists
+        console.log(existingDoc ? 'update' : 'create', updateDoc);
+
+        return existingDoc
             ? await this.datastore.update(updateDoc as Document, this.username)
             : await this.datastore.create(updateDoc, this.username);
     }
@@ -121,15 +111,9 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         if (mergeSource.resource.hasVesselFormPottery.length > 0) mergedDoc.resource.hasVesselFormPottery = mergeSource.resource.hasVesselFormPottery;
         if (mergeSource.resource.hasTypeNumber.length > 0) mergedDoc.resource.hasTypeNumber = mergeSource.resource.hasTypeNumber;
         if (mergeSource.resource.type.length > 0) mergedDoc.resource.type = mergeSource.resource.type;
-
-        MeninxFindImportStrategy.checkTypeOfSherd(mergeSource.resource.sherdTypeCheck, mergedDoc.resource, mergeSource.resource.amount);
-
         if (mergeSource.resource.hasDecorationTechniquePottery.length > 0) mergedDoc.resource.hasDecorationTechniquePottery = mergeSource.resource.hasDecorationTechniquePottery;
         if (mergeSource.resource.hasComment.length > 0) mergedDoc.resource.hasComment = mergeSource.resource.hasComment;
         if (mergeSource.resource.hasProvinience.length > 0) mergedDoc.resource.hasProvinience = mergeSource.resource.hasProvinience;
-
-        mergedDoc.resource.relations['liesWithin'] = mergeSource.resource.relations['liesWithin'];
-        mergedDoc.resource.relations['isRecordedIn'] = mergeSource.resource.relations['isRecordedIn'];
 
         return mergedDoc;
     }

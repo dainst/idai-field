@@ -24,6 +24,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
                 private projectConfiguration: ProjectConfiguration,
                 private username: string) { }
 
+
     /**
      * @throws errorWithParams
      */
@@ -36,13 +37,13 @@ export class MeninxFindImportStrategy implements ImportStrategy {
 
 
         let updateDoc: NewDocument|Document;
-
         let exists = false;
-        const existingOne = await this.getExistingDoc(importDoc.resource.identifier);
-        if (existingOne) { // new document -> create
+
+        const existingDoc = await this.getExistingDoc(importDoc.resource.identifier);
+        if (existingDoc) {
 
             exists = true;
-            updateDoc = MeninxFindImportStrategy.mergeInto(existingOne, importDoc as any);
+            updateDoc = MeninxFindImportStrategy.mergeInto(existingDoc, importDoc as any);
 
         } else {
 

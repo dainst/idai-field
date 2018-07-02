@@ -109,6 +109,12 @@ export class ResourcesPage {
     }
 
 
+    public static clickFirstSuggestion() {
+
+        return common.click(ResourcesPage.getFirstSuggestion());
+    }
+
+
     // get text
 
     public static getListItemIdentifierText(itemNr) {
@@ -246,6 +252,12 @@ export class ResourcesPage {
     public static getSuggestions() {
 
         return element.all(by.css('.suggestion-container .title'));
+    }
+
+
+    public static getFirstSuggestion() {
+
+        return element(by.css('.suggestion-container .title'));
     }
 
 

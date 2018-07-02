@@ -3,7 +3,6 @@ import {NavbarPage} from '../navbar.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
 import {ProjectPage} from '../project.page';
-import {MapPage} from '../map/map.page';
 import {ImageOverviewPage} from '../images/image-overview.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
@@ -251,6 +250,19 @@ describe('resources/state --', function() {
             expect(suggestions.length).toBe(1);
             expect(suggestions[0].getText()).toEqual('testf1');
         });
+
+        done();
+    });
+
+
+    it('search/suggestions -- delete query string after following suggestion link', async done => {
+
+        SearchBarPage.typeInSearchField('SE0');
+        browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesPage.clickFirstSuggestion();
+
+        NavbarPage.clickNavigateToProject();
+        expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');
 
         done();
     });

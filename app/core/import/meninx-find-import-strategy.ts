@@ -30,7 +30,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
      */
     public async importDoc(importDoc: NewDocument): Promise<Document> {
 
-        const existingDoc = await this.getExistingDoc(importDoc.resource.identifier);
+        const existingDoc: Document|undefined = await this.getExistingDoc(importDoc.resource.identifier);
 
         const updateDoc: NewDocument|Document = existingDoc
             ? MeninxFindImportStrategy.mergeInto(existingDoc, importDoc as any)

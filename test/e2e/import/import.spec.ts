@@ -57,7 +57,7 @@ describe('import --', function() {
         element(by.css('.alert button')).click();
         NavbarPage.clickNavigateToExcavation();
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob1'));
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob2'));

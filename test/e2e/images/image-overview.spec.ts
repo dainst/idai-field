@@ -20,7 +20,7 @@ describe('images --', function() {
     function createTwo() {
 
         ImageOverviewPage.createDepictsRelation('testf1');
-        ImageOverviewPage.createDepictsRelation('SI0');
+        ImageOverviewPage.createDepictsRelation('SE0');
     }
 
     function expectLinkBadgePresence(toBeTruthy: boolean, nrBadges: number = 1) {

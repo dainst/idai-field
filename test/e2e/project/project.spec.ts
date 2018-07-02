@@ -74,10 +74,10 @@ describe('project --', function() {
         browser.sleep(delays.shortRest * 15);
         NavbarPage.clickNavigateToExcavation();
         browser.sleep(delays.shortRest * 5);
-        SearchBarPage.typeInSearchField('SI');
+        SearchBarPage.typeInSearchField('SE');
         browser.sleep(delays.shortRest * 5);
 
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
 
         ProjectPage.clickProjectsBadge();
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });
@@ -121,10 +121,10 @@ describe('project --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         browser.sleep(delays.shortRest * 5);
-        SearchBarPage.typeInSearchField('SI');
+        SearchBarPage.typeInSearchField('SE');
         browser.sleep(delays.shortRest * 5);
 
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SI0'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
 
         ProjectPage.clickProjectsBadge();
 

@@ -49,7 +49,7 @@ describe('resources --', () => {
 
         NavbarPage.clickNavigateToImages();
         NavbarPage.clickNavigateToExcavation();
-        ResourcesPage.openEditByDoubleClickResource('SI0');
+        ResourcesPage.openEditByDoubleClickResource('SE0');
         DoceditPage.clickImagesTab();
 
     }
@@ -407,10 +407,10 @@ describe('resources --', () => {
 
     it('maintype -- should create a new main type resource', () => {
 
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
         ResourcesPage.performCreateMainTypeResource('newTrench');
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('newTrench'));
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SI0')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
         ResourcesPage.getListItemEls().then(elements => expect(elements.length).toBe(0));
     });
 

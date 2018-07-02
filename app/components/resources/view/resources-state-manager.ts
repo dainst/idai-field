@@ -78,7 +78,9 @@ export class ResourcesStateManager {
 
         this.resourcesState = ResourcesState.setView(this.resourcesState, viewName);
 
-        if (!this.resourcesState.viewStates[this.resourcesState.view]) this.resourcesState.viewStates[this.resourcesState.view] = ViewState.default();
+        if (!this.resourcesState.viewStates[this.resourcesState.view]) {
+            this.resourcesState.viewStates[this.resourcesState.view] = ViewState.default();
+        }
         this.setActiveDocumentViewTab(undefined);
     }
 

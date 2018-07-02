@@ -44,6 +44,8 @@ export class ViewState {
         }
 
         (viewState as any).displayHierarchy = true;
-        (viewState as any).navigationPaths = {};
+        (viewState as any).navigationPaths = {
+            '_all': NavigationPath.empty()
+        };
     }
 }

@@ -29,8 +29,6 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         importDoc: NewDocument
     ): Promise<Document> {
 
-        // await this.validator.validate(document as Document); // will throw identifier conflict if document exists
-
         const trenchIdentifier = '' + importDoc.resource.identifier[0] + '000';
         try {
             const existing = await this.datastore.find({q: trenchIdentifier, types: ['Trench']});

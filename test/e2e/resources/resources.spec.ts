@@ -258,8 +258,8 @@ describe('resources --', () => {
             NavbarPage.clickCloseAllMessages();
         }
 
-        del('trench1');
-        del('trench2');
+        del('T1');
+        del('T2');
 
         NavbarPage.clickNavigateToExcavation();
 

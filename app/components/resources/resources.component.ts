@@ -42,13 +42,7 @@ export class ResourcesComponent implements AfterViewChecked {
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
             if (params['id']) {
-                // The timeout is needed to prevent buggy map behavior after following a relation link from
-                // image component to resources component and after following a conflict resolver link from
-                // taskbar
-                setTimeout(() => {
-                    this.selectDocumentFromParams(params['id'], params['menu'], params['tab']).then(() => {
-                    })
-                }, 100);
+                await this.selectDocumentFromParams(params['id'], params['menu'], params['tab']);
             }
         });
 

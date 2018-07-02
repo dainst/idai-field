@@ -34,23 +34,27 @@ export class MeninxFindImportStrategy implements ImportStrategy {
             [await this.getLiesWithinId(importDoc.resource.relations['liesWithin'][0])];
 
 
-        const updateDoc: NewDocument|Document = importDoc;
+        let updateDoc: NewDocument|Document;
 
-
-        const existingOne = this.getExistingDoc(importDoc.resource.identifier);
         let exists = false;
+        const existingOne = await this.getExistingDoc(importDoc.resource.identifier);
         if (existingOne) { // new document -> create
 
             exists = true;
-            MeninxFindImportStrategy.mergeInto(updateDoc, importDoc as any);
-            MeninxFindImportStrategy.checkTypeOfSherd(importDoc.resource.sherdTypeCheck, importDoc.resource, importDoc.resource.amount);
-            delete importDoc.resource.amount && delete importDoc.resource.sherdTypeCheck;
-            importDoc.resource = removeEmptyStrings(importDoc.resource);
+            updateDoc = MeninxFindImportStrategy.mergeInto(existingOne, importDoc as any);
 
+        } else {
+
+            updateDoc = importDoc;
+
+            MeninxFindImportStrategy.checkTypeOfSherd(updateDoc.resource.sherdTypeCheck, updateDoc.resource, updateDoc.resource.amount);
+            delete updateDoc.resource.amount;
+            delete updateDoc.resource.sherdTypeCheck;
         }
 
 
-        if (!exists) console.log('create', updateDoc);
+        updateDoc.resource = removeEmptyStrings(updateDoc.resource);
+        console.log(exists ? 'update' : 'create', updateDoc);
 
         return exists
             ? await this.datastore.update(updateDoc as Document, this.username)
@@ -65,16 +69,11 @@ export class MeninxFindImportStrategy implements ImportStrategy {
             importDocExistenceFindResult = await this.datastore.find(
                 { constraints: { "identifier:match": resourceIdentifier } });
         } catch (err) { throw "no find result obtained" }
+        if (importDocExistenceFindResult.documents.length > 1) throw ["More than one doc found for identifier ", resourceIdentifier];
 
-        let existingOne;
-        if (importDocExistenceFindResult.documents.length > 0) {
-
-            // if more than one (e.g. 1001-3 and 1001-31 for search tearm 1001-3), filter the right one
-            existingOne = importDocExistenceFindResult.documents.find(_ => _.resource.identifier === resourceIdentifier);
-            if (importDocExistenceFindResult.documents.length > 1) throw ["More than one doc found for identifier ", resourceIdentifier];
-            return existingOne;
-
-        } else return undefined;
+        return importDocExistenceFindResult.documents.length === 1
+            ? importDocExistenceFindResult.documents[0]
+            : undefined;
     }
 
 
@@ -126,7 +125,9 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         if (importDoc.resource.hasProvinience.length > 0) updateDoc.resource.hasProvinience = importDoc.resource.hasProvinience;
 
         updateDoc.resource.relations['liesWithin'] = importDoc.resource.relations['liesWithin'];
-        updateDoc.resource.relations['isRecordedIn'] = importDoc.resource.relations['isRecordedIn']
+        updateDoc.resource.relations['isRecordedIn'] = importDoc.resource.relations['isRecordedIn'];
+
+        return updateDoc;
     }
 
 

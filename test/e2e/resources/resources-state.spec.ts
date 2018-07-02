@@ -63,7 +63,7 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToImages();
         browser.sleep(delays.shortRest * 5);
-        ImageOverviewPage.createDepictsRelation('trench1');
+        ImageOverviewPage.createDepictsRelation('S1');
     }
 
 

@@ -37,7 +37,7 @@ export class MeninxFindCsvParser extends AbstractParser {
                                 hasDecorationTechniquePottery: object.Decor,
                                 hasComment: object.comment,
                                 hasProvinience: object.provenience,
-                                type: "Pottery", // TODO: check if really just pottery
+                                type: "Pottery",
                                 relations: {
                                     liesWithin: [
                                         object.se

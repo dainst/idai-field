@@ -418,7 +418,7 @@ describe('resources --', () => {
     it('maintype -- should edit a main type resource', () => {
 
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.openEditByDoubleClickResource('trench1');
+        ResourcesPage.openEditByDoubleClickResource('S1');
         DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);

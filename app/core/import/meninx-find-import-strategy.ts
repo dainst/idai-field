@@ -3,6 +3,7 @@ import {ImportStrategy} from './import-strategy';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
 import {M} from '../../m';
+import {IdaiFieldFindResult} from '../datastore/core/cached-read-datastore';
 
 
 const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {
@@ -35,45 +36,47 @@ export class MeninxFindImportStrategy implements ImportStrategy {
             throw [M.IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE, trenchIdentifier];
         }
 
+        let liesWithinTargetFindResult: IdaiFieldFindResult<Document>;
         const liesWithinIdentifier = importDoc.resource.relations['liesWithin'][0];
         try {
-            const existing = await this.datastore.find({q: liesWithinIdentifier, types: [
+            liesWithinTargetFindResult = await this.datastore.find({q: liesWithinIdentifier, types: [
                     "Feature", "DrillCoreLayer", "Floor", "Grave", "Layer", "Other", "Architecture", "SurveyUnit", "Planum", "Room", "Burial"]});
-
-            if (existing.documents.length > 1) throw "More than one SU found for identifier" + liesWithinIdentifier;
-            importDoc.resource.relations['liesWithin'] = [existing.documents[0].resource.id];
         } catch (err) {
+            console.error("here")
             throw [M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE, liesWithinIdentifier];
         }
+
+        if (liesWithinTargetFindResult.documents.length > 1) throw [M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE, "More than one SU found for identifier" + liesWithinIdentifier];
+        importDoc.resource.relations['liesWithin'] = [liesWithinTargetFindResult.documents[0].resource.id];
 
         let updateDoc: NewDocument|Document = importDoc;
         let exists = false;
 
+        let importDocExistenceFindResult: IdaiFieldFindResult<Document>;
         try {
-            const existing = await this.datastore.find({q: importDoc.resource.identifier});
-            let existingOne;
-            if (existing.documents.length > 0) {
+            importDocExistenceFindResult = await this.datastore.find({q: importDoc.resource.identifier});
+        } catch (err) { throw "no find result obtained" }
 
-                // if more than one (e.g. 1001-3 and 1001-31 for search tearm 1001-3), filter the right one
-                existingOne = existing.documents.find(_ => _.resource.identifier === importDoc.resource.identifier);
+        let existingOne;
+        if (importDocExistenceFindResult.documents.length > 0) {
 
-                if (existingOne) {
-                    updateDoc = existingOne;
-                    exists = true;
-                    MeninxFindImportStrategy.mergeInto(updateDoc, importDoc as any);
-                }
+            // if more than one (e.g. 1001-3 and 1001-31 for search tearm 1001-3), filter the right one
+            existingOne = importDocExistenceFindResult.documents.find(_ => _.resource.identifier === importDoc.resource.identifier);
+
+            if (existingOne) {
+                updateDoc = existingOne;
+                exists = true;
+                MeninxFindImportStrategy.mergeInto(updateDoc, importDoc as any);
             }
+        }
 
-            if (existing.documents.length < 1 || !existingOne) { // new document -> create
+        if (importDocExistenceFindResult.documents.length < 1 || !existingOne) { // new document -> create
 
-                MeninxFindImportStrategy.checkTypeOfSherd(importDoc.resource.sherdTypeCheck, importDoc.resource, importDoc.resource.amount);
-                delete importDoc.resource.amount && delete importDoc.resource.sherdTypeCheck;
-                importDoc.resource = removeEmptyStrings(importDoc.resource);
+            MeninxFindImportStrategy.checkTypeOfSherd(importDoc.resource.sherdTypeCheck, importDoc.resource, importDoc.resource.amount);
+            delete importDoc.resource.amount && delete importDoc.resource.sherdTypeCheck;
+            importDoc.resource = removeEmptyStrings(importDoc.resource);
 
-            }
-
-
-        } catch (err) {}
+        }
 
         if (!exists) console.log('create', updateDoc);
 

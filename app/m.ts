@@ -399,7 +399,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE] = {
-            content: "Beim Import ist ein Fehler aufgetreten: Ressource konnte keiner Stratigraphischen Einheit zugeordnet werden: \"{0}\"",
+            content: "Beim Import ist ein Fehler aufgetreten: Ressource konnte nicht einer Stratigraphischen Einheit zugeordnet werden. Ziel Identifier oder Fehler: \"{0}\"",
             level: 'danger',
             params: ["?"],
             hidden: false

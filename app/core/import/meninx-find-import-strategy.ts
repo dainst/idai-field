@@ -38,19 +38,9 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         const liesWithinIdentifier = importDoc.resource.relations['liesWithin'][0];
         try {
             const existing = await this.datastore.find({q: liesWithinIdentifier, types: [
-                    "Feature",
-                    "DrillCoreLayer",
-                    "Floor",
-                    "Grave",
-                    "Layer",
-                    "Other",
-                    "Architecture",
-                    "SurveyUnit",
-                    "Planum",
-                    "Room",
-                    "Burial"
-                ]});
+                    "Feature", "DrillCoreLayer", "Floor", "Grave", "Layer", "Other", "Architecture", "SurveyUnit", "Planum", "Room", "Burial"]});
 
+            if (existing.documents.length > 1) throw "More than one SU found for identifier" + liesWithinIdentifier;
             importDoc.resource.relations['liesWithin'] = [existing.documents[0].resource.id];
         } catch (err) {
             throw [M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE, liesWithinIdentifier];

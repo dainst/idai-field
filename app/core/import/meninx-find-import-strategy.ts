@@ -33,7 +33,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         const existingDoc: Document|undefined = await this.getExistingDoc(importDoc.resource.identifier);
 
         const updateDoc: NewDocument|Document = existingDoc
-            ? MeninxFindImportStrategy.mergeInto(existingDoc, importDoc as any)
+            ? MeninxFindImportStrategy.mergeInto(existingDoc, importDoc)
             : importDoc;
 
         MeninxFindImportStrategy.checkTypeOfSherd(importDoc.resource.sherdTypeCheck, updateDoc.resource, importDoc.resource.amount);
@@ -103,7 +103,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
     }
 
 
-    private static mergeInto(mergeTarget: Document|NewDocument, mergeSource: Document) {
+    private static mergeInto(mergeTarget: Document|NewDocument, mergeSource: NewDocument) {
 
         const mergedDoc = ObjectUtil.cloneObject(mergeTarget);
 

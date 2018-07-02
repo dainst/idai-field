@@ -281,7 +281,7 @@ describe('syncing --', function() {
     });
 
 
-    xit('resolve an eventual conflict via conflict resolver', done => {
+    it('resolve an eventual conflict via conflict resolver', done => {
 
         const nr = '10';
 
@@ -309,7 +309,7 @@ describe('syncing --', function() {
     });
 
 
-    xit('detect an eventual conflict and mark the corresponding resource list item', async done => {
+    it('detect an eventual conflict and mark the corresponding resource list item', async done => {
 
         const nr = '7';
 

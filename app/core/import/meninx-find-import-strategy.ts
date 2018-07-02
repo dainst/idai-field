@@ -29,8 +29,8 @@ export class MeninxFindImportStrategy implements ImportStrategy {
 
         const trenchIdentifier = '' + importDoc.resource.identifier[0] + '000';
         try {
-            const existing = await this.datastore.find({q: trenchIdentifier, types: ['Trench']});
-            importDoc.resource.relations['isRecordedIn'] = [existing.documents[0].resource.id];
+            const trench = await this.datastore.find({q: trenchIdentifier, types: ['Trench']});
+            importDoc.resource.relations['isRecordedIn'] = [trench.documents[0].resource.id];
         } catch (err) {
             throw [M.IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE, trenchIdentifier];
         }

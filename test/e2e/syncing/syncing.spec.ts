@@ -258,7 +258,7 @@ describe('syncing --', function() {
     });
 
 
-    xit('resolve a save conflict via conflict resolver', async done => {
+    it('resolve a save conflict via conflict resolver', async done => {
 
         const nr = '6';
         let testDocument = await createOneDocument(nr);

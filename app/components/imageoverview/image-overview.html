@@ -6,14 +6,17 @@
          (drop)="false">
 
         <div class="row bg-light image-overview-nav">
-            <div *ngIf="!getSelected().length" class="col-sm-7 py-2">
+            <div *ngIf="!getSelected().length" class="col-sm-7 py-2"
+                 (mouseenter)="show_search_help_tooltip = true"
+                 (mouseleave)="show_search_help_tooltip = false">
+
                 <search-bar [q]="getQuery().q"
                             [types]="getQuery().types" [parentType]="'Image'" [hidden]="getSelected().length"
                             (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setTypeFilters($event)">
                 </search-bar>
 
 
-                <button class="search-help-tooltip btn btn-outline-primary" style="
+                <button *ngIf="show_search_help_tooltip" class="search-help-tooltip btn btn-outline-primary" style="
                     outline: none !important; position: absolute; top: 9px; right: 66px;
                     box-shadow: none !important;
                     border: 0px; margin-top: 2px; margin-bottom: 2px; color: #ababab;">

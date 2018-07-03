@@ -29,12 +29,15 @@ $roboto-font-path: '../fonts/';
   .tooltip-inner {
     width: 400px;
   }
+  animation-name: delayedFadeIn;
+  animation-duration: 1s; /* Adjust this duration */
 }
 
 .tooltip > div {
   animation-name: delayedFadeIn;
   animation-duration: 1s; /* Adjust this duration */
-}
+  }
+
 
 
 @Keyframes delayedFadeIn {

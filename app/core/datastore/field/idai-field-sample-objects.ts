@@ -14,7 +14,7 @@ export const DOCS: NewDocument[] = [
         'resource': {
             'id': 't1',
             'identifier': 'S1',
-            'shortDescription': 'Goldener Schnitt',
+            'shortDescription': 'Schnitt 1',
             'relations': {
                 'isRecordedIn': []
             },
@@ -34,7 +34,7 @@ export const DOCS: NewDocument[] = [
         'resource': {
             'id': 't2',
             'identifier': 'S2',
-            'shortDescription': 'Matrix-Schnitt',
+            'shortDescription': 'Schnitt 2',
             'relations': {
                 'isRecordedIn': []
             },

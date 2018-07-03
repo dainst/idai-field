@@ -6,7 +6,9 @@
 
     <div class="col-md-6 mr-md-auto">
         <div class="row">
-            <div id="search-bar-container" class="col-md-9">
+            <div id="search-bar-container" class="col-md-9"
+                 (mouseenter)="show_search_help_tooltip = true"
+                 (mouseleave)="show_search_help_tooltip = false">
                 <resources-search-bar [q]="getQueryString()"
                                       [types]="getTypeFilters()"
                                       [relationName]="'isRecordedIn'"
@@ -14,6 +16,16 @@
                                       (onQueryStringChanged)="setQueryString($event)"
                                       (onTypesChanged)="setTypeFilters($event)">
                 </resources-search-bar>
+
+
+                <button *ngIf="show_search_help_tooltip" class="search-help-tooltip btn btn-outline-primary" style="
+                    outline: none !important; position: absolute; top: 2px; right: 66px;
+                    box-shadow: none !important;
+                    border: 0px; margin-top: 2px; margin-bottom: 2px; color: #ababab;">
+                    <span class="mdi mdi-help-circle"
+                          ngbTooltip="Geben Sie Suchbegriffe ein, um die Menge der Suchtreffer in der Ressourcenliste einzuschränken. Werden keine Suchtreffer im aktuellen Kontext gefunden, werden Suchvorschläge aus anderen Kontexten angezeigt. Es kann ein Platzhalter nach der Art 'S[EU]-1' verwendet werden. Solch eine Suche trifft 'SE-1' und 'SU-1'. 'S[EU]' trifft 'SE*' und 'SU*'."
+                          placement="bottom"></span>
+                </button>
             </div>
 
             <div id="buttons-container" class="col-md-3">

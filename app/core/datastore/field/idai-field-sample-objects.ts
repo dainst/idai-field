@@ -174,7 +174,7 @@ export const DOCS: NewDocument[] = [
         'resource': {
             'id': 'si4',
             'identifier': 'SE4',
-            'shortDescription': 'Ein Befund',
+            'shortDescription': 'Ein Grab',
             'relations': {
                 'isRecordedIn': ['t2'],
                 'isBefore': ['si3'],
@@ -202,7 +202,7 @@ export const DOCS: NewDocument[] = [
                     ]
                 ]
             },
-            'type': 'Feature'
+            'type': 'Grave'
         }
     },
     {
@@ -262,7 +262,7 @@ export const DOCS: NewDocument[] = [
                     ]
                 ]
             },
-            'type': 'Feature'
+            'type': 'Layer'
         }
     },
     {

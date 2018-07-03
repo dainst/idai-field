@@ -69,50 +69,53 @@ export class ResourcesMapComponent {
      *   <code>null</code> indicates geometry should get deleted.
      *   <code>undefined</code> indicates editing operation aborted.
      */
-    public quitEditing(geometry: IdaiFieldGeometry) {
+    public async quitEditing(geometry: IdaiFieldGeometry) {
 
-        const selectedDoc = this.viewFacade.getSelectedDocument();
-        if (!selectedDoc) return;
-        if (!selectedDoc.resource.geometry) return;
+        const selectedDocument = this.viewFacade.getSelectedDocument();
+        if (!selectedDocument) return;
+        if (!selectedDocument.resource.geometry) return;
 
         if (geometry) {
-            selectedDoc.resource.geometry = geometry;
-        } else if (geometry === null || !selectedDoc.resource.geometry.coordinates
-                || selectedDoc.resource.geometry.coordinates.length == 0) {
-            delete selectedDoc.resource.geometry;
+            selectedDocument.resource.geometry = geometry;
+        } else if (geometry === null || !selectedDocument.resource.geometry.coordinates
+                || selectedDocument.resource.geometry.coordinates.length == 0) {
+            delete selectedDocument.resource.geometry;
         }
 
         if (this.selectedDocumentIsNew()) {
             if (geometry !== undefined) {
-                const selectedDoc = this.viewFacade.getSelectedDocument();
-                if (selectedDoc) this.resourcesComponent.editDocument(selectedDoc);
+                const selectedDocument = this.viewFacade.getSelectedDocument();
+                if (selectedDocument) await this.resourcesComponent.editDocument(selectedDocument);
             } else {
                 this.resourcesComponent.isEditingGeometry = false;
-                this.viewFacade.remove(selectedDoc);
+                this.viewFacade.remove(selectedDocument);
             }
         } else {
             this.resourcesComponent.isEditingGeometry = false;
-            if (geometry !== undefined) this.save();
+            if (geometry !== undefined) await this.save();
         }
     }
 
 
-    private save() {
+    private async save() {
 
-        const selectedDoc = this.viewFacade.getSelectedDocument();
-        if (!selectedDoc) return;
+        const selectedDocument = this.viewFacade.getSelectedDocument();
+        if (!selectedDocument) return;
 
-        this.persistenceManager.persist(selectedDoc, this.usernameProvider.getUsername())
-            .catch(msgWithParams => this.messages.add(msgWithParams));
+        try {
+            await this.persistenceManager.persist(selectedDocument, this.usernameProvider.getUsername());
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
+        }
     }
 
 
     private selectedDocumentIsNew(): boolean {
 
-        const selectedDoc = this.viewFacade.getSelectedDocument();
-        if (!selectedDoc) return false;
+        const selectedDocument = this.viewFacade.getSelectedDocument();
+        if (!selectedDocument) return false;
 
-        return !selectedDoc.resource.id;
+        return !selectedDocument.resource.id;
     }
 
 

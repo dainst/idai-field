@@ -25,13 +25,6 @@ $roboto-font-path: '../fonts/';
 @import 'components/imageupload/image-upload';
 @import 'components/matrix/matrix-view';
 
-.search-help-tooltip {
-  .tooltip-inner {
-    width: 400px;
-  }
-  animation-name: delayedFadeIn;
-  animation-duration: 1s; /* Adjust this duration */
-}
 
 .tooltip > div {
   animation-name: delayedFadeIn;

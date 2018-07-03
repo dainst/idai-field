@@ -144,7 +144,7 @@ export module ResourcesState {
     }
 
 
-    export function removeActiveLayersIds(state: ResourcesState): ResourcesState {
+    export function removeActiveLayersIds(state: ResourcesState): ResourcesState { // TODO check if we need to deal with the _all layer context here
 
         const cloned = ObjectUtil.cloneObject(state);
 

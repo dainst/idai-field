@@ -47,19 +47,17 @@ export class DocumentsManager {
 
     public getTotalDocumentCount = () => this.totalDocumentCount;
 
-    public removeFromDocuments = (document: Document) => this.documents = subtract([document])(this.documents);
-
     public deselectionNotifications = (): Observable<Document> => ObserverUtil.register(this.deselectionObservers);
 
     public populateDocumentsNotifactions = (): Observable<Array<Document>> =>
         ObserverUtil.register(this.populateDocumentsObservers);
 
 
-    public isNewDocumentFromRemote = (document: Document) => {
+    public isNewDocumentFromRemote(document: Document): boolean {
 
         if (!document.resource.id) return false;
         return this.newDocumentsFromRemote.includes(document.resource.id);
-    };
+    }
 
 
     public async setQueryString(q: string, populate: boolean = true) {

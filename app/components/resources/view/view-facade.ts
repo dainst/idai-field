@@ -81,8 +81,6 @@ export class ViewFacade {
 
     public isNewDocumentFromRemote = (document: Document) => this.documentsManager.isNewDocumentFromRemote(document);
 
-    public remove = (document: Document) => this.documentsManager.removeFromDocuments(document);
-
     public getSearchString = () => ResourcesState.getQueryString(this.resourcesStateManager.get());
 
     public setSearchString = (q: string, populate?: boolean) => this.documentsManager.setQueryString(q, populate);

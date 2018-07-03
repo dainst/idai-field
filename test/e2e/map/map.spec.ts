@@ -398,6 +398,7 @@ describe('map --', function() {
 
         beginCreateDocWithGeometry('point', function() { return MapPage.setMarker(100, 100); });
         MapPage.clickMapOption('abort');
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemMarkedNewEl()), delays.ECWaitTime);
         expect(browser.getCurrentUrl()).toContain('resources');
         expect(browser.getCurrentUrl()).not.toContain('edit');
     });

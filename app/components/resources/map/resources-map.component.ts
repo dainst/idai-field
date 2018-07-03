@@ -87,7 +87,7 @@ export class ResourcesMapComponent {
                 const selectedDocument = this.viewFacade.getSelectedDocument();
                 if (selectedDocument) await this.resourcesComponent.editDocument(selectedDocument);
             } else {
-                this.viewFacade.remove(selectedDocument);
+                this.viewFacade.deselect();
                 this.resourcesComponent.isEditingGeometry = false;
             }
         } else {

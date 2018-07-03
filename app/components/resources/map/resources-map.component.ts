@@ -24,7 +24,7 @@ export class ResourcesMapComponent {
 
     @Input() activeTab: string;
 
-    private parentDocuments: Array<Document>;
+    public parentDocuments: Array<Document>;
 
 
     constructor(

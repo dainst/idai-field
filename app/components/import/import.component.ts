@@ -30,6 +30,8 @@ import {Validator} from '../../core/model/validator';
 import {MeninxFindCsvParser} from '../../core/import/meninx-find-csv-parser';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {MeninxFindImportStrategy} from '../../core/import/meninx-find-import-strategy';
+import {Settings} from '../../core/settings/settings';
+import {SettingsService} from '../../core/settings/settings-service';
 
 
 type ImportFormat = 'native' | 'idig' | 'geojson' | 'meninxfind';
@@ -68,7 +70,8 @@ export class ImportComponent {
         private usernameProvider: UsernameProvider,
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private settingsService: SettingsService
     ) {
         this.viewFacade.getAllOperationSubtypeWithViewDocuments().then(
             documents => this.mainTypeDocuments = documents,

@@ -87,12 +87,12 @@ export class ResourcesMapComponent {
                 const selectedDocument = this.viewFacade.getSelectedDocument();
                 if (selectedDocument) await this.resourcesComponent.editDocument(selectedDocument);
             } else {
-                this.resourcesComponent.isEditingGeometry = false;
                 this.viewFacade.remove(selectedDocument);
+                this.resourcesComponent.isEditingGeometry = false;
             }
         } else {
-            this.resourcesComponent.isEditingGeometry = false;
             if (geometry !== undefined) await this.save();
+            this.resourcesComponent.isEditingGeometry = false;
         }
     }
 
@@ -103,7 +103,9 @@ export class ResourcesMapComponent {
         if (!selectedDocument) return;
 
         try {
-            await this.persistenceManager.persist(selectedDocument, this.usernameProvider.getUsername());
+            await this.viewFacade.setSelectedDocument(
+                await this.persistenceManager.persist(selectedDocument, this.usernameProvider.getUsername())
+            );
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         }

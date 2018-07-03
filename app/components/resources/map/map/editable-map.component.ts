@@ -515,7 +515,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         polyline.pm.disable();
         this.map.removeLayer(polyline);
-        this.removeElement(polyline, this.editablePolylines);
+        EditableMapComponent.removeElement(polyline, this.editablePolylines);
     }
 
 
@@ -589,7 +589,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private removeElement(element: any, list: Array<any>) {
+    private static removeElement(element: any, list: Array<any>) {
 
         for (let listElement of list) {
             if (element == listElement) {

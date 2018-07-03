@@ -65,7 +65,7 @@ export class ViewFacade {
 
     public getDocuments = () => this.documentsManager.getDocuments();
 
-    public getSelectedDocument = () => ResourcesState.getSelectedDocument(this.resourcesStateManager.get())
+    public getSelectedDocument = () => ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
 
     public getTotalDocumentCount = () => this.documentsManager.getTotalDocumentCount();
 
@@ -130,6 +130,14 @@ export class ViewFacade {
 
         if (this.isInOverview()) throw ViewFacade.err('getOperationTypeLabel');
         return this.resourcesStateManager.getLabelForName(this.resourcesStateManager.get().view) as string; // cast ok, we are not in overview
+    }
+
+
+    public getOperationTypeSelection(): string|undefined {
+
+        if (this.isInOverview()) return 'project';
+        if (!this.getDisplayHierarchy() && this.getBypassOperationTypeSelection()) return '_all';
+        return ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
     }
 
 

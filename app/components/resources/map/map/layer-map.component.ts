@@ -24,7 +24,7 @@ export class LayerMapComponent extends MapComponent {
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
     @Input() parentDocument: IdaiFieldDocument;
-    @Input() mainTypeDocument: IdaiFieldDocument;
+    @Input() mainTypeDocument: string; // TODO rename to context
     @Input() projectDocument: IdaiFieldDocument;
     @Input() update: boolean;
 
@@ -171,6 +171,7 @@ export class LayerMapComponent extends MapComponent {
             && (changes['mainTypeDocument'].currentValue || changes['mainTypeDocument'].previousValue)) {
             return true;
         }
+
 
         // Update layers after switching from a view without main type documents to another view without
         // main type documents.

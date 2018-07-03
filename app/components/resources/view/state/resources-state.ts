@@ -74,14 +74,14 @@ export module ResourcesState {
         const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
         if (!mainTypeDocumentResourceId) return [];
 
-        const layersIds = state.viewStates[state.view].layerIds[mainTypeDocumentResourceId];
+        const layersIds = viewState(state).layerIds[isAllSelection(viewState(state)) ? '_all' : mainTypeDocumentResourceId];
         return layersIds ? layersIds : [];
     }
 
 
     export function getLayerIds(state: ResourcesState): {[mainTypeDocumentId: string]: string[]} {
 
-        return state.viewStates[state.view].layerIds;
+        return viewState(state).layerIds;
     }
 
 
@@ -137,7 +137,9 @@ export module ResourcesState {
         const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
         if (!mainTypeDocumentResourceId) return cloned;
 
-        cloned.viewStates[cloned.view].layerIds[mainTypeDocumentResourceId] = activeLayersIds.slice(0);
+        const layerContextId = isAllSelection(viewState(cloned)) ? '_all' : mainTypeDocumentResourceId;
+        viewState(cloned).layerIds[layerContextId] = activeLayersIds.slice(0);
+
         return cloned;
     }
 
@@ -160,9 +162,8 @@ export module ResourcesState {
         const mainTypeDocumentResourceId: string|undefined = getMainTypeDocumentResourceId(cloned);
         if (!mainTypeDocumentResourceId) return cloned;
 
-        const viewState: ViewState = cloned.viewStates[cloned.view];
-        const navigationPathId: string = isAllSelection(viewState) ? '_all' : mainTypeDocumentResourceId;
-        viewState.navigationPaths[navigationPathId] = navPath;
+        const navigationPathId: string = isAllSelection(viewState(cloned)) ? '_all' : mainTypeDocumentResourceId;
+        viewState(cloned).navigationPaths[navigationPathId] = navPath;
 
         return cloned;
     }
@@ -247,6 +248,12 @@ export module ResourcesState {
     function isAllSelection(viewState: ViewState): boolean {
 
         return !viewState.displayHierarchy && viewState.bypassOperationTypeSelection;
+    }
+
+
+    function viewState(state: ResourcesState): ViewState {
+
+        return state.viewStates[state.view];
     }
 }
 

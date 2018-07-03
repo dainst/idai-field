@@ -1,8 +1,8 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} from '@angular/core';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/field';
+import {IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from 'idai-components-2/field';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
-import {IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from "idai-components-2/field";
 
 declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
                      _layer: any } }
@@ -75,7 +75,6 @@ export class EditableMapComponent extends LayerMapComponent {
         this.map.pm.enableDraw(drawMode, drawOptions);
         this.drawMode = drawMode;
     }
-
 
 
     public finishEditing() {
@@ -438,8 +437,8 @@ export class EditableMapComponent extends LayerMapComponent {
     private removePolygon(polygon: L.Polygon) {
 
         polygon.pm.disable();
-        this.map.removeLayer(polygon);  
-        this.removeElement(polygon, this.editablePolygons);
+        this.map.removeLayer(polygon);
+        EditableMapComponent.removeElement(polygon, this.editablePolygons);
     }
 
 

@@ -4,7 +4,7 @@ import {MapComponent} from 'idai-components-2/field';
 import {Messages} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
-import {LayerManager, LayersInitializationResult, ListDiffResult} from './layer-manager';
+import {LayerManager, ListDiffResult} from './layer-manager';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {LayerImageProvider} from './layer-image-provider';
 import {IdaiFieldGeoreference} from "../../../../core/model/idai-field-georeference";
@@ -24,6 +24,7 @@ export class LayerMapComponent extends MapComponent {
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
     @Input() parentDocument: IdaiFieldDocument;
+    @Input() mainTypeDocument: string; // TODO rename to context
     @Input() projectDocument: IdaiFieldDocument;
     @Input() update: boolean;
 
@@ -41,8 +42,8 @@ export class LayerMapComponent extends MapComponent {
                 projectConfiguration: ProjectConfiguration) {
 
         super(projectConfiguration);
+
         this.layerManager.reset();
-        layerManager.layerIdsNotifications().subscribe(result => this.updateLayers(result));
     }
 
 
@@ -84,15 +85,17 @@ export class LayerMapComponent extends MapComponent {
 
         if (this.layersUpdate) {
             this.layersUpdate = false;
-            // return this.updateLayers(); // TODO check if still necessary
+            return this.updateLayers();
         }
     }
 
 
-    private async updateLayers(layerInitializationResult: LayersInitializationResult): Promise<any> {
+    private async updateLayers(): Promise<any> {
 
         this.layerImageProvider.reset();
-        const {layers, activeLayersChange} = layerInitializationResult;
+
+        const { layers, activeLayersChange } =
+            await this.layerManager.initializeLayers();
 
         this.layers = layers;
         this.initializePanes();
@@ -160,6 +163,15 @@ export class LayerMapComponent extends MapComponent {
      * provider while the images are still loading.
      */
     private static isLayersUpdateNecessary(changes: SimpleChanges): boolean {
+
+        // Update layers after switching main type document.
+        // Update layers after switching to another view with an existing main type document or coming from
+        // a view with an existing main type document.
+        if (changes['mainTypeDocument']
+            && (changes['mainTypeDocument'].currentValue || changes['mainTypeDocument'].previousValue)) {
+            return true;
+        }
+
 
         // Update layers after switching from a view without main type documents to another view without
         // main type documents.

@@ -71,6 +71,8 @@ export class ViewFacade {
 
     public getActiveDocumentViewTab = () => this.resourcesStateManager.get().activeDocumentViewTab;
 
+    public getActiveLayersIds = () => ResourcesState.getActiveLayersIds(this.resourcesStateManager.get());
+
     public deselect = () => this.documentsManager.deselect();
 
     public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesStateManager.setActiveLayersIds(activeLayersIds);
@@ -88,8 +90,6 @@ export class ViewFacade {
     public moveInto = (document: IdaiFieldDocument|undefined) => this.documentsManager.moveInto(document);
 
     public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
-
-    public layerIdsNotifications = () => this.resourcesStateManager.layerIdsNotifications();
 
     public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
 
@@ -130,6 +130,14 @@ export class ViewFacade {
 
         if (this.isInOverview()) throw ViewFacade.err('getOperationTypeLabel');
         return this.resourcesStateManager.getLabelForName(this.resourcesStateManager.get().view) as string; // cast ok, we are not in overview
+    }
+
+
+    public getOperationTypeSelection(): string|undefined {
+
+        if (this.isInOverview()) return 'project';
+        if (!this.getDisplayHierarchy() && this.getBypassOperationTypeSelection()) return '_all';
+        return ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
     }
 
 

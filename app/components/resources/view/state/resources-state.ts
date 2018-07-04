@@ -172,7 +172,7 @@ export module ResourcesState {
         return {
             viewStates: {
                 project: {
-                    layerIds: {'test': ['o25']},
+                    layerIds: {'project': ['o25']},
                     displayHierarchy: true,
                     bypassOperationTypeSelection: false,
                     navigationPaths: {

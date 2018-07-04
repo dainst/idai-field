@@ -6,24 +6,11 @@
          (drop)="false">
 
         <div class="row bg-light image-overview-nav">
-            <div *ngIf="!getSelected().length" class="col-sm-7 py-2"
-                 (mouseenter)="show_search_help_tooltip = true"
-                 (mouseleave)="show_search_help_tooltip = false">
-
+            <div *ngIf="!getSelected().length" class="col-sm-7 py-2">
                 <search-bar [q]="getQuery().q"
                             [types]="getQuery().types" [parentType]="'Image'" [hidden]="getSelected().length"
                             (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setTypeFilters($event)">
                 </search-bar>
-
-
-                <button *ngIf="show_search_help_tooltip" class="search-help-tooltip btn btn-outline-primary" style="
-                    outline: none !important; position: absolute; top: 9px; right: 66px;
-                    box-shadow: none !important;
-                    border: 0px; margin-top: 2px; margin-bottom: 2px; color: #ababab;">
-                    <span class="mdi mdi-help-circle"
-                          ngbTooltip="Es kann ein Platzhalter nach der Art 'S[12]4' verwendet werden. Solch eine Suche trifft 'S14' und 'S24'. 'S[12]' trifft 'S10', 'S11', ..., 'S19', 'S20', 'S21', ..."
-                          placement="bottom"></span>
-                </button>
             </div>
 
             <div *ngIf="!getSelected().length" class="col-sm-3 py-2">

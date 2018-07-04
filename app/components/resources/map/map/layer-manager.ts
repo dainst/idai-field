@@ -3,7 +3,6 @@ import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-do
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/field/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../view/view-facade';
 import {subtract, unique} from 'tsfun';
-import {TypeUtility} from '../../../../core/model/type-utility';
 import {ObserverUtil} from '../../../../util/observer-util';
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable'

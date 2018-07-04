@@ -90,22 +90,15 @@ export class LayerManager {
 
         try {
             return {
-                layers: await this.fetchLayers(),
+                layers: (await this.datastore.find({
+                    constraints: { 'georeference:exist': 'KNOWN' }
+                })).documents,
                 activeLayersChange: activeLayersChange
             };
         } catch(e) {
             console.error('error with datastore.find', e);
             throw undefined;
         }
-    }
-
-
-    private async fetchLayers() {
-
-        return (await this.datastore.find({
-                q: '',
-                constraints: { 'georeference:exist': 'KNOWN' }
-            })).documents;
     }
 
 

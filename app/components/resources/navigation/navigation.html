@@ -5,8 +5,8 @@
             <div ngbTooltip="Wechsel zwischen hierarchischer Anordnung und einfacher Auflistung" placement="right"
                  container="body" triggers="manual" #tooltip="ngbTooltip"
                  (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()" (click)="tooltip.close()">
-                <span *ngIf="!viewFacade.getBypassHierarchy()" class="mdi mdi-file-tree"></span>
-                <span *ngIf="viewFacade.getBypassHierarchy()" class="mdi mdi-view-sequential"></span>
+                <span *ngIf="!getBypassHierarchy()" class="mdi mdi-file-tree"></span>
+                <span *ngIf="getBypassHierarchy()" class="mdi mdi-view-sequential"></span>
             </div>
         </div>
 
@@ -14,11 +14,11 @@
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
 
             <div class="dropdown-menu" ngbDropdownMenu>
-                <button *ngIf="viewFacade.getBypassHierarchy()" class="dropdown-item"
+                <button *ngIf="getBypassHierarchy()" class="dropdown-item"
                         (click)="activateBypassOperationTypeSelection()">
                     <em>Alle</em>
                 </button>
-                <hr *ngIf="viewFacade.getBypassHierarchy()">
+                <hr *ngIf="getBypassHierarchy()">
 
                 <button *ngFor="let document of viewFacade.getOperationTypeDocuments()" class="dropdown-item"
                         (click)="chooseOperationTypeDocumentOption(document)">
@@ -27,14 +27,14 @@
             </div>
         </div>
 
-        <div *ngIf="!viewFacade.getBypassHierarchy() || !viewFacade.getSelectAllOperationsOnBypassHierarchy()"
+        <div *ngIf="showOperationAsFirstSegment()"
              id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
             {{viewFacade.getSelectedOperationTypeDocument().resource.identifier}}
         </div>
 
-        <div *ngIf="viewFacade.getBypassHierarchy() && viewFacade.getSelectAllOperationsOnBypassHierarchy()"
+        <div *ngIf="showOperationsAllAsFirstSegment()"
                 id="selected-all-operation-type-documents" type="button" class="btn btn-outline-primary navigation-button"
                 [class.root-document]="!navigationPath.selectedSegmentId"
                 (click)="moveInto(undefined)">

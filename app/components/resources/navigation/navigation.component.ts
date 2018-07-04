@@ -28,8 +28,13 @@ export class NavigationComponent {
         });
     }
 
+    public showOperationAsFirstSegment = () => !this.viewFacade.getBypassHierarchy() || !this.viewFacade.getSelectAllOperationsOnBypassHierarchy();
+
+    public showOperationsAllAsFirstSegment = () => this.viewFacade.getBypassHierarchy() && this.viewFacade.getSelectAllOperationsOnBypassHierarchy();
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
+
+    public getBypassHierarchy = () => this.viewFacade.getBypassHierarchy();
 
     public moveInto = (document: IdaiFieldDocument|undefined) => this.viewFacade.moveInto(document);
 

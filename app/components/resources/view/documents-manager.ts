@@ -113,26 +113,26 @@ export class DocumentsManager {
     }
 
 
-    public async setSelected(documentToSelect: IdaiFieldDocument): Promise<any> {
+    public async setSelected(resourceId: string): Promise<any> {
 
         this.documents = this.documents.filter(hasId);
 
-        if (documentToSelect.resource.id) {
-            this.newDocumentsFromRemote =
-                subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
-        }
+        try {
+            const documentToSelect = await this.datastore.get(resourceId);
 
-        if (!(await this.createUpdatedDocumentList()).documents.find(hasEqualId(documentToSelect))) {
+            this.newDocumentsFromRemote = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
-            if (documentToSelect) {
+            if (!(await this.createUpdatedDocumentList()).documents.find(hasEqualId(documentToSelect))) {
+
                 await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
-            } else {
-                console.error('documentToSelect undefined in setSelected'); // see #8317
+                await this.populateDocumentList();
             }
-            await this.populateDocumentList();
-        }
 
-        this.selectAndNotify(documentToSelect);
+            this.selectAndNotify(documentToSelect);
+
+        } catch (e) {
+            console.error('documentToSelect undefined in DocumentsManager.setSelected()');
+        }
     }
 
 

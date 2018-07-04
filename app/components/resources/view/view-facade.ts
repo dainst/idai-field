@@ -69,6 +69,8 @@ export class ViewFacade {
 
     public getActiveDocumentViewTab = () => this.resourcesStateManager.get().activeDocumentViewTab;
 
+    public setSelectedDocument = (resourceId: string) => this.documentsManager.setSelected(resourceId);
+
     public deselect = () => this.documentsManager.deselect();
 
     public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesStateManager.setActiveLayersIds(activeLayersIds);
@@ -106,12 +108,6 @@ export class ViewFacade {
     public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
 
     public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
-
-
-    public async setSelectedDocument(resourceId: string) {
-
-        await this.documentsManager.setSelected(await this.datastore.get(resourceId)); // TODO select it from the list, not via datastore
-    }
 
 
     public getNavigationPath() {

@@ -27,9 +27,10 @@ export class ResourcesStateManager {
     public loaded: boolean = false;
 
     private navigationPathObservers: Array<Observer<NavigationPath>> = [];
+    public navigationPathNotifications = (): Observable<NavigationPath> => ObserverUtil.register(this.navigationPathObservers);
 
-    public navigationPathNotifications = (): Observable<NavigationPath> =>
-        ObserverUtil.register(this.navigationPathObservers);
+    private layerIdsObservers: Array<Observer<string[]>> = [];
+    public layerIdsNotifications = (): Observable<string[]> => ObserverUtil.register(this.layerIdsObservers);
 
     private resourcesState = ResourcesState.makeDefaults();
 
@@ -82,6 +83,7 @@ export class ResourcesStateManager {
             this.resourcesState.viewStates[this.resourcesState.view] = ViewState.default();
         }
         this.setActiveDocumentViewTab(undefined);
+        await this.notifyLayerIdsObservers();
     }
 
 
@@ -133,6 +135,7 @@ export class ResourcesStateManager {
         this.resourcesState = ResourcesState.setBypassOperationTypeSelection(this.resourcesState,
             bypassOperationTypeSelection);
         this.notifyNavigationPathObservers();
+        this.notifyLayerIdsObservers();
     }
 
 
@@ -177,6 +180,7 @@ export class ResourcesStateManager {
 
     public setMainTypeDocument(resourceId: string|undefined) {
 
+        const previousMainTypeResourceId = ResourcesState.getMainTypeDocumentResourceId(this.resourcesState);
         this.resourcesState = ResourcesState.setMainTypeDocumentResourceId(this.resourcesState, resourceId);
 
         if (resourceId && !this.resourcesState.viewStates[this.resourcesState.view].navigationPaths[resourceId]) {
@@ -185,6 +189,7 @@ export class ResourcesStateManager {
         }
 
         this.notifyNavigationPathObservers();
+        if (resourceId !== previousMainTypeResourceId) this.notifyLayerIdsObservers();
     }
 
 
@@ -202,6 +207,12 @@ export class ResourcesStateManager {
     private notifyNavigationPathObservers() {
 
         ObserverUtil.notify(this.navigationPathObservers, ObjectUtil.cloneObject(ResourcesState.getNavigationPath(this.resourcesState)));
+    }
+
+
+    private notifyLayerIdsObservers() {
+
+        ObserverUtil.notify(this.layerIdsObservers, ResourcesState.getActiveLayersIds(this.resourcesState));
     }
 
 

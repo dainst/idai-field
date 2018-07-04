@@ -39,33 +39,31 @@ export module ResourcesState {
 
     export function getNavigationPath(state: ResourcesState): NavigationPath {
 
-        const viewState: ViewState = state.viewStates[state.view];
+        if (isAllSelection(viewState(state))) return viewState(state).navigationPaths['_all'];
 
-        if (isAllSelection(viewState)) return viewState.navigationPaths['_all'];
-
-        const mainTypeDocumentResourceId = viewState.mainTypeDocumentResourceId;
+        const mainTypeDocumentResourceId = viewState(state).mainTypeDocumentResourceId;
         if (!mainTypeDocumentResourceId) return NavigationPath.empty();
 
-        const path = viewState.navigationPaths[mainTypeDocumentResourceId];
+        const path = viewState(state).navigationPaths[mainTypeDocumentResourceId];
         return path ? path : NavigationPath.empty();
     }
 
 
     export function getBypassOperationTypeSelection(state: ResourcesState): boolean {
 
-        return state.viewStates[state.view].bypassOperationTypeSelection;
+        return viewState(state).bypassOperationTypeSelection;
     }
 
 
     export function getDisplayHierarchy(state: ResourcesState): boolean {
 
-        return state.viewStates[state.view].displayHierarchy;
+        return viewState(state).displayHierarchy;
     }
 
 
     export function getMainTypeDocumentResourceId(state: ResourcesState): string|undefined {
 
-        return state.viewStates[state.view].mainTypeDocumentResourceId;
+        return viewState(state).mainTypeDocumentResourceId;
     }
 
 
@@ -126,7 +124,7 @@ export module ResourcesState {
     export function setSelectedDocument(state: ResourcesState, document: IdaiFieldDocument|undefined): ResourcesState {
 
         return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state),
-            state.viewStates[state.view].displayHierarchy, document));
+            viewState(state).displayHierarchy, document));
     }
 
 
@@ -149,7 +147,7 @@ export module ResourcesState {
         const cloned = ObjectUtil.cloneObject(state);
 
         const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
-        if (mainTypeDocumentResourceId) delete cloned.viewStates[cloned.view].layerIds[mainTypeDocumentResourceId];
+        if (mainTypeDocumentResourceId) delete viewState(cloned).layerIds[mainTypeDocumentResourceId];
 
         return cloned;
     }
@@ -224,7 +222,7 @@ export module ResourcesState {
     export function setDisplayHierarchy(state: ResourcesState, displayHierarchy: boolean): ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
-        (cloned.viewStates[cloned.view] as any).displayHierarchy = displayHierarchy;
+        (viewState(cloned) as any).displayHierarchy = displayHierarchy;
         return cloned;
     }
 
@@ -233,14 +231,14 @@ export module ResourcesState {
                                                   mainTypeDocumentResourceId: string|undefined): ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
-        (cloned.viewStates[cloned.view] as any).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
+        (viewState(cloned) as any).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
         return cloned;
     }
 
     export function setBypassOperationTypeSelection(state: ResourcesState, bypassOperationTypeSelection: boolean): ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
-        (cloned.viewStates[cloned.view] as any).bypassOperationTypeSelection = bypassOperationTypeSelection;
+        (viewState(cloned) as any).bypassOperationTypeSelection = bypassOperationTypeSelection;
         return cloned;
     }
 

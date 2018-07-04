@@ -222,7 +222,7 @@ export module ResourcesState {
     export function setDisplayHierarchy(state: ResourcesState, displayHierarchy: boolean): ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
-        (viewState(cloned) as any).displayHierarchy = displayHierarchy;
+        (viewState(cloned) as any /* write ok on construction */).displayHierarchy = displayHierarchy;
         return cloned;
     }
 
@@ -231,14 +231,14 @@ export module ResourcesState {
                                                   mainTypeDocumentResourceId: string|undefined): ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
-        (viewState(cloned) as any).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
+        (viewState(cloned) as any /* write ok on construction */).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
         return cloned;
     }
 
     export function setBypassOperationTypeSelection(state: ResourcesState, bypassOperationTypeSelection: boolean): ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
-        (viewState(cloned) as any).bypassOperationTypeSelection = bypassOperationTypeSelection;
+        (viewState(cloned) as any /* write ok on construction */).bypassOperationTypeSelection = bypassOperationTypeSelection;
         return cloned;
     }
 

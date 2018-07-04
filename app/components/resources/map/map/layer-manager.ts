@@ -36,7 +36,6 @@ export class LayerManager {
 
     constructor(
         private datastore: IdaiFieldImageDocumentReadDatastore,
-        private typeUtility: TypeUtility,
         private viewFacade: ViewFacade) {
 
 
@@ -106,10 +105,10 @@ export class LayerManager {
 
         return (await this.datastore.find({
                 q: '',
-                types: this.typeUtility.getImageTypeNames(),
                 constraints: { 'georeference:exist': 'KNOWN' }
             })).documents;
     }
+
 
     private notifyLayerIdsObservers(layerInitializationResult: LayersInitializationResult) {
 

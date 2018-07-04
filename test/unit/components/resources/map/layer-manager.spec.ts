@@ -40,7 +40,7 @@ describe('LayerManager', () => {
             ['getActiveLayersIds', 'setActiveLayersIds', 'layerIdsNotifications']);
         mockViewFacade.layerIdsNotifications.and.returnValue({subscribe: layerIdSubs => layerIdSubscription = layerIdSubs});
 
-        layerManager = new LayerManager(mockDatastore, mockImageTypeUtility, mockViewFacade);
+        layerManager = new LayerManager(mockDatastore, mockViewFacade);
     });
 
 

@@ -110,7 +110,7 @@ export class PlusButtonComponent implements OnChanges {
             case 'disabled-search':
                 return 'Bitte löschen Sie den Suchtext, um neue Ressourcen anlegen zu können.';
             case 'disabled-hierarchy':
-                return 'Bitte aktivieren Sie die Hierarchieanzeige, um neue Ressourcen anlegen zu können.';
+                return 'Bitte wählen Sie die hierarchische Anordnung, um neue Ressourcen anlegen zu können.';
         }
     }
 

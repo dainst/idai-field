@@ -87,14 +87,6 @@ export class ViewFacade {
 
     public moveInto = (document: IdaiFieldDocument|undefined) => this.documentsManager.moveInto(document);
 
-    public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
-
-    public layerIdsNotifications = () => this.resourcesStateManager.layerIdsNotifications();
-
-    public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
-
-    public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
-
     public rebuildNavigationPath = () => this.resourcesStateManager.rebuildNavigationPath();
 
     public populateDocumentList = () => this.documentsManager.populateDocumentList();
@@ -108,6 +100,14 @@ export class ViewFacade {
     public setDisplayHierarchy = (displayHierarchy: boolean) => this.documentsManager.setDisplayHierarchy(displayHierarchy);
 
     public getBypassOperationTypeSelection = () => ResourcesState.getBypassOperationTypeSelection(this.resourcesStateManager.get());
+
+    public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
+
+    public layerIdsNotifications = () => this.resourcesStateManager.layerIdsNotifications();
+
+    public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
+
+    public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
 
 
     public getNavigationPath() {

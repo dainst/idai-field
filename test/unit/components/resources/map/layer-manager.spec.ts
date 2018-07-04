@@ -1,4 +1,7 @@
-import {LayerManager} from '../../../../../app/components/resources/map/map/layer-manager';
+import {
+    LayerManager,
+    LayersInitializationResult
+} from '../../../../../app/components/resources/map/map/layer-manager';
 import {IdaiFieldImageDocument} from '../../../../../app/core/model/idai-field-image-document';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {Static} from '../../../static';
@@ -8,7 +11,7 @@ import {Static} from '../../../static';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-fdescribe('LayerManager', () => {
+describe('LayerManager', () => {
 
     let layerManager: LayerManager;
 
@@ -21,6 +24,7 @@ fdescribe('LayerManager', () => {
         = Static.doc('Main Type Document', 'MTD', 'trench', 'mtd') as IdaiFieldDocument;
 
     let mockViewFacade;
+    let layerIdSubscription;
 
 
     beforeEach(() => {
@@ -34,74 +38,93 @@ fdescribe('LayerManager', () => {
 
         mockViewFacade = jasmine.createSpyObj('viewFacade',
             ['getActiveLayersIds', 'setActiveLayersIds', 'layerIdsNotifications']);
-        mockViewFacade.layerIdsNotifications.and.returnValue({subscribe: () => {}});
+        mockViewFacade.layerIdsNotifications.and.returnValue({subscribe: layerIdSubs => layerIdSubscription = layerIdSubs});
 
         layerManager = new LayerManager(mockDatastore, mockImageTypeUtility, mockViewFacade);
     });
 
-    /* TODO reenable
 
-    it('initialize layers', async done => {
+    it('add two layers', async done => {
 
-        const { layers, activeLayersChange } = await layerManager.initializeLayers(true);
+        layerManager.layerIdsNotifications().subscribe((layersInitializationResult: LayersInitializationResult) => {
 
-        expect(layers.length).toBe(2);
-        expect(layers[0].resource.id).toEqual('l1');
-        expect(layers[1].resource.id).toEqual('l2');
-
-        expect(activeLayersChange.added.length).toBe(0);
-        expect(activeLayersChange.removed.length).toBe(0);
-
-        done();
-    });
-
-
-    it('restore active layers from resources state', async done => {
-
-        mockViewFacade.getActiveLayersIds.and.returnValue([ 'l2' ]);
-
-        const { activeLayersChange } = await layerManager.initializeLayers(true);
-
-        expect(activeLayersChange.added.length).toBe(1);
-        expect(activeLayersChange.added[0]).toEqual('l2');
-        expect(activeLayersChange.removed.length).toBe(0);
-
-        done();
-    });
-
-
-    it('add and remove correct layers when initializing with different resources states',
-            async done => {
-
-        mockViewFacade.getActiveLayersIds.and.returnValue([ 'l2' ]);
-
-        await layerManager.initializeLayers(true);
-
-        mockViewFacade.getActiveLayersIds.and.returnValue([ 'l1' ]);
-
-        const { activeLayersChange } = await layerManager.initializeLayers(true);
-
-        expect(activeLayersChange.added.length).toBe(1);
-        expect(activeLayersChange.added[0]).toEqual('l1');
-        expect(activeLayersChange.removed.length).toBe(1);
-        expect(activeLayersChange.removed[0]).toEqual('l2');
-
-        done();
-    });
-
-
-    it('add or remove no layers if the layers are initialized with the same resources state again',
-        async done => {
-
-            mockViewFacade.getActiveLayersIds.and.returnValue([ 'l2' ]);
-
-            await layerManager.initializeLayers(true);
-            const { activeLayersChange } = await layerManager.initializeLayers(true);
-
-            expect(activeLayersChange.added.length).toBe(0);
-            expect(activeLayersChange.removed.length).toBe(0);
-
+            expect(layersInitializationResult.layers.length).toEqual(2);
+            expect(layersInitializationResult.layers[0].resource.id).toEqual('l1');
+            expect(layersInitializationResult.layers[1].resource.id).toEqual('l2');
+            expect(layersInitializationResult.activeLayersChange.added).toEqual(['l1', 'l2']);
+            expect(layersInitializationResult.activeLayersChange.removed).toEqual([]);
             done();
         });
-        */
+        await layerIdSubscription(['l1', 'l2'], true);
+    });
+
+
+
+    it('add two layers, then remove one', async done => {
+
+        let i = 0;
+        layerManager.layerIdsNotifications().subscribe((layersInitializationResult: LayersInitializationResult) => {
+
+            if (i === 0) {
+                i++;
+                return;
+            }
+
+            expect(layersInitializationResult.layers.length).toEqual(2);
+            expect(layersInitializationResult.layers[0].resource.id).toEqual('l1');
+            expect(layersInitializationResult.layers[1].resource.id).toEqual('l2');
+            expect(layersInitializationResult.activeLayersChange.added).toEqual([]);
+            expect(layersInitializationResult.activeLayersChange.removed).toEqual(['l2']);
+            done();
+        });
+
+        await layerIdSubscription(['l1', 'l2'], true);
+        await layerIdSubscription(['l1'], true);
+    });
+
+
+    it('add two layers, then replace one with the other', async done => {
+
+        let i = 0;
+        layerManager.layerIdsNotifications().subscribe((layersInitializationResult: LayersInitializationResult) => {
+
+            if (i === 0) {
+                i++;
+                return;
+            }
+
+            expect(layersInitializationResult.layers.length).toEqual(2);
+            expect(layersInitializationResult.layers[0].resource.id).toEqual('l1');
+            expect(layersInitializationResult.layers[1].resource.id).toEqual('l2');
+            expect(layersInitializationResult.activeLayersChange.added).toEqual(['l2']);
+            expect(layersInitializationResult.activeLayersChange.removed).toEqual(['l1']);
+            done();
+        });
+
+        await layerIdSubscription(['l1'], true);
+        await layerIdSubscription(['l2'], true);
+    });
+
+
+    it('add and remove two layers', async done => {
+
+        let i = 0;
+        layerManager.layerIdsNotifications().subscribe((layersInitializationResult: LayersInitializationResult) => {
+
+            if (i === 0) {
+                i++;
+                return;
+            }
+
+            expect(layersInitializationResult.layers.length).toEqual(2);
+            expect(layersInitializationResult.layers[0].resource.id).toEqual('l1');
+            expect(layersInitializationResult.layers[1].resource.id).toEqual('l2');
+            expect(layersInitializationResult.activeLayersChange.added).toEqual([]);
+            expect(layersInitializationResult.activeLayersChange.removed).toEqual(['l1', 'l2']);
+            done();
+        });
+
+        await layerIdSubscription(['l1', 'l2'], true);
+        await layerIdSubscription([], true);
+    });
 });

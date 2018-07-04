@@ -47,6 +47,8 @@ export class LayerManager {
                 this.activeLayerIds);
 
             this.activeLayerIds = activeLayersIds;
+
+            // TODO see if we notify them only if there are neither removals nor additions
             this.notifyLayerIdsObservers(await this.initializeLayers(activeLayersChange, skipRemoval));
         });
     }

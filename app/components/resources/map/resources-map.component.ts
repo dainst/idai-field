@@ -123,7 +123,7 @@ export class ResourcesMapComponent {
 
     private getParentDocuments(navigationPath: NavigationPath): Array<Document> {
 
-        if (!this.viewFacade.getDisplayHierarchy() && this.viewFacade.getBypassOperationTypeSelection()) {
+        if (!this.viewFacade.getBypassHierarchy() && this.viewFacade.getSelectAllOperationsOnBypassHierarchy()) {
             return this.viewFacade.getOperationTypeDocuments();
         }
 

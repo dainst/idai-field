@@ -104,23 +104,23 @@ export module NavigationPath {
     }
 
 
-    export function getSelectedDocument(navPath: NavigationPath, displayHierarchy: boolean): IdaiFieldDocument|undefined {
+    export function getSelectedDocument(navPath: NavigationPath, bypassHierarchy: boolean): IdaiFieldDocument|undefined {
 
-        return getViewContext(navPath, displayHierarchy).selected;
+        return getViewContext(navPath, bypassHierarchy).selected;
     }
 
 
-    export function setQueryString(navPath: NavigationPath, displayHierarchy: boolean, q: string) {
+    export function setQueryString(navPath: NavigationPath, bypassHierarchy: boolean, q: string) {
 
         const clone = ObjectUtil.cloneObject(navPath);
-        (getViewContext(clone, displayHierarchy) as any).q = q;
+        (getViewContext(clone, bypassHierarchy) as any).q = q;
         return clone;
     }
 
 
-    export function getQueryString(navPath: NavigationPath, displayHierarchy: boolean) {
+    export function getQueryString(navPath: NavigationPath, bypassHierarchy: boolean) {
 
-        return getViewContext(navPath, displayHierarchy).q;
+        return getViewContext(navPath, bypassHierarchy).q;
     }
 
 
@@ -223,13 +223,11 @@ export module NavigationPath {
 
 
 
-    function getViewContext(navPath: NavigationPath, displayHierarchy: boolean): ViewContext {
+    function getViewContext(navPath: NavigationPath, bypassHierarchy: boolean): ViewContext {
 
-        if (!displayHierarchy) return navPath.flatContext;
+        if (bypassHierarchy) return navPath.flatContext;
 
-        return !displayHierarchy
-            ? navPath.flatContext
-            : navPath.selectedSegmentId
+        return navPath.selectedSegmentId
                 ? getSelectedSegment(navPath)
                 : navPath.hierarchyContext;
     }

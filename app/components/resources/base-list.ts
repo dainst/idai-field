@@ -46,7 +46,7 @@ export class BaseList {
     // TODO unit test this
     public getPlusButtonStatus(): PlusButtonStatus {
 
-        if (!this.viewFacade.getDisplayHierarchy()) {
+        if (!this.viewFacade.getBypassHierarchy()) {
             return 'disabled-hierarchy';
         } else if (this.viewFacade.getSearchString() !== '') {
             return 'disabled-search';

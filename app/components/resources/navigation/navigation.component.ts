@@ -38,19 +38,19 @@ export class NavigationComponent {
 
         if (this.loading.isLoading()) return;
 
-        await this.viewFacade.setDisplayHierarchy(!this.viewFacade.getDisplayHierarchy());
+        await this.viewFacade.setBypassHierarchy(!this.viewFacade.getBypassHierarchy());
     }
 
 
     public async activateBypassOperationTypeSelection() {
 
-        await this.viewFacade.setBypassOperationTypeSelection(true);
+        await this.viewFacade.setSelectAllOperationsOnBypassHierarchy(true);
     }
 
 
     public getSegments(): Array<IdaiFieldDocument> {
 
-        return this.viewFacade.getDisplayHierarchy()
+        return !this.viewFacade.getBypassHierarchy()
             ? this.navigationPath.segments.map(_ => _.document)
             : [];
     }

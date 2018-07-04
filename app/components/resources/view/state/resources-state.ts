@@ -21,19 +21,19 @@ export module ResourcesState {
 
     export function getQueryString(state: ResourcesState) {
 
-        return NavigationPath.getQueryString(getNavigationPath(state), getDisplayHierarchy(state));
+        return NavigationPath.getQueryString(getNavigationPath(state), getBypassHierarchy(state));
     }
 
 
     export function getTypeFilters(state: ResourcesState) {
 
-        return NavigationPath.getTypeFilters(getNavigationPath(state), getDisplayHierarchy(state));
+        return NavigationPath.getTypeFilters(getNavigationPath(state), getBypassHierarchy(state));
     }
 
 
     export function getSelectedDocument(state: ResourcesState) {
 
-        return NavigationPath.getSelectedDocument(getNavigationPath(state), getDisplayHierarchy(state));
+        return NavigationPath.getSelectedDocument(getNavigationPath(state), getBypassHierarchy(state));
     }
 
 
@@ -49,15 +49,15 @@ export module ResourcesState {
     }
 
 
-    export function getBypassOperationTypeSelection(state: ResourcesState): boolean {
+    export function getSelectAllOperationsOnBypassHierarchy(state: ResourcesState): boolean {
 
-        return viewState(state).bypassOperationTypeSelection;
+        return viewState(state).selectAllOperationsOnBypassHierarchy;
     }
 
 
-    export function getDisplayHierarchy(state: ResourcesState): boolean {
+    export function getBypassHierarchy(state: ResourcesState): boolean {
 
-        return viewState(state).displayHierarchy;
+        return viewState(state).bypassHierarchy;
     }
 
 
@@ -110,21 +110,21 @@ export module ResourcesState {
     export function setQueryString(state: ResourcesState, q: string): ResourcesState {
 
         return updateNavigationPath(state, NavigationPath.setQueryString(getNavigationPath(state),
-            getDisplayHierarchy(state), q));
+            getBypassHierarchy(state), q));
     }
 
 
     export function setTypeFilters(state: ResourcesState, types: string[]): ResourcesState {
 
         return updateNavigationPath(state, NavigationPath.setTypeFilters(getNavigationPath(state),
-            getDisplayHierarchy(state), types));
+            getBypassHierarchy(state), types));
     }
 
 
     export function setSelectedDocument(state: ResourcesState, document: IdaiFieldDocument|undefined): ResourcesState {
 
         return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state),
-            viewState(state).displayHierarchy, document));
+            viewState(state).bypassHierarchy, document));
     }
 
 
@@ -173,15 +173,15 @@ export module ResourcesState {
             viewStates: {
                 project: {
                     layerIds: {'project': ['o25']},
-                    displayHierarchy: true,
-                    bypassOperationTypeSelection: false,
+                    bypassHierarchy: false,
+                    selectAllOperationsOnBypassHierarchy: false,
                     navigationPaths: {
                         '_all': NavigationPath.empty()
                     }
                 },
                 excavation: {
-                    displayHierarchy: true,
-                    bypassOperationTypeSelection: false,
+                    bypassHierarchy: false,
+                    selectAllOperationsOnBypassHierarchy: false,
                     navigationPaths: {
                         't1': NavigationPath.empty(),
                         '_all': NavigationPath.empty()
@@ -219,10 +219,10 @@ export module ResourcesState {
     }
 
 
-    export function setDisplayHierarchy(state: ResourcesState, displayHierarchy: boolean): ResourcesState {
+    export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean): ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
-        (viewState(cloned) as any /* write ok on construction */).displayHierarchy = displayHierarchy;
+        (viewState(cloned) as any /* write ok on construction */).bypassHierarchy = bypassHierarchy;
         return cloned;
     }
 
@@ -235,17 +235,17 @@ export module ResourcesState {
         return cloned;
     }
 
-    export function setBypassOperationTypeSelection(state: ResourcesState, bypassOperationTypeSelection: boolean): ResourcesState {
+    export function setSelectAllOperationsOnBypassHierarchy(state: ResourcesState, selectAllOperationsOnBypassHierarchy: boolean): ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
-        (viewState(cloned) as any /* write ok on construction */).bypassOperationTypeSelection = bypassOperationTypeSelection;
+        (viewState(cloned) as any /* write ok on construction */).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
         return cloned;
     }
 
 
     function isAllSelection(viewState: ViewState): boolean {
 
-        return !viewState.displayHierarchy && viewState.bypassOperationTypeSelection;
+        return viewState.bypassHierarchy && viewState.selectAllOperationsOnBypassHierarchy;
     }
 
 

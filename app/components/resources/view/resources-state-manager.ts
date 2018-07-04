@@ -123,17 +123,17 @@ export class ResourcesStateManager {
         this.resourcesState = ResourcesState.setMode(this.resourcesState, mode);
     }
 
-    public setDisplayHierarchy(displayHierarchy: boolean) {
+    public setBypassHierarchy(bypassHierarchy: boolean) {
 
-        this.resourcesState = ResourcesState.setDisplayHierarchy(this.resourcesState, displayHierarchy);
+        this.resourcesState = ResourcesState.setBypassHierarchy(this.resourcesState, bypassHierarchy);
         this.notifyNavigationPathObservers();
     }
 
 
-    public setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
+    public setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy: boolean) {
 
-        this.resourcesState = ResourcesState.setBypassOperationTypeSelection(this.resourcesState,
-            bypassOperationTypeSelection);
+        this.resourcesState = ResourcesState.setSelectAllOperationsOnBypassHierarchy(this.resourcesState,
+            selectAllOperationsOnBypassHierarchy);
         this.notifyNavigationPathObservers();
         this.notifyLayerIdsObservers();
     }
@@ -195,7 +195,7 @@ export class ResourcesStateManager {
 
     public async updateNavigationPathForDocument(document: IdaiFieldDocument) {
 
-        this.setDisplayHierarchy(true);
+        this.setBypassHierarchy(false);
 
         if (!NavigationPath.isPartOfNavigationPath(document, ResourcesState.getNavigationPath(this.resourcesState),
                 ResourcesState.getMainTypeDocumentResourceId(this.resourcesState))) {

@@ -10,14 +10,14 @@ describe('NavigationService', () => {
 
     beforeEach(() => {
 
-        viewFacade = jasmine.createSpyObj('vf', ['isInOverview', 'moveInto', 'getDisplayHierarchy']);
+        viewFacade = jasmine.createSpyObj('vf', ['isInOverview', 'moveInto', 'getBypassHierarchy']);
         projectConfiguration = jasmine.createSpyObj('pc', ['getRelationDefinitions']);
 
         navigationService = new NavigationService(
             projectConfiguration, undefined, viewFacade);
 
         viewFacade.isInOverview.and.returnValue(false);
-        viewFacade.getDisplayHierarchy.and.returnValue(true);
+        viewFacade.getBypassHierarchy.and.returnValue(false);
     });
 
 
@@ -31,7 +31,7 @@ describe('NavigationService', () => {
     it('does not display hierarchy', () => {
 
         viewFacade.isInOverview.and.returnValue(false);
-        viewFacade.getDisplayHierarchy.and.returnValue(false);
+        viewFacade.getBypassHierarchy.and.returnValue(true);
         expect(navigationService.showMoveIntoOption(Static.ifDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(false);
     });
 

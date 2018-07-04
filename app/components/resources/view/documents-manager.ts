@@ -74,16 +74,16 @@ export class DocumentsManager {
     }
 
 
-    public async setDisplayHierarchy(displayHierarchy: boolean) {
+    public async setBypassHierarchy(bypassHierarchy: boolean) {
 
-        this.resourcesStateManager.setDisplayHierarchy(displayHierarchy);
+        this.resourcesStateManager.setBypassHierarchy(bypassHierarchy);
         await this.populateAndDeselectIfNecessary();
     }
 
 
-    public async setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
+    public async setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy: boolean) {
 
-        this.resourcesStateManager.setBypassOperationTypeSelection(bypassOperationTypeSelection);
+        this.resourcesStateManager.setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy);
         await this.populateAndDeselectIfNecessary();
     }
 
@@ -163,8 +163,8 @@ export class DocumentsManager {
 
         const isRecordedInTargetIdOrIds = DocumentsManager.chooseIsRecordedInTargetIdOrIds(isRecordedInTarget,
             () => this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id),
-            ResourcesState.getDisplayHierarchy(state),
-            ResourcesState.getBypassOperationTypeSelection(state));
+            ResourcesState.getBypassHierarchy(state),
+            ResourcesState.getSelectAllOperationsOnBypassHierarchy(state));
 
         return (await this.fetchDocuments(
                 DocumentsManager.buildQuery(
@@ -253,12 +253,12 @@ export class DocumentsManager {
     private static chooseIsRecordedInTargetIdOrIds(
         mainTypeDocumentResourceId: string|undefined,
         operationTypeDocumentIds: () => string[],
-        displayHierarchy: boolean,
-        bypassOperationTypeSelection: boolean): string|string[]|undefined {
+        bypassHierarchy: boolean,
+        selectAllOperationsOnBypassHierarchy: boolean): string|string[]|undefined {
 
         if (!mainTypeDocumentResourceId) return undefined;
 
-        return bypassOperationTypeSelection && !displayHierarchy
+        return bypassHierarchy && selectAllOperationsOnBypassHierarchy
             ? operationTypeDocumentIds()
             : mainTypeDocumentResourceId;
     }
@@ -271,7 +271,7 @@ export class DocumentsManager {
         overviewTypeNames: string[]
     ): Query {
 
-        const displayHierarchy = ResourcesState.getDisplayHierarchy(state);
+        const bypassHierarchy = ResourcesState.getBypassHierarchy(state);
         const typeFilters = ResourcesState.getTypeFilters(state);
 
         return {
@@ -281,7 +281,7 @@ export class DocumentsManager {
             constraints: DocumentsManager.buildConstraints(
                 isRecordedInTargetIdOrIds,
                 ResourcesState.getNavigationPath(state).selectedSegmentId,
-                displayHierarchy),
+                !bypassHierarchy),
 
             types: (typeFilters.length > 0)
                 ? typeFilters
@@ -289,7 +289,7 @@ export class DocumentsManager {
                     ? overviewTypeNames
                     : undefined,
 
-            limit: !displayHierarchy ? DocumentsManager.documentLimit : undefined
+            limit: bypassHierarchy ? DocumentsManager.documentLimit : undefined
         };
     }
 

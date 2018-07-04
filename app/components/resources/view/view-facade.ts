@@ -95,11 +95,11 @@ export class ViewFacade {
 
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesStateManager.setActiveDocumentViewTab(activeDocumentViewTab);
 
-    public getDisplayHierarchy = () => ResourcesState.getDisplayHierarchy(this.resourcesStateManager.get());
+    public getBypassHierarchy = () => ResourcesState.getBypassHierarchy(this.resourcesStateManager.get());
 
-    public setDisplayHierarchy = (displayHierarchy: boolean) => this.documentsManager.setDisplayHierarchy(displayHierarchy);
+    public setBypassHierarchy = (bypassHierarchy: boolean) => this.documentsManager.setBypassHierarchy(bypassHierarchy);
 
-    public getBypassOperationTypeSelection = () => ResourcesState.getBypassOperationTypeSelection(this.resourcesStateManager.get());
+    public getSelectAllOperationsOnBypassHierarchy = () => ResourcesState.getSelectAllOperationsOnBypassHierarchy(this.resourcesStateManager.get());
 
     public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
 
@@ -184,17 +184,17 @@ export class ViewFacade {
     }
 
 
-    public async setBypassOperationTypeSelection(bypassOperationTypeSelection: boolean) {
+    public async setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy: boolean) {
 
-        if (this.isInOverview()) throw ViewFacade.err('setBypassOperationTypeSelection');
-        await this.documentsManager.setBypassOperationTypeSelection(bypassOperationTypeSelection);
+        if (this.isInOverview()) throw ViewFacade.err('setSelectAllOperationsOnBypassHierarchy');
+        await this.documentsManager.setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy);
     }
 
 
     public async selectOperationTypeDocument(operationTypeDocument: Document): Promise<void> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectOperationTypeDocument');
-        if (!this.getDisplayHierarchy()) await this.setBypassOperationTypeSelection(false);
+        if (this.getBypassHierarchy()) await this.setSelectAllOperationsOnBypassHierarchy(false);
         this.resourcesStateManager.setMainTypeDocument(operationTypeDocument.resource.id);
         await this.populateDocumentList();
     }

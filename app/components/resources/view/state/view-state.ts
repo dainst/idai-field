@@ -7,8 +7,8 @@ export interface ViewState {
 
     readonly mainTypeDocumentResourceId?: string;
 
-    readonly displayHierarchy: boolean;
-    readonly bypassOperationTypeSelection: boolean; // true means all mainTypeDocuments are selected. used when displayHierarchy is false.
+    readonly bypassHierarchy: boolean;
+    readonly selectAllOperationsOnBypassHierarchy: boolean;
 
     readonly layerIds: {[mainTypeDocumentId: string]: string[]};
     readonly navigationPaths: {[mainTypeDocumentId: string]: NavigationPath};
@@ -21,8 +21,8 @@ export class ViewState {
 
         return {
             mode: 'map',
-            displayHierarchy: true,
-            bypassOperationTypeSelection: false,
+            bypassHierarchy: false,
+            selectAllOperationsOnBypassHierarchy: false,
             navigationPaths: {
                 '_all': NavigationPath.empty()
             },
@@ -43,7 +43,7 @@ export class ViewState {
             }
         }
 
-        (viewState as any).displayHierarchy = true;
+        (viewState as any).bypassHierarchy = false;
         (viewState as any).navigationPaths = {
             '_all': NavigationPath.empty()
         };

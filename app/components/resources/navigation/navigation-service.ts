@@ -30,7 +30,7 @@ export class NavigationService {
 
         if (!document.resource.id) return false; // do not show as long as it is not saved
         if (document.resource.type === 'Place') return false;
-        if (!this.viewFacade.getDisplayHierarchy()) return false;
+        if (this.viewFacade.getBypassHierarchy()) return false;
         if (this.viewFacade.isInOverview()) return true;
 
         return ((this.projectConfiguration

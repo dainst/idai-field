@@ -270,9 +270,9 @@ export function main() {
 
             await viewFacade.selectView('excavation');
             await viewFacade.setSearchString('abc');
-            await viewFacade.setDisplayHierarchy(false);
+            await viewFacade.setBypassHierarchy(true);
             expect(viewFacade.getSearchString()).toEqual('');
-            await viewFacade.setDisplayHierarchy(true);
+            await viewFacade.setBypassHierarchy(false);
             expect(viewFacade.getSearchString()).toEqual('abc');
             done();
         });
@@ -281,10 +281,10 @@ export function main() {
         it('ViewContext -- all optypedocs selection has its own context', async done => {
 
             await viewFacade.selectView('excavation');
-            await viewFacade.setDisplayHierarchy(false);
-            await viewFacade.setBypassOperationTypeSelection(true);
+            await viewFacade.setBypassHierarchy(true);
+            await viewFacade.setSelectAllOperationsOnBypassHierarchy(true);
             await viewFacade.setSearchString('abc');
-            await viewFacade.setBypassOperationTypeSelection(false);
+            await viewFacade.setSelectAllOperationsOnBypassHierarchy(false);
             expect(viewFacade.getSearchString()).toEqual('');
             done();
         });

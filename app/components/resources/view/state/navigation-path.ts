@@ -176,6 +176,7 @@ export module NavigationPath {
         return undefined;
     }
 
+
     export function isPartOfNavigationPath(
         document: IdaiFieldDocument,
         navPath: NavigationPath,

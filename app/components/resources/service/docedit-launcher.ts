@@ -53,7 +53,7 @@ export class DoceditLauncher {
 
         result['updateScrollTarget'] = true;
 
-        await this.viewFacade.setSelectedDocument(result['document'] as IdaiFieldDocument);
+        await this.viewFacade.setSelectedDocument((result['document'] as IdaiFieldDocument).resource.id);
         await this.viewFacade.populateDocumentList();
     }
 

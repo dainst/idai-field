@@ -411,7 +411,7 @@ export function main() {
 
             await viewFacade.selectView('excavation');
             await viewFacade.setSearchString('feature1');
-            await viewFacade.setSelectedDocument(featureDocument2);
+            await viewFacade.setSelectedDocument(featureDocument2.resource.id);
             expect(viewFacade.getSearchString()).toEqual('');
             expect(viewFacade.getDocuments().length).toBe(2);
             done();
@@ -422,7 +422,7 @@ export function main() {
 
             await viewFacade.selectView('excavation');
             await viewFacade.setSearchString('feature1');
-            await viewFacade.setSelectedDocument(featureDocument1);
+            await viewFacade.setSelectedDocument(featureDocument1.resource.id);
             expect(viewFacade.getSearchString()).toEqual('feature1');
             expect(viewFacade.getDocuments().length).toBe(1);
             done();
@@ -433,7 +433,7 @@ export function main() {
 
             await viewFacade.selectView('excavation');
             await viewFacade.moveInto(featureDocument1);
-            await viewFacade.setSelectedDocument(findDocument1);
+            await viewFacade.setSelectedDocument(findDocument1.resource.id);
             await viewFacade.setSearchString('find1');
             expect(viewFacade.getSelectedDocument().resource.id).toBe(findDocument1.resource.id);
             done();
@@ -443,7 +443,7 @@ export function main() {
         it('operations view: query does not match selection, deselect', async done => {
 
             await viewFacade.selectView('excavation');
-            await viewFacade.setSelectedDocument(findDocument1);
+            await viewFacade.setSelectedDocument(findDocument1.resource.id);
             await viewFacade.setSearchString('find2');
             expect(viewFacade.getSelectedDocument()).toBe(undefined);
             done();
@@ -453,8 +453,8 @@ export function main() {
         it('deselect on switching views', async done => {
 
             await viewFacade.selectView('project');
-            await viewFacade.setSelectedDocument(trenchDocument1);
-            expect(viewFacade.getSelectedDocument()).toEqual(trenchDocument1);
+            await viewFacade.setSelectedDocument(trenchDocument1.resource.id);
+            expect(viewFacade.getSelectedDocument().resource.id).toEqual(trenchDocument1.resource.id);
 
             await viewFacade.selectView('excavation');
             expect(viewFacade.getSelectedDocument()).toEqual(undefined);
@@ -466,7 +466,7 @@ export function main() {
 
             await viewFacade.selectView('excavation');
             await viewFacade.moveInto(featureDocument1);
-            await viewFacade.setSelectedDocument(findDocument1);
+            await viewFacade.setSelectedDocument(findDocument1.resource.id);
 
             await viewFacade.moveInto(undefined);
             expect(viewFacade.getSelectedDocument()).toBeUndefined();
@@ -479,7 +479,7 @@ export function main() {
         it('operations view: previous selection gets restored on view change', async () => {
 
             await viewFacade.selectView('excavation');
-            await viewFacade.setSelectedDocument(featureDocument2);
+            await viewFacade.setSelectedDocument(featureDocument2.resource.id);
 
             await viewFacade.selectView('project');
             expect(viewFacade.getSelectedDocument()).toBeUndefined();
@@ -492,7 +492,7 @@ export function main() {
         it('operations view: previous selection gets restored when coming from overview', async () => {
 
             await viewFacade.selectView('excavation');
-            await viewFacade.setSelectedDocument(featureDocument2);
+            await viewFacade.setSelectedDocument(featureDocument2.resource.id);
 
             await viewFacade.selectView('project');
             await viewFacade.selectView('excavation');

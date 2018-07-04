@@ -148,7 +148,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private async selectDocumentFromParams(id: string, menu: string, tab: string) {
 
-        await this.viewFacade.setSelectedDocumentById(id);
+        await this.viewFacade.setSelectedDocument(id);
         this.setScrollTarget(this.viewFacade.getSelectedDocument());
 
         try {

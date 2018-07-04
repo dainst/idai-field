@@ -124,7 +124,7 @@ export class RoutingService {
                 ['resources', viewName, documentToSelect.resource.id, 'view', tab] :
                 ['resources', viewName, documentToSelect.resource.id]);
         } else {
-            this.viewFacade.setSelectedDocument(documentToSelect)
+            this.viewFacade.setSelectedDocument(documentToSelect.resource.id)
         }
     }
 

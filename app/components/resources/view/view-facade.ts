@@ -49,8 +49,6 @@ export class ViewFacade {
     }
 
 
-    public setSelectedDocument = (document: Document) => this.documentsManager.setSelected(document as IdaiFieldDocument);
-
     public addNewDocument = (document: IdaiFieldDocument) => this.documentsManager.addNewDocument(document);
 
     public getCurrentViewName = () => this.resourcesStateManager.get().view;
@@ -108,6 +106,12 @@ export class ViewFacade {
     public deselectionNotifications = () => this.documentsManager.deselectionNotifications();
 
     public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
+
+
+    public async setSelectedDocument(resourceId: string) {
+
+        await this.documentsManager.setSelected(await this.datastore.get(resourceId)); // TODO select it from the list, not via datastore
+    }
 
 
     public getNavigationPath() {
@@ -168,12 +172,6 @@ export class ViewFacade {
         }
 
         return mainTypeDocuments;
-    }
-
-
-    public async setSelectedDocumentById(resourceId: string) {
-
-        await this.documentsManager.setSelected(await this.datastore.get(resourceId));
     }
 
 

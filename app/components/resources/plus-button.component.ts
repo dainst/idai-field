@@ -8,7 +8,7 @@ import {M} from '../../m';
 import {TypeUtility} from '../../core/model/type-utility';
 
 
-export type PlusButtonStatus = 'enabled'|'disabled-search'|'disabled-hierarchy';
+export type PlusButtonStatus = 'enabled'|'disabled-hierarchy';
 
 
 @Component({
@@ -107,8 +107,6 @@ export class PlusButtonComponent implements OnChanges {
         switch(this.status) {
             case 'enabled':
                 return '';
-            case 'disabled-search':
-                return 'Bitte löschen Sie den Suchtext, um neue Ressourcen anlegen zu können.';
             case 'disabled-hierarchy':
                 return 'Bitte wählen Sie die hierarchische Anordnung, um neue Ressourcen anlegen zu können.';
         }

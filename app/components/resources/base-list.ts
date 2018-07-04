@@ -48,8 +48,6 @@ export class BaseList {
 
         if (this.viewFacade.getBypassHierarchy()) {
             return 'disabled-hierarchy';
-        } else if (this.viewFacade.getSearchString() !== '') {
-            return 'disabled-search';
         } else {
             return 'enabled';
         }

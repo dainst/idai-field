@@ -152,7 +152,7 @@ export function main() {
         afterEach((done) => new PouchDB('testdb').destroy().then(() => {done()}), 5000);
 
 
-        xit('reload layer ids on startup', async done => {
+        it('reload layer ids on startup', async done => {
 
             resourcesState.loaded = false;
             stateSerializer.load.and.returnValue({ excavation: {
@@ -161,7 +161,12 @@ export function main() {
             }});
 
 
+            let i = 0;
             viewFacade.layerIdsNotifications().subscribe(layerIds => {
+                if (i === 0) {
+                    i++;
+                    return;
+                }
                 expect(layerIds).toEqual(['layerid1']);
                 done();
             });
@@ -311,7 +316,7 @@ export function main() {
         });
 
 
-        xit('reload predefined layer ids on startup in test/demo project', async done => {
+        it('reload predefined layer ids on startup in test/demo project', async done => {
 
             resourcesState = new ResourcesStateManager(
                 idaiFieldDocumentDatastore,
@@ -330,7 +335,13 @@ export function main() {
                 loading
             );
 
+            let i = 0;
             viewFacade.layerIdsNotifications().subscribe(layerIds => {
+
+                if (i === 0) {
+                    i++;
+                    return;
+                }
                 expect(layerIds).toEqual(['o25']);
                 done();
             });

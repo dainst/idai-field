@@ -191,11 +191,11 @@ export class ViewFacade {
     }
 
 
-    public async selectOperationTypeDocument(operationTypeDocument: Document): Promise<void> {
+    public async selectOperationTypeDocument(resourceId: string): Promise<void> {
 
         if (this.isInOverview()) throw ViewFacade.err('selectOperationTypeDocument');
         if (this.getBypassHierarchy()) await this.setSelectAllOperationsOnBypassHierarchy(false);
-        this.resourcesStateManager.setMainTypeDocument(operationTypeDocument.resource.id);
+        this.resourcesStateManager.setMainTypeDocument(resourceId);
         await this.populateDocumentList();
     }
 

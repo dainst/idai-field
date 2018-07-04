@@ -46,7 +46,7 @@ export class RoutingService {
         await this.router.navigate(['resources',
             this.viewFacade.getMainTypeHomeViewName(document.resource.type)]);
 
-        await this.viewFacade.selectOperationTypeDocument(document);
+        await this.viewFacade.selectOperationTypeDocument(document.resource.id);
     }
 
 
@@ -59,8 +59,7 @@ export class RoutingService {
         if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Image')) {
             this.jumpToImageTypeRelationTarget(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
-            this.jumpToResourceTypeRelationTarget(
-                documentToSelect, tab, comingFromOutsideResourcesComponent);
+            this.jumpToResourceTypeRelationTarget(documentToSelect, tab, comingFromOutsideResourcesComponent);
         }
     }
 

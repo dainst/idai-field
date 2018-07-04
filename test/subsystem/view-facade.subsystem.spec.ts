@@ -172,7 +172,7 @@ export function main() {
             });
 
             await viewFacade.selectView('excavation');
-            await viewFacade.selectOperationTypeDocument(trenchDocument1);
+            await viewFacade.selectOperationTypeDocument(trenchDocument1.resource.id);
         });
 
 
@@ -294,7 +294,7 @@ export function main() {
 
             await viewFacade.selectView('excavation');
             expect(viewFacade.getSelectedOperationTypeDocument().resource.id).toEqual(trenchDocument1.resource.id);
-            await viewFacade.selectOperationTypeDocument(trenchDocument2);
+            await viewFacade.selectOperationTypeDocument(trenchDocument2.resource.id);
             await viewFacade.selectView('project');
             await viewFacade.selectView('excavation');
             expect(viewFacade.getSelectedOperationTypeDocument().resource.id).toEqual(trenchDocument2.resource.id);
@@ -347,7 +347,7 @@ export function main() {
             });
 
             await viewFacade.selectView('excavation');
-            await viewFacade.selectOperationTypeDocument(trenchDocument1);
+            await viewFacade.selectOperationTypeDocument(trenchDocument1.resource.id);
         });
 
 
@@ -390,7 +390,7 @@ export function main() {
             await idaiFieldDocumentDatastore.create(findDocument3, 'u');
 
             await viewFacade.selectView('excavation');
-            await viewFacade.selectOperationTypeDocument(trenchDocument2);
+            await viewFacade.selectOperationTypeDocument(trenchDocument2.resource.id);
             expect(viewFacade.getDocuments().length).toBe(1);
             expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find3');
             done();
@@ -496,7 +496,7 @@ export function main() {
 
             await viewFacade.selectView('project');
             await viewFacade.selectView('excavation');
-            await viewFacade.selectOperationTypeDocument(trenchDocument1); // ... with this deleting the selection
+            await viewFacade.selectOperationTypeDocument(trenchDocument1.resource.id); // ... with this deleting the selection
 
             expect(viewFacade.getSelectedDocument().resource.id).toBe(featureDocument2.resource.id);
         });
@@ -536,7 +536,7 @@ export function main() {
             expect(toResourceId(navigationPath.segments[0])).toEqual(featureDocument1.resource.id);
             expect(navigationPath.selectedSegmentId).toEqual(featureDocument1.resource.id);
 
-            await viewFacade.selectOperationTypeDocument(trenchDocument2);
+            await viewFacade.selectOperationTypeDocument(trenchDocument2.resource.id);
             navigationPath = await viewFacade.getNavigationPath();
             expect(navigationPath.segments.length).toEqual(0);
 
@@ -547,7 +547,7 @@ export function main() {
             expect(toResourceId(navigationPath.segments[0])).toEqual(featureDocument3.resource.id);
             expect(navigationPath.selectedSegmentId).toEqual(featureDocument3.resource.id);
 
-            await viewFacade.selectOperationTypeDocument(trenchDocument1);
+            await viewFacade.selectOperationTypeDocument(trenchDocument1.resource.id);
             navigationPath = await viewFacade.getNavigationPath();
             expect(navigationPath.selectedSegmentId).toEqual(featureDocument1.resource.id);
 

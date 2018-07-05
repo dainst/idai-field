@@ -38,16 +38,14 @@ export class LayerManager {
         private viewFacade: ViewFacade) {
 
 
-        viewFacade.layerIdsNotifications().subscribe(async (activeLayersIds, skipRemoval = false) => {
+        viewFacade.layerIdsNotifications().subscribe(async activeLayersIds => {
 
             const activeLayersChange = LayerManager.computeActiveLayersChange(
                 activeLayersIds,
                 this.activeLayerIds);
 
             this.activeLayerIds = activeLayersIds;
-
-            // TODO see if we notify them only if there are neither removals nor additions
-            this.notifyLayerIdsObservers(await this.initializeLayers(activeLayersChange, skipRemoval));
+            this.notifyOperationContextObservers(await this.initializeLayers(activeLayersChange));
         });
     }
 
@@ -83,7 +81,7 @@ export class LayerManager {
     }
 
 
-    private async initializeLayers(activeLayersChange: any, skipRemoval: boolean)
+    public async initializeLayers(activeLayersChange: any, skipRemoval = false) // TODO should be private but tests access it, also, skipRemove is only used in tests
         : Promise<LayersInitializationResult> {
 
         if (!skipRemoval) await this.removeNonExistingLayers();
@@ -102,7 +100,7 @@ export class LayerManager {
     }
 
 
-    private notifyLayerIdsObservers(layerInitializationResult: LayersInitializationResult) {
+    private notifyOperationContextObservers(layerInitializationResult: LayersInitializationResult) {
 
         ObserverUtil.notify(this.layerIdsObservers, layerInitializationResult);
     }

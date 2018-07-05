@@ -2,10 +2,8 @@ import {Injectable} from '@angular/core';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/field/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../view/view-facade';
-import {subtract, unique} from 'tsfun';
-import {ObserverUtil} from '../../../../util/observer-util';
-import {Observer} from 'rxjs/Observer';
-import {Observable} from 'rxjs/Observable'
+import {unique, subtract} from 'tsfun';
+import {TypeUtility} from '../../../../core/model/type-utility';
 
 
 export interface LayersInitializationResult {
@@ -28,31 +26,39 @@ export interface ListDiffResult {
  */
 export class LayerManager {
 
-    private layerIdsObservers: Array<Observer<LayersInitializationResult>> = [];
-    public layerIdsNotifications = (): Observable<LayersInitializationResult> => ObserverUtil.register(this.layerIdsObservers);
-
     private activeLayerIds: Array<string> = [];
 
     constructor(
         private datastore: IdaiFieldImageDocumentReadDatastore,
-        private viewFacade: ViewFacade) {
-
-
-        viewFacade.layerIdsNotifications().subscribe(async activeLayersIds => {
-
-            const activeLayersChange = LayerManager.computeActiveLayersChange(
-                activeLayersIds,
-                this.activeLayerIds);
-
-            this.activeLayerIds = activeLayersIds;
-            this.notifyOperationContextObservers(await this.initializeLayers(activeLayersChange));
-        });
-    }
+        private viewFacade: ViewFacade) {}
 
 
     public reset = () => this.activeLayerIds = [];
 
     public isActiveLayer = (resourceId: string) => this.activeLayerIds.includes(resourceId);
+
+
+    public async initializeLayers(skipRemoval = false)
+    : Promise<LayersInitializationResult> {
+
+        if (!skipRemoval) await this.removeNonExistingLayers();
+
+        const activeLayersChange = LayerManager.computeActiveLayersChange(
+            this.viewFacade.getActiveLayersIds(),
+            this.activeLayerIds);
+
+        this.activeLayerIds = this.viewFacade.getActiveLayersIds();
+
+        try {
+            return {
+                layers: await this.fetchLayers(),
+                activeLayersChange: activeLayersChange
+            };
+        } catch(e) {
+            console.error('error with datastore.find', e);
+            throw undefined;
+        }
+    }
 
 
     public toggleLayer(resourceId: string) {
@@ -67,7 +73,7 @@ export class LayerManager {
 
     private async removeNonExistingLayers() {
 
-        const newActiveLayersIds = this.activeLayerIds;
+        const newActiveLayersIds = this.viewFacade.getActiveLayersIds();
 
         let i = newActiveLayersIds.length;
         while (i--) {
@@ -81,28 +87,11 @@ export class LayerManager {
     }
 
 
-    public async initializeLayers(activeLayersChange: any, skipRemoval = false) // TODO should be private but tests access it, also, skipRemove is only used in tests
-        : Promise<LayersInitializationResult> {
+    private async fetchLayers() {
 
-        if (!skipRemoval) await this.removeNonExistingLayers();
-
-        try {
-            return {
-                layers: (await this.datastore.find({
-                    constraints: { 'georeference:exist': 'KNOWN' }
-                })).documents,
-                activeLayersChange: activeLayersChange
-            };
-        } catch(e) {
-            console.error('error with datastore.find', e);
-            throw undefined;
-        }
-    }
-
-
-    private notifyOperationContextObservers(layerInitializationResult: LayersInitializationResult) {
-
-        ObserverUtil.notify(this.layerIdsObservers, layerInitializationResult);
+        return (await this.datastore.find({
+            constraints: { 'georeference:exist': 'KNOWN' }
+        })).documents;
     }
 
 

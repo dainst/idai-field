@@ -8,7 +8,7 @@ import {Static} from '../../../static';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-fdescribe('LayerManager', () => {
+describe('LayerManager', () => {
 
     let layerManager: LayerManager;
 
@@ -33,13 +33,12 @@ fdescribe('LayerManager', () => {
         mockImageTypeUtility.getImageTypeNames.and.returnValue(['Image']);
 
         mockViewFacade = jasmine.createSpyObj('viewFacade',
-            ['getActiveLayersIds', 'setActiveLayersIds', 'layerIdsNotifications']);
-        mockViewFacade.layerIdsNotifications.and.returnValue({subscribe: () => {}});
+            ['getActiveLayersIds', 'setActiveLayersIds']);
+        mockViewFacade.getActiveLayersIds.and.returnValue([]);
 
         layerManager = new LayerManager(mockDatastore, mockViewFacade);
     });
 
-    /* TODO reenable
 
     it('initialize layers', async done => {
 
@@ -103,5 +102,4 @@ fdescribe('LayerManager', () => {
 
             done();
         });
-        */
 });

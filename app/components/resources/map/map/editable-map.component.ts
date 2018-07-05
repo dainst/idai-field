@@ -52,7 +52,7 @@ export class EditableMapComponent extends LayerMapComponent {
         if (!this.editableMarker) return;
 
         this.editableMarker.unbindTooltip();
-        let color = this.typeColors[this.selectedDocument.resource.type];
+        const color = this.typeColors[this.selectedDocument.resource.type];
         this.editableMarker.setIcon(EditableMapComponent.generateMarkerIcon(color, 'active'));
         (this.editableMarker.dragging as any).enable();
         this.editableMarker.setZIndexOffset(1000);
@@ -123,7 +123,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private createEditableMarker(position: L.LatLng) {
 
-        let color = this.typeColors[this.selectedDocument.resource.type];
+        const color = this.typeColors[this.selectedDocument.resource.type];
         this.editableMarker = L.marker(position, {
             icon: EditableMapComponent.generateMarkerIcon(color, 'active'),
             draggable: true,
@@ -399,8 +399,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
         const mapComponent = this;
         this.map.on('pm:create', function(event: L.LayerEvent) { 
-            let polygon: L.Polygon = <L.Polygon> event.layer; 
-            let latLngs: Array<any> = polygon.getLatLngs();
+            const polygon: L.Polygon = <L.Polygon> event.layer; 
+            const latLngs: Array<any> = polygon.getLatLngs();
             if (latLngs.length == 1 && latLngs[0].length >= 3) {
                 mapComponent.editablePolygons.push(polygon);
                 mapComponent.setupEditablePolygon(polygon);
@@ -503,7 +503,7 @@ export class EditableMapComponent extends LayerMapComponent {
         polyline.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
 
         const mapComponent = this;
-        polyline.on('pm:edit', function() {;
+        polyline.on('pm:edit', function() {
             if (this.getLatLngs().length <= 1) mapComponent.deleteGeometry();
         });
         this.selectedPolyline = polyline;

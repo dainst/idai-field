@@ -5,11 +5,6 @@
 
 #document-edit-wrapper {
 
-  .tab-content {
-    border: 1px solid #ddd;
-    border-top: 0;
-  }
-
   .form-group.card {
     margin-bottom: 0;
   }
@@ -24,12 +19,10 @@
   }
 
   header {
-    background-color: #eee;
     padding: 7px;
     border-bottom: 1px solid #ccc;
     user-select: none;
     background-color: #67b2b9;
-    padding: 7px;
     
     #type-switcher-button-container {
       min-width: 55px;
@@ -52,14 +45,16 @@
     margin-right: -3px;
   }
 
-
   main {
     padding: 25px;
     background-color: #eee;
 
     .tab-content {
       height: calc(100vh - 238px);
-      overflow: auto;
+      border: 1px solid #ddd;
+      border-top: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
   }
 

@@ -24,7 +24,7 @@ export class LayerMapComponent extends MapComponent {
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
     @Input() parentDocument: IdaiFieldDocument;
-    @Input() mainTypeDocument: string; // TODO rename to context
+    @Input() mainTypeDocument: string;
     @Input() projectDocument: IdaiFieldDocument;
     @Input() update: boolean;
 

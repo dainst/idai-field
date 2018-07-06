@@ -25,7 +25,7 @@ import {ResourcesState} from './state/resources-state';
  */
 export class ViewFacade {
 
-    private operationTypeDocumentsManager: OperationsManager;
+    private operationsManager: OperationsManager;
     private documentsManager: DocumentsManager;
 
 
@@ -35,14 +35,14 @@ export class ViewFacade {
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading
     ) {
-        this.operationTypeDocumentsManager = new OperationsManager(
+        this.operationsManager = new OperationsManager(
             datastore,
             resourcesStateManager
         );
         this.documentsManager = new DocumentsManager(
             datastore,
             remoteChangesStream,
-            this.operationTypeDocumentsManager,
+            this.operationsManager,
             resourcesStateManager,
             loading
         );
@@ -101,6 +101,8 @@ export class ViewFacade {
 
     public setBypassHierarchy = (bypassHierarchy: boolean) => this.documentsManager.setBypassHierarchy(bypassHierarchy);
 
+    public getAllOperations = () => this.operationsManager.getAllOperations();
+
     public getSelectAllOperationsOnBypassHierarchy = () => ResourcesState.getSelectAllOperationsOnBypassHierarchy(this.resourcesStateManager.get());
 
     public navigationPathNotifications = () => this.resourcesStateManager.navigationPathNotifications();
@@ -136,11 +138,11 @@ export class ViewFacade {
     public getSelectedOperations(): Array<IdaiFieldDocument> {
 
         if (this.isInOverview()) return [];
-        if (!this.operationTypeDocumentsManager.getDocuments()) return [];
+        if (!this.operationsManager.getDocuments()) return [];
         if (this.getBypassHierarchy() && this.getSelectAllOperationsOnBypassHierarchy()) {
-            return this.operationTypeDocumentsManager.getDocuments();
+            return this.operationsManager.getDocuments();
         }
-        const selectedOperationTypeDocument = this.operationTypeDocumentsManager.getDocuments()
+        const selectedOperationTypeDocument = this.operationsManager.getDocuments()
             .find(_ => _.resource.id === ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get()));
         return selectedOperationTypeDocument ? [selectedOperationTypeDocument] : [];
     }
@@ -149,25 +151,7 @@ export class ViewFacade {
     public getOperations(): Array<IdaiFieldDocument> {
 
         if (this.isInOverview()) throw ViewFacade.err('getOperations');
-        return this.operationTypeDocumentsManager.getDocuments();
-    }
-
-
-    public async getAllOperations(): Promise<Array<Document>> {
-
-        const viewMainTypes = this.resourcesStateManager.getViews()
-            .map((view: any) => {return view.operationSubtype});
-
-        let mainTypeDocuments: Array<Document> = [];
-
-        for (let viewMainType of viewMainTypes) {
-            if (viewMainType === 'Project') continue;
-
-            mainTypeDocuments = mainTypeDocuments.concat(
-                (await this.datastore.find({ q: '', types: [viewMainType] })).documents);
-        }
-
-        return mainTypeDocuments;
+        return this.operationsManager.getDocuments();
     }
 
 
@@ -204,7 +188,7 @@ export class ViewFacade {
     public async populateOperations(): Promise<void> {
 
         if (this.isInOverview()) throw ViewFacade.err('populateOperations');
-        await this.operationTypeDocumentsManager.populate();
+        await this.operationsManager.populate();
     }
 
 

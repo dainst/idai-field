@@ -49,6 +49,24 @@ export class OperationsManager {
     }
 
 
+    public async getAllOperations(): Promise<Array<IdaiFieldDocument>> {
+
+        const viewMainTypes = this.resourcesStateManager.getViews()
+            .map((view: any) => {return view.operationSubtype});
+
+        let operations: Array<IdaiFieldDocument> = [];
+
+        for (let viewMainType of viewMainTypes) {
+            if (viewMainType === 'Project') continue;
+
+            operations = operations.concat(
+                (await this.datastore.find({ types: [viewMainType] })).documents);
+        }
+
+        return operations;
+    }
+
+
     private async fetchDocuments(query: Query): Promise<any> {
 
         try {

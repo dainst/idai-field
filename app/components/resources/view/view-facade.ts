@@ -120,7 +120,7 @@ export class ViewFacade {
     }
 
 
-    public getMainTypeHomeViewName(mainTypeName: string): string|undefined {
+    public getMainTypeHomeViewName(mainTypeName: string): string|undefined { // TODO refactor into simple delegate method
 
         return (mainTypeName === 'Project')
             ? 'project'

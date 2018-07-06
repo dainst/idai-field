@@ -39,7 +39,7 @@ export class BaseList {
             && this.resourcesComponent.ready
             && !this.loading.isLoading()
             && (this.viewFacade.isInOverview()
-                || this.viewFacade.getSelectedOperationTypeDocument() !== undefined);
+                || this.viewFacade.getSelectedOperations().length > 0);
     }
 
 

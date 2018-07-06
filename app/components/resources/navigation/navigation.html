@@ -1,6 +1,6 @@
 <div id="navigation" class="row">
 
-    <div *ngIf="!viewFacade.isInOverview() && viewFacade.getSelectedOperationTypeDocument()" class="btn-group">
+    <div *ngIf="!viewFacade.isInOverview() && viewFacade.getSelectedOperations()[0]" class="btn-group">
         <div id="hierarchy-mode-switch" class="btn btn-outline-primary" (click)="toggleDisplayHierarchy()">
             <div ngbTooltip="Wechsel zwischen hierarchischer Anordnung und einfacher Auflistung" placement="right"
                  container="body" triggers="manual" #tooltip="ngbTooltip"
@@ -20,7 +20,7 @@
                 </button>
                 <hr *ngIf="getBypassHierarchy()">
 
-                <button *ngFor="let document of viewFacade.getOperationTypeDocuments()" class="dropdown-item"
+                <button *ngFor="let document of viewFacade.getOperations()" class="dropdown-item"
                         (click)="chooseOperationTypeDocumentOption(document)">
                     {{getDocumentLabel(document)}}
                 </button>
@@ -31,7 +31,7 @@
              id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
-            {{viewFacade.getSelectedOperationTypeDocument().resource.identifier}}
+            {{viewFacade.getSelectedOperations()[0].resource.identifier}}
         </div>
 
         <div *ngIf="showOperationsAllAsFirstSegment()"

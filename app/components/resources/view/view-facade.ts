@@ -126,42 +126,34 @@ export class ViewFacade {
     }
 
 
-    public getOperationTypeLabel(): string {
+    public getOperationLabel(): string {
 
-        if (this.isInOverview()) throw ViewFacade.err('getOperationTypeLabel');
+        if (this.isInOverview()) throw ViewFacade.err('getOperationLabel');
         return this.resourcesStateManager.getLabelForName(this.resourcesStateManager.get().view) as string; // cast ok, we are not in overview
     }
 
 
-    public getOperationTypeSelection(): string|undefined {
+    public getSelectedOperations(): Array<IdaiFieldDocument> {
 
-        if (this.isInOverview()) return 'project';
-        if (this.getBypassHierarchy() && this.getSelectAllOperationsOnBypassHierarchy()) return '_all';
-        return ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
-    }
-
-
-    public getSelectedOperationTypeDocument(): IdaiFieldDocument|undefined {
-
-        if (this.isInOverview()) throw ViewFacade.err('getSelectedOperationTypeDocument');
-        if (!this.operationTypeDocumentsManager.getDocuments()) return undefined;
-
+        if (this.isInOverview()) return [];
+        if (!this.operationTypeDocumentsManager.getDocuments()) return [];
+        if (this.getBypassHierarchy() && this.getSelectAllOperationsOnBypassHierarchy()) {
+            return this.operationTypeDocumentsManager.getDocuments();
+        }
         const selectedOperationTypeDocument = this.operationTypeDocumentsManager.getDocuments()
-            .filter(_ => _.resource.id === ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get()));
-        return selectedOperationTypeDocument.length > 0
-            ? selectedOperationTypeDocument[0]
-            : undefined;
+            .find(_ => _.resource.id === ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get()));
+        return selectedOperationTypeDocument ? [selectedOperationTypeDocument] : [];
     }
 
 
-    public getOperationTypeDocuments(): Array<IdaiFieldDocument> {
+    public getOperations(): Array<IdaiFieldDocument> {
 
-        if (this.isInOverview()) throw ViewFacade.err('getOperationTypeDocuments');
+        if (this.isInOverview()) throw ViewFacade.err('getOperations');
         return this.operationTypeDocumentsManager.getDocuments();
     }
 
 
-    public async getAllOperationSubtypeWithViewDocuments(): Promise<Array<Document>> {
+    public async getAllOperations(): Promise<Array<Document>> {
 
         const viewMainTypes = this.resourcesStateManager.getViews()
             .map((view: any) => {return view.operationSubtype});
@@ -193,9 +185,9 @@ export class ViewFacade {
     }
 
 
-    public async selectOperationTypeDocument(resourceId: string): Promise<void> {
+    public async selectOperation(resourceId: string): Promise<void> {
 
-        if (this.isInOverview()) throw ViewFacade.err('selectOperationTypeDocument');
+        if (this.isInOverview()) throw ViewFacade.err('selectOperation');
         if (this.getBypassHierarchy()) await this.setSelectAllOperationsOnBypassHierarchy(false);
         this.resourcesStateManager.setMainTypeDocument(resourceId);
         await this.populateDocumentList();
@@ -209,9 +201,9 @@ export class ViewFacade {
      *   b) the first element of the operation type documents it is not set
      *      and operation type documents length > 1
      */
-    public async populateOperationTypeDocuments(): Promise<void> {
+    public async populateOperations(): Promise<void> {
 
-        if (this.isInOverview()) throw ViewFacade.err('populateOperationTypeDocuments');
+        if (this.isInOverview()) throw ViewFacade.err('populateOperations');
         await this.operationTypeDocumentsManager.populate();
     }
 
@@ -229,7 +221,7 @@ export class ViewFacade {
         let mainTypeResourceid: string|undefined;
 
         if (!this.isInOverview()) {
-            await this.populateOperationTypeDocuments();
+            await this.populateOperations();
             mainTypeResourceid = ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
         } else {
             mainTypeResourceid = 'project';

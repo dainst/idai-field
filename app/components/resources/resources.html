@@ -46,9 +46,9 @@
      (dragleave)="false"
      (drop)="false">
 
-    <div *ngIf="ready && !viewFacade.isInOverview() && !viewFacade.getSelectedOperationTypeDocument() && !isEditingGeometry"
+    <div *ngIf="showNoMainTypesWarning()"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
-        <em>Legen Sie eine Ressource vom Typ '{{viewFacade.getOperationTypeLabel()}}' in der
+        <em>Legen Sie eine Ressource vom Typ '{{viewFacade.getOperationLabel()}}' in der
             <a href="#" routerLink="/resources/project">Übersicht</a> an, um hier mit ihr arbeiten zu können.
         </em>
     </div>

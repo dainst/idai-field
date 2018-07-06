@@ -9,7 +9,7 @@
         <editable-map [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
                       [parentDocuments]="parentDocuments"
-                      [mainTypeDocument]="viewFacade.getOperationTypeSelection()"
+                      [mainTypeDocument]="mainTypeIds()"
                       [isEditing]="resourcesComponent.isEditingGeometry"
                       [projectDocument]="resourcesComponent.projectDocument"
                       [update]="resourcesComponent.ready"

@@ -160,7 +160,7 @@ export function main() {
                 layerIds: {'t1': ['layerid1']}
             }});
             await viewFacade.selectView('excavation');
-            await viewFacade.selectOperationTypeDocument(trenchDocument1.resource.id);
+            await viewFacade.selectOperation(trenchDocument1.resource.id);
             expect(viewFacade.getActiveLayersIds()).toEqual(['layerid1']);
             done();
         });
@@ -283,11 +283,11 @@ export function main() {
         it('ViewState -- restore operation type selection after switching views', async done => {
 
             await viewFacade.selectView('excavation');
-            expect(viewFacade.getSelectedOperationTypeDocument().resource.id).toEqual(trenchDocument1.resource.id);
-            await viewFacade.selectOperationTypeDocument(trenchDocument2.resource.id);
+            expect(viewFacade.getSelectedOperations()[0].resource.id).toEqual(trenchDocument1.resource.id);
+            await viewFacade.selectOperation(trenchDocument2.resource.id);
             await viewFacade.selectView('project');
             await viewFacade.selectView('excavation');
-            expect(viewFacade.getSelectedOperationTypeDocument().resource.id).toEqual(trenchDocument2.resource.id);
+            expect(viewFacade.getSelectedOperations()[0].resource.id).toEqual(trenchDocument2.resource.id);
             done();
         });
 
@@ -326,7 +326,7 @@ export function main() {
             );
 
             await viewFacade.selectView('excavation');
-            await viewFacade.selectOperationTypeDocument(trenchDocument1.resource.id);
+            await viewFacade.selectOperation(trenchDocument1.resource.id);
             expect(viewFacade.getActiveLayersIds()).toEqual(['o25']);
             done();
         });
@@ -371,7 +371,7 @@ export function main() {
             await idaiFieldDocumentDatastore.create(findDocument3, 'u');
 
             await viewFacade.selectView('excavation');
-            await viewFacade.selectOperationTypeDocument(trenchDocument2.resource.id);
+            await viewFacade.selectOperation(trenchDocument2.resource.id);
             expect(viewFacade.getDocuments().length).toBe(1);
             expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find3');
             done();
@@ -477,7 +477,7 @@ export function main() {
 
             await viewFacade.selectView('project');
             await viewFacade.selectView('excavation');
-            await viewFacade.selectOperationTypeDocument(trenchDocument1.resource.id); // ... with this deleting the selection
+            await viewFacade.selectOperation(trenchDocument1.resource.id); // ... with this deleting the selection
 
             expect(viewFacade.getSelectedDocument().resource.id).toBe(featureDocument2.resource.id);
         });
@@ -517,7 +517,7 @@ export function main() {
             expect(toResourceId(navigationPath.segments[0])).toEqual(featureDocument1.resource.id);
             expect(navigationPath.selectedSegmentId).toEqual(featureDocument1.resource.id);
 
-            await viewFacade.selectOperationTypeDocument(trenchDocument2.resource.id);
+            await viewFacade.selectOperation(trenchDocument2.resource.id);
             navigationPath = await viewFacade.getNavigationPath();
             expect(navigationPath.segments.length).toEqual(0);
 
@@ -528,7 +528,7 @@ export function main() {
             expect(toResourceId(navigationPath.segments[0])).toEqual(featureDocument3.resource.id);
             expect(navigationPath.selectedSegmentId).toEqual(featureDocument3.resource.id);
 
-            await viewFacade.selectOperationTypeDocument(trenchDocument1.resource.id);
+            await viewFacade.selectOperation(trenchDocument1.resource.id);
             navigationPath = await viewFacade.getNavigationPath();
             expect(navigationPath.selectedSegmentId).toEqual(featureDocument1.resource.id);
 

@@ -25,10 +25,9 @@ export class OperationTypeDocumentsManager {
 
     public async populate(): Promise<void> {
 
-        this.documents = await this.fetchDocuments(
-            OperationTypeDocumentsManager.makeMainTypeQuery(
+        this.documents = await this.fetchDocuments({ types: [
                 this.resourcesStateManager.getViewType() as string // cast ok because we populate only when not in overview
-            ));
+            ]});
 
         if (this.documents.length === 0) return this.resourcesStateManager.setMainTypeDocument(undefined);
 
@@ -106,11 +105,5 @@ export class OperationTypeDocumentsManager {
 
         console.error('Error with find. Query:', query);
         if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
-    }
-
-
-    private static makeMainTypeQuery(mainType: string): Query {
-
-        return { types: [mainType] };
     }
 }

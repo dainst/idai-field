@@ -73,7 +73,7 @@ export class ImportComponent {
         private modalService: NgbModal,
         private settingsService: SettingsService
     ) {
-        this.viewFacade.getAllOperationSubtypeWithViewDocuments().then(
+        this.viewFacade.getAllOperations().then(
             documents => this.mainTypeDocuments = documents,
             msgWithParams => messages.add(msgWithParams)
         );

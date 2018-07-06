@@ -46,7 +46,7 @@ export class RoutingService {
         await this.router.navigate(['resources',
             this.viewFacade.getMainTypeHomeViewName(document.resource.type)]);
 
-        await this.viewFacade.selectOperationTypeDocument(document.resource.id);
+        await this.viewFacade.selectOperation(document.resource.id);
     }
 
 

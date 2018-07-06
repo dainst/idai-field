@@ -44,12 +44,8 @@ export class ResourcesMapComponent {
     }
 
 
-    public getIsRecordedInTarget() {
-
-        return this.resourcesComponent.getSelectedOperationTypeDocument() !== undefined
-            ? this.resourcesComponent.getSelectedOperationTypeDocument()
-            : this.settingsService.getProjectDocument()
-    }
+    public mainTypeIds = () => this.viewFacade.getSelectedOperations()
+        .map(_ => _.resource.id).join(',');
 
 
     public async select(document: IdaiFieldDocument|undefined) {
@@ -123,13 +119,8 @@ export class ResourcesMapComponent {
 
     private getParentDocuments(navigationPath: NavigationPath): Array<Document> {
 
-        if (!this.viewFacade.getBypassHierarchy() && this.viewFacade.getSelectAllOperationsOnBypassHierarchy()) {
-            return this.viewFacade.getOperationTypeDocuments();
-        }
-
-        if (!navigationPath.selectedSegmentId) {
-            const isRecordedInTarget: Document|undefined = this.getIsRecordedInTarget();
-            return isRecordedInTarget ? [isRecordedInTarget] : [];
+        if (this.viewFacade.getBypassHierarchy() || !navigationPath.selectedSegmentId) {
+            return this.viewFacade.getSelectedOperations();
         }
 
         const segment = navigationPath.segments

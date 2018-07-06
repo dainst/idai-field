@@ -68,13 +68,8 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setTypeFilters = (types: string[]|undefined) => this.viewFacade.setFilterTypes(types ? types : []);
 
-
-    public getSelectedOperationTypeDocument() {
-
-        return this.viewFacade.isInOverview()
-            ? undefined
-            : this.viewFacade.getSelectedOperationTypeDocument();
-    }
+    public showNoMainTypesWarning = () => this.ready && !this.viewFacade.isInOverview()
+        && this.viewFacade.getSelectedOperations().length < 1 && !this.isEditingGeometry;
 
 
     ngAfterViewChecked() {

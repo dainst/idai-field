@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
+import {OperationsManager} from './operations-manager';
 import {DocumentsManager} from './documents-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
@@ -25,7 +25,7 @@ import {ResourcesState} from './state/resources-state';
  */
 export class ViewFacade {
 
-    private operationTypeDocumentsManager: OperationTypeDocumentsManager;
+    private operationTypeDocumentsManager: OperationsManager;
     private documentsManager: DocumentsManager;
 
 
@@ -35,7 +35,7 @@ export class ViewFacade {
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading
     ) {
-        this.operationTypeDocumentsManager = new OperationTypeDocumentsManager(
+        this.operationTypeDocumentsManager = new OperationsManager(
             datastore,
             resourcesStateManager
         );

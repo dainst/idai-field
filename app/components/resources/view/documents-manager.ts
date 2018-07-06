@@ -2,7 +2,7 @@ import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
 import {Document, Query} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {OperationTypeDocumentsManager} from './operation-type-documents-manager';
+import {OperationsManager} from './operations-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {ObserverUtil} from '../../../util/observer-util';
@@ -35,7 +35,7 @@ export class DocumentsManager {
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
-        private operationTypeDocumentsManager: OperationTypeDocumentsManager,
+        private operationTypeDocumentsManager: OperationsManager,
         private resourcesStateManager: ResourcesStateManager,
         private loading: Loading
     ) {
@@ -217,7 +217,7 @@ export class DocumentsManager {
 
     private async makeSureSelectedDocumentAppearsInList(documentToSelect: IdaiFieldDocument) {
 
-        this.operationTypeDocumentsManager.selectLinkedOperationTypeDocumentForSelectedDocument(documentToSelect);
+        this.operationTypeDocumentsManager.selectLinkedOperationForSelectedDocument(documentToSelect);
         await this.resourcesStateManager.updateNavigationPathForDocument(documentToSelect);
         await this.adjustQuerySettingsIfNecessary(documentToSelect);
     }

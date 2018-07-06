@@ -9,7 +9,7 @@ import {ResourcesState} from './state/resources-state';
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  */
-export class OperationTypeDocumentsManager {
+export class OperationsManager {
 
     private documents: Array<IdaiFieldDocument>;
 
@@ -35,12 +35,12 @@ export class OperationTypeDocumentsManager {
     }
 
 
-    public selectLinkedOperationTypeDocumentForSelectedDocument(
+    public selectLinkedOperationForSelectedDocument(
         selectedDocument: IdaiFieldDocument|undefined) {
 
         if (!this.documents || this.documents.length === 0) return;
 
-        const operationTypeDocument = OperationTypeDocumentsManager.getMainTypeDocumentForDocument(
+        const operationTypeDocument = OperationsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
 
         if (operationTypeDocument && operationTypeDocument.resource.id !== ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get())) {
@@ -55,12 +55,12 @@ export class OperationTypeDocumentsManager {
             const result = await this.datastore.find(query as any);
             if (result) return result.documents;
         } catch (errWithParams) {
-            OperationTypeDocumentsManager.handleFindErr(errWithParams, query);
+            OperationsManager.handleFindErr(errWithParams, query);
         }
     }
 
 
-    private selectFirstOperationTypeDocumentFromList() {
+    private selectFirstOperationFromList() {
 
         if (this.documents && this.documents.length > 0) {
             this.resourcesStateManager.setMainTypeDocument(this.documents[0].resource.id);
@@ -74,14 +74,14 @@ export class OperationTypeDocumentsManager {
 
         const mainTypeDocumentResourceId = ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
         if (!mainTypeDocumentResourceId) {
-            this.selectFirstOperationTypeDocumentFromList();
+            this.selectFirstOperationFromList();
         } else {
             try {
                 const document = await this.datastore.get(mainTypeDocumentResourceId);
                 this.resourcesStateManager.setMainTypeDocument(document.resource.id);
             } catch(e) {
                 this.resourcesStateManager.removeActiveLayersIds();
-                this.selectFirstOperationTypeDocumentFromList();
+                this.selectFirstOperationFromList();
             }
         }
     }

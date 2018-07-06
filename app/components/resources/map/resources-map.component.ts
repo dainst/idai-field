@@ -44,7 +44,8 @@ export class ResourcesMapComponent {
     }
 
 
-    // note that we make no distinction for 'all'-selection if getSelectedOperations.length is 1
+    // note that we make no distinction for 'all'-selection if getSelectedOperations.length is 1.
+    // this is ok because we do not offer the 'all'-selection if only one operation is available.
     public mainTypeIds = () => this.viewFacade.getSelectedOperations()
         .map(_ => _.resource.id).join(',');
 

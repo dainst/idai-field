@@ -112,7 +112,7 @@ export class ViewFacade {
     public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
 
 
-    public getNavigationPath() {
+    public getNavigationPath() { // TODO refactor into simple delegate method
 
         return this.isInOverview()
             ? NavigationPath.empty()
@@ -130,7 +130,7 @@ export class ViewFacade {
 
     public getOperationLabel(): string {
 
-        if (this.isInOverview()) throw ViewFacade.err('getOperationLabel');
+        if (this.isInOverview()) throw ViewFacade.err('getOperationLabel'); // TODO instead of throwing, let ResourcesStateManager return 'Project'
         return this.resourcesStateManager.getLabelForName(this.resourcesStateManager.get().view) as string; // cast ok, we are not in overview
     }
 
@@ -188,23 +188,11 @@ export class ViewFacade {
     public async selectView(viewName: string): Promise<void> {
 
         await this.resourcesStateManager.initialize(viewName);
-        await this.setupMainTypeDocument();
+
+        if (this.isInOverview()) this.resourcesStateManager.setMainTypeDocument('project');
+        else await this.populateOperations();
+
         await this.populateDocumentList();
-    }
-
-
-    private async setupMainTypeDocument(): Promise<void> {
-
-        let mainTypeResourceid: string|undefined;
-
-        if (!this.isInOverview()) {
-            await this.populateOperations();
-            mainTypeResourceid = ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
-        } else {
-            mainTypeResourceid = 'project'; // TODO is this necessary to set the maintyperesourceid in overview?
-        }
-
-        this.resourcesStateManager.setMainTypeDocument(mainTypeResourceid);
     }
 
 

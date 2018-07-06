@@ -188,10 +188,7 @@ export class ViewFacade {
     public async selectView(viewName: string): Promise<void> {
 
         await this.resourcesStateManager.initialize(viewName);
-
-        if (this.isInOverview()) this.resourcesStateManager.setMainTypeDocument('project');
-        else await this.populateOperations();
-
+        await this.operationsManager.populate();
         await this.populateDocumentList();
     }
 

@@ -25,6 +25,8 @@ export class OperationsManager {
 
     public async populate(): Promise<void> {
 
+        if (this.resourcesStateManager.isInOverview()) return this.resourcesStateManager.setMainTypeDocument('project');
+
         this.documents = await this.fetchDocuments({ types: [
                 this.resourcesStateManager.getViewType() as string // cast ok because we populate only when not in overview
             ]});

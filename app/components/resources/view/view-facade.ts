@@ -112,7 +112,7 @@ export class ViewFacade {
     public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
 
 
-    public getNavigationPath() { // TODO refactor into simple delegate method
+    public getNavigationPath() {
 
         return this.isInOverview()
             ? NavigationPath.empty()

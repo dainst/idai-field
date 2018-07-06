@@ -47,6 +47,18 @@ export class NavigationComponent {
     }
 
 
+    public showNavigation() {
+
+        return !this.viewFacade.isInOverview() && this.viewFacade.getSelectedOperations().length > 0;
+    }
+
+
+    public showSelectAllOperationsOption() {
+
+        return this.viewFacade.getBypassHierarchy() && this.viewFacade.getOperations().length > 1;
+    }
+
+
     public async activateBypassOperationTypeSelection() {
 
         await this.viewFacade.setSelectAllOperationsOnBypassHierarchy(true);

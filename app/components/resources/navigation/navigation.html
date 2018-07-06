@@ -1,6 +1,6 @@
 <div id="navigation" class="row">
 
-    <div *ngIf="!viewFacade.isInOverview() && viewFacade.getSelectedOperations()[0]" class="btn-group">
+    <div *ngIf="showNavigation()" class="btn-group">
         <div id="hierarchy-mode-switch" class="btn btn-outline-primary" (click)="toggleDisplayHierarchy()">
             <div ngbTooltip="Wechsel zwischen hierarchischer Anordnung und einfacher Auflistung" placement="right"
                  container="body" triggers="manual" #tooltip="ngbTooltip"
@@ -14,11 +14,11 @@
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
 
             <div class="dropdown-menu" ngbDropdownMenu>
-                <button *ngIf="getBypassHierarchy()" class="dropdown-item"
+                <button *ngIf="showSelectAllOperationsOption()" class="dropdown-item"
                         (click)="activateBypassOperationTypeSelection()">
                     <em>Alle</em>
                 </button>
-                <hr *ngIf="getBypassHierarchy()">
+                <hr *ngIf="showSelectAllOperationsOption()">
 
                 <button *ngFor="let document of viewFacade.getOperations()" class="dropdown-item"
                         (click)="chooseOperationTypeDocumentOption(document)">

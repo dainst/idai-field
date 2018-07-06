@@ -25,7 +25,7 @@
 <div id="list-background" class="bg-light">
     <plus-button *ngIf="isPlusButtonShown()"
                  id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
-                 [preselectedType]="viewFacade.getCurrentFilterType()"
+                 [preselectedType]="getCurrentFilterType()"
                  [liesWithin]="getSelectedSegmentDoc()"
                  [isRecordedIn]="viewFacade.getSelectedOperations()[0]"
                  [skipFormAndReturnNewDocument]="true"

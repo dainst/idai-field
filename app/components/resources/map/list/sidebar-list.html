@@ -29,7 +29,7 @@
 </ul>
 
 <plus-button *ngIf="isPlusButtonShown()" id="create-document-button" [placement]="'top'"
-             [preselectedType]="viewFacade.getCurrentFilterType()"
+             [preselectedType]="getCurrentFilterType()"
              [liesWithin]="getSelectedSegmentDoc()"
              [isRecordedIn]="viewFacade.getSelectedOperations()[0]"
              [status]="getPlusButtonStatus()"></plus-button>

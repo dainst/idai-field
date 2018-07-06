@@ -155,13 +155,6 @@ export class ViewFacade {
     }
 
 
-    public getCurrentFilterType()  {
-
-        const filterTypes = ResourcesState.getTypeFilters(this.resourcesStateManager.get());
-        return filterTypes && filterTypes.length > 0 ? filterTypes[0] : undefined;
-    }
-
-
     public async setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy: boolean) {
 
         if (this.isInOverview()) throw ViewFacade.err('setSelectAllOperationsOnBypassHierarchy');
@@ -208,7 +201,7 @@ export class ViewFacade {
             await this.populateOperations();
             mainTypeResourceid = ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
         } else {
-            mainTypeResourceid = 'project';
+            mainTypeResourceid = 'project'; // TODO is this necessary to set the maintyperesourceid in overview?
         }
 
         this.resourcesStateManager.setMainTypeDocument(mainTypeResourceid);

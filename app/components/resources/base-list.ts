@@ -4,6 +4,7 @@ import {ViewFacade} from './view/view-facade';
 import {Loading} from '../../widgets/loading';
 import {NavigationPath} from './view/state/navigation-path';
 import {PlusButtonStatus} from './plus-button.component';
+import {ResourcesState} from './view/state/resources-state';
 
 /**
  * @author Philipp Gerth
@@ -22,6 +23,13 @@ export class BaseList {
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
         });
+    }
+
+
+    public getCurrentFilterType()  {
+
+        const filterTypes = this.viewFacade.getFilterTypes();
+        return filterTypes && filterTypes.length > 0 ? filterTypes[0] : undefined;
     }
 
 

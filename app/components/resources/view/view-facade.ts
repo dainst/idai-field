@@ -101,6 +101,8 @@ export class ViewFacade {
 
     public setBypassHierarchy = (bypassHierarchy: boolean) => this.documentsManager.setBypassHierarchy(bypassHierarchy);
 
+    public getMainTypeHomeViewName = (mainTypeName: string) => this.resourcesStateManager.getViewNameForMainType(mainTypeName);
+
     public getAllOperations = () => this.operationsManager.getAllOperations();
 
     public getSelectAllOperationsOnBypassHierarchy = () => ResourcesState.getSelectAllOperationsOnBypassHierarchy(this.resourcesStateManager.get());
@@ -117,14 +119,6 @@ export class ViewFacade {
         return this.isInOverview()
             ? NavigationPath.empty()
             : ResourcesState.getNavigationPath(this.resourcesStateManager.get());
-    }
-
-
-    public getMainTypeHomeViewName(mainTypeName: string): string|undefined { // TODO refactor into simple delegate method
-
-        return (mainTypeName === 'Project')
-            ? 'project'
-            : this.resourcesStateManager.getViewNameForOperationSubtype(mainTypeName);
     }
 
 

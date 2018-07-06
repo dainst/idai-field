@@ -62,11 +62,17 @@ export class ResourcesStateManager {
 
     public getViews = () => this.views.get();
 
-    public getViewNameForOperationSubtype = (name: string) => this.views.getViewNameForOperationSubtype(name);
-
     public getLabelForName = (name: string) => this.views.getLabelForName(name);
 
     public getOperationSubtypeForViewName = (name: string) => this.views.getOperationSubtypeForViewName(name);
+
+
+    public getViewNameForMainType(name: string) {
+
+        return (name === 'Project')
+            ? 'project'
+            : this.views.getViewNameForOperationSubtype(name);
+    }
 
 
     public async initialize(viewName: string): Promise<any> {

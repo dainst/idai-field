@@ -124,7 +124,7 @@ export class ViewFacade {
 
     public getOperationLabel(): string {
 
-        if (this.isInOverview()) throw ViewFacade.err('getOperationLabel'); // TODO instead of throwing, let ResourcesStateManager return 'Project'
+        if (this.isInOverview()) throw ViewFacade.err('getOperationLabel'); // TODO instead of throwing, let ResourcesStateManager return 'Project'. even better: try to get rid of this method, which is only used once, and replace it by combinations of other methods of view facade
         return this.resourcesStateManager.getLabelForName(this.resourcesStateManager.get().view) as string; // cast ok, we are not in overview
     }
 

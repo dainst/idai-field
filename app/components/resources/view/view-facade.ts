@@ -51,7 +51,7 @@ export class ViewFacade {
 
     public addNewDocument = (document: IdaiFieldDocument) => this.documentsManager.addNewDocument(document);
 
-    public getCurrentViewName = () => this.resourcesStateManager.get().view;
+    public getView = (): string => this.resourcesStateManager.get().view;
 
     public isInOverview = () => this.resourcesStateManager.isInOverview();
 

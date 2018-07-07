@@ -119,7 +119,7 @@ export class RoutingService {
 
         const viewName = await this.viewFacade.getMainTypeHomeViewName(mainTypeName);
 
-        if (comingFromOutsideResourcesComponent || viewName != this.viewFacade.getCurrentViewName()) {
+        if (comingFromOutsideResourcesComponent || viewName != this.viewFacade.getView()) {
             this.router.navigate(tab ?
                 ['resources', viewName, documentToSelect.resource.id, 'view', tab] :
                 ['resources', viewName, documentToSelect.resource.id]);

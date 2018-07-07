@@ -10,7 +10,7 @@
                 <resources-search-bar [q]="getQueryString()"
                                       [types]="getTypeFilters()"
                                       [relationName]="'isRecordedIn'"
-                                      [relationRangeType]="viewFacade.getCurrentViewMainType()"
+                                      [relationRangeType]="getViewType()"
                                       (onQueryStringChanged)="setQueryString($event)"
                                       (onTypesChanged)="setTypeFilters($event)">
                 </resources-search-bar>

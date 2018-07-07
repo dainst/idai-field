@@ -54,6 +54,8 @@ export class ResourcesComponent implements AfterViewChecked {
     }
 
 
+    public getViewType = () => this.viewFacade.getViewType();
+
     public currentModeIs = (mode: string) => (this.viewFacade.getMode() === mode);
 
     public setQueryString = (q: string) => this.viewFacade.setSearchString(q);

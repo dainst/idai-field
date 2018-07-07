@@ -53,6 +53,8 @@ export class ViewFacade {
 
     public getView = (): string => this.resourcesStateManager.get().view;
 
+    public getViewType = () => this.resourcesStateManager.getViewType(); // main type of the current view
+
     public isInOverview = () => this.resourcesStateManager.isInOverview();
 
     public getOperationSubtypeViews = () => this.resourcesStateManager.getViews();
@@ -93,8 +95,6 @@ export class ViewFacade {
 
     public populateDocumentList = () => this.documentsManager.populateDocumentList();
 
-    public getCurrentViewMainType = () => this.resourcesStateManager.getViewType();
-
     public setActiveDocumentViewTab = (activeDocumentViewTab: string|undefined) => this.resourcesStateManager.setActiveDocumentViewTab(activeDocumentViewTab);
 
     public getBypassHierarchy = () => ResourcesState.getBypassHierarchy(this.resourcesStateManager.get());
@@ -124,7 +124,7 @@ export class ViewFacade {
 
     public getOperationLabel(): string {
 
-        if (this.isInOverview()) throw ViewFacade.err('getOperationLabel'); // TODO instead of throwing, let ResourcesStateManager return 'Project'. even better: try to get rid of this method, which is only used once, and replace it by combinations of other methods of view facade
+        if (this.isInOverview()) throw ViewFacade.err('getOperationLabel');
         return this.resourcesStateManager.getLabelForName(this.resourcesStateManager.get().view) as string; // cast ok, we are not in overview
     }
 

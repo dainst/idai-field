@@ -58,15 +58,12 @@
 
   #hierarchy-mode-switch {
     padding: 0;
+    width: 42px;
+    height: 39px;
 
-    div {
-      width: 42px;
-      height: 39px;
-
-      .mdi {
-        position: relative;
-        top: 9px;
-      }
+    .mdi {
+      position: relative;
+      top: 8px;
     }
   }
 }

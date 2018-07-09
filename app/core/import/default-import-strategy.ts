@@ -23,7 +23,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      * @throws errorWithParams
      */
     public async importDoc(
-            document: NewDocument // TODO use IdaiFieldDocument and make sure it is properly converted
+            document: NewDocument
         ): Promise<Document> {
 
 

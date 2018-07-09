@@ -140,14 +140,20 @@ export module NavigationPath {
 
     export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
-        const shortenedNavigationPath = ObjectUtil.cloneObject(navPath);
-        (shortenedNavigationPath as any).segments = takeWhile(differentFrom(firstToBeExcluded))(navPath.segments);
+        const shortened = ObjectUtil.cloneObject(navPath);
+        (shortened as any /* cast ok on construction */).segments = takeWhile(differentFrom(firstToBeExcluded))(navPath.segments);
 
-        if (navPath.selectedSegmentId === firstToBeExcluded.document.resource.id) { // TODO should be: if selectedSegmentId is not contained in the surviving segments
-            (shortenedNavigationPath as any).selectedSegmentId = undefined;
+        if (shortened.selectedSegmentId) {
+
+            const stillActiveSegmentDocument = shortened.segments
+                .find(_ => _.document.resource.id === shortened.selectedSegmentId);
+
+            if (!stillActiveSegmentDocument) {
+                (shortened as any /* cast ok on construction */).selectedSegmentId = undefined;
+            }
         }
 
-        return shortenedNavigationPath;
+        return shortened;
     }
 
 

@@ -1,15 +1,16 @@
 <div id="navigation" class="row">
 
-    <div *ngIf="showNavigation()" class="btn-group">
-        <div id="hierarchy-mode-switch" class="btn btn-outline-primary" (click)="toggleDisplayHierarchy()">
-            <div ngbTooltip="Wechsel zwischen hierarchischer Anordnung und einfacher Auflistung" placement="right"
-                 container="body" triggers="manual" #tooltip="ngbTooltip"
-                 (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()" (click)="tooltip.close()">
-                <span *ngIf="!getBypassHierarchy()" class="mdi mdi-file-tree"></span>
-                <span *ngIf="getBypassHierarchy()" class="mdi mdi-view-sequential"></span>
-            </div>
+    <div *ngIf="showNavigation()" id="hierarchy-mode-switch" class="btn btn-primary mr-2"
+         (click)="toggleDisplayHierarchy()">
+        <div ngbTooltip="Wechsel zwischen hierarchischer Anordnung und einfacher Auflistung"
+             placement="right" container="body" triggers="manual" #tooltip="ngbTooltip"
+             (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()" (click)="tooltip.close()">
+            <span *ngIf="!getBypassHierarchy()" class="mdi mdi-file-tree"></span>
+            <span *ngIf="getBypassHierarchy()" class="mdi mdi-view-sequential"></span>
         </div>
+    </div>
 
+    <div *ngIf="showNavigation()" class="btn-group">
         <div class="btn-group operation-document-selector" ngbDropdown placement="bottom-left" role="group">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
 

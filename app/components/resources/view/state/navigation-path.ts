@@ -145,10 +145,10 @@ export module NavigationPath {
 
         if (shortened.selectedSegmentId) {
 
-            const stillActiveSegmentDocument = shortened.segments
+            const stillSelectedSegment = shortened.segments
                 .find(_ => _.document.resource.id === shortened.selectedSegmentId);
 
-            if (!stillActiveSegmentDocument) {
+            if (!stillSelectedSegment) {
                 (shortened as any /* cast ok on construction */).selectedSegmentId = undefined;
             }
         }

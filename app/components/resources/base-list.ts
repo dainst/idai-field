@@ -40,7 +40,6 @@ export class BaseList {
     }
 
 
-    // TODO unit test this
     public isPlusButtonShown(): boolean {
 
         return !this.resourcesComponent.isEditingGeometry
@@ -51,7 +50,6 @@ export class BaseList {
     }
 
 
-    // TODO unit test this
     public getPlusButtonStatus(): PlusButtonStatus {
 
         if (this.viewFacade.getBypassHierarchy()) {

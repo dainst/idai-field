@@ -4,32 +4,19 @@
       "hasColorSoil": {
         "inputType": "input"
       },
-      "hasPeriodBeginning": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
-          "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
-          "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
-          "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)",
-          "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)",
-          "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
-          "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
-          "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
-      },
-      "hasPeriodEnd": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
-          "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
-          "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
-          "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)",
-          "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)",
-          "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
-          "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
-          "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
-      },
+      "hasDating": {
+      "inputType": "dating",
+      "valuelist": [
+        "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
+        "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
+        "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
+        "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)",
+        "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)",
+        "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
+        "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
+        "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
+      ]
+    },
       "hasDimensionHeight": {
         "inputType": "dimension",
         "positionValues": [
@@ -41,8 +28,8 @@
   },
   "Room": {
     "fields": {
-        "hasPeriodBeginning": {
-        "inputType": "dropdown",
+      "hasDating": {
+        "inputType": "dating",
         "valuelist": [
           "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
           "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
@@ -52,27 +39,14 @@
           "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
           "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
           "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
-      },
-      "hasPeriodEnd": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
-          "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
-          "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
-          "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)",
-          "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)",
-          "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
-          "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
-          "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
+        ]
       }
     }
   },
   "Operation": {
     "fields": {
-        "hasPeriodBeginning": {
-        "inputType": "dropdown",
+      "hasDating": {
+        "inputType": "dating",
         "valuelist": [
           "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
           "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
@@ -82,27 +56,14 @@
           "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
           "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
           "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
-      },
-      "hasPeriodEnd": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
-          "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
-          "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
-          "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)",
-          "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)",
-          "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
-          "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
-          "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
+        ]
       }
     }
   },
   "Wall_surface": {
     "fields": {
-        "hasPeriodBeginning": {
-        "inputType": "dropdown",
+      "hasDating": {
+        "inputType": "dating",
         "valuelist": [
           "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
           "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
@@ -112,27 +73,14 @@
           "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
           "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
           "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
-      },
-      "hasPeriodEnd": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
-          "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
-          "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
-          "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)",
-          "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)",
-          "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
-          "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
-          "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
+        ]
       }
     }
   },
   "Inscription": {
     "fields": {
-        "hasPeriodBeginning": {
-        "inputType": "dropdown",
+      "hasDating": {
+        "inputType": "dating",
         "valuelist": [
           "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
           "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
@@ -142,57 +90,14 @@
           "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
           "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
           "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
-      },
-      "hasPeriodEnd": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
-          "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
-          "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
-          "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)",
-          "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)",
-          "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
-          "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
-          "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
-      }
-    }
-  },
-  "Feature": {
-    "fields": {
-        "hasPeriodBeginning": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
-          "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
-          "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
-          "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)",
-          "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)",
-          "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
-          "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
-          "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
-      },
-      "hasPeriodEnd": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
-          "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
-          "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
-          "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)",
-          "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)",
-          "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
-          "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
-          "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
+        ]
       }
     }
   },
   "Find": {
     "fields": {
-        "hasPeriodBeginning": {
-        "inputType": "dropdown",
+      "hasDating": {
+        "inputType": "dating",
         "valuelist": [
           "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
           "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
@@ -202,20 +107,7 @@
           "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
           "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
           "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
-      },
-      "hasPeriodEnd": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Vorrömisch I. ca. 500 - 146 v. Chr. (punisch)",
-          "Vorrömisch II. 146 - 31 v. Chr. (neopunisch)",
-          "Frühe Kaiserzeit. 31 v. Chr. - 69 n. Chr. (augusteisch / iulisch-claudisch)",
-          "Mittlere Kaiserzeit I. ca. 69 - 117 n. Chr. (flavisch - trajanisch)",
-          "Mittlere Kaiserzeit II. 117 - 235 n. Chr. (hadrianisch - severisch)",
-          "Späte Kaiserzeit. 235 - 306 n. Chr. (Soldatenkaiser - tetrarchisch)",
-          "Spätantike I.  306 - 530 n. Chr. (konstantinisch - vandalisch)",
-          "Spätantike II. 530 - 698 n. Chr. (byzantinisch)"
-          ]
+        ]
       }
     }
   },

@@ -1386,42 +1386,6 @@
         "hasDating": {
           "inputType": "dating",
           "valuelist": [
-            "Dating"
-          ]
-        },
-        "hasPeriodBeginning": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Archaisch",
-            "Bronzezeitlich",
-            "Byzantinisch",
-            "Eisenzeitlich",
-            "Frühbronzezeitlich",
-            "Frühbyzantinisch",
-            "Frühhellenistisch",
-            "Frühkaiserzeitlich",
-            "Frühklassisch",
-            "Geometrisch",
-            "Hellenistisch",
-            "Kaiserzeitlich",
-            "Klassisch",
-            "Neolithisch",
-            "Neuzeitlich",
-            "Osmanisch",
-            "Pleistozän",
-            "Rezent",
-            "Römisch",
-            "Spätantik",
-            "Spätbronzezeitlich",
-            "Spätbyzantinisch",
-            "Späthellenistisch",
-            "Spätkaiserzeitlich",
-            "Spätklassisch"
-          ]
-        },
-        "hasPeriodEnd": {
-          "inputType": "dropdown",
-          "valuelist": [
             "Archaisch",
             "Bronzezeitlich",
             "Byzantinisch",
@@ -1723,7 +1687,31 @@
         "hasDating": {
           "inputType": "dating",
           "valuelist": [
-            "Dating"
+            "Archaisch",
+            "Bronzezeitlich",
+            "Byzantinisch",
+            "Eisenzeitlich",
+            "Frühbronzezeitlich",
+            "Frühbyzantinisch",
+            "Frühhellenistisch",
+            "Frühkaiserzeitlich",
+            "Frühklassisch",
+            "Geometrisch",
+            "Hellenistisch",
+            "Kaiserzeitlich",
+            "Klassisch",
+            "Neolithisch",
+            "Neuzeitlich",
+            "Osmanisch",
+            "Pleistozän",
+            "Rezent",
+            "Römisch",
+            "Spätantik",
+            "Spätbronzezeitlich",
+            "Spätbyzantinisch",
+            "Späthellenistisch",
+            "Spätkaiserzeitlich",
+            "Spätklassisch"
           ]
         },
         "hasDimensionLength": {
@@ -1787,66 +1775,6 @@
             "trichterförmig",
             "unregelmäßig",
             "wannenförmig"
-          ]
-        },
-        "hasPeriodBeginning": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Archaisch",
-            "Bronzezeitlich",
-            "Byzantinisch",
-            "Eisenzeitlich",
-            "Frühbronzezeitlich",
-            "Frühbyzantinisch",
-            "Frühhellenistisch",
-            "Frühkaiserzeitlich",
-            "Frühklassisch",
-            "Geometrisch",
-            "Hellenistisch",
-            "Kaiserzeitlich",
-            "Klassisch",
-            "Neolithisch",
-            "Neuzeitlich",
-            "Osmanisch",
-            "Pleistozän",
-            "Rezent",
-            "Römisch",
-            "Spätantik",
-            "Spätbronzezeitlich",
-            "Spätbyzantinisch",
-            "Späthellenistisch",
-            "Spätkaiserzeitlich",
-            "Spätklassisch"
-          ]
-        },
-        "hasPeriodEnd": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Archaisch",
-            "Bronzezeitlich",
-            "Byzantinisch",
-            "Eisenzeitlich",
-            "Frühbronzezeitlich",
-            "Frühbyzantinisch",
-            "Frühhellenistisch",
-            "Frühkaiserzeitlich",
-            "Frühklassisch",
-            "Geometrisch",
-            "Hellenistisch",
-            "Kaiserzeitlich",
-            "Klassisch",
-            "Neolithisch",
-            "Neuzeitlich",
-            "Osmanisch",
-            "Pleistozän",
-            "Rezent",
-            "Römisch",
-            "Spätantik",
-            "Spätbronzezeitlich",
-            "Spätbyzantinisch",
-            "Späthellenistisch",
-            "Spätkaiserzeitlich",
-            "Spätklassisch"
           ]
         }
       }
@@ -1988,7 +1916,31 @@
         "hasDating": {
           "inputType": "dating",
           "valuelist": [
-            "Dating"
+            "Archaisch",
+            "Bronzezeitlich",
+            "Byzantinisch",
+            "Eisenzeitlich",
+            "Frühbronzezeitlich",
+            "Frühbyzantinisch",
+            "Frühhellenistisch",
+            "Frühkaiserzeitlich",
+            "Frühklassisch",
+            "Geometrisch",
+            "Hellenistisch",
+            "Kaiserzeitlich",
+            "Klassisch",
+            "Neolithisch",
+            "Neuzeitlich",
+            "Osmanisch",
+            "Pleistozän",
+            "Rezent",
+            "Römisch",
+            "Spätantik",
+            "Spätbronzezeitlich",
+            "Spätbyzantinisch",
+            "Späthellenistisch",
+            "Spätkaiserzeitlich",
+            "Spätklassisch"
           ]
         },
         "hasDimensionWidth": {
@@ -2018,66 +1970,6 @@
             "Wasserversorgung",
             "Weihinschrift",
             "Öffentliche Ausstattung"
-          ]
-        },
-        "hasPeriodBeginning": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Archaisch",
-            "Bronzezeitlich",
-            "Byzantinisch",
-            "Eisenzeitlich",
-            "Frühbronzezeitlich",
-            "Frühbyzantinisch",
-            "Frühhellenistisch",
-            "Frühkaiserzeitlich",
-            "Frühklassisch",
-            "Geometrisch",
-            "Hellenistisch",
-            "Kaiserzeitlich",
-            "Klassisch",
-            "Neolithisch",
-            "Neuzeitlich",
-            "Osmanisch",
-            "Pleistozän",
-            "Rezent",
-            "Römisch",
-            "Spätantik",
-            "Spätbronzezeitlich",
-            "Spätbyzantinisch",
-            "Späthellenistisch",
-            "Spätkaiserzeitlich",
-            "Spätklassisch"
-          ]
-        },
-        "hasPeriodEnd": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Archaisch",
-            "Bronzezeitlich",
-            "Byzantinisch",
-            "Eisenzeitlich",
-            "Frühbronzezeitlich",
-            "Frühbyzantinisch",
-            "Frühhellenistisch",
-            "Frühkaiserzeitlich",
-            "Frühklassisch",
-            "Geometrisch",
-            "Hellenistisch",
-            "Kaiserzeitlich",
-            "Klassisch",
-            "Neolithisch",
-            "Neuzeitlich",
-            "Osmanisch",
-            "Pleistozän",
-            "Rezent",
-            "Römisch",
-            "Spätantik",
-            "Spätbronzezeitlich",
-            "Spätbyzantinisch",
-            "Späthellenistisch",
-            "Spätkaiserzeitlich",
-            "Spätklassisch"
           ]
         }
       }
@@ -2968,7 +2860,31 @@
         "hasDating": {
           "inputType": "dating",
           "valuelist": [
-            "Dating"
+            "Archaisch",
+            "Bronzezeitlich",
+            "Byzantinisch",
+            "Eisenzeitlich",
+            "Frühbronzezeitlich",
+            "Frühbyzantinisch",
+            "Frühhellenistisch",
+            "Frühkaiserzeitlich",
+            "Frühklassisch",
+            "Geometrisch",
+            "Hellenistisch",
+            "Kaiserzeitlich",
+            "Klassisch",
+            "Neolithisch",
+            "Neuzeitlich",
+            "Osmanisch",
+            "Pleistozän",
+            "Rezent",
+            "Römisch",
+            "Spätantik",
+            "Spätbronzezeitlich",
+            "Spätbyzantinisch",
+            "Späthellenistisch",
+            "Spätkaiserzeitlich",
+            "Spätklassisch"
           ]
         },
         "hasDimensionHeight": {
@@ -3555,7 +3471,31 @@
         "hasDating": {
           "inputType": "dating",
           "valuelist": [
-            "Dating"
+            "Archaisch",
+            "Bronzezeitlich",
+            "Byzantinisch",
+            "Eisenzeitlich",
+            "Frühbronzezeitlich",
+            "Frühbyzantinisch",
+            "Frühhellenistisch",
+            "Frühkaiserzeitlich",
+            "Frühklassisch",
+            "Geometrisch",
+            "Hellenistisch",
+            "Kaiserzeitlich",
+            "Klassisch",
+            "Neolithisch",
+            "Neuzeitlich",
+            "Osmanisch",
+            "Pleistozän",
+            "Rezent",
+            "Römisch",
+            "Spätantik",
+            "Spätbronzezeitlich",
+            "Spätbyzantinisch",
+            "Späthellenistisch",
+            "Spätkaiserzeitlich",
+            "Spätklassisch"
           ]
         },
         "hasDimensionHeight": {
@@ -4660,7 +4600,31 @@
         "hasDating": {
           "inputType": "dating",
           "valuelist": [
-            "Dating"
+            "Archaisch",
+            "Bronzezeitlich",
+            "Byzantinisch",
+            "Eisenzeitlich",
+            "Frühbronzezeitlich",
+            "Frühbyzantinisch",
+            "Frühhellenistisch",
+            "Frühkaiserzeitlich",
+            "Frühklassisch",
+            "Geometrisch",
+            "Hellenistisch",
+            "Kaiserzeitlich",
+            "Klassisch",
+            "Neolithisch",
+            "Neuzeitlich",
+            "Osmanisch",
+            "Pleistozän",
+            "Rezent",
+            "Römisch",
+            "Spätantik",
+            "Spätbronzezeitlich",
+            "Spätbyzantinisch",
+            "Späthellenistisch",
+            "Spätkaiserzeitlich",
+            "Spätklassisch"
           ]
         },
         "hasDimensionDiameter": {
@@ -4710,66 +4674,6 @@
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
-        },
-        "hasPeriodBeginning": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Archaisch",
-            "Bronzezeitlich",
-            "Byzantinisch",
-            "Eisenzeitlich",
-            "Frühbronzezeitlich",
-            "Frühbyzantinisch",
-            "Frühhellenistisch",
-            "Frühkaiserzeitlich",
-            "Frühklassisch",
-            "Geometrisch",
-            "Hellenistisch",
-            "Kaiserzeitlich",
-            "Klassisch",
-            "Neolithisch",
-            "Neuzeitlich",
-            "Osmanisch",
-            "Pleistozän",
-            "Rezent",
-            "Römisch",
-            "Spätantik",
-            "Spätbronzezeitlich",
-            "Spätbyzantinisch",
-            "Späthellenistisch",
-            "Spätkaiserzeitlich",
-            "Spätklassisch"
-          ]
-        },
-        "hasPeriodEnd": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Archaisch",
-            "Bronzezeitlich",
-            "Byzantinisch",
-            "Eisenzeitlich",
-            "Frühbronzezeitlich",
-            "Frühbyzantinisch",
-            "Frühhellenistisch",
-            "Frühkaiserzeitlich",
-            "Frühklassisch",
-            "Geometrisch",
-            "Hellenistisch",
-            "Kaiserzeitlich",
-            "Klassisch",
-            "Neolithisch",
-            "Neuzeitlich",
-            "Osmanisch",
-            "Pleistozän",
-            "Rezent",
-            "Römisch",
-            "Spätantik",
-            "Spätbronzezeitlich",
-            "Spätbyzantinisch",
-            "Späthellenistisch",
-            "Spätkaiserzeitlich",
-            "Spätklassisch"
-          ]
         },
         "hasStoragePlace": {
           "inputType": "radio",

@@ -1390,6 +1390,9 @@
     },
     "Place": {
       "fields": {
+        "hasDating": {
+          "inputType": "dating"
+        },
         "hasPlaceName": {
           "inputType": "input"
         },
@@ -1441,66 +1444,6 @@
             "einzelnes Steindenkmal",
             "ländliches Gebäude",
             "urbanes Gebäude"
-          ]
-        },
-        "hasPeriodBeginning": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Archaisch",
-            "Bronzezeitlich",
-            "Byzantinisch",
-            "Eisenzeitlich",
-            "Frühbronzezeitlich",
-            "Frühbyzantinisch",
-            "Frühhellenistisch",
-            "Frühkaiserzeitlich",
-            "Frühklassisch",
-            "Geometrisch",
-            "Hellenistisch",
-            "Kaiserzeitlich",
-            "Klassisch",
-            "Neolithisch",
-            "Neuzeitlich",
-            "Osmanisch",
-            "Pleistozän",
-            "Rezent",
-            "Römisch",
-            "Spätantik",
-            "Spätbronzezeitlich",
-            "Spätbyzantinisch",
-            "Späthellenistisch",
-            "Spätkaiserzeitlich",
-            "Spätklassisch"
-          ]
-        },
-        "hasPeriodEnd": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Archaisch",
-            "Bronzezeitlich",
-            "Byzantinisch",
-            "Eisenzeitlich",
-            "Frühbronzezeitlich",
-            "Frühbyzantinisch",
-            "Frühhellenistisch",
-            "Frühkaiserzeitlich",
-            "Frühklassisch",
-            "Geometrisch",
-            "Hellenistisch",
-            "Kaiserzeitlich",
-            "Klassisch",
-            "Neolithisch",
-            "Neuzeitlich",
-            "Osmanisch",
-            "Pleistozän",
-            "Rezent",
-            "Römisch",
-            "Spätantik",
-            "Spätbronzezeitlich",
-            "Spätbyzantinisch",
-            "Späthellenistisch",
-            "Spätkaiserzeitlich",
-            "Spätklassisch"
           ]
         },
         "hasSiteClassification": {

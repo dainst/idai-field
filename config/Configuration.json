@@ -1600,10 +1600,6 @@
             "weiß"
           ]
         },
-        "hasDating": {
-          "inputType": "dating"
-
-        },
         "hasDimensionLength": {
           "inputType": "dimension", 
           "positionValues": [

@@ -4,9 +4,6 @@
       "hasColorSoil": {
         "inputType": "input"
       },
-      "hasDating": {
-      "inputType": "dating"
-    },
       "hasDimensionHeight": {
         "inputType": "dimension",
         "positionValues": [

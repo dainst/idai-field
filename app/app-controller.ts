@@ -2,15 +2,16 @@
 
 import {Injectable} from "@angular/core";
 import * as express from 'express';
-
-const remote = require('electron').remote;
-const expressPouchDB = require('express-pouchdb');
-
 import {Document} from 'idai-components-2/core';
 import {PouchdbManager} from "./core/datastore/core/pouchdb-manager";
 import {DocumentCache} from "./core/datastore/core/document-cache";
 import {ImagesState} from "./components/imageoverview/view/images-state";
 import {ResourcesStateManager} from './components/resources/view/resources-state-manager';
+import {IndexFacade} from './core/datastore/index/index-facade';
+
+const remote = require('electron').remote;
+const expressPouchDB = require('express-pouchdb');
+
 
 @Injectable()
 /**
@@ -22,7 +23,8 @@ export class AppController {
         private pouchdbManager: PouchdbManager,
         private resourcesState: ResourcesStateManager,
         private documentCache: DocumentCache<Document>,
-        private imagesState: ImagesState) {
+        private imagesState: ImagesState,
+        private indexFacade: IndexFacade) {
     }
 
     public setupServer(): Promise<any> {
@@ -38,6 +40,8 @@ export class AppController {
 
                 this.documentCache.resetForE2E();
                 await this.pouchdbManager.resetForE2E();
+                await this.indexFacade.clear();
+                await this.pouchdbManager.indexAll(this.indexFacade);
 
                 res.send('done');
             });

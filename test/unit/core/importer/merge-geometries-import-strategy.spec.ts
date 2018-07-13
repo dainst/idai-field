@@ -22,7 +22,8 @@ describe('MergeGeometriesImportStrategy Tests ---', () => {
             resource: {
                 id: '1',
                 identifier: 'i1',
-                shortDescription: 'sd1'
+                shortDescription: 'sd1',
+                relations: {}
             }
         };
 
@@ -53,7 +54,8 @@ describe('MergeGeometriesImportStrategy Tests ---', () => {
             id: '1',
             identifier: 'i1',
             shortDescription: 'sd1',
-            geometry: { a: 'b' }
+            geometry: { a: 'b' },
+            relations: {}
         });
         expect(importedDoc.modified).toBeDefined();
         expect(importedDoc.modified.length).toBe(1);

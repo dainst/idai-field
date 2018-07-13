@@ -5,6 +5,7 @@ import {SettingsService} from '../settings/settings-service';
 import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
+import {ObjectUtil} from '../../util/object-util';
 
 /**
  * @author Daniel de Oliveira
@@ -38,7 +39,13 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
                 if (!existingDocument.modified) existingDocument.modified = [];
                 existingDocument.modified.push({ user: this.username, date: new Date() });
 
-                return this.validator.validate(existingDocument);
+                const docToValidate = ObjectUtil.cloneObject(existingDocument);
+                if (docToValidate.resource.relations.isRecordedIn // empty isRecordedIn on operation subtype documents leads to validation error
+                    && docToValidate.resource.relations.isRecordedIn.length === 0) {
+
+                    delete docToValidate.resource.relations.isRecordedIn;
+                }
+                return this.validator.validate(docToValidate);
             }, () => {
                 return Promise.reject([M.ALL_FIND_ERROR]);
             }).then(() => this.datastore.update(existingDocument, this.username),

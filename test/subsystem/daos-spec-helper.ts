@@ -35,11 +35,11 @@ export class DAOsSpecHelper {
         ]
     });
 
-    constructor() {
+    constructor(projectConfiguration?: ProjectConfiguration) {
 
-        spyOn(console, 'debug'); // suppress console.debug
+        if (projectConfiguration) this.projectConfiguration = projectConfiguration;
 
-        const {datastore, documentCache, indexFacade} = DAOsSpecHelper.createPouchdbDatastore('testdb');
+        const {datastore, documentCache, indexFacade} = this.createPouchdbDatastore('testdb');
         const converter = new IdaiFieldTypeConverter(
             new TypeUtility(this.projectConfiguration));
 
@@ -52,7 +52,7 @@ export class DAOsSpecHelper {
     }
 
 
-    public static createIndexers() {
+    public createIndexers() {
 
         const constraintIndexer = new ConstraintIndexer({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
@@ -61,18 +61,18 @@ export class DAOsSpecHelper {
             'identifier:match': { path: 'resource.identifier', type: 'match' },
             'id:match': { path: 'resource.id', type: 'match' }
         }, false);
-        const fulltextIndexer = new FulltextIndexer(false);
+        const fulltextIndexer = new FulltextIndexer(this.projectConfiguration, false);
         return [constraintIndexer, fulltextIndexer] as [ConstraintIndexer, FulltextIndexer];
     }
 
 
-    public static createPouchdbDatastore(dbname) {
+    public createPouchdbDatastore(dbname) {
 
-        const [constraintIndexer, fulltextIndexer] = DAOsSpecHelper.createIndexers();
+        const [constraintIndexer, fulltextIndexer] = this.createIndexers();
 
         const documentCache = new DocumentCache<IdaiFieldDocument>();
         const indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
-        const pouchdbManager = new PouchdbManager(indexFacade);
+        const pouchdbManager = new PouchdbManager();
 
 
         const datastore = new PouchdbDatastore(

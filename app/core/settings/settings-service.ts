@@ -104,7 +104,7 @@ export class SettingsService {
 
         if (this.settings.isSyncActive) await this.startSync();
 
-        this.loadProjectDocument(true);
+        await this.loadProjectDocument(true);
 
         // config
 

@@ -9,6 +9,7 @@ import {Static} from '../../../static';
 describe('FulltextIndexer', () => {
 
     let fi;
+    let projectConfiguration;
 
     function doc(id, identifier, type, shortDescription = 'short') {
 
@@ -30,9 +31,30 @@ describe('FulltextIndexer', () => {
     }
 
 
+    beforeAll(() => {
+
+        projectConfiguration = jasmine.createSpyObj('projectConfiguration',
+            ['getTypesMap']);
+
+        const defaultFieldConfiguration =  {
+            fields: {
+                identifier: {},
+                shortDescription: {},
+            }
+        };
+
+        projectConfiguration.getTypesMap.and.returnValue({
+            type: defaultFieldConfiguration,
+            type1: defaultFieldConfiguration,
+            type2: defaultFieldConfiguration,
+            type3: defaultFieldConfiguration
+        });
+    });
+
+
     beforeEach(() => {
 
-        fi = new FulltextIndexer(false);
+        fi = new FulltextIndexer(projectConfiguration, false);
     });
 
 

@@ -1,20 +1,22 @@
 import {ImagestoreErrors} from '../../../../app/core/imagestore/imagestore-errors';
 import {PouchDbFsImagestore} from '../../../../app/core/imagestore/pouch-db-fs-imagestore';
 import {PouchdbManager} from '../../../../app/core/datastore/core/pouchdb-manager';
-import {IndexFacade} from "../../../../app/core/datastore/index/index-facade";
-/**
- * @author Sebastian Cuy
- */
+import {IndexFacade} from '../../../../app/core/datastore/index/index-facade';
 
 import fs = require('fs');
 import rimraf = require('rimraf');
 import PouchDB = require('pouchdb');
 
+/**
+ * @author Sebastian Cuy
+ */
+
 // helper functions for converting strings to ArrayBuffers and vice versa
 function str2ab(str: string): ArrayBuffer {
+
     const buf = new ArrayBuffer(str.length); // 2 bytes for each char
     const bufView = new Uint8Array(buf);
-    for (let i=0, strLen=str.length; i<strLen; i++) {
+    for (let i = 0, strLen = str.length; i < strLen; i++) {
         bufView[i] = str.charCodeAt(i);
     }
     return buf;
@@ -28,7 +30,7 @@ describe('PouchDbFsImagestore', () => {
     const storeProjectPath = 'store/unittest/';
 
 
-    beforeEach(() => {
+    beforeEach(async done => {
         const mockBlobMaker = jasmine.createSpyObj('blobProxy',['makeBlob']);
         mockBlobMaker.makeBlob.and.callFake(data => { return { safeResourceUrl: data }; });
         const mockConverter = jasmine.createSpyObj('converter',['convert']);
@@ -37,12 +39,15 @@ describe('PouchDbFsImagestore', () => {
         mockConfigProvider.getProjectConfiguration.and.callFake(() =>{ return {} });
         const mockConstraintIndexer = jasmine.createSpyObj('mockConstraintIndexer',['update', 'clear']);
         const mockFulltextIndexer = jasmine.createSpyObj('mockFulltextIndexer',['add', 'clear']);
-        manager = new PouchdbManager(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer));
+        manager = new PouchdbManager();
 
-        manager.loadProjectDb('unittest', undefined);
+        await manager.loadProjectDb('unittest', undefined);
+        await manager.indexAll(new IndexFacade(mockConstraintIndexer, mockFulltextIndexer));
 
         store = new PouchDbFsImagestore(mockConverter, mockBlobMaker, manager.getDbProxy());
-        store.setPath('store/', 'unittest');
+        await store.setPath('store/', 'unittest');
+
+        done();
     });
 
 

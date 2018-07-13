@@ -26,7 +26,7 @@ export class PouchdbManager {
     private resolveDbReady: Function;
 
 
-    constructor(private indexFacade: IndexFacade) {
+    constructor() {
 
         const dbReady = new Promise(resolve => this.resolveDbReady = resolve as any);
         this.dbProxy = new PouchdbProxy(dbReady);
@@ -71,10 +71,6 @@ export class PouchdbManager {
             await sampleDataLoader.go(db, name);
         }
 
-        this.indexFacade.clear();
-        await PouchdbManager.fetchAll(db,
-            (doc: any) => this.indexFacade.put(doc, true, false)
-        );
         this.resolveDbReady(db);
         this.dbHandle = db;
     }
@@ -143,9 +139,18 @@ export class PouchdbManager {
     }
 
 
-    private static async fetchAll(db:any, forEach: Function) {
+    public async indexAll(indexFacade: IndexFacade) {
 
-        await db
+        await this.fetchAll(
+        (doc: any) => {
+            (indexFacade as IndexFacade).put(doc, true, false);
+        });
+    }
+
+
+    private async fetchAll(forEach: Function) {
+
+        await this.dbHandle
             .allDocs({
                     include_docs: true,
                     conflicts: true

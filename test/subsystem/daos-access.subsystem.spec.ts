@@ -33,7 +33,7 @@ export function main() {
 
             spyOn(console, 'error');
 
-            const result = DAOsSpecHelper.createPouchdbDatastore('testdb');
+            const result = h.createPouchdbDatastore('testdb');
             const datastore = result.datastore;
 
             image0 = Static.doc('Image','Image','Image','image0');

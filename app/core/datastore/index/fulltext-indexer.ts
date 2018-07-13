@@ -1,9 +1,9 @@
-import {Document} from 'idai-components-2/core';
+import {flow as _} from 'tsfun';
+import {flatMap} from 'tsfun/src/arrays/arrays';
+import {Document, ProjectConfiguration, FieldDefinition} from 'idai-components-2/core';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
 import {ObjectUtil} from '../../../util/object-util';
-import {flow as _} from "tsfun";
-import {flatMap} from "tsfun/src/arrays/arrays";
 
 /**
  * @author Daniel de Oliveira
@@ -11,7 +11,7 @@ import {flatMap} from "tsfun/src/arrays/arrays";
  */
 export class FulltextIndexer {
 
-    private fieldsToIndex = ['identifier', 'shortDescription'];
+    private defaultFieldsToIndex = ['identifier', 'shortDescription'];
 
     private index: {
         [resourceType: string]: {
@@ -22,7 +22,8 @@ export class FulltextIndexer {
     };
 
 
-    constructor(private showWarnings = true) {
+    constructor(private projectConfiguration: ProjectConfiguration,
+                private showWarnings = true) {
 
         this.setUp();
     }
@@ -31,32 +32,32 @@ export class FulltextIndexer {
     public clear = () => this.setUp();
 
 
-    public put(doc: Document, skipRemoval: boolean = false) {
+    public put(document: Document, skipRemoval: boolean = false) {
 
         function indexToken(tokenAsCharArray: string[]) {
 
-            const typeIndex = this.index[doc.resource.type];
+            const typeIndex = this.index[document.resource.type];
 
             tokenAsCharArray.reduce((accumulator, letter) => {
                 accumulator += letter;
                 if (!typeIndex[accumulator]) typeIndex[accumulator] = {};
-                typeIndex[accumulator][doc.resource.id as any] = indexItem;
+                typeIndex[accumulator][document.resource.id as any] = indexItem;
                 return accumulator;
             }, '');
         }
 
 
-        const indexItem = IndexItem.from(doc, this.showWarnings);
+        const indexItem = IndexItem.from(document, this.showWarnings);
         if (!indexItem) return;
 
-        if (!skipRemoval) this.remove(doc);
-        if (!this.index[doc.resource.type]) this.index[doc.resource.type] = {'*' : { } };
-        this.index[doc.resource.type]['*'][doc.resource.id as any] = indexItem;
+        if (!skipRemoval) this.remove(document);
+        if (!this.index[document.resource.type]) this.index[document.resource.type] = {'*' : { } };
+        this.index[document.resource.type]['*'][document.resource.id as any] = indexItem;
 
-        _(this.fieldsToIndex
-            .filter(field => doc.resource[field])
-            .filter(field => doc.resource[field] !== '')
-            .map(field => doc.resource[field]),
+        _(this.getFieldsToIndex(document.resource.type)
+            .filter(field => document.resource[field])
+            .filter(field => document.resource[field] !== '')
+            .map(field => document.resource[field]),
             flatMap((content: string) => content.split(' ')))
             .map(token => token.toLowerCase())
             .map(token => Array.from(token))
@@ -104,6 +105,15 @@ export class FulltextIndexer {
     private setUp() {
 
         this.index = { };
+    }
+
+
+    private getFieldsToIndex(typeName: string): string[] {
+
+        return Object.values(this.projectConfiguration.getTypesMap()[typeName].fields)
+            .filter((field: FieldDefinition) => field.fulltextIndexed)
+            .map((field: FieldDefinition) => field.name)
+            .concat(this.defaultFieldsToIndex);
     }
 
 

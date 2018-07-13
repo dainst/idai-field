@@ -16,9 +16,33 @@ describe('IndexFacade', () => {
 
     beforeEach(() => {
 
-        const [constraintIndexer, fulltextIndexer] = DAOsSpecHelper.createIndexers();
+        const [constraintIndexer, fulltextIndexer]
+            = new DAOsSpecHelper(createMockProjectConfiguration()).createIndexers();
         indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
     });
+
+
+    function createMockProjectConfiguration(): any {
+
+        const projectConfiguration = jasmine.createSpyObj('projectConfiguration',
+            ['getTypesMap']);
+
+        const defaultFieldConfiguration =  {
+            fields: {
+                identifier: {},
+                shortDescription: {},
+            }
+        };
+
+        projectConfiguration.getTypesMap.and.returnValue({
+            type1: defaultFieldConfiguration,
+            type2: defaultFieldConfiguration,
+            type3: defaultFieldConfiguration,
+            Find: defaultFieldConfiguration
+        });
+
+        return projectConfiguration;
+    }
 
 
     it('should find with filterSet undefined', () => {

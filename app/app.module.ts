@@ -3,24 +3,24 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiMessagesModule, MD, Messages} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor, IdaiDocumentsModule} from 'idai-components-2/core';
-import {IdaiFieldValidator} from './core/model/idai-field-validator';
 import {ConfigReader, ConfigLoader, ProjectConfiguration} from 'idai-components-2/core';
+import {IdaiFieldValidator} from './core/model/idai-field-validator';
+import {IdaiWidgetsModule} from 'idai-components-2/widgets';
+import {IdaiFieldAppConfigurator} from 'idai-components-2/field';
 import {routing} from './app.routing';
 import {M} from './m';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './components/resources/resources.module';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Imagestore} from './core/imagestore/imagestore';
 import {ReadImagestore} from './core/imagestore/read-imagestore';
 import {ImageOverviewModule} from './components/imageoverview/image-overview.module';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {BlobMaker} from './core/imagestore/blob-maker';
 import {Converter} from './core/imagestore/converter';
-import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {SettingsModule} from './components/settings/settings.module';
-import {IdaiFieldAppConfigurator} from 'idai-components-2/field';
 import {SettingsService} from './core/settings/settings-service';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
@@ -41,11 +41,18 @@ import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
 import {TaskbarConflictsComponent} from './components/navbar/taskbar-conflicts.component';
 import {TypeUtility} from './core/model/type-utility';
 import {UsernameProvider} from './core/settings/username-provider';
+import {IndexFacade} from './core/datastore/index/index-facade';
+import {FulltextIndexer} from './core/datastore/index/fulltext-indexer';
+import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
 
 
 const remote = require('electron').remote;
 
-let pconf: any = undefined;
+let projectConfiguration: ProjectConfiguration|undefined = undefined;
+let fulltextIndexer: FulltextIndexer|undefined = undefined;
+let constraintIndexer: ConstraintIndexer|undefined = undefined;
+let indexFacade: IndexFacade|undefined = undefined;
+
 
 @NgModule({
     imports: [
@@ -81,9 +88,26 @@ let pconf: any = undefined;
         {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [SettingsService],
-            useFactory: (settingsService: SettingsService) =>
-                 () => settingsService.bootProject().then(proconf => pconf = proconf)
+            deps: [SettingsService, PouchdbManager],
+            useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager) =>
+                 async () => {
+                    projectConfiguration = await settingsService.bootProject();
+                    fulltextIndexer = new FulltextIndexer(projectConfiguration, true);
+                    constraintIndexer = new ConstraintIndexer({
+                         'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
+                         'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
+                         'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
+                         'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' },
+                         'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
+                         'identifier:match': { path: 'resource.identifier', type: 'match' },
+                         'id:match': { path: 'resource.id', type: 'match' },
+                         'georeference:exist': { path: 'resource.georeference', type: 'exist' },
+                         'conflicts:exist': { path: '_conflicts', type: 'exist' }
+                     }, true);
+                    indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
+                    indexFacade.clear();
+                    await pouchdbManager.indexAll(indexFacade);
+                 }
         },
         SettingsService,
         { provide: UsernameProvider, useExisting: SettingsService },
@@ -110,11 +134,44 @@ let pconf: any = undefined;
         {
             provide: ProjectConfiguration,
             useFactory: () => {
-                if (!pconf) {
-                    console.error('pconf has not yet been provided');
-                    throw 'pconf has not yet been provided';
+                if (!projectConfiguration) {
+                    console.error('project configuration has not yet been provided');
+                    throw 'project configuration has not yet been provided';
                 }
-                return pconf;
+                return projectConfiguration;
+            },
+            deps: []
+        },
+        {
+            provide: FulltextIndexer,
+            useFactory: () => {
+                if (!fulltextIndexer) {
+                    console.error('fulltext indexer has not yet been provided');
+                    throw 'fulltext indexer has not yet been provided';
+                }
+                return fulltextIndexer;
+            },
+            deps: []
+        },
+        {
+            provide: ConstraintIndexer,
+            useFactory: () => {
+                if (!constraintIndexer) {
+                    console.error('constraint indexer has not yet been provided');
+                    throw 'constraint indexer has not yet been provided';
+                }
+                return constraintIndexer;
+            },
+            deps: []
+        },
+        {
+            provide: IndexFacade,
+            useFactory: () => {
+                if (!indexFacade) {
+                    console.error('index facade has not yet been provided');
+                    throw 'index facade has not yet been provided';
+                }
+                return indexFacade;
             },
             deps: []
         },

@@ -3,8 +3,6 @@ import {Datastore, Document, ReadDatastore} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {DocumentCache} from './core/document-cache';
 import {PouchdbDatastore} from './core/pouchdb-datastore';
-import {ConstraintIndexer} from './index/constraint-indexer';
-import {FulltextIndexer} from './index/fulltext-indexer';
 import {PouchdbServerDatastore} from './pouchdb-server-datastore';
 import {PouchdbManager} from './core/pouchdb-manager';
 import {IdaiFieldDocumentDatastore} from './field/idai-field-document-datastore';
@@ -32,48 +30,9 @@ import {IdaiFieldFeatureDocument} from '../model/idai-field-feature-document';
 @NgModule({
     providers: [
         RemoteChangesStream,
-
-        { provide: PouchdbManager, useFactory: function(
-            indexFacade: IndexFacade
-        ){
-            return new PouchdbManager(indexFacade);
-        },
-            deps: [IndexFacade]
-        },
-
+        PouchdbManager,
         { provide: TypeConverter, useClass: IdaiFieldTypeConverter },
-
-        {
-            provide: FulltextIndexer,
-            useFactory: function () {
-                return new FulltextIndexer(true);
-            }
-        },
-        {
-            provide: ConstraintIndexer,
-            useFactory: function() {
-                return new ConstraintIndexer({
-                    'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
-                    'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
-                    'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
-                    'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' },
-                    'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
-                    'identifier:match': { path: 'resource.identifier', type: 'match' },
-                    'id:match': { path: 'resource.id', type: 'match' },
-                    'georeference:exist': { path: 'resource.georeference', type: 'exist' },
-                    'conflicts:exist': { path: '_conflicts', type: 'exist' }
-                }, true);
-            }
-        },
         DocumentCache,
-        {
-            provide: IndexFacade,
-            useFactory: function (fulltextIndexer: FulltextIndexer, constraintIndexer: ConstraintIndexer) {
-                return new IndexFacade(constraintIndexer, fulltextIndexer);
-            },
-            deps: [FulltextIndexer, ConstraintIndexer]
-        },
-
         IdGenerator,
         {
             provide: PouchdbDatastore,

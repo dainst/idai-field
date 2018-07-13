@@ -72,14 +72,20 @@ export function main() {
          */
 
 
+        // TODO beforeEach is used two times? There has to be something wrong with this (even if it works)
         beforeEach(async done => {
 
             spyOn(console, 'debug'); // suppress console.debug
 
-            const {datastore, documentCache, indexFacade} = DAOsSpecHelper.createPouchdbDatastore('testdb');
+            const projectConfiguration: ProjectConfiguration = new ProjectConfiguration(pc);
+            const daosSpecHelper = new DAOsSpecHelper(projectConfiguration);
+
+            const {datastore, documentCache, indexFacade}
+                = daosSpecHelper.createPouchdbDatastore('testdb');
             idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
                 datastore, indexFacade, documentCache,
-                new IdaiFieldTypeConverter(new TypeUtility(new ProjectConfiguration(pc))));
+                new IdaiFieldTypeConverter(new TypeUtility(projectConfiguration))
+            );
 
             projectDocument = Static.doc('testdb','testdb','Project','project');
             trenchDocument1 = Static.ifDoc('trench1','trench1','Trench','t1');
@@ -93,7 +99,8 @@ export function main() {
             findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument1 = Static.ifDoc('Feature 1','feature1','Feature', 'feature1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-            featureDocument1.resource.relations['includes'] = [findDocument1.resource.id, findDocument2.resource.id];
+            featureDocument1.resource.relations['includes'] = [findDocument1.resource.id,
+                findDocument2.resource.id];
             findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
             findDocument2.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
@@ -113,8 +120,8 @@ export function main() {
 
         beforeEach(() => {
 
-            settingsService =
-                jasmine.createSpyObj('settingsService', ['getUsername', 'getSelectedProject', 'getProjectDocument']);
+            settingsService = jasmine.createSpyObj('settingsService', ['getUsername', 'getSelectedProject',
+                'getProjectDocument']);
             settingsService.getUsername.and.returnValue('user');
             settingsService.getSelectedProject.and.returnValue('testdb');
             settingsService.getProjectDocument.and.returnValue(projectDocument);

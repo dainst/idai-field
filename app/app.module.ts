@@ -105,8 +105,7 @@ let indexFacade: IndexFacade|undefined = undefined;
                          'conflicts:exist': { path: '_conflicts', type: 'exist' }
                      }, true);
                     indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
-                    indexFacade.clear();
-                    await pouchdbManager.indexAll(indexFacade);
+                    await pouchdbManager.reindex(indexFacade);
                  }
         },
         SettingsService,

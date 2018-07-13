@@ -40,8 +40,7 @@ export class AppController {
 
                 this.documentCache.resetForE2E();
                 await this.pouchdbManager.resetForE2E();
-                await this.indexFacade.clear();
-                await this.pouchdbManager.indexAll(this.indexFacade);
+                await this.pouchdbManager.reindex(this.indexFacade);
 
                 res.send('done');
             });

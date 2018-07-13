@@ -41,7 +41,7 @@ export module Validations {
 
         const fields: Array<any> = projectFields.concat(defaultFields);
 
-        const invalidFields: Array<any> = [];
+        let invalidFields: Array<any> = [];
 
         for (let resourceField in resource) {
             if (resource.hasOwnProperty(resourceField)) {
@@ -58,6 +58,11 @@ export module Validations {
             }
         }
 
+        if (projectConfiguration.getFieldDefinitions(resource.type)
+                .find(fd => fd.name === 'hasDating')) {
+            invalidFields = invalidFields
+                .filter(_ => _ !== 'hasPeriodBeginning' && _!== 'hasPeriodEnd');
+        }
         return (invalidFields.length > 0) ? invalidFields : [];
     }
 

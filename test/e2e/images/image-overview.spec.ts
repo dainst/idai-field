@@ -10,12 +10,16 @@ const path = require('path');
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
+const common = require('../common');
+
 
 describe('images --', function() {
 
-
     const resourceId1 = 'tf1';
     const resourceId2 = 'si0';
+
+    let i = 0;
+
 
     function createTwo() {
 
@@ -23,11 +27,13 @@ describe('images --', function() {
         ImageOverviewPage.createDepictsRelation('SE0');
     }
 
+
     function expectLinkBadgePresence(toBeTruthy: boolean, nrBadges: number = 1) {
 
         _expectLinkBadgePresence(toBeTruthy, resourceId1);
         if (nrBadges == 2) _expectLinkBadgePresence(toBeTruthy, resourceId2);
     }
+
 
     function _expectLinkBadgePresence(toBeTruthy, relatedResourceId) {
 
@@ -55,20 +61,20 @@ describe('images --', function() {
         browser.sleep(delays.shortRest * 3);
     });
 
-    let i = 0;
 
-
-    beforeEach(() => {
+    beforeEach(async done => {
 
         if (i > 0) {
             NavbarPage.performNavigateToSettings();
-            request.post('http://localhost:3003/reset', {});
+            await common.resetApp();
             browser.sleep(delays.shortRest * 3);
             NavbarPage.clickNavigateToImages();
             ImageOverviewPage.waitForCells();
             browser.sleep(delays.shortRest);
         }
+
         i++;
+        done();
     });
 
 

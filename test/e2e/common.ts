@@ -17,10 +17,12 @@ function typeIn(inputField, text) {
     return inputField;
 }
 
+
 function click(el) {
     browser.wait(EC.visibilityOf(el), delays.ECWaitTime);
     return el.click();
 }
+
 
 function resetConfigJson(): Promise<any> {
 
@@ -35,8 +37,20 @@ function resetConfigJson(): Promise<any> {
     });
 }
 
+
+function resetApp(): Promise<any> {
+
+    return new Promise(resolve => {
+        require('request').post('http://localhost:3003/reset', () => {
+            resolve();
+        });
+    });
+}
+
+
 module.exports = {
     typeIn: typeIn,
     click: click,
-    resetConfigJson: resetConfigJson
+    resetConfigJson: resetConfigJson,
+    resetApp: resetApp
 };

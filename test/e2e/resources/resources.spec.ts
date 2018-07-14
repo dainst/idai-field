@@ -14,6 +14,7 @@ import {OperationBarPage} from '../operation-bar.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
+const common = require('../common');
 
 
 /**
@@ -32,16 +33,19 @@ describe('resources --', () => {
     });
 
 
-    beforeEach(async () => {
+    beforeEach(async done => {
+
         if (i > 0) {
             NavbarPage.performNavigateToSettings();
-            require('request').post('http://localhost:3003/reset', {});
+            await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickNavigateToProject();
             browser.sleep(delays.shortRest * 3);
             NavbarPage.clickNavigateToExcavation();
         }
+
         i++;
+        done();
     });
 
 

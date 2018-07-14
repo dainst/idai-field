@@ -4,6 +4,7 @@ import {ResourcesPage} from './resources.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 
 const delays = require('../config/delays');
+const common = require('../common');
 const EC = protractor.ExpectedConditions;
 
 describe('resources/list --', () => {
@@ -19,10 +20,11 @@ describe('resources/list --', () => {
     });
 
 
-    beforeEach(() => {
+    beforeEach(async done => {
+
         if (index > 0) {
             NavbarPage.performNavigateToSettings();
-            require('request').post('http://localhost:3003/reset', {});
+            await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickNavigateToProject();
             browser.sleep(delays.shortRest * 2);
@@ -31,7 +33,9 @@ describe('resources/list --', () => {
             ResourcesPage.clickListModeButton();
             browser.sleep(delays.shortRest);
         }
+
         index++;
+        done();
     });
 
 

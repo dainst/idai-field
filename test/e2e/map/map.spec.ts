@@ -4,11 +4,11 @@ import {ResourcesPage} from '../resources/resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {NavbarPage} from "../navbar.page";
 import {GeometryViewPage} from '../widgets/geometry-view.page';
+
 const EC = protractor.ExpectedConditions;
-
-
-const delays = require('../config/delays');
 const request = require('request');
+const delays = require('../config/delays');
+const common = require('../common');
 
 describe('map --', function() {
 
@@ -134,16 +134,19 @@ describe('map --', function() {
     });
 
 
-    beforeEach(() => {
+    beforeEach(async done => {
+
         if (index > 0) {
             NavbarPage.performNavigateToSettings();
-            request.post('http://localhost:3003/reset', {form:{key:'value'}});
+            await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickNavigateToProject();
             browser.sleep(delays.shortRest * 4);
             NavbarPage.clickNavigateToExcavation();
         }
+
         index++;
+        done();
     });
 
 

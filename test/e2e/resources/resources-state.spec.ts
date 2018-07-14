@@ -19,7 +19,7 @@ const common = require('../common');
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('resources/state --', function() {
+fdescribe('resources/state --', function() {
 
     const appDataPath = browser.params.appDataPath;
 
@@ -30,17 +30,18 @@ describe('resources/state --', function() {
     beforeAll(() => removeResourcesStateFile());
 
 
-    beforeEach(() => {
+    beforeEach(async done => {
 
         if (index > 0) {
-            NavbarPage.performNavigateToSettings().then(() => {
-                require('request').post('http://localhost:3003/reset', {});
-            });
+            NavbarPage.performNavigateToSettings();
+            await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickNavigateToProject();
             browser.sleep(delays.shortRest * 3);
         }
+
         index++;
+        done();
     });
 
 

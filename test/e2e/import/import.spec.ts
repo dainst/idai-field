@@ -14,8 +14,8 @@ const EC = protractor.ExpectedConditions;
  */
 describe('import --', function() {
 
-
     let index = 0;
+
 
     beforeAll(function() {
 
@@ -23,17 +23,19 @@ describe('import --', function() {
     });
 
 
-    beforeEach(() => {
+    beforeEach(async done => {
 
         if (index > 0) {
             NavbarPage.performNavigateToSettings();
-            require('request').post('http://localhost:3003/reset', {});
+            await common.resetApp();
             browser.sleep(delays.shortRest);
             NavbarPage.clickNavigateToProject();
             browser.sleep(delays.shortRest * 4);
             NavbarPage.performNavigateToImport();
         }
+
         index++;
+        done();
     });
 
 

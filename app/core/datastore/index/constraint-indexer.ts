@@ -194,7 +194,7 @@ export class ConstraintIndexer {
 
         return Object.values(this.projectConfiguration.getTypesMap())
             .reduce((result: Array<FieldDefinition>, type: IdaiType) => {
-                return result.concat(type['fields']);
+                return result.concat(type.fields);
             }, [])
             .filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
                 return field.constraintIndexed && self.indexOf(

@@ -104,7 +104,7 @@ export class FulltextIndexer {
 
     private setUp() {
 
-        this.index = { };
+        this.index = {};
     }
 
 

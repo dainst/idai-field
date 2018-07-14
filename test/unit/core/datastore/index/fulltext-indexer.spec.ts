@@ -36,7 +36,7 @@ describe('FulltextIndexer', () => {
         projectConfiguration = jasmine.createSpyObj('projectConfiguration',
             ['getTypesMap']);
 
-        const defaultFieldConfiguration =  {
+        const defaultTypeConfiguration = {
             fields: {
                 identifier: {},
                 shortDescription: {},
@@ -44,10 +44,10 @@ describe('FulltextIndexer', () => {
         };
 
         projectConfiguration.getTypesMap.and.returnValue({
-            type: defaultFieldConfiguration,
-            type1: defaultFieldConfiguration,
-            type2: defaultFieldConfiguration,
-            type3: defaultFieldConfiguration
+            type: defaultTypeConfiguration,
+            type1: defaultTypeConfiguration,
+            type2: defaultTypeConfiguration,
+            type3: defaultTypeConfiguration
         });
     });
 
@@ -58,7 +58,7 @@ describe('FulltextIndexer', () => {
     });
 
 
-    it('match one with with different search terms', () => {
+    it('match one with different search terms', () => {
 
         fi.put(doc('1', 'identifier1', 'type'));
         expect(fi.get('identifier1', ['type'])).toEqual([indexItem('1')]);

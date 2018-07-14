@@ -103,7 +103,7 @@ let indexFacade: IndexFacade|undefined = undefined;
                          'id:match': { path: 'resource.id', type: 'match' },
                          'georeference:exist': { path: 'resource.georeference', type: 'exist' },
                          'conflicts:exist': { path: '_conflicts', type: 'exist' }
-                     }, true);
+                     }, projectConfiguration, true);
                     indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
                     await pouchdbManager.reindex(indexFacade);
                  }

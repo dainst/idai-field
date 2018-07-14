@@ -1,3 +1,4 @@
+import {Document} from 'idai-components-2/core';
 import {ConstraintIndexer} from '../../../../../app/core/datastore/index/constraint-indexer';
 import {IndexItem} from '../../../../../app/core/datastore/index/index-item';
 
@@ -8,31 +9,57 @@ import {IndexItem} from '../../../../../app/core/datastore/index/index-item';
 describe('ConstraintIndexer', () => {
 
     let ci;
+    let projectConfiguration;
 
-    function doc(id) {
+
+    beforeAll(() => {
+
+        projectConfiguration = jasmine.createSpyObj('projectConfiguration',
+            ['getTypesMap']);
+    });
+
+
+    beforeEach(() => {
+
+        projectConfiguration.getTypesMap.and.returnValue({
+            type: {
+                fields: [
+                    { name: 'identifier' },
+                    { name: 'shortDescription' }
+                ]
+            }
+        });
+    });
+
+
+    function doc(id): Document {
+
         return {
             resource: {
                 id: id,
                 identifier: 'identifier' + id,
+                type: 'type',
                 relations: {}
             },
             created:
                 {
-                    date: '2017-12-31'
+                    date: new Date('2017-12-31'),
+                    user: 'testuser'
                 },
             modified: [
                 {
-                    date: '2018-01-01'
+                    date: new Date('2018-01-01'),
+                    user: 'testuser'
                 }
             ]
-        }
+        };
     }
 
 
     function indexItem(id, identifier?): IndexItem {
 
         if (!identifier) identifier = 'identifier' + id;
-        return { id: id, date: '2018-01-01' as any, identifier: identifier };
+        return { id: id, date: new Date('2018-01-01'), identifier: identifier };
     }
 
 
@@ -47,7 +74,7 @@ describe('ConstraintIndexer', () => {
 
         ci = new ConstraintIndexer({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
-        }, false);
+        }, projectConfiguration, false);
 
         ci.put(docs[0]);
         ci.put(docs[1]);
@@ -65,7 +92,7 @@ describe('ConstraintIndexer', () => {
 
         ci = new ConstraintIndexer({
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' }
-        });
+        }, projectConfiguration);
 
         ci.put(docs[0]);
         return docs;
@@ -93,7 +120,7 @@ describe('ConstraintIndexer', () => {
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
             'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        });
+        }, projectConfiguration);
 
         ci.put(docs[0]);
         return docs;
@@ -117,7 +144,7 @@ describe('ConstraintIndexer', () => {
 
         ci = new ConstraintIndexer({
             'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' }
-        }, false);
+        }, projectConfiguration, false);
 
         ci.put(docs[0]);
 
@@ -129,7 +156,7 @@ describe('ConstraintIndexer', () => {
 
         ci = new ConstraintIndexer({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, false);
+        }, projectConfiguration, false);
         ci.put(doc('1'));
         expect(ci.get('identifier:match', 'identifier1')).toEqual([indexItem('1')]);
     });
@@ -139,7 +166,7 @@ describe('ConstraintIndexer', () => {
 
         ci = new ConstraintIndexer({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, false);
+        }, projectConfiguration, false);
         const doc0 = doc('1');
         delete doc0.resource.identifier;
         ci.put(doc0);
@@ -151,7 +178,7 @@ describe('ConstraintIndexer', () => {
 
         ci = new ConstraintIndexer({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, false);
+        }, projectConfiguration, false);
         const doc0 = doc('1');
         delete doc0.created;
         delete doc0.modified;
@@ -164,7 +191,7 @@ describe('ConstraintIndexer', () => {
 
         ci = new ConstraintIndexer({
             'identifier:match': { path: 'resource.identifier', type: 'match' }
-        }, false);
+        }, projectConfiguration, false);
         ci.put(doc('1'));
         ci.clear();
         expect(ci.get('identifier:match', 'identifier1')).toEqual([]);
@@ -175,7 +202,7 @@ describe('ConstraintIndexer', () => {
 
         ci = new ConstraintIndexer({
             'identifier:contain': { path: 'resource.identifier', type: 'contain' }
-        }, false);
+        }, projectConfiguration, false);
 
         expect(ci.get('identifier:contain', 'identifier1')).toEqual([]);
     });
@@ -236,7 +263,7 @@ describe('ConstraintIndexer', () => {
 
         ci = new ConstraintIndexer({
             'conflicts:exist': { path: '_conflicts', type: 'exist' }
-        }, false);
+        }, projectConfiguration, false);
 
         ci.put(docs[0]);
         ci.put(docs[1]);
@@ -249,7 +276,9 @@ describe('ConstraintIndexer', () => {
     it('throw error if type is unknown', () => {
 
         expect(() => {
-            new ConstraintIndexer({ 'name': { path: 'testpath', type: 'unknown' }}, false)
+            new ConstraintIndexer({
+                'name': { path: 'testpath', type: 'unknown' }
+            }, projectConfiguration, false)
         }).toThrow();
     });
 
@@ -265,7 +294,7 @@ describe('ConstraintIndexer', () => {
 
         ci = new ConstraintIndexer({
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' }
-        }, false);
+        }, projectConfiguration, false);
 
         ci.put(docs[0]);
         ci.put(docs[1]);
@@ -291,7 +320,7 @@ describe('ConstraintIndexer', () => {
         ci = new ConstraintIndexer({
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
-        }, false);
+        }, projectConfiguration, false);
 
         ci.put(docs[0]);
         ci.put(docs[1]);
@@ -320,7 +349,7 @@ describe('ConstraintIndexer', () => {
 
         ci = new ConstraintIndexer({
             'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' }
-        }, false);
+        }, projectConfiguration, false);
 
         ci.put(docs[0]);
         ci.put(docs[1]);
@@ -328,5 +357,28 @@ describe('ConstraintIndexer', () => {
         ci.put(docs[3]);
 
         expect(ci.get('depicts:contain', ['1', '2'])).toEqual([indexItem('3'), indexItem('4')]);
+    });
+
+
+    it('index field specified in search configuration', () => {
+
+        projectConfiguration.getTypesMap.and.returnValue({
+            type: {
+                fields: [
+                    { name: 'identifier' },
+                    { name: 'shortDescription' },
+                    { name: 'customField', constraintIndexed: true }
+                ]
+            }
+        });
+
+        const docs = [doc('1')];
+        docs[0].resource.customField = 'testValue';
+
+        ci = new ConstraintIndexer({}, projectConfiguration, false);
+
+        ci.put(docs[0]);
+
+        expect(ci.get('customField:match', 'testValue')).toEqual([indexItem('1')]);
     });
 });

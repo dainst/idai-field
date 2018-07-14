@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2/core';
+import {Document, ProjectConfiguration, IdaiType, FieldDefinition} from 'idai-components-2/core';
 import {ObjectUtil} from '../../../util/object-util';
 import {IndexItem} from './index-item';
 
@@ -15,6 +15,8 @@ export interface IndexDefinition {
  * @author Thomas Kleinke
  */
 export class ConstraintIndexer {
+
+    private indexDefinitions: { [name: string]: IndexDefinition };
 
     private containIndex: {
         [path: string]: {
@@ -42,9 +44,12 @@ export class ConstraintIndexer {
 
 
     constructor(
-        private indexDefinitions: { [name: string]: IndexDefinition },
+        defaultIndexDefinitions: { [name: string]: IndexDefinition },
+        private projectConfiguration: ProjectConfiguration,
         private showWarnings = true
         ) {
+
+        this.indexDefinitions = this.getIndexDefinitions(defaultIndexDefinitions);
 
         const validationError
             = ConstraintIndexer.validateIndexDefinitions(Object.values(this.indexDefinitions));
@@ -117,6 +122,7 @@ export class ConstraintIndexer {
                 break;
 
             case 'match':
+                if (!elForPath) break;
                 ConstraintIndexer.addToIndex(this.matchIndex, doc, indexDefinition.path, elForPath, this.showWarnings);
                 break;
 
@@ -180,6 +186,39 @@ export class ConstraintIndexer {
                                             matchTerm: string): { [id: string]: IndexItem }|undefined {
 
         return this.getIndex(indexDefinition)[indexDefinition.path][matchTerm];
+    }
+
+
+    private getIndexDefinitions(defaultIndexDefinitions: { [name: string]: IndexDefinition })
+            : { [name: string]: IndexDefinition } {
+
+        return Object.values(this.projectConfiguration.getTypesMap())
+            .reduce((result: Array<FieldDefinition>, type: IdaiType) => {
+                return result.concat(type['fields']);
+            }, [])
+            .filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
+                return field.constraintIndexed && self.indexOf(
+                    self.find((f: FieldDefinition) => f.name === field.name) as FieldDefinition
+                ) === index;
+            })
+            .map((field: FieldDefinition) => ConstraintIndexer.makeIndexDefinition(field))
+            .reduce((result: any, definition: any) => {
+                result[definition.name] = definition.indexDefinition;
+                return result;
+            }, defaultIndexDefinitions);
+    }
+
+
+    private static makeIndexDefinition(field: FieldDefinition)
+            : { name: string, indexDefinition: IndexDefinition } {
+
+        return {
+            name: field.name + ':match',
+            indexDefinition: {
+                path: 'resource.' + field.name,
+                type: 'match'
+            }
+        };
     }
 
 

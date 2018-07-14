@@ -60,7 +60,7 @@ export class DAOsSpecHelper {
             'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
             'identifier:match': { path: 'resource.identifier', type: 'match' },
             'id:match': { path: 'resource.id', type: 'match' }
-        }, false);
+        }, this.projectConfiguration, false);
         const fulltextIndexer = new FulltextIndexer(this.projectConfiguration, false);
         return [constraintIndexer, fulltextIndexer] as [ConstraintIndexer, FulltextIndexer];
     }

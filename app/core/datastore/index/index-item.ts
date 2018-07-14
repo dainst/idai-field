@@ -36,7 +36,7 @@ export class IndexItem {
             return undefined;
         }
         if (!document.resource['identifier']) {
-            if (showWarnings) console.warn("no identifier, will not index");
+            if (showWarnings) console.warn('no identifier, will not index');
             return undefined;
         }
         const lastModified: Action = Document.getLastModified(document);

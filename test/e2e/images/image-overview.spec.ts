@@ -4,9 +4,6 @@ import {NavbarPage} from "../navbar.page";
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {FieldsViewPage} from '../widgets/fields-view-page';
 import {SearchBarPage} from '../widgets/search-bar.page';
-const request = require('request');
-
-const path = require('path');
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');

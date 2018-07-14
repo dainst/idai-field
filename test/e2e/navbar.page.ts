@@ -73,6 +73,7 @@ export class NavbarPage {
         }
     };
 
+
     // get text
 
     public static getMessageText() {
@@ -81,11 +82,13 @@ export class NavbarPage {
         return element(by.id('message-0')).getText();
     };
 
+
     public static getActiveNavLinkLabel() {
 
         browser.wait(EC.visibilityOf(element(by.css('#navbarSupportedContent .nav-link.active'))), delays.ECWaitTime);
         return element(by.css('#navbarSupportedContent .nav-link.active')).getText();
     }
+
 
     // sequences
 

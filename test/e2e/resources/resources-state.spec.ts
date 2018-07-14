@@ -25,6 +25,7 @@ describe('resources/state --', function() {
 
     let index = 0;
 
+
     beforeAll(() => ProjectPage.get());
 
     beforeAll(() => removeResourcesStateFile());

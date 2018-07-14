@@ -1,4 +1,5 @@
 import {browser, protractor, element, by} from 'protractor';
+
 const EC = protractor.ExpectedConditions;
 const delays = require('./config/delays');
 const common = require('./common');

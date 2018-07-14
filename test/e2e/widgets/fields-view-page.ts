@@ -1,6 +1,7 @@
+'use strict';
+
 import {browser, protractor, element, by} from 'protractor';
 
-'use strict';
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');

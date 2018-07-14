@@ -1,4 +1,4 @@
-import {browser, protractor, element} from 'protractor';
+import {browser, protractor} from 'protractor';
 
 let EC = protractor.ExpectedConditions;
 let delays = require('./config/delays');
@@ -9,6 +9,7 @@ const fs = require('fs');
  */
 
 function typeIn(inputField, text) {
+
     browser.wait(EC.visibilityOf(inputField), delays.ECWaitTime);
     inputField.clear();
     for (let i in text) {
@@ -19,6 +20,7 @@ function typeIn(inputField, text) {
 
 
 function click(el) {
+
     browser.wait(EC.visibilityOf(el), delays.ECWaitTime);
     return el.click();
 }

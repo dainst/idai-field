@@ -2,17 +2,21 @@ import {browser, protractor, element, by} from 'protractor';
 import {MapPage} from './map.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {DoceditPage} from '../docedit/docedit.page';
-import {NavbarPage} from "../navbar.page";
+import {NavbarPage} from '../navbar.page';
 import {GeometryViewPage} from '../widgets/geometry-view.page';
 
 const EC = protractor.ExpectedConditions;
-const request = require('request');
 const delays = require('../config/delays');
 const common = require('../common');
 
+
 describe('map --', function() {
 
+    let index = 0;
+
+
     function setPolygon() {
+
         return Promise.resolve()
             .then(() => { return new Promise(function(resolve) {
                 setTimeout(function() { resolve(); }, delays.shortRest);
@@ -22,7 +26,9 @@ describe('map --', function() {
             .then(() => { return MapPage.clickMap(100,100); });
     }
 
+
     function setMultiPolygon() {
+
         return Promise.resolve()
             .then(() => {
                 browser.sleep(3000);
@@ -41,7 +47,9 @@ describe('map --', function() {
             .then(() => { return MapPage.clickMap(300, 300); });
     }
 
+
     function setPolyline() {
+
         return Promise.resolve()
             .then(() => { return new Promise(function(resolve) {
                 setTimeout(function() { resolve(); }, delays.shortRest);
@@ -52,17 +60,21 @@ describe('map --', function() {
             .then(() => { return MapPage.clickMap(400,200); });
     }
 
+
     function setUnfinishedPolyline() {
+
         return Promise.resolve()
             .then(() => { return new Promise(function(resolve) {
                 setTimeout(function() { resolve(); }, delays.shortRest);
             })}).then(() => { return MapPage.clickMap(100,100); })
             .then(() => { return MapPage.clickMap(200,200); })
             .then(() => { return MapPage.clickMap(300,100); })
-            .then(() => { return MapPage.clickMap(400,200); })
+            .then(() => { return MapPage.clickMap(400,200); });
     }
 
+
     function setMultiPolyline() {
+
         return Promise.resolve()
             .then(() => {
                 browser.sleep(1000);
@@ -79,7 +91,9 @@ describe('map --', function() {
             .then(() => { return MapPage.clickMap(400,400); });
     }
 
+
     function setUnfinishedMultiPolyline() {
+
         return Promise.resolve()
             .then(() => {
                 browser.sleep(1000);
@@ -91,17 +105,21 @@ describe('map --', function() {
             .then(() => { return MapPage.clickMap(500,200); })
             .then(() => { return MapPage.clickMap(500,100); })
             .then(() => { return MapPage.clickMap(400,300); })
-            .then(() => { return MapPage.clickMap(400,400); })
+            .then(() => { return MapPage.clickMap(400,400); });
     }
 
+
     function beginCreateDocWithGeometry(geometry, mapClickCallback) {
+
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType();
         return ResourcesPage.clickSelectGeometryType(geometry)
             .then(function() { return mapClickCallback(); });
     }
+
     
     function createDocWithGeometry(identifier, geometry, mapClickCallback) {
+
         beginCreateDocWithGeometry(geometry, mapClickCallback).then(
             function() {
                 MapPage.clickMapOption('ok');
@@ -111,20 +129,23 @@ describe('map --', function() {
             });
     }
 
+
     function createDoc(identifier, geometryType, mapClickCallback) {
+
         if (geometryType) {
             createDocWithGeometry(identifier, geometryType, mapClickCallback)
         } else {
             ResourcesPage.performCreateResource(identifier);
         }
     }
+
     
     function createDocThenReedit(identifier, geometryType, mapClickCallback) {
+
         createDoc(identifier, geometryType, mapClickCallback);
         GeometryViewPage.clickReeditGeometry();
     }
 
-    let index = 0;
 
     beforeAll(() => {
 

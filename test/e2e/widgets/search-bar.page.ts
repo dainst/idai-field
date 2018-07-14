@@ -1,7 +1,7 @@
 import {browser, protractor, element, by} from 'protractor';
 
-const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
+const common = require('../common.js');
 const delays = require('../config/delays');
 
 /**
@@ -14,13 +14,13 @@ export class SearchBarPage {
     public static getSelectedTypeFilterButton() {
 
         return element(by.css('#filter-button type-icon'));
-    };
+    }
 
 
     public static getSearchBarInputField() {
 
         return element(by.id('object-search'));
-    };
+    }
 
 
     // text
@@ -28,7 +28,7 @@ export class SearchBarPage {
     public static getSearchBarInputFieldValue() {
 
         return SearchBarPage.getSearchBarInputField().getAttribute('value');
-    };
+    }
 
 
     public static getSelectedTypeFilterCharacter() {
@@ -44,7 +44,7 @@ export class SearchBarPage {
 
         common.click(element(by.id('searchfilter')));
         common.click(element(by.id('choose-type-option-' + typeName)));
-    };
+    }
 
 
     // type in
@@ -52,5 +52,5 @@ export class SearchBarPage {
     public static typeInSearchField(text) {
 
         return common.typeIn(SearchBarPage.getSearchBarInputField(), text);
-    };
+    }
 }

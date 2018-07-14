@@ -1,6 +1,7 @@
+'use strict';
+
 import {browser, protractor, element, by} from 'protractor';
 
-'use strict';
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -10,7 +11,6 @@ const delays = require('../config/delays');
  */
 export class RelationsViewPage {
 
-
     public static getRelationsTab() {
 
         return element(by.id('document-view-relations-tab'));
@@ -19,7 +19,7 @@ export class RelationsViewPage {
 
     public static clickRelationsTab() {
 
-        return common.click(element(by.id('document-view-relations-tab')));
+        return common.click(RelationsViewPage.getRelationsTab());
     }
 
 

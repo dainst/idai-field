@@ -9,9 +9,6 @@ import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 
 const delays = require('../config/delays');
-const cors = require('pouchdb-server/lib/cors');
-const express = require('express');
-
 const path = require('path');
 const common = require('../common');
 
@@ -22,12 +19,16 @@ const common = require('../common');
 describe('settings --', function() {
 
     beforeAll(done => {
+
         common.resetConfigJson().then(done);
     });
 
+
     afterEach(done => {
+
         common.resetConfigJson().then(done);
     });
+
 
     it('save syncing settings to config file and load them after restart', done => {
 

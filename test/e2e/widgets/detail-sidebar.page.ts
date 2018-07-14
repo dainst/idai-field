@@ -1,7 +1,8 @@
-import {browser, protractor, element, by} from 'protractor';
-
 'use strict';
+
+import {browser, protractor, element, by} from 'protractor';
 import {FieldsViewPage} from './fields-view-page';
+
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -10,7 +11,6 @@ const delays = require('../config/delays');
  * @author Daniel de Oliveira
  */
 export class DetailSidebarPage {
-
 
     public static clickBackToGridButton = function () {
 
@@ -43,13 +43,6 @@ export class DetailSidebarPage {
 
         browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar .identifier .fieldvalue'))), delays.ECWaitTime);
         return element(by.css('.detail-sidebar .identifier .fieldvalue')).getText();
-    }
-
-
-    public static getShortDescription() {
-
-        browser.wait(EC.visibilityOf(element(by.id('.detail-sidebar .short-description .fieldvalue'))), delays.ECWaitTime);
-        return element(by.id('.detail-sidebar .short-description .fieldvalue')).getText();
     }
 
 

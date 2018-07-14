@@ -1,11 +1,12 @@
-import {browser, protractor, element, by} from 'protractor';
-
 'use strict';
+
+import {browser, protractor, element, by} from 'protractor';
 import {NavbarPage} from '../navbar.page';
+
 let EC = protractor.ExpectedConditions;
 let delays = require('../config/delays');
-
 let common = require('../common.js');
+
 
 export module ImageOverviewPage {
 

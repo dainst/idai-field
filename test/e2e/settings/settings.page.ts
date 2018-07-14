@@ -14,33 +14,25 @@ export class SettingsPage {
         return browser.get('#/settings');
     };
 
+
     public static clickSaveSettingsButton = function() {
 
         common.click(element(by.id('save-settings-button')));
     };
 
-    public static getRemoteSiteAddressInput = function() {
-
-        browser.wait(EC.visibilityOf(element(by.id('sync-target-address-input'))),
-            delays.ECWaitTime);
-        return element(by.id('sync-target-address-input'));
-    };
-
-    public static getRemoteSiteAddress = function() {
-
-        return this.getRemoteSiteAddressInput().getAttribute('value');
-    };
 
     public static getUserName = function() {
 
         return this.getUserNameInput().getAttribute('value');
     };
 
+
     public static getUserNameInput = function() {
 
         browser.wait(EC.visibilityOf(element(by.id('username-input'))), delays.ECWaitTime);
         return element(by.id('username-input'));
     };
+
 
     public static getImagestorePathInput = function() {
 

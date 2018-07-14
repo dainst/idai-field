@@ -10,7 +10,6 @@ import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {DoceditImageTabPage} from '../docedit/docedit-image-tab.page';
 import {ThumbnailViewPage} from '../widgets/thumbnail-view.page';
 import {ImagePickerModalPage} from '../widgets/image-picker-modal.page';
-import {OperationBarPage} from '../operation-bar.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');

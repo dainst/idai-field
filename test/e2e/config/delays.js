@@ -2,6 +2,7 @@
 var promisesDelay = 0;
 
 function delayPromises(milliseconds) {
+    
     var executeFunction = browser.driver.controlFlow().execute;
 
     browser.driver.controlFlow().execute = function() {
@@ -15,7 +16,7 @@ function delayPromises(milliseconds) {
     };
 }
 
-console.log("Set promises delay to " + promisesDelay + " ms.");
+console.log('Set promises delay to ' + promisesDelay + ' ms.');
 delayPromises(promisesDelay);
 
 

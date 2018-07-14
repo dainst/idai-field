@@ -1,11 +1,10 @@
-import {browser, protractor} from 'protractor';
+import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from './resources.page';
-import {SearchBarPage} from '../widgets/search-bar.page';
 
 const delays = require('../config/delays');
 const common = require('../common');
-const EC = protractor.ExpectedConditions;
+
 
 describe('resources/list --', () => {
 
@@ -83,5 +82,4 @@ describe('resources/list --', () => {
         NavbarPage.clickCloseAllMessages();
 
     });
-
 });

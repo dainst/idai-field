@@ -1,8 +1,6 @@
-import {browser, protractor, element, by} from 'protractor';
+import {element, by} from 'protractor';
 
 let common = require('../common.js');
-let delays = require('../config/delays');
-let EC = protractor.ExpectedConditions;
 
 /**
  * @author Daniel de Oliveira
@@ -17,10 +15,12 @@ export class DoceditImageTabPage {
         return common.click(element(by.id('delete-images')));
     }
 
+
     public static clickInsertImage = function() {
 
         common.click(element(by.id('create-depicts-relations-btn')));
     };
+
 
     // elements
 

@@ -17,25 +17,30 @@ export class DoceditPage {
         element(by.id('document-edit-button-goto-view')).click();
     };
 
+
     public static clickFieldsTab = function() {
 
         common.click(element(by.id('docedit-fields-tab')));
     };
+
 
     public static clickRelationsTab = function() {
 
         common.click(element(by.id('docedit-relations-tab')));
     };
 
+
     public static clickImagesTab = function() {
 
         common.click(element(by.id('docedit-images-tab')));
     };
 
+
     public static clickConflictsTab = function() {
 
         common.click(element(by.id('docedit-conflicts-tab')));
     };
+
 
     public static clickSaveDocument = function(clickMsgAway = true) {
 
@@ -55,15 +60,18 @@ export class DoceditPage {
             });
     };
 
+
     public static clickDeleteDocument() {
 
         common.click(element(by.id('document-edit-button-delete-document')));
     };
 
+
     public static clickConfirmDeleteInModal = function() {
 
         common.click(element(by.id('delete-resource-confirm')));
     };
+
 
     public static clickChooseRightRevision = function() {
 
@@ -71,11 +79,13 @@ export class DoceditPage {
         element.all(by.css('input[type=radio]')).get(1).click();
     };
 
+
     public static clickSolveConflictButton = function() {
 
         browser.wait(EC.visibilityOf(element(by.id('solve-conflict-button'))), delays.ECWaitTime);
         element(by.id('solve-conflict-button')).click();
     };
+
 
     public static clickTypeSwitcherButton = function() {
 
@@ -83,11 +93,13 @@ export class DoceditPage {
         element(by.id('type-switcher-button')).click();
     };
 
+
     public static clickTypeSwitcherOption = function(typeName: string) {
 
         browser.wait(EC.visibilityOf(element(by.id('choose-type-option-' + typeName))), delays.ECWaitTime);
         element(by.id('choose-type-option-' + typeName)).click();
     };
+
 
     public static clickSelectOption(fieldName: string, optionIndex: number) {
 
@@ -95,6 +107,7 @@ export class DoceditPage {
             delays.ECWaitTime);
         element.all(by.css('#edit-form-element-' + fieldName + ' select option')).get(optionIndex).click();
     };
+
 
     // get text
 
@@ -104,12 +117,14 @@ export class DoceditPage {
         return element.all(by.tagName('dai-input input')).get(index).getAttribute('value');
     };
 
+
     // elements
 
     public static getConfirmDeletionInputField() {
 
         return element(by.id('delete-resource-input'));
     }
+
 
     // type in
 
@@ -119,6 +134,7 @@ export class DoceditPage {
             delays.ECWaitTime);
         common.typeIn(element(by.css('#edit-form-element-' + fieldName + ' input')), text);
     };
+
 
     public static typeInIdentifierInConfirmDeletionInputField(identifier) {
 

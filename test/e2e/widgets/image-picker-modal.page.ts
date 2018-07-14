@@ -1,9 +1,8 @@
-import {browser, protractor, element, by} from 'protractor';
-
 'use strict';
-const common = require("../common.js");
-const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
+
+import {protractor, element, by} from 'protractor';
+
+const common = require('../common.js');
 
 /**
  * @author Daniel de Oliveira
@@ -17,10 +16,12 @@ export class ImagePickerModalPage {
         common.click(element(by.css('#image-picker-modal-header #add-image')));
     }
 
+
     public static clickAddImages() {
 
         common.click(element(by.css('#image-picker-modal-header #add-images')));
     }
+
 
     // typeIn
 
@@ -28,6 +29,7 @@ export class ImagePickerModalPage {
 
        common.typeIn(element(by.css('#image-picker-modal #object-search')), identifier);
     }
+
 
     // elements
 

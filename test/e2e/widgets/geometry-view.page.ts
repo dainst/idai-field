@@ -1,6 +1,5 @@
 import {browser, protractor, element, by} from 'protractor';
 
-
 const common = require('../common.js');
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -9,7 +8,6 @@ const delays = require('../config/delays');
  * @author Daniel de Oliveira
  */
 export class GeometryViewPage {
-
 
     public static clickGeometryTab() {
 
@@ -34,7 +32,8 @@ export class GeometryViewPage {
     public static getSelectedGeometryTypeText() {
 
         GeometryViewPage.clickGeometryTab();
-        browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element(by.css('#document-view-field-geometry .fieldvalue'))),
+            delays.ECWaitTime);
         return element(by.id('document-view-field-geometry')).element(by.css('.fieldvalue')).getText();
     };
 }

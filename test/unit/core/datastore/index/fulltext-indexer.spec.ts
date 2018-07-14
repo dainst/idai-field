@@ -11,6 +11,7 @@ describe('FulltextIndexer', () => {
     let fi;
     let projectConfiguration;
 
+
     function doc(id, identifier, type, shortDescription = 'short') {
 
         const doc = Static.doc(shortDescription, identifier, type, id);
@@ -35,12 +36,18 @@ describe('FulltextIndexer', () => {
 
         projectConfiguration = jasmine.createSpyObj('projectConfiguration',
             ['getTypesMap']);
+    });
+
+
+    beforeEach(() => {
+
+        fi = new FulltextIndexer(projectConfiguration, false);
 
         const defaultTypeConfiguration = {
-            fields: {
-                identifier: {},
-                shortDescription: {},
-            }
+            fields: [
+                { name: 'identifier' },
+                { name: 'shortDescription' }
+            ]
         };
 
         projectConfiguration.getTypesMap.and.returnValue({
@@ -49,12 +56,6 @@ describe('FulltextIndexer', () => {
             type2: defaultTypeConfiguration,
             type3: defaultTypeConfiguration
         });
-    });
-
-
-    beforeEach(() => {
-
-        fi = new FulltextIndexer(projectConfiguration, false);
     });
 
 
@@ -242,5 +243,27 @@ describe('FulltextIndexer', () => {
 
         expect(results).toContain('Hello-A-0033');
         expect(results).toContain('Hello-A-0021');
+    });
+
+
+    it('index field specified in search configuration', () => {
+
+       projectConfiguration.getTypesMap.and.returnValue({
+            type: {
+                fields: [
+                    { name: 'identifier' },
+                    { name: 'shortDescription' },
+                    { name: 'customField', fulltextIndexed: true }
+                ]
+            }
+        });
+
+        const document = doc('1', 'identifier1', 'type');
+        document.resource.customField = 'testValue';
+        fi.put(document);
+
+        const results = fi.get('testValue', ['type']).map(result => result.identifier);
+        expect(results.length).toBe(1);
+        expect(results[0]).toEqual('identifier1');
     });
 });

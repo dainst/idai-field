@@ -20,6 +20,7 @@ export class SearchConstraintsComponent implements OnChanges {
     public selectedField: FieldDefinition|undefined;
     public searchTerm: string = '';
     public constraints: Array<{ fieldName: string; searchTerm: string }> = [];
+    public showConstraintsMenu: boolean = false;
 
     private static textFieldInputTypes: string[] = ['input', 'text', 'unsignedInt', 'float', 'unsignedFloat'];
 

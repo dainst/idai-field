@@ -1,10 +1,17 @@
 <div class="btn-group">
-    <div class="btn btn-primary">
-        Felder <span class="badge badge-light">{{constraints.length}}</span>
-    </div>
-
-    <div class="btn btn-primary" (click)="openModal(constraintModal)">
+    <div id="add-constraint-button" class="btn btn-primary"
+         (mouseenter)="showConstraintsMenu = true;"
+         (mouseleave)="showConstraintsMenu = false;"
+         (click)="openModal(constraintModal)">
+        Felder
+        <span class="badge badge-light">{{constraints.length}}</span>
         <span class="mdi mdi-plus"></span>
+    </div>
+</div>
+
+<div *ngIf="showConstraintsMenu && constraints.length > 0" id="constraints-menu">
+    <div *ngFor="let constraint of constraints">
+        <b>{{constraint.fieldName}}:</b> {{constraint.searchTerm}}
     </div>
 </div>
 

@@ -29,6 +29,13 @@ search-constraints {
     div {
       padding: 10px;
       background-color: white;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    div:hover {
+      background-color: darken($list-item-hover-color, 5%);
+      transition: background-color .65s ease;
     }
   }
 }

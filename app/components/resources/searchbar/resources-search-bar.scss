@@ -6,6 +6,11 @@ resources-search-bar {
   #input-wrapper {
     position: relative;
     width: 100%;
+
+    input {
+      height: 39px;
+      margin-top: 1px;
+    }
   }
 
   #object-search {
@@ -14,6 +19,10 @@ resources-search-bar {
 
   #filter-button {
     right: 160px !important;
+
+    #searchfilter {
+      height: 39px !important;
+    }
   }
 
   search-constraints {

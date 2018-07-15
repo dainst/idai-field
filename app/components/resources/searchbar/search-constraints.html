@@ -3,13 +3,13 @@
     <div id="add-constraint-button" class="btn btn-primary"
          (click)="openModal(constraintModal)">
         Felder
-        <span class="badge badge-light">{{constraints.length}}</span>
+        <span class="badge badge-light">{{constraintListItems.length}}</span>
         <span class="mdi mdi-plus"></span>
     </div>
 
-    <div *ngIf="showConstraintsMenu && constraints.length > 0" id="constraints-menu">
-        <div *ngFor="let constraint of constraints">
-            <b>{{constraint.fieldName}}:</b> {{constraint.searchTerm}}
+    <div *ngIf="showConstraintsMenu && constraintListItems.length > 0" id="constraints-menu">
+        <div *ngFor="let constraint of constraintListItems" (click)="removeConstraint(constraint.name)">
+            <b>{{constraint.label}}:</b> {{constraint.searchTerm}} <span class="mdi mdi-close-circle"></span>
         </div>
     </div>
 </div>

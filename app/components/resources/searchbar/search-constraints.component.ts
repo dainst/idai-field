@@ -3,12 +3,15 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ProjectConfiguration, FieldDefinition} from 'idai-components-2/core';
 import {ViewFacade} from '../view/view-facade';
 
+
+type ConstraintListItem = { name: string; label: string; searchTerm: string };
+
+
 @Component({
     moduleId: module.id,
     selector: 'search-constraints',
     templateUrl: './search-constraints.html'
 })
-
 /**
  * @author Thomas Kleinke
  */
@@ -19,8 +22,7 @@ export class SearchConstraintsComponent implements OnChanges {
     public fields: Array<FieldDefinition>;
     public selectedField: FieldDefinition|undefined;
     public searchTerm: string = '';
-    public constraints: Array<{ fieldName: string; searchTerm: string }> = [];
-    public showConstraintsMenu: boolean = false;
+    public constraintListItems: Array<ConstraintListItem> = [];
 
     private static textFieldInputTypes: string[] = ['input', 'text', 'unsignedInt', 'float', 'unsignedFloat'];
 
@@ -41,10 +43,7 @@ export class SearchConstraintsComponent implements OnChanges {
 
     public async openModal(modal: any) {
 
-        if (await this.modalService.open(modal).result == 'ok') {
-            await this.addConstraint();
-            this.reset();
-        }
+        if (await this.modalService.open(modal).result == 'ok') await this.addNewConstraint();
     }
 
 
@@ -69,6 +68,36 @@ export class SearchConstraintsComponent implements OnChanges {
     }
 
 
+    public async removeConstraint(constraintName: string) {
+
+        const constraints: { [name: string]: string } = this.viewFacade.getCustomConstraints();
+        delete constraints[constraintName];
+        await this.viewFacade.setCustomConstraints(constraints);
+
+        this.reset();
+    }
+
+
+    private async addNewConstraint() {
+
+        if (!this.selectedField || this.searchTerm.length == 0) return;
+
+        const constraints: { [name: string]: string } = this.viewFacade.getCustomConstraints();
+        constraints[this.selectedField.name + ':match'] = this.searchTerm;
+        await this.viewFacade.setCustomConstraints(constraints);
+
+        this.reset();
+    }
+
+
+    private reset() {
+
+        this.updateConstraintListItems();
+        this.selectedField = undefined;
+        this.searchTerm = '';
+    }
+
+
     private updateFields() {
 
         this.fields = this.projectConfiguration.getFieldDefinitions(this.type)
@@ -76,33 +105,25 @@ export class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private async addConstraint() {
-
-        if (!this.selectedField || this.searchTerm.length == 0) return;
+    private updateConstraintListItems() {
 
         const constraints: { [name: string]: string } = this.viewFacade.getCustomConstraints();
-        constraints[this.selectedField.name + ':match'] = this.searchTerm;
-        await this.viewFacade.setCustomConstraints(constraints);
-    }
-
-
-    private reset() {
-
-        this.updateConstraints();
-        this.selectedField = undefined;
-        this.searchTerm = '';
-    }
-
-
-    private updateConstraints() {
-
-        const constraints: { [name: string]: string } = this.viewFacade.getCustomConstraints();
-        this.constraints = Object.keys(constraints)
+        this.constraintListItems = Object.keys(constraints)
             .map(constraintName => {
                 return {
-                    fieldName: constraintName.substring(0, constraintName.indexOf(':')),
+                    name: constraintName,
+                    label: this.getLabel(constraintName),
                     searchTerm: constraints[constraintName]
                 }
             });
+    }
+
+
+    private getLabel(constraintName: string): string {
+
+        const fieldName: string = constraintName.substring(0, constraintName.indexOf(':'));
+
+        return this.projectConfiguration.getTypesMap()[this.type].fields
+            .find((field: FieldDefinition) => field.name === fieldName).label;
     }
 }

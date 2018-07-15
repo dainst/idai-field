@@ -1,1 +1,10 @@
-{}
+{
+  "Feature": {
+    "constraint": ["hasDairy", "hasDescription", "hasColor"],
+    "fulltext": []
+  },
+  "Floor": {
+    "constraint": ["hasConditionComment", "hasConditionAmount", "hasConsistency"],
+    "fulltext": []
+  }
+}

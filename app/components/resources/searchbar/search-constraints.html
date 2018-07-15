@@ -1,0 +1,39 @@
+<div class="btn-group">
+    <div class="btn btn-primary">
+        Felder <span class="badge badge-light">{{constraints.length}}</span>
+    </div>
+
+    <div class="btn btn-primary" (click)="openModal(constraintModal)">
+        <span class="mdi mdi-plus"></span>
+    </div>
+</div>
+
+<ng-template #constraintModal let-c="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Suchkriterium hinzufügen</h5>
+    </div>
+    <div class="modal-body">
+        <select (change)="selectField($event.target.value)" class="form-control">
+            <option value="" [selected]="!selectedField"></option>
+            <option *ngFor="let field of fields" value="{{field.name}}"
+                    [selected]="selectedField && selectedField.name === field.name">
+                {{field.label}}
+            </option>
+        </select>
+
+        <div *ngIf="getSearchInputType(selectedField) === 'input'">
+            <input type="text" [(ngModel)]="searchTerm" class="form-control">
+        </div>
+
+        <div *ngIf="getSearchInputType(selectedField) === 'dropdown'">
+            <select [(ngModel)]="searchTerm" class="form-control">
+                <option value=""></option>
+                <option *ngFor="let value of selectedField.valuelist" value="{{value}}">{{value}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="delete-images-confirm" class="btn btn-primary" (click)="c('ok')">OK</button>
+        <button type="button" id="delete-images-cancel" class="btn btn-secondary" (click)="c('cancel')">Abbrechen</button>
+    </div>
+</ng-template>

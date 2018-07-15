@@ -17,7 +17,7 @@
         </search-suggestions>
     </span>
 
-    <span *ngIf="showFiltersMenu" id="filter-button" class="input-group-btn">
+    <div *ngIf="showFiltersMenu" id="filter-button" class="input-group-btn">
         <button id="searchfilter"
                 class="btn btn-primary"
                 type="button"
@@ -39,5 +39,7 @@
                 </type-picker>
             </div>
         </ng-template>
-    </span>
+    </div>
+
+    <search-constraints [type]="types && types.length > 0 ? types[0] : undefined"></search-constraints>
 </form>

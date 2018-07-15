@@ -2,11 +2,13 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export interface ViewContext {
 
     readonly q: string;
     readonly types: string[];
+    readonly customConstraints: { [name: string]: string }
     readonly selected?: IdaiFieldDocument;
 }
 
@@ -17,7 +19,8 @@ export module ViewContext {
 
         return {
             q: '',
-            types: []
+            types: [],
+            customConstraints: {}
         }
     }
 }

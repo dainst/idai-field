@@ -38,6 +38,7 @@ import {ResourcesStateManager} from './view/resources-state-manager';
 import {ViewDefinition} from './view/state/view-definition';
 import {OperationViews} from './view/state/operation-views';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
+import {SearchConstraintsComponent} from './searchbar/search-constraints.component';
 
 const remote = require('electron').remote;
 
@@ -66,7 +67,8 @@ const remote = require('electron').remote;
         SidebarListComponent,
         NavigationComponent,
         ResourcesSearchBarComponent,
-        SearchSuggestionsComponent
+        SearchSuggestionsComponent,
+        SearchConstraintsComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

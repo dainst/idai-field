@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import {Observer} from 'rxjs/Observer';
+import {Observable} from 'rxjs/Observable'
 import {ResourcesState} from './state/resources-state';
 import {StateSerializer} from '../../../common/state-serializer';
 import {OperationViews} from './state/operation-views';
@@ -6,8 +8,6 @@ import {ViewState} from './state/view-state';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {NavigationPath} from './state/navigation-path';
 import {ObserverUtil} from '../../../util/observer-util';
-import {Observer} from 'rxjs/Observer';
-import {Observable} from 'rxjs/Observable'
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ObjectUtil} from '../../../util/object-util';
 
@@ -26,12 +26,11 @@ export class ResourcesStateManager {
 
     public loaded: boolean = false;
 
-    private navigationPathObservers: Array<Observer<NavigationPath>> = [];
-
     public navigationPathNotifications = (): Observable<NavigationPath> =>
         ObserverUtil.register(this.navigationPathObservers);
 
     private resourcesState = ResourcesState.makeDefaults();
+    private navigationPathObservers: Array<Observer<NavigationPath>> = [];
 
     /**
      * Clients can obtain the latest ResourcesState with this method.
@@ -120,6 +119,12 @@ export class ResourcesStateManager {
     public setTypeFilters(types: string[]) {
 
         this.resourcesState = ResourcesState.setTypeFilters(this.resourcesState, types);
+    }
+
+
+    public setCustomConstraints(constraints: { [name: string]: string}) {
+
+        this.resourcesState = ResourcesState.setCustomConstraints(this.resourcesState, constraints);
     }
 
 

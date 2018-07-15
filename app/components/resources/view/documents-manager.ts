@@ -12,6 +12,7 @@ import {subtract, unique} from 'tsfun';
 import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../../core/datastore/core/cached-read-datastore';
 import {ResourcesState} from './state/resources-state';
+import {ObjectUtil} from '../../../util/object-util';
 
 
 /**
@@ -70,6 +71,13 @@ export class DocumentsManager {
     public async setTypeFilters(types: string[]) {
 
         this.resourcesStateManager.setTypeFilters(types);
+        await this.populateAndDeselectIfNecessary();
+    }
+
+
+    public async setCustomConstraints(constraints: { [name: string]: string}) {
+
+        this.resourcesStateManager.setCustomConstraints(constraints);
         await this.populateAndDeselectIfNecessary();
     }
 
@@ -273,12 +281,14 @@ export class DocumentsManager {
 
         const bypassHierarchy = ResourcesState.getBypassHierarchy(state);
         const typeFilters = ResourcesState.getTypeFilters(state);
+        const customConstraints = ResourcesState.getCustomConstraints(state);
 
         return {
 
             q: ResourcesState.getQueryString(state),
 
             constraints: DocumentsManager.buildConstraints(
+                customConstraints,
                 isRecordedInTargetIdOrIds,
                 ResourcesState.getNavigationPath(state).selectedSegmentId,
                 !bypassHierarchy),
@@ -294,18 +304,23 @@ export class DocumentsManager {
     }
 
 
-    private static buildConstraints(
-        isRecordedInIdOrIds: string|string[]|undefined,
-        liesWithinId: string|undefined,
-        addLiesWithinConstraints: boolean): { [name: string]: string|string[]} {
+    private static buildConstraints(customConstraints: { [name: string]: string },
+                                    isRecordedInIdOrIds: string|string[]|undefined,
+                                    liesWithinId: string|undefined,
+                                    addLiesWithinConstraints: boolean): { [name: string]: string|string[]} {
 
-        const constraints: { [name: string]: string|string[] } = addLiesWithinConstraints
-            ? liesWithinId
-                ? { 'liesWithin:contain': liesWithinId }
-                : { 'liesWithin:exist': 'UNKNOWN' }
-            : {};
+        const constraints: { [name: string]: string|string[] } = ObjectUtil.cloneObject(customConstraints);
+
+        if (addLiesWithinConstraints) {
+            if (liesWithinId) {
+                constraints['liesWithin:contain'] = liesWithinId;
+            } else {
+                constraints['liesWithin:exist'] = 'UNKNOWN';
+            }
+        }
 
         if (isRecordedInIdOrIds) constraints['isRecordedIn:contain'] = isRecordedInIdOrIds;
+
         return constraints;
     }
 

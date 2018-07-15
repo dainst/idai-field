@@ -63,6 +63,8 @@ export class ViewFacade {
 
     public getFilterTypes = () => ResourcesState.getTypeFilters(this.resourcesStateManager.get());
 
+    public getCustomConstraints = () => ResourcesState.getCustomConstraints(this.resourcesStateManager.get());
+
     public getDocuments = () => this.documentsManager.getDocuments();
 
     public getSelectedDocument = () => ResourcesState.getSelectedDocument(this.resourcesStateManager.get());
@@ -88,6 +90,8 @@ export class ViewFacade {
     public setSearchString = (q: string, populate?: boolean) => this.documentsManager.setQueryString(q, populate);
 
     public setFilterTypes = (types: string[]) => this.documentsManager.setTypeFilters(types);
+
+    public setCustomConstraints = (constraints: { [name: string]: string}) => this.documentsManager.setCustomConstraints(constraints);
 
     public moveInto = (document: IdaiFieldDocument|undefined) => this.documentsManager.moveInto(document);
 

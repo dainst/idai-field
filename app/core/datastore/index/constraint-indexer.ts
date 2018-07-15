@@ -196,8 +196,9 @@ export class ConstraintIndexer {
             .reduce((result: Array<FieldDefinition>, type: IdaiType) => {
                 return result.concat(type.fields);
             }, [])
+            .filter((field: FieldDefinition) => field.constraintIndexed)
             .filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
-                return field.constraintIndexed && self.indexOf(
+                return self.indexOf(
                     self.find((f: FieldDefinition) => f.name === field.name) as FieldDefinition
                 ) === index;
             })

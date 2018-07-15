@@ -118,7 +118,7 @@ export module NavigationPath {
     }
 
 
-    export function getQueryString(navPath: NavigationPath, bypassHierarchy: boolean) {
+    export function getQueryString(navPath: NavigationPath, bypassHierarchy: boolean): string {
 
         return getViewContext(navPath, bypassHierarchy).q;
     }
@@ -132,9 +132,25 @@ export module NavigationPath {
     }
 
 
-    export function getTypeFilters(navPath: NavigationPath, displayHierarchy: boolean) {
+    export function getTypeFilters(navPath: NavigationPath, displayHierarchy: boolean): string[] {
 
         return getViewContext(navPath, displayHierarchy).types;
+    }
+
+
+    export function setCustomConstraints(navPath: NavigationPath, displayHierarchy: boolean,
+                                         constraints: { [name: string]: string}) {
+
+        const clone = ObjectUtil.cloneObject(navPath);
+        (getViewContext(clone, displayHierarchy) as any).customConstraints = constraints;
+        return clone;
+    }
+
+
+    export function getCustomConstraints(navPath: NavigationPath,
+                                         displayHierarchy: boolean): { [name: string]: string} {
+
+        return getViewContext(navPath, displayHierarchy).customConstraints;
     }
 
 
@@ -210,7 +226,7 @@ export module NavigationPath {
             const currentSegmentDoc = await get(currentResourceId);
             currentResourceId = ModelUtil.getRelationTargetId(currentSegmentDoc, 'liesWithin', 0);
 
-            segments.unshift( {document: currentSegmentDoc, q: '', types: []});
+            segments.unshift( { document: currentSegmentDoc, q: '', types: [], customConstraints: {} });
         }
         return segments;
     }
@@ -249,6 +265,6 @@ export module NavigationPath {
             : (oldSelectedSegmentId
                     ? takeUntil(isSegmentWith(oldSelectedSegmentId))(oldSegments)
                     : []
-            ).concat([{document: newSelectedSegmentDoc, q: '', types: []}]);
+            ).concat([{ document: newSelectedSegmentDoc, q: '', types: [], customConstraints: {} }]);
     }
 }

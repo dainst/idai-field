@@ -6,7 +6,7 @@
 
     <div class="col-md-6 mr-md-auto">
         <div class="row">
-            <div id="search-bar-container" class="col-md-9">
+            <div id="search-bar-container" class="col-md-10">
                 <resources-search-bar [q]="getQueryString()"
                                       [types]="getTypeFilters()"
                                       [relationName]="'isRecordedIn'"
@@ -16,7 +16,7 @@
                 </resources-search-bar>
             </div>
 
-            <div id="buttons-container" class="col-md-3">
+            <div id="buttons-container" class="col-md-2">
                 <div *ngIf="ready" class="btn-group resources-mode-buttons">
                     <button id="map-mode-button"
                             (click)="switchMode('map')"

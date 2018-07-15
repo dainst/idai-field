@@ -31,6 +31,12 @@ export module ResourcesState {
     }
 
 
+    export function getCustomConstraints(state: ResourcesState) {
+
+        return NavigationPath.getCustomConstraints(getNavigationPath(state), getBypassHierarchy(state));
+    }
+
+
     export function getSelectedDocument(state: ResourcesState) {
 
         return NavigationPath.getSelectedDocument(getNavigationPath(state), getBypassHierarchy(state));
@@ -121,7 +127,16 @@ export module ResourcesState {
     }
 
 
-    export function setSelectedDocument(state: ResourcesState, document: IdaiFieldDocument|undefined): ResourcesState {
+    export function setCustomConstraints(state: ResourcesState,
+                                         constraints: { [name: string]: string}): ResourcesState {
+
+        return updateNavigationPath(state, NavigationPath.setCustomConstraints(getNavigationPath(state),
+            getBypassHierarchy(state), constraints));
+    }
+
+
+    export function setSelectedDocument(state: ResourcesState,
+                                        document: IdaiFieldDocument|undefined): ResourcesState {
 
         return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state),
             viewState(state).bypassHierarchy, document));

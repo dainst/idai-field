@@ -1,7 +1,23 @@
 /**
  * @author Thomas Kleinke
  */
-#input-wrapper {
-  position: relative;
-  width: 100%;
+resources-search-bar {
+
+  #input-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  #object-search {
+    width: calc(100% - 200px) !important;
+  }
+
+  #filter-button {
+    right: 160px !important;
+  }
+
+  search-constraints {
+    position: absolute;
+    right: 21px;
+  }
 }

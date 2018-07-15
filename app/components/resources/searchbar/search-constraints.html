@@ -1,13 +1,14 @@
 <div (mouseenter)="showConstraintsMenu = true;"
      (mouseleave)="showConstraintsMenu = false;">
-    <div id="add-constraint-button" class="btn btn-primary"
+    <div *ngIf="type" id="add-constraint-button" class="btn btn-primary"
          (click)="openModal(constraintModal)">
-        Felder
+        <span class="mdi mdi-magnify"></span>
         <span class="badge badge-light">{{constraintListItems.length}}</span>
         <span class="mdi mdi-plus"></span>
     </div>
 
     <div *ngIf="showConstraintsMenu && constraintListItems.length > 0" id="constraints-menu">
+        <h6>Suchkriterien</h6>
         <div *ngFor="let constraint of constraintListItems" (click)="removeConstraint(constraint.name)">
             <b>{{constraint.label}}:</b> {{constraint.searchTerm}} <span class="mdi mdi-close-circle"></span>
         </div>

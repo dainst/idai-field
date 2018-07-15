@@ -5,16 +5,14 @@ search-constraints {
 
   #add-constraint-button {
     width: 132px;
+    text-align: left;
 
     .badge {
-      position: relative;
-      left: 4px;
+      margin-left: 4px;
     }
 
     .mdi-plus {
-      position: relative;
-      top: 1px;
-      left: 8px;
+      margin-left: 42px;
     }
   }
 
@@ -25,6 +23,13 @@ search-constraints {
     width: 132px;
     background-color: rgb(238, 238, 238);
     box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+
+    h6 {
+      background-color: #f7f7f7;
+      padding: 10px;
+      margin-bottom: 0;
+      cursor: default;
+    }
 
     div {
       padding: 10px;

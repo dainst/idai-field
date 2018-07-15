@@ -55,7 +55,7 @@
     "@angular/platform-browser": "4.2.2",
     "@angular/platform-browser-dynamic": "4.2.2",
     "@angular/router": "4.2.2",
-    "@mdi/font": "2.4.85",
+    "@mdi/font": "2.5.94",
     "@ng-bootstrap/ng-bootstrap": "1.0.0",
     "Leaflet.vector-markers": "0.0.6",
     "angular2-uuid": "1.1.0",

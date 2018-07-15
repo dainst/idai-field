@@ -38,12 +38,13 @@
     padding-right: 8px;
 
     .resources-mode-buttons {
+      position: absolute;
+      right: 8px;
       margin-top: 3px;
       margin-bottom: -1px;
-      width: 100% !important;
 
       button {
-        width: 50% !important;
+        width: 42px;
       }
     }
   }

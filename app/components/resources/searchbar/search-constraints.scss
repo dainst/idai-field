@@ -23,6 +23,7 @@ search-constraints {
     width: 132px;
     background-color: rgb(238, 238, 238);
     box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+    user-select: none;
 
     h6 {
       background-color: #f7f7f7;
@@ -35,7 +36,6 @@ search-constraints {
       padding: 10px;
       background-color: white;
       cursor: pointer;
-      user-select: none;
     }
 
     div:hover {

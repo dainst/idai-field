@@ -20,7 +20,10 @@
         <h5 class="modal-title">Suchkriterium hinzufügen</h5>
     </div>
     <div class="modal-body">
-        <select (change)="selectField($event.target.value)" class="form-control">
+        <label for="constraint-field-select" class="control-label col-form-label">
+            Feld auswählen:
+        </label>
+        <select id="constraint-field-select" (change)="selectField($event.target.value)" class="form-control">
             <option value="" [selected]="!selectedField"></option>
             <option *ngFor="let field of fields" value="{{field.name}}"
                     [selected]="selectedField && selectedField.name === field.name">
@@ -29,18 +32,29 @@
         </select>
 
         <div *ngIf="getSearchInputType(selectedField) === 'input'">
-            <input type="text" [(ngModel)]="searchTerm" class="form-control">
+            <label for="constraint-search-term-input" class="control-label col-form-label">
+                Suchbegriff:
+            </label>
+            <input id="constraint-search-term-input" type="text"
+                   [(ngModel)]="searchTerm" class="form-control">
         </div>
 
         <div *ngIf="getSearchInputType(selectedField) === 'dropdown'">
-            <select [(ngModel)]="searchTerm" class="form-control">
+            <label for="constraint-search-term-select" class="control-label col-form-label">
+                Suchbegriff:
+            </label>
+            <select id="constraint-search-term-select" [(ngModel)]="searchTerm" class="form-control">
                 <option value=""></option>
                 <option *ngFor="let value of selectedField.valuelist" value="{{value}}">{{value}}</option>
             </select>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" id="delete-images-confirm" class="btn btn-primary" (click)="c('ok')">OK</button>
-        <button type="button" id="delete-images-cancel" class="btn btn-secondary" (click)="c('cancel')">Abbrechen</button>
+        <button type="button" id="delete-images-confirm" class="btn btn-primary" (click)="c('ok')">
+            OK
+        </button>
+        <button type="button" id="delete-images-cancel" class="btn btn-secondary" (click)="c('cancel')">
+            Abbrechen
+        </button>
     </div>
 </ng-template>

@@ -3,30 +3,34 @@
  */
 resources-search-bar {
 
-  #input-wrapper {
-    position: relative;
-    width: 100%;
+  form {
+    align-items: inherit !important;
+    padding-top: 1px;
 
-    input {
-      height: 39px;
-      margin-top: 1px;
+    #input-wrapper {
+      position: relative;
+      width: 100%;
+
+      input {
+        height: 39px;
+      }
     }
-  }
 
-  #object-search {
-    width: calc(100% - 200px) !important;
-  }
-
-  #filter-button {
-    right: 160px !important;
-
-    #searchfilter {
-      height: 39px !important;
+    #object-search {
+      width: calc(100% - 200px) !important;
     }
-  }
 
-  search-constraints {
-    position: absolute;
-    right: 27px;
+    #filter-button {
+      right: 160px !important;
+
+      #searchfilter {
+        height: 39px !important;
+      }
+    }
+
+    search-constraints {
+      position: absolute;
+      right: 27px;
+    }
   }
 }

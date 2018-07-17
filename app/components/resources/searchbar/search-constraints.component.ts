@@ -89,20 +89,9 @@ export class SearchConstraintsComponent implements OnChanges {
 
     private reset() {
 
-        this.updateFields();
         this.updateConstraintListItems();
+        this.updateFields();
         this.removeUserEntries();
-    }
-
-
-    private updateFields() {
-
-        this.fields = this.projectConfiguration.getFieldDefinitions(this.type)
-            .filter(field => {
-                return field.constraintIndexed
-                    && this.getSearchInputType(field)
-                    && !this.constraintListItems.find(item => item.fieldName === field.name);
-            });
     }
 
 
@@ -117,6 +106,17 @@ export class SearchConstraintsComponent implements OnChanges {
                     label: this.getLabel(constraintName),
                     searchTerm: constraints[constraintName]
                 }
+            });
+    }
+
+
+    private updateFields() {
+
+        this.fields = this.projectConfiguration.getFieldDefinitions(this.type)
+            .filter(field => {
+                return field.constraintIndexed
+                    && this.getSearchInputType(field)
+                    && !this.constraintListItems.find(item => item.fieldName === field.name);
             });
     }
 

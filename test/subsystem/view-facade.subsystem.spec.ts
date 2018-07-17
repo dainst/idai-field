@@ -546,8 +546,6 @@ export function main() {
 
         it('operations view: search with custom constraint filter', async done => {
 
-            console.log('find document 1', JSON.stringify(findDocument1));
-
             await viewFacade.selectView('excavation');
             await viewFacade.moveInto(featureDocument1);
 

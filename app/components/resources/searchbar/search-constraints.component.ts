@@ -3,7 +3,7 @@ import {ProjectConfiguration, FieldDefinition} from 'idai-components-2/core';
 import {ViewFacade} from '../view/view-facade';
 
 
-type ConstraintListItem = { name: string; label: string; searchTerm: string };
+type ConstraintListItem = { name: string; fieldName: string, label: string; searchTerm: string };
 
 
 @Component({
@@ -88,6 +88,7 @@ export class SearchConstraintsComponent implements OnChanges {
     private reset() {
 
         this.updateConstraintListItems();
+        this.updateFields();
         this.selectedField = undefined;
         this.searchTerm = '';
     }
@@ -96,7 +97,11 @@ export class SearchConstraintsComponent implements OnChanges {
     private updateFields() {
 
         this.fields = this.projectConfiguration.getFieldDefinitions(this.type)
-            .filter(field => field.constraintIndexed && this.getSearchInputType(field));
+            .filter(field => {
+                return field.constraintIndexed
+                    && this.getSearchInputType(field)
+                    && !this.constraintListItems.find(item => item.fieldName === field.name);
+            });
     }
 
 
@@ -107,6 +112,7 @@ export class SearchConstraintsComponent implements OnChanges {
             .map(constraintName => {
                 return {
                     name: constraintName,
+                    fieldName: SearchConstraintsComponent.getFieldName(constraintName),
                     label: this.getLabel(constraintName),
                     searchTerm: constraints[constraintName]
                 }
@@ -116,10 +122,10 @@ export class SearchConstraintsComponent implements OnChanges {
 
     private getLabel(constraintName: string): string {
 
-        const fieldName: string = constraintName.substring(0, constraintName.indexOf(':'));
-
         return this.projectConfiguration.getTypesMap()[this.type].fields
-            .find((field: FieldDefinition) => field.name === fieldName).label;
+            .find((field: FieldDefinition) => {
+                return field.name === SearchConstraintsComponent.getFieldName(constraintName);
+            }).label;
     }
 
 
@@ -136,5 +142,11 @@ export class SearchConstraintsComponent implements OnChanges {
 
         this.showConstraintsMenu = false;
         this.reset();
+    }
+
+
+    private static getFieldName(constraintName: string): string {
+
+        return constraintName.substring(0, constraintName.indexOf(':'));
     }
 }

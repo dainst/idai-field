@@ -13,7 +13,7 @@
         <b>{{constraint.label}}:</b> {{constraint.searchTerm}} <span class="mdi mdi-close-circle"></span>
     </div>
 
-    <div class="form-inline">
+    <div *ngIf="fields && fields.length > 0" class="form-inline">
         <select id="constraint-field-select" (change)="selectField($event.target.value)" class="form-control">
             <option value="" [selected]="!selectedField" hidden>Feld auswählen</option>
             <option *ngFor="let field of fields" value="{{field.name}}"

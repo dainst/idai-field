@@ -11,7 +11,7 @@
     <div *ngFor="let constraint of constraintListItems" class="constraint-list-item"
          (click)="removeConstraint(constraint.name); $event.stopPropagation();">
         <div class="constraint-list-item-text">
-            <b>{{constraint.label}}:</b> {{constraint.searchTerm}}
+            <em>{{constraint.label}}:</em> {{constraint.searchTerm}}
         </div>
         <span class="mdi mdi-close-circle"></span>
     </div>

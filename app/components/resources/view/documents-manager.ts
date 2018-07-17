@@ -238,6 +238,7 @@ export class DocumentsManager {
 
             this.resourcesStateManager.setQueryString('');
             this.resourcesStateManager.setTypeFilters([]);
+            this.resourcesStateManager.setCustomConstraints({});
         }
     }
 

@@ -195,7 +195,7 @@ export function main() {
         it('ViewContext -- keep filter when switching views', async done => {
 
             await viewFacade.selectView('excavation');
-            viewFacade.setFilterTypes(['Feature']);
+            await viewFacade.setFilterTypes(['Feature']);
             await viewFacade.selectView('project');
             expect(viewFacade.getFilterTypes()).toEqual([]);
             await viewFacade.selectView('excavation');
@@ -207,7 +207,7 @@ export function main() {
         it('ViewContext -- keep filter when move into', async done => {
 
             await viewFacade.selectView('excavation');
-            viewFacade.setFilterTypes(['Feature']);
+            await viewFacade.setFilterTypes(['Feature']);
             await viewFacade.moveInto(featureDocument1);
             expect(viewFacade.getFilterTypes()).toEqual([]);
             await viewFacade.moveInto(undefined);
@@ -219,7 +219,7 @@ export function main() {
         it('ViewContext -- keep filter on switching mode', async done => {
 
             await viewFacade.selectView('excavation');
-            viewFacade.setFilterTypes(['Feature']);
+            await viewFacade.setFilterTypes(['Feature']);
             viewFacade.setMode('list');
             expect(viewFacade.getFilterTypes()).toEqual(['Feature']);
             viewFacade.setMode('map');
@@ -231,7 +231,7 @@ export function main() {
         it('ViewContext -- keep query string when switching views', async done => {
 
             await viewFacade.selectView('excavation');
-            viewFacade.setSearchString('abc');
+            await viewFacade.setSearchString('abc');
             await viewFacade.selectView('project');
             expect(viewFacade.getSearchString()).toEqual('');
             await viewFacade.selectView('excavation');
@@ -243,7 +243,7 @@ export function main() {
         it('ViewContext -- keep query string when move into', async done => {
 
             await viewFacade.selectView('excavation');
-            viewFacade.setSearchString('abc');
+            await viewFacade.setSearchString('abc');
             await viewFacade.moveInto(featureDocument1);
             expect(viewFacade.getSearchString()).toEqual('');
             await viewFacade.moveInto(undefined);
@@ -255,7 +255,7 @@ export function main() {
         it('ViewContext -- keep query string on switching mode', async done => {
 
             await viewFacade.selectView('excavation');
-            viewFacade.setSearchString('abc');
+            await viewFacade.setSearchString('abc');
             viewFacade.setMode('list');
             expect(viewFacade.getSearchString()).toEqual('abc');
             viewFacade.setMode('map');

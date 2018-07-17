@@ -89,10 +89,9 @@ export class SearchConstraintsComponent implements OnChanges {
 
     private reset() {
 
-        this.updateConstraintListItems();
         this.updateFields();
-        this.selectedField = undefined;
-        this.searchTerm = '';
+        this.updateConstraintListItems();
+        this.removeUserEntries();
     }
 
 
@@ -119,6 +118,13 @@ export class SearchConstraintsComponent implements OnChanges {
                     searchTerm: constraints[constraintName]
                 }
             });
+    }
+
+
+    private removeUserEntries() {
+
+        this.selectedField = undefined;
+        this.searchTerm = '';
     }
 
 

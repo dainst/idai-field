@@ -38,7 +38,7 @@ export function main() {
                 { 'type': 'Building', 'fields': [] },
                 { 'type': 'Trench', 'fields': [] },
                 { 'type': 'Image', 'fields': [] },
-                { 'type': 'Find', 'fields': [] },
+                { 'type': 'Find', 'fields': [{ name: 'hasProcessor', constraintIndexed: true }] },
                 { 'type': 'Feature', 'fields': [] },
                 { 'type': 'Project', 'fields': [] }
             ]
@@ -87,24 +87,25 @@ export function main() {
                 new IdaiFieldTypeConverter(new TypeUtility(projectConfiguration))
             );
 
-            projectDocument = Static.doc('testdb','testdb','Project','project');
-            trenchDocument1 = Static.ifDoc('trench1','trench1','Trench','t1');
+            projectDocument = Static.doc('testdb', 'testdb', 'Project', 'project');
+            trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
             trenchDocument1.resource.relations['isRecordedIn'] = ['testdb'];
             trenchDocument2 = Static.ifDoc('trench2','trench2','Trench','t2');
             trenchDocument2.resource.relations['isRecordedIn'] = ['testdb'];
 
-            findDocument1 = Static.ifDoc('Find 1','find1','Find', 'find1');
+            findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
+            findDocument1.resource.hasProcessor = 'person';
             findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-            findDocument2 = Static.ifDoc('Find 2','find2','Find', 'find2');
+            findDocument2 = Static.ifDoc('Find 2', 'find2', 'Find', 'find2');
             findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
-            featureDocument1 = Static.ifDoc('Feature 1','feature1','Feature', 'feature1');
+            featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
             featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
             featureDocument1.resource.relations['includes'] = [findDocument1.resource.id,
                 findDocument2.resource.id];
             findDocument1.resource.relations['liesWithin'] = [featureDocument1.resource.id];
             findDocument2.resource.relations['liesWithin'] = [featureDocument1.resource.id];
 
-            featureDocument2 = Static.ifDoc('Feature 2','feature2','Feature', 'feature2');
+            featureDocument2 = Static.ifDoc('Feature 2', 'feature2', 'Feature', 'feature2');
             featureDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
             await idaiFieldDocumentDatastore.create(projectDocument, 'u');
@@ -538,6 +539,27 @@ export function main() {
             await viewFacade.selectOperation(trenchDocument1.resource.id);
             navigationPath = await viewFacade.getNavigationPath();
             expect(navigationPath.selectedSegmentId).toEqual(featureDocument1.resource.id);
+
+            done();
+        });
+
+
+        it('operations view: search with custom constraint filter', async done => {
+
+            console.log('find document 1', JSON.stringify(findDocument1));
+
+            await viewFacade.selectView('excavation');
+            await viewFacade.moveInto(featureDocument1);
+
+            await viewFacade.setFilterTypes(['Find']);
+            expect(viewFacade.getDocuments().length).toBe(2);
+
+            await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });
+            expect(viewFacade.getDocuments().length).toBe(1);
+            expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find1');
+
+            await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'wrongPerson' });
+            expect(viewFacade.getDocuments().length).toBe(0);
 
             done();
         });

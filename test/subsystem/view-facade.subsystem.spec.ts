@@ -561,5 +561,24 @@ export function main() {
 
             done();
         });
+
+
+        it('operations view: remove custom constraint filters when type filter is changed', async done => {
+
+            await viewFacade.selectView('excavation');
+            await viewFacade.moveInto(featureDocument1);
+
+            await viewFacade.setFilterTypes(['Find']);
+            await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });
+            expect(viewFacade.getDocuments().length).toBe(1);
+
+            await viewFacade.setFilterTypes(['Feature']);
+            expect(viewFacade.getCustomConstraints()).toEqual({});
+
+            await viewFacade.setFilterTypes(['Find']);
+            expect(viewFacade.getDocuments().length).toBe(2);
+
+            done();
+        });
     });
 }

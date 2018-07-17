@@ -596,7 +596,8 @@
           "label": "Kampagne"
         },
         "hasDating": {
-          "label": "Datierung"
+          "label": "Datierung",
+          "description": "Grobdatierung und weitere Datierungen"
         },
         "hasPeriodBeginning": {
           "label": "Grobdatierung (von)"
@@ -738,7 +739,8 @@
           "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
         },
         "hasDating": {
-          "label": "Datierung"
+          "label": "Datierung",
+          "description": "Grobdatierung und weitere Datierungen"
         },
         "hasDimensionLength": {
           "label": "Länge",
@@ -836,7 +838,8 @@
           "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
         },
         "hasDating": {
-          "label": "Datierung"
+          "label": "Datierung",
+          "description": "Grobdatierung und weitere Datierungen"
         },
         "hasDimensionWidth": {
           "label": "Breite",
@@ -1181,7 +1184,8 @@
           "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
         },
         "hasDating": {
-          "label": "Datierung"
+          "label": "Datierung",
+          "description": "Grobdatierung und weitere Datierungen"
         },
         "hasDimensionHeight": {
           "label": "Höhe",
@@ -1360,7 +1364,8 @@
           "description": "Welcher Art ist die Mauerkonstruktion?"
         },
         "hasDating": {
-          "label": "Datierung"
+          "label": "Datierung",
+          "description": "Grobdatierung und weitere Datierungen"
         },
         "hasDimensionHeight": {
           "label": "Höhe",
@@ -1636,7 +1641,8 @@
           "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
         },
         "hasDating": {
-          "label": "Datierung"
+          "label": "Datierung",
+          "description": "Grobdatierung und weitere Datierungen"
         },
         "hasDimensionDiameter": {
           "label": "Durchmesser",

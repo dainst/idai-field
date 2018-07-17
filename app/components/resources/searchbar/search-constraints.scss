@@ -35,14 +35,28 @@ search-constraints {
     }
 
     .constraint-list-item {
+      position: relative;
       cursor: pointer;
       background-color: white;
       margin-bottom: 1px;
-    }
 
-    .constraint-list-item:hover {
-      background-color: darken($list-item-hover-color, 5%);
-      transition: background-color .65s ease;
+      &:hover {
+        background-color: darken($list-item-hover-color, 5%);
+        transition: background-color .65s ease;
+      }
+
+      .constraint-list-item-text {
+        width: calc(100% - 36px);
+        overflow: hidden;
+        word-wrap: break-word;
+      }
+
+      .mdi-close-circle {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 10px;
+      }
     }
 
     .form-inline {

@@ -10,7 +10,10 @@
     <h6>Suchkriterien</h6>
     <div *ngFor="let constraint of constraintListItems" class="constraint-list-item"
          (click)="removeConstraint(constraint.name); $event.stopPropagation();">
-        <b>{{constraint.label}}:</b> {{constraint.searchTerm}} <span class="mdi mdi-close-circle"></span>
+        <div class="constraint-list-item-text">
+            <b>{{constraint.label}}:</b> {{constraint.searchTerm}}
+        </div>
+        <span class="mdi mdi-close-circle"></span>
     </div>
 
     <div *ngIf="fields && fields.length > 0" class="form-inline">

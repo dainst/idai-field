@@ -44,6 +44,12 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     }
 
 
+    public isTypeSelected(): boolean {
+
+        return this.types !== undefined && this.types.length > 0;
+    }
+
+
     protected handleClick(event: Event) {
 
         let target: any = event.target;

@@ -264,6 +264,45 @@ export function main() {
         });
 
 
+        it('ViewContext -- keep custom constraints when switching views', async done => {
+
+            await viewFacade.selectView('excavation');
+            await viewFacade.setFilterTypes(['Find']);
+            await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });
+            await viewFacade.selectView('project');
+            expect(viewFacade.getCustomConstraints()).toEqual({});
+            await viewFacade.selectView('excavation');
+            expect(viewFacade.getCustomConstraints()).toEqual({ 'hasProcessor:match': 'person' });
+            done();
+        });
+
+
+        it('ViewContext -- keep custom constraints when move into', async done => {
+
+            await viewFacade.selectView('excavation');
+            await viewFacade.setFilterTypes(['Find']);
+            await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });
+            await viewFacade.moveInto(featureDocument1);
+            expect(viewFacade.getCustomConstraints()).toEqual({});
+            await viewFacade.moveInto(undefined);
+            expect(viewFacade.getCustomConstraints()).toEqual({ 'hasProcessor:match': 'person' });
+            done();
+        });
+
+
+        it('ViewContext -- keep custom constraints on switching mode', async done => {
+
+            await viewFacade.selectView('excavation');
+            await viewFacade.setFilterTypes(['Find']);
+            await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });
+            viewFacade.setMode('list');
+            expect(viewFacade.getCustomConstraints()).toEqual({ 'hasProcessor:match': 'person' });
+            viewFacade.setMode('map');
+            expect(viewFacade.getCustomConstraints()).toEqual({ 'hasProcessor:match': 'person' });
+            done();
+        });
+
+
         it('ViewContext -- optypedoc has different context in different hierarchy mode', async done => {
 
             await viewFacade.selectView('excavation');

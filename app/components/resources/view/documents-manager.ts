@@ -71,6 +71,7 @@ export class DocumentsManager {
     public async setTypeFilters(types: string[]) {
 
         this.resourcesStateManager.setTypeFilters(types);
+        this.resourcesStateManager.setCustomConstraints({});
         await this.populateAndDeselectIfNecessary();
     }
 

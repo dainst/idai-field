@@ -33,13 +33,15 @@ export class SearchConstraintsComponent implements OnChanges {
     constructor(private projectConfiguration: ProjectConfiguration,
                 private viewFacade: ViewFacade) {
 
-        this.viewFacade.navigationPathNotifications().subscribe(() => this.reset());
+        this.viewFacade.navigationPathNotifications().subscribe(() => {
+            if (this.type) this.reset();
+        });
     }
 
 
     ngOnChanges() {
 
-        this.updateFields();
+        this.reset();
     }
 
 

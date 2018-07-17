@@ -9,7 +9,7 @@
 <div *ngIf="showConstraintsMenu" id="constraints-menu">
     <h6>Suchkriterien</h6>
     <div *ngFor="let constraint of constraintListItems" class="constraint-list-item"
-         (click)="removeConstraint(constraint.name)">
+         (click)="removeConstraint(constraint.name); $event.stopPropagation();">
         <b>{{constraint.label}}:</b> {{constraint.searchTerm}} <span class="mdi mdi-close-circle"></span>
     </div>
 
@@ -28,12 +28,12 @@
 
         <select *ngIf="getSearchInputType(selectedField) === 'dropdown'"
                 id="constraint-search-term-select" [(ngModel)]="searchTerm" class="form-control">
-            <option value=""></option>
+            <option value="" hidden></option>
             <option *ngFor="let value of selectedField.valuelist" value="{{value}}">{{value}}</option>
         </select>
 
         <div *ngIf="searchTerm.length > 0" id="add-constraint-button" class="btn btn-primary"
-             (click)="addConstraint()">
+             (click)="addConstraint(); $event.stopPropagation();">
             <span class="mdi mdi-plus"></span>
         </div>
     </div>

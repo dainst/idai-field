@@ -19,6 +19,7 @@
     <div *ngIf="fields && fields.length > 0" class="form-inline">
         <select id="constraint-field-select" (change)="selectField($event.target.value)" class="form-control">
             <option value="" [selected]="!selectedField" hidden>Feld auswählen</option>
+            <option value=""></option>
             <option *ngFor="let field of fields" value="{{field.name}}"
                     [selected]="selectedField && selectedField.name === field.name">
                 {{field.label}}
@@ -26,12 +27,13 @@
         </select>
 
         <input *ngIf="getSearchInputType(selectedField) === 'input'"
-               id="constraint-search-term-input" type="text"
+               id="constraint-search-term-input" type="text" placeholder="Suchbegriff eingeben"
                [(ngModel)]="searchTerm" class="form-control">
 
         <select *ngIf="getSearchInputType(selectedField) === 'dropdown'"
                 id="constraint-search-term-select" [(ngModel)]="searchTerm" class="form-control">
-            <option value="" hidden></option>
+            <option value="" hidden [selected]="searchTerm.length === 0">Suchbegriff auswählen</option>
+            <option value=""></option>
             <option *ngFor="let value of selectedField.valuelist" value="{{value}}">{{value}}</option>
         </select>
 

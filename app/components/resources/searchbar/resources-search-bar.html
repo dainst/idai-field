@@ -2,13 +2,14 @@
 
     <span id="input-wrapper">
         <input #searchInput
+               id="object-search"
+               class="form-control"
+               [class.small-search-input]="types && types.length > 0"
                [(ngModel)]="q"
                (keyup)="onKeyUp($event)"
                (focus)="showSuggestions()"
                name="searchInput"
                type="text"
-               class="form-control"
-               id="object-search"
                placeholder="Suchen...">
         <search-suggestions [q]="q"
                             [types]="(types && types.length > 0) ? types : undefined"
@@ -16,6 +17,8 @@
                             [visible]="suggestionsVisible">
         </search-suggestions>
     </span>
+
+    <search-constraints [type]="types && types.length > 0 ? types[0] : undefined"></search-constraints>
 
     <div *ngIf="showFiltersMenu" id="filter-button" class="input-group-btn">
         <button id="searchfilter"
@@ -40,6 +43,4 @@
             </div>
         </ng-template>
     </div>
-
-    <search-constraints [type]="types && types.length > 0 ? types[0] : undefined"></search-constraints>
 </form>

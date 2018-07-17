@@ -1,5 +1,4 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ProjectConfiguration, FieldDefinition} from 'idai-components-2/core';
 import {ViewFacade} from '../view/view-facade';
 
@@ -28,7 +27,6 @@ export class SearchConstraintsComponent implements OnChanges {
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private modalService: NgbModal,
                 private viewFacade: ViewFacade) {
 
         this.viewFacade.navigationPathNotifications().subscribe(() => this.reset());
@@ -38,12 +36,6 @@ export class SearchConstraintsComponent implements OnChanges {
     ngOnChanges() {
 
         this.updateFields();
-    }
-
-
-    public async openModal(modal: any) {
-
-        if (await this.modalService.open(modal).result == 'ok') await this.addNewConstraint();
     }
 
 
@@ -68,22 +60,22 @@ export class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public async removeConstraint(constraintName: string) {
+    public async addConstraint() {
+
+        if (!this.selectedField || this.searchTerm.length == 0) return;
 
         const constraints: { [name: string]: string } = this.viewFacade.getCustomConstraints();
-        delete constraints[constraintName];
+        constraints[this.selectedField.name + ':match'] = this.searchTerm;
         await this.viewFacade.setCustomConstraints(constraints);
 
         this.reset();
     }
 
 
-    private async addNewConstraint() {
-
-        if (!this.selectedField || this.searchTerm.length == 0) return;
+    public async removeConstraint(constraintName: string) {
 
         const constraints: { [name: string]: string } = this.viewFacade.getCustomConstraints();
-        constraints[this.selectedField.name + ':match'] = this.searchTerm;
+        delete constraints[constraintName];
         await this.viewFacade.setCustomConstraints(constraints);
 
         this.reset();

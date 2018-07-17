@@ -2,49 +2,63 @@
  * @author Thomas Kleinke
  */
 search-constraints {
+  width: 100%;
 
-  #add-constraint-button {
-    width: 132px;
+  #constraints-menu-button {
+    position: absolute;
+    top: -36px;
+    right: 83px;
+    width: 42px;
+    height: 39px;
     text-align: left;
-
-    .badge {
-      margin-left: 4px;
-    }
-
-    .mdi-plus {
-      margin-left: 42px;
-    }
   }
 
   #constraints-menu {
     display: inline;
     position: absolute;
-    top: 39px;
-    width: 132px;
-    background-color: rgb(238, 238, 238);
+    top: 3px;
+    width: calc(100% - 34px);
+    background-color: #f7f7f7;
     box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
     user-select: none;
 
+    h6,
+    .constraint-list-item,
+    .form-inline {
+      padding: 10px;
+    }
+
     h6 {
       background-color: #f7f7f7;
-      padding: 10px;
       margin-bottom: 0;
       cursor: default;
     }
 
-    div {
-      padding: 10px;
-      background-color: white;
+    .constraint-list-item {
       cursor: pointer;
+      background-color: white;
+      margin-bottom: 1px;
     }
 
-    div:hover {
+    .constraint-list-item:hover {
       background-color: darken($list-item-hover-color, 5%);
       transition: background-color .65s ease;
     }
-  }
-}
 
-#constraint-field-select {
-  margin-bottom:  12px;
+    .form-inline {
+      background-color: #f7f7f7;
+
+      select,
+      input {
+        width: calc(50% - 31px);
+        height: 39px;
+      }
+
+      #constraint-field-select,
+      #constraint-search-term-select,
+      #constraint-search-term-input {
+        margin-right: 10px;
+      }
+    }
+  }
 }

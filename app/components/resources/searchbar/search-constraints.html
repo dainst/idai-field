@@ -1,60 +1,40 @@
-<div (mouseenter)="showConstraintsMenu = true;"
-     (mouseleave)="showConstraintsMenu = false;">
-    <div *ngIf="type" id="add-constraint-button" class="btn btn-primary"
-         (click)="openModal(constraintModal)">
-        <span class="mdi mdi-magnify"></span>
-        <span class="badge badge-light">{{constraintListItems.length}}</span>
-        <span class="mdi mdi-plus"></span>
-    </div>
-
-    <div *ngIf="showConstraintsMenu && constraintListItems.length > 0" id="constraints-menu">
-        <h6>Suchkriterien</h6>
-        <div *ngFor="let constraint of constraintListItems" (click)="removeConstraint(constraint.name)">
-            <b>{{constraint.label}}:</b> {{constraint.searchTerm}} <span class="mdi mdi-close-circle"></span>
-        </div>
-    </div>
+<div *ngIf="type" id="constraints-menu-button" class="btn btn-primary"
+     (click)="showConstraintsMenu = !showConstraintsMenu;">
+    <span *ngIf="constraintListItems.length === 0" class="mdi mdi-plus"></span>
+    <span *ngIf="constraintListItems.length > 0" class="badge badge-light">
+        {{constraintListItems.length}}
+    </span>
 </div>
 
-<ng-template #constraintModal let-c="close">
-    <div class="modal-header">
-        <h5 class="modal-title">Suchkriterium hinzufügen</h5>
+<div *ngIf="showConstraintsMenu" id="constraints-menu">
+    <h6>Suchkriterien</h6>
+    <div *ngFor="let constraint of constraintListItems" class="constraint-list-item"
+         (click)="removeConstraint(constraint.name)">
+        <b>{{constraint.label}}:</b> {{constraint.searchTerm}} <span class="mdi mdi-close-circle"></span>
     </div>
-    <div class="modal-body">
-        <label for="constraint-field-select" class="control-label col-form-label">
-            Feld auswählen:
-        </label>
+
+    <div class="form-inline">
         <select id="constraint-field-select" (change)="selectField($event.target.value)" class="form-control">
-            <option value="" [selected]="!selectedField"></option>
+            <option value="" [selected]="!selectedField" hidden>Feld auswählen</option>
             <option *ngFor="let field of fields" value="{{field.name}}"
                     [selected]="selectedField && selectedField.name === field.name">
                 {{field.label}}
             </option>
         </select>
 
-        <div *ngIf="getSearchInputType(selectedField) === 'input'">
-            <label for="constraint-search-term-input" class="control-label col-form-label">
-                Suchbegriff:
-            </label>
-            <input id="constraint-search-term-input" type="text"
-                   [(ngModel)]="searchTerm" class="form-control">
-        </div>
+        <input *ngIf="getSearchInputType(selectedField) === 'input'"
+               id="constraint-search-term-input" type="text"
+               [(ngModel)]="searchTerm" class="form-control">
 
-        <div *ngIf="getSearchInputType(selectedField) === 'dropdown'">
-            <label for="constraint-search-term-select" class="control-label col-form-label">
-                Suchbegriff:
-            </label>
-            <select id="constraint-search-term-select" [(ngModel)]="searchTerm" class="form-control">
-                <option value=""></option>
-                <option *ngFor="let value of selectedField.valuelist" value="{{value}}">{{value}}</option>
-            </select>
+        <select *ngIf="getSearchInputType(selectedField) === 'dropdown'"
+                id="constraint-search-term-select" [(ngModel)]="searchTerm" class="form-control">
+            <option value=""></option>
+            <option *ngFor="let value of selectedField.valuelist" value="{{value}}">{{value}}</option>
+        </select>
+
+        <div *ngIf="searchTerm.length > 0" id="add-constraint-button" class="btn btn-primary"
+             (click)="addConstraint()">
+            <span class="mdi mdi-plus"></span>
         </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" id="delete-images-confirm" class="btn btn-primary" (click)="c('ok')">
-            OK
-        </button>
-        <button type="button" id="delete-images-cancel" class="btn btn-secondary" (click)="c('cancel')">
-            Abbrechen
-        </button>
-    </div>
-</ng-template>
+</div>

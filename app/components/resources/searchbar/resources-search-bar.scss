@@ -17,11 +17,15 @@ resources-search-bar {
     }
 
     #object-search {
-      width: calc(100% - 200px) !important;
+      width: calc(100% - 60px) !important;
+    }
+
+    #object-search.small-search-input {
+      width: calc(100% - 101px) !important;
     }
 
     #filter-button {
-      right: 160px !important;
+      right: 19px !important;
 
       #searchfilter {
         height: 39px !important;
@@ -30,7 +34,7 @@ resources-search-bar {
 
     search-constraints {
       position: absolute;
-      right: 27px;
+      top: 39px;
     }
   }
 }

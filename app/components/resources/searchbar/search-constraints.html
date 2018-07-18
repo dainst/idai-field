@@ -1,8 +1,10 @@
-<div *ngIf="type" id="constraints-menu-button" class="btn btn-outline-primary"
-     [class.focused]="resourcesSearchBarComponent.isFocused()"
-     (click)="showConstraintsMenu = !showConstraintsMenu;"
-    ngbTooltip="{{ constraintListItems.length === 0
-        ? 'Weitere Suchkriterien einstellen' : 'Aktive Suchkriterien'}}" placement="left" container="body">
+<div *ngIf="type" id="constraints-menu-button"
+     class="btn btn-outline-primary" [class.focused]="resourcesSearchBarComponent.isFocused()"
+     ngbTooltip="{{ constraintListItems.length === 0
+        ? 'Weitere Suchkriterien einstellen' : 'Aktive Suchkriterien'}}"
+     placement="left" container="body" triggers="manual" #tooltip="ngbTooltip"
+     (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
+     (click)="tooltip.close(); showConstraintsMenu = !showConstraintsMenu;" >
     <span *ngIf="constraintListItems.length === 0" class="mdi mdi-plus"></span>
     <span *ngIf="constraintListItems.length > 0" class="badge badge-light">
         {{constraintListItems.length}}

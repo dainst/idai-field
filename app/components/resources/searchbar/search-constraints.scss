@@ -11,6 +11,8 @@ search-constraints {
     width: 42px;
     height: 39px;
     text-align: left;
+    border-left-width: 0 !important;
+    border-color: lightgrey;
 
     &.focused {
       border-color: #80bdff !important;

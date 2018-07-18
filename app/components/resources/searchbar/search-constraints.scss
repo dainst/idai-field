@@ -11,6 +11,10 @@ search-constraints {
     width: 42px;
     height: 39px;
     text-align: left;
+
+    &.focused {
+      border-color: #80bdff !important;
+    }
   }
 
   #constraints-menu {

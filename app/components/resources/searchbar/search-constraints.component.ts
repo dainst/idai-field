@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {ProjectConfiguration, FieldDefinition} from 'idai-components-2/core';
 import {ViewFacade} from '../view/view-facade';
+import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 
 
 type ConstraintListItem = { name: string; fieldName: string, label: string; searchTerm: string };
@@ -30,7 +31,8 @@ export class SearchConstraintsComponent implements OnChanges {
     private static textFieldInputTypes: string[] = ['input', 'text', 'unsignedInt', 'float', 'unsignedFloat'];
 
 
-    constructor(private projectConfiguration: ProjectConfiguration,
+    constructor(public resourcesSearchBarComponent: ResourcesSearchBarComponent,
+                private projectConfiguration: ProjectConfiguration,
                 private viewFacade: ViewFacade) {
 
         this.viewFacade.navigationPathNotifications().subscribe(() => {

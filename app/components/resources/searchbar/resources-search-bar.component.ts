@@ -1,4 +1,4 @@
-import {Component, ElementRef} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
 import {TypeUtility} from '../../../core/model/type-utility';
@@ -15,6 +15,8 @@ import {TypeUtility} from '../../../core/model/type-utility';
  * @author Thomas Kleinke
  */
 export class ResourcesSearchBarComponent extends SearchBarComponent {
+
+    @ViewChild('searchInput') fulltextSearchInput: ElementRef;
 
     private suggestionsVisible: boolean = false;
 
@@ -47,6 +49,13 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     public isTypeSelected(): boolean {
 
         return this.types !== undefined && this.types.length > 0;
+    }
+
+
+    public isFocused(): boolean {
+
+        return this.fulltextSearchInput.nativeElement.ownerDocument.activeElement
+            === this.fulltextSearchInput.nativeElement;
     }
 
 

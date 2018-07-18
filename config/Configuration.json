@@ -1360,7 +1360,7 @@
           "inputType": "unsignedFloat"
         },
         "hasBeginningDate": {
-          "inputType": "input"
+          "inputType": "date"
         },
         "hasDescription": {
           "inputType": "text"
@@ -1369,7 +1369,7 @@
           "inputType": "text"
         },
         "hasEndDate": {
-          "inputType": "input"
+          "inputType": "date"
         },
         "hasProcessor": {
           "inputType": "input"
@@ -1553,7 +1553,10 @@
           "inputType": "unsignedFloat"
         },
         "hasBeginningDate": {
-          "inputType": "input"
+          "inputType": "date"
+        },
+        "hasEndDate": {
+          "inputType": "date"
         },
         "hasComparison": {
           "inputType": "text"
@@ -1566,9 +1569,6 @@
         },
         "hasDisturbance": {
           "inputType": "boolean"
-        },
-        "hasEndDate": {
-          "inputType": "input"
         },
         "hasFeatureAmount": {
           "inputType": "input"
@@ -2809,7 +2809,7 @@
       "color": "#08306b",
       "fields": {
         "hasDate": {
-          "inputType": "input"
+          "inputType": "date"
         },
         "hasDescription": {
           "inputType": "text"
@@ -4362,7 +4362,7 @@
           "inputType": "unsignedFloat"
         },
         "hasDate": {
-          "inputType": "input"
+          "inputType": "date"
         },
         "hasDescription": {
           "inputType": "text"

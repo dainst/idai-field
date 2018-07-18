@@ -220,7 +220,7 @@ export class ResourcesPage {
 
     public static isListMode() {
 
-        let listBtn = element(by.css('#list-mode-button.active'));
+        let listBtn = element(by.css('#map-mode-button.active'));
         return listBtn.isPresent();
     }
 

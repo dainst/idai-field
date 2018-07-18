@@ -18,21 +18,23 @@
 
             <div id="buttons-container" class="col-md-2">
                 <div *ngIf="ready" class="btn-group resources-mode-buttons">
-                    <button id="map-mode-button"
+                    <button *ngIf="viewFacade.getMode() === 'list'"
+                            id="map-mode-button"
                             (click)="switchMode('map')"
-                            ngbTooltip="Kartendarstellung der Ressourcen"
-                            placement="left"
+                            ngbTooltip="Wechsel zwischen Karten- und Listendarstellung der Ressourcen"
+                            placement="left" container="body"
                             class="btn btn-primary m-0"
                             [class.active]="currentModeIs('map')">
-                        <span class="mdi mdi-map"></span>
+                        <span class="mdi mdi-table"></span>
                     </button>
-                    <button id="list-mode-button"
+                    <button *ngIf="viewFacade.getMode() === 'map'"
+                            id="list-mode-button"
                             (click)="switchMode('list')"
                             class="btn btn-primary m-0"
-                            ngbTooltip="Listendarstellung der Ressourcen"
-                            placement="left"
+                            ngbTooltip="Wechsel zwischen Karten- und Listendarstellung der Ressourcen"
+                            placement="left" container="body"
                             [class.active]="currentModeIs('list')">
-                        <span class="mdi mdi-table"></span>
+                        <span class="mdi mdi-map"></span>
                     </button>
                 </div>
             </div>

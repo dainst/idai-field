@@ -76,13 +76,9 @@ export class NavigationComponent {
     }
 
 
-    public async toggleBypassOperationTypeSelection() {
+    public async activateBypassOperationTypeSelection() {
 
-        if (!this.viewFacade.getSelectAllOperationsOnBypassHierarchy()) {
-            await this.viewFacade.setSelectAllOperationsOnBypassHierarchy(true);
-        } else {
-            await this.viewFacade.setSelectAllOperationsOnBypassHierarchy(false);
-        }
+        await this.viewFacade.setSelectAllOperationsOnBypassHierarchy(true);
     }
 
 

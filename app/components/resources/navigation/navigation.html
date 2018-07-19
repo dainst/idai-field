@@ -15,8 +15,7 @@
             <span *ngIf="getBypassHierarchy()" class="mdi mdi-magnify"></span>
     </div>
 
-    <div *ngIf="showNavigation() &&
-        (!getBypassHierarchy() || !viewFacade.getSelectAllOperationsOnBypassHierarchy())"
+    <div *ngIf="showNavigation()"
          class="btn-group">
 
         <div class="btn-group operation-document-selector" ngbDropdown placement="bottom-left" role="group">
@@ -38,6 +37,13 @@
             {{viewFacade.getSelectedOperations()[0].resource.identifier}}
         </div>
 
+        <div *ngIf="showOperationsAllAsFirstSegment()"
+             id="selected-all-operation-type-documents" type="button" class="btn btn-outline-primary navigation-button"
+             [class.root-document]="!navigationPath.selectedSegmentId"
+             (click)="moveInto(undefined)">
+            <em>Alle</em>
+        </div>
+
         <div *ngFor="let document of getSegments()" class="btn btn-outline-primary navigation-button"
              [class.root-document]="document.resource.id === navigationPath.selectedSegmentId"
              (click)="moveInto(document)">
@@ -46,7 +52,7 @@
     </div>
 
 
-    <div *ngIf="getBypassHierarchy()"
+    <div *ngIf="getBypassHierarchy() && !showOperationsAllAsFirstSegment()"
          class="ml-2 btn btn{{!viewFacade.getSelectAllOperationsOnBypassHierarchy() ? '-outline' : ''}}-primary mr-2"
          (click)="toggleBypassOperationTypeSelection()"
          ngbTooltip="Alle Maßnahmen des Typs '{{getTypeName()}}' durchsuchen"

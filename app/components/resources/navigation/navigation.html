@@ -1,12 +1,18 @@
 <div id="navigation" class="row">
 
-    <div *ngIf="showNavigation()" id="hierarchy-mode-switch" class="btn btn-primary mr-2"
+    <div *ngIf="showNavigation()"
+         id="hierarchy-mode-switch"
+         class="btn {{getBypassHierarchy() ? 'btn-primary' : 'btn-outline-primary'}} mr-2"
          ngbTooltip="Wechsel zwischen hierarchischer Anordnung und einfacher Auflistung"
-         placement="right" container="body" triggers="manual" #tooltip="ngbTooltip"
-         (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
+         placement="right"
+         container="body"
+         triggers="manual"
+         #tooltip="ngbTooltip"
+         (mouseover)="tooltip.open()"
+         (mouseleave)="tooltip.close()"
          (click)="tooltip.close(); toggleDisplayHierarchy();">
-            <span *ngIf="!getBypassHierarchy()" class="mdi mdi-file-tree"></span>
-            <span *ngIf="getBypassHierarchy()" class="mdi mdi-view-sequential"></span>
+            <span *ngIf="!getBypassHierarchy()" class="mdi mdi-magnify"></span>
+            <span *ngIf="getBypassHierarchy()" class="mdi mdi-magnify"></span>
     </div>
 
     <div *ngIf="showNavigation()" class="btn-group">

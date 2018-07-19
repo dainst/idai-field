@@ -15,15 +15,6 @@
             <span *ngIf="getBypassHierarchy()" class="mdi mdi-magnify"></span>
     </div>
 
-    <div *ngIf="getBypassHierarchy()"
-         class="btn btn{{!viewFacade.getSelectAllOperationsOnBypassHierarchy() ? '-outline' : ''}}-primary mr-2"
-         (click)="toggleBypassOperationTypeSelection()"
-         ngbTooltip="Alle Maßnahmen des Typs '{{getTypeName()}}' durchsuchen"
-         placement="right"
-         container="body">
-        <span class="mdi mdi-multiplication-box"></span>
-    </div>
-
     <div *ngIf="showNavigation() &&
         (!getBypassHierarchy() || !viewFacade.getSelectAllOperationsOnBypassHierarchy())"
          class="btn-group">
@@ -52,5 +43,15 @@
              (click)="moveInto(document)">
             {{document.resource.identifier}}
         </div>
+    </div>
+
+
+    <div *ngIf="getBypassHierarchy()"
+         class="ml-2 btn btn{{!viewFacade.getSelectAllOperationsOnBypassHierarchy() ? '-outline' : ''}}-primary mr-2"
+         (click)="toggleBypassOperationTypeSelection()"
+         ngbTooltip="Alle Maßnahmen des Typs '{{getTypeName()}}' durchsuchen"
+         placement="right"
+         container="body">
+        <span class="mdi mdi-multiplication-box"></span>
     </div>
 </div>

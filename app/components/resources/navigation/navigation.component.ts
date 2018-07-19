@@ -39,6 +39,14 @@ export class NavigationComponent {
     public moveInto = (document: IdaiFieldDocument|undefined) => this.viewFacade.moveInto(document);
 
 
+    public getTooltip() {
+
+        return this.viewFacade.getBypassHierarchy()
+            ? 'Suchmodus deaktivieren'
+            : 'Suchmodus aktivieren. Im Suchmodus kann über sämtliche Ressourcen einer/mehrerer Maßnahmen gesucht werden. Zusätzliche Suchkriterien können gewählt werden.';
+    }
+
+
     public async toggleDisplayHierarchy() {
 
         if (this.loading.isLoading()) return;

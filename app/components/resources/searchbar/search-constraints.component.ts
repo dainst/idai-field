@@ -53,9 +53,6 @@ export class SearchConstraintsComponent implements OnChanges {
     }
 
 
-
-
-
     public getSearchInputType(field: FieldDefinition|undefined): 'input'|'dropdown'|undefined {
 
         if (!field) return undefined;

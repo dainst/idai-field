@@ -315,7 +315,7 @@ export function main() {
         });
 
 
-        it('ViewContext -- all optypedocs selection has its own context', async done => {
+        xit('ViewContext -- all optypedocs selection has its own context', async done => {
 
             await viewFacade.selectView('excavation');
             await viewFacade.setBypassHierarchy(true);

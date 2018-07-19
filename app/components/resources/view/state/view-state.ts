@@ -1,4 +1,5 @@
 import {NavigationPath} from './navigation-path';
+import {ViewContext} from "./view-context";
 
 /**
  * @author Thomas Kleinke
@@ -9,6 +10,8 @@ export interface ViewState {
 
     readonly bypassHierarchy: boolean;
     readonly selectAllOperationsOnBypassHierarchy: boolean;
+
+    readonly searchContext: ViewContext;
 
     readonly layerIds: {[mainTypeDocumentId: string]: string[]};
     readonly navigationPaths: {[mainTypeDocumentId: string]: NavigationPath};
@@ -26,7 +29,8 @@ export class ViewState {
             navigationPaths: {
                 '_all': NavigationPath.empty()
             },
-            layerIds: {}
+            layerIds: {},
+            searchContext: ViewContext.empty()
         };
     };
 
@@ -44,6 +48,7 @@ export class ViewState {
         }
 
         (viewState as any).bypassHierarchy = false;
+        (viewState as any).searchContext = ViewContext.empty();
         (viewState as any).navigationPaths = {
             '_all': NavigationPath.empty()
         };

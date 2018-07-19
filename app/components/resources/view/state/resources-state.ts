@@ -2,6 +2,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ViewState} from './view-state';
 import {ObjectUtil} from '../../../../util/object-util';
 import {NavigationPath} from './navigation-path';
+import {ViewContext} from "./view-context";
 
 /**
  * @author Thomas Kleinke
@@ -21,13 +22,17 @@ export module ResourcesState {
 
     export function getQueryString(state: ResourcesState) {
 
-        return NavigationPath.getQueryString(getNavigationPath(state), getBypassHierarchy(state));
+        return viewState(state).bypassHierarchy
+            ? viewState(state).searchContext.q
+            : NavigationPath.getQueryString(getNavigationPath(state), getBypassHierarchy(state));
     }
 
 
     export function getTypeFilters(state: ResourcesState) {
 
-        return NavigationPath.getTypeFilters(getNavigationPath(state), getBypassHierarchy(state));
+        return viewState(state).bypassHierarchy
+            ? viewState(state).searchContext.types
+            : NavigationPath.getTypeFilters(getNavigationPath(state), getBypassHierarchy(state));
     }
 
 
@@ -115,16 +120,35 @@ export module ResourcesState {
 
     export function setQueryString(state: ResourcesState, q: string): ResourcesState {
 
-        return updateNavigationPath(state, NavigationPath.setQueryString(getNavigationPath(state),
-            getBypassHierarchy(state), q));
+        if (viewState(state).bypassHierarchy) {
+
+            const cloned: any = ObjectUtil.cloneObject(state);
+            (viewState(cloned).searchContext as any /* cast ok on construct*/).q = q;
+            return cloned;
+
+        } else {
+
+            return updateNavigationPath(state, NavigationPath.setQueryString(getNavigationPath(state),
+                getBypassHierarchy(state), q));
+        }
     }
 
 
     export function setTypeFilters(state: ResourcesState, types: string[]): ResourcesState {
 
-        return updateNavigationPath(state, NavigationPath.setTypeFilters(getNavigationPath(state),
-            getBypassHierarchy(state), types));
+        if (viewState(state).bypassHierarchy) {
+
+            const cloned: any = ObjectUtil.cloneObject(state);
+            (viewState(cloned).searchContext as any /* cast ok on construct*/).types = types;
+            return cloned;
+
+        } else {
+
+            return updateNavigationPath(state, NavigationPath.setTypeFilters(getNavigationPath(state),
+                getBypassHierarchy(state), types));
+        }
     }
+
 
 
     export function setCustomConstraints(state: ResourcesState,
@@ -192,7 +216,8 @@ export module ResourcesState {
                     selectAllOperationsOnBypassHierarchy: false,
                     navigationPaths: {
                         '_all': NavigationPath.empty()
-                    }
+                    },
+                    searchContext: ViewContext.empty()
                 },
                 excavation: {
                     bypassHierarchy: false,
@@ -201,7 +226,8 @@ export module ResourcesState {
                         't1': NavigationPath.empty(),
                         '_all': NavigationPath.empty()
                     },
-                    layerIds: {'t1': ['o25']}
+                    layerIds: {'t1': ['o25']},
+                    searchContext: ViewContext.empty()
                 }
             },
             view: 'project',

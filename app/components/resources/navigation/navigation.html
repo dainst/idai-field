@@ -15,16 +15,23 @@
             <span *ngIf="getBypassHierarchy()" class="mdi mdi-magnify"></span>
     </div>
 
-    <div *ngIf="showNavigation()" class="btn-group">
+    <div *ngIf="getBypassHierarchy()"
+         class="btn btn{{!viewFacade.getSelectAllOperationsOnBypassHierarchy() ? '-outline' : ''}}-primary mr-2"
+         (click)="toggleBypassOperationTypeSelection()"
+         ngbTooltip="Alle Maßnahmen des Typs '{{getTypeName()}}' durchsuchen"
+         placement="right"
+         container="body">
+        <span class="mdi mdi-multiplication-box"></span>
+    </div>
+
+    <div *ngIf="showNavigation() &&
+        (!getBypassHierarchy() || !viewFacade.getSelectAllOperationsOnBypassHierarchy())"
+         class="btn-group">
+
         <div class="btn-group operation-document-selector" ngbDropdown placement="bottom-left" role="group">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
 
             <div class="dropdown-menu" ngbDropdownMenu>
-                <button *ngIf="showSelectAllOperationsOption()" class="dropdown-item"
-                        (click)="activateBypassOperationTypeSelection()">
-                    <em>Alle</em>
-                </button>
-                <hr *ngIf="showSelectAllOperationsOption()">
 
                 <button *ngFor="let document of viewFacade.getOperations()" class="dropdown-item"
                         (click)="chooseOperationTypeDocumentOption(document)">
@@ -38,13 +45,6 @@
              [class.root-document]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
             {{viewFacade.getSelectedOperations()[0].resource.identifier}}
-        </div>
-
-        <div *ngIf="showOperationsAllAsFirstSegment()"
-                id="selected-all-operation-type-documents" type="button" class="btn btn-outline-primary navigation-button"
-                [class.root-document]="!navigationPath.selectedSegmentId"
-                (click)="moveInto(undefined)">
-            <em>Alle</em>
         </div>
 
         <div *ngFor="let document of getSegments()" class="btn btn-outline-primary navigation-button"

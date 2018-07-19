@@ -4,6 +4,7 @@ import {ViewFacade} from '../view/view-facade';
 import {ModelUtil} from '../../../core/model/model-util';
 import {NavigationPath} from '../view/state/navigation-path';
 import {Loading} from '../../../widgets/loading';
+import {ProjectConfiguration} from 'idai-components-2/core';
 
 
 @Component({
@@ -20,8 +21,10 @@ export class NavigationComponent {
     public navigationPath: NavigationPath = NavigationPath.empty();
 
 
-    constructor(public viewFacade: ViewFacade,
-                private loading: Loading) {
+    constructor(
+        public viewFacade: ViewFacade,
+        private loading: Loading,
+        public projectConfiguration: ProjectConfiguration) {
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
@@ -37,6 +40,12 @@ export class NavigationComponent {
     public getBypassHierarchy = () => this.viewFacade.getBypassHierarchy();
 
     public moveInto = (document: IdaiFieldDocument|undefined) => this.viewFacade.moveInto(document);
+
+
+    public getTypeName() {
+
+        return this.projectConfiguration.getLabelForType(this.viewFacade.getViewType() as any);
+    }
 
 
     public getTooltip() {
@@ -67,9 +76,13 @@ export class NavigationComponent {
     }
 
 
-    public async activateBypassOperationTypeSelection() {
+    public async toggleBypassOperationTypeSelection() {
 
-        await this.viewFacade.setSelectAllOperationsOnBypassHierarchy(true);
+        if (!this.viewFacade.getSelectAllOperationsOnBypassHierarchy()) {
+            await this.viewFacade.setSelectAllOperationsOnBypassHierarchy(true);
+        } else {
+            await this.viewFacade.setSelectAllOperationsOnBypassHierarchy(false);
+        }
     }
 
 

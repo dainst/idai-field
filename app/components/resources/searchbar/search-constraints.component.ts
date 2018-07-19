@@ -40,14 +40,20 @@ export class SearchConstraintsComponent implements OnChanges {
         });
     }
 
+    ngOnChanges = () => this.reset();
 
     public showSearchConstraintsOption = () => this.viewFacade.getBypassHierarchy();
 
 
-    ngOnChanges() {
+    public getTooltip() {
 
-        this.reset();
+        return this.constraintListItems.length === 0
+            ? 'Weitere Suchkriterien einstellen'
+            : 'Aktive Suchkriterien';
     }
+
+
+
 
 
     public getSearchInputType(field: FieldDefinition|undefined): 'input'|'dropdown'|undefined {

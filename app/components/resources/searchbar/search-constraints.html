@@ -1,7 +1,6 @@
 <div *ngIf="showSearchConstraintsOption()" id="constraints-menu-button"
      class="btn btn-outline-primary" [class.focused]="resourcesSearchBarComponent.isFocused()"
-     ngbTooltip="{{ constraintListItems.length === 0
-        ? 'Weitere Suchkriterien einstellen' : 'Aktive Suchkriterien'}}"
+     ngbTooltip="{{getTooltip()}}"
      placement="left" container="body" triggers="manual" #tooltip="ngbTooltip"
      (mouseover)="tooltip.open()" (mouseleave)="tooltip.close()"
      (click)="tooltip.close(); showConstraintsMenu = !showConstraintsMenu;" >
@@ -13,6 +12,11 @@
 
 <div *ngIf="showConstraintsMenu" id="constraints-menu">
     <h6>Suchkriterien</h6>
+
+    <span *ngIf="!type">
+        Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
+    </span>
+
     <div *ngFor="let constraint of constraintListItems" class="constraint-list-item"
          (click)="removeConstraint(constraint.name); $event.stopPropagation();">
         <div class="constraint-list-item-text">

@@ -12,10 +12,8 @@ export interface ViewState {
     readonly navigationPaths: {[mainTypeDocumentId: string]: NavigationPath};
 
     // bypassHierarchy (search mode) related
-
     readonly bypassHierarchy: boolean;
     readonly selectAllOperationsOnBypassHierarchy: boolean;
-
     readonly searchContext: ViewContext;
     readonly customConstraints: { [name: string]: string }
     // -

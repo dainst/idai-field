@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ProjectConfiguration, FieldDefinition} from 'idai-components-2/core';
 import {ViewFacade} from '../view/view-facade';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
@@ -40,9 +40,16 @@ export class SearchConstraintsComponent implements OnChanges {
         });
     }
 
-    ngOnChanges = () => this.reset();
+    public showSearchConstraintsOption() {
 
-    public showSearchConstraintsOption = () => this.viewFacade.getBypassHierarchy();
+        return this.viewFacade.getBypassHierarchy();
+    }
+
+
+    ngOnChanges(changes: SimpleChanges): void {
+
+        this.reset();
+    }
 
 
     public getTooltip() {

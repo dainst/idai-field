@@ -14,8 +14,6 @@ import {ModelUtil} from '../../../../core/model/model-util';
 export interface NavigationPath {
 
     readonly hierarchyContext: ViewContext;
-    readonly flatContext: ViewContext;
-
     readonly segments: Array<NavigationPathSegment>;
 
     /**
@@ -33,7 +31,6 @@ export module NavigationPath {
         return {
             segments: [],
             hierarchyContext: ViewContext.empty(),
-            flatContext: ViewContext.empty()
         };
     }
 
@@ -247,8 +244,6 @@ export module NavigationPath {
 
 
     function getViewContext(navPath: NavigationPath, bypassHierarchy: boolean): ViewContext {
-
-        if (bypassHierarchy) return navPath.flatContext;
 
         return navPath.selectedSegmentId
                 ? getSelectedSegment(navPath)

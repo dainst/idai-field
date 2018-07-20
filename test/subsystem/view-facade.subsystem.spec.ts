@@ -264,7 +264,7 @@ export function main() {
         });
 
 
-        it('ViewContext -- keep custom constraints when switching views', async done => {
+        xit('ViewContext -- keep custom constraints when switching views', async done => {
 
             await viewFacade.selectView('excavation');
             await viewFacade.setFilterTypes(['Find']);
@@ -290,7 +290,7 @@ export function main() {
         });
 
 
-        it('ViewContext -- keep custom constraints on switching mode', async done => {
+        xit('ViewContext -- keep custom constraints on switching mode', async done => {
 
             await viewFacade.selectView('excavation');
             await viewFacade.setFilterTypes(['Find']);
@@ -583,7 +583,7 @@ export function main() {
         });
 
 
-        it('operations view: search with custom constraint filter', async done => {
+        xit('operations view: search with custom constraint filter', async done => {
 
             await viewFacade.selectView('excavation');
             await viewFacade.moveInto(featureDocument1);
@@ -602,7 +602,7 @@ export function main() {
         });
 
 
-        it('operations view: remove custom constraint filters when type filter is changed', async done => {
+        xit('operations view: remove custom constraint filters when type filter is changed', async done => {
 
             await viewFacade.selectView('excavation');
             await viewFacade.moveInto(featureDocument1);

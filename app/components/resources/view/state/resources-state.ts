@@ -288,7 +288,7 @@ export module ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
         (viewState(cloned) as any /* write ok on construction */).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
-        (viewState(cloned) as any /* write ok on construction */).searchContext.selected = undefined;
+        (viewState(cloned) as any /* write ok on construction */).searchContext.selected = undefined; // TODO test this
         return cloned;
     }
 
@@ -296,7 +296,9 @@ export module ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
         (viewState(cloned) as any /* write ok on construction */).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
-        (viewState(cloned) as any /* write ok on construction */).searchContext.selected = undefined; // TODO test this
+        if (selectAllOperationsOnBypassHierarchy) {
+            (viewState(state) as any /* write ok on construction */).searchContext.selected = undefined; // TODO test this
+        }
         return cloned;
     }
 

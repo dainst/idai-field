@@ -264,9 +264,10 @@ export function main() {
         });
 
 
-        xit('ViewContext -- keep custom constraints when switching views', async done => {
+        it('ViewContext -- keep custom constraints when switching views', async done => {
 
             await viewFacade.selectView('excavation');
+            await viewFacade.setBypassHierarchy(true);
             await viewFacade.setFilterTypes(['Find']);
             await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });
             await viewFacade.selectView('project');

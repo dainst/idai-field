@@ -38,9 +38,9 @@ export module ResourcesState {
 
     export function getCustomConstraints(state: ResourcesState) {
 
-        // TODO only search mode
-
-        return NavigationPath.getCustomConstraints(getNavigationPath(state), getBypassHierarchy(state));
+        return viewState(state).bypassHierarchy
+            ? viewState(state).customConstraints
+            : {};
     }
 
 
@@ -154,14 +154,12 @@ export module ResourcesState {
     }
 
 
-
     export function setCustomConstraints(state: ResourcesState,
                                          constraints: { [name: string]: string}): ResourcesState {
 
-        // TODO only search mode
-
-        return updateNavigationPath(state, NavigationPath.setCustomConstraints(getNavigationPath(state),
-            getBypassHierarchy(state), constraints));
+        const cloned: any = ObjectUtil.cloneObject(state);
+        (viewState(cloned) as any /* cast ok on construct*/).customConstraints = constraints;
+        return cloned;
     }
 
 
@@ -232,7 +230,8 @@ export module ResourcesState {
                     navigationPaths: {
                         '_all': NavigationPath.empty()
                     },
-                    searchContext: ViewContext.empty()
+                    searchContext: ViewContext.empty(),
+                    customConstraints: {}
                 },
                 excavation: {
                     bypassHierarchy: false,
@@ -242,7 +241,8 @@ export module ResourcesState {
                         '_all': NavigationPath.empty()
                     },
                     layerIds: {'t1': ['o25']},
-                    searchContext: ViewContext.empty()
+                    searchContext: ViewContext.empty(),
+                    customConstraints: {}
                 }
             },
             view: 'project',

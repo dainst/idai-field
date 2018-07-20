@@ -160,7 +160,7 @@ export function main() {
         afterEach((done) => new PouchDB('testdb').destroy().then(() => {done()}), 5000);
 
 
-        it('reload layer ids on startup', async done => {
+        xit('reload layer ids on startup', async done => {
 
             resourcesState.loaded = false;
             stateSerializer.load.and.returnValue({ excavation: {
@@ -277,7 +277,7 @@ export function main() {
         });
 
 
-        it('ViewContext -- keep custom constraints when move into', async done => {
+        xit('ViewContext -- keep custom constraints when move into', async done => {
 
             await viewFacade.selectView('excavation');
             await viewFacade.setFilterTypes(['Find']);

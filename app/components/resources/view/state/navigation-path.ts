@@ -135,22 +135,6 @@ export module NavigationPath {
     }
 
 
-    export function setCustomConstraints(navPath: NavigationPath, displayHierarchy: boolean,
-                                         constraints: { [name: string]: string}) {
-
-        const clone = ObjectUtil.cloneObject(navPath);
-        (getViewContext(clone, displayHierarchy) as any).customConstraints = constraints;
-        return clone;
-    }
-
-
-    export function getCustomConstraints(navPath: NavigationPath,
-                                         displayHierarchy: boolean): { [name: string]: string} {
-
-        return getViewContext(navPath, displayHierarchy).customConstraints;
-    }
-
-
     export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
         const shortened = ObjectUtil.cloneObject(navPath);
@@ -223,7 +207,7 @@ export module NavigationPath {
             const currentSegmentDoc = await get(currentResourceId);
             currentResourceId = ModelUtil.getRelationTargetId(currentSegmentDoc, 'liesWithin', 0);
 
-            segments.unshift( { document: currentSegmentDoc, q: '', types: [], customConstraints: {} });
+            segments.unshift( { document: currentSegmentDoc, q: '', types: []});
         }
         return segments;
     }
@@ -260,6 +244,6 @@ export module NavigationPath {
             : (oldSelectedSegmentId
                     ? takeUntil(isSegmentWith(oldSelectedSegmentId))(oldSegments)
                     : []
-            ).concat([{ document: newSelectedSegmentDoc, q: '', types: [], customConstraints: {} }]);
+            ).concat([{ document: newSelectedSegmentDoc, q: '', types: [] }]);
     }
 }

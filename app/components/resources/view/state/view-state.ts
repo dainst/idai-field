@@ -17,7 +17,7 @@ export interface ViewState {
     readonly selectAllOperationsOnBypassHierarchy: boolean;
 
     readonly searchContext: ViewContext;
-
+    readonly customConstraints: { [name: string]: string }
     // -
 }
 
@@ -34,7 +34,8 @@ export class ViewState {
                 '_all': NavigationPath.empty()
             },
             layerIds: {},
-            searchContext: ViewContext.empty()
+            searchContext: ViewContext.empty(),
+            customConstraints: {}
         };
     };
 

@@ -3,6 +3,7 @@ import {ViewContext} from "./view-context";
 
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export interface ViewState {
 

@@ -8,13 +8,17 @@ export interface ViewState {
 
     readonly mainTypeDocumentResourceId?: string;
 
+    readonly layerIds: {[mainTypeDocumentId: string]: string[]};
+    readonly navigationPaths: {[mainTypeDocumentId: string]: NavigationPath};
+
+    // bypassHierarchy (search mode) related
+
     readonly bypassHierarchy: boolean;
     readonly selectAllOperationsOnBypassHierarchy: boolean;
 
     readonly searchContext: ViewContext;
 
-    readonly layerIds: {[mainTypeDocumentId: string]: string[]};
-    readonly navigationPaths: {[mainTypeDocumentId: string]: NavigationPath};
+    // -
 }
 
 

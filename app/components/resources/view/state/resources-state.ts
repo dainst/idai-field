@@ -38,13 +38,17 @@ export module ResourcesState {
 
     export function getCustomConstraints(state: ResourcesState) {
 
+        // TODO only search mode
+
         return NavigationPath.getCustomConstraints(getNavigationPath(state), getBypassHierarchy(state));
     }
 
 
-    export function getSelectedDocument(state: ResourcesState) {
+    export function getSelectedDocument(state: ResourcesState): IdaiFieldDocument|undefined {
 
-        return NavigationPath.getSelectedDocument(getNavigationPath(state), getBypassHierarchy(state));
+        return viewState(state).bypassHierarchy
+            ? viewState(state).searchContext.selected
+            : NavigationPath.getSelectedDocument(getNavigationPath(state), getBypassHierarchy(state));
     }
 
 
@@ -154,6 +158,8 @@ export module ResourcesState {
     export function setCustomConstraints(state: ResourcesState,
                                          constraints: { [name: string]: string}): ResourcesState {
 
+        // TODO only search mode
+
         return updateNavigationPath(state, NavigationPath.setCustomConstraints(getNavigationPath(state),
             getBypassHierarchy(state), constraints));
     }
@@ -162,8 +168,17 @@ export module ResourcesState {
     export function setSelectedDocument(state: ResourcesState,
                                         document: IdaiFieldDocument|undefined): ResourcesState {
 
-        return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state),
-            viewState(state).bypassHierarchy, document));
+        if (viewState(state).bypassHierarchy) {
+
+            const cloned: any = ObjectUtil.cloneObject(state);
+            (viewState(cloned).searchContext as any /* cast ok on construct*/).selected = document;
+            return cloned;
+
+        } else {
+
+            return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state),
+                viewState(state).bypassHierarchy, document));
+        }
     }
 
 
@@ -273,6 +288,7 @@ export module ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
         (viewState(cloned) as any /* write ok on construction */).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
+        (viewState(cloned) as any /* write ok on construction */).searchContext.selected = undefined;
         return cloned;
     }
 
@@ -280,6 +296,7 @@ export module ResourcesState {
 
         const cloned = ObjectUtil.cloneObject(state);
         (viewState(cloned) as any /* write ok on construction */).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
+        (viewState(cloned) as any /* write ok on construction */).searchContext.selected = undefined; // TODO test this
         return cloned;
     }
 

@@ -278,9 +278,10 @@ export function main() {
         });
 
 
-        xit('ViewContext -- keep custom constraints on switching mode', async done => {
+        it('ViewContext -- keep custom constraints on switching mode', async done => {
 
             await viewFacade.selectView('excavation');
+            await viewFacade.setBypassHierarchy(true);
             await viewFacade.setFilterTypes(['Find']);
             await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });
             viewFacade.setMode('list');

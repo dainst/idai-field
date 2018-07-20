@@ -54,8 +54,6 @@ export module ResourcesState {
 
     export function getNavigationPath(state: ResourcesState): NavigationPath {
 
-        if (isAllSelection(viewState(state))) return viewState(state).navigationPaths['_all'];
-
         const mainTypeDocumentResourceId = viewState(state).mainTypeDocumentResourceId;
         if (!mainTypeDocumentResourceId) return NavigationPath.empty();
 
@@ -212,8 +210,7 @@ export module ResourcesState {
         const mainTypeDocumentResourceId: string|undefined = getMainTypeDocumentResourceId(cloned);
         if (!mainTypeDocumentResourceId) return cloned;
 
-        const navigationPathId: string = isAllSelection(viewState(cloned)) ? '_all' : mainTypeDocumentResourceId;
-        viewState(cloned).navigationPaths[navigationPathId] = navPath;
+        viewState(cloned).navigationPaths[mainTypeDocumentResourceId] = navPath;
 
         return cloned;
     }
@@ -227,9 +224,7 @@ export module ResourcesState {
                     layerIds: {'project': ['o25']},
                     bypassHierarchy: false,
                     selectAllOperationsOnBypassHierarchy: false,
-                    navigationPaths: {
-                        '_all': NavigationPath.empty()
-                    },
+                    navigationPaths: {},
                     searchContext: ViewContext.empty(),
                     customConstraints: {}
                 },
@@ -237,8 +232,7 @@ export module ResourcesState {
                     bypassHierarchy: false,
                     selectAllOperationsOnBypassHierarchy: false,
                     navigationPaths: {
-                        't1': NavigationPath.empty(),
-                        '_all': NavigationPath.empty()
+                        't1': NavigationPath.empty()
                     },
                     layerIds: {'t1': ['o25']},
                     searchContext: ViewContext.empty(),

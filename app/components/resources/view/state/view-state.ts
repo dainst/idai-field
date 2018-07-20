@@ -30,9 +30,7 @@ export class ViewState {
             mode: 'map',
             bypassHierarchy: false,
             selectAllOperationsOnBypassHierarchy: false,
-            navigationPaths: {
-                '_all': NavigationPath.empty()
-            },
+            navigationPaths: {},
             layerIds: {},
             searchContext: ViewContext.empty(),
             customConstraints: {}
@@ -54,8 +52,6 @@ export class ViewState {
 
         (viewState as any).bypassHierarchy = false;
         (viewState as any).searchContext = ViewContext.empty();
-        (viewState as any).navigationPaths = {
-            '_all': NavigationPath.empty()
-        };
+        (viewState as any).navigationPaths = {};
     }
 }

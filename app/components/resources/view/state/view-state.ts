@@ -17,7 +17,6 @@ export interface ViewState {
     readonly selectAllOperationsOnBypassHierarchy: boolean;
     readonly searchContext: ViewContext;
     readonly customConstraints: { [name: string]: string }
-    // -
 }
 
 

@@ -13,7 +13,7 @@ import {ModelUtil} from '../../../../core/model/model-util';
  */
 export interface NavigationPath {
 
-    readonly hierarchyContext: ViewContext;
+    readonly basicContext: ViewContext; // used when no segment selected
     readonly segments: Array<NavigationPathSegment>;
 
     /**
@@ -30,7 +30,7 @@ export module NavigationPath {
 
         return {
             segments: [],
-            hierarchyContext: ViewContext.empty(),
+            basicContext: ViewContext.empty(),
         };
     }
 
@@ -231,7 +231,7 @@ export module NavigationPath {
 
         return navPath.selectedSegmentId
                 ? getSelectedSegment(navPath)
-                : navPath.hierarchyContext;
+                : navPath.basicContext;
     }
 
 

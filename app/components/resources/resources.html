@@ -6,7 +6,7 @@
 
     <div class="col-md-6 mr-md-auto">
         <div class="row">
-            <div id="search-bar-container" class="col-md-11">
+            <div id="search-bar-container" class="col-md-9">
                 <resources-search-bar [q]="getQueryString()"
                                       [types]="getTypeFilters()"
                                       [relationName]="'isRecordedIn'"
@@ -16,25 +16,23 @@
                 </resources-search-bar>
             </div>
 
-            <div id="buttons-container" class="col-md-1">
+            <div id="buttons-container" class="col-md-3">
                 <div *ngIf="ready" class="btn-group resources-mode-buttons">
-                    <button *ngIf="currentModeIs('list')"
-                            id="map-mode-button"
+                    <button id="map-mode-button"
                             (click)="switchMode('map')"
-                            ngbTooltip="Wechsel zwischen Karten- und Listendarstellung der Ressourcen"
-                            placement="left" container="body"
+                            ngbTooltip="Kartendarstellung der Ressourcen"
+                            placement="left"
                             class="btn btn-primary m-0"
-                            [class.active]="currentModeIs('list')">
-                        <span class="mdi mdi-table"></span>
-                    </button>
-                    <button *ngIf="currentModeIs('map')"
-                            id="list-mode-button"
-                            (click)="switchMode('list')"
-                            class="btn btn-primary m-0"
-                            ngbTooltip="Wechsel zwischen Karten- und Listendarstellung der Ressourcen"
-                            placement="left" container="body"
                             [class.active]="currentModeIs('map')">
                         <span class="mdi mdi-map"></span>
+                    </button>
+                    <button id="list-mode-button"
+                            (click)="switchMode('list')"
+                            class="btn btn-primary m-0"
+                            ngbTooltip="Listendarstellung der Ressourcen"
+                            placement="left"
+                            [class.active]="currentModeIs('list')">
+                        <span class="mdi mdi-table"></span>
                     </button>
                 </div>
             </div>

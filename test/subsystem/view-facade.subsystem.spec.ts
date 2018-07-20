@@ -278,19 +278,6 @@ export function main() {
         });
 
 
-        xit('ViewContext -- keep custom constraints when move into', async done => {
-
-            await viewFacade.selectView('excavation');
-            await viewFacade.setFilterTypes(['Find']);
-            await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });
-            await viewFacade.moveInto(featureDocument1);
-            expect(viewFacade.getCustomConstraints()).toEqual({});
-            await viewFacade.moveInto(undefined);
-            expect(viewFacade.getCustomConstraints()).toEqual({ 'hasProcessor:match': 'person' });
-            done();
-        });
-
-
         xit('ViewContext -- keep custom constraints on switching mode', async done => {
 
             await viewFacade.selectView('excavation');

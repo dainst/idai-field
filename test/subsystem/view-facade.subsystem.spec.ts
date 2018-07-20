@@ -304,14 +304,14 @@ export function main() {
         });
 
 
-        xit('ViewContext -- all optypedocs selection has its own context', async done => {
+        it('ViewContext -- all optypedocs selection does not have its own context', async done => {
 
             await viewFacade.selectView('excavation');
             await viewFacade.setBypassHierarchy(true);
             await viewFacade.setSelectAllOperationsOnBypassHierarchy(true);
             await viewFacade.setSearchString('abc');
             await viewFacade.setSelectAllOperationsOnBypassHierarchy(false);
-            expect(viewFacade.getSearchString()).toEqual('');
+            expect(viewFacade.getSearchString()).toEqual('abc');
             done();
         });
 

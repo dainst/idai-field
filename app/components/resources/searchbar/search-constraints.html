@@ -13,9 +13,9 @@
 <div *ngIf="showConstraintsMenu" id="constraints-menu">
     <h6>Suchkriterien</h6>
 
-    <span *ngIf="!type">
+    <div *ngIf="!type" id="constraints-type-filter-info">
         Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
-    </span>
+    </div>
 
     <div *ngFor="let constraint of constraintListItems" class="constraint-list-item"
          (click)="removeConstraint(constraint.name); $event.stopPropagation();">

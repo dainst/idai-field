@@ -26,9 +26,11 @@ search-constraints {
     width: calc(100% - 34px);
     background-color: #f7f7f7;
     box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+    cursor: default;
     user-select: none;
 
     h6,
+    #constraints-type-filter-info,
     .constraint-list-item,
     .form-inline {
       padding: 10px;

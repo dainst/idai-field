@@ -1453,7 +1453,7 @@
       }
     },
     "Survey": {
-      "label": "Survey Areal",
+      "label": "Survey-Areal",
       "fields": {
         "hasResearchMethod": {
           "label": "Untersuchungsmethode",

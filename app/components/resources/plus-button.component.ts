@@ -108,7 +108,8 @@ export class PlusButtonComponent implements OnChanges {
             case 'enabled':
                 return '';
             case 'disabled-hierarchy':
-                return 'Bitte deaktivieren Sie den Suchmodus, um neue Ressourcen anlegen zu können.';
+                return 'Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu '
+                    + 'können.';
         }
     }
 

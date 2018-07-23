@@ -19,7 +19,6 @@ import {BaseList} from '../base-list';
  */
 export class ListComponent extends BaseList {
 
-    @Input() ready: boolean;
     @Input() documents: Array<IdaiFieldDocument>;
 
     public typesMap: { [type: string]: IdaiType };

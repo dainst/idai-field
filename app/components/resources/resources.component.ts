@@ -25,8 +25,6 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public isEditingGeometry: boolean = false;
 
-    public ready: boolean = true;
-
     private scrollTarget: IdaiFieldDocument|undefined;
 
     private clickEventObservers: Array<any> = [];
@@ -70,8 +68,10 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setTypeFilters = (types: string[]|undefined) => this.viewFacade.setFilterTypes(types ? types : []);
 
-    public isViewWithoutMainTypeDocuments = () => this.ready && !this.viewFacade.isInOverview()
+    public isViewWithoutMainTypeDocuments = () => this.isReady() && !this.viewFacade.isInOverview()
         && this.viewFacade.getSelectedOperations().length < 1 && !this.isEditingGeometry;
+
+    public isReady = () => this.viewFacade.isReady();
 
 
     ngAfterViewChecked() {
@@ -127,7 +127,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public switchMode(mode: 'map' | 'list') {
 
-        if (!this.ready) return;
+        if (!this.isReady()) return;
 
         // this is so that new elements are properly included and sorted when coming back to list
         if (this.viewFacade.getMode() === 'list'

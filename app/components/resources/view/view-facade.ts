@@ -27,6 +27,7 @@ export class ViewFacade {
 
     private operationsManager: OperationsManager;
     private documentsManager: DocumentsManager;
+    private ready: boolean;
 
 
     constructor(
@@ -117,6 +118,8 @@ export class ViewFacade {
 
     public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
 
+    public isReady = () => this.ready;
+
 
     public getNavigationPath() {
 
@@ -185,9 +188,13 @@ export class ViewFacade {
 
     public async selectView(viewName: string): Promise<void> {
 
+        this.ready = false;
+
         await this.resourcesStateManager.initialize(viewName);
         await this.operationsManager.populate();
         await this.populateDocumentList();
+
+        this.ready = true;
     }
 
 

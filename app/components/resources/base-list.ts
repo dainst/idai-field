@@ -42,7 +42,7 @@ export class BaseList {
     public isPlusButtonShown(): boolean {
 
         return !this.resourcesComponent.isEditingGeometry
-            && this.resourcesComponent.ready
+            && this.viewFacade.isReady()
             && !this.loading.isLoading()
             && (this.viewFacade.isInOverview()
                 || this.viewFacade.getSelectedOperations().length > 0);

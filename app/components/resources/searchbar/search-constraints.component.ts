@@ -40,15 +40,16 @@ export class SearchConstraintsComponent implements OnChanges {
         });
     }
 
-    public showSearchConstraintsOption() {
-
-        return this.viewFacade.getBypassHierarchy();
-    }
-
 
     ngOnChanges(changes: SimpleChanges): void {
 
         this.reset();
+    }
+
+
+    public showSearchConstraintsOption() {
+
+        return this.viewFacade.getBypassHierarchy();
     }
 
 

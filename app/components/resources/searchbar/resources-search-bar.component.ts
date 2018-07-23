@@ -61,7 +61,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     }
 
 
-    public showSearchConstraintsOption(): boolean {
+    public showSearchConstraints(): boolean {
 
         return this.viewFacade.getBypassHierarchy();
     }

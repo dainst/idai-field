@@ -46,8 +46,7 @@ export class TypeUtility {
 
         return this.projectConfiguration.getTypesList()
             .filter(type => {
-                return type.name === 'Place'
-                    || (type.name !== 'Operation' && this.isSubtype(type.name, 'Operation'));
+                return type.name === 'Operation' || type.name === 'Place';
             });
     }
 

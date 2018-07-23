@@ -12,7 +12,7 @@
                       [mainTypeDocument]="mainTypeIds()"
                       [isEditing]="resourcesComponent.isEditingGeometry"
                       [projectDocument]="resourcesComponent.projectDocument"
-                      [update]="resourcesComponent.ready"
+                      [update]="viewFacade.isReady()"
                       (onSelectDocument)="select($event)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>
     </div>

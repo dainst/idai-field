@@ -28,7 +28,6 @@ describe('BaseList', () => {
         loading.isLoading.and.returnValue(false);
         viewFacade.isInOverview.and.returnValue(true);
         resourcesComponent.isEditingGeometry = false;
-        resourcesComponent.ready = true;
         loading.isLoading.and.returnValue(false);
     });
 

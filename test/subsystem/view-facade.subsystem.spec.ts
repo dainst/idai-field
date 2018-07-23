@@ -572,10 +572,10 @@ export function main() {
         });
 
 
-        xit('operations view: search with custom constraint filter', async done => {
+        it('operations view: search with custom constraint filter', async done => {
 
             await viewFacade.selectView('excavation');
-            await viewFacade.moveInto(featureDocument1);
+            await viewFacade.setBypassHierarchy(true);
 
             await viewFacade.setFilterTypes(['Find']);
             expect(viewFacade.getDocuments().length).toBe(2);
@@ -591,10 +591,10 @@ export function main() {
         });
 
 
-        xit('operations view: remove custom constraint filters when type filter is changed', async done => {
+        it('operations view: remove custom constraint filters when type filter is changed', async done => {
 
             await viewFacade.selectView('excavation');
-            await viewFacade.moveInto(featureDocument1);
+            await viewFacade.setBypassHierarchy(true);
 
             await viewFacade.setFilterTypes(['Find']);
             await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });

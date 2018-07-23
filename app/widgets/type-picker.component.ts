@@ -15,12 +15,14 @@ export class TypePickerComponent {
     @Input() typesTreeList: Array<IdaiType>;
     @Input() selectedTypes: Array<IdaiType>;
     @Input() allTypesOptionVisible: boolean = false;
+    @Input() allowPickingAbstractTypes: boolean = false;
 
     @Output() onTypePicked: EventEmitter<IdaiType> = new EventEmitter<IdaiType>();
 
+
     public pickType(type: IdaiType) {
 
-        if (type && type.isAbstract) return;
+        if (type && type.isAbstract && !this.allowPickingAbstractTypes) return;
 
         this.onTypePicked.emit(type);
     }

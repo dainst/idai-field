@@ -389,6 +389,15 @@ export function main() {
         });
 
 
+        it('operations overview: show all resources in extended search mode', async done => {
+
+            await viewFacade.selectView('project');
+            await viewFacade.setBypassHierarchy(true);
+            expect(viewFacade.getDocuments().length).toBe(6);
+            done();
+        });
+
+
         it('operations view: populate document list', async done => {
 
             await viewFacade.selectView('excavation');

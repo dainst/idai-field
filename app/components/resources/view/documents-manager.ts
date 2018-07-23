@@ -286,7 +286,6 @@ export class DocumentsManager {
         const customConstraints = ResourcesState.getCustomConstraints(state);
 
         return {
-
             q: ResourcesState.getQueryString(state),
 
             constraints: DocumentsManager.buildConstraints(
@@ -297,7 +296,7 @@ export class DocumentsManager {
 
             types: (typeFilters.length > 0)
                 ? typeFilters
-                : !isRecordedInTargetIdOrIds && isInOverview
+                : !isRecordedInTargetIdOrIds && isInOverview && !bypassHierarchy
                     ? overviewTypeNames
                     : undefined,
 

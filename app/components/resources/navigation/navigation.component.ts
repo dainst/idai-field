@@ -51,8 +51,8 @@ export class NavigationComponent {
     public getTooltip() {
 
         return this.viewFacade.getBypassHierarchy()
-            ? 'Suchmodus deaktivieren'
-            : 'Suchmodus aktivieren. Im Suchmodus kann über sämtliche Ressourcen einer/mehrerer Maßnahmen gesucht werden. Zusätzliche Suchkriterien können gewählt werden.';
+            ? 'Erweiterten Suchmodus deaktivieren'
+            : 'Erweiterten Suchmodus aktivieren';
     }
 
 

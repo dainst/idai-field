@@ -11,6 +11,7 @@
                                       [types]="getTypeFilters()"
                                       [relationName]="'isRecordedIn'"
                                       [relationRangeType]="getViewType()"
+                                      [extendedSearch]="getBypassHierarchy()"
                                       (onQueryStringChanged)="setQueryString($event)"
                                       (onTypesChanged)="setTypeFilters($event)">
                 </resources-search-bar>

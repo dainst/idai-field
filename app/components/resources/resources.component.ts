@@ -71,6 +71,8 @@ export class ResourcesComponent implements AfterViewChecked {
     public isViewWithoutMainTypeDocuments = () => this.isReady() && !this.viewFacade.isInOverview()
         && this.viewFacade.getSelectedOperations().length < 1 && !this.isEditingGeometry;
 
+    public getBypassHierarchy = () => this.viewFacade.getBypassHierarchy();
+
     public isReady = () => this.viewFacade.isReady();
 
 

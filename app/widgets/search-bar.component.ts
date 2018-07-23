@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiType} from 'idai-components-2/core';
-import {TypeUtility} from '../core/model/type-utility';
+
 
 @Component({
     moduleId: module.id,
@@ -38,10 +38,10 @@ export class SearchBarComponent implements OnChanges {
 
     @ViewChild('p') protected popover: any;
 
-    private filterOptions: Array<IdaiType> = [];
+    protected filterOptions: Array<IdaiType> = [];
 
 
-    constructor(private projectConfiguration: ProjectConfiguration, private typeUtility: TypeUtility) {}
+    constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -77,14 +77,14 @@ export class SearchBarComponent implements OnChanges {
     }
 
 
-    private initializeFilterOptions() {
+    protected initializeFilterOptions() {
 
         this.filterOptions = [];
+        this.addFilterOptionsFromConfiguration();
+    }
 
-        if (this.relationRangeType === 'Project') {
-            return this.typeUtility.getOverviewTypes().forEach(_ => this.addFilterOption(_));
-        }
 
+    protected addFilterOptionsFromConfiguration() {
 
         for (let type of this.projectConfiguration.getTypesTreeList()) {
 
@@ -105,7 +105,7 @@ export class SearchBarComponent implements OnChanges {
     }
 
 
-    private addFilterOptionsFor(type: IdaiType) {
+    protected addFilterOptionsFor(type: IdaiType) {
 
         for (let childType of type.children) {
             if (this.projectConfiguration.isAllowedRelationDomainType(childType.name, this.relationRangeType,
@@ -116,7 +116,7 @@ export class SearchBarComponent implements OnChanges {
     }
 
 
-    private addFilterOption(type: IdaiType) {
+    protected addFilterOption(type: IdaiType) {
 
         if (this.filterOptions.indexOf(type) == -1) {
             this.filterOptions.push(type);

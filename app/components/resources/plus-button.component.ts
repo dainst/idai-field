@@ -183,7 +183,9 @@ export class PlusButtonComponent implements OnChanges {
         if (!this.isRecordedIn) return this.getOverviewTypes().includes(type.name);
 
         if (!projectConfiguration.isAllowedRelationDomainType(type.name,
-                this.isRecordedIn.resource.type, 'isRecordedIn')) return false;
+                this.isRecordedIn.resource.type, 'isRecordedIn')) {
+            return false;
+        }
 
         return this.liesWithin
                 ? projectConfiguration.isAllowedRelationDomainType(

@@ -52,12 +52,17 @@ export class TypeUtility {
     }
 
 
-    public getNonImageTypeNames(): string[] {
+    public getNonImageTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
-            .map(type => type.name)
-            .filter(typeName => !this.isSubtype(typeName, 'Image'))
-            .filter(typeName => !TypeUtility.isProjectType(typeName))
+            .filter(type => !this.isSubtype(type.name, 'Image'))
+            .filter(type => !TypeUtility.isProjectType(type.name))
+    }
+
+
+    public getNonImageTypeNames(): string[] {
+
+        return this.getNonImageTypes().map(type => type.name);
     }
 
 

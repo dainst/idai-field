@@ -1,5 +1,5 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
+import {Component, ElementRef, Input, SimpleChanges, ViewChild} from '@angular/core';
+import {ProjectConfiguration, IdaiType} from 'idai-components-2/core';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {ViewFacade} from '../view/view-facade';
@@ -17,6 +17,8 @@ import {ViewFacade} from '../view/view-facade';
  */
 export class ResourcesSearchBarComponent extends SearchBarComponent {
 
+    @Input() extendedSearch: boolean;
+
     @ViewChild('searchInput') fulltextSearchInput: ElementRef;
 
     private suggestionsVisible: boolean = false;
@@ -24,9 +26,19 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
     constructor(private elementRef: ElementRef,
                 private viewFacade: ViewFacade,
-                projectConfiguration: ProjectConfiguration, typeUtility: TypeUtility) {
+                private typeUtility: TypeUtility,
+                projectConfiguration: ProjectConfiguration) {
 
-        super(projectConfiguration, typeUtility);
+        super(projectConfiguration);
+    }
+
+
+    public ngOnChanges(changes: SimpleChanges) {
+
+        if (changes['relationName'] || changes['relationRangeType'] || changes['parentType'] ||
+            changes['showFiltersMenu'] || changes['extendedSearch']) {
+            this.initializeFilterOptions();
+        }
     }
 
 
@@ -61,9 +73,25 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     }
 
 
-    public showSearchConstraints(): boolean {
+    protected initializeFilterOptions() {
 
-        return this.viewFacade.getBypassHierarchy();
+        this.filterOptions = [];
+
+        if (this.viewFacade.isInOverview()) {
+            this.addFilterTypesForOverview();
+        } else {
+            this.addFilterOptionsFromConfiguration();
+        }
+    }
+
+
+    private addFilterTypesForOverview() {
+
+        const types: Array<IdaiType> = this.extendedSearch ?
+            this.typeUtility.getNonImageTypes().filter(type => !type.parentType) :
+            this.typeUtility.getOverviewTypes();
+
+        types.forEach(type => this.addFilterOption(type));
     }
 
 

@@ -4,7 +4,7 @@
         <input #searchInput
                id="object-search"
                class="form-control"
-               [class.small-search-input]="showSearchConstraints()"
+               [class.small-search-input]="extendedSearch"
                [(ngModel)]="q"
                (keyup)="onKeyUp($event)"
                (focus)="showSuggestions()"
@@ -18,7 +18,7 @@
         </search-suggestions>
     </span>
 
-    <search-constraints *ngIf="showSearchConstraints()"
+    <search-constraints *ngIf="extendedSearch"
                         [type]="isTypeSelected() ? types[0] : undefined">
     </search-constraints>
 

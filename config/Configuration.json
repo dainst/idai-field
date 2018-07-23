@@ -1383,6 +1383,9 @@
             "Campaign"
           ]
         },
+        "hasPeriod": {
+          "inputType": "dropdownRange"
+        },
         "hasDating": {
           "inputType": "dating"
         }
@@ -1557,6 +1560,9 @@
         },
         "hasEndDate": {
           "inputType": "date"
+        },
+        "hasDating": {
+          "inputType": "dating"
         },
         "hasComparison": {
           "inputType": "text"
@@ -1798,6 +1804,9 @@
             "Vollständig",
             "Vollständig zerstört"
           ]
+        },
+        "hasPeriod": {
+          "inputType": "dropdownRange"
         },
         "hasDating": {
           "inputType": "dating"
@@ -2716,6 +2725,9 @@
             "Vollständig zerstört"
           ]
         },
+        "hasPeriod": {
+          "inputType": "dropdownRange"
+        },
         "hasDating": {
           "inputType": "dating"
         },
@@ -3299,6 +3311,9 @@
             "Sonstiges Loch",
             "Sturzauflager"
           ]
+        },
+        "hasPeriod": {
+          "inputType": "dropdownRange"
         },
         "hasDating": {
           "inputType": "dating"
@@ -4401,6 +4416,9 @@
             "Vollständig",
             "Vollständig zerstört"
           ]
+        },
+        "hasPeriod": {
+          "inputType": "dropdownRange"
         },
         "hasDating": {
           "inputType": "dating"

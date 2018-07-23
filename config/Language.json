@@ -572,6 +572,10 @@
           "label": "Startdatum",
           "description": "Datum an dem die Maßnahme beginnt"
         },
+        "hasEndDate": {
+          "label": "Enddatum",
+          "description": "Ende des Projektes."
+        },
         "hasDescription": {
           "label": "Beschreibung",
           "description": "Freies Beschreibungsfeld"
@@ -579,10 +583,6 @@
         "hasDiaryAbstract": {
           "label": "Projektverlauf",
           "description": "Darstellung des Projekt- oder Grabungsverlaufs, ggfs. Zusammenfassung des Tagebuchs."
-        },
-        "hasEndDate": {
-          "label": "Enddatum",
-          "description": "Ende des Projektes."
         },
         "hasProcessor": {
           "label": "Bearbeiter/Bearbeiterin",
@@ -595,15 +595,11 @@
         "hasCampaign": {
           "label": "Kampagne"
         },
+        "hasPeriod": {
+          "label": "Grobdatierung"
+        },
         "hasDating": {
-          "label": "Datierung",
-          "description": "Grobdatierung und weitere Datierungen"
-        },
-        "hasPeriodBeginning": {
-          "label": "Grobdatierung (von)"
-        },
-        "hasPeriodEnd": {
-          "label": "Grobdatierung (bis)"
+          "label": "Datierung"
         }
       }
     },
@@ -653,11 +649,8 @@
         "hasFindspotClassification": {
           "label": "Klassifikation Fundstelle"
         },
-        "hasPeriodBeginning": {
-          "label": "Grobdatierung (von)"
-        },
-        "hasPeriodEnd": {
-          "label": "Grobdatierung (bis)"
+        "hasDating": {
+          "label": "Datierung"
         },
         "hasSiteClassification": {
           "label": "Klassifikation Fundplatz"
@@ -706,6 +699,10 @@
           "label": "Startdatum",
           "description": "Datum an dem die Maßnahme beginnt"
         },
+        "hasEndDate": {
+          "label": "Enddatum",
+          "description": "Ende des Projektes."
+        },
         "hasComparison": {
           "label": "Vergleich(e)",
           "description": "Vergleich mit ähnlichen Befunden/Objekten/Inschriften etc. mit Angabe einer Referenz."
@@ -722,10 +719,6 @@
           "label": "Störung",
           "description": "Befund gestört: Ja/Nein"
         },
-        "hasEndDate": {
-          "label": "Enddatum",
-          "description": "Ende des Projektes."
-        },
         "hasFeatureAmount": {
           "label": "Befundanteil",
           "description": "Prozentuale Menge des Einschlusses im Vergleich zum Gesamtbefund, je nach Grabungsmethodik Einteilung prozentual ('5-10%') oder textuell ('wenig')."
@@ -738,9 +731,11 @@
           "label": "Farbe und Intensität",
           "description": "Farbe, soweit erkennbar. Hier kann kombiniert werden: \nBeispielsweise blass hell rot orange."
         },
+        "hasPeriod": {
+          "label": "Grobdatierung"
+        },
         "hasDating": {
-          "label": "Datierung",
-          "description": "Grobdatierung und weitere Datierungen"
+          "label": "Datierung"
         },
         "hasDimensionLength": {
           "label": "Länge",
@@ -761,12 +756,6 @@
         "hasFeatureForm": {
           "label": "Form der stratigrafischen Einheit (im Planum bzw. Profil)",
           "description": "Form der stratigrafischen Einheit. Welche erkennbare Form kann identifiziert werden? (Rund, U-förmig etc.)"
-        },
-        "hasPeriodBeginning": {
-          "label": "Grobdatierung (von)"
-        },
-        "hasPeriodEnd": {
-          "label": "Grobdatierung (bis)"
         }
       }
     },
@@ -837,9 +826,11 @@
           "label": "Erhaltener Anteil",
           "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
         },
+        "hasPeriod": {
+          "label": "Grobdatierung"
+        },
         "hasDating": {
-          "label": "Datierung",
-          "description": "Grobdatierung und weitere Datierungen"
+          "label": "Datierung"
         },
         "hasDimensionWidth": {
           "label": "Breite",
@@ -847,12 +838,6 @@
         },
         "hasObjectTypeInscription": {
           "label": "Ansprache bzw. Art der Inschrift"
-        },
-        "hasPeriodBeginning": {
-          "label": "Grobdatierung (von)"
-        },
-        "hasPeriodEnd": {
-          "label": "Grobdatierung (bis)"
         }
       }
     },
@@ -1183,9 +1168,11 @@
           "label": "Erhaltener Anteil",
           "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
         },
+        "hasPeriod": {
+          "label": "Grobdatierung"
+        },
         "hasDating": {
-          "label": "Datierung",
-          "description": "Grobdatierung und weitere Datierungen"
+          "label": "Datierung"
         },
         "hasDimensionHeight": {
           "label": "Höhe",
@@ -1202,12 +1189,6 @@
         "hasDimensionWidth": {
           "label": "Breite",
           "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
-        },
-        "hasPeriodBeginning": {
-          "label": "Grobdatierung (von)"
-        },
-        "hasPeriodEnd": {
-          "label": "Grobdatierung (bis)"
         }
       }
     },
@@ -1363,9 +1344,11 @@
           "label": "Konstruktionsdetails",
           "description": "Welcher Art ist die Mauerkonstruktion?"
         },
+        "hasPeriod": {
+          "label": "Grobdatierung"
+        },
         "hasDating": {
-          "label": "Datierung",
-          "description": "Grobdatierung und weitere Datierungen"
+          "label": "Datierung"
         },
         "hasDimensionHeight": {
           "label": "Höhe",
@@ -1386,12 +1369,6 @@
         "hasMark": {
           "label": "Steinmetzzeichen",
           "description": "Auflistung möglicher Steinmetzzeichen (z.B. A, AC etc.)"
-        },
-        "hasPeriodBeginning": {
-          "label": "Grobdatierung (von)"
-        },
-        "hasPeriodEnd": {
-          "label": "Grobdatierung (bis)"
         },
         "hasPlasterComponents": {
           "label": "Putz-Komponenten"
@@ -1640,9 +1617,11 @@
           "label": "Erhaltener Anteil",
           "description": "Erhaltener Anteil im Vergleich zum Original (z.B. fragmentarisch)"
         },
+        "hasPeriod": {
+          "label": "Grobdatierung"
+        },
         "hasDating": {
-          "label": "Datierung",
-          "description": "Grobdatierung und weitere Datierungen"
+          "label": "Datierung"
         },
         "hasDimensionDiameter": {
           "label": "Durchmesser",
@@ -1675,12 +1654,6 @@
         "hasDimensionxOther": {
           "label": "Andere Maße",
           "description": "Andere Maße können hier eingegeben werden. Bitte kommentieren."
-        },
-        "hasPeriodBeginning": {
-          "label": "Grobdatierung (von)"
-        },
-        "hasPeriodEnd": {
-          "label": "Grobdatierung (bis)"
         },
         "hasStoragePlace": {
           "label": "Aufbewahrungsort",

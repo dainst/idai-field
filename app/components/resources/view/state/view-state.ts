@@ -51,5 +51,6 @@ export class ViewState {
         (viewState as any).bypassHierarchy = false;
         (viewState as any).searchContext = ViewContext.empty();
         (viewState as any).navigationPaths = {};
+        (viewState as any).customConstraints = {};
     }
 }

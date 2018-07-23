@@ -5,7 +5,6 @@ import {BaseList} from '../../../../app/components/resources/base-list';
  */
 describe('BaseList', () => {
 
-
     let viewFacade;
     let resourcesComponent;
     let loading;
@@ -14,10 +13,11 @@ describe('BaseList', () => {
 
     beforeEach(() => {
 
-        viewFacade = jasmine.createSpyObj('viewFacade', [
-            'getBypassHierarchy', 'navigationPathNotifications', 'isInOverview', 'getSelectedOperations']);
+        viewFacade = jasmine.createSpyObj('viewFacade', ['getBypassHierarchy', 'navigationPathNotifications',
+            'isInOverview', 'getSelectedOperations', 'isReady']);
         viewFacade.navigationPathNotifications.and.returnValue({subscribe: () => {}});
         viewFacade.getSelectedOperations.and.returnValue([]);
+        viewFacade.isReady.and.returnValue(true);
 
         resourcesComponent = jasmine.createSpyObj('resourcesComponent', ['getViewType']);
         loading = jasmine.createSpyObj('loading', ['isLoading']);
@@ -40,6 +40,7 @@ describe('BaseList', () => {
         viewFacade.getBypassHierarchy.and.returnValue(false);
         expect(bl.getPlusButtonStatus()).toEqual('enabled');
     });
+
 
     it('plus button shown in overview', () => {
 
@@ -71,7 +72,7 @@ describe('BaseList', () => {
 
     it('plus button not shown not ready', () => {
 
-        resourcesComponent.ready = false;
+        viewFacade.isReady.and.returnValue(false);
         expect(bl.isPlusButtonShown()).toBeFalsy();
     });
 });

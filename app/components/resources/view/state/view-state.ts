@@ -1,5 +1,5 @@
 import {NavigationPath} from './navigation-path';
-import {ViewContext} from "./view-context";
+import {ViewContext} from './view-context';
 
 /**
  * @author Thomas Kleinke

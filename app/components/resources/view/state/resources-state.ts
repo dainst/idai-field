@@ -2,7 +2,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ViewState} from './view-state';
 import {ObjectUtil} from '../../../../util/object-util';
 import {NavigationPath} from './navigation-path';
-import {ViewContext} from "./view-context";
+import {ViewContext} from './view-context';
 
 /**
  * @author Thomas Kleinke

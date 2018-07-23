@@ -70,7 +70,7 @@ export class ResourcesComponent implements AfterViewChecked {
 
     public setTypeFilters = (types: string[]|undefined) => this.viewFacade.setFilterTypes(types ? types : []);
 
-    public showNoMainTypesWarning = () => this.ready && !this.viewFacade.isInOverview()
+    public isViewWithoutMainTypeDocuments = () => this.ready && !this.viewFacade.isInOverview()
         && this.viewFacade.getSelectedOperations().length < 1 && !this.isEditingGeometry;
 
 

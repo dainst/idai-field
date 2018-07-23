@@ -7,7 +7,7 @@
     <div class="col-md-6 mr-md-auto">
         <div class="row">
             <div id="search-bar-container" class="col-md-9">
-                <resources-search-bar [q]="getQueryString()"
+                <resources-search-bar *ngIf="!isViewWithoutMainTypeDocuments()" [q]="getQueryString()"
                                       [types]="getTypeFilters()"
                                       [relationName]="'isRecordedIn'"
                                       [relationRangeType]="getViewType()"
@@ -46,7 +46,7 @@
      (dragleave)="false"
      (drop)="false">
 
-    <div *ngIf="showNoMainTypesWarning()"
+    <div *ngIf="isViewWithoutMainTypeDocuments()"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
         <em>Legen Sie eine Ressource vom Typ '{{viewFacade.getOperationLabel()}}' in der
             <a href="#" routerLink="/resources/project">Übersicht</a> an, um hier mit ihr arbeiten zu können.

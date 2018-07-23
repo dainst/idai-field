@@ -47,12 +47,6 @@ export class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public showSearchConstraintsOption() {
-
-        return this.viewFacade.getBypassHierarchy();
-    }
-
-
     public getTooltip() {
 
         return this.constraintListItems.length === 0

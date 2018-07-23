@@ -4,7 +4,7 @@
         <input #searchInput
                id="object-search"
                class="form-control"
-               [class.small-search-input]="isTypeSelected()"
+               [class.small-search-input]="showSearchConstraintsOption()"
                [(ngModel)]="q"
                (keyup)="onKeyUp($event)"
                (focus)="showSuggestions()"
@@ -18,7 +18,9 @@
         </search-suggestions>
     </span>
 
-    <search-constraints [type]="isTypeSelected() ? types[0] : undefined"></search-constraints>
+    <search-constraints *ngIf="showSearchConstraintsOption()"
+                        [type]="isTypeSelected() ? types[0] : undefined">
+    </search-constraints>
 
     <div *ngIf="showFiltersMenu" id="filter-button" class="input-group-btn">
         <button id="searchfilter"

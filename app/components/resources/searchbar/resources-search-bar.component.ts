@@ -2,6 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
 import {TypeUtility} from '../../../core/model/type-utility';
+import {ViewFacade} from '../view/view-facade';
 
 @Component({
     moduleId: module.id,
@@ -22,6 +23,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
 
     constructor(private elementRef: ElementRef,
+                private viewFacade: ViewFacade,
                 projectConfiguration: ProjectConfiguration, typeUtility: TypeUtility) {
 
         super(projectConfiguration, typeUtility);
@@ -56,6 +58,12 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
         return this.fulltextSearchInput.nativeElement.ownerDocument.activeElement
             === this.fulltextSearchInput.nativeElement;
+    }
+
+
+    public showSearchConstraintsOption(): boolean {
+
+        return this.viewFacade.getBypassHierarchy();
     }
 
 

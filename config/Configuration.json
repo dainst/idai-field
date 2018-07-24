@@ -1763,7 +1763,6 @@
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        
         "hasObjectTypeInscription": {
           "inputType": "checkboxes",
           "valuelist": [

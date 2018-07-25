@@ -13,18 +13,18 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // all packages
 
-    public static ALL_FIND_ERROR: string = 'all/finderror';
+    public static ALL_FIND_ERROR = 'all/finderror';
 
     // App Package
 
-    public static APP_NO_PROJECT_IDENTIFIER: string = 'app/noprojectidentifier';
-    public static APP_GENERIC_SAVE_ERROR: string = 'app/genericsaveerror';
-    public static APP_ERRORS_IN_CONFIG: string = 'app/errorsinconfig';
+    public static APP_NO_PROJECT_IDENTIFIER = 'app/noprojectidentifier';
+    public static APP_GENERIC_SAVE_ERROR = 'app/genericsaveerror';
+    public static APP_ERRORS_IN_CONFIG = 'app/errorsinconfig';
 
     // Settings Package
 
-    public static SETTINGS_ACTIVATED: string = 'settings/activated';
-    public static SETTINGS_MALFORMED_ADDRESS: string = 'settings/malformed_address';
+    public static SETTINGS_ACTIVATED = 'settings/activated';
+    public static SETTINGS_MALFORMED_ADDRESS = 'settings/malformed_address';
 
     // Import Package
 
@@ -53,92 +53,93 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE = 'importer/failure/nofeatureassignable';
 
     // Backup Package
-    public static BACKUP_DUMP_SUCCESS: string = 'backup/dumpsuccess';
-    public static BACKUP_DUMP_ERROR: string = 'backup/dumperror';
-    public static BACKUP_READ_DUMP_SUCCESS: string = 'backup/readdumpsuccess';
-    public static BACKUP_READ_DUMP_ERROR: string = 'backup/readdumperror';
-    public static BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST: string = 'backup/readdumperror/filenotexist';
-    public static BACKUP_READ_DUMP_ERROR_NO_PROJECT_NAME: string = 'backup/readdumperror/noprojectname';
-    public static BACKUP_READ_DUMP_ERROR_SAME_PROJECT_NAME: string = 'backup/readdumperror/sameprojectname';
+    public static BACKUP_DUMP_SUCCESS = 'backup/dumpsuccess';
+    public static BACKUP_DUMP_ERROR = 'backup/dumperror';
+    public static BACKUP_READ_DUMP_SUCCESS = 'backup/readdumpsuccess';
+    public static BACKUP_READ_DUMP_ERROR = 'backup/readdumperror';
+    public static BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST = 'backup/readdumperror/filenotexist';
+    public static BACKUP_READ_DUMP_ERROR_NO_PROJECT_NAME = 'backup/readdumperror/noprojectname';
+    public static BACKUP_READ_DUMP_ERROR_SAME_PROJECT_NAME = 'backup/readdumperror/sameprojectname';
 
     // Datastore Package
 
-    public static DATASTORE_RESOURCE_ID_EXISTS: string = 'datastore/resourceidexists';
-    public static DATASTORE_NOT_FOUND: string = 'datastore/notfound';
-    public static DATASTORE_GENERIC_ERROR: string = 'datastore/genericerr';
+    public static DATASTORE_RESOURCE_ID_EXISTS = 'datastore/resourceidexists';
+    public static DATASTORE_NOT_FOUND = 'datastore/notfound';
+    public static DATASTORE_GENERIC_ERROR = 'datastore/genericerr';
 
     // Docedit Package
 
-    public static DOCEDIT_SAVE_SUCCESS: string = 'docedit/savesuccess';
-    public static DOCEDIT_DELETE_SUCCESS: string = 'docedit/deletesuccess';
-    public static DOCEDIT_SAVE_ERROR: string = 'docedit/saveerror';
-    public static DOCEDIT_DELETE_ERROR: string = 'docedit/deleteerror';
-    public static DOCEDIT_SAVE_CONFLICT: string = 'docedit/saveconflict';
-    public static DOCEDIT_TYPE_CHANGE_FIELDS_WARNING: string = 'docedit/typechangefieldswarning';
-    public static DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING: string = 'docedit/typechangerelationswarning';
-    public static DOCEDIT_LIESWITHIN_RELATION_REMOVED_WARNING: string = 'docedit/lieswithinrelationremovedwarning';
+    public static DOCEDIT_SAVE_SUCCESS = 'docedit/savesuccess';
+    public static DOCEDIT_DELETE_SUCCESS = 'docedit/deletesuccess';
+    public static DOCEDIT_SAVE_ERROR = 'docedit/saveerror';
+    public static DOCEDIT_DELETE_ERROR = 'docedit/deleteerror';
+    public static DOCEDIT_SAVE_CONFLICT = 'docedit/saveconflict';
+    public static DOCEDIT_TYPE_CHANGE_FIELDS_WARNING = 'docedit/typechangefieldswarning';
+    public static DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING = 'docedit/typechangerelationswarning';
+    public static DOCEDIT_LIESWITHIN_RELATION_REMOVED_WARNING = 'docedit/lieswithinrelationremovedwarning';
 
     // Images Package
 
-    public static IMAGES_SUCCESS_WORLDFILE_UPLOADED: string = 'images/success/worldfileuploaded';
-    public static IMAGES_SUCCESS_GEOREFERENCE_DELETED: string = 'images/success/georeferencedeleted';
-    public static IMAGES_ERROR_FILEREADER: string = 'images/error/filereader';
-    public static IMAGES_ERROR_DUPLICATE_FILENAME: string = 'images/error/duplicatefilename';
-    public static IMAGES_ERROR_DUPLICATE_FILENAMES: string = 'images/error/duplicatefilenames';
-    public static IMAGES_ONE_NOT_FOUND: string = 'images/error/one_notfound';
-    public static IMAGES_N_NOT_FOUND: string = 'images/error/notfound';
+    public static IMAGES_SUCCESS_WORLDFILE_UPLOADED = 'images/success/worldfileuploaded';
+    public static IMAGES_SUCCESS_GEOREFERENCE_DELETED = 'images/success/georeferencedeleted';
+    public static IMAGES_ERROR_FILEREADER = 'images/error/filereader';
+    public static IMAGES_ERROR_DUPLICATE_FILENAME = 'images/error/duplicatefilename';
+    public static IMAGES_ERROR_DUPLICATE_FILENAMES = 'images/error/duplicatefilenames';
+    public static IMAGES_ONE_NOT_FOUND = 'images/error/one_notfound';
+    public static IMAGES_N_NOT_FOUND = 'images/error/notfound';
 
     // Imagestore Package
 
-    public static IMAGESTORE_ERROR_INVALID_PATH: string = 'images/error/mediastore/invalidpath';
-    public static IMAGESTORE_ERROR_INVALID_PATH_READ: string = 'images/error/mediastore/invalidpathread';
-    public static IMAGESTORE_ERROR_INVALID_PATH_WRITE: string = 'images/error/mediastore/invalidpathwrite';
-    public static IMAGESTORE_ERROR_INVALID_PATH_DELETE: string = 'images/error/mediastore/invalidpathdelete';
-    public static IMAGESTORE_ERROR_READ: string = 'images/error/mediastore/read';
-    public static IMAGESTORE_ERROR_WRITE: string = 'images/error/mediastore/write';
-    public static IMAGESTORE_ERROR_DELETE: string = 'images/error/mediastore/delete';
-    public static IMAGESTORE_ERROR_INVALID_WORLDFILE: string = 'images/error/mediastore/invalidworldfile';
-    public static IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS: string = 'images/error/mediastore/unsupportedexts';
+    public static IMAGESTORE_ERROR_INVALID_PATH = 'images/error/mediastore/invalidpath';
+    public static IMAGESTORE_ERROR_INVALID_PATH_READ = 'images/error/mediastore/invalidpathread';
+    public static IMAGESTORE_ERROR_INVALID_PATH_WRITE = 'images/error/mediastore/invalidpathwrite';
+    public static IMAGESTORE_ERROR_INVALID_PATH_DELETE = 'images/error/mediastore/invalidpathdelete';
+    public static IMAGESTORE_ERROR_READ = 'images/error/mediastore/read';
+    public static IMAGESTORE_ERROR_WRITE = 'images/error/mediastore/write';
+    public static IMAGESTORE_ERROR_DELETE = 'images/error/mediastore/delete';
+    public static IMAGESTORE_ERROR_INVALID_WORLDFILE = 'images/error/mediastore/invalidworldfile';
+    public static IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS = 'images/error/mediastore/unsupportedexts';
 
     // Model Package
 
-    public static MODEL_VALIDATION_ERROR_IDEXISTS: string = 'validation/error/idexists';
-    public static MODEL_VALIDATION_ERROR_MISSING_COORDINATES: string = 'validation/error/missingcoordinates';
-    public static MODEL_VALIDATION_ERROR_INVALID_COORDINATES: string = 'validation/error/invalidcoordinates';
-    public static MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE: string = 'validation/error/missinggeometrytype';
-    public static MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE: string = 'validation/error/unsupportedgeometrytype';
+    public static MODEL_VALIDATION_ERROR_IDEXISTS = 'validation/error/idexists';
+    public static MODEL_VALIDATION_ERROR_MISSING_COORDINATES = 'validation/error/missingcoordinates';
+    public static MODEL_VALIDATION_ERROR_INVALID_COORDINATES = 'validation/error/invalidcoordinates';
+    public static MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE = 'validation/error/missinggeometrytype';
+    public static MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE = 'validation/error/unsupportedgeometrytype';
 
     // Resources Package
 
-    public static RESOURCES_SUCCESS_IMAGE_UPLOADED: string = 'resources/success/imageimported';
-    public static RESOURCES_SUCCESS_IMAGES_UPLOADED: string = 'resources/success/imagesimported';
-    public static RESOURCES_SUCCESS_PROJECT_DELETED: string = 'resources/success/projectdeleted';
-    public static RESOURCES_ERROR_TYPE_NOT_FOUND: string = 'resources/error/typenotfound';
-    public static RESOURCES_ERROR_NO_PROJECT_NAME: string = 'resources/error/noprojectname';
-    public static RESOURCES_ERROR_PROJECT_NAME_EXISTS: string = 'resources/error/projectnamexists';
-    public static RESOURCES_ERROR_PROJECT_NAME_NOT_SAME: string = 'resources/error/projectnamenotsame';
-    public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST: string = 'resources/error/oneprojectmustexist';
-    public static RESOURCES_ERROR_PROJECT_DELETED: string = 'resources/error/projectdeleted';
+    public static RESOURCES_SUCCESS_IMAGE_UPLOADED = 'resources/success/imageimported';
+    public static RESOURCES_SUCCESS_IMAGES_UPLOADED = 'resources/success/imagesimported';
+    public static RESOURCES_SUCCESS_PROJECT_DELETED = 'resources/success/projectdeleted';
+    public static RESOURCES_ERROR_TYPE_NOT_FOUND = 'resources/error/typenotfound';
+    public static RESOURCES_ERROR_NO_PROJECT_NAME = 'resources/error/noprojectname';
+    public static RESOURCES_ERROR_PROJECT_NAME_LENGTH = 'resources/error/projectnamelength';
+    public static RESOURCES_ERROR_PROJECT_NAME_EXISTS = 'resources/error/projectnamexists';
+    public static RESOURCES_ERROR_PROJECT_NAME_NOT_SAME = 'resources/error/projectnamenotsame';
+    public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources/error/oneprojectmustexist';
+    public static RESOURCES_ERROR_PROJECT_DELETED = 'resources/error/projectdeleted';
 
     // Validation
 
-    public static VALIDATION_ERROR_MISSINGPROPERTY: string = 'validation/error/missingproperty';
-    public static VALIDATION_ERROR_MISSINGVIEWTYPE: string = 'validation/error/missingviewtype';
-    public static VALIDATION_ERROR_NONOPERATIONVIEWTYPE: string = 'validation/error/nonoperationviewtype';
-    public static VALIDATION_ERROR_TOPLEVELTYPEHASPARENT: string = 'validation/error/topleveltypehasparent';
-    public static VALIDATION_ERROR_INCOMPLETERECORDEDIN: string = 'validation/error/incompleterecordedin';
-    public static VALIDATION_ERROR_NOPROJECTRECORDEDIN: string = 'validation/error/noprojectrecordedin';
-    public static VALIDATION_ERROR_INVALIDINPUTTYPE: string = 'validation/error/invalidinputtype';
-    public static VALIDATION_ERROR_INVALIDTYPE: string = 'validation/error/invalidtype';
-    public static VALIDATION_ERROR_INVALIDFIELD: string = 'validation/error/invalidfield';
-    public static VALIDATION_ERROR_INVALIDFIELDS: string = 'validation/error/invalidfields';
-    public static VALIDATION_ERROR_INVALIDRELATIONFIELD: string = 'validation/error/invalidrelationfield';
-    public static VALIDATION_ERROR_INVALIDRELATIONFIELDS: string = 'validation/error/invalidrelationfields';
-    public static VALIDATION_ERROR_INVALID_NUMERIC_VALUE: string = 'validation/error/invalidnumericvalue';
-    public static VALIDATION_ERROR_INVALID_NUMERIC_VALUES: string = 'validation/error/invalidnumericvalues';
+    public static VALIDATION_ERROR_MISSINGPROPERTY = 'validation/error/missingproperty';
+    public static VALIDATION_ERROR_MISSINGVIEWTYPE = 'validation/error/missingviewtype';
+    public static VALIDATION_ERROR_NONOPERATIONVIEWTYPE = 'validation/error/nonoperationviewtype';
+    public static VALIDATION_ERROR_TOPLEVELTYPEHASPARENT = 'validation/error/topleveltypehasparent';
+    public static VALIDATION_ERROR_INCOMPLETERECORDEDIN = 'validation/error/incompleterecordedin';
+    public static VALIDATION_ERROR_NOPROJECTRECORDEDIN = 'validation/error/noprojectrecordedin';
+    public static VALIDATION_ERROR_INVALIDINPUTTYPE = 'validation/error/invalidinputtype';
+    public static VALIDATION_ERROR_INVALIDTYPE = 'validation/error/invalidtype';
+    public static VALIDATION_ERROR_INVALIDFIELD = 'validation/error/invalidfield';
+    public static VALIDATION_ERROR_INVALIDFIELDS = 'validation/error/invalidfields';
+    public static VALIDATION_ERROR_INVALIDRELATIONFIELD = 'validation/error/invalidrelationfield';
+    public static VALIDATION_ERROR_INVALIDRELATIONFIELDS = 'validation/error/invalidrelationfields';
+    public static VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'validation/error/invalidnumericvalue';
+    public static VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'validation/error/invalidnumericvalues';
 
     // Matrix Package
-    public static MATRIX_WARNING_LOOP_DOCUMENT: string = 'matrix/warning/loopdocument';
+    public static MATRIX_WARNING_LOOP_DOCUMENT = 'matrix/warning/loopdocument';
 
 
 
@@ -588,6 +589,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.RESOURCES_ERROR_PROJECT_NAME_EXISTS] = {
             content: 'Ein Projekt mit dem Namen \'{0}\' existiert bereits.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_ERROR_PROJECT_NAME_LENGTH] = {
+            content: 'Der angegebene Projektname ist um {0} Zeichen zu lang.',
             level: 'danger',
             params: [],
             hidden: false

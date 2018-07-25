@@ -18,6 +18,8 @@ const remote = require('electron').remote;
  */
 export class ProjectsComponent implements OnInit {
 
+    private static PROJECT_NAME_MAX_LENGTH = 18;
+
     public selectedProject: string;
     public newProject: string = '';
     public projectToDelete: string = '';
@@ -67,6 +69,11 @@ export class ProjectsComponent implements OnInit {
         if (this.newProject === '') return this.messages.add([M.RESOURCES_ERROR_NO_PROJECT_NAME]);
         if (this.getProjects().includes(this.newProject)) {
             return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_EXISTS, this.newProject]);
+        }
+
+        const lengthDiff = this.newProject.length - ProjectsComponent.PROJECT_NAME_MAX_LENGTH;
+        if (lengthDiff > 0) {
+            return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_LENGTH, lengthDiff.toString()]);
         }
 
         await this.settingsService.createProject(

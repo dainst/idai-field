@@ -77,13 +77,13 @@ var mainWindow;
 
 function createWindow() {
 
-    const screenWidth = electron.screen.getPrimaryDisplay().workAreaSize.width;
-    const screenHeight = electron.screen.getPrimaryDisplay().workAreaSize.height;
+    var screenWidth = electron.screen.getPrimaryDisplay().workAreaSize.width;
+    var screenHeight = electron.screen.getPrimaryDisplay().workAreaSize.height;
 
     mainWindow = new electron.BrowserWindow({
         width: screenWidth >= 1680 ? 1680 : 1280,
         height: screenHeight >= 1050 ? 1050 : 800,
-        minWidth: 1100,
+        minWidth: 1200, // to allow for displaying project names like 'mmmmmm-mmmmmmm-mmm'
         minHeight: 600,
         webPreferences: {
             nodeIntegration: true,

@@ -460,7 +460,7 @@ describe('resources --', () => {
             'gehen: Mauertyp');
         NavbarPage.clickCloseAllMessages();
         DoceditPage.clickSaveDocument();
-        DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Stratigrafische Einheit'));
+        DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Stratigraphische Einheit'));
         browser.wait(EC.stalenessOf(FieldsViewPage.getFieldElement(0)));
     });
 

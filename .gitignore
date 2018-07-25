@@ -1,3 +1,5 @@
+*.rb
+
 # Logs
 logs
 *.log

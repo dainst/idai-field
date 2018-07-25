@@ -116,7 +116,7 @@
         },
         "hasProcessor": {
           "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+          "description": "Bearbeiter bzw. Bearbeiterin der Befundgruppe."
         },
         "hasCampaign": {
           "label": "Kampagne"
@@ -570,11 +570,11 @@
         },
         "hasBeginningDate": {
           "label": "Startdatum",
-          "description": "Datum an dem die Maßnahme beginnt"
+          "description": "Datum an dem die Aufnahme der Maßnahme begonnen wurde."
         },
         "hasEndDate": {
           "label": "Enddatum",
-          "description": "Ende des Projektes."
+          "description": "Datum an dem die Aufnahme der Maßnahme abgeschlossen wurde."
         },
         "hasDescription": {
           "label": "Beschreibung",
@@ -586,7 +586,7 @@
         },
         "hasProcessor": {
           "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+          "description": "Bearbeiter bzw. Bearbeiterin der Maßnahme."
         },
         "hasSupervisor": {
           "label": "Leiter/Leiterin",
@@ -689,7 +689,7 @@
       }
     },
     "Feature": {
-      "label": "Stratigrafische Einheit",
+      "label": "Stratigraphische Einheit",
       "fields": {
         "hasArea": {
           "label": "Fläche in m2",
@@ -697,11 +697,11 @@
         },
         "hasBeginningDate": {
           "label": "Startdatum",
-          "description": "Datum an dem die Maßnahme beginnt"
+          "description": "Datum an dem die Aufnahme der stratigraphischen Einheit begann."
         },
         "hasEndDate": {
           "label": "Enddatum",
-          "description": "Ende des Projektes."
+          "description": "Datum an dem die Aufnahme der stratigraphischen Einheit endete."
         },
         "hasComparison": {
           "label": "Vergleich(e)",
@@ -725,7 +725,7 @@
         },
         "hasProcessor": {
           "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+          "description": "Bearbeiter bzw. Bearbeiterin der stratigraphischen Einheit."
         },
         "hasColor": {
           "label": "Farbe und Intensität",
@@ -816,7 +816,7 @@
         },
         "hasProcessor": {
           "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+          "description": "Bearbeiter bzw. Bearbeiterin der Inschrift."
         },
         "hasCondition": {
           "label": "Erhaltungszustand",
@@ -858,7 +858,7 @@
         },
         "hasProcessor": {
           "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+          "description": "Bearbeiter bzw. Bearbeiterin der der Abbildung."
         },
         "hasCampaign": {
           "label": "Kampagne"
@@ -1155,7 +1155,7 @@
         },
         "hasProcessor": {
           "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+          "description": "Bearbeiter bzw. Bearbeiterin des Raumes."
         },
         "hasCampaign": {
           "label": "Kampagne"
@@ -1205,7 +1205,7 @@
         },
         "hasProcessor": {
           "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+          "description": "Bearbeiter bzw. Bearbeiterin des Arbeitsgangs."
         },
         "hasOperationClassification": {
           "label": "Klassifikation Arbeitsgang"
@@ -1310,7 +1310,7 @@
         },
         "hasProcessor": {
           "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+          "description": "Bearbeiter bzw. Bearbeiterin der Wandoberfläche."
         },
         "hasSurfaceDecoration": {
           "label": "Oberflächendekoration",
@@ -1586,8 +1586,8 @@
           "description": "Freies Beschreibungsfeld"
         },
         "hasProcessor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Ressouce."
+          "label": "Fundbarbeiter/FundBearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin des Fundes."
         },
         "hasPublicationMaterialSummary": {
           "label": "Material",

@@ -116,6 +116,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_TYPE_NOT_FOUND = 'resources/error/typenotfound';
     public static RESOURCES_ERROR_NO_PROJECT_NAME = 'resources/error/noprojectname';
     public static RESOURCES_ERROR_PROJECT_NAME_LENGTH = 'resources/error/projectnamelength';
+    public static RESOURCES_ERROR_PROJECT_NAME_SYMBOLS = 'resources/error/projectnamesymbols';
     public static RESOURCES_ERROR_PROJECT_NAME_EXISTS = 'resources/error/projectnamexists';
     public static RESOURCES_ERROR_PROJECT_NAME_NOT_SAME = 'resources/error/projectnamenotsame';
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources/error/oneprojectmustexist';
@@ -595,6 +596,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.RESOURCES_ERROR_PROJECT_NAME_LENGTH] = {
             content: 'Der angegebene Projektname ist um {0} Zeichen zu lang.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.RESOURCES_ERROR_PROJECT_NAME_SYMBOLS] = {
+            content: "Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie _ und -.",
             level: 'danger',
             params: [],
             hidden: false

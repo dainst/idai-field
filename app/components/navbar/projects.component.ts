@@ -76,6 +76,11 @@ export class ProjectsComponent implements OnInit {
             return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_LENGTH, lengthDiff.toString()]);
         }
 
+        const allowed = /^[0-9a-z\-_]+$/.test(this.newProject);
+        if (!allowed) {
+            return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_SYMBOLS]);
+        }
+
         await this.settingsService.createProject(
             this.newProject,
             remote.getGlobal('switches') && remote.getGlobal('switches').destroy_before_create

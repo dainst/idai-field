@@ -844,10 +844,6 @@
     "Image": {
       "label": "Abbildung",
       "fields": {
-        "hasCaption": {
-          "label": "Beschriftung",
-          "description": "Feld der Abbildungsbeschriftung."
-        },
         "hasDescription": {
           "label": "Beschreibung",
           "description": "Freies Beschreibungsfeld"
@@ -859,13 +855,6 @@
         "hasProcessor": {
           "label": "Bearbeiter/Bearbeiterin",
           "description": "Bearbeiter bzw. Bearbeiterin der der Abbildung, falls nach der Aufnahme Änderungen erfolgten."
-        },
-        "hasCampaign": {
-          "label": "Kampagne"
-        },
-        "hasPictureObject": {
-          "label": "Abbildungsgegenstand",
-          "description": "Inhalt des Bildes, z.B. 'Arbeitsfoto'"
         }
       }
     },

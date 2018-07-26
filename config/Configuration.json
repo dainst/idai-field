@@ -813,16 +813,16 @@
           "inputType": "input"
         },
         "hasBuildingResearchHistory": {
-          "inputType": "input"
+          "inputType": "text"
         },
         "hasConditionComment": {
           "inputType": "input"
         },
         "hasExcavationHistory": {
-          "inputType": "input"
+          "inputType": "text"
         },
         "hasHistory": {
-          "inputType": "input"
+          "inputType": "text"
         },
         "hasRestauration": {
           "inputType": "boolean"
@@ -1354,7 +1354,7 @@
           ]
         },
         "hasBuildingHistory": {
-          "inputType": "input"
+          "inputType": "text"
         },
         "hasBuildingResearchHistory": {
           "inputType": "text"

@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ProjectConfiguration, FieldDefinition} from 'idai-components-2/core';
 import {ViewFacade} from '../view/view-facade';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
+import {ConstraintIndexer} from '../../../core/datastore/index/constraint-indexer';
 
 
 type ConstraintListItem = { name: string; fieldName: string, label: string; searchTerm: string };
@@ -29,6 +30,7 @@ export class SearchConstraintsComponent implements OnChanges {
     public showConstraintsMenu: boolean = false;
 
     private static textFieldInputTypes: string[] = ['input', 'text', 'unsignedInt', 'float', 'unsignedFloat'];
+    private static dropdownInputTypes: string[] = ['dropdown', 'checkboxes'];
 
 
     constructor(public resourcesSearchBarComponent: ResourcesSearchBarComponent,
@@ -61,7 +63,7 @@ export class SearchConstraintsComponent implements OnChanges {
 
         if (SearchConstraintsComponent.textFieldInputTypes.includes(field.inputType as string)) {
             return 'input';
-        } else if (field.inputType === 'dropdown') {
+        } else if (SearchConstraintsComponent.dropdownInputTypes.includes(field.inputType as string)) {
             return 'dropdown';
         } else {
             return undefined;
@@ -80,8 +82,12 @@ export class SearchConstraintsComponent implements OnChanges {
         if (!this.selectedField || this.searchTerm.length == 0) return;
 
         const constraints: { [name: string]: string } = this.viewFacade.getCustomConstraints();
-        constraints[this.selectedField.name + ':match'] = this.searchTerm;
+        const constraintName: string = this.selectedField.name
+            + ':' + ConstraintIndexer.getDefaultIndexType(this.selectedField);
+        constraints[constraintName] = this.searchTerm;
         await this.viewFacade.setCustomConstraints(constraints);
+
+        console.log(constraints);
 
         this.reset();
     }

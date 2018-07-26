@@ -360,25 +360,31 @@ describe('ConstraintIndexer', () => {
     });
 
 
-    it('index field specified in search configuration', () => {
+    it('index fields specified in search configuration', () => {
 
         projectConfiguration.getTypesMap.and.returnValue({
             type: {
                 fields: [
                     { name: 'identifier' },
                     { name: 'shortDescription' },
-                    { name: 'customField', constraintIndexed: true }
+                    { name: 'customField1', inputType: 'input', constraintIndexed: true },
+                    { name: 'customField2', inputType: 'boolean', constraintIndexed: true },
+                    { name: 'customField3', inputType: 'checkboxes', constraintIndexed: true }
                 ]
             }
         });
 
         const docs = [doc('1')];
-        docs[0].resource.customField = 'testValue';
+        docs[0].resource.customField1 = 'testValue';
+        docs[0].resource.customField2 = true;
+        docs[0].resource.customField3 = ['testValue1', 'testValue2'];
 
         ci = new ConstraintIndexer({}, projectConfiguration, false);
 
         ci.put(docs[0]);
 
-        expect(ci.get('customField:match', 'testValue')).toEqual([indexItem('1')]);
+        expect(ci.get('customField1:match', 'testValue')).toEqual([indexItem('1')]);
+        expect(ci.get('customField2:exist', 'KNOWN')).toEqual([indexItem('1')]);
+        expect(ci.get('customField3:contain', 'testValue1')).toEqual([indexItem('1')]);
     });
 });

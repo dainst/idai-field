@@ -210,14 +210,29 @@ export class ConstraintIndexer {
     }
 
 
+    public static getDefaultIndexType(field: FieldDefinition): string {
+
+        switch (field.inputType) {
+            case 'checkboxes':
+                return 'contain';
+            case 'boolean':
+                return 'exist';
+            default:
+                return 'match';
+        }
+    }
+
+
     private static makeIndexDefinition(field: FieldDefinition)
             : { name: string, indexDefinition: IndexDefinition } {
 
+        const indexType: string = this.getDefaultIndexType(field);
+
         return {
-            name: field.name + ':match',
+            name: field.name + ':' + indexType,
             indexDefinition: {
                 path: 'resource.' + field.name,
-                type: 'match'
+                type: indexType
             }
         };
     }

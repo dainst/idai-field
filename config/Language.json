@@ -854,7 +854,7 @@
         },
         "hasProcessor": {
           "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der der Abbildung, falls nach der Aufnahme Änderungen erfolgten."
+          "description": "Bearbeiter bzw. Bearbeiterin der Abbildung, falls nach der Aufnahme Änderungen erfolgten."
         }
       }
     },
@@ -1567,7 +1567,7 @@
           "description": "Erhaltene Menge in Prozent"
         },
         "hasDate": {
-          "label": "Fundatum",
+          "label": "Funddatum",
           "description": "Datum der Aufnahme des Fundes."
         },
         "hasDescription": {

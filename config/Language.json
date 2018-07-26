@@ -1578,8 +1578,8 @@
           "description": "Erhaltene Menge in Prozent"
         },
         "hasDate": {
-          "label": "Datum",
-          "description": "Datum der Durchführung"
+          "label": "Fundatum",
+          "description": "Datum der Aufnahme des Fundes."
         },
         "hasDescription": {
           "label": "Beschreibung",

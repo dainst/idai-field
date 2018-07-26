@@ -858,7 +858,7 @@
         },
         "hasProcessor": {
           "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der der Abbildung."
+          "description": "Bearbeiter bzw. Bearbeiterin der der Abbildung, falls nach der Aufnahme Änderungen erfolgten."
         },
         "hasCampaign": {
           "label": "Kampagne"

@@ -8,7 +8,7 @@ export module ObjectUtil {
 
         let result = object;
         for (let segment of path.split('.')) {
-            if (result[segment]) result = result[segment];
+            if (result[segment] || result[segment] === false) result = result[segment];
             else return result = undefined;
         }
         return result;

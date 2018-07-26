@@ -376,7 +376,7 @@ describe('ConstraintIndexer', () => {
 
         const docs = [doc('1')];
         docs[0].resource.customField1 = 'testValue';
-        docs[0].resource.customField2 = true;
+        docs[0].resource.customField2 = false;
         docs[0].resource.customField3 = ['testValue1', 'testValue2'];
 
         ci = new ConstraintIndexer({}, projectConfiguration, false);
@@ -384,7 +384,7 @@ describe('ConstraintIndexer', () => {
         ci.put(docs[0]);
 
         expect(ci.get('customField1:match', 'testValue')).toEqual([indexItem('1')]);
-        expect(ci.get('customField2:exist', 'KNOWN')).toEqual([indexItem('1')]);
+        expect(ci.get('customField2:match', 'false')).toEqual([indexItem('1')]);
         expect(ci.get('customField3:contain', 'testValue1')).toEqual([indexItem('1')]);
     });
 });

@@ -122,8 +122,9 @@ export class ConstraintIndexer {
                 break;
 
             case 'match':
-                if (!elForPath) break;
-                ConstraintIndexer.addToIndex(this.matchIndex, doc, indexDefinition.path, elForPath, this.showWarnings);
+                if (!elForPath && elForPath !== false) break;
+                ConstraintIndexer.addToIndex(this.matchIndex, doc, indexDefinition.path, elForPath.toString(),
+                    this.showWarnings);
                 break;
 
             case 'contain':
@@ -215,8 +216,6 @@ export class ConstraintIndexer {
         switch (field.inputType) {
             case 'checkboxes':
                 return 'contain';
-            case 'boolean':
-                return 'exist';
             default:
                 return 'match';
         }

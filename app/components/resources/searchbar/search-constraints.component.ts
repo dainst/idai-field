@@ -5,7 +5,13 @@ import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 import {ConstraintIndexer} from '../../../core/datastore/index/constraint-indexer';
 
 
-type ConstraintListItem = { name: string; fieldName: string, label: string; searchTerm: string };
+type ConstraintListItem = {
+    name: string;
+    fieldName: string,
+    label: string;
+    searchTerm: string,
+    searchInputType?: string
+};
 
 
 @Component({
@@ -57,7 +63,7 @@ export class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    public getSearchInputType(field: FieldDefinition|undefined): 'input'|'dropdown'|undefined {
+    public getSearchInputType(field: FieldDefinition|undefined): 'input'|'dropdown'|'boolean'|undefined {
 
         if (!field) return undefined;
 
@@ -65,6 +71,8 @@ export class SearchConstraintsComponent implements OnChanges {
             return 'input';
         } else if (SearchConstraintsComponent.dropdownInputTypes.includes(field.inputType as string)) {
             return 'dropdown';
+        } else if (field.inputType === 'boolean') {
+            return 'boolean';
         } else {
             return undefined;
         }
@@ -73,7 +81,7 @@ export class SearchConstraintsComponent implements OnChanges {
 
     public selectField(fieldName: string) {
 
-        this.selectedField = this.fields.find(field => field.name === fieldName);
+        this.selectedField = this.fields.find(field => field.name === fieldName)
     }
 
 
@@ -87,8 +95,6 @@ export class SearchConstraintsComponent implements OnChanges {
         constraints[constraintName] = this.searchTerm;
         await this.viewFacade.setCustomConstraints(constraints);
 
-        console.log(constraints);
-
         this.reset();
     }
 
@@ -100,6 +106,16 @@ export class SearchConstraintsComponent implements OnChanges {
         await this.viewFacade.setCustomConstraints(constraints);
 
         this.reset();
+    }
+
+
+    public getSearchTermLabel(constraintListItem: ConstraintListItem): string {
+
+        if (constraintListItem.searchInputType === 'boolean') {
+            return (constraintListItem.searchTerm === 'true') ? 'Ja' : 'Nein';
+        } else {
+            return constraintListItem.searchTerm;
+        }
     }
 
 
@@ -116,11 +132,14 @@ export class SearchConstraintsComponent implements OnChanges {
         const constraints: { [name: string]: string } = this.viewFacade.getCustomConstraints();
         this.constraintListItems = Object.keys(constraints)
             .map(constraintName => {
+                const fieldName: string = SearchConstraintsComponent.getFieldName(constraintName);
+
                 return {
                     name: constraintName,
-                    fieldName: SearchConstraintsComponent.getFieldName(constraintName),
+                    fieldName: fieldName,
                     label: this.getLabel(constraintName),
-                    searchTerm: constraints[constraintName]
+                    searchTerm: constraints[constraintName],
+                    searchInputType: this.getSearchInputType(this.getField(fieldName))
                 }
             });
     }
@@ -141,6 +160,13 @@ export class SearchConstraintsComponent implements OnChanges {
 
         this.selectedField = undefined;
         this.searchTerm = '';
+    }
+
+
+    private getField(fieldName: string): FieldDefinition {
+
+        return this.projectConfiguration.getFieldDefinitions(this.type)
+            .find(field => field.name === fieldName) as FieldDefinition;
     }
 
 

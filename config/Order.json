@@ -36,7 +36,7 @@
     "Drilling": ["hasDrillingEquipment", "hasDimensionDiameter", "hasDimensionHeight", "hasDimensionVerticalExtent"],
     "Sample": ["hasSoilType", "hasSampleType", "hasWeight", "hasLabNumber"],
     "SurveyUnit": ["hasArea", "hasDimensionLength", "hasDimensionWidth", "hasFinds"],
-    "Image": ["hasDescription", "hasCaption", "hasDraughtsmen", "hasProcessor", "hasCampaign", "hasPictureObject"],
+    "Image": ["hasDescription", "hasDraughtsmen", "hasProcessor"],
     "Drawing": ["hasDrawingMaterial", "hasDrawingTool", "hasDrawingType", "hasScale"],
     "Photo": ["hasOriginalType"]
   }

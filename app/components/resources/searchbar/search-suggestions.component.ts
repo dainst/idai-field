@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {Document, Query} from 'idai-components-2/core';
+import {Query} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RoutingService} from '../../routing-service';
@@ -20,7 +20,7 @@ export class SearchSuggestionsComponent implements OnChanges {
     @Input() visible: boolean;
 
     private suggestedDocuments: Array<IdaiFieldDocument> = [];
-    private documents: Array<Document> = [];
+    private documentsFound: boolean;
 
 
     constructor(private routingService: RoutingService,
@@ -28,7 +28,7 @@ export class SearchSuggestionsComponent implements OnChanges {
                 private viewFacade: ViewFacade) {
 
         this.viewFacade.populateDocumentNotifications().subscribe(async documents => {
-            this.documents = documents;
+            this.documentsFound = documents.length > 0;
             await this.updateSuggestions();
         });
     }
@@ -49,13 +49,13 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     public isSuggestionBoxVisible(): boolean {
 
-        return this.visible && this.documents.length == 0;
+        return this.visible && !this.documentsFound;
     }
 
 
     private async updateSuggestions() {
 
-        if (this.viewFacade.getSearchString().length == 0 || this.documents.length > 0) {
+        if (this.viewFacade.getSearchString().length == 0 || this.documentsFound) {
             return this.suggestedDocuments = [];
         }
 
@@ -65,12 +65,10 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     private makeQuery(): Query {
 
-        const query: Query = {
+        return {
             q: this.viewFacade.getSearchString(),
             types: this.viewFacade.getFilterTypes().length > 0 ? this.viewFacade.getFilterTypes() : undefined,
             limit: this.maxSuggestions
         };
-
-        return query;
     }
 }

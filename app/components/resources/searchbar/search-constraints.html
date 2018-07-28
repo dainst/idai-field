@@ -29,7 +29,9 @@
         <select id="constraint-field-select" (change)="selectField($event.target.value)" class="form-control">
             <option value="" [selected]="!selectedField" hidden>Feld auswählen</option>
             <option value=""></option>
-            <option *ngFor="let field of fields" value="{{field.name}}"
+            <option *ngFor="let field of fields"
+                    id="constraint-field-select-option-{{field.name}}"
+                    value="{{field.name}}"
                     [selected]="selectedField && selectedField.name === field.name">
                 {{field.label}}
             </option>

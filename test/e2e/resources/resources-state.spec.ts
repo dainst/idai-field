@@ -220,6 +220,25 @@ describe('resources/state --', function() {
     });
 
 
+    it('search/extended -- perform constraint search', () => {
+
+        OperationBarPage.clickSwitchHierarchyMode();
+
+        ResourcesPage.openEditByDoubleClickResource('S1');
+        DoceditPage.typeInInputField('hasProcessor', 'testvalue');
+        DoceditPage.clickSaveDocument();
+
+        SearchBarPage.clickChooseTypeFilter('operation');
+        ResourcesPage.clickConstraintsMenuButton();
+        ResourcesPage.clickSelectConstraintField('hasProcessor');
+        ResourcesPage.typeInConstraintSearchTerm('testvalue');
+        ResourcesPage.clickAddConstraintButton();
+
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S1')));
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S2')));
+    });
+
+
     it('search/suggestions -- show suggestion for resource from different context', done => {
 
         SearchBarPage.typeInSearchField('SE0');
@@ -408,7 +427,6 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
         OperationBarPage.clickSwitchHierarchyMode();
-        browser.actions().mouseUp().mouseMove({ x: 200, y: 200 }).perform(); // avoid tooltip
         OperationBarPage.performSelectOperation(0);
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('SE1'));

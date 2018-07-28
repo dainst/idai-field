@@ -115,6 +115,24 @@ export class ResourcesPage {
     }
 
 
+    public static clickConstraintsMenuButton() {
+
+        return common.click(element(by.id('constraints-menu-button')));
+    }
+
+
+    public static clickSelectConstraintField(fieldName: string) {
+
+        common.click(element(by.id('constraint-field-select-option-' + fieldName)));
+    };
+
+
+    public static clickAddConstraintButton() {
+
+        common.click(element(by.id('add-constraint-button')));
+    }
+
+
     // get text
 
     public static getListItemIdentifierText(itemNr) {
@@ -256,17 +274,24 @@ export class ResourcesPage {
 
     // type in
 
-    public static typeInListModeInputField(identifier, index, inputText) {
+    public static typeInListModeInputField(identifier: string, index: number, inputText: string) {
 
         return common.typeIn(this.getListModeInputField(identifier, index), inputText);
     }
 
 
-    public static typeInNewResourceAndHitEnterInList (inputText) {
+    public static typeInNewResourceAndHitEnterInList(inputText: string) {
   
-        browser.wait(EC.visibilityOf(element.all(by.css('#list .identifier-input')).first()), delays.ECWaitTime);
+        browser.wait(EC.visibilityOf(element.all(by.css('#list .identifier-input')).first()),
+            delays.ECWaitTime);
         common.typeIn(element.all(by.css('#list .identifier-input')).last(), inputText);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
+    }
+
+
+    public static typeInConstraintSearchTerm(inputText: string) {
+
+        return common.typeIn(element(by.id('constraint-search-term-input')), inputText);
     }
 
 

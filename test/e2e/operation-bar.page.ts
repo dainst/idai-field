@@ -11,7 +11,8 @@ export class OperationBarPage {
 
     public static clickSwitchHierarchyMode() {
 
-        return common.click(element(by.id('hierarchy-mode-switch')));
+        common.click(element(by.id('hierarchy-mode-switch')));
+        browser.actions().mouseUp().mouseMove({ x: 200, y: 200 }).perform(); // avoid tooltip
     }
 
 

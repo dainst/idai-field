@@ -235,7 +235,7 @@ describe('resources/state --', function() {
         ResourcesSearchBarPage.typeInConstraintSearchTerm('testvalue');
         ResourcesSearchBarPage.clickAddConstraintButton();
 
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S1')));
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S2')));
     });
 

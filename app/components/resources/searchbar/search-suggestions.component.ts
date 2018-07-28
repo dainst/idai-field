@@ -55,7 +55,8 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     private async updateSuggestions() {
 
-        if (this.viewFacade.getSearchString().length == 0 || this.documentsFound) {
+        if ((this.viewFacade.getSearchString().length === 0 && this.viewFacade.getFilterTypes().length === 0)
+                || this.documentsFound) {
             return this.suggestedDocuments = [];
         }
 

@@ -270,10 +270,10 @@ describe('syncing --', function() {
         testDocument.resource.shortDescription = 'Testfund' + nr + '_alternative1';
         await updateTestDoc(testDocument);
         DoceditPage.typeInInputField('shortDescription', 'Testfund' + nr + '_alternative2');
-        DoceditPage.clickSaveDocument();
+        DoceditPage.clickSaveDocument(true, false);
         DoceditPage.clickChooseRightRevision();
         DoceditPage.clickSolveConflictButton();
-        DoceditPage.clickSaveDocument();
+        DoceditPage.clickSaveDocument(true, false);
         expect(ResourcesPage.getListItemEl('testf' + nr).getAttribute('class'))
             .not.toContain('conflicted');
 

@@ -42,7 +42,8 @@ export class DoceditPage {
     };
 
 
-    public static clickSaveDocument = function(clickMsgAway = true) {
+    public static clickSaveDocument = function(clickMsgAway: boolean = true,
+                                               waitForModalToClose: boolean = true) {
 
         return browser.wait(EC.visibilityOf(element(by.id('document-edit-button-save-document'))), delays.ECWaitTime)
             .then(function() {
@@ -57,7 +58,11 @@ export class DoceditPage {
                         })
                     }
                 )
-            }).then(() => browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper')))));
+            }).then(() => {
+                if (waitForModalToClose) {
+                    browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
+                }
+            });
     };
 
 

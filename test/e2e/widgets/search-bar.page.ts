@@ -47,6 +47,12 @@ export class SearchBarPage {
     }
 
 
+    public static clickSearchBarInputField() {
+
+        return common.click(SearchBarPage.getSearchBarInputField());
+    }
+
+
     // type in
 
     public static typeInSearchField(text) {

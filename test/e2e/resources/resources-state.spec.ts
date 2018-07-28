@@ -360,6 +360,36 @@ describe('resources/state --', function() {
     });
 
 
+    it('search/suggestions -- show suggestion for extended search query', async done => {
+
+        NavbarPage.clickNavigateToExcavation();
+        OperationBarPage.performSelectOperation(1);
+
+        ResourcesPage.openEditByDoubleClickResource('SE2');
+        DoceditPage.clickSelectOption('hasLayerClassification', 1);
+        DoceditPage.clickSaveDocument();
+
+        OperationBarPage.performSelectOperation(0);
+        OperationBarPage.clickSwitchHierarchyMode();
+
+        SearchBarPage.clickChooseTypeFilter('feature-layer');
+        ResourcesSearchBarPage.clickConstraintsMenuButton();
+        ResourcesSearchBarPage.clickSelectConstraintField('hasLayerClassification');
+        ResourcesSearchBarPage.clickSelectDropdownValue(1);
+        ResourcesSearchBarPage.clickAddConstraintButton();
+        SearchBarPage.clickSearchBarInputField();
+
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE2')));
+        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesSearchBarPage.getSuggestions().then(suggestions => {
+            expect(suggestions.length).toBe(1);
+            expect(suggestions[0].getText()).toEqual('SE2');
+        });
+
+        done();
+    });
+
+
     it('operate in different views', () => {
 
         ResourcesPage.performCreateResource('trench3', 'trench');

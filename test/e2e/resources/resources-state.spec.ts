@@ -158,7 +158,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
+    it('search -- set type of newly created resource to filter type if a child type is chosen as filter type', () => {
 
         NavbarPage.clickNavigateToExcavation();
         browser.sleep(delays.shortRest * 3);
@@ -166,7 +166,8 @@ describe('resources/state --', function() {
         const checkTypeIcon = () => {
 
             SearchBarPage.clickChooseTypeFilter('feature-architecture');
-            ResourcesPage.getCreateDocumentButtonTypeCharacter().then(character => expect(character).toEqual('A'));
+            ResourcesPage.getCreateDocumentButtonTypeCharacter()
+                .then(character => expect(character).toEqual('A'));
 
             SearchBarPage.clickChooseTypeFilter('feature');
             browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonTypeIcon()), delays.ECWaitTime);
@@ -175,33 +176,32 @@ describe('resources/state --', function() {
             browser.wait(EC.stalenessOf(ResourcesPage.getCreateDocumentButtonTypeIcon()), delays.ECWaitTime);
         };
 
-        const createResourceWithPresetType = (identifier: string, selectGeometryType: boolean) => {
+        const createResourceWithPresetType = (identifier: string, listMode: boolean) => {
 
             SearchBarPage.clickChooseTypeFilter('feature-layer');
-            ResourcesPage.getCreateDocumentButtonTypeCharacter().then(character => expect(character).toEqual('E'));
+            ResourcesPage.getCreateDocumentButtonTypeCharacter()
+                .then(character => expect(character).toEqual('E'));
             ResourcesPage.clickCreateResource();
-            if (selectGeometryType) ResourcesPage.clickSelectGeometryType();
 
-            ResourcesPage.isListMode().then(function(isListMode) {
-                if (isListMode) {
-                    ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);
-                } else {
-                    DoceditPage.typeInInputField('identifier', identifier);
-                    ResourcesPage.scrollUp();
-                    DoceditPage.clickSaveDocument();
-                }
-            });
+            if (listMode) {
+                ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);
+            } else {
+                ResourcesPage.clickSelectGeometryType();
+                DoceditPage.typeInInputField('identifier', identifier);
+                ResourcesPage.scrollUp();
+                DoceditPage.clickSaveDocument();
+            }
 
             browser.sleep(delays.shortRest);
         };
 
         checkTypeIcon();
-        createResourceWithPresetType('1', true);
+        createResourceWithPresetType('1', false);
         DetailSidebarPage.getTypeFromDocView().then(character => expect(character).toEqual('Erdbefund'));
 
         ResourcesPage.clickListModeButton();
         checkTypeIcon();
-        createResourceWithPresetType('2', false);
+        createResourceWithPresetType('2', true);
     });
 
 

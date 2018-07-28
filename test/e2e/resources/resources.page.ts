@@ -218,13 +218,6 @@ export class ResourcesPage {
     }
 
 
-    public static isListMode() {
-
-        let listBtn = element(by.css('#map-mode-button.active'));
-        return listBtn.isPresent();
-    }
-
-
     public static getResourceTypeOption(typeName: string) {
 
         return element(by.id('choose-type-option-' + typeName));

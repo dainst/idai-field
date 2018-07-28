@@ -170,7 +170,9 @@ describe('resources --', () => {
 
         browser.sleep(5000);
 
-        ResourcesPage.performCreateResource('', 'feature', 'shortDescription', 'Text', undefined, false);
+        ResourcesPage.performCreateResource('', 'feature',
+            'shortDescription', 'Text', undefined,
+            false, false);
 
         NavbarPage.awaitAlert('identifier', false);
         NavbarPage.clickCloseAllMessages();
@@ -181,8 +183,10 @@ describe('resources --', () => {
 
     it('messages -- warn if an existing identifier is used', () => {
 
-        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
-        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
+        ResourcesPage.performCreateResource('12',undefined,undefined,
+            undefined,undefined,false);
+        ResourcesPage.performCreateResource('12',undefined,undefined,
+            undefined,undefined,false, false);
 
         NavbarPage.awaitAlert('existiert bereits', false);
         NavbarPage.clickCloseAllMessages();
@@ -193,8 +197,10 @@ describe('resources --', () => {
 
     it('messages -- do not warn if two different identifiers start with the same string', () => {
 
-        ResourcesPage.performCreateResource('120',undefined,undefined,undefined,undefined,false);
-        ResourcesPage.performCreateResource('12',undefined,undefined,undefined,undefined,false);
+        ResourcesPage.performCreateResource('120',undefined,undefined,
+            undefined,undefined,false);
+        ResourcesPage.performCreateResource('12',undefined,undefined,
+            undefined,undefined,false, false);
 
         expect(NavbarPage.getMessageText()).toContain('erfolgreich');
     });

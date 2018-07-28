@@ -23,30 +23,28 @@ export class DocumentPickerComponent implements OnChanges {
     @Output() documentSelected: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     public documents: Array<IdaiFieldDocument>;
-    public fetchDocsRunning = false;
 
-    protected query: Query = {};
+    protected query: Query = { limit: 50 };
 
 
     constructor(private datastore: IdaiFieldDocumentDatastore,
                 private projectConfiguration: ProjectConfiguration,
-                private loading: Loading) {
+                private loading: Loading) {}
 
-        this.query = {};
-        this.fetchDocuments();
-    }
+
+    public isLoading = () => this.loading.isLoading();
 
 
     async ngOnChanges() {
 
-        await this.fetchDocuments();
+        await this.updateResultList();
     }
 
 
     public async setQueryString(q: string) {
 
         this.query.q = q;
-        await this.fetchDocuments();
+        await this.updateResultList();
     }
 
 
@@ -57,26 +55,31 @@ export class DocumentPickerComponent implements OnChanges {
         } else {
             delete this.query.types;
         }
-        await this.fetchDocuments();
+        await this.updateResultList();
     }
 
 
-    /**
-     * Populates the document list with all documents
-     * from the datastore which match the current query.
-     */
-    private async fetchDocuments() {
+    public isQuerySpecified(): boolean {
 
-        if (this.fetchDocsRunning) return;
-        this.fetchDocsRunning = true;
+        return ((this.query.q !== undefined && this.query.q.length > 0)
+            || (this.query.types !== undefined && this.query.types.length > 0));
+    }
+
+
+    private async updateResultList() {
 
         this.documents = [];
+        if (this.isQuerySpecified()) await this.fetchDocuments();
+    }
+
+
+    private async fetchDocuments() {
+
         this.loading.start();
 
         try {
             const result = await this.datastore.find(this.query);
             this.documents = this.filterNotAllowedRelationDomainTypes(result.documents);
-            this.fetchDocsRunning = false;
         } catch (err) {
             console.error(err);
         } finally {

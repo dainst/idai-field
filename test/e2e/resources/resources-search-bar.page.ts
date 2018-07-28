@@ -28,9 +28,21 @@ export class ResourcesSearchBarPage {
     };
 
 
+    public static clickSelectBooleanValue(value: boolean) {
+
+        common.click(element(by.id('constraint-search-term-boolean-select-option-' + value)));
+    }
+
+
     public static clickAddConstraintButton() {
 
         common.click(element(by.id('add-constraint-button')));
+    }
+
+
+    public static clickRemoveConstraintButton(fieldName: string) {
+
+        common.click(element(by.id('remove-constraint-button-' + fieldName)));
     }
 
 

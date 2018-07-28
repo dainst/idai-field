@@ -17,7 +17,8 @@
         Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
     </div>
 
-    <div *ngFor="let constraint of constraintListItems" class="constraint-list-item"
+    <div *ngFor="let constraint of constraintListItems"
+         id="remove-constraint-button-{{constraint.fieldName}}" class="constraint-list-item"
          (click)="removeConstraint(constraint.name); $event.stopPropagation();">
         <div class="constraint-list-item-text">
             <em>{{constraint.label}}:</em> {{getSearchTermLabel(constraint)}}
@@ -52,8 +53,8 @@
                 id="constraint-search-term-boolean-select" [(ngModel)]="searchTerm" class="form-control">
             <option value="" hidden [selected]="searchTerm.length === 0">Suchbegriff auswählen</option>
             <option value=""></option>
-            <option value="true">Ja</option>
-            <option value="false">Nein</option>
+            <option id="constraint-search-term-boolean-select-option-true" value="true">Ja</option>
+            <option id="constraint-search-term-boolean-select-option-false" value="false">Nein</option>
         </select>
 
         <div *ngIf="searchTerm.length > 0" id="add-constraint-button" class="btn btn-primary"

@@ -109,6 +109,13 @@ export class DoceditPage {
     };
 
 
+    public static clickBooleanRadioButton(fieldName: string, radioButtonIndex: number) {
+
+        browser.wait(EC.visibilityOf(element(by.id('edit-form-element-' + fieldName))), delays.ECWaitTime);
+        element.all(by.css('#edit-form-element-' + fieldName + ' input')).get(radioButtonIndex).click();
+    }
+
+
     // get text
 
     public static getInputFieldValue = function(index) {

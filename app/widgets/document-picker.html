@@ -18,6 +18,7 @@
     <div id="document-picker-placeholder" *ngIf="!documents || documents.length == 0">
         <br>
         <loading-icon></loading-icon>
+        <span *ngIf="!isQuerySpecified()">Keine Suchkriterien angegeben</span>
         <span *ngIf="isQuerySpecified() && !isLoading()">Keine Ziele gefunden</span>
     </div>
 </div>

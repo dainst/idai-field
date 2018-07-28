@@ -68,6 +68,7 @@ export class SearchSuggestionsComponent implements OnChanges {
         return {
             q: this.viewFacade.getSearchString(),
             types: this.viewFacade.getFilterTypes().length > 0 ? this.viewFacade.getFilterTypes() : undefined,
+            constraints: this.viewFacade.getCustomConstraints(),
             limit: this.maxSuggestions
         };
     }

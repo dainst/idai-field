@@ -10,9 +10,7 @@
                name="searchInput"
                type="text"
                placeholder="Suchen...">
-        <search-suggestions [q]="q"
-                            [types]="isTypeSelected() ? types : undefined"
-                            [maxSuggestions]="5"
+        <search-suggestions [maxSuggestions]="5"
                             [visible]="suggestionsVisible">
         </search-suggestions>
     </span>

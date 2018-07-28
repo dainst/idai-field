@@ -16,8 +16,6 @@ import {ViewFacade} from '../view/view-facade';
  */
 export class SearchSuggestionsComponent implements OnChanges {
 
-    @Input() q: string = '';
-    @Input() types: string[]|undefined;
     @Input() maxSuggestions: number;
     @Input() visible: boolean;
 
@@ -57,7 +55,9 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     private async updateSuggestions() {
 
-        if (this.q.length == 0 || this.documents.length > 0) return this.suggestedDocuments = [];
+        if (this.viewFacade.getSearchString().length == 0 || this.documents.length > 0) {
+            return this.suggestedDocuments = [];
+        }
 
         this.suggestedDocuments = (await this.datastore.find(this.makeQuery())).documents;
     }
@@ -65,8 +65,11 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     private makeQuery(): Query {
 
-        const query: Query = { q: this.q, limit: this.maxSuggestions };
-        if (this.types) query.types = this.types;
+        const query: Query = {
+            q: this.viewFacade.getSearchString(),
+            types: this.viewFacade.getFilterTypes().length > 0 ? this.viewFacade.getFilterTypes() : undefined,
+            limit: this.maxSuggestions
+        };
 
         return query;
     }

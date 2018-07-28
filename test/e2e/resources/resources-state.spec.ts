@@ -240,7 +240,26 @@ describe('resources/state --', function() {
     });
 
 
-   it('search/extended -- perform constraint search for boolean field', () => {
+    it('search/extended -- perform constraint search for dropdown field', () => {
+
+        OperationBarPage.clickSwitchHierarchyMode();
+
+        ResourcesPage.openEditByDoubleClickResource('SE2');
+        DoceditPage.clickSelectOption('hasLayerClassification', 1);
+        DoceditPage.clickSaveDocument();
+
+        SearchBarPage.clickChooseTypeFilter('feature-layer');
+        ResourcesSearchBarPage.clickConstraintsMenuButton();
+        ResourcesSearchBarPage.clickSelectConstraintField('hasLayerClassification');
+        ResourcesSearchBarPage.clickSelectDropdownValue(1);
+        ResourcesSearchBarPage.clickAddConstraintButton();
+
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE2')));
+        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE5')));
+    });
+
+
+    it('search/extended -- perform constraint search for boolean field', () => {
 
         OperationBarPage.clickSwitchHierarchyMode();
 

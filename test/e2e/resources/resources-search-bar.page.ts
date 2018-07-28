@@ -1,6 +1,8 @@
-import {element, by} from 'protractor';
+import {element, by, browser, protractor} from 'protractor';
 
 const common = require('../common.js');
+const EC = protractor.ExpectedConditions;
+const delays = require('../config/delays');
 
 
 /**
@@ -26,6 +28,13 @@ export class ResourcesSearchBarPage {
 
         common.click(element(by.id('constraint-field-select-option-' + fieldName)));
     };
+
+
+    public static clickSelectDropdownValue(optionIndex: number) {
+
+        browser.wait(EC.visibilityOf(element(by.id('constraint-search-term-select'))), delays.ECWaitTime);
+        element.all(by.css('#constraint-search-term-select option')).get(optionIndex + 1).click();
+    }
 
 
     public static clickSelectBooleanValue(value: boolean) {

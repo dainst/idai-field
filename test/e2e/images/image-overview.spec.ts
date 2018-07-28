@@ -232,9 +232,12 @@ describe('images --', function() {
 
         ImageOverviewPage.clickCell(0);
         ImageOverviewPage.clickLinkButton();
-        ImageOverviewPage.getLinkModalListEntries().then(esBefore => expect(esBefore.length).toBeGreaterThan(2));
+        SearchBarPage.typeInSearchField('S');
+        ImageOverviewPage.getLinkModalListEntries()
+            .then(esBefore => expect(esBefore.length).toBeGreaterThan(2));
         SearchBarPage.clickChooseTypeFilter('operation-trench');
-        ImageOverviewPage.getLinkModalListEntries().then(esAfter => expect(esAfter.length).toBe(2));
+        ImageOverviewPage.getLinkModalListEntries()
+            .then(esAfter => expect(esAfter.length).toBe(2));
         done();
     });
 });

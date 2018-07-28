@@ -293,6 +293,23 @@ describe('resources/state --', function() {
     });
 
 
+    it('search/extended -- remove field from dropdown after adding constraint', () => {
+
+        OperationBarPage.clickSwitchHierarchyMode();
+
+        SearchBarPage.clickChooseTypeFilter('operation');
+        ResourcesSearchBarPage.clickConstraintsMenuButton();
+        ResourcesSearchBarPage.clickSelectConstraintField('hasProcessor');
+
+        ResourcesSearchBarPage.typeInConstraintSearchTerm('testvalue');
+        ResourcesSearchBarPage.clickAddConstraintButton();
+
+        browser.wait(EC.stalenessOf(
+            ResourcesSearchBarPage.getConstraintFieldOption('hasProcessor')
+        ));
+    });
+
+
     it('search/suggestions -- show suggestion for resource from different context', done => {
 
         SearchBarPage.typeInSearchField('SE0');

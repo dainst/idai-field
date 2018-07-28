@@ -26,7 +26,7 @@ export class ResourcesSearchBarPage {
 
     public static clickSelectConstraintField(fieldName: string) {
 
-        common.click(element(by.id('constraint-field-select-option-' + fieldName)));
+        common.click(ResourcesSearchBarPage.getConstraintFieldOption(fieldName));
     };
 
 
@@ -72,6 +72,12 @@ export class ResourcesSearchBarPage {
     public static getFirstSuggestion() {
 
         return element(by.css('.suggestion-container .title'));
+    }
+
+
+    public static getConstraintFieldOption(fieldName: string) {
+
+        return element(by.id('constraint-field-select-option-' + fieldName));
     }
 
 

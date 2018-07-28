@@ -4,7 +4,8 @@ import {Document} from 'idai-components-2/core';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
-import {IndexFacade} from "../index/index-facade";
+import {IndexFacade} from '../index/index-facade';
+import {ObjectUtil} from '../../../util/object-util';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -78,13 +79,17 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         if (!this.suppressWait) await this.datastore.ready();
 
-        if (query.types) {
-            query.types.forEach(type => this.typeConverter.validateTypeToBeOfClass(type, this.typeClass));
+        const clonedQuery: Query = ObjectUtil.cloneObject(query);
+
+        if (clonedQuery.types) {
+            clonedQuery.types.forEach(type => {
+                this.typeConverter.validateTypeToBeOfClass(type, this.typeClass);
+            });
         } else {
-            query.types = this.typeConverter.getTypesForClass(this.typeClass);
+            clonedQuery.types = this.typeConverter.getTypesForClass(this.typeClass);
         }
 
-        return this.getDocumentsForIds(this.findIds(query), query.limit);
+        return this.getDocumentsForIds(this.findIds(clonedQuery), clonedQuery.limit);
     }
 
 

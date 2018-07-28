@@ -57,7 +57,7 @@ export class DoceditPage {
                         })
                     }
                 )
-            });
+            }).then(() => browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper')))));
     };
 
 

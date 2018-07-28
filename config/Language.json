@@ -1575,7 +1575,7 @@
           "description": "Freies Beschreibungsfeld"
         },
         "hasProcessor": {
-          "label": "Fundbarbeiter/FundBearbeiterin",
+          "label": "Fundbearbeiter/Fundbearbeiterin",
           "description": "Bearbeiter bzw. Bearbeiterin des Fundes."
         },
         "hasPublicationMaterialSummary": {

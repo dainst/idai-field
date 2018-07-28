@@ -9,6 +9,7 @@ import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {RelationsViewPage} from '../widgets/relations-view.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {OperationBarPage} from '../operation-bar.page';
+import {ResourcesSearchBarPage} from './resources-search-bar.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -229,10 +230,10 @@ describe('resources/state --', function() {
         DoceditPage.clickSaveDocument();
 
         SearchBarPage.clickChooseTypeFilter('operation');
-        ResourcesPage.clickConstraintsMenuButton();
-        ResourcesPage.clickSelectConstraintField('hasProcessor');
-        ResourcesPage.typeInConstraintSearchTerm('testvalue');
-        ResourcesPage.clickAddConstraintButton();
+        ResourcesSearchBarPage.clickConstraintsMenuButton();
+        ResourcesSearchBarPage.clickSelectConstraintField('hasProcessor');
+        ResourcesSearchBarPage.typeInConstraintSearchTerm('testvalue');
+        ResourcesSearchBarPage.clickAddConstraintButton();
 
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S1')));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S2')));
@@ -242,8 +243,8 @@ describe('resources/state --', function() {
     it('search/suggestions -- show suggestion for resource from different context', done => {
 
         SearchBarPage.typeInSearchField('SE0');
-        browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesPage.getSuggestions().then(suggestions => {
+        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesSearchBarPage.getSuggestions().then(suggestions => {
             expect(suggestions.length).toBe(1);
             expect(suggestions[0].getText()).toEqual('SE0');
         });
@@ -256,8 +257,8 @@ describe('resources/state --', function() {
 
         SearchBarPage.typeInSearchField('S');
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
-        browser.wait(EC.invisibilityOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
+        browser.wait(EC.invisibilityOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesSearchBarPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
 
         done();
     });
@@ -266,8 +267,8 @@ describe('resources/state --', function() {
     it('search/suggestions -- do not suggest project document', done => {
 
         SearchBarPage.typeInSearchField('te');
-        browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesPage.getSuggestions().then(suggestions => {
+        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesSearchBarPage.getSuggestions().then(suggestions => {
             expect(suggestions.length).toBe(1);
             expect(suggestions[0].getText()).toEqual('testf1');
         });
@@ -279,8 +280,8 @@ describe('resources/state --', function() {
     it('search/suggestions -- delete query string after following suggestion link', async done => {
 
         SearchBarPage.typeInSearchField('SE0');
-        browser.wait(EC.presenceOf(ResourcesPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesPage.clickFirstSuggestion();
+        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesSearchBarPage.clickFirstSuggestion();
 
         NavbarPage.clickNavigateToProject();
         expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');

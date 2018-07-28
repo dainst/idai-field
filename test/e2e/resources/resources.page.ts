@@ -109,30 +109,6 @@ export class ResourcesPage {
     }
 
 
-    public static clickFirstSuggestion() {
-
-        return common.click(ResourcesPage.getFirstSuggestion());
-    }
-
-
-    public static clickConstraintsMenuButton() {
-
-        return common.click(element(by.id('constraints-menu-button')));
-    }
-
-
-    public static clickSelectConstraintField(fieldName: string) {
-
-        common.click(element(by.id('constraint-field-select-option-' + fieldName)));
-    };
-
-
-    public static clickAddConstraintButton() {
-
-        common.click(element(by.id('add-constraint-button')));
-    }
-
-
     // get text
 
     public static getListItemIdentifierText(itemNr) {
@@ -254,24 +230,6 @@ export class ResourcesPage {
     }
 
 
-    public static getSuggestionsBox() {
-
-        return element(by.id('search-suggestions'));
-    }
-
-
-    public static getSuggestions() {
-
-        return element.all(by.css('.suggestion-container .title'));
-    }
-
-
-    public static getFirstSuggestion() {
-
-        return element(by.css('.suggestion-container .title'));
-    }
-
-
     // type in
 
     public static typeInListModeInputField(identifier: string, index: number, inputText: string) {
@@ -286,12 +244,6 @@ export class ResourcesPage {
             delays.ECWaitTime);
         common.typeIn(element.all(by.css('#list .identifier-input')).last(), inputText);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
-    }
-
-
-    public static typeInConstraintSearchTerm(inputText: string) {
-
-        return common.typeIn(element(by.id('constraint-search-term-input')), inputText);
     }
 
 

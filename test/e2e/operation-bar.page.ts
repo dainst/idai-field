@@ -11,6 +11,7 @@ export class OperationBarPage {
 
     public static clickSwitchHierarchyMode() {
 
+        browser.wait(EC.stalenessOf(element(by.css('.loading-icon'))), delays.ECWaitTime);
         common.click(element(by.id('hierarchy-mode-switch')));
         browser.actions().mouseUp().mouseMove({ x: 200, y: 200 }).perform(); // avoid tooltip
     }

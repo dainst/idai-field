@@ -363,14 +363,14 @@ describe('resources/state --', function() {
     it('search/suggestions -- show suggestion for extended search query', async done => {
 
         NavbarPage.clickNavigateToExcavation();
-        OperationBarPage.performSelectOperation(1);
+        OperationBarPage.clickSwitchHierarchyMode();
+        OperationBarPage.performSelectOperation(2);
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
         DoceditPage.clickSelectOption('hasLayerClassification', 1);
         DoceditPage.clickSaveDocument();
 
-        OperationBarPage.performSelectOperation(0);
-        OperationBarPage.clickSwitchHierarchyMode();
+        OperationBarPage.performSelectOperation(1);
 
         SearchBarPage.clickChooseTypeFilter('feature-layer');
         ResourcesSearchBarPage.clickConstraintsMenuButton();

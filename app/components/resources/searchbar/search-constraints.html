@@ -28,7 +28,7 @@
 
     <div *ngIf="fields && fields.length > 0" class="form-inline">
         <select id="constraint-field-select" (change)="selectField($event.target.value)" class="form-control">
-            <option value="" [selected]="!selectedField" hidden>Feld auswählen</option>
+            <option value="" [selected]="!selectedField" hidden>Feld wählen</option>
             <option value=""></option>
             <option *ngFor="let field of fields"
                     id="constraint-field-select-option-{{field.name}}"
@@ -44,14 +44,14 @@
 
         <select *ngIf="getSearchInputType(selectedField) === 'dropdown'"
                 id="constraint-search-term-select" [(ngModel)]="searchTerm" class="form-control">
-            <option value="" hidden [selected]="searchTerm.length === 0">Suchbegriff auswählen</option>
+            <option value="" hidden [selected]="searchTerm.length === 0">Suchbegriff wählen</option>
             <option value=""></option>
             <option *ngFor="let value of selectedField.valuelist" value="{{value}}">{{value}}</option>
         </select>
 
         <select *ngIf="getSearchInputType(selectedField) === 'boolean'"
                 id="constraint-search-term-boolean-select" [(ngModel)]="searchTerm" class="form-control">
-            <option value="" hidden [selected]="searchTerm.length === 0">Suchbegriff auswählen</option>
+            <option value="" hidden [selected]="searchTerm.length === 0">Suchbegriff wählen</option>
             <option value=""></option>
             <option id="constraint-search-term-boolean-select-option-true" value="true">Ja</option>
             <option id="constraint-search-term-boolean-select-option-false" value="false">Nein</option>

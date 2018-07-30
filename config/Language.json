@@ -332,7 +332,7 @@
       }
     },
     "Building": {
-      "label": "Bauaufnahme",
+      "label": "Bauwerk",
       "fields": {
         "hasBuildingHistory": {
           "label": "Baugeschichte",

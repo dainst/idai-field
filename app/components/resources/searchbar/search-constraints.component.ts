@@ -81,7 +81,8 @@ export class SearchConstraintsComponent implements OnChanges {
 
     public selectField(fieldName: string) {
 
-        this.selectedField = this.fields.find(field => field.name === fieldName)
+        this.selectedField = this.fields.find(field => field.name === fieldName);
+        this.searchTerm = '';
     }
 
 

@@ -379,7 +379,6 @@ describe('resources/state --', function() {
         ResourcesSearchBarPage.clickAddConstraintButton();
         SearchBarPage.clickSearchBarInputField();
 
-        browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE2')));
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.getSuggestions().then(suggestions => {
             expect(suggestions.length).toBe(1);

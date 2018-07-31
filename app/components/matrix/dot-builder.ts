@@ -1,4 +1,4 @@
-import {ProjectConfiguration} from 'idai-components-2/core';
+import {ProjectConfiguration, Document} from 'idai-components-2/core';
 import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-document';
 import {ObjectUtil} from "../../util/object-util";
 
@@ -10,14 +10,14 @@ import {ObjectUtil} from "../../util/object-util";
 export module DotBuilder {
 
     export function build(projectConfiguration: ProjectConfiguration,
-                          groups: { [group: string]: Array<IdaiFieldFeatureDocument> }
-                          ): string {
+                          groups: { [group: string]: Array<IdaiFieldFeatureDocument> },
+                          relations: string[] = ['isAfter', 'isBefore', 'isContemporaryWith']): string {
 
         const docs = takeOutNonExistingRelations(Object
             .keys(groups)
             .reduce((acc: IdaiFieldFeatureDocument[],
                      group: string) => acc.concat(groups[group])
-                , []));
+                , []), relations);
 
         return 'digraph { newrank = true; '
             + createNodeDefinitions(projectConfiguration, groups)
@@ -28,7 +28,9 @@ export module DotBuilder {
     }
 
 
-    function takeOutNonExistingRelations(documents: Array<IdaiFieldFeatureDocument>)
+    function takeOutNonExistingRelations(
+        documents: Array<IdaiFieldFeatureDocument>,
+        relations: string[])
             : Array<IdaiFieldFeatureDocument> {
 
         const resultDocs: IdaiFieldFeatureDocument[] = ObjectUtil.cloneObject(documents);
@@ -36,12 +38,20 @@ export module DotBuilder {
         const resourceIds: string[] = [];
         resultDocs.forEach(_ => resourceIds.push(_.resource.id));
 
-        resultDocs.forEach(doc => {
-            doc.resource.relations.isAfter = doc.resource.relations.isAfter.filter(target => resourceIds.includes(target));
-            doc.resource.relations.isBefore = doc.resource.relations.isBefore.filter(target => resourceIds.includes(target));
-            doc.resource.relations.isContemporaryWith = doc.resource.relations.isContemporaryWith.filter(target => resourceIds.includes(target));
-        });
+        resultDocs
+            .forEach(doc =>
+                [0, 1, 2].forEach(i => cleanRelation(doc, relations[i],
+                    (target: string) => resourceIds.includes(target))));
         return resultDocs;
+    }
+
+
+    function cleanRelation(document: Document, relation: string, test: Function) {
+
+        document.resource.relations[relation]
+            = ObjectUtil
+                .takeOrMake(document, 'resource.relations.' + relation, [])
+                .filter(test);
     }
 
 

@@ -87,17 +87,17 @@ const remote = require('electron').remote;
 
                 const views: ViewDefinition[] = [
                     {
-                        "label": "Schnitte",
+                        "label": "Ausgrabung",
                         "name": "excavation",
                         "operationSubtype": "Trench"
                     },
                     {
-                        "label": "Bauaufnahmen",
+                        "label": "Bauaufnahme",
                         "name": "Building",
                         "operationSubtype": "Building"
                     },
                     {
-                        "label": "Surveys",
+                        "label": "Survey",
                         "name": "survey",
                         "operationSubtype": "Survey"
                     }

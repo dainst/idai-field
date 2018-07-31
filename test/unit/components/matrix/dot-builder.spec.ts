@@ -30,7 +30,7 @@ describe('DotBuilder', () => {
 
         const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2]);
 
-        expect(graph).toMatch('digraph \{' +
+        expect(graph).toMatch('digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -53,7 +53,7 @@ describe('DotBuilder', () => {
 
         const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2, feature3]);
 
-        expect(graph).toMatch('digraph \{' +
+        expect(graph).toMatch('digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -73,7 +73,7 @@ describe('DotBuilder', () => {
 
         const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2]);
 
-        expect(graph).toMatch('digraph \{' +
+        expect(graph).toMatch('digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -91,7 +91,7 @@ describe('DotBuilder', () => {
 
         const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1]);
 
-        expect(graph).toMatch('digraph \{' +
+        expect(graph).toMatch('digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '\}');
@@ -113,7 +113,7 @@ describe('DotBuilder', () => {
         ]);
 
         expect(graph).toMatch(
-            'digraph \{' +
+            'digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature3" \\[id="node-f3".*\\] ' +
@@ -139,7 +139,7 @@ describe('DotBuilder', () => {
         ]);
 
         expect(graph).toMatch(
-            'digraph \{' +
+            'digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature3" \\[id="node-f3".*\\] ' +
@@ -147,7 +147,6 @@ describe('DotBuilder', () => {
             '\}'
         );
     });
-
 
 
     it('build dot string for diamond formed graph', () => {
@@ -168,8 +167,8 @@ describe('DotBuilder', () => {
         const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2, feature3, feature4]);
 
         expect(graph).toMatch(
-            'digraph \{' +
-            'node \\[style=filled, fontname="Roboto"\] ' +
+            'digraph \{ newrank = true; ' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
             '"feature3" \\[id="node-f3".*\\] ' +
@@ -206,7 +205,7 @@ describe('DotBuilder', () => {
         ]);
 
         expect(graph).toMatch(
-            'digraph \{' +
+            'digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -272,7 +271,7 @@ describe('DotBuilder', () => {
             feature13, feature14]);
 
         expect(graph).toMatch(
-            'digraph \{' +
+            'digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -320,7 +319,7 @@ describe('DotBuilder', () => {
         const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2, feature3, feature4]);
 
         expect(graph).toMatch(
-            'digraph \{' +
+            'digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -332,6 +331,50 @@ describe('DotBuilder', () => {
             '"feature2" -> "feature3" \\[dir="none", class="is-contemporary-with-f2 is-contemporary-with-f3".*\\] ' +
             '\{rank=same "feature2", "feature3"\} ' +
             '\}'
+        );
+    });
+
+
+    it('create subgraphs for resources with period', () => {
+
+        const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = Static.iffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = Static.iffDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature5 = Static.iffDoc('Feature 5', 'feature5', 'Feature', 'f5');
+
+        feature2.resource.hasPeriod = 'Period 1';
+        feature3.resource.hasPeriod = 'Period 1';
+        feature4.resource.hasPeriod = 'Period 2';
+        feature5.resource.hasPeriod = 'Period 2';
+
+        feature1.resource.relations['isAfter'] = ['f2', 'f4'];
+        feature2.resource.relations['isAfter'] = ['f3'];
+        feature4.resource.relations['isAfter'] = ['f5'];
+
+        feature2.resource.relations['isBefore'] = ['f1'];
+        feature4.resource.relations['isBefore'] = ['f1'];
+        feature3.resource.relations['isBefore'] = ['f2'];
+        feature5.resource.relations['isBefore'] = ['f4'];
+
+        const graph: string = DotBuilder.build(mockProjectConfiguration,
+            [feature1, feature2, feature3, feature4, feature5]);
+
+        expect(graph).toMatch(
+            'digraph \{ newrank = true; ' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            'subgraph "cluster Period 1" \{label="Period 1" ' +
+            '"feature2" \\[id="node-f2".*\\] ' +
+            '"feature3" \\[id="node-f3".*\\] \} ' +
+            'subgraph "cluster Period 2" {label="Period 2" ' +
+            '"feature4" \\[id="node-f4".*\\] ' +
+            '"feature5" \\[id="node-f5".*\\] \} ' +
+            '\{rank=min "feature1"\} ' +
+            '"feature1" -> \{"feature2", "feature4"\} \\[class="is-after-f1".*\\] ' +
+            '"feature2" -> "feature3" \\[class="is-after-f2".*\\] ' +
+            '"feature4" -> "feature5" \\[class="is-after-f4".*\\] ' +
+            '}'
         );
     });
 });

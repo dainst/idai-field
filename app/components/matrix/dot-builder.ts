@@ -8,11 +8,12 @@ import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-docu
  */
 export module DotBuilder {
 
-    export function build(projectConfiguration: ProjectConfiguration, documents: Array<IdaiFieldFeatureDocument>): string {
+    export function build(projectConfiguration: ProjectConfiguration,
+                          documents: Array<IdaiFieldFeatureDocument>): string {
 
         const docs = takeOutNonExistingRelations(documents);
 
-        return 'digraph {'
+        return 'digraph { newrank = true; '
             + createNodeDefinitions(projectConfiguration, docs)
             + createRootDocumentMinRankDefinition(docs)
             + createIsAfterEdgesDefinitions(docs)
@@ -21,7 +22,8 @@ export module DotBuilder {
     }
 
 
-    function takeOutNonExistingRelations(documents: IdaiFieldFeatureDocument[]): IdaiFieldFeatureDocument[] {
+    function takeOutNonExistingRelations(documents: Array<IdaiFieldFeatureDocument>)
+            : Array<IdaiFieldFeatureDocument> {
 
         const resultDocs: IdaiFieldFeatureDocument[] = JSON.parse(JSON.stringify(documents));
 
@@ -29,7 +31,6 @@ export module DotBuilder {
         resultDocs.forEach(_ => resourceIds.push(_.resource.id));
 
         resultDocs.forEach(doc => {
-
             doc.resource.relations.isAfter = doc.resource.relations.isAfter.filter(target => resourceIds.includes(target));
             doc.resource.relations.isBefore = doc.resource.relations.isBefore.filter(target => resourceIds.includes(target));
             doc.resource.relations.isContemporaryWith = doc.resource.relations.isContemporaryWith.filter(target => resourceIds.includes(target));
@@ -38,7 +39,7 @@ export module DotBuilder {
     }
 
 
-    function createIsContemporaryWithEdgesDefinitions(documents: IdaiFieldFeatureDocument[]): string {
+    function createIsContemporaryWithEdgesDefinitions(documents: Array<IdaiFieldFeatureDocument>): string {
 
         const processedIsContemporaryWithTargetIds: string[] = [];
 
@@ -52,7 +53,7 @@ export module DotBuilder {
     }
 
 
-    function createIsAfterEdgesDefinitions(documents: IdaiFieldFeatureDocument[]): string {
+    function createIsAfterEdgesDefinitions(documents: Array<IdaiFieldFeatureDocument>): string {
 
         const result: string = documents
             .map(document => createIsAfterEdgesDefinition(documents, document))
@@ -63,7 +64,7 @@ export module DotBuilder {
     }
 
 
-    function createRootDocumentMinRankDefinition(documents: IdaiFieldFeatureDocument[]): string {
+    function createRootDocumentMinRankDefinition(documents: Array<IdaiFieldFeatureDocument>): string {
 
         const rootDocuments: Array<IdaiFieldFeatureDocument> = getRootDocuments(documents);
 
@@ -74,10 +75,33 @@ export module DotBuilder {
     }
 
 
-    function createNodeDefinitions(projectConfiguration: ProjectConfiguration, documents: IdaiFieldFeatureDocument[]): string {
+    function createNodeDefinitions(projectConfiguration: ProjectConfiguration,
+                                   documents: Array<IdaiFieldFeatureDocument>): string {
+
+        const periodMap: { [period: string]: Array<IdaiFieldFeatureDocument> } = getPeriodMap(documents);
 
         return 'node [style=filled, fontname="Roboto"] '
-            + documents.map(_ => createNodeDefinition(projectConfiguration, _)).join('');
+            + Object.keys(periodMap).map(period => {
+                return createNodeDefinitionsForPeriodSubgraph(projectConfiguration, period,
+                    periodMap[period]);
+            }).join('');
+    }
+
+
+    function createNodeDefinitionsForPeriodSubgraph(projectConfiguration: ProjectConfiguration,
+                                                    period: string,
+                                                    documents: Array<IdaiFieldFeatureDocument>): string {
+
+        const nodeDefinitions: string = documents.map(document => {
+            return createNodeDefinition(projectConfiguration, document);
+        }).join('');
+
+        if (period !== 'NO_PERIOD') {
+            return 'subgraph "cluster ' + period + '" {label="' + period + '" '
+                + nodeDefinitions + '} ';
+        } else {
+            return nodeDefinitions;
+        }
     }
 
 
@@ -87,20 +111,23 @@ export module DotBuilder {
     }
 
 
-    function getRelationTargetIdentifiers(documents: IdaiFieldFeatureDocument[], targetIds: string[]): string[] {
+    function getRelationTargetIdentifiers(documents: Array<IdaiFieldFeatureDocument>,
+                                          targetIds: string[]): string[] {
 
         return targetIds
             .map(targetId => getIdentifier(documents, targetId))
             .filter(targetIdentifier => targetIdentifier !== '')
     }
 
-    function getRootDocuments(documents: IdaiFieldFeatureDocument[]): IdaiFieldFeatureDocument[] {
+
+    function getRootDocuments(documents: Array<IdaiFieldFeatureDocument>): Array<IdaiFieldFeatureDocument> {
 
         return documents.filter(document => isRootDocument(documents, document));
     }
 
 
-    function isRootDocument(documents: IdaiFieldFeatureDocument[], document: IdaiFieldFeatureDocument, processedDocuments: string[] = []): boolean {
+    function isRootDocument(documents: Array<IdaiFieldFeatureDocument>,
+                            document: IdaiFieldFeatureDocument, processedDocuments: string[] = []): boolean {
 
         if (document.resource.relations.isAfter.length === 0 || document.resource.relations.isBefore.length !== 0) return false;
         processedDocuments.push(document.resource.id);
@@ -109,7 +136,8 @@ export module DotBuilder {
     }
 
 
-    function isContemporaryWithNonRootDocument(documents: IdaiFieldFeatureDocument[], isContemporaryWith: string[], processedDocuments: string[]) {
+    function isContemporaryWithNonRootDocument(documents: Array<IdaiFieldFeatureDocument>,
+                                               isContemporaryWith: string[], processedDocuments: string[]) {
 
         return (
             undefined !=
@@ -123,7 +151,7 @@ export module DotBuilder {
 
 
     function createIsContemporaryWithEdgesDefinition(
-        documents: IdaiFieldFeatureDocument[],
+        documents: Array<IdaiFieldFeatureDocument>,
         document: IdaiFieldFeatureDocument,
         processedIsContemporaryWithTargetIds: string[]): string|undefined {
 
@@ -155,20 +183,22 @@ export module DotBuilder {
     }
 
 
-    function getIdentifier(documents: IdaiFieldFeatureDocument[], id: string): string {
+    function getIdentifier(documents: Array<IdaiFieldFeatureDocument>, id: string): string {
 
         const document: IdaiFieldFeatureDocument|undefined = getDocument(documents, id);
         return document ? document.resource.identifier : '';
     }
 
 
-    function getDocument(documents: IdaiFieldFeatureDocument[], id: string): IdaiFieldFeatureDocument|undefined {
+    function getDocument(documents: Array<IdaiFieldFeatureDocument>,
+                         id: string): IdaiFieldFeatureDocument|undefined {
 
         return documents.find(document => document.resource.id == id);
     }
 
 
-    function createIsAfterEdgesDefinition(documents: IdaiFieldFeatureDocument[], document: IdaiFieldFeatureDocument): string|undefined {
+    function createIsAfterEdgesDefinition(documents: Array<IdaiFieldFeatureDocument>,
+                                          document: IdaiFieldFeatureDocument): string|undefined {
 
         const targetIds: string[]|undefined = document.resource.relations['isAfter'];
         if (!targetIds || targetIds.length === 0) return;
@@ -189,9 +219,10 @@ export module DotBuilder {
     }
 
 
-    function createNodeDefinition(projectConfiguration: ProjectConfiguration, document: IdaiFieldFeatureDocument) {
+    function createNodeDefinition(projectConfiguration: ProjectConfiguration,
+                                  document: IdaiFieldFeatureDocument) {
 
-        return '"'+document.resource.identifier+'"' // <- important to enclose the identifier in "", otherwise -.*# etc. cause errors or unexpected behaviour
+        return '"' + document.resource.identifier + '"' // <- important to enclose the identifier in "", otherwise -.*# etc. cause errors or unexpected behaviour
             + ' [id="node-' + document.resource.id + '" fillcolor="'
             + projectConfiguration.getColorForType(document.resource.type)
             + '" color="'
@@ -200,5 +231,19 @@ export module DotBuilder {
             ' fontcolor="'
             + projectConfiguration.getTextColorForType(document.resource.type)
             + '"] ';
+    }
+
+
+    function getPeriodMap(documents: Array<IdaiFieldFeatureDocument>)
+            : { [period: string]: Array<IdaiFieldFeatureDocument> } {
+
+        return documents.reduce((periodMap: any, document: IdaiFieldFeatureDocument) => {
+            const period: string = document.resource.hasPeriod
+                || document.resource.hasPeriodBeginning // TODO Remove
+                || 'NO_PERIOD';
+            if (!periodMap[period]) periodMap[period] = [];
+            periodMap[period].push(document);
+            return periodMap;
+        }, {});
     }
 }

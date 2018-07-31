@@ -1,12 +1,10 @@
-import {
-    Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2,
-    ViewChild
-} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, ViewChild}
+    from '@angular/core';
 import 'viz.js';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import * as svgPanZoom from 'svg-pan-zoom';
 import {DotBuilder} from './dot-builder';
 import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-document';
-import {ProjectConfiguration} from 'idai-components-2/core';
 
 
 type ElementType = 'node'|'edge'|undefined;

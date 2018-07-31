@@ -55,6 +55,7 @@ export const DOCS: NewDocument[] = [
             'id': 'si1',
             'identifier': 'SE1',
             'shortDescription': 'Ein Befund',
+            'hasPeriod': 'Kaiserzeitlich',
             'relations': {
                 'isRecordedIn': ['t2'],
                 'isAfter': ['si2', 'si5'],
@@ -90,6 +91,7 @@ export const DOCS: NewDocument[] = [
             'id': 'si2',
             'identifier': 'SE2',
             'shortDescription': 'Ein Erdbefund',
+            'hasPeriod': 'Kaiserzeitlich',
             'relations': {
                 'isRecordedIn': ['t2'],
                 'isBefore': ['si1'],
@@ -125,6 +127,7 @@ export const DOCS: NewDocument[] = [
         'resource': {
             'id': 'si3',
             'identifier': 'SE3',
+            'hasPeriod': 'Bronzezeitlich',
             'shortDescription': 'Architektur',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -174,6 +177,7 @@ export const DOCS: NewDocument[] = [
         'resource': {
             'id': 'si4',
             'identifier': 'SE4',
+            'hasPeriod': 'Bronzezeitlich',
             'shortDescription': 'Ein Grab',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -209,6 +213,7 @@ export const DOCS: NewDocument[] = [
         'resource': {
             'id': 'si5',
             'identifier': 'SE5',
+            'hasPeriod': 'Bronzezeitlich',
             'shortDescription': 'Ein Befund',
             'relations': {
                 'isRecordedIn': ['t2'],

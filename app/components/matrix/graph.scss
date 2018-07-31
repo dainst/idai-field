@@ -13,10 +13,16 @@
     .node {
       cursor: pointer;
       user-select: none;
+
+      text {
+        fill: #fff;
+      }
     }
 
-    text {
-      fill: #ffffff;
+    .cluster {
+      text {
+        fill: #000;
+      }
     }
   }
 }

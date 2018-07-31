@@ -441,7 +441,7 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToProject();
         ResourcesPage.performCreateResource('t2', 'trench');
         ResourcesPage.clickMoveIntoButton('t2');
-        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Schnitte'));
+        NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('t2'));
     });
 

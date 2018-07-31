@@ -109,16 +109,15 @@ export module DotBuilder {
                                                     period: string,
                                                     documents: Array<Document>): string {
 
-        const nodeDefinitions: string = documents.map(document => {
-            return createNodeDefinition(projectConfiguration, document);
-        }).join('');
+        const nodeDefinitions: string =
+            documents
+                .map(document => createNodeDefinition(projectConfiguration, document))
+                .join('');
 
-        if (period !== 'UNKNOWN') {
-            return 'subgraph "cluster ' + period + '" {label="' + period + '" fontname="Roboto" '
+        return period === 'UNKNOWN'
+            ? nodeDefinitions
+            : 'subgraph "cluster ' + period + '" {label="' + period + '" fontname="Roboto" '
                 + nodeDefinitions + '} ';
-        } else {
-            return nodeDefinitions;
-        }
     }
 
 

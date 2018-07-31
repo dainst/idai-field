@@ -65,11 +65,12 @@ export module DotBuilder {
 
     function createRootDocumentMinRankDefinition(documents: IdaiFieldFeatureDocument[]): string {
 
-        return '{rank=min '
-            + getRootDocuments(documents)
-                .map(document => document.resource.identifier)
-                .join(', ')
-            + '} ';
+        const rootDocuments: Array<IdaiFieldFeatureDocument> = getRootDocuments(documents);
+
+        return rootDocuments.length == 0 ? '' :
+            '{rank=min "'
+            + rootDocuments.map(document => document.resource.identifier).join('", "')
+            + '"} ';
     }
 
 
@@ -82,7 +83,7 @@ export module DotBuilder {
 
     function createSameRankDefinition(targetIdentifiers: string[]): string {
 
-        return '{rank=same ' + targetIdentifiers.join(', ') + '}';
+        return '{rank=same "' + targetIdentifiers.join('", "') + '"}';
     }
 
 
@@ -183,8 +184,8 @@ export module DotBuilder {
     function createEdgesDefinition(document: IdaiFieldFeatureDocument, targetIdentifiers: string[]): string {
 
         return targetIdentifiers.length == 1
-            ? document.resource.identifier + ' -> ' + targetIdentifiers[0]
-            : document.resource.identifier + ' -> {' + targetIdentifiers.join(', ') + '}';
+            ? '"' + document.resource.identifier + '" -> "' + targetIdentifiers[0] + '"'
+            : '"' + document.resource.identifier + '" -> {"' + targetIdentifiers.join('", "') + '"}';
     }
 
 

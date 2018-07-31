@@ -31,19 +31,17 @@ export module DotBuilder {
 
     function takeOutNonExistingRelations(
         documents: Array<Document>,
-        relations: string[])
-            : Array<Document> {
+        relations: string[]): Array<Document> {
 
-        const resultDocs: Document[] = ObjectUtil.cloneObject(documents);
+        const targetExists = (target: string) => documents
+            .map(_ => _.resource.id)
+            .includes(target);
 
-        const resourceIds: string[] = [];
-        resultDocs.forEach(_ => resourceIds.push(_.resource.id));
-
-        resultDocs
-            .forEach(doc =>
-                [0, 1, 2].forEach(i => cleanRelation(doc, relations[i],
-                    (target: string) => resourceIds.includes(target))));
-        return resultDocs;
+        return ObjectUtil.cloneObject(documents)
+            .reduce((docs: Document[], doc: Document) => {
+                [0, 1, 2].forEach(i => cleanRelation(doc, relations[i], targetExists));
+                return docs.concat(doc);
+            }, []);
     }
 
 

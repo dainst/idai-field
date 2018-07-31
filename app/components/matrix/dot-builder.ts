@@ -20,7 +20,7 @@ export module DotBuilder {
                 , []));
 
         return 'digraph { newrank = true; '
-            + createNodeDefinitions(projectConfiguration, docs, groups)
+            + createNodeDefinitions(projectConfiguration, groups)
             + createRootDocumentMinRankDefinition(docs)
             + createIsAfterEdgesDefinitions(docs)
             + createIsContemporaryWithEdgesDefinitions(docs)
@@ -82,15 +82,15 @@ export module DotBuilder {
 
 
     function createNodeDefinitions(projectConfiguration: ProjectConfiguration,
-                                   documents: Array<IdaiFieldFeatureDocument>,
-                                   periodMap: { [period: string]: Array<IdaiFieldFeatureDocument> }
+                                   groups: { [group: string]: Array<IdaiFieldFeatureDocument> }
                                    ): string {
 
         return 'node [style=filled, fontname="Roboto"] '
-            + Object.keys(periodMap)
-                .map(period => createNodeDefinitionsForPeriodSubgraph(
-                        projectConfiguration, period, periodMap[period])
-            ).join('');
+            + Object
+                .keys(groups)
+                .map(group => createNodeDefinitionsForPeriodSubgraph(
+                        projectConfiguration, group, groups[group]))
+                .join('');
     }
 
 

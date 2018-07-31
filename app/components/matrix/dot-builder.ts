@@ -1,5 +1,6 @@
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-document';
+import {ObjectUtil} from "../../util/object-util";
 
 
 /**
@@ -30,7 +31,7 @@ export module DotBuilder {
     function takeOutNonExistingRelations(documents: Array<IdaiFieldFeatureDocument>)
             : Array<IdaiFieldFeatureDocument> {
 
-        const resultDocs: IdaiFieldFeatureDocument[] = JSON.parse(JSON.stringify(documents));
+        const resultDocs: IdaiFieldFeatureDocument[] = ObjectUtil.cloneObject(documents);
 
         const resourceIds: string[] = [];
         resultDocs.forEach(_ => resourceIds.push(_.resource.id));

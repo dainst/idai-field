@@ -28,7 +28,10 @@ describe('DotBuilder', () => {
         feature1.resource.relations['isAfter'] = ['f2'];
         feature2.resource.relations['isBefore'] = ['f1'];
 
-        const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2]);
+        const graph: string = DotBuilder.build(
+            mockProjectConfiguration, [feature1, feature2], {
+                'NO_PERIOD': [feature1, feature2]
+            });
 
         expect(graph).toMatch('digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -51,7 +54,11 @@ describe('DotBuilder', () => {
         feature2.resource.relations['isBefore'] = ['f1'];
         feature3.resource.relations['isBefore'] = ['f1'];
 
-        const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2, feature3]);
+        const graph: string = DotBuilder.build(mockProjectConfiguration,
+            [feature1, feature2, feature3],
+            {
+                'NO_PERIOD': [feature1, feature2, feature3]
+            });
 
         expect(graph).toMatch('digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -71,7 +78,11 @@ describe('DotBuilder', () => {
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
 
-        const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2]);
+        const graph: string = DotBuilder
+            .build(mockProjectConfiguration,
+                [feature1, feature2], {
+                    'NO_PERIOD': [feature1, feature2]
+                });
 
         expect(graph).toMatch('digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -89,7 +100,11 @@ describe('DotBuilder', () => {
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
 
-        const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1]);
+        const graph: string = DotBuilder.build(
+            mockProjectConfiguration,
+            [feature1], {
+                'NO_PERIOD': [feature1]
+            });
 
         expect(graph).toMatch('digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -110,7 +125,9 @@ describe('DotBuilder', () => {
 
         const graph: string = DotBuilder.build(mockProjectConfiguration, [
             feature1, feature3, feature4, feature5
-        ]);
+        ], {'NO_PERIOD': [
+                feature1, feature3, feature4, feature5
+            ]});
 
         expect(graph).toMatch(
             'digraph \{ newrank = true; ' +
@@ -135,8 +152,10 @@ describe('DotBuilder', () => {
         feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
 
         const graph: string = DotBuilder.build(mockProjectConfiguration, [
-            feature1, feature3, feature5
-        ]);
+            feature1, feature3, feature5], {
+                'NO_PERIOD': [
+                    feature1, feature3, feature5]
+        });
 
         expect(graph).toMatch(
             'digraph \{ newrank = true; ' +
@@ -164,7 +183,11 @@ describe('DotBuilder', () => {
         feature3.resource.relations['isBefore'] = ['f1'];
         feature4.resource.relations['isBefore'] = ['f2', 'f3'];
 
-        const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2, feature3, feature4]);
+        const graph: string = DotBuilder.build(
+            mockProjectConfiguration,
+            [feature1, feature2, feature3, feature4], {
+                'NO_PERIOD': [feature1, feature2, feature3, feature4]
+            });
 
         expect(graph).toMatch(
             'digraph \{ newrank = true; ' +
@@ -200,9 +223,12 @@ describe('DotBuilder', () => {
         feature2.resource.relations['isBefore'] = ['f1'];
         feature5.resource.relations['isBefore'] = ['f2'];
 
-        const graph: string = DotBuilder.build(mockProjectConfiguration, [
-            feature1, feature2, feature3, feature4, feature5
-        ]);
+        const graph: string = DotBuilder.build(
+            mockProjectConfiguration, [
+            feature1, feature2, feature3, feature4, feature5],
+            {
+                'NO_PERIOD': [feature1, feature2, feature3, feature4, feature5]
+            });
 
         expect(graph).toMatch(
             'digraph \{ newrank = true; ' +
@@ -268,7 +294,13 @@ describe('DotBuilder', () => {
             feature1, feature2, feature3, feature4,
             feature5, feature6, feature7, feature8,
             feature9, feature10, feature11, feature12,
-            feature13, feature14]);
+            feature13, feature14], {
+            'NO_PERIOD': [
+                feature1, feature2, feature3, feature4,
+                feature5, feature6, feature7, feature8,
+                feature9, feature10, feature11, feature12,
+                feature13, feature14]
+        });
 
         expect(graph).toMatch(
             'digraph \{ newrank = true; ' +
@@ -316,7 +348,11 @@ describe('DotBuilder', () => {
         feature2.resource.relations['isBefore'] = ['f1'];
         feature4.resource.relations['isBefore'] = ['f3'];
 
-        const graph: string = DotBuilder.build(mockProjectConfiguration, [feature1, feature2, feature3, feature4]);
+        const graph: string = DotBuilder.build(
+            mockProjectConfiguration,
+            [feature1, feature2, feature3, feature4], {
+                'NO_PERIOD': [feature1, feature2, feature3, feature4]
+            });
 
         expect(graph).toMatch(
             'digraph \{ newrank = true; ' +
@@ -357,8 +393,13 @@ describe('DotBuilder', () => {
         feature3.resource.relations['isBefore'] = ['f2'];
         feature5.resource.relations['isBefore'] = ['f4'];
 
-        const graph: string = DotBuilder.build(mockProjectConfiguration,
-            [feature1, feature2, feature3, feature4, feature5]);
+        const graph: string = DotBuilder.build(
+            mockProjectConfiguration,
+            [feature1, feature2, feature3, feature4, feature5],
+            {
+                'NO_PERIOD' : [feature1],
+                'Period 1': [feature2, feature3],
+                'Period 2': [feature4, feature5]});
 
         expect(graph).toMatch(
             'digraph \{ newrank = true; ' +

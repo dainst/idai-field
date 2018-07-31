@@ -77,7 +77,10 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private createGraph(): string {
 
-        const graph: string = DotBuilder.build(this.projectConfiguration, this.documents);
+        const graph: string = DotBuilder.build(
+            this.projectConfiguration,
+            this.documents,
+            GraphComponent.getPeriodMap(this.documents));
         return Viz(graph, { format: 'svg', engine: 'dot' }) as string;
     }
 
@@ -203,6 +206,20 @@ export class GraphComponent implements OnInit, OnChanges {
             polygon.setAttribute('stroke', color);
             polygon.setAttribute('fill', color);
         }
+    }
+
+
+    private static getPeriodMap(documents: Array<IdaiFieldFeatureDocument>)
+        : { [period: string]: Array<IdaiFieldFeatureDocument> } {
+
+        return documents.reduce((periodMap: any, document: IdaiFieldFeatureDocument) => {
+            const period: string = document.resource.hasPeriod
+                || document.resource.hasPeriodBeginning // TODO Remove
+                || 'NO_PERIOD';
+            if (!periodMap[period]) periodMap[period] = [];
+            periodMap[period].push(document);
+            return periodMap;
+        }, {});
     }
 
 

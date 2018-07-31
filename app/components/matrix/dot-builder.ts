@@ -9,12 +9,14 @@ import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-docu
 export module DotBuilder {
 
     export function build(projectConfiguration: ProjectConfiguration,
-                          documents: Array<IdaiFieldFeatureDocument>): string {
+                          documents: Array<IdaiFieldFeatureDocument>,
+                          periodMap: { [period: string]: Array<IdaiFieldFeatureDocument> }
+                          ): string {
 
         const docs = takeOutNonExistingRelations(documents);
 
         return 'digraph { newrank = true; '
-            + createNodeDefinitions(projectConfiguration, docs)
+            + createNodeDefinitions(projectConfiguration, docs, periodMap)
             + createRootDocumentMinRankDefinition(docs)
             + createIsAfterEdgesDefinitions(docs)
             + createIsContemporaryWithEdgesDefinitions(docs)
@@ -76,15 +78,15 @@ export module DotBuilder {
 
 
     function createNodeDefinitions(projectConfiguration: ProjectConfiguration,
-                                   documents: Array<IdaiFieldFeatureDocument>): string {
-
-        const periodMap: { [period: string]: Array<IdaiFieldFeatureDocument> } = getPeriodMap(documents);
+                                   documents: Array<IdaiFieldFeatureDocument>,
+                                   periodMap: { [period: string]: Array<IdaiFieldFeatureDocument> }
+                                   ): string {
 
         return 'node [style=filled, fontname="Roboto"] '
-            + Object.keys(periodMap).map(period => {
-                return createNodeDefinitionsForPeriodSubgraph(projectConfiguration, period,
-                    periodMap[period]);
-            }).join('');
+            + Object.keys(periodMap)
+                .map(period => createNodeDefinitionsForPeriodSubgraph(
+                        projectConfiguration, period, periodMap[period])
+            ).join('');
     }
 
 
@@ -231,19 +233,5 @@ export module DotBuilder {
             ' fontcolor="'
             + projectConfiguration.getTextColorForType(document.resource.type)
             + '"] ';
-    }
-
-
-    function getPeriodMap(documents: Array<IdaiFieldFeatureDocument>)
-            : { [period: string]: Array<IdaiFieldFeatureDocument> } {
-
-        return documents.reduce((periodMap: any, document: IdaiFieldFeatureDocument) => {
-            const period: string = document.resource.hasPeriod
-                || document.resource.hasPeriodBeginning // TODO Remove
-                || 'NO_PERIOD';
-            if (!periodMap[period]) periodMap[period] = [];
-            periodMap[period].push(document);
-            return periodMap;
-        }, {});
     }
 }

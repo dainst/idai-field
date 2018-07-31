@@ -72,7 +72,7 @@ export module DotBuilder {
     function createIsAfterEdgesDefinitions(documents: Array<Document>, relations: string[]): string {
 
         const result: string = documents
-            .map(document => createIsAfterEdgesDefinition(documents, document, relations))
+            .map(document => createIsAboveEdgesDefinition(documents, document, relations))
             .filter(graphString => graphString != undefined)
             .join(' ');
 
@@ -223,7 +223,7 @@ export module DotBuilder {
     }
 
 
-    function createIsAfterEdgesDefinition(documents: Array<Document>,
+    function createIsAboveEdgesDefinition(documents: Array<Document>,
                                           document: Document,
                                           relations: string[]): string|undefined {
 
@@ -234,6 +234,7 @@ export module DotBuilder {
         if (targetIdentifiers.length === 0) return;
 
         return createEdgesDefinition(document, targetIdentifiers)
+            // TODO rename is-after- to is-above-. is above - the general abstraction for that type of edge which was hardcoded to isAfter before
             + ' [class="is-after-' + document.resource.id + '" arrowsize="0.37" arrowhead="normal"]';
     }
 

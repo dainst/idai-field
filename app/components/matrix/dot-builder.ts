@@ -220,7 +220,7 @@ export module DotBuilder {
     function getDocument(documents: Array<Document>,
                          id: string): Document|undefined {
 
-        return documents.find(document => document.resource.id == id);
+        return documents.find(_ => _.resource.id === id);
     }
 
 

@@ -197,6 +197,7 @@ export module DotBuilder {
             const targetIdentifiers = getRelationTargetIdentifiers(documents, [targetId]);
             return targetIdentifiers.length === 0 ? '' :
                 createEdgesDefinition(document, targetIdentifiers)
+                // TODO rename is-contemporary-with to same-rank-
                 + ' [dir="none", class="is-contemporary-with-' + document.resource.id
                 + ' is-contemporary-with-' + targetId + '"]';
         }).join(' ');

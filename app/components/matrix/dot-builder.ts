@@ -121,12 +121,6 @@ export module DotBuilder {
     }
 
 
-    function createSameRankDefinition(targetIdentifiers: string[]): string {
-
-        return '{rank=same "' + targetIdentifiers.join('", "') + '"}';
-    }
-
-
     function getRelationTargetIdentifiers(documents: Array<Document>,
                                           targetIds: string[]): string[] {
 
@@ -181,32 +175,42 @@ export module DotBuilder {
         document: Document,
         processedIsSameRankTargetIds: string[]): string|undefined {
 
+        if (!document.resource.relations.isContemporaryWith) return; // TODO make param
 
-        let targetIds: string[]|undefined = document.resource.relations.isContemporaryWith;
-        if (!targetIds) return;
-
-        targetIds = targetIds
-            .filter(targetId => !processedIsSameRankTargetIds.includes(targetId));
+        const targetIds: string[]|undefined =
+            document.resource.relations.isContemporaryWith
+                .filter(targetId => !processedIsSameRankTargetIds.includes(targetId)); // TODO use predicate from tsfun
 
         targetIds.forEach(targetId => processedIsSameRankTargetIds.push(targetId));
         processedIsSameRankTargetIds.push(document.resource.id);
 
-        if (targetIds.length == 0) return;
+        if (targetIds.length === 0) return;
 
-        const edgesDefinitions: string = targetIds.map(targetId => {
-            const targetIdentifiers = getRelationTargetIdentifiers(documents, [targetId]);
-            return targetIdentifiers.length === 0 ? '' :
-                createEdgesDefinition(document, targetIdentifiers)
-                // TODO rename is-contemporary-with to same-rank-
-                + ' [dir="none", class="is-contemporary-with-' + document.resource.id
-                + ' is-contemporary-with-' + targetId + '"]';
-        }).join(' ');
+        return createEdgesDefinitions(targetIds, documents, document)
+            + ' '
+            + createSameRankDefinition(
+                getRelationTargetIdentifiers(documents, [document.resource.id].concat(targetIds)));
+    }
 
-        const sameRankDefinition: string = createSameRankDefinition(
-            getRelationTargetIdentifiers(documents, [document.resource.id].concat(targetIds))
-        );
 
-        return edgesDefinitions + ' ' + sameRankDefinition;
+    function createEdgesDefinitions(targetIds: string[], documents: Document[], document: Document) {
+
+        return targetIds
+            .map(targetId => {
+                const targetIdentifiers = getRelationTargetIdentifiers(documents, [targetId]);
+                return targetIdentifiers.length === 0 ? '' :
+                    createEdgesDefinition(document, targetIdentifiers)
+                    // TODO rename is-contemporary-with to same-rank-
+                    + ' [dir="none", class="is-contemporary-with-' + document.resource.id
+                    + ' is-contemporary-with-' + targetId + '"]';
+            })
+            .join(' ')
+    }
+
+
+    function createSameRankDefinition(targetIdentifiers: string[]): string {
+
+        return '{rank=same "' + targetIdentifiers.join('", "') + '"}';
     }
 
 

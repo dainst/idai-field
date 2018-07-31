@@ -214,7 +214,7 @@ export class GraphComponent implements OnInit, OnChanges {
         return documents.reduce((periodMap: any, document: IdaiFieldFeatureDocument) => {
             const period: string = document.resource.hasPeriod
                 || document.resource.hasPeriodBeginning // TODO Remove
-                || 'NO_PERIOD';
+                || 'UNKNOWN';
             if (!periodMap[period]) periodMap[period] = [];
             periodMap[period].push(document);
             return periodMap;

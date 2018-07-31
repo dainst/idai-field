@@ -30,7 +30,7 @@ describe('DotBuilder', () => {
 
         const graph: string = DotBuilder.build(
             mockProjectConfiguration, {
-                'NO_PERIOD': [feature1, feature2]
+                'UNKNOWN': [feature1, feature2]
             });
 
         expect(graph).toMatch('digraph \{ newrank = true; ' +
@@ -56,7 +56,7 @@ describe('DotBuilder', () => {
 
         const graph: string = DotBuilder.build(mockProjectConfiguration,
             {
-                'NO_PERIOD': [feature1, feature2, feature3]
+                'UNKNOWN': [feature1, feature2, feature3]
             });
 
         expect(graph).toMatch('digraph \{ newrank = true; ' +
@@ -79,7 +79,7 @@ describe('DotBuilder', () => {
 
         const graph: string = DotBuilder
             .build(mockProjectConfiguration, {
-                    'NO_PERIOD': [feature1, feature2]
+                    'UNKNOWN': [feature1, feature2]
                 });
 
         expect(graph).toMatch('digraph \{ newrank = true; ' +
@@ -100,7 +100,7 @@ describe('DotBuilder', () => {
 
         const graph: string = DotBuilder.build(
             mockProjectConfiguration,  {
-                'NO_PERIOD': [feature1]
+                'UNKNOWN': [feature1]
             });
 
         expect(graph).toMatch('digraph \{ newrank = true; ' +
@@ -121,7 +121,7 @@ describe('DotBuilder', () => {
         feature4.resource.relations['isContemporaryWith'] = ['f2', 'f3'];
 
         const graph: string = DotBuilder.build(mockProjectConfiguration,
-            {'NO_PERIOD': [
+            {'UNKNOWN': [
                 feature1, feature3, feature4, feature5
             ]});
 
@@ -148,7 +148,7 @@ describe('DotBuilder', () => {
         feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
 
         const graph: string = DotBuilder.build(mockProjectConfiguration, {
-                'NO_PERIOD': [
+                'UNKNOWN': [
                     feature1, feature3, feature5]
         });
 
@@ -180,7 +180,7 @@ describe('DotBuilder', () => {
 
         const graph: string = DotBuilder.build(
             mockProjectConfiguration, {
-                'NO_PERIOD': [feature1, feature2, feature3, feature4]
+                'UNKNOWN': [feature1, feature2, feature3, feature4]
             });
 
         expect(graph).toMatch(
@@ -220,7 +220,7 @@ describe('DotBuilder', () => {
         const graph: string = DotBuilder.build(
             mockProjectConfiguration,
             {
-                'NO_PERIOD': [feature1, feature2, feature3, feature4, feature5]
+                'UNKNOWN': [feature1, feature2, feature3, feature4, feature5]
             });
 
         expect(graph).toMatch(
@@ -284,7 +284,7 @@ describe('DotBuilder', () => {
         feature14.resource.relations['isBefore'] = ['f13'];
 
         const graph: string = DotBuilder.build(mockProjectConfiguration, {
-            'NO_PERIOD': [
+            'UNKNOWN': [
                 feature1, feature2, feature3, feature4,
                 feature5, feature6, feature7, feature8,
                 feature9, feature10, feature11, feature12,
@@ -339,7 +339,7 @@ describe('DotBuilder', () => {
 
         const graph: string = DotBuilder.build(
             mockProjectConfiguration, {
-                'NO_PERIOD': [feature1, feature2, feature3, feature4]
+                'UNKNOWN': [feature1, feature2, feature3, feature4]
             });
 
         expect(graph).toMatch(
@@ -384,7 +384,7 @@ describe('DotBuilder', () => {
         const graph: string = DotBuilder.build(
             mockProjectConfiguration,
             {
-                'NO_PERIOD' : [feature1],
+                'UNKNOWN' : [feature1],
                 'Period 1': [feature2, feature3],
                 'Period 2': [feature4, feature5]});
 

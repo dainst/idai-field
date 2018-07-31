@@ -102,7 +102,7 @@ export module DotBuilder {
             return createNodeDefinition(projectConfiguration, document);
         }).join('');
 
-        if (period !== 'NO_PERIOD') {
+        if (period !== 'UNKNOWN') {
             return 'subgraph "cluster ' + period + '" {label="' + period + '" fontname="Roboto" '
                 + nodeDefinitions + '} ';
         } else {

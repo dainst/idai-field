@@ -60,7 +60,7 @@ export module DotBuilder {
         const processedIsContemporaryWithTargetIds: string[] = [];
 
         const result: string = documents
-            .map(document => createIsContemporaryWithEdgesDefinition(
+            .map(document => createSameRankEdgesDefinition(
                 documents, document, processedIsContemporaryWithTargetIds))
             .filter(graphString => graphString != undefined)
             .join(' ');
@@ -153,20 +153,20 @@ export module DotBuilder {
             || document.resource.relations[relations[1]].length !== 0) return false;
         processedDocuments.push(document.resource.id);
 
-        return !isContemporaryWithNonRootDocument(documents,
+        return !isSameRankNonRootDocument(documents,
             document.resource.relations[relations[2]], processedDocuments, relations);
     }
 
 
-    function isContemporaryWithNonRootDocument(
+    function isSameRankNonRootDocument(
         documents: Array<Document>,
-        isContemporaryWith: string[],
+        isSameRank: string[],
         processedDocuments: string[],
         relations: string[]) {
 
         return (
             undefined !=
-            isContemporaryWith
+            isSameRank
                 .filter(targetId => !processedDocuments.includes(targetId))
                 .find(targetId => {
                     const targetDocument: Document | undefined = getDocument(documents, targetId);
@@ -176,20 +176,20 @@ export module DotBuilder {
     }
 
 
-    function createIsContemporaryWithEdgesDefinition(
+    function createSameRankEdgesDefinition(
         documents: Array<Document>,
         document: Document,
-        processedIsContemporaryWithTargetIds: string[]): string|undefined {
+        processedIsSameRankTargetIds: string[]): string|undefined {
 
 
         let targetIds: string[]|undefined = document.resource.relations.isContemporaryWith;
         if (!targetIds) return;
 
         targetIds = targetIds
-            .filter(targetId => !processedIsContemporaryWithTargetIds.includes(targetId));
+            .filter(targetId => !processedIsSameRankTargetIds.includes(targetId));
 
-        targetIds.forEach(targetId => processedIsContemporaryWithTargetIds.push(targetId));
-        processedIsContemporaryWithTargetIds.push(document.resource.id);
+        targetIds.forEach(targetId => processedIsSameRankTargetIds.push(targetId));
+        processedIsSameRankTargetIds.push(document.resource.id);
 
         if (targetIds.length == 0) return;
 

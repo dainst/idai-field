@@ -29,7 +29,7 @@ describe('DotBuilder', () => {
         feature2.resource.relations['isBefore'] = ['f1'];
 
         const graph: string = DotBuilder.build(
-            mockProjectConfiguration, [feature1, feature2], {
+            mockProjectConfiguration, {
                 'NO_PERIOD': [feature1, feature2]
             });
 
@@ -55,7 +55,6 @@ describe('DotBuilder', () => {
         feature3.resource.relations['isBefore'] = ['f1'];
 
         const graph: string = DotBuilder.build(mockProjectConfiguration,
-            [feature1, feature2, feature3],
             {
                 'NO_PERIOD': [feature1, feature2, feature3]
             });
@@ -79,8 +78,7 @@ describe('DotBuilder', () => {
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
 
         const graph: string = DotBuilder
-            .build(mockProjectConfiguration,
-                [feature1, feature2], {
+            .build(mockProjectConfiguration, {
                     'NO_PERIOD': [feature1, feature2]
                 });
 
@@ -101,8 +99,7 @@ describe('DotBuilder', () => {
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
 
         const graph: string = DotBuilder.build(
-            mockProjectConfiguration,
-            [feature1], {
+            mockProjectConfiguration,  {
                 'NO_PERIOD': [feature1]
             });
 
@@ -123,9 +120,8 @@ describe('DotBuilder', () => {
         feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
         feature4.resource.relations['isContemporaryWith'] = ['f2', 'f3'];
 
-        const graph: string = DotBuilder.build(mockProjectConfiguration, [
-            feature1, feature3, feature4, feature5
-        ], {'NO_PERIOD': [
+        const graph: string = DotBuilder.build(mockProjectConfiguration,
+            {'NO_PERIOD': [
                 feature1, feature3, feature4, feature5
             ]});
 
@@ -151,8 +147,7 @@ describe('DotBuilder', () => {
 
         feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
 
-        const graph: string = DotBuilder.build(mockProjectConfiguration, [
-            feature1, feature3, feature5], {
+        const graph: string = DotBuilder.build(mockProjectConfiguration, {
                 'NO_PERIOD': [
                     feature1, feature3, feature5]
         });
@@ -184,8 +179,7 @@ describe('DotBuilder', () => {
         feature4.resource.relations['isBefore'] = ['f2', 'f3'];
 
         const graph: string = DotBuilder.build(
-            mockProjectConfiguration,
-            [feature1, feature2, feature3, feature4], {
+            mockProjectConfiguration, {
                 'NO_PERIOD': [feature1, feature2, feature3, feature4]
             });
 
@@ -224,8 +218,7 @@ describe('DotBuilder', () => {
         feature5.resource.relations['isBefore'] = ['f2'];
 
         const graph: string = DotBuilder.build(
-            mockProjectConfiguration, [
-            feature1, feature2, feature3, feature4, feature5],
+            mockProjectConfiguration,
             {
                 'NO_PERIOD': [feature1, feature2, feature3, feature4, feature5]
             });
@@ -290,11 +283,7 @@ describe('DotBuilder', () => {
         feature13.resource.relations['isBefore'] = ['f8', 'f10'];
         feature14.resource.relations['isBefore'] = ['f13'];
 
-        const graph: string = DotBuilder.build(mockProjectConfiguration, [
-            feature1, feature2, feature3, feature4,
-            feature5, feature6, feature7, feature8,
-            feature9, feature10, feature11, feature12,
-            feature13, feature14], {
+        const graph: string = DotBuilder.build(mockProjectConfiguration, {
             'NO_PERIOD': [
                 feature1, feature2, feature3, feature4,
                 feature5, feature6, feature7, feature8,
@@ -349,8 +338,7 @@ describe('DotBuilder', () => {
         feature4.resource.relations['isBefore'] = ['f3'];
 
         const graph: string = DotBuilder.build(
-            mockProjectConfiguration,
-            [feature1, feature2, feature3, feature4], {
+            mockProjectConfiguration, {
                 'NO_PERIOD': [feature1, feature2, feature3, feature4]
             });
 
@@ -395,7 +383,6 @@ describe('DotBuilder', () => {
 
         const graph: string = DotBuilder.build(
             mockProjectConfiguration,
-            [feature1, feature2, feature3, feature4, feature5],
             {
                 'NO_PERIOD' : [feature1],
                 'Period 1': [feature2, feature3],

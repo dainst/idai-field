@@ -9,14 +9,17 @@ import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-docu
 export module DotBuilder {
 
     export function build(projectConfiguration: ProjectConfiguration,
-                          documents: Array<IdaiFieldFeatureDocument>,
-                          periodMap: { [period: string]: Array<IdaiFieldFeatureDocument> }
+                          groups: { [group: string]: Array<IdaiFieldFeatureDocument> }
                           ): string {
 
-        const docs = takeOutNonExistingRelations(documents);
+        const docs = takeOutNonExistingRelations(Object
+            .keys(groups)
+            .reduce((acc: IdaiFieldFeatureDocument[],
+                     group: string) => acc.concat(groups[group])
+                , []));
 
         return 'digraph { newrank = true; '
-            + createNodeDefinitions(projectConfiguration, docs, periodMap)
+            + createNodeDefinitions(projectConfiguration, docs, groups)
             + createRootDocumentMinRankDefinition(docs)
             + createIsAfterEdgesDefinitions(docs)
             + createIsContemporaryWithEdgesDefinitions(docs)

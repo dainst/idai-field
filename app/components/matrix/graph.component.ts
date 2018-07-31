@@ -79,7 +79,6 @@ export class GraphComponent implements OnInit, OnChanges {
 
         const graph: string = DotBuilder.build(
             this.projectConfiguration,
-            this.documents,
             GraphComponent.getPeriodMap(this.documents));
         return Viz(graph, { format: 'svg', engine: 'dot' }) as string;
     }

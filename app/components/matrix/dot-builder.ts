@@ -97,7 +97,7 @@ export module DotBuilder {
         }).join('');
 
         if (period !== 'NO_PERIOD') {
-            return 'subgraph "cluster ' + period + '" {label="' + period + '" '
+            return 'subgraph "cluster ' + period + '" {label="' + period + '" fontname="Roboto" '
                 + nodeDefinitions + '} ';
         } else {
             return nodeDefinitions;

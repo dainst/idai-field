@@ -364,10 +364,10 @@ describe('DotBuilder', () => {
             'digraph \{ newrank = true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
-            'subgraph "cluster Period 1" \{label="Period 1" ' +
+            'subgraph "cluster Period 1" \{\\label="Period 1".*\\ ' +
             '"feature2" \\[id="node-f2".*\\] ' +
             '"feature3" \\[id="node-f3".*\\] \} ' +
-            'subgraph "cluster Period 2" {label="Period 2" ' +
+            'subgraph "cluster Period 2" {\\label="Period 2".*\\ ' +
             '"feature4" \\[id="node-f4".*\\] ' +
             '"feature5" \\[id="node-f5".*\\] \} ' +
             '\{rank=min "feature1"\} ' +

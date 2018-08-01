@@ -1,6 +1,6 @@
 <div id="matrix-view" class="row bg-light py-2">
 
-    <div class="col-md-8">
+    <div class="col-md-6">
         <div *ngIf="showTrenchSelector()" class="btn-group operation-document-selector"
              ngbDropdown placement="bottom-left" role="group">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
@@ -28,6 +28,31 @@
                     container="body"
                     class="btn btn-{{groupMode ? '' : 'outline-'}}primary m-0">
                 <span class="mdi mdi-view-grid"></span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="col-md-2 mr-md-auto">
+        <div class="btn-group subgraph-selection-buttons" style="width: 100% !important;">
+
+            <button id="subgraph-selection-mode" style="width: 50% !important;"
+                    (click)="toggleSubgraphSelection()"
+                    ngbTooltip="{{selectionMode !== 'edit' ? 'Dokumentenausauswahl beginnen' : 'Dokumentenausauswahl beenden'}}"
+                    placement="left"
+                    container="body"
+                    class="btn btn-{{selectionMode === 'edit' ? 'outline-' : ''}}primary m-0">
+                <span class="mdi mdi-image-search-outline"></span>
+            </button>
+            <button id="subgraph-selection-activate-button" style="width: 50% !important;"
+                    (click)="subgraphActivateDeactivate()"
+                    ngbTooltip="{{selectionMode === 'edit' ?
+                        'Dokumente neu laden' : 'Graphen aus ausgewählten Dokumenten erstellen'}}"
+                    placement="left"
+                    container="body"
+                    class="btn btn-primary m-0">
+                <span *ngIf="selectionMode !== 'edit'" class="mdi mdi-play"></span>
+                <span *ngIf="selectionMode === 'edit'" class="mdi mdi-reload"></span>
             </button>
         </div>
     </div>
@@ -88,7 +113,7 @@
 
     <graph *ngIf="showGraph()"
            [graph]="graph"
-           (onSelect)="selectResourceToEdit($event)">
+           (onSelect)="select($event)">
     </graph>
 </div>
 

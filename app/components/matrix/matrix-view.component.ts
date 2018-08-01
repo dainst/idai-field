@@ -8,9 +8,11 @@ import {MatrixState} from './matrix-state';
 import {IdaiFieldFeatureDocumentReadDatastore} from '../../core/datastore/field/idai-field-feature-document-read-datastore';
 import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-document';
 import {Loading} from '../../widgets/loading';
-import {GraphComponent} from "./graph.component";
 import {DotBuilder} from "./dot-builder";
 import {ProjectConfiguration} from 'idai-components-2/core';
+
+
+type LineType = 'straight' | 'curved';
 
 
 @Component({
@@ -22,13 +24,18 @@ import {ProjectConfiguration} from 'idai-components-2/core';
  */
 export class MatrixViewComponent implements OnInit {
 
-    private trenches: Array<IdaiFieldDocument> = [];
+
+    private trenches: IdaiFieldDocument[] = [];
     private selectedTrench: IdaiFieldDocument|undefined;
-    private featureDocuments: Array<IdaiFieldFeatureDocument> = [];
+    private featureDocuments: IdaiFieldFeatureDocument[] = [];
+
+    private subgraphSelection: IdaiFieldFeatureDocument[] = [];
+
 
     public graph: string;
 
-    public currentLineMode: 'straight' | 'curved' = 'curved';
+    public selectionMode: 'edit' | 'subgraphSelect' = 'edit';
+    public currentLineMode: LineType = 'curved';
 
     private groupMode = true; // true meaning things get grouped by period
 
@@ -65,14 +72,14 @@ export class MatrixViewComponent implements OnInit {
     public showTrenchSelector = () => !this.noTrenches();
 
 
-    public selectLineMode(mode: 'straight' | 'curved') {
+    public selectLineMode(mode: LineType) {
 
         this.currentLineMode = mode;
         this.createGraph();
     };
 
 
-    public currentLineModeIs(mode: 'straight' | 'curved'): boolean {
+    public currentLineModeIs(mode: LineType): boolean {
 
         return this.currentLineMode === mode;
     }
@@ -90,13 +97,22 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    public async selectResourceToEdit(resourceIdentifier: string) {
+    public async select(resourceIdentifier: string) {
 
         const docToEdit = this.featureDocuments.find(_ =>
             _.resource.identifier === resourceIdentifier);
 
         if (!docToEdit) return;
-        await this.launchDocedit(docToEdit);
+
+        if (this.selectionMode === 'edit') {
+            await this.launchDocedit(docToEdit);
+        } else {
+            if (!this.subgraphSelection // TODO use tsfun unique with a comparison function parameter, possible with sameOnPath('resource.identifier')
+                .find(_ => _.resource.identifier === docToEdit.resource.identifier)) {
+                    this.subgraphSelection.push(docToEdit);
+                }
+        }
+
     }
 
 
@@ -119,6 +135,32 @@ export class MatrixViewComponent implements OnInit {
                 });
     }
 
+
+    public async subgraphActivateDeactivate() {
+
+        if (this.selectionMode === 'edit') {
+            if (this.selectedTrench) {
+                await this.loadFeatureDocuments(this.selectedTrench);
+            }
+        } else {
+            this.featureDocuments = this.subgraphSelection;
+            this.subgraphSelection = [];
+            this.selectionMode = 'edit';
+        }
+
+        this.createGraph();
+    }
+
+
+    public toggleSubgraphSelection(): void {
+
+        if (this.selectionMode === 'edit') {
+            this.subgraphSelection = [];
+            this.selectionMode = 'subgraphSelect';
+        } else {
+            this.selectionMode = 'edit';
+        }
+    }
 
 
     private createGraph(): void {

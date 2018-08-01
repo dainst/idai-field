@@ -90,34 +90,35 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    public async select(event: string) {
+    public async selectResourceToEdit(resourceIdentifier: string) {
 
-        let selected;
-        for (let doc of this.featureDocuments) {
-            if (event === doc.resource.identifier) selected = doc;
-        }
-        if (!selected) return;
+        const docToEdit = this.featureDocuments.find(_ =>
+            _.resource.identifier === resourceIdentifier);
+
+        if (!docToEdit) return;
+        await this.launchDocedit(docToEdit);
+    }
+
+
+    public async launchDocedit(docToEdit: IdaiFieldFeatureDocument) {
 
         const doceditRef = this.modalService.open(DoceditComponent,
             { size: 'lg', backdrop: 'static', keyboard: false });
-        doceditRef.componentInstance.setDocument(selected);
+        doceditRef.componentInstance.setDocument(docToEdit);
 
-        await doceditRef.result.then(
-            res => {
-                this.featureDocuments = [];
-                this.selectedTrench = undefined;
-                this.populateTrenches()
-            },
-            closeReason => {
+        const reset = () => {
+            this.featureDocuments = [];
+            this.selectedTrench = undefined;
+            this.populateTrenches()
+        };
 
-                if (closeReason === 'deleted') {
-                    this.featureDocuments = [];
-                    this.selectedTrench = undefined;
-                    this.populateTrenches();
-                }
-            }
-        );
+        await doceditRef.result
+            .then(() => reset(),
+                reason => {
+                    if (reason === 'deleted') reset();
+                });
     }
+
 
 
     private createGraph(): void {

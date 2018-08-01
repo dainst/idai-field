@@ -91,13 +91,8 @@ export class MatrixViewComponent implements OnInit {
 
     public toggleGroupMode() {
 
-        if (this.groupMode) {
-            this.groupMode = false;
-            this.createGraph();
-        } else {
-            this.groupMode = true;
-            this.createGraph();
-        }
+        this.groupMode = !this.groupMode;
+        this.createGraph();
     }
 
 

@@ -180,9 +180,9 @@ export class MatrixViewComponent implements OnInit {
         this.trenches = (await this.datastore.find({ types: ['Trench'] })).documents;
         if (this.trenches.length === 0) return;
 
-        for (let trench of this.trenches) {
-            if (this.matrixState.selectedTrenchId === trench.resource.id) return this.selectTrench(trench);
-        }
+        const previouslySelectedTrench = this.trenches
+            .find(sameOn('resource.id', this.matrixState.selectedTrenchId));
+        if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
 
         this.matrixState.selectedTrenchId = this.trenches[0].resource.id;
         await this.selectTrench(this.trenches[0]);
@@ -194,11 +194,7 @@ export class MatrixViewComponent implements OnInit {
         groupMode: boolean)
         : { [period: string]: Array<IdaiFieldFeatureDocument> } {
 
-        if (!groupMode) {
-            return {
-                'UNKNOWN': documents
-            };
-        }
+        if (!groupMode) return { 'UNKNOWN': documents };
 
         return documents.reduce((periodMap: any, document: IdaiFieldFeatureDocument) => {
             const period: string = document.resource.hasPeriod
@@ -238,10 +234,10 @@ export class MatrixViewComponent implements OnInit {
 
 
 // TODO move to tsfun / predicates
-const sameOn = (comparison: any, path: string) =>
+const sameOn = (path: string, comparison: any) =>
     (object: any): boolean =>
         ObjectUtil.getElForPathIn(object, path) === comparison;
 
 
 const sameOnResourceIdentifier = (comparison: any) =>
-    sameOn(comparison, 'resource.identifier');
+    sameOn('resource.identifier', comparison);

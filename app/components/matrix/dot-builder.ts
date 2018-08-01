@@ -26,7 +26,7 @@ export module DotBuilder {
             + createRootDocumentMinRankDefinition(docs, relations)
             + createIsAfterEdgesDefinitions(docs, relations)
             + createIsContemporaryWithEdgesDefinitions(docs)
-            + (linemode === 'straight' ? ' splines=ortho }' : ' }');
+            + (linemode === 'straight' ? ' splines=ortho }' : '}');
     }
 
 

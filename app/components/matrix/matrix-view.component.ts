@@ -136,17 +136,14 @@ export class MatrixViewComponent implements OnInit {
     private async populateTrenches(): Promise<void> {
 
         this.trenches = (await this.datastore.find({ types: ['Trench'] })).documents;
+        if (this.trenches.length === 0) return;
 
-        if (this.trenches.length > 0) {
-
-            for (let trench of this.trenches) {
-                if (this.matrixState.selectedTrenchId === trench.resource.id) return this.selectTrench(trench);
-            }
-
-            this.matrixState.selectedTrenchId = this.trenches[0].resource.id;
-            await this.selectTrench(this.trenches[0]);
-
+        for (let trench of this.trenches) {
+            if (this.matrixState.selectedTrenchId === trench.resource.id) return this.selectTrench(trench);
         }
+
+        this.matrixState.selectedTrenchId = this.trenches[0].resource.id;
+        await this.selectTrench(this.trenches[0]);
     }
 
 

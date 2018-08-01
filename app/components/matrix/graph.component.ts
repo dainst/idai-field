@@ -23,12 +23,15 @@ type EdgeType = 'is-after'|'is-contemporary-with'|undefined;
     templateUrl: './graph.html'
 })
 /**
+ * Responsible for the svg / css manipulation and direct interaction of the graph.
+ *
  * @author Thomas Kleinke
  */
 export class GraphComponent implements OnInit, OnChanges {
 
     @Input() graph: string;
     @Output() onSelect: EventEmitter<string> = new EventEmitter<string>();
+    @Input() highlightSelection = true;
 
     @ViewChild('graphContainer') graphContainer: ElementRef;
 
@@ -39,7 +42,6 @@ export class GraphComponent implements OnInit, OnChanges {
     private static defaultColor: string = '#000000';
 
     private static mouseDownProperties: any = null;
-
 
     constructor(
         private renderer: Renderer2
@@ -80,6 +82,19 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
+    private performSelection(event: Event) {
+
+        this.onSelect.emit(GraphComponent.mouseDownProperties.target);
+
+        if (this.highlightSelection) {
+
+            const gElement: Element|undefined = GraphComponent.getGElement(
+                event.target as Element);
+            if (gElement) GraphComponent.setSelectionHighlight(gElement);
+        }
+    }
+
+
     private initializeMouseMoveEventListener() {
 
         this.renderer.listen(this.graphContainer.nativeElement, 'mousemove', event => {
@@ -91,7 +106,10 @@ export class GraphComponent implements OnInit, OnChanges {
             if (GraphComponent.mouseDownProperties == null) return;
 
             if ((Math.abs(event.clientX - GraphComponent.mouseDownProperties.x) < 2)
-                && (Math.abs(event.clientY - GraphComponent.mouseDownProperties.y) < 2)) this.onSelect.emit(GraphComponent.mouseDownProperties.target);
+                && (Math.abs(event.clientY - GraphComponent.mouseDownProperties.y) < 2)) {
+
+                this.performSelection(event);
+            }
             GraphComponent.mouseDownProperties = null;
         });
 
@@ -259,6 +277,16 @@ export class GraphComponent implements OnInit, OnChanges {
         } else if (gElement.id.startsWith('edge')) {
             return 'edge';
         } else return undefined;
+    }
+
+
+    private static setSelectionHighlight(element: Element) {
+
+        const elementType: ElementType = GraphComponent.getElementType(element);
+
+        if (elementType == 'node') {
+            element.setAttribute('stroke', '#afafaf');
+        }
     }
 
 

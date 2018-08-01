@@ -20,6 +20,8 @@ type LineType = 'straight' | 'curved';
     templateUrl: './matrix-view.html'
 })
 /**
+ * Responsible for the calculation of the graph.
+ *
  * @author Thomas Kleinke
  */
 export class MatrixViewComponent implements OnInit {

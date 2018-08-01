@@ -14,9 +14,6 @@ import {ObjectUtil} from "../../util/object-util";
 import {isNot} from 'tsfun';
 
 
-type LineType = 'straight' | 'curved';
-
-
 @Component({
     moduleId: module.id,
     templateUrl: './matrix-view.html'
@@ -28,15 +25,17 @@ type LineType = 'straight' | 'curved';
  */
 export class MatrixViewComponent implements OnInit {
 
+    /**
+     * the latest svg calculated with graphviz via dot-builder
+     * based on our component's current settings.
+     */
+    public graph: string;
 
     private trenches: IdaiFieldDocument[] = [];
     private selectedTrench: IdaiFieldDocument|undefined;
+
     private featureDocuments: IdaiFieldFeatureDocument[] = [];
-
-    private subgraphSelection: IdaiFieldFeatureDocument[] = [];
-
-
-    public graph: string;
+    private subgraphSelection: IdaiFieldFeatureDocument[] = []; // see selectionMode
 
     public groupMode = true; // true meaning things get grouped by period
     public selectionMode = false; // false is edit mode, true is selection mode
@@ -61,10 +60,6 @@ export class MatrixViewComponent implements OnInit {
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
-    private noTrenches = () => this.trenches.length === 0;
-
-    private noFeatures = () => this.featureDocuments.length === 0;
-
     public showGraph = () => !this.noTrenches() && !this.noFeatures();
 
     public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures() && !this.loading.isLoading();
@@ -73,18 +68,22 @@ export class MatrixViewComponent implements OnInit {
 
     public showTrenchSelector = () => !this.noTrenches();
 
+    private noTrenches = () => this.trenches.length === 0;
+
+    private noFeatures = () => this.featureDocuments.length === 0;
+
 
     public selectLineMode(curvedLineMode: boolean) {
 
         this.curvedLineMode = curvedLineMode;
-        this.createGraph();
+        this.calculateNewGraph();
     };
 
 
     public toggleGroupMode() {
 
         this.groupMode = !this.groupMode;
-        this.createGraph();
+        this.calculateNewGraph();
     }
 
 
@@ -120,8 +119,6 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-
-
     public async subgraphActivateDeactivate() {
 
         if (!this.selectionMode) {
@@ -136,7 +133,7 @@ export class MatrixViewComponent implements OnInit {
             this.selectionMode = false;
         }
 
-        this.createGraph();
+        this.calculateNewGraph();
     }
 
 
@@ -147,7 +144,7 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private createGraph(): void {
+    private calculateNewGraph(): void {
 
         const graph: string = DotBuilder.build(
             this.projectConfiguration,
@@ -173,6 +170,31 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
+    private async selectTrench(trench: IdaiFieldDocument) {
+
+        if (trench == this.selectedTrench) return;
+
+        this.selectedTrench = trench;
+        this.matrixState.selectedTrenchId = this.selectedTrench.resource.id;
+        this.featureDocuments = [];
+
+        await this.loadFeatureDocuments(trench);
+        this.calculateNewGraph();
+    }
+
+
+    private async loadFeatureDocuments(trench: IdaiFieldDocument) {
+
+        this.loading.start();
+
+        this.featureDocuments = (await this.featureDatastore.find( {
+            constraints: { 'isRecordedIn:contain': trench.resource.id }
+        })).documents;
+
+        this.loading.stop();
+    }
+
+
     private static getPeriodMap(
         documents: Array<IdaiFieldFeatureDocument>,
         groupMode: boolean)
@@ -188,31 +210,6 @@ export class MatrixViewComponent implements OnInit {
             periodMap[period].push(document);
             return periodMap;
         }, {});
-    }
-
-
-    private async selectTrench(trench: IdaiFieldDocument) {
-
-        if (trench == this.selectedTrench) return;
-
-        this.selectedTrench = trench;
-        this.matrixState.selectedTrenchId = this.selectedTrench.resource.id;
-        this.featureDocuments = [];
-
-        await this.loadFeatureDocuments(trench);
-        this.createGraph();
-    }
-
-
-    private async loadFeatureDocuments(trench: IdaiFieldDocument) {
-
-        this.loading.start();
-
-        this.featureDocuments = (await this.featureDatastore.find( {
-            constraints: { 'isRecordedIn:contain': trench.resource.id }
-        })).documents;
-
-        this.loading.stop();
     }
 }
 

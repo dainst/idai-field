@@ -59,7 +59,7 @@ export module ObjectUtil {
         })(object, JSON.parse(JSON.stringify(object))) as O;
     }
 
-
+    // TODO move to tsfun / predicates
     export function isEmpty(object: Object): boolean {
 
         return Object.keys(object).length == 0;

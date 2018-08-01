@@ -10,6 +10,8 @@ import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-docu
 import {Loading} from '../../widgets/loading';
 import {DotBuilder} from "./dot-builder";
 import {ProjectConfiguration} from 'idai-components-2/core';
+import {ObjectUtil} from "../../util/object-util";
+import {isNot} from 'tsfun';
 
 
 type LineType = 'straight' | 'curved';
@@ -101,20 +103,19 @@ export class MatrixViewComponent implements OnInit {
 
     public async select(resourceIdentifier: string) {
 
-        const docToEdit = this.featureDocuments.find(_ =>
-            _.resource.identifier === resourceIdentifier);
+        const docToEdit = this.featureDocuments.find(
+            sameOnResourceIdentifier(resourceIdentifier));
 
         if (!docToEdit) return;
-
         if (this.selectionMode === 'edit') return this.launchDocedit(docToEdit);
 
+        if (!this.subgraphSelection
+            .find(sameOnResourceIdentifier(resourceIdentifier))) {
 
-        if (!this.subgraphSelection // TODO use tsfun unique with a comparison function parameter, possible with sameOnPath('resource.identifier')
-            .find(_ => _.resource.identifier === docToEdit.resource.identifier)) {
                 this.subgraphSelection.push(docToEdit);
         } else {
             this.subgraphSelection = this.subgraphSelection
-                .filter(_ => _.resource.identifier !== resourceIdentifier);
+                .filter(isNot(sameOnResourceIdentifier(resourceIdentifier)));
         }
     }
 
@@ -240,3 +241,13 @@ export class MatrixViewComponent implements OnInit {
         this.loading.stop();
     }
 }
+
+
+// TODO move to tsfun / predicates
+const sameOn = (comparison: any, path: string) =>
+    (object: any): boolean =>
+        ObjectUtil.getElForPathIn(object, path) === comparison;
+
+
+const sameOnResourceIdentifier = (comparison: any) =>
+    sameOn(comparison, 'resource.identifier');

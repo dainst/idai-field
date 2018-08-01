@@ -96,14 +96,11 @@ export class MatrixViewComponent implements OnInit {
         if (!docToEdit) return;
         if (!this.selectionMode) return this.launchDocedit(docToEdit);
 
-        if (!this.subgraphSelection
-            .find(sameOnResourceIdentifier(resourceIdentifier))) {
-
-                this.subgraphSelection.push(docToEdit);
-        } else {
-            this.subgraphSelection = this.subgraphSelection
+        this.subgraphSelection = !this.subgraphSelection
+                .find(sameOnResourceIdentifier(resourceIdentifier))
+            ? this.subgraphSelection.concat([docToEdit])
+            : this.subgraphSelection
                 .filter(isNot(sameOnResourceIdentifier(resourceIdentifier)));
-        }
     }
 
 

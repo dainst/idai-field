@@ -32,7 +32,7 @@ export module ObjectUtil {
     }
 
 
-    // TODO make global
+    // TODO make global, add more general version of it to tsfun
     /**
      * Clones the object, keeping the type of Date objects as Date.
      *

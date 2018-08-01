@@ -12,7 +12,7 @@ export module DotBuilder {
                           groups: { [group: string]: Array<Document> },
                           relations: string[] =
                               ['isAfter', 'isBefore', 'isContemporaryWith'], // TODO do not give defaults
-                          linemode: 'straight' | 'curved' = 'curved'
+                          curvedLineMode = true
     ): string {
 
         const docs = takeOutNonExistingRelations(Object
@@ -26,7 +26,7 @@ export module DotBuilder {
             + createRootDocumentMinRankDefinition(docs, relations)
             + createIsAfterEdgesDefinitions(docs, relations)
             + createIsContemporaryWithEdgesDefinitions(docs)
-            + (linemode === 'straight' ? ' splines=ortho }' : '}');
+            + (!curvedLineMode ? ' splines=ortho }' : '}');
     }
 
 

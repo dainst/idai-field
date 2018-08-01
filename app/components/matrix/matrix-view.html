@@ -61,21 +61,21 @@
     <div class="col-md-2 mr-md-auto">
         <div class="btn-group resources-mode-buttons" style="width: 100% !important;">
             <button id="straight-mode-button" style="width: 50% !important;"
-                    (click)="selectLineMode('straight')"
+                    (click)="selectLineMode(false)"
                     ngbTooltip="Graph mit geraden Linien zeichnen"
                     placement="left"
                     container="body"
                     class="btn btn-primary m-0"
-                    [class.active]="currentLineModeIs('straight')">
+                    [class.active]="!curvedLineMode">
                 |
             </button>
             <button id="curved-mode-button" style="width: 50% !important;"
-                    (click)="selectLineMode('curved')"
+                    (click)="selectLineMode(true)"
                     ngbTooltip="Graph mit geschwungenen Linien zeichnen"
                     placement="left"
                     container="body"
                     class="btn btn-primary m-0"
-                    [class.active]="currentLineModeIs('curved')">
+                    [class.active]="curvedLineMode">
                 )
             </button>
         </div>

@@ -38,10 +38,10 @@ export class MatrixViewComponent implements OnInit {
 
     public graph: string;
 
-    public currentLineMode: LineType = 'curved';
-
     public groupMode = true; // true meaning things get grouped by period
     public selectionMode = false; // false is edit mode, true is selection mode
+    public curvedLineMode = true; // false is straight line mode
+
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
@@ -75,17 +75,11 @@ export class MatrixViewComponent implements OnInit {
     public showTrenchSelector = () => !this.noTrenches();
 
 
-    public selectLineMode(mode: LineType) {
+    public selectLineMode(curvedLineMode: boolean) {
 
-        this.currentLineMode = mode;
+        this.curvedLineMode = curvedLineMode;
         this.createGraph();
     };
-
-
-    public currentLineModeIs(mode: LineType): boolean {
-
-        return this.currentLineMode === mode;
-    }
 
 
     public toggleGroupMode() {
@@ -165,7 +159,7 @@ export class MatrixViewComponent implements OnInit {
             this.projectConfiguration,
             MatrixViewComponent.getPeriodMap(this.featureDocuments, this.groupMode),
             ['isAfter', 'isBefore', 'isContemporaryWith'],
-            this.currentLineMode);
+            this.curvedLineMode);
 
         this.graph = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
     }

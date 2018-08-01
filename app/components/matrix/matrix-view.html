@@ -1,6 +1,6 @@
 <div id="matrix-view" class="row bg-light py-2">
 
-    <div class="col-md-9">
+    <div class="col-md-8">
         <div *ngIf="showTrenchSelector()" class="btn-group operation-document-selector"
              ngbDropdown placement="bottom-left" role="group">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
@@ -17,6 +17,21 @@
 
         <div *ngIf="!showTrenchSelector()" id="trench-selector-placeholder"></div>
     </div>
+
+
+    <div class="col-md-1 mr-md-auto">
+        <div class="btn-group" style="width: 100% !important;">
+            <button id="periods-mode-button" style="width: 100% !important;"
+                    ngbTooltip="Gruppierung nach Perioden {{groupMode ? 'ausschalten' : 'einschalten'}} / placement also on the left side?"
+                    placement="left"
+                    (click)="toggleGroupMode()"
+                    container="body"
+                    class="btn btn-{{groupMode ? '' : 'outline-'}}primary m-0">
+                <span class="mdi mdi-view-grid"></span>
+            </button>
+        </div>
+    </div>
+
 
     <div class="col-md-2 mr-md-auto">
         <div class="btn-group resources-mode-buttons" style="width: 100% !important;">
@@ -72,8 +87,7 @@
     </div>
 
     <graph *ngIf="showGraph()"
-           [documents]="featureDocuments"
-           [linemode]="currentLineMode"
+           [graph]="graph"
            (onSelect)="select($event)">
     </graph>
 </div>

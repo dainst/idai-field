@@ -21,8 +21,7 @@ type EdgeType = 'is-after'|'is-contemporary-with'|undefined;
  */
 export class GraphComponent implements OnInit, OnChanges {
 
-    @Input() documents: Array<IdaiFieldFeatureDocument>;
-    @Input() linemode: 'straight' | 'curved';
+    @Input() graph: string;
     @Output() onSelect: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('graphContainer') graphContainer: ElementRef;
@@ -37,8 +36,7 @@ export class GraphComponent implements OnInit, OnChanges {
 
 
     constructor(
-        private renderer: Renderer2,
-        private projectConfiguration: ProjectConfiguration
+        private renderer: Renderer2
     ) {}
 
 
@@ -65,27 +63,14 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private showGraph() {
 
-        const svg: string = this.createGraph();
+        if (!this.graph) return;
 
-        const svgGraph = new DOMParser().parseFromString(svg, 'image/svg+xml')
+        const svgGraph = new DOMParser().parseFromString(this.graph, 'image/svg+xml')
             .getElementsByTagName('svg')[0];
 
         GraphComponent.removeTitleElements(svgGraph);
         this.graphContainer.nativeElement.appendChild(svgGraph);
         GraphComponent.configurePanZoomBehavior(svgGraph);
-    }
-
-
-    private createGraph(): string {
-
-        console.log("createGraph",this.linemode)
-
-        const graph: string = DotBuilder.build(
-            this.projectConfiguration,
-            GraphComponent.getPeriodMap(this.documents),
-            ['isAfter', 'isBefore', 'isContemporaryWith'],
-            this.linemode);
-        return Viz(graph, { format: 'svg', engine: 'dot' }) as string;
     }
 
 
@@ -210,20 +195,6 @@ export class GraphComponent implements OnInit, OnChanges {
             polygon.setAttribute('stroke', color);
             polygon.setAttribute('fill', color);
         }
-    }
-
-
-    private static getPeriodMap(documents: Array<IdaiFieldFeatureDocument>)
-        : { [period: string]: Array<IdaiFieldFeatureDocument> } {
-
-        return documents.reduce((periodMap: any, document: IdaiFieldFeatureDocument) => {
-            const period: string = document.resource.hasPeriod
-                || document.resource.hasPeriodBeginning // TODO Remove
-                || 'UNKNOWN';
-            if (!periodMap[period]) periodMap[period] = [];
-            periodMap[period].push(document);
-            return periodMap;
-        }, {});
     }
 
 

@@ -1,19 +1,58 @@
 <div id="matrix-view" class="row bg-light py-2">
-    <div *ngIf="showTrenchSelector()" class="btn-group operation-document-selector"
-         ngbDropdown placement="bottom-left" role="group">
-        <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
-        <div class="dropdown-menu" ngbDropdownMenu>
-            <button *ngFor="let trench of trenches" class="dropdown-item" (click)="selectTrench(trench)">
-                {{getDocumentLabel(trench)}}
-            </button>
+
+    <div class="col-md-9">
+        <div *ngIf="showTrenchSelector()" class="btn-group operation-document-selector"
+             ngbDropdown placement="bottom-left" role="group">
+            <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <button *ngFor="let trench of trenches" class="dropdown-item" (click)="selectTrench(trench)">
+                    {{getDocumentLabel(trench)}}
+                </button>
+            </div>
+
+            <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">
+                {{getDocumentLabel(selectedTrench)}}
+            </div>
         </div>
 
-        <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">
-            {{getDocumentLabel(selectedTrench)}}
+        <div *ngIf="!showTrenchSelector()" id="trench-selector-placeholder"></div>
+    </div>
+
+    <div class="col-md-2 mr-md-auto">
+        <div class="btn-group resources-mode-buttons" style="width: 100% !important;">
+            <button id="straight-mode-button" style="width: 50% !important;"
+                    (click)="selectLineMode('straight')"
+                    ngbTooltip="Graph mit geraden Linien zeichnen"
+                    placement="left"
+                    container="body"
+                    class="btn btn-primary m-0"
+                    [class.active]="currentLineModeIs('straight')">
+                |
+            </button>
+            <button id="curved-mode-button" style="width: 50% !important;"
+                    (click)="selectLineMode('curved')"
+                    ngbTooltip="Graph mit geschwungenen Linien zeichnen"
+                    placement="left"
+                    container="body"
+                    class="btn btn-primary m-0"
+                    [class.active]="currentLineModeIs('curved')">
+                )
+            </button>
         </div>
     </div>
 
-    <div *ngIf="!showTrenchSelector()" id="trench-selector-placeholder"></div>
+    <div class="col-md-1 mr-md-auto">
+        <div class="btn-group" style="width: 100% !important;">
+            <button id="createBackupButton" style="width: 100% !important;"
+                    class="btn btn-primary"
+                    ngbTooltip="Export function / does nothing yet"
+                    placement="left"
+                    container="body"
+                    [ngClass]="{ 'disabled': running }">
+                <span class="mdi mdi-file-export" style="color: white"></span>
+            </button>
+        </div>
+    </div>
 </div>
 
 <div id="matrix-container">
@@ -32,6 +71,10 @@
         </em>
     </div>
 
-    <graph *ngIf="showGraph()" [documents]="featureDocuments" (onSelect)="select($event)"></graph>
+    <graph *ngIf="showGraph()"
+           [documents]="featureDocuments"
+           [linemode]="currentLineMode"
+           (onSelect)="select($event)">
+    </graph>
 </div>
 

@@ -23,6 +23,7 @@ export class MatrixViewComponent implements OnInit {
     private selectedTrench: IdaiFieldDocument|undefined;
     private featureDocuments: Array<IdaiFieldFeatureDocument> = [];
 
+    public currentLineMode: 'straight' | 'curved' = 'curved';
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
@@ -53,6 +54,18 @@ export class MatrixViewComponent implements OnInit {
     public showNoTrenchesWarning = () => this.noTrenches();
 
     public showTrenchSelector = () => !this.noTrenches();
+
+
+    public selectLineMode(mode: 'straight' | 'curved') {
+
+        this.currentLineMode = mode;
+    };
+
+
+    public currentLineModeIs(mode: 'straight' | 'curved'): boolean {
+
+        return this.currentLineMode === mode;
+    }
 
 
     public async select(event: string) {

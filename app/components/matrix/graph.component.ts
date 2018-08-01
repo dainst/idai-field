@@ -22,6 +22,7 @@ type EdgeType = 'is-after'|'is-contemporary-with'|undefined;
 export class GraphComponent implements OnInit, OnChanges {
 
     @Input() documents: Array<IdaiFieldFeatureDocument>;
+    @Input() linemode: 'straight' | 'curved';
     @Output() onSelect: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('graphContainer') graphContainer: ElementRef;
@@ -77,9 +78,13 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private createGraph(): string {
 
+        console.log("createGraph",this.linemode)
+
         const graph: string = DotBuilder.build(
             this.projectConfiguration,
-            GraphComponent.getPeriodMap(this.documents));
+            GraphComponent.getPeriodMap(this.documents),
+            ['isAfter', 'isBefore', 'isContemporaryWith'],
+            this.linemode);
         return Viz(graph, { format: 'svg', engine: 'dot' }) as string;
     }
 

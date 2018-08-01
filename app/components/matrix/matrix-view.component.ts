@@ -61,7 +61,6 @@ export class MatrixViewComponent implements OnInit {
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
-
     private noTrenches = () => this.trenches.length === 0;
 
     private noFeatures = () => this.featureDocuments.length === 0;
@@ -117,15 +116,13 @@ export class MatrixViewComponent implements OnInit {
         const reset = () => {
             this.featureDocuments = [];
             this.selectedTrench = undefined;
-            this.populateTrenches()
+            this.populateTrenches();
         };
 
-        await doceditRef.result
-            .then(() => reset(),
-                reason => {
-                    if (reason === 'deleted') reset();
-                });
+        await doceditRef.result.then(reset, doWhen('deleted', reset));
     }
+
+
 
 
     public async subgraphActivateDeactivate() {
@@ -221,6 +218,10 @@ export class MatrixViewComponent implements OnInit {
         this.loading.stop();
     }
 }
+
+
+const doWhen = (comparison: any, f: Function) =>
+    (other: any) => { if (comparison === other) f(); };
 
 
 // TODO move to tsfun / predicates

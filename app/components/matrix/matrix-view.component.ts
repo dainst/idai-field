@@ -38,11 +38,10 @@ export class MatrixViewComponent implements OnInit {
 
     public graph: string;
 
-    public selectionMode: 'edit' | 'subgraphSelect' = 'edit';
     public currentLineMode: LineType = 'curved';
 
-    private groupMode = true; // true meaning things get grouped by period
-
+    public groupMode = true; // true meaning things get grouped by period
+    public selectionMode = false; // false is edit mode, true is selection mode
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
@@ -102,7 +101,7 @@ export class MatrixViewComponent implements OnInit {
             sameOnResourceIdentifier(resourceIdentifier));
 
         if (!docToEdit) return;
-        if (this.selectionMode === 'edit') return this.launchDocedit(docToEdit);
+        if (!this.selectionMode) return this.launchDocedit(docToEdit);
 
         if (!this.subgraphSelection
             .find(sameOnResourceIdentifier(resourceIdentifier))) {
@@ -137,7 +136,7 @@ export class MatrixViewComponent implements OnInit {
 
     public async subgraphActivateDeactivate() {
 
-        if (this.selectionMode === 'edit') {
+        if (!this.selectionMode) {
             if (this.selectedTrench) {
                 await this.loadFeatureDocuments(this.selectedTrench);
             }
@@ -146,7 +145,7 @@ export class MatrixViewComponent implements OnInit {
                 this.featureDocuments = this.subgraphSelection;
                 this.subgraphSelection = [];
             }
-            this.selectionMode = 'edit';
+            this.selectionMode = false;
         }
 
         this.createGraph();
@@ -155,11 +154,11 @@ export class MatrixViewComponent implements OnInit {
 
     public toggleSubgraphSelection(): void {
 
-        if (this.selectionMode === 'edit') {
+        if (!this.selectionMode) {
             this.subgraphSelection = [];
-            this.selectionMode = 'subgraphSelect';
+            this.selectionMode = true;
         } else {
-            this.selectionMode = 'edit';
+            this.selectionMode = false;
         }
     }
 

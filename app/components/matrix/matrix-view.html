@@ -38,21 +38,21 @@
 
             <button id="subgraph-selection-mode" style="width: 50% !important;"
                     (click)="toggleSubgraphSelection()"
-                    ngbTooltip="{{selectionMode === 'edit' ? 'Dokumentenausauswahl beginnen' : 'Dokumentenausauswahl beenden'}}"
+                    ngbTooltip="{{!selectionMode ? 'Dokumentenausauswahl beginnen' : 'Dokumentenausauswahl beenden'}}"
                     placement="left"
                     container="body"
-                    class="btn btn-{{selectionMode === 'edit' ? 'outline-' : ''}}primary m-0">
+                    class="btn btn-{{!selectionMode ? 'outline-' : ''}}primary m-0">
                 <span class="mdi mdi-image-search-outline"></span>
             </button>
             <button id="subgraph-selection-activate-button" style="width: 50% !important;"
                     (click)="subgraphActivateDeactivate()"
-                    ngbTooltip="{{selectionMode === 'edit' ?
+                    ngbTooltip="{{!selectionMode ?
                         'Dokumente neu laden' : 'Graphen aus ausgewählten Dokumenten erstellen'}}"
                     placement="left"
                     container="body"
                     class="btn btn-primary m-0">
-                <span *ngIf="selectionMode !== 'edit'" class="mdi mdi-play"></span>
-                <span *ngIf="selectionMode === 'edit'" class="mdi mdi-reload"></span>
+                <span *ngIf="selectionMode" class="mdi mdi-play"></span>
+                <span *ngIf="!selectionMode" class="mdi mdi-reload"></span>
             </button>
         </div>
     </div>

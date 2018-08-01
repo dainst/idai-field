@@ -89,17 +89,17 @@ export class MatrixViewComponent implements OnInit {
 
     public async select(resourceIdentifier: string) {
 
-        const docToEdit = this.featureDocuments.find(
+        const selectedDoc = this.featureDocuments.find(
             sameOnResourceIdentifier(resourceIdentifier));
 
-        if (!docToEdit) return;
-        if (!this.selectionMode) return this.launchDocedit(docToEdit);
+        if (!selectedDoc) return;
 
-        this.subgraphSelection = !this.subgraphSelection
-                .find(sameOnResourceIdentifier(resourceIdentifier))
-            ? this.subgraphSelection.concat([docToEdit])
-            : this.subgraphSelection
-                .filter(isNot(sameOnResourceIdentifier(resourceIdentifier)));
+        if (!this.selectionMode) {
+            this.launchDocedit(selectedDoc);
+        } else {
+            this.subgraphSelection = MatrixViewComponent
+                .addOrRemove(this.subgraphSelection, selectedDoc);
+        }
     }
 
 
@@ -192,6 +192,17 @@ export class MatrixViewComponent implements OnInit {
         })).documents;
 
         this.loading.stop();
+    }
+
+
+    private static addOrRemove(subgraphSelection: Array<IdaiFieldFeatureDocument>,
+                               docToAddOrRemove: IdaiFieldFeatureDocument) {
+
+        return !subgraphSelection
+            .find(sameOn('resource.id', docToAddOrRemove.resource.id))
+            ? subgraphSelection.concat([docToAddOrRemove])
+            : subgraphSelection
+                .filter(isNot(sameOn('resource.id', docToAddOrRemove.resource.id)));
     }
 
 

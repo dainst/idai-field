@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
+import {element} from "protractor";
 
 
 type ElementType = 'node'|'edge'|undefined;
@@ -86,11 +87,22 @@ export class GraphComponent implements OnInit, OnChanges {
 
         this.onSelect.emit(GraphComponent.mouseDownProperties.target);
 
-        if (this.highlightSelection) {
+        if (this.highlightSelection) GraphComponent
+            .performHighlightingSelection(event.target as Element);
+    }
 
-            const gElement: Element|undefined = GraphComponent.getGElement(
-                event.target as Element);
-            if (gElement) GraphComponent.setSelectionHighlight(gElement);
+
+    private static performHighlightingSelection(e: Element) {
+
+        const gElement: Element|undefined = GraphComponent.getGElement(e);
+
+        if (gElement) {
+            const elementType: ElementType = GraphComponent.getElementType(gElement);
+            if (elementType !== 'node') return;
+            gElement.setAttribute('stroke',
+                !gElement.getAttribute('stroke') || gElement.getAttribute('stroke') === ''
+                    ? '#afafaf'
+                    : '');
         }
     }
 
@@ -256,7 +268,7 @@ export class GraphComponent implements OnInit, OnChanges {
     private static getGElement(element: Element): Element|undefined {
 
         do {
-            if (element.tagName == 'g') return element;
+            if (element.tagName === 'g') return element;
             element = element.parentNode as HTMLElement;
         } while (element);
 
@@ -277,16 +289,6 @@ export class GraphComponent implements OnInit, OnChanges {
         } else if (gElement.id.startsWith('edge')) {
             return 'edge';
         } else return undefined;
-    }
-
-
-    private static setSelectionHighlight(element: Element) {
-
-        const elementType: ElementType = GraphComponent.getElementType(element);
-
-        if (elementType == 'node') {
-            element.setAttribute('stroke', '#afafaf');
-        }
     }
 
 

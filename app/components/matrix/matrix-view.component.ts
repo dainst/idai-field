@@ -106,15 +106,16 @@ export class MatrixViewComponent implements OnInit {
 
         if (!docToEdit) return;
 
-        if (this.selectionMode === 'edit') {
-            await this.launchDocedit(docToEdit);
-        } else {
-            if (!this.subgraphSelection // TODO use tsfun unique with a comparison function parameter, possible with sameOnPath('resource.identifier')
-                .find(_ => _.resource.identifier === docToEdit.resource.identifier)) {
-                    this.subgraphSelection.push(docToEdit);
-                }
-        }
+        if (this.selectionMode === 'edit') return this.launchDocedit(docToEdit);
 
+
+        if (!this.subgraphSelection // TODO use tsfun unique with a comparison function parameter, possible with sameOnPath('resource.identifier')
+            .find(_ => _.resource.identifier === docToEdit.resource.identifier)) {
+                this.subgraphSelection.push(docToEdit);
+        } else {
+            this.subgraphSelection = this.subgraphSelection
+                .filter(_ => _.resource.identifier !== resourceIdentifier);
+        }
     }
 
 

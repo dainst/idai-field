@@ -90,7 +90,7 @@ export class MatrixViewComponent implements OnInit {
     public async select(resourceIdentifier: string) {
 
         const selectedDoc = this.featureDocuments.find(
-            sameOnResourceIdentifier(resourceIdentifier));
+            sameOn('resource.identifier', resourceIdentifier));
 
         if (!selectedDoc) return;
 
@@ -233,7 +233,3 @@ const doWhen = (comparison: any, f: Function) =>
 const sameOn = (path: string, comparison: any) =>
     (object: any): boolean =>
         ObjectUtil.getElForPathIn(object, path) === comparison;
-
-
-const sameOnResourceIdentifier = (comparison: any) =>
-    sameOn('resource.identifier', comparison);

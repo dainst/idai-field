@@ -4,6 +4,7 @@
  */
 export module ObjectUtil {
 
+    // TODO move to tsfun
     export function getElForPathIn(object: any, path: string) {
 
         let result = object;
@@ -14,7 +15,7 @@ export module ObjectUtil {
         return result;
     }
 
-
+    // TODO move to tsfun
     export function takeOrMake(object: Object, path: string, val: any) {
 
         if (getElForPathIn(object, path)) return getElForPathIn(object, path);
@@ -31,6 +32,7 @@ export module ObjectUtil {
     }
 
 
+    // TODO make global
     /**
      * Clones the object, keeping the type of Date objects as Date.
      *

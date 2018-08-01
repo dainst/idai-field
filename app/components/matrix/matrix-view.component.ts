@@ -70,7 +70,7 @@ export class MatrixViewComponent implements OnInit {
 
     private noTrenches = () => this.trenches.length === 0;
 
-    private noFeatures = () => this.featureDocuments.length === 0;
+    private noFeatures = () => this.featureDocuments.length === 0; // todo add isEmpty(Array) to tsfun
 
 
     public selectLineMode(curvedLineMode: boolean) {

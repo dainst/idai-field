@@ -154,12 +154,8 @@ export class MatrixViewComponent implements OnInit {
 
     public toggleSubgraphSelection(): void {
 
-        if (!this.selectionMode) {
-            this.subgraphSelection = [];
-            this.selectionMode = true;
-        } else {
-            this.selectionMode = false;
-        }
+        this.selectionMode = !this.selectionMode;
+        if (this.selectionMode) this.subgraphSelection = [];
     }
 
 

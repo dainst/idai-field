@@ -145,8 +145,10 @@ export class MatrixViewComponent implements OnInit {
                 await this.loadFeatureDocuments(this.selectedTrench);
             }
         } else {
-            this.featureDocuments = this.subgraphSelection;
-            this.subgraphSelection = [];
+            if (this.subgraphSelection.length > 0) {
+                this.featureDocuments = this.subgraphSelection;
+                this.subgraphSelection = [];
+            }
             this.selectionMode = 'edit';
         }
 

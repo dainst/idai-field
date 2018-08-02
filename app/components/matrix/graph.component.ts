@@ -1,14 +1,6 @@
-import {
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewChild
-} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnInit, Output, Renderer2, ViewChild}
+    from '@angular/core';
+import {DOCUMENT} from '@angular/platform-browser';
 import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
 import {GraphManipulation} from "./graph-manipulation";
@@ -40,7 +32,8 @@ export class GraphComponent implements OnInit, OnChanges {
     private static mouseDownProperties: any = null;
 
 
-    constructor(private renderer: Renderer2) {}
+    constructor(@Inject(DOCUMENT) private htmlDocument: Document,
+                private renderer: Renderer2) {}
 
 
     ngOnInit() {
@@ -73,6 +66,7 @@ export class GraphComponent implements OnInit, OnChanges {
 
         GraphManipulation.removeTitleElements(svgGraph);
         this.graphContainer.nativeElement.appendChild(svgGraph);
+        GraphManipulation.addClusterSubgraphLabelBoxes(svgGraph, this.htmlDocument);
         GraphComponent.configurePanZoomBehavior(svgGraph);
     }
 

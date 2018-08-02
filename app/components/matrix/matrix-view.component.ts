@@ -207,10 +207,8 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private static getPeriodMap(
-        documents: Array<IdaiFieldFeatureDocument>,
-        groupMode: boolean)
-        : { [period: string]: Array<IdaiFieldFeatureDocument> } {
+    private static getPeriodMap(documents: Array<IdaiFieldFeatureDocument>,
+                                groupMode: boolean): { [period: string]: Array<IdaiFieldFeatureDocument> } {
 
         if (!groupMode) return { 'UNKNOWN': documents };
 

@@ -39,11 +39,11 @@ export module GraphManipulation {
             const rectElement: Element = createSVGElement('rect', htmlDocument);
             rectElement.setAttribute('x', textElement.getBBox().x.toString());
             rectElement.setAttribute('y', textElement.getBBox().y.toString());
-            rectElement.setAttribute('width', textElement.getBBox().width.toString());            rectElement.setAttribute('height', textElement.getBBox().height.toString());
-            rectElement.setAttribute('rx', '3');
-            rectElement.setAttribute('ry', '3');
+            rectElement.setAttribute('width', textElement.getBBox().width.toString());
+            rectElement.setAttribute('height', textElement.getBBox().height.toString());
             rectElement.setAttribute('fill', 'aliceblue');
             textElement.setAttribute('font-size', '12.00');
+            textElement.setAttribute('fill', 'grey');
             clusterElements[i].removeChild(textElement);
             labelElement.appendChild(rectElement);
             labelElement.appendChild(textElement);

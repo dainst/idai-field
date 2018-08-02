@@ -39,7 +39,7 @@ export module DotBuilder {
     function takeOutNonExistingRelations(documents: Array<Document>, relations: string[]): Array<Document> {
 
         const targetExists = (target: string) => documents
-            .map(_ => _.resource.id)
+            .map(document => document.resource.id)
             .includes(target);
 
         return ObjectUtil.cloneObject(documents)
@@ -123,8 +123,7 @@ export module DotBuilder {
     }
 
 
-    function getRelationTargetIdentifiers(documents: Array<Document>,
-                                          targetIds: string[]): string[] {
+    function getRelationTargetIdentifiers(documents: Array<Document>, targetIds: string[]): string[] {
 
         return targetIds
             .map(targetId => getIdentifier(documents, targetId))
@@ -214,10 +213,9 @@ export module DotBuilder {
     }
 
 
-    function getDocument(documents: Array<Document>,
-                         id: string): Document|undefined {
+    function getDocument(documents: Array<Document>, id: string): Document|undefined {
 
-        return documents.find(_ => _.resource.id === id);
+        return documents.find(document => document.resource.id === id);
     }
 
 

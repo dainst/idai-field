@@ -10,7 +10,7 @@ import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-docu
 import {Loading} from '../../widgets/loading';
 import {DotBuilder} from './dot-builder';
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {isNot, on, sameAs} from 'tsfun';
+import {isNot, on, sameAs, doWhen, isEmpty} from 'tsfun';
 
 
 @Component({
@@ -62,9 +62,9 @@ export class MatrixViewComponent implements OnInit {
 
     public showTrenchSelector = () => !this.noTrenches();
 
-    private noTrenches = () => this.trenches.length === 0;
+    private noTrenches = () => isEmpty(this.trenches);
 
-    private noFeatures = () => this.featureDocuments.length === 0; // todo add isEmpty(Array) to tsfun
+    private noFeatures = () => isEmpty(this.featureDocuments);
 
 
     async ngOnInit() {
@@ -115,7 +115,7 @@ export class MatrixViewComponent implements OnInit {
             this.populateTrenches();
         };
 
-        await doceditRef.result.then(reset, doWhen('deleted', reset));
+        await doceditRef.result.then(reset, doWhen(sameAs('deleted'), reset));
     }
 
 
@@ -221,8 +221,3 @@ export class MatrixViewComponent implements OnInit {
         }, {});
     }
 }
-
-
-// TODO move to tsfun
-const doWhen = (comparison: any, f: Function) =>
-    (other: any) => { if (comparison === other) f(); };

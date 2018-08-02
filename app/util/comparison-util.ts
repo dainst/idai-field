@@ -6,7 +6,7 @@ import {equals, equalTo} from 'tsfun';
  */
 export module ComparisonUtil {
 
-
+    // TODO move to tsfun
     export function getDuplicateValues(array: any[]): any[] {
 
         const temp: any[] = [];

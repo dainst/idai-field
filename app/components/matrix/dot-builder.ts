@@ -1,6 +1,7 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
 import {ObjectUtil} from '../../util/object-util';
 
+
 export type GraphRelationsConfiguration = {
 
     above: string;
@@ -161,12 +162,12 @@ export module DotBuilder {
     }
 
 
-    function isSameRankNonRootDocument(documents: Array<Document>, isSameRank: string[],
+    function isSameRankNonRootDocument(documents: Array<Document>, sameRankRelationTargets: string[],
                                        processedDocuments: string[], relations: GraphRelationsConfiguration) {
 
         return (
             undefined !=
-            isSameRank
+            sameRankRelationTargets
                 .filter(targetId => !processedDocuments.includes(targetId))
                 .find(targetId => {
                     const targetDocument: Document | undefined = getDocument(documents, targetId);

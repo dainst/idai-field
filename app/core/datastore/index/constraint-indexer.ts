@@ -1,7 +1,6 @@
 import {Document, ProjectConfiguration, IdaiType, FieldDefinition} from 'idai-components-2/core';
-import {ObjectUtil} from '../../../util/object-util';
 import {IndexItem} from './index-item';
-import {getElForPathIn} from 'tsfun/objects';
+import {getElForPathIn} from 'tsfun';
 
 
 export interface IndexDefinition {

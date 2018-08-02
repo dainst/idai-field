@@ -1,6 +1,6 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
 import {ObjectUtil} from '../../util/object-util';
-import {takeOrMake} from 'tsfun/objects';
+import {takeOrMake} from 'tsfun';
 
 
 export type GraphRelationsConfiguration = {

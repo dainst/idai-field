@@ -10,9 +10,7 @@ import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-docu
 import {Loading} from '../../widgets/loading';
 import {DotBuilder} from './dot-builder';
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {ObjectUtil} from '../../util/object-util';
-import {isNot} from 'tsfun';
-import {getElForPathIn} from 'tsfun/objects';
+import {isNot, on, sameAs} from 'tsfun';
 
 
 @Component({
@@ -92,7 +90,7 @@ export class MatrixViewComponent implements OnInit {
     public async select(resourceIdentifier: string) {
 
         const selectedDoc = this.featureDocuments.find(
-            on('resource.identifier', resourceIdentifier));
+            on('resource.identifier', sameAs(resourceIdentifier)));
 
         if (!selectedDoc) return;
 
@@ -164,7 +162,7 @@ export class MatrixViewComponent implements OnInit {
         if (this.trenches.length === 0) return;
 
         const previouslySelectedTrench = this.trenches
-            .find(on('resource.id', this.matrixState.selectedTrenchId));
+            .find(on('resource.id', sameAs(this.matrixState.selectedTrenchId)));
         if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
 
         this.matrixState.selectedTrenchId = this.trenches[0].resource.id;
@@ -201,10 +199,10 @@ export class MatrixViewComponent implements OnInit {
                                docToAddOrRemove: IdaiFieldFeatureDocument) {
 
         return !subgraphSelection
-            .find(on2('resource.id', docToAddOrRemove))
+            .find(on('resource.id', docToAddOrRemove))
             ? subgraphSelection.concat([docToAddOrRemove])
             : subgraphSelection
-                .filter(isNot(on2('resource.id', docToAddOrRemove)));
+                .filter(isNot(on('resource.id', docToAddOrRemove)));
     }
 
 
@@ -230,9 +228,3 @@ const doWhen = (comparison: any, f: Function) =>
 
 
 // TODO move to tsfun / predicates
-const on = (path: string, comparison: any) =>
-    (object: any): boolean => getElForPathIn(object, path) === comparison;
-
-
-// TODO move to tsfun / predicates
-const on2 = (path: string, comparison: any) => on(path, getElForPathIn(comparison, path));

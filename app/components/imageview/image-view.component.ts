@@ -13,6 +13,7 @@ import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {M} from '../../m';
 import {RoutingService} from '../routing-service';
 import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/field/idai-field-image-document-read-datastore';
+import {isEmpty} from 'tsfun';
 
 
 @Component({
@@ -92,7 +93,7 @@ export class ImageViewComponent implements OnInit {
         if (!this.image.document) return false;
 
         const relations: any = this.image.document.resource.relations;
-        if (ObjectUtil.isEmpty(relations)) return false;
+        if (isEmpty(relations)) return false;
 
         return Object.keys(relations).filter(name => relations[name].length > 0).length > 0;
     }

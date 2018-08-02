@@ -1,3 +1,5 @@
+import {equals, equalTo} from 'tsfun';
+
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -29,12 +31,6 @@ export module ObjectUtil {
             return plain;
 
         })(object, JSON.parse(JSON.stringify(object))) as O;
-    }
-
-    // TODO move to tsfun / predicates
-    export function isEmpty(object: Object): boolean {
-
-        return Object.keys(object).length == 0;
     }
 
 
@@ -81,12 +77,12 @@ export module ObjectUtil {
         const type1: string = ObjectUtil.getType(value1);
         const type2: string = ObjectUtil.getType(value2);
 
-        if (type1 != type2) {
+        if (type1 !== type2) {
             return false;
-        } else if (type1 == 'object') {
+        } else if (type1 === 'object') {
             return compareObjects(value1, value2);
-        } else if (type1 == 'array') {
-            return compareArrays(value1, value2);
+        } else if (type1 === 'array') {
+            return equals(value1, value2, equalTo);
         } else {
             return compareFields(value1, value2);
         }
@@ -104,32 +100,9 @@ export module ObjectUtil {
         if (field1 instanceof Array && !(field2 instanceof Array)) return false;
         if (!(field1 instanceof Array) && field2 instanceof Array) return false;
 
-        if (field1 instanceof Array) return compareArrays(field1, field2);
+        if (field1 instanceof Array) return equals(field1, field2, equalTo);
 
         return field1 === field2;
-    }
-
-
-    // TODO move to tsfun
-    export function compareArrays(array1: any[], array2: any[]): boolean {
-
-        if (array1.length != array2.length) return false;
-
-        for (let element of array1) {
-            if (!isInArray(array2, element)) return false;
-        }
-
-        for (let element of array2) {
-            if (!isInArray(array1, element)) return false;
-        }
-
-        return true;
-    }
-
-
-    export function isInArray(array: any[], value: any): boolean {
-
-        return array.find(element => compareObjects(element, value)) != undefined;
     }
 
 

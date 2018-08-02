@@ -6,6 +6,7 @@ import {ResourcesComponent} from '../../resources.component';
 import {ObjectUtil} from '../../../../util/object-util';
 import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../view/view-facade';
+import {isEmpty} from 'tsfun';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class DocumentViewSidebarComponent {
         if (!selectedDoc) return false;
 
         const relations: any = selectedDoc.resource.relations;
-        if (ObjectUtil.isEmpty(relations)) return false;
+        if (isEmpty(relations)) return false;
 
         return Object.keys(relations).filter(name => {
             return this.projectConfiguration.isVisibleRelation(name, selectedDoc.resource.type)

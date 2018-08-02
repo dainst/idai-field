@@ -223,5 +223,6 @@ export class MatrixViewComponent implements OnInit {
 }
 
 
+// TODO move to tsfun
 const doWhen = (comparison: any, f: Function) =>
     (other: any) => { if (comparison === other) f(); };

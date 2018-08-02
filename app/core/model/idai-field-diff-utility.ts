@@ -1,6 +1,7 @@
 import {IdaiFieldResource} from 'idai-components-2/field';
 import {ObjectUtil} from '../../util/object-util';
 import {unique} from "tsfun";
+import {ComparisonUtil} from "../../util/comparison-util";
 
 /**
  * @author Thomas Kleinke
@@ -12,8 +13,8 @@ export class IdaiFieldDiffUtility {
         const fieldsToIgnore: string[] = ['relations'];
 
         let differingFieldsNames: string[]
-            = ObjectUtil.findDifferingFieldsInObject(resource1, resource2, fieldsToIgnore)
-                .concat(ObjectUtil.findDifferingFieldsInObject(resource2, resource1, fieldsToIgnore));
+            = ComparisonUtil.findDifferingFieldsInObject(resource1, resource2, fieldsToIgnore)
+                .concat(ComparisonUtil.findDifferingFieldsInObject(resource2, resource1, fieldsToIgnore));
 
         return unique(differingFieldsNames);
     }
@@ -22,8 +23,8 @@ export class IdaiFieldDiffUtility {
     public static findDifferingRelations(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
 
         let differingRelationNames: string[]
-            = ObjectUtil.findDifferingFieldsInObject(resource1.relations, resource2.relations)
-                .concat(ObjectUtil.findDifferingFieldsInObject(resource2.relations, resource1.relations));
+            = ComparisonUtil.findDifferingFieldsInObject(resource1.relations, resource2.relations)
+                .concat(ComparisonUtil.findDifferingFieldsInObject(resource2.relations, resource1.relations));
 
         return unique(differingRelationNames);
     }

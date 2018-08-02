@@ -2,8 +2,8 @@ import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2/core';
 import {M} from '../../m';
 import {AbstractParser} from './abstract-parser';
-import {ObjectUtil} from '../../util/object-util';
 import {Observer} from 'rxjs/Observer';
+import {ComparisonUtil} from "../../util/comparison-util";
 
 export interface Geojson {
     type: string,
@@ -97,7 +97,7 @@ export class GeojsonParser extends AbstractParser {
 
     private addDuplicateIdentifierWarnings(identifiers: string[]) {
 
-        const duplicateIdentifiers: string[] = ObjectUtil.getDuplicateValues(identifiers);
+        const duplicateIdentifiers: string[] = ComparisonUtil.getDuplicateValues(identifiers);
         if (duplicateIdentifiers.length == 1) {
             this.warnings.push([M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER, duplicateIdentifiers[0]]);
         } else if (duplicateIdentifiers.length > 1) {

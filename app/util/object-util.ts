@@ -82,18 +82,12 @@ export module ObjectUtil {
         if (type1 !== type2) {
             return false;
         } else if (type1 === 'object') {
-            return compareObjects(value1, value2);
+            return equalTo(value1)(value2);
         } else if (type1 === 'array') {
             return equals(value1, value2, equalTo);
         } else {
             return compareFields(value1, value2);
         }
-    }
-
-
-    export function compareObjects(object1: Object, object2: Object): boolean {
-
-        return JSON.stringify(object1) == JSON.stringify(object2);
     }
 
 

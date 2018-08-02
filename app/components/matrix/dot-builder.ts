@@ -1,5 +1,5 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
-import {ObjectUtil} from "../../util/object-util";
+import {ObjectUtil} from '../../util/object-util';
 
 
 /**
@@ -15,24 +15,28 @@ export module DotBuilder {
                           curvedLineMode = true
     ): string {
 
-        const docs = takeOutNonExistingRelations(Object
-            .keys(groups)
-            .reduce((acc: Document[],
-                     group: string) => acc.concat(groups[group])
-                , []), relations);
+        const documents: Array<Document> = getDocuments(groups, relations);
 
         return 'digraph { newrank = true; '
             + createNodeDefinitions(projectConfiguration, groups)
-            + createRootDocumentMinRankDefinition(docs, relations)
-            + createIsAfterEdgesDefinitions(docs, relations)
-            + createIsContemporaryWithEdgesDefinitions(docs)
+            + createRootDocumentMinRankDefinition(documents, relations)
+            + createIsAfterEdgesDefinitions(documents, relations)
+            + createIsContemporaryWithEdgesDefinitions(documents)
             + (!curvedLineMode ? ' splines=ortho }' : '}');
     }
 
 
-    function takeOutNonExistingRelations(
-        documents: Array<Document>,
-        relations: string[]): Array<Document> {
+    function getDocuments(groups: { [group: string]: Array<Document> },
+                          relations: string[]): Array<Document> {
+
+        return takeOutNonExistingRelations(
+            Object.keys(groups).reduce((acc: Document[], group: string) => acc.concat(groups[group]), []),
+            relations
+        );
+    }
+
+
+    function takeOutNonExistingRelations(documents: Array<Document>, relations: string[]): Array<Document> {
 
         const targetExists = (target: string) => documents
             .map(_ => _.resource.id)
@@ -55,8 +59,7 @@ export module DotBuilder {
     }
 
 
-    function createIsContemporaryWithEdgesDefinitions(
-        documents: Array<Document>): string {
+    function createIsContemporaryWithEdgesDefinitions(documents: Array<Document>): string {
 
         const processedIsContemporaryWithTargetIds: string[] = [];
 
@@ -81,8 +84,7 @@ export module DotBuilder {
     }
 
 
-    function createRootDocumentMinRankDefinition(
-        documents: Array<Document>, relations: string[]): string {
+    function createRootDocumentMinRankDefinition(documents: Array<Document>, relations: string[]): string {
 
         const rootDocuments: Array<Document> = getRootDocuments(documents, relations);
 
@@ -94,8 +96,7 @@ export module DotBuilder {
 
 
     function createNodeDefinitions(projectConfiguration: ProjectConfiguration,
-                                   groups: { [group: string]: Array<Document> }
-                                   ): string {
+                                   groups: { [group: string]: Array<Document> }): string {
 
         return 'node [style=filled, fontname="Roboto"] '
             + Object
@@ -131,17 +132,13 @@ export module DotBuilder {
     }
 
 
-    function getRootDocuments(
-        documents: Array<Document>,
-        relations: string[]): Array<Document> {
+    function getRootDocuments(documents: Array<Document>, relations: string[]): Array<Document> {
 
         return documents.filter(document => isRootDocument(documents, document, relations));
     }
 
 
-    function isRootDocument(documents: Array<Document>,
-                            document: Document,
-                            relations: string[],
+    function isRootDocument(documents: Array<Document>, document: Document, relations: string[],
                             processedDocuments: string[] = []): boolean {
 
         if (document.resource.relations[relations[0]].length === 0
@@ -153,11 +150,8 @@ export module DotBuilder {
     }
 
 
-    function isSameRankNonRootDocument(
-        documents: Array<Document>,
-        isSameRank: string[],
-        processedDocuments: string[],
-        relations: string[]) {
+    function isSameRankNonRootDocument(documents: Array<Document>, isSameRank: string[],
+                                       processedDocuments: string[], relations: string[]) {
 
         return (
             undefined !=
@@ -171,10 +165,8 @@ export module DotBuilder {
     }
 
 
-    function createSameRankEdgesDefinition(
-        documents: Array<Document>,
-        document: Document,
-        processedIsSameRankTargetIds: string[]): string|undefined {
+    function createSameRankEdgesDefinition(documents: Array<Document>, document: Document,
+                                           processedIsSameRankTargetIds: string[]): string|undefined {
 
         if (!document.resource.relations.isContemporaryWith) return; // TODO make param
 
@@ -229,8 +221,7 @@ export module DotBuilder {
     }
 
 
-    function createIsAboveEdgesDefinition(documents: Array<Document>,
-                                          document: Document,
+    function createIsAboveEdgesDefinition(documents: Array<Document>, document: Document,
                                           relations: string[]): string|undefined {
 
         const targetIds: string[]|undefined = document.resource.relations[relations[0]];
@@ -253,8 +244,7 @@ export module DotBuilder {
     }
 
 
-    function createNodeDefinition(projectConfiguration: ProjectConfiguration,
-                                  document: Document) {
+    function createNodeDefinition(projectConfiguration: ProjectConfiguration, document: Document) {
 
         return '"' + document.resource.identifier + '"' // <- important to enclose the identifier in "", otherwise -.*# etc. cause errors or unexpected behaviour
             + ' [id="node-' + document.resource.id + '" fillcolor="'

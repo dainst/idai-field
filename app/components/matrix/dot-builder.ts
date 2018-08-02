@@ -1,6 +1,13 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
 import {ObjectUtil} from '../../util/object-util';
 
+export type GraphRelationsConfiguration = {
+
+    above: string;
+    below: string;
+    sameRank: string;
+}
+
 
 /**
  * @author Thomas Kleinke
@@ -10,9 +17,11 @@ export module DotBuilder {
 
     export function build(projectConfiguration: ProjectConfiguration,
                           groups: { [group: string]: Array<Document> },
-                          relations: string[] =
-                              ['isAfter', 'isBefore', 'isContemporaryWith'], // TODO do not give defaults
-                          curvedLineMode = true
+                          relations: GraphRelationsConfiguration = { // TODO do not give defaults
+                              above: 'isAfter',
+                              below: 'isBefore',
+                              sameRank: 'isContemporaryWith'
+                          }, curvedLineMode = true
     ): string {
 
         const documents: Array<Document> = getDocuments(groups, relations);
@@ -27,7 +36,7 @@ export module DotBuilder {
 
 
     function getDocuments(groups: { [group: string]: Array<Document> },
-                          relations: string[]): Array<Document> {
+                          relations: GraphRelationsConfiguration): Array<Document> {
 
         return takeOutNonExistingRelations(
             Object.keys(groups).reduce((acc: Document[], group: string) => acc.concat(groups[group]), []),
@@ -36,7 +45,8 @@ export module DotBuilder {
     }
 
 
-    function takeOutNonExistingRelations(documents: Array<Document>, relations: string[]): Array<Document> {
+    function takeOutNonExistingRelations(documents: Array<Document>,
+                                         relations: GraphRelationsConfiguration): Array<Document> {
 
         const targetExists = (target: string) => documents
             .map(document => document.resource.id)
@@ -44,7 +54,9 @@ export module DotBuilder {
 
         return ObjectUtil.cloneObject(documents)
             .reduce((docs: Document[], doc: Document) => {
-                [0, 1, 2].forEach(i => cleanRelation(doc, relations[i], targetExists));
+                cleanRelation(doc, relations.above, targetExists);
+                cleanRelation(doc, relations.below, targetExists);
+                cleanRelation(doc, relations.sameRank, targetExists);
                 return docs.concat(doc);
             }, []);
     }
@@ -52,10 +64,9 @@ export module DotBuilder {
 
     function cleanRelation(document: Document, relation: string, test: Function) {
 
-        document.resource.relations[relation]
-            = ObjectUtil
-                .takeOrMake(document, 'resource.relations.' + relation, [])
-                .filter(test);
+        document.resource.relations[relation] = ObjectUtil
+            .takeOrMake(document, 'resource.relations.' + relation, [])
+            .filter(test);
     }
 
 
@@ -73,7 +84,8 @@ export module DotBuilder {
     }
 
 
-    function createAboveEdgesDefinitions(documents: Array<Document>, relations: string[]): string {
+    function createAboveEdgesDefinitions(documents: Array<Document>,
+                                         relations: GraphRelationsConfiguration): string {
 
         const result: string = documents
             .map(document => createAboveEdgesDefinition(documents, document, relations))
@@ -84,7 +96,8 @@ export module DotBuilder {
     }
 
 
-    function createRootDocumentMinRankDefinition(documents: Array<Document>, relations: string[]): string {
+    function createRootDocumentMinRankDefinition(documents: Array<Document>,
+                                                 relations: GraphRelationsConfiguration): string {
 
         const rootDocuments: Array<Document> = getRootDocuments(documents, relations);
 
@@ -99,8 +112,7 @@ export module DotBuilder {
                                    groups: { [group: string]: Array<Document> }): string {
 
         return 'node [style=filled, fontname="Roboto"] '
-            + Object
-                .keys(groups)
+            + Object.keys(groups)
                 .map(group => createNodeDefinitionsForGroup(
                     projectConfiguration, group, groups[group])
                 ).join('');
@@ -129,26 +141,27 @@ export module DotBuilder {
     }
 
 
-    function getRootDocuments(documents: Array<Document>, relations: string[]): Array<Document> {
+    function getRootDocuments(documents: Array<Document>,
+                              relations: GraphRelationsConfiguration): Array<Document> {
 
         return documents.filter(document => isRootDocument(documents, document, relations));
     }
 
 
-    function isRootDocument(documents: Array<Document>, document: Document, relations: string[],
-                            processedDocuments: string[] = []): boolean {
+    function isRootDocument(documents: Array<Document>, document: Document,
+                            relations: GraphRelationsConfiguration, processedDocuments: string[] = []): boolean {
 
-        if (document.resource.relations[relations[0]].length === 0
-            || document.resource.relations[relations[1]].length !== 0) return false;
+        if (document.resource.relations[relations.above].length === 0
+            || document.resource.relations[relations.below].length !== 0) return false;
         processedDocuments.push(document.resource.id);
 
         return !isSameRankNonRootDocument(documents,
-            document.resource.relations[relations[2]], processedDocuments, relations);
+            document.resource.relations[relations.sameRank], processedDocuments, relations);
     }
 
 
     function isSameRankNonRootDocument(documents: Array<Document>, isSameRank: string[],
-                                       processedDocuments: string[], relations: string[]) {
+                                       processedDocuments: string[], relations: GraphRelationsConfiguration) {
 
         return (
             undefined !=
@@ -217,9 +230,9 @@ export module DotBuilder {
 
 
     function createAboveEdgesDefinition(documents: Array<Document>, document: Document,
-                                        relations: string[]): string|undefined {
+                                        relations: GraphRelationsConfiguration): string|undefined {
 
-        const targetIds: string[]|undefined = document.resource.relations[relations[0]];
+        const targetIds: string[]|undefined = document.resource.relations[relations.above];
         if (!targetIds || targetIds.length === 0) return;
 
         const targetIdentifiers = getRelationTargetIdentifiers(documents, targetIds);

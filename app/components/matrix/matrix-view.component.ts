@@ -150,7 +150,7 @@ export class MatrixViewComponent implements OnInit {
         const graph: string = DotBuilder.build(
             this.projectConfiguration,
             MatrixViewComponent.getPeriodMap(this.featureDocuments, this.groupMode),
-            ['isAfter', 'isBefore', 'isContemporaryWith'],
+            { above: 'isAfter', below: 'isBefore', sameRank: 'isContemporaryWith' },
             this.curvedLineMode);
 
         this.graph = Viz(graph, { format: 'svg', engine: 'dot' }) as string;

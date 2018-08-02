@@ -18,11 +18,8 @@ export module DotBuilder {
 
     export function build(projectConfiguration: ProjectConfiguration,
                           groups: { [group: string]: Array<Document> },
-                          relations: GraphRelationsConfiguration = { // TODO do not give defaults
-                              above: 'isAfter',
-                              below: 'isBefore',
-                              sameRank: 'isContemporaryWith'
-                          }, curvedLineMode = true
+                          relations: GraphRelationsConfiguration,
+                          curvedLineMode = true
     ): string {
 
         const documents: Array<Document> = getDocuments(groups, relations);

@@ -22,6 +22,7 @@ import {isNot} from 'tsfun';
  * Responsible for the calculation of the graph.
  *
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class MatrixViewComponent implements OnInit {
 

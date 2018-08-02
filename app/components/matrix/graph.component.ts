@@ -11,11 +11,7 @@ import {
 } from '@angular/core';
 import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
-import {element} from "protractor";
-
-
-type ElementType = 'node'|'edge'|undefined;
-type EdgeType = 'is-after'|'is-contemporary-with'|undefined;
+import {GraphManipulation} from "./graph-manipulation";
 
 
 @Component({
@@ -27,6 +23,7 @@ type EdgeType = 'is-after'|'is-contemporary-with'|undefined;
  * Responsible for the svg / css manipulation and direct interaction of the graph.
  *
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export class GraphComponent implements OnInit, OnChanges {
 
@@ -39,14 +36,10 @@ export class GraphComponent implements OnInit, OnChanges {
     private hoverElement: Element|undefined;
 
     private static maxRealZoom: number = 2;
-    private static hoverColor: string = '#6e95de';
-    private static defaultColor: string = '#000000';
 
     private static mouseDownProperties: any = null;
 
-    constructor(
-        private renderer: Renderer2
-    ) {}
+    constructor(private renderer: Renderer2) {}
 
 
     ngOnInit() {
@@ -148,14 +141,14 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private onMouseMove(event: MouseEvent) {
 
-        const gElement: Element|undefined = GraphComponent.getGElement(event.target as Element);
+        const gElement: Element|undefined = GraphManipulation.getGElement(event.target as Element);
 
         if (!gElement) return;
 
-        if (GraphComponent.getElementType(gElement)) {
+        if (GraphManipulation.getElementType(gElement)) {
             this.setHoverElement(gElement);
         } else if (this.hoverElement) {
-            GraphComponent.setHighlighting(this.graphContainer, this.hoverElement, false);
+            GraphManipulation.setHighlighting(this.graphContainer, this.hoverElement, false);
             this.hoverElement = undefined;
         }
     }
@@ -165,9 +158,9 @@ export class GraphComponent implements OnInit, OnChanges {
 
         if (this.hoverElement && this.hoverElement == element) return;
 
-        if (this.hoverElement) GraphComponent.setHighlighting(
+        if (this.hoverElement) GraphManipulation.setHighlighting(
             this.graphContainer, this.hoverElement, false);
-        GraphComponent.setHighlighting(this.graphContainer, element, true);
+        GraphManipulation.setHighlighting(this.graphContainer, element, true);
 
         this.hoverElement = element;
     }
@@ -175,70 +168,15 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private static performHighlightingSelection(e: Element) {
 
-        const gElement: Element|undefined = GraphComponent.getGElement(e);
+        const gElement: Element|undefined = GraphManipulation.getGElement(e);
 
         if (gElement) {
-            const elementType: ElementType = GraphComponent.getElementType(gElement);
+            const elementType: GraphManipulation.ElementType = GraphManipulation.getElementType(gElement);
             if (elementType !== 'node') return;
             gElement.setAttribute('stroke',
                 !gElement.getAttribute('stroke') || gElement.getAttribute('stroke') === ''
                     ? '#afafaf'
                     : '');
-        }
-    }
-
-
-    private static setHighlighting(
-        graphContainer: ElementRef, element: Element, highlight: boolean) {
-
-        const elementType: ElementType = GraphComponent.getElementType(element);
-
-        if (elementType == 'node') {
-            GraphComponent.setEdgesHighlighting(
-                graphContainer, GraphComponent.getResourceId(element), highlight);
-        } else if (elementType == 'edge') {
-            GraphComponent.setEdgeHighlighting(element, highlight,
-                GraphComponent.getEdgeType(element));
-        }
-    }
-
-
-    private static setEdgesHighlighting(
-        graphContainer: ElementRef, id: string, highlight: boolean) {
-
-        GraphComponent.setEdgesHighlightingForType(
-            graphContainer, 'is-after', id, highlight);
-        GraphComponent.setEdgesHighlightingForType(
-            graphContainer, 'is-contemporary-with', id, highlight);
-    }
-
-
-    private static setEdgesHighlightingForType(
-        graphContainer: ElementRef,
-        edgeType: EdgeType, id: string, highlight: boolean) {
-
-        const edges: HTMLCollection
-            = graphContainer.nativeElement.getElementsByClassName(edgeType + '-' + id);
-
-        for (let i = 0; i < edges.length; i++) {
-            GraphComponent.setEdgeHighlighting(edges[i], highlight, edgeType);
-        }
-    }
-
-
-    private static setEdgeHighlighting(edge: Element, highlight: boolean, edgeType: EdgeType) {
-
-        const color: string = highlight ? this.hoverColor : this.defaultColor;
-        const strokeWidth: string = highlight ? '2' : '1';
-
-        const path = edge.getElementsByTagName('path')[0];
-        path.setAttribute('stroke', color);
-        path.setAttribute('stroke-width', strokeWidth);
-
-        if (edgeType === 'is-after') {
-            const polygon = edge.getElementsByTagName('polygon')[0];
-            polygon.setAttribute('stroke', color);
-            polygon.setAttribute('fill', color);
         }
     }
 
@@ -271,44 +209,5 @@ export class GraphComponent implements OnInit, OnChanges {
             panZoomBehavior.setMinZoom(1);
             panZoomBehavior.setMaxZoom(maxZoom);
         }
-    }
-
-
-    private static getGElement(element: Element): Element|undefined {
-
-        do {
-            if (element.tagName === 'g') return element;
-            element = element.parentNode as HTMLElement;
-        } while (element);
-
-        return undefined;
-    }
-
-
-    private static getResourceId(gElement: Element): string {
-
-        return gElement.id.substring(gElement.id.indexOf('-') + 1);
-    }
-
-
-    private static getElementType(gElement: Element): ElementType {
-
-        if (gElement.id.startsWith('node')) {
-            return 'node';
-        } else if (gElement.id.startsWith('edge')) {
-            return 'edge';
-        } else return undefined;
-    }
-
-
-    private static getEdgeType(edge: Element): EdgeType {
-
-        const classAttribute: string|null = edge.getAttribute('class');
-
-        if (classAttribute && classAttribute.includes('is-after')) {
-            return 'is-after';
-        } else if (classAttribute && classAttribute.includes('is-contemporary-with')) {
-            return 'is-contemporary-with';
-        } else return undefined;
     }
 }

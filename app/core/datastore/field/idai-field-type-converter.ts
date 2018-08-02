@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {TypeConverter} from '../core/type-converter';
 import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
-import {ObjectUtil} from '../../../util/object-util';
 import {TypeUtility} from '../../model/type-utility';
+import {takeOrMake} from 'tsfun/objects';
+
 
 @Injectable()
 /**
@@ -55,17 +56,17 @@ export class IdaiFieldTypeConverter extends TypeConverter<Document> {
     public convert<T extends Document>(doc: Document): T {
 
         if (this.typeUtility.isSubtype(doc.resource.type, 'Image')) {
-            ObjectUtil.takeOrMake(doc,'resource.identifier','');
-            ObjectUtil.takeOrMake(doc,'resource.relations.depicts', []);
+            takeOrMake(doc,'resource.identifier','');
+            takeOrMake(doc,'resource.relations.depicts', []);
         } else {
 
-            ObjectUtil.takeOrMake(doc,'resource.identifier','');
-            ObjectUtil.takeOrMake(doc,'resource.relations.isRecordedIn', []);
+            takeOrMake(doc,'resource.identifier','');
+            takeOrMake(doc,'resource.relations.isRecordedIn', []);
 
             if (this.typeUtility.isSubtype(doc.resource.type,'Feature')) {
-                ObjectUtil.takeOrMake(doc,'resource.relations.isContemporaryWith', []);
-                ObjectUtil.takeOrMake(doc,'resource.relations.isAfter', []);
-                ObjectUtil.takeOrMake(doc,'resource.relations.isBefore', []);
+                takeOrMake(doc,'resource.relations.isContemporaryWith', []);
+                takeOrMake(doc,'resource.relations.isAfter', []);
+                takeOrMake(doc,'resource.relations.isBefore', []);
             }
         }
 

@@ -9,6 +9,14 @@ import {Static} from '../../static';
 
 describe('DotBuilder', () => {
 
+
+    const defaultRelations = {
+        above: 'isAfter',
+        below: 'isBefore',
+        sameRank: 'isContemporaryWith'
+    };
+
+
     let mockProjectConfiguration;
 
     beforeAll(() => {
@@ -31,7 +39,7 @@ describe('DotBuilder', () => {
         const graph: string = DotBuilder.build(
             mockProjectConfiguration, {
                 'UNKNOWN': [feature1, feature2]
-            });
+            }, defaultRelations);
 
         expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -57,7 +65,7 @@ describe('DotBuilder', () => {
         const graph: string = DotBuilder.build(mockProjectConfiguration,
             {
                 'UNKNOWN': [feature1, feature2, feature3]
-            });
+            }, defaultRelations);
 
         expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -80,7 +88,7 @@ describe('DotBuilder', () => {
         const graph: string = DotBuilder
             .build(mockProjectConfiguration, {
                     'UNKNOWN': [feature1, feature2]
-                });
+                }, defaultRelations);
 
         expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -101,7 +109,7 @@ describe('DotBuilder', () => {
         const graph: string = DotBuilder.build(
             mockProjectConfiguration,  {
                 'UNKNOWN': [feature1]
-            });
+            }, defaultRelations);
 
         expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -123,7 +131,7 @@ describe('DotBuilder', () => {
         const graph: string = DotBuilder.build(mockProjectConfiguration,
             {'UNKNOWN': [
                 feature1, feature3, feature4, feature5
-            ]});
+            ]}, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -150,7 +158,7 @@ describe('DotBuilder', () => {
         const graph: string = DotBuilder.build(mockProjectConfiguration, {
                 'UNKNOWN': [
                     feature1, feature3, feature5]
-        });
+        }, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -181,7 +189,7 @@ describe('DotBuilder', () => {
         const graph: string = DotBuilder.build(
             mockProjectConfiguration, {
                 'UNKNOWN': [feature1, feature2, feature3, feature4]
-            });
+            }, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -221,7 +229,7 @@ describe('DotBuilder', () => {
             mockProjectConfiguration,
             {
                 'UNKNOWN': [feature1, feature2, feature3, feature4, feature5]
-            });
+            }, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -289,7 +297,7 @@ describe('DotBuilder', () => {
                 feature5, feature6, feature7, feature8,
                 feature9, feature10, feature11, feature12,
                 feature13, feature14]
-        });
+        }, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -340,7 +348,7 @@ describe('DotBuilder', () => {
         const graph: string = DotBuilder.build(
             mockProjectConfiguration, {
                 'UNKNOWN': [feature1, feature2, feature3, feature4]
-            });
+            }, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -386,7 +394,7 @@ describe('DotBuilder', () => {
             {
                 'UNKNOWN' : [feature1],
                 'Period 1': [feature2, feature3],
-                'Period 2': [feature4, feature5]});
+                'Period 2': [feature4, feature5]}, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +

@@ -12,6 +12,7 @@ import {DotBuilder} from './dot-builder';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {ObjectUtil} from '../../util/object-util';
 import {isNot} from 'tsfun';
+import {getElForPathIn} from 'tsfun/objects';
 
 
 @Component({
@@ -230,10 +231,8 @@ const doWhen = (comparison: any, f: Function) =>
 
 // TODO move to tsfun / predicates
 const on = (path: string, comparison: any) =>
-    (object: any): boolean =>
-        ObjectUtil.getElForPathIn(object, path) === comparison;
+    (object: any): boolean => getElForPathIn(object, path) === comparison;
 
 
 // TODO move to tsfun / predicates
-const on2 = (path: string, comparison: any) =>
-    on(path, ObjectUtil.getElForPathIn(comparison, path));
+const on2 = (path: string, comparison: any) => on(path, getElForPathIn(comparison, path));

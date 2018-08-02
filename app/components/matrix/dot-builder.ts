@@ -1,5 +1,6 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
 import {ObjectUtil} from '../../util/object-util';
+import {takeOrMake} from 'tsfun/objects';
 
 
 export type GraphRelationsConfiguration = {
@@ -18,11 +19,8 @@ export module DotBuilder {
 
     export function build(projectConfiguration: ProjectConfiguration,
                           groups: { [group: string]: Array<Document> },
-                          relations: GraphRelationsConfiguration = { // TODO do not give defaults
-                              above: 'isAfter',
-                              below: 'isBefore',
-                              sameRank: 'isContemporaryWith'
-                          }, curvedLineMode = true
+                          relations: GraphRelationsConfiguration,
+                          curvedLineMode = true
     ): string {
 
         const documents: Array<Document> = getDocuments(groups, relations);
@@ -65,8 +63,8 @@ export module DotBuilder {
 
     function cleanRelation(document: Document, relation: string, test: Function) {
 
-        document.resource.relations[relation] = ObjectUtil
-            .takeOrMake(document, 'resource.relations.' + relation, [])
+        document.resource.relations[relation] =
+            takeOrMake(document, 'resource.relations.' + relation, [])
             .filter(test);
     }
 

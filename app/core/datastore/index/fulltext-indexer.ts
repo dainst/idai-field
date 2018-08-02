@@ -157,6 +157,6 @@ export class FulltextIndexer {
         return (!index[type] || !index[type][s]) ?
             resultSets.copy() :
             resultSets.copy().combine(
-                Object.keys(index[type][s]).map(id => ObjectUtil.cloneObject(index[type][s][id])));
+                Object.keys(index[type][s]).map(id => ObjectUtil.cloneWithDates(index[type][s][id])));
     }
 }

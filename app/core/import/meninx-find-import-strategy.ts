@@ -105,7 +105,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
 
     private static mergeInto(mergeTarget: Document|NewDocument, mergeSource: NewDocument) {
 
-        const mergedDoc = ObjectUtil.cloneObject(mergeTarget);
+        const mergedDoc = ObjectUtil.cloneWithDates(mergeTarget);
 
         if (mergeSource.resource.shortDescription.length > 0) mergedDoc.resource.shortDescription = mergeSource.resource.shortDescription;
         if (mergeSource.resource.hasVesselFormPottery.length > 0) mergedDoc.resource.hasVesselFormPottery = mergeSource.resource.hasVesselFormPottery;

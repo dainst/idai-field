@@ -39,7 +39,7 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
                 if (!existingDocument.modified) existingDocument.modified = [];
                 existingDocument.modified.push({ user: this.username, date: new Date() });
 
-                const docToValidate = ObjectUtil.cloneObject(existingDocument);
+                const docToValidate = ObjectUtil.cloneWithDates(existingDocument);
                 if (docToValidate.resource.relations.isRecordedIn // empty isRecordedIn on operation subtype documents leads to validation error
                     && docToValidate.resource.relations.isRecordedIn.length === 0) {
 

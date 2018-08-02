@@ -58,7 +58,7 @@ export class PouchdbDatastore {
         } catch (_) {}
         if (exists) throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
 
-        const clonedDocument = ObjectUtil.cloneObject(document);
+        const clonedDocument = ObjectUtil.cloneWithDates(document);
         if (!clonedDocument.resource.id) clonedDocument.resource.id = this.idGenerator.generateId();
         (clonedDocument as any)['_id'] = clonedDocument.resource.id;
         (clonedDocument as any)['created'] = { user: username, date: new Date() };
@@ -92,7 +92,7 @@ export class PouchdbDatastore {
             throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
         }
 
-        const clonedDocument = ObjectUtil.cloneObject(document);
+        const clonedDocument = ObjectUtil.cloneWithDates(document);
         clonedDocument.created = existingDoc.created;
         clonedDocument.modified = existingDoc.modified;
         if (squashRevisionsIds) {

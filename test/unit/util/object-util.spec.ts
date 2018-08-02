@@ -18,7 +18,7 @@ describe('ObjectUtil', () => {
            c: ''
        };
 
-       const cloned = ObjectUtil.cloneObject(original);
+       const cloned = ObjectUtil.cloneWithDates(original);
 
        expect(cloned.a.a1 instanceof Date).toBeTruthy();
        expect(cloned.a.a2 as any).toEqual('');
@@ -38,7 +38,7 @@ describe('ObjectUtil', () => {
             c: ''
         };
 
-        const cloned = ObjectUtil.cloneObject(original);
+        const cloned = ObjectUtil.cloneWithDates(original);
 
         original["a"] = "" as any;
         delete original["b"];

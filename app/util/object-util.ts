@@ -6,14 +6,13 @@ import {equals, equalTo, clone} from 'tsfun';
  */
 export module ObjectUtil {
 
-    // TODO make global, add more general version of it to tsfun
     /**
      * Clones the object, keeping the type of Date objects as Date.
      *
      * @param {O} object
      * @returns {O}
      */
-    export function cloneObject<O>(object: O): O {
+    export function cloneWithDates<O>(object: O): O {
 
         return clone(object, convertDates);
     }

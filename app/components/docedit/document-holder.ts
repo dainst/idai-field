@@ -70,8 +70,8 @@ export class DocumentHolder {
 
     public setClonedDocument(document: Document) {
 
-        this.oldVersion = ObjectUtil.cloneObject(document);
-        this.clonedDocument = ObjectUtil.cloneObject(document);
+        this.oldVersion = ObjectUtil.cloneWithDates(document);
+        this.clonedDocument = ObjectUtil.cloneWithDates(document);
         this.inspectedRevisions = [];
     };
 

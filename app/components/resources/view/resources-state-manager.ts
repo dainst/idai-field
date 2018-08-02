@@ -214,7 +214,7 @@ export class ResourcesStateManager {
 
     private notifyNavigationPathObservers() {
 
-        ObserverUtil.notify(this.navigationPathObservers, ObjectUtil.cloneObject(ResourcesState.getNavigationPath(this.resourcesState)));
+        ObserverUtil.notify(this.navigationPathObservers, ObjectUtil.cloneWithDates(ResourcesState.getNavigationPath(this.resourcesState)));
     }
 
 

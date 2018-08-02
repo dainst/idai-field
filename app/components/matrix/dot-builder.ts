@@ -51,7 +51,7 @@ export module DotBuilder {
             .map(document => document.resource.id)
             .includes(target);
 
-        return ObjectUtil.cloneObject(documents)
+        return ObjectUtil.cloneWithDates(documents)
             .reduce((docs: Document[], doc: Document) => {
                 cleanRelation(doc, relations.above, targetExists);
                 cleanRelation(doc, relations.below, targetExists);

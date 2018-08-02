@@ -6,6 +6,7 @@ import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
 import {ObjectUtil} from '../../../util/object-util';
+import {clone} from 'tsfun';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -79,7 +80,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         if (!this.suppressWait) await this.datastore.ready();
 
-        const clonedQuery: Query = ObjectUtil.cloneObject(query);
+        const clonedQuery: Query = clone(query);
 
         if (clonedQuery.types) {
             clonedQuery.types.forEach(type => {

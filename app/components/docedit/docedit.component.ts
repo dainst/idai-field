@@ -94,7 +94,7 @@ export class DoceditComponent {
      */
     public save(viaSaveButton: boolean) {
 
-        const documentBeforeSave: Document = ObjectUtil.cloneObject(this.documentHolder.getClonedDocument());
+        const documentBeforeSave: Document = ObjectUtil.cloneWithDates(this.documentHolder.getClonedDocument());
 
         this.documentHolder.save().then(
             () => this.handleSaveSuccess(documentBeforeSave, viaSaveButton),

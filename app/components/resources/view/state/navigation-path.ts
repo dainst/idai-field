@@ -79,7 +79,7 @@ export module NavigationPath {
         navPath: NavigationPath,
         newSelectedSegmentDoc: IdaiFieldDocument|undefined): NavigationPath {
 
-        const updatedNavigationPath = ObjectUtil.cloneObject(navPath);
+        const updatedNavigationPath = ObjectUtil.cloneWithDates(navPath);
 
         if (newSelectedSegmentDoc) {
             (updatedNavigationPath as any).segments = rebuildElements(
@@ -95,7 +95,7 @@ export module NavigationPath {
 
     export function setSelectedDocument(navPath: NavigationPath, displayHierarchy: boolean, document: IdaiFieldDocument|undefined) {
 
-        const clone = ObjectUtil.cloneObject(navPath);
+        const clone = ObjectUtil.cloneWithDates(navPath);
         (getViewContext(clone, displayHierarchy) as any).selected = document;
         return clone;
     }
@@ -109,7 +109,7 @@ export module NavigationPath {
 
     export function setQueryString(navPath: NavigationPath, bypassHierarchy: boolean, q: string) {
 
-        const clone = ObjectUtil.cloneObject(navPath);
+        const clone = ObjectUtil.cloneWithDates(navPath);
         (getViewContext(clone, bypassHierarchy) as any).q = q;
         return clone;
     }
@@ -123,7 +123,7 @@ export module NavigationPath {
 
     export function setTypeFilters(navPath: NavigationPath, displayHierarchy: boolean, types: string[]) {
 
-        const clone = ObjectUtil.cloneObject(navPath);
+        const clone = ObjectUtil.cloneWithDates(navPath);
         (getViewContext(clone, displayHierarchy) as any).types = types;
         return clone;
     }
@@ -137,7 +137,7 @@ export module NavigationPath {
 
     export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
-        const shortened = ObjectUtil.cloneObject(navPath);
+        const shortened = ObjectUtil.cloneWithDates(navPath);
         (shortened as any /* cast ok on construction */).segments = takeWhile(differentFrom(firstToBeExcluded))(navPath.segments);
 
         if (shortened.selectedSegmentId) {
@@ -217,7 +217,7 @@ export module NavigationPath {
         newSegments: NavigationPathSegment[],
         newSelectedSegmentId: string): NavigationPath {
 
-        const updatedNavigationPath = ObjectUtil.cloneObject(navPath);
+        const updatedNavigationPath = ObjectUtil.cloneWithDates(navPath);
 
         if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) (updatedNavigationPath as any).segments = newSegments;
 

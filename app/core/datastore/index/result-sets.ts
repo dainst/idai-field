@@ -77,9 +77,9 @@ export class ResultSets {
     private copy(): ResultSets {
 
         return new ResultSets(
-            ObjectUtil.cloneObject(this.addSets),
-            ObjectUtil.cloneObject(this.subtractSets),
-            ObjectUtil.cloneObject(this.map)
+            ObjectUtil.cloneWithDates(this.addSets),
+            ObjectUtil.cloneWithDates(this.subtractSets),
+            ObjectUtil.cloneWithDates(this.map)
         );
     }
 }

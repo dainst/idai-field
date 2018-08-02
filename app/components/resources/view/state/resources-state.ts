@@ -98,7 +98,7 @@ export module ResourcesState {
 
     export function setActiveDocumentViewTab(state: ResourcesState, activeDocumentViewTab: string|undefined): ResourcesState {
 
-        const cloned: any = ObjectUtil.cloneObject(state);
+        const cloned: any = ObjectUtil.cloneWithDates(state);
         cloned.activeDocumentViewTab = activeDocumentViewTab;
         return cloned;
     }
@@ -106,7 +106,7 @@ export module ResourcesState {
 
     export function setView(state: ResourcesState, view: string): ResourcesState {
 
-        const cloned: any = ObjectUtil.cloneObject(state);
+        const cloned: any = ObjectUtil.cloneWithDates(state);
         cloned.view = view;
         return cloned;
     }
@@ -114,7 +114,7 @@ export module ResourcesState {
 
     export function setMode(state: ResourcesState, mode: 'map' | 'list'): ResourcesState {
 
-        const cloned: any = ObjectUtil.cloneObject(state);
+        const cloned: any = ObjectUtil.cloneWithDates(state);
         cloned.mode = mode;
         return cloned;
     }
@@ -124,7 +124,7 @@ export module ResourcesState {
 
         if (viewState(state).bypassHierarchy) {
 
-            const cloned: any = ObjectUtil.cloneObject(state);
+            const cloned: any = ObjectUtil.cloneWithDates(state);
             (viewState(cloned).searchContext as any /* cast ok on construct*/).q = q;
             return cloned;
 
@@ -140,7 +140,7 @@ export module ResourcesState {
 
         if (viewState(state).bypassHierarchy) {
 
-            const cloned: any = ObjectUtil.cloneObject(state);
+            const cloned: any = ObjectUtil.cloneWithDates(state);
             (viewState(cloned).searchContext as any /* cast ok on construct*/).types = types;
             return cloned;
 
@@ -155,7 +155,7 @@ export module ResourcesState {
     export function setCustomConstraints(state: ResourcesState,
                                          constraints: { [name: string]: string}): ResourcesState {
 
-        const cloned: any = ObjectUtil.cloneObject(state);
+        const cloned: any = ObjectUtil.cloneWithDates(state);
         (viewState(cloned) as any /* cast ok on construct*/).customConstraints = constraints;
         return cloned;
     }
@@ -166,7 +166,7 @@ export module ResourcesState {
 
         if (viewState(state).bypassHierarchy) {
 
-            const cloned: any = ObjectUtil.cloneObject(state);
+            const cloned: any = ObjectUtil.cloneWithDates(state);
             (viewState(cloned).searchContext as any /* cast ok on construct*/).selected = document;
             return cloned;
 
@@ -180,7 +180,7 @@ export module ResourcesState {
 
     export function setActiveLayerIds(state: ResourcesState, activeLayersIds: string[]): ResourcesState {
 
-        const cloned = ObjectUtil.cloneObject(state);
+        const cloned = ObjectUtil.cloneWithDates(state);
 
         const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
         if (!mainTypeDocumentResourceId) return cloned;
@@ -194,7 +194,7 @@ export module ResourcesState {
 
     export function removeActiveLayersIds(state: ResourcesState): ResourcesState {
 
-        const cloned = ObjectUtil.cloneObject(state);
+        const cloned = ObjectUtil.cloneWithDates(state);
 
         const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
         if (mainTypeDocumentResourceId) delete viewState(cloned).layerIds[mainTypeDocumentResourceId];
@@ -205,7 +205,7 @@ export module ResourcesState {
 
     export function updateNavigationPath(state: ResourcesState, navPath: NavigationPath): ResourcesState {
 
-        const cloned = ObjectUtil.cloneObject(state);
+        const cloned = ObjectUtil.cloneWithDates(state);
 
         const mainTypeDocumentResourceId: string|undefined = getMainTypeDocumentResourceId(cloned);
         if (!mainTypeDocumentResourceId) return cloned;
@@ -262,7 +262,7 @@ export module ResourcesState {
 
     export function complete(state: ResourcesState ): ResourcesState {
 
-        const cloned = ObjectUtil.cloneObject(state);
+        const cloned = ObjectUtil.cloneWithDates(state);
         Object.keys(cloned.viewStates)
             .forEach(viewName => ViewState.complete(cloned.viewStates[viewName]));
         return cloned;
@@ -271,7 +271,7 @@ export module ResourcesState {
 
     export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean): ResourcesState {
 
-        const cloned = ObjectUtil.cloneObject(state);
+        const cloned = ObjectUtil.cloneWithDates(state);
         (viewState(cloned) as any /* write ok on construction */).bypassHierarchy = bypassHierarchy;
         return cloned;
     }
@@ -280,7 +280,7 @@ export module ResourcesState {
     export function setMainTypeDocumentResourceId(state: ResourcesState,
                                                   mainTypeDocumentResourceId: string|undefined): ResourcesState {
 
-        const cloned = ObjectUtil.cloneObject(state);
+        const cloned = ObjectUtil.cloneWithDates(state);
         (viewState(cloned) as any /* write ok on construction */).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
         (viewState(cloned) as any /* write ok on construction */).searchContext.selected = undefined; // TODO test this
         return cloned;
@@ -288,7 +288,7 @@ export module ResourcesState {
 
     export function setSelectAllOperationsOnBypassHierarchy(state: ResourcesState, selectAllOperationsOnBypassHierarchy: boolean): ResourcesState {
 
-        const cloned = ObjectUtil.cloneObject(state);
+        const cloned = ObjectUtil.cloneWithDates(state);
         (viewState(cloned) as any /* write ok on construction */).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
         if (selectAllOperationsOnBypassHierarchy) {
             (viewState(state) as any /* write ok on construction */).searchContext.selected = undefined; // TODO test this

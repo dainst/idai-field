@@ -1,4 +1,4 @@
-import {ElementRef} from "@angular/core";
+import {ElementRef} from '@angular/core';
 import 'viz.js';
 
 /**
@@ -16,13 +16,12 @@ export module GraphManipulation {
     const defaultColor: string = '#000000';
 
 
-    export function setHoverElement(
-        graphContainer: ElementRef, element: Element, hoverElement: Element|undefined) {
+    export function setHoverElement(graphContainer: ElementRef, element: Element,
+                                    hoverElement: Element|undefined) {
 
         if (hoverElement && hoverElement === element) return hoverElement;
 
-        if (hoverElement) GraphManipulation.setHighlighting(
-            graphContainer, hoverElement, false);
+        if (hoverElement) GraphManipulation.setHighlighting(graphContainer, hoverElement, false);
         GraphManipulation.setHighlighting(graphContainer, element, true);
 
         return element;
@@ -68,8 +67,7 @@ export module GraphManipulation {
     }
 
 
-    export function setHighlighting(
-        graphContainer: ElementRef, element: Element, highlight: boolean) {
+    export function setHighlighting(graphContainer: ElementRef, element: Element, highlight: boolean) {
 
         const elementType: ElementType = getElementType(element);
 
@@ -91,8 +89,7 @@ export module GraphManipulation {
     }
 
 
-    function setEdgesHighlighting(
-        graphContainer: ElementRef, id: string, highlight: boolean) {
+    function setEdgesHighlighting(graphContainer: ElementRef, id: string, highlight: boolean) {
 
         setEdgesHighlightingForType(
             graphContainer, 'is-after', id, highlight);
@@ -118,9 +115,8 @@ export module GraphManipulation {
     }
 
 
-    function setEdgesHighlightingForType(
-        graphContainer: ElementRef,
-        edgeType: EdgeType, id: string, highlight: boolean) {
+    function setEdgesHighlightingForType(graphContainer: ElementRef, edgeType: EdgeType, id: string,
+                                         highlight: boolean) {
 
         const edges: HTMLCollection
             = graphContainer.nativeElement.getElementsByClassName(edgeType + '-' + id);

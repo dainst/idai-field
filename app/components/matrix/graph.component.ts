@@ -28,16 +28,17 @@ import {GraphManipulation} from "./graph-manipulation";
 export class GraphComponent implements OnInit, OnChanges {
 
     @Input() graph: string;
-    @Output() onSelect: EventEmitter<string> = new EventEmitter<string>();
     @Input() highlightSelection = true;
+
+    @Output() onSelect: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('graphContainer') graphContainer: ElementRef;
 
     private hoverElement: Element|undefined;
 
     private static maxRealZoom: number = 2;
-
     private static mouseDownProperties: any = null;
+
 
     constructor(private renderer: Renderer2) {}
 
@@ -122,7 +123,7 @@ export class GraphComponent implements OnInit, OnChanges {
                                 x: event.clientX,
                                 y: event.clientY,
                                 target: event.path[0].nextElementSibling.childNodes[0].data
-                            }
+                            };
                         }
                     }
                 } else if (event.path[0].localName === 'text'
@@ -132,7 +133,7 @@ export class GraphComponent implements OnInit, OnChanges {
                         x: event.clientX,
                         y: event.clientY,
                         target: event.path[0].innerHTML
-                    }
+                    };
                 }
             }
         });
@@ -145,15 +146,10 @@ export class GraphComponent implements OnInit, OnChanges {
         if (!gElement) return;
 
         if (GraphManipulation.getElementType(gElement)) {
-
-            this.hoverElement = GraphManipulation.setHoverElement(
-                this.graphContainer, gElement, this.hoverElement);
-
+            this.hoverElement = GraphManipulation.setHoverElement(this.graphContainer, gElement,
+                this.hoverElement);
         } else if (this.hoverElement) {
-
-            GraphManipulation.setHighlighting(
-                this.graphContainer, this.hoverElement, false);
-
+            GraphManipulation.setHighlighting(this.graphContainer, this.hoverElement, false);
             this.hoverElement = undefined;
         }
     }
@@ -161,10 +157,7 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private static configurePanZoomBehavior(svg: SVGSVGElement) {
 
-        const panZoomBehavior: SvgPanZoom.Instance = svgPanZoom(svg, {
-            dblClickZoomEnabled: false
-        });
-
+        const panZoomBehavior: SvgPanZoom.Instance = svgPanZoom(svg, { dblClickZoomEnabled: false });
         const maxZoom: number = GraphComponent.maxRealZoom / panZoomBehavior.getSizes().realZoom;
 
         if (panZoomBehavior.getSizes().realZoom > GraphComponent.maxRealZoom) {

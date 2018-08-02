@@ -8,9 +8,9 @@ import {MatrixState} from './matrix-state';
 import {IdaiFieldFeatureDocumentReadDatastore} from '../../core/datastore/field/idai-field-feature-document-read-datastore';
 import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-document';
 import {Loading} from '../../widgets/loading';
-import {DotBuilder} from "./dot-builder";
+import {DotBuilder} from './dot-builder';
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {ObjectUtil} from "../../util/object-util";
+import {ObjectUtil} from '../../util/object-util';
 import {isNot} from 'tsfun';
 
 
@@ -53,12 +53,6 @@ export class MatrixViewComponent implements OnInit {
     ) {}
 
 
-    async ngOnInit() {
-
-        await this.populateTrenches();
-    }
-
-
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
     public showGraph = () => !this.noTrenches() && !this.noFeatures();
@@ -72,6 +66,12 @@ export class MatrixViewComponent implements OnInit {
     private noTrenches = () => this.trenches.length === 0;
 
     private noFeatures = () => this.featureDocuments.length === 0; // todo add isEmpty(Array) to tsfun
+
+
+    async ngOnInit() {
+
+        await this.populateTrenches();
+    }
 
 
     public selectLineMode(curvedLineMode: boolean) {

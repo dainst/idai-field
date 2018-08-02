@@ -33,7 +33,7 @@ describe('DotBuilder', () => {
                 'UNKNOWN': [feature1, feature2]
             });
 
-        expect(graph).toMatch('digraph \{ newrank = true; ' +
+        expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -59,7 +59,7 @@ describe('DotBuilder', () => {
                 'UNKNOWN': [feature1, feature2, feature3]
             });
 
-        expect(graph).toMatch('digraph \{ newrank = true; ' +
+        expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -82,7 +82,7 @@ describe('DotBuilder', () => {
                     'UNKNOWN': [feature1, feature2]
                 });
 
-        expect(graph).toMatch('digraph \{ newrank = true; ' +
+        expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -103,7 +103,7 @@ describe('DotBuilder', () => {
                 'UNKNOWN': [feature1]
             });
 
-        expect(graph).toMatch('digraph \{ newrank = true; ' +
+        expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '\}');
@@ -126,7 +126,7 @@ describe('DotBuilder', () => {
             ]});
 
         expect(graph).toMatch(
-            'digraph \{ newrank = true; ' +
+            'digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature3" \\[id="node-f3".*\\] ' +
@@ -153,7 +153,7 @@ describe('DotBuilder', () => {
         });
 
         expect(graph).toMatch(
-            'digraph \{ newrank = true; ' +
+            'digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature3" \\[id="node-f3".*\\] ' +
@@ -184,7 +184,7 @@ describe('DotBuilder', () => {
             });
 
         expect(graph).toMatch(
-            'digraph \{ newrank = true; ' +
+            'digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -224,7 +224,7 @@ describe('DotBuilder', () => {
             });
 
         expect(graph).toMatch(
-            'digraph \{ newrank = true; ' +
+            'digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -292,7 +292,7 @@ describe('DotBuilder', () => {
         });
 
         expect(graph).toMatch(
-            'digraph \{ newrank = true; ' +
+            'digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -343,7 +343,7 @@ describe('DotBuilder', () => {
             });
 
         expect(graph).toMatch(
-            'digraph \{ newrank = true; ' +
+            'digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
@@ -389,7 +389,7 @@ describe('DotBuilder', () => {
                 'Period 2': [feature4, feature5]});
 
         expect(graph).toMatch(
-            'digraph \{ newrank = true; ' +
+            'digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
             'subgraph "cluster Period 1" \{\\label="Period 1".*\\ ' +

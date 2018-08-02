@@ -27,7 +27,7 @@ export module DotBuilder {
 
         const documents: Array<Document> = getDocuments(groups, relations);
 
-        return 'digraph { newrank = true; '
+        return 'digraph { newrank=true; '
             + createNodeDefinitions(projectConfiguration, groups)
             + createRootDocumentMinRankDefinition(documents, relations)
             + createAboveEdgesDefinitions(documents, relations)
@@ -130,7 +130,12 @@ export module DotBuilder {
 
         return group === 'UNKNOWN'
             ? nodeDefinitions
-            : 'subgraph "cluster ' + group + '" {label="' + group + '" fontname="Roboto" '
+            : 'subgraph "cluster ' + group + '" '
+                + '{label="' + group + '" '
+                + 'fontname="Roboto" '
+                + 'color=grey '
+                + 'bgcolor=aliceblue '
+                + 'style=dashed '
                 + nodeDefinitions + '} ';
     }
 

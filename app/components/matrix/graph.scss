@@ -13,15 +13,20 @@
     .node {
       cursor: pointer;
       user-select: none;
+
+      text {
+        cursor: pointer;
+      }
     }
 
     .cluster {
-      cursor: default;
-
       text {
         font-size: 13px;
-        cursor: default;
       }
+    }
+
+    text {
+      cursor: default;
     }
   }
 }

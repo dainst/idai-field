@@ -16,6 +16,19 @@ export module GraphManipulation {
     const defaultColor: string = '#000000';
 
 
+    export function setHoverElement(
+        graphContainer: ElementRef, element: Element, hoverElement: Element|undefined) {
+
+        if (hoverElement && hoverElement === element) return hoverElement;
+
+        if (hoverElement) GraphManipulation.setHighlighting(
+            graphContainer, hoverElement, false);
+        GraphManipulation.setHighlighting(graphContainer, element, true);
+
+        return element;
+    }
+
+
     export function performHighlightingSelection(e: Element) {
 
         const gElement: Element|undefined = GraphManipulation.getGElement(e);

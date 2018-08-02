@@ -142,27 +142,20 @@ export class GraphComponent implements OnInit, OnChanges {
     private onMouseMove(event: MouseEvent) {
 
         const gElement: Element|undefined = GraphManipulation.getGElement(event.target as Element);
-
         if (!gElement) return;
 
         if (GraphManipulation.getElementType(gElement)) {
-            this.setHoverElement(gElement);
+
+            this.hoverElement = GraphManipulation.setHoverElement(
+                this.graphContainer, gElement, this.hoverElement);
+
         } else if (this.hoverElement) {
-            GraphManipulation.setHighlighting(this.graphContainer, this.hoverElement, false);
+
+            GraphManipulation.setHighlighting(
+                this.graphContainer, this.hoverElement, false);
+
             this.hoverElement = undefined;
         }
-    }
-
-
-    private setHoverElement(element: Element) {
-
-        if (this.hoverElement && this.hoverElement == element) return;
-
-        if (this.hoverElement) GraphManipulation.setHighlighting(
-            this.graphContainer, this.hoverElement, false);
-        GraphManipulation.setHighlighting(this.graphContainer, element, true);
-
-        this.hoverElement = element;
     }
 
 

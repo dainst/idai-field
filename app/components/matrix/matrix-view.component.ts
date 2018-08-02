@@ -90,7 +90,7 @@ export class MatrixViewComponent implements OnInit {
     public async select(resourceIdentifier: string) {
 
         const selectedDoc = this.featureDocuments.find(
-            sameOn('resource.identifier', resourceIdentifier));
+            on('resource.identifier', resourceIdentifier));
 
         if (!selectedDoc) return;
 
@@ -162,7 +162,7 @@ export class MatrixViewComponent implements OnInit {
         if (this.trenches.length === 0) return;
 
         const previouslySelectedTrench = this.trenches
-            .find(sameOn('resource.id', this.matrixState.selectedTrenchId));
+            .find(on('resource.id', this.matrixState.selectedTrenchId));
         if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
 
         this.matrixState.selectedTrenchId = this.trenches[0].resource.id;
@@ -199,10 +199,10 @@ export class MatrixViewComponent implements OnInit {
                                docToAddOrRemove: IdaiFieldFeatureDocument) {
 
         return !subgraphSelection
-            .find(sameOn('resource.id', docToAddOrRemove.resource.id))
+            .find(on('resource.id', docToAddOrRemove.resource.id))
             ? subgraphSelection.concat([docToAddOrRemove])
             : subgraphSelection
-                .filter(isNot(sameOn('resource.id', docToAddOrRemove.resource.id)));
+                .filter(isNot(on('resource.id', docToAddOrRemove.resource.id)));
     }
 
 
@@ -230,6 +230,6 @@ const doWhen = (comparison: any, f: Function) =>
 
 
 // TODO move to tsfun / predicates
-const sameOn = (path: string, comparison: any) =>
+const on = (path: string, comparison: any) =>
     (object: any): boolean =>
         ObjectUtil.getElForPathIn(object, path) === comparison;

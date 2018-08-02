@@ -30,7 +30,7 @@ export module DotBuilder {
             + createNodeDefinitions(projectConfiguration, groups)
             + createRootDocumentMinRankDefinition(documents, relations)
             + createAboveEdgesDefinitions(documents, relations)
-            + createSameRankEdgesDefinitions(documents)
+            + createSameRankEdgesDefinitions(documents, relations)
             + (!curvedLineMode ? ' splines=ortho }' : '}');
     }
 
@@ -70,14 +70,15 @@ export module DotBuilder {
     }
 
 
-    function createSameRankEdgesDefinitions(documents: Array<Document>): string {
+    function createSameRankEdgesDefinitions(documents: Array<Document>,
+                                            relations: GraphRelationsConfiguration): string {
 
         const processedSameRankTargetIds: string[] = [];
 
         const result: string = documents
             .map(document => createSameRankEdgesDefinition(
-                documents, document, processedSameRankTargetIds))
-            .filter(graphString => graphString != undefined)
+                documents, document, relations, processedSameRankTargetIds)
+            ).filter(graphString => graphString != undefined)
             .join(' ');
 
         return (result.length > 0) ? result + ' ' : result;
@@ -176,12 +177,12 @@ export module DotBuilder {
 
 
     function createSameRankEdgesDefinition(documents: Array<Document>, document: Document,
+                                           relations: GraphRelationsConfiguration,
                                            processedSameRankTargetIds: string[]): string|undefined {
 
-        if (!document.resource.relations.isContemporaryWith) return; // TODO make param
+        if (!document.resource.relations[relations.sameRank]) return;
 
-        const targetIds: string[]|undefined =
-            document.resource.relations.isContemporaryWith
+        const targetIds: string[]|undefined = document.resource.relations[relations.sameRank]
                 .filter(targetId => !processedSameRankTargetIds.includes(targetId)); // TODO use predicate from tsfun
 
         targetIds.forEach(targetId => processedSameRankTargetIds.push(targetId));
@@ -192,7 +193,8 @@ export module DotBuilder {
         return createEdgesDefinitions(targetIds, documents, document)
             + ' '
             + createSameRankDefinition(
-                getRelationTargetIdentifiers(documents, [document.resource.id].concat(targetIds)));
+                getRelationTargetIdentifiers(documents, [document.resource.id].concat(targetIds))
+            );
     }
 
 

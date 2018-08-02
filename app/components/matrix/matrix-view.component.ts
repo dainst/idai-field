@@ -199,10 +199,10 @@ export class MatrixViewComponent implements OnInit {
                                docToAddOrRemove: IdaiFieldFeatureDocument) {
 
         return !subgraphSelection
-            .find(on('resource.id', docToAddOrRemove.resource.id))
+            .find(on2('resource.id', docToAddOrRemove))
             ? subgraphSelection.concat([docToAddOrRemove])
             : subgraphSelection
-                .filter(isNot(on('resource.id', docToAddOrRemove.resource.id)));
+                .filter(isNot(on2('resource.id', docToAddOrRemove)));
     }
 
 
@@ -233,3 +233,8 @@ const doWhen = (comparison: any, f: Function) =>
 const on = (path: string, comparison: any) =>
     (object: any): boolean =>
         ObjectUtil.getElForPathIn(object, path) === comparison;
+
+
+// TODO move to tsfun / predicates
+const on2 = (path: string, comparison: any) =>
+    on(path, ObjectUtil.getElForPathIn(comparison, path));

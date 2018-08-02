@@ -4,34 +4,6 @@
  */
 export module ObjectUtil {
 
-    // TODO move to tsfun
-    export function getElForPathIn(object: any, path: string) {
-
-        let result = object;
-        for (let segment of path.split('.')) {
-            if (result[segment] || result[segment] === false) result = result[segment];
-            else return result = undefined;
-        }
-        return result;
-    }
-
-    // TODO move to tsfun
-    export function takeOrMake(object: Object, path: string, val: any) {
-
-        if (getElForPathIn(object, path)) return getElForPathIn(object, path);
-        let result: any = object;
-        let last;
-        let lastSegment: any;
-        for (let segment of path.split('.')) {
-            if (!result[segment]) result[segment] = { };
-            last = result;
-            lastSegment = segment;
-            result = result[segment];
-        }
-        return last[lastSegment] = val;
-    }
-
-
     // TODO make global, add more general version of it to tsfun
     /**
      * Clones the object, keeping the type of Date objects as Date.

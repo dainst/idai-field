@@ -1,5 +1,6 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
 import {ObjectUtil} from '../../util/object-util';
+import {takeOrMake} from 'tsfun/objects';
 
 
 export type GraphRelationsConfiguration = {
@@ -62,8 +63,8 @@ export module DotBuilder {
 
     function cleanRelation(document: Document, relation: string, test: Function) {
 
-        document.resource.relations[relation] = ObjectUtil
-            .takeOrMake(document, 'resource.relations.' + relation, [])
+        document.resource.relations[relation] =
+            takeOrMake(document, 'resource.relations.' + relation, [])
             .filter(test);
     }
 

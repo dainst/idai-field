@@ -8,7 +8,7 @@ import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-s
 import {ObserverUtil} from '../../../util/observer-util';
 import {Loading} from '../../../widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
-import {subtract, unique} from 'tsfun';
+import {subtract, unique, clone} from 'tsfun';
 import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../../core/datastore/core/cached-read-datastore';
 import {ResourcesState} from './state/resources-state';
@@ -310,7 +310,7 @@ export class DocumentsManager {
                                     liesWithinId: string|undefined,
                                     addLiesWithinConstraints: boolean): { [name: string]: string|string[]} {
 
-        const constraints: { [name: string]: string|string[] } = ObjectUtil.cloneObject(customConstraints);
+        const constraints: { [name: string]: string|string[] } = clone(customConstraints);
 
         if (addLiesWithinConstraints) {
             if (liesWithinId) {

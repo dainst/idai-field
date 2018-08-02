@@ -1,4 +1,4 @@
-import {equals, equalTo} from 'tsfun';
+import {equals, equalTo, clone} from 'tsfun';
 
 /**
  * @author Thomas Kleinke
@@ -15,22 +15,25 @@ export module ObjectUtil {
      */
     export function cloneObject<O>(object: O): O {
 
-        return (function convertDates<O>(original: any, plain: any) {
+        return clone(object, convertDates);
+    }
 
-            if (original) {
-                for (let key of Object.keys(original)) {
 
-                    if (original[key] instanceof Date) {
-                        plain[key] = new Date(original[key]);
-                    } else if (typeof original[key] === 'object') {
-                        convertDates(original[key], plain[key])
-                    }
+    function convertDates<O>(original: any, plain: any) {
 
+        if (original) {
+            for (let key of Object.keys(original)) {
+
+                if (original[key] instanceof Date) {
+                    plain[key] = new Date(original[key]);
+                } else if (typeof original[key] === 'object') {
+                    convertDates(original[key], plain[key])
                 }
-            }
-            return plain;
 
-        })(object, JSON.parse(JSON.stringify(object))) as O;
+            }
+        }
+        return plain;
+
     }
 
 

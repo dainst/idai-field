@@ -20,8 +20,8 @@ export module DotBuilder {
         return 'digraph { newrank = true; '
             + createNodeDefinitions(projectConfiguration, groups)
             + createRootDocumentMinRankDefinition(documents, relations)
-            + createIsAfterEdgesDefinitions(documents, relations)
-            + createIsContemporaryWithEdgesDefinitions(documents)
+            + createAboveEdgesDefinitions(documents, relations)
+            + createSameRankEdgesDefinitions(documents)
             + (!curvedLineMode ? ' splines=ortho }' : '}');
     }
 
@@ -59,13 +59,13 @@ export module DotBuilder {
     }
 
 
-    function createIsContemporaryWithEdgesDefinitions(documents: Array<Document>): string {
+    function createSameRankEdgesDefinitions(documents: Array<Document>): string {
 
-        const processedIsContemporaryWithTargetIds: string[] = [];
+        const processedSameRankTargetIds: string[] = [];
 
         const result: string = documents
             .map(document => createSameRankEdgesDefinition(
-                documents, document, processedIsContemporaryWithTargetIds))
+                documents, document, processedSameRankTargetIds))
             .filter(graphString => graphString != undefined)
             .join(' ');
 
@@ -73,10 +73,10 @@ export module DotBuilder {
     }
 
 
-    function createIsAfterEdgesDefinitions(documents: Array<Document>, relations: string[]): string {
+    function createAboveEdgesDefinitions(documents: Array<Document>, relations: string[]): string {
 
         const result: string = documents
-            .map(document => createIsAboveEdgesDefinition(documents, document, relations))
+            .map(document => createAboveEdgesDefinition(documents, document, relations))
             .filter(graphString => graphString != undefined)
             .join(' ');
 
@@ -163,16 +163,16 @@ export module DotBuilder {
 
 
     function createSameRankEdgesDefinition(documents: Array<Document>, document: Document,
-                                           processedIsSameRankTargetIds: string[]): string|undefined {
+                                           processedSameRankTargetIds: string[]): string|undefined {
 
         if (!document.resource.relations.isContemporaryWith) return; // TODO make param
 
         const targetIds: string[]|undefined =
             document.resource.relations.isContemporaryWith
-                .filter(targetId => !processedIsSameRankTargetIds.includes(targetId)); // TODO use predicate from tsfun
+                .filter(targetId => !processedSameRankTargetIds.includes(targetId)); // TODO use predicate from tsfun
 
-        targetIds.forEach(targetId => processedIsSameRankTargetIds.push(targetId));
-        processedIsSameRankTargetIds.push(document.resource.id);
+        targetIds.forEach(targetId => processedSameRankTargetIds.push(targetId));
+        processedSameRankTargetIds.push(document.resource.id);
 
         if (targetIds.length === 0) return;
 
@@ -216,8 +216,8 @@ export module DotBuilder {
     }
 
 
-    function createIsAboveEdgesDefinition(documents: Array<Document>, document: Document,
-                                          relations: string[]): string|undefined {
+    function createAboveEdgesDefinition(documents: Array<Document>, document: Document,
+                                        relations: string[]): string|undefined {
 
         const targetIds: string[]|undefined = document.resource.relations[relations[0]];
         if (!targetIds || targetIds.length === 0) return;

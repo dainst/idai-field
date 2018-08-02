@@ -9,7 +9,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {NavigationPath} from './state/navigation-path';
 import {ObserverUtil} from '../../../util/observer-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
-import {ObjectUtil} from '../../../util/object-util';
+import {clone} from '../../../util/object-util';
 
 
 @Injectable()
@@ -214,7 +214,7 @@ export class ResourcesStateManager {
 
     private notifyNavigationPathObservers() {
 
-        ObserverUtil.notify(this.navigationPathObservers, ObjectUtil.cloneWithDates(ResourcesState.getNavigationPath(this.resourcesState)));
+        ObserverUtil.notify(this.navigationPathObservers, clone(ResourcesState.getNavigationPath(this.resourcesState)));
     }
 
 

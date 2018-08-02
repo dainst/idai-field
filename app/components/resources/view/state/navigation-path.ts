@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {ObjectUtil} from '../../../../util/object-util';
+import {clone} from '../../../../util/object-util';
 import {ViewContext} from './view-context';
 import {differentFrom, isSegmentWith, NavigationPathSegment, toResourceId} from './navigation-path-segment';
 import {takeUntil, takeWhile} from 'tsfun';
@@ -79,7 +79,7 @@ export module NavigationPath {
         navPath: NavigationPath,
         newSelectedSegmentDoc: IdaiFieldDocument|undefined): NavigationPath {
 
-        const updatedNavigationPath = ObjectUtil.cloneWithDates(navPath);
+        const updatedNavigationPath = clone(navPath);
 
         if (newSelectedSegmentDoc) {
             (updatedNavigationPath as any).segments = rebuildElements(
@@ -95,9 +95,9 @@ export module NavigationPath {
 
     export function setSelectedDocument(navPath: NavigationPath, displayHierarchy: boolean, document: IdaiFieldDocument|undefined) {
 
-        const clone = ObjectUtil.cloneWithDates(navPath);
-        (getViewContext(clone, displayHierarchy) as any).selected = document;
-        return clone;
+        const _clone = clone(navPath);
+        (getViewContext(_clone, displayHierarchy) as any).selected = document;
+        return _clone;
     }
 
 
@@ -109,9 +109,9 @@ export module NavigationPath {
 
     export function setQueryString(navPath: NavigationPath, bypassHierarchy: boolean, q: string) {
 
-        const clone = ObjectUtil.cloneWithDates(navPath);
-        (getViewContext(clone, bypassHierarchy) as any).q = q;
-        return clone;
+        const _clone = clone(navPath);
+        (getViewContext(_clone, bypassHierarchy) as any).q = q;
+        return _clone;
     }
 
 
@@ -123,9 +123,9 @@ export module NavigationPath {
 
     export function setTypeFilters(navPath: NavigationPath, displayHierarchy: boolean, types: string[]) {
 
-        const clone = ObjectUtil.cloneWithDates(navPath);
-        (getViewContext(clone, displayHierarchy) as any).types = types;
-        return clone;
+        const _clone = clone(navPath);
+        (getViewContext(_clone, displayHierarchy) as any).types = types;
+        return _clone;
     }
 
 
@@ -137,7 +137,7 @@ export module NavigationPath {
 
     export function shorten(navPath: NavigationPath, firstToBeExcluded: NavigationPathSegment): NavigationPath {
 
-        const shortened = ObjectUtil.cloneWithDates(navPath);
+        const shortened = clone(navPath);
         (shortened as any /* cast ok on construction */).segments = takeWhile(differentFrom(firstToBeExcluded))(navPath.segments);
 
         if (shortened.selectedSegmentId) {
@@ -217,7 +217,7 @@ export module NavigationPath {
         newSegments: NavigationPathSegment[],
         newSelectedSegmentId: string): NavigationPath {
 
-        const updatedNavigationPath = ObjectUtil.cloneWithDates(navPath);
+        const updatedNavigationPath = clone(navPath);
 
         if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) (updatedNavigationPath as any).segments = newSegments;
 

@@ -1,9 +1,8 @@
-import {flow as _} from 'tsfun';
-import {flatMap} from 'tsfun/src/arrays/arrays';
-import {Document, ProjectConfiguration, FieldDefinition} from 'idai-components-2/core';
+import {flatMap, flow as _} from 'tsfun';
+import {Document, FieldDefinition, ProjectConfiguration} from 'idai-components-2/core';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
-import {ObjectUtil} from '../../../util/object-util';
+import {clone} from '../../../util/object-util';
 
 /**
  * @author Daniel de Oliveira
@@ -157,6 +156,6 @@ export class FulltextIndexer {
         return (!index[type] || !index[type][s]) ?
             resultSets.copy() :
             resultSets.copy().combine(
-                Object.keys(index[type][s]).map(id => ObjectUtil.cloneWithDates(index[type][s][id])));
+                Object.keys(index[type][s]).map(id => clone(index[type][s][id])));
     }
 }

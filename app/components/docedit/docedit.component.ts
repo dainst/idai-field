@@ -5,7 +5,7 @@ import {Messages} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ConflictDeletedModalComponent} from './conflict-deleted-modal.component';
-import {ObjectUtil} from '../../util/object-util';
+import {clone} from '../../util/object-util';
 import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
 import {DeleteModalComponent} from './delete-modal.component';
@@ -94,7 +94,7 @@ export class DoceditComponent {
      */
     public save(viaSaveButton: boolean) {
 
-        const documentBeforeSave: Document = ObjectUtil.cloneWithDates(this.documentHolder.getClonedDocument());
+        const documentBeforeSave: Document = clone(this.documentHolder.getClonedDocument());
 
         this.documentHolder.save().then(
             () => this.handleSaveSuccess(documentBeforeSave, viaSaveButton),

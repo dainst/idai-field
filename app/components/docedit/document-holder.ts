@@ -7,7 +7,7 @@ import {
 } from 'idai-components-2/core';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
-import {ObjectUtil} from '../../util/object-util';
+import {clone} from '../../util/object-util';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
@@ -70,8 +70,8 @@ export class DocumentHolder {
 
     public setClonedDocument(document: Document) {
 
-        this.oldVersion = ObjectUtil.cloneWithDates(document);
-        this.clonedDocument = ObjectUtil.cloneWithDates(document);
+        this.oldVersion = clone(document);
+        this.clonedDocument = clone(document);
         this.inspectedRevisions = [];
     };
 

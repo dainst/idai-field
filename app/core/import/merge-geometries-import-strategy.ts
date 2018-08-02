@@ -1,11 +1,10 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ImportStrategy} from './import-strategy';
-import {SettingsService} from '../settings/settings-service';
 import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
-import {ObjectUtil} from '../../util/object-util';
+import {clone} from '../../util/object-util';
 
 /**
  * @author Daniel de Oliveira
@@ -39,7 +38,7 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
                 if (!existingDocument.modified) existingDocument.modified = [];
                 existingDocument.modified.push({ user: this.username, date: new Date() });
 
-                const docToValidate = ObjectUtil.cloneWithDates(existingDocument);
+                const docToValidate = clone(existingDocument);
                 if (docToValidate.resource.relations.isRecordedIn // empty isRecordedIn on operation subtype documents leads to validation error
                     && docToValidate.resource.relations.isRecordedIn.length === 0) {
 

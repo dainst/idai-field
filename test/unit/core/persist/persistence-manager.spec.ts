@@ -1,7 +1,7 @@
 import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {PersistenceManager} from "../../../../app/core/persist/persistence-manager";
-import {ObjectUtil} from '../../../../app/util/object-util';
+import {clone} from '../../../../app/util/object-util';
 
 /**
  * @author Daniel de Oliveira
@@ -125,7 +125,7 @@ describe('PersistenceManager', () => {
     it('should save the related document for a new document', async done => {
 
         doc.resource.relations['BelongsTo'] = ['2'];
-        const clonedDoc = ObjectUtil.cloneWithDates(doc);
+        const clonedDoc = clone(doc);
         delete doc.resource.id; // make it a 'new' document
 
         mockDatastore.create.and.returnValue(Promise.resolve(clonedDoc)); // has resourceId, simulates create

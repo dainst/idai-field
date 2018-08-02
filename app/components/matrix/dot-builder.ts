@@ -1,5 +1,5 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
-import {ObjectUtil} from '../../util/object-util';
+import {clone} from '../../util/object-util';
 import {takeOrMake} from 'tsfun';
 
 
@@ -51,7 +51,7 @@ export module DotBuilder {
             .map(document => document.resource.id)
             .includes(target);
 
-        return ObjectUtil.cloneWithDates(documents)
+        return clone(documents)
             .reduce((docs: Document[], doc: Document) => {
                 cleanRelation(doc, relations.above, targetExists);
                 cleanRelation(doc, relations.below, targetExists);

@@ -3,7 +3,6 @@ import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ResourcesComponent} from '../../resources.component';
-import {ObjectUtil} from '../../../../util/object-util';
 import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../view/view-facade';
 import {isEmpty} from 'tsfun';

@@ -1,7 +1,7 @@
 import {intersection, NestedArray, subtract, union} from 'tsfun';
 import {unite, intersect} from 'tsfun/objects';
 import {SimpleIndexItem} from './index-item';
-import {ObjectUtil} from '../../../util/object-util';
+import {clone} from '../../../util/object-util';
 
 
 type IndexItemMap = {[id: string]: SimpleIndexItem};
@@ -77,9 +77,9 @@ export class ResultSets {
     private copy(): ResultSets {
 
         return new ResultSets(
-            ObjectUtil.cloneWithDates(this.addSets),
-            ObjectUtil.cloneWithDates(this.subtractSets),
-            ObjectUtil.cloneWithDates(this.map)
+            clone(this.addSets),
+            clone(this.subtractSets),
+            clone(this.map)
         );
     }
 }

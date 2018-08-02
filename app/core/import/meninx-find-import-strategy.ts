@@ -4,7 +4,7 @@ import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
 import {M} from '../../m';
 import {IdaiFieldFindResult} from '../datastore/core/cached-read-datastore';
-import {ObjectUtil} from '../../util/object-util';
+import {clone} from '../../util/object-util';
 
 
 const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {
@@ -105,7 +105,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
 
     private static mergeInto(mergeTarget: Document|NewDocument, mergeSource: NewDocument) {
 
-        const mergedDoc = ObjectUtil.cloneWithDates(mergeTarget);
+        const mergedDoc = clone(mergeTarget);
 
         if (mergeSource.resource.shortDescription.length > 0) mergedDoc.resource.shortDescription = mergeSource.resource.shortDescription;
         if (mergeSource.resource.hasVesselFormPottery.length > 0) mergedDoc.resource.hasVesselFormPottery = mergeSource.resource.hasVesselFormPottery;

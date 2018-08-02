@@ -5,7 +5,6 @@ import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
-import {ObjectUtil} from '../../../util/object-util';
 import {clone} from 'tsfun';
 
 

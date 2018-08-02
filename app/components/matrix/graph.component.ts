@@ -70,7 +70,7 @@ export class GraphComponent implements OnInit, OnChanges {
         const svgGraph = new DOMParser().parseFromString(this.graph, 'image/svg+xml')
             .getElementsByTagName('svg')[0];
 
-        GraphComponent.removeTitleElements(svgGraph);
+        GraphManipulation.removeTitleElements(svgGraph);
         this.graphContainer.nativeElement.appendChild(svgGraph);
         GraphComponent.configurePanZoomBehavior(svgGraph);
     }
@@ -80,7 +80,7 @@ export class GraphComponent implements OnInit, OnChanges {
 
         this.onSelect.emit(GraphComponent.mouseDownProperties.target);
 
-        if (this.highlightSelection) GraphComponent
+        if (this.highlightSelection) GraphManipulation
             .performHighlightingSelection(event.target as Element);
     }
 
@@ -163,34 +163,6 @@ export class GraphComponent implements OnInit, OnChanges {
         GraphManipulation.setHighlighting(this.graphContainer, element, true);
 
         this.hoverElement = element;
-    }
-
-
-    private static performHighlightingSelection(e: Element) {
-
-        const gElement: Element|undefined = GraphManipulation.getGElement(e);
-
-        if (gElement) {
-            const elementType: GraphManipulation.ElementType = GraphManipulation.getElementType(gElement);
-            if (elementType !== 'node') return;
-            gElement.setAttribute('stroke',
-                !gElement.getAttribute('stroke') || gElement.getAttribute('stroke') === ''
-                    ? '#afafaf'
-                    : '');
-        }
-    }
-
-
-    private static removeTitleElements(svg: SVGSVGElement) {
-
-        const rootElement: SVGGElement = svg.getElementsByTagName('g')[0];
-        rootElement.removeChild(rootElement.getElementsByTagName('title')[0]);
-
-        for (let i = 0; i < rootElement.children.length; i++) {
-            const titleElements: NodeListOf<HTMLTitleElement>
-                = rootElement.children[i].getElementsByTagName('title');
-            if (titleElements.length == 1) rootElement.children[i].removeChild(titleElements[0]);
-        }
     }
 
 

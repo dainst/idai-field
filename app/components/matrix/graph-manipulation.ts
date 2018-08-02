@@ -3,6 +3,7 @@ import 'viz.js';
 
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
 export module GraphManipulation {
 
@@ -13,6 +14,34 @@ export module GraphManipulation {
     const hoverColor: string = '#6e95de';
 
     const defaultColor: string = '#000000';
+
+
+    export function performHighlightingSelection(e: Element) {
+
+        const gElement: Element|undefined = GraphManipulation.getGElement(e);
+
+        if (gElement) {
+            const elementType: GraphManipulation.ElementType = GraphManipulation.getElementType(gElement);
+            if (elementType !== 'node') return;
+            gElement.setAttribute('stroke',
+                !gElement.getAttribute('stroke') || gElement.getAttribute('stroke') === ''
+                    ? '#afafaf'
+                    : '');
+        }
+    }
+
+
+    export function removeTitleElements(svg: SVGSVGElement) {
+
+        const rootElement: SVGGElement = svg.getElementsByTagName('g')[0];
+        rootElement.removeChild(rootElement.getElementsByTagName('title')[0]);
+
+        for (let i = 0; i < rootElement.children.length; i++) {
+            const titleElements: NodeListOf<HTMLTitleElement>
+                = rootElement.children[i].getElementsByTagName('title');
+            if (titleElements.length == 1) rootElement.children[i].removeChild(titleElements[0]);
+        }
+    }
 
 
     export function getGElement(element: Element): Element|undefined {

@@ -9,7 +9,7 @@ export module GraphManipulation {
 
     export type ElementType = 'node'|'edge'|undefined;
 
-    export type EdgeType = 'is-after'|'is-contemporary-with'|undefined;
+    export type EdgeType = 'above'|'same-rank'|undefined;
 
     const hoverColor: string = '#6e95de';
 
@@ -92,9 +92,9 @@ export module GraphManipulation {
     function setEdgesHighlighting(graphContainer: ElementRef, id: string, highlight: boolean) {
 
         setEdgesHighlightingForType(
-            graphContainer, 'is-after', id, highlight);
+            graphContainer, 'above', id, highlight);
         setEdgesHighlightingForType(
-            graphContainer, 'is-contemporary-with', id, highlight);
+            graphContainer, 'same-rank', id, highlight);
     }
 
 
@@ -107,7 +107,7 @@ export module GraphManipulation {
         path.setAttribute('stroke', color);
         path.setAttribute('stroke-width', strokeWidth);
 
-        if (edgeType === 'is-after') {
+        if (edgeType === 'above') {
             const polygon = edge.getElementsByTagName('polygon')[0];
             polygon.setAttribute('stroke', color);
             polygon.setAttribute('fill', color);
@@ -131,10 +131,10 @@ export module GraphManipulation {
 
         const classAttribute: string|null = edge.getAttribute('class');
 
-        if (classAttribute && classAttribute.includes('is-after')) {
-            return 'is-after';
-        } else if (classAttribute && classAttribute.includes('is-contemporary-with')) {
-            return 'is-contemporary-with';
+        if (classAttribute && classAttribute.includes('above')) {
+            return 'above';
+        } else if (classAttribute && classAttribute.includes('same-rank')) {
+            return 'same-rank';
         } else return undefined;
     }
 

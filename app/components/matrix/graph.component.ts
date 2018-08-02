@@ -92,21 +92,6 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
-    private static performHighlightingSelection(e: Element) {
-
-        const gElement: Element|undefined = GraphComponent.getGElement(e);
-
-        if (gElement) {
-            const elementType: ElementType = GraphComponent.getElementType(gElement);
-            if (elementType !== 'node') return;
-            gElement.setAttribute('stroke',
-                !gElement.getAttribute('stroke') || gElement.getAttribute('stroke') === ''
-                    ? '#afafaf'
-                    : '');
-        }
-    }
-
-
     private initializeMouseMoveEventListener() {
 
         this.renderer.listen(this.graphContainer.nativeElement, 'mousemove', event => {
@@ -170,7 +155,7 @@ export class GraphComponent implements OnInit, OnChanges {
         if (GraphComponent.getElementType(gElement)) {
             this.setHoverElement(gElement);
         } else if (this.hoverElement) {
-            this.setHighlighting(this.hoverElement, false);
+            GraphComponent.setHighlighting(this.graphContainer, this.hoverElement, false);
             this.hoverElement = undefined;
         }
     }
@@ -180,36 +165,60 @@ export class GraphComponent implements OnInit, OnChanges {
 
         if (this.hoverElement && this.hoverElement == element) return;
 
-        if (this.hoverElement) this.setHighlighting(this.hoverElement, false);
-        this.setHighlighting(element, true);
+        if (this.hoverElement) GraphComponent.setHighlighting(
+            this.graphContainer, this.hoverElement, false);
+        GraphComponent.setHighlighting(this.graphContainer, element, true);
 
         this.hoverElement = element;
     }
 
 
-    private setHighlighting(element: Element, highlight: boolean) {
+    private static performHighlightingSelection(e: Element) {
 
-        const elementType: ElementType = GraphComponent.getElementType(element);
+        const gElement: Element|undefined = GraphComponent.getGElement(e);
 
-        if (elementType == 'node') {
-            this.setEdgesHighlighting(GraphComponent.getResourceId(element), highlight);
-        } else if (elementType == 'edge') {
-            GraphComponent.setEdgeHighlighting(element, highlight, GraphComponent.getEdgeType(element));
+        if (gElement) {
+            const elementType: ElementType = GraphComponent.getElementType(gElement);
+            if (elementType !== 'node') return;
+            gElement.setAttribute('stroke',
+                !gElement.getAttribute('stroke') || gElement.getAttribute('stroke') === ''
+                    ? '#afafaf'
+                    : '');
         }
     }
 
 
-    private setEdgesHighlighting(id: string, highlight: boolean) {
+    private static setHighlighting(
+        graphContainer: ElementRef, element: Element, highlight: boolean) {
 
-        this.setEdgesHighlightingForType('is-after', id, highlight);
-        this.setEdgesHighlightingForType('is-contemporary-with', id, highlight);
+        const elementType: ElementType = GraphComponent.getElementType(element);
+
+        if (elementType == 'node') {
+            GraphComponent.setEdgesHighlighting(
+                graphContainer, GraphComponent.getResourceId(element), highlight);
+        } else if (elementType == 'edge') {
+            GraphComponent.setEdgeHighlighting(element, highlight,
+                GraphComponent.getEdgeType(element));
+        }
     }
 
 
-    private setEdgesHighlightingForType(edgeType: EdgeType, id: string, highlight: boolean) {
+    private static setEdgesHighlighting(
+        graphContainer: ElementRef, id: string, highlight: boolean) {
+
+        GraphComponent.setEdgesHighlightingForType(
+            graphContainer, 'is-after', id, highlight);
+        GraphComponent.setEdgesHighlightingForType(
+            graphContainer, 'is-contemporary-with', id, highlight);
+    }
+
+
+    private static setEdgesHighlightingForType(
+        graphContainer: ElementRef,
+        edgeType: EdgeType, id: string, highlight: boolean) {
 
         const edges: HTMLCollection
-            = this.graphContainer.nativeElement.getElementsByClassName(edgeType + '-' + id);
+            = graphContainer.nativeElement.getElementsByClassName(edgeType + '-' + id);
 
         for (let i = 0; i < edges.length; i++) {
             GraphComponent.setEdgeHighlighting(edges[i], highlight, edgeType);

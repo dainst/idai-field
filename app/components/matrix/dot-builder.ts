@@ -101,24 +101,22 @@ export module DotBuilder {
         return 'node [style=filled, fontname="Roboto"] '
             + Object
                 .keys(groups)
-                .map(group => createNodeDefinitionsForPeriodSubgraph(
-                        projectConfiguration, group, groups[group]))
-                .join('');
+                .map(group => createNodeDefinitionsForGroup(
+                    projectConfiguration, group, groups[group])
+                ).join('');
     }
 
 
-    function createNodeDefinitionsForPeriodSubgraph(projectConfiguration: ProjectConfiguration,
-                                                    period: string,
-                                                    documents: Array<Document>): string {
+    function createNodeDefinitionsForGroup(projectConfiguration: ProjectConfiguration,
+                                           group: string, documents: Array<Document>): string {
 
-        const nodeDefinitions: string =
-            documents
-                .map(document => createNodeDefinition(projectConfiguration, document))
-                .join('');
+        const nodeDefinitions: string = documents
+            .map(document => createNodeDefinition(projectConfiguration, document))
+            .join('');
 
-        return period === 'UNKNOWN'
+        return group === 'UNKNOWN'
             ? nodeDefinitions
-            : 'subgraph "cluster ' + period + '" {label="' + period + '" fontname="Roboto" '
+            : 'subgraph "cluster ' + group + '" {label="' + group + '" fontname="Roboto" '
                 + nodeDefinitions + '} ';
     }
 

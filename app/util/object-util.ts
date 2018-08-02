@@ -110,6 +110,7 @@ export module ObjectUtil {
     }
 
 
+    // TODO move to tsfun
     export function compareArrays(array1: any[], array2: any[]): boolean {
 
         if (array1.length != array2.length) return false;

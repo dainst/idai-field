@@ -1,6 +1,6 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
 import {clone} from '../../util/object-util';
-import {takeOrMake} from 'tsfun';
+import {takeOrMake, isNot, includedIn, isDefined, isEmpty} from 'tsfun';
 
 
 export type GraphRelationsConfiguration = {
@@ -72,13 +72,18 @@ export module DotBuilder {
     function createSameRankEdgesDefinitions(documents: Array<Document>,
                                             relations: GraphRelationsConfiguration): string {
 
-        const processedSameRankTargetIds: string[] = [];
+        const result: string =
+            documents
+                .reduce(([defs, processedSameRankTargetIds]: [Array<string|undefined>, string[]], document) => {
 
-        const result: string = documents
-            .map(document => createSameRankEdgesDefinition(
-                documents, document, relations, processedSameRankTargetIds)
-            ).filter(graphString => graphString != undefined)
-            .join(' ');
+                    const [def, updatedProcessedSameRankTargetIds] = createSameRankEdgesDefinition(
+                        documents, document, relations, processedSameRankTargetIds);
+
+                    return [defs.concat([def] as any), updatedProcessedSameRankTargetIds];
+                }
+                , [[], []])[0]
+                .filter(isDefined)
+                .join(' ');
 
         return (result.length > 0) ? result + ' ' : result;
     }
@@ -180,25 +185,26 @@ export module DotBuilder {
     }
 
 
-    function createSameRankEdgesDefinition(documents: Array<Document>, document: Document,
-                                           relations: GraphRelationsConfiguration,
-                                           processedSameRankTargetIds: string[]): string|undefined {
+    function createSameRankEdgesDefinition(
+        documents: Array<Document>, document: Document,
+        relations: GraphRelationsConfiguration,
+        processedSameRankTargetIds: string[]): [string|undefined, string[]] {
 
-        if (!document.resource.relations[relations.sameRank]) return;
+        if (!document.resource.relations[relations.sameRank]) return [undefined, clone(processedSameRankTargetIds)];
 
         const targetIds: string[]|undefined = document.resource.relations[relations.sameRank]
-                .filter(targetId => !processedSameRankTargetIds.includes(targetId)); // TODO use predicate from tsfun
+                .filter(isNot(includedIn(processedSameRankTargetIds)));
 
-        targetIds.forEach(targetId => processedSameRankTargetIds.push(targetId));
-        processedSameRankTargetIds.push(document.resource.id);
+        const updatedProcessedSameRankTargetIds: string[] =
+            clone(processedSameRankTargetIds).concat(targetIds).concat([document.resource.id]);
 
-        if (targetIds.length === 0) return;
+        if (isEmpty(targetIds)) return [undefined, clone(updatedProcessedSameRankTargetIds)];
 
-        return createEdgesDefinitions(targetIds, documents, document)
+        return [createEdgesDefinitions(targetIds, documents, document)
             + ' '
             + createSameRankDefinition(
                 getRelationTargetIdentifiers(documents, [document.resource.id].concat(targetIds))
-            );
+            ), updatedProcessedSameRankTargetIds];
     }
 
 

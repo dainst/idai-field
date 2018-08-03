@@ -90,7 +90,7 @@ export class MatrixViewComponent implements OnInit {
     public async select(resourceIdentifier: string) {
 
         const selectedDoc = this.featureDocuments.find(
-            on('resource.identifier!')(resourceIdentifier));
+            on('resource.identifier:')(resourceIdentifier));
 
         if (!selectedDoc) return;
 
@@ -162,7 +162,7 @@ export class MatrixViewComponent implements OnInit {
         if (this.trenches.length === 0) return;
 
         const previouslySelectedTrench = this.trenches
-            .find(on('resource.id!')(this.matrixState.selectedTrenchId));
+            .find(on('resource.id:')(this.matrixState.selectedTrenchId));
         if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
 
         this.matrixState.selectedTrenchId = this.trenches[0].resource.id;

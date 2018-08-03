@@ -54,7 +54,7 @@ export class ResultSets {
     public collapse(): Array<SimpleIndexItem> {
 
         return this.pickFromMap(
-                subtract(union(this.subtractSets))(intersection(this.addSets))
+                subtract(...this.subtractSets)(intersection(this.addSets))
                 );
     }
 

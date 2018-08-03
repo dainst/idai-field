@@ -1,5 +1,5 @@
 import {intersection, NestedArray, subtract, union} from 'tsfun';
-import {unite, intersect} from 'tsfun/objects';
+import {uniteMap as unite, intersectMap as intersect} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 import {clone} from '../../../util/object-util';
 

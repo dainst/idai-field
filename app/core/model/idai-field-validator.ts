@@ -117,6 +117,7 @@ export class IdaiFieldValidator extends Validator {
     }
 
 
+    // TODO use comparator from tsfun
     private static isDuplicate(result: any, doc: any) {
 
         return result.resource.id !== doc.resource.id;

@@ -39,6 +39,7 @@ export module NavigationPathSegment {
 }
 
 
+// TODO possibly use comparator from tsfun
 export const isSegmentWith
     = (resourceId: string) => (segment: NavigationPathSegment) => resourceId === segment.document.resource.id;
 

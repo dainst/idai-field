@@ -4,6 +4,7 @@ import {M} from '../../m';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
 import {Validator} from './validator';
 import {Validations} from './validations';
+import {sameOn} from 'tsfun';
 
 
 /**
@@ -66,7 +67,7 @@ export class IdaiFieldValidator extends Validator {
                     'identifier:match': doc.resource.identifier
                 }
             }).then(result => {
-                if (result.totalCount > 0 && IdaiFieldValidator.isDuplicate(result.documents[0], doc)) {
+                if (result.totalCount > 0 && sameOn('resource.id', result.documents[0], doc)) {
                     return Promise.reject([M.MODEL_VALIDATION_ERROR_IDEXISTS, doc.resource.identifier]);
                 }
                 return Promise.resolve();
@@ -114,12 +115,5 @@ export class IdaiFieldValidator extends Validator {
         }
 
         return null;
-    }
-
-
-    // TODO use comparator from tsfun
-    private static isDuplicate(result: any, doc: any) {
-
-        return result.resource.id !== doc.resource.id;
     }
 }

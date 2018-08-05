@@ -1,18 +1,19 @@
 <div *ngIf="layers.length > 0">
-    <div *ngIf="!isOpened()" id="layer-button" class="btn btn-primary"
-         (mouseenter)="open()"><span class="mdi mdi-layers mdi-18px"></span></div>
-    <div *ngIf="isOpened()" id="layer-menu" class="card card-block form-group"
-         (mouseleave)="close()">
+    <div id="layer-button" class="btn btn-primary layer-button" [class.active]="opened"
+         (mouseenter)="open()">
+        <span class="mdi mdi-layers mdi-18px"></span>
+    </div>
+    <div *ngIf="opened" id="layer-menu" class="card card-block form-group layer-menu">
         <div *ngFor="let layer of layers" class="layer-entry">
             <span *ngIf="isActiveLayer(layer)">
                 <span class="mdi mdi-eye layer-menu-button layer-active" (click)="toggleLayer(layer)"
-                      data-toggle="tooltip" title="Karte ausblenden"></span>
+                      data-toggle="tooltip" title="Bild ausblenden"></span>
                 <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
-                      data-toggle="tooltip" title="Karte fokussieren" (click)="focusLayer(layer)"></span>
+                      data-toggle="tooltip" title="Bild fokussieren" (click)="focusLayer(layer)"></span>
             </span>
             <span *ngIf="!isActiveLayer(layer)">
                 <span class="mdi mdi-eye-off layer-menu-button layer-inactive" (click)="toggleLayer(layer)"
-                      data-toggle="tooltip" title="Karte anzeigen"></span>
+                      data-toggle="tooltip" title="Bild anzeigen"></span>
                 <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive"></span>
             </span>
             <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>

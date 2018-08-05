@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, SimpleChanges} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {MapComponent} from 'idai-components-2/field';
 import {Messages} from 'idai-components-2/core';
@@ -7,7 +7,7 @@ import {ImageContainer} from '../../../../core/imagestore/image-container';
 import {LayerManager, ListDiffResult} from './layer-manager';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {LayerImageProvider} from './layer-image-provider';
-import {IdaiFieldGeoreference} from "../../../../core/model/idai-field-georeference";
+import {IdaiFieldGeoreference} from '../../../../core/model/idai-field-georeference';
 
 
 @Component({
@@ -24,10 +24,9 @@ export class LayerMapComponent extends MapComponent {
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
     @Input() parentDocument: IdaiFieldDocument;
-    @Input() mainTypeDocument: string;
+    @Input() mainTypeDocumentIds: string;
     @Input() projectDocument: IdaiFieldDocument;
     @Input() update: boolean;
-
 
     public layers: Array<IdaiFieldImageDocument> = [];
 
@@ -94,8 +93,7 @@ export class LayerMapComponent extends MapComponent {
 
         this.layerImageProvider.reset();
 
-        const { layers, activeLayersChange } =
-            await this.layerManager.initializeLayers();
+        const { layers, activeLayersChange } = await this.layerManager.initializeLayers();
 
         this.layers = layers;
         this.initializePanes();
@@ -167,8 +165,8 @@ export class LayerMapComponent extends MapComponent {
         // Update layers after switching main type document.
         // Update layers after switching to another view with an existing main type document or coming from
         // a view with an existing main type document.
-        if (changes['mainTypeDocument']
-            && (changes['mainTypeDocument'].currentValue || changes['mainTypeDocument'].previousValue)) {
+        if (changes['mainTypeDocumentIds']
+            && (changes['mainTypeDocumentIds'].currentValue || changes['mainTypeDocumentIds'].previousValue)) {
             return true;
         }
 

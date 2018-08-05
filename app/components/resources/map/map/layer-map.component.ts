@@ -26,7 +26,7 @@ export class LayerMapComponent extends MapComponent {
 
     private panes: { [resourceId: string]: any } = {};
     private imageOverlays: { [resourceId: string]: L.ImageOverlay } = {};
-    private layersUpdate: boolean = false;
+    private layersUpdate: boolean = true;
 
 
     constructor(private layerManager: LayerManager,
@@ -37,6 +37,14 @@ export class LayerMapComponent extends MapComponent {
         super(projectConfiguration);
 
         this.layerManager.reset();
+    }
+
+
+    async ngOnChanges(changes: SimpleChanges) {
+
+        if (LayerMapComponent.isLayersUpdateNecessary(changes)) this.layersUpdate = true;
+
+        await super.ngOnChanges(changes);
     }
 
 
@@ -69,8 +77,6 @@ export class LayerMapComponent extends MapComponent {
      * Called by MapComponent.ngOnChange
      */
     protected async updateMap(changes: SimpleChanges): Promise<any> {
-
-        if (LayerMapComponent.isLayersUpdateNecessary(changes)) this.layersUpdate = true;
 
         if (!this.update) return Promise.resolve();
 

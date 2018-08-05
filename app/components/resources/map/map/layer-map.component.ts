@@ -1,5 +1,4 @@
 import {Component, Input, SimpleChanges} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
 import {MapComponent} from 'idai-components-2/field';
 import {Messages} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
@@ -21,12 +20,7 @@ import {IdaiFieldGeoreference} from '../../../../core/model/idai-field-georefere
  */
 export class LayerMapComponent extends MapComponent {
 
-    @Input() documents: Array<IdaiFieldDocument>;
-    @Input() selectedDocument: IdaiFieldDocument;
-    @Input() parentDocument: IdaiFieldDocument;
     @Input() mainTypeDocumentIds: string;
-    @Input() projectDocument: IdaiFieldDocument;
-    @Input() update: boolean;
 
     public layers: Array<IdaiFieldImageDocument> = [];
 
@@ -169,7 +163,6 @@ export class LayerMapComponent extends MapComponent {
             && (changes['mainTypeDocumentIds'].currentValue || changes['mainTypeDocumentIds'].previousValue)) {
             return true;
         }
-
 
         // Update layers after switching from a view without main type documents to another view without
         // main type documents.

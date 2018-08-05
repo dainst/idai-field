@@ -20,16 +20,8 @@ declare global { namespace L { namespace PM { namespace Draw { interface Line { 
  */
 export class EditableMapComponent extends LayerMapComponent {
 
-    @Input() documents: Array<IdaiFieldDocument>;
-    @Input() selectedDocument: IdaiFieldDocument;
-    @Input() parentDocument: IdaiFieldDocument;
-    @Input() mainTypeDocumentIds: string;
-    @Input() projectDocument: IdaiFieldDocument;
-    @Input() update: boolean;
     @Input() isEditing: boolean;
 
-    @Output() onSelectDocument: EventEmitter<IdaiFieldDocument|undefined|null> =
-        new EventEmitter<IdaiFieldDocument|undefined|null>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> =
         new EventEmitter<IdaiFieldGeometry>();
 

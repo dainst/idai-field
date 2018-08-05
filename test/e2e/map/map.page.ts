@@ -42,4 +42,10 @@ export class MapPage {
         browser.wait(EC.presenceOf(MapPage.getMapOption(optionName)), delays.ECWaitTime);
         return MapPage.getMapOption(optionName).click();
     };
+
+
+    public static getLayerButton() {
+
+        return element(by.id('layer-button'));
+    }
 }

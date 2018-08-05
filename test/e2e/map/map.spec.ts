@@ -444,4 +444,10 @@ describe('map --', function() {
             expect(text).toEqual('Multipolyline');
         });
     });
+
+
+    it('show layer menu', () => {
+
+        browser.wait(EC.presenceOf(MapPage.getLayerButton()));
+    });
 });

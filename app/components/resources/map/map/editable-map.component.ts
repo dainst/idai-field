@@ -554,7 +554,7 @@ export class EditableMapComponent extends LayerMapComponent {
     protected deselect() {
 
         if (!this.isEditing) {
-            this.onSelectDocument.emit(null);
+            this.onSelectDocument.emit(undefined);
         }
     }
 

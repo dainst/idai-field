@@ -14,11 +14,7 @@ export module ComparisonUtil {
         return Object.keys(resource1)
             .filter(key => fieldsToIgnore && fieldsToIgnore.indexOf(key) > -1)
             .reduce(
-                concatIf(
-                    key =>
-                        !ComparisonUtil.compare(
-                            (resource1 as any)[key],
-                            (resource2 as any)[key])),
+                concatIf(notCompareInBoth(resource1, resource2)),
                 [] as string[]);
     }
 
@@ -27,13 +23,18 @@ export module ComparisonUtil {
 
         return Object.keys(relations1)
             .reduce(
-                concatIf(
-                    key =>
-                    !arrayEquivalent
-                        ((relations1 as any)[key])
-                        ((relations2 as any)[key])),
+                concatIf(notArrayEquivalentInBoth(relations1, relations2)),
                 [] as string[]);
     }
+
+
+    const notCompareInBoth = (l: any, r: any) => (key: string) =>
+        !ComparisonUtil.compare((l)[key], (r)[key]);
+
+
+    const notArrayEquivalentInBoth = (l: any, r: any) => (key: string) =>
+        !arrayEquivalent(l[key])(r[key]);
+
 
     // TODO possibly put to tsfun
     export const concatIf = (f: (_: string) => boolean) => (acc: string[], val: string) =>

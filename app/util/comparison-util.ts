@@ -26,17 +26,10 @@ export module ComparisonUtil {
 
     export function findDifferingFieldsInRelations(relations1: Object, relations2: Object): string[] {
 
-        const differingFieldsNames: string[] = [];
-
-        for (let fieldName in relations1) {
-            if (relations1.hasOwnProperty(fieldName)) {
-
-                // TODO do with tsfun subtract
-                if (!arrayEquivalent((relations1 as any)[fieldName])
-                    ((relations2 as any)[fieldName])) differingFieldsNames.push(fieldName);
-            }
-        }
-        return differingFieldsNames;
+        return Object.keys(relations1)
+            .reduce((acc, key) => !arrayEquivalent((relations1 as any)[key])((relations2 as any)[key])
+                            ? acc : acc.concat([key] as any)
+            , []);
     }
 
 

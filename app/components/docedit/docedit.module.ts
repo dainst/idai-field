@@ -17,13 +17,11 @@ import {ImagePickerComponent} from "./imagetab/image-picker.component";
 import {ImageGridModule} from "../imagegrid/image-grid.module";
 import {DeleteModalComponent} from './delete-modal.component';
 import {DocumentHolder} from './document-holder';
-
 import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
-
 import {EditFormComponent} from './core/edit-form.component';
 import {RelationsFormComponent} from './core/relations-form.component';
-import {RelationPickerComponent} from './core/relation-picker.component';
-import {RelationPickerGroupComponent} from './core/relation-picker-group.component';
+import {RelationPickerComponent} from './core/relationspick/relation-picker.component';
+import {RelationPickerGroupComponent} from './core/relationspick/relation-picker-group.component';
 import {CheckboxesComponent} from './core/forms/checkboxes.component';
 import {DropdownComponent} from './core/forms/dropdown.component';
 import {InputComponent} from './core/forms/input.component';
@@ -35,11 +33,7 @@ import {TextComponent} from './core/forms/text.component';
 import {DatingComponent} from './core/forms/dating.component';
 import {DateComponent} from './core/forms/date.component';
 import {NgbDateDEParserFormatter} from './core/forms/date-formatter.component';
-// import {FieldsViewComponent} from './core/fields-view.component';
-// import {RelationsViewComponent} from './core/relations-view.component';
-// import {IdaiWidgetsModule} from '../core/idai-widgets.module';
 import {BooleanComponent} from './core/forms/boolean.component';
-// import {DocumentTeaserComponent} from './document-teaser.component';
 import {EditFormFieldComponent} from './core/edit-form-field.component';
 import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
 import {DocumentEditChangeMonitor} from './core/document-edit-change-monitor';

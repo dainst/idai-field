@@ -65,10 +65,9 @@ export class Validator {
 
 
         let msgWithParams = Validator.validateGeometry(doc.resource.geometry as any);
-        if (msgWithParams) return Promise.reject(msgWithParams);
+        if (msgWithParams) throw msgWithParams;
 
-
-        return this.datastore ? this.validateIdentifier(doc as any) : Promise.resolve();
+        return this.datastore ? this.validateIdentifier(doc as any) : undefined;
     }
 
 

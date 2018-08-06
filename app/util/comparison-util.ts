@@ -7,22 +7,19 @@ import {arrayEquivalent, arrayEquivalentBy, jsonEqual, isNot} from 'tsfun';
 export module ComparisonUtil {
 
 
-    // TODO make use of filter, includedIn, reduce
-    export function findDifferingFieldsInResource(object1: Object, object2: Object, fieldsToIgnore?: string[]): string[] {
+    // TODO make use includedIn,
+    export function findDifferingFieldsInResource(resource1: Object, resource2: Object,
+                                                  fieldsToIgnore?: string[]): string[] {
 
-        const differingFieldsNames: string[] = [];
-
-        for (let fieldName in object1) {
-            if (object1.hasOwnProperty(fieldName)) {
-
-                if (fieldsToIgnore && fieldsToIgnore.indexOf(fieldName) > -1) continue;
-
-                if (!ComparisonUtil.compare(
-                    (object1 as any)[fieldName],
-                    (object2 as any)[fieldName])) differingFieldsNames.push(fieldName);
-            }
-        }
-        return differingFieldsNames;
+        return Object.keys(resource1)
+            .filter(key => fieldsToIgnore && fieldsToIgnore.indexOf(key) > -1)
+            .reduce(
+                concatIf(
+                    key =>
+                        !ComparisonUtil.compare(
+                            (resource1 as any)[key],
+                            (resource2 as any)[key])),
+                [] as string[]);
     }
 
 

@@ -264,9 +264,7 @@ export class RelationPickerComponent implements OnChanges {
             relDef: RelationDefinition) {
 
         // Don't suggest the resource itself
-        if (resource.id == suggestion.id) {
-            return false;
-        }
+        if (resource.id === suggestion.id) return false; // TODO do that in caller loop
 
         // Don't suggest a resource that is already included as a target in the relation list
         if (resource.relations[relDef.name].indexOf(suggestion.id as any) > -1) {

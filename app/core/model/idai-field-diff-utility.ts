@@ -13,8 +13,8 @@ export module IdaiFieldDiffUtility {
         const fieldsToIgnore: string[] = ['relations'];
 
         const differingFieldsNames: string[]
-            = IdaiFieldDiffUtility.findDifferingFieldsInResource(resource1, resource2, fieldsToIgnore)
-                .concat(IdaiFieldDiffUtility.findDifferingFieldsInResource(resource2, resource1, fieldsToIgnore));
+            = findDifferingFieldsInResource(resource1, resource2, fieldsToIgnore)
+                .concat(findDifferingFieldsInResource(resource2, resource1, fieldsToIgnore));
 
         return unique(differingFieldsNames);
     }
@@ -24,15 +24,15 @@ export module IdaiFieldDiffUtility {
     export function findDifferingRelations(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
 
         const differingRelationNames: string[]
-            = IdaiFieldDiffUtility.findDifferingFieldsInRelations(resource1.relations, resource2.relations)
-                .concat(IdaiFieldDiffUtility.findDifferingFieldsInRelations(resource2.relations, resource1.relations));
+            = findDifferingFieldsInRelations(resource1.relations, resource2.relations)
+                .concat(findDifferingFieldsInRelations(resource2.relations, resource1.relations));
 
         return unique(differingRelationNames);
     }
 
 
     // TODO make use includedIn,
-    export function findDifferingFieldsInResource(resource1: Object, resource2: Object,
+    function findDifferingFieldsInResource(resource1: Object, resource2: Object,
                                                   fieldsToIgnore?: string[]): string[] {
 
         return Object.keys(resource1)
@@ -43,7 +43,7 @@ export module IdaiFieldDiffUtility {
     }
 
 
-    export function findDifferingFieldsInRelations(relations1: Object, relations2: Object) {
+    function findDifferingFieldsInRelations(relations1: Object, relations2: Object) {
 
         return Object.keys(relations1)
             .reduce(

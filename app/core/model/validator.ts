@@ -21,18 +21,18 @@ export class Validator {
      * @param doc
      * @returns resolves with () or rejects with msgsWithParams
      */
-    public validate(doc: Document|NewDocument): Promise<any> {
+    public async validate(doc: Document|NewDocument): Promise<void> {
 
         let resource = doc.resource;
 
         if (!Validations.validateType(resource, this.projectConfiguration)) {
-            return Promise.reject([M.VALIDATION_ERROR_INVALIDTYPE, resource.type]);
+            throw [M.VALIDATION_ERROR_INVALIDTYPE, resource.type];
         }
 
         let missingProperties = Validations.getMissingProperties(resource, this.projectConfiguration);
         if (missingProperties.length > 0) {
-            return Promise.reject([M.VALIDATION_ERROR_MISSINGPROPERTY, resource.type]
-                .concat(missingProperties.join((', '))));
+            throw [M.VALIDATION_ERROR_MISSINGPROPERTY, resource.type]
+                .concat(missingProperties.join((', ')));
         }
 
         const invalidFields = Validations.validateFields(resource, this.projectConfiguration);
@@ -41,7 +41,7 @@ export class Validator {
                 M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS];
             err.push(resource.type);
             err.push(invalidFields.join(', '));
-            return Promise.reject(err);
+            throw err;
         }
 
         const invalidRelationFields = Validations.validateRelations(resource, this.projectConfiguration);
@@ -51,7 +51,7 @@ export class Validator {
                 M.VALIDATION_ERROR_INVALIDRELATIONFIELDS];
             err.push(resource.type);
             err.push(invalidRelationFields.join(', '));
-            return Promise.reject(err);
+            throw err;
         }
 
         let invalidNumericValues;
@@ -61,12 +61,15 @@ export class Validator {
                 M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES];
             err.push(resource.type);
             err.push(invalidNumericValues.join(', '));
-            return Promise.reject(err);
+            throw err;
         }
 
 
+        let msgWithParams = Validator.validateGeometry(doc.resource.geometry as any);
+        if (msgWithParams) return Promise.reject(msgWithParams);
 
-        return this.datastore ? this.validateCustom(doc as any) : Promise.resolve();
+
+        return this.datastore ? this.validateIdentifier(doc as any) : Promise.resolve();
     }
 
 
@@ -94,23 +97,6 @@ export class Validator {
         });
 
         return documents.length === 1;
-    }
-
-
-    /**
-     * @throws msgsWithParams in case of validation error
-     */
-    /**
-     * @param doc
-     * @returns {Promise<void>}
-     * @returns {Promise<void>} resolves with () or rejects with msgsWithParams in case of validation error
-     */
-    protected async validateCustom(doc: IdaiFieldDocument): Promise<void> {
-
-        await this.validateIdentifier(doc);
-
-        const msgWithParams = await Validator.validateGeometry(doc.resource.geometry as any);
-        if (msgWithParams) throw msgWithParams;
     }
 
 

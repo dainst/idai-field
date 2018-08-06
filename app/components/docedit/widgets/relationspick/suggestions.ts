@@ -13,7 +13,7 @@ export module Suggestions {
                                         maxSuggestions: number) {
 
         return flow<any>(documents,
-            filter(isNot(on('resource.id', 'id')(resource))), // Don't suggest the resource itself
+            filter(isNot(on('resource.id:')(resource.id))), // Don't suggest the resource itself
             filter(isNot(alreadyIncluded(resource, relationDefinition))),
             filter(isNot(includedInTargetRelationList(resource, relationDefinition))),
             filter(rightRelationType(relationDefinition)),

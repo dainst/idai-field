@@ -5,6 +5,7 @@ import {Resource} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from './document-edit-change-monitor';
 import {ReadDatastore} from 'idai-components-2/core';
 import {RelationDefinition} from 'idai-components-2/core';
+import {take} from 'tsfun';
 
 
 @Component({
@@ -18,6 +19,8 @@ import {RelationDefinition} from 'idai-components-2/core';
  * @author Daniel de Oliveira
  */
 export class RelationPickerComponent implements OnChanges {
+
+    private static MAX_SUGGESTIONS = 5;
 
     @Input() document: any;
     
@@ -234,21 +237,9 @@ export class RelationPickerComponent implements OnChanges {
 
     private static makeSuggestionsFrom(documents: any, resource: any, relationDefinition: any) {
 
-        const suggestions = [] as any;
-        const maxNrSuggestions = 5;
-        let nrSuggestions = 0;
-        for (let document of documents) { // TODO use filter and then take(5) from tsfun
-
-            if (nrSuggestions === maxNrSuggestions) continue;
-
-            if (RelationPickerComponent.isValidSuggestion(resource,
-                    document.resource, relationDefinition)) {
-
-                suggestions.push(document as never);
-                nrSuggestions++;
-            }
-        }
-        return suggestions;
+        return take(this.MAX_SUGGESTIONS)(documents
+            .filter((document: any) => RelationPickerComponent.isValidSuggestion(resource,
+                document.resource, relationDefinition))) as Document[];
     }
 
 

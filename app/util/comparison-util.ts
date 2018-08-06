@@ -1,4 +1,4 @@
-import {arrayEquivalent, arrayEquivalentBy, jsonEqual} from 'tsfun';
+import {arrayEquivalent, arrayEquivalentBy, jsonEqual, isNot} from 'tsfun';
 
 /**
  * @author Thomas Kleinke
@@ -26,15 +26,21 @@ export module ComparisonUtil {
     }
 
 
-    export function findDifferingFieldsInRelations(relations1: Object, relations2: Object): string[] {
+    export function findDifferingFieldsInRelations(relations1: Object, relations2: Object) {
 
         return Object.keys(relations1)
-            .reduce((acc, key) => !arrayEquivalent((relations1 as any)[key])((relations2 as any)[key])
-                            ? acc : acc.concat([key] as any)
-            , []);
+            .reduce(
+                concatIf(
+                    key =>
+                    !arrayEquivalent
+                        ((relations1 as any)[key])
+                        ((relations2 as any)[key])),
+                [] as string[]);
     }
 
-    // TODO make a generic reducer which abstract just the method execution and string concat afterwards
+    // TODO possibly put to tsfun
+    export const concatIf = (f: (_: string) => boolean) => (acc: string[], val: string) =>
+        f(val) ? acc.concat([val as string]) : acc;
 
 
     export function compare(value1: any, value2: any): boolean {

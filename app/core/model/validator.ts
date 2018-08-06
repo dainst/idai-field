@@ -21,7 +21,9 @@ export class Validator {
      * @param doc
      * @returns resolves with () or rejects with msgsWithParams
      */
-    public async validate(doc: Document|NewDocument): Promise<void> {
+    public async validate(
+        doc: Document|NewDocument // TODO type to IdaiFieldDocument|NewIdaiFieldDocument
+    ): Promise<void> {
 
         let resource = doc.resource;
 
@@ -37,31 +39,28 @@ export class Validator {
 
         const invalidFields = Validations.validateFields(resource, this.projectConfiguration);
         if (invalidFields.length > 0) {
-            const err = [invalidFields.length == 1 ?
-                M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS];
-            err.push(resource.type);
-            err.push(invalidFields.join(', '));
-            throw err;
+            throw [invalidFields.length === 1 ?
+                M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS]
+                .concat([resource.type])
+                .concat(invalidFields.join(', '));
         }
 
         const invalidRelationFields = Validations.validateRelations(resource, this.projectConfiguration);
         if (invalidRelationFields.length > 0) {
-            const err = [invalidRelationFields.length == 1 ?
-                M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
-                M.VALIDATION_ERROR_INVALIDRELATIONFIELDS];
-            err.push(resource.type);
-            err.push(invalidRelationFields.join(', '));
-            throw err;
+            throw [invalidRelationFields.length === 1 ?
+                    M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
+                    M.VALIDATION_ERROR_INVALIDRELATIONFIELDS]
+                .concat([resource.type])
+                .concat([invalidRelationFields.join(', ')]);
         }
 
-        let invalidNumericValues;
-        if (invalidNumericValues = Validations.validateNumericValues(resource, this.projectConfiguration)) {
-            let err = [invalidNumericValues.length == 1 ?
-                M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
-                M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES];
-            err.push(resource.type);
-            err.push(invalidNumericValues.join(', '));
-            throw err;
+        let invalidNumericValues = Validations.validateNumericValues(resource, this.projectConfiguration);
+        if (invalidNumericValues ) {
+            throw [invalidNumericValues.length === 1 ?
+                    M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
+                    M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES]
+                .concat([resource.type])
+                .concat([invalidNumericValues.join(', ')]);
         }
 
 

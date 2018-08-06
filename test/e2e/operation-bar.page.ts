@@ -24,5 +24,6 @@ export class OperationBarPage {
         browser.wait(EC.presenceOf(element(by.css('.operation-document-selector .dropdown-menu'))),
             delays.ECWaitTime);
         element.all(by.css('.operation-document-selector .dropdown-menu button')).get(index).click();
+        browser.wait(EC.stalenessOf(element(by.css('.loading-icon'))), delays.ECWaitTime);
     }
 }

@@ -3,7 +3,6 @@ import {Document} from 'idai-components-2/core';
 import {M} from '../../m';
 import {AbstractParser} from './abstract-parser';
 import {Observer} from 'rxjs/Observer';
-import {ComparisonUtil} from "../../util/comparison-util";
 import {duplicates} from 'tsfun';
 
 export interface Geojson {

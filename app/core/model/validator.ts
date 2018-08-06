@@ -5,6 +5,8 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/field';
 import {M} from '../../m';
 import {Validations} from './validations';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
+import {TypeUtility} from './type-utility';
+import {to, mapMap} from 'tsfun';
 
 
 @Injectable()
@@ -15,7 +17,8 @@ import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document
 export class Validator {
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private datastore: IdaiFieldDocumentDatastore) {}
+                private datastore: IdaiFieldDocumentDatastore,
+                private typeUtility: TypeUtility) {}
 
     /**
      * @param doc
@@ -24,6 +27,23 @@ export class Validator {
     public async validate(
         doc: Document|NewDocument // TODO type to IdaiFieldDocument|NewIdaiFieldDocument
     ): Promise<void> {
+
+
+        // See #8992
+        if (this.typeUtility) {
+            if (!Object.keys(mapMap(to('name'))(this.typeUtility.getSubtypes('Operation')))
+                    .concat(Object.keys(mapMap(to('name'))(this.typeUtility.getSubtypes('Image'))))
+                    .concat(['Place'])
+                    .includes(doc.resource.type)) {
+
+                if (!doc.resource.relations.isRecordedIn
+                    || doc.resource.relations.isRecordedIn.length !== 1) {
+                    throw [M.VALIDATION_ERROR_NORECORDEDIN];
+                }
+            }
+        }
+
+
 
         let resource = doc.resource;
 

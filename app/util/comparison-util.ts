@@ -1,4 +1,4 @@
-import {arrayEquivalentBy, jsonEquals} from 'tsfun';
+import {arrayEquivalentBy, jsonEqual} from 'tsfun';
 
 /**
  * @author Thomas Kleinke
@@ -53,9 +53,9 @@ export module ComparisonUtil {
         if (type1 !== type2) {
             return false;
         } else if (type1 === 'object') {
-            return jsonEquals(value1)(value2);
+            return jsonEqual(value1)(value2);
         } else if (type1 === 'array') {
-            return arrayEquivalentBy(jsonEquals)(value1)(value2);
+            return arrayEquivalentBy(jsonEqual)(value1)(value2);
         } else {
             return compareFields(value1, value2);
         }
@@ -67,7 +67,7 @@ export module ComparisonUtil {
         if (field1 instanceof Array && !(field2 instanceof Array)) return false;
         if (!(field1 instanceof Array) && field2 instanceof Array) return false;
 
-        if (field1 instanceof Array) return arrayEquivalentBy(jsonEquals)(field1)(field2);
+        if (field1 instanceof Array) return arrayEquivalentBy(jsonEqual)(field1)(field2);
 
         return field1 === field2;
     }

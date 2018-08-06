@@ -360,7 +360,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/suggestions -- show suggestion for extended search query', async done => {
+    it('search/suggestions -- show suggestion for extended search query', done => {
 
         NavbarPage.clickNavigateToExcavation();
         OperationBarPage.performSelectOperation(1);

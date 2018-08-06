@@ -221,6 +221,34 @@ describe('resources/state --', function() {
     });
 
 
+    it('search/suggestions -- show suggestion for extended search query', done => {
+
+        OperationBarPage.clickSwitchHierarchyMode();
+
+        ResourcesPage.openEditByDoubleClickResource('SE2');
+        DoceditPage.clickSelectOption('hasLayerClassification', 1);
+        DoceditPage.clickSaveDocument();
+
+        NavbarPage.clickNavigateToExcavation();
+        OperationBarPage.clickSwitchHierarchyMode();
+
+        SearchBarPage.clickChooseTypeFilter('feature-layer');
+        ResourcesSearchBarPage.clickConstraintsMenuButton();
+        ResourcesSearchBarPage.clickSelectConstraintField('hasLayerClassification');
+        ResourcesSearchBarPage.clickSelectDropdownValue(1);
+        ResourcesSearchBarPage.clickAddConstraintButton();
+        SearchBarPage.clickSearchBarInputField();
+
+        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesSearchBarPage.getSuggestions().then(suggestions => {
+            expect(suggestions.length).toBe(1);
+            expect(suggestions[0].getText()).toEqual('SE2');
+        });
+
+        done();
+    });
+
+
     it('search/extended -- perform constraint search for simple input field', () => {
 
         OperationBarPage.clickSwitchHierarchyMode();
@@ -355,34 +383,6 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToProject();
         expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');
-
-        done();
-    });
-
-
-    it('search/suggestions -- show suggestion for extended search query', done => {
-
-        OperationBarPage.clickSwitchHierarchyMode();
-
-        ResourcesPage.openEditByDoubleClickResource('SE2');
-        DoceditPage.clickSelectOption('hasLayerClassification', 1);
-        DoceditPage.clickSaveDocument();
-
-        NavbarPage.clickNavigateToExcavation();
-        OperationBarPage.clickSwitchHierarchyMode();
-
-        SearchBarPage.clickChooseTypeFilter('feature-layer');
-        ResourcesSearchBarPage.clickConstraintsMenuButton();
-        ResourcesSearchBarPage.clickSelectConstraintField('hasLayerClassification');
-        ResourcesSearchBarPage.clickSelectDropdownValue(1);
-        ResourcesSearchBarPage.clickAddConstraintButton();
-        SearchBarPage.clickSearchBarInputField();
-
-        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesSearchBarPage.getSuggestions().then(suggestions => {
-            expect(suggestions.length).toBe(1);
-            expect(suggestions[0].getText()).toEqual('SE2');
-        });
 
         done();
     });

@@ -89,13 +89,9 @@ export class Validator {
 
     private async isExistingRelationTarget(targetId: string): Promise<boolean> {
 
-        const {documents} = await this.datastore.find({
-            constraints: {
-                'id:match': targetId
-            }
-        });
-
-        return documents.length === 1;
+        return (await this.datastore.find({
+                constraints: {'id:match': targetId}
+            })).documents.length === 1;
     }
 
 

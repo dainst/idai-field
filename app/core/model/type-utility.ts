@@ -13,6 +13,7 @@ export class TypeUtility {
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
+    // TODO curry it with typeName in inner param list
     public isSubtype(typeName: string, superTypeName: string): boolean {
 
         const type = this.projectConfiguration.getTypesMap()[typeName];

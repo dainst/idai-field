@@ -17,8 +17,7 @@ import {to, mapMap} from 'tsfun';
 export class Validator {
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private datastore: IdaiFieldDocumentDatastore,
-                private typeUtility: TypeUtility) {}
+                private datastore: IdaiFieldDocumentDatastore) {}
 
     /**
      * @param doc
@@ -27,23 +26,6 @@ export class Validator {
     public async validate(
         doc: Document|NewDocument // TODO type to IdaiFieldDocument|NewIdaiFieldDocument
     ): Promise<void> {
-
-
-        // See #8992
-        if (this.typeUtility) {
-            if (!Object.keys(mapMap(to('name'))(this.typeUtility.getSubtypes('Operation')))
-                    .concat(Object.keys(mapMap(to('name'))(this.typeUtility.getSubtypes('Image'))))
-                    .concat(['Place'])
-                    .includes(doc.resource.type)) {
-
-                if (!doc.resource.relations.isRecordedIn
-                    || doc.resource.relations.isRecordedIn.length !== 1) {
-                    throw [M.VALIDATION_ERROR_NORECORDEDIN];
-                }
-            }
-        }
-
-
 
         let resource = doc.resource;
 

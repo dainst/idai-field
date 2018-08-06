@@ -15,6 +15,7 @@ import {Validations} from '../../core/model/validations';
 import {TypeUtility} from '../../core/model/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {DocumentEditChangeMonitor} from './core/document-edit-change-monitor';
+import {mapMap, to} from 'tsfun';
 
 
 @Injectable()
@@ -80,6 +81,19 @@ export class DocumentHolder {
 
         this.clonedDocument = await this.cleanup(this.clonedDocument);
 
+        // See #8992
+        if (this.typeUtility) {
+            if (!Object.keys(mapMap(to('name'))(this.typeUtility.getSubtypes('Operation')))
+                    .concat(Object.keys(mapMap(to('name'))(this.typeUtility.getSubtypes('Image'))))
+                    .concat(['Place'])
+                    .includes(this.clonedDocument.resource.type)) {
+
+                if (!this.clonedDocument.resource.relations.isRecordedIn
+                    || this.clonedDocument.resource.relations.isRecordedIn.length !== 1) {
+                    throw [M.VALIDATION_ERROR_NORECORDEDIN];
+                }
+            }
+        }
 
         await this.validator.validate(this.clonedDocument);
         this.clonedDocument = await this.persistenceManager.persist(

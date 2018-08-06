@@ -81,7 +81,7 @@ describe('Validator', () => {
                 },
             }
         };
-        new Validator(projectConfiguration, undefined, undefined)
+        new Validator(projectConfiguration, undefined)
             .validate(doc).then(() => done(), msgWithParams => fail(msgWithParams));
     });
 
@@ -97,7 +97,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, undefined)
+        new Validator(projectConfiguration, undefined)
             .validate(doc).then(() => done(), msgWithParams => fail(msgWithParams));
     });
 
@@ -112,7 +112,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, undefined)
+        new Validator(projectConfiguration, undefined)
             .validate(doc).then(() => fail(), msgWithParams => {
             expect(msgWithParams).toEqual([M.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
             done();
@@ -131,7 +131,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, undefined)
+        new Validator(projectConfiguration, undefined)
             .validate(doc).then(() => fail(), msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
                 done();
@@ -151,7 +151,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, undefined)
+        new Validator(projectConfiguration, undefined)
             .validate(doc).then(() => fail(), msgWithParams => {
             expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDFIELD, 'T', 'a']);
             done();
@@ -172,7 +172,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, undefined)
+        new Validator(projectConfiguration, undefined)
             .validate(doc).then(() => fail(), msgWithParams => {
             expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDFIELDS, 'T', 'a, b']);
             done();
@@ -192,7 +192,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, undefined).validate(doc).then(
+        new Validator(projectConfiguration, undefined).validate(doc).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDRELATIONFIELD, 'T2',
@@ -215,7 +215,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, undefined).validate(doc).then(
+        new Validator(projectConfiguration, undefined).validate(doc).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDRELATIONFIELDS, 'T2',
@@ -237,7 +237,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, undefined).validate(doc).then(
+        new Validator(projectConfiguration, undefined).validate(doc).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE, 'T', 'number1']);
@@ -259,7 +259,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, undefined).validate(doc).then(
+        new Validator(projectConfiguration, undefined).validate(doc).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES, 'T',

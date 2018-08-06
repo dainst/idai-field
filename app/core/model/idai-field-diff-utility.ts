@@ -1,5 +1,5 @@
 import {IdaiFieldResource} from 'idai-components-2/field';
-import {unique, arrayEquivalent, arrayEquivalentBy, jsonEqual, isNot} from 'tsfun';
+import {unique, arrayEquivalent, arrayEquivalentBy, jsonEqual, isNot, tripleEqual} from 'tsfun';
 
 /**
  * @author Thomas Kleinke
@@ -10,33 +10,30 @@ export module IdaiFieldDiffUtility {
     // TODO unit test
     export function findDifferingFields(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
 
-        const fieldsToIgnore: string[] = ['relations'];
-
         const differingFieldsNames: string[]
-            = findDifferingFieldsInResource(resource1, resource2, fieldsToIgnore)
-                .concat(findDifferingFieldsInResource(resource2, resource1, fieldsToIgnore));
+            = findDifferingFieldsInResource(resource1, resource2)
+                .concat(findDifferingFieldsInResource(resource2, resource1));
 
         return unique(differingFieldsNames);
     }
 
 
     // TODO unit test
-    export function findDifferingRelations(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
+    export function findDifferingRelations(relations1: Object, relations2: Object): string[] {
 
         const differingRelationNames: string[]
-            = findDifferingFieldsInRelations(resource1.relations, resource2.relations)
-                .concat(findDifferingFieldsInRelations(resource2.relations, resource1.relations));
+            = findDifferingFieldsInRelations(relations1, relations2)
+                .concat(findDifferingFieldsInRelations(relations2, relations1));
 
         return unique(differingRelationNames);
     }
 
 
     // TODO make use includedIn,
-    function findDifferingFieldsInResource(resource1: Object, resource2: Object,
-                                                  fieldsToIgnore?: string[]): string[] {
+    function findDifferingFieldsInResource(resource1: Object, resource2: Object): string[] {
 
         return Object.keys(resource1)
-            .filter(key => fieldsToIgnore && fieldsToIgnore.indexOf(key) > -1)
+            .filter(isNot(tripleEqual('relations')))
             .reduce(
                 concatIf(notCompareInBoth(resource1, resource2)),
                 [] as string[]);

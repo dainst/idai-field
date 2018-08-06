@@ -12,8 +12,8 @@ export class IdaiFieldDiffUtility {
         const fieldsToIgnore: string[] = ['relations'];
 
         const differingFieldsNames: string[]
-            = ComparisonUtil.findDifferingFieldsInObject(resource1, resource2, fieldsToIgnore)
-                .concat(ComparisonUtil.findDifferingFieldsInObject(resource2, resource1, fieldsToIgnore));
+            = ComparisonUtil.findDifferingFieldsInResource(resource1, resource2, fieldsToIgnore)
+                .concat(ComparisonUtil.findDifferingFieldsInResource(resource2, resource1, fieldsToIgnore));
 
         return unique(differingFieldsNames);
     }
@@ -22,8 +22,8 @@ export class IdaiFieldDiffUtility {
     public static findDifferingRelations(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
 
         const differingRelationNames: string[]
-            = ComparisonUtil.findDifferingFieldsInObject(resource1.relations, resource2.relations)
-                .concat(ComparisonUtil.findDifferingFieldsInObject(resource2.relations, resource1.relations));
+            = ComparisonUtil.findDifferingFieldsInRelations(resource1.relations, resource2.relations)
+                .concat(ComparisonUtil.findDifferingFieldsInRelations(resource2.relations, resource1.relations));
 
         return unique(differingRelationNames);
     }

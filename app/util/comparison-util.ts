@@ -1,4 +1,4 @@
-import {arrayEquivalentBy, jsonEqual} from 'tsfun';
+import {arrayEquivalent, arrayEquivalentBy, jsonEqual} from 'tsfun';
 
 /**
  * @author Thomas Kleinke
@@ -6,7 +6,7 @@ import {arrayEquivalentBy, jsonEqual} from 'tsfun';
  */
 export module ComparisonUtil {
 
-    export function findDifferingFieldsInObject(object1: Object, object2: Object, fieldsToIgnore?: string[]): string[] {
+    export function findDifferingFieldsInResource(object1: Object, object2: Object, fieldsToIgnore?: string[]): string[] {
 
         const differingFieldsNames: string[] = [];
 
@@ -24,36 +24,41 @@ export module ComparisonUtil {
     }
 
 
+    export function findDifferingFieldsInRelations(relations1: Object, relations2: Object): string[] {
+
+        const differingFieldsNames: string[] = [];
+
+        for (let fieldName in relations1) {
+            if (relations1.hasOwnProperty(fieldName)) {
+
+                // TODO do with tsfun subtract
+                if (!arrayEquivalent((relations1 as any)[fieldName])
+                    ((relations2 as any)[fieldName])) differingFieldsNames.push(fieldName);
+            }
+        }
+        return differingFieldsNames;
+    }
+
+
     export function compare(value1: any, value2: any): boolean {
 
         if (!value1 && !value2) return true;
         if ((value1 && !value2) || (!value1 && value2)) return false;
 
-        const type1: string = ComparisonUtil.getType(value1);
-        const type2: string = ComparisonUtil.getType(value2);
+        const type1: string = getType(value1);
+        const type2: string = getType(value2);
 
         if (type1 !== type2) return false;
 
         if (type1 === 'array' && type2 === 'array') {
-            return arrayEquivalentBy(jsonEqual)(value1)(value2);
+            return arrayEquivalentBy(jsonEqual)(value1)(value2)
         }
 
         return jsonEqual(value1)(value2);
     }
 
 
-    // export function compareFields(field1: any, field2: any): boolean {
-    //
-    //     if (field1 instanceof Array && !(field2 instanceof Array)) return false;
-    //     if (!(field1 instanceof Array) && field2 instanceof Array) return false;
-    //
-    //     if (field1 instanceof Array) return arrayEquivalentBy(jsonEqual)(field1)(field2);
-    //
-    //     return field1 === field2;
-    // }
-
-
-    export function getType(value: any): string {
+    function getType(value: any): string {
 
         return typeof value == 'object'
             ? value instanceof Array

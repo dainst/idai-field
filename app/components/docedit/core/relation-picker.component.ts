@@ -5,7 +5,7 @@ import {Resource} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from './document-edit-change-monitor';
 import {ReadDatastore} from 'idai-components-2/core';
 import {RelationDefinition} from 'idai-components-2/core';
-import {take} from 'tsfun';
+import {take, filter, flow} from 'tsfun';
 
 
 @Component({
@@ -235,54 +235,55 @@ export class RelationPickerComponent implements OnChanges {
     }
 
 
-    private static makeSuggestionsFrom(documents: any, resource: any, relationDefinition: any) {
+    private static makeSuggestionsFrom(documents: Document[], resource: any, relationDefinition: any) {
 
-        return take(this.MAX_SUGGESTIONS)(documents
-            .filter((document: any) => RelationPickerComponent.isValidSuggestion(resource,
-                document.resource, relationDefinition))) as Document[];
+        return flow<any>(documents,
+                filter(this.isValidSuggestion(resource, relationDefinition)),
+                take(this.MAX_SUGGESTIONS));
     }
 
 
     /**
      * Checks if the given suggestion should be shown as a suggestion
      * @param resource
-     * @param suggestion
      * @param relDef
      * @return true if the suggestion should be suggested, false otherwise
      */
-    private static isValidSuggestion(
-            resource: Resource, suggestion: Resource,
-            relDef: RelationDefinition) {
+    private static isValidSuggestion(resource: Resource, relDef: RelationDefinition) {
 
-        // Don't suggest the resource itself
-        if (resource.id === suggestion.id) return false; // TODO do that in caller loop
+        return (suggestionDocument: Document) => {
+
+            const suggestion: Resource = suggestionDocument.resource;
+
+            if (resource.id === suggestion.id) return false; // TODO do that in caller loop
 
 
-        // Don't suggest a resource that is already included as a target in the relation list
-        if (resource.relations[relDef.name].indexOf(suggestion.id as any) > -1) {
-            return false;
-        }
+            // Don't suggest a resource that is already included as a target in the relation list
+            if (resource.relations[relDef.name].indexOf(suggestion.id as any) > -1) {
+                return false;
+            }
 
-        // Don't suggest a resource that is already included as a target in the inverse relation list
-        if (resource.relations[relDef.inverse]
+            // Don't suggest a resource that is already included as a target in the inverse relation list
+            if (resource.relations[relDef.inverse]
                 && resource.relations[relDef.inverse].indexOf(suggestion.id as any) > -1) {
-            return false;
-        }
+                return false;
+            }
 
-        // Don't suggest a resource whose type is not a part of the relation's range
-        if (relDef.range.indexOf(suggestion.type) == -1) {
-            return false;
-        }
+            // Don't suggest a resource whose type is not a part of the relation's range
+            if (relDef.range.indexOf(suggestion.type) == -1) {
+                return false;
+            }
 
+            // Don't suggest a resource which is linked to a different main type resource if the relation property
+            // 'sameMainTypeResource' is set to true
+            return !relDef.sameMainTypeResource ||
+                RelationPickerComponent.isSameMainTypeResource(
+                    resource, suggestion);
 
-        // if (relDef.name === 'isRecordedIn') return true;
-
-        // Don't suggest a resource which is linked to a different main type resource if the relation property
-        // 'sameMainTypeResource' is set to true
-        return !relDef.sameMainTypeResource ||
-            RelationPickerComponent.isSameMainTypeResource(
-                resource, suggestion);
+            // Don't suggest the resource itself
+        };
     }
+
 
 
     private static isSameMainTypeResource(

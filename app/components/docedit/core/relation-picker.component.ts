@@ -237,9 +237,9 @@ export class RelationPickerComponent implements OnChanges {
         const suggestions = [] as any;
         const maxNrSuggestions = 5;
         let nrSuggestions = 0;
-        for (let document of documents) {
+        for (let document of documents) { // TODO use filter and then take(5) from tsfun
 
-            if (nrSuggestions == maxNrSuggestions) continue;
+            if (nrSuggestions === maxNrSuggestions) continue;
 
             if (RelationPickerComponent.isValidSuggestion(resource,
                     document.resource, relationDefinition)) {

@@ -1,0 +1,12 @@
+<div *ngFor="let relation of relations[relationDefinition.name]; let i = index">
+    <relation-picker [(document)]="document" [relationDefinition]="relationDefinition" [relationIndex]="i" [primary]="primary"></relation-picker>
+</div>
+<div class="circular-button add-relation"
+     *ngIf="!relations[relationDefinition.name] || relations[relationDefinition.name].length == 0 || validateNewest()"
+     type="button"
+     (click)="createRelation()">+</div>
+
+<!-- Button disabled when waiting for input -->
+<div class="circular-button add-relation-disabled" style="display: none;"
+     *ngIf="relations[relationDefinition.name] && relations[relationDefinition.name].length > 0 && !validateNewest()"
+     type="button">+</div>

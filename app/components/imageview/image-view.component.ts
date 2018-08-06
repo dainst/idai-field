@@ -3,10 +3,8 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {DocumentEditChangeMonitor} from 'idai-components-2/core';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {clone} from '../../util/object-util';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
 import {ImageContainer} from '../../core/imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
@@ -14,6 +12,7 @@ import {M} from '../../m';
 import {RoutingService} from '../routing-service';
 import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/field/idai-field-image-document-read-datastore';
 import {isEmpty} from 'tsfun';
+import {DocumentEditChangeMonitor} from '../docedit/core/document-edit-change-monitor';
 
 
 @Component({

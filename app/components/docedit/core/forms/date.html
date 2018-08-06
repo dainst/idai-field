@@ -1,0 +1,14 @@
+<input class="form-control" [firstDayOfWeek]="1" placeholder="dd.mm.yyyy"
+       (click)="d.toggle()" (ngModelChange)="update($event)" [(ngModel)]="dateStruct"
+       ngbDatepicker #d="ngbDatepicker">
+
+<div *ngIf="dateNotParsed">
+    <b>Achtung.</b> Das Datum liegt in einem veralteten Format vor
+    und konnte nicht geparsed werden.
+    <br>
+    <p>
+    Gespeicherter Wert: <b>"{{resource[_field.name]}}"</b>
+    </p>
+    Bitte wählen tragen Sie das Datum erneut ein und es wird beim nächsten Speichern
+    ersetzt.
+</div>

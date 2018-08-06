@@ -3,13 +3,13 @@ import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/field';
 import {
     Action,
     Document,
-    DocumentEditChangeMonitor,
     Messages,
     ProjectConfiguration
 } from 'idai-components-2/core';
 import {IdaiFieldDiffUtility} from '../../core/model/idai-field-diff-utility';
 import {M} from '../../m';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
+import {DocumentEditChangeMonitor} from './core/document-edit-change-monitor';
 
 const moment = require('moment');
 

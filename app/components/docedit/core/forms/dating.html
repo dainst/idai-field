@@ -1,0 +1,158 @@
+<ng-template #editDate let-date="date" let-index="index">
+    <input class="form-control" type="number" size="6" min="0" max="100000"
+           [(ngModel)]="date.value" value="0" style="width:100px" name="value_{{index}}"
+           required>
+    <select class="form-control ml-1" [(ngModel)]="date.type"
+            style="width:80px" name="type_{{index}}">
+        <option value="bce">v.Chr.</option>
+        <option value="ce">n.Chr.</option>
+        <option value="bp">BP</option>
+    </select>
+</ng-template>
+
+<ng-template #checkboxes let-dating="dating" let-hide="hide">
+    <div class="form-group">
+        <div class="form-check form-check-inline" *ngIf="hide != 'isImprecise'">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox"
+                       [checked]="dating.isImprecise"
+                       (change)="dating.isImprecise = !dating.isImprecise">
+                Ungenau
+            </label>
+        </div>
+        <div class="form-check form-check-inline" *ngIf="hide != 'isUncertain'">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox"
+                       [checked]="dating.isUncertain"
+                       (change)="dating.isUncertain = !dating.isUncertain">
+                Unsicher
+            </label>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #editDating let-dating="dating">
+    <form #datingForm="ngForm" (ngSubmit)="addNewDating()">
+
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <select class="form-control" [(ngModel)]="dating.type" name="type">
+                        <option value="range">Zeitraum</option>
+                        <option value="exact">Exakt</option>
+                        <option value="before">Vor</option>
+                        <option value="after">Nach</option>
+                        <option value="scientific">Naturwissenschaftlich</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card-block">
+
+                <div *ngIf="dating.type == 'range'">
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <ng-container [ngTemplateOutlet]="editDate"
+                                          [ngTemplateOutletContext]="{ date: dating.dates[0], index: 0 }"></ng-container>
+                            <span style="width: 60px; text-align:center;">bis</span>
+                            <ng-container [ngTemplateOutlet]="editDate"
+                                          [ngTemplateOutletContext]="{ date: dating.dates[1], index: 1 }"></ng-container>
+                        </div>
+                    </div>
+                    <ng-container [ngTemplateOutlet]="checkboxes"
+                                  [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
+                </div>
+
+                <div *ngIf="dating.type == 'exact'">
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <ng-container [ngTemplateOutlet]="editDate"
+                                          [ngTemplateOutletContext]="{ date: dating.dates[0], index: 0 }"></ng-container>
+                        </div>
+                    </div>
+                    <ng-container [ngTemplateOutlet]="checkboxes"
+                                  [ngTemplateOutletContext]="{ dating: dating, hide: 'isImprecise' }"></ng-container>
+                </div>
+
+                <div *ngIf="dating.type == 'before'">
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <ng-container [ngTemplateOutlet]="editDate"
+                                          [ngTemplateOutletContext]="{ date: dating.dates[1], index: 1 }"></ng-container>
+                        </div>
+                    </div>
+                    <ng-container [ngTemplateOutlet]="checkboxes"
+                                  [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
+                </div>
+
+                <div *ngIf="dating.type == 'after'">
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <ng-container [ngTemplateOutlet]="editDate"
+                                          [ngTemplateOutletContext]="{ date: dating.dates[0], index: 0 }"></ng-container>
+                        </div>
+                    </div>
+                    <ng-container [ngTemplateOutlet]="checkboxes"
+                                  [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
+                </div>
+
+                <div *ngIf="dating.type == 'scientific'">
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <ng-container [ngTemplateOutlet]="editDate"
+                                          [ngTemplateOutletContext]="{ date: dating.dates[0], index: 0 }"></ng-container>
+                            <span style="width: 60px; text-align:center; font-weight:bold; font-size:1.5em">&plusmn;</span>
+                            <input type="number" style="width:100px" name="margin" class="form-control"
+                                   [(ngModel)]="dating.margin">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Grundlage:</label>
+                    <input type="text" [(ngModel)]="dating.hasSource" name="source"
+                        class="form-control">
+                </div>
+
+            </div>
+            <div class="card-footer" align="right">
+                <button type="submit" class="btn btn-primary"
+                        [disabled]="!convertDating(dating)">
+                    OK
+                </button>
+                <button type="button" class="btn btn-secondary"
+                        (click)="newDating = null">
+                    Abbrechen
+                </button>
+            </div>
+
+
+        </div>
+
+    </form>
+</ng-template>
+
+<div *ngFor="let item of resource[field.name]; index as i"  class="checkbox">
+    <div class="input-group mb-2">
+        <input value="{{item.hasLabel}}" type="text" disabled class="form-control">
+        <span class="input-group-btn">
+            <button class="btn btn-danger" type="button" (click)="removeDating(i)">
+                <span class="mdi mdi-delete"></span>
+            </button>
+        </span>
+    </div>
+</div>
+<div class="input-group">
+    <input placeholder="Hinzufügen ..." type="text" disabled class="form-control">
+    <span class="input-group-btn">
+        <button class="btn btn-success" type="button" (click)="createNewDating()">
+            <span class="mdi mdi-plus-circle"></span>
+        </button>
+    </span>
+</div>
+<div *ngIf="newDating" class="mt-2">
+    <ng-container [ngTemplateOutlet]="editDating"
+                  [ngTemplateOutletContext]="{ dating: newDating }">
+    </ng-container>
+</div>

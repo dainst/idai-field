@@ -1,0 +1,47 @@
+<div class="dating-component">
+
+    <div class="input-group">
+        <label *ngIf="showEndElements()">
+            von&nbsp;
+        </label>
+
+
+        <!-- the following block is duplicated for
+        the reason that this way we can retrigger setValue() again and again,
+        even when no change occured. we use this to return to the mode
+        where only hasPeriod is used
+        -->
+        <select *ngIf="showEndElements()"
+                [(ngModel)]="resource[field.name]" (change)="setValue($event.target.value)"
+                class="form-control">
+            <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
+            <option *ngFor="let item of field.valuelist" value="{{item}}">{{item}}</option>
+        </select>
+        <select *ngIf="!showEndElements()"
+                [(ngModel)]="resource[field.name]" (change)="setValue($event.target.value)"
+                class="form-control">
+            <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
+            <option *ngFor="let item of field.valuelist" value="{{item}}">{{item}}</option>
+        </select>
+        <!-- end -->
+
+
+        <label *ngIf="showEndElements()">
+            &nbsp;&nbsp;bis&nbsp;
+        </label>
+        <select *ngIf="showEndElements()" [disabled]="!resource[field.name] || resource[field.name] === ''"
+                [(ngModel)]="resource[field.name + 'End']" (change)="setEndValue($event.target.value)"
+                class="form-control">
+            <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
+            <option *ngFor="let item of field.valuelist" value="{{item}}">{{item}}</option>
+        </select>
+        <button *ngIf="!showEndElements()"
+                ngbTooltip="Grobdatierung als Zeitraum angeben"
+                placement="left"
+                class="btn btn-outline-primary"
+                type="button"
+                (click)="activateEnd()">
+            <span class="mdi mdi-arrow-expand-horizontal"></span>
+        </button>
+    </div>
+</div>

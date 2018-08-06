@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {
     DatastoreErrors,
     Document,
-    DocumentEditChangeMonitor,
     ProjectConfiguration
 } from 'idai-components-2/core';
 import {Validator} from '../../core/model/validator';
@@ -15,6 +14,7 @@ import {flow, includedIn, isNot} from 'tsfun';
 import {Validations} from '../../core/model/validations';
 import {TypeUtility} from '../../core/model/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
+import {DocumentEditChangeMonitor} from './core/document-edit-change-monitor';
 
 
 @Injectable()

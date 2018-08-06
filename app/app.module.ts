@@ -5,7 +5,7 @@ import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiMessagesModule, MD, Messages} from 'idai-components-2/core';
-import {DocumentEditChangeMonitor, IdaiDocumentsModule} from 'idai-components-2/core';
+import {IdaiDocumentsModule} from 'idai-components-2/core';
 import {ConfigReader, ConfigLoader, ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldValidator} from './core/model/idai-field-validator';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
@@ -175,7 +175,6 @@ let indexFacade: IndexFacade|undefined = undefined;
             deps: []
         },
         PersistenceManager,
-        DocumentEditChangeMonitor,
         {
             provide: Validator,
             useFactory: function(projectConfiguration: ProjectConfiguration, datastore: IdaiFieldDocumentDatastore) {

@@ -12,7 +12,7 @@ const EC = protractor.ExpectedConditions;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-xdescribe('import --', function() {
+describe('import --', function() {
 
     let index = 0;
 
@@ -69,7 +69,7 @@ xdescribe('import --', function() {
     it('import a valid iDAI.field JSONL file via HTTP', () => {
 
         importIt('./test/test-data/importer-test-ok.jsonl');
-        browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest * 4);
         NavbarPage.clickNavigateToExcavation();
         OperationBarPage.performSelectOperation(0);
 

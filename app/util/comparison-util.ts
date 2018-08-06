@@ -6,24 +6,6 @@ import {arrayEquivalentBy, jsonEqual} from 'tsfun';
  */
 export module ComparisonUtil {
 
-    // TODO move to tsfun
-    export function getDuplicateValues(array: any[]): any[] {
-
-        const temp: any[] = [];
-        const result: any[] = [];
-
-        for (let value of array) {
-            if (temp.indexOf(value) > -1 && result.indexOf(value) == -1) {
-                result.push(value);
-            } else {
-                temp.push(value);
-            }
-        }
-
-        return result;
-    }
-
-
     export function findDifferingFieldsInObject(object1: Object, object2: Object, fieldsToIgnore?: string[]): string[] {
 
         const differingFieldsNames: string[] = [];

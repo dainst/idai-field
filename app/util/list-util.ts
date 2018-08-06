@@ -3,6 +3,8 @@
  * @author Daniel de Oliveira
  */
 
+// TODO put to tsfun
+
 export const getAtIndex = <A>(as: Array<A>, i: number): A|undefined => getAtIndexOr(as, i);
 
 

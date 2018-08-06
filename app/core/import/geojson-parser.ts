@@ -4,6 +4,7 @@ import {M} from '../../m';
 import {AbstractParser} from './abstract-parser';
 import {Observer} from 'rxjs/Observer';
 import {ComparisonUtil} from "../../util/comparison-util";
+import {duplicates} from 'tsfun';
 
 export interface Geojson {
     type: string,
@@ -97,7 +98,7 @@ export class GeojsonParser extends AbstractParser {
 
     private addDuplicateIdentifierWarnings(identifiers: string[]) {
 
-        const duplicateIdentifiers: string[] = ComparisonUtil.getDuplicateValues(identifiers);
+        const duplicateIdentifiers: string[] = duplicates(identifiers);
         if (duplicateIdentifiers.length == 1) {
             this.warnings.push([M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER, duplicateIdentifiers[0]]);
         } else if (duplicateIdentifiers.length > 1) {

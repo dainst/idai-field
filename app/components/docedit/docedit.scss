@@ -2,8 +2,8 @@
 @import 'docedit-conflicts-tab';
 @import 'type-switcher-button';
 @import 'imagetab/image-picker';
-//@import "docedit/relation-picker";
-//@import "docedit/relation-picker-group";
+@import "core/relation-picker";
+@import "core/relation-picker-group";
 
 #document-edit-wrapper {
 

@@ -475,13 +475,15 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'wall_surface');
-        ResourcesPage.performCreateRelation('1', '2', 9);
+        ResourcesPage.performCreateRelation('1', '2',
+            10); // Trägt
         ResourcesPage.clickSelectResource('2');
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         RelationsViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('1'));
         ResourcesPage.clickSelectResource('1');
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         RelationsViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('2'));
+
         DetailSidebarPage.performEditDocument();
         DoceditPage.clickTypeSwitcherButton();
         DoceditPage.clickTypeSwitcherOption('feature-layer');

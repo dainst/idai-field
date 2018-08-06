@@ -1,7 +1,7 @@
 /**
  * @author Thomas Kleinke
  */
-import {RelationPickerGroupComponent} from '../../../../../app/components/docedit/core/relationspick/relation-picker-group.component';
+import {RelationPickerGroupComponent} from '../../../../../app/components/docedit/widgets/relationspick/relation-picker-group.component';
 
 describe('RelationPickerGroupComponent', () => {
 

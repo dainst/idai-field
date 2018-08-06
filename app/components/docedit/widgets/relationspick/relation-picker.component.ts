@@ -2,11 +2,11 @@ import {Component, Input, OnChanges, ElementRef} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {Query} from 'idai-components-2/core';
 import {Resource} from 'idai-components-2/core';
-import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 import {ReadDatastore} from 'idai-components-2/core';
 import {RelationDefinition} from 'idai-components-2/core';
 import {take, filter, flow, isNot, on} from 'tsfun';
 import {Suggestions} from './suggestions';
+import {DocumentEditChangeMonitor} from '../../core/document-edit-change-monitor';
 
 
 @Component({

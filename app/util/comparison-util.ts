@@ -32,6 +32,8 @@ export module ComparisonUtil {
             , []);
     }
 
+    // TODO make a generic reducer which abstract just the method execution and string concat afterwards
+
 
     export function compare(value1: any, value2: any): boolean {
 

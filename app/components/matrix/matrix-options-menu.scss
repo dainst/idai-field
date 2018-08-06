@@ -19,6 +19,8 @@
   top: 109px;
   padding-bottom: 10px;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  cursor: default !important;
+  user-select: none;
 
   .form-group {
     margin-bottom: 0;
@@ -26,6 +28,10 @@
     .form-check {
       margin-left: 20px;
       margin-right: 10px;
+
+      .form-check-input {
+        cursor: default !important;
+      }
 
       .form-check-label {
         margin-left: -20px;

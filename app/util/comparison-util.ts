@@ -6,6 +6,8 @@ import {arrayEquivalent, arrayEquivalentBy, jsonEqual} from 'tsfun';
  */
 export module ComparisonUtil {
 
+
+    // TODO make use of filter, includedIn, reduce
     export function findDifferingFieldsInResource(object1: Object, object2: Object, fieldsToIgnore?: string[]): string[] {
 
         const differingFieldsNames: string[] = [];

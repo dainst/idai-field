@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/field';
+import {ProjectConfiguration} from 'idai-components-2/core';
+import {isNot, on, sameAs, doWhen, isEmpty} from 'tsfun';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -9,8 +11,6 @@ import {IdaiFieldFeatureDocumentReadDatastore} from '../../core/datastore/field/
 import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-document';
 import {Loading} from '../../widgets/loading';
 import {DotBuilder} from './dot-builder';
-import {ProjectConfiguration} from 'idai-components-2/core';
-import {isNot, on, sameAs, doWhen, isEmpty} from 'tsfun';
 
 
 @Component({
@@ -31,15 +31,15 @@ export class MatrixViewComponent implements OnInit {
      */
     public graph: string;
 
-    private trenches: IdaiFieldDocument[] = [];
+    private trenches: Array<IdaiFieldDocument> = [];
     private selectedTrench: IdaiFieldDocument|undefined;
 
-    private featureDocuments: IdaiFieldFeatureDocument[] = [];
-    private subgraphSelection: IdaiFieldFeatureDocument[] = []; // see selectionMode
+    private featureDocuments: Array<IdaiFieldFeatureDocument> = [];
+    private subgraphSelection: Array<IdaiFieldFeatureDocument> = []; // see selectionMode
 
-    public groupMode = true; // true meaning things get grouped by period
-    public selectionMode = false; // false is edit mode, true is selection mode
-    public curvedLineMode = true; // false is straight line mode
+    public clusterMode: 'periods'|'none' = 'periods';
+    public lineMode: 'ortho'|'curved' = 'ortho';
+    public selectionMode: boolean = false; // false is edit mode, true is selection mode
 
 
     constructor(
@@ -73,16 +73,16 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    public selectLineMode(curvedLineMode: boolean) {
+    public setLineMode(lineMode: 'ortho'|'curved') {
 
-        this.curvedLineMode = curvedLineMode;
+        this.lineMode = lineMode;
         this.calculateNewGraph();
     };
 
 
-    public toggleGroupMode() {
+    public setClusterMode(clusterMode: 'periods'|'none') {
 
-        this.groupMode = !this.groupMode;
+        this.clusterMode = clusterMode;
         this.calculateNewGraph();
     }
 
@@ -95,7 +95,7 @@ export class MatrixViewComponent implements OnInit {
         if (!selectedDoc) return;
 
         if (!this.selectionMode) {
-            this.launchDocedit(selectedDoc);
+            await this.launchDocedit(selectedDoc);
         } else {
             this.subgraphSelection = MatrixViewComponent
                 .addOrRemove(this.subgraphSelection, selectedDoc);
@@ -148,9 +148,9 @@ export class MatrixViewComponent implements OnInit {
 
         const graph: string = DotBuilder.build(
             this.projectConfiguration,
-            MatrixViewComponent.getPeriodMap(this.featureDocuments, this.groupMode),
+            MatrixViewComponent.getPeriodMap(this.featureDocuments, this.clusterMode),
             { above: 'isAfter', below: 'isBefore', sameRank: 'isContemporaryWith' },
-            this.curvedLineMode);
+            this.lineMode === 'curved');
 
         this.graph = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
     }
@@ -206,10 +206,10 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private static getPeriodMap(documents: Array<IdaiFieldFeatureDocument>,
-                                groupMode: boolean): { [period: string]: Array<IdaiFieldFeatureDocument> } {
+    private static getPeriodMap(documents: Array<IdaiFieldFeatureDocument>, clusterMode: 'periods'|'none')
+            : { [period: string]: Array<IdaiFieldFeatureDocument> } {
 
-        if (!groupMode) return { 'UNKNOWN': documents };
+        if (clusterMode === 'none') return { 'UNKNOWN': documents };
 
         return documents.reduce((periodMap: any, document: IdaiFieldFeatureDocument) => {
             const period: string = document.resource.hasPeriod

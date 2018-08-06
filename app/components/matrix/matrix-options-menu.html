@@ -1,0 +1,42 @@
+<div id="matrix-options-button" class="btn btn-primary" [class.active]="opened"
+     (mouseenter)="open()">
+    <span class="mdi mdi-settings mdi-18px"></span>
+</div>
+<div *ngIf="opened" id="matrix-options-menu" class="card card-block">
+    <form>
+        <fieldset class="form-group">
+            <div class="form-check form-check-inline">
+                <input id="line-radio-1"
+                       class="form-check-input"
+                       name="line-type-radios"
+                       type="radio"
+                       [value]="'ortho'"
+                       [(ngModel)]="lineMode"
+                       (change)="emitLineMode()">
+                <label class="form-check-label" for="line-radio-1">Gerade</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input id="line-radio-2"
+                       class="form-check-input"
+                       name="line-type-radios"
+                       type="radio"
+                       [value]="'curved'"
+                       [(ngModel)]="lineMode"
+                       (change)="emitLineMode()">
+                <label class="form-check-label" for="line-radio-2">Gebogene Kanten</label>
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <div class="form-check form-check-inline">
+                <input id="period-check"
+                       class="form-check-input"
+                       name="period-check"
+                       type="checkbox"
+                       [checked]="clusterMode === 'periods'"
+                       (change)="toggleClusterMode()">
+                <label class="form-check-label" for="period-check">Phasen (Grobdatierung) anzeigen</label>
+            </div>
+        </fieldset>
+    </form>
+</div>

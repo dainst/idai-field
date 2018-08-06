@@ -18,21 +18,6 @@
         <div *ngIf="!showTrenchSelector()" id="trench-selector-placeholder"></div>
     </div>
 
-
-    <div class="col-md-1 mr-md-auto">
-        <div class="btn-group" style="width: 100% !important;">
-            <button id="periods-mode-button" style="width: 100% !important;"
-                    ngbTooltip="Gruppierung nach Perioden {{groupMode ? 'ausschalten' : 'einschalten'}} / placement also on the left side?"
-                    placement="left"
-                    (click)="toggleGroupMode()"
-                    container="body"
-                    class="btn btn-{{groupMode ? '' : 'outline-'}}primary m-0">
-                <span class="mdi mdi-view-grid"></span>
-            </button>
-        </div>
-    </div>
-
-
     <div class="col-md-2 mr-md-auto">
         <div class="btn-group subgraph-selection-buttons" style="width: 100% !important;">
 
@@ -57,30 +42,6 @@
         </div>
     </div>
 
-
-    <div class="col-md-2 mr-md-auto">
-        <div class="btn-group resources-mode-buttons" style="width: 100% !important;">
-            <button id="straight-mode-button" style="width: 50% !important;"
-                    (click)="selectLineMode(false)"
-                    ngbTooltip="Graph mit geraden Linien zeichnen"
-                    placement="left"
-                    container="body"
-                    class="btn btn-primary m-0"
-                    [class.active]="!curvedLineMode">
-                |
-            </button>
-            <button id="curved-mode-button" style="width: 50% !important;"
-                    (click)="selectLineMode(true)"
-                    ngbTooltip="Graph mit geschwungenen Linien zeichnen"
-                    placement="left"
-                    container="body"
-                    class="btn btn-primary m-0"
-                    [class.active]="curvedLineMode">
-                )
-            </button>
-        </div>
-    </div>
-
     <div class="col-md-1 mr-md-auto">
         <div class="btn-group" style="width: 100% !important;">
             <button id="createBackupButton" style="width: 100% !important;"
@@ -97,6 +58,11 @@
 
 <div id="matrix-container">
     <loading-icon></loading-icon>
+    <matrix-options-menu [lineMode]="lineMode"
+                         [clusterMode]="clusterMode"
+                         (onLineModeChanged)="setLineMode($event)"
+                         (onClusterModeChanged)="setClusterMode($event)">
+    </matrix-options-menu>
 
     <div *ngIf="showNoTrenchesWarning()"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">

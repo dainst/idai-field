@@ -1,0 +1,35 @@
+/**
+ * @author Thomas Kleinke
+ */
+
+#matrix-options-button,
+#matrix-options-menu {
+  position: absolute;
+  z-index: 1000;
+  right: 11px;
+  border: none;
+  border-radius: 0;
+}
+
+#matrix-options-button {
+  top: 70px;
+}
+
+#matrix-options-menu {
+  top: 109px;
+  padding-bottom: 10px;
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+
+  .form-group {
+    margin-bottom: 0;
+
+    .form-check {
+      margin-left: 20px;
+      margin-right: 10px;
+
+      .form-check-label {
+        margin-left: -20px;
+      }
+    }
+  }
+}

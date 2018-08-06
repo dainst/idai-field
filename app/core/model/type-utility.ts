@@ -47,9 +47,7 @@ export class TypeUtility {
     public getOverviewTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
-            .filter(type => {
-                return type.name === 'Operation' || type.name === 'Place';
-            });
+            .filter(type => type.name === 'Operation' || type.name === 'Place');
     }
 
 

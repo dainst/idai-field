@@ -3,11 +3,12 @@ import {unique, arrayEquivalent, arrayEquivalentBy, jsonEqual, isNot} from 'tsfu
 
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
-export class IdaiFieldDiffUtility {
+export module IdaiFieldDiffUtility {
 
     // TODO unit test
-    public static findDifferingFields(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
+    export function findDifferingFields(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
 
         const fieldsToIgnore: string[] = ['relations'];
 
@@ -20,7 +21,7 @@ export class IdaiFieldDiffUtility {
 
 
     // TODO unit test
-    public static findDifferingRelations(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
+    export function findDifferingRelations(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
 
         const differingRelationNames: string[]
             = IdaiFieldDiffUtility.findDifferingFieldsInRelations(resource1.relations, resource2.relations)
@@ -31,45 +32,46 @@ export class IdaiFieldDiffUtility {
 
 
     // TODO make use includedIn,
-    private static findDifferingFieldsInResource(resource1: Object, resource2: Object,
+    export function findDifferingFieldsInResource(resource1: Object, resource2: Object,
                                                   fieldsToIgnore?: string[]): string[] {
 
         return Object.keys(resource1)
             .filter(key => fieldsToIgnore && fieldsToIgnore.indexOf(key) > -1)
             .reduce(
-                IdaiFieldDiffUtility.concatIf(IdaiFieldDiffUtility.notCompareInBoth(resource1, resource2)),
+                concatIf(notCompareInBoth(resource1, resource2)),
                 [] as string[]);
     }
 
 
-    private static findDifferingFieldsInRelations(relations1: Object, relations2: Object) {
+    export function findDifferingFieldsInRelations(relations1: Object, relations2: Object) {
 
         return Object.keys(relations1)
             .reduce(
-                IdaiFieldDiffUtility.concatIf(IdaiFieldDiffUtility.notArrayEquivalentInBoth(relations1, relations2)),
+                concatIf(notArrayEquivalentInBoth(relations1, relations2)),
                 [] as string[]);
     }
 
 
-    private static notCompareInBoth = (l: any, r: any) => (key: string) =>
-        !IdaiFieldDiffUtility.compare((l)[key], (r)[key]);
+    const notCompareInBoth = (l: any, r: any) => (key: string) =>
+        !compare((l)[key], (r)[key]);
 
 
-    private static notArrayEquivalentInBoth = (l: any, r: any) => (key: string) =>
+    const notArrayEquivalentInBoth = (l: any, r: any) => (key: string) =>
         !arrayEquivalent(l[key])(r[key]);
 
+
     // TODO possibly put to tsfun
-    private static concatIf = (f: (_: string) => boolean) => (acc: string[], val: string) =>
+    const concatIf = (f: (_: string) => boolean) => (acc: string[], val: string) =>
         f(val) ? acc.concat([val as string]) : acc;
 
 
-    public static compare(value1: any, value2: any): boolean {
+    export function compare(value1: any, value2: any): boolean {
 
         if (!value1 && !value2) return true;
         if ((value1 && !value2) || (!value1 && value2)) return false;
 
-        const type1: string = IdaiFieldDiffUtility.getType(value1);
-        const type2: string = IdaiFieldDiffUtility.getType(value2);
+        const type1: string = getType(value1);
+        const type2: string = getType(value2);
 
         if (type1 !== type2) return false;
 
@@ -81,7 +83,7 @@ export class IdaiFieldDiffUtility {
     }
 
 
-    private static getType(value: any): string {
+    function getType(value: any): string {
 
         return typeof value == 'object'
             ? value instanceof Array

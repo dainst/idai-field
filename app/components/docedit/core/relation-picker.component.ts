@@ -266,6 +266,7 @@ export class RelationPickerComponent implements OnChanges {
         // Don't suggest the resource itself
         if (resource.id === suggestion.id) return false; // TODO do that in caller loop
 
+
         // Don't suggest a resource that is already included as a target in the relation list
         if (resource.relations[relDef.name].indexOf(suggestion.id as any) > -1) {
             return false;
@@ -281,6 +282,9 @@ export class RelationPickerComponent implements OnChanges {
         if (relDef.range.indexOf(suggestion.type) == -1) {
             return false;
         }
+
+
+        // if (relDef.name === 'isRecordedIn') return true;
 
         // Don't suggest a resource which is linked to a different main type resource if the relation property
         // 'sameMainTypeResource' is set to true

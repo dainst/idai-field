@@ -8,6 +8,7 @@ import {IdaiType, ProjectConfiguration} from 'idai-components-2/core'
  * @author F.Z.
  * @author Daniel de Oliveira
  */
+// TODO add function which returns regular types (i.e. not image, not operation, not place)
 export class TypeUtility {
 
     constructor(private projectConfiguration: ProjectConfiguration) {}

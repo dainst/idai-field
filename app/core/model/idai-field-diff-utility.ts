@@ -1,3 +1,4 @@
+import {Relations} from 'idai-components-2/core';
 import {IdaiFieldResource} from 'idai-components-2/field';
 import {unique, arrayEquivalent, arrayEquivalentBy, jsonEqual, isNot, tripleEqual} from 'tsfun';
 
@@ -18,8 +19,8 @@ export module IdaiFieldDiffUtility {
     }
 
 
-    // TODO unit test
-    export function findDifferingRelations(relations1: Object, relations2: Object): string[] {
+    // TODO unit test, move to Relations
+    export function findDifferingRelations(relations1: Relations, relations2: Relations): string[] {
 
         const differingRelationNames: string[]
             = findDifferingFieldsInRelations(relations1, relations2)
@@ -40,12 +41,12 @@ export module IdaiFieldDiffUtility {
     }
 
 
-    function findDifferingFieldsInRelations(relations1: Object, relations2: Object) {
+    function findDifferingFieldsInRelations(relations1: Object, relations2: Object):  string[] {
 
         return Object.keys(relations1)
             .reduce(
                 concatIf(notArrayEquivalentInBoth(relations1, relations2)),
-                [] as string[]);
+                []);
     }
 
 

@@ -10,9 +10,8 @@
                        class="form-check-input"
                        name="line-type-radios"
                        type="radio"
-                       [value]="'ortho'"
-                       [(ngModel)]="lineMode"
-                       (change)="emitLineMode()">
+                       [checked]="getLineMode() === 'ortho'"
+                       (change)="setLineMode('ortho')">
                 <label class="form-check-label" for="line-radio-1">Gerade</label>
             </div>
             <div class="form-check form-check-inline">
@@ -20,9 +19,8 @@
                        class="form-check-input"
                        name="line-type-radios"
                        type="radio"
-                       [value]="'curved'"
-                       [(ngModel)]="lineMode"
-                       (change)="emitLineMode()">
+                       [checked]="getLineMode() === 'curved'"
+                       (change)="setLineMode('curved')">
                 <label class="form-check-label" for="line-radio-2">Gebogene Kanten</label>
             </div>
         </fieldset>
@@ -33,7 +31,7 @@
                        class="form-check-input"
                        name="period-check"
                        type="checkbox"
-                       [checked]="clusterMode === 'periods'"
+                       [checked]="getClusterMode() === 'periods'"
                        (change)="toggleClusterMode()">
                 <label class="form-check-label" for="period-check">Phasen (Grobdatierung) anzeigen</label>
             </div>

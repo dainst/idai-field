@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, Output, Renderer2} from '@angular/core';
+import {Component, EventEmitter, Output, Renderer2} from '@angular/core';
 import {MenuComponent} from '../../widgets/menu.component';
+import {MatrixLineMode, MatrixState} from './matrix-state';
 
 
 @Component({
@@ -12,28 +13,32 @@ import {MenuComponent} from '../../widgets/menu.component';
  */
 export class MatrixOptionsMenuComponent extends MenuComponent {
 
-    @Input() lineMode: 'ortho'|'curved';
-    @Input() clusterMode: 'periods'|'none';
-
-    @Output() onLineModeChanged: EventEmitter<'ortho'|'curved'> = new EventEmitter<'ortho'|'curved'>();
-    @Output() onClusterModeChanged: EventEmitter<'periods'|'none'> = new EventEmitter<'periods'|'none'>();
+    @Output() onChange: EventEmitter<void> = new EventEmitter<void>();
 
 
-    constructor(renderer: Renderer2) {
+    constructor(private matrixState: MatrixState,
+                renderer: Renderer2) {
 
         super(renderer, 'matrix-options-button', 'matrix-options-menu');
     }
 
 
-    public emitLineMode() {
+    public getLineMode = () => this.matrixState.getLineMode();
+    public getClusterMode = () => this.matrixState.getClusterMode();
 
-        this.onLineModeChanged.emit(this.lineMode);
+
+    public setLineMode(lineMode: MatrixLineMode) {
+
+        this.matrixState.setLineMode(lineMode);
+        this.onChange.emit()
     }
 
 
     public toggleClusterMode() {
 
-        this.clusterMode = this.clusterMode === 'periods' ? 'none' : 'periods';
-        this.onClusterModeChanged.emit(this.clusterMode);
+        this.matrixState.setClusterMode(
+            this.matrixState.getClusterMode() === 'periods' ? 'none' : 'periods'
+        );
+        this.onChange.emit();
     }
 }

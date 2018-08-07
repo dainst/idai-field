@@ -37,8 +37,6 @@ export class MatrixViewComponent implements OnInit {
     private featureDocuments: Array<IdaiFieldFeatureDocument> = [];
     private subgraphSelection: Array<IdaiFieldFeatureDocument> = []; // see selectionMode
 
-    public clusterMode: 'periods'|'none' = 'periods';
-    public lineMode: 'ortho'|'curved' = 'ortho';
     public selectionMode: boolean = false; // false is edit mode, true is selection mode
 
 
@@ -70,20 +68,6 @@ export class MatrixViewComponent implements OnInit {
     async ngOnInit() {
 
         await this.populateTrenches();
-    }
-
-
-    public setLineMode(lineMode: 'ortho'|'curved') {
-
-        this.lineMode = lineMode;
-        this.calculateNewGraph();
-    };
-
-
-    public setClusterMode(clusterMode: 'periods'|'none') {
-
-        this.clusterMode = clusterMode;
-        this.calculateNewGraph();
     }
 
 
@@ -133,24 +117,24 @@ export class MatrixViewComponent implements OnInit {
             this.selectionMode = false;
         }
 
-        this.calculateNewGraph();
+        this.calculateGraph();
     }
 
 
-    public toggleSubgraphSelection(): void {
+    public toggleSubgraphSelection() {
 
         this.selectionMode = !this.selectionMode;
         if (this.selectionMode) this.subgraphSelection = [];
     }
 
 
-    private calculateNewGraph(): void {
+    public calculateGraph() {
 
         const graph: string = DotBuilder.build(
             this.projectConfiguration,
-            MatrixViewComponent.getPeriodMap(this.featureDocuments, this.clusterMode),
+            MatrixViewComponent.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
             { above: 'isAfter', below: 'isBefore', sameRank: 'isContemporaryWith' },
-            this.lineMode === 'curved');
+            this.matrixState.getLineMode() === 'curved');
 
         this.graph = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
     }
@@ -162,10 +146,10 @@ export class MatrixViewComponent implements OnInit {
         if (this.trenches.length === 0) return;
 
         const previouslySelectedTrench = this.trenches
-            .find(on('resource.id:')(this.matrixState.selectedTrenchId));
+            .find(on('resource.id:')(this.matrixState.getSelectedTrenchId()));
         if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
 
-        this.matrixState.selectedTrenchId = this.trenches[0].resource.id;
+        this.matrixState.setSelectedTrenchId(this.trenches[0].resource.id);
         await this.selectTrench(this.trenches[0]);
     }
 
@@ -175,11 +159,11 @@ export class MatrixViewComponent implements OnInit {
         if (trench == this.selectedTrench) return;
 
         this.selectedTrench = trench;
-        this.matrixState.selectedTrenchId = this.selectedTrench.resource.id;
+        this.matrixState.setSelectedTrenchId(this.selectedTrench.resource.id);
         this.featureDocuments = [];
 
         await this.loadFeatureDocuments(trench);
-        this.calculateNewGraph();
+        this.calculateGraph();
     }
 
 

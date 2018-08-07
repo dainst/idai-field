@@ -55,11 +55,7 @@
 
 <div id="matrix-container">
     <loading-icon></loading-icon>
-    <matrix-options-menu [lineMode]="lineMode"
-                         [clusterMode]="clusterMode"
-                         (onLineModeChanged)="setLineMode($event)"
-                         (onClusterModeChanged)="setClusterMode($event)">
-    </matrix-options-menu>
+    <matrix-options-menu (onChange)="calculateGraph()"></matrix-options-menu>
 
     <div *ngIf="showNoTrenchesWarning()"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">

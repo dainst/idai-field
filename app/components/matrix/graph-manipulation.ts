@@ -56,17 +56,19 @@ export module GraphManipulation {
     }
 
 
-    export function performHighlightingSelection(e: Element) {
+    export function performHighlightingSelection(e: Element, highlight: boolean) {
 
         const gElement: Element|undefined = GraphManipulation.getGElement(e);
+        if (!gElement || GraphManipulation.getElementType(gElement) !== 'node') return;
 
-        if (gElement) {
-            const elementType: GraphManipulation.ElementType = GraphManipulation.getElementType(gElement);
-            if (elementType !== 'node') return;
-            gElement.setAttribute('stroke',
-                !gElement.getAttribute('stroke') || gElement.getAttribute('stroke') === ''
-                    ? '#afafaf'
-                    : '');
+        const ellipseElement: Element = gElement.getElementsByTagName('ellipse')[0];
+
+        if (highlight) {
+            ellipseElement.setAttribute('stroke',  '#de1000');
+            ellipseElement.setAttribute('stroke-width', '3');
+        } else {
+            ellipseElement.setAttribute('stroke',  ellipseElement.getAttribute('fill') as string);
+            ellipseElement.setAttribute('stroke-width', '');
         }
     }
 

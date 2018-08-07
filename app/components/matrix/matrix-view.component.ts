@@ -81,8 +81,7 @@ export class MatrixViewComponent implements OnInit {
         if (!this.selectionMode) {
             await this.launchDocedit(selectedDoc);
         } else {
-            this.subgraphSelection = MatrixViewComponent
-                .addOrRemove(this.subgraphSelection, selectedDoc);
+            this.subgraphSelection = MatrixViewComponent.addOrRemove(this.subgraphSelection, selectedDoc);
         }
     }
 

@@ -20,13 +20,14 @@ import {GraphManipulation} from "./graph-manipulation";
 export class GraphComponent implements OnInit, OnChanges {
 
     @Input() graph: string;
-    @Input() highlightSelection = true;
+    @Input() selectionMode: boolean = true;
 
     @Output() onSelect: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('graphContainer') graphContainer: ElementRef;
 
     private hoverElement: Element|undefined;
+    private selectedElements: Array<Element> = [];
 
     private static maxRealZoom: number = 2;
     private static mouseDownProperties: any = null;
@@ -75,8 +76,16 @@ export class GraphComponent implements OnInit, OnChanges {
 
         this.onSelect.emit(GraphComponent.mouseDownProperties.target);
 
-        if (this.highlightSelection) GraphManipulation
-            .performHighlightingSelection(event.target as Element);
+        if (this.selectionMode) {
+            const element: Element = event.target as Element;
+            const selected: boolean = this.selectedElements.includes(element);
+            if (selected) {
+                this.selectedElements.splice(this.selectedElements.indexOf(element), 1);
+            } else {
+                this.selectedElements.push(element);
+            }
+            GraphManipulation.performHighlightingSelection(event.target as Element, !selected);
+        }
     }
 
 

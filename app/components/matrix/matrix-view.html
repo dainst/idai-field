@@ -64,7 +64,7 @@
     <graph *ngIf="showGraph()"
            [graph]="graph"
            (onSelect)="select($event)"
-           [highlightSelection]="selectionMode !== 'edit'">
+           [selectionMode]="selectionMode">
     </graph>
 </div>
 

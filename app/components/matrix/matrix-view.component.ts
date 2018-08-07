@@ -67,6 +67,7 @@ export class MatrixViewComponent implements OnInit {
 
     async ngOnInit() {
 
+        await this.matrixState.load();
         await this.populateTrenches();
     }
 
@@ -149,7 +150,6 @@ export class MatrixViewComponent implements OnInit {
             .find(on('resource.id:')(this.matrixState.getSelectedTrenchId()));
         if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
 
-        this.matrixState.setSelectedTrenchId(this.trenches[0].resource.id);
         await this.selectTrench(this.trenches[0]);
     }
 

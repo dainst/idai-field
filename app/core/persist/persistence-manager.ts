@@ -57,6 +57,9 @@ export class PersistenceManager {
         const connectedDocs = await this.getExistingConnectedDocs(allVersions as Document[]);
         await this.updateConnectedDocs(persistedDocument as Document, connectedDocs, true, username);
 
+        // TODO make separate 2nd pass in which all child documents (by liesWithin) get checked
+        // if they have the same isRecordedIn as the document and correct them if not
+
         return persistedDocument;
     }
 

@@ -25,6 +25,13 @@
   .form-group {
     margin-bottom: 0;
 
+    .pre-label {
+      position: relative;
+      top: 1px;
+      margin-right: 7px;
+      font-size: 15px;
+    }
+
     .form-check {
       margin-left: 20px;
       margin-right: 10px;

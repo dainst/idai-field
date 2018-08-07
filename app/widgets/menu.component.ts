@@ -9,20 +9,23 @@ export abstract class MenuComponent {
 
     public opened: boolean = false;
 
-    private removeMouseMoveEventListener: Function|undefined;
+    private mouseEventListener: Function|undefined;
 
 
     constructor(private renderer: Renderer2,
                 private buttonElementId: string,
-                private menuElementId: string) {}
+                private menuElementId: string,
+                private clickToOpen: boolean = false) {}
 
 
     public open() {
 
         this.opened = true;
 
-        this.removeMouseMoveEventListener = this.renderer.listen('document', 'mousemove',
-            event => this.handleMouseMove(event));
+        this.mouseEventListener = this.renderer.listen(
+            'document',
+            this.clickToOpen ? 'click' : 'mousemove',
+            event => this.handleMouseEvent(event));
     }
 
 
@@ -30,11 +33,11 @@ export abstract class MenuComponent {
 
         this.opened = false;
 
-        if (this.removeMouseMoveEventListener) this.removeMouseMoveEventListener();
+        if (this.mouseEventListener) this.mouseEventListener();
     }
 
 
-    private handleMouseMove(event: any) {
+    private handleMouseEvent(event: any) {
 
         let target = event.target;
         let inside = false;

@@ -48,14 +48,14 @@ export class PersistenceManager {
         revisionsToSquash: Document[] = [],
         ): Promise<Document> {
 
-        const persistedDocument = await this.persistIt(document as Document, username, revisionsToSquash);
+        const persistedDocument = await this.persistIt(document, username, revisionsToSquash);
 
         const allVersions = [persistedDocument]
             .concat(oldVersion as Document)
             .concat(revisionsToSquash);
 
         const connectedDocs = await this.getExistingConnectedDocs(allVersions as Document[]);
-        await this.updateConnectedDocs(persistedDocument as Document, connectedDocs, true, username);
+        await this.updateConnectedDocs(persistedDocument, connectedDocs, true, username);
 
         // TODO make separate 2nd pass in which all child documents (by liesWithin) get checked
         // if they have the same isRecordedIn as the document and correct them if not

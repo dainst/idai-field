@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
-import {IdaiFieldFeatureDocument} from '../../app/core/model/idai-field-feature-document';
+import {IdaiFieldFeatureDocument} from 'idai-components-2/field';
 
 
 /**

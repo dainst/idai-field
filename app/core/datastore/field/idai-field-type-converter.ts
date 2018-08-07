@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Document} from 'idai-components-2/core';
 import {TypeConverter} from '../core/type-converter';
-import {IdaiFieldImageDocument} from '../../model/idai-field-image-document';
+import {IdaiFieldImageDocument} from 'idai-components-2/field';
 import {TypeUtility} from '../../model/type-utility';
 import {takeOrMake} from 'tsfun';
 

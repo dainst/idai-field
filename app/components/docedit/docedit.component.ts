@@ -14,7 +14,7 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
 import {DatastoreErrors} from 'idai-components-2/core';
 import {TypeUtility} from '../../core/model/type-utility';
-import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
+import {IdaiFieldImageDocument} from 'idai-components-2/field';
 
 
 @Component({

@@ -8,7 +8,7 @@ import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixState} from './matrix-state';
 import {IdaiFieldFeatureDocumentReadDatastore} from '../../core/datastore/field/idai-field-feature-document-read-datastore';
-import {IdaiFieldFeatureDocument} from '../../core/model/idai-field-feature-document';
+import {IdaiFieldFeatureDocument} from 'idai-components-2/field';
 import {Loading} from '../../widgets/loading';
 import {DotBuilder} from './dot-builder';
 

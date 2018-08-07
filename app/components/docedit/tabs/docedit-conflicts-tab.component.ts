@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {Relations} from 'idai-components-2/core';
+import {Relations, Resource} from 'idai-components-2/core';
 import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/field';
 import {
     Action,
@@ -7,7 +7,6 @@ import {
     Messages,
     ProjectConfiguration
 } from 'idai-components-2/core';
-import {IdaiFieldDiffUtility} from '../../../core/model/idai-field-diff-utility';
 import {M} from '../../../m';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {DocumentEditChangeMonitor} from '../core/document-edit-change-monitor';
@@ -244,7 +243,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         let differingFields: any[] = [];
 
         const differingFieldsNames: string[]
-            = IdaiFieldDiffUtility.findDifferingFields(document.resource, revision.resource);
+            = Resource.getDifferingFields(document.resource, revision.resource);
         const differingRelationsNames: string[]
             = Relations.getDifferent(document.resource.relations, revision.resource.relations);
 

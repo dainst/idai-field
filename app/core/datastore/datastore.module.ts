@@ -8,7 +8,7 @@ import {PouchdbManager} from './core/pouchdb-manager';
 import {IdaiFieldDocumentDatastore} from './field/idai-field-document-datastore';
 import {IdaiFieldDocumentReadDatastore} from './field/idai-field-document-read-datastore';
 import {IdaiFieldImageDocumentDatastore} from './field/idai-field-image-document-datastore';
-import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
+import {IdaiFieldImageDocument} from 'idai-components-2/field';
 import {IdaiFieldImageDocumentReadDatastore} from './field/idai-field-image-document-read-datastore';
 import {TypeConverter} from './core/type-converter';
 import {DocumentDatastore} from './document-datastore';
@@ -19,7 +19,7 @@ import {IndexFacade} from './index/index-facade';
 import {IdGenerator} from './core/id-generator';
 import {IdaiFieldFeatureDocumentDatastore} from './field/idai-field-feature-document-datastore';
 import {IdaiFieldFeatureDocumentReadDatastore} from './field/idai-field-feature-document-read-datastore';
-import {IdaiFieldFeatureDocument} from '../model/idai-field-feature-document';
+import {IdaiFieldFeatureDocument} from 'idai-components-2/field';
 
 /**
  * There is the top level package, in which everything idai-field specific resides,

@@ -9,7 +9,7 @@ import {ExtensionUtil} from '../../util/extension-util';
 import {UploadStatus} from './upload-status';
 import {PersistenceManager} from '../../core/persist/persistence-manager';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
-import {NewIdaiFieldImageDocument} from "../../core/model/new-idai-field-image-document";
+import {NewIdaiFieldImageDocument} from 'idai-components-2/field';
 import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/field/idai-field-image-document-read-datastore';
 import {UsernameProvider} from '../../core/settings/username-provider';
 

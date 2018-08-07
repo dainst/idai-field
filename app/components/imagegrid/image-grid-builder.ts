@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldImageResource} from '../../core/model/idai-field-image-resource';
+import {IdaiFieldImageResource} from 'idai-components-2/field';
 import {ImageContainer} from '../../core/imagestore/image-container';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
 

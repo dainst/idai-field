@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
+import {IdaiFieldImageDocument} from 'idai-components-2/field';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/field/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../view/view-facade';
 import {unique, subtract} from 'tsfun';

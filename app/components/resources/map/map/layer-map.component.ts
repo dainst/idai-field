@@ -4,9 +4,9 @@ import {Messages} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
 import {LayerManager, ListDiffResult} from './layer-manager';
-import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
+import {IdaiFieldImageDocument} from 'idai-components-2/field';
 import {LayerImageProvider} from './layer-image-provider';
-import {IdaiFieldGeoreference} from '../../../../core/model/idai-field-georeference';
+import {IdaiFieldGeoreference} from 'idai-components-2/field';
 
 
 @Component({

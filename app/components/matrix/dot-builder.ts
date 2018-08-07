@@ -185,15 +185,16 @@ export module DotBuilder {
     }
 
 
-    function createSameRankEdgesDefinition(
-        documents: Array<Document>, document: Document,
-        relations: GraphRelationsConfiguration,
-        processedSameRankTargetIds: string[]): [string|undefined, string[]] {
+    function createSameRankEdgesDefinition(documents: Array<Document>, document: Document,
+                                           relations: GraphRelationsConfiguration,
+                                           processedSameRankTargetIds: string[]): [string|undefined, string[]] {
 
-        if (!document.resource.relations[relations.sameRank]) return [undefined, clone(processedSameRankTargetIds)];
+        if (!document.resource.relations[relations.sameRank]) {
+            return [undefined, clone(processedSameRankTargetIds)];
+        }
 
         const targetIds: string[]|undefined = document.resource.relations[relations.sameRank]
-                .filter(isNot(includedIn(processedSameRankTargetIds)));
+            .filter(isNot(includedIn(processedSameRankTargetIds)));
 
         const updatedProcessedSameRankTargetIds: string[] =
             clone(processedSameRankTargetIds).concat(targetIds).concat([document.resource.id]);
@@ -217,8 +218,7 @@ export module DotBuilder {
                     createEdgesDefinition(document, targetIdentifiers)
                     + ' [dir="none", class="same-rank-' + document.resource.id
                     + ' same-rank-' + targetId + '"]';
-            })
-            .join(' ')
+            }).join(' ');
     }
 
 
@@ -247,11 +247,16 @@ export module DotBuilder {
         const targetIds: string[]|undefined = document.resource.relations[relations.above];
         if (!targetIds || targetIds.length === 0) return;
 
-        const targetIdentifiers = getRelationTargetIdentifiers(documents, targetIds);
-        if (targetIdentifiers.length === 0) return;
+        return targetIds.map(targetId => createEdgeDefinition(documents, document, targetId))
+            .join(' ');
+    }
 
-        return createEdgesDefinition(document, targetIdentifiers)
-            + ' [class="above-' + document.resource.id + '" arrowsize="0.37" arrowhead="normal"]';
+
+    function createEdgeDefinition(documents: Array<Document>, document: Document, targetId: string): string {
+
+        return '"' + document.resource.identifier + '" -> "' + getIdentifier(documents, targetId) + '"'
+            + ' [class="above-' + document.resource.id + ' below-' + targetId + '"'
+            + '  arrowsize="0.37" arrowhead="normal"]';
     }
 
 

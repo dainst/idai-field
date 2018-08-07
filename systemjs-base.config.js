@@ -82,6 +82,6 @@ config.map = {
     'pouchdb-replication-stream': 'node_modules/pouchdb-replication-stream/dist/pouchdb.replication-stream.js'
 };
 
-config.meta=  {
+config.meta = {
     'node_modules/papaparse/papaparse.js': { format: 'global', exports: 'Papa' }
 };

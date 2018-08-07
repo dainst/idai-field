@@ -7,11 +7,13 @@ import 'viz.js';
  */
 export module GraphManipulation {
 
-    const hoverColor: string = '#6e95de';
     const defaultColor: string = '#000000';
+    const aboveHighlightColor: string = '#6E95DE';
+    const belowHighlightColor: string = '#4f9d66';
+    const sameRankHighlightColor: string = '#d98a6c';
 
     export type ElementType = 'node'|'edge'|undefined;
-    export type EdgeType = 'above'|'same-rank'|undefined;
+    export type EdgeType = 'above'|'below'|'same-rank'|undefined;
 
 
     export function removeTitleElements(svg: SVGSVGElement) {
@@ -99,6 +101,8 @@ export module GraphManipulation {
             graphContainer, 'above', id, highlight);
         setEdgesHighlightingForType(
             graphContainer, 'same-rank', id, highlight);
+        setEdgesHighlightingForType(
+            graphContainer, 'below', id, highlight);
     }
 
 
@@ -116,17 +120,32 @@ export module GraphManipulation {
 
     function setEdgeHighlighting(edge: Element, highlight: boolean, edgeType: EdgeType) {
 
-        const color: string = highlight ? hoverColor : defaultColor;
+        const color: string = getEdgeColor(highlight, edgeType);
         const strokeWidth: string = highlight ? '2' : '1';
 
         const path = edge.getElementsByTagName('path')[0];
         path.setAttribute('stroke', color);
         path.setAttribute('stroke-width', strokeWidth);
 
-        if (edgeType === 'above') {
+        if (edgeType === 'above' || edgeType === 'below') {
             const polygon = edge.getElementsByTagName('polygon')[0];
             polygon.setAttribute('stroke', color);
             polygon.setAttribute('fill', color);
+        }
+    }
+
+
+    function getEdgeColor(highlight: boolean, edgeType: EdgeType): string {
+
+        if (!highlight || !edgeType) return defaultColor;
+
+        switch(edgeType) {
+            case 'above':
+                return aboveHighlightColor;
+            case 'below':
+                return belowHighlightColor;
+            case 'same-rank':
+                return sameRankHighlightColor;
         }
     }
 

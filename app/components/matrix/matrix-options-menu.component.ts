@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output, Renderer2} from '@angular/core';
 import {MenuComponent} from '../../widgets/menu.component';
-import {MatrixLineMode, MatrixState} from './matrix-state';
+import {MatrixLineMode, MatrixRelationsMode, MatrixState} from './matrix-state';
 
 
 @Component({
@@ -23,20 +23,28 @@ export class MatrixOptionsMenuComponent extends MenuComponent {
     }
 
 
+    public getRelationsMode = () => this.matrixState.getRelationsMode();
     public getLineMode = () => this.matrixState.getLineMode();
     public getClusterMode = () => this.matrixState.getClusterMode();
 
 
-    public setLineMode(lineMode: MatrixLineMode) {
+    public async setRelationsMode(relationsMode: MatrixRelationsMode) {
 
-        this.matrixState.setLineMode(lineMode);
-        this.onChange.emit()
+        await this.matrixState.setRelationsMode(relationsMode);
+        this.onChange.emit();
     }
 
 
-    public toggleClusterMode() {
+    public async setLineMode(lineMode: MatrixLineMode) {
 
-        this.matrixState.setClusterMode(
+        await this.matrixState.setLineMode(lineMode);
+        this.onChange.emit();
+    }
+
+
+    public async toggleClusterMode() {
+
+        await this.matrixState.setClusterMode(
             this.matrixState.getClusterMode() === 'periods' ? 'none' : 'periods'
         );
         this.onChange.emit();

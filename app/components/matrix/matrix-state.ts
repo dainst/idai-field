@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {StateSerializer} from '../../common/state-serializer';
 
+export type MatrixRelationsMode = 'temporal'|'spatial';
 export type MatrixLineMode = 'ortho'|'curved';
 export type MatrixClusterMode = 'periods'|'none';
 
@@ -13,6 +14,7 @@ export type MatrixClusterMode = 'periods'|'none';
 export class MatrixState {
 
     private selectedTrenchId: string = 't2'; // this is the test projects second trench. if it does not exist in other projects, the app handles that
+    private relationsMode: MatrixRelationsMode = 'temporal';
     private lineMode: MatrixLineMode = 'ortho';
     private clusterMode: MatrixClusterMode = 'periods';
 
@@ -29,6 +31,18 @@ export class MatrixState {
     public setSelectedTrenchId(selectedTrenchId: string) {
 
         this.selectedTrenchId = selectedTrenchId;
+    }
+
+
+    public getRelationsMode(): MatrixRelationsMode {
+
+        return this.relationsMode;
+    }
+
+
+    public setRelationsMode(relationsMode: MatrixRelationsMode) {
+
+        this.relationsMode = relationsMode;
     }
 
 
@@ -62,6 +76,7 @@ export class MatrixState {
 
         const loadedState: any = await this.stateSerializer.load('matrix-state');
 
+        if (loadedState.relationsMode) this.relationsMode = loadedState.relationsMode;
         if (loadedState.lineMode) this.lineMode = loadedState.lineMode;
         if (loadedState.clusterMode) this.clusterMode = loadedState.clusterMode;
     }
@@ -76,6 +91,7 @@ export class MatrixState {
     private createSerializationObject(): any {
 
         return {
+            relationsMode: this.relationsMode,
             lineMode: this.lineMode,
             clusterMode: this.clusterMode
         };

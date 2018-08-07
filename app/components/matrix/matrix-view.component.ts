@@ -6,11 +6,11 @@ import {isNot, on, tripleEqual, doWhen, isEmpty} from 'tsfun';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {MatrixState} from './matrix-state';
+import {MatrixRelationsMode, MatrixState} from './matrix-state';
 import {IdaiFieldFeatureDocumentReadDatastore} from '../../core/datastore/field/idai-field-feature-document-read-datastore';
 import {IdaiFieldFeatureDocument} from 'idai-components-2/field';
 import {Loading} from '../../widgets/loading';
-import {DotBuilder} from './dot-builder';
+import {DotBuilder, GraphRelationsConfiguration} from './dot-builder';
 
 
 @Component({
@@ -74,8 +74,7 @@ export class MatrixViewComponent implements OnInit {
 
     public async select(resourceIdentifier: string) {
 
-        const selectedDoc = this.featureDocuments.find(
-            on('resource.identifier:')(resourceIdentifier));
+        const selectedDoc = this.featureDocuments.find(on('resource.identifier:')(resourceIdentifier));
 
         if (!selectedDoc) return;
 
@@ -134,7 +133,7 @@ export class MatrixViewComponent implements OnInit {
         const graph: string = DotBuilder.build(
             this.projectConfiguration,
             MatrixViewComponent.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
-            { above: 'isAfter', below: 'isBefore', sameRank: 'isContemporaryWith' },
+            MatrixViewComponent.getRelationConfiguration(this.matrixState.getRelationsMode()),
             this.matrixState.getLineMode() === 'curved');
 
         this.graph = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
@@ -203,5 +202,13 @@ export class MatrixViewComponent implements OnInit {
             periodMap[period].push(document);
             return periodMap;
         }, {});
+    }
+
+
+    private static getRelationConfiguration(relationsMode: MatrixRelationsMode): GraphRelationsConfiguration {
+
+        return relationsMode === 'temporal'
+            ? { above: 'isAfter', below: 'isBefore', sameRank: 'isContemporaryWith' }
+            : { above: 'isAbove', below: 'isBelow', sameRank: 'borders' };
     }
 }

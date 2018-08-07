@@ -45,4 +45,14 @@
       }
     }
   }
+
+  fieldset:nth-of-type(2) {
+    > label:first-of-type {
+      margin-right: 30px;
+    }
+
+    > div:first-of-type {
+      margin-right: 11px;
+    }
+  }
 }

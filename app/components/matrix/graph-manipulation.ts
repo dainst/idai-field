@@ -8,7 +8,7 @@ import 'viz.js';
 export module GraphManipulation {
 
     const defaultColor: string = '#000000';
-    const aboveHighlightColor: string = '#6E95DE';
+    const aboveHighlightColor: string = '#6e95de';
     const belowHighlightColor: string = '#4f9d66';
     const sameRankHighlightColor: string = '#d98a6c';
 

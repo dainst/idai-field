@@ -46,7 +46,7 @@ describe('DotBuilder', () => {
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
             '\{rank=min "feature1"\} ' +
-            '"feature1" -> "feature2" \\[class="above-f1".*\\] ' +
+            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
             '\}');
     });
 
@@ -73,7 +73,8 @@ describe('DotBuilder', () => {
             '"feature2" \\[id="node-f2".*\\] ' +
             '"feature3" \\[id="node-f3".*\\] ' +
             '\{rank=min "feature1"\} ' +
-            '"feature1" -> \{"feature2", "feature3"\} \\[class="above-f1".*\\] ' +
+            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+            '"feature1" -> "feature3" \\[class="above-f1 below-f3".*\\] ' +
             '\}');
     });
 
@@ -95,7 +96,7 @@ describe('DotBuilder', () => {
             '"feature1" \\[id="node-f1".*\\] ' +
             '"feature2" \\[id="node-f2".*\\] ' +
             '\{rank=min "feature1"\} ' +
-            '"feature1" -> "feature2" \\[class="above-f1".*\\] ' +
+            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
             '\}');
     });
 
@@ -199,9 +200,10 @@ describe('DotBuilder', () => {
             '"feature3" \\[id="node-f3".*\\] ' +
             '"feature4" \\[id="node-f4".*\\] ' +
             '\{rank=min "feature1"\} ' +
-            '"feature1" -> \{"feature2", "feature3"\} \\[class="above-f1".*\\] ' +
-            '"feature2" -> "feature4" \\[class="above-f2".*\\] ' +
-            '"feature3" -> "feature4" \\[class="above-f3".*\\] ' +
+            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+            '"feature1" -> "feature3" \\[class="above-f1 below-f3".*\\] ' +
+            '"feature2" -> "feature4" \\[class="above-f2 below-f4".*\\] ' +
+            '"feature3" -> "feature4" \\[class="above-f3 below-f4".*\\] ' +
             '}'
         );
     });
@@ -240,12 +242,10 @@ describe('DotBuilder', () => {
             '"feature4" \\[id="node-f4".*\\] ' +
             '"feature5" \\[id="node-f5".*\\] ' +
             '\{rank=min "feature1"\} ' +
-            '"feature1" -> "feature2" \\[class="above-f1".*\\] ' +
-            '"feature2" -> "feature5" \\[class="above-f2".*\\] ' +
-            '"feature2" -> "feature3" \\[dir="none", ' +
-            'class="same-rank-f2 same-rank-f3".*\\] ' +
-            '"feature2" -> "feature4" \\[dir="none", ' +
-            'class="same-rank-f2 same-rank-f4".*\\] ' +
+            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+            '"feature2" -> "feature5" \\[class="above-f2 below-f5".*\\] ' +
+            '"feature2" -> "feature3" \\[dir="none", class="same-rank-f2 same-rank-f3".*\\] ' +
+            '"feature2" -> "feature4" \\[dir="none", class="same-rank-f2 same-rank-f4".*\\] ' +
             '\{rank=same "feature2", "feature3", "feature4"\} ' +
             '\}'
         );
@@ -317,13 +317,20 @@ describe('DotBuilder', () => {
             '"feature13" \\[id="node-f13".*\\] ' +
             '"feature14" \\[id="node-f14".*\\] ' +
             '\{rank=min "feature1"\} ' +
-            '"feature1" -> \{"feature2", "feature3", "feature4", "feature5", "feature6"\} \\[class="above-f1".*\\] ' +
-            '"feature2" -> \{"feature7", "feature8"\} \\[class="above-f2".*\\] ' +
-            '"feature5" -> "feature9" \\[class="above-f5".*\\] ' +
-            '"feature6" -> \{"feature10", "feature11", "feature12"\} \\[class="above-f6".*\\] ' +
-            '"feature8" -> "feature13" \\[class="above-f8".*\\] ' +
-            '"feature10" -> "feature13" \\[class="above-f10".*\\] ' +
-            '"feature13" -> "feature14" \\[class="above-f13".*\\] ' +
+            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+            '"feature1" -> "feature3" \\[class="above-f1 below-f3".*\\] ' +
+            '"feature1" -> "feature4" \\[class="above-f1 below-f4".*\\] ' +
+            '"feature1" -> "feature5" \\[class="above-f1 below-f5".*\\] ' +
+            '"feature1" -> "feature6" \\[class="above-f1 below-f6".*\\] ' +
+            '"feature2" -> "feature7" \\[class="above-f2 below-f7".*\\] ' +
+            '"feature2" -> "feature8" \\[class="above-f2 below-f8".*\\] ' +
+            '"feature5" -> "feature9" \\[class="above-f5 below-f9".*\\] ' +
+            '"feature6" -> "feature10" \\[class="above-f6 below-f10".*\\] ' +
+            '"feature6" -> "feature11" \\[class="above-f6 below-f11".*\\] ' +
+            '"feature6" -> "feature12" \\[class="above-f6 below-f12".*\\] ' +
+            '"feature8" -> "feature13" \\[class="above-f8 below-f13".*\\] ' +
+            '"feature10" -> "feature13" \\[class="above-f10 below-f13".*\\] ' +
+            '"feature13" -> "feature14" \\[class="above-f13 below-f14".*\\] ' +
             '\}'
         );
     });
@@ -358,8 +365,8 @@ describe('DotBuilder', () => {
             '"feature3" \\[id="node-f3".*\\] ' +
             '"feature4" \\[id="node-f4".*\\] ' +
             '\{rank=min "feature1"\} ' +
-            '"feature1" -> "feature2" \\[class="above-f1".*\\] ' +
-            '"feature3" -> "feature4" \\[class="above-f3".*\\] ' +
+            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+            '"feature3" -> "feature4" \\[class="above-f3 below-f4".*\\] ' +
             '"feature2" -> "feature3" \\[dir="none", class="same-rank-f2 same-rank-f3".*\\] ' +
             '\{rank=same "feature2", "feature3"\} ' +
             '\}'
@@ -407,9 +414,10 @@ describe('DotBuilder', () => {
             '"feature4" \\[id="node-f4".*\\] ' +
             '"feature5" \\[id="node-f5".*\\] \} ' +
             '\{rank=min "feature1"\} ' +
-            '"feature1" -> \{"feature2", "feature4"\} \\[class="above-f1".*\\] ' +
-            '"feature2" -> "feature3" \\[class="above-f2".*\\] ' +
-            '"feature4" -> "feature5" \\[class="above-f4".*\\] ' +
+            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+            '"feature1" -> "feature4" \\[class="above-f1 below-f4".*\\] ' +
+            '"feature2" -> "feature3" \\[class="above-f2 below-f3".*\\] ' +
+            '"feature4" -> "feature5" \\[class="above-f4 below-f5".*\\] ' +
             '}'
         );
     });

@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Document, toResourceId, NewDocument, ProjectConfiguration, Resource} from 'idai-components-2/core';
+import {Document, toResourceId, Relations,
+    NewDocument, ProjectConfiguration, Resource} from 'idai-components-2/core';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {subtract} from 'tsfun';
+import {subtract, flatMap, flow, filter} from 'tsfun';
 import {TypeUtility} from '../model/type-utility';
 
 
@@ -137,20 +138,18 @@ export class PersistenceManager {
 
         return subtract
             (documents.map(toResourceId))
-            (
-                documents.reduce((acc: Array<string>, doc) =>
-                    acc.concat(this.extractRelatedObjectIDs(doc.resource))
-                , [])
-            );
+            (flatMap<any>(doc =>
+                    this.extractAllTargetIds(doc.resource.relations))(documents));
     }
 
 
-    private extractRelatedObjectIDs(resource: Resource): Array<string> {
+    // TODO move to Relations
+    private extractAllTargetIds(relations: Relations): Array<string> {
 
-        return Object.keys(resource.relations)
-            .filter(prop => resource.relations.hasOwnProperty(prop))
-            .filter(prop => this.projectConfiguration.isRelationProperty(prop))
-            .reduce((ids: Array<string>, prop) => ids.concat(resource.relations[prop]), []);
+        return flow<any>((Object.keys(relations))
+            .filter(prop => relations.hasOwnProperty(prop))
+            .filter(prop => this.projectConfiguration.isRelationProperty(prop)),
+            flatMap((prop: string) => relations[prop as string]));
     }
 
 

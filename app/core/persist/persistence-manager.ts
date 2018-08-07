@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Document, NewDocument, ProjectConfiguration, Resource} from 'idai-components-2/core';
+import {Document, toResourceId, NewDocument, ProjectConfiguration, Resource} from 'idai-components-2/core';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {subtract} from 'tsfun';
@@ -136,7 +136,7 @@ export class PersistenceManager {
     private getUniqueConnectedDocumentsIds(documents: Array<Document>) {
 
         return subtract
-            (documents.map(_ => _.resource.id))
+            (documents.map(toResourceId))
             (
                 documents.reduce((acc: Array<string>, doc) =>
                     acc.concat(this.extractRelatedObjectIDs(doc.resource))

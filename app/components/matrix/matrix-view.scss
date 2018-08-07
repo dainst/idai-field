@@ -31,8 +31,9 @@
 
 #matrix-container {
   position: absolute;
+  left: 0;
   padding-top: 58px;
-  width: calc(100% - 15px);
+  width: 100%;
   height: calc(100vh - 57px);
   overflow: hidden;
 

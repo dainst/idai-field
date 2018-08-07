@@ -52,7 +52,7 @@ export class RelationPickerComponent implements OnChanges {
     ) {}
 
 
-    public ngOnChanges() {
+    public async ngOnChanges() {
 
         if (this.document) {
             this.resource = this.document.resource;
@@ -65,11 +65,17 @@ export class RelationPickerComponent implements OnChanges {
 
         const relationId: string = this.relations[this.relationDefinition.name][this.relationIndex];
 
-        if (relationId && relationId != '') {
+
+        if (relationId && relationId !== '') {
+
+            // See #8992
+            await this.deleteLiesWithinConditionally(relationId);
+
             this.datastore.get(relationId).then(
                 document => { this.selectedTarget = document as Document; },
                 err => { this.disabled = true; console.error(err); }
             );
+
         } else {
             setTimeout(() => {
                 (this.updateSuggestions() as any).then(() => {
@@ -210,6 +216,27 @@ export class RelationPickerComponent implements OnChanges {
                 // If one does the keyup quickly after pasting, it wasn't working. If One leaves the command
                 // key somewhat later, it worked.
                 break;
+        }
+    }
+
+    private async deleteLiesWithinConditionally(relationId?: string) {
+
+        if (this.relationDefinition.name === 'isRecordedIn'
+            && this.resource.relations['liesWithin']
+            && this.resource.relations['liesWithin'].length > 0) {
+
+            const liesWithinTarget =
+                await this.datastore.get(this.document.resource.relations['liesWithin'][0]);
+
+            if (liesWithinTarget) {
+                if (liesWithinTarget.resource.relations['isRecordedIn']
+                    && liesWithinTarget.resource.relations['isRecordedIn'].length > 0) {
+
+                    if (liesWithinTarget.resource.relations['isRecordedIn'][0] !== relationId) {
+                        this.document.resource.relations['liesWithin'] = []
+                    }
+                }
+            }
         }
     }
 

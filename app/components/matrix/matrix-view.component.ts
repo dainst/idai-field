@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {isNot, on, sameAs, doWhen, isEmpty} from 'tsfun';
+import {isNot, on, tripleEqual, doWhen, isEmpty} from 'tsfun';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -115,7 +115,7 @@ export class MatrixViewComponent implements OnInit {
             this.populateTrenches();
         };
 
-        await doceditRef.result.then(reset, doWhen(sameAs('deleted'), reset));
+        await doceditRef.result.then(reset, doWhen(tripleEqual('deleted'), reset));
     }
 
 

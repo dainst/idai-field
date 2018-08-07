@@ -452,7 +452,7 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('c2', 'feature');
         ResourcesPage.clickMoveIntoButton('c2');
         ResourcesPage.performCreateResource('i1', 'inscription');
-        ResourcesPage.performCreateRelation('i1', 'testf1', 1);
+        ResourcesPage.performCreateRelation('i1', 'testf1', 2);
 
         RelationsViewPage.clickRelation(0);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
@@ -474,10 +474,10 @@ describe('resources/state --', function() {
 
         ResourcesPage.openEditByDoubleClickResource('testf1');
         DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(0, 0, 0);
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(0);
-        DoceditRelationsTabPage.typeInRelationByIndices(0, 0, 'context2');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(0, 0, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0, 0);
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(1);
+        DoceditRelationsTabPage.typeInRelationByIndices(1, 0, 'context2');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(1, 0, 0);
         DoceditPage.clickSaveDocument();
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);

@@ -1,30 +1,91 @@
 import {IdaiFieldResource} from 'idai-components-2/field';
-import {unique} from "tsfun";
-import {ComparisonUtil} from "../../util/comparison-util";
+import {unique, arrayEquivalent, arrayEquivalentBy, jsonEqual, isNot, tripleEqual} from 'tsfun';
 
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
-export class IdaiFieldDiffUtility {
+export module IdaiFieldDiffUtility {
 
-    public static findDifferingFields(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
-
-        const fieldsToIgnore: string[] = ['relations'];
+    // TODO unit test
+    export function findDifferingFields(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
 
         const differingFieldsNames: string[]
-            = ComparisonUtil.findDifferingFieldsInObject(resource1, resource2, fieldsToIgnore)
-                .concat(ComparisonUtil.findDifferingFieldsInObject(resource2, resource1, fieldsToIgnore));
+            = findDifferingFieldsInResource(resource1, resource2)
+                .concat(findDifferingFieldsInResource(resource2, resource1));
 
         return unique(differingFieldsNames);
     }
 
 
-    public static findDifferingRelations(resource1: IdaiFieldResource, resource2: IdaiFieldResource): string[] {
+    // TODO unit test
+    export function findDifferingRelations(relations1: Object, relations2: Object): string[] {
 
         const differingRelationNames: string[]
-            = ComparisonUtil.findDifferingFieldsInObject(resource1.relations, resource2.relations)
-                .concat(ComparisonUtil.findDifferingFieldsInObject(resource2.relations, resource1.relations));
+            = findDifferingFieldsInRelations(relations1, relations2)
+                .concat(findDifferingFieldsInRelations(relations2, relations1));
 
         return unique(differingRelationNames);
+    }
+
+
+    // TODO make use includedIn,
+    function findDifferingFieldsInResource(resource1: Object, resource2: Object): string[] {
+
+        return Object.keys(resource1)
+            .filter(isNot(tripleEqual('relations')))
+            .reduce(
+                concatIf(notCompareInBoth(resource1, resource2)),
+                [] as string[]);
+    }
+
+
+    function findDifferingFieldsInRelations(relations1: Object, relations2: Object) {
+
+        return Object.keys(relations1)
+            .reduce(
+                concatIf(notArrayEquivalentInBoth(relations1, relations2)),
+                [] as string[]);
+    }
+
+
+    const notCompareInBoth = (l: any, r: any) => (key: string) =>
+        !compare((l)[key], (r)[key]);
+
+
+    const notArrayEquivalentInBoth = (l: any, r: any) => (key: string) =>
+        !arrayEquivalent(l[key])(r[key]);
+
+
+    // TODO possibly put to tsfun
+    const concatIf = (f: (_: string) => boolean) => (acc: string[], val: string) =>
+        f(val) ? acc.concat([val as string]) : acc;
+
+
+    export function compare(value1: any, value2: any): boolean {
+
+        if (!value1 && !value2) return true;
+        if ((value1 && !value2) || (!value1 && value2)) return false;
+
+        const type1: string = getType(value1);
+        const type2: string = getType(value2);
+
+        if (type1 !== type2) return false;
+
+        if (type1 === 'array' && type2 === 'array') {
+            return arrayEquivalentBy(jsonEqual)(value1)(value2)
+        }
+
+        return jsonEqual(value1)(value2);
+    }
+
+
+    function getType(value: any): string {
+
+        return typeof value == 'object'
+            ? value instanceof Array
+                ? 'array'
+                : 'object'
+            : 'flat';
     }
 }

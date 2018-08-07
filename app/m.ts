@@ -130,6 +130,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static VALIDATION_ERROR_TOPLEVELTYPEHASPARENT = 'validation/error/topleveltypehasparent';
     public static VALIDATION_ERROR_INCOMPLETERECORDEDIN = 'validation/error/incompleterecordedin';
     public static VALIDATION_ERROR_NOPROJECTRECORDEDIN = 'validation/error/noprojectrecordedin';
+    public static VALIDATION_ERROR_NORECORDEDIN = 'validation/error/norecordedin';
     public static VALIDATION_ERROR_INVALIDINPUTTYPE = 'validation/error/invalidinputtype';
     public static VALIDATION_ERROR_INVALIDTYPE = 'validation/error/invalidtype';
     public static VALIDATION_ERROR_INVALIDFIELD = 'validation/error/invalidfield';
@@ -716,6 +717,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.VALIDATION_ERROR_NOPROJECTRECORDEDIN]={
             content: 'Fehlende Definition von \'recordedIn\' für den Type \'project\'.',
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.VALIDATION_ERROR_NORECORDEDIN]={
+            content: 'Fehlende Definition von \'Gehört zu\'.',
             level: 'danger',
             params: [],
             hidden: false

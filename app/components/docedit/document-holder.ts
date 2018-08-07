@@ -10,7 +10,7 @@ import {clone} from '../../util/object-util';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {flow, includedIn, isNot} from 'tsfun';
+import {flow, includedIn, isNot, mapMap, to, uniteMap} from 'tsfun';
 import {Validations} from '../../core/model/validations';
 import {TypeUtility} from '../../core/model/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
@@ -80,6 +80,22 @@ export class DocumentHolder {
 
         this.clonedDocument = await this.cleanup(this.clonedDocument);
 
+        // See #8992
+        if (this.typeUtility) {
+            if (!Object.keys(
+                    flow(this.typeUtility.getSubtypes('Operation'),
+                        uniteMap(this.typeUtility.getSubtypes('Image'),
+                        mapMap(to('name')))
+                    ))
+                    .concat(['Place'])
+                    .includes(this.clonedDocument.resource.type)) {
+
+                if (!this.clonedDocument.resource.relations.isRecordedIn
+                    || this.clonedDocument.resource.relations.isRecordedIn.length !== 1) {
+                    throw [M.VALIDATION_ERROR_NORECORDEDIN];
+                }
+            }
+        }
 
         await this.validator.validate(this.clonedDocument);
         this.clonedDocument = await this.persistenceManager.persist(

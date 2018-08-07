@@ -8,11 +8,13 @@ import {IdaiType, ProjectConfiguration} from 'idai-components-2/core'
  * @author F.Z.
  * @author Daniel de Oliveira
  */
+// TODO add function which returns regular types (i.e. not image, not operation, not place)
 export class TypeUtility {
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
 
+    // TODO curry it with typeName in inner param list
     public isSubtype(typeName: string, superTypeName: string): boolean {
 
         const type = this.projectConfiguration.getTypesMap()[typeName];
@@ -45,9 +47,7 @@ export class TypeUtility {
     public getOverviewTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
-            .filter(type => {
-                return type.name === 'Operation' || type.name === 'Place';
-            });
+            .filter(type => type.name === 'Operation' || type.name === 'Place');
     }
 
 

@@ -1,5 +1,7 @@
 import {clone as _clone} from 'tsfun';
 
+// TODO move to document
+
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira

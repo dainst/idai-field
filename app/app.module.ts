@@ -7,7 +7,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiMessagesModule, MD, Messages} from 'idai-components-2/core';
 import {IdaiDocumentsModule} from 'idai-components-2/core';
 import {ConfigReader, ConfigLoader, ProjectConfiguration} from 'idai-components-2/core';
-import {IdaiFieldValidator} from './core/model/idai-field-validator';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {IdaiFieldAppConfigurator} from 'idai-components-2/field';
 import {routing} from './app.routing';
@@ -175,13 +174,7 @@ let indexFacade: IndexFacade|undefined = undefined;
             deps: []
         },
         PersistenceManager,
-        {
-            provide: Validator,
-            useFactory: function(projectConfiguration: ProjectConfiguration, datastore: IdaiFieldDocumentDatastore) {
-                return new IdaiFieldValidator(projectConfiguration, datastore);
-            },
-            deps: [ProjectConfiguration, DocumentDatastore]
-        },
+        Validator,
         { provide: MD, useClass: M},
         DoceditActiveTabService
     ],

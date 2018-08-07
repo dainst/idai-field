@@ -1,6 +1,7 @@
 import {FieldDefinition, ProjectConfiguration, RelationDefinition} from 'idai-components-2/core';
 import {Resource, NewResource} from 'idai-components-2/core';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../util/number-util';
+import {on} from 'tsfun';
 
 export module Validations {
 
@@ -28,9 +29,10 @@ export module Validations {
      */
     export function validateType(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): boolean {
 
-        if (!resource.type) return false;
-        return projectConfiguration.getTypesList()
-            .some(type => type.name == resource.type);
+        if (!resource.type) return false; // TODO check it, but this should be unnecessary when making use of on
+        return projectConfiguration
+            .getTypesList()
+            .some(on('name:')(resource.type));
     }
 
 

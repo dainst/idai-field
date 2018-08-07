@@ -35,6 +35,7 @@ export class PersistenceManager {
      * These are compared with document to determine which relations have been removed.
      *
      * @param document an existing or a new document
+     * @param username
      * @param oldVersion to be used only if document is an existing document.
      * @param revisionsToSquash these revisions get deleted while updating document
      * @returns a copy of the updated document

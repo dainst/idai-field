@@ -1,6 +1,6 @@
 <div id="matrix-view" class="row bg-light py-2">
 
-    <div class="col-md-6">
+    <div class="col-md-9">
         <div *ngIf="showTrenchSelector()" class="btn-group operation-document-selector"
              ngbDropdown placement="bottom-left" role="group">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
@@ -18,7 +18,7 @@
         <div *ngIf="!showTrenchSelector()" id="trench-selector-placeholder"></div>
     </div>
 
-    <div class="col-md-2 mr-md-auto">
+    <div class="col-md-3 mr-md-auto">
         <div class="btn-group subgraph-selection-buttons" style="width: 100% !important;">
 
             <button id="subgraph-selection-mode" style="width: 50% !important;"
@@ -39,13 +39,9 @@
                 <span *ngIf="selectionMode" class="mdi mdi-play"></span>
                 <span *ngIf="!selectionMode" class="mdi mdi-reload"></span>
             </button>
-        </div>
-    </div>
 
-    <div class="col-md-1 mr-md-auto">
-        <div class="btn-group" style="width: 100% !important;">
-            <button id="createBackupButton" style="width: 100% !important;"
-                    class="btn btn-primary"
+            <button id="createBackupButton" style="width: 20% !important;"
+                    class="btn btn-primary ml-3"
                     ngbTooltip="Export function / does nothing yet"
                     placement="left"
                     container="body"
@@ -53,6 +49,7 @@
                 <span class="mdi mdi-file-export" style="color: white"></span>
             </button>
         </div>
+
     </div>
 </div>
 

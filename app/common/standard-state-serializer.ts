@@ -6,14 +6,14 @@ import {SettingsService} from '../core/settings/settings-service';
 const remote = require('electron').remote;
 
 
+export type StateType = 'resources-state'|'matrix-state';
+
+
 @Injectable()
 /**
  * @author Thomas Kleinke
  */
 export class StandardStateSerializer extends StateSerializer {
-
-    public static RESOURCES_STATE: string = 'resources-state';
-
 
     constructor(private settingsService: SettingsService) {
 
@@ -21,11 +21,11 @@ export class StandardStateSerializer extends StateSerializer {
     }
 
 
-    public async load(): Promise<any> {
+    public async load(stateType: StateType): Promise<any> {
 
         return new Promise(resolve => {
 
-            fs.readFile(this.getFilePath(), 'utf-8', (err: any, content: any) => {
+            fs.readFile(this.getFilePath(stateType), 'utf-8', (err: any, content: any) => {
                 if (err) {
                     resolve({});
                 } else {
@@ -40,13 +40,13 @@ export class StandardStateSerializer extends StateSerializer {
     }
 
 
-    public store(stateObject: any): Promise<any> {
+    public store(stateObject: any, stateType: StateType): Promise<any> {
 
         return new Promise((resolve, reject) => {
 
             if (this.settingsService.getSelectedProject() == 'test') return resolve();
 
-            fs.writeFile(this.getFilePath(),
+            fs.writeFile(this.getFilePath(stateType),
                     JSON.stringify(stateObject), (err: any) => {
                 if (err) {
                     reject(err);
@@ -58,9 +58,9 @@ export class StandardStateSerializer extends StateSerializer {
     }
 
 
-    private getFilePath(): string {
+    private getFilePath(stateType: StateType): string {
 
-        return remote.getGlobal('appDataPath') + '/' + StandardStateSerializer.RESOURCES_STATE + '-'
+        return remote.getGlobal('appDataPath') + '/' +  stateType + '-'
             + this.settingsService.getSelectedProject() + '.json';
     }
 }

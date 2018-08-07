@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable'
+import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ResourcesState} from './state/resources-state';
 import {StateSerializer} from '../../../common/state-serializer';
 import {OperationViews} from './state/operation-views';
 import {ViewState} from './state/view-state';
-import {IdaiFieldDocument} from 'idai-components-2/field';
 import {NavigationPath} from './state/navigation-path';
 import {ObserverUtil} from '../../../util/observer-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
@@ -233,7 +233,8 @@ export class ResourcesStateManager {
 
     private serialize() {
 
-        this.serializer.store(ResourcesStateManager.createObjectToSerialize(this.resourcesState));
+        this.serializer.store(ResourcesStateManager.createObjectToSerialize(this.resourcesState),
+            'resources-state');
     }
 
 
@@ -244,7 +245,7 @@ export class ResourcesStateManager {
         if (this.project === 'test' ) {
             if (!this.suppressLoadMapInTestProject) resourcesState = ResourcesState.makeSampleDefaults()
         } else {
-            (resourcesState as any).viewStates = await this.serializer.load();
+            (resourcesState as any).viewStates = await this.serializer.load('resources-state');
             resourcesState = ResourcesState.complete(resourcesState);
         }
 

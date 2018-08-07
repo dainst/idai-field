@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
+import * as fs from 'fs';
+import {StateSerializer} from './state-serializer';
 import {SettingsService} from '../core/settings/settings-service';
 
 const remote = require('electron').remote;
-import * as fs from 'fs';
-import {StateSerializer} from "./state-serializer";
 
 
 @Injectable()
@@ -14,7 +14,9 @@ export class StandardStateSerializer extends StateSerializer {
 
     public static RESOURCES_STATE: string = 'resources-state';
 
+
     constructor(private settingsService: SettingsService) {
+
         super();
     }
 
@@ -30,9 +32,8 @@ export class StandardStateSerializer extends StateSerializer {
                     try {
                         resolve(JSON.parse(content));
                     } catch (_) {
-                        resolve({})
+                        resolve({});
                     }
-
                 }
             });
         });

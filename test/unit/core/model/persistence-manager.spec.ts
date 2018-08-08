@@ -103,6 +103,80 @@ describe('PersistenceManager', () => {
     });
 
 
+    it('should save the base object', async done => {
+
+        mockDatastore.update.and.returnValue(Promise.resolve(doc));
+        await persistenceManager.persist(doc, 'u');
+        expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
+        done();
+    });
+
+
+    it('delete a relation which was present in old version', async done => {
+
+        const oldVersion = { 'resource' : {
+                'id' :'1', 'identifier': 'ob1',
+                'type': 'object',
+                'relations' : { 'BelongsTo' : [ '2' ] }
+            }};
+
+        relatedDoc.resource.relations['Contains'] = ['1'];
+        mockDatastore.update.and.returnValue(Promise.resolve(doc));
+
+        await persistenceManager.persist(doc, 'u', oldVersion as any, []);
+
+        expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
+        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
+
+        expect(doc.resource.relations['BelongsTo']).toBe(undefined);
+        expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
+        done();
+    });
+
+
+    it('delete a relation which was present in conflicting revision', async done => {
+
+        const squashVersion = { 'resource' : {
+                'id' :'1', 'identifier': 'ob1',
+                'type': 'object',
+                'relations' : { 'BelongsTo' : [ '2' ] }
+            }, '_rev' : '1-a' };
+
+        relatedDoc.resource.relations['Contains'] = ['1'];
+
+        await persistenceManager.persist(doc, 'u', doc, [squashVersion] as any);
+
+        expect(mockDatastore.update).toHaveBeenCalledWith(
+            jasmine.objectContaining({
+                resource : jasmine.objectContaining({ id: '1' })
+            }), 'u', ['1-a']);
+
+        expect(mockDatastore.update).toHaveBeenCalledWith(
+            jasmine.objectContaining({
+                resource : jasmine.objectContaining({ id: '2' })
+            }), 'u', undefined);
+
+        expect(doc.resource.relations['BelongsTo']).toBe(undefined);
+        expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
+        done();
+    });
+
+
+    it('should save the related document for a new document', async done => {
+
+        doc.resource.relations['BelongsTo'] = ['2'];
+        const clonedDoc = clone(doc);
+        delete doc.resource.id; // make it a 'new' document
+
+        mockDatastore.create.and.returnValue(Promise.resolve(clonedDoc)); // has resourceId, simulates create
+
+        await persistenceManager.persist(doc, 'u');
+
+        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
+        expect(relatedDoc.resource.relations['Contains'][0]).toBe('1'); // the '1' comes from clonedDoc.resource.id
+        done();
+    });
+
 
     it('remove: should remove an operation type resource, another related resource gets relation updated', async done => {
 

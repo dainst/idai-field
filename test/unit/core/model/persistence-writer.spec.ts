@@ -32,7 +32,7 @@ describe('PersistenceWriter', () => {
 
     let mockDatastore;
     let mockTypeUtility;
-    let persistenceWriter;
+    let persistenceWriter: PersistenceWriter;
     const id = 'abc';
 
     let doc: Document;
@@ -86,21 +86,12 @@ describe('PersistenceWriter', () => {
     });
 
 
-    it('should save the base object', async done => {
-
-        mockDatastore.update.and.returnValue(Promise.resolve(doc));
-        await persistenceWriter.update(doc, doc, [], 'u');
-        expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
-        done();
-    });
-
-
     it('should save the related document', async done => {
 
         doc.resource.relations['BelongsTo'] = ['2'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await persistenceWriter.update(doc, doc, [], 'u');
+        await persistenceWriter.write(doc, doc, [], false, 'u');
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
         expect(relatedDoc.resource.relations['Contains'][0]).toBe('1');
@@ -108,20 +99,7 @@ describe('PersistenceWriter', () => {
     });
 
 
-    it('should save the related document for a new document', async done => {
 
-        doc.resource.relations['BelongsTo'] = ['2'];
-        const clonedDoc = clone(doc);
-        delete doc.resource.id; // make it a 'new' document
-
-        mockDatastore.create.and.returnValue(Promise.resolve(clonedDoc)); // has resourceId, simulates create
-
-        await persistenceWriter.update(doc, doc, [], 'u');
-
-        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
-        expect(relatedDoc.resource.relations['Contains'][0]).toBe('1'); // the '1' comes from clonedDoc.resource.id
-        done();
-    });
 
 
     it('should save an object with a one way relation', async done => {
@@ -129,7 +107,7 @@ describe('PersistenceWriter', () => {
         doc.resource.relations['isRecordedIn'] = ['2'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await persistenceWriter.update(doc, doc, [], 'u');
+        await persistenceWriter.write(doc, doc, [], false, 'u');
 
         expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc, 'u', undefined);
         done();
@@ -141,7 +119,7 @@ describe('PersistenceWriter', () => {
         doc.resource.relations['BelongsTo'] = ['2', '3'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await persistenceWriter.update(doc, doc, [], 'u');
+        await persistenceWriter.write(doc, doc, [], false, 'u');
 
         // expect(mockDatastore.update).toHaveBeenCalledWith(relatedObject);
         // right now it is not possible to test both objects due to problems with the return val of promise.all
@@ -152,63 +130,12 @@ describe('PersistenceWriter', () => {
     });
 
 
-    it('delete a relation which was present in old version', async done => {
-
-        const oldVersion = { 'resource' : {
-                'id' :'1', 'identifier': 'ob1',
-                'type': 'object',
-                'relations' : { 'BelongsTo' : [ '2' ] }
-            }};
-
-        relatedDoc.resource.relations['Contains'] = ['1'];
-        mockDatastore.update.and.returnValue(Promise.resolve(doc));
-
-        await persistenceWriter.update(doc, oldVersion, [], 'u');
-
-        expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
-        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
-
-        expect(doc.resource.relations['BelongsTo']).toBe(undefined);
-        expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
-        done();
-    });
-
-
-    it('delete a relation which was present in conflicting revision', async done => {
-
-        const squashVersion = { 'resource' : {
-                'id' :'1', 'identifier': 'ob1',
-                'type': 'object',
-                'relations' : { 'BelongsTo' : [ '2' ] }
-            }, '_rev' : '1-a' };
-
-        relatedDoc.resource.relations['Contains'] = ['1'];
-
-        await persistenceWriter.update(doc,  doc, [squashVersion], 'u');
-
-        expect(mockDatastore.update).toHaveBeenCalledWith(
-            jasmine.objectContaining({
-                resource : jasmine.objectContaining({ id: '1' })
-            }), 'u', ['1-a']);
-
-        expect(mockDatastore.update).toHaveBeenCalledWith(
-            jasmine.objectContaining({
-                resource : jasmine.objectContaining({ id: '2' })
-            }), 'u', undefined);
-
-        expect(doc.resource.relations['BelongsTo']).toBe(undefined);
-        expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
-        done();
-    });
-
-
-
     it('remove: should remove a document', async done => {
 
         doc.resource.relations['BelongsTo']=['2'];
         relatedDoc.resource.relations['Contains']=['1'];
 
-        await persistenceWriter.remove(doc, doc, 'u');
+        await persistenceWriter.write(doc, doc, [], true, 'u');
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
         expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
@@ -220,7 +147,7 @@ describe('PersistenceWriter', () => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
 
-        await persistenceWriter.remove(doc, doc, 'u');
+        await persistenceWriter.write(doc, doc, [], true, 'u');
 
         expect(mockDatastore.update).not.toHaveBeenCalled();
         done();

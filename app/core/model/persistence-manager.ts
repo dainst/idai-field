@@ -31,6 +31,9 @@ export class PersistenceManager {
     ) {}
 
 
+
+
+
     /**
      * Persists document and all the objects that are or have been in relation
      * with the object before the method call.
@@ -56,7 +59,7 @@ export class PersistenceManager {
         revisionsToSquash: Document[] = [],
         ): Promise<Document> {
 
-        const persistedDocument = await this.persistenceWriter.update(
+        const persistedDocument = await this.updateWithConnections(
             document as Document, oldVersion, revisionsToSquash, username);
 
         // TODO make separate 2nd pass in which all child documents (by liesWithin) get checked
@@ -84,10 +87,34 @@ export class PersistenceManager {
         // don't rely on isRecordedIn alone. Make sure it is really an operation subtype
         if (this.typeUtility.isSubtype(document.resource.type, "Operation")) {
             for (let recordedInDoc of (await this.getDocsRecordedIn(document.resource.id))) {
-                await this.persistenceWriter.remove(recordedInDoc, recordedInDoc, username);
+                await this.removeWithConnections(recordedInDoc, recordedInDoc, username);
             }
         }
-        await this.persistenceWriter.remove(document, oldVersion, username);
+        await this.removeWithConnections(document, oldVersion, username);
+    }
+
+
+    public async updateWithConnections(document: Document,
+                        oldVersion: Document,
+                        revisionsToSquash: Array<Document>,
+                        username: string) {
+
+        const updated = await this.persistIt(document, username, mapTo('_rev', revisionsToSquash));
+
+        await this.persistenceWriter.write(
+            updated, oldVersion, revisionsToSquash, false, username);
+        return updated as Document;
+    }
+
+
+    private async removeWithConnections(document: Document,
+                        oldVersion: Document,
+                        username: string): Promise<void> {
+
+        await this.persistenceWriter.write(
+            document, oldVersion, [], true, username);
+        await this.datastore.remove(document);
+        return undefined;
     }
 
 
@@ -96,5 +123,16 @@ export class PersistenceManager {
         return (await this.datastore.find({
             constraints: { 'isRecordedIn:contain': resourceId }
         })).documents;
+    }
+
+
+    private persistIt(document: Document|NewDocument, username: string, squashRevisionIds: string[]): Promise<Document> {
+
+        return document.resource.id
+            ? this.datastore.update(
+                document as Document,
+                username,
+                squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
+            : this.datastore.create(document, username);
     }
 }

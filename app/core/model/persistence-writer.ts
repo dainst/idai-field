@@ -17,35 +17,11 @@ export class PersistenceWriter {
     ) {}
 
 
-    public async remove(document: Document,
-                        oldVersion: Document,
-                        username: string): Promise<void> {
-
-        await this.updateWithConnections(
-            document, oldVersion, [], true, username);
-        await this.datastore.remove(document);
-        return undefined;
-    }
-
-
-    public async update(document: Document,
-                        oldVersion: Document,
-                        revisionsToSquash: Array<Document>,
-                        username: string) {
-
-        const updated = await this.persistIt(document, username, mapTo('_rev', revisionsToSquash));
-
-        await this.updateWithConnections(
-            updated, oldVersion, revisionsToSquash, false, username);
-        return updated as Document;
-    }
-
-
-    private async updateWithConnections(document: Document,
-                                        oldVersion: Document,
-                                        revisionsToSquash: Array<Document>,
-                                        deletion: boolean,
-                                        username: string): Promise<void> {
+    public async write(document: Document,
+                       oldVersion: Document,
+                       revisionsToSquash: Array<Document>,
+                       deletion: boolean,
+                       username: string): Promise<void> {
 
         const connectedDocs = await this.getExistingConnectedDocs(
             [document].concat([oldVersion]).concat(revisionsToSquash));
@@ -55,7 +31,9 @@ export class PersistenceWriter {
             connectedDocs, !deletion);
 
         // Note that this does not update a document for beeing target of isRecordedIn
-        for (let docToUpdate of docsToUpdate) await this.persistIt(docToUpdate, username, []);
+        for (let docToUpdate of docsToUpdate) {
+            await this.datastore.update(docToUpdate as Document, username, undefined)
+        }
     }
 
 
@@ -88,16 +66,5 @@ export class PersistenceWriter {
         return subtract
             (documents.map(toResourceId))
             (flatMap<any>(getAllRelationTargetsForDoc)(documents));
-    }
-
-
-    private persistIt(document: Document|NewDocument, username: string, squashRevisionIds: string[]): Promise<Document> {
-
-        return document.resource.id
-            ? this.datastore.update(
-                document as Document,
-                username,
-                squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
-            : this.datastore.create(document, username);
     }
 }

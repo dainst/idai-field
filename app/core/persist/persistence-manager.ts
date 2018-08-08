@@ -143,7 +143,7 @@ export class PersistenceManager {
     private getUniqueConnectedDocumentsIds(documents: Array<Document>, allowedRelations: string[]) {
 
         return subtract
-            (documents.map(toResourceId)) // TODO get these directly as params
+            (documents.map(toResourceId))
             (flatMap<any>(doc =>
                     Relations.getAllTargets(doc.resource.relations, allowedRelations))(documents));
     }

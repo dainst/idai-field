@@ -2,13 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ProjectConfiguration} from 'idai-components-2/core';
+import {IdaiFieldFeatureDocument} from 'idai-components-2/field';
 import {isNot, on, tripleEqual, doWhen, isEmpty} from 'tsfun';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixRelationsMode, MatrixState} from './matrix-state';
 import {IdaiFieldFeatureDocumentReadDatastore} from '../../core/datastore/field/idai-field-feature-document-read-datastore';
-import {IdaiFieldFeatureDocument} from 'idai-components-2/field';
 import {Loading} from '../../widgets/loading';
 import {DotBuilder, GraphRelationsConfiguration} from './dot-builder';
 
@@ -72,10 +72,9 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    public async select(resourceIdentifier: string) {
+    public async select(resourceId: string) {
 
-        const selectedDoc = this.featureDocuments.find(on('resource.identifier:')(resourceIdentifier));
-
+        const selectedDoc = this.featureDocuments.find(on('resource.id:')(resourceId));
         if (!selectedDoc) return;
 
         if (!this.selectionMode) {

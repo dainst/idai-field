@@ -29,8 +29,9 @@ export class GraphComponent implements OnInit, OnChanges {
     private hoverElement: Element|undefined;
     private selectedElements: Array<Element> = [];
 
+    private lastMousePosition: { x: number, y: number }|undefined;
+
     private static maxRealZoom: number = 2;
-    private static mouseDownProperties: any = null;
 
 
     constructor(@Inject(DOCUMENT) private htmlDocument: Document,
@@ -68,24 +69,43 @@ export class GraphComponent implements OnInit, OnChanges {
         GraphManipulation.removeTitleElements(svgGraph);
         this.graphContainer.nativeElement.appendChild(svgGraph);
         GraphManipulation.addClusterSubgraphLabelBoxes(svgGraph, this.htmlDocument);
-        GraphComponent.configurePanZoomBehavior(svgGraph);
+        this.configurePanZoomBehavior(svgGraph);
     }
 
 
     private performSelection(event: Event) {
 
-        this.onSelect.emit(GraphComponent.mouseDownProperties.target);
+        const nodeElement: Element|undefined = GraphComponent.getNodeElement(event.target as Element);
+        if (!nodeElement) return;
+
+        this.onSelect.emit(GraphComponent.getResourceIdFromNodeElement(nodeElement));
 
         if (this.selectionMode) {
-            const element: Element = event.target as Element;
-            const selected: boolean = this.selectedElements.includes(element);
+            const selected: boolean = this.selectedElements.includes(nodeElement);
             if (selected) {
-                this.selectedElements.splice(this.selectedElements.indexOf(element), 1);
+                this.selectedElements.splice(this.selectedElements.indexOf(nodeElement), 1);
             } else {
-                this.selectedElements.push(element);
+                this.selectedElements.push(nodeElement);
             }
             GraphManipulation.performHighlightingSelection(event.target as Element, !selected);
         }
+    }
+
+
+    private static getNodeElement(element: Element|null): Element|undefined {
+
+        while (element) {
+            if (element.classList.contains('node')) return element;
+            element = element.parentElement;
+        }
+
+        return undefined;
+    }
+
+
+    private static getResourceIdFromNodeElement(nodeElement: Element) {
+
+        return nodeElement.id.substring(5); // Remove 'node-' to get resource id
     }
 
 
@@ -95,50 +115,8 @@ export class GraphComponent implements OnInit, OnChanges {
             this.onMouseMove(event);
         });
 
-        this.renderer.listen(this.graphContainer.nativeElement, 'mouseup', event => {
-
-            if (GraphComponent.mouseDownProperties == null) return;
-
-            if ((Math.abs(event.clientX - GraphComponent.mouseDownProperties.x) < 2)
-                && (Math.abs(event.clientY - GraphComponent.mouseDownProperties.y) < 2)) {
-
-                this.performSelection(event);
-            }
-            GraphComponent.mouseDownProperties = null;
-        });
-
-        this.renderer.listen(this.graphContainer.nativeElement, 'mousedown', event => {
-
-            GraphComponent.mouseDownProperties = null;
-
-            if (event.path[0]
-                && event.path[0].localName !== 'svg'
-                && event.path[0].localName !== 'polygon') {
-
-                if (event.path[0].localName === 'ellipse') {
-
-                    if (event.path[0].nextElementSibling
-                        && event.path[0].nextElementSibling.childNodes.length > 0) {
-
-                        if (event.path[0].nextElementSibling.childNodes[0].data) {
-
-                            GraphComponent.mouseDownProperties = {
-                                x: event.clientX,
-                                y: event.clientY,
-                                target: event.path[0].nextElementSibling.childNodes[0].data
-                            };
-                        }
-                    }
-                } else if (event.path[0].localName === 'text'
-                    && event.path[0].innerHTML !== '') {
-
-                    GraphComponent.mouseDownProperties = {
-                        x: event.clientX,
-                        y: event.clientY,
-                        target: event.path[0].innerHTML
-                    };
-                }
-            }
+        this.renderer.listen(this.graphContainer.nativeElement, 'click', event => {
+            this.performSelection(event);
         });
     }
 
@@ -158,9 +136,36 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
-    private static configurePanZoomBehavior(svg: SVGSVGElement) {
+    private configurePanZoomBehavior(svg: SVGSVGElement) {
 
-        const panZoomBehavior: SvgPanZoom.Instance = svgPanZoom(svg, { dblClickZoomEnabled: false });
+        const panZoomBehavior: SvgPanZoom.Instance = svgPanZoom(svg, {
+            dblClickZoomEnabled: false,
+            customEventsHandler: {
+                haltEventListeners: ['mousedown', 'mousemove', 'mouseleave', 'mouseup'],
+                init: options => {
+                    options.svgElement.addEventListener('mousedown', (event: MouseEvent) => {
+                        if (event.button === 2) this.lastMousePosition = { x: event.x, y: event.y };
+                    });
+
+                    options.svgElement.addEventListener('mousemove', (event: MouseEvent) => {
+                        if (this.lastMousePosition) {
+                            const newMousePosition = { x: event.x, y: event.y };
+                            const delta = {
+                                x: newMousePosition.x - this.lastMousePosition.x,
+                                y: newMousePosition.y - this.lastMousePosition.y
+                            };
+                            panZoomBehavior.panBy(delta);
+                            this.lastMousePosition = newMousePosition;
+                        }
+                    });
+
+                    options.svgElement.addEventListener('mouseup', (event: MouseEvent) => {
+                        this.lastMousePosition = undefined;
+                    });
+                }, destroy: () => {}
+            }
+        });
+
         const maxZoom: number = GraphComponent.maxRealZoom / panZoomBehavior.getSizes().realZoom;
 
         if (panZoomBehavior.getSizes().realZoom > GraphComponent.maxRealZoom) {

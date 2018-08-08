@@ -1,6 +1,6 @@
 <div id="matrix-view" class="row bg-light py-2">
 
-    <div class="col-md-10">
+    <div class="col-md-8">
         <div *ngIf="showTrenchSelector()" class="btn-group operation-document-selector"
              ngbDropdown placement="bottom-left" role="group">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
@@ -18,29 +18,38 @@
         <div *ngIf="!showTrenchSelector()" id="trench-selector-placeholder"></div>
     </div>
 
-    <div class="col-md-2 mr-md-auto">
-        <div class="btn-group subgraph-selection-buttons" style="width: 100% !important;">
-
-            <button id="subgraph-selection-mode" style="width: 50% !important;"
-                    (click)="toggleSubgraphSelection()"
-                    ngbTooltip="{{!selectionMode ? 'Dokumentenausauswahl beginnen' : 'Dokumentenausauswahl beenden'}}"
-                    placement="left"
-                    container="body"
-                    class="btn btn-{{!selectionMode ? 'outline-' : ''}}primary m-0">
-                <span class="mdi mdi-image-search-outline"></span>
-            </button>
-            <button id="subgraph-selection-activate-button" style="width: 50% !important;"
-                    (click)="subgraphActivateDeactivate()"
-                    ngbTooltip="{{!selectionMode ?
-                        'Dokumente neu laden' : 'Graphen aus ausgewählten Dokumenten erstellen'}}"
-                    placement="left"
-                    container="body"
-                    class="btn btn-primary m-0">
-                <span *ngIf="selectionMode" class="mdi mdi-play"></span>
-                <span *ngIf="!selectionMode" class="mdi mdi-reload"></span>
-            </button>
+    <div class="col-md-4 mr-md-auto">
+        <div class="btn-group">
+            <div class="btn btn-primary"
+                 (click)="setSelectionMode('none')"
+                 [class.active]="selectionMode === 'none'">
+                <span class="mdi mdi-pencil"></span>
+            </div>
+            <div class="btn btn-primary"
+                 (click)="setSelectionMode('single')"
+                 [class.active]="selectionMode === 'single'">
+                <span class="mdi mdi-cursor-default-outline"></span>
+            </div>
+            <div class="btn btn-primary"
+                 (click)="setSelectionMode('rect')"
+                 [class.active]="selectionMode === 'rect'">
+                <span class="mdi mdi-select"></span>
+            </div>
         </div>
 
+        <div class="btn-group">
+            <div class="btn btn-primary"
+                 [class.disabled]="subgraphSelection.length === 0"
+                 (click)="createGraphFromSelection()">
+                <span class="mdi mdi-transfer"></span>
+            </div>
+
+            <div class="btn btn-primary"
+                 [class.disabled]="!graphFromSelection"
+                 (click)="reloadGraph()">
+                <span class="mdi mdi-reload"></span>
+            </div>
+        </div>
     </div>
 </div>
 

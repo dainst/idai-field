@@ -29,18 +29,18 @@ export type MatrixSelectionMode = 'single'|'rect'|'none';
 export class MatrixViewComponent implements OnInit {
 
     /**
-     * the latest svg calculated with graphviz via dot-builder
-     * based on our component's current settings.
+     * The latest svg calculated with GraphViz via DotBuilder based on our component's current settings.
      */
     public graph: string;
+
+    public selectionMode: MatrixSelectionMode = 'rect';
+    public graphFromSelection: boolean = false;
 
     private trenches: Array<IdaiFieldDocument> = [];
     private selectedTrench: IdaiFieldDocument|undefined;
 
     private featureDocuments: Array<IdaiFieldFeatureDocument> = [];
-    private subgraphSelection: Array<IdaiFieldFeatureDocument> = []; // see selectionMode
-
-    public selectionMode: MatrixSelectionMode = 'rect';
+    private subgraphSelection: Array<IdaiFieldFeatureDocument> = [];
 
 
     constructor(
@@ -114,28 +114,30 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    public async subgraphActivateDeactivate() {
+    public createGraphFromSelection() {
 
-        if (!this.selectionMode) {
-            if (this.selectedTrench) {
-                await this.loadFeatureDocuments(this.selectedTrench);
-            }
-        } else {
-            if (this.subgraphSelection.length > 0) {
-                this.featureDocuments = this.subgraphSelection;
-                this.subgraphSelection = [];
-            }
-            this.selectionMode = 'none';
-        }
+        this.featureDocuments = this.subgraphSelection;
+        this.subgraphSelection = [];
+        this.graphFromSelection = true;
 
         this.calculateGraph();
     }
 
 
-    public toggleSubgraphSelection() {
+    public async reloadGraph() {
 
-        this.selectionMode = this.selectionMode === 'none' ? 'rect' : 'none';
-        if (this.selectionMode) this.subgraphSelection = [];
+        if (!this.selectedTrench) return;
+
+        await this.loadFeatureDocuments(this.selectedTrench);
+        this.calculateGraph();
+
+        this.graphFromSelection = false;
+    }
+
+
+    public setSelectionMode(selectionMode: MatrixSelectionMode) {
+
+        this.selectionMode = selectionMode;
     }
 
 

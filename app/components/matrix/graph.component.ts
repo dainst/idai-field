@@ -163,24 +163,34 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private configureMouseListeners(svg: SVGSVGElement) {
 
-        svg.addEventListener('mousedown', (event: MouseEvent) => {
-            if (event.button === 2) this.lastMousePosition = { x: event.x, y: event.y };
-        });
+        svg.addEventListener('mousedown', this.onMouseDown.bind(this));
+        svg.addEventListener('mousemove', this.onMouseMovePan.bind(this));
+        svg.addEventListener('mouseup', this.onMouseUp.bind(this));
+    }
 
-        svg.addEventListener('mousemove', (event: MouseEvent) => {
-            if (this.lastMousePosition) {
-                const newMousePosition = { x: event.x, y: event.y };
-                const delta = {
-                    x: newMousePosition.x - this.lastMousePosition.x,
-                    y: newMousePosition.y - this.lastMousePosition.y
-                };
-                this.panZoomBehavior.panBy(delta);
-                this.lastMousePosition = newMousePosition;
-            }
-        });
 
-        svg.addEventListener('mouseup', (event: MouseEvent) => {
-            this.lastMousePosition = undefined;
-        });
+    private onMouseDown(event: MouseEvent) {
+
+        if (event.button === 2) this.lastMousePosition = { x: event.x, y: event.y };
+    }
+
+
+    private onMouseMovePan(event: MouseEvent) {
+
+        if (this.lastMousePosition) {
+            const newMousePosition = { x: event.x, y: event.y };
+            const delta = {
+                x: newMousePosition.x - this.lastMousePosition.x,
+                y: newMousePosition.y - this.lastMousePosition.y
+            };
+            this.panZoomBehavior.panBy(delta);
+            this.lastMousePosition = newMousePosition;
+        }
+    }
+
+
+    private onMouseUp() {
+
+        this.lastMousePosition = undefined;
     }
 }

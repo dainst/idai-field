@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Document, toResourceId, Relations,
-    NewDocument, ProjectConfiguration} from 'idai-components-2/core';
-import {ConnectedDocsResolution} from './connected-docs-resolution';
+import {Document, NewDocument, ProjectConfiguration, toResourceId} from 'idai-components-2/core';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {subtract, flatMap, flow, filter, to, on, isNot, mapTo, includedIn} from 'tsfun';
+import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to} from 'tsfun';
 import {TypeUtility} from '../model/type-utility';
 import {PersistenceWriter} from './persistence-writer';
 

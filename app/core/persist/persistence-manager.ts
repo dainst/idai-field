@@ -3,7 +3,7 @@ import {Document, toResourceId, Relations,
     NewDocument, ProjectConfiguration} from 'idai-components-2/core';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {subtract, flatMap, flow, filter} from 'tsfun';
+import {subtract, flatMap, flow, filter, to} from 'tsfun';
 import {TypeUtility} from '../model/type-utility';
 
 
@@ -169,7 +169,7 @@ export class PersistenceManager {
                     console.log("_rev field not found", _);
                     return false;
                 })
-                .map(_ => (_ as any)['_rev'])
+                .map(to('_rev'))
             : undefined;
 
         return document.resource.id

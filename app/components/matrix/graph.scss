@@ -9,10 +9,11 @@
   svg {
     width: 100% !important;
     height: 100% !important;
+    user-select: none;
+    cursor: default;
 
     .node {
       cursor: pointer;
-      user-select: none;
 
       text {
         cursor: pointer;

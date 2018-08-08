@@ -149,12 +149,16 @@ export class PersistenceManager {
     }
 
 
-    private static getAllTargets(relations: Relations, allowedRelations: string[]): Array<string> {
+    private static getAllTargets(relations: Relations, allowedRelations?: string[]): Array<string> {
 
-        return flow<any>((Object.keys(relations))
-                .filter(prop => relations.hasOwnProperty(prop))
-                .filter(includedIn(allowedRelations)),
-            flatMap((prop: string) => relations[prop as string]));
+        const ownKeys = Object.keys(relations)
+                .filter(prop => relations.hasOwnProperty(prop));
+
+        const usableRelations = allowedRelations
+            ? ownKeys.filter(includedIn(allowedRelations))
+            : ownKeys;
+
+        return flatMap((prop: string) => relations[prop as string])(usableRelations);
     }
 
 

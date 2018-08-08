@@ -5,6 +5,7 @@ import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {subtract, flatMap, flow, filter, to, on, isNot, mapTo, includedIn} from 'tsfun';
 import {TypeUtility} from '../model/type-utility';
+import {PersistenceWriter} from './persistence-writer';
 
 
 // TODO make sure that when a resource is deleted which contains
@@ -24,11 +25,15 @@ import {TypeUtility} from '../model/type-utility';
  */
 export class PersistenceManager {
 
+    private persistenceWriter: PersistenceWriter;
+
     constructor(
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
         private typeUtility: TypeUtility
-    ) {}
+    ) {
+        this.persistenceWriter = new PersistenceWriter(datastore, projectConfiguration);
+    }
 
 
     /**
@@ -56,31 +61,13 @@ export class PersistenceManager {
         revisionsToSquash: Document[] = [],
         ): Promise<Document> {
 
-        const persistedDocument = await this.persistIt(document, username, mapTo('_rev', revisionsToSquash) /* TODO let caller do the mapTo */);
-
-        const connectedDocs = await this.getExistingConnectedDocs(
-            [persistedDocument].concat(oldVersion).concat(revisionsToSquash));
-
-        await this.updateConnectedDocs(persistedDocument, connectedDocs, true, username);
+        const persistedDocument = await this.persistenceWriter.update(
+            document as Document, oldVersion, revisionsToSquash, username);
 
         // TODO make separate 2nd pass in which all child documents (by liesWithin) get checked
         // if they have the same isRecordedIn as the document and correct them if not
 
         return persistedDocument;
-    }
-
-
-    private async updateConnectedDocs(document: Document, connectedDocs: Array<Document>, setInverseRelations: boolean, user: string) {
-
-        for (let docToUpdate of
-
-            // Note that this does not update a document for beeing target of isRecordedIn
-            ConnectedDocsResolution.determineDocsToUpdate(
-                this.projectConfiguration, document, connectedDocs,
-                setInverseRelations)) {
-
-            await this.persistIt(docToUpdate, user, []);
-        }
     }
 
 
@@ -113,41 +100,7 @@ export class PersistenceManager {
         document: Document,
         user: string, oldVersion: Document = document) {
 
-        const connectedDocs = await this.getExistingConnectedDocs([document].concat([oldVersion]));
-        await this.updateConnectedDocs(document, connectedDocs, false, user);
-        await this.datastore.remove(document);
-    }
-
-
-    private async getExistingConnectedDocs(documents: Array<Document>) {
-
-        const connectedDocuments: Array<Document> = [];
-        for (let id of this.getUniqueConnectedDocumentsIds(documents,
-                this.projectConfiguration.getAllRelationDefinitions().map(to('name')))) {
-
-            try {
-                connectedDocuments.push(await this.datastore.get(id));
-            } catch (_) {
-                // this can be either due to deletion order, for example when
-                // deleting multiple docs recordedIn some other, but related to one another
-                // or it can be due to 'really' missing documents. missing documents mean
-                // an inconsistent database state, which can for example result
-                // of docs not yet replicated
-                console.warn('connected document not found', id);
-            }
-        }
-        return connectedDocuments;
-    }
-
-
-    private getUniqueConnectedDocumentsIds(documents: Array<Document>, allowedRelations: string[]) {
-
-        const getAllRelationTargetsForDoc = (doc: Document) =>
-            Relations.getAllTargets(doc.resource.relations, allowedRelations);
-
-        return subtract
-            (documents.map(toResourceId))
-            (flatMap<any>(getAllRelationTargetsForDoc)(documents));
+        await this.persistenceWriter.remove(document, oldVersion, user);
     }
 
 
@@ -156,16 +109,5 @@ export class PersistenceManager {
         return (await this.datastore.find({
             constraints: { 'isRecordedIn:contain': resourceId }
         })).documents;
-    }
-
-
-    private persistIt(document: Document|NewDocument, username: string, squashRevisionIds: string[]): Promise<Document> {
-
-        return document.resource.id
-            ? this.datastore.update(
-                document as Document,
-                username,
-                squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
-            : this.datastore.create(document, username);
     }
 }

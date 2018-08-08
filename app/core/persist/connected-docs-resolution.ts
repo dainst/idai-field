@@ -73,6 +73,7 @@ export module ConnectedDocsResolution {
                 document.resource.relations[relation]
                     .filter(id => id == targetDocument.resource.id) // match only the one targetDocument
                     .forEach(() => {
+
                         if (targetDocument.resource.relations[inverse as any] == undefined)
                             targetDocument.resource.relations[inverse as any] = [];
 

@@ -37,18 +37,11 @@ export class GraphComponent implements OnChanges {
 
     constructor(@Inject(DOCUMENT) private htmlDocument: Document) {}
 
+
     ngOnChanges() {
 
         this.reset();
         this.showGraph();
-    }
-
-
-    private reset() {
-
-        while (this.graphContainer.nativeElement.firstChild) {
-            this.graphContainer.nativeElement.removeChild(this.graphContainer.nativeElement.firstChild);
-        }
     }
 
 
@@ -63,23 +56,6 @@ export class GraphComponent implements OnChanges {
         this.graphContainer.nativeElement.appendChild(svgGraph);
         GraphManipulation.addClusterSubgraphLabelBoxes(svgGraph, this.htmlDocument);
         this.configurePanZoomBehavior(svgGraph);
-    }
-
-
-    private static getNodeElement(element: Element|null): Element|undefined {
-
-        while (element) {
-            if (element.classList.contains('node')) return element;
-            element = element.parentElement;
-        }
-
-        return undefined;
-    }
-
-
-    private static getResourceIdFromNodeElement(nodeElement: Element) {
-
-        return nodeElement.id.substring(5); // Remove 'node-' to get resource id
     }
 
 
@@ -129,6 +105,23 @@ export class GraphComponent implements OnChanges {
     }
 
 
+    private onMouseUp() {
+
+        this.lastMousePosition = undefined;
+    }
+
+
+    private onClick(event: Event) {
+
+        const nodeElement: Element|undefined = GraphComponent.getNodeElement(event.target as Element);
+        if (!nodeElement) return;
+
+        this.onSelect.emit(GraphComponent.getResourceIdFromNodeElement(nodeElement));
+
+        if (this.selectionMode) this.performSelection(nodeElement);
+    }
+
+
     private performPanning(event: MouseEvent) {
 
         if (this.lastMousePosition) {
@@ -158,23 +151,6 @@ export class GraphComponent implements OnChanges {
     }
 
 
-    private onMouseUp() {
-
-        this.lastMousePosition = undefined;
-    }
-
-
-    private onClick(event: Event) {
-
-        const nodeElement: Element|undefined = GraphComponent.getNodeElement(event.target as Element);
-        if (!nodeElement) return;
-
-        this.onSelect.emit(GraphComponent.getResourceIdFromNodeElement(nodeElement));
-
-        if (this.selectionMode) this.performSelection(nodeElement);
-    }
-
-
     private performSelection(nodeElement: Element) {
 
         const isSelected: boolean = this.selectedElements.includes(nodeElement);
@@ -186,5 +162,30 @@ export class GraphComponent implements OnChanges {
         }
 
         GraphManipulation.performHighlightingSelection(nodeElement, !isSelected);
+    }
+
+
+    private reset() {
+
+        while (this.graphContainer.nativeElement.firstChild) {
+            this.graphContainer.nativeElement.removeChild(this.graphContainer.nativeElement.firstChild);
+        }
+    }
+
+
+    private static getNodeElement(element: Element|null): Element|undefined {
+
+        while (element) {
+            if (element.classList.contains('node')) return element;
+            element = element.parentElement;
+        }
+
+        return undefined;
+    }
+
+
+    private static getResourceIdFromNodeElement(nodeElement: Element) {
+
+        return nodeElement.id.substring(5); // Remove 'node-' to get resource id
     }
 }

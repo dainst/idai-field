@@ -1,6 +1,8 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ViewContext} from './view-context';
+import {to} from 'tsfun';
+
 
 /**
  * @author Thomas Kleinke
@@ -28,7 +30,7 @@ export module NavigationPathSegment {
     function hasValidRelation(mainTypeDocumentResourceId: string|undefined, segment: NavigationPathSegment,
                               segments: Array<NavigationPathSegment>): boolean {
 
-        const index: number = segments.indexOf(segment);
+        const index = segments.indexOf(segment);
 
         return (index === 0)
             ? mainTypeDocumentResourceId !== undefined && Document.hasRelationTarget(segment.document,
@@ -39,8 +41,7 @@ export module NavigationPathSegment {
 }
 
 
-// Todo make general mapOnto in tsfun
-export const toResourceId = (seg: NavigationPathSegment) => seg.document.resource.id;
+export const toResourceId = to('document.resource.id');
 
 
 // TODO use comparator from tsfun

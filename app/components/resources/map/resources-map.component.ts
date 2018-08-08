@@ -4,7 +4,7 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/field';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
-import {PersistenceManager} from '../../../core/persist/persistence-manager';
+import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {UsernameProvider} from '../../../core/settings/username-provider';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {NavigationPath} from '../view/state/navigation-path';

@@ -1,5 +1,5 @@
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {ConnectedDocsResolution} from "../../../../app/core/persist/connected-docs-resolution";
+import {ConnectedDocsResolution} from "../../../../app/core/model/connected-docs-resolution";
 
 
 /**

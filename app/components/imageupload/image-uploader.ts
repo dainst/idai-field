@@ -7,7 +7,7 @@ import {M} from '../../m';
 import {UploadModalComponent} from './upload-modal.component';
 import {ExtensionUtil} from '../../util/extension-util';
 import {UploadStatus} from './upload-status';
-import {PersistenceManager} from '../../core/persist/persistence-manager';
+import {PersistenceManager} from '../../core/model/persistence-manager';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {NewIdaiFieldImageDocument} from 'idai-components-2/field';
 import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/field/idai-field-image-document-read-datastore';

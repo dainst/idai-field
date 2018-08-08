@@ -5,7 +5,7 @@ import {
     ProjectConfiguration
 } from 'idai-components-2/core';
 import {Validator} from '../../core/model/validator';
-import {PersistenceManager} from '../../core/persist/persistence-manager';
+import {PersistenceManager} from '../../core/model/persistence-manager';
 import {clone} from '../../util/object-util';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';

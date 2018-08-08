@@ -4,9 +4,15 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiMessagesModule, MD, Messages} from 'idai-components-2/core';
-import {IdaiDocumentsModule} from 'idai-components-2/core';
-import {ConfigReader, ConfigLoader, ProjectConfiguration} from 'idai-components-2/core';
+import {
+    ConfigLoader,
+    ConfigReader,
+    IdaiDocumentsModule,
+    IdaiMessagesModule,
+    MD,
+    Messages,
+    ProjectConfiguration
+} from 'idai-components-2/core';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {IdaiFieldAppConfigurator} from 'idai-components-2/field';
 import {routing} from './app.routing';
@@ -31,9 +37,7 @@ import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-s
 import {ImageViewModule} from './components/imageview/image-view.module';
 import {AppController} from './app-controller';
 import {DatastoreModule} from './core/datastore/datastore.module';
-import {IdaiFieldDocumentDatastore} from './core/datastore/field/idai-field-document-datastore';
-import {PersistenceManager} from './core/persist/persistence-manager';
-import {DocumentDatastore} from './core/datastore/document-datastore';
+import {PersistenceManager} from './core/model/persistence-manager';
 import {Validator} from './core/model/validator';
 import {MatrixModule} from './components/matrix/matrix.module';
 import {PouchdbManager} from './core/datastore/core/pouchdb-manager';

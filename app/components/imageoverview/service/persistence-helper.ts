@@ -3,7 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {M} from '../../../m';
-import {PersistenceManager} from "../../../core/persist/persistence-manager";
+import {PersistenceManager} from "../../../core/model/persistence-manager";
 import {UsernameProvider} from '../../../core/settings/username-provider';
 
 @Injectable()

@@ -85,15 +85,17 @@ export class MatrixViewComponent implements OnInit {
         if (documents.length === 1 && this.selectionMode === 'none') {
             await this.launchDocedit(documents[0]);
         } else {
-            await this.selectDocuments(documents);
+            await this.selectDocuments(documents, this.selectionMode === 'single');
         }
     }
 
 
-    public async selectDocuments(documents: Array<IdaiFieldFeatureDocument>) {
+    public async selectDocuments(documents: Array<IdaiFieldFeatureDocument>, toggle: boolean) {
 
         documents.forEach(document => {
-            return this.subgraphSelection = MatrixViewComponent.addOrRemove(this.subgraphSelection, document);
+            return this.subgraphSelection = toggle
+                ? MatrixViewComponent.addOrRemove(this.subgraphSelection, document)
+                : MatrixViewComponent.add(this.subgraphSelection, document);
         });
     }
 
@@ -191,14 +193,21 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private static addOrRemove(subgraphSelection: Array<IdaiFieldFeatureDocument>,
-                               docToAddOrRemove: IdaiFieldFeatureDocument) {
+    private static add(subgraphSelection: Array<IdaiFieldFeatureDocument>,
+                       docToAdd: IdaiFieldFeatureDocument): Array<IdaiFieldFeatureDocument> {
 
-        return !subgraphSelection
-            .find(on('resource.id')(docToAddOrRemove))
-            ? subgraphSelection.concat([docToAddOrRemove])
-            : subgraphSelection
-                .filter(isNot(on('resource.id')(docToAddOrRemove)));
+        return subgraphSelection.find(on('resource.id')(docToAdd))
+            ? subgraphSelection
+            : subgraphSelection.concat([docToAdd]);
+    }
+
+
+    private static addOrRemove(subgraphSelection: Array<IdaiFieldFeatureDocument>,
+                               docToAddOrRemove: IdaiFieldFeatureDocument): Array<IdaiFieldFeatureDocument> {
+
+        return subgraphSelection.find(on('resource.id')(docToAddOrRemove))
+            ? subgraphSelection.filter(isNot(on('resource.id')(docToAddOrRemove)))
+            : subgraphSelection.concat([docToAddOrRemove]);
     }
 
 

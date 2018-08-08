@@ -167,7 +167,11 @@ export class GraphComponent implements OnChanges {
 
         this.onSelect.emit([GraphManipulation.getResourceId(nodeElement)]);
 
-        if (this.selectionMode) this.performSelection(nodeElement);
+        if (this.selectionMode === 'single') {
+            this.toggleSelection(nodeElement);
+        } else if (this.selectionMode === 'rect') {
+            this.performSelection(nodeElement);
+        }
     }
 
 
@@ -201,16 +205,28 @@ export class GraphComponent implements OnChanges {
     }
 
 
-    private performSelection(nodeElement: Element) {
+    private toggleSelection(nodeElement: Element) {
 
         const isSelected: boolean = this.selectedElements.includes(nodeElement);
 
         if (isSelected) {
-            this.selectedElements.splice(this.selectedElements.indexOf(nodeElement), 1);
+            this.performDeselection(nodeElement);
         } else {
-            this.selectedElements.push(nodeElement);
+            this.performSelection(nodeElement);
         }
+    }
 
-        GraphManipulation.performHighlightingSelection(nodeElement, !isSelected);
+
+    private performSelection(nodeElement: Element) {
+
+        this.selectedElements.push(nodeElement);
+        GraphManipulation.performHighlightingSelection(nodeElement, true);
+    }
+
+
+    private performDeselection(nodeElement: Element) {
+
+        this.selectedElements.splice(this.selectedElements.indexOf(nodeElement), 1);
+        GraphManipulation.performHighlightingSelection(nodeElement, false);
     }
 }

@@ -3,7 +3,7 @@ import {Document, toResourceId, Relations,
     NewDocument, ProjectConfiguration} from 'idai-components-2/core';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {subtract, flatMap, flow, filter, to, on, isNot, mapTo} from 'tsfun';
+import {subtract, flatMap, flow, filter, to, on, isNot, mapTo, includedIn} from 'tsfun';
 import {TypeUtility} from '../model/type-utility';
 
 
@@ -122,7 +122,8 @@ export class PersistenceManager {
     private async getExistingConnectedDocs(documents: Array<Document>) {
 
         const connectedDocuments: Array<Document> = [];
-        for (let id of this.getUniqueConnectedDocumentsIds(documents)) {
+        for (let id of this.getUniqueConnectedDocumentsIds(documents,
+                this.projectConfiguration.getAllRelationDefinitions().map(to('name')))) {
 
             try {
                 connectedDocuments.push(await this.datastore.get(id));
@@ -139,20 +140,20 @@ export class PersistenceManager {
     }
 
 
-    private getUniqueConnectedDocumentsIds(documents: Array<Document>) {
+    private getUniqueConnectedDocumentsIds(documents: Array<Document>, allowedRelations: string[]) {
 
         return subtract
             (documents.map(toResourceId))
             (flatMap<any>(doc =>
-                    this.getAllTargets(doc.resource.relations))(documents));
+                    PersistenceManager.getAllTargets(doc.resource.relations, allowedRelations))(documents));
     }
 
 
-    private getAllTargets(relations: Relations): Array<string> {
+    private static getAllTargets(relations: Relations, allowedRelations: string[]): Array<string> {
 
         return flow<any>((Object.keys(relations))
                 .filter(prop => relations.hasOwnProperty(prop))
-                .filter(prop => this.projectConfiguration.isRelationProperty(prop)),
+                .filter(includedIn(allowedRelations)),
             flatMap((prop: string) => relations[prop as string]));
     }
 

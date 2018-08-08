@@ -6,11 +6,11 @@ import {GraphManipulation} from './graph-manipulation';
  */
 export class SelectionRectangle {
 
-    private x1: number;
-    private y1: number;
+    private startPositionX: number;
+    private startPositionY: number;
 
-    private x2: number;
-    private y2: number;
+    private mousePositionX: number;
+    private mousePositionY: number;
 
     private svgElement: SVGRectElement;
 
@@ -19,12 +19,10 @@ export class SelectionRectangle {
 
     public start(event: MouseEvent, svgRoot: SVGSVGElement, htmlDocument: Document) {
 
-        this.x1 = this.x2 = event.x;
-        this.y1 = this.y2 = event.y - SelectionRectangle.verticalOffset;
+        this.startPositionX = this.mousePositionX = event.x;
+        this.startPositionY = this.mousePositionY = event.y - SelectionRectangle.verticalOffset;
 
         this.svgElement = GraphManipulation.createSVGElement('rect', htmlDocument) as SVGRectElement;
-        this.svgElement.setAttribute('x', this.x1.toString());
-        this.svgElement.setAttribute('y', this.y1.toString());
         this.svgElement.setAttribute('stroke', '#000');
         this.svgElement.setAttribute('stroke-width', '2');
         this.svgElement.setAttribute('stroke-dasharray', '10,10');
@@ -37,8 +35,11 @@ export class SelectionRectangle {
 
     public update(event: MouseEvent) {
 
-        this.x2 = event.x;
-        this.y2 = event.y - SelectionRectangle.verticalOffset;
+        this.mousePositionX = event.x;
+        this.mousePositionY = event.y - SelectionRectangle.verticalOffset;
+
+        this.svgElement.setAttribute('x', this.getLeft().toString());
+        this.svgElement.setAttribute('y', this.getTop().toString());
         this.svgElement.setAttribute('width', this.getWidth().toString());
         this.svgElement.setAttribute('height', this.getHeight().toString());
     }
@@ -69,21 +70,45 @@ export class SelectionRectangle {
 
         const boundingBox = element.getBoundingClientRect();
 
-        return boundingBox.right > this.x1
-            && boundingBox.left < this.x2
-            && boundingBox.top - SelectionRectangle.verticalOffset < this.y2
-            && boundingBox.bottom - SelectionRectangle.verticalOffset > this.y1;
+        return boundingBox.right > this.getLeft()
+            && boundingBox.left < this.getRight()
+            && boundingBox.top - SelectionRectangle.verticalOffset < this.getBottom()
+            && boundingBox.bottom - SelectionRectangle.verticalOffset > this.getTop();
+    }
+
+
+    private getLeft(): number {
+
+        return Math.min(this.startPositionX, this.mousePositionX);
+    }
+
+
+    private getRight(): number {
+
+        return Math.max(this.startPositionX, this.mousePositionX);
+    }
+
+
+    private getTop(): number {
+
+        return Math.min(this.startPositionY, this.mousePositionY);
+    }
+
+
+    private getBottom(): number {
+
+        return Math.max(this.startPositionY, this.mousePositionY);
     }
 
 
     private getWidth(): number {
 
-        return this.x2 - this.x1;
+        return this.getRight() - this.getLeft();
     }
 
 
     private getHeight(): number {
 
-        return this.y2 - this.y1;
+        return this.getBottom() - this.getTop();
     }
 }

@@ -3,7 +3,7 @@ import {Document, toResourceId, Relations,
     NewDocument, ProjectConfiguration} from 'idai-components-2/core';
 import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {subtract, flatMap, flow, filter, to} from 'tsfun';
+import {subtract, flatMap, flow, filter, to, on, isNot, mapTo} from 'tsfun';
 import {TypeUtility} from '../model/type-utility';
 
 
@@ -49,7 +49,7 @@ export class PersistenceManager {
         revisionsToSquash: Document[] = [],
         ): Promise<Document> {
 
-        const persistedDocument = await this.persistIt(document, username, revisionsToSquash);
+        const persistedDocument = await this.persistIt(document, username, mapTo('_rev', revisionsToSquash));
 
         const allVersions = [persistedDocument]
             .concat(oldVersion as Document)
@@ -74,7 +74,7 @@ export class PersistenceManager {
                 this.projectConfiguration, document, connectedDocs,
                 setInverseRelations)) {
 
-            await this.persistIt(docToUpdate, user);
+            await this.persistIt(docToUpdate, user, []);
         }
     }
 
@@ -160,23 +160,13 @@ export class PersistenceManager {
     }
 
 
-    private persistIt(document: Document|NewDocument, username: string, revisionsToSquash?: Document[]): Promise<Document> {
-
-        const squashRevisionIds = revisionsToSquash && revisionsToSquash.length > 0
-            ? revisionsToSquash
-                .filter(_ => {
-                    if ((_ as any)['_rev']) return true;
-                    console.log("_rev field not found", _);
-                    return false;
-                })
-                .map(to('_rev'))
-            : undefined;
+    private persistIt(document: Document|NewDocument, username: string, squashRevisionIds: string[]): Promise<Document> {
 
         return document.resource.id
             ? this.datastore.update(
                 document as Document,
                 username,
-                squashRevisionIds)
+                squashRevisionIds.length === 0 ? undefined : squashRevisionIds)
             : this.datastore.create(document, username);
     }
 }

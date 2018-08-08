@@ -17,10 +17,10 @@ export class ConnectedDocsWriter {
     ) {}
 
 
-    public async write(document: Document,
-                       otherVersions: Array<Document>,
-                       username: string,
-                       shouldSetInverseRelations = true): Promise<void> {
+    public async update(document: Document,
+                        otherVersions: Array<Document>,
+                        username: string,
+                        shouldSetInverseRelations = true): Promise<void> {
 
         const connectedDocs = await this.getExistingConnectedDocs(
             [document].concat(otherVersions));

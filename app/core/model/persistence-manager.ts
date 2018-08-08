@@ -77,17 +77,15 @@ export class PersistenceManager {
      *   [DatastoreErrors.DOCUMENT_DOES_NOT_EXIST_ERROR] - if document has a resource id, but does not exist in the db
      *   [DatastoreErrors.GENERIC_DELETE_ERROR] - if cannot delete for another reason
      */
-    public async remove(document: Document,
-                  username: string,
-                  oldVersion: Document = document) {
+    public async remove(document: Document, username: string) {
 
         // don't rely on isRecordedIn alone. Make sure it is really an operation subtype
         if (this.typeUtility.isSubtype(document.resource.type, "Operation")) {
             for (let recordedInDoc of (await this.getDocsRecordedIn(document.resource.id))) {
-                await this.removeWithConnections(recordedInDoc, recordedInDoc, username);
+                await this.removeWithConnections(recordedInDoc, username);
             }
         }
-        await this.removeWithConnections(document, oldVersion, username);
+        await this.removeWithConnections(document, username);
     }
 
 
@@ -98,18 +96,16 @@ export class PersistenceManager {
 
         const updated = await this.persistIt(document, username, mapTo('_rev', revisionsToSquash));
 
-        await this.persistenceWriter.write(
+        await this.persistenceWriter.update(
             updated, [oldVersion].concat(revisionsToSquash), username);
         return updated as Document;
     }
 
 
-    private async removeWithConnections(document: Document,
-                        oldVersion: Document,
-                        username: string): Promise<void> {
+    private async removeWithConnections(document: Document, username: string): Promise<void> {
 
-        await this.persistenceWriter.write(
-            document, [oldVersion], username, false);
+        await this.persistenceWriter.update(
+            document, [], username, false);
         await this.datastore.remove(document);
         return undefined;
     }

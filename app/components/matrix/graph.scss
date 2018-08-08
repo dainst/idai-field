@@ -6,6 +6,24 @@
 #graph-container {
   height: 100% !important;
 
+  &.selection-mode-rect {
+    svg {
+      cursor: crosshair;
+    }
+
+    .node {
+      cursor: crosshair;
+
+      text {
+        cursor: crosshair;
+      }
+    }
+
+    text {
+      cursor: crosshair;
+    }
+  }
+
   svg {
     width: 100% !important;
     height: 100% !important;

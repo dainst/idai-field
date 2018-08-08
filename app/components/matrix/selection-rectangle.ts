@@ -11,7 +11,7 @@ export class SelectionRectangle {
     private startPosition: { x: number, y: number};
     private mousePosition: { x: number, y: number};
 
-    private static verticalOffset: number = 117;
+    private static verticalOffset: number = 114;
 
 
     public start(event: MouseEvent, svgRoot: SVGSVGElement, htmlDocument: Document) {
@@ -20,8 +20,8 @@ export class SelectionRectangle {
 
         this.svgElement = GraphManipulation.createSVGElement('rect', htmlDocument) as SVGRectElement;
         this.svgElement.setAttribute('stroke', '#000');
-        this.svgElement.setAttribute('stroke-width', '2');
-        this.svgElement.setAttribute('stroke-dasharray', '10,10');
+        this.svgElement.setAttribute('stroke-width', '1');
+        this.svgElement.setAttribute('stroke-dasharray', '5,5');
         this.svgElement.setAttribute('fill-opacity', '0');
         const gElement = GraphManipulation.createSVGElement('g', htmlDocument);
         svgRoot.appendChild(gElement);

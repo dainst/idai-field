@@ -66,7 +66,7 @@ export class PersistenceWriter {
             this.projectConfiguration.getAllRelationDefinitions().map(to('name')))) {
 
             try {
-                connectedDocuments.push(await this.datastore.get(id));
+                connectedDocuments.push(await this.datastore.get(id as string));
             } catch (_) {
                 // this can be either due to deletion order, for example when
                 // deleting multiple docs recordedIn some other, but related to one another

@@ -44,6 +44,8 @@ export class GraphComponent implements OnChanges {
 
     private reset() {
 
+        if (this.panZoomBehavior) this.panZoomBehavior.destroy();
+
         while (this.graphContainer.nativeElement.firstChild) {
             this.graphContainer.nativeElement.removeChild(this.graphContainer.nativeElement.firstChild);
         }
@@ -70,8 +72,8 @@ export class GraphComponent implements OnChanges {
             dblClickZoomEnabled: false,
             customEventsHandler: {
                 haltEventListeners: ['mousedown', 'mousemove', 'mouseleave', 'mouseup'],
-                init: options => this.configureMouseListeners(options.svgElement),
-                destroy: () => {}
+                init: options => this.addMouseEventListeners(options.svgElement),
+                destroy: (options: any) => this.removeMouseEventListeners(options.svgElement)
             }
         });
 
@@ -93,12 +95,21 @@ export class GraphComponent implements OnChanges {
     }
 
 
-    private configureMouseListeners(svg: SVGSVGElement) {
+    private addMouseEventListeners(svg: SVGSVGElement) {
 
         svg.addEventListener('mousedown', this.onMouseDown.bind(this));
         svg.addEventListener('mousemove', this.onMouseMove.bind(this));
         svg.addEventListener('mouseup', this.onMouseUp.bind(this));
         svg.addEventListener('click', this.onClick.bind(this));
+    }
+
+
+    private removeMouseEventListeners(svg: SVGSVGElement) {
+
+        svg.removeEventListener('mousedown', this.onMouseDown.bind(this));
+        svg.removeEventListener('mousemove', this.onMouseMove.bind(this));
+        svg.removeEventListener('mouseup', this.onMouseUp.bind(this));
+        svg.removeEventListener('click', this.onClick.bind(this));
     }
 
 

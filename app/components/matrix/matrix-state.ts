@@ -40,9 +40,10 @@ export class MatrixState {
     }
 
 
-    public setRelationsMode(relationsMode: MatrixRelationsMode) {
+    public async setRelationsMode(relationsMode: MatrixRelationsMode) {
 
         this.relationsMode = relationsMode;
+        await this.store();
     }
 
 

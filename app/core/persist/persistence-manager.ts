@@ -143,22 +143,9 @@ export class PersistenceManager {
     private getUniqueConnectedDocumentsIds(documents: Array<Document>, allowedRelations: string[]) {
 
         return subtract
-            (documents.map(toResourceId))
+            (documents.map(toResourceId)) // TODO get these directly as params
             (flatMap<any>(doc =>
-                    PersistenceManager.getAllTargets(doc.resource.relations, allowedRelations))(documents));
-    }
-
-
-    private static getAllTargets(relations: Relations, allowedRelations?: string[]): Array<string> {
-
-        const ownKeys = Object.keys(relations)
-                .filter(prop => relations.hasOwnProperty(prop));
-
-        const usableRelations = allowedRelations
-            ? ownKeys.filter(includedIn(allowedRelations))
-            : ownKeys;
-
-        return flatMap((prop: string) => relations[prop as string])(usableRelations);
+                    Relations.getAllTargets(doc.resource.relations, allowedRelations))(documents));
     }
 
 

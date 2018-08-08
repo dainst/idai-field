@@ -102,7 +102,7 @@ export class PersistenceManager {
         const updated = await this.persistIt(document, username, mapTo('_rev', revisionsToSquash));
 
         await this.persistenceWriter.write(
-            updated, oldVersion, revisionsToSquash, false, username);
+            updated, [oldVersion].concat(revisionsToSquash), username, false);
         return updated as Document;
     }
 
@@ -112,7 +112,7 @@ export class PersistenceManager {
                         username: string): Promise<void> {
 
         await this.persistenceWriter.write(
-            document, oldVersion, [], true, username);
+            document, [oldVersion], username, true);
         await this.datastore.remove(document);
         return undefined;
     }

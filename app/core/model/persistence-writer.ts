@@ -18,13 +18,12 @@ export class PersistenceWriter {
 
 
     public async write(document: Document,
-                       oldVersion: Document,
-                       revisionsToSquash: Array<Document>,
-                       deletion: boolean,
-                       username: string): Promise<void> {
+                       otherVersions: Array<Document>,
+                       username: string,
+                       deletion: boolean): Promise<void> {
 
         const connectedDocs = await this.getExistingConnectedDocs(
-            [document].concat([oldVersion]).concat(revisionsToSquash));
+            [document].concat(otherVersions));
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
             this.projectConfiguration, document,

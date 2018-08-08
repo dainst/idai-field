@@ -91,7 +91,7 @@ describe('PersistenceWriter', () => {
         doc.resource.relations['BelongsTo'] = ['2'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await persistenceWriter.write(doc, doc, [], false, 'u');
+        await persistenceWriter.write(doc, [doc], 'u', false);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
         expect(relatedDoc.resource.relations['Contains'][0]).toBe('1');
@@ -99,15 +99,12 @@ describe('PersistenceWriter', () => {
     });
 
 
-
-
-
     it('should save an object with a one way relation', async done => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await persistenceWriter.write(doc, doc, [], false, 'u');
+        await persistenceWriter.write(doc, [doc], 'u', false);
 
         expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc, 'u', undefined);
         done();
@@ -119,7 +116,7 @@ describe('PersistenceWriter', () => {
         doc.resource.relations['BelongsTo'] = ['2', '3'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await persistenceWriter.write(doc, doc, [], false, 'u');
+        await persistenceWriter.write(doc, [doc], 'u', false);
 
         // expect(mockDatastore.update).toHaveBeenCalledWith(relatedObject);
         // right now it is not possible to test both objects due to problems with the return val of promise.all
@@ -135,7 +132,7 @@ describe('PersistenceWriter', () => {
         doc.resource.relations['BelongsTo']=['2'];
         relatedDoc.resource.relations['Contains']=['1'];
 
-        await persistenceWriter.write(doc, doc, [], true, 'u');
+        await persistenceWriter.write(doc, [doc], 'u', true);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
         expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
@@ -147,7 +144,7 @@ describe('PersistenceWriter', () => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
 
-        await persistenceWriter.write(doc, doc, [], true, 'u');
+        await persistenceWriter.write(doc, [doc], 'u', true);
 
         expect(mockDatastore.update).not.toHaveBeenCalled();
         done();

@@ -6,21 +6,17 @@ import {GraphManipulation} from './graph-manipulation';
  */
 export class SelectionRectangle {
 
-    private startPositionX: number;
-    private startPositionY: number;
-
-    private mousePositionX: number;
-    private mousePositionY: number;
-
     private svgElement: SVGRectElement;
+
+    private startPosition: { x: number, y: number};
+    private mousePosition: { x: number, y: number};
 
     private static verticalOffset: number = 110;
 
 
     public start(event: MouseEvent, svgRoot: SVGSVGElement, htmlDocument: Document) {
 
-        this.startPositionX = this.mousePositionX = event.x;
-        this.startPositionY = this.mousePositionY = event.y - SelectionRectangle.verticalOffset;
+        this.startPosition = this.mousePosition = SelectionRectangle.getMousePosition(event);
 
         this.svgElement = GraphManipulation.createSVGElement('rect', htmlDocument) as SVGRectElement;
         this.svgElement.setAttribute('stroke', '#000');
@@ -35,8 +31,7 @@ export class SelectionRectangle {
 
     public update(event: MouseEvent) {
 
-        this.mousePositionX = event.x;
-        this.mousePositionY = event.y - SelectionRectangle.verticalOffset;
+        this.mousePosition = SelectionRectangle.getMousePosition(event);
 
         this.svgElement.setAttribute('x', this.getLeft().toString());
         this.svgElement.setAttribute('y', this.getTop().toString());
@@ -79,25 +74,25 @@ export class SelectionRectangle {
 
     private getLeft(): number {
 
-        return Math.min(this.startPositionX, this.mousePositionX);
+        return Math.min(this.startPosition.x, this.mousePosition.x);
     }
 
 
     private getRight(): number {
 
-        return Math.max(this.startPositionX, this.mousePositionX);
+        return Math.max(this.startPosition.x, this.mousePosition.x);
     }
 
 
     private getTop(): number {
 
-        return Math.min(this.startPositionY, this.mousePositionY);
+        return Math.min(this.startPosition.y, this.mousePosition.y);
     }
 
 
     private getBottom(): number {
 
-        return Math.max(this.startPositionY, this.mousePositionY);
+        return Math.max(this.startPosition.y, this.mousePosition.y);
     }
 
 
@@ -110,5 +105,14 @@ export class SelectionRectangle {
     private getHeight(): number {
 
         return this.getBottom() - this.getTop();
+    }
+
+
+    private static getMousePosition(event: MouseEvent): { x: number, y: number } {
+
+        return {
+            x: event.x,
+            y: event.y - this.verticalOffset
+        };
     }
 }

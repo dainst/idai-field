@@ -11,7 +11,7 @@ export class SelectionRectangle {
     private startPosition: { x: number, y: number};
     private mousePosition: { x: number, y: number};
 
-    private static verticalOffset: number = 110;
+    private static verticalOffset: number = 117;
 
 
     public start(event: MouseEvent, svgRoot: SVGSVGElement, htmlDocument: Document) {

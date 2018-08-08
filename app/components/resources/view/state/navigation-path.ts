@@ -2,8 +2,8 @@ import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {clone} from '../../../../util/object-util';
 import {ViewContext} from './view-context';
-import {differentFrom, isSegmentWith, NavigationPathSegment, toResourceId} from './navigation-path-segment';
-import {takeUntil, takeWhile} from 'tsfun';
+import {differentFrom, NavigationPathSegment, toResourceId} from './navigation-path-segment';
+import {takeUntil, takeWhile, on} from 'tsfun';
 import {ModelUtil} from '../../../../core/model/model-util';
 
 
@@ -242,7 +242,7 @@ export module NavigationPath {
         return oldSegments.map(toResourceId).includes(newSelectedSegmentDoc.resource.id)
             ? oldSegments
             : (oldSelectedSegmentId
-                    ? takeUntil(isSegmentWith(oldSelectedSegmentId))(oldSegments)
+                    ? takeUntil(on('document.resource.id:')(oldSelectedSegmentId))(oldSegments)
                     : []
             ).concat([{ document: newSelectedSegmentDoc, q: '', types: [] }]);
     }

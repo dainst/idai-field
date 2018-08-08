@@ -39,11 +39,6 @@ export module NavigationPathSegment {
 }
 
 
-// TODO possibly use comparator from tsfun
-export const isSegmentWith
-    = (resourceId: string) => (segment: NavigationPathSegment) => resourceId === segment.document.resource.id;
-
-
 // Todo make general mapOnto in tsfun
 export const toResourceId = (seg: NavigationPathSegment) => seg.document.resource.id;
 

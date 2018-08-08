@@ -1,4 +1,5 @@
-import {Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, Renderer2, ViewChild}
+    from '@angular/core';
 import {DOCUMENT} from '@angular/platform-browser';
 import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
@@ -28,11 +29,13 @@ export class GraphComponent implements OnChanges {
 
     private panZoomBehavior: SvgPanZoom.Instance;
     private lastMousePosition: { x: number, y: number }|undefined;
+    private removeMouseUpEventListener: Function;
 
     private static maxRealZoom: number = 2;
 
 
-    constructor(@Inject(DOCUMENT) private htmlDocument: Document) {}
+    constructor(@Inject(DOCUMENT) private htmlDocument: Document,
+                private renderer: Renderer2) {}
 
 
     ngOnChanges() {
@@ -99,8 +102,10 @@ export class GraphComponent implements OnChanges {
 
         svg.addEventListener('mousedown', this.onMouseDown.bind(this));
         svg.addEventListener('mousemove', this.onMouseMove.bind(this));
-        svg.addEventListener('mouseup', this.onMouseUp.bind(this));
         svg.addEventListener('click', this.onClick.bind(this));
+
+        this.removeMouseUpEventListener
+            = this.renderer.listen('document', 'mouseup', this.onMouseUp.bind(this));
     }
 
 
@@ -108,8 +113,9 @@ export class GraphComponent implements OnChanges {
 
         svg.removeEventListener('mousedown', this.onMouseDown.bind(this));
         svg.removeEventListener('mousemove', this.onMouseMove.bind(this));
-        svg.removeEventListener('mouseup', this.onMouseUp.bind(this));
         svg.removeEventListener('click', this.onClick.bind(this));
+
+        this.removeMouseUpEventListener();
     }
 
 

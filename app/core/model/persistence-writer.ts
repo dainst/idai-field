@@ -86,8 +86,8 @@ export class PersistenceWriter {
             Relations.getAllTargets(doc.resource.relations, allowedRelations);
 
         return subtract
-        (documents.map(toResourceId))
-        (flatMap<any>(getAllRelationTargetsForDoc)(documents));
+            (documents.map(toResourceId))
+            (flatMap<any>(getAllRelationTargetsForDoc)(documents));
     }
 
 

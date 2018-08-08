@@ -2,6 +2,7 @@ import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {PersistenceManager} from "../../../../app/core/model/persistence-manager";
 import {clone} from '../../../../app/util/object-util';
+import {PersistenceWriter} from '../../../../app/core/model/persistence-writer';
 
 /**
  * @author Daniel de Oliveira
@@ -71,7 +72,9 @@ describe('PersistenceManager', () => {
         mockTypeUtility = jasmine.createSpyObj('mockTypeUtility', ['isSubtype']);
         mockTypeUtility.isSubtype.and.returnValue(true);
 
-        persistenceManager = new PersistenceManager(mockDatastore, projectConfiguration, mockTypeUtility);
+        persistenceManager = new PersistenceManager(
+            mockDatastore, projectConfiguration, mockTypeUtility,
+            new PersistenceWriter(mockDatastore, projectConfiguration));
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.find.and.callFake(findFunction);
         mockDatastore.update.and.returnValue(Promise.resolve(doc));

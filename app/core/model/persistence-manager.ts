@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Document, NewDocument, ProjectConfiguration, toResourceId} from 'idai-components-2/core';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to} from 'tsfun';
-import {TypeUtility} from '../model/type-utility';
+import {TypeUtility} from './type-utility';
 import {PersistenceWriter} from './persistence-writer';
 
 
@@ -23,15 +23,12 @@ import {PersistenceWriter} from './persistence-writer';
  */
 export class PersistenceManager {
 
-    private persistenceWriter: PersistenceWriter;
-
     constructor(
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
-        private typeUtility: TypeUtility
-    ) {
-        this.persistenceWriter = new PersistenceWriter(datastore, projectConfiguration);
-    }
+        private typeUtility: TypeUtility,
+        private persistenceWriter: PersistenceWriter
+    ) {}
 
 
     /**

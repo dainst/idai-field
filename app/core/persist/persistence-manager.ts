@@ -11,6 +11,9 @@ import {TypeUtility} from '../model/type-utility';
 // children (via liesWithin, that either they also get deleted (like for operation type documents)
 // or they get moved to a higher level
 
+// Or solve both problems (that mentioned plus when resources are moved to different operations)
+// in view facade so that missing parents are ignored and items get displayed on the top level
+
 @Injectable()
 /**
  * When persisting or deleting, PersistenceManager maintains a consistent state of relations between the

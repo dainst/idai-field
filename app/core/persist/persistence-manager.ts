@@ -142,10 +142,12 @@ export class PersistenceManager {
 
     private getUniqueConnectedDocumentsIds(documents: Array<Document>, allowedRelations: string[]) {
 
+        const getAllRelationTargetsForDoc = (doc: Document) =>
+            Relations.getAllTargets(doc.resource.relations, allowedRelations);
+
         return subtract
             (documents.map(toResourceId))
-            (flatMap<any>(doc =>
-                    Relations.getAllTargets(doc.resource.relations, allowedRelations))(documents));
+            (flatMap<any>(getAllRelationTargetsForDoc)(documents));
     }
 
 

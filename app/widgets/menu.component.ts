@@ -9,7 +9,7 @@ export abstract class MenuComponent {
 
     public opened: boolean = false;
 
-    private mouseEventListener: Function|undefined;
+    private removeMouseEventListener: Function|undefined;
 
 
     constructor(private renderer: Renderer2,
@@ -22,7 +22,7 @@ export abstract class MenuComponent {
 
         this.opened = true;
 
-        this.mouseEventListener = this.renderer.listen(
+        this.removeMouseEventListener = this.renderer.listen(
             'document',
             this.clickToOpen ? 'click' : 'mousemove',
             event => this.handleMouseEvent(event));
@@ -33,7 +33,7 @@ export abstract class MenuComponent {
 
         this.opened = false;
 
-        if (this.mouseEventListener) this.mouseEventListener();
+        if (this.removeMouseEventListener) this.removeMouseEventListener();
     }
 
 

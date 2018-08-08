@@ -38,14 +38,8 @@ export module GraphManipulation {
         for (let i = 0; i < clusterElements.length; i++) {
             const labelElement: Element = createSVGElement('g', htmlDocument);
             const textElement: SVGTextElement = clusterElements[i].getElementsByTagName('text')[0];
-            const rectElement: Element = createSVGElement('rect', htmlDocument);
-            rectElement.setAttribute('x', textElement.getBBox().x.toString());
-            rectElement.setAttribute('y', textElement.getBBox().y.toString());
-            rectElement.setAttribute('width', textElement.getBBox().width.toString());
-            rectElement.setAttribute('height', textElement.getBBox().height.toString());
-            rectElement.setAttribute('fill', 'aliceblue');
-            textElement.setAttribute('font-size', '12.00');
-            textElement.setAttribute('fill', 'grey');
+            const rectElement: Element = createSubgraphLabelBoxElement(textElement, htmlDocument);
+            adjustSubgraphLabelLayout(textElement);
             clusterElements[i].removeChild(textElement);
             labelElement.appendChild(rectElement);
             labelElement.appendChild(textElement);
@@ -53,6 +47,26 @@ export module GraphManipulation {
         }
 
         graphElement.appendChild(clusterLabelGroupElement);
+    }
+
+
+    function createSubgraphLabelBoxElement(textElement: SVGTextElement, htmlDocument: Document): Element {
+
+        const rectElement: Element = createSVGElement('rect', htmlDocument);
+        rectElement.setAttribute('x', textElement.getBBox().x.toString());
+        rectElement.setAttribute('y', textElement.getBBox().y.toString());
+        rectElement.setAttribute('width', textElement.getBBox().width.toString());
+        rectElement.setAttribute('height', textElement.getBBox().height.toString());
+        rectElement.setAttribute('fill', 'aliceblue');
+
+        return rectElement;
+    }
+
+
+    function adjustSubgraphLabelLayout(textElement: SVGTextElement) {
+
+        textElement.setAttribute('font-size', '12.00');
+        textElement.setAttribute('fill', 'grey');
     }
 
 

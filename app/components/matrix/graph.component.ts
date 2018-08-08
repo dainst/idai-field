@@ -11,8 +11,6 @@ import {GraphManipulation} from './graph-manipulation';
     templateUrl: './graph.html'
 })
 /**
- * Responsible for the svg / css manipulation and direct interaction of the graph.
- *
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */

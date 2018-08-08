@@ -18,8 +18,8 @@ export class PersistenceWriter {
 
 
     public async remove(document: Document,
-                                 oldVersion: Document,
-                                 username: string): Promise<void> {
+                        oldVersion: Document,
+                        username: string): Promise<void> {
 
         await this.updateWithConnections(
             document, oldVersion, [], true, username);

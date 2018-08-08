@@ -87,18 +87,10 @@ export class PersistenceManager {
         // don't rely on isRecordedIn alone. Make sure it is really an operation subtype
         if (this.typeUtility.isSubtype(document.resource.type, "Operation")) {
             for (let recordedInDoc of (await this.getDocsRecordedIn(document.resource.id))) {
-                await this.removeDocument(recordedInDoc, username);
+                await this.persistenceWriter.remove(recordedInDoc, recordedInDoc, username);
             }
         }
-        await this.removeDocument(document, username, oldVersion);
-    }
-
-
-    private async removeDocument(
-        document: Document,
-        user: string, oldVersion: Document = document) {
-
-        await this.persistenceWriter.remove(document, oldVersion, user);
+        await this.persistenceWriter.remove(document, oldVersion, username);
     }
 
 

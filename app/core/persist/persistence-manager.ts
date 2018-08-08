@@ -96,7 +96,7 @@ export class PersistenceManager {
 
         // don't rely on isRecordedIn alone. Make sure it is really an operation subtype
         if (this.typeUtility.isSubtype(document.resource.type, "Operation")) {
-            for (let recordedInDoc of (await this.getDocsRecordedIn(document))) {
+            for (let recordedInDoc of (await this.getDocsRecordedIn(document.resource.id))) {
                 await this.removeDocument(recordedInDoc, username);
             }
         }
@@ -152,10 +152,10 @@ export class PersistenceManager {
     }
 
 
-    private async getDocsRecordedIn(document: Document): Promise<Array<Document>> {
+    private async getDocsRecordedIn(resourceId: string): Promise<Array<Document>> {
 
         return (await this.datastore.find({
-            constraints: { 'isRecordedIn:contain': document.resource.id }
+            constraints: { 'isRecordedIn:contain': resourceId }
         })).documents;
     }
 

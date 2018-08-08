@@ -45,17 +45,15 @@ export class PersistenceManager {
     public async persist(
         document: NewDocument, // or Document
         username: string,
-        oldVersion: NewDocument = document,
+        oldVersion: Document = document as Document,
         revisionsToSquash: Document[] = [],
         ): Promise<Document> {
 
         const persistedDocument = await this.persistIt(document, username, mapTo('_rev', revisionsToSquash) /* TODO let caller do the mapTo */);
 
-        const allVersions = [persistedDocument]
-            .concat(oldVersion as Document)
-            .concat(revisionsToSquash);
+        const connectedDocs = await this.getExistingConnectedDocs(
+            [persistedDocument].concat(oldVersion).concat(revisionsToSquash));
 
-        const connectedDocs = await this.getExistingConnectedDocs(allVersions as Document[]);
         await this.updateConnectedDocs(persistedDocument, connectedDocs, true, username);
 
         // TODO make separate 2nd pass in which all child documents (by liesWithin) get checked

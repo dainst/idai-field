@@ -31,9 +31,6 @@ export class PersistenceManager {
     ) {}
 
 
-
-
-
     /**
      * Persists document and all the objects that are or have been in relation
      * with the object before the method call.
@@ -94,7 +91,7 @@ export class PersistenceManager {
     }
 
 
-    public async updateWithConnections(document: Document,
+    private async updateWithConnections(document: Document,
                         oldVersion: Document,
                         revisionsToSquash: Array<Document>,
                         username: string) {

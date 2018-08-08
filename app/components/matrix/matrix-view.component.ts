@@ -13,6 +13,9 @@ import {Loading} from '../../widgets/loading';
 import {DotBuilder, GraphRelationsConfiguration} from './dot-builder';
 
 
+export type MatrixSelectionMode = 'single'|'rect'|'none';
+
+
 @Component({
     moduleId: module.id,
     templateUrl: './matrix-view.html'
@@ -37,7 +40,7 @@ export class MatrixViewComponent implements OnInit {
     private featureDocuments: Array<IdaiFieldFeatureDocument> = [];
     private subgraphSelection: Array<IdaiFieldFeatureDocument> = []; // see selectionMode
 
-    public selectionMode: boolean = false; // false is edit mode, true is selection mode
+    public selectionMode: MatrixSelectionMode = 'rect';
 
 
     constructor(
@@ -72,16 +75,26 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    public async select(resourceId: string) {
+    public async select(resourceIds: string[]) {
 
-        const selectedDocument = this.featureDocuments.find(on('resource.id:')(resourceId));
-        if (!selectedDocument) return;
+        const documents: Array<IdaiFieldFeatureDocument> = resourceIds.map(resourceId => {
+            return this.featureDocuments.find(on('resource.id:')(resourceId)) as IdaiFieldFeatureDocument;
+        }).filter(document => document !== undefined);
 
-        if (!this.selectionMode) {
-            await this.launchDocedit(selectedDocument);
+        if (documents.length === 0) return;
+        if (documents.length === 1 && this.selectionMode === 'none') {
+            await this.launchDocedit(documents[0]);
         } else {
-            this.subgraphSelection = MatrixViewComponent.addOrRemove(this.subgraphSelection, selectedDocument);
+            await this.selectDocuments(documents);
         }
+    }
+
+
+    public async selectDocuments(documents: Array<IdaiFieldFeatureDocument>) {
+
+        documents.forEach(document => {
+            return this.subgraphSelection = MatrixViewComponent.addOrRemove(this.subgraphSelection, document);
+        });
     }
 
 
@@ -112,7 +125,7 @@ export class MatrixViewComponent implements OnInit {
                 this.featureDocuments = this.subgraphSelection;
                 this.subgraphSelection = [];
             }
-            this.selectionMode = false;
+            this.selectionMode = 'none';
         }
 
         this.calculateGraph();
@@ -121,7 +134,7 @@ export class MatrixViewComponent implements OnInit {
 
     public toggleSubgraphSelection() {
 
-        this.selectionMode = !this.selectionMode;
+        this.selectionMode = this.selectionMode === 'none' ? 'rect' : 'none';
         if (this.selectionMode) this.subgraphSelection = [];
     }
 

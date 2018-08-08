@@ -213,7 +213,7 @@ export module GraphManipulation {
     }
 
 
-    function createSVGElement(type: string, htmlDocument: Document): Element {
+    export function createSVGElement(type: string, htmlDocument: Document): Element {
 
         return htmlDocument.createElementNS('http://www.w3.org/2000/svg', type);
     }

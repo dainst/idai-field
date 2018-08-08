@@ -4,6 +4,8 @@ import {DOCUMENT} from '@angular/platform-browser';
 import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
 import {GraphManipulation} from './graph-manipulation';
+import {MatrixSelectionMode} from './matrix-view.component';
+import {SelectionRectangle} from './selection-rectangle';
 
 
 @Component({
@@ -18,16 +20,19 @@ import {GraphManipulation} from './graph-manipulation';
 export class GraphComponent implements OnChanges {
 
     @Input() graph: string;
-    @Input() selectionMode: boolean = true;
+    @Input() selectionMode: MatrixSelectionMode;
 
-    @Output() onSelect: EventEmitter<string> = new EventEmitter<string>();
+    @Output() onSelect: EventEmitter<string[]> = new EventEmitter<string[]>();
 
     @ViewChild('graphContainer') graphContainer: ElementRef;
+
+    private svgRoot: SVGSVGElement;
 
     private hoverElement: Element|undefined;
     private selectedElements: Array<Element> = [];
 
     private panZoomBehavior: SvgPanZoom.Instance;
+    private selectionRectangle: SelectionRectangle|undefined;
     private lastMousePosition: { x: number, y: number }|undefined;
     private removeMouseUpEventListener: Function;
 
@@ -59,13 +64,13 @@ export class GraphComponent implements OnChanges {
 
         if (!this.graph) return;
 
-        const svgGraph = new DOMParser().parseFromString(this.graph, 'image/svg+xml')
+        this.svgRoot = new DOMParser().parseFromString(this.graph, 'image/svg+xml')
             .getElementsByTagName('svg')[0];
 
-        GraphManipulation.removeTitleElements(svgGraph);
-        this.graphContainer.nativeElement.appendChild(svgGraph);
-        GraphManipulation.addClusterSubgraphLabelBoxes(svgGraph, this.htmlDocument);
-        this.configurePanZoomBehavior(svgGraph);
+        GraphManipulation.removeTitleElements(this.svgRoot);
+        this.graphContainer.nativeElement.appendChild(this.svgRoot);
+        GraphManipulation.addClusterSubgraphLabelBoxes(this.svgRoot, this.htmlDocument);
+        this.configurePanZoomBehavior(this.svgRoot);
     }
 
 
@@ -122,6 +127,10 @@ export class GraphComponent implements OnChanges {
     private onMouseDown(event: MouseEvent) {
 
         if (event.button === 2) this.lastMousePosition = { x: event.x, y: event.y };
+        if (event.button === 0 && this.selectionMode === 'rect') {
+            this.selectionRectangle = new SelectionRectangle();
+            this.selectionRectangle.start(event, this.svgRoot, this.htmlDocument);
+        }
     }
 
 
@@ -129,12 +138,25 @@ export class GraphComponent implements OnChanges {
 
         this.performPanning(event);
         this.performHovering(event.target as Element);
+        if (this.selectionRectangle) this.selectionRectangle.update(event);
     }
 
 
     private onMouseUp() {
 
         this.lastMousePosition = undefined;
+
+        if (this.selectionRectangle) {
+            const selectedElements: Array<Element> = this.selectionRectangle.getSelectedElements(this.svgRoot);
+            if (selectedElements.length > 0) {
+                this.onSelect.emit(selectedElements.map(element => {
+                    this.performSelection(element);
+                    return GraphManipulation.getResourceId(element);
+                }));
+            }
+            this.selectionRectangle.remove(this.svgRoot);
+            this.selectionRectangle = undefined;
+        }
     }
 
 
@@ -143,7 +165,7 @@ export class GraphComponent implements OnChanges {
         const nodeElement: Element|undefined = GraphManipulation.getNodeElement(event.target as Element);
         if (!nodeElement) return;
 
-        this.onSelect.emit(GraphManipulation.getResourceId(nodeElement));
+        this.onSelect.emit([GraphManipulation.getResourceId(nodeElement)]);
 
         if (this.selectionMode) this.performSelection(nodeElement);
     }

@@ -103,29 +103,6 @@ describe('PersistenceManager', () => {
     });
 
 
-    it('remove: should remove a document', async done => {
-
-        doc.resource.relations['BelongsTo']=['2'];
-        relatedDoc.resource.relations['Contains']=['1'];
-
-        await persistenceManager.remove(doc, 'u');
-
-        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
-        expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
-        done();
-    });
-
-
-    it('remove: should remove a document with a one way relation', async done => {
-
-        doc.resource.relations['isRecordedIn'] = ['2'];
-
-        await persistenceManager.remove(doc, 'u');
-
-        expect(mockDatastore.update).not.toHaveBeenCalled();
-        done();
-    });
-
 
     it('remove: should remove an operation type resource, another related resource gets relation updated', async done => {
 

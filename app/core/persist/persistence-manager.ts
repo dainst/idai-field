@@ -43,7 +43,7 @@ export class PersistenceManager {
      * @throws msgWithParams
      */
     public async persist(
-        document: NewDocument, // or Document
+        document: NewDocument|Document,
         username: string,
         oldVersion: Document = document as Document,
         revisionsToSquash: Document[] = [],

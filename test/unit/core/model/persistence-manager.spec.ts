@@ -2,7 +2,7 @@ import {Document} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {PersistenceManager} from "../../../../app/core/model/persistence-manager";
 import {clone} from '../../../../app/util/object-util';
-import {PersistenceWriter} from '../../../../app/core/model/persistence-writer';
+import {ConnectedDocsWriter} from '../../../../app/core/model/connected-docs-writer';
 
 /**
  * @author Daniel de Oliveira
@@ -74,7 +74,7 @@ describe('PersistenceManager', () => {
 
         persistenceManager = new PersistenceManager(
             mockDatastore, projectConfiguration, mockTypeUtility,
-            new PersistenceWriter(mockDatastore, projectConfiguration));
+            new ConnectedDocsWriter(mockDatastore, projectConfiguration));
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.find.and.callFake(findFunction);
         mockDatastore.update.and.returnValue(Promise.resolve(doc));

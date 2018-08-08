@@ -1,12 +1,11 @@
 import {Document, ProjectConfiguration} from 'idai-components-2/core';
-import {clone} from '../../../../app/util/object-util';
-import {PersistenceWriter} from '../../../../app/core/model/persistence-writer';
+import {ConnectedDocsWriter} from '../../../../app/core/model/connected-docs-writer';
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-describe('PersistenceWriter', () => {
+describe('ConnectedDocsWriter', () => {
 
     const projectConfiguration = new ProjectConfiguration({
         'types': [
@@ -32,7 +31,7 @@ describe('PersistenceWriter', () => {
 
     let mockDatastore;
     let mockTypeUtility;
-    let persistenceWriter: PersistenceWriter;
+    let persistenceWriter: ConnectedDocsWriter;
     const id = 'abc';
 
     let doc: Document;
@@ -59,7 +58,7 @@ describe('PersistenceWriter', () => {
         mockTypeUtility = jasmine.createSpyObj('mockTypeUtility', ['isSubtype']);
         mockTypeUtility.isSubtype.and.returnValue(true);
 
-        persistenceWriter = new PersistenceWriter(mockDatastore, projectConfiguration);
+        persistenceWriter = new ConnectedDocsWriter(mockDatastore, projectConfiguration);
 
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.update.and.returnValue(Promise.resolve(doc));

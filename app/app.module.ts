@@ -47,7 +47,7 @@ import {UsernameProvider} from './core/settings/username-provider';
 import {IndexFacade} from './core/datastore/index/index-facade';
 import {FulltextIndexer} from './core/datastore/index/fulltext-indexer';
 import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
-import {PersistenceWriter} from './core/model/persistence-writer';
+import {ConnectedDocsWriter} from './core/model/connected-docs-writer';
 
 
 const remote = require('electron').remote;
@@ -178,7 +178,7 @@ let indexFacade: IndexFacade|undefined = undefined;
             },
             deps: []
         },
-        PersistenceWriter,
+        ConnectedDocsWriter,
         PersistenceManager,
         Validator,
         { provide: MD, useClass: M},

@@ -9,7 +9,7 @@ import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to} from 
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export class PersistenceWriter {
+export class ConnectedDocsWriter {
 
     constructor(
         private datastore: DocumentDatastore,

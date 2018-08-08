@@ -32,7 +32,7 @@ export module NavigationPathSegment {
 
         const index = segments.indexOf(segment);
 
-        return (index === 0)
+        return index === 0
             ? mainTypeDocumentResourceId !== undefined && Document.hasRelationTarget(segment.document,
             'isRecordedIn', mainTypeDocumentResourceId)
             : Document.hasRelationTarget(segment.document,

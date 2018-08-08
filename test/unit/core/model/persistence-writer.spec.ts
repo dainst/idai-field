@@ -91,7 +91,7 @@ describe('PersistenceWriter', () => {
         doc.resource.relations['BelongsTo'] = ['2'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await persistenceWriter.write(doc, [doc], 'u', false);
+        await persistenceWriter.write(doc, [doc], 'u');
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
         expect(relatedDoc.resource.relations['Contains'][0]).toBe('1');
@@ -104,7 +104,7 @@ describe('PersistenceWriter', () => {
         doc.resource.relations['isRecordedIn'] = ['2'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await persistenceWriter.write(doc, [doc], 'u', false);
+        await persistenceWriter.write(doc, [doc], 'u');
 
         expect(mockDatastore.update).not.toHaveBeenCalledWith(relatedDoc, 'u', undefined);
         done();
@@ -116,7 +116,7 @@ describe('PersistenceWriter', () => {
         doc.resource.relations['BelongsTo'] = ['2', '3'];
         mockDatastore.update.and.returnValue(Promise.resolve(doc));
 
-        await persistenceWriter.write(doc, [doc], 'u', false);
+        await persistenceWriter.write(doc, [doc], 'u');
 
         // expect(mockDatastore.update).toHaveBeenCalledWith(relatedObject);
         // right now it is not possible to test both objects due to problems with the return val of promise.all
@@ -132,7 +132,7 @@ describe('PersistenceWriter', () => {
         doc.resource.relations['BelongsTo']=['2'];
         relatedDoc.resource.relations['Contains']=['1'];
 
-        await persistenceWriter.write(doc, [doc], 'u', true);
+        await persistenceWriter.write(doc, [doc], 'u', false);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
         expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
@@ -144,7 +144,7 @@ describe('PersistenceWriter', () => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
 
-        await persistenceWriter.write(doc, [doc], 'u', true);
+        await persistenceWriter.write(doc, [doc], 'u', false);
 
         expect(mockDatastore.update).not.toHaveBeenCalled();
         done();

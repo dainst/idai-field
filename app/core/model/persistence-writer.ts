@@ -20,14 +20,14 @@ export class PersistenceWriter {
     public async write(document: Document,
                        otherVersions: Array<Document>,
                        username: string,
-                       deletion: boolean): Promise<void> {
+                       shouldSetInverseRelations = true): Promise<void> {
 
         const connectedDocs = await this.getExistingConnectedDocs(
             [document].concat(otherVersions));
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
             this.projectConfiguration, document,
-            connectedDocs, !deletion);
+            connectedDocs, shouldSetInverseRelations);
 
         // Note that this does not update a document for beeing target of isRecordedIn
         for (let docToUpdate of docsToUpdate) {

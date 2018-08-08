@@ -22,7 +22,8 @@ export module ConnectedDocsResolution {
         projectConfiguration: ProjectConfiguration,
         document: Document,
         targetDocuments: Array<Document>,
-        shouldSetInverseRelations: boolean = true): Array<Document> {
+        shouldSetInverseRelations: boolean = true
+    ): Array<Document> {
 
         const copyOfTargetDocuments = JSON.parse(JSON.stringify(targetDocuments));
 

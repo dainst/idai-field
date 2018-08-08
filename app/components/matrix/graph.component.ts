@@ -29,6 +29,7 @@ export class GraphComponent implements OnInit, OnChanges {
     private hoverElement: Element|undefined;
     private selectedElements: Array<Element> = [];
 
+    private panZoomBehavior: SvgPanZoom.Instance;
     private lastMousePosition: { x: number, y: number }|undefined;
 
     private static maxRealZoom: number = 2;
@@ -138,42 +139,48 @@ export class GraphComponent implements OnInit, OnChanges {
 
     private configurePanZoomBehavior(svg: SVGSVGElement) {
 
-        const panZoomBehavior: SvgPanZoom.Instance = svgPanZoom(svg, {
+        this.panZoomBehavior = svgPanZoom(svg, {
             dblClickZoomEnabled: false,
             customEventsHandler: {
                 haltEventListeners: ['mousedown', 'mousemove', 'mouseleave', 'mouseup'],
                 init: options => {
-                    options.svgElement.addEventListener('mousedown', (event: MouseEvent) => {
-                        if (event.button === 2) this.lastMousePosition = { x: event.x, y: event.y };
-                    });
-
-                    options.svgElement.addEventListener('mousemove', (event: MouseEvent) => {
-                        if (this.lastMousePosition) {
-                            const newMousePosition = { x: event.x, y: event.y };
-                            const delta = {
-                                x: newMousePosition.x - this.lastMousePosition.x,
-                                y: newMousePosition.y - this.lastMousePosition.y
-                            };
-                            panZoomBehavior.panBy(delta);
-                            this.lastMousePosition = newMousePosition;
-                        }
-                    });
-
-                    options.svgElement.addEventListener('mouseup', (event: MouseEvent) => {
-                        this.lastMousePosition = undefined;
-                    });
+                    this.configureMouseListeners(options.svgElement);
                 }, destroy: () => {}
             }
         });
 
-        const maxZoom: number = GraphComponent.maxRealZoom / panZoomBehavior.getSizes().realZoom;
+        const maxZoom: number = GraphComponent.maxRealZoom / this.panZoomBehavior.getSizes().realZoom;
 
-        if (panZoomBehavior.getSizes().realZoom > GraphComponent.maxRealZoom) {
-            panZoomBehavior.zoom(maxZoom);
-            panZoomBehavior.disableZoom();
+        if (this.panZoomBehavior.getSizes().realZoom > GraphComponent.maxRealZoom) {
+            this.panZoomBehavior.zoom(maxZoom);
+            this.panZoomBehavior.disableZoom();
         } else {
-            panZoomBehavior.setMinZoom(1);
-            panZoomBehavior.setMaxZoom(maxZoom);
+            this.panZoomBehavior.setMinZoom(1);
+            this.panZoomBehavior.setMaxZoom(maxZoom);
         }
+    }
+
+
+    private configureMouseListeners(svg: SVGSVGElement) {
+
+        svg.addEventListener('mousedown', (event: MouseEvent) => {
+            if (event.button === 2) this.lastMousePosition = { x: event.x, y: event.y };
+        });
+
+        svg.addEventListener('mousemove', (event: MouseEvent) => {
+            if (this.lastMousePosition) {
+                const newMousePosition = { x: event.x, y: event.y };
+                const delta = {
+                    x: newMousePosition.x - this.lastMousePosition.x,
+                    y: newMousePosition.y - this.lastMousePosition.y
+                };
+                this.panZoomBehavior.panBy(delta);
+                this.lastMousePosition = newMousePosition;
+            }
+        });
+
+        svg.addEventListener('mouseup', (event: MouseEvent) => {
+            this.lastMousePosition = undefined;
+        });
     }
 }

@@ -74,13 +74,13 @@ export class MatrixViewComponent implements OnInit {
 
     public async select(resourceId: string) {
 
-        const selectedDoc = this.featureDocuments.find(on('resource.id:')(resourceId));
-        if (!selectedDoc) return;
+        const selectedDocument = this.featureDocuments.find(on('resource.id:')(resourceId));
+        if (!selectedDocument) return;
 
         if (!this.selectionMode) {
-            await this.launchDocedit(selectedDoc);
+            await this.launchDocedit(selectedDocument);
         } else {
-            this.subgraphSelection = MatrixViewComponent.addOrRemove(this.subgraphSelection, selectedDoc);
+            this.subgraphSelection = MatrixViewComponent.addOrRemove(this.subgraphSelection, selectedDocument);
         }
     }
 

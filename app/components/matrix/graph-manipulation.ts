@@ -113,12 +113,9 @@ export module GraphManipulation {
 
     function setEdgesHighlighting(graphContainer: ElementRef, id: string, highlight: boolean) {
 
-        setEdgesHighlightingForType(
-            graphContainer, 'above', id, highlight);
-        setEdgesHighlightingForType(
-            graphContainer, 'same-rank', id, highlight);
-        setEdgesHighlightingForType(
-            graphContainer, 'below', id, highlight);
+        setEdgesHighlightingForType(graphContainer, 'above', id, highlight);
+        setEdgesHighlightingForType(graphContainer, 'same-rank', id, highlight);
+        setEdgesHighlightingForType(graphContainer, 'below', id, highlight);
     }
 
 

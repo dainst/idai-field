@@ -91,10 +91,10 @@ export class MatrixViewComponent implements OnInit {
             { size: 'lg', backdrop: 'static', keyboard: false });
         doceditRef.componentInstance.setDocument(docToEdit);
 
-        const reset = () => {
+        const reset = async () => {
             this.featureDocuments = [];
             this.selectedTrench = undefined;
-            this.populateTrenches();
+            await this.populateTrenches();
         };
 
         await doceditRef.result.then(reset, doWhen(tripleEqual('deleted'), reset));

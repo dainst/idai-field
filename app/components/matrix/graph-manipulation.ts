@@ -163,6 +163,17 @@ export module GraphManipulation {
     }
 
 
+    export function getNodeElement(element: Element|null): Element|undefined {
+
+        while (element) {
+            if (element.classList.contains('node')) return element;
+            element = element.parentElement;
+        }
+
+        return undefined;
+    }
+
+
     function getEdgeType(edge: Element): EdgeType {
 
         const classAttribute: string|null = edge.getAttribute('class');
@@ -185,9 +196,9 @@ export module GraphManipulation {
     }
 
 
-    function getResourceId(gElement: Element): string {
+    export function getResourceId(nodeElement: Element): string {
 
-        return gElement.id.substring(gElement.id.indexOf('-') + 1);
+        return nodeElement.id.substring(nodeElement.id.indexOf('-') + 1);
     }
 
 

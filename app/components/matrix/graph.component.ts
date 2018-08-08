@@ -113,10 +113,10 @@ export class GraphComponent implements OnChanges {
 
     private onClick(event: Event) {
 
-        const nodeElement: Element|undefined = GraphComponent.getNodeElement(event.target as Element);
+        const nodeElement: Element|undefined = GraphManipulation.getNodeElement(event.target as Element);
         if (!nodeElement) return;
 
-        this.onSelect.emit(GraphComponent.getResourceIdFromNodeElement(nodeElement));
+        this.onSelect.emit(GraphManipulation.getResourceId(nodeElement));
 
         if (this.selectionMode) this.performSelection(nodeElement);
     }
@@ -170,22 +170,5 @@ export class GraphComponent implements OnChanges {
         while (this.graphContainer.nativeElement.firstChild) {
             this.graphContainer.nativeElement.removeChild(this.graphContainer.nativeElement.firstChild);
         }
-    }
-
-
-    private static getNodeElement(element: Element|null): Element|undefined {
-
-        while (element) {
-            if (element.classList.contains('node')) return element;
-            element = element.parentElement;
-        }
-
-        return undefined;
-    }
-
-
-    private static getResourceIdFromNodeElement(nodeElement: Element) {
-
-        return nodeElement.id.substring(5); // Remove 'node-' to get resource id
     }
 }

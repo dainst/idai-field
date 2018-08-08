@@ -49,7 +49,7 @@ export class PersistenceManager {
         revisionsToSquash: Document[] = [],
         ): Promise<Document> {
 
-        const persistedDocument = await this.persistIt(document, username, mapTo('_rev', revisionsToSquash));
+        const persistedDocument = await this.persistIt(document, username, mapTo('_rev', revisionsToSquash) /* TODO let caller do the mapTo */);
 
         const allVersions = [persistedDocument]
             .concat(oldVersion as Document)

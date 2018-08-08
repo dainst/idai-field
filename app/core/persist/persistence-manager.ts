@@ -7,6 +7,10 @@ import {subtract, flatMap, flow, filter, to, on, isNot, mapTo} from 'tsfun';
 import {TypeUtility} from '../model/type-utility';
 
 
+// TODO make sure that when a resource is deleted which contains
+// children (via liesWithin, that either they also get deleted (like for operation type documents)
+// or they get moved to a higher level
+
 @Injectable()
 /**
  * When persisting or deleting, PersistenceManager maintains a consistent state of relations between the

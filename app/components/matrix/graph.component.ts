@@ -1,9 +1,8 @@
-import {Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, ViewChild}
-    from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {DOCUMENT} from '@angular/platform-browser';
 import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
-import {GraphManipulation} from "./graph-manipulation";
+import {GraphManipulation} from './graph-manipulation';
 
 
 @Component({
@@ -45,6 +44,14 @@ export class GraphComponent implements OnChanges {
     }
 
 
+    private reset() {
+
+        while (this.graphContainer.nativeElement.firstChild) {
+            this.graphContainer.nativeElement.removeChild(this.graphContainer.nativeElement.firstChild);
+        }
+    }
+
+
     private showGraph() {
 
         if (!this.graph) return;
@@ -65,11 +72,16 @@ export class GraphComponent implements OnChanges {
             dblClickZoomEnabled: false,
             customEventsHandler: {
                 haltEventListeners: ['mousedown', 'mousemove', 'mouseleave', 'mouseup'],
-                init: options => {
-                    this.configureMouseListeners(options.svgElement);
-                }, destroy: () => {}
+                init: options => this.configureMouseListeners(options.svgElement),
+                destroy: () => {}
             }
         });
+
+        this.configureZooming();
+    }
+
+
+    private configureZooming() {
 
         const maxZoom: number = GraphComponent.maxRealZoom / this.panZoomBehavior.getSizes().realZoom;
 
@@ -124,15 +136,16 @@ export class GraphComponent implements OnChanges {
 
     private performPanning(event: MouseEvent) {
 
-        if (this.lastMousePosition) {
-            const newMousePosition = { x: event.x, y: event.y };
-            const delta = {
-                x: newMousePosition.x - this.lastMousePosition.x,
-                y: newMousePosition.y - this.lastMousePosition.y
-            };
-            this.panZoomBehavior.panBy(delta);
-            this.lastMousePosition = newMousePosition;
-        }
+        if (!this.lastMousePosition) return;
+
+        const newMousePosition = { x: event.x, y: event.y };
+        const delta = {
+            x: newMousePosition.x - this.lastMousePosition.x,
+            y: newMousePosition.y - this.lastMousePosition.y
+        };
+
+        this.panZoomBehavior.panBy(delta);
+        this.lastMousePosition = newMousePosition;
     }
 
 
@@ -142,8 +155,8 @@ export class GraphComponent implements OnChanges {
         if (!gElement) return;
 
         if (GraphManipulation.getElementType(gElement)) {
-            this.hoverElement = GraphManipulation.setHoverElement(this.graphContainer, gElement,
-                this.hoverElement);
+            this.hoverElement
+                = GraphManipulation.setHoverElement(this.graphContainer, gElement, this.hoverElement);
         } else if (this.hoverElement) {
             GraphManipulation.setHighlighting(this.graphContainer, this.hoverElement, false);
             this.hoverElement = undefined;
@@ -162,13 +175,5 @@ export class GraphComponent implements OnChanges {
         }
 
         GraphManipulation.performHighlightingSelection(nodeElement, !isSelected);
-    }
-
-
-    private reset() {
-
-        while (this.graphContainer.nativeElement.firstChild) {
-            this.graphContainer.nativeElement.removeChild(this.graphContainer.nativeElement.firstChild);
-        }
     }
 }

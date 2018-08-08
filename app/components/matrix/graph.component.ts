@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnInit, Output, Renderer2, ViewChild}
+import {Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, ViewChild}
     from '@angular/core';
 import {DOCUMENT} from '@angular/platform-browser';
 import 'viz.js';
@@ -17,7 +17,7 @@ import {GraphManipulation} from "./graph-manipulation";
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class GraphComponent implements OnInit, OnChanges {
+export class GraphComponent implements OnChanges {
 
     @Input() graph: string;
     @Input() selectionMode: boolean = true;
@@ -35,15 +35,7 @@ export class GraphComponent implements OnInit, OnChanges {
     private static maxRealZoom: number = 2;
 
 
-    constructor(@Inject(DOCUMENT) private htmlDocument: Document,
-                private renderer: Renderer2) {}
-
-
-    ngOnInit() {
-
-        this.initializeMouseMoveEventListener();
-    }
-
+    constructor(@Inject(DOCUMENT) private htmlDocument: Document) {}
 
     ngOnChanges() {
 
@@ -74,25 +66,6 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
-    private performSelection(event: Event) {
-
-        const nodeElement: Element|undefined = GraphComponent.getNodeElement(event.target as Element);
-        if (!nodeElement) return;
-
-        this.onSelect.emit(GraphComponent.getResourceIdFromNodeElement(nodeElement));
-
-        if (this.selectionMode) {
-            const selected: boolean = this.selectedElements.includes(nodeElement);
-            if (selected) {
-                this.selectedElements.splice(this.selectedElements.indexOf(nodeElement), 1);
-            } else {
-                this.selectedElements.push(nodeElement);
-            }
-            GraphManipulation.performHighlightingSelection(event.target as Element, !selected);
-        }
-    }
-
-
     private static getNodeElement(element: Element|null): Element|undefined {
 
         while (element) {
@@ -107,33 +80,6 @@ export class GraphComponent implements OnInit, OnChanges {
     private static getResourceIdFromNodeElement(nodeElement: Element) {
 
         return nodeElement.id.substring(5); // Remove 'node-' to get resource id
-    }
-
-
-    private initializeMouseMoveEventListener() {
-
-        this.renderer.listen(this.graphContainer.nativeElement, 'mousemove', event => {
-            this.onMouseMove(event);
-        });
-
-        this.renderer.listen(this.graphContainer.nativeElement, 'click', event => {
-            this.performSelection(event);
-        });
-    }
-
-
-    private onMouseMove(event: MouseEvent) {
-
-        const gElement: Element|undefined = GraphManipulation.getGElement(event.target as Element);
-        if (!gElement) return;
-
-        if (GraphManipulation.getElementType(gElement)) {
-            this.hoverElement = GraphManipulation.setHoverElement(this.graphContainer, gElement,
-                this.hoverElement);
-        } else if (this.hoverElement) {
-            GraphManipulation.setHighlighting(this.graphContainer, this.hoverElement, false);
-            this.hoverElement = undefined;
-        }
     }
 
 
@@ -164,8 +110,9 @@ export class GraphComponent implements OnInit, OnChanges {
     private configureMouseListeners(svg: SVGSVGElement) {
 
         svg.addEventListener('mousedown', this.onMouseDown.bind(this));
-        svg.addEventListener('mousemove', this.onMouseMovePan.bind(this));
+        svg.addEventListener('mousemove', this.onMouseMove.bind(this));
         svg.addEventListener('mouseup', this.onMouseUp.bind(this));
+        svg.addEventListener('click', this.onClick.bind(this));
     }
 
 
@@ -175,7 +122,14 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
-    private onMouseMovePan(event: MouseEvent) {
+    private onMouseMove(event: MouseEvent) {
+
+        this.performPanning(event);
+        this.performHovering(event.target as Element);
+    }
+
+
+    private performPanning(event: MouseEvent) {
 
         if (this.lastMousePosition) {
             const newMousePosition = { x: event.x, y: event.y };
@@ -189,8 +143,48 @@ export class GraphComponent implements OnInit, OnChanges {
     }
 
 
+    private performHovering(targetElement: Element) {
+
+        const gElement: Element|undefined = GraphManipulation.getGElement(targetElement);
+        if (!gElement) return;
+
+        if (GraphManipulation.getElementType(gElement)) {
+            this.hoverElement = GraphManipulation.setHoverElement(this.graphContainer, gElement,
+                this.hoverElement);
+        } else if (this.hoverElement) {
+            GraphManipulation.setHighlighting(this.graphContainer, this.hoverElement, false);
+            this.hoverElement = undefined;
+        }
+    }
+
+
     private onMouseUp() {
 
         this.lastMousePosition = undefined;
+    }
+
+
+    private onClick(event: Event) {
+
+        const nodeElement: Element|undefined = GraphComponent.getNodeElement(event.target as Element);
+        if (!nodeElement) return;
+
+        this.onSelect.emit(GraphComponent.getResourceIdFromNodeElement(nodeElement));
+
+        if (this.selectionMode) this.performSelection(nodeElement);
+    }
+
+
+    private performSelection(nodeElement: Element) {
+
+        const isSelected: boolean = this.selectedElements.includes(nodeElement);
+
+        if (isSelected) {
+            this.selectedElements.splice(this.selectedElements.indexOf(nodeElement), 1);
+        } else {
+            this.selectedElements.push(nodeElement);
+        }
+
+        GraphManipulation.performHighlightingSelection(nodeElement, !isSelected);
     }
 }

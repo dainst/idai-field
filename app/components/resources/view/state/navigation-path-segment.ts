@@ -1,7 +1,7 @@
 import {Document} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ViewContext} from './view-context';
-import {to} from 'tsfun';
+import {to, differentFromBy, on} from 'tsfun';
 
 
 /**
@@ -44,6 +44,4 @@ export module NavigationPathSegment {
 export const toResourceId = to('document.resource.id');
 
 
-// TODO use comparator from tsfun
-export const differentFrom = (a: NavigationPathSegment) => (b: NavigationPathSegment) =>
-    a.document.resource.id !== b.document.resource.id;
+export const differentFrom = differentFromBy(on('document.resource.id'));

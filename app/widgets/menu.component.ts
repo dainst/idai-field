@@ -18,6 +18,16 @@ export abstract class MenuComponent {
                 private clickToOpen: boolean = false) {}
 
 
+    public toggle() {
+
+        if (this.opened) {
+            this.close();
+        } else {
+            this.open();
+        }
+    }
+
+
     public open() {
 
         this.opened = true;

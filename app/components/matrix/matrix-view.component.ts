@@ -149,6 +149,8 @@ export class MatrixViewComponent implements OnInit {
 
         if (trench == this.selectedTrench) return;
 
+        this.selection.clear(false);
+
         this.selectedTrench = trench;
         this.matrixState.setSelectedTrenchId(this.selectedTrench.resource.id);
         this.featureDocuments = [];

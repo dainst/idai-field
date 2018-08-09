@@ -72,11 +72,11 @@ export class MatrixSelection {
     }
 
 
-    public clear() {
+    public clear(notify: boolean = true) {
 
         if (!this.selectedDocumentsIds) return;
 
-        this.notifyObservers({ ids: this.selectedDocumentsIds, changeType: 'removed' });
+        if (notify) this.notifyObservers({ ids: this.selectedDocumentsIds, changeType: 'removed' });
         this.selectedDocumentsIds = [];
     }
 }

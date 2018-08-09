@@ -88,7 +88,10 @@ export class MatrixViewComponent implements OnInit {
 
     public createGraphFromSelection() {
 
+        if (!this.documentsSelected()) return;
+
         this.featureDocuments = this.selection.getSelectedDocuments(this.featureDocuments);
+
         this.selection.clear();
         this.calculateGraph();
 
@@ -98,7 +101,7 @@ export class MatrixViewComponent implements OnInit {
 
     public async reloadGraph() {
 
-        if (!this.selectedTrench) return;
+        if (!this.selectedTrench || !this.graphFromSelection) return;
 
         await this.loadFeatureDocuments(this.selectedTrench);
         this.calculateGraph();

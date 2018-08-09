@@ -74,6 +74,8 @@ export class MatrixSelection {
 
     public clear() {
 
+        if (!this.selectedDocumentsIds) return;
+
         this.notifyObservers({ ids: this.selectedDocumentsIds, changeType: 'removed' });
         this.selectedDocumentsIds = [];
     }

@@ -39,6 +39,8 @@ export class MatrixViewComponent implements OnInit {
 
     private featureDocuments: Array<IdaiFieldFeatureDocument> = [];
 
+    private trenchesLoaded: boolean = false;
+
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
@@ -56,7 +58,7 @@ export class MatrixViewComponent implements OnInit {
 
     public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures() && !this.loading.isLoading();
 
-    public showNoTrenchesWarning = () => this.noTrenches();
+    public showNoTrenchesWarning = () => this.trenchesLoaded && this.noTrenches();
 
     public showTrenchSelector = () => !this.noTrenches();
 
@@ -134,6 +136,8 @@ export class MatrixViewComponent implements OnInit {
         if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
 
         await this.selectTrench(this.trenches[0]);
+
+        this.trenchesLoaded = true;
     }
 
 

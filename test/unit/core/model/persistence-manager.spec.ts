@@ -58,8 +58,6 @@ describe('PersistenceManager', () => {
 
     beforeEach(() => {
 
-        spyOn(console, 'warn');
-
         mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'find', 'create', 'update', 'refresh', 'remove']);
         mockTypeUtility = jasmine.createSpyObj('mockTypeUtility', ['isSubtype']);
         mockTypeUtility.isSubtype.and.returnValue(true);

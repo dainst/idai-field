@@ -75,14 +75,21 @@ export module GraphManipulation {
         const gElement: Element|undefined = GraphManipulation.getGElement(e);
         if (!gElement || GraphManipulation.getElementType(gElement) !== 'node') return;
 
-        const ellipseElement: Element = gElement.getElementsByTagName('ellipse')[0];
+        let shadowElement = gElement.getElementsByClassName('shadow-element')[0];
 
         if (highlight) {
-            ellipseElement.setAttribute('stroke',  '#de1000');
-            ellipseElement.setAttribute('stroke-width', '3');
-        } else {
-            ellipseElement.setAttribute('stroke',  ellipseElement.getAttribute('fill') as string);
-            ellipseElement.setAttribute('stroke-width', '');
+            if (shadowElement) return;
+
+            const ellipseElement = gElement.getElementsByTagName('ellipse')[0];
+            shadowElement = ellipseElement.cloneNode() as Element;
+            shadowElement.classList.add('shadow-element');
+            shadowElement.setAttribute('fill', '#647fc7');
+            shadowElement.setAttribute('filter', 'url(#shadow-filter)');
+            shadowElement.setAttribute('rx', '33');
+            shadowElement.setAttribute('ry', '21');
+            gElement.insertBefore(shadowElement, ellipseElement);
+        } else if (shadowElement) {
+            gElement.removeChild(shadowElement);
         }
     }
 
@@ -145,6 +152,24 @@ export module GraphManipulation {
             polygon.setAttribute('stroke', color);
             polygon.setAttribute('fill', color);
         }
+    }
+
+
+    export function configureShadowFilter(svg: SVGSVGElement, htmlDocument: Document) {
+
+        const filterElement = createSVGElement('filter', htmlDocument);
+        filterElement.setAttribute('id', 'shadow-filter');
+        filterElement.setAttribute('x', '-40%');
+        filterElement.setAttribute('y', '-40%');
+        filterElement.setAttribute('height', '160%');
+        filterElement.setAttribute('width', '160%');
+
+        const feGaussianBlurElement = createSVGElement('feGaussianBlur', htmlDocument);
+        feGaussianBlurElement.setAttribute('in', 'SourceGraphic');
+        feGaussianBlurElement.setAttribute('stdDeviation', '3');
+        filterElement.appendChild(feGaussianBlurElement);
+
+        svg.appendChild(filterElement);
     }
 
 

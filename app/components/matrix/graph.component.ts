@@ -80,6 +80,7 @@ export class GraphComponent implements OnChanges {
         this.svgRoot = new DOMParser().parseFromString(this.graph, 'image/svg+xml')
             .getElementsByTagName('svg')[0];
 
+        GraphManipulation.configureShadowFilter(this.svgRoot, this.htmlDocument);
         GraphManipulation.removeTitleElements(this.svgRoot);
         this.graphContainer.nativeElement.appendChild(this.svgRoot);
         GraphManipulation.addClusterSubgraphLabelBoxes(this.svgRoot, this.htmlDocument);

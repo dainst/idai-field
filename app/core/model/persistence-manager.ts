@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Document, NewDocument, ProjectConfiguration, toResourceId} from 'idai-components-2/core';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to} from 'tsfun';
+import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to, isDefined, isUndefined} from 'tsfun';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
-import {clone} from '../../util/object-util'; // TODO move to document
+import {clone} from '../../util/object-util';
 
 
 @Injectable()
@@ -109,12 +109,9 @@ export class PersistenceManager {
         if (document.resource.relations['isRecordedIn'].length === 0) return;
 
         const docsToCorrect = (await this.findAllLiesWithinDocs(document.resource.id))
-            // TODO make .filter(isDefinedBy(on('...)
-            // TODO .filter(on('a.b.c')(isDefined))
-            // TODO .filter(on('a.b.c')(jsonEqual('abc')))
+            .filter(on('resource.relations.isRecordedIn')(isDefined)) // TODO unit test, make isArray predicate
             .filter(doc => {
-                return (doc.resource.relations['isRecordedIn']
-                    && doc.resource.relations['isRecordedIn'].length > 0)
+                return doc.resource.relations['isRecordedIn'].length > 0
             })
             .filter(isNot(on('resource.relations.isRecordedIn')(document)));
 

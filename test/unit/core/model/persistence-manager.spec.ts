@@ -112,28 +112,6 @@ describe('PersistenceManager', () => {
     });
 
 
-    it('delete a relation which was present in old version', async done => {
-
-        const oldVersion = { 'resource' : {
-                'id' :'1', 'identifier': 'ob1',
-                'type': 'object',
-                'relations' : { 'BelongsTo' : [ '2' ] }
-            }};
-
-        relatedDoc.resource.relations['Contains'] = ['1'];
-        mockDatastore.update.and.returnValue(Promise.resolve(doc));
-
-        await persistenceManager.persist(doc, 'u', oldVersion as any, []);
-
-        expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
-        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
-
-        expect(doc.resource.relations['BelongsTo']).toBe(undefined);
-        expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
-        done();
-    });
-
-
     it('delete a relation which was present in conflicting revision', async done => {
 
         const squashVersion = { 'resource' : {

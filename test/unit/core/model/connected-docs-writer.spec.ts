@@ -110,6 +110,27 @@ describe('ConnectedDocsWriter', () => {
     });
 
 
+    it('delete a relation which was present in old version', async done => {
+
+        const oldVersion = { 'resource' : {
+                'id' :'1', 'identifier': 'ob1',
+                'type': 'object',
+                'relations' : { 'BelongsTo' : [ '2' ] }
+            }};
+
+        relatedDoc.resource.relations['Contains'] = ['1'];
+        mockDatastore.update.and.returnValue(Promise.resolve(doc));
+
+        await persistenceWriter.update(doc, [oldVersion as any], 'u');
+
+        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
+
+        expect(doc.resource.relations['BelongsTo']).toBe(undefined);
+        expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
+        done();
+    });
+
+
     it('should add two relations of the same type', async done => {
 
         doc.resource.relations['BelongsTo'] = ['2', '3'];

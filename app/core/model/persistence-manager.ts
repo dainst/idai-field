@@ -122,7 +122,7 @@ export class PersistenceManager {
                 })
                 .filter(isNot(on('resource.relations.isRecordedIn')(document)));
 
-            for (let docToCorrect of docsToCorrect) {
+            for (let docToCorrect of docsToCorrect) { // TODO clone doc before saving, use jasmine object containing to test it then
                 docToCorrect.resource.relations['isRecordedIn'] = document.resource.relations['isRecordedIn'];
                 await this.datastore.update(docToCorrect, username, undefined);
             }

@@ -202,21 +202,6 @@ describe('PersistenceManager', () => {
     });
 
 
-    it('remove: where a connected document does not exist anymore', async done => {
-
-        doc.resource.relations['BelongsTo']=['nonexistent'];
-
-        mockDatastore.get.and.returnValue(Promise.reject('not exists'));
-
-        await persistenceManager.remove(doc, 'u');
-
-        expect(mockDatastore.update).not.toHaveBeenCalled();
-        expect(mockDatastore.remove).toHaveBeenCalledWith(doc);
-        expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
-        done();
-    });
-
-
     it('should correct lies within relations when resource moved to other operation', async done => {
 
         doc.resource.relations['isRecordedIn'] = ['t2'];

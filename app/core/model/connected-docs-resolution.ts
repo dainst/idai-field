@@ -42,48 +42,49 @@ export module ConnectedDocsResolution {
     }
 
 
-    function pruneInverseRelations(
-        projectConfiguration: ProjectConfiguration,
-        resourceId: string,
-        targetDocument: Document,
-        keepAllNoInverseRelations: boolean) {
+    function pruneInverseRelations(projectConfiguration: ProjectConfiguration,
+                                   resourceId: string,
+                                   targetDocument: Document,
+                                   keepAllNoInverseRelations: boolean) {
 
         Object.keys(targetDocument.resource.relations)
             .filter(relation => projectConfiguration.isRelationProperty(relation))
             .filter(relation => (!(keepAllNoInverseRelations && relation === 'isRecordedIn')))
             .forEach(relation =>
-                removeRelation(
-                    resourceId, targetDocument.resource.relations, relation)
-            );
+                removeRelation(resourceId, targetDocument.resource.relations, relation));
     }
 
 
-    function setInverseRelations(
-        projectConfiguration: ProjectConfiguration,
-        document: Document,
-        targetDocument: Document) {
+    function setInverseRelations(projectConfiguration: ProjectConfiguration,
+                                 document: Document,
+                                 targetDocument: Document) {
 
         Object.keys(document.resource.relations)
             .filter(relation => projectConfiguration.isRelationProperty(relation))
             .filter(relation => relation !== "isRecordedIn")
-            .forEach(relation => {
+            .forEach(relation => setInverseRelation(document, targetDocument,
+                    relation, projectConfiguration.getInverseRelations(relation)));
+    }
 
-                const inverse = projectConfiguration.getInverseRelations(relation);
 
-                document.resource.relations[relation]
-                    .filter(id => id == targetDocument.resource.id) // match only the one targetDocument
-                    .forEach(() => {
+    function setInverseRelation(document: Document,
+                                targetDocument: Document,
+                                relation: any,
+                                inverse: any) {
 
-                        if (targetDocument.resource.relations[inverse as any] == undefined)
-                            targetDocument.resource.relations[inverse as any] = [];
+        document.resource.relations[relation]
+            .filter(id => id === targetDocument.resource.id) // match only the one targetDocument
+            .forEach(() => {
 
-                        const index = targetDocument.resource.relations[inverse as any].indexOf(document.resource.id as any);
-                        if (index != -1) {
-                            targetDocument.resource.relations[inverse as any].splice(index, 1);
-                        }
+                if (targetDocument.resource.relations[inverse] == undefined)
+                    targetDocument.resource.relations[inverse as any] = [];
 
-                        targetDocument.resource.relations[inverse as any].push(document.resource.id as any);
-                    });
+                const index = targetDocument.resource.relations[inverse].indexOf(document.resource.id as any);
+                if (index != -1) {
+                    targetDocument.resource.relations[inverse].splice(index, 1);
+                }
+
+                targetDocument.resource.relations[inverse].push(document.resource.id as any);
             });
     }
 

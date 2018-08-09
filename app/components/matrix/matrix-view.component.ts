@@ -11,10 +11,7 @@ import {MatrixRelationsMode, MatrixState} from './matrix-state';
 import {IdaiFieldFeatureDocumentReadDatastore} from '../../core/datastore/field/idai-field-feature-document-read-datastore';
 import {Loading} from '../../widgets/loading';
 import {DotBuilder, GraphRelationsConfiguration} from './dot-builder';
-import {MatrixSelection} from './matrix-selection';
-
-
-export type MatrixSelectionMode = 'single'|'rect'|'none';
+import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
 
 
 @Component({
@@ -35,7 +32,6 @@ export class MatrixViewComponent implements OnInit {
     public graph: string;
 
     public selection: MatrixSelection = new MatrixSelection();
-    public selectionMode: MatrixSelectionMode = 'rect';
     public graphFromSelection: boolean = false;
 
     private trenches: Array<IdaiFieldDocument> = [];
@@ -65,6 +61,8 @@ export class MatrixViewComponent implements OnInit {
     public showTrenchSelector = () => !this.noTrenches();
 
     public documentsSelected = () => this.selection.getSelectedDocuments(this.featureDocuments).length > 0;
+
+    public setSelectionMode = (selectionMode: MatrixSelectionMode) => this.selection.setMode(selectionMode);
 
     public clearSelection = () => this.selection.clear();
 
@@ -106,12 +104,6 @@ export class MatrixViewComponent implements OnInit {
         this.calculateGraph();
 
         this.graphFromSelection = false;
-    }
-
-
-    public setSelectionMode(selectionMode: MatrixSelectionMode) {
-
-        this.selectionMode = selectionMode;
     }
 
 

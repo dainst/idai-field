@@ -4,7 +4,6 @@ import {DOCUMENT} from '@angular/platform-browser';
 import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
 import {GraphManipulation} from './graph-manipulation';
-import {MatrixSelectionMode} from './matrix-view.component';
 import {SelectionRectangle} from './selection-rectangle';
 import {MatrixSelection, MatrixSelectionChange} from './matrix-selection';
 
@@ -22,7 +21,6 @@ export class GraphComponent implements OnChanges {
 
     @Input() graph: string;
     @Input() selection: MatrixSelection;
-    @Input() selectionMode: MatrixSelectionMode;
 
     @Output() onSelectForEdit: EventEmitter<string> = new EventEmitter<string>();
 
@@ -142,7 +140,7 @@ export class GraphComponent implements OnChanges {
     private onMouseDown(event: MouseEvent) {
 
         if (event.button === 2) this.lastMousePosition = { x: event.x, y: event.y };
-        if (event.button === 0 && this.selectionMode === 'rect') {
+        if (event.button === 0 && this.selection.getMode() === 'rect') {
             this.selectionRectangle = new SelectionRectangle();
             this.selectionRectangle.start(event, this.svgRoot, this.htmlDocument);
         }
@@ -181,7 +179,7 @@ export class GraphComponent implements OnChanges {
 
         const resourceId: string = GraphManipulation.getResourceId(nodeElement);
 
-        switch(this.selectionMode) {
+        switch(this.selection.getMode()) {
             case 'none':
                 this.onSelectForEdit.emit(resourceId);
                 break;

@@ -5,6 +5,8 @@ import {on} from 'tsfun';
 import {ObserverUtil} from '../../util/observer-util';
 
 
+export type MatrixSelectionMode = 'single'|'rect'|'none';
+
 export type MatrixSelectionChange = {
 
     ids: Array<string>;
@@ -18,12 +20,27 @@ export type MatrixSelectionChange = {
  */
 export class MatrixSelection {
 
+    private mode: MatrixSelectionMode = 'none';
     private selectedDocumentsIds: Array<string> = [];
     private observers: Array<Observer<MatrixSelectionChange>> = [];
 
 
     public changesNotifications = (): Observable<MatrixSelectionChange> => ObserverUtil.register(this.observers);
     public notifyObservers = (change: MatrixSelectionChange) => ObserverUtil.notify(this.observers, change);
+
+
+    public getMode(): MatrixSelectionMode {
+
+        return this.mode;
+    }
+
+
+    public setMode(mode: MatrixSelectionMode) {
+
+        if (mode === 'none' && this.mode !== 'none') this.clear();
+
+        this.mode = mode;
+    }
 
 
     public getSelectedDocuments(documents: Array<IdaiFieldFeatureDocument>): Array<IdaiFieldFeatureDocument> {

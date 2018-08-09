@@ -59,9 +59,7 @@ export class PersistenceManager {
         const persistedDocument = await this.updateWithConnections(
             document as Document, oldVersion, revisionsToSquash, username);
 
-        // TODO make separate 2nd pass in which all child documents (by liesWithin) get checked
-        // if they have the same isRecordedIn as the document and correct them if not
-
+        await this.fixIsRecordedInInLiesWithinDocs(persistedDocument, username);
         return persistedDocument;
     }
 
@@ -81,7 +79,7 @@ export class PersistenceManager {
 
         // don't rely on isRecordedIn alone. Make sure it is really an operation subtype
         if (this.typeUtility.isSubtype(document.resource.type, "Operation")) {
-            for (let recordedInDoc of (await this.getDocsRecordedIn(document.resource.id))) {
+            for (let recordedInDoc of (await this.findDocsRecordedInDocs(document.resource.id))) {
                 await this.removeWithConnections(recordedInDoc, username);
             }
         }
@@ -110,11 +108,50 @@ export class PersistenceManager {
     }
 
 
-    private async getDocsRecordedIn(resourceId: string): Promise<Array<Document>> {
+    private async fixIsRecordedInInLiesWithinDocs(document: Document, username: string) {
+
+        if (document.resource.relations['isRecordedIn']
+            && document.resource.relations['isRecordedIn'].length > 0) {
+
+            const allLiesWithinDocs = await this.findAllLiesWithinDocs(document.resource.id);
+            allLiesWithinDocs
+                .filter(doc => {
+                    return (doc.resource.relations['isRecordedIn']
+                        && doc.resource.relations['isRecordedIn'].length > 0)
+                })
+                .filter(isNot(on('resource.relations.isRecordedIn')(document)))
+                .forEach(docToCorrect => {
+                    docToCorrect.resource.relations['isRecordedIn'] = document.resource.relations['isRecordedIn'];
+                    this.datastore.update(docToCorrect, username, undefined);
+                });
+        }
+    }
+
+
+    private async findDocsRecordedInDocs(resourceId: string): Promise<Array<Document>> {
 
         return (await this.datastore.find({
             constraints: { 'isRecordedIn:contain': resourceId }
         })).documents;
+    }
+
+
+    private async findAllLiesWithinDocs(resourceId: string): Promise<Array<Document>> {
+
+        let result: Array<Document> = [];
+
+        const go = async (resourceId: string) => {
+
+            const documents = (await this.datastore.find({
+                constraints: { 'liesWithin:contain': resourceId }
+            })).documents;
+            result = result.concat(documents);
+
+            for (let doc of documents) await go(doc.resource.id);
+        };
+
+        await go(resourceId);
+        return result;
     }
 
 

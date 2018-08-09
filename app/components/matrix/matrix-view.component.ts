@@ -154,6 +154,7 @@ export class MatrixViewComponent implements OnInit {
         this.selectedTrench = trench;
         this.matrixState.setSelectedTrenchId(this.selectedTrench.resource.id);
         this.featureDocuments = [];
+        this.graphFromSelection = false;
 
         await this.loadFeatureDocuments(trench);
         this.calculateGraph();

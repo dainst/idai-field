@@ -1,24 +1,22 @@
-<div id="matrix-view" class="row bg-light py-2">
+<div id="matrix-view" class="bg-light py-2">
 
-    <div class="col-md-8">
-        <div *ngIf="showTrenchSelector()" class="btn-group operation-document-selector"
-             ngbDropdown placement="bottom-left" role="group">
-            <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
-            <div class="dropdown-menu" ngbDropdownMenu>
-                <button *ngFor="let trench of trenches" class="dropdown-item" (click)="selectTrench(trench)">
-                    {{getDocumentLabel(trench)}}
-                </button>
-            </div>
-
-            <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">
-                {{getDocumentLabel(selectedTrench)}}
-            </div>
+    <div *ngIf="showTrenchSelector()" class="btn-group operation-document-selector"
+         ngbDropdown placement="bottom-left" role="group">
+        <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
+        <div class="dropdown-menu" ngbDropdownMenu>
+            <button *ngFor="let trench of trenches" class="dropdown-item" (click)="selectTrench(trench)">
+                {{getDocumentLabel(trench)}}
+            </button>
         </div>
 
-        <div *ngIf="!showTrenchSelector()" id="trench-selector-placeholder"></div>
+        <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">
+            {{getDocumentLabel(selectedTrench)}}
+        </div>
     </div>
 
-    <div class="col-md-4 mr-md-auto">
+    <div *ngIf="!showTrenchSelector()" id="trench-selector-placeholder"></div>
+
+    <div class="float-right">
         <div class="btn-group">
             <div class="btn btn-primary"
                  [class.active]="getSelectionMode() === 'none'"

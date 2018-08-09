@@ -89,6 +89,7 @@ export module ConnectedDocsResolution {
     }
 
 
+    // TODO use and extend comparison functionality from tsfun
     function compare(targetDocuments: Array<Document>, copyOfTargetDocuments: Array<Document>): Array<Document> {
 
         const docsToUpdate = [] as any;

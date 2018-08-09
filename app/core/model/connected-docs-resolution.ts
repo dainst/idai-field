@@ -6,8 +6,6 @@ import {Document, ProjectConfiguration} from 'idai-components-2/core';
  */
 export module ConnectedDocsResolution {
 
-    // TODO give allowed relations as param instead of projectConfiguration
-
     /**
      * Determines which targetDocuments need their relations updated, based
      * on the relations seen in <i>document</i> alone. Relations in targetDocuments,

@@ -63,7 +63,7 @@ export class ConnectedDocsWriter {
         const uniqueConnectedDocIds = this.getUniqueConnectedDocumentsIds(
             documents,
             this.projectConfiguration
-                .getAllRelationDefinitions() // TODO give allowed relations as param instead of accessing projectConfiguration field
+                .getAllRelationDefinitions()
                 .map(to('name')));
 
         const connectedDocuments: Array<Document> = [];

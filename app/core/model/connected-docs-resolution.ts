@@ -1,4 +1,5 @@
 import {Document, ProjectConfiguration} from 'idai-components-2/core';
+import {isNot, tripleEqual} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -50,8 +51,7 @@ export module ConnectedDocsResolution {
         Object.keys(targetDocument.resource.relations)
             .filter(relation => projectConfiguration.isRelationProperty(relation))
             .filter(relation => (!(keepAllNoInverseRelations && relation === 'isRecordedIn')))
-            .forEach(relation =>
-                removeRelation(resourceId, targetDocument.resource.relations, relation));
+            .forEach(removeRelation(resourceId, targetDocument.resource.relations));
     }
 
 
@@ -61,7 +61,7 @@ export module ConnectedDocsResolution {
 
         Object.keys(document.resource.relations)
             .filter(relation => projectConfiguration.isRelationProperty(relation))
-            .filter(relation => relation !== "isRecordedIn")
+            .filter(isNot(tripleEqual("isRecordedIn")) )
             .forEach(relation => setInverseRelation(document, targetDocument,
                     relation, projectConfiguration.getInverseRelations(relation)));
     }
@@ -115,7 +115,7 @@ export module ConnectedDocsResolution {
     }
 
 
-    function removeRelation(resourceId: string, relations: any, relation: string): boolean {
+    const removeRelation = (resourceId: string, relations: any) => (relation: string): boolean => {
 
         const index = relations[relation].indexOf(resourceId);
         if (index == -1) return false;

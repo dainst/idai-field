@@ -94,9 +94,13 @@ export class MatrixViewComponent implements OnInit {
 
         if (!this.documentsSelected()) return;
 
-        this.featureDocuments = this.selection.getSelectedDocuments(this.featureDocuments);
-
+        const selectedDocuments: Array<IdaiFieldFeatureDocument>
+            = this.selection.getSelectedDocuments(this.featureDocuments);
         this.selection.clear();
+
+        if (selectedDocuments.length === this.featureDocuments.length) return;
+
+        this.featureDocuments = selectedDocuments;
         this.calculateGraph();
 
         this.graphFromSelection = true;

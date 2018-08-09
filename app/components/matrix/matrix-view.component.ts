@@ -31,11 +31,11 @@ export class MatrixViewComponent implements OnInit {
      */
     public graph: string;
 
-    public selection: MatrixSelection = new MatrixSelection();
     public graphFromSelection: boolean = false;
 
     private trenches: Array<IdaiFieldDocument> = [];
     private selectedTrench: IdaiFieldDocument|undefined;
+    private selection: MatrixSelection = new MatrixSelection();
 
     private featureDocuments: Array<IdaiFieldFeatureDocument> = [];
 
@@ -61,6 +61,8 @@ export class MatrixViewComponent implements OnInit {
     public showTrenchSelector = () => !this.noTrenches();
 
     public documentsSelected = () => this.selection.getSelectedDocuments(this.featureDocuments).length > 0;
+
+    public getSelectionMode = () => this.selection.getMode();
 
     public setSelectionMode = (selectionMode: MatrixSelectionMode) => this.selection.setMode(selectionMode);
 

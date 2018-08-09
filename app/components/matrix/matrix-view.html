@@ -21,7 +21,7 @@
     <div class="col-md-4 mr-md-auto">
         <div class="btn-group">
             <div class="btn btn-primary"
-                 [class.active]="selectionMode === 'none'"
+                 [class.active]="getSelectionMode() === 'none'"
                  ngbTooltip="Bearbeitungsmodus"
                  placement="bottom"
                  container="body"
@@ -33,7 +33,7 @@
                 <span class="mdi mdi-pencil"></span>
             </div>
             <div class="btn btn-primary"
-                 [class.active]="selectionMode === 'single'"
+                 [class.active]="getSelectionMode() === 'single'"
                  ngbTooltip="Einzelauswahlmodus"
                  placement="bottom"
                  container="body"
@@ -45,7 +45,7 @@
                 <span class="mdi mdi-cursor-default-outline"></span>
             </div>
             <div class="btn btn-primary"
-                 [class.active]="selectionMode === 'rect'"
+                 [class.active]="getSelectionMode() === 'rect'"
                  ngbTooltip="Gruppenauswahlmodus"
                  placement="bottom"
                  container="body"

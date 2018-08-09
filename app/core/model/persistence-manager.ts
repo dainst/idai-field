@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Document, NewDocument, ProjectConfiguration, toResourceId} from 'idai-components-2/core';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to} from 'tsfun';
+import {filter, flatMap, flow, includedIn, isNot, mapTo, on, onBy, subtract, to, isDefined, isUndefined, isUndefinedOrEmpty, arrayEquivalent, isArray} from 'tsfun';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
+import {clone} from '../../util/object-util';
 
 
 @Injectable()
@@ -20,7 +21,7 @@ export class PersistenceManager {
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
         private typeUtility: TypeUtility,
-        private persistenceWriter: ConnectedDocsWriter
+        private connectedDocsWriter: ConnectedDocsWriter
     ) {}
 
 
@@ -87,7 +88,7 @@ export class PersistenceManager {
 
         const updated = await this.persistIt(document, username, mapTo('_rev', revisionsToSquash));
 
-        await this.persistenceWriter.update(
+        await this.connectedDocsWriter.update(
             updated, [oldVersion].concat(revisionsToSquash), username);
         return updated as Document;
     }
@@ -95,7 +96,7 @@ export class PersistenceManager {
 
     private async removeWithConnections(document: Document, username: string): Promise<void> {
 
-        await this.persistenceWriter.remove(document, username);
+        await this.connectedDocsWriter.remove(document, username);
         await this.datastore.remove(document);
         return undefined;
     }
@@ -103,22 +104,16 @@ export class PersistenceManager {
 
     private async fixIsRecordedInInLiesWithinDocs(document: Document, username: string) {
 
-        if (!document.resource.relations['isRecordedIn']) return;
-        if (document.resource.relations['isRecordedIn'].length === 0) return;
+        if (isUndefinedOrEmpty(document.resource.relations['isRecordedIn'])) return;
 
         const docsToCorrect = (await this.findAllLiesWithinDocs(document.resource.id))
-            // TODO make .filter(isDefinedBy(on('...)
-            // TODO .filter(on('a.b.c')(isDefined))
-            // TODO .filter(on('a.b.c')(jsonEqual('abc')))
-            .filter(doc => {
-                return (doc.resource.relations['isRecordedIn']
-                    && doc.resource.relations['isRecordedIn'].length > 0)
-            })
-            .filter(isNot(on('resource.relations.isRecordedIn')(document)));
+            .filter(on('resource.relations.isRecordedIn')(isArray))
+            .filter(isNot(onBy(arrayEquivalent)('resource.relations.isRecordedIn')(document)));
 
-        for (let docToCorrect of docsToCorrect) { // TODO clone doc before saving, use jasmine object containing to test it then
-            docToCorrect.resource.relations['isRecordedIn'] = document.resource.relations['isRecordedIn'];
-            await this.datastore.update(docToCorrect, username, undefined);
+        for (let docToCorrect of docsToCorrect) {
+            const cloned = clone(docToCorrect);
+            cloned.resource.relations['isRecordedIn'] = document.resource.relations['isRecordedIn'];
+            await this.datastore.update(cloned, username, undefined);
         }
     }
 

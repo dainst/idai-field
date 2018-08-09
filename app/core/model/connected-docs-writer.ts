@@ -6,6 +6,13 @@ import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to} from 
 
 @Injectable()
 /**
+ * Architecture note: This class deals with automatic
+ * udpate of documents directly connected
+ * to a document via relations.
+ *
+ * Other operations, like correcting documents' isRecordedIn relations
+ * or hierarchical deletions is done in persistence manager.
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */

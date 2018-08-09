@@ -1,11 +1,11 @@
 import {Document, ProjectConfiguration} from 'idai-components-2/core';
+import {isNot, tripleEqual} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export module ConnectedDocsResolution {
-
 
     /**
      * Determines which targetDocuments need their relations updated, based
@@ -43,52 +43,53 @@ export module ConnectedDocsResolution {
     }
 
 
-    function pruneInverseRelations(
-        projectConfiguration: ProjectConfiguration,
-        resourceId: string,
-        targetDocument: Document,
-        keepAllNoInverseRelations: boolean) {
+    function pruneInverseRelations(projectConfiguration: ProjectConfiguration,
+                                   resourceId: string,
+                                   targetDocument: Document,
+                                   keepAllNoInverseRelations: boolean) {
 
         Object.keys(targetDocument.resource.relations)
             .filter(relation => projectConfiguration.isRelationProperty(relation))
             .filter(relation => (!(keepAllNoInverseRelations && relation === 'isRecordedIn')))
-            .forEach(relation =>
-                removeRelation(
-                    resourceId, targetDocument.resource.relations, relation)
-            );
+            .forEach(removeRelation(resourceId, targetDocument.resource.relations));
     }
 
 
-    function setInverseRelations(
-        projectConfiguration: ProjectConfiguration,
-        document: Document,
-        targetDocument: Document) {
+    function setInverseRelations(projectConfiguration: ProjectConfiguration,
+                                 document: Document,
+                                 targetDocument: Document) {
 
         Object.keys(document.resource.relations)
             .filter(relation => projectConfiguration.isRelationProperty(relation))
-            .filter(relation => relation !== "isRecordedIn")
-            .forEach(relation => {
+            .filter(isNot(tripleEqual("isRecordedIn")) )
+            .forEach(relation => setInverseRelation(document, targetDocument,
+                    relation, projectConfiguration.getInverseRelations(relation)));
+    }
 
-                const inverse = projectConfiguration.getInverseRelations(relation);
 
-                document.resource.relations[relation]
-                    .filter(id => id == targetDocument.resource.id) // match only the one targetDocument
-                    .forEach(() => {
+    function setInverseRelation(document: Document,
+                                targetDocument: Document,
+                                relation: any,
+                                inverse: any) {
 
-                        if (targetDocument.resource.relations[inverse as any] == undefined)
-                            targetDocument.resource.relations[inverse as any] = [];
+        document.resource.relations[relation]
+            .filter(id => id === targetDocument.resource.id) // match only the one targetDocument
+            .forEach(() => {
 
-                        const index = targetDocument.resource.relations[inverse as any].indexOf(document.resource.id as any);
-                        if (index != -1) {
-                            targetDocument.resource.relations[inverse as any].splice(index, 1);
-                        }
+                if (targetDocument.resource.relations[inverse] == undefined)
+                    targetDocument.resource.relations[inverse as any] = [];
 
-                        targetDocument.resource.relations[inverse as any].push(document.resource.id as any);
-                    });
+                const index = targetDocument.resource.relations[inverse].indexOf(document.resource.id as any);
+                if (index != -1) {
+                    targetDocument.resource.relations[inverse].splice(index, 1);
+                }
+
+                targetDocument.resource.relations[inverse].push(document.resource.id as any);
             });
     }
 
 
+    // TODO use and extend comparison functionality from tsfun
     function compare(targetDocuments: Array<Document>, copyOfTargetDocuments: Array<Document>): Array<Document> {
 
         const docsToUpdate = [] as any;
@@ -115,7 +116,7 @@ export module ConnectedDocsResolution {
     }
 
 
-    function removeRelation(resourceId: string, relations: any, relation: string): boolean {
+    const removeRelation = (resourceId: string, relations: any) => (relation: string): boolean => {
 
         const index = relations[relation].indexOf(resourceId);
         if (index == -1) return false;

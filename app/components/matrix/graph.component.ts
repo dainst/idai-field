@@ -226,15 +226,20 @@ export class GraphComponent implements OnChanges, OnDestroy {
 
         if (!this.selectionRectangle) return;
 
-        const selectedElements: Array<Element> = this.selectionRectangle.getSelectedElements(this.svgRoot);
-        if (selectedElements.length > 0) {
-            selectedElements.forEach(element => {
-                this.selection.add(GraphManipulation.getResourceId(element));
-            });
-        }
+        this.addToSelection(this.selectionRectangle.getSelectedElements(this.svgRoot));
 
         this.selectionRectangle.finish(this.svgRoot);
         this.selectionRectangle = undefined;
+    }
+
+
+    private addToSelection(selectedElements: Array<Element>) {
+
+        if (selectedElements.length === 0) return;
+
+        selectedElements.forEach(element => {
+            this.selection.add(GraphManipulation.getResourceId(element));
+        });
     }
 
 

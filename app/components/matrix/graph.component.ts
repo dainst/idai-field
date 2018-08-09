@@ -167,17 +167,7 @@ export class GraphComponent implements OnChanges, OnDestroy {
     private onMouseUp() {
 
         this.lastMousePosition = undefined;
-
-        if (this.selectionRectangle) {
-            const selectedElements: Array<Element> = this.selectionRectangle.getSelectedElements(this.svgRoot);
-            if (selectedElements.length > 0) {
-                selectedElements.forEach(element => {
-                    this.selection.add(GraphManipulation.getResourceId(element));
-                });
-            }
-            this.selectionRectangle.remove(this.svgRoot);
-            this.selectionRectangle = undefined;
-        }
+        if (this.selectionRectangle) this.performGroupSelection();
     }
 
 
@@ -229,6 +219,22 @@ export class GraphComponent implements OnChanges, OnDestroy {
             GraphManipulation.setHighlighting(this.graphContainer, this.hoverElement, false);
             this.hoverElement = undefined;
         }
+    }
+
+
+    private performGroupSelection() {
+
+        if (!this.selectionRectangle) return;
+
+        const selectedElements: Array<Element> = this.selectionRectangle.getSelectedElements(this.svgRoot);
+        if (selectedElements.length > 0) {
+            selectedElements.forEach(element => {
+                this.selection.add(GraphManipulation.getResourceId(element));
+            });
+        }
+
+        this.selectionRectangle.finish(this.svgRoot);
+        this.selectionRectangle = undefined;
     }
 
 

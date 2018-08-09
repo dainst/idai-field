@@ -29,7 +29,7 @@ export class SelectionRectangle {
     }
 
 
-    public remove(svgRoot: SVGSVGElement) {
+    public finish(svgRoot: SVGSVGElement) {
 
         svgRoot.removeChild(this.svgElement.parentElement as Element);
     }

@@ -1449,7 +1449,8 @@
             "Farbe",
             "Form",
             "Grenzen",
-            "Konsistenz"
+            "Konsistenz",
+            "Komposition
           ]
         },
         "hasLayerClassification": {
@@ -1670,7 +1671,8 @@
             "Farbe",
             "Form",
             "Grenzen",
-            "Konsistenz"
+            "Konsistenz",
+            "Komposition
           ]
         },
         "hasFloorClassification": {
@@ -2419,7 +2421,8 @@
             "Farbe",
             "Form",
             "Grenzen",
-            "Konsistenz"
+            "Konsistenz",
+            "Komposition
           ]
         },
         "hasGraveType": {
@@ -3309,7 +3312,8 @@
             "Farbe",
             "Form",
             "Grenzen",
-            "Konsistenz"
+            "Konsistenz",
+            "Komposition
           ]
         },
         "hasOtherClassification": {

@@ -114,17 +114,18 @@ export class PersistenceManager {
             && document.resource.relations['isRecordedIn'].length > 0) {
 
             const allLiesWithinDocs = await this.findAllLiesWithinDocs(document.resource.id);
-            allLiesWithinDocs
+            const docsToCorrect = allLiesWithinDocs
                 // TODO make .filter(isDefinedBy(on('...)
                 .filter(doc => {
                     return (doc.resource.relations['isRecordedIn']
                         && doc.resource.relations['isRecordedIn'].length > 0)
                 })
-                .filter(isNot(on('resource.relations.isRecordedIn')(document)))
-                .forEach(docToCorrect => {
-                    docToCorrect.resource.relations['isRecordedIn'] = document.resource.relations['isRecordedIn'];
-                    this.datastore.update(docToCorrect, username, undefined);
-                });
+                .filter(isNot(on('resource.relations.isRecordedIn')(document)));
+
+            for (let docToCorrect of docsToCorrect) {
+                docToCorrect.resource.relations['isRecordedIn'] = document.resource.relations['isRecordedIn'];
+                await this.datastore.update(docToCorrect, username, undefined);
+            }
         }
     }
 

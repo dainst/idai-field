@@ -131,7 +131,7 @@ describe('ConnectedDocsWriter', () => {
         doc.resource.relations['BelongsTo']=['2'];
         relatedDoc.resource.relations['Contains']=['1'];
 
-        await persistenceWriter.update(doc, [doc], 'u', false);
+        await persistenceWriter.remove(doc, 'u');
 
         expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
         expect(relatedDoc.resource.relations['Contains']).toBe(undefined);
@@ -143,7 +143,7 @@ describe('ConnectedDocsWriter', () => {
 
         doc.resource.relations['isRecordedIn'] = ['2'];
 
-        await persistenceWriter.update(doc, [doc], 'u', false);
+        await persistenceWriter.remove(doc, 'u');
 
         expect(mockDatastore.update).not.toHaveBeenCalled();
         done();

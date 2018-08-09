@@ -17,30 +17,50 @@ export class ConnectedDocsWriter {
     ) {}
 
 
-    public async update(document: Document,
-                        otherVersions: Array<Document>,
-                        username: string,
-                        shouldSetInverseRelations = true): Promise<void> {
+    public async update(document: Document, otherVersions: Array<Document>, username: string): Promise<void> {
 
         const connectedDocs = await this.getExistingConnectedDocs(
             [document].concat(otherVersions));
 
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
             this.projectConfiguration, document,
-            connectedDocs, shouldSetInverseRelations);
+            connectedDocs, true);
+
+        await this.updateDocs(docsToUpdate, username);
+    }
+
+
+    public async remove(document: Document, username: string): Promise<void> {
+
+        const connectedDocs = await this.getExistingConnectedDocs([document]);
+
+        const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(
+            this.projectConfiguration, document,
+            connectedDocs, false);
+
+        await this.updateDocs(docsToUpdate, username);
+    }
+
+
+    private async updateDocs(docsToUpdate: Array<Document>, username: string) {
 
         // Note that this does not update a document for beeing target of isRecordedIn
         for (let docToUpdate of docsToUpdate) {
-            await this.datastore.update(docToUpdate as Document, username, undefined)
+            await this.datastore.update(docToUpdate, username, undefined);
         }
     }
 
 
     private async getExistingConnectedDocs(documents: Array<Document>) {
 
+        const uniqueConnectedDocIds = this.getUniqueConnectedDocumentsIds(
+            documents,
+            this.projectConfiguration
+                .getAllRelationDefinitions()
+                .map(to('name')));
+
         const connectedDocuments: Array<Document> = [];
-        for (let id of this.getUniqueConnectedDocumentsIds(documents,
-            this.projectConfiguration.getAllRelationDefinitions().map(to('name')))) {
+        for (let id of uniqueConnectedDocIds) {
 
             try {
                 connectedDocuments.push(await this.datastore.get(id as string));

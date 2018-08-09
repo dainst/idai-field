@@ -6,6 +6,7 @@ import * as svgPanZoom from 'svg-pan-zoom';
 import {GraphManipulation} from './graph-manipulation';
 import {MatrixSelectionMode} from './matrix-view.component';
 import {SelectionRectangle} from './selection-rectangle';
+import {MatrixSelection, MatrixSelectionChange} from './matrix-selection';
 
 
 @Component({
@@ -20,9 +21,10 @@ import {SelectionRectangle} from './selection-rectangle';
 export class GraphComponent implements OnChanges {
 
     @Input() graph: string;
+    @Input() selection: MatrixSelection;
     @Input() selectionMode: MatrixSelectionMode;
 
-    @Output() onSelect: EventEmitter<string[]> = new EventEmitter<string[]>();
+    @Output() onSelectForEdit: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('graphContainer') graphContainer: ElementRef;
 
@@ -47,6 +49,19 @@ export class GraphComponent implements OnChanges {
 
         this.reset();
         this.showGraph();
+
+        if (this.selection) {
+            this.selection.changesNotifications().subscribe((change: MatrixSelectionChange) => {
+                change.ids.map(id => GraphManipulation.getNodeElement(id, this.svgRoot))
+                    .forEach(nodeElement => {
+                        if (change.changeType === 'added') {
+                            this.performSelection(nodeElement);
+                        } else {
+                            this.performDeselection(nodeElement);
+                        }
+                    });
+            });
+        }
     }
 
 
@@ -149,10 +164,9 @@ export class GraphComponent implements OnChanges {
         if (this.selectionRectangle) {
             const selectedElements: Array<Element> = this.selectionRectangle.getSelectedElements(this.svgRoot);
             if (selectedElements.length > 0) {
-                this.onSelect.emit(selectedElements.map(element => {
-                    this.performSelection(element);
-                    return GraphManipulation.getResourceId(element);
-                }));
+                selectedElements.forEach(element => {
+                    this.selection.add(GraphManipulation.getResourceId(element));
+                });
             }
             this.selectionRectangle.remove(this.svgRoot);
             this.selectionRectangle = undefined;
@@ -162,15 +176,21 @@ export class GraphComponent implements OnChanges {
 
     private onClick(event: Event) {
 
-        const nodeElement: Element|undefined = GraphManipulation.getNodeElement(event.target as Element);
+        const nodeElement: Element|undefined = GraphManipulation.getParentNodeElement(event.target as Element);
         if (!nodeElement) return;
 
-        this.onSelect.emit([GraphManipulation.getResourceId(nodeElement)]);
+        const resourceId: string = GraphManipulation.getResourceId(nodeElement);
 
-        if (this.selectionMode === 'single') {
-            this.toggleSelection(nodeElement);
-        } else if (this.selectionMode === 'rect') {
-            this.performSelection(nodeElement);
+        switch(this.selectionMode) {
+            case 'none':
+                this.onSelectForEdit.emit(resourceId);
+                break;
+            case 'single':
+                this.selection.addOrRemove(resourceId);
+                break;
+            case 'rect':
+                this.selection.add(resourceId);
+                break;
         }
     }
 
@@ -201,18 +221,6 @@ export class GraphComponent implements OnChanges {
         } else if (this.hoverElement) {
             GraphManipulation.setHighlighting(this.graphContainer, this.hoverElement, false);
             this.hoverElement = undefined;
-        }
-    }
-
-
-    private toggleSelection(nodeElement: Element) {
-
-        const isSelected: boolean = this.selectedElements.includes(nodeElement);
-
-        if (isSelected) {
-            this.performDeselection(nodeElement);
-        } else {
-            this.performSelection(nodeElement);
         }
     }
 

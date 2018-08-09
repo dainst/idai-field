@@ -39,7 +39,7 @@
 
         <div class="btn-group">
             <div class="btn btn-primary"
-                 [class.disabled]="subgraphSelection.length === 0"
+                 [class.disabled]="!documentsSelected()"
                  (click)="createGraphFromSelection()">
                 <span class="mdi mdi-transfer"></span>
             </div>
@@ -72,8 +72,9 @@
 
     <graph *ngIf="showGraph()"
            [graph]="graph"
-           (onSelect)="select($event)"
-           [selectionMode]="selectionMode">
+           [selection]="selection"
+           [selectionMode]="selectionMode"
+           (onSelectForEdit)="edit($event)">
     </graph>
 </div>
 

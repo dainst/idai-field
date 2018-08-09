@@ -3,7 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldFeatureDocument} from 'idai-components-2/field';
-import {isNot, on, tripleEqual, doWhen, isEmpty} from 'tsfun';
+import {on, tripleEqual, doWhen, isEmpty} from 'tsfun';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -11,6 +11,7 @@ import {MatrixRelationsMode, MatrixState} from './matrix-state';
 import {IdaiFieldFeatureDocumentReadDatastore} from '../../core/datastore/field/idai-field-feature-document-read-datastore';
 import {Loading} from '../../widgets/loading';
 import {DotBuilder, GraphRelationsConfiguration} from './dot-builder';
+import {MatrixSelection} from './matrix-selection';
 
 
 export type MatrixSelectionMode = 'single'|'rect'|'none';
@@ -33,6 +34,7 @@ export class MatrixViewComponent implements OnInit {
      */
     public graph: string;
 
+    public selection: MatrixSelection = new MatrixSelection();
     public selectionMode: MatrixSelectionMode = 'rect';
     public graphFromSelection: boolean = false;
 
@@ -40,7 +42,6 @@ export class MatrixViewComponent implements OnInit {
     private selectedTrench: IdaiFieldDocument|undefined;
 
     private featureDocuments: Array<IdaiFieldFeatureDocument> = [];
-    private subgraphSelection: Array<IdaiFieldFeatureDocument> = [];
 
 
     constructor(
@@ -63,6 +64,8 @@ export class MatrixViewComponent implements OnInit {
 
     public showTrenchSelector = () => !this.noTrenches();
 
+    public documentsSelected = () => this.selection.getSelectedDocuments(this.featureDocuments).length > 0;
+
     private noTrenches = () => isEmpty(this.trenches);
 
     private noFeatures = () => isEmpty(this.featureDocuments);
@@ -75,54 +78,21 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    public async select(resourceIds: string[]) {
+    public async edit(resourceId: string) {
 
-        const documents: Array<IdaiFieldFeatureDocument> = resourceIds.map(resourceId => {
-            return this.featureDocuments.find(on('resource.id:')(resourceId)) as IdaiFieldFeatureDocument;
-        }).filter(document => document !== undefined);
-
-        if (documents.length === 0) return;
-        if (documents.length === 1 && this.selectionMode === 'none') {
-            await this.launchDocedit(documents[0]);
-        } else {
-            await this.selectDocuments(documents, this.selectionMode === 'single');
-        }
-    }
-
-
-    public async selectDocuments(documents: Array<IdaiFieldFeatureDocument>, toggle: boolean) {
-
-        documents.forEach(document => {
-            return this.subgraphSelection = toggle
-                ? MatrixViewComponent.addOrRemove(this.subgraphSelection, document)
-                : MatrixViewComponent.add(this.subgraphSelection, document);
-        });
-    }
-
-
-    public async launchDocedit(docToEdit: IdaiFieldFeatureDocument) {
-
-        const doceditRef = this.modalService.open(DoceditComponent,
-            { size: 'lg', backdrop: 'static', keyboard: false });
-        doceditRef.componentInstance.setDocument(docToEdit);
-
-        const reset = async () => {
-            this.featureDocuments = [];
-            this.selectedTrench = undefined;
-            await this.populateTrenches();
-        };
-
-        await doceditRef.result.then(reset, doWhen(tripleEqual('deleted'), reset));
+        await this.openEditorModal(
+            this.featureDocuments.find(on('resource.id:')(resourceId)) as IdaiFieldFeatureDocument
+        );
     }
 
 
     public createGraphFromSelection() {
 
-        this.featureDocuments = this.subgraphSelection;
-        this.subgraphSelection = [];
-        this.graphFromSelection = true;
-
+        this.featureDocuments = this.selection.getSelectedDocuments(this.featureDocuments);
+        this.selection.clear();
         this.calculateGraph();
+
+        this.graphFromSelection = true;
     }
 
 
@@ -193,21 +163,19 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private static add(subgraphSelection: Array<IdaiFieldFeatureDocument>,
-                       docToAdd: IdaiFieldFeatureDocument): Array<IdaiFieldFeatureDocument> {
+    private async openEditorModal(docToEdit: IdaiFieldFeatureDocument) {
 
-        return subgraphSelection.find(on('resource.id')(docToAdd))
-            ? subgraphSelection
-            : subgraphSelection.concat([docToAdd]);
-    }
+        const doceditRef = this.modalService.open(DoceditComponent,
+            { size: 'lg', backdrop: 'static', keyboard: false });
+        doceditRef.componentInstance.setDocument(docToEdit);
 
+        const reset = async () => {
+            this.featureDocuments = [];
+            this.selectedTrench = undefined;
+            await this.populateTrenches();
+        };
 
-    private static addOrRemove(subgraphSelection: Array<IdaiFieldFeatureDocument>,
-                               docToAddOrRemove: IdaiFieldFeatureDocument): Array<IdaiFieldFeatureDocument> {
-
-        return subgraphSelection.find(on('resource.id')(docToAddOrRemove))
-            ? subgraphSelection.filter(isNot(on('resource.id')(docToAddOrRemove)))
-            : subgraphSelection.concat([docToAddOrRemove]);
+        await doceditRef.result.then(reset, doWhen(tripleEqual('deleted'), reset));
     }
 
 

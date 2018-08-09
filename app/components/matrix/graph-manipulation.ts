@@ -174,7 +174,7 @@ export module GraphManipulation {
     }
 
 
-    export function getNodeElement(element: Element|null): Element|undefined {
+    export function getParentNodeElement(element: Element|null): Element|undefined {
 
         while (element) {
             if (element.classList.contains('node')) return element;
@@ -210,6 +210,12 @@ export module GraphManipulation {
     export function getResourceId(nodeElement: Element): string {
 
         return nodeElement.id.substring(nodeElement.id.indexOf('-') + 1);
+    }
+
+
+    export function getNodeElement(resourceId: string, svgRoot: SVGSVGElement): Element {
+
+        return svgRoot.getElementById('node-' + resourceId);
     }
 
 

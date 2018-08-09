@@ -29,7 +29,6 @@ export class GraphComponent implements OnChanges {
     private svgRoot: SVGSVGElement;
 
     private hoverElement: Element|undefined;
-    private selectedElements: Array<Element> = [];
 
     private panZoomBehavior: SvgPanZoom.Instance;
     private selectionRectangle: SelectionRectangle|undefined;
@@ -52,11 +51,9 @@ export class GraphComponent implements OnChanges {
             this.selection.changesNotifications().subscribe((change: MatrixSelectionChange) => {
                 change.ids.map(id => GraphManipulation.getNodeElement(id, this.svgRoot))
                     .forEach(nodeElement => {
-                        if (change.changeType === 'added') {
-                            this.performSelection(nodeElement);
-                        } else {
-                            this.performDeselection(nodeElement);
-                        }
+                        GraphManipulation.performHighlightingSelection(
+                            nodeElement, change.changeType === 'added'
+                        );
                     });
             });
         }
@@ -221,19 +218,5 @@ export class GraphComponent implements OnChanges {
             GraphManipulation.setHighlighting(this.graphContainer, this.hoverElement, false);
             this.hoverElement = undefined;
         }
-    }
-
-
-    private performSelection(nodeElement: Element) {
-
-        this.selectedElements.push(nodeElement);
-        GraphManipulation.performHighlightingSelection(nodeElement, true);
-    }
-
-
-    private performDeselection(nodeElement: Element) {
-
-        this.selectedElements.splice(this.selectedElements.indexOf(nodeElement), 1);
-        GraphManipulation.performHighlightingSelection(nodeElement, false);
     }
 }

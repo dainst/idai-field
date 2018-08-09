@@ -4,7 +4,7 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to} from 'tsfun';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
-import {clone} from '../../util/object-util';
+import {clone} from '../../util/object-util'; // TODO move to document
 
 
 @Injectable()

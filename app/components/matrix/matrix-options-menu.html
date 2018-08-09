@@ -2,62 +2,64 @@
      (click)="toggle()">
     <span class="mdi mdi-settings mdi-18px"></span>
 </div>
-<div *ngIf="opened" id="matrix-options-menu" class="card card-block">
-    <form>
-        <fieldset class="form-group">
-            <label class="pre-label">Relationen:</label>
-            <div class="form-check form-check-inline">
-                <input id="relations-radio-temporal"
-                       class="form-check-input"
-                       name="relations-mode-radios"
-                       type="radio"
-                       [checked]="getRelationsMode() === 'temporal'"
-                       (change)="setRelationsMode('temporal')">
-                <label class="form-check-label" for="relations-radio-temporal">Zeitlich</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input id="relations-radio-spatial"
-                       class="form-check-input"
-                       name="relations-mode-radios"
-                       type="radio"
-                       [checked]="getRelationsMode() === 'spatial'"
-                       (change)="setRelationsMode('spatial')">
-                <label class="form-check-label" for="relations-radio-spatial">Räumlich</label>
-            </div>
-        </fieldset>
+<div *ngIf="opened" id="matrix-options-menu" class="card">
+    <div class="card-body">
+        <form>
+            <fieldset class="form-group">
+                <label class="pre-label">Relationen:</label>
+                <div class="form-check form-check-inline">
+                    <input id="relations-radio-temporal"
+                           class="form-check-input"
+                           name="relations-mode-radios"
+                           type="radio"
+                           [checked]="getRelationsMode() === 'temporal'"
+                           (change)="setRelationsMode('temporal')">
+                    <label class="form-check-label" for="relations-radio-temporal">Zeitlich</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input id="relations-radio-spatial"
+                           class="form-check-input"
+                           name="relations-mode-radios"
+                           type="radio"
+                           [checked]="getRelationsMode() === 'spatial'"
+                           (change)="setRelationsMode('spatial')">
+                    <label class="form-check-label" for="relations-radio-spatial">Räumlich</label>
+                </div>
+            </fieldset>
 
-        <fieldset class="form-group">
-            <label class="pre-label">Kanten:</label>
-            <div class="form-check form-check-inline">
-                <input id="line-radio-ortho"
-                       class="form-check-input"
-                       name="line-mode-radios"
-                       type="radio"
-                       [checked]="getLineMode() === 'ortho'"
-                       (change)="setLineMode('ortho')">
-                <label class="form-check-label" for="line-radio-ortho">Gerade</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input id="line-radio-curved"
-                       class="form-check-input"
-                       name="line-mode-radios"
-                       type="radio"
-                       [checked]="getLineMode() === 'curved'"
-                       (change)="setLineMode('curved')">
-                <label class="form-check-label" for="line-radio-curved">Gebogen</label>
-            </div>
-        </fieldset>
+            <fieldset class="form-group">
+                <label class="pre-label">Kanten:</label>
+                <div class="form-check form-check-inline">
+                    <input id="line-radio-ortho"
+                           class="form-check-input"
+                           name="line-mode-radios"
+                           type="radio"
+                           [checked]="getLineMode() === 'ortho'"
+                           (change)="setLineMode('ortho')">
+                    <label class="form-check-label" for="line-radio-ortho">Gerade</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input id="line-radio-curved"
+                           class="form-check-input"
+                           name="line-mode-radios"
+                           type="radio"
+                           [checked]="getLineMode() === 'curved'"
+                           (change)="setLineMode('curved')">
+                    <label class="form-check-label" for="line-radio-curved">Gebogen</label>
+                </div>
+            </fieldset>
 
-        <fieldset class="form-group">
-            <div class="form-check form-check-inline">
-                <input id="period-check"
-                       class="form-check-input"
-                       name="period-check"
-                       type="checkbox"
-                       [checked]="getClusterMode() === 'periods'"
-                       (change)="toggleClusterMode()">
-                <label class="form-check-label" for="period-check">Gruppierung nach Grobdatierung</label>
-            </div>
-        </fieldset>
-    </form>
+            <fieldset class="form-group">
+                <div class="form-check form-check-inline">
+                    <input id="period-check"
+                           class="form-check-input"
+                           name="period-check"
+                           type="checkbox"
+                           [checked]="getClusterMode() === 'periods'"
+                           (change)="toggleClusterMode()">
+                    <label class="form-check-label" for="period-check">Gruppierung nach Grobdatierung</label>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 </div>

@@ -7,8 +7,6 @@
   position: absolute;
   z-index: 1000;
   right: 11px;
-  border: none;
-  border-radius: 0;
 }
 
 #matrix-options-button {
@@ -16,11 +14,17 @@
 }
 
 #matrix-options-menu {
-  top: 109px;
-  padding-bottom: 10px;
+  top: 113px;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  border-radius: 0.25rem !important;
+  background-color: #f8f9fa !important;
   cursor: default !important;
   user-select: none;
+
+  .card-body {
+    padding-bottom: 15px;
+  }
 
   .form-group {
     margin-bottom: 0;

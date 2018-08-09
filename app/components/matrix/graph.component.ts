@@ -1,8 +1,9 @@
-import {Component, ElementRef, EventEmitter, Inject, Input, OnChanges, Output, Renderer2, ViewChild}
-    from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, Renderer2,
+    ViewChild} from '@angular/core';
 import {DOCUMENT} from '@angular/platform-browser';
 import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
+import {Subscription} from 'rxjs/Subscription';
 import {GraphManipulation} from './graph-manipulation';
 import {SelectionRectangle} from './selection-rectangle';
 import {MatrixSelection, MatrixSelectionChange} from './matrix-selection';
@@ -17,7 +18,7 @@ import {MatrixSelection, MatrixSelectionChange} from './matrix-selection';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class GraphComponent implements OnChanges {
+export class GraphComponent implements OnChanges, OnDestroy {
 
     @Input() graph: string;
     @Input() selection: MatrixSelection;
@@ -33,7 +34,10 @@ export class GraphComponent implements OnChanges {
     private panZoomBehavior: SvgPanZoom.Instance;
     private selectionRectangle: SelectionRectangle|undefined;
     private lastMousePosition: { x: number, y: number }|undefined;
+
     private removeMouseUpEventListener: Function;
+    private selectionSubscription: Subscription|undefined;
+
 
     private static maxRealZoom: number = 2;
 
@@ -46,17 +50,13 @@ export class GraphComponent implements OnChanges {
 
         this.reset();
         this.showGraph();
+        this.subscribeSelectionChangesNotifications();
+    }
 
-        if (this.selection) {
-            this.selection.changesNotifications().subscribe((change: MatrixSelectionChange) => {
-                change.ids.map(id => GraphManipulation.getNodeElement(id, this.svgRoot))
-                    .forEach(nodeElement => {
-                        GraphManipulation.performHighlightingSelection(
-                            nodeElement, change.changeType === 'added'
-                        );
-                    });
-            });
-        }
+
+    ngOnDestroy() {
+
+        if (this.selectionSubscription) this.selectionSubscription.unsubscribe();
     }
 
 
@@ -82,6 +82,22 @@ export class GraphComponent implements OnChanges {
         this.graphContainer.nativeElement.appendChild(this.svgRoot);
         GraphManipulation.addClusterSubgraphLabelBoxes(this.svgRoot, this.htmlDocument);
         this.configurePanZoomBehavior(this.svgRoot);
+    }
+
+
+    private subscribeSelectionChangesNotifications() {
+
+        if (this.selectionSubscription) return;
+
+        this.selectionSubscription =
+            this.selection.changesNotifications().subscribe((change: MatrixSelectionChange) => {
+            change.ids.map(id => GraphManipulation.getNodeElement(id, this.svgRoot))
+                .forEach(nodeElement => {
+                    GraphManipulation.performHighlightingSelection(
+                        nodeElement, change.changeType === 'added'
+                    );
+                });
+        });
     }
 
 

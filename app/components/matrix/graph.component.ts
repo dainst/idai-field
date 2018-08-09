@@ -89,15 +89,10 @@ export class GraphComponent implements OnChanges, OnDestroy {
 
         if (this.selectionSubscription) return;
 
-        this.selectionSubscription =
-            this.selection.changesNotifications().subscribe((change: MatrixSelectionChange) => {
-            change.ids.map(id => GraphManipulation.getNodeElement(id, this.svgRoot))
-                .forEach(nodeElement => {
-                    GraphManipulation.performHighlightingSelection(
-                        nodeElement, change.changeType === 'added'
-                    );
-                });
-        });
+        this.selectionSubscription = this.selection.changesNotifications().subscribe(
+            (change: MatrixSelectionChange) => {
+                GraphComponent.updateHighlighting(change, this.svgRoot);
+            });
     }
 
 
@@ -234,5 +229,16 @@ export class GraphComponent implements OnChanges, OnDestroy {
             GraphManipulation.setHighlighting(this.graphContainer, this.hoverElement, false);
             this.hoverElement = undefined;
         }
+    }
+
+
+    private static updateHighlighting(change: MatrixSelectionChange, svgRoot: SVGSVGElement) {
+
+        change.ids.map(id => GraphManipulation.getNodeElement(id, svgRoot))
+            .forEach(nodeElement => {
+                GraphManipulation.performHighlightingSelection(
+                    nodeElement, change.changeType === 'added'
+                );
+            });
     }
 }

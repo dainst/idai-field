@@ -104,6 +104,7 @@ export class PersistenceManager {
 
     private async fixIsRecordedInInLiesWithinDocs(document: Document, username: string) {
 
+        // TODO add undefinedOrEmpty to tsfun
         if (!document.resource.relations['isRecordedIn']) return;
         if (document.resource.relations['isRecordedIn'].length === 0) return;
 

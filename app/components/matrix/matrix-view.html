@@ -21,18 +21,39 @@
     <div class="col-md-4 mr-md-auto">
         <div class="btn-group">
             <div class="btn btn-primary"
-                 (click)="setSelectionMode('none')"
-                 [class.active]="selectionMode === 'none'">
+                 [class.active]="selectionMode === 'none'"
+                 ngbTooltip="Bearbeitungsmodus"
+                 placement="bottom"
+                 container="body"
+                 triggers="manual"
+                 #selectionTooltip1="ngbTooltip"
+                 (mouseover)="selectionTooltip1.open()"
+                 (mouseleave)="selectionTooltip1.close()"
+                 (click)="selectionTooltip1.close(); setSelectionMode('none');">
                 <span class="mdi mdi-pencil"></span>
             </div>
             <div class="btn btn-primary"
-                 (click)="setSelectionMode('single')"
-                 [class.active]="selectionMode === 'single'">
+                 [class.active]="selectionMode === 'single'"
+                 ngbTooltip="Einzelauswahlmodus"
+                 placement="bottom"
+                 container="body"
+                 triggers="manual"
+                 #selectionTooltip2="ngbTooltip"
+                 (mouseover)="selectionTooltip2.open()"
+                 (mouseleave)="selectionTooltip2.close()"
+                 (click)="selectionTooltip2.close(); setSelectionMode('single');">
                 <span class="mdi mdi-cursor-default-outline"></span>
             </div>
             <div class="btn btn-primary"
-                 (click)="setSelectionMode('rect')"
-                 [class.active]="selectionMode === 'rect'">
+                 [class.active]="selectionMode === 'rect'"
+                 ngbTooltip="Gruppenauswahlmodus"
+                 placement="bottom"
+                 container="body"
+                 triggers="manual"
+                 #selectionTooltip3="ngbTooltip"
+                 (mouseover)="selectionTooltip3.open()"
+                 (mouseleave)="selectionTooltip3.close()"
+                 (click)="selectionTooltip3.close(); setSelectionMode('rect');">
                 <span class="mdi mdi-select"></span>
             </div>
         </div>
@@ -40,19 +61,40 @@
         <div class="btn-group">
             <div class="btn btn-primary"
                  [class.disabled]="!documentsSelected()"
-                 (click)="clearSelection()">
+                 ngbTooltip="Auswahl aufheben"
+                 placement="bottom"
+                 container="body"
+                 triggers="manual"
+                 #clearSelectionTooltip="ngbTooltip"
+                 (mouseover)="clearSelectionTooltip.open()"
+                 (mouseleave)="clearSelectionTooltip.close()"
+                 (click)="clearSelectionTooltip.close(); clearSelection();">
                 <span class="mdi mdi-select-off"></span>
             </div>
 
             <div class="btn btn-primary"
                  [class.disabled]="!documentsSelected()"
-                 (click)="createGraphFromSelection()">
+                 ngbTooltip="Matrix aus Auswahl erstellen"
+                 placement="bottom"
+                 container="body"
+                 triggers="manual"
+                 #matrixFromSelectionTooltip="ngbTooltip"
+                 (mouseover)="matrixFromSelectionTooltip.open()"
+                 (mouseleave)="matrixFromSelectionTooltip.close()"
+                 (click)="matrixFromSelectionTooltip.close(); createGraphFromSelection();">
                 <span class="mdi mdi-transfer"></span>
             </div>
 
             <div class="btn btn-primary"
                  [class.disabled]="!graphFromSelection"
-                 (click)="reloadGraph()">
+                 ngbTooltip="Matrix neu laden"
+                 placement="bottom"
+                 container="body"
+                 triggers="manual"
+                 #reloadGraphTooltip="ngbTooltip"
+                 (mouseover)="reloadGraphTooltip.open()"
+                 (mouseleave)="reloadGraphTooltip.close()"
+                 (click)="reloadGraphTooltip.close(); reloadGraph();">
                 <span class="mdi mdi-reload"></span>
             </div>
         </div>

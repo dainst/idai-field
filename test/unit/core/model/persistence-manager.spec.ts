@@ -43,16 +43,8 @@ describe('PersistenceManager', () => {
 
     let findResult: Array<Document>;
 
-    let getFunction = function(id) {
-        return new Promise(resolve => {
-            if (id === relatedDoc['resource']['id']) {
-                resolve(relatedDoc);
-            }
-            else {
-                resolve(anotherRelatedDoc);
-            }
-        });
-    };
+    let getFunction = async (id) => id === relatedDoc['resource']['id']
+        ? relatedDoc : anotherRelatedDoc;
 
 
     let findFunction = function() {

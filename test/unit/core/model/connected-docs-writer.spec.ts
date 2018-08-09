@@ -30,7 +30,6 @@ describe('ConnectedDocsWriter', () => {
     });
 
     let mockDatastore;
-    let mockTypeUtility;
     let connectedDocsWriter: ConnectedDocsWriter;
     const id = 'abc';
 
@@ -38,16 +37,8 @@ describe('ConnectedDocsWriter', () => {
     let relatedDoc: any;
     let anotherRelatedDoc: any;
 
-    let getFunction = function(id) {
-        return new Promise(resolve => {
-            if (id === relatedDoc['resource']['id']) {
-                resolve(relatedDoc);
-            }
-            else {
-                resolve(anotherRelatedDoc);
-            }
-        });
-    };
+    const getFunction = async (id) => id === relatedDoc['resource']['id']
+            ? relatedDoc : anotherRelatedDoc;
 
 
     beforeEach(() => {
@@ -55,8 +46,6 @@ describe('ConnectedDocsWriter', () => {
         spyOn(console, 'warn');
 
         mockDatastore = jasmine.createSpyObj('mockDatastore', ['get', 'find', 'create', 'update', 'refresh', 'remove']);
-        mockTypeUtility = jasmine.createSpyObj('mockTypeUtility', ['isSubtype']);
-        mockTypeUtility.isSubtype.and.returnValue(true);
 
         connectedDocsWriter = new ConnectedDocsWriter(mockDatastore, projectConfiguration);
 

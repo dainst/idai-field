@@ -116,6 +116,8 @@ export class PersistenceManager {
             const allLiesWithinDocs = await this.findAllLiesWithinDocs(document.resource.id);
             const docsToCorrect = allLiesWithinDocs
                 // TODO make .filter(isDefinedBy(on('...)
+                // TODO .filter(on('a.b.c')(isDefined))
+                // TODO .filter(on('a.b.c')(jsonEqual('abc')))
                 .filter(doc => {
                     return (doc.resource.relations['isRecordedIn']
                         && doc.resource.relations['isRecordedIn'].length > 0)

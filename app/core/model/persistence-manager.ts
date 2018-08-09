@@ -104,8 +104,7 @@ export class PersistenceManager {
 
     private async removeWithConnections(document: Document, username: string): Promise<void> {
 
-        await this.persistenceWriter.update(
-            document, [], username, false);
+        await this.persistenceWriter.remove(document, username);
         await this.datastore.remove(document);
         return undefined;
     }

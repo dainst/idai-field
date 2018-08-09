@@ -103,24 +103,22 @@ export class PersistenceManager {
 
     private async fixIsRecordedInInLiesWithinDocs(document: Document, username: string) {
 
-        if (document.resource.relations['isRecordedIn']
-            && document.resource.relations['isRecordedIn'].length > 0) {
+        if (!document.resource.relations['isRecordedIn']) return;
+        if (document.resource.relations['isRecordedIn'].length === 0) return;
 
-            const allLiesWithinDocs = await this.findAllLiesWithinDocs(document.resource.id);
-            const docsToCorrect = allLiesWithinDocs
-                // TODO make .filter(isDefinedBy(on('...)
-                // TODO .filter(on('a.b.c')(isDefined))
-                // TODO .filter(on('a.b.c')(jsonEqual('abc')))
-                .filter(doc => {
-                    return (doc.resource.relations['isRecordedIn']
-                        && doc.resource.relations['isRecordedIn'].length > 0)
-                })
-                .filter(isNot(on('resource.relations.isRecordedIn')(document)));
+        const docsToCorrect = (await this.findAllLiesWithinDocs(document.resource.id))
+            // TODO make .filter(isDefinedBy(on('...)
+            // TODO .filter(on('a.b.c')(isDefined))
+            // TODO .filter(on('a.b.c')(jsonEqual('abc')))
+            .filter(doc => {
+                return (doc.resource.relations['isRecordedIn']
+                    && doc.resource.relations['isRecordedIn'].length > 0)
+            })
+            .filter(isNot(on('resource.relations.isRecordedIn')(document)));
 
-            for (let docToCorrect of docsToCorrect) { // TODO clone doc before saving, use jasmine object containing to test it then
-                docToCorrect.resource.relations['isRecordedIn'] = document.resource.relations['isRecordedIn'];
-                await this.datastore.update(docToCorrect, username, undefined);
-            }
+        for (let docToCorrect of docsToCorrect) { // TODO clone doc before saving, use jasmine object containing to test it then
+            docToCorrect.resource.relations['isRecordedIn'] = document.resource.relations['isRecordedIn'];
+            await this.datastore.update(docToCorrect, username, undefined);
         }
     }
 

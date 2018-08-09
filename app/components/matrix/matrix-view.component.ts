@@ -66,6 +66,8 @@ export class MatrixViewComponent implements OnInit {
 
     public documentsSelected = () => this.selection.getSelectedDocuments(this.featureDocuments).length > 0;
 
+    public clearSelection = () => this.selection.clear();
+
     private noTrenches = () => isEmpty(this.trenches);
 
     private noFeatures = () => isEmpty(this.featureDocuments);

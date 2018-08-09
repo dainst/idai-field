@@ -40,6 +40,12 @@
         <div class="btn-group">
             <div class="btn btn-primary"
                  [class.disabled]="!documentsSelected()"
+                 (click)="clearSelection()">
+                <span class="mdi mdi-select-off"></span>
+            </div>
+
+            <div class="btn btn-primary"
+                 [class.disabled]="!documentsSelected()"
                  (click)="createGraphFromSelection()">
                 <span class="mdi mdi-transfer"></span>
             </div>

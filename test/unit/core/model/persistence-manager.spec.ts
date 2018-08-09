@@ -74,7 +74,12 @@ describe('PersistenceManager', () => {
 
         persistenceManager = new PersistenceManager(
             mockDatastore, projectConfiguration, mockTypeUtility,
-            new ConnectedDocsWriter(mockDatastore, projectConfiguration));
+
+            // We do not mock this one here to capture the full interaction
+            // interaction of peristenceManage and connectedDocsWriter
+            new ConnectedDocsWriter(mockDatastore, projectConfiguration)
+        );
+
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.find.and.callFake(findFunction);
         mockDatastore.update.and.returnValue(Promise.resolve(doc));

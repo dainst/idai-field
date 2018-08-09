@@ -4,6 +4,7 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to} from 'tsfun';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
+import {clone} from '../../util/object-util';
 
 
 @Injectable()
@@ -20,7 +21,7 @@ export class PersistenceManager {
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
         private typeUtility: TypeUtility,
-        private persistenceWriter: ConnectedDocsWriter
+        private connectedDocsWriter: ConnectedDocsWriter
     ) {}
 
 
@@ -87,7 +88,7 @@ export class PersistenceManager {
 
         const updated = await this.persistIt(document, username, mapTo('_rev', revisionsToSquash));
 
-        await this.persistenceWriter.update(
+        await this.connectedDocsWriter.update(
             updated, [oldVersion].concat(revisionsToSquash), username);
         return updated as Document;
     }
@@ -95,7 +96,7 @@ export class PersistenceManager {
 
     private async removeWithConnections(document: Document, username: string): Promise<void> {
 
-        await this.persistenceWriter.remove(document, username);
+        await this.connectedDocsWriter.remove(document, username);
         await this.datastore.remove(document);
         return undefined;
     }
@@ -116,9 +117,10 @@ export class PersistenceManager {
             })
             .filter(isNot(on('resource.relations.isRecordedIn')(document)));
 
-        for (let docToCorrect of docsToCorrect) { // TODO clone doc before saving, use jasmine object containing to test it then
-            docToCorrect.resource.relations['isRecordedIn'] = document.resource.relations['isRecordedIn'];
-            await this.datastore.update(docToCorrect, username, undefined);
+        for (let docToCorrect of docsToCorrect) {
+            const cloned = clone(docToCorrect);
+            cloned.resource.relations['isRecordedIn'] = document.resource.relations['isRecordedIn'];
+            await this.datastore.update(cloned, username, undefined);
         }
     }
 

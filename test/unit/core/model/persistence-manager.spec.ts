@@ -208,14 +208,27 @@ describe('PersistenceManager', () => {
             Promise.resolve({documents:[anotherRelatedDoc]}),
             Promise.resolve({documents:[]}));
 
-        mockDatastore.update.and.returnValue(Promise.resolve(doc));
+        let checked1 = false;
+        let checked2 = false;
+        let checked3 = false;
+        mockDatastore.update.and.callFake((doc: any, u: string) => {
+            if (doc.resource.id === '2') {
+                if (doc.resource.relations.isRecordedIn[0] !== 't2') fail();
+                checked2 = true;
+            } else if (doc.resource.id === '3') {
+                if (doc.resource.relations.isRecordedIn[0] !== 't2') fail();
+                checked3 = true;
+            } else {
+                checked1 = true;
+            }
+            return Promise.resolve(doc);
+        });
+
         await persistenceManager.persist(doc, 'u');
 
-        expect(mockDatastore.update).toHaveBeenCalledWith(doc, 'u', undefined);
-        expect(mockDatastore.update).toHaveBeenCalledWith(relatedDoc, 'u', undefined);
-        expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
-        expect(relatedDoc.resource.relations.isRecordedIn[0]).toEqual('t2');
-        expect(anotherRelatedDoc.resource.relations.isRecordedIn[0]).toEqual('t2')
+        expect(checked1 && checked2 && checked3).toBe(true);
+        expect(relatedDoc.resource.relations.isRecordedIn[0]).toEqual('t1'); // originals untouched
+        expect(anotherRelatedDoc.resource.relations.isRecordedIn[0]).toEqual('t1');
         done();
     });
 });

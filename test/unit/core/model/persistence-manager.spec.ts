@@ -231,4 +231,23 @@ describe('PersistenceManager', () => {
         expect(anotherRelatedDoc.resource.relations.isRecordedIn[0]).toEqual('t1');
         done();
     });
+
+
+    fit('only (!) correct lies within relations when resource moved to other (!) operation', async done => {
+
+        doc.resource.relations['isRecordedIn'] = ['t1'];
+        relatedDoc.resource.relations = { liesWithin: ['1'], isRecordedIn: ['t1']};
+        anotherRelatedDoc.resource.relations = { liesWithin: ['2'], isRecordedIn: ['t1']};
+
+        mockDatastore.find.and.returnValues(
+            Promise.resolve({documents:[relatedDoc]}),
+            Promise.resolve({documents:[anotherRelatedDoc]}),
+            Promise.resolve({documents:[]}));
+
+        mockDatastore.update.and.callFake((doc: any, u: string) => Promise.resolve(doc));
+        await persistenceManager.persist(doc, 'u');
+        expect(mockDatastore.update).toHaveBeenCalledTimes(1);
+
+        done();
+    });
 });

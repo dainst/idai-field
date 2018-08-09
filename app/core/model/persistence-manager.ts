@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Document, NewDocument, ProjectConfiguration, toResourceId} from 'idai-components-2/core';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to, isDefined, isUndefined, isUndefinedOrEmpty} from 'tsfun';
+import {filter, flatMap, flow, includedIn, isNot, mapTo, on, onBy, subtract, to, isDefined, isUndefined, isUndefinedOrEmpty, arrayEquivalent} from 'tsfun';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../../util/object-util';
@@ -108,7 +108,8 @@ export class PersistenceManager {
 
         const docsToCorrect = (await this.findAllLiesWithinDocs(document.resource.id))
             .filter(isNot(on('resource.relations.isRecordedIn')(isUndefinedOrEmpty))) // TODO unit test, make isArray predicate
-            .filter(isNot(on('resource.relations.isRecordedIn')(document))); // TODO this should not work, since it must be compared on the first element, perhaps using arrayEquivalent
+            .filter(isNot(onBy(arrayEquivalent)
+            ('resource.relations.isRecordedIn')(document)));
 
         for (let docToCorrect of docsToCorrect) {
             const cloned = clone(docToCorrect);

@@ -125,10 +125,7 @@ describe('ConnectedDocsWriter', () => {
 
         await connectedDocsWriter.update(doc, [doc], 'u');
 
-        // expect(mockDatastore.update).toHaveBeenCalledWith(relatedObject);
-        // right now it is not possible to test both objects due to problems with the return val of promise.all
         expect(mockDatastore.update).toHaveBeenCalledWith(anotherRelatedDoc, 'u', undefined);
-        // expect(relatedObject['Contains'][0]).toBe('1');
         expect(anotherRelatedDoc['resource']['relations']['Contains'][0]).toBe('1');
         done();
     });

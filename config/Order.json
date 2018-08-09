@@ -2,8 +2,8 @@
   "types": ["Operation", "Trench", "Building", "Survey", "Place", "Feature", "Layer", "Grave", "Burial", "Architecture", "Floor", "DrillCoreLayer", "Other", "Wall_surface", "Room", "Find", "Pottery", "Terracotta", "Brick", "Bone", "Glass", "Metal", "Stone", "Wood", "Coin", "PlasterFragment", "Mollusk", "Inscription", "ProcessUnit", "Profile", "Planum", "Drilling", "Sample", "SurveyUnit", "Image", "Drawing", "Photo"],
   "fields":{
     "Project": ["hasDescription", "hasInstitution", "hasSupervisor", "hasContactPerson", "hasContactMail", "hasProjectURI", "hasExternalReference", "hasGazId", "hasLatitude", "hasLongitude", "hasEPSGId", "coordinateReferenceSystem"],
-    "Operation": ["hasDescription", "hasBeginningDate", "hasEndDate", "hasProcessor", "hasSupervisor", "hasCampaign", "hasArea", "hasPeriod", "hasDating", "hasDiaryAbstract"],
-    "Trench": ["hasDairy", "hasResearchQuestion", "hasTrenchComment", "hasExcavationType", "hasSpatialLocation", "hasOrientation", "hasDimensionLength", "hasDimensionVerticalExtent", "hasDimensionWidth"],
+    "Operation": ["hasDescription", "hasBeginningDate", "hasEndDate", "hasProcessor", "hasSupervisor", "hasCampaign", "hasArea", "hasDiaryAbstract"],
+    "Trench": ["hasDairy", "hasResearchQuestion", "hasTrenchComment", "hasExcavationType", "hasSpatialLocation", "hasOrientation", "hasDimensionLength", "hasDimensionVerticalExtent", "hasDimensionWidth", "hasPeriod", "hasDating"],
     "Building": ["hasMaterial", "hasContext", "hasCondition", "hasConditionAmount", "hasConditionComment", "hasRestauration", "hasDimensionLength", "hasDimensionWidth", "hasBuildingType", "hasBuildingTechnique", "hasBuildingCategory", "hasBuildingCategorySpecific", "hasArchitecturalOrders", "hasBuildingHistory", "hasBuildingResearchHistory", "hasExcavationHistory", "hasHistory"],
     "Survey": ["hasResearchMethod"],
     "Place": ["hasDescription", "hasGazId", "hasPlaceName", "hasPlaceType", "isAncient", "hasSiteClassification", "hasFindspotClassification", "hasModernIntervention", "hasExcavationHistory", "hasBuildingResearchHistory", "hasBuildingHistory", "hasFindSituation"],

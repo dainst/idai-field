@@ -809,6 +809,12 @@
     "Building": {
       "parent": "Operation",
       "fields": {
+        "hasPeriod": {
+          "inputType": "dropdownRange"
+        },
+        "hasDating": {
+          "inputType": "dating"
+        },
         "hasBuildingHistory": {
           "inputType": "input"
         },
@@ -1322,12 +1328,6 @@
           "valuelist": [
             "Campaign"
           ]
-        },
-        "hasPeriod": {
-          "inputType": "dropdownRange"
-        },
-        "hasDating": {
-          "inputType": "dating"
         }
       }
     },

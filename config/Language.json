@@ -401,6 +401,12 @@
         "hasMaterial": {
           "label": "Material",
           "description": "Material, aus welchem der Einschluss ist, z.B. 'Holzkohle'"
+        },
+        "hasPeriod": {
+          "label": "Grobdatierung"
+        },
+        "hasDating": {
+          "label": "Datierung"
         }
       }
     },
@@ -594,12 +600,6 @@
         },
         "hasCampaign": {
           "label": "Kampagne"
-        },
-        "hasPeriod": {
-          "label": "Grobdatierung"
-        },
-        "hasDating": {
-          "label": "Datierung"
         }
       }
     },

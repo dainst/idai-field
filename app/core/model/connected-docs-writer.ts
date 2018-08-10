@@ -4,7 +4,7 @@ import {ConnectedDocsResolution} from './connected-docs-resolution';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to} from 'tsfun';
 
-@Injectable()
+
 /**
  * Architecture note: This class deals with automatic
  * udpate of documents directly connected

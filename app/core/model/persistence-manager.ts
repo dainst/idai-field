@@ -7,6 +7,7 @@ import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../../util/object-util';
 
 
+@Injectable()
 /**
  * When persisting or deleting, PersistenceManager maintains a consistent state of relations between the
  * documents by updating related documents relations.

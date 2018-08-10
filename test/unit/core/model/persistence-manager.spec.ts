@@ -63,12 +63,7 @@ describe('PersistenceManager', () => {
         mockTypeUtility.isSubtype.and.returnValue(true);
 
         persistenceManager = new PersistenceManager(
-            mockDatastore, projectConfiguration, mockTypeUtility,
-
-            // We do not mock this one here to capture the full interaction
-            // interaction of peristenceManage and connectedDocsWriter
-            new ConnectedDocsWriter(mockDatastore, projectConfiguration)
-        );
+            mockDatastore, projectConfiguration, mockTypeUtility);
 
         mockDatastore.get.and.callFake(getFunction);
         mockDatastore.find.and.callFake(findFunction);

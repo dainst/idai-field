@@ -7,7 +7,6 @@ import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../../util/object-util';
 
 
-@Injectable()
 /**
  * When persisting or deleting, PersistenceManager maintains a consistent state of relations between the
  * documents by updating related documents relations.
@@ -17,12 +16,15 @@ import {clone} from '../../util/object-util';
  */
 export class PersistenceManager {
 
+    private connectedDocsWriter: ConnectedDocsWriter;
+
     constructor(
         private datastore: DocumentDatastore,
         private projectConfiguration: ProjectConfiguration,
-        private typeUtility: TypeUtility,
-        private connectedDocsWriter: ConnectedDocsWriter
-    ) {}
+        private typeUtility: TypeUtility
+    ) {
+        this.connectedDocsWriter = new ConnectedDocsWriter(this.datastore, this.projectConfiguration);
+    }
 
 
     /**

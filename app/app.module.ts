@@ -178,7 +178,6 @@ let indexFacade: IndexFacade|undefined = undefined;
             },
             deps: []
         },
-        ConnectedDocsWriter,
         PersistenceManager,
         Validator,
         { provide: MD, useClass: M},

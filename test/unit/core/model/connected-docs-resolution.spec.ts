@@ -98,7 +98,9 @@ describe('ConnectedDocsResolution', () => {
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc]);
 
         expect(docsToUpdate).toEqual([relatedDoc]);
-        expect(relatedDoc.resource.relations['Contains']).toEqual(['1','4']);
+        expect(relatedDoc.resource.relations['Contains'].length).toEqual(2);
+        expect(relatedDoc.resource.relations['Contains'])
+            .toEqual(jasmine.arrayContaining(['1', '4']));
     });
 
 
@@ -121,7 +123,9 @@ describe('ConnectedDocsResolution', () => {
         const docsToUpdate = ConnectedDocsResolution.determineDocsToUpdate(projectConfiguration, doc, [relatedDoc]);
 
         expect(docsToUpdate).toEqual([]);
-        expect(relatedDoc.resource.relations['Contains']).toEqual(['1','4']);
+        expect(relatedDoc.resource.relations['Contains'].length).toEqual(2);
+        expect(relatedDoc.resource.relations['Contains'])
+            .toEqual(jasmine.arrayContaining(['1', '4']));
     });
 
 

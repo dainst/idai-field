@@ -1,5 +1,5 @@
 import {Document, ProjectConfiguration} from 'idai-components-2/core';
-import {isNot, tripleEqual} from 'tsfun';
+import {isNot, tripleEqual, arrayEquivalent, on, onBy} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -98,12 +98,12 @@ export module ConnectedDocsResolution {
             let same = true;
 
             if (Object.keys(targetDocuments[i].resource.relations).sort().toString()
-                == Object.keys(copyOfTargetDocuments[i].resource.relations).sort().toString()) {
+                === Object.keys(copyOfTargetDocuments[i].resource.relations).sort().toString()) {
 
                 for (let relation in copyOfTargetDocuments[i].resource.relations) {
-                    const orig = targetDocuments[i].resource.relations[relation].sort().toString();
-                    const copy = copyOfTargetDocuments[i].resource.relations[relation].sort().toString();
-                    if (orig != copy) same = false;
+
+                    if (!onBy(arrayEquivalent)('resource.relations.' + relation)
+                        (targetDocuments[i])(copyOfTargetDocuments[i])) same = false;
                 }
             } else {
                 same = false;

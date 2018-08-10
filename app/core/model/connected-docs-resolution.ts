@@ -1,5 +1,5 @@
 import {Document, ProjectConfiguration} from 'idai-components-2/core';
-import {isNot, tripleEqual, arrayEquivalent, on, onBy} from 'tsfun';
+import {isNot, tripleEqual, arrayEquivalent, objectEquivalentBy, on, onBy} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -89,27 +89,19 @@ export module ConnectedDocsResolution {
     }
 
 
-    // TODO use and extend comparison functionality from tsfun
+    // TODO pair instances of targetDocuments and copyOfTargetDocuments and reduce over them
     function compare(targetDocuments: Array<Document>, copyOfTargetDocuments: Array<Document>): Array<Document> {
 
         const docsToUpdate = [] as any;
 
         for (let i in targetDocuments) {
-            let same = true;
 
-            if (Object.keys(targetDocuments[i].resource.relations).sort().toString()
-                === Object.keys(copyOfTargetDocuments[i].resource.relations).sort().toString()) {
+            if (!onBy(objectEquivalentBy(arrayEquivalent))('resource.relations')
+                (targetDocuments[i])
+                (copyOfTargetDocuments[i])) {
 
-                for (let relation in copyOfTargetDocuments[i].resource.relations) {
-
-                    if (!onBy(arrayEquivalent)('resource.relations.' + relation)
-                        (targetDocuments[i])(copyOfTargetDocuments[i])) same = false;
-                }
-            } else {
-                same = false;
+                docsToUpdate.push(targetDocuments[i] as never);
             }
-
-            if (!same) docsToUpdate.push(targetDocuments[i] as never);
         }
 
         return docsToUpdate;

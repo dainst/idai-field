@@ -1,4 +1,4 @@
-import {Document, ProjectConfiguration} from 'idai-components-2/core';
+import {Document, ProjectConfiguration, Relations} from 'idai-components-2/core';
 import {isNot, tripleEqual, arrayEquivalent, objectEquivalentBy, on, onBy} from 'tsfun';
 
 /**
@@ -89,23 +89,27 @@ export module ConnectedDocsResolution {
     }
 
 
-    // TODO pair instances of targetDocuments and copyOfTargetDocuments and reduce over them
-    function compare(targetDocuments: Array<Document>, copyOfTargetDocuments: Array<Document>): Array<Document> {
+    function compare(targetDocuments: Array<Document>,
+                     copyOfTargetDocuments: Array<Document>): Array<Document> {
 
-        const docsToUpdate = [] as any;
-
-        for (let i in targetDocuments) {
-
-            if (!onBy(objectEquivalentBy(arrayEquivalent))('resource.relations')
-                (targetDocuments[i])
-                (copyOfTargetDocuments[i])) {
-
-                docsToUpdate.push(targetDocuments[i] as never);
-            }
-        }
-
-        return docsToUpdate;
+        return targetDocuments.reduce((acc: any, targetDoc: any, i: number) =>
+                relationsEqualInDocuments(targetDoc, copyOfTargetDocuments[i])
+                    ? acc
+                    : acc.concat(targetDoc) // TODO return the clones from copyOfTargetDocuments and unit test it
+            , []);
     }
+
+
+    function relationsEqualInDocuments(documentA: Document, documentB: Document): boolean {
+
+        return onBy(relationsEquivalent)('resource.relations')(documentA)(documentB);
+    }
+
+    // TODO move to relations
+    const relationsEquivalent = (r1: Relations) => (r2: Relations) => {
+
+        return objectEquivalentBy(arrayEquivalent)(r1)(r2);
+    };
 
 
     const removeRelation = (resourceId: string, relations: any) => (relation: string): boolean => {

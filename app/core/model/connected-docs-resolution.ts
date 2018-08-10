@@ -94,7 +94,7 @@ export module ConnectedDocsResolution {
 
         return targetDocuments.reduce((acc: any, targetDoc: any, i: number) =>
                 !relationsEqualInDocuments(targetDoc, copyOfTargetDocuments[i])
-                    ? acc.concat(targetDoc) // TODO return the clones from copyOfTargetDocuments and unit test it
+                    ? acc.concat(targetDoc)
                     : acc
             , []);
     }

@@ -1,5 +1,5 @@
-import {Document, ProjectConfiguration, Relations, relationsEquivalent} from 'idai-components-2/core';
-import {isNot, tripleEqual, arrayEquivalent, objectEquivalentBy, on, onBy} from 'tsfun';
+import {Document, ProjectConfiguration, relationsEquivalent} from 'idai-components-2/core';
+import {arrayEquivalent, isNot, objectEquivalentBy, on, onBy, tripleEqual} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -12,11 +12,15 @@ export module ConnectedDocsResolution {
      * on the relations seen in <i>document</i> alone. Relations in targetDocuments,
      * which correspond to other documents, are left as they are.
      *
-     * @param setInverseRelations if <b>false</b>, relations of <i>targetDocuments</i>
+     * @param projectConfiguration
+     * @param document
+     * @param targetDocuments
+     * @param shouldSetInverseRelations if <b>false</b>, relations of <i>targetDocuments</i>
      *   which point to <i>document</i>, get only removed, but not (re-)created
      *
-     * @returns a selection with copies of the targetDocuments which
-     *   got an update in their relations
+     * @returns a selection with of the targetDocuments which
+     *   got an update in their relations.
+     *   Note that targetDocuments relations get modified <b>in place</b>.
      */
     export function determineDocsToUpdate(
         projectConfiguration: ProjectConfiguration,

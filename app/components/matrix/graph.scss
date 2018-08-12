@@ -3,49 +3,57 @@
  * @author Daniel de Oliveira
  */
 
-#graph-container {
-  height: 100% !important;
+graph {
+  #graph-container {
+    height: 100% !important;
 
-  &.selection-mode-rect {
-    svg {
-      cursor: crosshair;
-    }
+    &.selection-mode-rect {
+      svg {
+        cursor: crosshair;
+      }
 
-    .node {
-      cursor: crosshair;
+      .node {
+        cursor: crosshair;
+
+        text {
+          cursor: crosshair;
+        }
+      }
 
       text {
         cursor: crosshair;
       }
     }
 
-    text {
-      cursor: crosshair;
+    svg {
+      width: 100% !important;
+      height: 100% !important;
+      user-select: none;
+      cursor: default;
+
+      .node {
+        cursor: pointer;
+
+        text {
+          cursor: pointer;
+        }
+      }
+
+      .cluster {
+        text {
+          font-size: 13px;
+        }
+      }
+
+      text {
+        cursor: default;
+      }
     }
   }
 
-  svg {
-    width: 100% !important;
-    height: 100% !important;
-    user-select: none;
-    cursor: default;
-
-    .node {
-      cursor: pointer;
-
-      text {
-        cursor: pointer;
-      }
-    }
-
-    .cluster {
-      text {
-        font-size: 13px;
-      }
-    }
-
-    text {
-      cursor: default;
-    }
+  zoom-buttons {
+    position: absolute;
+    top: 70px;
+    left: 11px;
   }
 }

@@ -8,6 +8,7 @@ import {GraphComponent} from './graph.component';
 import {MatrixState} from './matrix-state';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {MatrixOptionsMenuComponent} from './matrix-options-menu.component';
+import {ZoomButtonsComponent} from './zoom-buttons.component';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import {MatrixOptionsMenuComponent} from './matrix-options-menu.component';
     declarations: [
         MatrixViewComponent,
         GraphComponent,
-        MatrixOptionsMenuComponent
+        MatrixOptionsMenuComponent,
+        ZoomButtonsComponent
     ],
     providers: [
         MatrixState

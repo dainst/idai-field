@@ -1,0 +1,30 @@
+/*
+ * @author Thomas Kleinke
+ */
+
+.zoom-buttons {
+  .btn {
+    height: 35px;
+    padding: 0 10px;
+    font-size: 22px;
+    border: 1px solid rgba(0, 0, 0, 0.35) !important;
+    border-radius: 0.25rem !important;
+    color: black;
+    background-color: #fff;
+  }
+
+  .btn:focus,
+  .btn:active {
+    outline: none;
+  }
+
+  #zoom-in-button {
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+
+  #zoom-out-button {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+}

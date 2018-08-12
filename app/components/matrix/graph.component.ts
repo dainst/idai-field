@@ -46,6 +46,10 @@ export class GraphComponent implements OnChanges, OnDestroy {
                 private renderer: Renderer2) {}
 
 
+    public zoomIn = () => this.panZoomBehavior.zoomIn();
+    public zoomOut = () => this.panZoomBehavior.zoomOut();
+
+
     ngOnChanges() {
 
         this.reset();

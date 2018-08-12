@@ -60,11 +60,16 @@ export class GraphComponent implements OnChanges, OnDestroy {
 
     ngOnDestroy() {
 
-        if (this.selectionSubscription) this.selectionSubscription.unsubscribe();
+        this.reset();
     }
 
 
     private reset() {
+
+        if (this.selectionSubscription) {
+            this.selectionSubscription.unsubscribe();
+            this.selectionSubscription = undefined;
+        }
 
         if (this.panZoomBehavior) this.panZoomBehavior.destroy();
 

@@ -12,6 +12,7 @@ import {Loading} from './loading';
 import {LoadingIconComponent} from './loading-icon.component';
 import {SearchBarComponent} from './search-bar.component';
 import {TypePickerComponent} from './type-picker.component';
+import {ZoomButtonsComponent} from './zoom-buttons.component';
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import {TypePickerComponent} from './type-picker.component';
         DescriptionViewComponent,
         LoadingIconComponent,
         SearchBarComponent,
-        TypePickerComponent
+        TypePickerComponent,
+        ZoomButtonsComponent
     ],
     providers: [
         Loading
@@ -38,7 +40,8 @@ import {TypePickerComponent} from './type-picker.component';
         DescriptionViewComponent,
         LoadingIconComponent,
         SearchBarComponent,
-        TypePickerComponent
+        TypePickerComponent,
+        ZoomButtonsComponent
     ],
     entryComponents: [
     ]

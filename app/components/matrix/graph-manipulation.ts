@@ -75,24 +75,29 @@ export module GraphManipulation {
         const gElement: Element|undefined = GraphManipulation.getGElement(e);
         if (!gElement || GraphManipulation.getElementType(gElement) !== 'node') return;
 
-        let shadowElement = gElement.getElementsByClassName('shadow-element')[0];
+        const shadowElement = gElement.getElementsByClassName('shadow-element')[0];
 
-        if (highlight) {
-            if (shadowElement) return;
-
+        if (highlight && !shadowElement) {
             const ellipseElement = gElement.getElementsByTagName('ellipse')[0];
-            const {rx, ry} = getShadowElementRadius(ellipseElement);
-
-            shadowElement = ellipseElement.cloneNode() as Element;
-            shadowElement.classList.add('shadow-element');
-            shadowElement.setAttribute('fill', '#647fc7');
-            shadowElement.setAttribute('filter', 'url(#shadow-filter)');
-            shadowElement.setAttribute('rx', rx);
-            shadowElement.setAttribute('ry', ry);
-            gElement.insertBefore(shadowElement, ellipseElement);
-        } else if (shadowElement) {
+            gElement.insertBefore(createShadowElement(ellipseElement), ellipseElement);
+        } else if (!highlight && shadowElement) {
             gElement.removeChild(shadowElement);
         }
+    }
+
+
+    function createShadowElement(ellipseElement: Element): Element {
+
+        const {rx, ry} = getShadowElementRadius(ellipseElement);
+
+        const shadowElement = ellipseElement.cloneNode() as Element;
+        shadowElement.classList.add('shadow-element');
+        shadowElement.setAttribute('fill', '#647fc7');
+        shadowElement.setAttribute('filter', 'url(#shadow-filter)');
+        shadowElement.setAttribute('rx', rx);
+        shadowElement.setAttribute('ry', ry);
+
+        return shadowElement;
     }
 
 

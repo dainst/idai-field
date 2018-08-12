@@ -20,14 +20,14 @@ import {MatrixSelection, MatrixSelectionChange} from './matrix-selection';
  */
 export class GraphComponent implements OnChanges, OnDestroy {
 
-    @Input() graph: string;
+    @Input() graph: string|undefined;
     @Input() selection: MatrixSelection;
 
     @Output() onSelectForEdit: EventEmitter<string> = new EventEmitter<string>();
 
     @ViewChild('graphContainer') graphContainer: ElementRef;
 
-    private svgRoot: SVGSVGElement;
+    private svgRoot: SVGSVGElement|undefined;
 
     private hoverElement: Element|undefined;
 
@@ -36,7 +36,7 @@ export class GraphComponent implements OnChanges, OnDestroy {
     private lastMousePosition: { x: number, y: number }|undefined;
 
     private removeMouseUpEventListener: Function;
-    private selectionSubscription: Subscription|undefined;
+    private selectionSubscription: Subscription;
 
 
     private static maxRealZoom: number = 2;
@@ -54,7 +54,6 @@ export class GraphComponent implements OnChanges, OnDestroy {
 
         this.reset();
         this.showGraph();
-        this.subscribeSelectionChangesNotifications();
     }
 
 
@@ -66,16 +65,12 @@ export class GraphComponent implements OnChanges, OnDestroy {
 
     private reset() {
 
-        if (this.selectionSubscription) {
-            this.selectionSubscription.unsubscribe();
-            this.selectionSubscription = undefined;
-        }
+        if (!this.svgRoot) return;
 
-        if (this.panZoomBehavior) this.panZoomBehavior.destroy();
-
-        while (this.graphContainer.nativeElement.firstChild) {
-            this.graphContainer.nativeElement.removeChild(this.graphContainer.nativeElement.firstChild);
-        }
+        this.selectionSubscription.unsubscribe();
+        this.panZoomBehavior.destroy();
+        this.graphContainer.nativeElement.removeChild(this.svgRoot);
+        this.svgRoot = undefined;
     }
 
 
@@ -91,16 +86,15 @@ export class GraphComponent implements OnChanges, OnDestroy {
         this.graphContainer.nativeElement.appendChild(this.svgRoot);
         GraphManipulation.addClusterSubgraphLabelBoxes(this.svgRoot, this.htmlDocument);
         this.configurePanZoomBehavior(this.svgRoot);
+        this.subscribeSelectionChangesNotifications();
     }
 
 
     private subscribeSelectionChangesNotifications() {
 
-        if (this.selectionSubscription) return;
-
         this.selectionSubscription = this.selection.changesNotifications().subscribe(
             (change: MatrixSelectionChange) => {
-                GraphComponent.updateHighlighting(change, this.svgRoot);
+                GraphComponent.updateHighlighting(change, this.svgRoot as SVGSVGElement);
             });
     }
 
@@ -160,7 +154,7 @@ export class GraphComponent implements OnChanges, OnDestroy {
         if (event.button === 2) this.lastMousePosition = { x: event.x, y: event.y };
         if (event.button === 0 && this.selection.getMode() === 'rect') {
             this.selectionRectangle = new SelectionRectangle();
-            this.selectionRectangle.start(event, this.svgRoot, this.htmlDocument);
+            this.selectionRectangle.start(event, this.svgRoot as SVGSVGElement, this.htmlDocument);
         }
     }
 
@@ -235,9 +229,9 @@ export class GraphComponent implements OnChanges, OnDestroy {
 
         if (!this.selectionRectangle) return;
 
-        this.addToSelection(this.selectionRectangle.getSelectedElements(this.svgRoot));
+        this.addToSelection(this.selectionRectangle.getSelectedElements(this.svgRoot as SVGSVGElement));
 
-        this.selectionRectangle.finish(this.svgRoot);
+        this.selectionRectangle.finish(this.svgRoot as SVGSVGElement);
         this.selectionRectangle = undefined;
     }
 

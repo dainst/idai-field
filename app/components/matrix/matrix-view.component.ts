@@ -29,7 +29,7 @@ export class MatrixViewComponent implements OnInit {
     /**
      * The latest svg calculated with GraphViz via DotBuilder based on our component's current settings.
      */
-    public graph: string;
+    public graph: string|undefined;
 
     public graphFromSelection: boolean = false;
 
@@ -53,8 +53,6 @@ export class MatrixViewComponent implements OnInit {
 
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
-
-    public showGraph = () => !this.noTrenches() && !this.noFeatures();
 
     public showNoResourcesWarning = () => !this.noTrenches() && this.noFeatures() && !this.loading.isLoading();
 
@@ -155,6 +153,7 @@ export class MatrixViewComponent implements OnInit {
         this.matrixState.setSelectedTrenchId(this.selectedTrench.resource.id);
         this.featureDocuments = [];
         this.graphFromSelection = false;
+        this.graph = undefined;
 
         await this.loadFeatureDocuments(trench);
         this.calculateGraph();

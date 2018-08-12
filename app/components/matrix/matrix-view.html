@@ -114,8 +114,7 @@
         </em>
     </div>
 
-    <graph *ngIf="showGraph()"
-           [graph]="graph"
+    <graph [graph]="graph"
            [selection]="selection"
            (onSelectForEdit)="edit($event)">
     </graph>

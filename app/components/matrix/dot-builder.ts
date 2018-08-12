@@ -275,8 +275,7 @@ export module DotBuilder {
             + projectConfiguration.getColorForType(document.resource.type)
             + '" color="'
             + projectConfiguration.getColorForType(document.resource.type)
-            + '"' +
-            ' fontcolor="'
+            + '" fontcolor="'
             + projectConfiguration.getTextColorForType(document.resource.type)
             + '"] ';
     }

@@ -81,16 +81,27 @@ export module GraphManipulation {
             if (shadowElement) return;
 
             const ellipseElement = gElement.getElementsByTagName('ellipse')[0];
+            const {rx, ry} = getShadowElementRadius(ellipseElement);
+
             shadowElement = ellipseElement.cloneNode() as Element;
             shadowElement.classList.add('shadow-element');
             shadowElement.setAttribute('fill', '#647fc7');
             shadowElement.setAttribute('filter', 'url(#shadow-filter)');
-            shadowElement.setAttribute('rx', '33');
-            shadowElement.setAttribute('ry', '21');
+            shadowElement.setAttribute('rx', rx);
+            shadowElement.setAttribute('ry', ry);
             gElement.insertBefore(shadowElement, ellipseElement);
         } else if (shadowElement) {
             gElement.removeChild(shadowElement);
         }
+    }
+
+
+    function getShadowElementRadius(shadowElement: Element): { rx: string, ry: string } {
+
+        return {
+            rx: (parseFloat(shadowElement.getAttribute('rx') as string) + 3).toString(),
+            ry: (parseFloat(shadowElement.getAttribute('ry') as string) + 3).toString()
+        };
     }
 
 

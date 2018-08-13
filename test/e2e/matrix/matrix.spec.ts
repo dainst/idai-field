@@ -129,5 +129,5 @@ describe('matrix --', () => {
         MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(0));
         MatrixPage.clickPeriodCheckbox();
         MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(2));
-    })
+    });
 });

@@ -11,6 +11,7 @@ exports.config = {
     baseUrl: fileUrl(path.resolve(__dirname, '../../..') + '/index.html'),
 
     specs: [
+        '../matrix/*.spec.js',
         '../syncing/*.spec.js',
         '../project/*.spec.js',
         '../resources/resources.spec.js',
@@ -18,8 +19,7 @@ exports.config = {
         '../images/*.spec.js',
         '../map/*.spec.js',
         '../import/*.spec.js',
-        '../settings/*.spec.js',
-        '../matrix/*.spec.js'
+        '../settings/*.spec.js'
     ],
 
     allScriptsTimeout: 110000,

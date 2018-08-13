@@ -72,7 +72,6 @@ export function main() {
          */
 
 
-        // TODO beforeEach is used two times? There has to be something wrong with this (even if it works)
         beforeEach(async done => {
 
             spyOn(console, 'debug'); // suppress console.debug
@@ -115,11 +114,7 @@ export function main() {
             await idaiFieldDocumentDatastore.create(findDocument2, 'u');
             await idaiFieldDocumentDatastore.create(featureDocument1, 'u');
             await idaiFieldDocumentDatastore.create(featureDocument2, 'u');
-            done();
-        });
 
-
-        beforeEach(() => {
 
             settingsService = jasmine.createSpyObj('settingsService', ['getUsername', 'getSelectedProject',
                 'getProjectDocument']);
@@ -154,6 +149,7 @@ export function main() {
                 resourcesState,
                 loading
             );
+            done();
         });
 
 

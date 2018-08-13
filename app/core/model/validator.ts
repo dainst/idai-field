@@ -22,7 +22,7 @@ export class Validator {
      * @returns resolves with () or rejects with msgsWithParams
      */
     public async validate(
-        doc: Document|NewDocument // TODO type to IdaiFieldDocument|NewIdaiFieldDocument
+        doc: Document|NewDocument
     ): Promise<void> {
 
         let resource = doc.resource;
@@ -152,7 +152,6 @@ export class Validator {
     }
 
 
-    // TODO use comparator from tsfun
     private static isDuplicate(result: any, doc: any) {
 
         return result.resource.id !== doc.resource.id;

@@ -16,7 +16,8 @@
 
     <div class="float-right">
         <div class="btn-group">
-            <div class="btn btn-primary"
+            <div id="edit-mode-button"
+                 class="btn btn-primary"
                  [class.active]="getSelectionMode() === 'none'"
                  ngbTooltip="Bearbeitungsmodus"
                  placement="bottom"
@@ -28,7 +29,8 @@
                  (click)="selectionTooltip1.close(); setSelectionMode('none');">
                 <span class="mdi mdi-pencil"></span>
             </div>
-            <div class="btn btn-primary"
+            <div id="single-selection-mode-button"
+                 class="btn btn-primary"
                  [class.active]="getSelectionMode() === 'single'"
                  ngbTooltip="Einzelauswahlmodus"
                  placement="bottom"
@@ -40,7 +42,8 @@
                  (click)="selectionTooltip2.close(); setSelectionMode('single');">
                 <span class="mdi mdi-cursor-default-outline"></span>
             </div>
-            <div class="btn btn-primary"
+            <div id="group-selection-mode-button"
+                 class="btn btn-primary"
                  [class.active]="getSelectionMode() === 'rect'"
                  ngbTooltip="Gruppenauswahlmodus"
                  placement="bottom"
@@ -55,7 +58,8 @@
         </div>
 
         <div class="btn-group">
-            <div class="btn btn-primary"
+            <div id="clear-selection-button"
+                 class="btn btn-primary"
                  [class.disabled]="!documentsSelected()"
                  ngbTooltip="Auswahl aufheben"
                  placement="bottom"
@@ -68,7 +72,8 @@
                 <span class="mdi mdi-select-off"></span>
             </div>
 
-            <div class="btn btn-primary"
+            <div id="create-graph-from-selection-button"
+                 class="btn btn-primary"
                  [class.disabled]="!documentsSelected()"
                  ngbTooltip="Matrix aus Auswahl erstellen"
                  placement="left"
@@ -81,7 +86,8 @@
                 <span class="mdi mdi-transfer"></span>
             </div>
 
-            <div class="btn btn-primary"
+            <div id="reload-graph-button"
+                 class="btn btn-primary"
                  [class.disabled]="!graphFromSelection"
                  ngbTooltip="Matrix neu laden"
                  placement="left"

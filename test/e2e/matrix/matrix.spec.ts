@@ -40,7 +40,7 @@ describe('matrix --', () => {
     });
 
 
-    it('show basic matrix', () => {
+    function testDefaultMatrix() {
 
         MatrixPage.getNodes().then(nodes => expect(nodes.length).toBe(5));
         for (let i = 1; i <= 5; i++) {
@@ -54,6 +54,12 @@ describe('matrix --', () => {
         browser.wait(EC.presenceOf(MatrixPage.getAboveEdge('si3', 'si4')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(MatrixPage.getSameRankEdge('si3', 'si5')),
             delays.ECWaitTime);
+    }
+
+
+    it('show basic matrix', () => {
+
+        testDefaultMatrix();
     });
 
 
@@ -69,5 +75,28 @@ describe('matrix --', () => {
 
         browser.wait(EC.stalenessOf(MatrixPage.getAboveEdge('si1', 'si5')), delays.ECWaitTime);
         browser.wait(EC.presenceOf(MatrixPage.getAboveEdge('si1', 'si4')), delays.ECWaitTime);
+    });
+
+
+    it('show matrix for selected resources', () => {
+
+        MatrixPage.clickSingleSelectionModeButton();
+        MatrixPage.clickNode('si1');
+        MatrixPage.clickNode('si5');
+        MatrixPage.clickCreateGraphFromSelectionButton();
+
+        // TODO test selection highlighting
+
+        browser.wait(EC.stalenessOf(MatrixPage.getNode('si2')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(MatrixPage.getNode('si3')), delays.ECWaitTime);
+        browser.wait(EC.stalenessOf(MatrixPage.getNode('si4')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(MatrixPage.getNode('si1')), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(MatrixPage.getNode('si5')), delays.ECWaitTime);
+
+        MatrixPage.getEdges().then(edges => expect(edges.length).toBe(1));
+        browser.wait(EC.presenceOf(MatrixPage.getAboveEdge('si1', 'si5')), delays.ECWaitTime);
+
+        MatrixPage.clickReloadGraphButton();
+        testDefaultMatrix();
     });
 });

@@ -53,4 +53,22 @@ export class MatrixPage {
 
         return common.click(this.getNode(id));
     }
+
+
+    public static clickSingleSelectionModeButton() {
+
+        return common.click(element(by.id('single-selection-mode-button')));
+    }
+
+
+    public static clickCreateGraphFromSelectionButton() {
+
+        return common.click(element(by.id('create-graph-from-selection-button')));
+    }
+
+
+    public static clickReloadGraphButton() {
+
+        return common.click(element(by.id('reload-graph-button')));
+    }
 }

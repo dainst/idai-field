@@ -25,6 +25,12 @@ export class NavbarPage {
     };
 
 
+    public static clickNavigateToMatrix() {
+
+        return common.click(element.all(by.css('.nav-link')).get(5));
+    };
+
+
     public static clickNavigateToImages() {
 
         return common.click(element.all(by.css('.nav-link')).get(6));

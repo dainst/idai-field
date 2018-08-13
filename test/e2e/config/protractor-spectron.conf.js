@@ -18,7 +18,8 @@ exports.config = {
         '../images/*.spec.js',
         '../map/*.spec.js',
         '../import/*.spec.js',
-        '../settings/*.spec.js'
+        '../settings/*.spec.js',
+        '../matrix/*.spec.js'
     ],
 
     allScriptsTimeout: 110000,

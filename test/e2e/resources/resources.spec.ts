@@ -54,7 +54,6 @@ describe('resources --', () => {
         NavbarPage.clickNavigateToExcavation();
         ResourcesPage.openEditByDoubleClickResource('SE0');
         DoceditPage.clickImagesTab();
-
     }
 
 

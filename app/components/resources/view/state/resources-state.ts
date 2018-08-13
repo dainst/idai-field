@@ -125,7 +125,7 @@ export module ResourcesState {
         if (viewState(state).bypassHierarchy) {
 
             const cloned: any = clone(state);
-            (viewState(cloned).searchContext as any /* cast ok on construct*/).q = q;
+            (viewState(cloned).searchContext as any).q = q;
             return cloned;
 
         } else {
@@ -141,7 +141,7 @@ export module ResourcesState {
         if (viewState(state).bypassHierarchy) {
 
             const cloned: any = clone(state);
-            (viewState(cloned).searchContext as any /* cast ok on construct*/).types = types;
+            (viewState(cloned).searchContext as any).types = types;
             return cloned;
 
         } else {
@@ -156,7 +156,7 @@ export module ResourcesState {
                                          constraints: { [name: string]: string}): ResourcesState {
 
         const cloned: any = clone(state);
-        (viewState(cloned) as any /* cast ok on construct*/).customConstraints = constraints;
+        (viewState(cloned) as any).customConstraints = constraints;
         return cloned;
     }
 
@@ -167,7 +167,7 @@ export module ResourcesState {
         if (viewState(state).bypassHierarchy) {
 
             const cloned: any = clone(state);
-            (viewState(cloned).searchContext as any /* cast ok on construct*/).selected = document;
+            (viewState(cloned).searchContext as any).selected = document;
             return cloned;
 
         } else {
@@ -272,7 +272,7 @@ export module ResourcesState {
     export function setBypassHierarchy(state: ResourcesState, bypassHierarchy: boolean): ResourcesState {
 
         const cloned = clone(state);
-        (viewState(cloned) as any /* write ok on construction */).bypassHierarchy = bypassHierarchy;
+        (viewState(cloned) as any).bypassHierarchy = bypassHierarchy;
         return cloned;
     }
 
@@ -281,17 +281,17 @@ export module ResourcesState {
                                                   mainTypeDocumentResourceId: string|undefined): ResourcesState {
 
         const cloned = clone(state);
-        (viewState(cloned) as any /* write ok on construction */).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
-        (viewState(cloned) as any /* write ok on construction */).searchContext.selected = undefined; // TODO test this
+        (viewState(cloned) as any).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
+        (viewState(cloned) as any).searchContext.selected = undefined;
         return cloned;
     }
 
     export function setSelectAllOperationsOnBypassHierarchy(state: ResourcesState, selectAllOperationsOnBypassHierarchy: boolean): ResourcesState {
 
         const cloned = clone(state);
-        (viewState(cloned) as any /* write ok on construction */).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
+        (viewState(cloned) as any).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
         if (selectAllOperationsOnBypassHierarchy) {
-            (viewState(state) as any /* write ok on construction */).searchContext.selected = undefined; // TODO test this
+            (viewState(state) as any).searchContext.selected = undefined;
         }
         return cloned;
     }

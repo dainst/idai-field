@@ -14,7 +14,6 @@ import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
  */
 export class DatingComponent {
 
-    // TODO: use this map in template as well
     public DATE_TYPES = {
         'bce': 'v.Chr.',
         'ce': 'n.Chr.',

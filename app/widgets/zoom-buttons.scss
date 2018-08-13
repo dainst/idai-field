@@ -11,6 +11,10 @@
     border-radius: 0.25rem !important;
     color: black;
     background-color: #fff;
+
+    &.disabled {
+      cursor: not-allowed;
+    }
   }
 
   .btn:focus,

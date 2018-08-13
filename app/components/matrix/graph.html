@@ -3,6 +3,8 @@
      [class.selection-mode-rect]="selection.mode === 'rect'">
 </div>
 
-<zoom-buttons (onZoomInClicked)="zoomIn()"
+<zoom-buttons [zoomInEnabled]="zoomInEnabled()"
+              [zoomOutEnabled]="zoomOutEnabled()"
+              (onZoomInClicked)="zoomIn()"
               (onZoomOutClicked)="zoomOut()">
 </zoom-buttons>

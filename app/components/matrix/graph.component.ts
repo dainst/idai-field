@@ -28,7 +28,6 @@ export class GraphComponent implements OnChanges, OnDestroy {
     @ViewChild('graphContainer') graphContainer: ElementRef;
 
     private svgRoot: SVGSVGElement|undefined;
-
     private hoverElement: Element|undefined;
 
     private panZoomBehavior: SvgPanZoom.Instance;
@@ -38,13 +37,14 @@ export class GraphComponent implements OnChanges, OnDestroy {
     private removeMouseUpEventListener: Function;
     private selectionSubscription: Subscription;
 
+    private maxZoom: number;
 
+    private static minZoom: number = 1;
     private static maxRealZoom: number = 2;
 
 
     constructor(@Inject(DOCUMENT) private htmlDocument: Document,
                 private renderer: Renderer2) {}
-
 
     public zoomIn = () => this.panZoomBehavior.zoomIn();
     public zoomOut = () => this.panZoomBehavior.zoomOut();
@@ -60,6 +60,20 @@ export class GraphComponent implements OnChanges, OnDestroy {
     ngOnDestroy() {
 
         this.reset();
+    }
+
+
+    public zoomInEnabled(): boolean {
+
+        return this.svgRoot !== undefined
+            && this.panZoomBehavior.getZoom() + 0.1 <= this.maxZoom;
+    }
+
+
+    public zoomOutEnabled(): boolean {
+
+        return this.svgRoot !== undefined
+            && this.panZoomBehavior.getZoom() - 0.1 >= GraphComponent.minZoom;
     }
 
 
@@ -116,14 +130,14 @@ export class GraphComponent implements OnChanges, OnDestroy {
 
     private configureZooming() {
 
-        const maxZoom: number = GraphComponent.maxRealZoom / this.panZoomBehavior.getSizes().realZoom;
+        this.maxZoom = GraphComponent.maxRealZoom / this.panZoomBehavior.getSizes().realZoom;
 
         if (this.panZoomBehavior.getSizes().realZoom > GraphComponent.maxRealZoom) {
-            this.panZoomBehavior.zoom(maxZoom);
+            this.panZoomBehavior.zoom(this.maxZoom);
             this.panZoomBehavior.disableZoom();
         } else {
-            this.panZoomBehavior.setMinZoom(1);
-            this.panZoomBehavior.setMaxZoom(maxZoom);
+            this.panZoomBehavior.setMinZoom(GraphComponent.minZoom);
+            this.panZoomBehavior.setMaxZoom(this.maxZoom);
         }
     }
 

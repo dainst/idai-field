@@ -28,10 +28,9 @@ export class DoceditRelationsTabPage {
     };
 
 
-    public static clickRelationDeleteButtonByIndices = function(groupIndex, pickerIndex, suggestionIndex) {
+    public static clickRelationDeleteButtonByIndices = function(groupIndex, pickerIndex) {
 
-        return this.getRelationEl(groupIndex, pickerIndex).all(by.css('.delete-relation')).get(suggestionIndex)
-            .click();
+        return this.getRelationEl(groupIndex, pickerIndex).element(by.css('.delete-relation')).click();
     };
 
 

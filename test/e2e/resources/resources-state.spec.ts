@@ -474,7 +474,7 @@ describe('resources/state --', function() {
 
         ResourcesPage.openEditByDoubleClickResource('testf1');
         DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0);
         DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(1);
         DoceditRelationsTabPage.typeInRelationByIndices(1, 0, 'context2');
         DoceditRelationsTabPage.clickChooseRelationSuggestion(1, 0, 0);

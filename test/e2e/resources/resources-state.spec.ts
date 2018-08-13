@@ -8,7 +8,7 @@ import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {RelationsViewPage} from '../widgets/relations-view.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
-import {OperationBarPage} from '../operation-bar.page';
+import {OperationBarPage} from './operation-bar.page';
 import {ResourcesSearchBarPage} from './resources-search-bar.page';
 
 const fs = require('fs');

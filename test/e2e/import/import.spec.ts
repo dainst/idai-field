@@ -2,7 +2,7 @@ import {browser, by, element, protractor} from 'protractor';
 import {ImportPage} from './import.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {NavbarPage} from '../navbar.page';
-import {OperationBarPage} from '../operation-bar.page';
+import {OperationBarPage} from '../resources/operation-bar.page';
 
 const common = require('../common.js');
 const delays = require('../config/delays');

@@ -208,6 +208,6 @@ export class MatrixViewComponent implements OnInit {
 
         return relationsMode === 'temporal'
             ? { above: 'isAfter', below: 'isBefore', sameRank: 'isContemporaryWith' }
-            : { above: 'isAbove', below: 'isBelow', sameRank: 'borders' };
+            : { above: 'isAbove', below: 'isBelow' };
     }
 }

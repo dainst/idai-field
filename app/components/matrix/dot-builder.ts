@@ -7,7 +7,7 @@ export type GraphRelationsConfiguration = {
 
     above: string;
     below: string;
-    sameRank: string;
+    sameRank?: string;
 }
 
 
@@ -55,7 +55,7 @@ export module DotBuilder {
             .reduce((docs: Document[], doc: Document) => {
                 cleanRelation(doc, relations.above, targetExists);
                 cleanRelation(doc, relations.below, targetExists);
-                cleanRelation(doc, relations.sameRank, targetExists);
+                if (relations.sameRank) cleanRelation(doc, relations.sameRank, targetExists);
                 return docs.concat(doc);
             }, []);
     }
@@ -71,6 +71,8 @@ export module DotBuilder {
 
     function createSameRankEdgesDefinitions(documents: Array<Document>,
                                             relations: GraphRelationsConfiguration): string {
+
+        if (!relations.sameRank) return '';
 
         const result: string =
             documents
@@ -165,8 +167,10 @@ export module DotBuilder {
             || document.resource.relations[relations.below].length !== 0) return false;
         processedDocuments.push(document.resource.id);
 
-        return !isSameRankNonRootDocument(documents,
-            document.resource.relations[relations.sameRank], processedDocuments, relations);
+        return relations.sameRank
+            ? !isSameRankNonRootDocument(documents, document.resource.relations[relations.sameRank],
+                processedDocuments, relations)
+            : true;
     }
 
 
@@ -189,11 +193,11 @@ export module DotBuilder {
                                            relations: GraphRelationsConfiguration,
                                            processedSameRankTargetIds: string[]): [string|undefined, string[]] {
 
-        if (!document.resource.relations[relations.sameRank]) {
+        if (!document.resource.relations[relations.sameRank as string]) {
             return [undefined, clone(processedSameRankTargetIds)];
         }
 
-        const targetIds: string[]|undefined = document.resource.relations[relations.sameRank]
+        const targetIds: string[]|undefined = document.resource.relations[relations.sameRank  as string]
             .filter(isNot(includedIn(processedSameRankTargetIds)));
 
         const updatedProcessedSameRankTargetIds: string[] =

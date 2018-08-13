@@ -9,15 +9,14 @@ import {Static} from '../../static';
 
 describe('DotBuilder', () => {
 
-
     const defaultRelations = {
         above: 'isAfter',
         below: 'isBefore',
         sameRank: 'isContemporaryWith'
     };
 
-
     let mockProjectConfiguration;
+
 
     beforeAll(() => {
 

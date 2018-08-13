@@ -91,7 +91,6 @@ export class ResourcesStateManager {
     }
 
 
-    // TODO Use TypeUtility.getOverviewTypes()
     public getOverviewTypeNames() {
         return this.views.get()
             .map(_ => _.operationSubtype)

@@ -99,4 +99,15 @@ describe('matrix --', () => {
         MatrixPage.clickReloadGraphButton();
         testDefaultMatrix();
     });
+
+
+    it('switch between spatial and temporal relations', () => {
+
+        MatrixPage.clickOptionsButton();
+        MatrixPage.clickSpatialRelationsRadioButton();
+        MatrixPage.getEdges().then(edges => expect(edges.length).toBe(0));
+
+        MatrixPage.clickTemporalRelationsRadioButton();
+        testDefaultMatrix();
+    });
 });

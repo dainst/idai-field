@@ -39,6 +39,24 @@ export class MatrixPage {
     }
 
 
+    public static clickOptionsButton() {
+
+        return common.click(element(by.id('matrix-options-button')));
+    }
+
+
+    public static clickTemporalRelationsRadioButton() {
+
+        return common.click(element(by.id('relations-radio-temporal')));
+    }
+
+
+    public static clickSpatialRelationsRadioButton() {
+
+        return common.click(element(by.id('relations-radio-spatial')));
+    }
+
+
     // elements
 
     public static getSvgRoot() {

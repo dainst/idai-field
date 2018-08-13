@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2/core';
 import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 

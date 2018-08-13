@@ -282,7 +282,7 @@ export module ResourcesState {
 
         const cloned = clone(state);
         (viewState(cloned) as any).mainTypeDocumentResourceId = mainTypeDocumentResourceId;
-        (viewState(cloned) as any).searchContext.selected = undefined; // TODO test this
+        (viewState(cloned) as any).searchContext.selected = undefined;
         return cloned;
     }
 
@@ -291,7 +291,7 @@ export module ResourcesState {
         const cloned = clone(state);
         (viewState(cloned) as any).selectAllOperationsOnBypassHierarchy = selectAllOperationsOnBypassHierarchy;
         if (selectAllOperationsOnBypassHierarchy) {
-            (viewState(state) as any).searchContext.selected = undefined; // TODO test this
+            (viewState(state) as any).searchContext.selected = undefined;
         }
         return cloned;
     }

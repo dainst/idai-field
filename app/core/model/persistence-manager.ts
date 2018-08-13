@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Document, NewDocument, ProjectConfiguration, toResourceId} from 'idai-components-2/core';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {filter, flatMap, flow, includedIn, isNot, mapTo, on, onBy, subtract, to, isDefined, isUndefined, isUndefinedOrEmpty, arrayEquivalent, isArray} from 'tsfun';
+import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to, isDefined, isUndefined, isUndefinedOrEmpty, arrayEquivalent, isArray} from 'tsfun';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
 import {clone} from '../../util/object-util';
@@ -110,8 +110,8 @@ export class PersistenceManager {
         if (isUndefinedOrEmpty(document.resource.relations['isRecordedIn'])) return;
 
         const docsToCorrect = (await this.findAllLiesWithinDocs(document.resource.id))
-            .filter(on('resource.relations.isRecordedIn')(isArray))
-            .filter(isNot(onBy(arrayEquivalent)('resource.relations.isRecordedIn')(document)));
+            .filter(on('resource.relations.isRecordedIn', isArray))
+            .filter(isNot(on('resource.relations.isRecordedIn', arrayEquivalent)(document)));
 
         for (let docToCorrect of docsToCorrect) {
             const cloned = clone(docToCorrect);

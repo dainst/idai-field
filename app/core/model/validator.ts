@@ -1,12 +1,10 @@
 import {Injectable} from '@angular/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
-import {Document, NewDocument} from 'idai-components-2/core';
+import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/field';
 import {M} from '../../m';
 import {Validations} from './validations';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
-import {TypeUtility} from './type-utility';
-import {to, mapMap} from 'tsfun';
+import {to} from 'tsfun';
 
 
 @Injectable()

@@ -1,5 +1,5 @@
 import {Document, ProjectConfiguration, relationsEquivalent} from 'idai-components-2/core';
-import {arrayEquivalent, isNot, objectEquivalentBy, on, onBy, tripleEqual} from 'tsfun';
+import {arrayEquivalent, isNot, objectEqualBy, on, tripleEqual} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -106,7 +106,7 @@ export module ConnectedDocsResolution {
 
     function relationsEqualInDocuments(documentA: Document, documentB: Document): boolean {
 
-        return onBy(relationsEquivalent)('resource.relations')(documentA)(documentB);
+        return on('resource.relations', relationsEquivalent)(documentA)(documentB);
     }
 
 

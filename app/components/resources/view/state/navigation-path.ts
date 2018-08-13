@@ -244,6 +244,6 @@ export module NavigationPath {
             : (oldSelectedSegmentId
                     ? takeUntil(on('document.resource.id:')(oldSelectedSegmentId))(oldSegments)
                     : []
-            ).concat([{ document: newSelectedSegmentDoc, q: '', types: [] }]);
+            ).concat([{ document: newSelectedSegmentDoc, q: '', types: [] }]) as NavigationPathSegment[];
     }
 }

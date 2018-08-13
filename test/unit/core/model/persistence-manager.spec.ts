@@ -1,8 +1,6 @@
-import {Document} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
+import {Document, ProjectConfiguration} from 'idai-components-2/core';
 import {PersistenceManager} from "../../../../app/core/model/persistence-manager";
 import {clone} from '../../../../app/util/object-util';
-import {ConnectedDocsWriter} from '../../../../app/core/model/connected-docs-writer';
 
 /**
  * @author Daniel de Oliveira

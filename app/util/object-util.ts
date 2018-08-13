@@ -1,4 +1,4 @@
-import {clone as _clone} from 'tsfun';
+import {jsonClone} from 'tsfun';
 
 // TODO move to document
 
@@ -15,7 +15,7 @@ import {clone as _clone} from 'tsfun';
  */
 export function clone<O>(object: O): O {
 
-    return _clone(object, convertDates);
+    return convertDates(object, jsonClone(object));
 }
 
 

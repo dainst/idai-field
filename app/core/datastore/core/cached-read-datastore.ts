@@ -5,7 +5,7 @@ import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
-import {clone} from 'tsfun';
+import {jsonClone} from 'tsfun';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -79,7 +79,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         if (!this.suppressWait) await this.datastore.ready();
 
-        const clonedQuery: Query = clone(query);
+        const clonedQuery: Query = jsonClone(query);
 
         if (clonedQuery.types) {
             clonedQuery.types.forEach(type => {

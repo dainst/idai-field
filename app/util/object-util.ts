@@ -1,18 +1,9 @@
 import {jsonClone} from 'tsfun';
 
-// TODO move to document
+// @author Thomas Kleinke
+// @author Daniel de Oliveira
 
-/**
- * @author Thomas Kleinke
- * @author Daniel de Oliveira
- */
 
-/**
- * Clones the object, keeping the type of Date objects as Date.
- *
- * @param {O} object
- * @returns {O}
- */
 export function clone<O>(object: O): O {
 
     return convertDates(object, jsonClone(object));
@@ -33,5 +24,4 @@ function convertDates<O>(original: any, plain: any) {
         }
     }
     return plain;
-
 }

@@ -13,6 +13,34 @@ export class MatrixPage {
     }
 
 
+    // click
+
+    public static clickNode(id: string) {
+
+        return common.click(this.getNode(id));
+    }
+
+
+    public static clickSingleSelectionModeButton() {
+
+        return common.click(element(by.id('single-selection-mode-button')));
+    }
+
+
+    public static clickCreateGraphFromSelectionButton() {
+
+        return common.click(element(by.id('create-graph-from-selection-button')));
+    }
+
+
+    public static clickReloadGraphButton() {
+
+        return common.click(element(by.id('reload-graph-button')));
+    }
+
+
+    // elements
+
     public static getSvgRoot() {
 
         return element(by.tagName('svg'));
@@ -46,29 +74,5 @@ export class MatrixPage {
     public static getSameRankEdge(sameRankId1: string, sameRankId2: string) {
 
         return element(by.css('.edge.same-rank-' + sameRankId1 + '.same-rank-' + sameRankId2));
-    }
-
-
-    public static clickNode(id: string) {
-
-        return common.click(this.getNode(id));
-    }
-
-
-    public static clickSingleSelectionModeButton() {
-
-        return common.click(element(by.id('single-selection-mode-button')));
-    }
-
-
-    public static clickCreateGraphFromSelectionButton() {
-
-        return common.click(element(by.id('create-graph-from-selection-button')));
-    }
-
-
-    public static clickReloadGraphButton() {
-
-        return common.click(element(by.id('reload-graph-button')));
     }
 }

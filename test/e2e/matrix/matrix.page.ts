@@ -1,5 +1,6 @@
 import {browser, element, by} from 'protractor';
 
+const common = require('../common');
 
 /**
  * @author Thomas Kleinke
@@ -45,5 +46,11 @@ export class MatrixPage {
     public static getSameRankEdge(sameRankId1: string, sameRankId2: string) {
 
         return element(by.css('.edge.same-rank-' + sameRankId1 + '.same-rank-' + sameRankId2));
+    }
+
+
+    public static clickNode(id: string) {
+
+        return common.click(this.getNode(id));
     }
 }

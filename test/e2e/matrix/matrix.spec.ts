@@ -110,4 +110,15 @@ describe('matrix --', () => {
         MatrixPage.clickTemporalRelationsRadioButton();
         testDefaultMatrix();
     });
+
+
+    it('toggle period clusters', () => {
+
+        MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(2));
+        MatrixPage.clickOptionsButton();
+        MatrixPage.clickPeriodCheckbox();
+        MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(0));
+        MatrixPage.clickPeriodCheckbox();
+        MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(2));
+    })
 });

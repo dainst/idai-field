@@ -29,7 +29,7 @@ export module Validations {
      */
     export function validateType(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): boolean {
 
-        if (!resource.type) return false; // TODO check it, but this should be unnecessary when making use of on
+        if (!resource.type) return false;
         return projectConfiguration
             .getTypesList()
             .some(on('name:')(resource.type));

@@ -52,7 +52,7 @@ export abstract class MenuComponent {
         let inside = false;
 
         do {
-            if (target.id == this.buttonElementId || target.id == this.menuElementId) {
+            if (target.id === this.buttonElementId || target.id === this.menuElementId) {
                 inside = true;
                 break;
             }

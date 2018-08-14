@@ -9,21 +9,22 @@
                 <form>
                     <fieldset class="form-group">
                         <div *ngFor="let layer of layers" class="layer-entry">
-                            <span *ngIf="isActiveLayer(layer)">
-                                <span class="mdi mdi-eye layer-menu-button layer-active"
-                                      (click)="toggleLayer(layer)"
-                                      data-toggle="tooltip" title="Bild ausblenden"></span>
-                                <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
-                                      data-toggle="tooltip" title="Bild fokussieren"
-                                      (click)="focusLayer(layer)"></span>
+                            <span class="mdi layer-menu-button"
+                                  [class.mdi-eye]="isActiveLayer(layer)"
+                                  [class.mdi-eye-off]="!isActiveLayer(layer)"
+                                  [class.layer-active]="isActiveLayer(layer)"
+                                  [class.layer-inactive]="!isActiveLayer(layer)"
+                                  (click)="toggleLayer(layer)">
                             </span>
-                            <span *ngIf="!isActiveLayer(layer)">
-                                <span class="mdi mdi-eye-off layer-menu-button layer-inactive"
-                                      (click)="toggleLayer(layer)"
-                                      data-toggle="tooltip" title="Bild anzeigen"></span>
-                                <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
-                                </span>
+
+                            <span *ngIf="isActiveLayer(layer)"
+                                  class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
+                                  (click)="focusLayer(layer)">
                             </span>
+                            <span *ngIf="!isActiveLayer(layer)"
+                                  class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
+                            </span>
+
                             <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
                         </div>
                     </fieldset>

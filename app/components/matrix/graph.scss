@@ -25,6 +25,16 @@ graph {
       }
     }
 
+    &.selection-active {
+      ellipse {
+        opacity: 0.25;
+
+        &.selected {
+          opacity: 1;
+        }
+      }
+    }
+
     svg {
       width: 100% !important;
       height: 100% !important;

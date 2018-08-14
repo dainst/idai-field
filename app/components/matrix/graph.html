@@ -1,6 +1,7 @@
 <div #graphContainer
      id="graph-container"
-     [class.selection-mode-rect]="selection.mode === 'rect'">
+     [class.selection-mode-rect]="selection.mode === 'rect'"
+     [class.selection-active]="selection.documentsSelected()">
 </div>
 
 <zoom-buttons [zoomInEnabled]="zoomInEnabled()"

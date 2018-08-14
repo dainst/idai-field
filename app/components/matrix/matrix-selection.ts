@@ -43,6 +43,12 @@ export class MatrixSelection {
     }
 
 
+    public documentsSelected(): boolean {
+
+        return this.selectedDocumentsIds.length > 0;
+    }
+
+
     public getSelectedDocuments(documents: Array<IdaiFieldFeatureDocument>): Array<IdaiFieldFeatureDocument> {
 
         return this.selectedDocumentsIds.map(id => {

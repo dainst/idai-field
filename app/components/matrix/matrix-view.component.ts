@@ -60,7 +60,7 @@ export class MatrixViewComponent implements OnInit {
 
     public showTrenchSelector = () => !this.noTrenches();
 
-    public documentsSelected = () => this.selection.getSelectedDocuments(this.featureDocuments).length > 0;
+    public documentsSelected = () => this.selection.documentsSelected();
 
     public getSelectionMode = () => this.selection.getMode();
 

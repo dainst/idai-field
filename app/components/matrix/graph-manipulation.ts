@@ -70,43 +70,18 @@ export module GraphManipulation {
     }
 
 
-    export function performHighlightingSelection(e: Element, highlight: boolean) {
+    export function markAsSelected(e: Element, selected: boolean) {
 
         const gElement: Element|undefined = GraphManipulation.getGElement(e);
         if (!gElement || GraphManipulation.getElementType(gElement) !== 'node') return;
 
-        const shadowElement = gElement.getElementsByClassName('shadow-element')[0];
+        const ellipseElement = gElement.getElementsByTagName('ellipse')[0];
 
-        if (highlight && !shadowElement) {
-            const ellipseElement = gElement.getElementsByTagName('ellipse')[0];
-            gElement.insertBefore(createShadowElement(ellipseElement), ellipseElement);
-        } else if (!highlight && shadowElement) {
-            gElement.removeChild(shadowElement);
+        if (selected && !ellipseElement.classList.contains('selected')) {
+            ellipseElement.classList.add('selected');
+        } else if (!selected && ellipseElement.classList.contains('selected')) {
+            ellipseElement.classList.remove('selected');
         }
-    }
-
-
-    function createShadowElement(ellipseElement: Element): Element {
-
-        const {rx, ry} = getShadowElementRadius(ellipseElement);
-
-        const shadowElement = ellipseElement.cloneNode() as Element;
-        shadowElement.classList.add('shadow-element');
-        shadowElement.setAttribute('fill', '#647fc7');
-        shadowElement.setAttribute('filter', 'url(#shadow-filter)');
-        shadowElement.setAttribute('rx', rx);
-        shadowElement.setAttribute('ry', ry);
-
-        return shadowElement;
-    }
-
-
-    function getShadowElementRadius(shadowElement: Element): { rx: string, ry: string } {
-
-        return {
-            rx: (parseFloat(shadowElement.getAttribute('rx') as string) + 3).toString(),
-            ry: (parseFloat(shadowElement.getAttribute('ry') as string) + 3).toString()
-        };
     }
 
 
@@ -168,24 +143,6 @@ export module GraphManipulation {
             polygon.setAttribute('stroke', color);
             polygon.setAttribute('fill', color);
         }
-    }
-
-
-    export function configureShadowFilter(svg: SVGSVGElement, htmlDocument: Document) {
-
-        const filterElement = createSVGElement('filter', htmlDocument);
-        filterElement.setAttribute('id', 'shadow-filter');
-        filterElement.setAttribute('x', '-40%');
-        filterElement.setAttribute('y', '-40%');
-        filterElement.setAttribute('height', '160%');
-        filterElement.setAttribute('width', '160%');
-
-        const feGaussianBlurElement = createSVGElement('feGaussianBlur', htmlDocument);
-        feGaussianBlurElement.setAttribute('in', 'SourceGraphic');
-        feGaussianBlurElement.setAttribute('stdDeviation', '3');
-        filterElement.appendChild(feGaussianBlurElement);
-
-        svg.appendChild(filterElement);
     }
 
 

@@ -46,8 +46,11 @@ export class GraphComponent implements OnChanges, OnDestroy {
     constructor(@Inject(DOCUMENT) private htmlDocument: Document,
                 private renderer: Renderer2) {}
 
+
     public zoomIn = () => this.panZoomBehavior.zoomIn();
     public zoomOut = () => this.panZoomBehavior.zoomOut();
+
+    public documentsSelected = () => this.selection.documentsSelected();
 
 
     ngOnChanges() {
@@ -95,7 +98,6 @@ export class GraphComponent implements OnChanges, OnDestroy {
         this.svgRoot = new DOMParser().parseFromString(this.graph, 'image/svg+xml')
             .getElementsByTagName('svg')[0];
 
-        GraphManipulation.configureShadowFilter(this.svgRoot, this.htmlDocument);
         GraphManipulation.removeTitleElements(this.svgRoot);
         this.graphContainer.nativeElement.appendChild(this.svgRoot);
         GraphManipulation.addClusterSubgraphLabelBoxes(this.svgRoot, this.htmlDocument);
@@ -108,7 +110,7 @@ export class GraphComponent implements OnChanges, OnDestroy {
 
         this.selectionSubscription = this.selection.changesNotifications().subscribe(
             (change: MatrixSelectionChange) => {
-                GraphComponent.updateHighlighting(change, this.svgRoot as SVGSVGElement);
+                GraphComponent.updateSelected(change, this.svgRoot as SVGSVGElement);
             });
     }
 
@@ -260,13 +262,11 @@ export class GraphComponent implements OnChanges, OnDestroy {
     }
 
 
-    private static updateHighlighting(change: MatrixSelectionChange, svgRoot: SVGSVGElement) {
+    private static updateSelected(change: MatrixSelectionChange, svgRoot: SVGSVGElement) {
 
         change.ids.map(id => GraphManipulation.getNodeElement(id, svgRoot))
             .forEach(nodeElement => {
-                GraphManipulation.performHighlightingSelection(
-                    nodeElement, change.changeType === 'added'
-                );
+                GraphManipulation.markAsSelected(nodeElement, change.changeType === 'added');
             });
     }
 }

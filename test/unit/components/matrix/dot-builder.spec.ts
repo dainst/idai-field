@@ -533,24 +533,26 @@ describe('DotBuilder', () => {
         const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
         const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
         const feature3 = Static.iffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = Static.iffDoc('Feature 4', 'feature4', 'Feature', 'f4');
 
         feature1.resource.relations['isContemporaryWith'] = ['f2'];
         feature2.resource.relations['isContemporaryWith'] = ['f1', 'f3'];
-        feature3.resource.relations['isContemporaryWith'] = ['f3'];
+        feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
+        feature4.resource.relations['isContemporaryWith'] = ['f3'];
 
         const graph: string = DotBuilder.build(
             mockProjectConfiguration, {
-                'UNKNOWN': [feature1, feature3]
-            }, [feature1, feature2, feature3],
+                'UNKNOWN': [feature1, feature4]
+            }, [feature1, feature2, feature3, feature4],
             defaultRelations
         );
 
         expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
             '"feature1" \\[id="node-f1".*\\] ' +
-            '"feature3" \\[id="node-f3".*\\] ' +
-            '"feature1" -> "feature3" \\[dir="none", class="same-rank-f1 same-rank-f3".*\\] ' +
-            '\{rank=same "feature1", "feature3"\} ' +
+            '"feature4" \\[id="node-f4".*\\] ' +
+            '"feature1" -> "feature4" \\[dir="none", class="same-rank-f1 same-rank-f4".*\\] ' +
+            '\{rank=same "feature1", "feature4"\} ' +
             '\}');
     });
 });

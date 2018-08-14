@@ -86,8 +86,9 @@ export module DotBuilder {
         return merge(
             getRelationTargetIds(document, relationTypes)
                 .map(targetId => {
-                    return getIncludedRelationTargetIds(targetId, documents, totalDocuments, relationTypes);
-                }), document.resource.id
+                    return getIncludedRelationTargetIds(targetId, documents, totalDocuments, relationTypes,
+                        [document.resource.id]);
+                })
         );
     }
 
@@ -102,32 +103,33 @@ export module DotBuilder {
 
 
     function getIncludedRelationTargetIds(targetId: string, documents: Array<Document>,
-                                          totalDocuments: Array<Document>, relationTypes: string[]): string[] {
+                                          totalDocuments: Array<Document>, relationTypes: string[],
+                                          processedTargetIds: string[]): string[] {
+
+        processedTargetIds.push(targetId);
 
         let targetDocument: Document | undefined
             = documents.find(document => document.resource.id === targetId);
-
         if (targetDocument) return [targetId];
 
         targetDocument = totalDocuments.find(document => document.resource.id === targetId);
+        if (!targetDocument) return [];
 
-        if (!targetDocument) {
-            return [];
-        } else {
-            return merge(
-                getRelationTargetIds(targetDocument, relationTypes)
-                    .map(targetId => {
-                        return getIncludedRelationTargetIds(targetId, documents, totalDocuments, relationTypes);
-                    })
-            );
-        }
+        return merge(
+            getRelationTargetIds(targetDocument, relationTypes)
+                .filter(isNot(includedIn(processedTargetIds)))
+                .map(targetId => {
+                    return getIncludedRelationTargetIds(targetId, documents, totalDocuments,
+                        relationTypes, processedTargetIds);
+                })
+        );
     }
 
 
-    function merge(targetIdSets: string[][], forbiddenId?: string): string[] {
+    function merge(targetIdSets: string[][]): string[] {
 
         return targetIdSets.reduce((result: any, targetIds) => {
-            targetIds.filter(targetId => !result.includes(targetId) && targetId !== forbiddenId)
+            targetIds.filter(targetId => !result.includes(targetId))
                 .forEach(targetId => result.push(targetId));
             return result;
         }, []);

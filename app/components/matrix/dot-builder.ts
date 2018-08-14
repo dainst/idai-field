@@ -138,17 +138,14 @@ export module DotBuilder {
                                             edges: { [id: string]: Edges }): string {
 
         const result: string =
-            documents
-                .reduce(([defs, processedSameRankTargetIds]: [Array<string|undefined>, string[]], document) => {
-
-                    const [def, updatedProcessedSameRankTargetIds] = createSameRankEdgesDefinition(
-                        documents, document, edges, processedSameRankTargetIds);
-
-                    return [defs.concat([def] as any), updatedProcessedSameRankTargetIds];
-                }
-                , [[], []])[0]
-                .filter(isDefined)
-                .join(' ');
+            documents.reduce(([defs, processedSameRankTargetIds]: [Array<string|undefined>, string[]], document) => {
+                const [def, updatedProcessedSameRankTargetIds] = createSameRankEdgesDefinition(
+                    documents, document, edges[document.resource.id], processedSameRankTargetIds
+                );
+                return [defs.concat([def] as any), updatedProcessedSameRankTargetIds];
+            }, [[], []])[0]
+            .filter(isDefined)
+            .join(' ');
 
         return (result.length > 0) ? result + ' ' : result;
     }
@@ -226,15 +223,13 @@ export module DotBuilder {
     function isRootDocument(documents: Array<Document>, document: Document, edges: { [id: string]: Edges },
                             processedDocuments: string[] = []): boolean {
 
-        if (edges[document.resource.id].aboveIds.length === 0
-            || edges[document.resource.id].belowIds.length > 0) {
-            return false;
-        }
+        const documentEdges: Edges = edges[document.resource.id];
+
+        if (documentEdges.aboveIds.length === 0 || documentEdges.belowIds.length > 0) return false;
 
         processedDocuments.push(document.resource.id);
 
-        return !isSameRankNonRootDocument(documents, edges[document.resource.id].sameRankIds,
-                processedDocuments, edges);
+        return !isSameRankNonRootDocument(documents, documentEdges.sameRankIds, processedDocuments, edges);
     }
 
 
@@ -254,11 +249,10 @@ export module DotBuilder {
     }
 
 
-    function createSameRankEdgesDefinition(documents: Array<Document>, document: Document,
-                                           edges: { [id: string]: Edges },
+    function createSameRankEdgesDefinition(documents: Array<Document>, document: Document, edges: Edges,
                                            processedSameRankTargetIds: string[]): [string|undefined, string[]] {
 
-        const targetIds: string[]|undefined = edges[document.resource.id].sameRankIds
+        const targetIds: string[]|undefined = edges.sameRankIds
             .filter(isNot(includedIn(processedSameRankTargetIds)));
 
         const updatedProcessedSameRankTargetIds: string[] =

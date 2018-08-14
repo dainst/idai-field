@@ -35,10 +35,12 @@ describe('DotBuilder', () => {
         feature1.resource.relations['isAfter'] = ['f2'];
         feature2.resource.relations['isBefore'] = ['f1'];
 
+        const documents = [feature1, feature2];
+
         const graph: string = DotBuilder.build(
             mockProjectConfiguration, {
-                'UNKNOWN': [feature1, feature2]
-            }, defaultRelations);
+                'UNKNOWN': documents
+            }, documents, defaultRelations);
 
         expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -61,10 +63,12 @@ describe('DotBuilder', () => {
         feature2.resource.relations['isBefore'] = ['f1'];
         feature3.resource.relations['isBefore'] = ['f1'];
 
-        const graph: string = DotBuilder.build(mockProjectConfiguration,
-            {
-                'UNKNOWN': [feature1, feature2, feature3]
-            }, defaultRelations);
+        const documents = [feature1, feature2, feature3];
+
+        const graph: string = DotBuilder.build(
+            mockProjectConfiguration,
+            { 'UNKNOWN': documents }, documents, defaultRelations
+        );
 
         expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -85,10 +89,12 @@ describe('DotBuilder', () => {
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
 
+        const documents = [feature1, feature2];
+
         const graph: string = DotBuilder
             .build(mockProjectConfiguration, {
-                    'UNKNOWN': [feature1, feature2]
-                }, defaultRelations);
+                    'UNKNOWN': documents
+                }, documents, defaultRelations);
 
         expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -106,10 +112,12 @@ describe('DotBuilder', () => {
 
         feature1.resource.relations['isAfter'] = ['f2', 'f3'];
 
+        const documents = [feature1];
+
         const graph: string = DotBuilder.build(
             mockProjectConfiguration,  {
-                'UNKNOWN': [feature1]
-            }, defaultRelations);
+                'UNKNOWN': documents
+            }, documents, defaultRelations);
 
         expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -128,10 +136,10 @@ describe('DotBuilder', () => {
         feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
         feature4.resource.relations['isContemporaryWith'] = ['f2', 'f3'];
 
+        const documents = [feature1, feature3, feature4, feature5];
+
         const graph: string = DotBuilder.build(mockProjectConfiguration,
-            {'UNKNOWN': [
-                feature1, feature3, feature4, feature5
-            ]}, defaultRelations);
+            { 'UNKNOWN': documents }, documents, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -155,10 +163,11 @@ describe('DotBuilder', () => {
 
         feature3.resource.relations['isContemporaryWith'] = ['f2', 'f4'];
 
+        const documents = [feature1, feature3, feature5];
+
         const graph: string = DotBuilder.build(mockProjectConfiguration, {
-                'UNKNOWN': [
-                    feature1, feature3, feature5]
-        }, defaultRelations);
+                'UNKNOWN': documents
+        }, documents, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -186,10 +195,12 @@ describe('DotBuilder', () => {
         feature3.resource.relations['isBefore'] = ['f1'];
         feature4.resource.relations['isBefore'] = ['f2', 'f3'];
 
+        const documents = [feature1, feature2, feature3, feature4];
+
         const graph: string = DotBuilder.build(
             mockProjectConfiguration, {
-                'UNKNOWN': [feature1, feature2, feature3, feature4]
-            }, defaultRelations);
+                'UNKNOWN': documents
+            }, documents, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -226,11 +237,13 @@ describe('DotBuilder', () => {
         feature2.resource.relations['isBefore'] = ['f1'];
         feature5.resource.relations['isBefore'] = ['f2'];
 
+        const documents = [feature1, feature2, feature3, feature4, feature5];
+
         const graph: string = DotBuilder.build(
             mockProjectConfiguration,
             {
-                'UNKNOWN': [feature1, feature2, feature3, feature4, feature5]
-            }, defaultRelations);
+                'UNKNOWN': documents
+            }, documents, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -290,13 +303,12 @@ describe('DotBuilder', () => {
         feature13.resource.relations['isBefore'] = ['f8', 'f10'];
         feature14.resource.relations['isBefore'] = ['f13'];
 
+        const documents = [feature1, feature2, feature3, feature4, feature5, feature6, feature7, feature8,
+            feature9, feature10, feature11, feature12, feature13, feature14];
+
         const graph: string = DotBuilder.build(mockProjectConfiguration, {
-            'UNKNOWN': [
-                feature1, feature2, feature3, feature4,
-                feature5, feature6, feature7, feature8,
-                feature9, feature10, feature11, feature12,
-                feature13, feature14]
-        }, defaultRelations);
+            'UNKNOWN': documents
+        }, documents, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -351,10 +363,12 @@ describe('DotBuilder', () => {
         feature2.resource.relations['isBefore'] = ['f1'];
         feature4.resource.relations['isBefore'] = ['f3'];
 
+        const documents = [feature1, feature2, feature3, feature4];
+
         const graph: string = DotBuilder.build(
             mockProjectConfiguration, {
-                'UNKNOWN': [feature1, feature2, feature3, feature4]
-            }, defaultRelations);
+                'UNKNOWN': documents
+            }, documents, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -395,12 +409,14 @@ describe('DotBuilder', () => {
         feature3.resource.relations['isBefore'] = ['f2'];
         feature5.resource.relations['isBefore'] = ['f4'];
 
+        const documents = [feature1, feature2, feature3, feature4, feature5];
+
         const graph: string = DotBuilder.build(
             mockProjectConfiguration,
             {
                 'UNKNOWN' : [feature1],
                 'Period 1': [feature2, feature3],
-                'Period 2': [feature4, feature5]}, defaultRelations);
+                'Period 2': [feature4, feature5]}, documents, defaultRelations);
 
         expect(graph).toMatch(
             'digraph \{ newrank=true; ' +
@@ -453,10 +469,12 @@ describe('DotBuilder', () => {
         feature5.resource.relations['isBelow'] = ['f4'];
         feature6.resource.relations['isCutBy'] = ['f4'];
 
+        const documents = [ feature1, feature2, feature3, feature4, feature5, feature6];
+
         const graph: string = DotBuilder.build(
             mockProjectConfiguration, {
-                'UNKNOWN': [feature1, feature2, feature3, feature4, feature5, feature6]
-            }, relations);
+                'UNKNOWN': documents
+            }, documents, relations);
 
         expect(graph).toMatch('digraph \{ newrank=true; ' +
             'node \\[style=filled, fontname="Roboto"\\] ' +
@@ -470,6 +488,69 @@ describe('DotBuilder', () => {
             '"feature3" -> "feature4" \\[class="above-f3 below-f4".*\\] ' +
             '"feature4" -> "feature5" \\[class="above-f4 below-f5".*\\] ' +
             '"feature4" -> "feature6" \\[class="above-f4 below-f6".*\\] ' +
+            '\}');
+    });
+
+
+    it('create above edges between nodes connected by nodes not included in the graph', () => {
+
+        const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = Static.iffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = Static.iffDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature5 = Static.iffDoc('Feature 5', 'feature5', 'Feature', 'f5');
+
+        feature1.resource.relations['isAfter'] = ['f3'];
+        feature2.resource.relations['isAfter'] = ['f4'];
+        feature3.resource.relations['isAfter'] = ['f5'];
+        feature4.resource.relations['isAfter'] = ['f5'];
+
+        feature3.resource.relations['isBefore'] = ['f1'];
+        feature4.resource.relations['isBefore'] = ['f2'];
+        feature5.resource.relations['isBefore'] = ['f3', 'f4'];
+
+        const graph: string = DotBuilder.build(
+            mockProjectConfiguration, {
+                'UNKNOWN': [feature1, feature2, feature5]
+            }, [feature1, feature2, feature3, feature4, feature5],
+            defaultRelations
+        );
+
+        expect(graph).toMatch('digraph \{ newrank=true; ' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature2" \\[id="node-f2".*\\] ' +
+            '"feature5" \\[id="node-f5".*\\] ' +
+            '\{rank=min "feature1", "feature2"\} ' +
+            '"feature1" -> "feature5" \\[class="above-f1 below-f5".*\\] ' +
+            '"feature2" -> "feature5" \\[class="above-f2 below-f5".*\\] ' +
+            '\}');
+    });
+
+
+    it('create sameRank edges between nodes connected by nodes not included in the graph', () => {
+
+        const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = Static.iffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+
+        feature1.resource.relations['isContemporaryWith'] = ['f2'];
+        feature2.resource.relations['isContemporaryWith'] = ['f1', 'f3'];
+        feature3.resource.relations['isContemporaryWith'] = ['f3'];
+
+        const graph: string = DotBuilder.build(
+            mockProjectConfiguration, {
+                'UNKNOWN': [feature1, feature3]
+            }, [feature1, feature2, feature3],
+            defaultRelations
+        );
+
+        expect(graph).toMatch('digraph \{ newrank=true; ' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature3" \\[id="node-f3".*\\] ' +
+            '"feature1" -> "feature3" \\[dir="none", class="same-rank-f1 same-rank-f3".*\\] ' +
+            '\{rank=same "feature1", "feature3"\} ' +
             '\}');
     });
 });

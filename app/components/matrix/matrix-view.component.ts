@@ -38,6 +38,8 @@ export class MatrixViewComponent implements OnInit {
     private selection: MatrixSelection = new MatrixSelection();
 
     private featureDocuments: Array<IdaiFieldFeatureDocument> = [];
+    private totalFeatureDocuments: Array<IdaiFieldFeatureDocument> = [];
+
 
     private trenchesLoaded: boolean = false;
 
@@ -121,6 +123,7 @@ export class MatrixViewComponent implements OnInit {
         const graph: string = DotBuilder.build(
             this.projectConfiguration,
             MatrixViewComponent.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
+            this.totalFeatureDocuments,
             MatrixViewComponent.getRelationConfiguration(this.matrixState.getRelationsMode()),
             this.matrixState.getLineMode() === 'curved');
 
@@ -164,7 +167,7 @@ export class MatrixViewComponent implements OnInit {
 
         this.loading.start();
 
-        this.featureDocuments = (await this.featureDatastore.find( {
+        this.totalFeatureDocuments = this.featureDocuments = (await this.featureDatastore.find( {
             constraints: { 'isRecordedIn:contain': trench.resource.id }
         })).documents;
 

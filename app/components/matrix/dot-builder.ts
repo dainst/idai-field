@@ -11,6 +11,14 @@ export type GraphRelationsConfiguration = {
 }
 
 
+type Edges = {
+
+    aboveIds: string[];
+    belowIds: string[];
+    sameRankIds: string[];
+}
+
+
 /**
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
@@ -19,80 +27,122 @@ export module DotBuilder {
 
     export function build(projectConfiguration: ProjectConfiguration,
                           groups: { [group: string]: Array<Document> },
+                          totalDocuments: Array<Document>,
                           relations: GraphRelationsConfiguration,
-                          curvedLineMode = true
-    ): string {
+                          curvedLineMode = true): string {
 
-        const documents: Array<Document> = getDocuments(groups, relations);
+        const documents: Array<Document> = getDocuments(groups);
+        const edges: { [id: string]: Edges } = getEdges(documents, totalDocuments, relations);
 
         return 'digraph { newrank=true; '
             + createNodeDefinitions(projectConfiguration, groups)
-            + createRootDocumentMinRankDefinition(documents, relations)
-            + createAboveEdgesDefinitions(documents, relations)
-            + createSameRankEdgesDefinitions(documents, relations)
+            + createRootDocumentMinRankDefinition(documents, edges)
+            + createAboveEdgesDefinitions(documents, edges)
+            + (relations.sameRank ? createSameRankEdgesDefinitions(documents, edges) : '')
             + (!curvedLineMode ? ' splines=ortho }' : '}');
     }
 
 
-    function getDocuments(groups: { [group: string]: Array<Document> },
-                          relations: GraphRelationsConfiguration): Array<Document> {
+    function getDocuments(groups: { [group: string]: Array<Document> }): Array<Document> {
 
-        return takeOutNonExistingRelations(
-            Object.keys(groups).reduce((acc: Document[], group: string) => acc.concat(groups[group]), []),
-            relations
-        );
+        return Object.keys(groups).reduce((acc: Document[], group: string) => acc.concat(groups[group]), []);
     }
 
 
-    function takeOutNonExistingRelations(documents: Array<Document>,
-                                         relations: GraphRelationsConfiguration): Array<Document> {
+    function getEdges(documents: Array<Document>, totalDocuments: Array<Document>,
+                      relations: GraphRelationsConfiguration): { [id: string]: Edges } {
 
-        return clone(documents)
-            .reduce((docs: Document[], doc: Document) => {
-                cleanRelations(doc, documents, relations);
-                return docs.concat(doc);
+        return documents.map(document => {
+            return getEdgesForDocument(document, documents, totalDocuments, relations);
+        }).reduce((result: any, edgesResult: any) => {
+            result[edgesResult.resourceId] = edgesResult.edges;
+            return result;
+        }, {});
+    }
+
+
+    function getEdgesForDocument(document: Document, documents: Array<Document>,
+                                 totalDocuments: Array<Document>, relations: GraphRelationsConfiguration)
+                                    : { resourceId: string, edges: Edges } {
+
+        const edges: Edges = {
+            aboveIds: getTargetIdsForRelationTypes(document, documents, totalDocuments, relations.above),
+            belowIds: getTargetIdsForRelationTypes(document, documents, totalDocuments, relations.below),
+            sameRankIds: relations.sameRank
+                ? getTargetIdsForRelationTypes(document, documents, totalDocuments, [relations.sameRank])
+                : []
+        };
+
+        return {
+            resourceId: document.resource.id,
+            edges: edges
+        };
+    }
+
+
+    function getTargetIdsForRelationTypes(document: Document, documents: Array<Document>,
+                                          totalDocuments: Array<Document>, relationTypes: string[]): string[] {
+
+        return getTargetIds(document, relationTypes)
+            .map(targetId => {
+                return getExistingTargetIds(targetId, documents, totalDocuments, relationTypes);
+            }).reduce((result: any, targetIds) => {
+            // TODO Extract method
+            targetIds.filter(targetId => !result.includes(targetId) && targetId !== document.resource.id)
+                .forEach(targetId => result.push(targetId));
+            return result;
+        }, []);
+    }
+
+
+    function getTargetIds(document: Document, relationTypes: string[]): string[] {
+
+        return relationTypes.filter(relationType => document.resource.relations[relationType])
+            .map(relationType => document.resource.relations[relationType])
+            .reduce((result: any, targetIds) => {
+                // TODO Extract method
+                targetIds.filter(targetId => !result.includes(targetId))
+                    .forEach(targetId => result.push(targetId));
+                return result;
             }, []);
     }
 
 
-    function cleanRelations(document: Document, documents: Array<Document>,
-                            relations: GraphRelationsConfiguration) {
+    function getExistingTargetIds(targetId: string, documents: Array<Document>,
+                                  totalDocuments: Array<Document>, relationTypes: string[]): string[] {
 
-        const targetExists = (target: string) => documents
-            .map(document => document.resource.id)
-            .includes(target);
+        let targetDocument: Document | undefined
+            = documents.find(document => document.resource.id === targetId);
 
-        relations.above.forEach((relation: string) => {
-            cleanRelation(document, relation, targetExists);
-        });
+        if (targetDocument) return [targetId];
 
-        relations.below.forEach((relation: string) => {
-            cleanRelation(document, relation, targetExists);
-        });
+        targetDocument = totalDocuments.find(document => document.resource.id === targetId);
 
-        if (relations.sameRank) cleanRelation(document, relations.sameRank, targetExists);
-    }
-
-
-    function cleanRelation(document: Document, relation: string, test: Function) {
-
-        document.resource.relations[relation] =
-            takeOrMake(document, 'resource.relations.' + relation, [])
-            .filter(test);
+        if (!targetDocument) {
+            return [];
+        } else {
+            return getTargetIds(targetDocument, relationTypes)
+                .map(targetId => {
+                    return getExistingTargetIds(targetId, documents, totalDocuments, relationTypes);
+                }).reduce((result: any, targetIds) => {
+                    // TODO Extract method
+                    targetIds.filter(id => !result.includes(id))
+                        .forEach(id => result.push(id));
+                    return result;
+                }, []);
+        }
     }
 
 
     function createSameRankEdgesDefinitions(documents: Array<Document>,
-                                            relations: GraphRelationsConfiguration): string {
-
-        if (!relations.sameRank) return '';
+                                            edges: { [id: string]: Edges }): string {
 
         const result: string =
             documents
                 .reduce(([defs, processedSameRankTargetIds]: [Array<string|undefined>, string[]], document) => {
 
                     const [def, updatedProcessedSameRankTargetIds] = createSameRankEdgesDefinition(
-                        documents, document, relations, processedSameRankTargetIds);
+                        documents, document, edges, processedSameRankTargetIds);
 
                     return [defs.concat([def] as any), updatedProcessedSameRankTargetIds];
                 }
@@ -105,10 +155,10 @@ export module DotBuilder {
 
 
     function createAboveEdgesDefinitions(documents: Array<Document>,
-                                         relations: GraphRelationsConfiguration): string {
+                                         edges: { [id: string]: Edges }): string {
 
         const result: string = documents
-            .map(document => createAboveEdgesDefinition(documents, document, relations))
+            .map(document => createAboveEdgesDefinition(documents, document, edges))
             .filter(graphString => graphString != undefined)
             .join(' ');
 
@@ -117,9 +167,9 @@ export module DotBuilder {
 
 
     function createRootDocumentMinRankDefinition(documents: Array<Document>,
-                                                 relations: GraphRelationsConfiguration): string {
+                                                 edges: { [id: string]: Edges }): string {
 
-        const rootDocuments: Array<Document> = getRootDocuments(documents, relations);
+        const rootDocuments: Array<Document> = getRootDocuments(documents, edges);
 
         return rootDocuments.length === 0 ? '' :
             '{rank=min "'
@@ -167,30 +217,29 @@ export module DotBuilder {
 
 
     function getRootDocuments(documents: Array<Document>,
-                              relations: GraphRelationsConfiguration): Array<Document> {
+                              edges: { [id: string]: Edges }): Array<Document> {
 
-        return documents.filter(document => isRootDocument(documents, document, relations));
+        return documents.filter(document => isRootDocument(documents, document, edges));
     }
 
 
-    function isRootDocument(documents: Array<Document>, document: Document,
-                            relations: GraphRelationsConfiguration, processedDocuments: string[] = []): boolean {
+    function isRootDocument(documents: Array<Document>, document: Document, edges: { [id: string]: Edges },
+                            processedDocuments: string[] = []): boolean {
 
-        if (!hasRelations(document, relations.above) || hasRelations(document, relations.below)) {
+        if (edges[document.resource.id].aboveIds.length === 0
+            || edges[document.resource.id].belowIds.length > 0) {
             return false;
         }
 
         processedDocuments.push(document.resource.id);
 
-        return relations.sameRank
-            ? !isSameRankNonRootDocument(documents, document.resource.relations[relations.sameRank],
-                processedDocuments, relations)
-            : true;
+        return !isSameRankNonRootDocument(documents, edges[document.resource.id].sameRankIds,
+                processedDocuments, edges);
     }
 
 
     function isSameRankNonRootDocument(documents: Array<Document>, sameRankRelationTargets: string[],
-                                       processedDocuments: string[], relations: GraphRelationsConfiguration) {
+                                       processedDocuments: string[], edges: { [id: string]: Edges }) {
 
         return (
             undefined !=
@@ -199,20 +248,17 @@ export module DotBuilder {
                 .find(targetId => {
                     const targetDocument: Document | undefined = getDocument(documents, targetId);
                     return (targetDocument && !isRootDocument(
-                        documents, targetDocument, relations, processedDocuments)) === true;
+                        documents, targetDocument, edges, processedDocuments)
+                    ) === true;
                 }));
     }
 
 
     function createSameRankEdgesDefinition(documents: Array<Document>, document: Document,
-                                           relations: GraphRelationsConfiguration,
+                                           edges: { [id: string]: Edges },
                                            processedSameRankTargetIds: string[]): [string|undefined, string[]] {
 
-        if (!document.resource.relations[relations.sameRank as string]) {
-            return [undefined, clone(processedSameRankTargetIds)];
-        }
-
-        const targetIds: string[]|undefined = document.resource.relations[relations.sameRank as string]
+        const targetIds: string[]|undefined = edges[document.resource.id].sameRankIds
             .filter(isNot(includedIn(processedSameRankTargetIds)));
 
         const updatedProcessedSameRankTargetIds: string[] =
@@ -261,24 +307,13 @@ export module DotBuilder {
 
 
     function createAboveEdgesDefinition(documents: Array<Document>, document: Document,
-                                        relations: GraphRelationsConfiguration): string|undefined {
+                                        edges: { [id: string]: Edges }): string|undefined {
 
-        const targetIds = getTargetIds(document, relations.above);
+        const targetIds = edges[document.resource.id].aboveIds;
         if (targetIds.length === 0) return;
 
         return targetIds.map(targetId => createEdgeDefinition(documents, document, targetId))
             .join(' ');
-    }
-
-
-    function getTargetIds(document: Document, relationTypes: string[]): string[] {
-
-        return relationTypes.map(relationType => document.resource.relations[relationType])
-            .reduce((result: any, targetIds) => {
-                targetIds.filter(targetId => !result.includes(targetId))
-                    .forEach(targetId => result.push(targetId));
-                return result;
-            }, []);
     }
 
 
@@ -308,13 +343,5 @@ export module DotBuilder {
             + '" fontcolor="'
             + projectConfiguration.getTextColorForType(document.resource.type)
             + '"] ';
-    }
-
-
-    function hasRelations(document: Document, relationTypes: string[]): boolean {
-
-        return relationTypes.map(relationType => document.resource.relations[relationType])
-            .filter(relationTargets => relationTargets.length > 0)
-            .length > 0;
     }
 }

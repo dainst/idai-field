@@ -1,4 +1,4 @@
-import {DotBuilder} from '../../../../app/components/matrix/dot-builder';
+import {DotBuilder, GraphRelationsConfiguration} from '../../../../app/components/matrix/dot-builder';
 import {Static} from '../../static';
 
 
@@ -9,9 +9,9 @@ import {Static} from '../../static';
 
 describe('DotBuilder', () => {
 
-    const defaultRelations = {
-        above: 'isAfter',
-        below: 'isBefore',
+    const defaultRelations: GraphRelationsConfiguration = {
+        above: ['isAfter'],
+        below: ['isBefore'],
         sameRank: 'isContemporaryWith'
     };
 
@@ -419,5 +419,57 @@ describe('DotBuilder', () => {
             '"feature4" -> "feature5" \\[class="above-f4 below-f5".*\\] ' +
             '}'
         );
+    });
+
+
+    it('build dot string for relation configuration with multiple above/below relation types', () => {
+
+        const relations: GraphRelationsConfiguration = {
+            above: ['isAbove', 'cuts'],
+            below: ['isBelow', 'isCutBy'],
+            sameRank: 'isContemporaryWith'
+        };
+
+        const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = Static.iffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = Static.iffDoc('Feature 4', 'feature4', 'Feature', 'f4');
+        const feature5 = Static.iffDoc('Feature 5', 'feature5', 'Feature', 'f5');
+        const feature6 = Static.iffDoc('Feature 6', 'feature6', 'Feature', 'f6');
+
+        feature1.resource.relations['isAbove'] = ['f2'];
+        feature2.resource.relations['isBelow'] = ['f1'];
+
+        feature2.resource.relations['cuts'] = ['f3'];
+        feature3.resource.relations['isCutBy'] = ['f2'];
+
+        feature3.resource.relations['isAbove'] = ['f4'];
+        feature3.resource.relations['cuts'] = ['f4'];
+        feature4.resource.relations['isBelow'] = ['f3'];
+        feature4.resource.relations['isCutBy'] = ['f3'];
+
+        feature4.resource.relations['isAbove'] = ['f5'];
+        feature4.resource.relations['cuts'] = ['f6'];
+        feature5.resource.relations['isBelow'] = ['f4'];
+        feature6.resource.relations['isCutBy'] = ['f4'];
+
+        const graph: string = DotBuilder.build(
+            mockProjectConfiguration, {
+                'UNKNOWN': [feature1, feature2, feature3, feature4, feature5, feature6]
+            }, relations);
+
+        expect(graph).toMatch('digraph \{ newrank=true; ' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature2" \\[id="node-f2".*\\] ' +
+            '"feature3" \\[id="node-f3".*\\] ' +
+            '"feature4" \\[id="node-f4".*\\] ' +
+            '\{rank=min "feature1"\} ' +
+            '"feature1" -> "feature2" \\[class="above-f1 below-f2".*\\] ' +
+            '"feature2" -> "feature3" \\[class="above-f2 below-f3".*\\] ' +
+            '"feature3" -> "feature4" \\[class="above-f3 below-f4".*\\] ' +
+            '"feature4" -> "feature5" \\[class="above-f4 below-f5".*\\] ' +
+            '"feature4" -> "feature6" \\[class="above-f4 below-f6".*\\] ' +
+            '\}');
     });
 });

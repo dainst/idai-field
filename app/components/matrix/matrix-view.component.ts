@@ -207,7 +207,7 @@ export class MatrixViewComponent implements OnInit {
     private static getRelationConfiguration(relationsMode: MatrixRelationsMode): GraphRelationsConfiguration {
 
         return relationsMode === 'temporal'
-            ? { above: 'isAfter', below: 'isBefore', sameRank: 'isContemporaryWith' }
-            : { above: 'isAbove', below: 'isBelow' };
+            ? { above: ['isAfter'], below: ['isBefore'], sameRank: 'isContemporaryWith' }
+            : { above: ['isAbove', 'cuts'], below: ['isBelow', 'isCutBy'] };
     }
 }

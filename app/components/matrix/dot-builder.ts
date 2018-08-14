@@ -1,12 +1,12 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
-import {clone} from '../../util/object-util';
 import {takeOrMake, isNot, includedIn, isDefined, isEmpty} from 'tsfun';
+import {clone} from '../../util/object-util';
 
 
 export type GraphRelationsConfiguration = {
 
-    above: string;
-    below: string;
+    above: string[];
+    below: string[];
     sameRank?: string;
 }
 
@@ -47,17 +47,30 @@ export module DotBuilder {
     function takeOutNonExistingRelations(documents: Array<Document>,
                                          relations: GraphRelationsConfiguration): Array<Document> {
 
+        return clone(documents)
+            .reduce((docs: Document[], doc: Document) => {
+                cleanRelations(doc, documents, relations);
+                return docs.concat(doc);
+            }, []);
+    }
+
+
+    function cleanRelations(document: Document, documents: Array<Document>,
+                            relations: GraphRelationsConfiguration) {
+
         const targetExists = (target: string) => documents
             .map(document => document.resource.id)
             .includes(target);
 
-        return clone(documents)
-            .reduce((docs: Document[], doc: Document) => {
-                cleanRelation(doc, relations.above, targetExists);
-                cleanRelation(doc, relations.below, targetExists);
-                if (relations.sameRank) cleanRelation(doc, relations.sameRank, targetExists);
-                return docs.concat(doc);
-            }, []);
+        relations.above.forEach((relation: string) => {
+            cleanRelation(document, relation, targetExists);
+        });
+
+        relations.below.forEach((relation: string) => {
+            cleanRelation(document, relation, targetExists);
+        });
+
+        if (relations.sameRank) cleanRelation(document, relations.sameRank, targetExists);
     }
 
 
@@ -108,7 +121,7 @@ export module DotBuilder {
 
         const rootDocuments: Array<Document> = getRootDocuments(documents, relations);
 
-        return rootDocuments.length == 0 ? '' :
+        return rootDocuments.length === 0 ? '' :
             '{rank=min "'
             + rootDocuments.map(document => document.resource.identifier).join('", "')
             + '"} ';
@@ -163,8 +176,10 @@ export module DotBuilder {
     function isRootDocument(documents: Array<Document>, document: Document,
                             relations: GraphRelationsConfiguration, processedDocuments: string[] = []): boolean {
 
-        if (document.resource.relations[relations.above].length === 0
-            || document.resource.relations[relations.below].length !== 0) return false;
+        if (!hasRelations(document, relations.above) || hasRelations(document, relations.below)) {
+            return false;
+        }
+
         processedDocuments.push(document.resource.id);
 
         return relations.sameRank
@@ -197,7 +212,7 @@ export module DotBuilder {
             return [undefined, clone(processedSameRankTargetIds)];
         }
 
-        const targetIds: string[]|undefined = document.resource.relations[relations.sameRank  as string]
+        const targetIds: string[]|undefined = document.resource.relations[relations.sameRank as string]
             .filter(isNot(includedIn(processedSameRankTargetIds)));
 
         const updatedProcessedSameRankTargetIds: string[] =
@@ -248,11 +263,22 @@ export module DotBuilder {
     function createAboveEdgesDefinition(documents: Array<Document>, document: Document,
                                         relations: GraphRelationsConfiguration): string|undefined {
 
-        const targetIds: string[]|undefined = document.resource.relations[relations.above];
-        if (!targetIds || targetIds.length === 0) return;
+        const targetIds = getTargetIds(document, relations.above);
+        if (targetIds.length === 0) return;
 
         return targetIds.map(targetId => createEdgeDefinition(documents, document, targetId))
             .join(' ');
+    }
+
+
+    function getTargetIds(document: Document, relationTypes: string[]): string[] {
+
+        return relationTypes.map(relationType => document.resource.relations[relationType])
+            .reduce((result: any, targetIds) => {
+                targetIds.filter(targetId => !result.includes(targetId))
+                    .forEach(targetId => result.push(targetId));
+                return result;
+            }, []);
     }
 
 
@@ -282,5 +308,13 @@ export module DotBuilder {
             + '" fontcolor="'
             + projectConfiguration.getTextColorForType(document.resource.type)
             + '"] ';
+    }
+
+
+    function hasRelations(document: Document, relationTypes: string[]): boolean {
+
+        return relationTypes.map(relationType => document.resource.relations[relationType])
+            .filter(relationTargets => relationTargets.length > 0)
+            .length > 0;
     }
 }

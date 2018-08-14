@@ -83,28 +83,21 @@ export module DotBuilder {
     function getTargetIdsForRelationTypes(document: Document, documents: Array<Document>,
                                           totalDocuments: Array<Document>, relationTypes: string[]): string[] {
 
-        return getTargetIds(document, relationTypes)
-            .map(targetId => {
-                return getExistingTargetIds(targetId, documents, totalDocuments, relationTypes);
-            }).reduce((result: any, targetIds) => {
-            // TODO Extract method
-            targetIds.filter(targetId => !result.includes(targetId) && targetId !== document.resource.id)
-                .forEach(targetId => result.push(targetId));
-            return result;
-        }, []);
+        return merge(
+            getTargetIds(document, relationTypes)
+                .map(targetId => {
+                    return getExistingTargetIds(targetId, documents, totalDocuments, relationTypes);
+                }), document.resource.id
+        );
     }
 
 
     function getTargetIds(document: Document, relationTypes: string[]): string[] {
 
-        return relationTypes.filter(relationType => document.resource.relations[relationType])
+        return merge(
+            relationTypes.filter(relationType => document.resource.relations[relationType])
             .map(relationType => document.resource.relations[relationType])
-            .reduce((result: any, targetIds) => {
-                // TODO Extract method
-                targetIds.filter(targetId => !result.includes(targetId))
-                    .forEach(targetId => result.push(targetId));
-                return result;
-            }, []);
+        );
     }
 
 
@@ -121,16 +114,23 @@ export module DotBuilder {
         if (!targetDocument) {
             return [];
         } else {
-            return getTargetIds(targetDocument, relationTypes)
-                .map(targetId => {
-                    return getExistingTargetIds(targetId, documents, totalDocuments, relationTypes);
-                }).reduce((result: any, targetIds) => {
-                    // TODO Extract method
-                    targetIds.filter(id => !result.includes(id))
-                        .forEach(id => result.push(id));
-                    return result;
-                }, []);
+            return merge(
+                getTargetIds(targetDocument, relationTypes)
+                    .map(targetId => {
+                        return getExistingTargetIds(targetId, documents, totalDocuments, relationTypes);
+                    })
+            );
         }
+    }
+
+
+    function merge(targetIdSets: string[][], forbiddenId?: string): string[] {
+
+        return targetIdSets.reduce((result: any, targetIds) => {
+            targetIds.filter(targetId => !result.includes(targetId) && targetId !== forbiddenId)
+                .forEach(targetId => result.push(targetId));
+            return result;
+        }, []);
     }
 
 

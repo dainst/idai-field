@@ -8,20 +8,19 @@
   padding: 0 !important;
 
   header {
-    padding: 8px;
     position: fixed;
     width: 100%;
     z-index: 1001;
     margin-left: -15px;
     top: 57px;
-    height: 58px;
+    height: 56px;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
   }
 
   header button {
     position: absolute;
-    right: 8px;
-    bottom: 8px;
+    right: 6px;
+    bottom: 6px;
   }
 
   main {

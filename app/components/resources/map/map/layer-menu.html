@@ -3,20 +3,32 @@
          (click)="toggle()">
         <span class="mdi mdi-layers mdi-18px"></span>
     </div>
-    <div *ngIf="opened" id="layer-menu" class="card card-block form-group layer-menu">
-        <div *ngFor="let layer of layers" class="layer-entry">
-            <span *ngIf="isActiveLayer(layer)">
-                <span class="mdi mdi-eye layer-menu-button layer-active" (click)="toggleLayer(layer)"
-                      data-toggle="tooltip" title="Bild ausblenden"></span>
-                <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
-                      data-toggle="tooltip" title="Bild fokussieren" (click)="focusLayer(layer)"></span>
-            </span>
-            <span *ngIf="!isActiveLayer(layer)">
-                <span class="mdi mdi-eye-off layer-menu-button layer-inactive" (click)="toggleLayer(layer)"
-                      data-toggle="tooltip" title="Bild anzeigen"></span>
-                <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive"></span>
-            </span>
-            <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
+    <div *ngIf="opened" id="layer-menu" class="card">
+        <div class="card-body">
+            <div class="layer-menu-container">
+                <form>
+                    <fieldset class="form-group">
+                        <div *ngFor="let layer of layers" class="layer-entry">
+                            <span *ngIf="isActiveLayer(layer)">
+                                <span class="mdi mdi-eye layer-menu-button layer-active"
+                                      (click)="toggleLayer(layer)"
+                                      data-toggle="tooltip" title="Bild ausblenden"></span>
+                                <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
+                                      data-toggle="tooltip" title="Bild fokussieren"
+                                      (click)="focusLayer(layer)"></span>
+                            </span>
+                            <span *ngIf="!isActiveLayer(layer)">
+                                <span class="mdi mdi-eye-off layer-menu-button layer-inactive"
+                                      (click)="toggleLayer(layer)"
+                                      data-toggle="tooltip" title="Bild anzeigen"></span>
+                                <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
+                                </span>
+                            </span>
+                            <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     </div>
 </div>

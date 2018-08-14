@@ -65,11 +65,22 @@ $layer-menu-button-inactive-color: grey;
 
 #layer-menu {
   top: 50px;
-  max-height: 314px;
-  padding-bottom: 10px;
-  overflow-y: auto;
-  overflow-x: hidden;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  border-radius: 0.25rem !important;
+  background-color: #f8f9fa !important;
+  cursor: default !important;
+  user-select: none;
+
+  .layer-menu-container {
+    max-height: 296px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
 }
 
 .layer-entry {

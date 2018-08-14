@@ -1,5 +1,5 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
-import {takeOrMake, isNot, includedIn, isDefined, isEmpty} from 'tsfun';
+import {isNot, includedIn, isDefined, isEmpty} from 'tsfun';
 import {clone} from '../../util/object-util';
 
 
@@ -66,10 +66,10 @@ export module DotBuilder {
                                     : { resourceId: string, edges: Edges } {
 
         const edges: Edges = {
-            aboveIds: getTargetIdsForRelationTypes(document, documents, totalDocuments, relations.above),
-            belowIds: getTargetIdsForRelationTypes(document, documents, totalDocuments, relations.below),
+            aboveIds: getEdgeTargetIds(document, documents, totalDocuments, relations.above),
+            belowIds: getEdgeTargetIds(document, documents, totalDocuments, relations.below),
             sameRankIds: relations.sameRank
-                ? getTargetIdsForRelationTypes(document, documents, totalDocuments, [relations.sameRank])
+                ? getEdgeTargetIds(document, documents, totalDocuments, [relations.sameRank])
                 : []
         };
 
@@ -80,19 +80,19 @@ export module DotBuilder {
     }
 
 
-    function getTargetIdsForRelationTypes(document: Document, documents: Array<Document>,
-                                          totalDocuments: Array<Document>, relationTypes: string[]): string[] {
+    function getEdgeTargetIds(document: Document, documents: Array<Document>,
+                              totalDocuments: Array<Document>, relationTypes: string[]): string[] {
 
         return merge(
-            getTargetIds(document, relationTypes)
+            getRelationTargetIds(document, relationTypes)
                 .map(targetId => {
-                    return getExistingTargetIds(targetId, documents, totalDocuments, relationTypes);
+                    return getIncludedRelationTargetIds(targetId, documents, totalDocuments, relationTypes);
                 }), document.resource.id
         );
     }
 
 
-    function getTargetIds(document: Document, relationTypes: string[]): string[] {
+    function getRelationTargetIds(document: Document, relationTypes: string[]): string[] {
 
         return merge(
             relationTypes.filter(relationType => document.resource.relations[relationType])
@@ -101,8 +101,8 @@ export module DotBuilder {
     }
 
 
-    function getExistingTargetIds(targetId: string, documents: Array<Document>,
-                                  totalDocuments: Array<Document>, relationTypes: string[]): string[] {
+    function getIncludedRelationTargetIds(targetId: string, documents: Array<Document>,
+                                          totalDocuments: Array<Document>, relationTypes: string[]): string[] {
 
         let targetDocument: Document | undefined
             = documents.find(document => document.resource.id === targetId);
@@ -115,9 +115,9 @@ export module DotBuilder {
             return [];
         } else {
             return merge(
-                getTargetIds(targetDocument, relationTypes)
+                getRelationTargetIds(targetDocument, relationTypes)
                     .map(targetId => {
-                        return getExistingTargetIds(targetId, documents, totalDocuments, relationTypes);
+                        return getIncludedRelationTargetIds(targetId, documents, totalDocuments, relationTypes);
                     })
             );
         }

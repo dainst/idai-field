@@ -7,7 +7,7 @@ import {on, tripleEqual, doWhen, isEmpty} from 'tsfun';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {MatrixRelationsMode, MatrixState} from './matrix-state';
+import {MatrixClusterMode, MatrixRelationsMode, MatrixState} from './matrix-state';
 import {IdaiFieldFeatureDocumentReadDatastore} from '../../core/datastore/field/idai-field-feature-document-read-datastore';
 import {Loading} from '../../widgets/loading';
 import {DotBuilder, GraphRelationsConfiguration} from './dot-builder';
@@ -188,7 +188,7 @@ export class MatrixViewComponent implements OnInit {
     }
 
 
-    private static getPeriodMap(documents: Array<IdaiFieldFeatureDocument>, clusterMode: 'periods'|'none')
+    private static getPeriodMap(documents: Array<IdaiFieldFeatureDocument>, clusterMode: MatrixClusterMode)
             : { [period: string]: Array<IdaiFieldFeatureDocument> } {
 
         if (clusterMode === 'none') return { 'UNKNOWN': documents };

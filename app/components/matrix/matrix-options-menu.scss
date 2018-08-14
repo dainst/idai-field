@@ -6,15 +6,17 @@
 #matrix-options-menu {
   position: absolute;
   z-index: 1000;
-  right: 11px;
+  right: 8px;
 }
 
 #matrix-options-button {
-  top: 70px;
+  top: 67px;
+  width: 42px;
+  padding-left: 11px;
 }
 
 #matrix-options-menu {
-  top: 113px;
+  top: 110px;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(0, 0, 0, 0.15) !important;
   border-radius: 0.25rem !important;

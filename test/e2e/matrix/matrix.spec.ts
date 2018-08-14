@@ -37,6 +37,8 @@ describe('matrix --', () => {
         i++;
 
         browser.wait(EC.presenceOf(MatrixPage.getSvgRoot()), delays.ECWaitTime);
+        OperationBarPage.performSelectOperation(1);
+
         done();
     });
 
@@ -100,6 +102,17 @@ describe('matrix --', () => {
 
         MatrixPage.clickClearSelectionButton();
         MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(0));
+    });
+
+
+    it('clear selection when switching trenches', () => {
+
+        MatrixPage.clickSingleSelectionModeButton();
+        MatrixPage.clickNode('si1');
+
+        OperationBarPage.performSelectOperation(0);
+        expect(MatrixPage.getClearSelectionButton().getAttribute('class')).toMatch('disabled');
+        expect(MatrixPage.getCreateGraphFromSelectionButton().getAttribute('class')).toMatch('disabled');
     });
 
 

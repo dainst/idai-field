@@ -1,6 +1,8 @@
-import {browser, element, by} from 'protractor';
+import {browser, element, by, protractor} from 'protractor';
 
+const EC = protractor.ExpectedConditions;
 const common = require('../common');
+const delays = require('../config/delays');
 
 /**
  * @author Thomas Kleinke
@@ -29,13 +31,13 @@ export class MatrixPage {
 
     public static clickClearSelectionButton() {
 
-        return common.click(element(by.id('clear-selection-button')));
+        return common.click(MatrixPage.getClearSelectionButton());
     }
 
 
     public static clickCreateGraphFromSelectionButton() {
 
-        return common.click(element(by.id('create-graph-from-selection-button')));
+        return common.click(MatrixPage.getCreateGraphFromSelectionButton());
     }
 
 
@@ -116,5 +118,19 @@ export class MatrixPage {
     public static getSelectedNodes() {
 
         return element.all(by.css('.node .selected'));
+    }
+
+
+    public static getClearSelectionButton() {
+
+        browser.wait(EC.presenceOf(element(by.id('clear-selection-button'))), delays.ECWaitTime);
+        return element(by.id('clear-selection-button'));
+    }
+
+
+    public static getCreateGraphFromSelectionButton() {
+
+        browser.wait(EC.presenceOf(element(by.id('create-graph-from-selection-button'))), delays.ECWaitTime);
+        return element(by.id('create-graph-from-selection-button'));
     }
 }

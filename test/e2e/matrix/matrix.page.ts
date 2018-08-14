@@ -27,6 +27,12 @@ export class MatrixPage {
     }
 
 
+    public static clickClearSelectionButton() {
+
+        return common.click(element(by.id('clear-selection-button')));
+    }
+
+
     public static clickCreateGraphFromSelectionButton() {
 
         return common.click(element(by.id('create-graph-from-selection-button')));
@@ -104,5 +110,11 @@ export class MatrixPage {
     public static getClusters() {
 
         return element.all(by.css('.cluster'));
+    }
+
+
+    public static getSelectedNodes() {
+
+        return element.all(by.css('.node .selected'));
     }
 }

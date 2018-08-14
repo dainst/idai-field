@@ -87,14 +87,28 @@ describe('matrix --', () => {
     });
 
 
-    it('show matrix for selected resources', () => {
+    it('select and deselect resources', () => {
+
+        MatrixPage.clickSingleSelectionModeButton();
+        MatrixPage.clickNode('si1');
+        MatrixPage.clickNode('si2');
+        MatrixPage.clickNode('si3');
+        MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(3));
+
+        MatrixPage.clickNode('si3');
+        MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(2));
+
+        MatrixPage.clickClearSelectionButton();
+        MatrixPage.getSelectedNodes().then(selected => expect(selected.length).toBe(0));
+    });
+
+
+    it('create matrix from selected resources', () => {
 
         MatrixPage.clickSingleSelectionModeButton();
         MatrixPage.clickNode('si1');
         MatrixPage.clickNode('si5');
         MatrixPage.clickCreateGraphFromSelectionButton();
-
-        // TODO test selection highlighting
 
         browser.wait(EC.stalenessOf(MatrixPage.getNode('si2')), delays.ECWaitTime);
         browser.wait(EC.stalenessOf(MatrixPage.getNode('si3')), delays.ECWaitTime);

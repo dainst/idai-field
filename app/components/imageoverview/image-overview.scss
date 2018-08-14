@@ -19,8 +19,9 @@
     z-index: 1001;
     right: 0;
     left: 0;
-    top: 62px;
+    top: 58px;
     margin: 0;
+    height: 55px;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
   }
 
@@ -36,10 +37,16 @@
   #search-bar {
     margin-top: 2px;
     margin-bottom: -2px;
+
+    input,
+    #searchfilter {
+      height: 39px !important;
+    }
   }
 
   #main-type-document-filter-select {
-    margin-top: 3px;
+    height: 39px;
+    margin-top: 2px;
     margin-bottom: -3px;
     user-select: none;
   }
@@ -52,6 +59,7 @@
   }
 
   .slider-container {
+    padding-top: 17px;
     user-select: none;
     cursor: default;
 

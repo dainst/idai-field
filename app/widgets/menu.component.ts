@@ -14,8 +14,7 @@ export abstract class MenuComponent {
 
     constructor(private renderer: Renderer2,
                 private buttonElementId: string,
-                private menuElementId: string,
-                private clickToOpen: boolean = false) {}
+                private menuElementId: string) {}
 
 
     public toggle() {
@@ -34,7 +33,7 @@ export abstract class MenuComponent {
 
         this.removeMouseEventListener = this.renderer.listen(
             'document',
-            this.clickToOpen ? 'click' : 'mousemove',
+            'click',
             event => this.handleMouseEvent(event));
     }
 

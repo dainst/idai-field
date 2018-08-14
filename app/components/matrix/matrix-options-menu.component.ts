@@ -19,7 +19,7 @@ export class MatrixOptionsMenuComponent extends MenuComponent {
     constructor(private matrixState: MatrixState,
                 renderer: Renderer2) {
 
-        super(renderer, 'matrix-options-button', 'matrix-options-menu', true);
+        super(renderer, 'matrix-options-button', 'matrix-options-menu');
     }
 
 

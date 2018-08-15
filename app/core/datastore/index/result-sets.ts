@@ -41,7 +41,9 @@ export class ResultSets {
 
         const copy = this.copy();
 
-        const indexItemsMap = indexItems.reduce((acc: IndexItemMap, item) => (acc[item.id] = item, acc), {});
+        const indexItemsMap = indexItems
+            .reduce((acc: IndexItemMap, item) => (acc[item.id] = item, acc), {});
+
         copy.map = unite(indexItemsMap)(copy.map);
 
         if (mode !== 'subtract') copy.addSets.push(Object.keys(indexItemsMap));

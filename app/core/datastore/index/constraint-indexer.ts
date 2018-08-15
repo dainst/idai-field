@@ -1,6 +1,6 @@
 import {Document, ProjectConfiguration, IdaiType, FieldDefinition} from 'idai-components-2/core';
 import {IndexItem} from './index-item';
-import {getElForPathIn} from 'tsfun';
+import {get} from 'tsfun';
 
 
 export interface IndexDefinition {
@@ -101,7 +101,7 @@ export class ConstraintIndexer {
 
     private putFor(indexDefinition: IndexDefinition, doc: Document) {
 
-        const elForPath = getElForPathIn(doc, indexDefinition.path);
+        const elForPath = get(doc)(indexDefinition.path);
 
         switch(indexDefinition.type) {
             case 'exist':

@@ -258,7 +258,7 @@ export module DotBuilder {
             .filter(isNot(includedIn(processedSameRankTargetIds)));
 
         const updatedProcessedSameRankTargetIds: string[] =
-            clone(processedSameRankTargetIds).concat(targetIds).concat([document.resource.id]);
+            clone(processedSameRankTargetIds).concat([document.resource.id]);
 
         if (isEmpty(targetIds)) return [undefined, clone(updatedProcessedSameRankTargetIds)];
 

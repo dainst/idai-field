@@ -259,9 +259,47 @@ describe('DotBuilder', () => {
             '"feature2" -> "feature3" \\[dir="none", class="same-rank-f2 same-rank-f3".*\\] ' +
             '"feature2" -> "feature4" \\[dir="none", class="same-rank-f2 same-rank-f4".*\\] ' +
             '\{rank=same "feature2", "feature3", "feature4"\} ' +
+            '"feature3" -> "feature4" \\[dir="none", class="same-rank-f3 same-rank-f4".*\\] ' +
+            '\{rank=same "feature3", "feature4"\} ' +
             '\}'
         );
     });
+
+
+    it('handle multiple isContemporaryWith relation targets for one resource', () => {
+
+        const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = Static.iffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = Static.iffDoc('Feature 4', 'feature4', 'Feature', 'f4');
+
+        feature1.resource.relations['isContemporaryWith'] = ['f2'];
+        feature2.resource.relations['isContemporaryWith'] = ['f1', 'f4'];
+        feature3.resource.relations['isContemporaryWith'] = ['f4'];
+        feature4.resource.relations['isContemporaryWith'] = ['f2', 'f3'];
+
+        const documents = [feature1, feature2, feature3, feature4];
+
+        const graph: string = DotBuilder.build(
+            mockProjectConfiguration, { 'UNKNOWN': documents },
+            documents, defaultRelations
+        );
+
+        expect(graph).toMatch('digraph \{ newrank=true; ' +
+            'node \\[style=filled, fontname="Roboto"\\] ' +
+            '"feature1" \\[id="node-f1".*\\] ' +
+            '"feature2" \\[id="node-f2".*\\] ' +
+            '"feature3" \\[id="node-f3".*\\] ' +
+            '"feature4" \\[id="node-f4".*\\] ' +
+            '"feature1" -> "feature2" \\[dir="none", class="same-rank-f1 same-rank-f2".*\\] ' +
+            '\{rank=same "feature1", "feature2"\} ' +
+            '"feature2" -> "feature4" \\[dir="none", class="same-rank-f2 same-rank-f4".*\\] ' +
+            '\{rank=same "feature2", "feature4"\} ' +
+            '"feature3" -> "feature4" \\[dir="none", class="same-rank-f3 same-rank-f4".*\\] ' +
+            '\{rank=same "feature3", "feature4"\} ' +
+            '\}');
+    });
+
 
 
     it('build dot string for complicated graph', () => {

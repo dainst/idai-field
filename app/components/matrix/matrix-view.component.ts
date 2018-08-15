@@ -10,8 +10,9 @@ import {DoceditComponent} from '../docedit/docedit.component';
 import {MatrixClusterMode, MatrixRelationsMode, MatrixState} from './matrix-state';
 import {IdaiFieldFeatureDocumentReadDatastore} from '../../core/datastore/field/idai-field-feature-document-read-datastore';
 import {Loading} from '../../widgets/loading';
-import {DotBuilder, GraphRelationsConfiguration} from './dot-builder';
+import {DotBuilder} from './dot-builder';
 import {MatrixSelection, MatrixSelectionMode} from './matrix-selection';
+import {Edges, EdgesBuilder, GraphRelationsConfiguration} from './edges-builder';
 
 
 @Component({
@@ -120,12 +121,18 @@ export class MatrixViewComponent implements OnInit {
 
     public calculateGraph() {
 
+        const edges: { [resourceId: string]: Edges } = EdgesBuilder.build(
+            this.featureDocuments,
+            this.totalFeatureDocuments,
+            MatrixViewComponent.getRelationConfiguration(this.matrixState.getRelationsMode())
+        );
+
         const graph: string = DotBuilder.build(
             this.projectConfiguration,
             MatrixViewComponent.getPeriodMap(this.featureDocuments, this.matrixState.getClusterMode()),
-            this.totalFeatureDocuments,
-            MatrixViewComponent.getRelationConfiguration(this.matrixState.getRelationsMode()),
-            this.matrixState.getLineMode() === 'curved');
+            edges,
+            this.matrixState.getLineMode() === 'curved'
+        );
 
         this.graph = Viz(graph, { format: 'svg', engine: 'dot' }) as string;
     }

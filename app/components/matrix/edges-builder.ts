@@ -91,8 +91,7 @@ export module EdgesBuilder {
                 .map(targetIdResult => {
                     return getIncludedRelationTargetIds(targetIdResult.targetId, graphDocuments,
                         totalDocuments, relations, relationTypes.slice().concat(secondLevelRelationTypes),
-                        secondLevelRelationTypes, [document.resource.id],
-                        pathType);
+                        [document.resource.id], pathType);
                 })
         );
     }
@@ -119,7 +118,6 @@ export module EdgesBuilder {
     function getIncludedRelationTargetIds(targetId: string, graphDocuments: Array<Document>,
                                           totalDocuments: Array<Document>,
                                           relations: GraphRelationsConfiguration, relationTypes: string[],
-                                          secondLevelRelationTypes: string[],
                                           processedTargetIds: string[], pathType?: string)
                                         : Array<{ targetId: string, pathType?: string }> {
 
@@ -147,8 +145,8 @@ export module EdgesBuilder {
                         : pathType;
 
                     return getIncludedRelationTargetIds(targetIdResult.targetId,
-                        graphDocuments, totalDocuments, relations, relationTypes, secondLevelRelationTypes,
-                        processedTargetIds, nextPathType);
+                        graphDocuments, totalDocuments, relations, relationTypes, processedTargetIds,
+                        nextPathType);
                 })
         );
     }

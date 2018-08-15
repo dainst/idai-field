@@ -331,7 +331,6 @@ describe('EdgesBuilder', () => {
         feature4.resource.relations['isAfter'] = ['f5'];
         feature5.resource.relations['isBefore'] = ['f4'];
 
-
         const edges: { [resourceId: string]: Edges } = EdgesBuilder.build(
             [feature1, feature3, feature5],
             [feature1, feature2, feature3, feature4, feature5],
@@ -361,7 +360,6 @@ describe('EdgesBuilder', () => {
         feature1.resource.relations['isAfter'] = ['f3'];
         feature3.resource.relations['isBefore'] = ['f1'];
 
-
         const edges: { [resourceId: string]: Edges } = EdgesBuilder.build(
             [feature2, feature4],
             [feature1, feature2, feature3, feature4],
@@ -370,5 +368,31 @@ describe('EdgesBuilder', () => {
 
         expect(edges['f2']).toEqual({ aboveIds: ['f4'], belowIds: [], sameRankIds: [] });
         expect(edges['f4']).toEqual({ aboveIds: [], belowIds: ['f2'], sameRankIds: [] });
+    });
+
+
+    it('do not create duplicate edges', () => {
+
+        const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = Static.iffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+
+        feature1.resource.relations['isAfter'] = ['f2'];
+        feature2.resource.relations['isBefore'] = ['f1'];
+
+        feature1.resource.relations['isContemporaryWith'] = ['f3'];
+        feature3.resource.relations['isContemporaryWith'] = ['f1'];
+
+        feature3.resource.relations['isAfter'] = ['f2'];
+        feature2.resource.relations['isBefore'] = ['f3'];
+
+        const edges: { [resourceId: string]: Edges } = EdgesBuilder.build(
+            [feature1, feature2],
+            [feature1, feature2, feature3],
+            defaultRelations
+        );
+
+        expect(edges['f1']).toEqual({ aboveIds: ['f2'], belowIds: [], sameRankIds: [] });
+        expect(edges['f2']).toEqual({ aboveIds: [], belowIds: ['f1'], sameRankIds: [] });
     });
 });

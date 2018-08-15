@@ -1,4 +1,5 @@
 import {Document} from 'idai-components-2/core';
+import {unique} from 'tsfun';
 
 
 export type GraphRelationsConfiguration = {
@@ -62,12 +63,12 @@ export module EdgesBuilder {
                 .forEach(idResult => belowTargetIds.push(idResult));
 
             const edges = {
-                aboveIds: aboveTargetIds.map(idsResult => idsResult.targetId),
-                belowIds: belowTargetIds.map(idsResult => idsResult.targetId),
-                sameRankIds: sameRankTargetIds.filter(idsResult => {
+                aboveIds: unique(aboveTargetIds.map(idsResult => idsResult.targetId)),
+                belowIds: unique(belowTargetIds.map(idsResult => idsResult.targetId)),
+                sameRankIds: unique(sameRankTargetIds.filter(idsResult => {
                     return !idsResult.pathType
                         || idsResult.pathType === 'sameRank';
-                }).map(idsResult => idsResult.targetId)
+                }).map(idsResult => idsResult.targetId))
             };
 
             console.log(edges);

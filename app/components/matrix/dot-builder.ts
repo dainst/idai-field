@@ -118,9 +118,9 @@ export module DotBuilder {
         return merge(
             getRelationTargetIds(targetDocument, relationTypes)
                 .filter(isNot(includedIn(processedTargetIds)))
-                .map(targetId => {
-                    return getIncludedRelationTargetIds(targetId, documents, totalDocuments,
-                        relationTypes, processedTargetIds);
+                .map(id => {
+                    return getIncludedRelationTargetIds(id, documents, totalDocuments, relationTypes,
+                        processedTargetIds);
                 })
         );
     }

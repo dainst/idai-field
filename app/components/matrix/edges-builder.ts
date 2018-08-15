@@ -40,12 +40,14 @@ export module EdgesBuilder {
 
             const aboveTargetIds = getEdgeTargetIds(
                 document, graphDocuments, totalDocuments, relations, relations.above,
-                relations.sameRank ? [relations.sameRank] : []
+                relations.sameRank ? [relations.sameRank] : [],
+                'above'
             );
 
             const belowTargetIds = getEdgeTargetIds(
                 document, graphDocuments, totalDocuments, relations, relations.below,
-                relations.sameRank ? [relations.sameRank] : []
+                relations.sameRank ? [relations.sameRank] : [],
+                'below'
             );
 
             const sameRankTargetIds = relations.sameRank
@@ -53,20 +55,22 @@ export module EdgesBuilder {
                     [relations.sameRank], relations.above.concat(relations.below))
                 : [];
 
-            sameRankTargetIds.filter(idResult => idResult.secondLevelEdgeTypeUsed === 'above')
+            sameRankTargetIds.filter(idResult => idResult.pathType === 'above')
                 .forEach(idResult => aboveTargetIds.push(idResult));
 
-            sameRankTargetIds.filter(idResult => idResult.secondLevelEdgeTypeUsed === 'below')
+            sameRankTargetIds.filter(idResult => idResult.pathType === 'below')
                 .forEach(idResult => belowTargetIds.push(idResult));
 
             const edges = {
                 aboveIds: aboveTargetIds.map(idsResult => idsResult.targetId),
                 belowIds: belowTargetIds.map(idsResult => idsResult.targetId),
                 sameRankIds: sameRankTargetIds.filter(idsResult => {
-                    return !idsResult.secondLevelEdgeTypeUsed
-                        || idsResult.secondLevelEdgeTypeUsed === 'sameRank';
+                    return !idsResult.pathType
+                        || idsResult.pathType === 'sameRank';
                 }).map(idsResult => idsResult.targetId)
             };
+
+            console.log(edges);
 
             return {
                 resourceId: document.resource.id,
@@ -78,15 +82,16 @@ export module EdgesBuilder {
     function getEdgeTargetIds(document: Document, graphDocuments: Array<Document>,
                               totalDocuments: Array<Document>,
                               relations: GraphRelationsConfiguration, relationTypes: string[],
-                              secondLevelRelationTypes: string[])
-                            : Array<{ targetId: string, secondLevelEdgeTypeUsed?: string }> {
+                              secondLevelRelationTypes: string[], pathType?: string)
+                            : Array<{ targetId: string, pathType?: string }> {
 
         return mergeTargetIdResults(
             getRelationTargetIds(document, relationTypes)
                 .map(targetIdResult => {
                     return getIncludedRelationTargetIds(targetIdResult.targetId, graphDocuments,
-                        totalDocuments, relations, relationTypes.concat(secondLevelRelationTypes),
-                        secondLevelRelationTypes, [document.resource.id]);
+                        totalDocuments, relations, relationTypes.slice().concat(secondLevelRelationTypes),
+                        secondLevelRelationTypes, [document.resource.id],
+                        pathType);
                 })
         );
     }
@@ -114,14 +119,14 @@ export module EdgesBuilder {
                                           totalDocuments: Array<Document>,
                                           relations: GraphRelationsConfiguration, relationTypes: string[],
                                           secondLevelRelationTypes: string[],
-                                          processedTargetIds: string[], secondLevelEdgeTypeUsed?: string)
-                                        : Array<{ targetId: string, secondLevelEdgeTypeUsed?: string }> {
+                                          processedTargetIds: string[], pathType?: string)
+                                        : Array<{ targetId: string, pathType?: string }> {
 
         processedTargetIds.push(targetId);
 
         let targetDocument: Document | undefined
             = graphDocuments.find(document => document.resource.id === targetId);
-        if (targetDocument) return [{ targetId: targetId, secondLevelEdgeTypeUsed: secondLevelEdgeTypeUsed }];
+        if (targetDocument) return [{ targetId: targetId, pathType: pathType }];
 
         targetDocument = totalDocuments.find(document => document.resource.id === targetId);
         if (!targetDocument) return [];
@@ -130,13 +135,19 @@ export module EdgesBuilder {
             getRelationTargetIds(targetDocument, relationTypes)
                 .filter(targetIdResult => {
                     return !processedTargetIds.includes(targetIdResult.targetId)
-                        && (!secondLevelEdgeTypeUsed
-                        || getEdgeType(targetIdResult.relationType, relations) === secondLevelEdgeTypeUsed);
+                        && (!pathType
+                        || getEdgeType(targetIdResult.relationType, relations) === pathType
+                        || getEdgeType(targetIdResult.relationType, relations) === 'sameRank');
                 })
                 .map(targetIdResult => {
+                    const edgeType = getEdgeType(targetIdResult.relationType, relations);
+                    const nextPathType = !pathType && edgeType !== 'sameRank'
+                        ? edgeType
+                        : pathType;
+
                     return getIncludedRelationTargetIds(targetIdResult.targetId,
                         graphDocuments, totalDocuments, relations, relationTypes, secondLevelRelationTypes,
-                        processedTargetIds, getEdgeType(targetIdResult.relationType, relations));
+                        processedTargetIds, nextPathType);
                 })
         );
     }

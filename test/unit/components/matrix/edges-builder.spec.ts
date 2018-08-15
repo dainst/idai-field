@@ -342,4 +342,33 @@ describe('EdgesBuilder', () => {
         expect(edges['f3']).toEqual({ aboveIds: ['f5'], belowIds: [], sameRankIds: [] });
         expect(edges['f5']).toEqual({ aboveIds: [], belowIds: ['f3', 'f1'], sameRankIds: [] });
     });
+
+
+    it('create above edges between nodes connected via a combination of above and sameRank relations of '
+        + 'nodes not included in the graph (2)', () => {
+
+        const feature1 = Static.iffDoc('Feature 1', 'feature1', 'Feature', 'f1');
+        const feature2 = Static.iffDoc('Feature 2', 'feature2', 'Feature', 'f2');
+        const feature3 = Static.iffDoc('Feature 3', 'feature3', 'Feature', 'f3');
+        const feature4 = Static.iffDoc('Feature 4', 'feature4', 'Feature', 'f4');
+
+        feature1.resource.relations['isContemporaryWith'] = ['f2'];
+        feature2.resource.relations['isContemporaryWith'] = ['f1'];
+
+        feature3.resource.relations['isContemporaryWith'] = ['f4'];
+        feature4.resource.relations['isContemporaryWith'] = ['f3'];
+
+        feature1.resource.relations['isAfter'] = ['f3'];
+        feature3.resource.relations['isBefore'] = ['f1'];
+
+
+        const edges: { [resourceId: string]: Edges } = EdgesBuilder.build(
+            [feature2, feature4],
+            [feature1, feature2, feature3, feature4],
+            defaultRelations
+        );
+
+        expect(edges['f2']).toEqual({ aboveIds: ['f4'], belowIds: [], sameRankIds: [] });
+        expect(edges['f4']).toEqual({ aboveIds: [], belowIds: ['f2'], sameRankIds: [] });
+    });
 });

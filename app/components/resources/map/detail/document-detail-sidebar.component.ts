@@ -49,11 +49,13 @@ export class DocumentViewSidebarComponent {
         const relations: any = selectedDoc.resource.relations;
         if (isEmpty(relations)) return false;
 
-        return Object.keys(relations).filter(name => {
-            return this.projectConfiguration.isVisibleRelation(name, selectedDoc.resource.type)
-                && this.relationsToHide.indexOf(name) === -1
-                && relations[name].length > 0;
-        }).length > 0;
+        return Object.keys(relations)
+            .filter(name => {
+                return this.projectConfiguration.isVisibleRelation(name, selectedDoc.resource.type)
+                    && this.relationsToHide.indexOf(name) === -1
+                    && relations[name].length > 0;
+            })
+            .length > 0;
     }
 
 

@@ -23,7 +23,8 @@ export class RelationPickerGroupComponent implements OnChanges {
         
         if (this.document) this.relations = this.document.resource.relations;
     }
-    
+
+
     public createRelation() {
 
         if (!this.relations[this.relationDefinition.name])
@@ -40,6 +41,7 @@ export class RelationPickerGroupComponent implements OnChanges {
         return (this.relations[this.relationDefinition.name][index]
             && this.relations[this.relationDefinition.name][index].length > 0);
     }
+
 
     // Button not shown when waiting for input
     public showPlusButton(): boolean {

@@ -1,5 +1,4 @@
 import {Document} from 'idai-components-2/core';
-import {isNot, includedIn} from 'tsfun';
 
 
 export type GraphRelationsConfiguration = {
@@ -39,72 +38,128 @@ export module EdgesBuilder {
                                  totalDocuments: Array<Document>, relations: GraphRelationsConfiguration)
             : { resourceId: string, edges: Edges } {
 
-        const edges: Edges = {
-            aboveIds: getEdgeTargetIds(document, graphDocuments, totalDocuments, relations.above),
-            belowIds: getEdgeTargetIds(document, graphDocuments, totalDocuments, relations.below),
-            sameRankIds: relations.sameRank
-                ? getEdgeTargetIds(document, graphDocuments, totalDocuments, [relations.sameRank])
-                : []
-        };
+            const aboveTargetIds = getEdgeTargetIds(
+                document, graphDocuments, totalDocuments, relations, relations.above,
+                relations.sameRank ? [relations.sameRank] : []
+            );
 
-        return {
-            resourceId: document.resource.id,
-            edges: edges
-        };
+            const belowTargetIds = getEdgeTargetIds(
+                document, graphDocuments, totalDocuments, relations, relations.below,
+                relations.sameRank ? [relations.sameRank] : []
+            );
+
+            const sameRankTargetIds = relations.sameRank
+                ? getEdgeTargetIds(document, graphDocuments, totalDocuments, relations,
+                    [relations.sameRank], relations.above.concat(relations.below))
+                : [];
+
+            sameRankTargetIds.filter(idResult => idResult.secondLevelEdgeTypeUsed === 'above')
+                .forEach(idResult => aboveTargetIds.push(idResult));
+
+            sameRankTargetIds.filter(idResult => idResult.secondLevelEdgeTypeUsed === 'below')
+                .forEach(idResult => belowTargetIds.push(idResult));
+
+            const edges = {
+                aboveIds: aboveTargetIds.map(idsResult => idsResult.targetId),
+                belowIds: belowTargetIds.map(idsResult => idsResult.targetId),
+                sameRankIds: sameRankTargetIds.filter(idsResult => {
+                    return !idsResult.secondLevelEdgeTypeUsed
+                        || idsResult.secondLevelEdgeTypeUsed === 'sameRank';
+                }).map(idsResult => idsResult.targetId)
+            };
+
+            return {
+                resourceId: document.resource.id,
+                edges: edges
+            };
     }
 
 
     function getEdgeTargetIds(document: Document, graphDocuments: Array<Document>,
-                              totalDocuments: Array<Document>, relationTypes: string[]): string[] {
+                              totalDocuments: Array<Document>,
+                              relations: GraphRelationsConfiguration, relationTypes: string[],
+                              secondLevelRelationTypes: string[])
+                            : Array<{ targetId: string, secondLevelEdgeTypeUsed?: string }> {
 
-        return merge(
+        return mergeTargetIdResults(
             getRelationTargetIds(document, relationTypes)
-                .map(targetId => {
-                    return getIncludedRelationTargetIds(targetId, graphDocuments, totalDocuments,
-                        relationTypes, [document.resource.id]);
+                .map(targetIdResult => {
+                    return getIncludedRelationTargetIds(targetIdResult.targetId, graphDocuments,
+                        totalDocuments, relations, relationTypes.concat(secondLevelRelationTypes),
+                        secondLevelRelationTypes, [document.resource.id]);
                 })
         );
     }
 
 
-    function getRelationTargetIds(document: Document, relationTypes: string[]): string[] {
+    function getRelationTargetIds(document: Document, relationTypes: string[])
+            : Array<{ targetId: string, relationType: string }> {
 
-        return merge(
+        return mergeTargetIdResults(
             relationTypes.filter(relationType => document.resource.relations[relationType])
-                .map(relationType => document.resource.relations[relationType])
+                .map(relationType => {
+                    return document.resource.relations[relationType]
+                        .map(targetId => {
+                            return {
+                                targetId: targetId,
+                                relationType: relationType
+                            }
+                        });
+                })
         );
     }
 
 
     function getIncludedRelationTargetIds(targetId: string, graphDocuments: Array<Document>,
-                                          totalDocuments: Array<Document>, relationTypes: string[],
-                                          processedTargetIds: string[]): string[] {
+                                          totalDocuments: Array<Document>,
+                                          relations: GraphRelationsConfiguration, relationTypes: string[],
+                                          secondLevelRelationTypes: string[],
+                                          processedTargetIds: string[], secondLevelEdgeTypeUsed?: string)
+                                        : Array<{ targetId: string, secondLevelEdgeTypeUsed?: string }> {
 
         processedTargetIds.push(targetId);
 
         let targetDocument: Document | undefined
             = graphDocuments.find(document => document.resource.id === targetId);
-        if (targetDocument) return [targetId];
+        if (targetDocument) return [{ targetId: targetId, secondLevelEdgeTypeUsed: secondLevelEdgeTypeUsed }];
 
         targetDocument = totalDocuments.find(document => document.resource.id === targetId);
         if (!targetDocument) return [];
 
-        return merge(
+        return mergeTargetIdResults(
             getRelationTargetIds(targetDocument, relationTypes)
-                .filter(isNot(includedIn(processedTargetIds)))
-                .map(id => {
-                    return getIncludedRelationTargetIds(id, graphDocuments, totalDocuments, relationTypes,
-                        processedTargetIds);
+                .filter(targetIdResult => {
+                    return !processedTargetIds.includes(targetIdResult.targetId)
+                        && (!secondLevelEdgeTypeUsed
+                        || getEdgeType(targetIdResult.relationType, relations) === secondLevelEdgeTypeUsed);
+                })
+                .map(targetIdResult => {
+                    return getIncludedRelationTargetIds(targetIdResult.targetId,
+                        graphDocuments, totalDocuments, relations, relationTypes, secondLevelRelationTypes,
+                        processedTargetIds, getEdgeType(targetIdResult.relationType, relations));
                 })
         );
     }
 
 
-    function merge(targetIdSets: string[][]): string[] {
+    function getEdgeType(relationType: string,
+                         relations: GraphRelationsConfiguration): 'above'|'below'|'sameRank' {
 
-        return targetIdSets.reduce((result: any, targetIds) => {
-            targetIds.filter(targetId => !result.includes(targetId))
-                .forEach(targetId => result.push(targetId));
+        if (relations.above.includes(relationType)) {
+            return 'above';
+        } else if (relations.below.includes(relationType)) {
+            return 'below';
+        } else {
+            return 'sameRank';
+        }
+    }
+
+
+    function mergeTargetIdResults(targetIdSets: Array<Array<any>>): Array<any> {
+
+        return targetIdSets.reduce((result: any, sets) => {
+            sets.filter(set => !result.find((resultSet: any) => set.targetId === resultSet.targetId))
+                .forEach(set => result.push(set));
             return result;
         }, []);
     }

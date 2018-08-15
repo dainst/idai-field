@@ -1741,7 +1741,7 @@
   },
   "relations": {
     "isRecordedIn": {
-      "label": "Gehört zu"
+      "label": "Aufgenommen in Maßnahme"
     },
     "liesWithin": {
       "label": "Liegt in"

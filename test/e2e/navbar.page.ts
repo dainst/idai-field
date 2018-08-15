@@ -28,13 +28,13 @@ export class NavbarPage {
 
     public static clickNavigateToImages() {
 
-        return common.click(element.all(by.css('.nav-link')).get(6));
+        return common.click(element.all(by.css('.nav-link')).get(8));
     };
 
 
     public static clickNavigateToMatrix() {
 
-        return common.click(element.all(by.css('.nav-link')).get(8));
+        return common.click(element.all(by.css('.nav-link')).get(6));
     };
 
 

@@ -39,11 +39,9 @@ export class ResultSets {
         indexItems: Array<SimpleIndexItem>,
         mode: string = 'add'): ResultSets {
 
+        const indexItemsMap = ResultSets.intoObject(indexItems);
+
         const copy = this.copy();
-
-        const indexItemsMap = indexItems
-            .reduce((acc: IndexItemMap, item) => (acc[item.id] = item, acc), {});
-
         copy.map = uniteObject(indexItemsMap)(copy.map);
 
         if (mode !== 'subtract') copy.addSets.push(Object.keys(indexItemsMap));
@@ -66,7 +64,6 @@ export class ResultSets {
         return this.pickFromMap(
                 union(this.addSets)
                 );
-
     }
 
 
@@ -83,5 +80,12 @@ export class ResultSets {
             clone(this.subtractSets),
             clone(this.map)
         );
+    }
+
+
+    private static intoObject(indexItems: Array<SimpleIndexItem>) {
+
+        return indexItems
+            .reduce((acc: IndexItemMap, item) => (acc[item.id] = item, acc), {});
     }
 }

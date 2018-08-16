@@ -1,5 +1,5 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
-import {isNot, includedIn, isDefined, isEmpty} from 'tsfun';
+import {isNot, includedIn, isDefined, isEmpty, flatMap} from 'tsfun';
 import {clone} from '../../util/object-util';
 import {Edges} from './edges-builder';
 
@@ -28,12 +28,7 @@ export module DotBuilder {
 
     function getDocuments(groups: { [group: string]: Array<Document> }): Array<Document> {
 
-        return Object
-            .keys(groups)
-            .reduce(
-                (acc: Document[], group: string) => acc.concat(groups[group]),
-                []
-            );
+        return flatMap((group: any) => groups[group])(Object.keys(groups))
     }
 
 

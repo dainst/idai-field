@@ -47,7 +47,7 @@ export module DotBuilder {
                 .filter(isDefined)
                 .join(' ');
 
-        return (result.length > 0) ? result + ' ' : result;
+        return result.length > 0 ? result + ' ' : result;
     }
 
 

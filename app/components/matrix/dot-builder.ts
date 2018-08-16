@@ -70,7 +70,9 @@ export module DotBuilder {
 
         return rootDocuments.length === 0 ? '' :
             '{rank=min "'
-            + rootDocuments.map(to('resource.identifier')).join('", "')
+            + rootDocuments
+                .map(to('resource.identifier'))
+                .join('", "')
             + '"} ';
     }
 
@@ -110,28 +112,31 @@ export module DotBuilder {
     function getRelationTargetIdentifiers(documents: Array<Document>, targetIds: string[]): string[] {
 
         return targetIds
-            .map(targetId => getIdentifier(documents, targetId))
-            .filter(targetIdentifier => targetIdentifier !== '')
+            .map(findIdentifierIn(documents))
+            .filter(isNot(empty))
     }
 
 
     function getRootDocuments(documents: Array<Document>,
                               edges: { [id: string]: Edges }): Array<Document> {
 
-        return documents.filter(document => isRootDocument(documents, document, edges));
+        return documents.filter(isRootDocument(documents, edges));
     }
 
 
-    function isRootDocument(documents: Array<Document>, document: Document, edges: { [id: string]: Edges },
-                            processedDocuments: string[] = []): boolean {
+    function isRootDocument(documents: Array<Document>, edges: { [id: string]: Edges },
+                            processedDocuments: string[] = []) {
 
-        const documentEdges: Edges = edges[document.resource.id];
+        return (document: Document): boolean => {
 
-        if (documentEdges.aboveIds.length === 0 || documentEdges.belowIds.length > 0) return false;
+            const documentEdges: Edges = edges[document.resource.id];
 
-        processedDocuments.push(document.resource.id);
+            if (documentEdges.aboveIds.length === 0 || documentEdges.belowIds.length > 0) return false;
 
-        return !isSameRankNonRootDocument(documents, documentEdges.sameRankIds, processedDocuments, edges);
+            processedDocuments.push(document.resource.id);
+
+            return !isSameRankNonRootDocument(documents, documentEdges.sameRankIds, processedDocuments, edges);
+        }
     }
 
 
@@ -150,10 +155,9 @@ export module DotBuilder {
 
         return (targetId: string) => {
 
-            const targetDocument: Document | undefined = getDocument(documents, targetId);
-            return (targetDocument && !isRootDocument(
-                    documents, targetDocument, edges, processedDocuments)
-            ) === true;
+            const targetDocument = documents.find(on('resource.id:')(targetId));
+            return (targetDocument
+                && !isRootDocument(documents, edges, processedDocuments)(targetDocument)) === true;
         }
     }
 
@@ -165,7 +169,7 @@ export module DotBuilder {
             .filter(isNot(includedIn(processedSameRankTargetIds)));
 
         const updatedProcessedSameRankTargetIds: string[] =
-            copy(processedSameRankTargetIds).concat([document.resource.id]);
+            copy(processedSameRankTargetIds).concat(document.resource.id);
 
         if (isEmpty(targetIds)) return [undefined, copy(updatedProcessedSameRankTargetIds)];
 
@@ -197,16 +201,13 @@ export module DotBuilder {
     }
 
 
-    function getIdentifier(documents: Array<Document>, id: string): string {
+    function findIdentifierIn(documents: Array<Document>) {
 
-        const document: Document|undefined = getDocument(documents, id);
-        return document ? document.resource.identifier : '';
-    }
+        return (id: string): string => {
 
-
-    function getDocument(documents: Array<Document>, id: string): Document|undefined {
-
-        return documents.find(document => document.resource.id === id);
+            const document: Document|undefined = documents.find(on('resource.id:')(id));
+            return document ? document.resource.identifier : '';
+        }
     }
 
 
@@ -229,7 +230,7 @@ export module DotBuilder {
 
         return (targetId: string): string => {
 
-            return '"' + resourceIdentifier + '" -> "' + getIdentifier(documents, targetId) + '"'
+            return '"' + resourceIdentifier + '" -> "' + findIdentifierIn(documents)(targetId) + '"'
                 + ' [class="above-' + resourceId + ' below-' + targetId + '"'
                 + '  arrowsize="0.37" arrowhead="normal"]';
         }

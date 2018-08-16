@@ -80,10 +80,12 @@ export module DotBuilder {
                                    groups: { [group: string]: Array<Document> }): string {
 
         return 'node [style=filled, fontname="Roboto"] '
-            + Object.keys(groups)
+            + Object
+                .keys(groups)
                 .map(group => createNodeDefinitionsForGroup(
                     projectConfiguration, group, groups[group])
-                ).join('');
+                )
+                .join('');
     }
 
 
@@ -178,7 +180,8 @@ export module DotBuilder {
                     createEdgesDefinition(document.resource.identifier, targetIdentifiers)
                     + ' [dir="none", class="same-rank-' + document.resource.id
                     + ' same-rank-' + targetId + '"]';
-            }).join(' ');
+            })
+            .join(' ');
     }
 
 

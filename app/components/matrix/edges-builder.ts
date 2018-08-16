@@ -145,15 +145,23 @@ export module EdgesBuilder {
 
         return mergeTargetIdResults(
             getRelationTargetIds(targetDocument, getAllRelationTypes(relations))
-                .filter(targetIdResult => {
-                    return !processedTargetIds.includes(targetIdResult.targetId)
-                        && (!pathType
-                        || getEdgeType(targetIdResult.relationType, relations) === pathType
-                        || getEdgeType(targetIdResult.relationType, relations) === 'sameRank');
-                })
+                .filter(isProcessableEdgeType(relations, processedTargetIds, pathType))
                 .map(convertToTargetsAndPathTypes(graphDocuments, totalDocuments, relations,
                                                 processedTargetIds, pathType))
         );
+    }
+
+
+    function isProcessableEdgeType(relations: GraphRelationsConfiguration,
+                                   processedTargetIds: string[],
+                                   pathType?: string) {
+
+        return (targetIdResult: TargetAndRelationType) => {
+            return !processedTargetIds.includes(targetIdResult.targetId)
+                && (!pathType
+                    || getEdgeType(targetIdResult.relationType, relations) === pathType
+                    || getEdgeType(targetIdResult.relationType, relations) === 'sameRank');
+        }
     }
 
 

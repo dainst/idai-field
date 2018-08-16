@@ -74,7 +74,8 @@ export module EdgesBuilder {
                     unique(
                         sameRankTargetIds
                             .filter(idsResult => !idsResult.pathType || idsResult.pathType === 'sameRank')
-                            .map(to('targetId')))
+                            .map(to('targetId'))
+                    )
             };
 
             return {

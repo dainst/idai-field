@@ -66,7 +66,7 @@ export module DotBuilder {
     function createRootDocumentMinRankDefinition(documents: Array<Document>,
                                                  edges: { [id: string]: Edges }): string {
 
-        const rootDocuments: Array<Document> = getRootDocuments(documents, edges);
+        const rootDocuments = documents.filter(isRootDocument(documents, edges));
 
         return rootDocuments.length === 0 ? '' :
             '{rank=min "'
@@ -93,9 +93,10 @@ export module DotBuilder {
     function createNodeDefinitionsForGroup(projectConfiguration: ProjectConfiguration,
                                            group: string, documents: Array<Document>): string {
 
-        const nodeDefinitions: string = documents
-            .map(document => createNodeDefinition(projectConfiguration, document))
-            .join('');
+        const nodeDefinitions: string =
+            documents
+                .map(createNodeDefinition(projectConfiguration))
+                .join('');
 
         return group === 'UNKNOWN'
             ? nodeDefinitions
@@ -114,13 +115,6 @@ export module DotBuilder {
         return targetIds
             .map(findIdentifierIn(documents))
             .filter(isNot(empty))
-    }
-
-
-    function getRootDocuments(documents: Array<Document>,
-                              edges: { [id: string]: Edges }): Array<Document> {
-
-        return documents.filter(isRootDocument(documents, edges));
     }
 
 
@@ -245,16 +239,19 @@ export module DotBuilder {
     }
 
 
-    function createNodeDefinition(projectConfiguration: ProjectConfiguration, document: Document) {
+    function createNodeDefinition(projectConfiguration: ProjectConfiguration) {
 
-        return '"' + document.resource.identifier + '"' // <- important to enclose the identifier in "", otherwise -.*# etc. cause errors or unexpected behaviour
-            + ' [id="node-' + document.resource.id + '" fillcolor="'
-            + projectConfiguration.getColorForType(document.resource.type)
-            + '" color="'
-            + projectConfiguration.getColorForType(document.resource.type)
-            + '" fontcolor="'
-            + projectConfiguration.getTextColorForType(document.resource.type)
-            + '"] ';
+        return (document: Document) => {
+
+            return '"' + document.resource.identifier + '"' // <- important to enclose the identifier in "", otherwise -.*# etc. cause errors or unexpected behaviour
+                + ' [id="node-' + document.resource.id + '" fillcolor="'
+                + projectConfiguration.getColorForType(document.resource.type)
+                + '" color="'
+                + projectConfiguration.getColorForType(document.resource.type)
+                + '" fontcolor="'
+                + projectConfiguration.getTextColorForType(document.resource.type)
+                + '"] ';
+        }
     }
 
 

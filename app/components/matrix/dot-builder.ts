@@ -138,16 +138,23 @@ export module DotBuilder {
     function isSameRankNonRootDocument(documents: Array<Document>, sameRankRelationTargets: string[],
                                        processedDocuments: string[], edges: { [id: string]: Edges }) {
 
-        return (
-            undefined !=
+        return (undefined !==
             sameRankRelationTargets
                 .filter(isNot(includedIn(processedDocuments)))
-                .find(targetId => {
-                    const targetDocument: Document | undefined = getDocument(documents, targetId);
-                    return (targetDocument && !isRootDocument(
-                        documents, targetDocument, edges, processedDocuments)
-                    ) === true;
-                }));
+                .find(isNonRootDocument(documents, processedDocuments, edges)));
+    }
+
+
+    function isNonRootDocument(documents: Array<Document>,
+                               processedDocuments: string[], edges: { [id: string]: Edges }) {
+
+        return (targetId: string) => {
+
+            const targetDocument: Document | undefined = getDocument(documents, targetId);
+            return (targetDocument && !isRootDocument(
+                    documents, targetDocument, edges, processedDocuments)
+            ) === true;
+        }
     }
 
 

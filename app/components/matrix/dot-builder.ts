@@ -1,5 +1,5 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
-import {isNot, includedIn, isDefined, isEmpty, flatMap} from 'tsfun';
+import {isNot, includedIn, isDefined, isEmpty, flatMap, to} from 'tsfun';
 import {clone} from '../../util/object-util';
 import {Edges} from './edges-builder';
 
@@ -71,7 +71,7 @@ export module DotBuilder {
 
         return rootDocuments.length === 0 ? '' :
             '{rank=min "'
-            + rootDocuments.map(document => document.resource.identifier).join('", "')
+            + rootDocuments.map(to('resource.identifier')).join('", "')
             + '"} ';
     }
 
@@ -209,17 +209,21 @@ export module DotBuilder {
             const targetIds = edges[document.resource.id].aboveIds;
             if (targetIds.length === 0) return;
 
-            return targetIds.map(targetId => createEdgeDefinition(documents, document, targetId))
+            return targetIds
+                .map(createEdgeDefinition(documents, document))
                 .join(' ');
         }
     }
 
 
-    function createEdgeDefinition(documents: Array<Document>, document: Document, targetId: string): string {
+    function createEdgeDefinition(documents: Array<Document>, document: Document) {
 
-        return '"' + document.resource.identifier + '" -> "' + getIdentifier(documents, targetId) + '"'
-            + ' [class="above-' + document.resource.id + ' below-' + targetId + '"'
-            + '  arrowsize="0.37" arrowhead="normal"]';
+        return (targetId: string): string => {
+
+            return '"' + document.resource.identifier + '" -> "' + getIdentifier(documents, targetId) + '"'
+                + ' [class="above-' + document.resource.id + ' below-' + targetId + '"'
+                + '  arrowsize="0.37" arrowhead="normal"]';
+        }
     }
 
 

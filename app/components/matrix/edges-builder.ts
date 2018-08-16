@@ -136,10 +136,8 @@ export module EdgesBuilder {
 
         processedTargetIds.push(targetId);
 
-        let targetDocument: Document | undefined
-            = graphDocuments.find(on('resource.id:')(targetId));
+        let targetDocument: Document | undefined = graphDocuments.find(on('resource.id:')(targetId));
         if (targetDocument) return [{ targetId: targetId, pathType: pathType }];
-
         targetDocument = totalDocuments.find(on('resource.id:')(targetId));
         if (!targetDocument) return [];
 

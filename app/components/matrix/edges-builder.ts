@@ -1,11 +1,12 @@
 import {Document, Relations} from 'idai-components-2/core';
-import {unique, to, on} from 'tsfun';
+import {unique, to, on, unionBy} from 'tsfun';
 
 
 export type TargetAndRelationType = { targetId: string, relationType: string };
 
-
 export type TargetAndPathType = { targetId: string, pathType?: string };
+
+export type TargetsAndPathTypes = Array<TargetAndPathType>;
 
 
 export type GraphRelationsConfiguration = {
@@ -147,19 +148,19 @@ export module EdgesBuilder {
                         || getEdgeType(targetIdResult.relationType, relations) === pathType
                         || getEdgeType(targetIdResult.relationType, relations) === 'sameRank');
                 })
-                .map(convertToTargetAndPathType(graphDocuments, totalDocuments, relations,
+                .map(convertToTargetsAndPathTypes(graphDocuments, totalDocuments, relations,
                                                 processedTargetIds, pathType))
         );
     }
 
 
-    function convertToTargetAndPathType(graphDocuments: Array<Document>,
-                                        totalDocuments: Array<Document>,
-                                        relations: GraphRelationsConfiguration,
-                                        processedTargetIds: string[],
-                                        pathType?: string) {
+    function convertToTargetsAndPathTypes(graphDocuments: Array<Document>,
+                                          totalDocuments: Array<Document>,
+                                          relations: GraphRelationsConfiguration,
+                                          processedTargetIds: string[],
+                                          pathType?: string) {
 
-        return (targetIdResult: TargetAndRelationType) => {
+        return (targetIdResult: TargetAndRelationType): TargetsAndPathTypes => {
 
             const edgeType = getEdgeType(targetIdResult.relationType, relations);
             const nextPathType = !pathType && edgeType !== 'sameRank'
@@ -185,13 +186,9 @@ export module EdgesBuilder {
     }
 
 
-    function mergeTargetIdResults(targetIdSets: Array<Array<any>>): Array<any> {
+    function mergeTargetIdResults(targetIdSets: Array<TargetsAndPathTypes>): Array<any> {
 
-        return targetIdSets.reduce((result: any, sets) => {
-            sets.filter(set => !result.find(on('targetId')(set)))
-                .forEach(set => result.push(set));
-            return result;
-        }, []);
+        return unionBy(on('targetId'))(targetIdSets);
     }
 
 

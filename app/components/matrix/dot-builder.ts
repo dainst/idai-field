@@ -27,7 +27,7 @@ export module DotBuilder {
 
     function getDocuments(groups: { [group: string]: Array<Document> }): Array<Document> {
 
-        return flatMap((group: any) => groups[group])(Object.keys(groups))
+        return flatMap<any>(group => groups[group])(Object.keys(groups))
     }
 
 

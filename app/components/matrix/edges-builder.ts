@@ -198,9 +198,9 @@ export module EdgesBuilder {
     function getAllRelationTypes(relations: GraphRelationsConfiguration): string[] {
 
         const relationTypes: string[] = relations.above.concat(relations.below);
-        if (relations.sameRank) relationTypes.push(relations.sameRank);
-
-        return relationTypes;
+        return relations.sameRank
+            ? relationTypes.concat(relations.sameRank)
+            : relationTypes;
     }
 
 

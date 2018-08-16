@@ -141,7 +141,7 @@ export module DotBuilder {
         return (
             undefined !=
             sameRankRelationTargets
-                .filter(targetId => !processedDocuments.includes(targetId))
+                .filter(isNot(includedIn(processedDocuments)))
                 .find(targetId => {
                     const targetDocument: Document | undefined = getDocument(documents, targetId);
                     return (targetDocument && !isRootDocument(

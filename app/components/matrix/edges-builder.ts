@@ -1,5 +1,5 @@
 import {Document, Relations} from 'idai-components-2/core';
-import {unique, to, on, unionBy, addTo} from 'tsfun';
+import {unique, to, on, unionBy, addTo, intoObject} from 'tsfun';
 
 
 export type TargetAndRelationType = { targetId: string, relationType: string };
@@ -222,12 +222,4 @@ export module EdgesBuilder {
             return relations.sameRank ? [relations.sameRank] : [];
         }
     }
-
-
-    // TODO move to tsfun
-    const intoObject = (result: any, [key, value]: [string, any]) => {
-
-        result[key] = value;
-        return result;
-    };
 }

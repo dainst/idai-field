@@ -125,7 +125,7 @@ export module DotBuilder {
 
             const documentEdges: Edges = edges[document.resource.id];
 
-            if (documentEdges.aboveIds.length === 0 || documentEdges.belowIds.length > 0) return false;
+            if (isEmpty(documentEdges.aboveIds) || isNot(empty)(documentEdges.belowIds)) return false;
 
             processedDocuments.push(document.resource.id);
 

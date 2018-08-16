@@ -1,5 +1,5 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
-import {isNot, includedIn, isDefined, isEmpty, flatMap, to} from 'tsfun';
+import {isNot, includedIn, isDefined, isEmpty, flatMap, to, on, empty} from 'tsfun';
 import {clone} from '../../util/object-util';
 import {Edges} from './edges-builder';
 
@@ -250,6 +250,10 @@ export module DotBuilder {
 
     function hasSameRankEdges(edges: { [id: string]: Edges }): boolean {
 
-        return Object.values(edges).find(edges => edges.sameRankIds.length > 0) !== undefined;
+        return isDefined(
+                Object
+                    .values(edges)
+                    .find(isNot(on('sameRankIds', empty)))
+            );
     }
 }

@@ -61,7 +61,7 @@ export module DotBuilder {
                                          edges: { [id: string]: Edges }): string {
 
         const result: string = documents
-            .map(document => createAboveEdgesDefinition(documents, document, edges))
+            .map(createAboveEdgesDefinition(documents, edges))
             .filter(isDefined)
             .join(' ');
 
@@ -206,14 +206,17 @@ export module DotBuilder {
     }
 
 
-    function createAboveEdgesDefinition(documents: Array<Document>, document: Document,
-                                        edges: { [id: string]: Edges }): string|undefined {
+    function createAboveEdgesDefinition(documents: Array<Document>,
+                                        edges: { [id: string]: Edges }) {
 
-        const targetIds = edges[document.resource.id].aboveIds;
-        if (targetIds.length === 0) return;
+        return (document: Document): string|undefined => {
 
-        return targetIds.map(targetId => createEdgeDefinition(documents, document, targetId))
-            .join(' ');
+            const targetIds = edges[document.resource.id].aboveIds;
+            if (targetIds.length === 0) return;
+
+            return targetIds.map(targetId => createEdgeDefinition(documents, document, targetId))
+                .join(' ');
+        }
     }
 
 

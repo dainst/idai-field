@@ -134,10 +134,10 @@ export module EdgesBuilder {
         processedTargetIds.push(targetId);
 
         let targetDocument: Document | undefined
-            = graphDocuments.find(document => document.resource.id === targetId);
+            = graphDocuments.find(on('resource.id:')(targetId));
         if (targetDocument) return [{ targetId: targetId, pathType: pathType }];
 
-        targetDocument = totalDocuments.find(document => document.resource.id === targetId);
+        targetDocument = totalDocuments.find(on('resource.id:')(targetId));
         if (!targetDocument) return [];
 
         return mergeTargetIdResults(

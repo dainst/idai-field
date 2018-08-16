@@ -1,6 +1,5 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
-import {isNot, includedIn, isDefined, isEmpty, flatMap, to, on, empty} from 'tsfun';
-import {clone} from '../../util/object-util';
+import {isNot, includedIn, isDefined, isEmpty, flatMap, to, on, empty, copy} from 'tsfun';
 import {Edges} from './edges-builder';
 
 
@@ -159,9 +158,9 @@ export module DotBuilder {
             .filter(isNot(includedIn(processedSameRankTargetIds)));
 
         const updatedProcessedSameRankTargetIds: string[] =
-            clone(processedSameRankTargetIds).concat([document.resource.id]);
+            copy(processedSameRankTargetIds).concat([document.resource.id]);
 
-        if (isEmpty(targetIds)) return [undefined, clone(updatedProcessedSameRankTargetIds)];
+        if (isEmpty(targetIds)) return [undefined, copy(updatedProcessedSameRankTargetIds)];
 
         return [createEdgesDefinitions(targetIds, documents, document)
             + ' '

@@ -28,7 +28,12 @@ export module DotBuilder {
 
     function getDocuments(groups: { [group: string]: Array<Document> }): Array<Document> {
 
-        return Object.keys(groups).reduce((acc: Document[], group: string) => acc.concat(groups[group]), []);
+        return Object
+            .keys(groups)
+            .reduce(
+                (acc: Document[], group: string) => acc.concat(groups[group]),
+                []
+            );
     }
 
 
@@ -38,14 +43,15 @@ export module DotBuilder {
         if (!hasSameRankEdges(edges)) return '';
 
         const result: string =
-            documents.reduce(([defs, processedSameRankTargetIds]: [Array<string|undefined>, string[]], document) => {
-                const [def, updatedProcessedSameRankTargetIds] = createSameRankEdgesDefinition(
-                    documents, document, edges[document.resource.id], processedSameRankTargetIds
-                );
-                return [defs.concat([def] as any), updatedProcessedSameRankTargetIds];
-            }, [[], []])[0]
-            .filter(isDefined)
-            .join(' ');
+            documents
+                .reduce(([defs, processedSameRankTargetIds]: [Array<string|undefined>, string[]], document) => {
+                    const [def, updatedProcessedSameRankTargetIds] = createSameRankEdgesDefinition(
+                        documents, document, edges[document.resource.id], processedSameRankTargetIds
+                    );
+                    return [defs.concat(def), updatedProcessedSameRankTargetIds];
+                }, [[], []])[0]
+                .filter(isDefined)
+                .join(' ');
 
         return (result.length > 0) ? result + ' ' : result;
     }
@@ -56,7 +62,7 @@ export module DotBuilder {
 
         const result: string = documents
             .map(document => createAboveEdgesDefinition(documents, document, edges))
-            .filter(graphString => graphString != undefined)
+            .filter(isDefined)
             .join(' ');
 
         return (result.length > 0) ? result + ' ' : result;

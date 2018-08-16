@@ -34,7 +34,7 @@ export module EdgesBuilder {
                           relations: GraphRelationsConfiguration): { [id: string]: Edges } {
 
         return graphDocuments
-            .map(document => getEdgesForDocument(document, graphDocuments, totalDocuments, relations))
+            .map(getEdgesForDocument(graphDocuments, totalDocuments, relations))
             .reduce((result: any, edgesResult: any) => {
                 result[edgesResult.resourceId] = edgesResult.edges;
                 return result;
@@ -42,9 +42,10 @@ export module EdgesBuilder {
     }
 
 
-    function getEdgesForDocument(document: Document, graphDocuments: Array<Document>,
-                                 totalDocuments: Array<Document>, relations: GraphRelationsConfiguration)
-            : { resourceId: string, edges: Edges } {
+    function getEdgesForDocument(graphDocuments: Array<Document>,
+                                 totalDocuments: Array<Document>, relations: GraphRelationsConfiguration) {
+
+        return (document: Document): { resourceId: string, edges: Edges } => {
 
             const aboveTargetIds = getEdgeTargetIds(
                 document, graphDocuments, totalDocuments, relations, 'above'
@@ -82,6 +83,7 @@ export module EdgesBuilder {
                 resourceId: document.resource.id,
                 edges: edges
             };
+        }
     }
 
 

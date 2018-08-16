@@ -175,7 +175,7 @@ export module DotBuilder {
             .map(targetId => {
                 const targetIdentifiers = getRelationTargetIdentifiers(documents, [targetId]);
                 return targetIdentifiers.length === 0 ? '' :
-                    createEdgesDefinition(document, targetIdentifiers)
+                    createEdgesDefinition(document.resource.identifier, targetIdentifiers)
                     + ' [dir="none", class="same-rank-' + document.resource.id
                     + ' same-rank-' + targetId + '"]';
             }).join(' ');
@@ -210,28 +210,28 @@ export module DotBuilder {
             if (targetIds.length === 0) return;
 
             return targetIds
-                .map(createEdgeDefinition(documents, document))
+                .map(createEdgeDefinition(documents, document.resource.id, document.resource.identifier))
                 .join(' ');
         }
     }
 
 
-    function createEdgeDefinition(documents: Array<Document>, document: Document) {
+    function createEdgeDefinition(documents: Array<Document>, resourceId: string, resourceIdentifier: string) {
 
         return (targetId: string): string => {
 
-            return '"' + document.resource.identifier + '" -> "' + getIdentifier(documents, targetId) + '"'
-                + ' [class="above-' + document.resource.id + ' below-' + targetId + '"'
+            return '"' + resourceIdentifier + '" -> "' + getIdentifier(documents, targetId) + '"'
+                + ' [class="above-' + resourceId + ' below-' + targetId + '"'
                 + '  arrowsize="0.37" arrowhead="normal"]';
         }
     }
 
 
-    function createEdgesDefinition(document: Document, targetIdentifiers: string[]): string {
+    function createEdgesDefinition(resourceIdentifier: string, targetIdentifiers: string[]): string {
 
         return targetIdentifiers.length == 1
-            ? '"' + document.resource.identifier + '" -> "' + targetIdentifiers[0] + '"'
-            : '"' + document.resource.identifier + '" -> {"' + targetIdentifiers.join('", "') + '"}';
+            ? '"' + resourceIdentifier + '" -> "' + targetIdentifiers[0] + '"'
+            : '"' + resourceIdentifier + '" -> {"' + targetIdentifiers.join('", "') + '"}';
     }
 
 

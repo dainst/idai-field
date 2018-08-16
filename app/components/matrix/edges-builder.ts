@@ -90,8 +90,9 @@ export module EdgesBuilder {
 
         return mergeTargetIdResults(
             getRelationTargetIds(document, getRelationTypesForPathType(pathType, relations))
-                .map(targetAndType => {
-                    return getIncludedRelationTargetIds(targetAndType.targetId, graphDocuments,
+                .map(to('targetId'))
+                .map(targetId => {
+                    return getIncludedRelationTargetIds(targetId, graphDocuments,
                         totalDocuments, relations, [document.resource.id], pathType);
                 })
         );

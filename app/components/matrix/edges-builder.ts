@@ -35,10 +35,8 @@ export module EdgesBuilder {
 
         return graphDocuments
             .map(getEdgesForDocument(graphDocuments, totalDocuments, relations))
-            .reduce((result: any, edgesResult: any) => {
-                result[edgesResult.resourceId] = edgesResult.edges;
-                return result;
-            }, {});
+            .map(result => [result.resourceId, result.edges])
+            .reduce(intoObject, {});
     }
 
 
@@ -223,4 +221,12 @@ export module EdgesBuilder {
             return relations.sameRank ? [relations.sameRank] : [];
         }
     }
+
+
+    // TODO move to tsfun
+    const intoObject = (result: any, [key, value]: [string, any]) => {
+
+        result[key] = value;
+        return result;
+    };
 }

@@ -199,6 +199,7 @@ export class GraphComponent implements OnChanges, OnDestroy {
 
         switch(this.selection.getMode()) {
             case 'none':
+                this.abortHovering();
                 this.onSelectForEdit.emit(resourceId);
                 break;
             case 'single':
@@ -234,10 +235,18 @@ export class GraphComponent implements OnChanges, OnDestroy {
         if (GraphManipulation.getElementType(gElement)) {
             this.hoverElement
                 = GraphManipulation.setHoverElement(this.graphContainer, gElement, this.hoverElement);
-        } else if (this.hoverElement) {
-            GraphManipulation.setHighlighting(this.graphContainer, this.hoverElement, false);
-            this.hoverElement = undefined;
+        } else {
+            this.abortHovering();
         }
+    }
+
+
+    private abortHovering() {
+
+        if (!this.hoverElement) return;
+
+        GraphManipulation.setHighlighting(this.graphContainer, this.hoverElement, false);
+        this.hoverElement = undefined;
     }
 
 

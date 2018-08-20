@@ -46,6 +46,7 @@ export function main() {
 
         let viewFacade: ViewFacade;
         let resourcesState: ResourcesStateManager;
+        let projectConfiguration: ProjectConfiguration;
         let stateSerializer;
         let changesStream;
         let settingsService;
@@ -76,7 +77,7 @@ export function main() {
 
             spyOn(console, 'debug'); // suppress console.debug
 
-            const projectConfiguration: ProjectConfiguration = new ProjectConfiguration(pc);
+            projectConfiguration = new ProjectConfiguration(pc);
             const daosSpecHelper = new DAOsSpecHelper(projectConfiguration);
 
             const {datastore, documentCache, indexFacade}
@@ -144,6 +145,7 @@ export function main() {
             loading = jasmine.createSpyObj('loading', ['start', 'stop']);
 
             viewFacade = new ViewFacade(
+                projectConfiguration,
                 idaiFieldDocumentDatastore,
                 changesStream,
                 resourcesState,
@@ -351,6 +353,7 @@ export function main() {
             resourcesState.loaded = false;
 
             viewFacade = new ViewFacade(
+                projectConfiguration,
                 idaiFieldDocumentDatastore,
                 changesStream,
                 resourcesState,

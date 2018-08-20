@@ -131,6 +131,7 @@ const remote = require('electron').remote;
             ) {
 
                 return new ViewFacade(
+                    projectConfiguration,
                     datastore,
                     changesStream,
                     resourcesStateManager,

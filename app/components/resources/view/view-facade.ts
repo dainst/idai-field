@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2/core';
+import {Document, ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldDocument} from 'idai-components-2/field';
 import {OperationsManager} from './operations-manager';
 import {DocumentsManager} from './documents-manager';
@@ -31,6 +31,7 @@ export class ViewFacade {
 
 
     constructor(
+        private projectConfiguration: ProjectConfiguration,
         private datastore: IdaiFieldDocumentReadDatastore,
         private remoteChangesStream: RemoteChangesStream,
         private resourcesStateManager: ResourcesStateManager,
@@ -132,7 +133,10 @@ export class ViewFacade {
     public getOperationLabel(): string {
 
         if (this.isInOverview()) throw ViewFacade.err('getOperationLabel');
-        return this.resourcesStateManager.getLabelForName(this.resourcesStateManager.get().view) as string; // cast ok, we are not in overview
+        const typeName: string = this.resourcesStateManager
+            .getOperationSubtypeForViewName(this.resourcesStateManager.get().view) as string;
+
+        return this.projectConfiguration.getTypesMap()[typeName].label;
     }
 
 

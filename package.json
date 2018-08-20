@@ -26,9 +26,8 @@
     },
     "mac": {
       "category": "public.app-category.productivity",
-      "target": "zip",
       "icon": "img/logo.icns",
-      "artifactName": "iDAI.field-client-${version}-MacOS.${ext}",
+      "artifactName": "iDAI.field-${version}-MacOS.${ext}",
       "publish": "github"
     },
     "win": {

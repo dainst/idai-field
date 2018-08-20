@@ -158,12 +158,12 @@ export function main() {
         afterEach((done) => new PouchDB('testdb').destroy().then(() => {done()}), 5000);
 
 
-        xit('reload layer ids on startup', async done => {
+        it('reload layer ids on startup', async done => {
 
             resourcesState.loaded = false;
             stateSerializer.load.and.returnValue({ excavation: {
-                navigationPaths: {'t1': {elements: []}},
-                layerIds: {'t1': ['layerid1']}
+                navigationPaths: { 't1': { elements: [] } },
+                layerIds: { 't1': ['layerid1'] }
             }});
             await viewFacade.selectView('excavation');
             await viewFacade.selectOperation(trenchDocument1.resource.id);

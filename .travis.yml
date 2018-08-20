@@ -39,7 +39,7 @@ deploy:
   on:
     tags: true
     all_branches: true
-    repo: dainst/idai-field
+    repo: scuy/idai-field
 notifications:
   slack:
     on_success: never

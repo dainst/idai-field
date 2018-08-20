@@ -1,8 +1,9 @@
 'use strict';
 
-var electron = require('electron');
-var fs = require('fs');
-var menuTemplate = require('./menu.js');
+const electron = require('electron');
+const fs = require('fs');
+const menuTemplate = require('./menu.js');
+require('update-electron-app')();
 
 // Copy config file to appData if no config file exists in appData
 function copyConfigFile(destPath, appDataPath) {

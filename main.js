@@ -3,7 +3,7 @@
 const electron = require('electron');
 const fs = require('fs');
 const menuTemplate = require('./menu.js');
-require('update-electron-app')();
+const autoUpdater = require("electron-updater");
 
 // Copy config file to appData if no config file exists in appData
 function copyConfigFile(destPath, appDataPath) {
@@ -136,4 +136,9 @@ electron.app.on('window-all-closed', function() {
     if (process.platform !== 'darwin') {
         electron.app.quit();
     }
+});
+
+// Setup auto updater
+electron.app.on('ready', function()  {
+  autoUpdater.checkForUpdatesAndNotify();
 });

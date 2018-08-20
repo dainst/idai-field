@@ -26,7 +26,6 @@ export class ImageOverviewFacade {
     public initialize() {
 
         return this.imagesState.initialize().then(() => {
-            console.log('imagesState initialized!');
             if (!this.imagesState.getQuery()) this.imagesState.setQuery(this.getDefaultQuery());
             this.setQueryConstraints();
         }).then(() => this.fetchDocuments());

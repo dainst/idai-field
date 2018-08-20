@@ -1,134 +1,101 @@
 {
   "Trench": {
-    "constraint": ["hasDairy", "hasExcavationType", "hasOrientation"],
-    "fulltext": []
+    "constraint": ["hasDairy", "hasExcavationType", "hasOrientation"]
   },
   "Glass": {
-    "constraint": ["hasColor", "hasDecorationTechniqueGlass", "hasFormDescription", "hasManufactoringMethodGlass", "hasObjectTypeGlass", "hasProvinience", "hasTransparency", "hasVesselFormGlass", "hasVesselFormGlassSpecific"],
-    "fulltext": []
+    "constraint": ["hasColor", "hasDecorationTechniqueGlass", "hasFormDescription", "hasManufactoringMethodGlass", "hasObjectTypeGlass", "hasProvinience", "hasTransparency", "hasVesselFormGlass", "hasVesselFormGlassSpecific"]
   },
   "Drilling": {
-    "constraint": ["hasDrillingEquipment"],
-    "fulltext": []
+    "constraint": ["hasDrillingEquipment"]
   },
   "Planum": {
-    "constraint": ["hasHorizontalLocation", "hasOrientation", "hasPlanumForm"],
-    "fulltext": []
+    "constraint": ["hasHorizontalLocation", "hasOrientation", "hasPlanumForm"]
   },
   "Brick": {
-    "constraint": ["hasBrickForm", "hasBrickUsage", "hasClayColorOutside", "hasCoatColorInside", "hasCoatColorOutside", "hasDecorationTechniqueBrick", "hasFormDescription", "hasManufactoring", "hasManufactoringMethodBrick", "hasProvinience", "hasSpecificType", "hasTemper"],
-    "fulltext": []
+    "constraint": ["hasBrickForm", "hasBrickUsage", "hasClayColorOutside", "hasCoatColorInside", "hasCoatColorOutside", "hasDecorationTechniqueBrick", "hasFormDescription", "hasManufactoring", "hasManufactoringMethodBrick", "hasProvinience", "hasSpecificType", "hasTemper"]
   },
   "Burial": {
-    "constraint": ["hasAmountIndividuals", "hasBurialCharacteristic", "hasBurialDocumentation", "hasGraveFeature", "hasPositionArms", "hasPositionLegs", "hasPositioningIndividuals", "hasMaterial"],
-    "fulltext": []
+    "constraint": ["hasAmountIndividuals", "hasBurialCharacteristic", "hasBurialDocumentation", "hasGraveFeature", "hasPositionArms", "hasPositionLegs", "hasPositioningIndividuals", "hasMaterial"]
   },
   "SurveyUnit": {
-    "constraint": ["hasFinds"],
-    "fulltext": []
+    "constraint": ["hasFinds"]
   },
   "Building": {
-    "constraint": ["hasRestauration", "hasArchitecturalOrders", "hasBuildingCategory", "hasBuildingCategorySpecific", "hasBuildingTechnique", "hasBuildingType", "hasCondition", "hasConditionAmount", "hasContext"],
-    "fulltext": []
+    "constraint": ["hasRestauration", "hasArchitecturalOrders", "hasBuildingCategory", "hasBuildingCategorySpecific", "hasBuildingTechnique", "hasBuildingType", "hasCondition", "hasConditionAmount", "hasContext"]
   },
   "Wood": {
-    "constraint": ["hasColorWood", "hasObjectTypeWood", "hasTypeOfWood"],
-    "fulltext": []
+    "constraint": ["hasColorWood", "hasObjectTypeWood", "hasTypeOfWood"]
   },
   "Architecture": {
-    "constraint": ["hasFindingPlace", "hasGrouting", "hasLayerAmount", "hasLayerHight", "hasBlockProcessing", "hasBlockTreatment", "hasBrickwork", "hasCondition", "hasConditionAmount", "hasConstruction", "hasMark", "hasMortarBinder", "hasMortarColor", "hasMortarConsistency", "hasOrientation", "hasWallClassification", "hasWallType"],
-    "fulltext": []
+    "constraint": ["hasFindingPlace", "hasGrouting", "hasLayerAmount", "hasLayerHight", "hasBlockProcessing", "hasBlockTreatment", "hasBrickwork", "hasCondition", "hasConditionAmount", "hasConstruction", "hasMark", "hasMortarBinder", "hasMortarColor", "hasMortarConsistency", "hasOrientation", "hasWallClassification", "hasWallType"]
   },
   "Operation": {
-    "constraint": ["hasProcessor", "hasSupervisor", "hasCampaign"],
-    "fulltext": []
+    "constraint": ["hasProcessor", "hasSupervisor", "hasCampaign"]
   },
   "Place": {
-    "constraint": ["hasPlaceName", "hasPlaceType", "isAncient", "hasFindspotClassification", "hasSiteClassification"],
-    "fulltext": []
+    "constraint": ["hasPlaceName", "hasPlaceType", "isAncient", "hasFindspotClassification", "hasSiteClassification"]
   },
   "Layer": {
-    "constraint": ["hasNatural", "hasConsistency", "hasDistinguishingCriteria", "hasLayerClassification", "hasSoilType"],
-    "fulltext": []
+    "constraint": ["hasNatural", "hasConsistency", "hasDistinguishingCriteria", "hasLayerClassification", "hasSoilType"]
   },
   "Feature": {
-    "constraint": ["hasDairy", "hasDisturbance", "hasFeatureAmount", "hasProcessor", "hasColor", "hasFeatureBorders", "hasFeatureForm"],
-    "fulltext": []
+    "constraint": ["hasDairy", "hasDisturbance", "hasFeatureAmount", "hasProcessor", "hasColor", "hasFeatureBorders", "hasFeatureForm"]
   },
   "Floor": {
-    "constraint": ["hasCondition", "hasConditionAmount", "hasConsistency", "hasDistinguishingCriteria", "hasFloorClassification", "hasLayerClassification", "hasMortarBinder"],
-    "fulltext": []
+    "constraint": ["hasCondition", "hasConditionAmount", "hasConsistency", "hasDistinguishingCriteria", "hasFloorClassification", "hasLayerClassification", "hasMortarBinder"]
   },
   "Inscription": {
-    "constraint": ["hasLanguage", "hasProcessor", "hasCondition", "hasConditionAmount", "hasObjectTypeInscription"],
-    "fulltext": []
+    "constraint": ["hasLanguage", "hasProcessor", "hasCondition", "hasConditionAmount", "hasObjectTypeInscription"]
   },
   "Pottery": {
-    "constraint": ["hasAmountRimSherds", "hasAmountSherdsBase", "hasAmountSherdsHandles", "hasAmountSherdsLip", "hasAmountSherdsPedestal", "hasAmountSherdsRimBase", "hasAmountSherdsRimShoulder", "hasAmountSherdsShoulder", "hasAmountSherdsxOther", "hasAmountShertsLid", "hasClayColorBreakMunsell", "hasClayColorInsideMunsell", "hasClayColorOutsideMunsell", "hasCoat", "hasTypeNumber", "hasClayColorBreak", "hasClayColorInside", "hasClayColorOutside", "hasClayHardness", "hasCoatColorInside", "hasCoatColorOutside", "hasCoatInside", "hasCoatInsideType", "hasCoatOutside", "hasCoatOutsideType", "hasDecorationTechniquePottery", "hasFormDescription", "hasManufactoring", "hasManufactoringMethodPottery", "hasMaterialType", "hasObjectTypePottery", "hasPotteryTypeSpecific", "hasProvinience", "hasTemper", "hasTemperAmount", "hasTemperParticles", "hasTemperTypeClay", "hasVesselFormPottery", "hasVesselFormPotterySpecific"],
-    "fulltext": []
+    "constraint": ["hasAmountRimSherds", "hasAmountSherdsBase", "hasAmountSherdsHandles", "hasAmountSherdsLip", "hasAmountSherdsPedestal", "hasAmountSherdsRimBase", "hasAmountSherdsRimShoulder", "hasAmountSherdsShoulder", "hasAmountSherdsxOther", "hasAmountShertsLid", "hasClayColorBreakMunsell", "hasClayColorInsideMunsell", "hasClayColorOutsideMunsell", "hasCoat", "hasTypeNumber", "hasClayColorBreak", "hasClayColorInside", "hasClayColorOutside", "hasClayHardness", "hasCoatColorInside", "hasCoatColorOutside", "hasCoatInside", "hasCoatInsideType", "hasCoatOutside", "hasCoatOutsideType", "hasDecorationTechniquePottery", "hasFormDescription", "hasManufactoring", "hasManufactoringMethodPottery", "hasMaterialType", "hasObjectTypePottery", "hasPotteryTypeSpecific", "hasProvinience", "hasTemper", "hasTemperAmount", "hasTemperParticles", "hasTemperTypeClay", "hasVesselFormPottery", "hasVesselFormPotterySpecific"]
   },
   "DrillCoreLayer": {
-    "constraint": ["hasFinds", "hasSoilType"],
-    "fulltext": []
+    "constraint": ["hasFinds", "hasSoilType"]
   },
   "Grave": {
-    "constraint": ["hasFindingPlace", "hasCondition", "hasConditionAmount", "hasDistinguishingCriteria", "hasGraveType", "hasGraveTypeSpecific", "hasSoilType", "hasTombBuilding"],
-    "fulltext": []
+    "constraint": ["hasFindingPlace", "hasCondition", "hasConditionAmount", "hasDistinguishingCriteria", "hasGraveType", "hasGraveTypeSpecific", "hasSoilType", "hasTombBuilding"]
   },
   "Bone": {
-    "constraint": ["hasBiologicalAge", "hasBoneClassification", "hasBoneType", "hasBurningGrade", "hasGender", "hasObjectTypeBone", "hasSpecies"],
-    "fulltext": []
+    "constraint": ["hasBiologicalAge", "hasBoneClassification", "hasBoneType", "hasBurningGrade", "hasGender", "hasObjectTypeBone", "hasSpecies"]
   },
   "Room": {
-    "constraint": ["hasProcessor", "hasCampaign", "hasCondition", "hasConditionAmount"],
-    "fulltext": []
+    "constraint": ["hasProcessor", "hasCampaign", "hasCondition", "hasConditionAmount"]
   },
   "ProcessUnit": {
-    "constraint": ["hasProcessor", "hasOperationClassification"],
-    "fulltext": []
+    "constraint": ["hasProcessor", "hasOperationClassification"]
   },
   "Terracotta": {
-    "constraint": ["hasClayColorBreak", "hasClayColorInside", "hasClayColorOutside", "hasClayStructure", "hasCoatColorInside", "hasCoatColorOutside", "hasDecorationTechniquePottery", "hasFormDescription", "hasManufactoringMethodPottery", "hasProvinience", "hasSurfaceCondition", "hasTemper", "hasTemperAmount", "hasTemperParticles", "hasTerracottaType", "hasVesselFormTerracotta", "hasVesselFormTerracottaSpecific"],
-    "fulltext": []
+    "constraint": ["hasClayColorBreak", "hasClayColorInside", "hasClayColorOutside", "hasClayStructure", "hasCoatColorInside", "hasCoatColorOutside", "hasDecorationTechniquePottery", "hasFormDescription", "hasManufactoringMethodPottery", "hasProvinience", "hasSurfaceCondition", "hasTemper", "hasTemperAmount", "hasTemperParticles", "hasTerracottaType", "hasVesselFormTerracotta", "hasVesselFormTerracottaSpecific"]
   },
   "Wall_surface": {
-    "constraint": ["hasPlasterDecoration", "hasProcessor", "hasBlockTreatment", "hasBuildingTechnique", "hasColor", "hasCondition", "hasConditionAmount", "hasConstructionDetails", "hasJointsCondition", "hasJointsDecoration", "hasMark", "hasPlasterComponents", "hasWallOrientation", "isRoomSide", "isWallSide"],
-    "fulltext": []
+    "constraint": ["hasPlasterDecoration", "hasProcessor", "hasBlockTreatment", "hasBuildingTechnique", "hasColor", "hasCondition", "hasConditionAmount", "hasConstructionDetails", "hasJointsCondition", "hasJointsDecoration", "hasMark", "hasPlasterComponents", "hasWallOrientation", "isRoomSide", "isWallSide"]
   },
   "Other": {
-    "constraint": ["hasNatural", "hasConsistency", "hasDistinguishingCriteria", "hasOtherClassification", "hasSoilType"],
-    "fulltext": []
+    "constraint": ["hasNatural", "hasConsistency", "hasDistinguishingCriteria", "hasOtherClassification", "hasSoilType"]
   },
   "Sample": {
-    "constraint": ["hasLabNumber", "hasSampleType", "hasSoilType"],
-    "fulltext": []
+    "constraint": ["hasLabNumber", "hasSampleType", "hasSoilType"]
   },
   "Survey": {
-    "constraint": ["hasResearchMethod"],
-    "fulltext": []
+    "constraint": ["hasResearchMethod"]
   },
   "Stone": {
-    "constraint": ["hasArchitectureElement", "hasColor", "hasFormDescription", "hasMaterial", "hasObjectTypeStone", "hasOrigin", "hasProvinience", "hasTemperAmount"],
-    "fulltext": []
+    "constraint": ["hasArchitectureElement", "hasColor", "hasFormDescription", "hasMaterial", "hasObjectTypeStone", "hasOrigin", "hasProvinience", "hasTemperAmount"]
   },
   "Coin": {
-    "constraint": ["hasDenomination", "hasManufacturingMethodCoin", "hasMetalMaterial", "hasMint", "hasMintingRuler", "hasProvinience", "hasStampPositoning"],
-    "fulltext": []
+    "constraint": ["hasDenomination", "hasManufacturingMethodCoin", "hasMetalMaterial", "hasMint", "hasMintingRuler", "hasProvinience", "hasStampPositoning"]
   },
   "Find": {
-    "constraint": ["hasAmount", "hasCatalogueNr", "hasProcessor", "hasRestauration", "hasStorageInventNr.", "hasCondition", "hasConditionAmount", "hasStoragePlace"],
-    "fulltext": []
+    "constraint": ["hasAmount", "hasCatalogueNr", "hasProcessor", "hasRestauration", "hasStorageInventNr.", "hasCondition", "hasConditionAmount", "hasStoragePlace"]
   },
   "PlasterFragment": {
-    "constraint": ["hasDecoration", "hasDecorationPattern", "hasColor", "hasPlasterComponents"],
-    "fulltext": []
+    "constraint": ["hasDecoration", "hasDecorationPattern", "hasColor", "hasPlasterComponents"]
   },
   "Profile": {
-    "constraint": ["hasOrientation"],
-    "fulltext": []
+    "constraint": ["hasOrientation"]
   },
   "Metal": {
-    "constraint": ["hasDecorationTechniqueMetal", "hasFormDescription", "hasManufactoringMethodMetal", "hasMetalMaterial", "hasObjectTypeMetal", "hasProvinience", "hasVesselFormMetal", "hasVesselFormMetalSpecific"],
-    "fulltext": []
+    "constraint": ["hasDecorationTechniqueMetal", "hasFormDescription", "hasManufactoringMethodMetal", "hasMetalMaterial", "hasObjectTypeMetal", "hasProvinience", "hasVesselFormMetal", "hasVesselFormMetalSpecific"]
   }
 }

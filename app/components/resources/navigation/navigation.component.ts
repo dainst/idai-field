@@ -70,6 +70,12 @@ export class NavigationComponent {
     }
 
 
+    public showSwitchHierarchyModeButton() {
+
+        return this.viewFacade.isInOverview() || this.viewFacade.getSelectedOperations().length > 0;
+    }
+
+
     public showSelectAllOperationsOption() {
 
         return this.viewFacade.getBypassHierarchy() && this.viewFacade.getOperations().length > 1;

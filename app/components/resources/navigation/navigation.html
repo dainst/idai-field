@@ -1,6 +1,7 @@
 <div id="navigation" class="row">
 
-    <div id="hierarchy-mode-switch"
+    <div *ngIf="showSwitchHierarchyModeButton()"
+         id="hierarchy-mode-switch"
          class="btn {{getBypassHierarchy() ? 'btn-primary' : 'btn-outline-primary'}} mr-2"
          ngbTooltip="{{getTooltip()}}"
          placement="right"

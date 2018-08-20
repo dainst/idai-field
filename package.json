@@ -15,7 +15,7 @@
     "pree2e": "rimraf test/e2e-screenshots/*.png",
     "e2e": "node test/e2e/spectron.js",
     "package": "build -mw --publish never",
-    "package-mac": "build -m dmg --publish onTagOrDraft",
+    "package-mac": "build -m",
     "package-win": "build -w nsis --publish never"
   },
   "build": {

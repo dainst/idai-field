@@ -29,17 +29,6 @@ script:
 - npm rebuild node-sass
 - npm run build
 - npm run package-mac
-deploy:
-  skip_cleanup: true
-  provider: releases
-  api_key:
-    secure: "AiKOiIkvrZiEj/QiamgtyCnWdHBJPDTp88yQyKCKfqvhK3P1fkH12uAF/Ml7ySv0rfh9amf1OA/FsCsSLo0fIt3dOrUY/e2TdJj9g5v5H3tNq9/2GPCFJHol5gwzejrjEYbXtggzjKsYiJo1sYUVafC1sPDcAI7Db/0z1EvRJ0mnMtcBJg+B6gabrjJnf62oo/RnPYnvLsqacNOQe7c3NcNid748ma7a2ClwgZNuEY2kq9lgvo50/k/tCm/QxBtamwz8fbS2MpwwBHzXthA9p5e7Xv0Y5Oey9nU/LpCrPw6RW6wEkHustss+lAWYmYOu9NLosXWnkUpVbY9fD3FaiM4iU2RVSAFEB4Xu3LGMn9NDlO2uIe+V4mHppXlGxLdzoEFqUT+VG86PEfwYF0A0hVzH68xwShCcN9kS7aRgHAmE/caXDPoGaVfyxJ3W9VmlkvrI8ErI8vMtvkkj9+545+mMNbgVynMH+5tpe68JYVA9EHxgVtApQ11FM8Rsl9IBGIfHhDtuH9p3AQm2KPmTWHgcD/sigiSXoD+7ZtRLrdfUI9kZ9fcI+0x3H7lZzDAzxvAEnjMOyyxJzMdxtcNv2m5B0N7Wz02PbpD0zHr2suKIu12/WHKEU5zjAbwzKfmuBAuTtiDDy72hk1404azQeDUvgTc9Jc23z4xlhPy7kwY="
-  file_glob: true
-  file: release/*.dmg
-  on:
-    tags: true
-    all_branches: true
-    repo: scuy/idai-field
 notifications:
   slack:
     on_success: never

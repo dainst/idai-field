@@ -27,7 +27,8 @@
       "category": "public.app-category.productivity",
       "target": "zip",
       "icon": "img/logo.icns",
-      "artifactName": "iDAI.field-client-${version}-MacOS.${ext}"
+      "artifactName": "iDAI.field-client-${version}-MacOS.${ext}",
+      "publish": "github"
     },
     "win": {
       "target": "zip",
@@ -59,6 +60,7 @@
     "Leaflet.vector-markers": "0.0.6",
     "angular2-uuid": "1.1.0",
     "bootstrap": "4.0.0-beta",
+    "electron-updater": "^3.1.1",
     "es6-shim": "0.35.0",
     "express": "4.15.0",
     "express-pouchdb-dainst": "1000.0.3",

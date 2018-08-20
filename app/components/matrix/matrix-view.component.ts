@@ -98,6 +98,7 @@ export class MatrixViewComponent implements OnInit {
         const selectedDocuments: Array<IdaiFieldFeatureDocument>
             = this.selection.getSelectedDocuments(this.featureDocuments);
         this.selection.clear();
+        this.selection.setMode('none');
 
         if (selectedDocuments.length === this.featureDocuments.length) return;
 

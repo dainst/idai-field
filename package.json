@@ -33,7 +33,8 @@
     "win": {
       "target": "zip",
       "icon": "img/logo.ico",
-      "artifactName": "iDAI.field-client-${version}-Windows.${ext}"
+      "artifactName": "iDAI.field-${version}-Windows.${ext}",
+      "publish": "github"
     },
     "npmRebuild": false,
     "extraResources": [

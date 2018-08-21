@@ -26,20 +26,6 @@ build_script:
   - yarn run build
   - yarn run package-win
 
-artifacts:
-  - path: release/*.exe
-    name: installer
-
-deploy:
-  provider: GitHub
-  auth_token:
-    secure: 3aQM4eQwpFvNNftJYWFOsF7jAl6svWY1xjFSxUR0npeVJl65TLmiTgrjw0iU5xtU
-  artifact: installer
-  draft: false
-  prerelease: false
-  on:
-    appveyor_repo_tag: true
-
 notifications:
   - provider: Slack
     auth_token:

@@ -16,7 +16,7 @@
     "e2e": "node test/e2e/spectron.js",
     "package": "build -mw --publish never",
     "package-mac": "build -m",
-    "package-win": "build -w"
+    "package-win": "build -w nsis"
   },
   "build": {
     "appId": "org.dainst.idai-field-client",

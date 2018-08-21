@@ -6,13 +6,7 @@ const menuTemplate = require('./menu.js');
 const { autoUpdater } = require("electron-updater");
 
 const log = require("electron-log");
-log.transports.file.level = "debug";
-log.transports.console.level = "debug";
 autoUpdater.logger = log;
-
-log.warn("A test warning");
-log.info("A test info");
-log.info("A test debug");
 
 // Copy config file to appData if no config file exists in appData
 function copyConfigFile(destPath, appDataPath) {

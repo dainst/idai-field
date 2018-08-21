@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Document, Messages} from 'idai-components-2/core';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/field';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/core';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';

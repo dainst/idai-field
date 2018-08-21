@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {Relations, Resource} from 'idai-components-2/core';
-import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/field';
+import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/core';
 import {
     Action,
     Document,

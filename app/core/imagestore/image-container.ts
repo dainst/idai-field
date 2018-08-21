@@ -1,4 +1,4 @@
-import {IdaiFieldImageDocument} from 'idai-components-2/field';
+import {IdaiFieldImageDocument} from 'idai-components-2/core';
 
 
 export interface ImageContainer {

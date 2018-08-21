@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {ProjectConfiguration, FieldDefinition} from 'idai-components-2/core';
 
 

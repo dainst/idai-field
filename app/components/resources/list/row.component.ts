@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {IdaiType, Messages} from 'idai-components-2/core';
 import {M} from '../../../m';
 import {ResourcesComponent} from '../resources.component';

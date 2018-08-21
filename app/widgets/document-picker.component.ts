@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {Query} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {IdaiFieldDocumentDatastore} from '../core/datastore/field/idai-field-document-datastore';
 import {Loading} from './loading';

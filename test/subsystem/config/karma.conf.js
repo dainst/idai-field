@@ -27,7 +27,6 @@ module.exports = function(config) {
 
             // our stuff
             { pattern: 'node_modules/idai-components-2/core.js', included: false, watched: false },
-            { pattern: 'node_modules/idai-components-2/field.js', included: false, watched: false },
             { pattern: 'node_modules/idai-components-2/src/**/!(*spec).js', included: false, watched: false },
             { pattern: 'node_modules/tsfun/**/!(*spec).js', included: false, watched: false },
             { pattern: 'app/**/*.js', included: false, watched: true },

@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 
 /**
  * @author Daniel de Oliveira

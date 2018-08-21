@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {ViewContext} from './view-context';
 import {to, differentFromBy, on} from 'tsfun';
 

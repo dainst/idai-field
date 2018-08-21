@@ -1,7 +1,7 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiFieldDocument} from 'idai-components-2/field';
-import {IdaiFieldImageDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
+import {IdaiFieldImageDocument} from 'idai-components-2/core';
 import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {IdaiFieldImageDocumentReadDatastore} from "../../../core/datastore/field/idai-field-image-document-read-datastore";

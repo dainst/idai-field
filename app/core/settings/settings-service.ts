@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Messages, ProjectConfiguration, Document} from 'idai-components-2/core';
-import {IdaiFieldAppConfigurator} from 'idai-components-2/field';
+import {IdaiFieldAppConfigurator} from 'idai-components-2/core';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';

@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Query} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RoutingService} from '../../routing-service';
 import {ViewFacade} from '../view/view-facade';

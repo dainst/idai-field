@@ -1,7 +1,7 @@
 import {OperationViews} from '../../../../../app/components/resources/view/state/operation-views';
 import {Static} from '../../../static';
 import {ResourcesStateManager} from '../../../../../app/components/resources/view/resources-state-manager';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {Query} from 'idai-components-2/core';
 import {ResourcesState} from '../../../../../app/components/resources/view/state/resources-state';
 

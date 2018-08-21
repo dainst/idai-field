@@ -1,6 +1,6 @@
 import {PouchdbDatastore} from '../core/pouchdb-datastore';
 import {DocumentCache} from '../core/document-cache';
-import {IdaiFieldImageDocument} from 'idai-components-2/field';
+import {IdaiFieldImageDocument} from 'idai-components-2/core';
 import {TypeConverter} from '../core/type-converter';
 import {CachedDatastore} from '../core/cached-datastore';
 import {IndexFacade} from "../index/index-facade";

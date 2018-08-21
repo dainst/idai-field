@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {CachedDatastore} from '../../../../../app/core/datastore/core/cached-datastore';
 import {DocumentCache} from '../../../../../app/core/datastore/core/document-cache';
 import {IdaiFieldDocumentDatastore} from '../../../../../app/core/datastore/field/idai-field-document-datastore';

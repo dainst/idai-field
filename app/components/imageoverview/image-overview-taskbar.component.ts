@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/core';
 import {LinkModalComponent} from './link-modal.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';

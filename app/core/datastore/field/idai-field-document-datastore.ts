@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {PouchdbDatastore} from '../core/pouchdb-datastore';
 import {DocumentCache} from '../core/document-cache';
 import {TypeConverter} from '../core/type-converter';

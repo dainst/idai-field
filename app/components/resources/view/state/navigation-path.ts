@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {clone} from '../../../../util/object-util';
 import {ViewContext} from './view-context';
 import {differentFrom, NavigationPathSegment, toResourceId} from './navigation-path-segment';

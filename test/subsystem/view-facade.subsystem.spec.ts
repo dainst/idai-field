@@ -1,5 +1,5 @@
 import {ProjectConfiguration, Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
 import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/field/idai-field-document-datastore';

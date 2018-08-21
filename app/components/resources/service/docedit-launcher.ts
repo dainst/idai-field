@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document, NewDocument} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {DoceditActiveTabService} from '../../docedit/docedit-active-tab-service';
 import {ViewFacade} from '../view/view-facade';

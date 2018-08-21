@@ -1,7 +1,7 @@
 import {Input, Output, EventEmitter, Renderer2, Component} from '@angular/core';
 import {LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../../widgets/menu.component';
-import {IdaiFieldImageDocument} from 'idai-components-2/field';
+import {IdaiFieldImageDocument} from 'idai-components-2/core';
 
 @Component({
     moduleId: module.id,

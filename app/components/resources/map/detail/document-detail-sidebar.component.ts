@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {ResourcesComponent} from '../../resources.component';
 import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../view/view-facade';

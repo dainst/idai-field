@@ -14,7 +14,7 @@ import {
     ProjectConfiguration
 } from 'idai-components-2/core';
 import {IdaiWidgetsModule} from 'idai-components-2/widgets';
-import {IdaiFieldAppConfigurator} from 'idai-components-2/field';
+import {IdaiFieldAppConfigurator} from 'idai-components-2/core';
 import {routing} from './app.routing';
 import {M} from './m';
 import {AppComponent} from './app.component';

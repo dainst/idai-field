@@ -5,7 +5,7 @@ import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
 import {IdaiFieldTypeConverter} from "../../app/core/datastore/field/idai-field-type-converter";
 import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
 import {IndexFacade} from '../../app/core/datastore/index/index-facade';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 import {FulltextIndexer} from '../../app/core/datastore/index/fulltext-indexer';
 import {IdGenerator} from '../../app/core/datastore/core/id-generator';

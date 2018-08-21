@@ -1,6 +1,6 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} from '@angular/core';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/field';
-import {IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from 'idai-components-2/field';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/core';
+import {IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from 'idai-components-2/core';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
 

@@ -3,7 +3,7 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document} from 'idai-components-2/core';
 import {Messages} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/field';
+import {IdaiFieldDocument} from 'idai-components-2/core';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../util/object-util';
 import {M} from '../../m';
@@ -14,7 +14,7 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
 import {DatastoreErrors} from 'idai-components-2/core';
 import {TypeUtility} from '../../core/model/type-utility';
-import {IdaiFieldImageDocument} from 'idai-components-2/field';
+import {IdaiFieldImageDocument} from 'idai-components-2/core';
 
 
 @Component({

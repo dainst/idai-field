@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
-import {IdaiType} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2';
+import {IdaiType} from 'idai-components-2';
 
 
 @Component({

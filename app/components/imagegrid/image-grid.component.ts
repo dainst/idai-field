@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
-import {Messages, Document} from 'idai-components-2/core';
-import {IdaiFieldImageDocument} from 'idai-components-2/core';
+import {Messages, Document} from 'idai-components-2';
+import {IdaiFieldImageDocument} from 'idai-components-2';
 import {ImageGridConstruction} from './image-grid-builder';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';

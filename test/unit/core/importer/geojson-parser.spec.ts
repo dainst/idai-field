@@ -1,5 +1,5 @@
 import {GeojsonParser} from '../../../../app/core/import/geojson-parser';
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 import {M} from '../../../../app/m';
 
 /**

@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 import {ChangeHistoryMerge} from '../../../../../app/core/datastore/core/change-history-merge';
 
 /**

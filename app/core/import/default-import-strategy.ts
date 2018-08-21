@@ -1,4 +1,4 @@
-import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2/core';
+import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {ImportStrategy} from './import-strategy';
 import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";

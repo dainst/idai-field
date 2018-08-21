@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {DocumentEditChangeMonitor} from './document-edit-change-monitor';
-import {RelationDefinition} from 'idai-components-2/core';
+import {RelationDefinition} from 'idai-components-2';
 
 /**
  * @author Daniel de Oliveira

@@ -3,7 +3,7 @@ import {
     DatastoreErrors,
     Document,
     ProjectConfiguration
-} from 'idai-components-2/core';
+} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {clone} from '../../util/object-util';

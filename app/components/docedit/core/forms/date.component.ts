@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-import {Resource} from 'idai-components-2/core';
+import {Resource} from 'idai-components-2';
 import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 
 

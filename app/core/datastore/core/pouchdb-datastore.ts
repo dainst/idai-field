@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs/Observable';
-import {DatastoreErrors, Document, NewDocument} from 'idai-components-2/core';
+import {DatastoreErrors, Document, NewDocument} from 'idai-components-2';
 import {IdGenerator} from './id-generator';
 import {ObserverUtil} from '../../../util/observer-util';
 import {PouchdbProxy} from './pouchdb-proxy';

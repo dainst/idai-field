@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {MD,Message} from "idai-components-2/core"
+import {MD,Message} from "idai-components-2"
 
 /**
  * @author Daniel de Oliveira

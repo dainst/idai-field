@@ -2,7 +2,7 @@
 
 import {Injectable} from '@angular/core';
 import * as express from 'express';
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
 import {DocumentCache} from './core/datastore/core/document-cache';
 import {ImagesState} from './components/imageoverview/view/images-state';

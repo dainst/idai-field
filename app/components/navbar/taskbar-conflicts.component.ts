@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {RoutingService} from '../routing-service';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';

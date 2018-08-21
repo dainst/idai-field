@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {Messages} from 'idai-components-2/core';
+import {Messages} from 'idai-components-2';
 import {M} from '../../m';
-import {IdaiFieldGeoreference} from 'idai-components-2/core';
+import {IdaiFieldGeoreference} from 'idai-components-2';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PersistenceManager} from "../../core/model/persistence-manager";
 import {UsernameProvider} from '../../core/settings/username-provider';

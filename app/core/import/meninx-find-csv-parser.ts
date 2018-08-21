@@ -1,6 +1,6 @@
 import {AbstractParser} from './abstract-parser';
 import {Observable} from 'rxjs/Observable';
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 import {Observer} from 'rxjs/Observer';
 import {M} from '../../m';
 

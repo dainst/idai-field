@@ -1,4 +1,4 @@
-import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2/core';
+import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {ImportStrategy} from './import-strategy';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';

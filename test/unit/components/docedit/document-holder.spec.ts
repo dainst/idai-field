@@ -1,5 +1,5 @@
 import {DocumentHolder} from '../../../../app/components/docedit/document-holder';
-import {ProjectConfiguration} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2';
 
 /**
  * @author Daniel de Oliveira

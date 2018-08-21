@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, OnChanges, ViewChild} from '@angular/core';
-import {Messages} from 'idai-components-2/core';
-import {ProjectConfiguration, IdaiType} from 'idai-components-2/core';
+import {Messages} from 'idai-components-2';
+import {ProjectConfiguration, IdaiType} from 'idai-components-2';
 
 @Component({
     moduleId: module.id,

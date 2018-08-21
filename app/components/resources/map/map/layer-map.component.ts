@@ -1,12 +1,12 @@
 import {Component, Input, SimpleChanges} from '@angular/core';
-import {MapComponent} from 'idai-components-2/core';
-import {Messages} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
+import {MapComponent} from 'idai-components-2';
+import {Messages} from 'idai-components-2';
+import {ProjectConfiguration} from 'idai-components-2';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
 import {LayerManager, ListDiffResult} from './layer-manager';
-import {IdaiFieldImageDocument} from 'idai-components-2/core';
+import {IdaiFieldImageDocument} from 'idai-components-2';
 import {LayerImageProvider} from './layer-image-provider';
-import {IdaiFieldGeoreference} from 'idai-components-2/core';
+import {IdaiFieldGeoreference} from 'idai-components-2';
 
 
 @Component({

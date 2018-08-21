@@ -1,4 +1,4 @@
-import {Query} from 'idai-components-2/core';
+import {Query} from 'idai-components-2';
 import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
 import {DAOsSpecHelper} from '../../../../subsystem/daos-spec-helper';

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Messages} from 'idai-components-2/core';
+import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../../m';
 import {Settings} from '../../core/settings/settings';

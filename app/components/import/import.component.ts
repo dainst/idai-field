@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Http} from '@angular/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document, Messages, ProjectConfiguration} from 'idai-components-2/core';
+import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
 import {Import, ImportReport} from '../../core/import/import';
 import {Reader} from '../../core/import/reader';
 import {FileSystemReader} from '../../core/import/file-system-reader';

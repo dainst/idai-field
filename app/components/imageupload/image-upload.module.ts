@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {IdaiWidgetsModule} from 'idai-components-2/core';
+import {IdaiWidgetsModule} from 'idai-components-2';
 import {ImageUploader} from './image-uploader';
 import {UploadStatus} from './upload-status';
 import {UploadModalComponent} from './upload-modal.component';

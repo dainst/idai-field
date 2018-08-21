@@ -12,9 +12,9 @@ import {
     MD,
     Messages,
     ProjectConfiguration
-} from 'idai-components-2/core';
-import {IdaiWidgetsModule} from 'idai-components-2/core';
-import {IdaiFieldAppConfigurator} from 'idai-components-2/core';
+} from 'idai-components-2';
+import {IdaiWidgetsModule} from 'idai-components-2';
+import {IdaiFieldAppConfigurator} from 'idai-components-2';
 import {routing} from './app.routing';
 import {M} from './m';
 import {AppComponent} from './app.component';

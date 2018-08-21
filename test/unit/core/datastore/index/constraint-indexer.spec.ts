@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 import {ConstraintIndexer} from '../../../../../app/core/datastore/index/constraint-indexer';
 import {IndexItem} from '../../../../../app/core/datastore/index/index-item';
 

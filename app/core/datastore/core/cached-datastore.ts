@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Datastore} from 'idai-components-2/core';
-import {Document, NewDocument} from 'idai-components-2/core';
+import {Datastore} from 'idai-components-2';
+import {Document, NewDocument} from 'idai-components-2';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CachedReadDatastore} from './cached-read-datastore';

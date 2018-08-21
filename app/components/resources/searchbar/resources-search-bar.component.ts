@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, SimpleChanges, ViewChild} from '@angular/core';
-import {ProjectConfiguration, IdaiType} from 'idai-components-2/core';
+import {ProjectConfiguration, IdaiType} from 'idai-components-2';
 import {SearchBarComponent} from '../../../widgets/search-bar.component';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {ViewFacade} from '../view/view-facade';

@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {ViewFacade} from './view/view-facade';
 import {Loading} from '../../widgets/loading';

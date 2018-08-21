@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs/Observable';
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 import {M} from '../../m';
 import {AbstractParser} from './abstract-parser';
 import {Observer} from 'rxjs/Observer';

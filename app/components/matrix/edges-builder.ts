@@ -1,4 +1,4 @@
-import {Document, Relations} from 'idai-components-2/core';
+import {Document, Relations} from 'idai-components-2';
 import {unique, to, on, unionBy, addTo, intoObject} from 'tsfun';
 
 

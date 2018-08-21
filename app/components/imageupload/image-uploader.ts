@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2/core';
+import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {M} from '../../m';
@@ -9,7 +9,7 @@ import {ExtensionUtil} from '../../util/extension-util';
 import {UploadStatus} from './upload-status';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
-import {NewIdaiFieldImageDocument} from 'idai-components-2/core';
+import {NewIdaiFieldImageDocument} from 'idai-components-2';
 import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/field/idai-field-image-document-read-datastore';
 import {UsernameProvider} from '../../core/settings/username-provider';
 

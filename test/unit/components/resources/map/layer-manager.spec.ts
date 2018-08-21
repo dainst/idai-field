@@ -1,6 +1,6 @@
 import {LayerManager} from '../../../../../app/components/resources/map/map/layer-manager';
-import {IdaiFieldImageDocument} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/core';
+import {IdaiFieldImageDocument} from 'idai-components-2';
+import {IdaiFieldDocument} from 'idai-components-2';
 import {Static} from '../../../static';
 
 

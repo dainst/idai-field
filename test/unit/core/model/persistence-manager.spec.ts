@@ -1,4 +1,4 @@
-import {Document, ProjectConfiguration} from 'idai-components-2/core';
+import {Document, ProjectConfiguration} from 'idai-components-2';
 import {PersistenceManager} from "../../../../app/core/model/persistence-manager";
 import {clone} from '../../../../app/util/object-util';
 

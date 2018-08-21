@@ -1,4 +1,4 @@
-import {Action, Document} from 'idai-components-2/core';
+import {Action, Document} from 'idai-components-2';
 
 /**
  * @author Thomas Kleinke

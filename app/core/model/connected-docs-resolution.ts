@@ -1,4 +1,4 @@
-import {Document, ProjectConfiguration, relationsEquivalent} from 'idai-components-2/core';
+import {Document, ProjectConfiguration, relationsEquivalent} from 'idai-components-2';
 import {arrayEquivalent, isNot, objectEqualBy, on, tripleEqual} from 'tsfun';
 
 /**

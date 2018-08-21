@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2';
 import {ImageOverviewFacade} from '../view/imageoverview-facade';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {M} from '../../../m';

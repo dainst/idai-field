@@ -1,12 +1,12 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {Relations, Resource} from 'idai-components-2/core';
-import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2/core';
+import {Relations, Resource} from 'idai-components-2';
+import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2';
 import {
     Action,
     Document,
     Messages,
     ProjectConfiguration
-} from 'idai-components-2/core';
+} from 'idai-components-2';
 import {M} from '../../../m';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {DocumentEditChangeMonitor} from '../core/document-edit-change-monitor';

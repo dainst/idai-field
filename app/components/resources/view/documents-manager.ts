@@ -1,7 +1,7 @@
 import {Observer} from 'rxjs/Observer';
 import {Observable} from 'rxjs/Observable';
-import {Document, Query} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/core';
+import {Document, Query} from 'idai-components-2';
+import {IdaiFieldDocument} from 'idai-components-2';
 import {OperationsManager} from './operations-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';

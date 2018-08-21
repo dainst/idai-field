@@ -1,8 +1,8 @@
 import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output} from '@angular/core';
-import {Relations} from 'idai-components-2/core';
-import {IdaiType, ProjectConfiguration} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/core';
-import {Messages} from 'idai-components-2/core';
+import {Relations} from 'idai-components-2';
+import {IdaiType, ProjectConfiguration} from 'idai-components-2';
+import {IdaiFieldDocument} from 'idai-components-2';
+import {Messages} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {M} from '../../m';
 import {TypeUtility} from '../../core/model/type-utility';

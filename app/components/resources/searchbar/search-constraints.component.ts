@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ProjectConfiguration, FieldDefinition} from 'idai-components-2/core';
+import {ProjectConfiguration, FieldDefinition} from 'idai-components-2';
 import {ViewFacade} from '../view/view-facade';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
 import {ConstraintIndexer} from '../../../core/datastore/index/constraint-indexer';

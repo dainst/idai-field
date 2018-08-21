@@ -1,6 +1,6 @@
 import {Component, Input, AfterViewInit, OnChanges, ElementRef} from '@angular/core';
 import {DocumentEditChangeMonitor} from './document-edit-change-monitor';
-import {FieldDefinition} from 'idai-components-2/core';
+import {FieldDefinition} from 'idai-components-2';
 
 
 @Component({

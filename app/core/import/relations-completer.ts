@@ -1,4 +1,4 @@
-import {Document, ProjectConfiguration, Resource} from 'idai-components-2/core';
+import {Document, ProjectConfiguration, Resource} from 'idai-components-2';
 import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {UsernameProvider} from '../settings/username-provider';

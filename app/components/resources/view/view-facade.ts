@@ -1,5 +1,5 @@
-import {Document, ProjectConfiguration} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/core';
+import {Document, ProjectConfiguration} from 'idai-components-2';
+import {IdaiFieldDocument} from 'idai-components-2';
 import {OperationsManager} from './operations-manager';
 import {DocumentsManager} from './documents-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Document, NewDocument, ProjectConfiguration, toResourceId} from 'idai-components-2/core';
+import {Document, NewDocument, ProjectConfiguration, toResourceId} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to, isDefined, isUndefined, isUndefinedOrEmpty, arrayEquivalent, isArray} from 'tsfun';
 import {TypeUtility} from './type-utility';

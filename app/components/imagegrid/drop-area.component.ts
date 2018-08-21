@@ -1,5 +1,5 @@
 import {Component, Output, EventEmitter, Input} from '@angular/core';
-import {Messages, Document} from 'idai-components-2/core';
+import {Messages, Document} from 'idai-components-2';
 import {ImageUploader, ImageUploadResult} from '../imageupload/image-uploader';
 
 @Component({

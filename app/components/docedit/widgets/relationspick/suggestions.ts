@@ -1,4 +1,4 @@
-import {Document, Query, ReadDatastore, RelationDefinition, Resource} from 'idai-components-2/core';
+import {Document, Query, ReadDatastore, RelationDefinition, Resource} from 'idai-components-2';
 import {filter, flow, isNot, on, take} from 'tsfun';
 
 /**

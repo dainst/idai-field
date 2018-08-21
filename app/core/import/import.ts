@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 import {Reader} from './reader';
 import {Parser} from './parser';
 import {ImportStrategy} from './import-strategy';

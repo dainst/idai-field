@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Messages} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/core';
+import {Messages} from 'idai-components-2';
+import {IdaiFieldDocument} from 'idai-components-2';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {BlobMaker} from '../../core/imagestore/blob-maker';

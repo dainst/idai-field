@@ -1,5 +1,5 @@
-import {IdaiFieldDocument} from 'idai-components-2/core';
-import {Query} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2';
+import {Query} from 'idai-components-2';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ResourcesStateManager} from './resources-state-manager';
 import {ResourcesState} from './state/resources-state';

@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../view/view-facade';
 import {ModelUtil} from '../../../core/model/model-util';
 import {NavigationPath} from '../view/state/navigation-path';
 import {Loading} from '../../../widgets/loading';
-import {ProjectConfiguration} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2';
 
 
 @Component({

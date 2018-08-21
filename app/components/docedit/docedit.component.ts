@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2/core';
-import {Messages} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
+import {Messages} from 'idai-components-2';
+import {ProjectConfiguration} from 'idai-components-2';
+import {IdaiFieldDocument} from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../util/object-util';
 import {M} from '../../m';
@@ -12,9 +12,9 @@ import {DeleteModalComponent} from './dialog/delete-modal.component';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
-import {DatastoreErrors} from 'idai-components-2/core';
+import {DatastoreErrors} from 'idai-components-2';
 import {TypeUtility} from '../../core/model/type-utility';
-import {IdaiFieldImageDocument} from 'idai-components-2/core';
+import {IdaiFieldImageDocument} from 'idai-components-2';
 
 
 @Component({

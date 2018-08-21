@@ -1,4 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2';
 import {IdigCsvParser} from '../../app/core/import/idig-csv-parser';
 import {M} from '../../app/m';
 

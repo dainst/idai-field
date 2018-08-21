@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiFieldDocument} from 'idai-components-2/core';
-import {Messages} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2';
+import {Messages} from 'idai-components-2';
 import {LinkModalComponent} from './link-modal.component';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';

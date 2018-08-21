@@ -1,4 +1,4 @@
-import {Action, Document} from 'idai-components-2/core';
+import {Action, Document} from 'idai-components-2';
 import {SortUtil} from '../../../util/sort-util';
 
 

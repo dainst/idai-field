@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {FindResult, Query, ReadDatastore, DatastoreErrors} from 'idai-components-2/core';
-import {Document} from 'idai-components-2/core';
+import {FindResult, Query, ReadDatastore, DatastoreErrors} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';

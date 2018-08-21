@@ -1,4 +1,4 @@
-import {Document, ProjectConfiguration, IdaiType, FieldDefinition} from 'idai-components-2/core';
+import {Document, ProjectConfiguration, IdaiType, FieldDefinition} from 'idai-components-2';
 import {IndexItem} from './index-item';
 import {get} from 'tsfun';
 

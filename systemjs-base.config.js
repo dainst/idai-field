@@ -20,6 +20,11 @@ config.packages['tsfun'] = {
     defaultExtension: 'js'
 };
 
+config.packages['idai-components-2'] = {
+    main: 'index.js',
+    defaultExtension: 'js'
+};
+
 config.packages.node_modules = {
     defaultExtension: 'js'
 };

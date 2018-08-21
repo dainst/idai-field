@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2/core';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/core';
+import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
 import {M} from '../../m';
 import {Validations} from './validations';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';

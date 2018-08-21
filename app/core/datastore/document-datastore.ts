@@ -1,4 +1,4 @@
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 import {CachedDatastore} from './core/cached-datastore';
 import {PouchdbDatastore} from './core/pouchdb-datastore';
 import {DocumentCache} from './core/document-cache';

@@ -1,9 +1,9 @@
 import {AfterViewChecked, Component, Renderer2} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/core';
-import {Document} from 'idai-components-2/core';
-import {Messages} from 'idai-components-2/core';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
+import {Document} from 'idai-components-2';
+import {Messages} from 'idai-components-2';
 import {Loading} from '../../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';

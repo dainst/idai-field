@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Event, NavigationStart, Router} from '@angular/router';
-import {Messages} from 'idai-components-2/core';
+import {Messages} from 'idai-components-2';
 import {AppController} from './app-controller';
 import {ReadImagestore} from './core/imagestore/read-imagestore';
 

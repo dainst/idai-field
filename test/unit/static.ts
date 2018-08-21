@@ -1,6 +1,6 @@
-import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/core';
-import {IdaiFieldFeatureDocument} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
+import {IdaiFieldDocument} from 'idai-components-2';
+import {IdaiFieldFeatureDocument} from 'idai-components-2';
 
 
 /**

@@ -1,4 +1,4 @@
-import {ProjectConfiguration} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2';
 import {ConnectedDocsResolution} from "../../../../app/core/model/connected-docs-resolution";
 
 

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiFieldDocument} from 'idai-components-2/core';
-import {ProjectConfiguration} from 'idai-components-2/core';
-import {IdaiFieldFeatureDocument} from 'idai-components-2/core';
+import {IdaiFieldDocument} from 'idai-components-2';
+import {ProjectConfiguration} from 'idai-components-2';
+import {IdaiFieldFeatureDocument} from 'idai-components-2';
 import {on, tripleEqual, doWhen, isEmpty} from 'tsfun';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';

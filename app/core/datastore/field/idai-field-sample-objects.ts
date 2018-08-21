@@ -1,4 +1,4 @@
-import {NewDocument} from 'idai-components-2/core';
+import {NewDocument} from 'idai-components-2';
 
 export const DOCS: NewDocument[] = [
     {

@@ -1,4 +1,4 @@
-import {ProjectConfiguration, Document} from 'idai-components-2/core';
+import {ProjectConfiguration, Document} from 'idai-components-2';
 import {isNot, includedIn, isDefined, isEmpty, flatMap, to, on, empty, copy} from 'tsfun';
 import {Edges} from './edges-builder';
 

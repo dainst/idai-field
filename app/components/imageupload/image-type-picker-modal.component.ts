@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2/core';
-import {ProjectConfiguration, IdaiType} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
+import {ProjectConfiguration, IdaiType} from 'idai-components-2';
 
 @Component({
     selector: 'type-picker-modal',

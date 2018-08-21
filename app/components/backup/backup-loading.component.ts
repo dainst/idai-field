@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Messages} from 'idai-components-2/core';
+import {Messages} from 'idai-components-2';
 import {M} from '../../m';
 import {Backup} from './backup';
 import {SettingsService} from '../../core/settings/settings-service';

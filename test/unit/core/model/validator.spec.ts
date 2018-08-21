@@ -1,4 +1,4 @@
-import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/core';
+import {ProjectConfiguration} from 'idai-components-2/core';
 import {Validator} from '../../../../app/core/model/validator';
 import {M} from '../../../../app/m';
 

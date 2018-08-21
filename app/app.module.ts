@@ -5,8 +5,6 @@ import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {
-    ConfigLoader,
-    ConfigReader,
     IdaiDocumentsModule,
     IdaiMessagesModule,
     MD,
@@ -47,7 +45,8 @@ import {UsernameProvider} from './core/settings/username-provider';
 import {IndexFacade} from './core/datastore/index/index-facade';
 import {FulltextIndexer} from './core/datastore/index/fulltext-indexer';
 import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
-import {ConnectedDocsWriter} from './core/model/connected-docs-writer';
+import {ConfigReader} from '../components/src/core/configuration/config-reader';
+import {ConfigLoader} from '../components/src/core/configuration/config-loader';
 
 
 const remote = require('electron').remote;

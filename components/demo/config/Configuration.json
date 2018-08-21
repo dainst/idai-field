@@ -1,0 +1,149 @@
+{
+  "types": {
+    "Operation": {},
+    "Object": {
+      "parent": "Operation",
+      "fields": {
+        "minimalist_default": {},
+        "single_input": {
+          "inputType": "input"
+        },
+        "some_date": {
+          "inputType": "date"
+        },
+        "unsigned_integer_input": {
+          "inputType": "unsignedInt"
+        },
+        "float_input": {
+          "inputType": "float"
+        },
+        "unsigned_float_input": {
+          "inputType": "unsignedFloat"
+        },
+        "multiple_input": {
+          "inputType": "inputs"
+        },
+        "text": {
+          "inputType": "text"
+        },
+        "boolean": {
+          "inputType": "boolean"
+        },
+        "single_select_dropdown": {
+          "inputType": "dropdown",
+          "valuelist": [
+            "Alabaster",
+            "Amber",
+            "Antler"
+          ]
+        },
+        "single_select_radio": {
+          "inputType": "radio",
+          "valuelist": [
+            "Radio",
+            "CD",
+            "Television",
+            "Internets"
+          ]
+        },
+        "multiselect_checkbox": {
+          "inputType": "checkboxes",
+          "valuelist": [
+            "check",
+            "this",
+            "and/or",
+            "that"
+          ]
+        },
+        "multiselect_multiselect": {
+          "inputType": "multiselect",
+          "valuelist": [
+            "Acid Jazz",
+            "Avant-Garde Jazz",
+            "Bebop",
+            "Big Band",
+            "Blue Note",
+            "Contemporary Jazz",
+            "Cool",
+            "Crossover Jazz",
+            "Dixieland",
+            "Ethio-jazz",
+            "Fusion",
+            "Gypsy Jazz",
+            "Hard Bop",
+            "Latin Jazz",
+            "Mainstream Jazz",
+            "Ragtime",
+            "Smooth Jazz",
+            "Trad Jazz"
+          ]
+        },
+        "hasPeriod": {
+          "inputType": "dropdownRange"
+        },
+        "dating_input": {
+          "inputType": "dating"
+        },
+        "dimension": {
+          "inputType": "dimension",
+          "unitSuffix": "ü.NN.",
+          "positionValues": [
+            "am Bruch",
+            "oben",
+            "unten"
+          ]
+        }
+      }
+    },
+    "Object_enhanced": {
+      "parent": "Object",
+      "fields": {
+        "Dimensions": {},
+        "Storage": {},
+        "Description": {},
+        "range_start": {},
+        "range_end": {}
+      }
+    },
+    "Section": {},
+    "Drawing": {
+      "parent": "Image"
+    }
+  },
+  "relations": [
+    {
+      "domain": [
+        "Section"
+      ],
+      "inverse": "NO-INVERSE",
+      "name": "isRecordedIn",
+      "range": [
+        "Object"
+      ]
+    },
+    {
+      "name": "Belongs to",
+      "inverse": "Includes",
+      "domain": ["Object", "Object_enhanced", "Section"],
+      "range": ["Object", "Object_enhanced", "Section"]
+    },
+    {
+      "name": "Includes",
+      "inverse": "Belongs to",
+      "domain": ["Object", "Object_enhanced", "Section"],
+      "range": ["Object", "Object_enhanced", "Section"]
+    },
+    {
+      "name": "Found in",
+      "inverse": "Find spot of",
+      "domain": ["Object", "Object_enhanced"],
+      "range": ["Section"]
+    },
+    {
+      "name": "Find spot of",
+      "inverse": "Found in",
+      "domain": ["Section"],
+      "range": ["Object", "Object_enhanced"]
+    }
+  ]
+}

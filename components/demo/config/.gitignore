@@ -1,0 +1,12 @@
+*
+
+!.gitignore
+!Configuration.json
+!Fields-Custom.json
+!Hidden.json
+!Hidden-Custom.json
+!Language.json
+!Language-Custom.json
+!Search.json
+!Periods.json
+!Order.json

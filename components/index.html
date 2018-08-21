@@ -1,0 +1,94 @@
+<!DOCTYPE html> 
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>iDAI.components 2</title>
+
+    <meta name="author" content="DAINST DEVS">
+
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="src/css/idai-components-2.css">
+
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="node_modules/leaflet/dist/leaflet.js"></script>
+    <script src="node_modules/Leaflet.vector-markers/dist/leaflet-vector-markers.js"></script>
+
+    <script>
+        System.config({
+
+            paths: {
+                'angular2-uuid/*': 'node_modules/angular2-uuid/*.js'
+            },
+            map: {
+                'app': 'demo/app',
+                json: 'app/util/systemjs-json-plugin',
+                '@angular/platform-browser-dynamic': 'node_modules/@angular/platform-browser-dynamic',
+                '@angular/platform-browser': 'node_modules/@angular/platform-browser',
+                '@angular/http': 'node_modules/@angular/http',
+                '@angular/common': 'node_modules/@angular/common',
+                '@angular/core': 'node_modules/@angular/core',
+                '@angular/router': 'node_modules/@angular/router',
+                '@angular/compiler': 'node_modules/@angular/compiler',
+                '@angular/forms': 'node_modules/@angular/forms',
+                '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
+                'rxjs': 'node_modules/rxjs',
+                'ts-md5': 'node_modules/ts-md5',
+                'tsfun': 'node_modules/tsfun'
+            },
+            packages: {
+                'src/core': {
+                    format: 'cjs',
+                    defaultExtension: 'js'
+                },
+                'src/field': {
+                    format: 'cjs',
+                    defaultExtension: 'js'
+                },
+                'demo/app': {
+                    main: 'main.js',
+                    format: 'cjs',
+                    defaultExtension: 'js'
+                },
+                tsfun: {
+                    main: 'index.js',
+                    defaultExtension: 'js'
+                },
+                node_modules: {
+                    defaultExtension: 'js'
+                },
+                'demo/config' : {
+                    defaultExtension: false,
+                    meta: {
+                        '*.json': {
+                            loader: 'json'
+                        }
+                    }
+                },
+                '@angular/core'                    : {main: 'bundles/core.umd.min.js'},
+                '@angular/common'                  : {main: 'bundles/common.umd.min.js'},
+                '@angular/compiler'                : {main: 'bundles/compiler.umd.min.js'},
+                '@angular/router'                  : {main: 'bundles/router.umd.min.js'},
+                '@angular/platform-browser'        : {main: 'bundles/platform-browser.umd.min.js'},
+                '@angular/platform-browser-dynamic': {main: 'bundles/platform-browser-dynamic.umd.min.js'},
+                '@angular/http'                    : {main: 'bundles/http.umd.min.js'},
+                '@angular/forms'                   : {main: 'bundles/forms.umd.min.js'},
+                'rxjs'                             : {main: 'index.js'}
+            }
+        });
+        System.import('app')
+                .then(null, console.error.bind(console));
+    </script>
+
+</head>
+
+<body>
+    <idai-components-demo-app>Loading...</idai-components-demo-app>
+</body>
+
+</html>

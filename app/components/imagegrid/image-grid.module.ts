@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/core';
-import {IdaiWidgetsModule} from 'idai-components-2/widgets';
+import {IdaiWidgetsModule} from 'idai-components-2/core';
 import {IdaiMessagesModule} from 'idai-components-2/core';
 import {ImageGridComponent} from './image-grid.component';
 import {DropAreaComponent} from './drop-area.component';

@@ -13,7 +13,7 @@ import {
     Messages,
     ProjectConfiguration
 } from 'idai-components-2/core';
-import {IdaiWidgetsModule} from 'idai-components-2/widgets';
+import {IdaiWidgetsModule} from 'idai-components-2/core';
 import {IdaiFieldAppConfigurator} from 'idai-components-2/core';
 import {routing} from './app.routing';
 import {M} from './m';

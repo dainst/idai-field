@@ -3,7 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/core';
-import {IdaiWidgetsModule} from 'idai-components-2/widgets'
+import {IdaiWidgetsModule} from 'idai-components-2/core'
 import {imagesRouting} from './image-overview.routing';
 import {ImageOverviewComponent} from './image-overview.component';
 import {WidgetsModule} from '../../widgets/widgets.module';

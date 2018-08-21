@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiDocumentsModule} from 'idai-components-2/core';
-import {IdaiWidgetsModule} from 'idai-components-2/widgets';
+import {IdaiWidgetsModule} from 'idai-components-2/core';
 import {ProjectConfiguration} from 'idai-components-2/core';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/detail/geometry-view.component';

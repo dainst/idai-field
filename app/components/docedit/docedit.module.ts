@@ -5,7 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {IdaiDocumentsModule} from 'idai-components-2/core';
 import {DoceditComponent} from './docedit.component';
 import {RouterModule} from '@angular/router';
-import {IdaiWidgetsModule} from 'idai-components-2/widgets';
+import {IdaiWidgetsModule} from 'idai-components-2/core';
 import {IdaiMessagesModule} from 'idai-components-2/core';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {DoceditImageTabComponent} from './tabs/docedit-image-tab.component';

@@ -13,6 +13,10 @@ cache:
   - '%APPDATA%\npm-cache'
   - '%USERPROFILE%\.electron'
 
+environment:
+  GH_TOKEN:
+    secure: febq/MqfzS/3JfchQVtlarZApEi80xRea6Z5qvUTYeb1vH8ByxIXqavTh6DIo53/
+
 init:
   - git config --global core.autocrlf input
 

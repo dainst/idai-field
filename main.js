@@ -8,6 +8,10 @@ const { autoUpdater } = require("electron-updater");
 const log = require("electron-log");
 autoUpdater.logger = log;
 
+// needed to fix notications in win 10
+// see https://github.com/electron/electron/issues/10864
+electron.app.setAppUserModelId("org.dainst.field")
+
 // Copy config file to appData if no config file exists in appData
 function copyConfigFile(destPath, appDataPath) {
 

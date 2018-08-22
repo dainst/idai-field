@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 
 
 @Component({
@@ -21,12 +20,11 @@ export class DropdownComponent {
     @Input() field: any;
 
 
-    constructor(private documentEditChangeMonitor: DocumentEditChangeMonitor) {}
+    constructor() {}
 
 
     public setValue(value: any) {
         
-        if (value == '') delete this.resource[this.field.name];
-        this.documentEditChangeMonitor.setChanged();
+        if (value === '') delete this.resource[this.field.name];
     }
 }

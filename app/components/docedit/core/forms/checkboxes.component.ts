@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 
 
 @Component({
@@ -17,7 +16,7 @@ export class CheckboxesComponent {
     @Input() resource: Resource;
     @Input() field: any;
 
-    constructor(private documentEditChangeMonitor: DocumentEditChangeMonitor) {}
+    constructor() {}
 
     public toggleBox(item: any) {
 
@@ -28,6 +27,5 @@ export class CheckboxesComponent {
         else this.resource[this.field.name].push(item);
 
         if (this.resource[this.field.name].length === 0) delete this.resource[this.field.name];
-        this.documentEditChangeMonitor.setChanged();
     }
 }

@@ -6,7 +6,6 @@ import {ReadDatastore} from 'idai-components-2';
 import {RelationDefinition} from 'idai-components-2';
 import {take, filter, flow, isNot, on} from 'tsfun';
 import {Suggestions} from './suggestions';
-import {DocumentEditChangeMonitor} from '../../core/document-edit-change-monitor';
 
 
 @Component({
@@ -46,10 +45,7 @@ export class RelationPickerComponent implements OnChanges {
     private updateSuggestionsMode = false;
 
 
-    constructor(private element: ElementRef,
-        private datastore: ReadDatastore,
-        private documentEditChangeMonitor: DocumentEditChangeMonitor
-    ) {}
+    constructor(private element: ElementRef, private datastore: ReadDatastore) {}
 
 
     public async ngOnChanges() {
@@ -97,8 +93,6 @@ export class RelationPickerComponent implements OnChanges {
         this.selectedTarget = document;
         this.idSearchString = '';
         this.suggestions = [];
-
-        this.documentEditChangeMonitor.setChanged();
     }
 
 
@@ -158,7 +152,6 @@ export class RelationPickerComponent implements OnChanges {
                 this.relations[this.relationDefinition.name].splice(this.relationIndex, 1);
             } else {
                 this.relations[this.relationDefinition.name].splice(this.relationIndex, 1);
-                this.documentEditChangeMonitor.setChanged();
             }
 
             if (this.relations[this.relationDefinition.name].length==0)

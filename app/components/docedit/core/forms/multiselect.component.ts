@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 
 
 @Component({
@@ -18,9 +17,6 @@ export class MultiselectComponent {
     @Input() field: any;
 
 
-    constructor(private documentEditChangeMonitor: DocumentEditChangeMonitor) {}
-
-
     public toggleItem(item: any) {
 
         if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
@@ -35,7 +31,5 @@ export class MultiselectComponent {
             this.field.valuelist.splice(valueListIndex, 1);
             this.resource[this.field.name].push(item);
         }
-
-        this.documentEditChangeMonitor.setChanged();
     }
 }

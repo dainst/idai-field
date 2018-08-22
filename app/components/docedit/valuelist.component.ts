@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {DocumentEditChangeMonitor} from "./core/document-edit-change-monitor";
+
 
 /**
  * @author Thomas Kleinke
@@ -22,7 +22,6 @@ export class ValuelistComponent {
 
     public resource: Resource;
 
-    constructor(private saveService: DocumentEditChangeMonitor) {}
 
     public ngOnChanges() {
 
@@ -36,7 +35,6 @@ export class ValuelistComponent {
         for (var i = 0; i < selectedOptions.length; i++) {
             this.resource[this.field.relationDefinition].push(selectedOptions.item(i).childNodes[0].nodeValue);
         }
-        this.saveService.setChanged();
     }
 
     public isSelected(item: string) {

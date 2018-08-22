@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 
 
 @Component({
@@ -18,19 +17,17 @@ export class BooleanComponent {
     @Input() fieldName: string;
 
 
-    constructor(private documentEditChangeMonitor: DocumentEditChangeMonitor) {}
+    constructor() {}
 
 
     public setValue(value: any) {
 
         this.resource[this.fieldName] = value;
-        this.documentEditChangeMonitor.setChanged();
     }
 
 
     public resetValue() {
 
         delete this.resource[this.fieldName];
-        this.documentEditChangeMonitor.setChanged();
     }
 }

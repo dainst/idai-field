@@ -1,5 +1,4 @@
 import {Component, Input, AfterViewInit, OnChanges, ElementRef} from '@angular/core';
-import {DocumentEditChangeMonitor} from './document-edit-change-monitor';
 import {FieldDefinition} from 'idai-components-2';
 
 
@@ -22,8 +21,7 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
 
     constructor(
-        private elementRef: ElementRef,
-        private saveService: DocumentEditChangeMonitor
+        private elementRef: ElementRef
     ) {}
 
 
@@ -43,11 +41,5 @@ export class EditFormComponent implements AfterViewInit, OnChanges {
 
         const inputElements: Array<HTMLElement> = this.elementRef.nativeElement.getElementsByTagName('input');
         if (inputElements.length > 0) inputElements[0].focus();
-    }
-
-    
-    public markAsChanged() {
-
-        this.saveService.setChanged();
     }
 }

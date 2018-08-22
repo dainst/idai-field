@@ -5,7 +5,6 @@ import {IdaiFieldImageDocument} from 'idai-components-2';
 import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {IdaiFieldImageDocumentReadDatastore} from "../../../core/datastore/field/idai-field-image-document-read-datastore";
-import {DocumentEditChangeMonitor} from '../core/document-edit-change-monitor';
 
 @Component({
     selector: 'docedit-image-tab',
@@ -28,8 +27,7 @@ export class DoceditImageTabComponent {
 
     constructor(
         private datastore: IdaiFieldImageDocumentReadDatastore,
-        private modalService: NgbModal,
-        private documentEditChangeMonitor: DocumentEditChangeMonitor
+        private modalService: NgbModal
     ) {
     }
 
@@ -76,7 +74,10 @@ export class DoceditImageTabComponent {
             isDepictedIn.splice(isDepictedIn.indexOf(targetToRemove), 1);
         }
 
-        if (targetsToRemove.length > 0) this.documentEditChangeMonitor.setChanged();
+        if (targetsToRemove.length > 0) {
+            // TODO adjust
+            // this.documentEditChangeMonitor.setChanged();
+        }
 
         if (isDepictedIn.length == 0) {
             this.document.resource.relations['isDepictedIn'] = [];
@@ -135,7 +136,9 @@ export class DoceditImageTabComponent {
         imagePickerModal.result.then(
             (selectedImages: Array<IdaiFieldImageDocument>) => {
                 this.addIsDepictedInRelations(selectedImages);
-                this.documentEditChangeMonitor.setChanged();
+
+                // this.documentEditChangeMonitor.setChanged();
+                // TODO adjust
             }
         ).catch(() => {
             // Cancel

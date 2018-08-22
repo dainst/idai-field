@@ -9,7 +9,6 @@ import {
 } from 'idai-components-2';
 import {M} from '../../../m';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
-import {DocumentEditChangeMonitor} from '../core/document-edit-change-monitor';
 
 const moment = require('moment');
 
@@ -36,8 +35,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
         private messages: Messages,
-        private projectConfiguration: ProjectConfiguration,
-        private documentEditChangeMonitor: DocumentEditChangeMonitor) {}
+        private projectConfiguration: ProjectConfiguration) {}
 
 
     async ngOnChanges() {
@@ -102,8 +100,6 @@ export class DoceditConflictsTabComponent implements OnChanges {
             this.selectedRevision = undefined;
             this.differingFields = [];
         }
-
-        this.documentEditChangeMonitor.setChanged();
     }
 
 

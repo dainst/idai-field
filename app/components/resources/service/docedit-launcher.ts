@@ -5,7 +5,6 @@ import {IdaiFieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {DoceditActiveTabService} from '../../docedit/docedit-active-tab-service';
 import {ViewFacade} from '../view/view-facade';
-import {DocumentEditChangeMonitor} from '../../docedit/core/document-edit-change-monitor';
 
 @Injectable()
 /**
@@ -18,7 +17,6 @@ export class DoceditLauncher {
     constructor(
             private modalService: NgbModal,
             private doceditActiveTabService: DoceditActiveTabService,
-            private documentEditChangeMonitor: DocumentEditChangeMonitor,
             private viewFacade: ViewFacade
     ) {}
 
@@ -60,7 +58,8 @@ export class DoceditLauncher {
 
     private async handleClosed(closeReason: string) {
 
-        this.documentEditChangeMonitor.reset();
+        // this.documentEditChangeMonitor.reset();
+        // TODO reset
 
         if (closeReason == 'deleted') {
             this.viewFacade.deselect();

@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {Resource} from 'idai-components-2';
-import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 
 
 @Component({
@@ -11,7 +10,9 @@ import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 })
 export class DateComponent {
 
+
     @Input() resource: Resource;
+
     @Input('field')
     set field(value: any) {
 
@@ -33,14 +34,12 @@ export class DateComponent {
     private _field : any;
 
 
-    constructor(private documentEditChangeMonitor: DocumentEditChangeMonitor,
-                public dateFormatter: NgbDateParserFormatter) {}
+    constructor(public dateFormatter: NgbDateParserFormatter) {}
 
 
     public update(newValue: any) {
 
         this.resource[this._field.name] = this.dateFormatter.format(newValue);
         this.dateNotParsed = false;
-        this.documentEditChangeMonitor.setChanged();
     }
 }

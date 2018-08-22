@@ -53,7 +53,6 @@ describe('DocumentHolder', () => {
         const pacman = jasmine.createSpyObj('PersistenceManager', ['persist']);
         pacman.persist.and.callFake((doc,b,c,d) => Promise.resolve(doc));
         const usernameProvider = jasmine.createSpyObj('UsernameProvider', ['getUsername']);
-        const cmon = jasmine.createSpyObj('DocumentEditChangesMonitor', ['reset']);
         datastore = jasmine.createSpyObj('Datastore', ['get']);
 
         docHolder = new DocumentHolder(
@@ -63,7 +62,6 @@ describe('DocumentHolder', () => {
             undefined,
             undefined,
             usernameProvider,
-            cmon,
             datastore
         );
     });

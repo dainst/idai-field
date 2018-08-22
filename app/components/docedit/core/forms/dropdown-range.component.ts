@@ -1,6 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 
 
 @Component({
@@ -23,7 +22,7 @@ export class DropdownRangeComponent implements OnChanges {
     @Input() field: any;
 
 
-    constructor(private documentEditChangeMonitor: DocumentEditChangeMonitor) {}
+    constructor() {}
 
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -53,7 +52,6 @@ export class DropdownRangeComponent implements OnChanges {
             delete this.resource[this.field.name];
             this.resource[this.field.name + 'End'] = undefined;
         }
-        this.documentEditChangeMonitor.setChanged();
     }
 
 
@@ -65,6 +63,5 @@ export class DropdownRangeComponent implements OnChanges {
         } else {
             this.resource[this.field.name + 'End'] = value;
         }
-        this.documentEditChangeMonitor.setChanged();
     }
 }

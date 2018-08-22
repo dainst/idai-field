@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 
 
 @Component({
@@ -19,7 +18,7 @@ export class InputsComponent {
     @Input() fieldName: string;
 
     
-    constructor(private documentEditChangeMonitor: DocumentEditChangeMonitor) {}
+    constructor() {}
 
     
     public customTrackBy(index: number, obj: any): any {
@@ -32,13 +31,11 @@ export class InputsComponent {
 
         if (this.resource[this.fieldName] == undefined) this.resource[this.fieldName] = new Array<String>();
         this.resource[this.fieldName].push('');
-        this.documentEditChangeMonitor.setChanged();
     }
     
     
     public removeInputArrayItemAtIndex(index: any) {
 
         this.resource[this.fieldName].splice(index, 1);
-        this.documentEditChangeMonitor.setChanged();
     }
 }

@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {DecimalPipe} from '@angular/common';
 import {Resource} from 'idai-components-2';
-import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 
 
 @Component({
@@ -21,10 +20,7 @@ export class DimensionComponent {
     public newDimension: any = null;
 
 
-    constructor(
-        private documentEditChangeMonitor: DocumentEditChangeMonitor,
-        private decimalPipe: DecimalPipe) {
-    }
+    constructor(private decimalPipe: DecimalPipe) {}
 
 
     public createNewDimension() {
@@ -83,7 +79,6 @@ export class DimensionComponent {
     public removeDimensionAtIndex(dimensionIndex: number) {
 
         this.resource[this.field.name].splice(dimensionIndex, 1);
-        this.documentEditChangeMonitor.setChanged();
     }
 
 
@@ -113,7 +108,5 @@ export class DimensionComponent {
     	} else {
     	    delete dimension['editing'];
         }
-
-    	this.documentEditChangeMonitor.setChanged();
     }
 }

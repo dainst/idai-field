@@ -1,20 +1,15 @@
 import {Injectable} from '@angular/core';
-import {
-    DatastoreErrors,
-    Document,
-    ProjectConfiguration
-} from 'idai-components-2';
+import {DatastoreErrors, Document, ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
-import {clone} from '../../util/object-util';
 import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {flow, includedIn, isNot, mapObject, to, uniteObject} from 'tsfun';
 import {Validations} from '../../core/model/validations';
 import {TypeUtility} from '../../core/model/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
-import {DocumentEditChangeMonitor} from './core/document-edit-change-monitor';
+import {clone} from '../../util/object-util';
+import {flow, includedIn, isNot, jsonEqual, mapObject, to, uniteObject} from 'tsfun';
 
 
 @Injectable()
@@ -47,19 +42,21 @@ export class DocumentHolder {
         private imagestore: Imagestore,
         private typeUtility: TypeUtility,
         private usernameProvider: UsernameProvider,
-        private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private datastore: DocumentDatastore) {
     }
 
-    public isChanged = () => this.documentEditChangeMonitor.isChanged();
 
     public getClonedDocument = () => this.clonedDocument;
+
+
+    public isChanged = () => !jsonEqual(this.clonedDocument.resource)(this.oldVersion.resource);
 
 
     public changeType(newType: string) {
 
         this.clonedDocument.resource.type = newType;
-        this.documentEditChangeMonitor.setChanged();
+        // this.documentEditChangeMonitor.setChanged();
+        // TODO set changed
 
         return {
             invalidFields: this.validateFields(),
@@ -106,7 +103,6 @@ export class DocumentHolder {
         );
 
         await this.fetchLatestRevision();
-        this.documentEditChangeMonitor.reset();
     }
 
 

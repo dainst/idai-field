@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
-import {DocumentEditChangeMonitor} from '../document-edit-change-monitor';
 
 
 @Component({
@@ -26,13 +25,12 @@ export class DatingComponent {
     public newDating: {} = null as any;
 
 
-    constructor(private documentEditChangeMonitor: DocumentEditChangeMonitor) {}
+    constructor() {}
 
 
     public removeDating(index: number) {
 
         this.resource[this.field.name].splice(index, 1);
-        this.documentEditChangeMonitor.setChanged();
     }
 
 
@@ -50,7 +48,6 @@ export class DatingComponent {
         if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
         this.resource[this.field.name].push(this.convertDating(this.newDating));
         this.newDating = null as any;
-        this.documentEditChangeMonitor.setChanged();
     }
 
 

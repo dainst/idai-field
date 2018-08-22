@@ -84,7 +84,8 @@ config.map = {
     'string_decoder': '@node/string_decoder',
     'memorystream': 'node_modules/memorystream/index.js',
     'pouchdb-load': 'node_modules/pouchdb-load/dist/pouchdb.load.js',
-    'pouchdb-replication-stream': 'node_modules/pouchdb-replication-stream/dist/pouchdb.replication-stream.js'
+    'pouchdb-replication-stream': 'node_modules/pouchdb-replication-stream/dist/pouchdb.replication-stream.js',
+    'showdown': 'node_modules/showdown/dist/showdown.js'
 };
 
 config.meta = {

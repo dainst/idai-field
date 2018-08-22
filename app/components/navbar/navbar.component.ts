@@ -24,13 +24,8 @@ export class NavbarComponent implements OnInit {
 
     constructor(private viewFacade: ViewFacade,
                 private router: Router) {
-;
-        router.events.subscribe(() => {
-            this.activeRoute = router.url;
-            const i = this.activeRoute.lastIndexOf('/') + 1;
-            const sub = this.activeRoute.substr(i);
-            if (this.views.map(to('name')).includes(sub)) this.selectedView = this.views.find(on('name:')(sub))
-        });
+
+        router.events.subscribe(() => this.activeRoute = router.url);
     }
 
 

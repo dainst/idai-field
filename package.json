@@ -2,7 +2,7 @@
   "name": "idai-field-client",
   "description": "iDAI.field 2 Client",
   "main": "main.js",
-  "version": "2.4.15",
+  "version": "2.4.16",
   "license": "Apache-2.0",
   "author": "German Archaeological Institute",
   "scripts": {
@@ -19,7 +19,7 @@
     "package-win": "build -w nsis"
   },
   "build": {
-    "appId": "org.dainst.idai-field-client",
+    "appId": "org.dainst.field",
     "productName": "iDAI.field",
     "directories": {
       "output": "release"

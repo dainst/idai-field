@@ -10,6 +10,8 @@ cache:
   - node_modules
   - "$HOME/.electron"
   - "$HOME/.cache"
+  - $HOME/Library/Caches/electron
+  - $HOME/Library/Caches/electron-builder
 addons:
   apt:
     packages:

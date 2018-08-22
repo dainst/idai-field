@@ -14,8 +14,14 @@ excavations, older ones as well as those to come. Yet, due to the nature
 of its adjustable data model and the fact it is open source software, any 
 interested third party is free to reuse and adjust it to their needs.
    
+
+## Installation
+
+You can install the latest version of iDAI.field by downloading and running the [setup file](https://github.com/dainst/idai-field/releases/latest) corresponding to your operating system (MacOS or Windows).
+
+
    
-## Quickstart
+## Development
 
 Development of iDAI.field works under **MacOS**, **Windows** and **Linux**. In any case, before you start, make sure you have [NodeJS](https://nodejs.org/en/) > 7.0.0 as well as Node Package Manager ([NPM](https://www.npmjs.com/)) installed.  
 

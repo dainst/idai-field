@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ViewDefinition} from '../resources/view/state/view-definition';
-import {to, on} from 'tsfun';
+import {to, on, isNot} from 'tsfun';
 
 @Component({
     moduleId: module.id,
@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit {
 
 
     constructor(private viewFacade: ViewFacade,
-                router: Router) {
+                private router: Router) {
 
         router.events.subscribe(() => this.activeRoute = router.url);
     }
@@ -43,10 +43,19 @@ export class NavbarComponent implements OnInit {
     }
 
 
+    public selectableViews() {
+
+        return this.views
+            ? this.views.filter(isNot(on('name')(this.selectedView)))
+            : [];
+    }
+
+
     public goto(arg: any) {
 
         if (this.views.map(to('name')).includes(arg)) {
             this.selectedView = this.views.find(on('name:')(arg));
+            if (this.selectedView) this.router.navigate(['resources', this.selectedView.name])
         }
     }
 }

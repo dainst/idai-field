@@ -32,7 +32,7 @@
 
                 <div ngbDropdownMenu>
 
-                    <div *ngFor="let view of views; let i=index"
+                    <div *ngFor="let view of selectableViews(); let i=index"
                          (click)="goto(view.name)"
                          class="navbar-hover-element dropdown-item"
                          [class.active]="isActiveRoute('/resources/' + view.name)">

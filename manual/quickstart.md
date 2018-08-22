@@ -21,7 +21,7 @@ gleichzeitig verwendet wird. Bitte beachten Sie, dass Bilder in jedem Fall über
 Client importiert werden müssen. Bilddateien, die manuell in das Bilderverzeichnis
 eingefügt werden, werden von der Anwendung **nicht** korrekt erkannt. 
 
-3. Klicken Sie auf den Projektnamen *"test"*, um die Projektverwaltung aufzurufen. Hier
+3. Klicken Sie auf den Projektnamen *"test"*, um die **Projektverwaltung** aufzurufen. Hier
 können Sie über den Plus-Button ein neues Projekt anlegen. Erlaubte Zeichen für den
 Projektnamen sind Buchstaben, Zahlen und Bindestriche. Sobald das neue Projekt
 geladen wurde, können Sie über den Editierungs-Button in der Projektverwaltung allgemeine

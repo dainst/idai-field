@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ViewDefinition} from '../resources/view/state/view-definition';
-import {to, on} from 'tsfun';
 
 @Component({
     moduleId: module.id,
@@ -19,8 +18,6 @@ export class NavbarComponent implements OnInit {
     public views: Array<ViewDefinition>;
     public activeRoute: string;
 
-    public selectedView: ViewDefinition|undefined;
-
 
     constructor(private viewFacade: ViewFacade,
                 router: Router) {
@@ -32,7 +29,6 @@ export class NavbarComponent implements OnInit {
     public ngOnInit() {
 
         this.views = this.viewFacade.getOperationSubtypeViews();
-        this.selectedView = this.views[0];
     }
 
 
@@ -40,13 +36,5 @@ export class NavbarComponent implements OnInit {
 
         if (!this.activeRoute) return;
         return this.activeRoute.startsWith(route);
-    }
-
-
-    public goto(arg: any) {
-
-        if (this.views.map(to('name')).includes(arg)) {
-            this.selectedView = this.views.find(on('name:')(arg));
-        }
     }
 }

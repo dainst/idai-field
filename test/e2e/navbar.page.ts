@@ -16,7 +16,7 @@ export class NavbarPage {
 
     public static clickNavigateToExcavation() {
 
-        return common.click(element.all(by.css('.nav-link')).get(1));
+        return common.click(element.all(by.css('.nav-link')).get(2));
     };
 
 
@@ -26,15 +26,15 @@ export class NavbarPage {
     };
 
 
-    public static clickNavigateToMatrix() {
+    public static clickNavigateToImages() {
 
-        return common.click(element.all(by.css('.nav-link')).get(2));
+        return common.click(element.all(by.css('.nav-link')).get(8));
     };
 
 
-    public static clickNavigateToImages() {
+    public static clickNavigateToMatrix() {
 
-        return common.click(element.all(by.css('.nav-link')).get(3));
+        return common.click(element.all(by.css('.nav-link')).get(6));
     };
 
 

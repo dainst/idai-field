@@ -10,7 +10,6 @@ import {Resource} from 'idai-components-2';
 })
 export class DateComponent {
 
-
     @Input() resource: Resource;
 
     @Input('field')
@@ -39,7 +38,14 @@ export class DateComponent {
 
     public update(newValue: any) {
 
-        this.resource[this._field.name] = this.dateFormatter.format(newValue);
+        const formattedDate: string = this.dateFormatter.format(newValue);
+
+        if (formattedDate !== '') {
+            this.resource[this._field.name] = formattedDate;
+        } else {
+            delete this.resource[this._field.name];
+        }
+
         this.dateNotParsed = false;
     }
 }

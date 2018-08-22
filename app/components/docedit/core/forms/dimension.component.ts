@@ -79,6 +79,7 @@ export class DimensionComponent {
     public removeDimensionAtIndex(dimensionIndex: number) {
 
         this.resource[this.field.name].splice(dimensionIndex, 1);
+        if (this.resource[this.field.name].length === 0) delete this.resource[this.field.name];
     }
 
 

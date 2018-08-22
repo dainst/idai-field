@@ -19,27 +19,45 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="nav navbar-nav mr-auto">
+
+
             <li class="nav-item">
                 <a class="nav-link navbar-hover-element" [class.active]="isActiveRoute('/resources/project')"
                    href="#" routerLink="/resources/project">Übersicht</a>
             </li>
+
+            <div ngbDropdown class="nav-item">
+
+                <li id="navbar-dropdown" class="navbar-hover-element" ngbDropdownToggle></li>
+
+                <div ngbDropdownMenu>
+
+                    <div *ngFor="let view of views; let i=index"
+                         (click)="goto(view.name)"
+                         class="navbar-hover-element dropdown-item"
+                         [class.active]="isActiveRoute('/resources/' + view.name)">
+
+                        <span class="dropdown-entry-label">{{view.label}}</span>
+                    </div>
+                </div>
+            </div>
+
+
+
             <li class="nav-item">
-                <a class="nav-link navbar-separator-element">|</a>
+                <a class="nav-link navbar-hover-element" [class.active]="isActiveRoute('/resources/' + selectedView.name)"
+                   href="#" routerLink="{{ '/resources/' + selectedView.name }}">{{selectedView.label}}</a>
             </li>
-            <li *ngFor="let view of views; let i=index" class="nav-item">
-                <a class="nav-link navbar-hover-element" [class.active]="isActiveRoute('/resources/' + view.name)"
-                   href="#" routerLink="/resources/{{view.name}}">{{view.label}}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link navbar-separator-element">|</a>
-            </li>
+
+
             <li class="nav-item">
                 <a class="nav-link navbar-hover-element" [class.active]="isActiveRoute('/matrix')"
                    href="#" routerLink="/matrix">Matrix</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link navbar-separator-element">|</a>
-            </li>
+
+
+
+
             <li class="nav-item">
                 <a class="nav-link navbar-hover-element" [class.active]="isActiveRoute('/images')"
                    href="#" routerLink="/images">Bilder</a>

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ViewDefinition} from '../resources/view/state/view-definition';
-import {to, on, isNot, empty} from 'tsfun';
+import {to, on, isNot} from 'tsfun';
 
 @Component({
     moduleId: module.id,
@@ -24,12 +24,12 @@ export class NavbarComponent implements OnInit {
 
     constructor(private viewFacade: ViewFacade,
                 private router: Router) {
-
+;
         router.events.subscribe(() => {
             this.activeRoute = router.url;
-
-            const viewName = this.activeRoute.substr(this.activeRoute.lastIndexOf('/') + 1);
-            if (isNot(empty)(viewName)) this.goto(viewName, true);
+            const i = this.activeRoute.lastIndexOf('/') + 1;
+            const sub = this.activeRoute.substr(i);
+            if (this.views.map(to('name')).includes(sub)) this.selectedView = this.views.find(on('name:')(sub))
         });
     }
 
@@ -56,11 +56,11 @@ export class NavbarComponent implements OnInit {
     }
 
 
-    public goto(viewName: string, dontJump = false) {
+    public goto(arg: any) {
 
-        if (this.views.map(to('name')).includes(viewName)) {
-            this.selectedView = this.views.find(on('name:')(viewName));
-            if (this.selectedView && !dontJump) this.router.navigate(['resources', this.selectedView.name])
+        if (this.views.map(to('name')).includes(arg)) {
+            this.selectedView = this.views.find(on('name:')(arg));
+            if (this.selectedView) this.router.navigate(['resources', this.selectedView.name])
         }
     }
 }

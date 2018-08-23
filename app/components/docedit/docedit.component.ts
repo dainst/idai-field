@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document, Messages, IdaiFieldDocument, DatastoreErrors, IdaiFieldImageDocument}
+import {Document, Messages, IdaiFieldDocument, DatastoreErrors, IdaiFieldImageDocument, ProjectConfiguration}
     from 'idai-components-2';
-import {ProjectConfiguration} from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../util/object-util';
 import {M} from '../../m';
@@ -143,6 +142,20 @@ export class DoceditComponent {
     }
 
 
+    private async handleSaveError(errorWithParams: any) {
+
+        if (errorWithParams[0] == DatastoreErrors.DOCUMENT_NOT_FOUND) {
+            this.handleDeletedConflict();
+            return undefined;
+        } else if (errorWithParams.length > 0) {
+            this.messages.add(errorWithParams);
+        } else {
+            console.error(errorWithParams);
+            return [M.DOCEDIT_SAVE_ERROR];
+        }
+    }
+
+
     private async fetchParentLabel(document: IdaiFieldDocument|IdaiFieldImageDocument) {
 
         return !document.resource.relations.isRecordedIn
@@ -212,20 +225,6 @@ export class DoceditComponent {
             viaSaveButton: viaSaveButton
         });
         this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
-    }
-
-
-    private async handleSaveError(errorWithParams: any) {
-
-        if (errorWithParams[0] == DatastoreErrors.DOCUMENT_NOT_FOUND) {
-            this.handleDeletedConflict();
-            return undefined;
-        } else if (errorWithParams.length > 0) {
-            this.messages.add(errorWithParams);
-        } else {
-            console.error(errorWithParams);
-            return [M.DOCEDIT_SAVE_ERROR];
-        }
     }
 
 

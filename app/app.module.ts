@@ -1,20 +1,12 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
+import {HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
+import localeDe from '@angular/common/locales/de';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {
-    ConfigLoader,
-    ConfigReader,
-    IdaiDocumentsModule,
-    IdaiMessagesModule,
-    MD,
-    Messages,
-    ProjectConfiguration
-} from 'idai-components-2';
-import {IdaiWidgetsModule} from 'idai-components-2';
-import {IdaiFieldAppConfigurator} from 'idai-components-2';
+import {ConfigLoader, ConfigReader, IdaiDocumentsModule, IdaiMessagesModule, MD, Messages,
+    ProjectConfiguration, IdaiWidgetsModule, IdaiFieldAppConfigurator} from 'idai-components-2';
 import {routing} from './app.routing';
 import {M} from './m';
 import {AppComponent} from './app.component';
@@ -56,6 +48,9 @@ let projectConfiguration: ProjectConfiguration|undefined = undefined;
 let fulltextIndexer: FulltextIndexer|undefined = undefined;
 let constraintIndexer: ConstraintIndexer|undefined = undefined;
 let indexFacade: IndexFacade|undefined = undefined;
+
+
+registerLocaleData(localeDe, 'de');
 
 
 @NgModule({

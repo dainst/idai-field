@@ -55,6 +55,7 @@ config.packages['idai-components-2'] = {
     defaultExtension: 'js'
 };
 
+<<<<<<< HEAD
 
 
 config.packages['angular-uuid'] = {
@@ -62,6 +63,8 @@ config.packages['angular-uuid'] = {
     defaultExtension: 'js'
 };
 
+=======
+>>>>>>> 490200399298195d1594e880962a43a3d6cae389
 config.packages.node_modules = {
     defaultExtension: 'js'
 };
@@ -91,6 +94,7 @@ function packUmd(pkgName) {
 }
 ngPackageNames.forEach(packUmd);
 
+<<<<<<< HEAD
 
 config.packages['@angular/common/http'] = { main: '../bundles/common-http.umd.js', defaultExtension: 'js' }
 
@@ -99,10 +103,12 @@ config.packages['@angular/common/http'] = { main: '../bundles/common-http.umd.js
 //     'angular2-uuid/*': 'node_modules/angular2-uuid/*.js'
 // };
 
+=======
+>>>>>>> 490200399298195d1594e880962a43a3d6cae389
 config.map = {
     'app': 'app',
     '@angular': 'node_modules/@angular',
-    '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
+    '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.umd.js',
     'json': 'app/util/systemjs-json-plugin',
     'rxjs': 'node_modules/rxjs',
     'rxjs-compat': 'node_modules/rxjs-compat',
@@ -127,7 +133,8 @@ config.map = {
     'memorystream': 'node_modules/memorystream/index.js',
     'pouchdb-load': 'node_modules/pouchdb-load/dist/pouchdb.load.js',
     'pouchdb-replication-stream': 'node_modules/pouchdb-replication-stream/dist/pouchdb.replication-stream.js',
-    'showdown': 'node_modules/showdown/dist/showdown.js'
+    'showdown': 'node_modules/showdown/dist/showdown.js',
+    'angular2-uuid': 'node_modules/angular2-uuid/index.js'
 };
 
 config.meta = {

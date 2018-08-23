@@ -193,10 +193,10 @@ export class ConstraintIndexer {
     private getIndexDefinitions(defaultIndexDefinitions: { [name: string]: IndexDefinition })
             : { [name: string]: IndexDefinition } {
 
-        return Object.values(this.projectConfiguration.getTypesMap())
+        return (Object.values(this.projectConfiguration.getTypesMap())
             .reduce((result: Array<FieldDefinition>, type: IdaiType) => {
                 return result.concat(type.fields);
-            }, [])
+            }, []) as any)
             .filter((field: FieldDefinition) => field.constraintIndexed)
             .filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
                 return self.indexOf(

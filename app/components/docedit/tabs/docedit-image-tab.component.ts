@@ -98,7 +98,7 @@ export class DoceditImageTabComponent {
         });
 
         Promise.all(imageDocPromises as any).then(docs => {
-            this.documents = docs as Array<IdaiFieldImageDocument>;
+            this.documents = docs as any;
             this.clearSelection();
         });
     }

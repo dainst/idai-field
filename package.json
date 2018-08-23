@@ -13,7 +13,7 @@
     "start": "electron . dev",
     "jasmine": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
     "karma": "karma start test/subsystem/config/karma.conf.js",
-    "test": "npm run jasmine && npm run karma",
+    "test": "npm run jasmine",
     "pree2e": "rimraf test/e2e-screenshots/*.png",
     "e2e": "node test/e2e/spectron.js",
     "package": "build -mw --publish never",

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {flow, jsonEqual, mapObject, to, uniteObject} from 'tsfun';
+import {flow, jsonEqual, uniteObject} from 'tsfun';
 import {DatastoreErrors, Document, ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
@@ -83,22 +83,7 @@ export class DocumentHolder {
 
         const document: Document = await this.cleanup(this.clonedDocument);
 
-        // See #8992
-        if (this.typeUtility) {
-            if (!Object.keys(
-                    flow(this.typeUtility.getSubtypes('Operation'),
-                        uniteObject(this.typeUtility.getSubtypes('Image'),
-                        mapObject(to('name')))
-                    ))
-                    .concat(['Place'])
-                    .includes(document.resource.type)) {
-
-                if (!document.resource.relations.isRecordedIn
-                    || document.resource.relations.isRecordedIn.length !== 1) {
-                    throw [M.VALIDATION_ERROR_NORECORDEDIN];
-                }
-            }
-        }
+        if (this.isIsRecordedInRelationMissing(document)) throw [M.VALIDATION_ERROR_NORECORDEDIN];
 
         await this.validator.validate(document);
         await this.persistenceManager.persist(
@@ -167,8 +152,7 @@ export class DocumentHolder {
 
         try {
             await this.persistenceManager.remove(this.clonedDocument, this.usernameProvider.getUsername())
-        } catch(removeError) {
-
+        } catch (removeError) {
             console.error('removeWithPersistenceManager', removeError);
             if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) {
                 throw [M.DOCEDIT_DELETE_ERROR];
@@ -204,5 +188,23 @@ export class DocumentHolder {
                 (typeof(this.clonedDocument.resource[_]) === 'string')
                 && this.clonedDocument.resource[_].length === 0
             );
+    }
+
+
+    private isIsRecordedInRelationMissing(document: Document): boolean {
+
+        return this.isExpectedToHaveIsRecordedInRelation(document)
+            && !Document.hasRelations(document, 'isRecordedIn');
+    }
+
+
+    private isExpectedToHaveIsRecordedInRelation(document: Document): boolean {
+
+        if (!this.typeUtility) return false;
+
+        return !Object.keys(
+            uniteObject(this.typeUtility.getSubtypes('Operation'))
+            (this.typeUtility.getSubtypes('Image'))
+        ).concat(['Place']).includes(document.resource.type);
     }
 }

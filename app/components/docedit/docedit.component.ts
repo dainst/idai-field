@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {includedIn, isNot} from 'tsfun';
 import {Document, Messages, IdaiFieldDocument, DatastoreErrors, IdaiFieldImageDocument, ProjectConfiguration}
     from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
@@ -115,22 +116,24 @@ export class DoceditComponent {
      * @param viaSaveButton if true, it is assumed the call for save came directly
      *   via a user interaction.
      */
-    public save(viaSaveButton: boolean) {
+    public async save(viaSaveButton: boolean) {
 
         const documentBeforeSave: Document = clone(this.documentHolder.getClonedDocument());
 
         this.documentHolder.save().then(
-            () => this.handleSaveSuccess(documentBeforeSave, viaSaveButton),
-            msgWithParams => this.handleSaveError(msgWithParams)
+            async (savedDocument: Document) => {
+                await this.handleSaveSuccess(documentBeforeSave, savedDocument, viaSaveButton);
+            }, msgWithParams => this.handleSaveError(msgWithParams)
         );
     }
 
 
-    private async handleSaveSuccess(documentBeforeSave: Document, viaSaveButton: boolean) {
+    private async handleSaveSuccess(documentBeforeSave: Document, documentAfterSave: Document,
+                                    viaSaveButton: boolean) {
 
         try {
-            if (this.documentHolder.detectSaveConflicts(documentBeforeSave)) {
-                this.handleSaveConflict();
+            if (DoceditComponent.detectSaveConflicts(documentBeforeSave, documentAfterSave)) {
+                this.handleSaveConflict(documentAfterSave);
             } else {
                 await this.closeModalAfterSave(
                     this.documentHolder.getClonedDocument().resource.id as any,
@@ -241,8 +244,9 @@ export class DoceditComponent {
     }
 
 
-    private handleSaveConflict() {
+    private handleSaveConflict(documentAfterSave: Document) {
 
+        this.documentHolder.setClonedDocument(documentAfterSave);
         this.activeTabService.setActiveTab('conflicts');
         this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
     }
@@ -255,5 +259,17 @@ export class DoceditComponent {
         ).result.then(() => {
             this.documentHolder.makeClonedDocAppearNew();
         }).catch(() => {});
+    }
+
+
+    private static detectSaveConflicts(documentBeforeSave: Document, documentAfterSave: Document): boolean {
+
+        const conflictsBeforeSave: string[] = (documentBeforeSave as any)['_conflicts'];
+        const conflictsAfterSave: string[] =  (documentAfterSave as any)['_conflicts'];
+
+        if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
+        if (!conflictsAfterSave) return false;
+
+        return conflictsAfterSave.find(isNot(includedIn(conflictsBeforeSave))) != undefined;
     }
 }

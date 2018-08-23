@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {flow, jsonEqual, mapObject, to, uniteObject} from 'tsfun';
 import {DatastoreErrors, Document, ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
@@ -9,7 +10,6 @@ import {Validations} from '../../core/model/validations';
 import {TypeUtility} from '../../core/model/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {clone} from '../../util/object-util';
-import {flow, includedIn, isNot, jsonEqual, mapObject, to, uniteObject} from 'tsfun';
 
 
 @Injectable()
@@ -79,9 +79,9 @@ export class DocumentHolder {
     };
 
 
-    public async save() {
+    public async save(): Promise<Document> {
 
-        this.clonedDocument = await this.cleanup(this.clonedDocument);
+        const document: Document = await this.cleanup(this.clonedDocument);
 
         // See #8992
         if (this.typeUtility) {
@@ -91,38 +91,24 @@ export class DocumentHolder {
                         mapObject(to('name')))
                     ))
                     .concat(['Place'])
-                    .includes(this.clonedDocument.resource.type)) {
+                    .includes(document.resource.type)) {
 
-                if (!this.clonedDocument.resource.relations.isRecordedIn
-                    || this.clonedDocument.resource.relations.isRecordedIn.length !== 1) {
+                if (!document.resource.relations.isRecordedIn
+                    || document.resource.relations.isRecordedIn.length !== 1) {
                     throw [M.VALIDATION_ERROR_NORECORDEDIN];
                 }
             }
         }
 
-        await this.validator.validate(this.clonedDocument);
-        this.clonedDocument = await this.persistenceManager.persist(
-            this.clonedDocument,
+        await this.validator.validate(document);
+        await this.persistenceManager.persist(
+            document,
             this.usernameProvider.getUsername(),
             this.oldVersion,
             this.inspectedRevisions
         );
 
-        this.oldVersion = clone(this.clonedDocument);
-
-        await this.fetchLatestRevision();
-    }
-
-
-    public detectSaveConflicts(documentBeforeSave: Document): boolean {
-
-        const conflictsBeforeSave: string[] = (documentBeforeSave as any)['_conflicts'];
-        const conflictsAfterSave: string[] =  (this.clonedDocument as any)['_conflicts'];
-
-        if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
-        if (!conflictsAfterSave) return false;
-
-        return conflictsAfterSave.find(isNot(includedIn(conflictsBeforeSave))) != undefined;
+        return this.fetchLatestRevision();
     }
 
 
@@ -154,14 +140,11 @@ export class DocumentHolder {
     }
 
 
-    private async fetchLatestRevision() {
+    private fetchLatestRevision(): Promise<Document> {
 
         try {
-            this.clonedDocument = await this.datastore.get(
-                this.clonedDocument.resource.id, { skip_cache: true }
-            );
+            return this.datastore.get(this.clonedDocument.resource.id, { skip_cache: true });
         } catch (e) {
-
             throw [M.DATASTORE_NOT_FOUND];
         }
     }

@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2';
-import {Messages} from 'idai-components-2';
+import {Document, Messages, IdaiFieldDocument, DatastoreErrors, IdaiFieldImageDocument}
+    from 'idai-components-2';
 import {ProjectConfiguration} from 'idai-components-2';
-import {IdaiFieldDocument} from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../util/object-util';
 import {M} from '../../m';
@@ -12,9 +11,7 @@ import {DeleteModalComponent} from './dialog/delete-modal.component';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
-import {DatastoreErrors} from 'idai-components-2';
 import {TypeUtility} from '../../core/model/type-utility';
-import {IdaiFieldImageDocument} from 'idai-components-2';
 
 
 @Component({
@@ -34,7 +31,6 @@ import {IdaiFieldImageDocument} from 'idai-components-2';
 export class DoceditComponent {
 
     private parentLabel: string|undefined = undefined;
-
     private showDoceditImagesTab: boolean = false;
 
 
@@ -88,6 +84,34 @@ export class DoceditComponent {
     }
 
 
+    public changeType(newType: string) {
+
+        const {invalidFields, invalidRelations} = this.documentHolder.changeType(newType);
+        this.showTypeChangeFieldsWarning(invalidFields);
+        this.showTypeChangeRelationsWarning(invalidRelations);
+    }
+
+
+    public cancel() {
+
+        if (this.documentHolder.isChanged()) {
+            this.showModal();
+        } else {
+            this.activeModal.dismiss('cancel');
+        }
+    }
+
+
+    public async openDeleteModal() {
+
+        const ref = this.modalService.open(DeleteModalComponent);
+        ref.componentInstance.setDocument(this.documentHolder.getClonedDocument());
+        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.getClonedDocument()));
+        const decision = await ref.result;
+        if (decision === 'delete') this.deleteDoc();
+    }
+
+
     /**
      * @param viaSaveButton if true, it is assumed the call for save came directly
      *   via a user interaction.
@@ -117,35 +141,6 @@ export class DoceditComponent {
             this.messages.add(msgWithParams);
         }
     }
-
-
-    public changeType(newType: string) {
-
-        const {invalidFields, invalidRelations} = this.documentHolder.changeType(newType);
-        this.showTypeChangeFieldsWarning(invalidFields);
-        this.showTypeChangeRelationsWarning(invalidRelations);
-    }
-
-
-    public cancel() {
-
-        if (this.documentHolder.isChanged()) {
-            this.showModal();
-        } else {
-            this.activeModal.dismiss('cancel');
-        }
-    }
-
-
-    public async openDeleteModal() {
-
-        const ref = this.modalService.open(DeleteModalComponent);
-        ref.componentInstance.setDocument(this.documentHolder.getClonedDocument());
-        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.getClonedDocument()));
-        const decision = await ref.result;
-        if (decision === 'delete') this.deleteDoc();
-    }
-
 
 
     private async fetchParentLabel(document: IdaiFieldDocument|IdaiFieldImageDocument) {

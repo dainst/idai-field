@@ -88,9 +88,8 @@ describe('project --', function() {
 
         performCreateProject();
 
-
         // this is a workaround. normally we would like to start on the ProjectPage directly.
-        // but then it was shown that for some unkown reasons protractor cannot click to select a resource type
+        // but then it was shown that for some unknown reasons protractor cannot click to select a resource type
         ResourcesPage.get();
         NavbarPage.clickNavigateToImages();
         browser.sleep(200);
@@ -109,9 +108,7 @@ describe('project --', function() {
 
         ProjectPage.clickProjectsBadge();
 
-        ProjectPage.getProjectNameOptionText(1).then(t=>{
-            expect(t).toContain('test')
-        });
+        ProjectPage.getProjectNameOptionText(1).then(text => expect(text).toContain('test'));
         NavbarPage.clickSelectProject(1);
         ResourcesPage.get();
 
@@ -128,9 +125,7 @@ describe('project --', function() {
 
         ProjectPage.clickProjectsBadge();
 
-        ProjectPage.getProjectNameOptionText(1).then(t=>{
-            expect(t).toContain('abc')
-        });
+        ProjectPage.getProjectNameOptionText(1).then(text => expect(text).toContain('abc'));
         NavbarPage.clickSelectProject(1);
 
         ResourcesPage.get();

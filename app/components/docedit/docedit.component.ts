@@ -91,10 +91,10 @@ export class DoceditComponent {
     }
 
 
-    public cancel() {
+    public async cancel() {
 
         if (this.documentHolder.isChanged()) {
-            this.showModal();
+            await this.showModal();
         } else {
             this.activeModal.dismiss('cancel');
         }

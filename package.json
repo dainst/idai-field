@@ -59,7 +59,7 @@
     "@angular/platform-server": "6.0.0",
     "@angular/router": "6.0.0",
     "@mdi/font": "2.5.94",
-    "@ng-bootstrap/ng-bootstrap": "2.0.0",
+    "@ng-bootstrap/ng-bootstrap": "3.0.0",
     "Leaflet.vector-markers": "0.0.6",
     "angular2-uuid": "1.1.0",
     "bootstrap": "4.0.0-beta",

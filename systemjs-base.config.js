@@ -91,7 +91,7 @@ ngPackageNames.forEach(packUmd);
 config.map = {
     'app': 'app',
     '@angular': 'node_modules/@angular',
-    '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
+    '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.umd.js',
     'json': 'app/util/systemjs-json-plugin',
     'rxjs': 'node_modules/rxjs',
     'rxjs-compat': 'node_modules/rxjs-compat',

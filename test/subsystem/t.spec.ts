@@ -2,7 +2,7 @@
 // import {Static} from '../unit/static';
 
 
-// export function main() {
+export function main() {
 
 
     describe('t', () => {
@@ -19,4 +19,4 @@
 
 
     });
-// }
+}

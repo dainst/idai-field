@@ -23,7 +23,7 @@ module.exports = function(config) {
             { pattern: 'node_modules/@angular/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/angular2-uuid/**/*.js', included: false, watched: false },
-            // { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false },
+            // { pattern: 'node_modules/idai-components-2/node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false },
 
             // our stuff
             { pattern: 'node_modules/idai-components-2/index.js', included: false, watched: false },

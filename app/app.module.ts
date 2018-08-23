@@ -1,7 +1,7 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
-import {HttpModule} from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -66,7 +66,7 @@ let indexFacade: IndexFacade|undefined = undefined;
         SettingsModule,
         BrowserModule,
         FormsModule,
-        HttpModule,
+        HttpClientModule,
         NgbModule.forRoot(),
         IdaiDocumentsModule,
         IdaiMessagesModule,

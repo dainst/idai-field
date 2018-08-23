@@ -55,6 +55,8 @@ config.packages['idai-components-2'] = {
     defaultExtension: 'js'
 };
 
+
+
 config.packages['angular-uuid'] = {
     main: 'index.js',
     defaultExtension: 'js'
@@ -88,6 +90,10 @@ function packUmd(pkgName) {
     config.packages['@angular/'+pkgName] = { main: 'bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
 }
 ngPackageNames.forEach(packUmd);
+
+
+config.packages['@angular/common/http'] = { main: '../bundles/common-http.umd.js', defaultExtension: 'js' }
+
 
 // config.paths = {
 //     'angular2-uuid/*': 'node_modules/angular2-uuid/*.js'

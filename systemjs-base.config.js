@@ -64,6 +64,7 @@ config.map = {
     '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
     'json': 'app/util/systemjs-json-plugin',
     'rxjs': 'node_modules/rxjs',
+    'rxjs-compat': 'node_modules/rxjs-compat',
     'ts-md5': 'node_modules/ts-md5',
     'idai-components-2' : 'node_modules/idai-components-2',
     'tsfun' : 'node_modules/tsfun',

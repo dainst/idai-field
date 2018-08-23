@@ -17,7 +17,7 @@ import {PouchdbProxy} from '../datastore/core/pouchdb-proxy';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class PouchDbFsImagestore implements Imagestore {
+export class PouchDbFsImagestore /*implements Imagestore */{
 
     private projectPath: string|undefined = undefined;
 
@@ -116,7 +116,7 @@ export class PouchDbFsImagestore implements Imagestore {
 
             // temporary fix
             // if thumb and original present then recreate thumb
-            return this.readOriginal(key).then((data: any) => {
+            return (this.readOriginal(key) as any).then((data: any) => {
 
                 console.debug('recreate thumb');
                 return this.putAttachment(data, key, true)
@@ -233,7 +233,7 @@ export class PouchDbFsImagestore implements Imagestore {
     }
 
     
-    private readOriginal(key: string): Promise<ArrayBuffer> {
+    private readOriginal(key: string): /*Promise<ArrayBuffer>TODO*/ Promise<any> {
 
         let path = this.projectPath + key;
         return new Promise((resolve, reject) => {

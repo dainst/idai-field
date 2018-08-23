@@ -1,6 +1,6 @@
 import {Parser} from "./parser";
 import {Observable} from "rxjs/Observable";
-import {Document} from "idai-components-2";
+import {NewDocument, Document} from "idai-components-2";
 
 /**
  * @author Daniel de Oliveira

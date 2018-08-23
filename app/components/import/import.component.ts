@@ -185,7 +185,7 @@ export class ImportComponent {
             case 'geojson':
                 return new GeojsonParser();
             default: // 'native'
-                return new NativeJsonlParser();
+                return new NativeJsonlParser() as any;
         }
     }
 

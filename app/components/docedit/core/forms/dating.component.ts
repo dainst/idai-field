@@ -31,6 +31,7 @@ export class DatingComponent {
     public removeDating(index: number) {
 
         this.resource[this.field.name].splice(index, 1);
+        if (this.resource[this.field.name].length === 0) delete this.resource[this.field.name];
     }
 
 

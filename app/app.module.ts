@@ -47,7 +47,7 @@ import {UsernameProvider} from './core/settings/username-provider';
 import {IndexFacade} from './core/datastore/index/index-facade';
 import {FulltextIndexer} from './core/datastore/index/fulltext-indexer';
 import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
-import {ConnectedDocsWriter} from './core/model/connected-docs-writer';
+import {HelpComponent} from './components/help/help.component';
 
 
 const remote = require('electron').remote;
@@ -83,7 +83,8 @@ let indexFacade: IndexFacade|undefined = undefined;
         NavbarComponent,
         TaskbarComponent,
         TaskbarConflictsComponent,
-        ProjectsComponent
+        ProjectsComponent,
+        HelpComponent
     ],
     providers: [
         ConfigReader,

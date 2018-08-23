@@ -1,12 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {Relations, Resource} from 'idai-components-2';
-import {IdaiFieldDocument, IdaiFieldResource} from 'idai-components-2';
-import {
-    Action,
-    Document,
-    Messages,
-    ProjectConfiguration
-} from 'idai-components-2';
+import {Relations, Resource, IdaiFieldDocument, IdaiFieldResource, Document, Messages, ProjectConfiguration}
+    from 'idai-components-2';
 import {M} from '../../../m';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 
@@ -41,8 +35,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     async ngOnChanges() {
 
         for (let revisionId of (this.document as any)['_conflicts']) {
-            if (this.inspectedRevisions
-                    .map(_ => _.resource.id)
+            if (this.inspectedRevisions.map(_ => _.resource.id)
                     .includes(revisionId)) continue;
 
             try {
@@ -80,7 +73,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         
         for (let field of this.differingFields) {
             if (field.rightSideWinning) {
-                if (field.type == 'relation') {
+                if (field.type === 'relation') {
                     if (this.selectedRevision.resource.relations[field.name]) {
                         this.document.resource.relations[field.name]
                             = this.selectedRevision.resource.relations[field.name];
@@ -118,7 +111,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         this.relationTargets = {};
 
         for (let field of this.differingFields) {
-            if (field.type == 'relation') {
+            if (field.type === 'relation') {
                 this.fetchRelationTargetsOfField(this.document.resource, field.name);
                 this.fetchRelationTargetsOfField(this.selectedRevision.resource, field.name);
             }
@@ -156,15 +149,15 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     public getWinningSide(): string {
 
-        if (this.differingFields.length == 0) return 'left';
+        if (this.differingFields.length === 0) return 'left';
 
         let winningSide = '';
 
         for (let field of this.differingFields) {
-            if (winningSide == '') {
+            if (winningSide === '') {
                 winningSide = field.rightSideWinning ? 'right' : 'left';
-            } else if ((winningSide == 'left' && field.rightSideWinning)
-                    || (winningSide == 'right' && !field.rightSideWinning)) {
+            } else if ((winningSide === 'left' && field.rightSideWinning)
+                    || (winningSide === 'right' && !field.rightSideWinning)) {
                 return 'mixed';
             }
         }
@@ -230,11 +223,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    private static createDiff(
-        document: IdaiFieldDocument,
-        revision: IdaiFieldDocument,
-        projectConfiguration: ProjectConfiguration
-    ): any[] {
+    private static createDiff(document: IdaiFieldDocument, revision: IdaiFieldDocument,
+                              projectConfiguration: ProjectConfiguration): any[] {
 
         let differingFields: any[] = [];
 
@@ -247,10 +237,10 @@ export class DoceditConflictsTabComponent implements OnChanges {
             let type: string;
             let label: string;
 
-            if (fieldName == 'geometry') {
+            if (fieldName === 'geometry') {
                 type = 'geometry';
                 label = 'Geometrie';
-            } else if (fieldName == 'georeference') {
+            } else if (fieldName === 'georeference') {
                 type = 'georeference';
                 label = 'Georeferenz';
             } else {

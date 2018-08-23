@@ -25,20 +25,20 @@ export class TypeUtility {
     public getSubtypes(superTypeName: string): any {
 
         const projectTypesTree: { [type: string]: IdaiType } = this.projectConfiguration.getTypesTree();
-        let projectImageTypes: any = {};
+        let subtypes: any = {};
 
         if (projectTypesTree[superTypeName]) {
-            projectImageTypes[superTypeName] = projectTypesTree[superTypeName];
+            subtypes[superTypeName] = projectTypesTree[superTypeName];
 
             if (projectTypesTree[superTypeName].children) {
                 for (let i = projectTypesTree[superTypeName].children.length - 1; i >= 0; i--) {
-                    projectImageTypes[projectTypesTree[superTypeName].children[i].name]
+                    subtypes[projectTypesTree[superTypeName].children[i].name]
                         = projectTypesTree[superTypeName].children[i];
                 }
             }
         }
 
-        return projectImageTypes;
+        return subtypes;
     }
 
 

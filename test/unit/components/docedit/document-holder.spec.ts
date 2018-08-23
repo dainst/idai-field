@@ -1,14 +1,19 @@
+import {ProjectConfiguration, Document} from 'idai-components-2';
 import {DocumentHolder} from '../../../../app/components/docedit/document-holder';
-import {ProjectConfiguration} from 'idai-components-2';
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 describe('DocumentHolder', () => {
 
+    let document: Document;
+    let changedDocument: Document;
+
     let docHolder;
-    let d;
     let datastore;
+    let persistenceManager;
+
 
     beforeEach(() => {
 
@@ -33,7 +38,7 @@ describe('DocumentHolder', () => {
             ]
         });
 
-        d = {
+        document = {
             resource: {
                 type: 'A',
                 id: '1',
@@ -50,44 +55,46 @@ describe('DocumentHolder', () => {
         };
 
         const validator = jasmine.createSpyObj('Validator', ['validate']);
-        const pacman = jasmine.createSpyObj('PersistenceManager', ['persist']);
-        pacman.persist.and.callFake((doc,b,c,d) => Promise.resolve(doc));
+        persistenceManager = jasmine.createSpyObj('PersistenceManager', ['persist']);
+        persistenceManager.persist.and.callFake((doc, b, c, d) => {
+            changedDocument = doc;
+            Promise.resolve(doc);
+        });
+
         const usernameProvider = jasmine.createSpyObj('UsernameProvider', ['getUsername']);
         datastore = jasmine.createSpyObj('Datastore', ['get']);
+        datastore.get.and.callFake((a, b) => changedDocument);
 
         docHolder = new DocumentHolder(
             pconf,
-            pacman,
+            persistenceManager,
             validator,
             undefined,
             undefined,
             usernameProvider,
             datastore
         );
+        docHolder.clonedDocument = document;
     });
 
 
     it('remove empty and undefined relations', async done => {
 
-        docHolder.clonedDocument = d;
-        datastore.get.and.callFake((a,b) => docHolder.clonedDocument);
-        await docHolder.save();
+        const savedDocument: Document = await docHolder.save();
 
-        expect(Object.keys(docHolder.clonedDocument.resource.relations).length).toBe(1);
-        expect(Object.keys(docHolder.clonedDocument.resource.relations)[0]).toBe('isFoundOn2');
+        expect(Object.keys(savedDocument.resource.relations).length).toBe(1);
+        expect(Object.keys(savedDocument.resource.relations)[0]).toBe('isFoundOn2');
         done();
     });
 
 
     it('remove empty and undefined fields', async done => {
 
-        docHolder.clonedDocument = d;
-        datastore.get.and.callFake((_,__) => docHolder.clonedDocument);
-        await docHolder.save();
+        const savedDocument: Document = await docHolder.save();
 
-        expect(docHolder.clonedDocument.resource.undeffield).toBeUndefined();
-        expect(docHolder.clonedDocument.resource.emptyfield).toBeUndefined();
-        expect(docHolder.clonedDocument.resource.type).not.toBeUndefined();
+        expect(savedDocument.resource.undeffield).toBeUndefined();
+        expect(savedDocument.resource.emptyfield).toBeUndefined();
+        expect(savedDocument.resource.type).not.toBeUndefined();
         done();
     });
 });

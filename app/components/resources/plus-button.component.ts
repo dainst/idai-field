@@ -1,8 +1,5 @@
 import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output} from '@angular/core';
-import {Relations} from 'idai-components-2';
-import {IdaiType, ProjectConfiguration} from 'idai-components-2';
-import {IdaiFieldDocument} from 'idai-components-2';
-import {Messages} from 'idai-components-2';
+import {Relations, IdaiType, ProjectConfiguration, IdaiFieldDocument, Messages} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {M} from '../../m';
 import {TypeUtility} from '../../core/model/type-utility';
@@ -31,13 +28,12 @@ export class PlusButtonComponent implements OnChanges {
     @Input() skipFormAndReturnNewDocument: boolean = false;
     @Input() status: PlusButtonStatus = 'enabled';
 
-    @Output() documentRequested: EventEmitter<IdaiFieldDocument> =
-        new EventEmitter<IdaiFieldDocument>();
+    @Output() documentRequested: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
+
+    public selectedType: string|undefined;
+    public typesTreeList: Array<IdaiType>;
 
     @ViewChild('popover') private popover: any;
-
-    private typesTreeList: Array<IdaiType>;
-    private type: string|undefined;
 
 
     constructor(
@@ -66,7 +62,7 @@ export class PlusButtonComponent implements OnChanges {
         const newDocument: IdaiFieldDocument = <IdaiFieldDocument> {
             'resource': {
                 'relations': this.createRelations(),
-                'type': this.type
+                'type': this.selectedType
             }
         };
         if (this.skipFormAndReturnNewDocument) this.documentRequested.emit(newDocument);
@@ -76,9 +72,9 @@ export class PlusButtonComponent implements OnChanges {
 
     public reset() {
 
-        this.type = this.getButtonType() === 'singleType'
+        this.selectedType = this.getButtonType() === 'singleType'
             ? this.typesTreeList[0].name
-            : this.type = undefined;
+            : this.selectedType = undefined;
     }
 
 
@@ -97,7 +93,7 @@ export class PlusButtonComponent implements OnChanges {
 
     public chooseType(type: IdaiType) {
 
-        this.type = type.name;
+        this.selectedType = type.name;
         if (this.preselectedGeometryType) this.startDocumentCreation();
     }
 

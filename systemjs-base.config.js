@@ -55,16 +55,12 @@ config.packages['idai-components-2'] = {
     defaultExtension: 'js'
 };
 
-<<<<<<< HEAD
-
-
 config.packages['angular-uuid'] = {
     main: 'index.js',
     defaultExtension: 'js'
 };
 
-=======
->>>>>>> 490200399298195d1594e880962a43a3d6cae389
+
 config.packages.node_modules = {
     defaultExtension: 'js'
 };
@@ -94,7 +90,6 @@ function packUmd(pkgName) {
 }
 ngPackageNames.forEach(packUmd);
 
-<<<<<<< HEAD
 
 config.packages['@angular/common/http'] = { main: '../bundles/common-http.umd.js', defaultExtension: 'js' }
 
@@ -103,8 +98,6 @@ config.packages['@angular/common/http'] = { main: '../bundles/common-http.umd.js
 //     'angular2-uuid/*': 'node_modules/angular2-uuid/*.js'
 // };
 
-=======
->>>>>>> 490200399298195d1594e880962a43a3d6cae389
 config.map = {
     'app': 'app',
     '@angular': 'node_modules/@angular',

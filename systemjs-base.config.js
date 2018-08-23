@@ -55,11 +55,6 @@ config.packages['idai-components-2'] = {
     defaultExtension: 'js'
 };
 
-config.packages['angular-uuid'] = {
-    main: 'index.js',
-    defaultExtension: 'js'
-};
-
 config.packages.node_modules = {
     defaultExtension: 'js'
 };
@@ -121,7 +116,8 @@ config.map = {
     'memorystream': 'node_modules/memorystream/index.js',
     'pouchdb-load': 'node_modules/pouchdb-load/dist/pouchdb.load.js',
     'pouchdb-replication-stream': 'node_modules/pouchdb-replication-stream/dist/pouchdb.replication-stream.js',
-    'showdown': 'node_modules/showdown/dist/showdown.js'
+    'showdown': 'node_modules/showdown/dist/showdown.js',
+    'angular2-uuid': 'node_modules/angular2-uuid/index.js'
 };
 
 config.meta = {

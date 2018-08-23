@@ -84,10 +84,6 @@ function packUmd(pkgName) {
 }
 ngPackageNames.forEach(packUmd);
 
-// config.paths = {
-//     'angular2-uuid/*': 'node_modules/angular2-uuid/*.js'
-// };
-
 config.map = {
     'app': 'app',
     '@angular': 'node_modules/@angular',

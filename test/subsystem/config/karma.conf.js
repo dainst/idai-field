@@ -32,10 +32,11 @@ module.exports = function(config) {
             { pattern: 'app/**/*.js', included: false, watched: true },
             { pattern: 'config/*', included: false, watched: false },
 
-            // { pattern: 'test/subsystem/idig-', included: true, watched: true },
-            'test/subsystem/idig-csv-parser.spec.js',
+            // { pattern: 'test/subsystem/*spec*', included: false, watched: true },
+            'test/subsystem/t.spec.js',
+            // 'test/subsystem/idig-csv-parser.spec.js',
 
-            { pattern: 'test/unit/static.js', included: false, watched: true },
+            // { pattern: 'test/unit/static.js', included: false, watched: true },
             'systemjs-base.config.js',
             'test/subsystem/config/main.js',
             'test/subsystem/config/require-conf.js'
@@ -59,8 +60,15 @@ module.exports = function(config) {
         autoWatch: true,
 
         browsers: [
-            'Electron'
+            'Chrome_without_security'
         ],
+
+        customLaunchers: {
+            Chrome_without_security: {
+                base: 'Electron',
+                flags: ['--show', '--enable-logging']
+            }
+        },
 
         singleRun: true
     };

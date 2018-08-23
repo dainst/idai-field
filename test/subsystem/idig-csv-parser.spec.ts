@@ -7,7 +7,7 @@ import {M} from '../../app/m';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export function main() {
+// export function main() {
 
 
     describe('IdigCsvParser', () => {
@@ -117,4 +117,4 @@ export function main() {
 
         });
     });
-}
+// }

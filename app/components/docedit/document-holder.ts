@@ -49,7 +49,13 @@ export class DocumentHolder {
     public getClonedDocument = () => this.clonedDocument;
 
 
-    public isChanged = () => !jsonEqual(this.clonedDocument.resource)(this.oldVersion.resource);
+    public isChanged(): boolean {
+
+        if (!this.clonedDocument) return false;
+
+        return (this.inspectedRevisions.length > 0
+            || !jsonEqual(this.clonedDocument.resource)(this.oldVersion.resource));
+    }
 
 
     public changeType(newType: string) {

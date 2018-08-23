@@ -45,7 +45,7 @@ export class DoceditComponent {
     }
 
 
-    public isChanged = this.documentHolder.isChanged;
+    public isChanged = () => this.documentHolder.isChanged();
 
     public getFieldDefinitionLabel: (_: string) => string;
 

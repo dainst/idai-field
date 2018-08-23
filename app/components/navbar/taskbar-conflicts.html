@@ -9,7 +9,7 @@
             </li>
         </ul>
     </ng-template>
-    <a [ngbPopover]="popContent" popoverTitle="Konflikte"
+    <a [ngbPopover]="popContent" [autoClose]="false" popoverTitle="Konflikte"
        #popover="ngbPopover" placement="bottom" id="taskbar-conflicts-button"
        triggers="manual" (click)="togglePopover()"
        placement="bottom" class="navbar-hover-element">

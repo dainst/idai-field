@@ -25,6 +25,7 @@
                 type="button"
                 (click)="hideSuggestions()"
                 [ngbPopover]="filterMenu"
+                [autoClose]="false"
                 #p="ngbPopover"
                 placement="bottom">
             <span *ngIf="!isTypeSelected()" class="mdi mdi-filter"></span>

@@ -23,15 +23,18 @@ module.exports = function(config) {
             { pattern: 'node_modules/@angular/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
             { pattern: 'node_modules/angular2-uuid/**/*.js', included: false, watched: false },
-            { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false },
+            // { pattern: 'node_modules/systemjs/dist/system-polyfills.js', included: false, watched: false },
 
             // our stuff
             { pattern: 'node_modules/idai-components-2/index.js', included: false, watched: false },
-            { pattern: 'node_modules/idai-components-2/src/**/!(*spec).js', included: false, watched: false },
+            { pattern: 'node_modules/idai-components-2/src/**/!(*spec)*', included: false, watched: false },
             { pattern: 'node_modules/tsfun/**/!(*spec).js', included: false, watched: false },
             { pattern: 'app/**/*.js', included: false, watched: true },
             { pattern: 'config/*', included: false, watched: false },
-            { pattern: 'test/subsystem/**/*.js', included: false, watched: true },
+
+            // { pattern: 'test/subsystem/idig-', included: true, watched: true },
+            'test/subsystem/idig-csv-parser.spec.js',
+
             { pattern: 'test/unit/static.js', included: false, watched: true },
             'systemjs-base.config.js',
             'test/subsystem/config/main.js',

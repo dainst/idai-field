@@ -102,6 +102,8 @@ export class DocumentHolder {
             this.inspectedRevisions
         );
 
+        this.oldVersion = clone(this.clonedDocument);
+
         await this.fetchLatestRevision();
     }
 

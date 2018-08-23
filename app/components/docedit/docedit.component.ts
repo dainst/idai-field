@@ -130,13 +130,14 @@ export class DoceditComponent {
 
         try {
             if (this.documentHolder.detectSaveConflicts(documentBeforeSave)) {
-                this.activeTabService.setActiveTab('conflicts');
-                this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
+                this.handleSaveConflict();
             } else {
-                await this.closeModalAfterSave(this.documentHolder.getClonedDocument().resource.id as any, viaSaveButton);
+                await this.closeModalAfterSave(
+                    this.documentHolder.getClonedDocument().resource.id as any,
+                    viaSaveButton
+                );
             }
         } catch (msgWithParams) {
-
             this.messages.add(msgWithParams);
         }
     }
@@ -237,6 +238,13 @@ export class DoceditComponent {
         } catch(err) {
             this.messages.add(err);
         }
+    }
+
+
+    private handleSaveConflict() {
+
+        this.activeTabService.setActiveTab('conflicts');
+        this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
     }
 
 

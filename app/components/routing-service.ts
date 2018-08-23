@@ -73,7 +73,10 @@ export class RoutingService {
             if (!mainTypeName) return;
 
             const viewName = this.viewFacade.getMainTypeHomeViewName(mainTypeName);
-            await this.router.navigate(['resources', viewName]); // indirect away first to reload the resources component, in case you are already there
+            if (this.router.url.includes('resources')) {
+                // indirect away first to reload the resources component, in case you are already there
+                await this.router.navigate(['resources', viewName]);
+            }
             return this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
         }
     }

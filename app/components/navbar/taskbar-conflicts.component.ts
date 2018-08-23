@@ -1,6 +1,5 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
 import {Document} from 'idai-components-2';
-import {SettingsService} from '../../core/settings/settings-service';
 import {RoutingService} from '../routing-service';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
 import {IndexFacade} from '../../core/datastore/index/index-facade';
@@ -18,12 +17,12 @@ import {IndexFacade} from '../../core/datastore/index/index-facade';
  */
 export class TaskbarConflictsComponent {
 
+    public conflicts: Array<Document> = [];
 
     private cancelClickListener: Function;
 
     @ViewChild('popover') private popover: any;
 
-    public conflicts: Array<Document> = [];
 
     constructor(private routingService: RoutingService,
                 private elementRef: ElementRef,
@@ -38,9 +37,7 @@ export class TaskbarConflictsComponent {
 
     public async openConflictResolver(document: Document) {
 
-        if (this.popover.isOpen()) {
-            this.popover.close();
-        }
+        if (this.popover.isOpen()) this.popover.close();
         await this.routingService.jumpToConflictResolver(document);
     };
 

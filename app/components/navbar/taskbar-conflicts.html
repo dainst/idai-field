@@ -11,7 +11,6 @@
     </ng-template>
     <a [ngbPopover]="popContent" popoverTitle="Konflikte"
        #popover="ngbPopover" placement="bottom" id="taskbar-conflicts-button"
-       ngbTooltip="Insgesamt {{conflicts.length}} Konflikte"
        triggers="manual" (click)="togglePopover()"
        placement="bottom" class="navbar-hover-element">
         <span class="mdi mdi-alert-outline"></span>

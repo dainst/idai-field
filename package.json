@@ -82,6 +82,7 @@
     "reflect-metadata": "0.1.8",
     "roboto-fontface": "0.6.0",
     "rxjs": "6.0.0",
+    "rxjs-compat": "6.0.0",
     "showdown": "1.8.6",
     "svg-pan-zoom": "3.5.3",
     "systemjs": "0.21.4",

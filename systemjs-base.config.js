@@ -15,12 +15,47 @@ config.packages['rxjs'] = {
     defaultExtension: 'js'
 };
 
+config.packages['rxjs/operators'] = {
+    main: 'index.js',
+    defaultExtension: 'js'
+};
+
+config.packages['rxjs/internal-compatibility'] = {
+    main: 'index.js',
+    defaultExtension: 'js'
+};
+
+config.packages['rxjs/testing'] = {
+    main: 'index.js',
+    defaultExtension: 'js'
+};
+
+config.packages['rxjs/ajax'] = {
+    main: 'index.js',
+    defaultExtension: 'js'
+};
+
+config.packages['rxjs/webSocket'] = {
+    main: 'index.js',
+    defaultExtension: 'js'
+};
+
+config.packages['rxjs-compat'] = {
+    main: 'index.js',
+    defaultExtension: 'js'
+};
+
 config.packages['tsfun'] = {
     main: 'index.js',
     defaultExtension: 'js'
 };
 
 config.packages['idai-components-2'] = {
+    main: 'index.js',
+    defaultExtension: 'js'
+};
+
+config.packages['angular-uuid'] = {
     main: 'index.js',
     defaultExtension: 'js'
 };
@@ -54,9 +89,9 @@ function packUmd(pkgName) {
 }
 ngPackageNames.forEach(packUmd);
 
-config.paths = {
-    'angular2-uuid/*': 'node_modules/angular2-uuid/*.js'
-};
+// config.paths = {
+//     'angular2-uuid/*': 'node_modules/angular2-uuid/*.js'
+// };
 
 config.map = {
     'app': 'app',

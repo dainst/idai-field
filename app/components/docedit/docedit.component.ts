@@ -121,8 +121,8 @@ export class DoceditComponent {
         const documentBeforeSave: Document = clone(this.documentHolder.getClonedDocument());
 
         this.documentHolder.save().then(
-            async (savedDocument: Document) => {
-                await this.handleSaveSuccess(documentBeforeSave, savedDocument, viaSaveButton);
+            async (documentAfterSave: Document) => {
+                await this.handleSaveSuccess(documentBeforeSave, documentAfterSave, viaSaveButton);
             }, msgWithParams => this.handleSaveError(msgWithParams)
         );
     }
@@ -135,10 +135,7 @@ export class DoceditComponent {
             if (DoceditComponent.detectSaveConflicts(documentBeforeSave, documentAfterSave)) {
                 this.handleSaveConflict(documentAfterSave);
             } else {
-                await this.closeModalAfterSave(
-                    this.documentHolder.getClonedDocument().resource.id as any,
-                    viaSaveButton
-                );
+                await this.closeModalAfterSave(documentAfterSave.resource.id, viaSaveButton);
             }
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);

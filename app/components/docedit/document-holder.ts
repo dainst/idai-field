@@ -86,14 +86,14 @@ export class DocumentHolder {
         if (this.isIsRecordedInRelationMissing(document)) throw [M.VALIDATION_ERROR_NORECORDEDIN];
 
         await this.validator.validate(document);
-        await this.persistenceManager.persist(
+        const savedDocument: Document = await this.persistenceManager.persist(
             document,
             this.usernameProvider.getUsername(),
             this.oldVersion,
             this.inspectedRevisions
         );
 
-        return this.fetchLatestRevision();
+        return this.fetchLatestRevision(savedDocument.resource.id);
     }
 
 
@@ -125,10 +125,10 @@ export class DocumentHolder {
     }
 
 
-    private fetchLatestRevision(): Promise<Document> {
+    private fetchLatestRevision(id: string): Promise<Document> {
 
         try {
-            return this.datastore.get(this.clonedDocument.resource.id, { skip_cache: true });
+            return this.datastore.get(id, { skip_cache: true });
         } catch (e) {
             throw [M.DATASTORE_NOT_FOUND];
         }

@@ -67,7 +67,7 @@ describe('DocumentHolder', () => {
         const persistenceManager = jasmine.createSpyObj('PersistenceManager', ['persist']);
         persistenceManager.persist.and.callFake((doc, b, c, d) => {
             changedDocument = doc;
-            Promise.resolve(doc);
+            return Promise.resolve(changedDocument);
         });
 
         const typeUtility = jasmine.createSpyObj('TypeUtility', ['getSubtypes']);

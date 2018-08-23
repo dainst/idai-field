@@ -39,7 +39,7 @@ module.exports = function(config) {
         ],
 
         exclude: [
-            'node_modules/@angular/**/*_spec.js',
+            'node_modules/@angular/**/*spec*',
 
             // our stuff
             'node_modules/idai-components-2/test/**/*',

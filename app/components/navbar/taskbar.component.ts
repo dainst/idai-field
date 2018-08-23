@@ -1,9 +1,5 @@
-import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
-import {Document} from 'idai-components-2';
+import {Component} from '@angular/core';
 import {SettingsService} from '../../core/settings/settings-service';
-import {RoutingService} from '../routing-service';
-import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
-import {IndexFacade} from '../../core/datastore/index/index-facade';
 
 
 @Component({
@@ -18,16 +14,15 @@ import {IndexFacade} from '../../core/datastore/index/index-facade';
  */
 export class TaskbarComponent {
 
-    public connected = false;
-
+    public connected: boolean = false;
 
 
     constructor(private settings: SettingsService) {
 
         settings.syncStatusChanges().subscribe(c => {
-            if (c == 'disconnected') {
+            if (c === 'disconnected') {
                 this.connected = false;
-            } else if (c == 'connected') {
+            } else if (c === 'connected') {
                 this.connected = true;
             }
         });

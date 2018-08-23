@@ -159,7 +159,7 @@ export class ImageUploader {
             reader.onloadend = (that => {
                 return () => {
                     that.createImageDocument(file, type, depictsRelationTarget)
-                        .then(doc => that.imagestore.create(doc.resource.id, reader.result, true).then(() =>
+                        .then(doc => that.imagestore.create(doc.resource.id, reader.result as any, true).then(() =>
                             // to refresh the thumbnail in cache, which is done to prevent a conflict afterwards
                             this.imageDocumentDatastore.get(doc.resource.id, { skip_cache: true })
                         ))

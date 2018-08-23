@@ -52,7 +52,7 @@ export class GeoreferenceViewComponent {
         reader.onloadend = (that => {
             return () => {
                 this.worldfileInput.nativeElement.value = '';
-                const worldfileContent = reader.result.split("\n");
+                const worldfileContent = (reader.result as any).split("\n");
                 that.importWorldfile(worldfileContent, file);
             }
         })(this);

@@ -122,7 +122,7 @@
     "protractor-fail-fast": "2.0.0",
     "rimraf": "2.5.4",
     "spectron": "^3.7.2",
-    "typescript": "2.7.2",
+    "typescript": "3.0.1",
     "yargs": "5.0.0"
   }
 }

@@ -1,4 +1,5 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {HttpModule} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
@@ -61,6 +62,7 @@ registerLocaleData(localeDe, 'de');
         SettingsModule,
         BrowserModule,
         FormsModule,
+        HttpModule,
         HttpClientModule,
         NgbModule.forRoot(),
         IdaiDocumentsModule,

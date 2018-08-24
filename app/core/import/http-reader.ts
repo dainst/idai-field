@@ -1,5 +1,5 @@
 import {Reader} from "./reader";
-import {HttpClient} from "@angular/common/http";
+import {Http} from "@angular/http";
 import {M} from "../../m";
 
 /**
@@ -7,7 +7,7 @@ import {M} from "../../m";
  */
 export class HttpReader implements Reader {
 
-    constructor(private url: string,private http: HttpClient) {}
+    constructor(private url: string,private http: Http) {}
 
     public go(): Promise<string> {
 

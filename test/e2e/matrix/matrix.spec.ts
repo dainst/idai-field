@@ -60,7 +60,7 @@ describe('matrix --', () => {
     }
 
 
-    fit('show matrix for different trenches', () => {
+    it('show matrix for different trenches', () => {
 
         testDefaultMatrix();
         OperationBarPage.performSelectOperation(0);

@@ -78,6 +78,6 @@ app.start().then(() => app.client.sessions()).then(sessions => {
             console.log('appData', path);
             return new Promise(resolve => rimraf(path + '/idai-field-client/imagestore/test', () => resolve(code)));
         });
-    } else return Promise.resolve(undefined);
+    } else return Promise.resolve(0);
 }).then(code => app.stop().then(() => process.exit(code)))
 .catch(err => console.log('error when removing app data', err));

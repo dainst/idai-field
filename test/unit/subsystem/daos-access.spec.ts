@@ -1,7 +1,4 @@
-import {PouchdbDatastore} from '../../../app/core/datastore/core/pouchdb-datastore';
-import {PouchdbManager} from '../../../app/core/datastore/core/pouchdb-manager';
 import {DAOsHelper} from './daos-helper';
-import {DAOsSpecHelper} from '../../subsystem/daos-spec-helper';
 import {Static} from '../static';
 import * as PouchDB from 'pouchdb';
 

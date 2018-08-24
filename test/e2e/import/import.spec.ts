@@ -51,7 +51,7 @@ describe('import --', function() {
     };
 
 
-    it('delete already imported iDAI.field documents if an error occurs', () => {
+    xit('delete already imported iDAI.field documents if an error occurs', () => {
 
         importIt('./test/test-data/importer-test-constraint-violation.jsonl');
 

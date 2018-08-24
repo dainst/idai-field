@@ -63,21 +63,23 @@ app.start().then(() => app.client.sessions()).then(sessions => {
         });
         protractor.on('close', code => {
 
-            app.browserWindow.capturePage().then(function(imageBuffer) {
-                fs.writeFileSync('test/e2e-screenshots/close.png', imageBuffer);
-            });
+            // app.browserWindow.capturePage().then(function(imageBuffer) {
+            //     fs.writeFileSync('test/e2e-screenshots/close.png', imageBuffer);
+            // });
             resolve(code);
         });
     });
 
 }).then(code => {
+    console.log("finished with code", code)
     if (app && app.electron && app.electron && app.electron.remote && app.electron.remote.app) {
 
+        console.log("try to remove appdata")
         // does not work on linux anymore since last overall dependencies upgrade, thats what the surrounding if is for
         return app.electron.remote.app.getPath('appData').then(path => {
             console.log('appData', path);
             return new Promise(resolve => rimraf(path + '/idai-field-client/imagestore/test', () => resolve(code)));
         });
-    } else return Promise.resolve(0);
+    } else return Promise.resolve(code);
 }).then(code => app.stop().then(() => process.exit(code)))
 .catch(err => console.log('error when removing app data', err));

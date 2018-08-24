@@ -90,13 +90,7 @@ function packUmd(pkgName) {
 }
 ngPackageNames.forEach(packUmd);
 
-
 config.packages['@angular/common/http'] = { main: '../bundles/common-http.umd.js', defaultExtension: 'js' }
-
-
-// config.paths = {
-//     'angular2-uuid/*': 'node_modules/angular2-uuid/*.js'
-// };
 
 config.map = {
     'app': 'app',

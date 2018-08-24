@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2';
 import {Observer} from 'rxjs/Observer';
 import {M} from '../../m';
+// import * as Papa from 'papaparse'; TODO this does not work in production, fixes only unit test
 
 /**
  * @author Daniel de Oliveira

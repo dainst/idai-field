@@ -59,7 +59,10 @@ export class DAOsHelper {
             datastore, indexFacade, documentCache, converter);
         this.documentDatastore = new DocumentDatastore(
             datastore, indexFacade, documentCache, converter);
+
+        return {datastore, documentCache, indexFacade};
     }
+
 
 
 

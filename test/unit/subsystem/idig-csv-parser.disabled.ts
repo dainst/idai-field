@@ -10,7 +10,7 @@ import {M} from '../../../app/m';
 // export function main() {
 
 
-xdescribe('IdigCsvParser', () => {
+describe('IdigCsvParser', () => {
 
     beforeEach(
         function() {

@@ -24,15 +24,16 @@
                     <span class="mdi mdi-pencil mdi-18px"></span>
                 </div>
 
-                <div id="delete-project-button" class="circular-button red-button" [ngbPopover]="deleteProjectMenu"
-                     #deletePopover="ngbPopover" triggers="manual" placement="bottom"
+                <div id="delete-project-button" class="circular-button red-button"
+                     [ngbPopover]="deleteProjectMenu" #deletePopover="ngbPopover"
+                     [triggers]="'manual'" [placement]="'bottom'" [autoClose]="false"
                      (click)="reset(); deletePopover.toggle();">
                     <span class="delete-sign mdi mdi-delete mdi-18px"></span>
                 </div>
 
                 <div id="new-project-button" class="circular-button type-button" [ngbPopover]="newProjectMenu"
-                     #createPopover="ngbPopover" triggers="manual" placement="bottom"
-                     (click)="reset(); createPopover.toggle();">
+                     #createPopover="ngbPopover" [triggers]="'manual'" [placement]="'bottom'"
+                     [autoClose]="false" (click)="reset(); createPopover.toggle();">
                     <type-icon [type]="'Project'" size="41"></type-icon>
                     <div class="plus-sign-circle">
                         <span class="plus-sign mdi mdi-plus mdi-18px"></span>

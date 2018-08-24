@@ -71,9 +71,13 @@ app.start().then(() => app.client.sessions()).then(sessions => {
     });
 
 }).then(code => {
-    return app.electron.remote.app.getPath('appData').then(path => {
-        console.log('appData', path);
-        return new Promise(resolve => rimraf(path + '/idai-field-client/imagestore/test', () => resolve(code)));
-    });
+    if (app && app.electron && app.electron && app.electron.remote && app.electron.remote.app) {
+
+        // does not work on linux anymore since last overall dependencies upgrade, thats what the surrounding if is for
+        return app.electron.remote.app.getPath('appData').then(path => {
+            console.log('appData', path);
+            return new Promise(resolve => rimraf(path + '/idai-field-client/imagestore/test', () => resolve(code)));
+        });
+    } else return Promise.resolve(undefined);
 }).then(code => app.stop().then(() => process.exit(code)))
 .catch(err => console.log('error when removing app data', err));

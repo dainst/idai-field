@@ -43,7 +43,7 @@ xdescribe('IdigCsvParser', () => {
 
     });
 
-    it('should abort on syntax errors in file content', (done) => {
+    it('should abort on syntax errs in file content', (done) => {
 
         let fileContent = 'IdentifierUUID,Identifier,Title,Type\n'
             + '1,one,One,Context\n'

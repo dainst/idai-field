@@ -292,27 +292,27 @@ describe('resources/state --', function() {
         OperationBarPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.clickBooleanRadioButton('disturbance', 0);
+        DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
         DoceditPage.clickSaveDocument();
         ResourcesPage.openEditByDoubleClickResource('SE1');
-        DoceditPage.clickBooleanRadioButton('disturbance', 1);
+        DoceditPage.clickBooleanRadioButton('hasDisturbance', 1);
         DoceditPage.clickSaveDocument();
 
         SearchBarPage.clickChooseTypeFilter('feature');
         ResourcesSearchBarPage.clickConstraintsMenuButton();
-        ResourcesSearchBarPage.clickSelectConstraintField('disturbance');
+        ResourcesSearchBarPage.clickSelectConstraintField('hasDisturbance');
         ResourcesSearchBarPage.clickSelectBooleanValue(true);
         ResourcesSearchBarPage.clickAddConstraintButton();
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE1')));
 
-        ResourcesSearchBarPage.clickRemoveConstraintButton('disturbance');
+        ResourcesSearchBarPage.clickRemoveConstraintButton('hasDisturbance');
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')));
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE1')));
 
-        ResourcesSearchBarPage.clickSelectConstraintField('disturbance');
+        ResourcesSearchBarPage.clickSelectConstraintField('hasDisturbance');
         ResourcesSearchBarPage.clickSelectBooleanValue(false);
         ResourcesSearchBarPage.clickAddConstraintButton();
 

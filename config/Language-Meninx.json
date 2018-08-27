@@ -2,11 +2,11 @@
   "types": {
     "Feature": {
       "fields": {
-        "hasColorSoil": {
+        "colorSoil": {
           "label": "Farbe des Bodens",
           "description": "Farbe des Sediments"
         },
-        "hasDimensionHeight": {
+        "dimensionHeight": {
           "label": "Höhe",
           "description": "Angabe der Objekthöhe"
         }
@@ -14,7 +14,7 @@
     },
     "Wall_surface": {
       "fields": {
-        "hasDimensionHeight": {
+        "dimensionHeight": {
           "label": "Höhe",
           "description": "Angabe der Objekthöhe"
         }
@@ -22,7 +22,7 @@
     },
     "Inscription": {
       "fields": {
-        "hasDimensionHeight": {
+        "dimensionHeight": {
           "label": "Höhe",
           "description": "Angabe der Objekthöhe"
         }

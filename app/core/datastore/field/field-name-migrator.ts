@@ -1,5 +1,4 @@
 import {Document} from 'idai-components-2';
-import {clone} from '../../../util/object-util';
 import {migrationMap} from './migration-map';
 
 /**
@@ -16,9 +15,8 @@ export module FieldNameMigrator {
            resource[newFieldName] = document.resource[fieldName];
         });
 
-        const result: Document = clone(document);
-        result.resource = resource;
+        document.resource = resource;
 
-        return result;
+        return document;
     }
 }

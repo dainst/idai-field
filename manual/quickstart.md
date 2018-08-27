@@ -38,10 +38,21 @@ anzulegen.
 
 ## Suche
 
-### Suchen per Suchfilter
-
 In der **Übersicht**, den Maßnahmenansichten **Ausgrabung**, **Bauaufnahme** und **Survey**, sowie in der 
-Bilderverwaltung (Menüpunkt **Bilder**) steht ein Suchfilter zur Verfügung.
+Bilderverwaltung (Menüpunkt **Bilder**) steht ein **Suchfilter** zur Verfügung. Dieser kann genutzt werden, um
+die aktuell angezeigten Ressourcen weiter einzuschränken. 
+
+In der Übersicht sowie in dem Maßnahmenansichten steht darüber hinaus ein **erweiterter Suchmodus** bereit,
+der zusätzliche Suchoptionen ermöglicht, zum einen was den Suchbereich angeht, in dem Ressourcen gesucht werden,
+als auch was genauere Suchkriterien angeht.
+
+Der Suchfilter bietet die schnellste Möglichkeit, angezeigte Ressourcen nach bestimmten Kriterien 
+einzuschränken. In der Bilderverwaltung kann etwa die auf maximal **59** (je nach Zoomstufe) 
+angezeigte Ressourcen beschränkte Anzeige angepasst werden, so dass diejenigen Bilder angezeigt werden, 
+deren Namen beispielsweise mit einem bestimmten Suchbegriff anfangen. Der Suchfilter kann (und sollte) genutzt
+werden, um die Suchergebnisse der erweiterten Suche weiter einzuschränken.
+
+### Suchen per Suchfilter
 
 ![Filter](manual/search_filter.png)
 

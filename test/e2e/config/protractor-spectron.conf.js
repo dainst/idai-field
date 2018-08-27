@@ -11,13 +11,13 @@ exports.config = {
     baseUrl: fileUrl(path.resolve(__dirname, '../../..') + '/index.html'),
 
     specs: [
-        '../matrix/*.spec.js',
         '../syncing/*.spec.js',
         '../project/*.spec.js',
         '../resources/resources.spec.js',
         '../resources/resources-state.spec.js',
         '../images/*.spec.js',
         '../map/*.spec.js',
+        '../matrix/*.spec.js',
         '../import/*.spec.js',
         '../settings/*.spec.js'
     ],

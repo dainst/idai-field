@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Document} from 'idai-components-2';
-import {TypeConverter} from '../core/type-converter';
-import {IdaiFieldImageDocument} from 'idai-components-2';
-import {TypeUtility} from '../../model/type-utility';
+import {Document, IdaiFieldImageDocument} from 'idai-components-2';
 import {takeOrMake} from 'tsfun';
-
+import {TypeConverter} from '../core/type-converter';
+import {TypeUtility} from '../../model/type-utility';
+import {FieldNameMigrator} from './field-name-migrator';
 
 @Injectable()
 /**
@@ -54,23 +53,22 @@ export class IdaiFieldTypeConverter extends TypeConverter<Document> {
     }
 
 
-    public convert<T extends Document>(doc: Document): T {
+    public convert<T extends Document>(document: Document): T {
 
-        if (this.typeUtility.isSubtype(doc.resource.type, 'Image')) {
-            takeOrMake(doc,'resource.identifier','');
-            takeOrMake(doc,'resource.relations.depicts', []);
+        if (this.typeUtility.isSubtype(document.resource.type, 'Image')) {
+            takeOrMake(document,'resource.identifier','');
+            takeOrMake(document,'resource.relations.depicts', []);
         } else {
+            takeOrMake(document,'resource.identifier','');
+            takeOrMake(document,'resource.relations.isRecordedIn', []);
 
-            takeOrMake(doc,'resource.identifier','');
-            takeOrMake(doc,'resource.relations.isRecordedIn', []);
-
-            if (this.typeUtility.isSubtype(doc.resource.type,'Feature')) {
-                takeOrMake(doc,'resource.relations.isContemporaryWith', []);
-                takeOrMake(doc,'resource.relations.isAfter', []);
-                takeOrMake(doc,'resource.relations.isBefore', []);
+            if (this.typeUtility.isSubtype(document.resource.type,'Feature')) {
+                takeOrMake(document,'resource.relations.isContemporaryWith', []);
+                takeOrMake(document,'resource.relations.isAfter', []);
+                takeOrMake(document,'resource.relations.isBefore', []);
             }
         }
 
-        return doc as T;
+        return FieldNameMigrator.migrate(document) as T;
     }
 }

@@ -1,4 +1,4 @@
-export const migrationMap = {
+export const migrationMap: { [oldName: string]: string } = {
     'hasAgeDetermination': 'ageDetermination',
     'hasAgeDeterminationBasis': 'ageDeterminationBasis',
     'hasAmount': 'amount',

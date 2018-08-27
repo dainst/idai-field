@@ -5,73 +5,66 @@
 
     config.defaultJSExtensions = true;
 
-    config.packages.app = {
-        main: 'main.js',
-        format: 'cjs',
-        defaultExtension: 'js'
-    };
-
-    config.packages['rxjs'] = {
-        main: 'index.js',
-        defaultExtension: 'js'
-    };
-
-    config.packages['rxjs/operators'] = {
-        main: 'index.js',
-        defaultExtension: 'js'
-    };
-
-    config.packages['rxjs/internal-compatibility'] = {
-        main: 'index.js',
-        defaultExtension: 'js'
-    };
-
-    config.packages['rxjs/testing'] = {
-        main: 'index.js',
-        defaultExtension: 'js'
-    };
-
-    config.packages['rxjs/ajax'] = {
-        main: 'index.js',
-        defaultExtension: 'js'
-    };
-
-    config.packages['rxjs/webSocket'] = {
-        main: 'index.js',
-        defaultExtension: 'js'
-    };
-
-    config.packages['rxjs-compat'] = {
-        main: 'index.js',
-        defaultExtension: 'js'
-    };
-
-    config.packages['tsfun'] = {
-        main: 'index.js',
-        defaultExtension: 'js'
-    };
-
-    config.packages['idai-components-2'] = {
-        main: 'index.js',
-        defaultExtension: 'js'
-    };
-
-    config.packages['angular-uuid'] = {
-        main: 'index.js',
-        defaultExtension: 'js'
-    };
-
-
-    config.packages.node_modules = {
-        defaultExtension: 'js'
-    };
-
-    config.packages.config = {
-        defaultExtension: false,
-        meta: {
-            '*.json': {
-                loader: 'json'
+    config.packages = {
+        'app': {
+            main: 'main.js',
+            format: 'cjs',
+            defaultExtension: 'js'
+        },
+        'node_modules': {
+            defaultExtension: 'js'
+        },
+        'config': {
+            defaultExtension: false,
+            meta: {
+                '*.json': {
+                    loader: 'json'
+                }
             }
+        },
+        'rxjs': {
+            main: 'index.js',
+            defaultExtension: 'js'
+        },
+        'rxjs/operators': {
+            main: 'index.js',
+            defaultExtension: 'js'
+        },
+        'rxjs/internal-compatibility': {
+            main: 'index.js',
+            defaultExtension: 'js'
+        },
+        'rxjs/testing': {
+            main: 'index.js',
+            defaultExtension: 'js'
+        },
+        'rxjs/ajax': {
+            main: 'index.js',
+            defaultExtension: 'js'
+        },
+        'rxjs/webSocket': {
+            main: 'index.js',
+            defaultExtension: 'js'
+        },
+        'rxjs-compat': {
+            main: 'index.js',
+            defaultExtension: 'js'
+        },
+        'tsfun': {
+            main: 'index.js',
+            defaultExtension: 'js'
+        },
+        'idai-components-2': {
+            main: 'index.js',
+            defaultExtension: 'js'
+        },
+        'angular-uuid': {
+            main: 'index.js',
+            defaultExtension: 'js'
+        },
+        '@angular/common/http': {
+            main: '../bundles/common-http.umd.js',
+            defaultExtension: 'js'
         }
     };
 
@@ -87,11 +80,13 @@
     ];
 
     function packUmd(pkgName) {
-        config.packages['@angular/'+pkgName] = { main: 'bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
+        config.packages['@angular/' + pkgName] = {
+            main: 'bundles/' + pkgName + '.umd.js',
+            defaultExtension: 'js'
+        };
     }
-    ngPackageNames.forEach(packUmd);
 
-    config.packages['@angular/common/http'] = { main: '../bundles/common-http.umd.js', defaultExtension: 'js' }
+    ngPackageNames.forEach(packUmd);
 
     config.map = {
         'app': 'app',
@@ -122,13 +117,13 @@
         'pouchdb-load': 'node_modules/pouchdb-load/dist/pouchdb.load.js',
         'pouchdb-replication-stream': 'node_modules/pouchdb-replication-stream/dist/pouchdb.replication-stream.js',
         'showdown': 'node_modules/showdown/dist/showdown.js',
-        'angular2-uuid': 'node_modules/angular2-uuid/index.js'
+        'angular2-uuid': 'node_modules/angular2-uuid/index.js',
+        'papaparse': '@node/papaparse'
     };
 
     config.meta = {
         'node_modules/papaparse/papaparse.js': { format: 'global', exports: 'Papa' }
     };
 
-    config.map['papaparse'] = '@node/papaparse';
     System.config(config);
 })(this);

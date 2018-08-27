@@ -97,7 +97,8 @@ describe('resources --', () => {
 
     it('docview -- show the fields present in the object', () => {
 
-        ResourcesPage.performCreateResource('1', 'feature-architecture', 'hasArea', '100');
+        ResourcesPage.performCreateResource('1', 'feature-architecture',
+            'area', '100');
         ResourcesPage.clickSelectResource('1');
         FieldsViewPage.getFieldName(0).then(value => {
             expect(value).toBe('Fläche in m2'); // with the correct field label

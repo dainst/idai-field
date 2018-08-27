@@ -235,4 +235,5 @@ export const migrationMap = {
     "isAncient": "ancient",
     "isRoomSide": "roomSide",
     "isWallSide": "wallSide",
+    "hasColorSoil": "colorSoil"
 };

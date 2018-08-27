@@ -1,10 +1,10 @@
 {
   "Feature": {
     "fields": {
-      "hasColorSoil": {
+      "colorSoil": {
         "inputType": "input"
       },
-      "hasDimensionHeight": {
+      "dimensionHeight": {
         "inputType": "dimension",
         "positionValues": [
           "Maximale Ausdehnung",
@@ -15,42 +15,42 @@
   },
   "Room": {
     "fields": {
-      "hasDating": {
+      "dating": {
         "inputType": "dating"
       }
     }
   },
   "Operation": {
     "fields": {
-      "hasDating": {
+      "dating": {
         "inputType": "dating"
       }
     }
   },
   "Wall_surface": {
     "fields": {
-      "hasDating": {
+      "dating": {
         "inputType": "dating"
       }
     }
   },
   "Inscription": {
     "fields": {
-      "hasDating": {
+      "dating": {
         "inputType": "dating"
       }
     }
   },
   "Find": {
     "fields": {
-      "hasDating": {
+      "dating": {
         "inputType": "dating"
       }
     }
   },
   "Pottery": {
     "fields": {
-      "hasTemperTypeClay": {
+      "temperTypeClay": {
         "inputType": "checkboxes",
         "valuelist": [
           "T1",
@@ -85,7 +85,7 @@
           "T30"
         ]
       },
-      "hasPotteryTypeSpecific": {
+      "potteryTypeSpecific": {
         "inputType": "radio",
         "valuelist": [
           "African Cooking Ware",

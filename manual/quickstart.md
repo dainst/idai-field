@@ -114,7 +114,7 @@ wie folgt:
     (5) Bezeichner: "Landscape-0022"
 
 Eine Suche nach "Landscape-00[01]" liefert (1), (2), (3), (4), da für die dritte Ziffer sowohl 0 als auch 1
-als zulässige Zeichen angegeben wurden.
+als zulässige Zeichen angegeben wurden. Alle weiteren Zeichen danach sind aufgrund der Präfix-Suche erlaubt.
 
 Eine Suche nach "Landscape-00[01]1" liefert (1) und (4), da die Ziffer nach dem Platzhalter genau eine 1 sein muss.
 

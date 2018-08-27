@@ -48,7 +48,7 @@ Bilderverwaltung (Menüpunkt **Bilder**) steht ein Suchfilter zur Verfügung.
 In dem Textfeld können Suchbegriffe eingeben werden, im Filtermenü, welches sich per Klick auf das
 blaue Symbol öffnet, kann eine Typauswahl getroffen werden. Sowohl das Angeben eines Suchbegriffes als auch
 die Auswahl eines Ressourcentypen schränkt die aktuell angezeigten Ressourcen ein, so dass sie den 
-Filterkriterien ensprechen. In der Übersicht und den Maßnahmenansichten betrifft dass die Elemente in
+Filterkriterien entsprechen. In der Übersicht und den Maßnahmenansichten betrifft dass die Elemente in
 der linken Seitenleiste sowohl auf der Karte (sofern Geometrien vorhanden), wenn die Kartenansicht gewählt ist,
 oder die Listenelemente, wenn die Listenansicht gewählt ist. In der Bilderverwaltung betrifft das alle im Raster
 angezeigten Bilder.

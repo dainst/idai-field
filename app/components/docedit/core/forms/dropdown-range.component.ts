@@ -28,11 +28,11 @@ export class DropdownRangeComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
 
         // TODO this can be removed when the existing data has been adjusted via script
-        if (this.field.name === "hasPeriod" &&
-            this.resource && this.resource['hasPeriodBeginning']) {
+        if (this.field.name === 'period' &&
+            this.resource && this.resource['periodBeginning']) {
 
-            this.resource['hasPeriod'] = this.resource['hasPeriodBeginning'];
-            delete this.resource['hasPeriodBeginning'];
+            this.resource['period'] = this.resource['periodBeginning'];
+            delete this.resource['periodBeginning'];
         }
     }
 

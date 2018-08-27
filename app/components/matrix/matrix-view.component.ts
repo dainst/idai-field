@@ -205,8 +205,8 @@ export class MatrixViewComponent implements OnInit {
         if (clusterMode === 'none') return { 'UNKNOWN': documents };
 
         return documents.reduce((periodMap: any, document: IdaiFieldFeatureDocument) => {
-            const period: string = document.resource.hasPeriod
-                || document.resource.hasPeriodBeginning // TODO Remove
+            const period: string = document.resource.period
+                || document.resource.periodBeginning // TODO Remove
                 || 'UNKNOWN';
             if (!periodMap[period]) periodMap[period] = [];
             periodMap[period].push(document);

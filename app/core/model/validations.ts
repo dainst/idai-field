@@ -61,9 +61,9 @@ export module Validations {
         }
 
         if (projectConfiguration.getFieldDefinitions(resource.type) // TODO unit test this
-                .find(fd => fd.name === 'hasDating')) {
+                .find(fd => fd.name === 'dating')) {
             invalidFields = invalidFields
-                .filter(_ => _ !== 'hasPeriod' && _!== 'hasPeriodEnd');
+                .filter(_ => _ !== 'period' && _!== 'periodEnd');
         }
         return (invalidFields.length > 0) ? invalidFields : [];
     }

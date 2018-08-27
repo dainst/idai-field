@@ -121,10 +121,10 @@
         "campaign": {
           "label": "Kampagne"
         },
-        "hasPeriodBeginning": {
+        "periodBeginning": {
           "label": "Grobdatierung (von)"
         },
-        "hasPeriodEnd": {
+        "periodEnd": {
           "label": "Grobdatierung (bis)"
         }
       }

@@ -8,8 +8,8 @@
 
         <!-- the following block is duplicated for
         the reason that this way we can retrigger setValue() again and again,
-        even when no change occured. we use this to return to the mode
-        where only hasPeriod is used
+        even when no change occurred. we use this to return to the mode
+        where only period is used
         -->
         <select *ngIf="showEndElements()"
                 [(ngModel)]="resource[field.name]" (change)="setValue($event.target.value)"

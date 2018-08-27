@@ -5,6 +5,8 @@
 
     config.defaultJSExtensions = true;
 
+    var defaultConfiguration = { main: 'index.js', defaultExtension: 'js' };
+
     config.packages = {
         'app': {
             main: 'main.js',
@@ -22,50 +24,20 @@
                 }
             }
         },
-        'rxjs': {
-            main: 'index.js',
-            defaultExtension: 'js'
-        },
-        'rxjs/operators': {
-            main: 'index.js',
-            defaultExtension: 'js'
-        },
-        'rxjs/internal-compatibility': {
-            main: 'index.js',
-            defaultExtension: 'js'
-        },
-        'rxjs/testing': {
-            main: 'index.js',
-            defaultExtension: 'js'
-        },
-        'rxjs/ajax': {
-            main: 'index.js',
-            defaultExtension: 'js'
-        },
-        'rxjs/webSocket': {
-            main: 'index.js',
-            defaultExtension: 'js'
-        },
-        'rxjs-compat': {
-            main: 'index.js',
-            defaultExtension: 'js'
-        },
-        'tsfun': {
-            main: 'index.js',
-            defaultExtension: 'js'
-        },
-        'idai-components-2': {
-            main: 'index.js',
-            defaultExtension: 'js'
-        },
-        'angular-uuid': {
-            main: 'index.js',
-            defaultExtension: 'js'
-        },
         '@angular/common/http': {
             main: '../bundles/common-http.umd.js',
             defaultExtension: 'js'
-        }
+        },
+        'rxjs': defaultConfiguration,
+        'rxjs/operators': defaultConfiguration,
+        'rxjs/internal-compatibility': defaultConfiguration,
+        'rxjs/testing': defaultConfiguration,
+        'rxjs/ajax': defaultConfiguration,
+        'rxjs/webSocket': defaultConfiguration,
+        'rxjs-compat': defaultConfiguration,
+        'tsfun': defaultConfiguration,
+        'idai-components-2': defaultConfiguration,
+        'angular-uuid': defaultConfiguration
     };
 
     var ngPackageNames = [

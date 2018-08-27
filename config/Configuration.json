@@ -4,37 +4,37 @@
       "color": "blue",
       "parent": "Operation",
       "fields": {
-        "hasDairy": {
+        "diary": {
           "inputType": "input"
         },
-        "hasResearchQuestion": {
+        "researchQuestion": {
           "inputType": "input"
         },
-        "hasSpatialLocation": {
+        "spatialLocation": {
           "inputType": "input"
         },
-        "hasTrenchComment": {
+        "trenchComment": {
           "inputType": "text"
         },
-        "hasDimensionLength": {
+        "dimensionLength": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionVerticalExtent": {
+        "dimensionVerticalExtent": {
           "inputType": "dimension",
           "positionValues": [
           "Oberkante",
           "Unterkante"]
         },
-        "hasDimensionWidth": {
+        "dimensionWidth": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasExcavationType": {
+        "excavationType": {
           "inputType": "radio",
           "valuelist": [
             "Feldgrabung",
@@ -43,7 +43,7 @@
             "natürliche Schichten"
           ]
         },
-        "hasOrientation": {
+        "orientation": {
           "inputType": "dropdown",
           "valuelist": [
             "N-S",
@@ -62,10 +62,10 @@
       "color": "#99CC33",
       "parent": "Find",
       "fields": {
-        "hasDecorationDescription": {
+        "decorationDescription": {
           "inputType": "input"
         },
-        "hasColor": {
+        "color": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -89,7 +89,7 @@
             "weiß"
           ]
         },
-        "hasDecorationTechniqueGlass": {
+        "decorationTechniqueGlass": {
           "inputType": "dropdown",
           "valuelist": [
             "Bemalung",
@@ -112,7 +112,7 @@
             "figürlicher Schliffdekor"
           ]
         },
-        "hasFormDescription": {
+        "formDescription": {
           "inputType": "checkboxes",
           "valuelist": [
             "ausladend",
@@ -133,7 +133,7 @@
             "zylinderförmig"
           ]
         },
-        "hasManufactoringMethodGlass": {
+        "manufacturingMethodGlass": {
           "inputType": "dropdown",
           "valuelist": [
             "Formgeblasen (mit Reliefdekor)",
@@ -146,7 +146,7 @@
             "gedreht (auf Drehscheibe)"
           ]
         },
-        "hasObjectTypeGlass": {
+        "objectTypeGlass": {
           "inputType": "dropdown",
           "valuelist": [
             "Anhänger",
@@ -172,7 +172,7 @@
             "Weinheber"
           ]
         },
-        "hasProvinience": {
+        "provenance": {
           "inputType": "dropdown",
           "valuelist": [
             "Anatolien",
@@ -218,7 +218,7 @@
             "Ägypten"
           ]
         },
-        "hasTransparency": {
+        "transparency": {
           "inputType": "radio",
           "valuelist": [
             "durchscheinend",
@@ -227,7 +227,7 @@
             "versintert"
           ]
         },
-        "hasVesselFormGlass": {
+        "vesselFormGlass": {
           "inputType": "dropdown",
           "valuelist": [
             "Aschenurne",
@@ -246,7 +246,7 @@
             "Vorratsgefäß"
           ]
         },
-        "hasVesselFormGlassSpecific": {
+        "vesselFormGlassSpecific": {
           "inputType": "dropdown",
           "valuelist": [
             "Alabastron",
@@ -286,25 +286,25 @@
       "color": "#08519c",
       "parent": "ProcessUnit",
       "fields": {
-        "hasDimensionDiameter": {
+        "dimensionDiameter": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionHeight": {
+        "dimensionHeight": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionVerticalExtent": {
+        "dimensionVerticalExtent": {
           "inputType": "dimension",
           "positionValues": [
           "Oberkante",
           "Unterkante"]
         },
-        "hasDrillingEquipment": {
+        "drillingEquipment": {
           "inputType": "radio",
           "valuelist": [
             "Pürckhauer"
@@ -314,13 +314,13 @@
     },
     "FeatureGroup": {
       "fields": {
-        "hasDescription": {
+        "description": {
           "inputType": "text"
         },
-        "hasProcessor": {
+        "processor": {
           "inputType": "input"
         },
-        "hasCampaign": {
+        "campaign": {
           "inputType": "input",
           "valuelist": [
             "Campaign"
@@ -337,28 +337,28 @@
       "color": "#2171b5",
       "parent": "ProcessUnit",
       "fields": {
-        "hasArea": {
+        "area": {
           "inputType": "unsignedFloat"
         },
-        "hasDimensionLength": {
+        "dimensionLength": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionVerticalExtent": {
+        "dimensionVerticalExtent": {
           "inputType": "dimension",
           "positionValues": [
           "Oberkante",
           "Unterkante"]
         },
-        "hasDimensionWidth": {
+        "dimensionWidth": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasHorizontalLocation": {
+        "horizontalLocation": {
           "inputType": "dropdown",
           "valuelist": [
             "Abfallend nach Norden",
@@ -371,7 +371,7 @@
             "Ansteigend nach Westen"
           ]
         },
-        "hasOrientation": {
+        "orientation": {
           "inputType": "dropdown",
           "valuelist": [
             "N-S",
@@ -384,7 +384,7 @@
             "WSW-ONO"
           ]
         },
-        "hasPlanumForm": {
+        "planumForm": {
           "inputType": "radio",
           "valuelist": [
             "L-förmig",
@@ -399,10 +399,10 @@
       "color": "#CC0000",
       "parent": "Find",
       "fields": {
-        "hasFeatureText": {
+        "featureText": {
           "inputType": "input"
         },
-        "hasBrickForm": {
+        "brickForm": {
           "inputType": "checkboxes",
           "valuelist": [
             "Bodenziegel",
@@ -421,7 +421,7 @@
             "Wandziegel"
           ]
         },
-        "hasBrickUsage": {
+        "brickUsage": {
           "inputType": "radio",
           "valuelist": [
             "Decke",
@@ -434,7 +434,7 @@
             "Wandverkleidung"
           ]
         },
-        "hasClayColorOutside": {
+        "clayColorOutside": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -458,7 +458,7 @@
             "weiß"
           ]
         },
-        "hasCoatColorInside": {
+        "coatColorInside": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -482,7 +482,7 @@
             "weiß"
           ]
         },
-        "hasCoatColorOutside": {
+        "coatColorOutside": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -506,7 +506,7 @@
             "weiß"
           ]
         },
-        "hasDecorationTechniqueBrick": {
+        "decorationTechniqueBrick": {
           "inputType": "dropdown",
           "valuelist": [
             "Bemalung",
@@ -523,7 +523,7 @@
             "Überzug/Glasur"
           ]
         },
-        "hasFormDescription": {
+        "formDescription": {
           "inputType": "checkboxes",
           "valuelist": [
             "ausladend",
@@ -544,7 +544,7 @@
             "zylinderförmig"
           ]
         },
-        "hasManufactoring": {
+        "manufacturing": {
           "inputType": "checkboxes",
           "valuelist": [
             "Dickwandig",
@@ -558,7 +558,7 @@
             "Weich gebrannt"
           ]
         },
-        "hasManufactoringMethodBrick": {
+        "manufacturingMethodBrick": {
           "inputType": "radio",
           "valuelist": [
             "gedreht (auf Drehscheibe)",
@@ -567,7 +567,7 @@
             "handgeformt"
           ]
         },
-        "hasProvinience": {
+        "provenance": {
           "inputType": "dropdown",
           "valuelist": [
             "Anatolien",
@@ -613,7 +613,7 @@
             "Ägypten"
           ]
         },
-        "hasSpecificType": {
+        "specificType": {
           "inputType": "dropdown",
           "valuelist": [
             "Abschläge",
@@ -633,7 +633,7 @@
             "Ziegelbruch"
           ]
         },
-        "hasTemper": {
+        "temper": {
           "inputType": "checkboxes",
           "valuelist": [
             "Glimmer",
@@ -654,37 +654,37 @@
     },
     "Project": {
       "fields": {
-        "hasContactMail": {
+        "contactMail": {
           "inputType": "input"
         },
-        "hasContactPerson": {
+        "contactPerson": {
           "inputType": "input"
         },
-        "hasDescription": {
+        "description": {
           "inputType": "text"
         },
-        "hasEPSGId": {
+        "epsgId": {
           "inputType": "unsignedInt"
         },
-        "hasExternalReference": {
+        "externalReference": {
           "inputType": "input"
         },
-        "hasGazId": {
+        "gazId": {
           "inputType": "unsignedInt"
         },
-        "hasInstitution": {
+        "institution": {
           "inputType": "input"
         },
-        "hasLatitude": {
+        "latitude": {
           "inputType": "float"
         },
-        "hasLongitude": {
+        "longitude": {
           "inputType": "float"
         },
-        "hasProjectURI": {
+        "projectURI": {
           "inputType": "input"
         },
-        "hasSupervisor": {
+        "supervisor": {
           "inputType": "input"
         }
       }
@@ -692,43 +692,43 @@
     "Burial": {
       "parent": "Feature",
       "fields": {
-        "hasAgeDetermination": {
+        "ageDetermination": {
           "inputType": "input"
         },
-        "hasAgeDeterminationBasis": {
+        "ageDeterminationBasis": {
           "inputType": "input"
         },
-        "hasBodyHeightAndRobustness": {
+        "bodyHeightAndRobustness": {
           "inputType": "input"
         },
-        "hasBurialRite": {
+        "burialRite": {
           "inputType": "input"
         },
-        "hasConditionComment": {
+        "conditionComment": {
           "inputType": "input"
         },
-        "hasDietReconstruction": {
+        "dietReconstruction": {
           "inputType": "input"
         },
-        "hasFindingPlace": {
+        "findingPlace": {
           "inputType": "input"
         },
-        "hasPalaeopathologicalReport": {
+        "palaeopathologicalReport": {
           "inputType": "input"
         },
-        "hasPublicationDatingFinds": {
+        "publicationDatingFinds": {
           "inputType": "text"
         },
-        "hasPublicationDatingStratigraphy": {
+        "publicationDatingStratigraphy": {
           "inputType": "text"
         },
-        "hasSexDetermination": {
+        "sexDetermination": {
           "inputType": "input"
         },
-        "hasSexDeterminationBasis": {
+        "sexDeterminationBasis": {
           "inputType": "input"
         },
-        "hasAmountIndividuals": {
+        "amountIndividuals": {
           "inputType": "dropdown",
           "valuelist": [
             "Doppelbestattung",
@@ -742,7 +742,7 @@
             "Wiedergängerbestattung"
           ]
         },
-        "hasBurialCharacteristic": {
+        "burialCharacteristic": {
           "inputType": "dropdown",
           "valuelist": [
             "Primäre Bestattung",
@@ -750,7 +750,7 @@
             "Unsicher bzw. unbestimmbar"
           ]
         },
-        "hasBurialDocumentation": {
+        "burialDocumentation": {
           "inputType": "checkboxes",
           "valuelist": [
             "Endoskopie",
@@ -761,7 +761,7 @@
             "Röntgen"
           ]
         },
-        "hasGraveFeature": {
+        "graveFeature": {
           "inputType": "checkboxes",
           "valuelist": [
             "Brandbestattung",
@@ -771,7 +771,7 @@
             "Teil-Körperbestattung"
           ]
         },
-        "hasPositionArms": {
+        "positionArms": {
           "inputType": "checkboxes",
           "valuelist": [
             "Unsicher bzw. unbestimmbar",
@@ -783,7 +783,7 @@
             "ungleichmäßig"
           ]
         },
-        "hasPositionLegs": {
+        "positionLegs": {
           "inputType": "checkboxes",
           "valuelist": [
             "Beine angewinkelt",
@@ -794,7 +794,7 @@
             "gestreckt"
           ]
         },
-        "hasPositioningIndividuals": {
+        "positioningIndividuals": {
           "inputType": "checkboxes",
           "valuelist": [
             "Bauchlage",
@@ -809,31 +809,31 @@
     "Building": {
       "parent": "Operation",
       "fields": {
-        "hasPeriod": {
+        "period": {
           "inputType": "dropdownRange"
         },
-        "hasDating": {
+        "dating": {
           "inputType": "dating"
         },
-        "hasBuildingHistory": {
+        "buildingHistory": {
           "inputType": "input"
         },
-        "hasBuildingResearchHistory": {
+        "buildingResearchHistory": {
           "inputType": "text"
         },
-        "hasConditionComment": {
+        "conditionComment": {
           "inputType": "input"
         },
-        "hasExcavationHistory": {
+        "excavationHistory": {
           "inputType": "text"
         },
-        "hasHistory": {
+        "history": {
           "inputType": "text"
         },
-        "hasRestauration": {
+        "hasRestoration": {
           "inputType": "boolean"
         },
-        "hasArchitecturalOrders": {
+        "architecturalOrders": {
           "inputType": "radio",
           "valuelist": [
             "Dorische Ordnung",
@@ -843,7 +843,7 @@
             "Toskanische Ordnung"
           ]
         },
-        "hasBuildingCategory": {
+        "buildingCategory": {
           "inputType": "dropdown",
           "valuelist": [
             "Altar",
@@ -868,7 +868,7 @@
             "Wohnbau"
           ]
         },
-        "hasBuildingCategorySpecific": {
+        "buildingCategorySpecific": {
           "inputType": "dropdown",
           "valuelist": [
             "Aediculabau",
@@ -902,7 +902,7 @@
             "zweischiffig"
           ]
         },
-        "hasBuildingTechnique": {
+        "buildingTechnique": {
           "inputType": "dropdown",
           "valuelist": [
             "Blockverbandmauerwerk",
@@ -927,7 +927,7 @@
             "unspezifisches Mauerwerk"
           ]
         },
-        "hasBuildingType": {
+        "buildingType": {
           "inputType": "radio",
           "valuelist": [
             "Befestigung",
@@ -936,7 +936,7 @@
             "Werkstatt"
           ]
         },
-        "hasCondition": {
+        "condition": {
           "inputType": "dropdown",
           "valuelist": [
             "gut",
@@ -945,7 +945,7 @@
             "sehr schlecht"
           ]
         },
-        "hasConditionAmount": {
+        "conditionAmount": {
           "inputType": "dropdown",
           "valuelist": [
             "Fragmentarisch",
@@ -953,7 +953,7 @@
             "Vollständig zerstört"
           ]
         },
-        "hasContext": {
+        "context": {
           "inputType": "dropdown",
           "valuelist": [
             "Akropolis",
@@ -964,19 +964,19 @@
             "Wohnviertel"
           ]
         },
-        "hasDimensionLength": {
+        "dimensionLength": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionWidth": {
+        "dimensionWidth": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasMaterial": {
+        "material": {
           "inputType": "checkboxes",
           "valuelist": [
             "Andesit",
@@ -1005,19 +1005,19 @@
       "color": "#6baed6",
       "parent": "ProcessUnit",
       "fields": {
-        "hasArea": {
+        "area": {
           "inputType": "unsignedFloat"
         },
         "hasFinds": {
           "inputType": "boolean"
         },
-        "hasDimensionLength": {
+        "dimensionLength": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionWidth": {
+        "dimensionWidth": {
           "inputType": "dimension",
           "positionValues": [
             "Maximale Ausdehnung",
@@ -1030,7 +1030,7 @@
       "color": "#660000",
       "parent": "Find",
       "fields": {
-        "hasColorWood": {
+        "colorWood": {
           "inputType": "dropdown",
           "valuelist": [
             "braun",
@@ -1038,7 +1038,7 @@
             "schwarz"
           ]
         },
-        "hasObjectTypeWood": {
+        "objectTypeWood": {
           "inputType": "dropdown",
           "valuelist": [
             "Altar",
@@ -1058,7 +1058,7 @@
             "Unsicher bzw. unbestimmbar"
           ]
         },
-        "hasTypeOfWood": {
+        "typeOfWood": {
           "inputType": "dropdown",
           "valuelist": [
             "Ahorn",
@@ -1090,58 +1090,58 @@
       "color": "#707070",
       "parent": "Feature",
       "fields": {
-        "hasBibliography": {
+        "bibliography": {
           "inputType": "text"
         },
-        "hasConditionComment": {
+        "conditionComment": {
           "inputType": "input"
         },
-        "hasConstructionDetailsDescription": {
+        "constructionDetailsDescription": {
           "inputType": "input"
         },
-        "hasDiscriptionOfBuildingTechnique": {
+        "descriptionOfBuildingTechnique": {
           "inputType": "input"
         },
-        "hasFindingPlace": {
+        "findingPlace": {
           "inputType": "input"
         },
         "hasGrouting": {
           "inputType": "boolean"
         },
-        "hasLayerAmount": {
+        "layerAmount": {
           "inputType": "unsignedInt"
         },
-        "hasLayerHight": {
+        "layerHeight": {
           "inputType": "unsignedFloat"
         },
-        "hasMarkDescription": {
+        "markDescription": {
           "inputType": "input"
         },
-        "hasMaterialCharacteristic": {
+        "materialCharacteristic": {
           "inputType": "input"
         },
-        "hasMaterialForm": {
+        "materialForm": {
           "inputType": "input"
         },
-        "hasMuralCrown": {
+        "muralCrown": {
           "inputType": "input"
         },
-        "hasPublicationDatingFinds": {
+        "publicationDatingFinds": {
           "inputType": "text"
         },
-        "hasPublicationDatingScientific": {
+        "publicationDatingScientific": {
           "inputType": "text"
         },
-        "hasPublicationDatingStratigraphy": {
+        "publicationDatingStratigraphy": {
           "inputType": "text"
         },
-        "hasPublicationRemark": {
+        "publicationRemark": {
           "inputType": "input"
         },
-        "hasSpatialLocation": {
+        "spatialLocation": {
           "inputType": "input"
         },
-        "hasBlockProcessing": {
+        "blockProcessing": {
           "inputType": "checkboxes",
           "valuelist": [
             "Bruchsteine",
@@ -1150,7 +1150,7 @@
             "Werksteine"
           ]
         },
-        "hasBlockTreatment": {
+        "blockTreatment": {
           "inputType": "radio",
           "valuelist": [
             "bossiert",
@@ -1164,7 +1164,7 @@
             "unbehauen"
           ]
         },
-        "hasBrickwork": {
+        "brickwork": {
           "inputType": "checkboxes",
           "valuelist": [
             "Binderverband",
@@ -1176,7 +1176,7 @@
             "Märkischer Verband"
           ]
         },
-        "hasCondition": {
+        "condition": {
           "inputType": "dropdown",
           "valuelist": [
             "gut",
@@ -1185,7 +1185,7 @@
             "sehr schlecht"
           ]
         },
-        "hasConditionAmount": {
+        "conditionAmount": {
           "inputType": "dropdown",
           "valuelist": [
             "Fragmentarisch",
@@ -1193,7 +1193,7 @@
             "Vollständig zerstört"
           ]
         },
-        "hasConstruction": {
+        "construction": {
           "inputType": "dropdown",
           "valuelist": [
             "Fundament: Geschüttet",
@@ -1206,14 +1206,14 @@
             "zweischalig mit Binderlagen"
           ]
         },
-        "hasMark": {
+        "mark": {
           "inputType": "dropdown",
           "valuelist": [
             "A",
             "AC"
           ]
         },
-        "hasMortarBinder": {
+        "mortarBinder": {
           "inputType": "radio",
           "valuelist": [
             "dominant",
@@ -1222,7 +1222,7 @@
             "mittel"
           ]
         },
-        "hasMortarColor": {
+        "mortarColor": {
           "inputType": "dropdown",
           "valuelist": [
             "beige",
@@ -1242,7 +1242,7 @@
             "weiß"
           ]
         },
-        "hasMortarConsistency": {
+        "mortarConsistency": {
           "inputType": "radio",
           "valuelist": [
             "brüchig",
@@ -1255,7 +1255,7 @@
             "sandig"
           ]
         },
-        "hasOrientation": {
+        "orientation": {
           "inputType": "dropdown",
           "valuelist": [
             "N-S",
@@ -1268,7 +1268,7 @@
             "WSW-ONO"
           ]
         },
-        "hasWallClassification": {
+        "wallClassification": {
           "inputType": "dropdown",
           "valuelist": [
             "Aufgehendes",
@@ -1285,7 +1285,7 @@
             "Wandgestaltung"
           ]
         },
-        "hasWallType": {
+        "wallType": {
           "inputType": "dropdown",
           "valuelist": [
             "Außenmauer",
@@ -1302,28 +1302,28 @@
     },
     "Operation": {
       "fields": {
-        "hasArea": {
+        "area": {
           "inputType": "unsignedFloat"
         },
-        "hasBeginningDate": {
+        "beginningDate": {
           "inputType": "date"
         },
-        "hasDescription": {
+        "description": {
           "inputType": "text"
         },
-        "hasDiaryAbstract": {
+        "diaryAbstract": {
           "inputType": "text"
         },
-        "hasEndDate": {
+        "endDate": {
           "inputType": "date"
         },
-        "hasProcessor": {
+        "processor": {
           "inputType": "input"
         },
-        "hasSupervisor": {
+        "supervisor": {
           "inputType": "input"
         },
-        "hasCampaign": {
+        "campaign": {
           "inputType": "input",
           "valuelist": [
             "Campaign"
@@ -1333,45 +1333,45 @@
     },
     "Place": {
       "fields": {
-        "hasDating": {
+        "dating": {
           "inputType": "dating"
         },
-        "hasPlaceName": {
+        "placeName": {
           "inputType": "input"
         },
-        "hasPlaceType": {
+        "placeType": {
           "inputType": "dropdown",
           "valuelist": [
             "Gemarkung",
             "Provinz"
           ]
         },
-        "isAncient": {
+        "ancient": {
           "inputType": "radio",
           "valuelist": [
             "Antik",
             "Modern"
           ]
         },
-        "hasBuildingHistory": {
+        "buildingHistory": {
           "inputType": "text"
         },
-        "hasBuildingResearchHistory": {
+        "buildingResearchHistory": {
           "inputType": "text"
         },
-        "hasDescription": {
+        "description": {
           "inputType": "text"
         },
-        "hasExcavationHistory": {
+        "excavationHistory": {
           "inputType": "text"
         },
-        "hasFindSituation": {
+        "findSituation": {
           "inputType": "text"
         },
-        "hasModernIntervention": {
+        "modernIntervention": {
           "inputType": "input"
         },
-        "hasFindspotClassification": {
+        "findspotClassification": {
           "inputType": "dropdown",
           "valuelist": [
             "Einzelmauer",
@@ -1389,7 +1389,7 @@
             "urbanes Gebäude"
           ]
         },
-        "hasSiteClassification": {
+        "siteClassification": {
           "inputType": "dropdown",
           "valuelist": [
             "Bestattungsplatz",
@@ -1402,13 +1402,13 @@
       "color": "#663300",
       "parent": "Feature",
       "fields": {
-        "hasAppearance": {
+        "appearance": {
           "inputType": "input"
         },
-        "hasNatural": {
+        "isNatural": {
           "inputType": "boolean"
         },
-        "hasConsistency": {
+        "consistency": {
           "inputType": "checkboxes",
           "valuelist": [
             "Durch Brand versiegelt",
@@ -1437,13 +1437,13 @@
             "weich"
           ]
         },
-        "hasDimensionThickness": {
+        "dimensionThickness": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDistinguishingCriteria": {
+        "distinguishingCriteria": {
           "inputType": "radio",
           "valuelist": [
             "Farbe",
@@ -1453,7 +1453,7 @@
             "Komposition"
           ]
         },
-        "hasLayerClassification": {
+        "layerClassification": {
           "inputType": "dropdown",
           "valuelist": [
             "Brandschicht",
@@ -1462,7 +1462,7 @@
             "Planierschicht"
           ]
         },
-        "hasSoilType": {
+        "soilType": {
           "inputType": "dropdown",
           "valuelist": [
             "Feinsand",
@@ -1493,37 +1493,37 @@
     "Feature": {
       "color": "black",
       "fields": {
-        "hasArea": {
+        "area": {
           "inputType": "unsignedFloat"
         },
-        "hasBeginningDate": {
+        "beginningDate": {
           "inputType": "date"
         },
-        "hasEndDate": {
+        "endDate": {
           "inputType": "date"
         },
-        "hasDating": {
+        "dating": {
           "inputType": "dating"
         },
-        "hasComparison": {
+        "comparison": {
           "inputType": "text"
         },
-        "hasDairy": {
+        "diary": {
           "inputType": "input"
         },
-        "hasDescription": {
+        "description": {
           "inputType": "text"
         },
         "hasDisturbance": {
           "inputType": "boolean"
         },
-        "hasFeatureAmount": {
+        "featureAmount": {
           "inputType": "input"
         },
-        "hasProcessor": {
+        "processor": {
           "inputType": "input"
         },
-        "hasColor": {
+        "color": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -1547,25 +1547,25 @@
             "weiß"
           ]
         },
-        "hasDimensionLength": {
+        "dimensionLength": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionVerticalExtent": {
+        "dimensionVerticalExtent": {
           "inputType": "dimension",
           "positionValues": [
           "Oberkante",
           "Unterkante"]
         },
-        "hasDimensionWidth": {
+        "dimensionWidth": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasFeatureBorders": {
+        "featureBorders": {
           "inputType": "checkboxes",
           "valuelist": [
             "deutlich",
@@ -1588,7 +1588,7 @@
             "wellig"
           ]
         },
-        "hasFeatureForm": {
+        "featureForm": {
           "inputType": "checkboxes",
           "valuelist": [
             "Befundrest",
@@ -1616,10 +1616,10 @@
       "color": "#6600cc",
       "parent": "Feature",
       "fields": {
-        "hasConditionComment": {
+        "conditionComment": {
           "inputType": "input"
         },
-        "hasCondition": {
+        "condition": {
           "inputType": "dropdown",
           "valuelist": [
             "gut",
@@ -1628,7 +1628,7 @@
             "sehr schlecht"
           ]
         },
-        "hasConditionAmount": {
+        "conditionAmount": {
           "inputType": "dropdown",
           "valuelist": [
             "Fragmentarisch",
@@ -1636,7 +1636,7 @@
             "Vollständig zerstört"
           ]
         },
-        "hasConsistency": {
+        "consistency": {
           "inputType": "checkboxes",
           "valuelist": [
             "Durch Brand versiegelt",
@@ -1665,7 +1665,7 @@
             "weich"
           ]
         },
-        "hasDistinguishingCriteria": {
+        "distinguishingCriteria": {
           "inputType": "radio",
           "valuelist": [
             "Farbe",
@@ -1675,7 +1675,7 @@
             "Komposition"
           ]
         },
-        "hasFloorClassification": {
+        "floorClassification": {
           "inputType": "dropdown",
           "valuelist": [
             "Bastmatten",
@@ -1690,7 +1690,7 @@
             "Ziegel"
           ]
         },
-        "hasLayerClassification": {
+        "layerClassification": {
           "inputType": "dropdown",
           "valuelist": [
             "Brandschicht",
@@ -1699,7 +1699,7 @@
             "Planierschicht"
           ]
         },
-        "hasMortarBinder": {
+        "mortarBinder": {
           "inputType": "radio",
           "valuelist": [
             "dominant",
@@ -1712,25 +1712,25 @@
     },
     "Inscription": {
       "fields": {
-        "hasComparison": {
+        "comparison": {
           "inputType": "text"
         },
-        "hasConditionComment": {
+        "conditionComment": {
           "inputType": "input"
         },
-        "hasContent": {
+        "content": {
           "inputType": "text"
         },
-        "hasDescription": {
+        "description": {
           "inputType": "text"
         },
-        "hasLanguage": {
+        "language": {
           "inputType": "input"
         },
-        "hasProcessor": {
+        "processor": {
           "inputType": "input"
         },
-        "hasCondition": {
+        "condition": {
           "inputType": "dropdown",
           "valuelist": [
             "gut",
@@ -1739,7 +1739,7 @@
             "sehr schlecht"
           ]
         },
-        "hasConditionAmount": {
+        "conditionAmount": {
           "inputType": "dropdown",
           "valuelist": [
             "Fragmentarisch",
@@ -1747,25 +1747,25 @@
             "Vollständig zerstört"
           ]
         },
-        "hasPeriod": {
+        "period": {
           "inputType": "dropdownRange"
         },
-        "hasDating": {
+        "dating": {
           "inputType": "dating"
         },
-        "hasDimensionWidth": {
+        "dimensionWidth": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionHeight": {
+        "dimensionHeight": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasObjectTypeInscription": {
+        "objectTypeInscription": {
           "inputType": "checkboxes",
           "valuelist": [
             "Alltäglicher Gebrauch",
@@ -1785,13 +1785,13 @@
     },
     "Image": {
       "fields": {
-        "hasDescription": {
+        "description": {
           "inputType": "text"
         },
-        "hasDraughtsmen": {
+        "draughtsmen": {
           "inputType": "input"
         },
-        "hasProcessor": {
+        "processor": {
           "inputType": "input"
         }
       }
@@ -1799,70 +1799,70 @@
     "Pottery": {
       "parent": "Find",
       "fields": {
-        "hasAmountRimSherds": {
+        "amountRimSherds": {
           "inputType": "unsignedInt"
         },
-        "hasAmountSherdsBase": {
+        "amountSherdsBase": {
           "inputType": "unsignedInt"
         },
-        "hasAmountSherdsHandles": {
+        "amountSherdsHandles": {
           "inputType": "unsignedInt"
         },
-        "hasAmountSherdsLip": {
+        "amountSherdsLip": {
           "inputType": "unsignedInt"
         },
-        "hasAmountSherdsPedestal": {
+        "amountSherdsPedestal": {
           "inputType": "unsignedInt"
         },
-        "hasAmountSherdsRimBase": {
+        "amountSherdsRimBase": {
           "inputType": "unsignedInt"
         },
-        "hasAmountSherdsRimShoulder": {
+        "amountSherdsRimShoulder": {
           "inputType": "unsignedInt"
         },
-        "hasAmountSherdsShoulder": {
+        "amountSherdsShoulder": {
           "inputType": "unsignedInt"
         },
-        "hasAmountSherdsxOther": {
+        "amountSherdsOther": {
           "inputType": "unsignedInt"
         },
-        "hasAmountSherdsxPercent": {
+        "amountSherdsPercent": {
           "inputType": "unsignedFloat"
         },
-        "hasAmountShertsLid": {
+        "amountSherdsLid": {
           "inputType": "unsignedInt"
         },
-        "hasClayColorBreakMunsell": {
+        "clayColorBreakMunsell": {
           "inputType": "input"
         },
-        "hasClayColorInsideMunsell": {
+        "clayColorInsideMunsell": {
           "inputType": "input"
         },
-        "hasClayColorOutsideMunsell": {
+        "clayColorOutsideMunsell": {
           "inputType": "input"
         },
         "hasCoat": {
           "inputType": "boolean"
         },
-        "hasDecorationDescription": {
+        "decorationDescription": {
           "inputType": "input"
         },
-        "hasPotteryBreakStructure": {
+        "potteryBreakStructure": {
           "inputType": "input"
         },
-        "hasPotteryResidueAnalysis": {
+        "potteryResidueAnalysis": {
           "inputType": "input"
         },
-        "hasPotterySample": {
+        "potterySample": {
           "inputType": "input"
         },
-        "hasPurpose": {
+        "purpose": {
           "inputType": "input"
         },
-        "hasTypeNumber": {
+        "typeNumber": {
           "inputType": "input"
         },
-        "hasClayColorBreak": {
+        "clayColorBreak": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -1886,7 +1886,7 @@
             "weiß"
           ]
         },
-        "hasClayColorInside": {
+        "clayColorInside": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -1910,7 +1910,7 @@
             "weiß"
           ]
         },
-        "hasClayColorOutside": {
+        "clayColorOutside": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -1934,7 +1934,7 @@
             "weiß"
           ]
         },
-        "hasClayHardness": {
+        "clayHardness": {
           "inputType": "dropdown",
           "valuelist": [
             "1 (Fingernagel schabt, ritzt leicht)",
@@ -1946,7 +1946,7 @@
             "7-10 (Fensterglas wird geritzt, Stahl schlägt Funken)"
           ]
         },
-        "hasCoatColorInside": {
+        "coatColorInside": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -1970,7 +1970,7 @@
             "weiß"
           ]
         },
-        "hasCoatColorOutside": {
+        "coatColorOutside": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -1994,7 +1994,7 @@
             "weiß"
           ]
         },
-        "hasCoatInside": {
+        "coatInside": {
           "inputType": "dropdown",
           "valuelist": [
             "Glasur",
@@ -2003,7 +2003,7 @@
             "Tongrundig"
           ]
         },
-        "hasCoatInsideType": {
+        "coatInsideType": {
           "inputType": "checkboxes",
           "valuelist": [
             "Andere",
@@ -2015,7 +2015,7 @@
             "Überzug"
           ]
         },
-        "hasCoatOutside": {
+        "coatOutside": {
           "inputType": "dropdown",
           "valuelist": [
             "Glasur",
@@ -2024,7 +2024,7 @@
             "Tongrundig"
           ]
         },
-        "hasCoatOutsideType": {
+        "coatOutsideType": {
           "inputType": "checkboxes",
           "valuelist": [
             "Andere",
@@ -2036,7 +2036,7 @@
             "Überzug"
           ]
         },
-        "hasDecorationTechniquePottery": {
+        "decorationTechniquePottery": {
           "inputType": "dropdown",
           "valuelist": [
             "Bemalung",
@@ -2050,7 +2050,7 @@
             "Warzendekor"
           ]
         },
-        "hasFormDescription": {
+        "formDescription": {
           "inputType": "checkboxes",
           "valuelist": [
             "ausladend",
@@ -2071,7 +2071,7 @@
             "zylinderförmig"
           ]
         },
-        "hasManufactoring": {
+        "manufacturing": {
           "inputType": "checkboxes",
           "valuelist": [
             "Dickwandig",
@@ -2085,7 +2085,7 @@
             "Weich gebrannt"
           ]
         },
-        "hasManufactoringMethodPottery": {
+        "manufacturingMethodPottery": {
           "inputType": "checkboxes",
           "valuelist": [
             "gedreht (auf Drehscheibe)",
@@ -2096,14 +2096,14 @@
             "nachgedreht (überdreht)"
           ]
         },
-        "hasMaterialType": {
+        "materialType": {
           "inputType": "dropdown",
           "valuelist": [
             "Feinkeramik (Feine Ware)",
             "Gebrauchskeramik (Grobe Ware)"
           ]
         },
-        "hasObjectTypePottery": {
+        "objectTypePottery": {
           "inputType": "dropdown",
           "valuelist": [
             "Altar",
@@ -2132,7 +2132,7 @@
             "Werkzeug"
           ]
         },
-        "hasPotteryTypeSpecific": {
+        "potteryTypeSpecific": {
           "inputType": "radio",
           "valuelist": [
             "Arretina schwarz",
@@ -2165,7 +2165,7 @@
             "Terra sigilata"
           ]
         },
-        "hasProvinience": {
+        "provenance": {
           "inputType": "dropdown",
           "valuelist": [
             "Anatolien",
@@ -2211,7 +2211,7 @@
             "Ägypten"
           ]
         },
-        "hasTemper": {
+        "temper": {
           "inputType": "checkboxes",
           "valuelist": [
             "Glimmer",
@@ -2228,7 +2228,7 @@
             "Vulkanische Partikel"
           ]
         },
-        "hasTemperAmount": {
+        "temperAmount": {
           "inputType": "radio",
           "valuelist": [
             "Keine Einschlüsse",
@@ -2240,7 +2240,7 @@
             "Wenig"
           ]
         },
-        "hasTemperParticles": {
+        "temperParticles": {
           "inputType": "radio",
           "valuelist": [
             "fein",
@@ -2251,10 +2251,10 @@
             "sehr grob"
           ]
         },
-        "hasTemperTypeClay": {
+        "temperTypeClay": {
           "inputType": "input"
         },
-        "hasVesselFormPottery": {
+        "vesselFormPottery": {
           "inputType": "dropdown",
           "valuelist": [
             "Amphore",
@@ -2282,7 +2282,7 @@
             "Vorratsgefäß"
           ]
         },
-        "hasVesselFormPotterySpecific": {
+        "vesselFormPotterySpecific": {
           "inputType": "dropdown",
           "valuelist": [
             "Alabastron",
@@ -2330,19 +2330,19 @@
         "hasFinds": {
           "inputType": "boolean"
         },
-        "hasDimensionThickness": {
+        "dimensionThickness": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionVerticalExtent": {
+        "dimensionVerticalExtent": {
           "inputType": "dimension",
           "positionValues": [
           "Oberkante",
           "Unterkante"]
         },
-        "hasSoilType": {
+        "soilType": {
           "inputType": "dropdown",
           "valuelist": [
             "Feinsand",
@@ -2374,31 +2374,31 @@
       "color": "#339900",
       "parent": "Feature",
       "fields": {
-        "hasBibliography": {
+        "bibliography": {
           "inputType": "text"
         },
-        "hasConditionComment": {
+        "conditionComment": {
           "inputType": "input"
         },
-        "hasFindingPlace": {
+        "findingPlace": {
           "inputType": "input"
         },
-        "hasPublicationDatingFinds": {
+        "publicationDatingFinds": {
           "inputType": "text"
         },
-        "hasPublicationDatingScientific": {
+        "publicationDatingScientific": {
           "inputType": "text"
         },
-        "hasPublicationDatingStratigraphy": {
+        "publicationDatingStratigraphy": {
           "inputType": "text"
         },
-        "hasPublicationRemark": {
+        "publicationRemark": {
           "inputType": "input"
         },
-        "hasSpatialLocation": {
+        "spatialLocation": {
           "inputType": "input"
         },
-        "hasCondition": {
+        "condition": {
           "inputType": "dropdown",
           "valuelist": [
             "gut",
@@ -2407,7 +2407,7 @@
             "sehr schlecht"
           ]
         },
-        "hasConditionAmount": {
+        "conditionAmount": {
           "inputType": "dropdown",
           "valuelist": [
             "Fragmentarisch",
@@ -2415,7 +2415,7 @@
             "Vollständig zerstört"
           ]
         },
-        "hasDistinguishingCriteria": {
+        "distinguishingCriteria": {
           "inputType": "radio",
           "valuelist": [
             "Farbe",
@@ -2425,7 +2425,7 @@
             "Komposition"
           ]
         },
-        "hasGraveType": {
+        "graveType": {
           "inputType": "dropdown",
           "valuelist": [
             "Baumsargbestattung",
@@ -2453,7 +2453,7 @@
             "Ziegelplattengrab"
           ]
         },
-        "hasGraveTypeSpecific": {
+        "graveTypeSpecific": {
           "inputType": "checkboxes",
           "valuelist": [
             "Amphorenbestattung",
@@ -2465,7 +2465,7 @@
             "ziegelgemauertes Grab"
           ]
         },
-        "hasSoilType": {
+        "soilType": {
           "inputType": "dropdown",
           "valuelist": [
             "Feinsand",
@@ -2491,7 +2491,7 @@
             "Toniger Schluff"
           ]
         },
-        "hasTombBuilding": {
+        "tombBuilding": {
           "inputType": "checkboxes",
           "valuelist": [
             "Bruchsteingemauert",
@@ -2505,7 +2505,7 @@
       "color": "#CCFFFF",
       "parent": "Find",
       "fields": {
-        "hasBiologicalAge": {
+        "biologicalAge": {
           "inputType": "dropdown",
           "valuelist": [
             "Adult (18/20-40)",
@@ -2517,7 +2517,7 @@
             "Senil (60 <)"
           ]
         },
-        "hasBoneClassification": {
+        "boneClassification": {
           "inputType": "dropdown",
           "valuelist": [
             "Becken (Pelvis)",
@@ -2544,7 +2544,7 @@
             "Zahn"
           ]
         },
-        "hasBoneType": {
+        "boneType": {
           "inputType": "radio",
           "valuelist": [
             "Elfenbein",
@@ -2553,7 +2553,7 @@
             "Tierknochen"
           ]
         },
-        "hasBurningGrade": {
+        "burningGrade": {
           "inputType": "dropdown",
           "valuelist": [
             "I - 200°-300°C - Verfärbung etwa gelblichweiß-elfenbein glasig",
@@ -2563,14 +2563,14 @@
             "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß"
           ]
         },
-        "hasGender": {
+        "gender": {
           "inputType": "radio",
           "valuelist": [
             "Männlich",
             "Weiblich"
           ]
         },
-        "hasObjectTypeBone": {
+        "objectTypeBone": {
           "inputType": "dropdown",
           "valuelist": [
             "Anhänger",
@@ -2592,7 +2592,7 @@
             "Werkzeug"
           ]
         },
-        "hasSpecies": {
+        "species": {
           "inputType": "dropdown",
           "valuelist": [
             "Biber",
@@ -2611,25 +2611,25 @@
     },
     "Room": {
       "fields": {
-        "hasArea": {
+        "area": {
           "inputType": "unsignedFloat"
         },
-        "hasConditionComment": {
+        "conditionComment": {
           "inputType": "input"
         },
-        "hasDescription": {
+        "description": {
           "inputType": "text"
         },
-        "hasProcessor": {
+        "processor": {
           "inputType": "input"
         },
-        "hasCampaign": {
+        "campaign": {
           "inputType": "input",
           "valuelist": [
             "Campaign"
           ]
         },
-        "hasCondition": {
+        "condition": {
           "inputType": "dropdown",
           "valuelist": [
             "gut",
@@ -2638,7 +2638,7 @@
             "sehr schlecht"
           ]
         },
-        "hasConditionAmount": {
+        "conditionAmount": {
           "inputType": "dropdown",
           "valuelist": [
             "Fragmentarisch",
@@ -2646,31 +2646,31 @@
             "Vollständig zerstört"
           ]
         },
-        "hasPeriod": {
+        "period": {
           "inputType": "dropdownRange"
         },
-        "hasDating": {
+        "dating": {
           "inputType": "dating"
         },
-        "hasDimensionHeight": {
+        "dimensionHeight": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionLength": {
+        "dimensionLength": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionVerticalExtent": {
+        "dimensionVerticalExtent": {
           "inputType": "dimension",
           "positionValues": [
           "Oberkante",
           "Unterkante"]
         },
-        "hasDimensionWidth": {
+        "dimensionWidth": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
@@ -2681,16 +2681,16 @@
     "ProcessUnit": {
       "color": "#08306b",
       "fields": {
-        "hasDate": {
+        "date": {
           "inputType": "date"
         },
-        "hasDescription": {
+        "description": {
           "inputType": "text"
         },
-        "hasProcessor": {
+        "processor": {
           "inputType": "input"
         },
-        "hasOperationClassification": {
+        "operationClassification": {
           "inputType": "dropdown",
           "valuelist": [
             "Abhub",
@@ -2707,7 +2707,7 @@
       "color": "#FF6600",
       "parent": "Find",
       "fields": {
-        "hasClayColorBreak": {
+        "clayColorBreak": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -2731,7 +2731,7 @@
             "weiß"
           ]
         },
-        "hasClayColorInside": {
+        "clayColorInside": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -2755,7 +2755,7 @@
             "weiß"
           ]
         },
-        "hasClayColorOutside": {
+        "clayColorOutside": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -2779,7 +2779,7 @@
             "weiß"
           ]
         },
-        "hasClayStructure": {
+        "clayStructure": {
           "inputType": "radio",
           "valuelist": [
             "hart",
@@ -2788,7 +2788,7 @@
             "weich"
           ]
         },
-        "hasCoatColorInside": {
+        "coatColorInside": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -2812,7 +2812,7 @@
             "weiß"
           ]
         },
-        "hasCoatColorOutside": {
+        "coatColorOutside": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -2836,7 +2836,7 @@
             "weiß"
           ]
         },
-        "hasDecorationTechniquePottery": {
+        "decorationTechniquePottery": {
           "inputType": "dropdown",
           "valuelist": [
             "Bemalung",
@@ -2850,7 +2850,7 @@
             "Warzendekor"
           ]
         },
-        "hasFormDescription": {
+        "formDescription": {
           "inputType": "checkboxes",
           "valuelist": [
             "ausladend",
@@ -2871,7 +2871,7 @@
             "zylinderförmig"
           ]
         },
-        "hasManufactoringMethodPottery": {
+        "manufacturingMethodPottery": {
           "inputType": "checkboxes",
           "valuelist": [
             "gedreht (auf Drehscheibe)",
@@ -2882,7 +2882,7 @@
             "nachgedreht (überdreht)"
           ]
         },
-        "hasProvinience": {
+        "provenance": {
           "inputType": "dropdown",
           "valuelist": [
             "Anatolien",
@@ -2928,7 +2928,7 @@
             "Ägypten"
           ]
         },
-        "hasSurfaceCondition": {
+        "surfaceCondition": {
           "inputType": "dropdown",
           "valuelist": [
             "Brandspuren",
@@ -2942,7 +2942,7 @@
             "verwaschen"
           ]
         },
-        "hasTemper": {
+        "temper": {
           "inputType": "checkboxes",
           "valuelist": [
             "Glimmer",
@@ -2959,7 +2959,7 @@
             "Vulkanische Partikel"
           ]
         },
-        "hasTemperAmount": {
+        "temperAmount": {
           "inputType": "radio",
           "valuelist": [
             "Keine Einschlüsse",
@@ -2971,7 +2971,7 @@
             "Wenig"
           ]
         },
-        "hasTemperParticles": {
+        "temperParticles": {
           "inputType": "radio",
           "valuelist": [
             "fein",
@@ -2982,13 +2982,13 @@
             "sehr grob"
           ]
         },
-        "hasTerracottaType": {
+        "terracottaType": {
           "inputType": "radio",
           "valuelist": [
             "Kalyptere"
           ]
         },
-        "hasVesselFormTerracotta": {
+        "vesselFormTerracotta": {
           "inputType": "dropdown",
           "valuelist": [
             "Amphore",
@@ -3008,7 +3008,7 @@
             "Vorratsgefäß"
           ]
         },
-        "hasVesselFormTerracottaSpecific": {
+        "vesselFormTerracottaSpecific": {
           "inputType": "dropdown",
           "valuelist": [
             "Alabastron",
@@ -3042,37 +3042,37 @@
     "Wall_surface": {
       "color": "#ffff99",
       "fields": {
-        "hasArea": {
+        "area": {
           "inputType": "unsignedFloat"
         },
-        "hasConditionComment": {
+        "conditionComment": {
           "inputType": "input"
         },
-        "hasConstructionDetailsDescription": {
+        "constructionDetailsDescription": {
           "inputType": "input"
         },
-        "hasDescription": {
+        "description": {
           "inputType": "text"
         },
-        "hasMarkDescription": {
+        "markDescription": {
           "inputType": "input"
         },
         "hasPlasterDecoration": {
           "inputType": "boolean"
         },
-        "hasPlasterOlder": {
+        "plasterOlder": {
           "inputType": "input"
         },
-        "hasProcessor": {
+        "processor": {
           "inputType": "input"
         },
-        "hasSurfaceDecoration": {
+        "surfaceDecoration": {
           "inputType": "input"
         },
-        "hasWallConstructionTechnique": {
+        "wallConstructionTechnique": {
           "inputType": "input"
         },
-        "hasBlockTreatment": {
+        "blockTreatment": {
           "inputType": "radio",
           "valuelist": [
             "bossiert",
@@ -3086,7 +3086,7 @@
             "unbehauen"
           ]
         },
-        "hasBuildingTechnique": {
+        "buildingTechnique": {
           "inputType": "dropdown",
           "valuelist": [
             "Blockverbandmauerwerk",
@@ -3111,7 +3111,7 @@
             "unspezifisches Mauerwerk"
           ]
         },
-        "hasColor": {
+        "color": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -3135,7 +3135,7 @@
             "weiß"
           ]
         },
-        "hasCondition": {
+        "condition": {
           "inputType": "dropdown",
           "valuelist": [
             "gut",
@@ -3144,7 +3144,7 @@
             "sehr schlecht"
           ]
         },
-        "hasConditionAmount": {
+        "conditionAmount": {
           "inputType": "dropdown",
           "valuelist": [
             "Fragmentarisch",
@@ -3152,7 +3152,7 @@
             "Vollständig zerstört"
           ]
         },
-        "hasConstructionDetails": {
+        "constructionDetails": {
           "inputType": "dropdown",
           "valuelist": [
             "Abflussöffnung",
@@ -3173,25 +3173,25 @@
             "Sturzauflager"
           ]
         },
-        "hasPeriod": {
+        "period": {
           "inputType": "dropdownRange"
         },
-        "hasDating": {
+        "dating": {
           "inputType": "dating"
         },
-        "hasDimensionHeight": {
+        "dimensionHeight": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionWidth": {
+        "dimensionWidth": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasJointsCondition": {
+        "jointsCondition": {
           "inputType": "radio",
           "valuelist": [
             "Mörtel abplatzend",
@@ -3201,7 +3201,7 @@
             "partiell ausgehöhlt"
           ]
         },
-        "hasJointsDecoration": {
+        "jointsDecoration": {
           "inputType": "radio",
           "valuelist": [
             "Gerade",
@@ -3214,14 +3214,14 @@
             "Weit"
           ]
         },
-        "hasMark": {
+        "mark": {
           "inputType": "dropdown",
           "valuelist": [
             "A",
             "AC"
           ]
         },
-        "hasPlasterComponents": {
+        "plasterComponents": {
           "inputType": "radio",
           "valuelist": [
             "Feinsand",
@@ -3229,7 +3229,7 @@
             "Sand"
           ]
         },
-        "hasWallOrientation": {
+        "wallOrientation": {
           "inputType": "checkboxes",
           "valuelist": [
             "Norden",
@@ -3242,7 +3242,7 @@
             "Westen"
           ]
         },
-        "isRoomSide": {
+        "roomSide": {
           "inputType": "checkboxes",
           "valuelist": [
             "Norden",
@@ -3255,7 +3255,7 @@
             "Westen"
           ]
         },
-        "isWallSide": {
+        "wallSide": {
           "inputType": "radio",
           "valuelist": [
             "Norden",
@@ -3274,10 +3274,10 @@
       "color": "#CC6600",
       "parent": "Feature",
       "fields": {
-        "hasNatural": {
+        "isNatural": {
           "inputType": "boolean"
         },
-        "hasConsistency": {
+        "consistency": {
           "inputType": "checkboxes",
           "valuelist": [
             "Durch Brand versiegelt",
@@ -3306,7 +3306,7 @@
             "weich"
           ]
         },
-        "hasDistinguishingCriteria": {
+        "distinguishingCriteria": {
           "inputType": "radio",
           "valuelist": [
             "Farbe",
@@ -3316,7 +3316,7 @@
             "Komposition"
           ]
         },
-        "hasOtherClassification": {
+        "otherClassification": {
           "inputType": "dropdown",
           "valuelist": [
             "Abfallgrube",
@@ -3336,7 +3336,7 @@
             "Wasserreservoir"
           ]
         },
-        "hasSoilType": {
+        "soilType": {
           "inputType": "dropdown",
           "valuelist": [
             "Feinsand",
@@ -3368,13 +3368,13 @@
       "color": "#9ecae1",
       "parent": "ProcessUnit",
       "fields": {
-        "hasLabNumber": {
+        "labNumber": {
           "inputType": "input"
         },
-        "hasWeight": {
+        "weight": {
           "inputType": "unsignedFloat"
         },
-        "hasSampleType": {
+        "sampleType": {
           "inputType": "radio",
           "valuelist": [
             "Bodenprobe",
@@ -3385,7 +3385,7 @@
             "Pollenanalyse"
           ]
         },
-        "hasSoilType": {
+        "soilType": {
           "inputType": "dropdown",
           "valuelist": [
             "Feinsand",
@@ -3416,7 +3416,7 @@
     "Drawing": {
       "parent": "Image",
       "fields": {
-        "hasDrawingMaterial": {
+        "drawingMaterial": {
           "inputType": "radio",
           "valuelist": [
             "Digitale Datei",
@@ -3431,7 +3431,7 @@
             "Transparentpapier"
           ]
         },
-        "hasDrawingTool": {
+        "drawingTool": {
           "inputType": "radio",
           "valuelist": [
             "Bleistift",
@@ -3440,7 +3440,7 @@
             "digital erstellt"
           ]
         },
-        "hasDrawingType": {
+        "drawingType": {
           "inputType": "radio",
           "valuelist": [
             "AutoCAD Zeichnung (auch TachyCAD)",
@@ -3448,7 +3448,7 @@
             "Pantograf"
           ]
         },
-        "hasScale": {
+        "scale": {
           "inputType": "dropdown",
           "valuelist": [
             "1:1",
@@ -3467,7 +3467,7 @@
     "Survey": {
       "parent": "Operation",
       "fields": {
-        "hasResearchMethod": {
+        "researchMethod": {
           "inputType": "checkboxes",
           "valuelist": [
             "Befliegung",
@@ -3488,16 +3488,16 @@
       "color": "#5c5c8a",
       "parent": "Find",
       "fields": {
-        "hasPurpose": {
+        "purpose": {
           "inputType": "input"
         },
-        "hasTreatment": {
+        "treatment": {
           "inputType": "input"
         },
-        "hasWorkmanship": {
+        "workmanship": {
           "inputType": "input"
         },
-        "hasArchitectureElement": {
+        "architectureElement": {
           "inputType": "dropdown",
           "valuelist": [
             "Akroter",
@@ -3519,7 +3519,7 @@
             "Wandverkleidung"
           ]
         },
-        "hasColor": {
+        "color": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -3543,7 +3543,7 @@
             "weiß"
           ]
         },
-        "hasFormDescription": {
+        "formDescription": {
           "inputType": "checkboxes",
           "valuelist": [
             "ausladend",
@@ -3564,7 +3564,7 @@
             "zylinderförmig"
           ]
         },
-        "hasMaterial": {
+        "material": {
           "inputType": "checkboxes",
           "valuelist": [
             "Andesit",
@@ -3587,7 +3587,7 @@
             "Tuff"
           ]
         },
-        "hasObjectTypeStone": {
+        "objectTypeStone": {
           "inputType": "dropdown",
           "valuelist": [
             "Abschlag",
@@ -3635,7 +3635,7 @@
             "Ölpresse"
           ]
         },
-        "hasOrigin": {
+        "origin": {
           "inputType": "dropdown",
           "valuelist": [
             "Alpen",
@@ -3646,7 +3646,7 @@
             "Sizilien"
           ]
         },
-        "hasProvinience": {
+        "provenance": {
           "inputType": "dropdown",
           "valuelist": [
             "Anatolien",
@@ -3692,7 +3692,7 @@
             "Ägypten"
           ]
         },
-        "hasTemperAmount": {
+        "temperAmount": {
           "inputType": "radio",
           "valuelist": [
             "Keine Einschlüsse",
@@ -3710,16 +3710,16 @@
       "color": "#cc9900",
       "parent": "Find",
       "fields": {
-        "hasFrontSideDescription": {
+        "frontSideDescription": {
           "inputType": "input"
         },
-        "hasPreservedDiameter": {
+        "preservedDiameter": {
           "inputType": "unsignedFloat"
         },
-        "hasReverseSideDescription": {
+        "reverseSideDescription": {
           "inputType": "input"
         },
-        "hasDenomination": {
+        "denomination": {
           "inputType": "dropdown",
           "valuelist": [
             "1 1/2 Skripula",
@@ -3794,7 +3794,7 @@
             "Victoriatus"
           ]
         },
-        "hasManufacturingMethodCoin": {
+        "manufacturingMethodCoin": {
           "inputType": "input",
           "valuelist": [
             "Gegossen",
@@ -3803,7 +3803,7 @@
             "Unsicher bzw. unbestimmbar"
           ]
         },
-        "hasMetalMaterial": {
+        "metalMaterial": {
           "inputType": "checkboxes",
           "valuelist": [
             "Aluminium",
@@ -3821,7 +3821,7 @@
             "Zinn"
           ]
         },
-        "hasMint": {
+        "mint": {
           "inputType": "dropdown",
           "valuelist": [
             "Abdera",
@@ -4078,7 +4078,7 @@
             "Äetolien"
           ]
         },
-        "hasMintingRuler": {
+        "mintingRuler": {
           "inputType": "dropdown",
           "valuelist": [
             "Constans",
@@ -4092,7 +4092,7 @@
             "Valentianus III"
           ]
         },
-        "hasProvinience": {
+        "provenance": {
           "inputType": "dropdown",
           "valuelist": [
             "Anatolien",
@@ -4138,7 +4138,7 @@
             "Ägypten"
           ]
         },
-        "hasStampPositoning": {
+        "stampPositioning": {
           "inputType": "dropdown",
           "valuelist": [
             "- 1 Uhr",
@@ -4160,49 +4160,49 @@
     "Find": {
       "color": "black",
       "fields": {
-        "hasAmount": {
+        "amount": {
           "inputType": "unsignedInt"
         },
-        "hasBibliography": {
+        "bibliography": {
           "inputType": "text"
         },
-        "hasCatalogueNr": {
+        "catalogueNumber": {
           "inputType": "input"
         },
-        "hasComparison": {
+        "comparison": {
           "inputType": "text"
         },
-        "hasConditionComment": {
+        "conditionComment": {
           "inputType": "input"
         },
-        "hasConditionPercent": {
+        "conditionPercent": {
           "inputType": "unsignedFloat"
         },
-        "hasDate": {
+        "date": {
           "inputType": "date"
         },
-        "hasDescription": {
+        "description": {
           "inputType": "text"
         },
-        "hasProcessor": {
+        "processor": {
           "inputType": "input"
         },
-        "hasPublicationMaterialSummary": {
+        "publicationMaterialSummary": {
           "inputType": "input"
         },
-        "hasPublicationRemark": {
+        "publicationRemark": {
           "inputType": "input"
         },
-        "hasRestauration": {
+        "hasRestoration": {
           "inputType": "boolean"
         },
-        "hasStorageInventNr.": {
+        "storageInventoryNumber": {
           "inputType": "input"
         },
-        "hasWeight": {
+        "weight": {
           "inputType": "unsignedFloat"
         },
-        "hasCondition": {
+        "condition": {
           "inputType": "dropdown",
           "valuelist": [
             "gut",
@@ -4211,7 +4211,7 @@
             "sehr schlecht"
           ]
         },
-        "hasConditionAmount": {
+        "conditionAmount": {
           "inputType": "dropdown",
           "valuelist": [
             "Fragmentarisch",
@@ -4219,61 +4219,61 @@
             "Vollständig zerstört"
           ]
         },
-        "hasPeriod": {
+        "period": {
           "inputType": "dropdownRange"
         },
-        "hasDating": {
+        "dating": {
           "inputType": "dating"
         },
-        "hasDimensionDiameter": {
+        "dimensionDiameter": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionHeight": {
+        "dimensionHeight": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionLength": {
+        "dimensionLength": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionPerimeter": {
+        "dimensionPerimeter": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionThickness": {
+        "dimensionThickness": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionVerticalExtent": {
+        "dimensionVerticalExtent": {
           "inputType": "dimension",
           "positionValues": [
           "Oberkante",
           "Unterkante"]
         },
-        "hasDimensionWidth": {
+        "dimensionWidth": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionxOther": {
+        "dimensionOther": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasStoragePlace": {
+        "storagePlace": {
           "inputType": "radio",
           "valuelist": [
             "Landesamt",
@@ -4292,10 +4292,10 @@
       "color": "#737373",
       "parent": "Find",
       "fields": {
-        "hasArea": {
+        "area": {
           "inputType": "unsignedFloat"
         },
-        "hasComposition": {
+        "composition": {
           "inputType": "input"
         },
         "hasDecoration": {
@@ -4304,7 +4304,7 @@
         "hasDecorationPattern": {
           "inputType": "boolean"
         },
-        "hasColor": {
+        "color": {
           "inputType": "checkboxes",
           "valuelist": [
             "beige",
@@ -4328,7 +4328,7 @@
             "weiß"
           ]
         },
-        "hasPlasterComponents": {
+        "plasterComponents": {
           "inputType": "radio",
           "valuelist": [
             "Feinsand",
@@ -4341,7 +4341,7 @@
     "Photo": {
       "parent": "Image",
       "fields": {
-        "hasOriginalType": {
+        "originalType": {
           "inputType": "dropdown",
           "valuelist": [
             "Dia bunt",
@@ -4360,19 +4360,19 @@
       "color": "#c6dbef",
       "parent": "ProcessUnit",
       "fields": {
-        "hasDimensionHeight": {
+        "dimensionHeight": {
           "inputType": "dimension",
           "positionValues": [
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "hasDimensionVerticalExtent": {
+        "dimensionVerticalExtent": {
           "inputType": "dimension",
           "positionValues": [
           "Oberkante",
           "Unterkante"]
         },
-        "hasOrientation": {
+        "orientation": {
           "inputType": "dropdown",
           "valuelist": [
             "N-S",
@@ -4391,10 +4391,10 @@
       "color": "#995f25",
       "parent": "Find",
       "fields": {
-        "hasMaterialDescription": {
+        "materialDescription": {
           "inputType": "input"
         },
-        "hasDecorationTechniqueMetal": {
+        "decorationTechniqueMetal": {
           "inputType": "dropdown",
           "valuelist": [
             "Bemalung",
@@ -4409,7 +4409,7 @@
             "Vergoldung"
           ]
         },
-        "hasFormDescription": {
+        "formDescription": {
           "inputType": "checkboxes",
           "valuelist": [
             "ausladend",
@@ -4430,7 +4430,7 @@
             "zylinderförmig"
           ]
         },
-        "hasManufactoringMethodMetal": {
+        "manufacturingMethodMetal": {
           "inputType": "checkboxes",
           "valuelist": [
             "Getrieben",
@@ -4440,7 +4440,7 @@
             "Ziehtechnik"
           ]
         },
-        "hasMetalMaterial": {
+        "metalMaterial": {
           "inputType": "checkboxes",
           "valuelist": [
             "Aluminium",
@@ -4458,7 +4458,7 @@
             "Zinn"
           ]
         },
-        "hasObjectTypeMetal": {
+        "objectTypeMetal": {
           "inputType": "dropdown",
           "valuelist": [
             "Anhänger",
@@ -4516,7 +4516,7 @@
             "Zierbeschlag"
           ]
         },
-        "hasProvinience": {
+        "provenance": {
           "inputType": "dropdown",
           "valuelist": [
             "Anatolien",
@@ -4562,7 +4562,7 @@
             "Ägypten"
           ]
         },
-        "hasVesselFormMetal": {
+        "vesselFormMetal": {
           "inputType": "dropdown",
           "valuelist": [
             "Aschenurne",
@@ -4581,7 +4581,7 @@
             "Vorratsgefäß"
           ]
         },
-        "hasVesselFormMetalSpecific": {
+        "vesselFormMetalSpecific": {
           "inputType": "dropdown",
           "valuelist": [
             "Alabastron",

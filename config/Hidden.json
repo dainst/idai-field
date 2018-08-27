@@ -15,9 +15,6 @@
     "Feature": [
         "featureAmount"
     ],
-    "Find": [
-        "catalogueNumber"
-    ],
     "Findspot": [
         "buildingHistory",
         "excavationHistory"

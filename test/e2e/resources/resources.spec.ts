@@ -456,7 +456,7 @@ describe('resources --', () => {
         ResourcesPage.clickSelectResource('1');
         DetailSidebarPage.performEditDocument();
 
-        DoceditPage.clickSelectOption('hasWallType', 1);
+        DoceditPage.clickSelectOption('wallType', 1);
         DoceditPage.clickSaveDocument();
         browser.sleep(delays.shortRest);
         FieldsViewPage.getFieldValue(0).then(fieldValue => expect(fieldValue).toEqual('Außenmauer'));

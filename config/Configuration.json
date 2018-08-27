@@ -4167,7 +4167,7 @@
           "inputType": "text"
         },
         "hasCatalogueNr": {
-          "inputType": "unsignedInt"
+          "inputType": "input"
         },
         "hasComparison": {
           "inputType": "text"

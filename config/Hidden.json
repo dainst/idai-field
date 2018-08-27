@@ -1,53 +1,50 @@
 {
     "Architecture": [
-        "hasMarkDescription",
-        "hasMark"
+        "markDescription",
+        "mark"
     ],
     "Brick": [
-        "hasSpecificType"
+        "specificType"
     ],
     "Building": [
-        "hasBuildingHistory",
-        "hasExcavationHistory",
-        "hasHistory",
-        "hasArchitecturalOrders"
+        "buildingHistory",
+        "excavationHistory",
+        "history",
+        "architecturalOrders"
     ],
     "Feature": [
-        "hasFeatureAmount"
+        "featureAmount"
     ],
     "Find": [
-        "hasCatalogueNr"
+        "catalogueNumber"
     ],
     "Findspot": [
-        "hasBuildingHistory",
-        "hasExcavationHistory"
-    ],
-    "Image": [
-        "hasCaption"
+        "buildingHistory",
+        "excavationHistory"
     ],
     "Layer": [
-        "hasAppearance"
+        "appearance"
     ],
     "Metal": [
-        "hasMaterialDescription"
+        "materialDescription"
     ],
     "Part": [
-        "hasSpecificType"
+        "specificType"
     ],
     "Photo": [
-        "hasOriginalType"
+        "originalType"
     ],
     "Planum": [
-        "hasHorizontalLocation"
+        "horizontalLocation"
     ],
     "Trench": [
-        "hasResearchQuestion"
+        "researchQuestion"
     ],
     "Wall_surface": [
-        "hasMarkDescription",
-        "hasMark",
+        "markDescription",
+        "mark",
         "hasPlasterDecoration",
-        "hasPlasterOlder",
-        "hasSurfaceDecoration"
+        "plasterOlder",
+        "surfaceDecoration"
     ]
 }

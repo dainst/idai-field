@@ -102,13 +102,50 @@ Der Suchbegriff "s0" liefert (1) und (2) als Suchtreffer, da die Bezeichner von 
 Es handelt sich um eine sogenannte **Präfix-Suche**. Eine Suche nach "Schn" liefert (1), (2) und (3) zurück, 
 eine Suche nach "itt" oder "chni" hingegen nichts.
 
-* TODO: Platzhaltersuche
+#### Platzhaltersuche
+
+Im Textfilter ist auch eine Platzhaltersuche möglich. Diese ist auf einen Platzhalter beschränkt und funktioniert 
+wie folgt:
+
+    (1) Bezeichner: "Landscape-0001"
+    (2) Bezeichner: "Landscape-0009"
+    (3) Bezeichner: "Landscape-0010"
+    (4) Bezeichner: "Landscape-0011"
+    (5) Bezeichner: "Landscape-0022"
+
+Eine Suche nach "Landscape-00[01]" liefert (1), (2), (3), (4), da für die dritte Ziffer sowohl 0 als auch 1
+als zulässige Zeichen angegeben wurden.
+
+Eine Suche nach "Landscape-00[01]1" liefert (1) und (4), da die Ziffer nach dem Platzhalter genau eine 1 sein muss.
 
 ### Erweiterter Suchmodus
 
 In den Ressourcenansichten kann mit Klick auf das Lupensymbol
  
- ![Filter Menü](manual/filter_menu.png)
+ ![Filter Menü](manual/looking_glass.png)
  
  die erweiterte Suche aktiviert werden. Ein blaues Lupensymbol zeigt an, das der erweiterte Suchmodus aktiviert ist.
+ 
+#### Suchverhalten
+ 
+Wir die Suche in der Übersicht aktiviert, werden nicht nur Ressourcen von Maßnahmentypen und Orte gelistet,
+sondern sämtliche im Projekt angelegten Ressourcen. Bitte beachten Sie, dass die Anzahl der gleichzeitig 
+angelegten Ressourcen aus Performancegründen immer auf maximal **200** beschränkt ist (das Programm zeigt die weiteren 
+Ressourcen nicht an, zeigt aber an, wann die Beschränkung aktiv ist). Es sollte also in jedem Fall weiter
+mittels Text- oder Typfilter gefiltert werden. Der Typfilter bietet in dem Fall auch Typen aus anderen Maßnahmen
+an. So kann in der Suchübersicht beispielsweise im gesamten Projekt nach allen Ressourcen vom Typ "Keramik"
+gesucht werden.
+ 
+In den Maßnahmenansichten wird jeweils in der gesamten gerade ausgewählten Maßnahme gesucht, wobei eine Hierarchie,
+wie sie durch "Liegt in"-Beziehungen angelegt wird, ignoriert wird. Es kann auch über alle Maßnahmen eines bestimmten
+Typs gleichzeitig gesucht werden. Hierzu steht die Option "Alle" zur Verfügung, die nicht angezeigt wird, wenn
+der erweiterte Suchmodus nicht aktiviert ist 
+
+![Filter Menü](manual/all_operations.png)
+  
+Im erweiterten Suchmodus ist das Anlegen von Ressourcen nicht möglich. 
+
+### Spezifische Suchkriterien
+ 
+* TODO Zusätzlich zu den Filtern ...
  

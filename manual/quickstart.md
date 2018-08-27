@@ -68,7 +68,10 @@ Im Filtermenü
 
 kann jeweils eine Auswahl für einen Ressourcentyp getroffen werden. Die Auswahl kann sich hierbei
 entweder direkt auf einen Typ (z.B. "Erdbefund") oder eine ganze Typengruppe (z.B. "Stratigraphische Einheit")
-beziehen.
+beziehen. Im ersten Fall werden nur Ressourcen vom entsprechenden Typ angezeigt, im letzteren Fall werden Ressourcen
+vom ausgewählten Typ inklusive aller seiner Subtypen angezeigt. Bei einer Auswahl von z.B. 
+"Stratigraphische Einheit" werden Ressourcen vom Typ "Stratigraphische Einheit", "Erdbefund", "Architektur", "Fußboden" 
+etc. angezeigt. Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab.   
 
 #### Textfilter
 

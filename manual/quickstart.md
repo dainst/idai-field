@@ -75,8 +75,33 @@ etc. angezeigt. Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiv
 
 #### Textfilter
 
-* TODO: Identifier, ShortDescription
-* TODO: Prefix Suche
+Suchbegriffe werden derzeit mit den Felder Bezeichner und Kurzbeschreibung von Ressourcen abgeglichen. 
+ 
+Ein Beispiel: In der Ressourcenübersicht ist der Typfilter "Schnitt" ausgewählt und es gibt 
+drei Schnitte wie folgt:
+
+    (1)
+    Bezeichner: "S01"
+    Kurzbeschreibung: "Schnitt 01"
+    
+    (2)
+    Bezeichner: "S02"
+    Kurzbeschreibung: "Schnitt 02"
+    
+    (3)
+    Bezeichner: "ms1"
+    Kurzbeschreibung: "Mein Schnitt 1" 
+
+Alle möglichen **Suchtokens** sind die jeweils durch Leerzeichen getrennten Begriffe in den Bezeichnern und 
+Kurzbeschreibungen, also "s01, s02, schnitt, 01, 02, ms1, mein, schnitt, 1".
+  
+Der Suchbegriff "s01" liefert beispielsweise (1), die Suche nach "mein" liefert (3) als Suchtreffer, 
+**Groß- und Kleinschreibung** spielt dabei keine Rolle und wird ignoriert.
+
+Der Suchbegriff "s0" liefert (1) und (2) als Suchtreffer, da die Bezeichner von (1) und (2) mit "s0" beginnen.
+Es handelt sich um eine sogenannte **Präfix-Suche**. Eine Suche nach "Schn" liefert (1), (2) und (3) zurück, 
+eine Suche nach "itt" oder "chni" hingegen nichts.
+
 * TODO: Platzhaltersuche
 
 ### Erweiterter Suchmodus

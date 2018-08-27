@@ -114,7 +114,8 @@ describe('resources --', () => {
      */
     it('docview -- show only the fields present in the object', () => {
 
-        ResourcesPage.performCreateResource('1', 'feature-architecture', 'hasArea', '100');
+        ResourcesPage.performCreateResource('1', 'feature-architecture',
+            'area', '100');
         ResourcesPage.clickSelectResource('1');
         FieldsViewPage.getFields().then(function(items) {
             expect(items.length).toBe(1);

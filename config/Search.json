@@ -57,7 +57,7 @@
     "constraint": ["findingPlace", "condition", "conditionAmount", "distinguishingCriteria", "graveType", "graveTypeSpecific", "soilType", "tombBuilding"]
   },
   "Bone": {
-    "constraint": ["biologicalAge", "boneClassification", "boneType", "burningGrade", "gender", "objectTypeBone", "species"]
+    "constraint": ["biologicalAge", "boneClassification", "boneType", "burningGrade", "sex", "objectTypeBone", "species"]
   },
   "Room": {
     "constraint": ["processor", "campaign", "condition", "conditionAmount"]

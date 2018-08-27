@@ -1113,7 +1113,7 @@
         "burningGrade": {
           "label": "Verbrennungsgrad der Knochen (nach Wahl 1982)"
         },
-        "gender": {
+        "sex": {
           "label": "Geschlecht",
           "description": "Geschlecht des Menschens oder Tieres."
         },

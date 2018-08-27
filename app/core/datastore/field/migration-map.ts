@@ -114,7 +114,7 @@ export const migrationMap: { [oldName: string]: string } = {
     'hasFormDescription': 'formDescription',
     'hasFrontSideDescription': 'frontSideDescription',
     'hasGazId': 'gazId',
-    'hasGender': 'gender',
+    'hasGender': 'sex',
     'hasGraveFeature': 'graveFeature',
     'hasGraveType': 'graveType',
     'hasGraveTypeSpecific': 'graveTypeSpecific',

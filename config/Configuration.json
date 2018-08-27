@@ -2563,7 +2563,7 @@
             "V - ab 800°C - Verfärbung etwa altweiß/schmutzigweiß"
           ]
         },
-        "gender": {
+        "sex": {
           "inputType": "radio",
           "valuelist": [
             "Männlich",

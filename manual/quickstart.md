@@ -35,3 +35,52 @@ innerhalb einer Maßnahme anlegen.
 Verwenden Sie das Menü **Backup erstellen**, das Sie ebenfalls über das Dropdown-Menü
 in der oberen rechten Bildschirmecke erreichen, um regelmäßig Sicherungen Ihrer Projektdaten
 anzulegen.
+
+## Suche
+
+### Suchen per Suchfilter
+
+In der **Übersicht**, den Maßnahmenansichten **Ausgrabung**, **Bauaufnahme** und **Survey**, sowie in der 
+Bilderverwaltung (Menüpunkt **Bilder**) steht ein Suchfilter zur Verfügung.
+
+![Filter](manual/search_filter.png)
+
+In dem Textfeld können Suchbegriffe eingeben werden, im Filtermenü, welches sich per Klick auf das
+blaue Symbol öffnet, kann eine Typauswahl getroffen werden. Sowohl das Angeben eines Suchbegriffes als auch
+die Auswahl eines Ressourcentypen schränkt die aktuell angezeigten Ressourcen ein, so dass sie den 
+Filterkriterien ensprechen. In der Übersicht und den Maßnahmenansichten betrifft dass die Elemente in
+der linken Seitenleiste sowohl auf der Karte (sofern Geometrien vorhanden), wenn die Kartenansicht gewählt ist,
+oder die Listenelemente, wenn die Listenansicht gewählt ist. In der Bilderverwaltung betrifft das alle im Raster
+angezeigten Bilder.
+
+Wenn die aktuelle Anzeige (Maßnahmenübersicht, -ansichten) soweit durch die Filterkriterien eingeschränkt ist,
+dass keine Suchtreffer angezeigt werden, werden auch Suchergebnisse aus anderen Kontexten angezeigt. 
+
+![Filter Menü](manual/other_contexts.png)
+
+Mit Klick auf eines der Elemente wechselt man in den entsprechenden Kontext.
+
+#### Typfilter
+
+Im Filtermenü
+
+![Filter Menü](manual/filter_menu.png)
+
+kann jeweils eine Auswahl für einen Ressourcentyp getroffen werden. Die Auswahl kann sich hierbei
+entweder direkt auf einen Typ (z.B. "Erdbefund") oder eine ganze Typengruppe (z.B. "Stratigraphische Einheit")
+beziehen.
+
+#### Textfilter
+
+* TODO: Identifier, ShortDescription
+* TODO: Prefix Suche
+* TODO: Platzhaltersuche
+
+### Erweiterter Suchmodus
+
+In den Ressourcenansichten kann mit Klick auf das Lupensymbol
+ 
+ ![Filter Menü](manual/filter_menu.png)
+ 
+ die erweiterte Suche aktiviert werden. Ein blaues Lupensymbol zeigt an, das der erweiterte Suchmodus aktiviert ist.
+ 

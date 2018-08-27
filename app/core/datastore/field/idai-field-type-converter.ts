@@ -12,6 +12,7 @@ import {takeOrMake} from 'tsfun';
  */
 export class IdaiFieldTypeConverter extends TypeConverter<Document> {
 
+
     constructor(private typeUtility: TypeUtility) {
 
         super();

@@ -226,7 +226,7 @@ describe('resources/state --', function() {
         OperationBarPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
-        DoceditPage.clickSelectOption('hasLayerClassification', 1);
+        DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
         NavbarPage.clickNavigateToExcavation();
@@ -234,7 +234,7 @@ describe('resources/state --', function() {
 
         SearchBarPage.clickChooseTypeFilter('feature-layer');
         ResourcesSearchBarPage.clickConstraintsMenuButton();
-        ResourcesSearchBarPage.clickSelectConstraintField('hasLayerClassification');
+        ResourcesSearchBarPage.clickSelectConstraintField('layerClassification');
         ResourcesSearchBarPage.clickSelectDropdownValue(1);
         ResourcesSearchBarPage.clickAddConstraintButton();
         SearchBarPage.clickSearchBarInputField();
@@ -254,12 +254,12 @@ describe('resources/state --', function() {
         OperationBarPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('S1');
-        DoceditPage.typeInInputField('hasProcessor', 'testvalue');
+        DoceditPage.typeInInputField('processor', 'testvalue');
         DoceditPage.clickSaveDocument();
 
         SearchBarPage.clickChooseTypeFilter('operation');
         ResourcesSearchBarPage.clickConstraintsMenuButton();
-        ResourcesSearchBarPage.clickSelectConstraintField('hasProcessor');
+        ResourcesSearchBarPage.clickSelectConstraintField('processor');
         ResourcesSearchBarPage.typeInConstraintSearchTerm('testvalue');
         ResourcesSearchBarPage.clickAddConstraintButton();
 
@@ -273,12 +273,12 @@ describe('resources/state --', function() {
         OperationBarPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE2');
-        DoceditPage.clickSelectOption('hasLayerClassification', 1);
+        DoceditPage.clickSelectOption('layerClassification', 1);
         DoceditPage.clickSaveDocument();
 
         SearchBarPage.clickChooseTypeFilter('feature-layer');
         ResourcesSearchBarPage.clickConstraintsMenuButton();
-        ResourcesSearchBarPage.clickSelectConstraintField('hasLayerClassification');
+        ResourcesSearchBarPage.clickSelectConstraintField('layerClassification');
         ResourcesSearchBarPage.clickSelectDropdownValue(1);
         ResourcesSearchBarPage.clickAddConstraintButton();
 
@@ -292,27 +292,27 @@ describe('resources/state --', function() {
         OperationBarPage.clickSwitchHierarchyMode();
 
         ResourcesPage.openEditByDoubleClickResource('SE0');
-        DoceditPage.clickBooleanRadioButton('hasDisturbance', 0);
+        DoceditPage.clickBooleanRadioButton('disturbance', 0);
         DoceditPage.clickSaveDocument();
         ResourcesPage.openEditByDoubleClickResource('SE1');
-        DoceditPage.clickBooleanRadioButton('hasDisturbance', 1);
+        DoceditPage.clickBooleanRadioButton('disturbance', 1);
         DoceditPage.clickSaveDocument();
 
         SearchBarPage.clickChooseTypeFilter('feature');
         ResourcesSearchBarPage.clickConstraintsMenuButton();
-        ResourcesSearchBarPage.clickSelectConstraintField('hasDisturbance');
+        ResourcesSearchBarPage.clickSelectConstraintField('disturbance');
         ResourcesSearchBarPage.clickSelectBooleanValue(true);
         ResourcesSearchBarPage.clickAddConstraintButton();
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE1')));
 
-        ResourcesSearchBarPage.clickRemoveConstraintButton('hasDisturbance');
+        ResourcesSearchBarPage.clickRemoveConstraintButton('disturbance');
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')));
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE1')));
 
-        ResourcesSearchBarPage.clickSelectConstraintField('hasDisturbance');
+        ResourcesSearchBarPage.clickSelectConstraintField('disturbance');
         ResourcesSearchBarPage.clickSelectBooleanValue(false);
         ResourcesSearchBarPage.clickAddConstraintButton();
 
@@ -327,13 +327,13 @@ describe('resources/state --', function() {
 
         SearchBarPage.clickChooseTypeFilter('operation');
         ResourcesSearchBarPage.clickConstraintsMenuButton();
-        ResourcesSearchBarPage.clickSelectConstraintField('hasProcessor');
+        ResourcesSearchBarPage.clickSelectConstraintField('processor');
 
         ResourcesSearchBarPage.typeInConstraintSearchTerm('testvalue');
         ResourcesSearchBarPage.clickAddConstraintButton();
 
         browser.wait(EC.stalenessOf(
-            ResourcesSearchBarPage.getConstraintFieldOption('hasProcessor')
+            ResourcesSearchBarPage.getConstraintFieldOption('processor')
         ));
     });
 

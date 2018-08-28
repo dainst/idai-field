@@ -25,6 +25,11 @@ if (env) { // is environment 'dev' (npm start) or 'test' (npm run e2e)
     global.configurationDirPath = 'config';
 }
 
+function isInTestEnvironment() {
+
+    return (env && env.indexOf('test') !== -1);
+}
+
 
 if (!env || // is environment 'production' (packaged app)
     env.indexOf('dev') !== -1) { // is environment 'development' (npm start)
@@ -59,7 +64,7 @@ global.switches = {
     provide_reset: false
 };
 
-if (env && env.indexOf('test') !== -1) { // is environment 'test'
+if (isInTestEnvironment()) {
     global.switches.messages_timeout = undefined;
     global.switches.prevent_reload = true;
     global.switches.destroy_before_create = true;
@@ -87,7 +92,7 @@ function createWindow() {
         minHeight: 600,
         webPreferences: {
             nodeIntegration: true,
-            webSecurity: false
+            webSecurity: !isInTestEnvironment()
         }
     });
 

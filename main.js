@@ -8,7 +8,7 @@ const { autoUpdater } = require("electron-updater");
 const log = require("electron-log");
 autoUpdater.logger = log;
 
-// needed to fix notications in win 10
+// needed to fix notifications in win 10
 // see https://github.com/electron/electron/issues/10864
 electron.app.setAppUserModelId("org.dainst.field")
 

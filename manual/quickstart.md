@@ -67,7 +67,7 @@ angezeigten Bilder.
 Wenn die aktuelle Anzeige (Maßnahmenübersicht, -ansichten) soweit durch die Filterkriterien eingeschränkt ist,
 dass keine Suchtreffer angezeigt werden, werden auch Suchergebnisse aus anderen Kontexten angezeigt. 
 
-![Filter Menü](manual/other_contexts.png)
+![Andere Kontexte](manual/other_contexts.png)
 
 Mit Klick auf eines der Elemente wechselt man in den entsprechenden Kontext.
 
@@ -133,7 +133,7 @@ Eine Suche nach "Landscape-00[01]1" liefert (1) und (4), da die Ziffer nach dem 
 
 In den Ressourcenansichten kann mit Klick auf das Lupensymbol
  
- ![Filter Menü](manual/looking_glass.png)
+ ![Lupensymbol](manual/looking_glass.png)
  
  die erweiterte Suche aktiviert werden. Ein blaues Lupensymbol zeigt an, das der erweiterte Suchmodus aktiviert ist.
  
@@ -152,11 +152,27 @@ wie sie durch "Liegt in"-Beziehungen angelegt wird, ignoriert wird. Es kann auch
 Typs gleichzeitig gesucht werden. Hierzu steht die Option "Alle" zur Verfügung, die nicht angezeigt wird, wenn
 der erweiterte Suchmodus nicht aktiviert ist 
 
-![Filter Menü](manual/all_operations.png)
+![Alle Maßnahmen](manual/all_operations.png)
   
 Im erweiterten Suchmodus ist das Anlegen von Ressourcen nicht möglich. 
 
 ### Spezifische Suchkriterien
  
-* TODO Zusätzlich zu den Filtern ...
+Ist der erweiterte Suchmodus aktiviert, ist es, sobald ein Typfilter aktiviert ist, möglich, eine Suche
+über spezifische Felder einer Ressource anzustoßen. Dabei werden Felder zur Suche angeboten, die der entsprechenden
+Typendefinition entsprechen. Es können ein oder mehrere Werte ausgewählt werden. 
+
+![Suchkriterien](manual/criteria_search.png)
+
+Handelt es sich um Freitextfelder, so kann ein genauer Suchbegriff eingestellt werden. Achtung: Im Gegensatz zum Suchfilter 
+wird hier keine Präfix-Suche verwendet. Der eingestellte Begriff muss exakt so mit dem Feldinhalt des entsprechenden
+Feldes einer Ressource übereinstimmen, damit die Ressource im Suchergebnis auftaucht. Bei Feldern mit Wertelisten
+können die Suchbegriffe direkt aus einer entsprechenden Werteliste ausgewählt werden. 
+
+Neben der Auswahl mehrerer Suchbegriffe und der Notwendigkeit, einen Typfilter auszuwählen, funktioniert 
+die Suche selbstverständlich auch in Kombination mit dem Textfilter.
+
+
+
+ 
  

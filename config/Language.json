@@ -943,7 +943,7 @@
         "objectType": {
           "label": "Art des Objekts"
         },
-        "potteryTypeSpecific": {
+        "specificType": {
           "label": "Keramikart Ware"
         },
         "provenance": {
@@ -1042,7 +1042,7 @@
         "graveType": {
           "label": "Grabtyp"
         },
-        "graveTypeSpecific": {
+        "specificType": {
           "label": "Grabtyp speziell"
         },
         "soilType": {

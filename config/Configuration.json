@@ -2098,7 +2098,7 @@
             "Werkzeug"
           ]
         },
-        "potteryTypeSpecific": {
+        "specificType": {
           "inputType": "radio",
           "valuelist": [
             "Arretina schwarz",
@@ -2419,7 +2419,7 @@
             "Ziegelplattengrab"
           ]
         },
-        "graveTypeSpecific": {
+        "specificType": {
           "inputType": "checkboxes",
           "valuelist": [
             "Amphorenbestattung",

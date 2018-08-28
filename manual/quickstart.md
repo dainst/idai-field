@@ -171,6 +171,9 @@ wird hier keine Präfix-Suche verwendet. Der eingestellte Begriff muss exakt so 
 Feldes einer Ressource übereinstimmen, damit die Ressource im Suchergebnis auftaucht. Bei Feldern mit Wertelisten
 können die Suchbegriffe direkt aus einer entsprechenden Werteliste ausgewählt werden. 
 
+Die Zahl neben den Typfiltersymbol gibt die Anzahl der aktiveren Suchkriterien an. Mit Klick auf das kleine x
+können Suchkriterien wieder entfernt werden.
+
 Neben der Auswahl mehrerer Suchbegriffe und der Notwendigkeit, einen Typfilter auszuwählen, funktioniert 
 die Suche selbstverständlich auch in Kombination mit dem Textfilter.
 

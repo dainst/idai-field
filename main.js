@@ -10,7 +10,7 @@ const autoUpdate = require('./auto-update.js');
 electron.app.setAppUserModelId("org.dainst.field")
 
 // Copy config file to appData if no config file exists in appData
-function copyConfigFile(destPath, appDataPath) {
+const copyConfigFile = (destPath, appDataPath) => {
 
     if (!fs.existsSync(appDataPath)) fs.mkdirSync(appDataPath);
 
@@ -18,8 +18,7 @@ function copyConfigFile(destPath, appDataPath) {
         console.log('Create config.json at ' + destPath);
         fs.writeFileSync(destPath, JSON.stringify({"dbs":["test"]}));
     }
-}
-
+};
 
 
 // CONFIGURATION ---
@@ -32,10 +31,10 @@ if (env) { // is environment 'dev' (npm start) or 'test' (npm run e2e)
     global.configurationDirPath = 'config';
 }
 
-function isInTestEnvironment() {
+const isInTestEnvironment = () => {
 
-    return (env && env.indexOf('test') !== -1);
-}
+    return env && env.indexOf('test') !== -1;
+};
 
 
 if (!env || // is environment 'production' (packaged app)
@@ -88,7 +87,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-function createWindow() {
+const createWindow = () => {
 
     const screenWidth = electron.screen.getPrimaryDisplay().workAreaSize.width;
     const screenHeight = electron.screen.getPrimaryDisplay().workAreaSize.height;
@@ -116,7 +115,7 @@ function createWindow() {
     // mainWindow.webContents.openDevTools();
 
     // Emitted when the window is closed.
-    mainWindow.on('closed', function() {
+    mainWindow.on('closed', () => {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
@@ -126,12 +125,12 @@ function createWindow() {
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-electron.app.on('ready', function() {
+electron.app.on('ready', () => {
     createWindow();
     autoUpdate.setUp();
 });
 
-electron.app.on('activate', function() {
+electron.app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) {
@@ -140,7 +139,7 @@ electron.app.on('activate', function() {
 });
 
 // Quit when all windows are closed.
-electron.app.on('window-all-closed', function() {
+electron.app.on('window-all-closed', () => {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {

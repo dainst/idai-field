@@ -1,21 +1,21 @@
 'use strict';
 
-const { autoUpdater } = require("electron-updater");
-const log = require("electron-log");
-const { dialog } = require('electron')
+const {autoUpdater} = require('electron-updater');
+const log = require('electron-log');
+const {dialog} = require('electron');
 
 autoUpdater.logger = log;
 
-function setUp() {
+const setUp = () => {
     autoUpdater.checkForUpdates();
-}
+};
 
 autoUpdater.autoDownload = false;
 
 autoUpdater.on('error', (error) => {
     dialog.showErrorBox(
         'Error: ',
-        error == null ? "unknown" : (error.stack || error).toString()
+        error == null ? 'unknown' : (error.stack || error).toString()
     );
 });
 

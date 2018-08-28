@@ -1301,9 +1301,9 @@
           "label": "Fugenerhaltung",
           "description": "Aktueller Erhaltungszustand der Dachziegel"
         },
-        "jointsDecoration": {
+        "jointsType": {
           "label": "Fugengestaltung",
-          "description": "Gestaltung und Erhalt der Mauerfugen."
+          "description": "Gestaltung und Erhalt der Mauerfugen"
         },
         "mark": {
           "label": "Steinmetzzeichen",

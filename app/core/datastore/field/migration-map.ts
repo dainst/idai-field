@@ -122,7 +122,7 @@ export const migrationMap: { [oldName: string]: string } = {
     'hasHorizontalLocation': 'horizontalLocation',
     'hasInstitution': 'institution',
     'hasJointsCondition': 'jointsCondition',
-    'hasJointsDecoration': 'jointsDecoration',
+    'hasJointsDecoration': 'jointsType',
     'hasLabNumber': 'labNumber',
     'hasLanguage': 'language',
     'hasLatitude': 'latitude',

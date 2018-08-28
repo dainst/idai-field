@@ -3164,7 +3164,7 @@
             "partiell ausgehöhlt"
           ]
         },
-        "jointsDecoration": {
+        "jointsType": {
           "inputType": "radio",
           "valuelist": [
             "Gerade",

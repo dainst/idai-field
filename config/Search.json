@@ -69,7 +69,7 @@
     "constraint": ["clayColorBreak", "clayColorInside", "clayColorOutside", "clayStructure", "coatColorInside", "coatColorOutside", "decorationTechniquePottery", "formDescription", "manufacturingMethodPottery", "provenance", "surfaceCondition", "temper", "temperAmount", "temperParticles", "terracottaType", "vesselFormTerracotta", "vesselFormTerracottaSpecific"]
   },
   "Wall_surface": {
-    "constraint": ["hasPlasterDecoration", "processor", "blockTreatment", "buildingTechnique", "color", "condition", "conditionAmount", "constructionDetails", "jointsCondition", "jointsDecoration", "mark", "plasterComponents", "wallOrientation", "roomSide", "wallSide"]
+    "constraint": ["hasPlasterDecoration", "processor", "blockTreatment", "buildingTechnique", "color", "condition", "conditionAmount", "constructionDetails", "jointsCondition", "jointsType", "mark", "plasterComponents", "wallOrientation", "roomSide", "wallSide"]
   },
   "Other": {
     "constraint": ["isNatural", "consistency", "distinguishingCriteria", "otherClassification", "soilType"]

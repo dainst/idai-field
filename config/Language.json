@@ -873,15 +873,15 @@
           "label": "Beschreibung Dekoration",
           "description": "Weiteres Beschreibungsfeld zur näheren Ausführung der Dekoration"
         },
-        "potteryBreakStructure": {
+        "breakStructure": {
           "label": "Bemerkungen zum Bruch (Struktur, Porosität etc.)",
           "description": "Beschreibung der Struktur und der Porosität des Bruches"
         },
-        "potteryResidueAnalysis": {
+        "residueAnalysis": {
           "label": "Rückstandsanalyse",
           "description": "Angabe zur Rückstandsanalyse"
         },
-        "potterySample": {
+        "sample": {
           "label": "Probe",
           "description": "Angaben zu entnommener Probe"
         },

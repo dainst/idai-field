@@ -1813,13 +1813,13 @@
         "decorationDescription": {
           "inputType": "input"
         },
-        "potteryBreakStructure": {
+        "breakStructure": {
           "inputType": "input"
         },
-        "potteryResidueAnalysis": {
+        "residueAnalysis": {
           "inputType": "input"
         },
-        "potterySample": {
+        "sample": {
           "inputType": "input"
         },
         "purpose": {

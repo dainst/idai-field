@@ -3,8 +3,6 @@
         packages: {}
     };
 
-    config.defaultJSExtensions = true;
-
     var defaultConfiguration = { main: 'index.js', defaultExtension: 'js' };
 
     config.packages = {

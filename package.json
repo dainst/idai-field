@@ -2,7 +2,7 @@
   "name": "idai-field-client",
   "description": "iDAI.field 2 Client",
   "main": "main.js",
-  "version": "2.5.7",
+  "version": "2.5.1",
   "license": "Apache-2.0",
   "author": "German Archaeological Institute",
   "scripts": {
@@ -44,7 +44,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/scuy/idai-field.git"
+    "url": "https://github.com/dainst/idai-field.git"
   },
   "dependencies": {
     "@angular/animations": "6.1.4",

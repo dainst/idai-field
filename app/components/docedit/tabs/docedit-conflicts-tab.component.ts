@@ -212,8 +212,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
         let contentString: string = '';
         for (let element of fieldContent) {
-            if (element.hasLabel) {
-                contentString += '<div>' + element.hasLabel + '</div>';
+            if (element.label) {
+                contentString += '<div>' + element.label + '</div>';
             } else {
                 if (contentString.length > 0) contentString += ', ';
                 contentString += element;

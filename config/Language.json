@@ -820,10 +820,10 @@
     "Pottery": {
       "label": "Keramik",
       "fields": {
-        "amountWallSherds": {
+        "amountSherdsWall": {
          "label": "Anzahl Wand-Scherben"
        },
-       "amountRimSherds": {
+       "amountSherdsRim": {
          "label": "Anzahl Rand-Scherben"
        },
         "amountSherdsBase": {

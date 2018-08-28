@@ -3,7 +3,7 @@ export const migrationMap: { [oldName: string]: string } = {
     'hasAgeDeterminationBasis': 'ageDeterminationBasis',
     'hasAmount': 'amount',
     'hasAmountIndividuals': 'amountIndividuals',
-    'hasAmountRimSherds': 'amountWallSherds',
+    'hasAmountRimSherds': 'amountSherdsWall',
     'hasAmountSherdsBase': 'amountSherdsBase',
     'hasAmountSherdsHandles': 'amountSherdsHandles',
     'hasAmountSherdsLip': 'amountSherdsLip',

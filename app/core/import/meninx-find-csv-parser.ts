@@ -1,15 +1,13 @@
-import {AbstractParser} from './abstract-parser';
-import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2';
+import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
+import {AbstractParser} from './abstract-parser';
 import {M} from '../../m';
 // import * as Papa from 'papaparse'; TODO this does not work in production, fixes only unit test
 
 /**
  * @author Daniel de Oliveira
  */
-
-
 export class MeninxFindCsvParser extends AbstractParser {
 
     public parse(content: string): Observable<Document> {
@@ -31,14 +29,14 @@ export class MeninxFindCsvParser extends AbstractParser {
                             resource: {
                                 identifier: object.se + '-' + object.id,
                                 shortDescription: object.category,
-                                hasVesselFormPottery: object.form,
-                                hasTypeNumber: object.type,
+                                vesselForm: object.form,
+                                typeNumber: object.type,
                                 sherdTypeCheck: object.state,
                                 amount: object.nbr,
-                                hasDecorationTechniquePottery: object.Decor,
-                                hasComment: object.comment,
-                                hasProvinience: object.provenience,
-                                type: "Pottery",
+                                decorationTechnique: object.Decor,
+                                comment: object.comment,
+                                provenance: object.provenience,
+                                type: 'Pottery',
                                 relations: {
                                     liesWithin: [
                                         object.se

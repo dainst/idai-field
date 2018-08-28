@@ -133,7 +133,7 @@
   "PlasterFragment": {
     "fields": {
       "hasDecorationPattern": {
-        "inputType": "boolen"
+        "inputType": "boolean"
       }
     }
   }

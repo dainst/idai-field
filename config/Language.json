@@ -1610,10 +1610,6 @@
           "label": "Bemalung",
           "description": "Beschreibung der Bemalung des Putzes"
         },
-        "hasDecorationPattern": {
-          "label": "Dekoration",
-          "description": "Dekorationsmuster des Putzes, z. B. 'marmoriert'"
-        },
         "color": {
           "label": "Farbe und Intensität",
           "description": "Farbe, soweit erkennbar"

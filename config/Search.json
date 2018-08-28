@@ -3,7 +3,7 @@
     "constraint": ["diary", "excavationType", "orientation"]
   },
   "Glass": {
-    "constraint": ["color", "decorationTechniqueGlass", "formDescription", "manufacturingMethodGlass", "objectType", "provenance", "transparency", "vesselFormGlass", "vesselFormGlassSpecific"]
+    "constraint": ["color", "decorationTechniqueGlass", "formDescription", "manufacturingMethodGlass", "objectType", "provenance", "transparency", "vesselForm", "vesselFormSpecific"]
   },
   "Drilling": {
     "constraint": ["drillingEquipment"]
@@ -48,7 +48,7 @@
     "constraint": ["language", "processor", "condition", "conditionAmount", "objectType"]
   },
   "Pottery": {
-    "constraint": ["amountRimSherds", "amountSherdsBase", "amountSherdsHandles", "amountSherdsLip", "amountSherdsPedestal", "amountSherdsRimBase", "amountSherdsRimShoulder", "amountSherdsShoulder", "amountSherdsOther", "amountSherdsLid", "clayColorBreakMunsell", "clayColorInsideMunsell", "clayColorOutsideMunsell", "hasCoat", "typeNumber", "clayColorBreak", "clayColorInside", "clayColorOutside", "clayHardness", "coatColorInside", "coatColorOutside", "coatInside", "coatInsideType", "coatOutside", "coatOutsideType", "decorationTechniquePottery", "formDescription", "manufacturing", "manufacturingMethodPottery", "materialType", "objectType", "potteryTypeSpecific", "provenance", "temper", "temperAmount", "temperParticles", "temperTypeClay", "vesselFormPottery", "vesselFormPotterySpecific"]
+    "constraint": ["amountRimSherds", "amountSherdsBase", "amountSherdsHandles", "amountSherdsLip", "amountSherdsPedestal", "amountSherdsRimBase", "amountSherdsRimShoulder", "amountSherdsShoulder", "amountSherdsOther", "amountSherdsLid", "clayColorBreakMunsell", "clayColorInsideMunsell", "clayColorOutsideMunsell", "hasCoat", "typeNumber", "clayColorBreak", "clayColorInside", "clayColorOutside", "clayHardness", "coatColorInside", "coatColorOutside", "coatInside", "coatInsideType", "coatOutside", "coatOutsideType", "decorationTechniquePottery", "formDescription", "manufacturing", "manufacturingMethodPottery", "materialType", "objectType", "potteryTypeSpecific", "provenance", "temper", "temperAmount", "temperParticles", "temperTypeClay", "vesselForm", "vesselFormSpecific"]
   },
   "DrillCoreLayer": {
     "constraint": ["hasFinds", "soilType"]
@@ -66,7 +66,7 @@
     "constraint": ["processor", "operationClassification"]
   },
   "Terracotta": {
-    "constraint": ["clayColorBreak", "clayColorInside", "clayColorOutside", "clayStructure", "coatColorInside", "coatColorOutside", "decorationTechniquePottery", "formDescription", "manufacturingMethodPottery", "provenance", "surfaceCondition", "temper", "temperAmount", "temperParticles", "terracottaType", "vesselFormTerracotta", "vesselFormTerracottaSpecific"]
+    "constraint": ["clayColorBreak", "clayColorInside", "clayColorOutside", "clayStructure", "coatColorInside", "coatColorOutside", "decorationTechniquePottery", "formDescription", "manufacturingMethodPottery", "provenance", "surfaceCondition", "temper", "temperAmount", "temperParticles", "terracottaType", "vesselForm", "vesselFormSpecific"]
   },
   "Wall_surface": {
     "constraint": ["hasPlasterDecoration", "processor", "blockTreatment", "buildingTechnique", "color", "condition", "conditionAmount", "constructionDetails", "jointsCondition", "jointsType", "mark", "plasterComponents", "wallOrientation", "roomSide", "wallSide"]
@@ -96,6 +96,6 @@
     "constraint": ["orientation"]
   },
   "Metal": {
-    "constraint": ["decorationTechniqueMetal", "formDescription", "manufacturingMethodMetal", "metalMaterial", "objectType", "provenance", "vesselFormMetal", "vesselFormMetalSpecific"]
+    "constraint": ["decorationTechniqueMetal", "formDescription", "manufacturingMethodMetal", "metalMaterial", "objectType", "provenance", "vesselForm", "vesselFormSpecific"]
   }
 }

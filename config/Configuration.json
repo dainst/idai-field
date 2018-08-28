@@ -227,7 +227,7 @@
             "versintert"
           ]
         },
-        "vesselFormGlass": {
+        "vesselForm": {
           "inputType": "dropdown",
           "valuelist": [
             "Aschenurne",
@@ -246,7 +246,7 @@
             "Vorratsgefäß"
           ]
         },
-        "vesselFormGlassSpecific": {
+        "vesselFormSpecific": {
           "inputType": "dropdown",
           "valuelist": [
             "Alabastron",
@@ -2217,7 +2217,7 @@
         "temperTypeClay": {
           "inputType": "input"
         },
-        "vesselFormPottery": {
+        "vesselForm": {
           "inputType": "dropdown",
           "valuelist": [
             "Amphore",
@@ -2245,7 +2245,7 @@
             "Vorratsgefäß"
           ]
         },
-        "vesselFormPotterySpecific": {
+        "vesselFormSpecific": {
           "inputType": "dropdown",
           "valuelist": [
             "Alabastron",
@@ -2951,7 +2951,7 @@
             "Kalyptere"
           ]
         },
-        "vesselFormTerracotta": {
+        "vesselForm": {
           "inputType": "dropdown",
           "valuelist": [
             "Amphore",
@@ -2971,7 +2971,7 @@
             "Vorratsgefäß"
           ]
         },
-        "vesselFormTerracottaSpecific": {
+        "vesselFormSpecific": {
           "inputType": "dropdown",
           "valuelist": [
             "Alabastron",
@@ -4522,7 +4522,7 @@
             "Ägypten"
           ]
         },
-        "vesselFormMetal": {
+        "vesselForm": {
           "inputType": "dropdown",
           "valuelist": [
             "Aschenurne",
@@ -4541,7 +4541,7 @@
             "Vorratsgefäß"
           ]
         },
-        "vesselFormMetalSpecific": {
+        "vesselFormSpecific": {
           "inputType": "dropdown",
           "valuelist": [
             "Alabastron",

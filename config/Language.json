@@ -75,11 +75,11 @@
           "label": "Transparenz",
           "description": "Wie durchscheinend ist das Objekt?"
         },
-        "vesselFormGlass": {
+        "vesselForm": {
           "label": "Gefäß-Grundform",
           "description": "Grundform des Gefäßes"
         },
-        "vesselFormGlassSpecific": {
+        "vesselFormSpecific": {
           "label": "Form",
           "description": "Spezielle Form des Gefäßes"
         }
@@ -961,10 +961,10 @@
         "temperTypeClay": {
           "label": "Tongruppe"
         },
-        "vesselFormPottery": {
+        "vesselForm": {
           "label": "Gefäß-Grundform"
         },
-        "vesselFormPotterySpecific": {
+        "vesselFormSpecific": {
           "label": "Form",
           "description": "Spezielle Form des Gefäßes"
         }
@@ -1208,10 +1208,10 @@
           "label": "Art der Terrakotta",
           "description": "Massivität des Terrakotta-Objekts, z. B. 'Innen hohl'"
         },
-        "vesselFormTerracotta": {
+        "vesselForm": {
           "label": "Gefäß-Grundform"
         },
-        "vesselFormTerracottaSpecific": {
+        "vesselFormSpecific": {
           "label": "Form",
           "description": "Spezielle Form des Gefäßes"
         }
@@ -1669,10 +1669,10 @@
           "label": "Provenienz",
           "description": "Herkunftsort"
         },
-        "vesselFormMetal": {
+        "vesselForm": {
           "label": "Gefäß-Grundform"
         },
-        "vesselFormMetalSpecific": {
+        "vesselFormSpecific": {
           "label": "Form",
           "description": "Spezielle Form des Gefäßes"
         }

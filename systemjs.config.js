@@ -1,7 +1,5 @@
 (function(global) {
-    var config = {
-        packages: {}
-    };
+    var config = {};
 
     var defaultConfiguration = { main: 'index.js', defaultExtension: 'js' };
 

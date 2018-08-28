@@ -90,7 +90,7 @@
     "constraint": ["amount", "catalogueNumber", "processor", "hasRestoration", "storageInventoryNumber", "condition", "conditionAmount", "storagePlace"]
   },
   "PlasterFragment": {
-    "constraint": ["hasDecoration", "hasDecorationPattern", "color", "plasterComponents"]
+    "constraint": ["hasDecoration", "color", "plasterComponents"]
   },
   "Profile": {
     "constraint": ["orientation"]

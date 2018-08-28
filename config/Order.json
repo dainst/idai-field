@@ -27,7 +27,7 @@
     "Stone": ["material", "temperAmount", "treatment", "workmanship", "color", "formDescription", "objectType", "architectureElement", "purpose", "origin", "provenance"],
     "Wood": ["color", "typeOfWood", "objectType"],
     "Coin": ["metalMaterial", "manufacturingMethodCoin", "preservedDiameter", "frontSideDescription", "reverseSideDescription", "provenance", "stampPositioning", "denomination", "mint", "mintingRuler"],
-    "PlasterFragment": ["plasterComponents", "area", "color", "composition", "hasDecoration", "hasDecorationPattern"],
+    "PlasterFragment": ["plasterComponents", "area", "color", "composition", "hasDecoration"],
     "Mollusk": [],
     "Inscription": ["processor", "description", "dimensionWidth", "dimensionHeight", "objectType", "condition", "conditionAmount", "conditionComment", "language", "content", "period", "dating", "comparison"],
     "ProcessUnit": ["processor", "date", "description", "operationClassification"],

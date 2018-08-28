@@ -28,12 +28,12 @@
         }
       }
     },
-  "PlasterFragment": {
-    "fields": {
-      "hasDecorationPattern": {
-        "label": "Dekorationsmuster"
+    "PlasterFragment": {
+      "fields": {
+        "hasDecorationPattern": {
+          "label": "Dekorationsmuster"
+        }
       }
     }
-  }
   }
 }

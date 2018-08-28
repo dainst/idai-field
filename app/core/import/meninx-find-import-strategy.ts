@@ -125,7 +125,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         } else if (typeSherd === "C"){
             obj.hasAmountSherdsRimBase = amount;
         } else if (typeSherd === "P"){
-            obj.hasAmountRimSherds = amount;
+            obj.hasAmountRimSherds = amount; // TODO rename wallSherds
         } else if (typeSherd === "F"){
             obj.hasAmountSherdsBase = amount;
         } else if (typeSherd === "A"){

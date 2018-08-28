@@ -25,7 +25,7 @@
     "Glass": ["formDescription", "color", "decorationTechniqueGlass", "decorationDescription", "manufacturingMethodGlass", "objectTypeGlass", "vesselFormGlass", "vesselFormGlassSpecific", "provenance"],
     "Metal": ["metalMaterial", "materialDescription", "formDescription", "manufacturingMethodMetal", "decorationTechniqueMetal", "objectTypeMetal", "vesselFormMetal", "vesselFormMetalSpecific", "provenance"],
     "Stone": ["material", "temperAmount", "treatment", "workmanship", "color", "formDescription", "objectTypeStone", "architectureElement", "purpose", "origin", "provenance"],
-    "Wood": ["colorWood", "typeOfWood", "objectTypeWood"],
+    "Wood": ["color", "typeOfWood", "objectTypeWood"],
     "Coin": ["metalMaterial", "manufacturingMethodCoin", "preservedDiameter", "frontSideDescription", "reverseSideDescription", "provenance", "stampPositioning", "denomination", "mint", "mintingRuler"],
     "PlasterFragment": ["plasterComponents", "area", "color", "composition", "hasDecoration", "hasDecorationPattern"],
     "Mollusk": [],

@@ -24,7 +24,7 @@
     "constraint": ["hasRestoration", "architecturalOrders", "buildingCategory", "buildingCategorySpecific", "buildingTechnique", "buildingType", "condition", "conditionAmount", "context"]
   },
   "Wood": {
-    "constraint": ["colorWood", "objectTypeWood", "typeOfWood"]
+    "constraint": ["color", "objectTypeWood", "typeOfWood"]
   },
   "Architecture": {
     "constraint": ["findingPlace", "hasGrouting", "layerAmount", "layerHeight", "blockProcessing", "blockTreatment", "brickwork", "condition", "conditionAmount", "construction", "mark", "mortarBinder", "mortarColor", "mortarConsistency", "orientation", "wallClassification", "wallType"]

@@ -1007,7 +1007,7 @@
       "color": "#660000",
       "parent": "Find",
       "fields": {
-        "colorWood": {
+        "color": {
           "inputType": "dropdown",
           "valuelist": [
             "braun",

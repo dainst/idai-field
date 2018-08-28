@@ -405,8 +405,8 @@
     "Wood": {
       "label": "Holz",
       "fields": {
-        "colorWood": {
-          "label": "Farbe Holz",
+        "color": {
+          "label": "Farbe",
           "description": "Farbe des Fundes oder der Holzstruktur"
         },
         "objectTypeWood": {

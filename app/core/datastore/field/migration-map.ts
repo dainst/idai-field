@@ -56,7 +56,7 @@ export const migrationMap: { [oldName: string]: string } = {
     'hasCoatOutside': 'coatOutside',
     'hasCoatOutsideType': 'coatOutsideType',
     'hasColor': 'color',
-    'hasColorWood': 'colorWood',
+    'hasColorWood': 'color',
     'hasComparison': 'comparison',
     'hasComposition': 'composition',
     'hasCondition': 'condition',

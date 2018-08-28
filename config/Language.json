@@ -164,7 +164,7 @@
       "fields": {
         "featureText": {
           "label": "Stempeltext(e)",
-          "description": "Beschreibung zu besonderen Merkmalen zum Stempeltext"
+          "description": "Um- oder Abschrift des Stempeltexts."
         },
         "brickForm": {
           "label": "Ziegelform bzw. Verwendung"
@@ -387,8 +387,7 @@
           "description": "Angabe der Breite"
         },
         "material": {
-          "label": "Material",
-          "description": "Material des Einschlusses"
+          "label": "Material"
         },
         "period": {
           "label": "Grobdatierung"
@@ -599,14 +598,6 @@
         "placeName": {
           "label": "Ortsname",
           "description": "Name der Ortschaft bzw. Gemarkung"
-        },
-        "placeType": {
-          "label": "Ortstyp",
-          "description": "Angabe der Verortung in einer Provinz o. Ä."
-        },
-        "ancient": {
-          "label": "Ortsbezeichnung",
-          "description": "Ist der Name des Ortes antik oder modern? (Siehe auch Gazetteer-Dokumentation)"
         },
         "buildingHistory": {
           "label": "Baugeschichte",
@@ -1328,7 +1319,7 @@
         },
         "jointsDecoration": {
           "label": "Fugengestaltung",
-          "description": "Auswahl, nach der genauen Gestaltung und dem Erhalt der Mauerfugen"
+          "description": "Gestaltung und Erhalt der Mauerfugen."
         },
         "mark": {
           "label": "Steinmetzzeichen",
@@ -1343,11 +1334,11 @@
         },
         "roomSide": {
           "label": "Raumseite",
-          "description": "Welche Seite des Raumes wird beschrieben? Welche Ausrichtung hat er?"
+          "description": "Auf welcher Seite des Raumes wird die Wand aufgenommen?"
         },
         "wallSide": {
           "label": "Wandseite",
-          "description": "Angabe der Blickrichtung nach..."
+          "description": "Angabe der der 'Blickrichtung' der Wandoberfläche nach..."
         }
       }
     },
@@ -1450,8 +1441,7 @@
           "description": "Nähere Beschreibung der allgemeinen Form"
         },
         "material": {
-          "label": "Material",
-          "description": "Material des Einschlusses"
+          "label": "Material"
         },
         "objectTypeStone": {
           "label": "Art des Objekts"

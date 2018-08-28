@@ -1765,6 +1765,9 @@
         "amountWallSherds": {
           "inputType": "unsignedInt"
         },
+        "amountRimSherds": {
+          "inputType": "unsignedInt"
+        },
         "amountSherdsBase": {
           "inputType": "unsignedInt"
         },

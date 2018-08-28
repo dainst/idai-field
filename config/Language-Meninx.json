@@ -28,6 +28,13 @@
         }
       }
     },
+    "Pottery": {
+      "fields": {
+        "comment": {
+            "label": "Kommentar"
+        }
+      }
+    },
     "PlasterFragment": {
       "fields": {
         "hasDecorationPattern": {

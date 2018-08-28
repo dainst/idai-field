@@ -15,6 +15,8 @@ function copyConfigFile(destPath, appDataPath) {
     }
 }
 
+
+
 // CONFIGURATION ---
 
 var env = undefined;
@@ -72,6 +74,7 @@ if (isInTestEnvironment()) {
     global.switches.provide_reset = true;
 }
 
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 
 
 // -- OTHER GLOBALS

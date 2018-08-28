@@ -979,11 +979,6 @@
         "material": {
           "inputType": "checkboxes",
           "valuelist": [
-            "Andesit",
-            "Basalt",
-            "Feldspat",
-            "Flint",
-            "Glimmer",
             "Granit",
             "Kalk",
             "Kalkmörtel",
@@ -994,9 +989,7 @@
             "Pophyr",
             "Quarz",
             "Sandstein",
-            "Sinter",
-            "Trachyt",
-            "Tuff"
+            "Ziegel"
           ]
         }
       }
@@ -1338,20 +1331,6 @@
         },
         "placeName": {
           "inputType": "input"
-        },
-        "placeType": {
-          "inputType": "dropdown",
-          "valuelist": [
-            "Gemarkung",
-            "Provinz"
-          ]
-        },
-        "ancient": {
-          "inputType": "radio",
-          "valuelist": [
-            "Antik",
-            "Modern"
-          ]
         },
         "buildingHistory": {
           "inputType": "text"
@@ -4302,7 +4281,7 @@
           "inputType": "boolean"
         },
         "hasDecorationPattern": {
-          "inputType": "boolean"
+          "inputType": "input"
         },
         "color": {
           "inputType": "checkboxes",

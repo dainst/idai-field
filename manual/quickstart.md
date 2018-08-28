@@ -1,4 +1,4 @@
-## Erste Schritte
+# Erste Schritte
 
 Nach dem ersten Start des Clients befinden Sie sich zunächst im Projekt *"test"*, das es
 Ihnen ermöglicht, die Funktionen des Programms anhand einiger Testdaten auszuprobieren.
@@ -36,7 +36,9 @@ Verwenden Sie das Menü **Backup erstellen**, das Sie ebenfalls über das Dropdo
 in der oberen rechten Bildschirmecke erreichen, um regelmäßig Sicherungen Ihrer Projektdaten
 anzulegen.
 
-## Suche
+<hr>
+
+# Suche
 
 In der **Übersicht**, den Maßnahmenansichten **Ausgrabung**, **Bauaufnahme** und **Survey**, sowie in der 
 Bilderverwaltung (Menüpunkt **Bilder**) steht ein **Suchfilter** zur Verfügung. Dieser kann genutzt werden, um
@@ -52,7 +54,7 @@ angezeigte Ressourcen beschränkte Anzeige angepasst werden, so dass diejenigen 
 deren Namen beispielsweise mit einem bestimmten Suchbegriff anfangen. Der Suchfilter kann (und sollte) genutzt
 werden, um die Suchergebnisse der erweiterten Suche weiter einzuschränken.
 
-### Suchen per Suchfilter
+## Suchen per Suchfilter
 
 ![Filter](manual/search_filter.png)
 
@@ -67,11 +69,11 @@ angezeigten Bilder.
 Wenn die aktuelle Anzeige (Maßnahmenübersicht, -ansichten) soweit durch die Filterkriterien eingeschränkt ist,
 dass keine Suchtreffer angezeigt werden, werden auch Suchergebnisse aus anderen Kontexten angezeigt. 
 
-![Filter Menü](manual/other_contexts.png)
+![Andere Kontexte](manual/other_contexts.png)
 
 Mit Klick auf eines der Elemente wechselt man in den entsprechenden Kontext.
 
-#### Typfilter
+### Typfilter
 
 Im Filtermenü
 
@@ -84,7 +86,7 @@ vom ausgewählten Typ inklusive aller seiner Subtypen angezeigt. Bei einer Auswa
 "Stratigraphische Einheit" werden Ressourcen vom Typ "Stratigraphische Einheit", "Erdbefund", "Architektur", "Fußboden" 
 etc. angezeigt. Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab.   
 
-#### Textfilter
+### Textfilter
 
 Suchbegriffe werden derzeit mit den Felder Bezeichner und Kurzbeschreibung von Ressourcen abgeglichen. 
  
@@ -113,7 +115,7 @@ Der Suchbegriff "s0" liefert (1) und (2) als Suchtreffer, da die Bezeichner von 
 Es handelt sich um eine sogenannte **Präfix-Suche**. Eine Suche nach "Schn" liefert (1), (2) und (3) zurück, 
 eine Suche nach "itt" oder "chni" hingegen nichts.
 
-#### Platzhaltersuche
+### Platzhaltersuche
 
 Im Textfilter ist auch eine Platzhaltersuche möglich. Diese ist auf einen Platzhalter beschränkt und funktioniert 
 wie folgt:
@@ -129,15 +131,15 @@ als zulässige Zeichen angegeben wurden. Alle weiteren Zeichen danach sind aufgr
 
 Eine Suche nach "Landscape-00[01]1" liefert (1) und (4), da die Ziffer nach dem Platzhalter genau eine 1 sein muss.
 
-### Erweiterter Suchmodus
+## Erweiterter Suchmodus
 
 In den Ressourcenansichten kann mit Klick auf das Lupensymbol
  
- ![Filter Menü](manual/looking_glass.png)
+ ![Lupensymbol](manual/looking_glass.png)
  
  die erweiterte Suche aktiviert werden. Ein blaues Lupensymbol zeigt an, das der erweiterte Suchmodus aktiviert ist.
  
-#### Suchverhalten
+### Suchverhalten
  
 Wir die Suche in der Übersicht aktiviert, werden nicht nur Ressourcen von Maßnahmentypen und Orte gelistet,
 sondern sämtliche im Projekt angelegten Ressourcen. Bitte beachten Sie, dass die Anzahl der gleichzeitig 
@@ -152,11 +154,27 @@ wie sie durch "Liegt in"-Beziehungen angelegt wird, ignoriert wird. Es kann auch
 Typs gleichzeitig gesucht werden. Hierzu steht die Option "Alle" zur Verfügung, die nicht angezeigt wird, wenn
 der erweiterte Suchmodus nicht aktiviert ist 
 
-![Filter Menü](manual/all_operations.png)
+![Alle Maßnahmen](manual/all_operations.png)
   
 Im erweiterten Suchmodus ist das Anlegen von Ressourcen nicht möglich. 
 
-### Spezifische Suchkriterien
+## Spezifische Suchkriterien
  
-* TODO Zusätzlich zu den Filtern ...
+Ist der erweiterte Suchmodus aktiviert, ist es, sobald ein Typfilter aktiviert ist, möglich, eine Suche
+über spezifische Felder einer Ressource anzustoßen. Dabei werden Felder zur Suche angeboten, die der entsprechenden
+Typendefinition entsprechen. Es können ein oder mehrere Werte ausgewählt werden. 
+
+![Suchkriterien](manual/criteria_search.png)
+
+Handelt es sich um Freitextfelder, so kann ein genauer Suchbegriff eingestellt werden. Achtung: Im Gegensatz zum Suchfilter 
+wird hier keine Präfix-Suche verwendet. Der eingestellte Begriff muss exakt so mit dem Feldinhalt des entsprechenden
+Feldes einer Ressource übereinstimmen, damit die Ressource im Suchergebnis auftaucht. Bei Feldern mit Wertelisten
+können die Suchbegriffe direkt aus einer entsprechenden Werteliste ausgewählt werden. 
+
+Neben der Auswahl mehrerer Suchbegriffe und der Notwendigkeit, einen Typfilter auszuwählen, funktioniert 
+die Suche selbstverständlich auch in Kombination mit dem Textfilter.
+
+
+
+ 
  

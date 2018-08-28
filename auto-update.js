@@ -42,8 +42,8 @@ autoUpdater.on('update-downloaded', () => {
             autoUpdater.quitAndInstall();
         }
     });
-})
+});
 
 module.exports = {
     setUp: setUp
-}
+};

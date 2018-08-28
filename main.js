@@ -1,8 +1,8 @@
 'use strict';
 
-const electron = require('electron');
-const fs = require('fs');
-const menuTemplate = require('./menu.js');
+var electron = require('electron');
+var fs = require('fs');
+var menuTemplate = require('./menu.js');
 
 // Copy config file to appData if no config file exists in appData
 function copyConfigFile(destPath, appDataPath) {
@@ -98,7 +98,7 @@ function createWindow() {
 
     // mainWindow.webContents
 
-    const menu = electron.Menu.buildFromTemplate(menuTemplate);
+    var menu = electron.Menu.buildFromTemplate(menuTemplate);
     electron.Menu.setApplicationMenu(menu);
 
     // and load the index.html of the app.

@@ -1,8 +1,13 @@
 'use strict';
 
-var electron = require('electron');
-var fs = require('fs');
-var menuTemplate = require('./menu.js');
+const electron = require('electron');
+const fs = require('fs');
+const menuTemplate = require('./menu.js');
+const autoUpdate = require('./auto-update.js');
+
+// needed to fix notifications in win 10
+// see https://github.com/electron/electron/issues/10864
+electron.app.setAppUserModelId("org.dainst.field")
 
 // Copy config file to appData if no config file exists in appData
 function copyConfigFile(destPath, appDataPath) {
@@ -138,4 +143,8 @@ electron.app.on('window-all-closed', function() {
     if (process.platform !== 'darwin') {
         electron.app.quit();
     }
+});
+
+electron.app.on('ready', function()  {
+  autoUpdate.setUp();
 });

@@ -2,6 +2,8 @@ version: b{build}
 
 environment:
   nodejs_version: "8"
+  GH_TOKEN:
+    secure: febq/MqfzS/3JfchQVtlarZApEi80xRea6Z5qvUTYeb1vH8ByxIXqavTh6DIo53/
 
 os: unstable
 
@@ -12,6 +14,8 @@ cache:
   - node_modules
   - '%APPDATA%\npm-cache'
   - '%USERPROFILE%\.electron'
+  - '%LOCALAPPDATA%\electron\Cache'
+  - '%LOCALAPPDATA%\electron-builder\cache'
 
 init:
   - git config --global core.autocrlf input
@@ -25,20 +29,6 @@ install:
 build_script:
   - yarn run build
   - yarn run package-win
-
-artifacts:
-  - path: release/*.exe
-    name: installer
-
-deploy:
-  provider: GitHub
-  auth_token:
-    secure: 3aQM4eQwpFvNNftJYWFOsF7jAl6svWY1xjFSxUR0npeVJl65TLmiTgrjw0iU5xtU
-  artifact: installer
-  draft: false
-  prerelease: false
-  on:
-    appveyor_repo_tag: true
 
 notifications:
   - provider: Slack

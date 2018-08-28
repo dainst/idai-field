@@ -64,7 +64,7 @@
           "label": "Herstellungstechnik",
           "description": "Verwendete Technik zur Herstellung des Objekts; erkennbare Bearbeitungsspuren"
         },
-        "objectTypeGlass": {
+        "objectType": {
           "label": "Ansprache bzw. Art des Objekts"
         },
         "provenance": {
@@ -409,7 +409,7 @@
           "label": "Farbe",
           "description": "Farbe des Fundes oder der Holzstruktur"
         },
-        "objectTypeWood": {
+        "objectType": {
           "label": "Ansprache bzw. Art des Objekts"
         },
         "typeOfWood": {
@@ -795,7 +795,7 @@
           "label": "Breite",
           "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
         },
-        "objectTypeInscription": {
+        "objectType": {
           "label": "Ansprache bzw. Art der Inschrift"
         }
       }
@@ -937,7 +937,7 @@
           "label": "Materialklasse",
           "description": "Welcher Machart ist das vorgefundene Objekt?"
         },
-        "objectTypePottery": {
+        "objectType": {
           "label": "Art des Objekts"
         },
         "potteryTypeSpecific": {
@@ -1071,7 +1071,7 @@
           "label": "Geschlecht",
           "description": "Geschlecht des Menschen oder Tieres"
         },
-        "objectTypeBone": {
+        "objectType": {
           "label": "Ansprache bzw. Art des Objekts"
         },
         "species": {
@@ -1427,7 +1427,7 @@
         "material": {
           "label": "Material"
         },
-        "objectTypeStone": {
+        "objectType": {
           "label": "Art des Objekts"
         },
         "origin": {
@@ -1666,7 +1666,7 @@
         "manufacturingMethodMetal": {
           "label": "Herstellungstechnik"
         },
-        "objectTypeMetal": {
+        "objectType": {
           "label": "Ansprache bzw. Art des Objekts"
         },
         "provenance": {

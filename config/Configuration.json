@@ -146,7 +146,7 @@
             "gedreht (auf Drehscheibe)"
           ]
         },
-        "objectTypeGlass": {
+        "objectType": {
           "inputType": "dropdown",
           "valuelist": [
             "Anhänger",
@@ -1015,7 +1015,7 @@
             "schwarz"
           ]
         },
-        "objectTypeWood": {
+        "objectType": {
           "inputType": "dropdown",
           "valuelist": [
             "Altar",
@@ -1728,7 +1728,7 @@
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
         },
-        "objectTypeInscription": {
+        "objectType": {
           "inputType": "checkboxes",
           "valuelist": [
             "Alltäglicher Gebrauch",
@@ -2066,7 +2066,7 @@
             "Gebrauchskeramik (Grobe Ware)"
           ]
         },
-        "objectTypePottery": {
+        "objectType": {
           "inputType": "dropdown",
           "valuelist": [
             "Altar",
@@ -2533,7 +2533,7 @@
             "Weiblich"
           ]
         },
-        "objectTypeBone": {
+        "objectType": {
           "inputType": "dropdown",
           "valuelist": [
             "Anhänger",
@@ -3550,7 +3550,7 @@
             "Tuff"
           ]
         },
-        "objectTypeStone": {
+        "objectType": {
           "inputType": "dropdown",
           "valuelist": [
             "Abschlag",
@@ -4421,7 +4421,7 @@
             "Zinn"
           ]
         },
-        "objectTypeMetal": {
+        "objectType": {
           "inputType": "dropdown",
           "valuelist": [
             "Anhänger",

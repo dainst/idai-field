@@ -166,7 +166,7 @@ export const migrationMap: { [oldName: string]: string } = {
     'hasOtherClassification': 'otherClassification',
     'hasPalaeopathologicalReport': 'palaeopathologicalReport',
     'hasPeriod': 'period',
-    'hasPeriodBeginning': 'periodBeginning',
+    'hasPeriodBeginning': 'period',
     'hasPeriodEnd': 'periodEnd',
     'hasPlaceName': 'placeName',
     'hasPlaceType': 'placeType',

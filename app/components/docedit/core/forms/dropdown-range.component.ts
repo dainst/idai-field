@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
 
 
@@ -12,7 +12,7 @@ import {Resource} from 'idai-components-2';
  * @author Sebastian Cuy
  * @author Daniel de Oliveira
  */
-export class DropdownRangeComponent implements OnChanges {
+export class DropdownRangeComponent {
 
     public activateEnd = () => this.endActivated = true;
 
@@ -23,18 +23,6 @@ export class DropdownRangeComponent implements OnChanges {
 
 
     constructor() {}
-
-
-    ngOnChanges(changes: SimpleChanges): void {
-
-        // TODO this can be removed when the existing data has been adjusted via script
-        if (this.field.name === 'period' &&
-            this.resource && this.resource['periodBeginning']) {
-
-            this.resource['period'] = this.resource['periodBeginning'];
-            delete this.resource['periodBeginning'];
-        }
-    }
 
 
     public showEndElements() {

@@ -240,3 +240,18 @@ export const migrationMap: { [oldName: string]: string } = {
     'hasColorSoil': 'colorSoil',
     'hasFilename': 'filename'
 };
+
+export const subFieldsMigrationMap: { [oldName: string]: string } = {
+    'hasBegin': 'begin',
+    'hasEnd': 'end',
+    'hasInputRangeEndValue': 'inputRangeEndValue',
+    'hasInputUnit': 'inputUnit',
+    'hasInputValue': 'inputValue',
+    'hasLabel': 'label',
+    'hasMeasurementComment': 'measurementComment',
+    'hasMeasurementPosition': 'measurementPosition',
+    'hasRangeMax': 'rangeMax',
+    'hasRangeMin': 'rangeMin',
+    'hasSource': 'source',
+    'hasValue': 'value'
+};

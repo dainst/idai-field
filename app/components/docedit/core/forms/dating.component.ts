@@ -60,21 +60,21 @@ export class DatingComponent {
 
         const converted = this.createNormalizedDating(dating);
 
-        if (dating.type != 'scientific' && converted['hasBegin'] && converted['hasEnd']
-                && converted['hasBegin']['year'] > converted['hasEnd']['year']) {
+        if (dating.type != 'scientific' && converted['begin'] && converted['end']
+                && converted['begin']['year'] > converted['end']['year']) {
             return false;
         }
 
         if (dating.type == 'scientific' && dating.margin > 0) {
-            converted['hasEnd']['year'] = converted['hasBegin']['year'] + dating.margin;
-            converted['hasBegin']['year'] -= dating.margin;
+            converted['end']['year'] = converted['begin']['year'] + dating.margin;
+            converted['begin']['year'] -= dating.margin;
         }
 
-        if (dating['hasSource']) converted['hasSource'] = dating['hasSource'];
+        if (dating['source']) converted['source'] = dating['source'];
         if (dating['isImprecise']) converted['isImprecise'] = true;
         if (dating['isUncertain']) converted['isUncertain'] = true;
 
-        converted['hasLabel'] = this.generateLabel(dating);
+        converted['label'] = this.generateLabel(dating);
 
         return converted;
     }
@@ -85,11 +85,11 @@ export class DatingComponent {
         const normalized = {} as any;
 
         if (dating.type != 'before')
-            normalized['hasBegin'] = { year: this.normalizeDate(dating.dates[0]) };
+            normalized['begin'] = { year: this.normalizeDate(dating.dates[0]) };
         if (dating.type != 'after')
-            normalized['hasEnd'] = { year: this.normalizeDate(dating.dates[1]) };
+            normalized['end'] = { year: this.normalizeDate(dating.dates[1]) };
         if (dating.type == 'exact')
-            normalized['hasEnd'] = { year: this.normalizeDate(dating.dates[0]) };
+            normalized['end'] = { year: this.normalizeDate(dating.dates[0]) };
 
         return normalized;
     }
@@ -127,7 +127,7 @@ export class DatingComponent {
         if (dating.type == 'before') prefix = 'Vor ' + prefix;
         if (dating.type == 'after') prefix = 'Nach ' + prefix;
 
-        if (dating['hasSource']) postfix += ' [' + dating['hasSource'] + ']';
+        if (dating['source']) postfix += ' [' + dating['source'] + ']';
 
         return prefix + year + postfix;
     }

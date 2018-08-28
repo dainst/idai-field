@@ -27,15 +27,15 @@ export class DimensionComponent {
 
     	this.newDimension = {
     		'new': true,
-    		'hasValue': 0,
-            'hasInputValue': 0,
-            'hasInputRangeEndValue': 0,
-			'hasMeasurementPosition': '',
-			'hasMeasurementComment': '',
-			'hasInputUnit': 'cm',
+    		'value': 0,
+            'inputValue': 0,
+            'inputRangeEndValue': 0,
+			'measurementPosition': '',
+			'measurementComment': '',
+			'inputUnit': 'cm',
 			'isImprecise': false,
             'isRange': false,
-			'hasLabel': ''
+			'label': ''
     	};
     }
 
@@ -54,19 +54,19 @@ export class DimensionComponent {
         let label = (dimension['isImprecise'] ? 'ca. ' : '');
 
         if (dimension.isRange) {
-            label += `${this.decimalPipe.transform(dimension['hasInputValue'])}-${this.decimalPipe.transform(dimension['hasInputRangeEndValue'])}`;
+            label += `${this.decimalPipe.transform(dimension['inputValue'])}-${this.decimalPipe.transform(dimension['inputRangeEndValue'])}`;
         } else {
-            label += this.decimalPipe.transform(dimension['hasInputValue']);
+            label += this.decimalPipe.transform(dimension['inputValue']);
         }
 
-        label += ` ${dimension['hasInputUnit']}`;
+        label += ` ${dimension['inputUnit']}`;
 
         if (this.field.unitSuffix && this.field.unitSuffix != '') label += ` ${this.field.unitSuffix}`;
 
-    	if (dimension['hasMeasurementPosition']) label += `, Gemessen an ${dimension['hasMeasurementPosition']}`;
-    	if (dimension['hasMeasurementComment']) label += ` (${dimension['hasMeasurementComment']})`;
+    	if (dimension['measurementPosition']) label += `, Gemessen an ${dimension['measurementPosition']}`;
+    	if (dimension['measurementComment']) label += ` (${dimension['measurementComment']})`;
 
-        dimension['hasLabel'] = label;
+        dimension['label'] = label;
     }
 
 
@@ -88,14 +88,14 @@ export class DimensionComponent {
     	if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
 
         if (dimension.isRange) {
-            dimension['hasRangeMin'] = this.convertValueFromInputUnitToMicrometre(dimension['hasInputUnit'],
-                dimension['hasInputValue']);
-            dimension['hasRangeMax'] = this.convertValueFromInputUnitToMicrometre(dimension['hasInputUnit'],
-                dimension['hasInputRangeEndValue']);
-            delete(dimension['hasValue']);
+            dimension['rangeMin'] = this.convertValueFromInputUnitToMicrometre(dimension['inputUnit'],
+                dimension['inputValue']);
+            dimension['rangeMax'] = this.convertValueFromInputUnitToMicrometre(dimension['inputUnit'],
+                dimension['inputRangeEndValue']);
+            delete(dimension['value']);
         } else {
-    	    dimension['hasValue'] = this.convertValueFromInputUnitToMicrometre(dimension['hasInputUnit'],
-                dimension['hasInputValue']);
+    	    dimension['value'] = this.convertValueFromInputUnitToMicrometre(dimension['inputUnit'],
+                dimension['inputValue']);
         }
 
     	this.generateLabel(dimension);

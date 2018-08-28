@@ -111,7 +111,7 @@
 
                 <div class="form-group">
                     <label>Grundlage:</label>
-                    <input type="text" [(ngModel)]="dating.hasSource" name="source"
+                    <input type="text" [(ngModel)]="dating.source" name="source"
                         class="form-control">
                 </div>
 
@@ -135,7 +135,7 @@
 
 <div *ngFor="let item of resource[field.name]; index as i"  class="checkbox">
     <div class="input-group mb-2">
-        <input value="{{item.hasLabel}}" type="text" disabled class="form-control">
+        <input value="{{item.label}}" type="text" disabled class="form-control">
         <span class="input-group-btn">
             <button class="btn btn-danger" type="button" (click)="removeDating(i)">
                 <span class="mdi mdi-delete"></span>

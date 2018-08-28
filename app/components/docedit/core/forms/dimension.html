@@ -1,7 +1,7 @@
 <div *ngFor="let dimension of resource[field.name]; index as i"  class="mb-2">
 
 	<div class="input-group mb-2" *ngIf="!dimension.editing">
-		<input value="{{dimension.hasLabel}}" type="text" disabled class="form-control">
+		<input value="{{dimension.label}}" type="text" disabled class="form-control">
 		 <span class="input-group-btn">
 			<button class="btn btn-danger" (click)="removeDimensionAtIndex(i)"><span class="mdi mdi-delete"></span></button>
 		</span>
@@ -42,17 +42,17 @@
 
 		 
 			<div class="form-inline form-group">
-				<input [(ngModel)]="dimension.hasInputValue" type="number"
-					   step="0.001" min="0" size="6" name="hasInputValue"
+				<input [(ngModel)]="dimension.inputValue" type="number"
+					   step="0.001" min="0" size="6" name="inputValue"
 					   style="width:100px" class="form-control">
 				<span *ngIf="dimension.isRange" class="ml-2 form-inline form-group">
 					 -  
-					<input [(ngModel)]="dimension.hasInputRangeEndValue" type="number"
-						   step="0.001" min="0" size="6" name="hasInputRangeEndValue"
+					<input [(ngModel)]="dimension.inputRangeEndValue" type="number"
+						   step="0.001" min="0" size="6" name="inputRangeEndValue"
 						   style="width:100px" class="ml-2 form-control">
 				</span>
 
-				<select  [(ngModel)]="dimension.hasInputUnit" class="form-control">
+				<select  [(ngModel)]="dimension.inputUnit" class="form-control">
 					<option value="cm">cm</option>
 					<option value="m">m</option>
 					<option value="mm">mm</option>
@@ -61,11 +61,11 @@
 			</div>
 			<div class="form-inline form-group mx-2">
 				<label>Gemessen an</label>
-				<select *ngIf="this.field.positionValues" [(ngModel)]="dimension.hasMeasurementPosition" class="ml-2 form-control">
+				<select *ngIf="this.field.positionValues" [(ngModel)]="dimension.measurementPosition" class="ml-2 form-control">
 					<option value=""></option>
 					<option *ngFor="let item of field.positionValues" value="{{item}}">{{item}}</option>
 				</select>
-				<input *ngIf="!this.field.positionValues" [(ngModel)]="dimension.hasMeasurementPosition" class="form-control">
+				<input *ngIf="!this.field.positionValues" [(ngModel)]="dimension.measurementPosition" class="form-control">
 			</div>
 			
 			<div class="form-group mx-2">
@@ -79,7 +79,7 @@
 
 		    <div class="form-group">
 		    	<label>Kommentar:</label>
-		    	<input [(ngModel)]="dimension.hasMeasurementComment" type="text" class="form-control" name="hasMeasurementComment">
+		    	<input [(ngModel)]="dimension.measurementComment" type="text" class="form-control" name="measurementComment">
 		    </div>
 		</div>
 		<div class="card-footer" align="right">

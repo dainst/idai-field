@@ -3,7 +3,7 @@
     "constraint": ["diary", "excavationType", "orientation"]
   },
   "Glass": {
-    "constraint": ["color", "decorationTechnique", "formDescription", "manufacturingMethodGlass", "objectType", "provenance", "transparency", "vesselForm", "vesselFormSpecific"]
+    "constraint": ["color", "decorationTechnique", "formDescription", "manufacturingMethod", "objectType", "provenance", "transparency", "vesselForm", "vesselFormSpecific"]
   },
   "Drilling": {
     "constraint": ["drillingEquipment"]
@@ -12,7 +12,7 @@
     "constraint": ["horizontalLocation", "orientation", "planumForm"]
   },
   "Brick": {
-    "constraint": ["brickForm", "brickUsage", "clayColorOutside", "coatColorInside", "coatColorOutside", "decorationTechnique", "formDescription", "manufacturing", "manufacturingMethodBrick", "provenance", "specificType", "temper"]
+    "constraint": ["brickForm", "brickUsage", "clayColorOutside", "coatColorInside", "coatColorOutside", "decorationTechnique", "formDescription", "manufacturing", "manufacturingMethod", "provenance", "specificType", "temper"]
   },
   "Burial": {
     "constraint": ["amountIndividuals", "burialCharacteristic", "burialDocumentation", "graveFeature", "positionArms", "positionLegs", "positioningIndividuals", "material"]
@@ -48,7 +48,7 @@
     "constraint": ["language", "processor", "condition", "conditionAmount", "objectType"]
   },
   "Pottery": {
-    "constraint": ["amountWallSherds", "amountSherdsBase", "amountSherdsHandles", "amountSherdsLip", "amountSherdsPedestal", "amountSherdsRimBase", "amountSherdsRimShoulder", "amountSherdsShoulder", "amountSherdsOther", "amountSherdsLid", "clayColorBreakMunsell", "clayColorInsideMunsell", "clayColorOutsideMunsell", "hasCoat", "typeNumber", "clayColorBreak", "clayColorInside", "clayColorOutside", "clayHardness", "coatColorInside", "coatColorOutside", "coatInside", "coatInsideType", "coatOutside", "coatOutsideType", "decorationTechnique", "formDescription", "manufacturing", "manufacturingMethodPottery", "materialType", "objectType", "potteryTypeSpecific", "provenance", "temper", "temperAmount", "temperParticles", "temperTypeClay", "vesselForm", "vesselFormSpecific"]
+    "constraint": ["amountWallSherds", "amountSherdsBase", "amountSherdsHandles", "amountSherdsLip", "amountSherdsPedestal", "amountSherdsRimBase", "amountSherdsRimShoulder", "amountSherdsShoulder", "amountSherdsOther", "amountSherdsLid", "clayColorBreakMunsell", "clayColorInsideMunsell", "clayColorOutsideMunsell", "hasCoat", "typeNumber", "clayColorBreak", "clayColorInside", "clayColorOutside", "clayHardness", "coatColorInside", "coatColorOutside", "coatInside", "coatInsideType", "coatOutside", "coatOutsideType", "decorationTechnique", "formDescription", "manufacturing", "manufacturingMethod", "materialType", "objectType", "potteryTypeSpecific", "provenance", "temper", "temperAmount", "temperParticles", "temperTypeClay", "vesselForm", "vesselFormSpecific"]
   },
   "DrillCoreLayer": {
     "constraint": ["hasFinds", "soilType"]
@@ -66,7 +66,7 @@
     "constraint": ["processor", "operationClassification"]
   },
   "Terracotta": {
-    "constraint": ["clayColorBreak", "clayColorInside", "clayColorOutside", "clayStructure", "coatColorInside", "coatColorOutside", "decorationTechnique", "formDescription", "manufacturingMethodPottery", "provenance", "surfaceCondition", "temper", "temperAmount", "temperParticles", "terracottaType", "vesselForm", "vesselFormSpecific"]
+    "constraint": ["clayColorBreak", "clayColorInside", "clayColorOutside", "clayStructure", "coatColorInside", "coatColorOutside", "decorationTechnique", "formDescription", "manufacturingMethod", "provenance", "surfaceCondition", "temper", "temperAmount", "temperParticles", "terracottaType", "vesselForm", "vesselFormSpecific"]
   },
   "Wall_surface": {
     "constraint": ["hasPlasterDecoration", "processor", "blockTreatment", "buildingTechnique", "color", "condition", "conditionAmount", "constructionDetails", "jointsCondition", "jointsType", "mark", "plasterComponents", "wallOrientation", "roomSide", "wallSide"]
@@ -84,7 +84,7 @@
     "constraint": ["architectureElement", "color", "formDescription", "material", "objectType", "origin", "provenance", "temperAmount"]
   },
   "Coin": {
-    "constraint": ["denomination", "manufacturingMethodCoin", "metalMaterial", "mint", "mintingRuler", "provenance", "stampPositioning"]
+    "constraint": ["denomination", "manufacturingMethod", "metalMaterial", "mint", "mintingRuler", "provenance", "stampPositioning"]
   },
   "Find": {
     "constraint": ["amount", "catalogueNumber", "processor", "hasRestoration", "storageInventoryNumber", "condition", "conditionAmount", "storagePlace"]
@@ -96,6 +96,6 @@
     "constraint": ["orientation"]
   },
   "Metal": {
-    "constraint": ["decorationTechnique", "formDescription", "manufacturingMethodMetal", "metalMaterial", "objectType", "provenance", "vesselForm", "vesselFormSpecific"]
+    "constraint": ["decorationTechnique", "formDescription", "manufacturingMethod", "metalMaterial", "objectType", "provenance", "vesselForm", "vesselFormSpecific"]
   }
 }

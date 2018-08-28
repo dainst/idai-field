@@ -133,7 +133,7 @@
             "zylinderförmig"
           ]
         },
-        "manufacturingMethodGlass": {
+        "manufacturingMethod": {
           "inputType": "dropdown",
           "valuelist": [
             "Formgeblasen (mit Reliefdekor)",
@@ -542,7 +542,7 @@
             "Weich gebrannt"
           ]
         },
-        "manufacturingMethodBrick": {
+        "manufacturingMethod": {
           "inputType": "radio",
           "valuelist": [
             "gedreht (auf Drehscheibe)",
@@ -2051,7 +2051,7 @@
             "Weich gebrannt"
           ]
         },
-        "manufacturingMethodPottery": {
+        "manufacturingMethod": {
           "inputType": "checkboxes",
           "valuelist": [
             "gedreht (auf Drehscheibe)",
@@ -2837,7 +2837,7 @@
             "zylinderförmig"
           ]
         },
-        "manufacturingMethodPottery": {
+        "manufacturingMethod": {
           "inputType": "checkboxes",
           "valuelist": [
             "gedreht (auf Drehscheibe)",
@@ -3760,7 +3760,7 @@
             "Victoriatus"
           ]
         },
-        "manufacturingMethodCoin": {
+        "manufacturingMethod": {
           "inputType": "input",
           "valuelist": [
             "Gegossen",
@@ -4393,7 +4393,7 @@
             "zylinderförmig"
           ]
         },
-        "manufacturingMethodMetal": {
+        "manufacturingMethod": {
           "inputType": "checkboxes",
           "valuelist": [
             "Getrieben",

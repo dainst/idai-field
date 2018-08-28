@@ -60,7 +60,7 @@
           "label": "Beschreibung der Form",
           "description": "Nähere Beschreibung der allgemeinen Form"
         },
-        "manufacturingMethodGlass": {
+        "manufacturingMethod": {
           "label": "Herstellungstechnik",
           "description": "Verwendete Technik zur Herstellung des Objekts; erkennbare Bearbeitungsspuren"
         },
@@ -175,7 +175,7 @@
         "manufacturing": {
           "label": "Materialbeschreibung"
         },
-        "manufacturingMethodBrick": {
+        "manufacturingMethod": {
           "label": "Herstellungstechnik"
         },
         "provenance": {
@@ -933,7 +933,7 @@
         "manufacturing": {
           "label": "Materialbeschreibung"
         },
-        "manufacturingMethodPottery": {
+        "manufacturingMethod": {
           "label": "Herstellungstechnik"
         },
         "materialType": {
@@ -1185,7 +1185,7 @@
           "label": "Beschreibung der Form",
           "description": "Nähere Beschreibung der allgemeinen Form"
         },
-        "manufacturingMethodPottery": {
+        "manufacturingMethod": {
           "label": "Herstellungstechnik"
         },
         "provenance": {
@@ -1465,7 +1465,7 @@
           "label": "Nominalwert (Stückelung)",
           "description": "Name der Münzeinheit"
         },
-        "manufacturingMethodCoin": {
+        "manufacturingMethod": {
           "label": "Herstellungstechnik"
         },
         "metalMaterial": {
@@ -1662,7 +1662,7 @@
           "label": "Beschreibung der Form",
           "description": "Nähere Beschreibung der allgemeinen Form"
         },
-        "manufacturingMethodMetal": {
+        "manufacturingMethod": {
           "label": "Herstellungstechnik"
         },
         "objectType": {

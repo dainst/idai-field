@@ -35,12 +35,7 @@ autoUpdater.on('update-available', () => {
 autoUpdater.on('update-downloaded', () => {
     dialog.showMessageBox({
         title: 'Update installieren',
-        message: 'Die neue Version von iDAI.field wurde geladen. Möchten Sie die Anwendung jetzt neustarten um die neue Version zu installieren?',
-        buttons: ['Ja', 'Nein']
-    }, (buttonIndex) => {
-        if (buttonIndex === 0) {
-            autoUpdater.quitAndInstall();
-        }
+        message: 'Die neue Version von iDAI.field wurde geladen. Starten Sie die Anwendung neu um sie zu installieren.',
     });
 });
 

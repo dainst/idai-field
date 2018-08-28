@@ -122,7 +122,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
     private static checkTypeOfSherd(typeSherd: any, obj: any, amount: number) {
 
         if (typeSherd === 'B') {
-            obj.amountSherdsRimShoulder = amount;
+            obj.amountSherdsRim = amount;
         } else if (typeSherd === 'C') {
             obj.amountSherdsRimBase = amount;
         } else if (typeSherd === 'P') {

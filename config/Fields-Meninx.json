@@ -129,5 +129,12 @@
         ]
       }
     }
+  },
+  "PlasterFragment": {
+    "fields": {
+      "hasDecorationPattern": {
+        "inputType": "boolen"
+      }
+    }
   }
 }

@@ -24,7 +24,7 @@ function copyConfigFile(destPath, appDataPath) {
 
 // CONFIGURATION ---
 
-var env = undefined;
+let env = undefined;
 if (process.argv && process.argv.length > 2) {
     env = process.argv[2];
 }
@@ -86,12 +86,12 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-var mainWindow;
+let mainWindow;
 
 function createWindow() {
 
-    var screenWidth = electron.screen.getPrimaryDisplay().workAreaSize.width;
-    var screenHeight = electron.screen.getPrimaryDisplay().workAreaSize.height;
+    const screenWidth = electron.screen.getPrimaryDisplay().workAreaSize.width;
+    const screenHeight = electron.screen.getPrimaryDisplay().workAreaSize.height;
 
     mainWindow = new electron.BrowserWindow({
         width: screenWidth >= 1680 ? 1680 : 1280,
@@ -106,7 +106,7 @@ function createWindow() {
 
     // mainWindow.webContents
 
-    var menu = electron.Menu.buildFromTemplate(menuTemplate);
+    const menu = electron.Menu.buildFromTemplate(menuTemplate);
     electron.Menu.setApplicationMenu(menu);
 
     // and load the index.html of the app.

@@ -171,10 +171,56 @@ wird hier keine Präfix-Suche verwendet. Der eingestellte Begriff muss exakt so 
 Feldes einer Ressource übereinstimmen, damit die Ressource im Suchergebnis auftaucht. Bei Feldern mit Wertelisten
 können die Suchbegriffe direkt aus einer entsprechenden Werteliste ausgewählt werden. 
 
+Die Zahl neben den Typfiltersymbol gibt die Anzahl der aktiveren Suchkriterien an. Mit Klick auf das kleine x
+können Suchkriterien wieder entfernt werden.
+
 Neben der Auswahl mehrerer Suchbegriffe und der Notwendigkeit, einen Typfilter auszuwählen, funktioniert 
 die Suche selbstverständlich auch in Kombination mit dem Textfilter.
 
+# Matrix
 
+Unter dem Menüpunkt **Matrix** finden sich automatisch aus den Stratigrapischen Einheiten eines Projektes
+generierte Matrizen, pro Schnitt jeweils eine. Der Schnitt kann durch das Dropdown links oben in der Toolbar
+gewählt werden. Die Kanten der Matrix werden auf Grundlage der Beziehungen 
+"Zeitlich vor, Zeitlich nach, Zeitgleich mit", alternativ auf Grundlage der Relationen "Liegt über, Liegt unter" 
+zwischen verschiedenen Stratigraphischen Einheiten eines Schnittes erstellt. Die Auswahl zwischen diesen Varianten
+sowie weitere Optionen zur Generierung der Matrix können im Matrixwerkzeugmenü ausgewählt werden.
+
+![Matrixwerkzeuge](manual/matrix_tools.png)
+
+Die gewählten Einstellungen gelten für alle Matrizen in allen Schnitten und bleiben auch nach einem Programmneustart 
+erhalten.
+
+Ein Klick auf ein Matrix-Element führt zum Editierformular, in dem die entsprechende Ressource bearbeitet und
+gespeichert werden kann. Ein Rechtsklick, und eine anschließendes **Ziehen** der Maus bei weiterhin gedrückter
+Maustaste ändert die Positionierung der Matrix innerhalb des Anwendungsfensters. Die Zoomstufe kann mithilfe der + und -
+Buttons links oben eingestellt werden. 
+
+## Phasen
+
+In dem Matrixwerkzeugmenü befindet sich auch ein Häkchen für die **Gruppierung nach Grobdatierung**. Diese kann
+genutzt werden, wenn Stratigraphische Einheiten im Feld **Grobdatierung** Werte enthalten. Im Falle, dass ein Zeitraum gewählt ist, 
+wird jeweils nur der Wert aus **Grobdatierung (von)** verwendet. Stratigraphische Einheiten mit gleichen Feldwerten
+für die Grobdatierung werden nun nahe beieinander platziert und mit Boxen umrahmt.
+
+![Matrixphasen](manual/matrix_phases.png)
+
+## Teilmatrizen
+
+Um die Übersicht in großen Matrizen zu erleichtern, können auch Teilbereiche ausgewählt werden. Dies geschieht
+mithilfe der Werkzeuge in der Toolbar rechts oben.
+
+![Teilgraphen-Tools](manual/subgraph_tools.png)
+  
+Mit Klick auf das Mauszeiger Symbol wird der **Einzelauswahlmodus** gestartet. 
+Ein Klick auf ein Matrix-Element bewirkt
+nun eine Auswahl desselben. Mehrere Elemente gleichzeitig können 
+mithilfe des **Gruppenauswahlmodus** selektiert werden. Mit Klick auf das Stiftsymbol kann das ursprüngliche
+Verhalten wiederhergestellt werden, dass ein Klick auf ein Matrixelement das Editierformular öffnet.
+Sind Elemente selektiert, kann anschließend eine Matrix aus einer Auswahl erstellt werden. Aus dieser Matrix
+kann anschließend wieder eine Teilauswahl erstellt werden.
+
+Mit Klick auf den **Matrix Neu Laden** Button kann die ursprüngliche Matrix wiederhergestellt werden.
 
  
  

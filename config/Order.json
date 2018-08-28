@@ -6,7 +6,7 @@
     "Trench": ["diary", "researchQuestion", "trenchComment", "excavationType", "spatialLocation", "orientation", "dimensionLength", "dimensionVerticalExtent", "dimensionWidth", "period", "dating"],
     "Building": ["material", "context", "condition", "conditionAmount", "conditionComment", "hasRestoration", "dimensionLength", "dimensionWidth", "buildingType", "buildingTechnique", "buildingCategory", "buildingCategorySpecific", "architecturalOrders", "buildingHistory", "buildingResearchHistory", "excavationHistory", "history"],
     "Survey": ["researchMethod"],
-    "Place": ["description", "gazId", "placeName", "placeType", "ancient", "siteClassification", "findspotClassification", "modernIntervention", "excavationHistory", "buildingResearchHistory", "buildingHistory", "findSituation"],
+    "Place": ["description", "gazId", "placeName", "ancient", "siteClassification", "findspotClassification", "modernIntervention", "excavationHistory", "buildingResearchHistory", "buildingHistory", "findSituation"],
     "Feature": ["diary", "description", "processor", "beginningDate", "endDate", "period", "dating", "area", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison", "featureAmount", "dimensionLength", "dimensionVerticalExtent", "dimensionWidth"],
     "Layer": ["dimensionThickness", "distinguishingCriteria", "layerClassification", "isNatural", "soilType", "appearance", "consistency"],
     "Grave": ["spatialLocation", "soilType", "condition", "conditionAmount", "conditionComment", "distinguishingCriteria", "graveType", "graveTypeSpecific", "tombBuilding", "findingPlace", "bibliography", "publicationDatingFinds", "publicationDatingStratigraphy", "publicationDatingScientific", "publicationRemark"],

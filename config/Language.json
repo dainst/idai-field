@@ -148,7 +148,7 @@
       "fields": {
         "featureText": {
           "label": "Stempeltext(e)",
-          "description": "Um- oder Abschrift des Stempeltexts."
+          "description": "Um- oder Abschrift des Stempeltexts"
         },
         "brickForm": {
           "label": "Ziegelform bzw. Verwendung"
@@ -1322,7 +1322,7 @@
         },
         "wallSide": {
           "label": "Wandseite",
-          "description": "Angabe der der 'Blickrichtung' der Wandoberfläche nach..."
+          "description": "Angabe der 'Blickrichtung' der Wandoberfläche"
         }
       }
     },

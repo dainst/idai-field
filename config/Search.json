@@ -33,7 +33,7 @@
     "constraint": ["processor", "supervisor", "campaign"]
   },
   "Place": {
-    "constraint": ["placeName", "placeType", "ancient", "findspotClassification", "siteClassification"]
+    "constraint": ["placeName", "ancient", "findspotClassification", "siteClassification"]
   },
   "Layer": {
     "constraint": ["isNatural", "consistency", "distinguishingCriteria", "layerClassification", "soilType"]

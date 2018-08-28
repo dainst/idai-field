@@ -29,7 +29,7 @@
       }
     },
     "Pottery: {
-    "fields: {
+    "fields": {
     "comment": {
       "label": "Kommentar"
     }

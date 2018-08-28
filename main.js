@@ -126,7 +126,10 @@ function createWindow() {
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-electron.app.on('ready', createWindow);
+electron.app.on('ready', function() {
+    createWindow();
+    autoUpdate.setUp();
+});
 
 electron.app.on('activate', function() {
     // On OS X it's common to re-create a window in the app when the
@@ -143,8 +146,4 @@ electron.app.on('window-all-closed', function() {
     if (process.platform !== 'darwin') {
         electron.app.quit();
     }
-});
-
-electron.app.on('ready', function()  {
-  autoUpdate.setUp();
 });

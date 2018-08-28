@@ -27,6 +27,13 @@
           "description": "Angabe der Objekthöhe"
         }
       }
+    },
+  "PlasterFragment": {
+    "fields": {
+      "hasDecorationPattern": {
+        "label": "Dekorationsmuster"
+      }
     }
+  }
   }
 }

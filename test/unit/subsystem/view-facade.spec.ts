@@ -38,7 +38,7 @@ describe('ViewFacade/Subsystem', () => {
             { 'type': 'Building', 'fields': [] },
             { 'type': 'Trench', 'fields': [] },
             { 'type': 'Image', 'fields': [] },
-            { 'type': 'Find', 'fields': [{ name: 'hasProcessor', constraintIndexed: true }] },
+            { 'type': 'Find', 'fields': [{ name: 'processor', constraintIndexed: true }] },
             { 'type': 'Feature', 'fields': [] },
             { 'type': 'Project', 'fields': [] }
         ]
@@ -95,7 +95,7 @@ describe('ViewFacade/Subsystem', () => {
         trenchDocument2.resource.relations['isRecordedIn'] = ['testdb'];
 
         findDocument1 = Static.ifDoc('Find 1', 'find1', 'Find', 'find1');
-        findDocument1.resource.hasProcessor = 'person';
+        findDocument1.resource.processor = 'person';
         findDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
         findDocument2 = Static.ifDoc('Find 2', 'find2', 'Find', 'find2');
         findDocument2.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
@@ -266,11 +266,11 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.selectView('excavation');
         await viewFacade.setBypassHierarchy(true);
         await viewFacade.setFilterTypes(['Find']);
-        await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });
+        await viewFacade.setCustomConstraints({ 'processor:match': 'person' });
         await viewFacade.selectView('project');
         expect(viewFacade.getCustomConstraints()).toEqual({});
         await viewFacade.selectView('excavation');
-        expect(viewFacade.getCustomConstraints()).toEqual({ 'hasProcessor:match': 'person' });
+        expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:match': 'person' });
         done();
     });
 
@@ -280,11 +280,11 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.selectView('excavation');
         await viewFacade.setBypassHierarchy(true);
         await viewFacade.setFilterTypes(['Find']);
-        await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });
+        await viewFacade.setCustomConstraints({ 'processor:match': 'person' });
         viewFacade.setMode('list');
-        expect(viewFacade.getCustomConstraints()).toEqual({ 'hasProcessor:match': 'person' });
+        expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:match': 'person' });
         viewFacade.setMode('map');
-        expect(viewFacade.getCustomConstraints()).toEqual({ 'hasProcessor:match': 'person' });
+        expect(viewFacade.getCustomConstraints()).toEqual({ 'processor:match': 'person' });
         done();
     });
 
@@ -587,11 +587,11 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.setFilterTypes(['Find']);
         expect(viewFacade.getDocuments().length).toBe(2);
 
-        await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });
+        await viewFacade.setCustomConstraints({ 'processor:match': 'person' });
         expect(viewFacade.getDocuments().length).toBe(1);
         expect(viewFacade.getDocuments()[0].resource.identifier).toEqual('find1');
 
-        await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'wrongPerson' });
+        await viewFacade.setCustomConstraints({ 'processor:match': 'wrongPerson' });
         expect(viewFacade.getDocuments().length).toBe(0);
 
         done();
@@ -604,7 +604,7 @@ describe('ViewFacade/Subsystem', () => {
         await viewFacade.setBypassHierarchy(true);
 
         await viewFacade.setFilterTypes(['Find']);
-        await viewFacade.setCustomConstraints({ 'hasProcessor:match': 'person' });
+        await viewFacade.setCustomConstraints({ 'processor:match': 'person' });
         expect(viewFacade.getDocuments().length).toBe(1);
 
         await viewFacade.setFilterTypes(['Feature']);

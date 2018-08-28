@@ -312,22 +312,6 @@
         }
       }
     },
-    "FeatureGroup": {
-      "fields": {
-        "description": {
-          "inputType": "text"
-        },
-        "processor": {
-          "inputType": "input"
-        },
-        "campaign": {
-          "inputType": "input",
-          "valuelist": [
-            "Campaign"
-          ]
-        }
-      }
-    },
     "Mollusk": {
       "color": "#ff99ff",
       "parent": "Find",

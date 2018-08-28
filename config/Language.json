@@ -106,22 +106,6 @@
         }
       }
     },
-    "FeatureGroup": {
-      "label": "Befundgruppe",
-      "fields": {
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der Befundgruppe"
-        },
-        "campaign": {
-          "label": "Kampagne"
-        }
-      }
-    },
     "Mollusk": {
       "label": "Molluske",
       "fields": {}

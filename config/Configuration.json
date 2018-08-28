@@ -1762,6 +1762,9 @@
     "Pottery": {
       "parent": "Find",
       "fields": {
+        "amountWallSherds": {
+          "inputType": "unsignedInt"
+        },
         "amountRimSherds": {
           "inputType": "unsignedInt"
         },

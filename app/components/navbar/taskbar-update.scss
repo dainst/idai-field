@@ -1,0 +1,19 @@
+/**
+ * @author Thomas Kleinke
+ */
+taskbar-update {
+  position: relative;
+  left: -4px;
+  cursor: default !important;
+
+  #taskbar-update {
+    position: relative;
+
+    .mdi-arrow-down-bold {
+      color: #fff;
+      position: relative;
+      top: -8px;
+      left: -5px;
+    }
+  }
+}

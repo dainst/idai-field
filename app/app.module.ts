@@ -41,6 +41,7 @@ import {IndexFacade} from './core/datastore/index/index-facade';
 import {FulltextIndexer} from './core/datastore/index/fulltext-indexer';
 import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
 import {HelpComponent} from './components/help/help.component';
+import {TaskbarUpdateComponent} from './components/navbar/taskbar-update.component';
 
 
 const remote = require('electron').remote;
@@ -80,6 +81,7 @@ registerLocaleData(localeDe, 'de');
         NavbarComponent,
         TaskbarComponent,
         TaskbarConflictsComponent,
+        TaskbarUpdateComponent,
         ProjectsComponent,
         HelpComponent
     ],

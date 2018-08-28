@@ -103,8 +103,6 @@ const createWindow = () => {
         }
     });
 
-    // mainWindow.webContents
-
     const menu = electron.Menu.buildFromTemplate(menuTemplate);
     electron.Menu.setApplicationMenu(menu);
 
@@ -121,13 +119,15 @@ const createWindow = () => {
         // when you should delete the corresponding element.
         mainWindow = null;
     });
-}
+
+    return mainWindow;
+};
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 electron.app.on('ready', () => {
-    createWindow();
-    autoUpdate.setUp();
+    const mainWindow = createWindow();
+    autoUpdate.setUp(mainWindow);
 });
 
 electron.app.on('activate', () => {

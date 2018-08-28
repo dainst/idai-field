@@ -6,7 +6,12 @@ const {dialog} = require('electron');
 
 autoUpdater.logger = log;
 
-const setUp = () => {
+const setUp = (mainWindow) => {
+
+    autoUpdater.on('download-progress', progress => {
+        mainWindow.webContents.send('downloadProgress', progress);
+    });
+
     autoUpdater.checkForUpdates();
 };
 

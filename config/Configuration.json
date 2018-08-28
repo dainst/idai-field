@@ -4264,9 +4264,6 @@
         "hasDecoration": {
           "inputType": "boolean"
         },
-        "hasDecorationPattern": {
-          "inputType": "input"
-        },
         "color": {
           "inputType": "checkboxes",
           "valuelist": [

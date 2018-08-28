@@ -2,6 +2,8 @@ version: b{build}
 
 environment:
   nodejs_version: "8"
+  GH_TOKEN:
+    secure: febq/MqfzS/3JfchQVtlarZApEi80xRea6Z5qvUTYeb1vH8ByxIXqavTh6DIo53/
 
 os: unstable
 
@@ -14,10 +16,6 @@ cache:
   - '%USERPROFILE%\.electron'
   - '%LOCALAPPDATA%\electron\Cache'
   - '%LOCALAPPDATA%\electron-builder\cache'
-
-environment:
-  GH_TOKEN:
-    secure: febq/MqfzS/3JfchQVtlarZApEi80xRea6Z5qvUTYeb1vH8ByxIXqavTh6DIo53/
 
 init:
   - git config --global core.autocrlf input

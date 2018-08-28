@@ -3,10 +3,7 @@
 const electron = require('electron');
 const fs = require('fs');
 const menuTemplate = require('./menu.js');
-const { autoUpdater } = require("electron-updater");
-
-const log = require("electron-log");
-autoUpdater.logger = log;
+const autoUpdate = require('./auto-update.js');
 
 // needed to fix notifications in win 10
 // see https://github.com/electron/electron/issues/10864
@@ -145,7 +142,6 @@ electron.app.on('window-all-closed', function() {
     }
 });
 
-// Setup auto updater
 electron.app.on('ready', function()  {
-  autoUpdater.checkForUpdatesAndNotify();
+  autoUpdate.setUp();
 });

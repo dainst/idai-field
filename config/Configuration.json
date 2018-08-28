@@ -89,7 +89,7 @@
             "weiß"
           ]
         },
-        "decorationTechniqueGlass": {
+        "decorationTechnique": {
           "inputType": "dropdown",
           "valuelist": [
             "Bemalung",
@@ -490,7 +490,7 @@
             "weiß"
           ]
         },
-        "decorationTechniqueBrick": {
+        "decorationTechnique": {
           "inputType": "dropdown",
           "valuelist": [
             "Bemalung",
@@ -1999,7 +1999,7 @@
             "Überzug"
           ]
         },
-        "decorationTechniquePottery": {
+        "decorationTechnique": {
           "inputType": "dropdown",
           "valuelist": [
             "Bemalung",
@@ -2799,7 +2799,7 @@
             "weiß"
           ]
         },
-        "decorationTechniquePottery": {
+        "decorationTechnique": {
           "inputType": "dropdown",
           "valuelist": [
             "Bemalung",
@@ -4354,7 +4354,7 @@
         "materialDescription": {
           "inputType": "input"
         },
-        "decorationTechniqueMetal": {
+        "decorationTechnique": {
           "inputType": "dropdown",
           "valuelist": [
             "Bemalung",

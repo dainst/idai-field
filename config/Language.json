@@ -52,7 +52,7 @@
           "label": "Farbe und Intensität",
           "description": "Farbe, soweit erkennbar"
         },
-        "decorationTechniqueGlass": {
+        "decorationTechnique": {
           "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik",
           "description": "Technik, mit der Dekor auf das Glas angebracht wurde"
         },
@@ -165,7 +165,7 @@
         "coatColorOutside": {
           "label": "Überzug (außen): Farbe und Intensität"
         },
-        "decorationTechniqueBrick": {
+        "decorationTechnique": {
           "label": "Besonderheiten der Oberfläche bzw. Dekoration"
         },
         "formDescription": {
@@ -920,7 +920,7 @@
         "coatOutsideType": {
           "label": "Bearbeitung (außen)"
         },
-        "decorationTechniquePottery": {
+        "decorationTechnique": {
           "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik"
         },
         "formDescription": {
@@ -1175,7 +1175,7 @@
         "coatColorOutside": {
           "label": "Überzug (außen): Farbe und Intensität"
         },
-        "decorationTechniquePottery": {
+        "decorationTechnique": {
           "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik"
         },
         "formDescription": {
@@ -1652,7 +1652,7 @@
           "label": "Materialbeschreibung",
           "description": "Beschreibung des verwendeten Materials; möglicherweise exakte Beschreibung des Metalls oder der Legierung"
         },
-        "decorationTechniqueMetal": {
+        "decorationTechnique": {
           "label": "Besonderheiten der Oberfläche bzw. Dekorationstechnik"
         },
         "formDescription": {

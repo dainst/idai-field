@@ -56,6 +56,7 @@ export const migrationMap: { [oldName: string]: string } = {
     'hasCoatOutside': 'coatOutside',
     'hasCoatOutsideType': 'coatOutsideType',
     'hasColor': 'color',
+    'hasColorSoil': 'colorSoil',
     'hasColorWood': 'color',
     'hasComparison': 'comparison',
     'hasComposition': 'composition',
@@ -75,10 +76,10 @@ export const migrationMap: { [oldName: string]: string } = {
     'hasDate': 'date',
     'hasDating': 'dating',
     'hasDecorationDescription': 'decorationDescription',
-    'hasDecorationTechniqueBrick': 'decorationTechniqueBrick',
-    'hasDecorationTechniqueGlass': 'decorationTechniqueGlass',
-    'hasDecorationTechniqueMetal': 'decorationTechniqueMetal',
-    'hasDecorationTechniquePottery': 'decorationTechniquePottery',
+    'hasDecorationTechniqueBrick': 'decorationTechnique',
+    'hasDecorationTechniqueGlass': 'decorationTechnique',
+    'hasDecorationTechniqueMetal': 'decorationTechnique',
+    'hasDecorationTechniquePottery': 'decorationTechnique',
     'hasDenomination': 'denomination',
     'hasDescription': 'description',
     'hasDiaryAbstract': 'diaryAbstract',
@@ -107,6 +108,7 @@ export const migrationMap: { [oldName: string]: string } = {
     'hasFeatureBorders': 'featureBorders',
     'hasFeatureForm': 'featureForm',
     'hasFeatureText': 'featureText',
+    'hasFilename': 'filename',
     'hasFindingPlace': 'findingPlace',
     'hasFindSituation': 'findSituation',
     'hasFindspotClassification': 'findspotClassification',
@@ -236,9 +238,7 @@ export const migrationMap: { [oldName: string]: string } = {
     'hasWorkmanship': 'workmanship',
     'isAncient': 'ancient',
     'isRoomSide': 'roomSide',
-    'isWallSide': 'wallSide',
-    'hasColorSoil': 'colorSoil',
-    'hasFilename': 'filename'
+    'isWallSide': 'wallSide'
 };
 
 export const subFieldsMigrationMap: { [oldName: string]: string } = {

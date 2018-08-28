@@ -119,12 +119,6 @@
         },
         "campaign": {
           "label": "Kampagne"
-        },
-        "periodBeginning": {
-          "label": "Grobdatierung (von)"
-        },
-        "periodEnd": {
-          "label": "Grobdatierung (bis)"
         }
       }
     },

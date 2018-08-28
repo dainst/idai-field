@@ -821,8 +821,11 @@
       "label": "Keramik",
       "fields": {
         "amountWallSherds": {
-          "label": "Anzahl Wand-Scherben"
-        },
+         "label": "Anzahl Wand-Scherben"
+       },
+       "amountRimSherds": {
+         "label": "Anzahl Rand-Scherben"
+       },
         "amountSherdsBase": {
           "label": "Anzahl Boden-Scherben"
         },

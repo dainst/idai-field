@@ -21,18 +21,19 @@ const setUp = (mainWindow) => {
 
 autoUpdater.autoDownload = false;
 
-autoUpdater.on('error', (error) => {
+autoUpdater.on('error', error => {
     dialog.showErrorBox(
         'Error: ',
         error == null ? 'unknown' : (error.stack || error).toString()
     );
 });
 
-autoUpdater.on('update-available', () => {
+autoUpdater.on('update-available', updateInfo => {
     dialog.showMessageBox({
         type: 'info',
         title: 'Update verfügbar',
-        message: 'Eine neue Version von iDAI.field ist verfügbar. Möchten Sie sie herunterladen?',
+        message: 'Eine neue Version von iDAI.field (' + updateInfo.version + ') ist verfügbar. '
+            + 'Möchten Sie sie herunterladen und installieren?',
         buttons: ['Ja', 'Nein']
     }, (buttonIndex) => {
         if (buttonIndex === 0) {
@@ -41,10 +42,11 @@ autoUpdater.on('update-available', () => {
     });
 });
 
-autoUpdater.on('update-downloaded', () => {
+autoUpdater.on('update-downloaded', updateInfo => {
     dialog.showMessageBox({
         title: 'Update installieren',
-        message: 'Die neue Version von iDAI.field wurde geladen. Starten Sie die Anwendung neu, um sie zu installieren.',
+        message: 'Version ' + updateInfo.version + ' von iDAI.field wurde geladen. '
+            + 'Starten Sie die Anwendung neu, um sie zu installieren.'
     });
 });
 

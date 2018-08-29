@@ -1,11 +1,7 @@
-import {Component, Input, OnChanges, ElementRef} from '@angular/core';
-import {Document} from 'idai-components-2';
-import {Query} from 'idai-components-2';
-import {Resource} from 'idai-components-2';
-import {ReadDatastore} from 'idai-components-2';
-import {RelationDefinition} from 'idai-components-2';
-import {take, filter, flow, isNot, on} from 'tsfun';
+import {Component, ElementRef, Input, OnChanges} from '@angular/core';
+import {Document, Query, ReadDatastore, Resource} from 'idai-components-2';
 import {Suggestions} from './suggestions';
+import {isNot, undefinedOrEmpty} from 'tsfun';
 
 
 @Component({
@@ -32,7 +28,7 @@ export class RelationPickerComponent implements OnChanges {
     public relations: any;
 
     private suggestions: Document[];
-    private selectedSuggestionIndex: number = -1;
+    private selectedSuggestionIndex = -1;
     private selectedTarget: Document|undefined;
     private idSearchString: string;
     private suggestionsVisible: boolean;
@@ -59,15 +55,16 @@ export class RelationPickerComponent implements OnChanges {
         this.idSearchString = '';
         this.selectedTarget = undefined;
 
-        const relationId: string = this.relations[this.relationDefinition.name][this.relationIndex];
+        if (!this.relations[this.relationDefinition.name]) this.relations[this.relationDefinition.name] = [];
 
+        const relationTargetResourceId: string = this.relations[this.relationDefinition.name][this.relationIndex];
 
-        if (relationId && relationId !== '') {
+        if (isNot(undefinedOrEmpty)(relationTargetResourceId)) {
 
             // See #8992
-            await this.deleteLiesWithinConditionally(relationId);
+            await this.deleteLiesWithinConditionally(relationTargetResourceId);
 
-            this.datastore.get(relationId).then(
+            this.datastore.get(relationTargetResourceId).then(
                 document => { this.selectedTarget = document as Document; },
                 err => { this.disabled = true; console.error(err); }
             );

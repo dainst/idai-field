@@ -722,7 +722,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.VALIDATION_ERROR_NORECORDEDIN]={
-            content: 'Fehlende Definition von \'Gehört zu\'.',
+            content: 'Fehlende Definition von \'Aufgenommen in Maßnahme\'. Eine Zuordnung muss vorgenommen werden.',
             level: 'danger',
             params: [],
             hidden: false

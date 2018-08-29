@@ -71,13 +71,12 @@ app.start().then(() => app.client.sessions()).then(sessions => {
     });
 
 }).then(code => {
-    console.log("finished with code", code)
     if (app && app.electron && app.electron && app.electron.remote && app.electron.remote.app) {
 
-        console.log("try to remove appdata")
+        console.log("remove appdata");
         // does not work on linux anymore since last overall dependencies upgrade, thats what the surrounding if is for
         return app.electron.remote.app.getPath('appData').then(path => {
-            console.log('appData', path);
+            console.log('appData, path:', path);
             return new Promise(resolve => rimraf(path + '/idai-field-client/imagestore/test', () => resolve(code)));
         });
     } else return Promise.resolve(code);

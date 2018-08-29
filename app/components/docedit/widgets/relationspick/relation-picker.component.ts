@@ -130,21 +130,12 @@ export class RelationPickerComponent implements OnChanges {
     }
 
 
-    public deleteRelation(): Promise<any> {
+    public deleteRelation() {
 
-        let targetId = this.document.resource.relations[this.relationDefinition.name][this.relationIndex];
+        this.document.resource.relations[this.relationDefinition.name].splice(this.relationIndex, 1);
 
-        return new Promise<any>((resolve) => {
-            if (targetId.length == 0) {
-                this.document.resource.relations[this.relationDefinition.name].splice(this.relationIndex, 1);
-            } else {
-                this.document.resource.relations[this.relationDefinition.name].splice(this.relationIndex, 1);
-            }
-
-            if (this.document.resource.relations[this.relationDefinition.name].length==0)
-                delete this.document.resource.relations[this.relationDefinition.name];
-            resolve();
-        });
+        if (this.document.resource.relations[this.relationDefinition.name].length==0)
+            delete this.document.resource.relations[this.relationDefinition.name];
     }
 
 

@@ -2,6 +2,7 @@
 
 const electron = require('electron');
 const fs = require('fs');
+const os = require('os');
 const menuTemplate = require('./menu.js');
 const autoUpdate = require('./auto-update.js');
 
@@ -26,6 +27,7 @@ const setConfigDefaults = config => {
     if (!config.syncTarget) config.syncTarget = {};
     if (!config.remoteSites) config.remoteSites = [];
     if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
+    if (os.type() === 'Linux') config.isAutoUpdateActive = false;
 };
 
 

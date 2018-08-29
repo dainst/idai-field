@@ -24,9 +24,6 @@ export class RelationPickerComponent implements OnChanges {
     @Input() relationIndex: number;
     @Input() primary: string;
 
-    public resource: Resource;
-    public relations: any;
-
     private suggestions: Document[];
     private selectedSuggestionIndex = -1;
     private selectedTarget: Document|undefined;
@@ -46,18 +43,15 @@ export class RelationPickerComponent implements OnChanges {
 
     public async ngOnChanges() {
 
-        if (this.document) {
-            this.resource = this.document.resource;
-            this.relations = this.resource.relations;
-        }
-
         this.suggestions = [];
         this.idSearchString = '';
         this.selectedTarget = undefined;
 
-        if (!this.relations[this.relationDefinition.name]) this.relations[this.relationDefinition.name] = [];
+        if (!this.document.resource.relations[this.relationDefinition.name]) {
+            this.document.resource.relations[this.relationDefinition.name] = [];
+        }
 
-        const relationTargetResourceId: string = this.relations[this.relationDefinition.name][this.relationIndex];
+        const relationTargetResourceId: string = this.document.resource.relations[this.relationDefinition.name][this.relationIndex];
 
         if (isNot(undefinedOrEmpty)(relationTargetResourceId)) {
 
@@ -85,8 +79,7 @@ export class RelationPickerComponent implements OnChanges {
      */
     public createRelation(document: Document) {
 
-        this.relations[this.relationDefinition.name][this.relationIndex] =
-            document.resource.id;
+        this.document.resource.relations[this.relationDefinition.name][this.relationIndex] = document.resource.id;
         this.selectedTarget = document;
         this.idSearchString = '';
         this.suggestions = [];
@@ -112,16 +105,16 @@ export class RelationPickerComponent implements OnChanges {
 
     public leaveSuggestionMode() {
 
-        if (!this.relations[this.relationDefinition.name][this.relationIndex]
-            || this.relations[this.relationDefinition.name][this.relationIndex] == '') {
+        if (!this.document.resource.relations[this.relationDefinition.name][this.relationIndex]
+            || this.document.resource.relations[this.relationDefinition.name][this.relationIndex] == '') {
             return this.deleteRelation();
         }
 
         this.suggestionsVisible = false;
 
-        if (!this.selectedTarget && this.relations[this.relationDefinition.name][this.relationIndex]
-            && this.relations[this.relationDefinition.name][this.relationIndex] != '') {
-            this.datastore.get(this.relations[this.relationDefinition.name][this.relationIndex])
+        if (!this.selectedTarget && this.document.resource.relations[this.relationDefinition.name][this.relationIndex]
+            && this.document.resource.relations[this.relationDefinition.name][this.relationIndex] != '') {
+            this.datastore.get(this.document.resource.relations[this.relationDefinition.name][this.relationIndex])
                 .then(
                     document => { this.selectedTarget = document as Document; },
                     err => { console.error(err); }
@@ -142,17 +135,17 @@ export class RelationPickerComponent implements OnChanges {
 
     public deleteRelation(): Promise<any> {
 
-        let targetId = this.relations[this.relationDefinition.name][this.relationIndex];
+        let targetId = this.document.resource.relations[this.relationDefinition.name][this.relationIndex];
 
         return new Promise<any>((resolve) => {
             if (targetId.length == 0) {
-                this.relations[this.relationDefinition.name].splice(this.relationIndex, 1);
+                this.document.resource.relations[this.relationDefinition.name].splice(this.relationIndex, 1);
             } else {
-                this.relations[this.relationDefinition.name].splice(this.relationIndex, 1);
+                this.document.resource.relations[this.relationDefinition.name].splice(this.relationIndex, 1);
             }
 
-            if (this.relations[this.relationDefinition.name].length==0)
-                delete this.relations[this.relationDefinition.name];
+            if (this.document.resource.relations[this.relationDefinition.name].length==0)
+                delete this.document.resource.relations[this.relationDefinition.name];
             resolve();
         });
     }
@@ -212,8 +205,8 @@ export class RelationPickerComponent implements OnChanges {
     private async deleteLiesWithinConditionally(relationId?: string) {
 
         if (this.relationDefinition.name === 'isRecordedIn'
-            && this.resource.relations['liesWithin']
-            && this.resource.relations['liesWithin'].length > 0) {
+            && this.document.resource.relations['liesWithin']
+            && this.document.resource.relations['liesWithin'].length > 0) {
 
             const liesWithinTarget =
                 await this.datastore.get(this.document.resource.relations['liesWithin'][0]);
@@ -244,7 +237,7 @@ export class RelationPickerComponent implements OnChanges {
         return this.datastore.find(query)
             .then(result => {
                 this.suggestions = Suggestions.makeSuggestionsFrom(
-                    result.documents, this.resource,
+                    result.documents, this.document.resource,
                     this.relationDefinition, RelationPickerComponent.MAX_SUGGESTIONS);
             }).catch(err => {
                 console.debug(err);

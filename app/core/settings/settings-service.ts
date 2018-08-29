@@ -13,8 +13,8 @@ import {unique} from 'tsfun';
 import {IdaiFieldSampleDataLoader} from '../datastore/field/idai-field-sample-data-loader';
 import {Converter} from '../imagestore/converter';
 
+const {remote, ipcRenderer} = require('electron');
 
-const remote = require('electron').remote;
 
 @Injectable()
 /**
@@ -30,7 +30,6 @@ const remote = require('electron').remote;
  * @author Thomas Kleinke
  */
 export class SettingsService {
-
 
     private syncStatusObservers = [];
     private settings: Settings;
@@ -179,6 +178,8 @@ export class SettingsService {
             if (!SettingsService.validateAddress(this.settings.syncTarget.address))
                 throw 'malformed_address';
         }
+
+        ipcRenderer.send('settingsChanged', this.settings);
 
         return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject() as any)
             .catch((errWithParams: any) => {

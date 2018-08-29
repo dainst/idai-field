@@ -17,7 +17,7 @@
         </span>
     </a>
 
-    <a *ngIf="!isAutoUpdateActive()"
+    <a *ngIf="!isAutoUpdateActive() && !downloadComplete && progressPercent === -1"
        ngbTooltip="Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field."
        placement="bottom" container="body">
         <span class="mdi mdi-arrow-down-bold mdi-18px"></span>

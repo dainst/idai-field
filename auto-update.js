@@ -7,8 +7,11 @@ const {dialog} = require('electron');
 autoUpdater.logger = log;
 
 let updateVersion;
+let initialized = false;
 
 const setUp = (mainWindow) => {
+
+    if (initialized) return;
 
     autoUpdater.on('update-available', updateInfo => {
         updateVersion = updateInfo.version;
@@ -51,6 +54,7 @@ const setUp = (mainWindow) => {
     });
 
     autoUpdater.checkForUpdates();
+    initialized = true;
 };
 
 autoUpdater.autoDownload = false;

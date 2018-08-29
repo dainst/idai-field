@@ -15,6 +15,22 @@
     "Feature": [
         "featureAmount"
     ],
+    "Burial": [
+        "publicationDatingFinds",
+        "publicationDatingStratigraphy"
+    ],
+    "Architecture": [
+        "publicationDatingFinds",
+        "publicationDatingScientific",
+        "publicationDatingStratigraphy",
+        "publicationRemark"
+    ],
+    "Grave": [
+        "publicationDatingFinds",
+        "publicationDatingScientific",
+        "publicationDatingStratigraphy",
+        "publicationRemark"
+    ], 
     "Findspot": [
         "buildingHistory",
         "excavationHistory"

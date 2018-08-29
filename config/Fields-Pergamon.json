@@ -1,0 +1,220 @@
+{
+  "Pottery": {
+    "fields": {
+      "materialType":{
+        "inputType": "radio",
+        "valuelist": [
+          "Überzugsware",
+          "Bemalte Keramik",
+          "Glasurkeramik",
+          "Kochkeramik",
+          "Küchen/Transport/Vorratsware",
+          "Glättware",
+          "Porzellan",
+          "Lampe"
+        ]
+      },
+      "typeSpecific":{
+        "inputType": "dropdown",
+        "valuelist": [
+          "Schwarzfigurige Keramik ",
+          "Rotfigurige Keramik",
+          "Streifenware",
+          "Westabhangkeramik",
+          "Weißgrundige Keramik",
+          "Applikenkeramik",
+          "Reliefkeramik Sigilata",
+          "ESA",
+          "ESB",
+          "ESC",
+          "Bleiglausurkeramik",
+          "Italienische Sigilata ",
+          "Glanzton",
+          "Sanded ware",
+          "Eierschalenkeramik",
+          "Thronware",
+          "Barbotine Ware",
+          "Spachtelkeramik",
+          "Fuguralgefäß",
+          "LRC",
+          "ARS",
+          "Light Coloured Ware",
+          "Gilded Ware ",
+          "Sgraffito-Keramik",
+          "Graue ESC?"
+        ]
+      },
+      "coatOutside": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Ohne Überzug und Glasur",
+          "Mit Überzug",
+          "Mit partiellem Überzug",
+          "Mit Vollständigem Überzug",
+          "Mit partieller Schlemme",
+          "Mit vollständiger Schlemme",
+          "Mit partieller Glasur ",
+          "Mit Glasur",
+          "Mit vollständiger Glasur",
+          "Mit Glanzton",
+          "Mit sog. Self-Slip (Hartware)",
+          "Mit sog. Engobe (TK-Ständer)",
+          "poliert"
+        ]
+      },
+      "coatInside": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Ohne Überzug und Glasur",
+          "Mit Überzug",
+          "Mit partiellem Überzug",
+          "Mit Vollständigem Überzug",
+          "Mit partieller Schlemme",
+          "Mit vollständiger Schlemme",
+          "Mit Glasur",
+          "Mit partieller Glasur ",
+          "Mit vollständiger Glasur",
+          "Mit Glanzton",
+          "Mit sog. Self-Slip (Hartware)",
+          "Mit sog. Engobe (TK-Ständer)",
+          "poliert",
+          "schwach",
+          "stark",
+          "glänzend",
+          "matt",
+          "dicht",
+          "dünn"
+        ]
+
+      },
+      "hasClayColorOutside": {
+        "inputType": "radio",
+        "valuelist": [
+          "rot",
+          "schwarz",
+          "braun",
+          "bicolor (scharf abgegrenzt)",
+          "mehrfarbig",
+          "cremefarben"
+        ]
+      },
+      "vesselFormSpecific": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Becher",
+          "Tasse",
+          "Kanthers",
+          "Skyphos",
+          "Krater",
+          "Kelchgefäß",
+          "Tasse/Kanthoras/Krater",
+          "Napf",
+          "Schüssel",
+          "Teller",
+          "Napf/Schüssel/Teller",
+          "Platte",
+          "Krug",
+          "Kanne",
+          "Amphora",
+          "Kochtopf",
+          "Topfständer",
+          "Kohlenbecken",
+          "Krug/Amphora",
+          "Krugverschluß",
+          "Siebgefäß",
+          "Kasserolle",
+          "Moratorium",
+          "Pfanne",
+          "Deckel",
+          "Stövchen",
+          "Rost",
+          "Pathos",
+          "Dinos",
+          "Pathos/Dinos",
+          "Ständer",
+          "TK-Ständer",
+          "Ungentarium",
+          "Pyxis",
+          "Thymiaterion",
+          "Thymiateriondeckel",
+          "Askos",
+          "Kernos",
+          "Gutes",
+          "Formschüssel",
+          "Saugtasse",
+          "Offenes Gefäß",
+          "Geschlossenes Gefäß",
+          "Unbestimmt"
+        ]
+      },
+      "typeNumber": {
+        "inputType": "input",
+        "valuelist": [
+          "Netzbecher",
+          "Rillenbecher",
+          "Riefenbecher",
+          "Dellenbecher",
+          "Stülpdeckelschüssel",
+          "Fischteller",
+          "Steilrandschüssel",
+          "Steilrandteller",
+          "Kragenschüssel",
+          "Knickwandschüssel",
+          "Oinochoe",
+          "Olpe",
+          "Lagynos",
+          "Pilgerflasche",
+          "Amphoriskos",
+          "Phiole",
+          "Transportamphora",
+          "pergamenischer Waterjar",
+          "Hellenistische Reliefkeramik",
+          "Hollow-Foot-Amphora",
+          "Late Roman 3 Amphora",
+          "Dressel 24-Amphora",
+          "Thymiateriondeckel",
+          "Hayes Form 3 E",
+          "Hayes Form 10 A",
+          "Hayes Form 3",
+          "Hayes Form 3 C",
+          "Hayes Form 10 C",
+          "Hayes Form 10 B"
+        ]
+      },
+      "decorationTechnique": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Applikation",
+          "Barbotine",
+          "Bemalung",
+          "Daumendellen",
+          "Rädchen",
+          "Relief",
+          "Ritzung",
+          "Riefen",
+          "Sandbewurf",
+          "Sgraffito",
+          "Spachteldekor",
+          "Stempel",
+          "Thornwaredekor"
+        ]
+      },
+      "isImport": {
+        "inputType": "boolean"
+      },
+      "isMisfired": {
+        "inputType": "boolean"
+      },
+      "associatedSherds": {
+        "inputType": "input"
+      },
+      "documentationTodo": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Zeichnung",
+          "Photo"
+        ]
+      }
+    }
+  }
+}

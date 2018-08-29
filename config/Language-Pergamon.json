@@ -1,0 +1,75 @@
+{
+  "types": {
+    "Find": {
+      "amount": {
+        "label": "Anzahl (gesamt)",
+        "decription": "Was unter 'Zustand' zusammengefasst wird kann hier zusammengerechnet werden, wenn dies gewollt ist"
+      }
+    },
+    "Pottery": {
+      "label": "Keramik",
+      "fields": {
+        "associatedSherds": {
+          "label": "Anpassend/Zugehörig"
+        },
+        "isImport": {
+          "label": "Import"
+        },
+        "materialType": {
+          "label": "Ware"
+        },
+        "typeSpecific": {
+          "label": "Gattung"
+        },
+        "typeNumber": {
+          "label": "Typ"
+        },
+        "coatOutside": {
+          "label": "Oberfläche Außen + Qualität"
+        },
+        "coatInside": {
+          "label": "Oberfläche Innen + Qualität"
+        },
+        "vesselFormSpecific": {
+          "label": "Form"
+        },
+        "decorationTechnique": {
+          "label": "Dekoart"
+        },
+        "isMisfired": {
+          "label": "Fehlbrand/Schadensbrand"
+        },
+        "catalogueNumber": {
+          "label": "Kat: Nr."
+        },
+        "amountSherdsWall": {
+          "label": "Zustand: Wandscherbe(n)"
+        },
+        "amountSherdsRim": {
+          "label": "Zustand: Randscherbe(n)"
+        },
+        "amountSherdsBase": {
+          "label": "Zustand: Bodenscherbe(n)"
+        },
+        "amountSherdsHandles":{
+          "label": "Zustand: Henkelscherbe(n)"
+        },
+        "amountSherdsLip": {
+          "label": "Zustand: Ausguss/Ausgüsse"
+        },
+        "amountSherdsPedestal": {
+          "label": "Zustand: Fußscherbe(n)"
+        },
+        "amountShertsLid":{
+          "label": "Zustand: Deckelscherbe(n)"
+        },
+        "amountSherdsOther": {
+          "label": "Zustand: Andere Scherbe(n)"
+        },
+        "documentationTodo": {
+          "label": "Zeichnung/Photo"
+        }
+      }
+    }
+  }
+}

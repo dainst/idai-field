@@ -81,9 +81,9 @@ export class DocumentHolder {
 
     public async save(): Promise<Document> {
 
-        const document: Document = await this.cleanup(this.clonedDocument);
+        if (this.isIsRecordedInRelationMissing(this.clonedDocument)) throw [M.VALIDATION_ERROR_NORECORDEDIN];
 
-        if (this.isIsRecordedInRelationMissing(document)) throw [M.VALIDATION_ERROR_NORECORDEDIN];
+        const document: Document = await this.cleanup(this.clonedDocument);
 
         await this.validator.validate(document);
         const savedDocument: Document = await this.persistenceManager.persist(

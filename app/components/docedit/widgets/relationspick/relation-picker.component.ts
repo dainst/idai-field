@@ -47,9 +47,6 @@ export class RelationPickerComponent implements OnChanges {
         this.idSearchString = '';
         this.selectedTarget = undefined;
 
-        if (!this.document.resource.relations[this.relationDefinition.name]) {
-            this.document.resource.relations[this.relationDefinition.name] = [];
-        }
         const relationTargetResourceId: string =
             this.document.resource.relations[this.relationDefinition.name][this.relationIndex];
 

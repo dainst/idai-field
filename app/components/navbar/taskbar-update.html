@@ -1,10 +1,19 @@
 <div id="taskbar-update">
-    <a *ngIf="progressPercent < 100" id="taskbar-update-icon"
-       ngbTooltip="Neue Version wird heruntergeladen"
+    <a *ngIf="progressPercent > -1 && !downloadComplete"
+       ngbTooltip="Neue Version wird heruntergeladen..."
        placement="bottom" container="body">
         <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
         <span class="badge-pill badge-info taskbar-badge">
             {{progressPercent}}%
+        </span>
+    </a>
+
+    <a *ngIf="downloadComplete"
+       ngbTooltip="Die neue Version wurde heruntergeladen und wird beim Neustart installiert"
+       placement="bottom" container="body">
+        <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
+        <span class="badge-pill badge-success taskbar-badge">
+            ✓
         </span>
     </a>
 </div>

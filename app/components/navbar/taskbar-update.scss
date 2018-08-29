@@ -13,7 +13,13 @@ taskbar-update {
       color: #fff;
       position: relative;
       top: -8px;
-      left: -5px;
+      left: -6px;
+      width: 28px;
+    }
+
+    .badge-pill {
+      width: 32px;
+      text-align: center;
     }
   }
 }

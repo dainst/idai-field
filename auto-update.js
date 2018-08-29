@@ -12,6 +12,10 @@ const setUp = (mainWindow) => {
         mainWindow.webContents.send('downloadProgress', progress);
     });
 
+    autoUpdater.on('update-downloaded', () => {
+        mainWindow.webContents.send('updateDownloaded', true);
+    });
+
     autoUpdater.checkForUpdates();
 };
 
@@ -40,7 +44,7 @@ autoUpdater.on('update-available', () => {
 autoUpdater.on('update-downloaded', () => {
     dialog.showMessageBox({
         title: 'Update installieren',
-        message: 'Die neue Version von iDAI.field wurde geladen. Starten Sie die Anwendung neu um sie zu installieren.',
+        message: 'Die neue Version von iDAI.field wurde geladen. Starten Sie die Anwendung neu, um sie zu installieren.',
     });
 });
 

@@ -13,19 +13,21 @@ const ipcRenderer = require('electron').ipcRenderer;
  */
 export class TaskbarUpdateComponent {
 
+    public version: string;
     public progressPercent: number = -1;
     public downloadComplete: boolean = false;
 
 
     constructor(changeDetectorRef: ChangeDetectorRef) {
 
-        ipcRenderer.on('downloadProgress', (event: any, progress: any) => {
-            this.progressPercent = Math.round(progress.percent);
+        ipcRenderer.on('downloadProgress', (event: any, downloadInfo: any) => {
+            this.progressPercent = Math.round(downloadInfo.progressPercent);
+            this.version = downloadInfo.version;
             changeDetectorRef.detectChanges();
         });
 
-        ipcRenderer.on('updateDownloaded', (value: boolean) => {
-            this.downloadComplete = value;
+        ipcRenderer.on('updateDownloaded', () => {
+            this.downloadComplete = true;
             changeDetectorRef.detectChanges();
         });
     }

@@ -1,4 +1,5 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
+import {SettingsService} from '../../core/settings/settings-service';
 
 const ipcRenderer = require('electron').ipcRenderer;
 
@@ -18,7 +19,8 @@ export class TaskbarUpdateComponent {
     public downloadComplete: boolean = false;
 
 
-    constructor(changeDetectorRef: ChangeDetectorRef) {
+    constructor(private settingsService: SettingsService,
+        changeDetectorRef: ChangeDetectorRef) {
 
         ipcRenderer.on('downloadProgress', (event: any, downloadInfo: any) => {
             this.progressPercent = Math.round(downloadInfo.progressPercent);
@@ -31,4 +33,7 @@ export class TaskbarUpdateComponent {
             changeDetectorRef.detectChanges();
         });
     }
+
+
+    public isAutoUpdateActive = () => this.settingsService.isAutoUpdateActive();
 }

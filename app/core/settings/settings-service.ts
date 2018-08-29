@@ -69,6 +69,8 @@ export class SettingsService {
             : 'test';
     }
 
+    public isAutoUpdateActive = () => this.settings.isAutoUpdateActive;
+
 
     public async loadProjectDocument(isBoot = false): Promise<void> {
 

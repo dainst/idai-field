@@ -50,8 +50,8 @@ export class RelationPickerComponent implements OnChanges {
         if (!this.document.resource.relations[this.relationDefinition.name]) {
             this.document.resource.relations[this.relationDefinition.name] = [];
         }
-
-        const relationTargetResourceId: string = this.document.resource.relations[this.relationDefinition.name][this.relationIndex];
+        const relationTargetResourceId: string =
+            this.document.resource.relations[this.relationDefinition.name][this.relationIndex];
 
         if (isNot(undefinedOrEmpty)(relationTargetResourceId)) {
 
@@ -224,7 +224,7 @@ export class RelationPickerComponent implements OnChanges {
     }
 
 
-    private updateSuggestions() {
+    private async updateSuggestions() {
 
         if (this.updateSuggestionsMode) return;
         this.updateSuggestionsMode = true;
@@ -234,15 +234,18 @@ export class RelationPickerComponent implements OnChanges {
             query.q = this.idSearchString;
         }
 
-        return this.datastore.find(query)
-            .then(result => {
-                this.suggestions = Suggestions.makeSuggestionsFrom(
-                    result.documents, this.document.resource,
-                    this.relationDefinition, RelationPickerComponent.MAX_SUGGESTIONS);
-            }).catch(err => {
-                console.debug(err);
-            }).then(() => {
-                this.updateSuggestionsMode = false;
-            });
+        try {
+
+            this.suggestions = Suggestions.makeSuggestionsFrom(
+                (await this.datastore.find(query)).documents,
+                this.document.resource,
+                this.relationDefinition,
+                RelationPickerComponent.MAX_SUGGESTIONS);
+
+        } catch (err) {
+            console.debug(err);
+        } finally {
+            this.updateSuggestionsMode = false;
+        }
     }
 }

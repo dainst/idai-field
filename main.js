@@ -7,7 +7,7 @@ const autoUpdate = require('./auto-update.js');
 
 // needed to fix notifications in win 10
 // see https://github.com/electron/electron/issues/10864
-electron.app.setAppUserModelId("org.dainst.field")
+electron.app.setAppUserModelId('org.dainst.field');
 
 // Copy config file to appData if no config file exists in appData
 const copyConfigFile = (destPath, appDataPath) => {
@@ -16,8 +16,16 @@ const copyConfigFile = (destPath, appDataPath) => {
 
     if (!fs.existsSync(destPath)) {
         console.log('Create config.json at ' + destPath);
-        fs.writeFileSync(destPath, JSON.stringify({"dbs":["test"]}));
+        fs.writeFileSync(destPath, JSON.stringify({ 'dbs': ['test'] }));
     }
+};
+
+
+const setConfigDefaults = config => {
+
+    if (!config.syncTarget) config.syncTarget = {};
+    if (!config.remoteSites) config.remoteSites = [];
+    if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
 };
 
 
@@ -56,6 +64,7 @@ if (!env || // is environment 'production' (packaged app)
 
 console.log('Using config file: ' + global.configPath);
 global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
+setConfigDefaults(global.config);
 
 
 // -- CONFIGURATION
@@ -127,7 +136,7 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 electron.app.on('ready', () => {
     const mainWindow = createWindow();
-    autoUpdate.setUp(mainWindow);
+    if (global.config.isAutoUpdateActive) autoUpdate.setUp(mainWindow);
 });
 
 electron.app.on('activate', () => {

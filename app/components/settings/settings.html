@@ -125,6 +125,24 @@
                         gezogen bzw. dort gelöscht werden.
                     </div>
                 </div>
+
+
+                <hr>
+
+                <h5 style="margin-top: 32px;">Update</h5>
+
+                <div class="row" style="margin: 15px 0 0;">
+                    <div class="col-auto mr-auto">
+                        Automatische Prüfung auf Updates aktivieren
+                    </div>
+                    <div class="col-auto">
+                        <label class="switch" style="margin-bottom: 0;">
+                            <input type="checkbox" [checked]="settings.isAutoUpdateActive"
+                                   (change)="toggleAutoUpdate()">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

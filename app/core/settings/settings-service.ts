@@ -96,7 +96,7 @@ export class SettingsService {
 
     public async bootProject(): Promise<ProjectConfiguration> {
 
-        await this.updateSettings(await this.settingsSerializer.load());
+        await this.updateSettings(remote.getGlobal('config'));
 
         await this.pouchdbManager.loadProjectDb(
             this.getSelectedProject(),

@@ -10,33 +10,14 @@ import * as fs from 'fs';
  */
 export class SettingsSerializer {
 
-    public load(): Promise<Settings> {
-
-        return new Promise((resolve,reject) => {
-
-            fs.readFile(remote.getGlobal('configPath'), 'utf-8', (err: any, content: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    let settings = JSON.parse(content);
-                    if (!settings.syncTarget) settings.syncTarget = {};
-                    if (!settings.remoteSites) settings.remoteSites = [];
-                    resolve(settings);
-                }
-            });
-        });
-    }
-
-
     public store(settings: Settings): Promise<any> {
 
         if (!settings) return Promise.resolve(undefined);
 
         let configToWrite: any = {};
 
-        if (settings.isSyncActive) {
-            configToWrite['isSyncActive'] = settings.isSyncActive;
-        }
+        configToWrite['isAutoUpdateActive'] = settings.isAutoUpdateActive;
+        configToWrite['isSyncActive'] = settings.isSyncActive;
 
         if (settings.syncTarget && (settings.syncTarget['username'] || settings.syncTarget['password']
                 || settings.syncTarget['address'])) {

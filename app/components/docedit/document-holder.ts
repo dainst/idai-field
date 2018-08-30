@@ -61,12 +61,10 @@ export class DocumentHolder {
     public changeType(newType: string) {
 
         this.clonedDocument.resource.type = newType;
-        // this.documentEditChangeMonitor.setChanged();
-        // TODO set changed
 
         return {
-            invalidFields: this.validateFields(),
-            invalidRelations: this.validateRelationFields()
+            invalidFields: Validations.validateFields(this.clonedDocument.resource, this.projectConfiguration),
+            invalidRelations: Validations.validateRelations(this.clonedDocument.resource, this.projectConfiguration)
         }
     }
 
@@ -157,18 +155,6 @@ export class DocumentHolder {
                 throw [M.DOCEDIT_DELETE_ERROR];
             }
         }
-    }
-
-
-    private validateFields(): Array<string> {
-
-        return Validations.validateFields(this.clonedDocument.resource, this.projectConfiguration);
-    }
-
-
-    private validateRelationFields(): Array<string> {
-
-        return Validations.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
     }
 
 

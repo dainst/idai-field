@@ -4,7 +4,6 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
 import {M} from '../../m';
 import {Validations} from './validations';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
-import {to} from 'tsfun';
 
 
 @Injectable()
@@ -18,59 +17,72 @@ export class Validator {
                 private datastore: IdaiFieldDocumentDatastore) {}
 
     /**
-     * @param doc
-     * @returns resolves with () or rejects with msgsWithParams
+     * @param document a document or a new document. A new document is determined
+     *   by testing if is does not have document._id yet.
+     *
+     * Only <b>new resources</b> get their relations and fields validated (most important on import).
+     *   During "normal" operation we don't want that relations and fields not
+     *   defined anymore get rejected (and possibly erased).
+     *
+     * @returns resolves with () 
+     * @throws msgsWithParams on the first incident type
      */
     public async validate(
-        doc: Document|NewDocument
+        document: Document|NewDocument
     ): Promise<void> {
 
-        let resource = doc.resource;
 
-        if (!Validations.validateType(resource, this.projectConfiguration)) {
-            throw [M.VALIDATION_ERROR_INVALIDTYPE, resource.type];
+        if (!Validations.validateType(document.resource, this.projectConfiguration)) {
+            throw [M.VALIDATION_ERROR_INVALIDTYPE, document.resource.type];
         }
 
-        let missingProperties = Validations.getMissingProperties(resource, this.projectConfiguration);
+        
+        const missingProperties = Validations.getMissingProperties(document.resource, this.projectConfiguration);
         if (missingProperties.length > 0) {
-            throw [M.VALIDATION_ERROR_MISSINGPROPERTY, resource.type]
+            throw [M.VALIDATION_ERROR_MISSINGPROPERTY, document.resource.type]
                 .concat(missingProperties.join((', ')));
         }
 
-        const invalidFields = Validations.validateFields(resource, this.projectConfiguration);
-        if (invalidFields.length > 0) {
-            throw [invalidFields.length === 1 ?
-                M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS]
-                .concat([resource.type])
-                .concat(invalidFields.join(', '));
+
+        if (!(document as any)['_id']) {
+
+            const invalidFields = Validations.validateFields(document.resource, this.projectConfiguration);
+            if (invalidFields.length > 0) {
+                throw [invalidFields.length === 1 ?
+                    M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS]
+                    .concat([document.resource.type])
+                    .concat(invalidFields.join(', '));
+            }
+
+            const invalidRelationFields = Validations.validateRelations(document.resource, this.projectConfiguration);
+            if (invalidRelationFields.length > 0) {
+                throw [invalidRelationFields.length === 1 ?
+                        M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
+                        M.VALIDATION_ERROR_INVALIDRELATIONFIELDS]
+                    .concat([document.resource.type])
+                    .concat([invalidRelationFields.join(', ')]);
+            }
         }
 
-        const invalidRelationFields = Validations.validateRelations(resource, this.projectConfiguration);
-        if (invalidRelationFields.length > 0) {
-            throw [invalidRelationFields.length === 1 ?
-                    M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
-                    M.VALIDATION_ERROR_INVALIDRELATIONFIELDS]
-                .concat([resource.type])
-                .concat([invalidRelationFields.join(', ')]);
-        }
 
-        let invalidNumericValues = Validations.validateNumericValues(resource, this.projectConfiguration);
+        const invalidNumericValues = Validations.validateNumericValues(document.resource, this.projectConfiguration);
         if (invalidNumericValues ) {
             throw [invalidNumericValues.length === 1 ?
                     M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
                     M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES]
-                .concat([resource.type])
+                .concat([document.resource.type])
                 .concat([invalidNumericValues.join(', ')]);
         }
 
 
-        let msgWithParams = Validator.validateGeometry(doc.resource.geometry as any);
+        const msgWithParams = Validator.validateGeometry(document.resource.geometry as any);
         if (msgWithParams) throw msgWithParams;
 
-        return this.datastore ? this.validateIdentifier(doc as any) : undefined;
+        return this.datastore ? this.validateIdentifier(document as any) : undefined;
     }
 
 
+    // TODO remove or use
     public async validateRelationTargets(document: IdaiFieldDocument,
                                          relationName: string): Promise<string[]> {
 

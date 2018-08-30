@@ -93,23 +93,24 @@ describe('DocumentHolder', () => {
     });
 
 
-    it('remove empty and undefined relations', async done => {
+    it('remove empty and dont remove undefined relations', async done => {
 
         docHolder.clonedDocument = defaultDocument;
         const savedDocument: Document = await docHolder.save();
 
-        expect(Object.keys(savedDocument.resource.relations).length).toBe(1);
+        expect(Object.keys(savedDocument.resource.relations).length).toBe(2);
         expect(Object.keys(savedDocument.resource.relations)[0]).toBe('isFoundOn2');
+        expect(Object.keys(savedDocument.resource.relations)[1]).toBe('undefrel');
         done();
     });
 
 
-    it('remove empty and undefined fields', async done => {
+    it('remove empty and dont remove undefined fields', async done => {
 
         docHolder.clonedDocument = defaultDocument;
         const savedDocument: Document = await docHolder.save();
 
-        expect(savedDocument.resource.undeffield).toBeUndefined();
+        expect(savedDocument.resource.undeffield).not.toBeUndefined();
         expect(savedDocument.resource.emptyfield).toBeUndefined();
         expect(savedDocument.resource.type).not.toBeUndefined();
         done();

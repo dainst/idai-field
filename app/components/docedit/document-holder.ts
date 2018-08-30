@@ -61,8 +61,6 @@ export class DocumentHolder {
     public changeType(newType: string) {
 
         this.clonedDocument.resource.type = newType;
-        // this.documentEditChangeMonitor.setChanged();
-        // TODO set changed
 
         return {
             invalidFields: this.validateFields(),

@@ -14,7 +14,7 @@ export class HelpComponent implements OnInit {
 
     public html: string = '';
 
-    private static filePath: string = 'manual/quickstart.md';
+    private static filePath: string = 'manual/manual.md';
 
 
     async ngOnInit() {

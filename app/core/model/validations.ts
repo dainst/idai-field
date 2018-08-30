@@ -186,12 +186,7 @@ export module Validations {
 
     export function validateMultiPolygonCoordinates(coordinates: number[][][][]): boolean {
 
-        if (coordinates.length == 0) return false;
-
-        for (let i in coordinates) {
-            if (!validatePolygonCoordinates(coordinates[i])) return false;
-        }
-
-        return true;
+        return coordinates.length !== 0
+            && coordinates.every(validatePolygonCoordinates);
     }
 }

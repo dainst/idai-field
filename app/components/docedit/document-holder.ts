@@ -137,7 +137,7 @@ export class DocumentHolder {
 
         if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         try {
-            await this.imagestore.remove(this.clonedDocument.resource.id as any);
+            await this.imagestore.remove(this.clonedDocument.resource.id);
         } catch (_) {
             return [M.IMAGESTORE_ERROR_DELETE, this.clonedDocument.resource.id];
         }

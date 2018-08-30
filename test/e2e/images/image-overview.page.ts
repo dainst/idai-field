@@ -3,9 +3,9 @@
 import {browser, protractor, element, by} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 
-let EC = protractor.ExpectedConditions;
-let delays = require('../config/delays');
-let common = require('../common.js');
+const EC = protractor.ExpectedConditions;
+const delays = require('../config/delays');
+const common = require('../common.js');
 
 
 export module ImageOverviewPage {
@@ -28,7 +28,8 @@ export module ImageOverviewPage {
 
     export function waitForCells() {
 
-        return browser.wait(EC.presenceOf(element(by.css('.cell'))), delays.ECWaitTime, 'Waiting for image cells.');
+        return browser.wait(EC.presenceOf(element(by.css('.cell'))), delays.ECWaitTime,
+            'Waiting for image cells.');
     }
 
 

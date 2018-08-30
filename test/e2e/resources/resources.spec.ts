@@ -221,6 +221,7 @@ describe('resources --', () => {
 
         addTwoImages();
         gotoImageTab();
+        DoceditImageTabPage.waitForCells();
         DoceditImageTabPage.getCells().get(0).click();
         DoceditImageTabPage.clickDeleteImages();
         DoceditImageTabPage.getCells().then(cells => {
@@ -239,6 +240,7 @@ describe('resources --', () => {
 
         addTwoImages();
         gotoImageTab();
+        DoceditImageTabPage.waitForCells();
         DoceditImageTabPage.getCells().get(0).click();
         DoceditImageTabPage.getCells().get(1).click();
         DoceditImageTabPage.clickDeleteImages();

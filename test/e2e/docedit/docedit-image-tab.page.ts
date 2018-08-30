@@ -1,12 +1,22 @@
-import {element, by} from 'protractor';
+import {element, by, browser, protractor} from 'protractor';
 
-let common = require('../common.js');
+const EC = protractor.ExpectedConditions;
+const delays = require('../config/delays');
+const common = require('../common.js');
+
 
 /**
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export class DoceditImageTabPage {
+
+    public static waitForCells() {
+
+        return browser.wait(EC.presenceOf(element(by.css('.cell'))), delays.ECWaitTime,
+            'Waiting for image cells.');
+    }
+
 
     // click
 

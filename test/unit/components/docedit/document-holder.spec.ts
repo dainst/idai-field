@@ -71,12 +71,8 @@ describe('DocumentHolder', () => {
             return Promise.resolve(changedDocument);
         });
 
-        const typeUtility = jasmine.createSpyObj('TypeUtility', ['getSubtypes']);
-        typeUtility.getSubtypes.and.callFake(typeName => {
-            return typeName === 'Operation'
-                ? { 'Operation': { name: 'o' }, 'Trench': {} }
-                : { 'Image': {}, 'Drawing': {} }
-        });
+        const typeUtility = jasmine.createSpyObj('TypeUtility', ['getRegularTypeNames']);
+        typeUtility.getRegularTypeNames.and.returnValue(['Find']);
 
         const usernameProvider = jasmine.createSpyObj('UsernameProvider', ['getUsername']);
         datastore = jasmine.createSpyObj('Datastore', ['get']);

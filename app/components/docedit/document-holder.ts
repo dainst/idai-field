@@ -204,11 +204,10 @@ export class DocumentHolder {
 
     private isExpectedToHaveIsRecordedInRelation(document: Document): boolean {
 
-        if (!this.typeUtility) return false;
-
-        return !Object.keys(
-            uniteObject(this.typeUtility.getSubtypes('Operation'))
-            (this.typeUtility.getSubtypes('Image'))
-        ).concat(['Place']).includes(document.resource.type);
+        return !this.typeUtility
+            ? false
+            : this.typeUtility
+                .getRegularTypeNames()
+                .includes(document.resource.type);
     }
 }

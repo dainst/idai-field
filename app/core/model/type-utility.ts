@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {IdaiType, ProjectConfiguration} from 'idai-components-2'
+import {IdaiType, ProjectConfiguration} from 'idai-components-2';
+import {to} from 'tsfun';
 
 
 @Injectable()
@@ -72,6 +73,18 @@ export class TypeUtility {
     public getFeatureTypeNames(): string[] {
 
         return Object.keys(this.getSubtypes('Feature'));
+    }
+
+
+    public getRegularTypeNames(): string[] {
+
+        return this.projectConfiguration
+            .getTypesList()
+            .map(to('name'))
+            .filter(typename => typename !== 'Place')
+            .filter(typename => typename !== 'Project')
+            .filter(typename => !this.isSubtype(typename, 'Operation'))
+            .filter(typename => !this.isSubtype(typename, 'Image'));
     }
 
 

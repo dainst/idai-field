@@ -96,6 +96,7 @@ describe('DocumentHolder', () => {
         delete cloned.resource.relations.undefrel;
         docHolder.setClonedDocument(cloned);
 
+        docHolder.clonedDocument = defaultDocument;
         const savedDocument: Document = await docHolder.save();
 
         expect(Object.keys(savedDocument.resource.relations).length).toBe(1);

@@ -119,10 +119,10 @@ export class DocumentHolder {
     }
 
 
-    private fetchLatestRevision(id: string): Promise<Document> {
+    private async fetchLatestRevision(id: string): Promise<Document> {
 
         try {
-            return this.datastore.get(id, { skip_cache: true });
+            return await this.datastore.get(id, { skip_cache: true });
         } catch (e) {
             throw [M.DATASTORE_NOT_FOUND];
         }

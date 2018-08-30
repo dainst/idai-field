@@ -56,7 +56,7 @@ werden, um die Suchergebnisse der erweiterten Suche weiter einzuschränken.
 
 ## Suchen per Suchfilter
 
-![Filter](manual/search_filter.png)
+![Filter](images/search_filter.png)
 
 In dem Textfeld können Suchbegriffe eingeben werden, im Filtermenü, welches sich per Klick auf das
 blaue Symbol öffnet, kann eine Typauswahl getroffen werden. Sowohl das Angeben eines Suchbegriffes als auch
@@ -69,7 +69,7 @@ angezeigten Bilder.
 Wenn die aktuelle Anzeige (Maßnahmenübersicht, -ansichten) soweit durch die Filterkriterien eingeschränkt ist,
 dass keine Suchtreffer angezeigt werden, werden auch Suchergebnisse aus anderen Kontexten angezeigt. 
 
-![Andere Kontexte](manual/other_contexts.png)
+![Andere Kontexte](images/other_contexts.png)
 
 Mit Klick auf eines der Elemente wechselt man in den entsprechenden Kontext.
 
@@ -77,7 +77,7 @@ Mit Klick auf eines der Elemente wechselt man in den entsprechenden Kontext.
 
 Im Filtermenü
 
-![Filter Menü](manual/filter_menu.png)
+![Filter Menü](images/filter_menu.png)
 
 kann jeweils eine Auswahl für einen Ressourcentyp getroffen werden. Die Auswahl kann sich hierbei
 entweder direkt auf einen Typ (z.B. "Erdbefund") oder eine ganze Typengruppe (z.B. "Stratigraphische Einheit")
@@ -135,7 +135,7 @@ Eine Suche nach "Landscape-00[01]1" liefert (1) und (4), da die Ziffer nach dem 
 
 In den Ressourcenansichten kann mit Klick auf das Lupensymbol
  
- ![Lupensymbol](manual/looking_glass.png)
+ ![Lupensymbol](images/looking_glass.png)
  
  die erweiterte Suche aktiviert werden. Ein blaues Lupensymbol zeigt an, das der erweiterte Suchmodus aktiviert ist.
  
@@ -154,7 +154,7 @@ wie sie durch "Liegt in"-Beziehungen angelegt wird, ignoriert wird. Es kann auch
 Typs gleichzeitig gesucht werden. Hierzu steht die Option "Alle" zur Verfügung, die nicht angezeigt wird, wenn
 der erweiterte Suchmodus nicht aktiviert ist 
 
-![Alle Maßnahmen](manual/all_operations.png)
+![Alle Maßnahmen](images/all_operations.png)
   
 Im erweiterten Suchmodus ist das Anlegen von Ressourcen nicht möglich. 
 
@@ -164,7 +164,7 @@ Ist der erweiterte Suchmodus aktiviert, ist es, sobald ein Typfilter aktiviert i
 über spezifische Felder einer Ressource anzustoßen. Dabei werden Felder zur Suche angeboten, die der entsprechenden
 Typendefinition entsprechen. Es können ein oder mehrere Werte ausgewählt werden. 
 
-![Suchkriterien](manual/criteria_search.png)
+![Suchkriterien](images/criteria_search.png)
 
 Handelt es sich um Freitextfelder, so kann ein genauer Suchbegriff eingestellt werden. Achtung: Im Gegensatz zum Suchfilter 
 wird hier keine Präfix-Suche verwendet. Der eingestellte Begriff muss exakt so mit dem Feldinhalt des entsprechenden
@@ -186,7 +186,7 @@ gewählt werden. Die Kanten der Matrix werden auf Grundlage der Beziehungen
 zwischen verschiedenen Stratigraphischen Einheiten eines Schnittes erstellt. Die Auswahl zwischen diesen Varianten
 sowie weitere Optionen zur Generierung der Matrix können im Matrixwerkzeugmenü ausgewählt werden.
 
-![Matrixwerkzeuge](manual/matrix_tools.png)
+![Matrixwerkzeuge](images/matrix_tools.png)
 
 Die gewählten Einstellungen gelten für alle Matrizen in allen Schnitten und bleiben auch nach einem Programmneustart 
 erhalten.
@@ -203,14 +203,14 @@ genutzt werden, wenn Stratigraphische Einheiten im Feld **Grobdatierung** Werte 
 wird jeweils nur der Wert aus **Grobdatierung (von)** verwendet. Stratigraphische Einheiten mit gleichen Feldwerten
 für die Grobdatierung werden nun nahe beieinander platziert und mit Boxen umrahmt.
 
-![Matrixphasen](manual/matrix_phases.png)
+![Matrixphasen](images/matrix_phases.png)
 
 ## Teilmatrizen
 
 Um die Übersicht in großen Matrizen zu erleichtern, können auch Teilbereiche ausgewählt werden. Dies geschieht
 mithilfe der Werkzeuge in der Toolbar rechts oben.
 
-![Teilgraphen-Tools](manual/subgraph_tools.png)
+![Teilgraphen-Tools](images/subgraph_tools.png)
   
 Mit Klick auf das Mauszeiger Symbol wird der **Einzelauswahlmodus** gestartet. 
 Ein Klick auf ein Matrix-Element bewirkt

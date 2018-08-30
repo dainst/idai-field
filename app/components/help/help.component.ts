@@ -25,10 +25,17 @@ export class HelpComponent implements OnInit {
 
     private async loadHtml(): Promise<string> {
 
-        const markdown: string = await this.readMarkdownFile();
+        const markdown: string = await this.getMarkdown();
         const converter: Converter = HelpComponent.createConverter();
 
         return converter.makeHtml(markdown);
+    }
+
+
+    private async getMarkdown(): Promise<string> {
+
+        const markdown: string = await this.readMarkdownFile();
+        return HelpComponent.adjustImageLinks(markdown);
     }
 
 
@@ -43,6 +50,12 @@ export class HelpComponent implements OnInit {
                 }
             });
         });
+    }
+
+
+    private static adjustImageLinks(markdown: string): string {
+
+        return markdown.replace(/\]\(images\//g, '](manual/images/');
     }
 
 

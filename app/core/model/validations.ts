@@ -158,13 +158,8 @@ export module Validations {
 
     export function validateMultiPolylineCoordinates(coordinates: number[][][]): boolean {
 
-        if (coordinates.length == 0) return false;
-
-        for (let i in coordinates) {
-            if (!validatePolylineCoordinates(coordinates[i])) return false;
-        }
-
-        return true;
+        return coordinates.length !== 0
+            && coordinates.every(validatePolylineCoordinates);
     }
 
 

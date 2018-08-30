@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {flow, jsonEqual, uniteObject} from 'tsfun';
+import {flow, jsonEqual, uniteObject, isNot, includedIn} from 'tsfun';
 import {DatastoreErrors, Document, ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
@@ -80,12 +80,10 @@ export class DocumentHolder {
     public async save(): Promise<Document> {
 
         if (this.isIsRecordedInRelationMissing(this.clonedDocument)) throw [M.VALIDATION_ERROR_NORECORDEDIN];
+        await this.validator.validate(this.clonedDocument, true);
 
-        const document: Document = await this.cleanup(this.clonedDocument);
-
-        await this.validator.validate(document);
         const savedDocument: Document = await this.persistenceManager.persist(
-            document,
+            await this.cleanup(this.clonedDocument),
             this.usernameProvider.getUsername(),
             this.oldVersion,
             this.inspectedRevisions
@@ -161,14 +159,24 @@ export class DocumentHolder {
 
     private validateFields(): Array<string> {
 
-        return Validations.validateFields(this.clonedDocument.resource, this.projectConfiguration);
+        return this.validateButKeepInvalidOldVersionFields(Validations.validateFields);
     }
 
 
     private validateRelationFields(): Array<string> {
 
-        return Validations.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
+        return this.validateButKeepInvalidOldVersionFields(Validations.validateRelations);
     }
+
+
+    private validateButKeepInvalidOldVersionFields(validate: (_: any, __: any) => Array<string>): Array<string> {
+
+        const validationResultClonedVersion = validate(this.clonedDocument.resource, this.projectConfiguration);
+        const validationResultOldVersion = validate(this.oldVersion.resource, this.projectConfiguration);
+
+        return validationResultClonedVersion.filter(isNot(includedIn(validationResultOldVersion)));
+    }
+
 
 
     private getEmptyRelationFields(): Array<string> {

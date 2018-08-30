@@ -1,6 +1,7 @@
 import {ProjectConfiguration, Document} from 'idai-components-2';
 import {DocumentHolder} from '../../../../app/components/docedit/document-holder';
 import {M} from '../../../../app/m';
+import {clone} from '../../../../app/util/object-util';
 
 /**
  * @author Daniel de Oliveira
@@ -95,7 +96,10 @@ describe('DocumentHolder', () => {
 
     it('remove empty and undefined relations', async done => {
 
-        docHolder.clonedDocument = defaultDocument;
+        const cloned = clone(defaultDocument);
+        delete cloned.resource.relations.undefrel;
+        docHolder.setClonedDocument(cloned);
+
         const savedDocument: Document = await docHolder.save();
 
         expect(Object.keys(savedDocument.resource.relations).length).toBe(1);
@@ -106,12 +110,34 @@ describe('DocumentHolder', () => {
 
     it('remove empty and undefined fields', async done => {
 
+        const cloned = clone(defaultDocument);
+        delete cloned.resource.undeffield;
+        docHolder.setClonedDocument(cloned);
+
         docHolder.clonedDocument = defaultDocument;
         const savedDocument: Document = await docHolder.save();
 
         expect(savedDocument.resource.undeffield).toBeUndefined();
         expect(savedDocument.resource.emptyfield).toBeUndefined();
         expect(savedDocument.resource.type).not.toBeUndefined();
+        done();
+    });
+
+
+    it('do not remove undefined field if it was part of the original object', async done => {
+
+        docHolder.setClonedDocument(defaultDocument);
+        const savedDocument: Document = await docHolder.save();
+        expect(savedDocument.resource.undeffield).toEqual('some');
+        done();
+    });
+
+
+    it('do not remove undefined relation if it was part of the original object', async done => {
+
+        docHolder.setClonedDocument(defaultDocument);
+        const savedDocument: Document = await docHolder.save();
+        expect(savedDocument.resource.relations.undefrel[0]).toEqual('2');
         done();
     });
 
@@ -129,7 +155,7 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        docHolder.clonedDocument = document;
+        docHolder.setClonedDocument(document);
 
         try {
             await docHolder.save();
@@ -157,7 +183,7 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        docHolder.clonedDocument = document;
+        docHolder.setClonedDocument(document);
 
         try {
             await docHolder.save();
@@ -182,7 +208,7 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        docHolder.clonedDocument = document;
+        docHolder.setClonedDocument(document);
 
         try {
             await docHolder.save();

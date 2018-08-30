@@ -19,10 +19,12 @@ export class Validator {
 
     /**
      * @param doc
+     * @param suppressFieldsAndRelationsCheck
      * @returns resolves with () or rejects with msgsWithParams
      */
     public async validate(
-        doc: Document|NewDocument
+        doc: Document|NewDocument,
+        suppressFieldsAndRelationsCheck = false
     ): Promise<void> {
 
         let resource = doc.resource;
@@ -37,21 +39,23 @@ export class Validator {
                 .concat(missingProperties.join((', ')));
         }
 
-        const invalidFields = Validations.validateFields(resource, this.projectConfiguration);
-        if (invalidFields.length > 0) {
-            throw [invalidFields.length === 1 ?
-                M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS]
-                .concat([resource.type])
-                .concat(invalidFields.join(', '));
-        }
+        if (!suppressFieldsAndRelationsCheck) {
+            const invalidFields = Validations.validateFields(resource, this.projectConfiguration);
+            if (invalidFields.length > 0) {
+                throw [invalidFields.length === 1 ?
+                    M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS]
+                    .concat([resource.type])
+                    .concat(invalidFields.join(', '));
+            }
 
-        const invalidRelationFields = Validations.validateRelations(resource, this.projectConfiguration);
-        if (invalidRelationFields.length > 0) {
-            throw [invalidRelationFields.length === 1 ?
-                    M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
-                    M.VALIDATION_ERROR_INVALIDRELATIONFIELDS]
-                .concat([resource.type])
-                .concat([invalidRelationFields.join(', ')]);
+            const invalidRelationFields = Validations.validateRelations(resource, this.projectConfiguration);
+            if (invalidRelationFields.length > 0) {
+                throw [invalidRelationFields.length === 1 ?
+                        M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
+                        M.VALIDATION_ERROR_INVALIDRELATIONFIELDS]
+                    .concat([resource.type])
+                    .concat([invalidRelationFields.join(', ')]);
+            }
         }
 
         let invalidNumericValues = Validations.validateNumericValues(resource, this.projectConfiguration);

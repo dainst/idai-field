@@ -86,7 +86,6 @@ export class DocumentHolder {
         const document: Document = await this.cleanup(this.clonedDocument);
 
         await this.validator.validate(document);
-
         const savedDocument: Document = await this.persistenceManager.persist(
             document,
             this.usernameProvider.getUsername(),
@@ -118,7 +117,9 @@ export class DocumentHolder {
 
         return flow(
             document,
+            Document.removeRelations(this.validateRelationFields()),
             Document.removeRelations(this.getEmptyRelationFields()),
+            Document.removeFields(this.validateFields()),
             Document.removeFields(this.getEmptyFields())
         )
     }

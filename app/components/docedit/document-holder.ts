@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {flow, jsonEqual, uniteObject, isNot, includedIn} from 'tsfun';
+import {flow, jsonEqual, uniteObject, isNot, includedIn, isEmpty} from 'tsfun';
 import {DatastoreErrors, Document, ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
@@ -150,9 +150,7 @@ export class DocumentHolder {
             await this.persistenceManager.remove(this.clonedDocument, this.usernameProvider.getUsername())
         } catch (removeError) {
             console.error('removeWithPersistenceManager', removeError);
-            if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) {
-                throw [M.DOCEDIT_DELETE_ERROR];
-            }
+            if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) throw [M.DOCEDIT_DELETE_ERROR];
         }
     }
 
@@ -181,9 +179,9 @@ export class DocumentHolder {
 
     private getEmptyRelationFields(): Array<string> {
 
-        return Object.keys(this.clonedDocument.resource.relations).filter(relationName =>
-                this.clonedDocument.resource.relations[relationName].length === 0
-            );
+        return Object
+            .keys(this.clonedDocument.resource.relations)
+            .filter(relationName => isEmpty(this.clonedDocument.resource.relations[relationName]));
     }
 
 

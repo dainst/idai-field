@@ -83,7 +83,7 @@ export class DocumentHolder {
         await this.validator.validate(this.clonedDocument, true);
 
         const savedDocument: Document = await this.persistenceManager.persist(
-            await this.cleanup(this.clonedDocument),
+            this.cleanup(this.clonedDocument),
             this.usernameProvider.getUsername(),
             this.oldVersion,
             this.inspectedRevisions
@@ -109,7 +109,7 @@ export class DocumentHolder {
     }
 
 
-    private async cleanup(document: Document): Promise<Document> {
+    private cleanup(document: Document): Document {
 
         return flow(
             document,

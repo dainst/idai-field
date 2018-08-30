@@ -16,7 +16,7 @@ const common = require('../common');
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-xdescribe('settings --', function() {
+describe('settings --', function() {
 
     beforeAll(done => {
 

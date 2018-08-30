@@ -10,6 +10,21 @@ import * as fs from 'fs';
  */
 export class SettingsSerializer {
 
+    public load(): Promise<Settings> {
+
+        return new Promise((resolve,reject) => {
+            fs.readFile(remote.getGlobal('configPath'), 'utf-8', (err: any, content: any) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    let settings = JSON.parse(content);
+                    resolve(remote.getGlobal('setConfigDefaults')(settings));
+                }
+            });
+        });
+    }
+
+
     public store(settings: Settings): Promise<any> {
 
         if (!settings) return Promise.resolve(undefined);

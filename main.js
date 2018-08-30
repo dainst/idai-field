@@ -22,12 +22,14 @@ const copyConfigFile = (destPath, appDataPath) => {
 };
 
 
-const setConfigDefaults = config => {
+global.setConfigDefaults = config => {
 
     if (!config.syncTarget) config.syncTarget = {};
     if (!config.remoteSites) config.remoteSites = [];
     if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
     if (os.type() === 'Linux') config.isAutoUpdateActive = false;
+
+    return config;
 };
 
 
@@ -65,8 +67,9 @@ if (!env || // is environment 'production' (packaged app)
 }
 
 console.log('Using config file: ' + global.configPath);
-global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
-setConfigDefaults(global.config);
+global.config = global.setConfigDefaults(
+    JSON.parse(fs.readFileSync(global.configPath, 'utf-8'))
+);
 
 
 // -- CONFIGURATION

@@ -80,13 +80,10 @@ export class DocumentHolder {
     public async save(): Promise<Document> {
 
         if (this.isIsRecordedInRelationMissing(this.clonedDocument)) throw [M.VALIDATION_ERROR_NORECORDEDIN];
-
-        const document: Document = await this.cleanup(this.clonedDocument);
-
-        await this.validator.validate(document);
+        await this.validator.validate(this.clonedDocument);
 
         const savedDocument: Document = await this.persistenceManager.persist(
-            document,
+            await this.cleanup(this.clonedDocument),
             this.usernameProvider.getUsername(),
             this.oldVersion,
             this.inspectedRevisions
@@ -112,13 +109,13 @@ export class DocumentHolder {
     }
 
 
-    private async cleanup(document: Document): Promise<Document> {
+    private cleanup(document: Document): Document {
 
         return flow(
             document,
             Document.removeRelations(this.getEmptyRelationFields()),
             Document.removeFields(this.getEmptyFields())
-        )
+        );
     }
 
 

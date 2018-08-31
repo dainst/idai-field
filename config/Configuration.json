@@ -4693,16 +4693,8 @@
     },
     {
       "domain": [
-        "Feature",
-        "DrillCoreLayer",
-        "Floor",
-        "Grave",
-        "Layer",
-        "Other",
-        "Architecture",
         "Planum",
-        "Sample",
-        "Burial"
+        "Sample"
       ],
       "inverse": "isBelow",
       "name": "isAbove",
@@ -4721,16 +4713,8 @@
     },
     {
       "domain": [
-        "Feature",
-        "DrillCoreLayer",
-        "Floor",
-        "Grave",
-        "Layer",
-        "Other",
-        "Architecture",
         "Planum",
-        "Sample",
-        "Burial"
+        "Sample"
       ],
       "inverse": "isAbove",
       "name": "isBelow",

@@ -4582,18 +4582,6 @@
     {
       "domain": [
         "Floor",
-        "Find",
-        "Brick",
-        "Bone",
-        "Coin",
-        "Glass",
-        "Metal",
-        "Mollusk",
-        "PlasterFragment",
-        "Pottery",
-        "Stone",
-        "Terracotta",
-        "Wood",
         "ProcessUnit",
         "Drilling",
         "Planum",

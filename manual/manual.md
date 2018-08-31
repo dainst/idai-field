@@ -200,48 +200,95 @@ entsprechende Kriterium auswählen.
 
 # Matrix
 
-Unter dem Menüpunkt **Matrix** finden sich automatisch aus den Stratigrapischen Einheiten eines Projektes
-generierte Matrizen, pro Schnitt jeweils eine. Der Schnitt kann durch das Dropdown links oben in der Toolbar
-gewählt werden. Die Kanten der Matrix werden auf Grundlage der Beziehungen 
-"Zeitlich vor, Zeitlich nach, Zeitgleich mit", alternativ auf Grundlage der Relationen "Liegt über, Liegt unter" 
-zwischen verschiedenen Stratigraphischen Einheiten eines Schnittes erstellt. Die Auswahl zwischen diesen Varianten
-sowie weitere Optionen zur Generierung der Matrix können im Matrixwerkzeugmenü ausgewählt werden.
+Unter dem Menüpunkt **Matrix** finden Sie für jeden Schnitt des Projekts eine Matrix vor, die automatisch aus
+den stratigraphischen Einheiten des jeweiligen Schnitts generiert wird. Die Kanten der Matrix werden dabei
+auf Grundlage der Relationen erstellt, die für die Einheiten angelegt wurden.
+
+![Schnitt-Auswahl](images/trench_selection.png)
+
+Wählen Sie den Schnitt, für den Sie eine Matrix generieren möchten, über den Dropdown-Button links oben in der
+Toolbar aus.
+
+
+## Optionen
+
+Über den **Optionsbutton** in der rechten oberen Ecke der Matrixansicht können Sie verschiedene Einstellungen
+vornehmen, mit denen Sie die Darstellung der Matrix individuell anpassen können. Die gewählten Einstellungen
+gelten für alle Matrizen in allen Schnitten des Projekts und bleiben auch nach einem Programmneustart
+erhalten.
 
 ![Matrixwerkzeuge](images/matrix_tools.png)
 
-Die gewählten Einstellungen gelten für alle Matrizen in allen Schnitten und bleiben auch nach einem Programmneustart 
-erhalten.
 
-Ein Klick auf ein Matrix-Element führt zum Editierformular, in dem die entsprechende Ressource bearbeitet und
-gespeichert werden kann. Ein Rechtsklick, und eine anschließendes **Ziehen** der Maus bei weiterhin gedrückter
-Maustaste ändert die Positionierung der Matrix innerhalb des Anwendungsfensters. Die Zoomstufe kann mithilfe der + und -
-Buttons links oben eingestellt werden. 
+### Relationen
 
-## Phasen
+* *Zeitlich*: Kanten werden auf Basis der Relationen "Zeitlich vor", "Zeitlich nach" und "Zeitgleich mit"
+  erstellt.
+* *Räumlich*: Kanten werden auf Basis der Relationen "Liegt über", "Liegt unter", "Schneidet" und "Wird
+  geschnitten von" erstellt.
 
-In dem Matrixwerkzeugmenü befindet sich auch ein Häkchen für die **Gruppierung nach Grobdatierung**. Diese kann
-genutzt werden, wenn Stratigraphische Einheiten im Feld **Grobdatierung** Werte enthalten. Im Falle, dass ein Zeitraum gewählt ist, 
-wird jeweils nur der Wert aus **Grobdatierung (von)** verwendet. Stratigraphische Einheiten mit gleichen Feldwerten
-für die Grobdatierung werden nun nahe beieinander platziert und mit Boxen umrahmt.
+
+### Kanten
+
+* *Gerade*: Alle Kanten bestehen aus geraden Linien.
+* *Gebogen*: Kanten können gebogen sein, wenn keine direkte Verbindungslinie zwischen zwei Einheiten der
+  Matrix gezogen werden kann.
+
+
+### Gruppierung nach Grobdatierung
+
+Aktivieren Sie diese Option, um die stratigraphischen Einheiten in der Matrix anhand des Eintrags im Feld
+**Grobdatierung** zu gruppieren. Sind als Grobdatierung zwei Werte (von/bis) eingetragen, wird jeweils nur
+der Wert aus **Grobdatierung (von)** verwendet. Stratigraphische Einheiten mit gleichen Werten für die
+Grobdatierung werden nun nahe beieinander platziert und mit Rechtecken umrahmt.
 
 ![Matrixphasen](images/matrix_phases.png)
 
-## Teilmatrizen
 
-Um die Übersicht in großen Matrizen zu erleichtern, können auch Teilbereiche ausgewählt werden. Dies geschieht
-mithilfe der Werkzeuge in der Toolbar rechts oben.
+## Navigation
 
-![Teilgraphen-Tools](images/subgraph_tools.png)
+Bewegen Sie die Maus bei gedrückter **rechter Maustaste**, um die Position der Matrix innerhalb des
+Anzeigebereichs zu verändern. Verwenden Sie das **Mausrad** oder die **Zoom-Buttons** in der linken oberen
+Ecke des Anzeigebereichs, um die Zoomstufe anzupassen. Mit der **linken Maustaste** können Sie mit Einheiten
+der Matrix interagieren; die Art der Interaktion (Editierung oder Selektion) ist dabei vom gewählten
+Interaktionsmodus abhängig.
+
+Wenn Sie mit dem Mauszeiger über eine Einheit fahren, werden die davon ausgehenden Kanten farbig markiert:
+Grüne Linien zeigen Verbindungen zu Einheiten auf höheren Ebenen an, blaue zu Einheiten auf niedrigeren Ebenen
+und orange zu Einheiten auf der gleichen Ebene innerhalb der Matrix.
+
+
+## Editierung
+
+Standardmäßig befinden Sie sich im **Editierungsmodus**: Klicken Sie auf eine Einheit in der Matrix, um ein
+Fenster zu öffnen, in dem Sie die entsprechende Ressource bearbeiten können. Über den Reiter **Relationen**
+können Sie auf diese Weise durch Editierung der zeitlichen bzw. räumlichen Relationen auch die Einordnung der
+Einheit innerhalb der Matrix verändern. Nach einem Klick auf den Button **Speichern** wird die Matrix
+automatisch auf Grundlage der geänderten Daten aktualisiert.
+
+
+## Anzeige von Teilmatrizen
+
+Um die Übersicht in großen Matrizen zu erleichtern, können auch Teilmatrizen aus ausgewählten Einheiten
+der Matrix generiert werden. Verwenden Sie die Buttons auf der rechten Seite der Toolbar, um Einheiten zu
+selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
+
+![Teilgraphen-Tools](images/interaction_mode_buttons.png)
+
+* *Bearbeitungsmodus*: Einheiten können per Linksklick editiert werden.
+* *Einzelauswahlmodus*: Einheiten können einzeln per Linksklick selektiert und (bei erneutem Klick)
+  deselektiert werden.
+* *Gruppenauswahlmodus*: Einheiten können gruppenweise selektiert werden, indem ein Rechteck mit der Maus
+  gezogen wird.
   
-Mit Klick auf das Mauszeiger Symbol wird der **Einzelauswahlmodus** gestartet. 
-Ein Klick auf ein Matrix-Element bewirkt
-nun eine Auswahl desselben. Mehrere Elemente gleichzeitig können 
-mithilfe des **Gruppenauswahlmodus** selektiert werden. Mit Klick auf das Stiftsymbol kann das ursprüngliche
-Verhalten wiederhergestellt werden, dass ein Klick auf ein Matrixelement das Editierformular öffnet.
-Sind Elemente selektiert, kann anschließend eine Matrix aus einer Auswahl erstellt werden. Aus dieser Matrix
-kann anschließend wieder eine Teilauswahl erstellt werden.
-
-Mit Klick auf den **Matrix Neu Laden** Button kann die ursprüngliche Matrix wiederhergestellt werden.
-
- 
- 
+![Teilgraphen-Tools](images/subgraph_buttons.png)  
+  
+* *Auswahl aufheben*: Alle Einheiten werden deselektiert.
+* *Matrix aus Auswahl erstellen*: Eine neue Matrix wird generiert, in der ausschließlich die selektierten
+  Einheiten angezeigt werden. Die Generierung der Kanten geschieht weiterhin auf Grundlage aller
+  stratigraphischen Einheiten des Schnitts, sodass diese Funktion auch dazu verwendet werden kann, um auf
+  schnelle Weise zu prüfen, ob zwei Einheiten über mehrere Relationen/Ressourcen hinweg miteinander
+  verknüpft sind.
+* *Matrix neu laden*: Die ursprüngliche Matrix mit allen stratigraphischen Einheiten des gewählten Schnitts
+  wird wiederhergestellt.
+  

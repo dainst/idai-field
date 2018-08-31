@@ -63,32 +63,11 @@ export class HelpComponent implements OnInit {
 
     private async load() {
 
-        const markdown: string = await this.getMarkdown();
+        const markdown: string = await HelpComponent.getMarkdown();
         const htmlString: string = HelpComponent.createMarkdownConverter().makeHtml(markdown);
 
         this.html = this.domSanitizer.bypassSecurityTrustHtml(htmlString);
         this.chapters = HelpComponent.getChapters(htmlString);
-    }
-
-
-    private async getMarkdown(): Promise<string> {
-
-        const markdown: string = await this.readMarkdownFile();
-        return HelpComponent.adjustImageLinks(markdown);
-    }
-
-
-    private readMarkdownFile(): Promise<string> {
-
-        return new Promise<string>(resolve => {
-            fs.readFile(HelpComponent.filePath, 'utf-8', (err: any, content: string) => {
-                if (err) {
-                    resolve('');
-                } else {
-                    resolve(content);
-                }
-            });
-        });
     }
 
 
@@ -122,6 +101,27 @@ export class HelpComponent implements OnInit {
         }
 
         return chapters;
+    }
+
+
+    private static async getMarkdown(): Promise<string> {
+
+        const markdown: string = await HelpComponent.readFile(HelpComponent.filePath);
+        return HelpComponent.adjustImageLinks(markdown);
+    }
+
+
+    private static readFile(filePath: string): Promise<string> {
+
+        return new Promise<string>(resolve => {
+            fs.readFile(filePath, 'utf-8', (err: any, content: string) => {
+                if (err) {
+                    resolve('');
+                } else {
+                    resolve(content);
+                }
+            });
+        });
     }
 
 

@@ -61,6 +61,8 @@ describe('resources --', () => {
 
         gotoImageTab();
         DoceditImageTabPage.clickInsertImage();
+
+        DoceditImageTabPage.waitForCells();
         ImagePickerModalPage.getCells().get(0).click();
         ImagePickerModalPage.getCells().get(1).click();
         ImagePickerModalPage.clickAddImages();

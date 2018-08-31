@@ -88,18 +88,19 @@ In der Übersicht werden die folgenden drei Schnitte angezeigt:
 
     (1)
     Bezeichner: "S01"
-    Kurzbeschreibung: "Schnitt 01"
+    Kurzbeschreibung: "Schnitt-01"
     
     (2)
     Bezeichner: "S02"
-    Kurzbeschreibung: "Schnitt 02"
+    Kurzbeschreibung: "Schnitt-02"
     
     (3)
     Bezeichner: "ms1"
     Kurzbeschreibung: "Mein Schnitt 1" 
 
-**Mögliche Suchbegriffe** sind die jeweils durch Leerzeichen getrennten Textfolgen in den Bezeichnern und 
-Kurzbeschreibungen, also im Beispiel: "S01", "S02", "ms1", "Schnitt", "01", "02", "Mein", "Schnitt", "1".
+**Mögliche Suchbegriffe** sind die jeweils durch Leerzeichen oder Bindestriche getrennten Textfolgen in den
+Bezeichnern und Kurzbeschreibungen, also im Beispiel: "S01", "S02", "ms1", "Schnitt", "01", "02", "Mein",
+"Schnitt", "1".
   
 Der Suchbegriff "s01" liefert beispielsweise die Ressource (1), die Suche nach "mein" liefert (3) als
 Suchtreffer. **Groß- bzw. Kleinschreibung** spielt dabei keine Rolle und wird ignoriert.

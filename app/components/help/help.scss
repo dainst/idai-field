@@ -43,12 +43,17 @@
   #table-of-contents {
     position: fixed;
     margin-top: 10px;
+    user-select: none;
 
     .nav {
       margin: 5px 12px;
 
-      .nav-link.active {
-        background-color: #5572a1;
+      .nav-link {
+        cursor: pointer !important;
+
+        &.active {
+          background-color: #5572a1;
+        }
       }
     }
   }

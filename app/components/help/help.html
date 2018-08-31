@@ -1,11 +1,13 @@
-<div #help id="help">
+<div #help id="help" (scroll)="updateActiveElement()">
     <div class="row">
         <div id="table-of-contents-placeholder" class="col-md-2"></div>
         <div class="col-md-1"></div>
         <ul id="table-of-contents" class="col-md-2 nav flex-column">
             <li *ngFor="let chapter of chapters" class="nav nav-pills flex-column"
                 (click)="scrollToChapter(chapter)">
-                <a class="nav-link" href="javascript: void(0);">{{chapter.label}}</a>
+                <a class="nav-link" [class.active]="chapter === activeChapter" href="javascript: void(0);">
+                    {{chapter.label}}
+                </a>
             </li>
         </ul>
 

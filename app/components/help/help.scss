@@ -46,6 +46,10 @@
 
     .nav {
       margin: 5px 12px;
+
+      .nav-link.active {
+        background-color: #5572a1;
+      }
     }
   }
 }

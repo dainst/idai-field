@@ -3,7 +3,7 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import * as fs from 'fs';
 import {Converter} from 'showdown';
 
-type Chapter = { id: string, label: string; };
+type Chapter = { id: string, label: string };
 
 
 @Component({
@@ -18,11 +18,13 @@ export class HelpComponent implements OnInit {
 
     public html: SafeHtml;
     public chapters: Array<Chapter> = [];
+    public activeChapter: Chapter;
 
     @ViewChild('help') rootElement: ElementRef;
 
     private static filePath: string = 'manual/manual.md';
     private static scrollOffset: number = -15;
+    private static headerTopOffset: number = -62;
 
 
     constructor(private domSanitizer: DomSanitizer) {}
@@ -31,16 +33,31 @@ export class HelpComponent implements OnInit {
     async ngOnInit() {
 
         await this.load();
+        if (this.chapters.length > 0) this.activeChapter = this.chapters[0];
     }
 
 
     public scrollToChapter(chapter: Chapter) {
 
-        const element = document.getElementById(chapter.id);
-        if (element) {
-            element.scrollIntoView(true);
-            this.rootElement.nativeElement.scrollTop += HelpComponent.scrollOffset;
-        }
+        const element: HTMLElement|null = document.getElementById(chapter.id);
+        if (!element) return;
+
+        element.scrollIntoView(true);
+        this.rootElement.nativeElement.scrollTop += HelpComponent.scrollOffset;
+    }
+
+
+    public updateActiveElement() {
+
+        let activeElementTop: number = 1;
+
+        this.chapters.forEach(chapter => {
+            const top: number = HelpComponent.getHeaderTop(chapter);
+            if (top <= 0 && (top > activeElementTop || activeElementTop === 1)) {
+                activeElementTop = top;
+                this.activeChapter = chapter;
+            }
+        });
     }
 
 
@@ -105,5 +122,16 @@ export class HelpComponent implements OnInit {
         }
 
         return chapters;
+    }
+
+
+    private static getHeaderTop(chapter: Chapter): number {
+
+        const element: HTMLElement|null = document.getElementById(chapter.id);
+        if (!element) return 1;
+
+        return element.getBoundingClientRect().top
+            + HelpComponent.headerTopOffset
+            + HelpComponent.scrollOffset;
     }
 }

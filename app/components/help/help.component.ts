@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import * as fs from 'fs';
 import {Converter} from 'showdown';
 
@@ -12,9 +13,12 @@ import {Converter} from 'showdown';
  */
 export class HelpComponent implements OnInit {
 
-    public html: string = '';
+    public html: SafeHtml;
 
     private static filePath: string = 'manual/manual.md';
+
+
+    constructor(private domSanitizer: DomSanitizer) {}
 
 
     async ngOnInit() {
@@ -23,12 +27,12 @@ export class HelpComponent implements OnInit {
     }
 
 
-    private async loadHtml(): Promise<string> {
+    private async loadHtml(): Promise<SafeHtml> {
 
         const markdown: string = await this.getMarkdown();
-        const converter: Converter = HelpComponent.createConverter();
+        const htmlString: string = new Converter().makeHtml(markdown);
 
-        return converter.makeHtml(markdown);
+        return this.domSanitizer.bypassSecurityTrustHtml(htmlString);
     }
 
 
@@ -56,14 +60,5 @@ export class HelpComponent implements OnInit {
     private static adjustImageLinks(markdown: string): string {
 
         return markdown.replace(/img src="images/g, 'img src="manual/images');
-    }
-
-
-    private static createConverter(): Converter {
-
-        const converter: Converter = new Converter();
-        converter.setOption('noHeaderId', true);
-
-        return converter;
     }
 }

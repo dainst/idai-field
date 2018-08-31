@@ -55,7 +55,7 @@ export class HelpComponent implements OnInit {
 
     private static adjustImageLinks(markdown: string): string {
 
-        return markdown.replace(/\]\(images\//g, '](manual/images/');
+        return markdown.replace(/img src="images/g, 'img src="manual/images');
     }
 
 

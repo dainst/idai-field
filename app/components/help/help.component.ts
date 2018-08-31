@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import * as fs from 'fs';
 import {Converter} from 'showdown';
@@ -19,7 +19,10 @@ export class HelpComponent implements OnInit {
     public html: SafeHtml;
     public chapters: Array<Chapter> = [];
 
+    @ViewChild('help') rootElement: ElementRef;
+
     private static filePath: string = 'manual/manual.md';
+    private static scrollOffset: number = -15;
 
 
     constructor(private domSanitizer: DomSanitizer) {}
@@ -34,7 +37,10 @@ export class HelpComponent implements OnInit {
     public scrollToChapter(chapter: Chapter) {
 
         const element = document.getElementById(chapter.id);
-        if (element) element.scrollIntoView(true);
+        if (element) {
+            element.scrollIntoView(true);
+            this.rootElement.nativeElement.scrollTop += HelpComponent.scrollOffset;
+        }
     }
 
 

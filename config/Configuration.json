@@ -4581,13 +4581,7 @@
   "relations": [
     {
       "domain": [
-        "Feature",
-        "Architecture",
-        "Layer",
         "Floor",
-        "DrillCoreLayer",
-        "Grave",
-        "Other",
         "Find",
         "Brick",
         "Bone",
@@ -4607,8 +4601,7 @@
         "Sample",
         "Profile",
         "Inscription",
-        "Wall_surface",
-        "Burial"
+        "Wall_surface"
       ],
       "name": "isRecordedIn",
       "range": [

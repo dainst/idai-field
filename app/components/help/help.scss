@@ -36,7 +36,16 @@
     }
   }
 
+  #table-of-contents-placeholder {
+    border-right: 1px solid #eee;
+  }
+
   #table-of-contents {
     position: fixed;
+    margin-top: 10px;
+
+    .nav {
+      margin: 5px 12px;
+    }
   }
 }

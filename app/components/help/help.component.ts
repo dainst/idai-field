@@ -32,7 +32,9 @@ export class HelpComponent implements OnInit {
 
     async ngOnInit() {
 
-        await this.load();
+        const {html, chapters} = await HelpComponent.load(HelpComponent.filePath, this.domSanitizer);
+        this.html = html;
+        this.chapters = chapters;
         if (this.chapters.length > 0) this.activeChapter = this.chapters[0];
     }
 
@@ -61,13 +63,15 @@ export class HelpComponent implements OnInit {
     }
 
 
-    private async load() {
+    private static async load(filePath: string, domSanitizer: DomSanitizer) {
 
-        const markdown: string = await HelpComponent.getMarkdown();
+        const markdown: string = await HelpComponent.getMarkdown(filePath);
         const htmlString: string = HelpComponent.createMarkdownConverter().makeHtml(markdown);
 
-        this.html = this.domSanitizer.bypassSecurityTrustHtml(htmlString);
-        this.chapters = HelpComponent.getChapters(htmlString);
+        return {
+            html: domSanitizer.bypassSecurityTrustHtml(htmlString),
+            chapters: HelpComponent.getChapters(htmlString)
+        };
     }
 
 
@@ -104,9 +108,9 @@ export class HelpComponent implements OnInit {
     }
 
 
-    private static async getMarkdown(): Promise<string> {
+    private static async getMarkdown(filePath: string): Promise<string> {
 
-        const markdown: string = await HelpComponent.readFile(HelpComponent.filePath);
+        const markdown: string = await HelpComponent.readFile(filePath);
         return HelpComponent.adjustImageLinks(markdown);
     }
 

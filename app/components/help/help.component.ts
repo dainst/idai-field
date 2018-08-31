@@ -49,7 +49,7 @@ export class HelpComponent implements OnInit {
     }
 
 
-    public updateActiveElement() {
+    public updateActiveChapter() {
 
         let activeElementTop: number = 1;
 

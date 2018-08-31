@@ -147,7 +147,7 @@ wählen die entsprechende Ressource aus.
 In der Übersicht und in den Maßnahmenansichten können Sie durch einen Klick auf den Lupen-Button in den
 erweiterten Suchmodus wechseln.
  
-<p align="center"><img src="images/search/looking_glass.png" alt="Button zur Aktivierung des erweiterten Suchmodus"/></p>
+<p align="center"><img src="images/search/extended_search_button.png" alt="Button zur Aktivierung des erweiterten Suchmodus"/></p>
  
 Ein blauer Lupen-Button zeigt an, dass der erweiterte Suchmodus aktiviert ist.
 

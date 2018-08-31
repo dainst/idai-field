@@ -30,10 +30,10 @@ Metadaten des Projekts eingeben.
 Beginnnen Sie mit der Dateneingabe, indem Sie in den Bereich **Übersicht** wechseln, wo
 Sie Datensätze für Maßnahmen (Schnitte, Bauwerke, Survey-Areale) anlegen können. In den
 Bereichen **Ausgrabung**, **Bauaufnahme** und **Survey** können Sie anschließend Ressourcen
-innerhalb einer Maßnahme anlegen. 
+innerhalb von Maßnahmen anlegen. 
 
 Verwenden Sie das Menü **Backup erstellen**, das Sie ebenfalls über das Dropdown-Menü
-in der oberen rechten Bildschirmecke erreichen, um regelmäßig Sicherungen Ihrer Projektdaten
+in der oberen rechten Ecke des Bildschirms erreichen, um regelmäßig Sicherungen Ihrer Projektdaten
 anzulegen.
 
 
@@ -63,7 +63,7 @@ auszublenden, und besteht aus einem *Textfilter* (Eingabefeld) sowie einem *Typf
 Nach der Eingabe eines Suchbegriffes und/oder der Auswahl eines Ressourcentyps wird die Menge der aktuell
 angezeigten Ressourcen so eingeschränkt, dass sie den Filterkriterien entspricht. In der **Übersicht** und den
 **Maßnahmenansichten** betrifft das die Ressourcen in der linken Seitenleiste und auf der Karte (in der
-Kartenansicht) bzw. die Elemente der Liste (in der Listenansicht). In der Bilderverwaltung sind alle im
+Kartenansicht) bzw. die Elemente der Liste (in der Listenansicht). In der **Bilderverwaltung** sind alle im
 Raster angezeigten Bilder vom Suchfilter betroffen.
 
 
@@ -75,7 +75,8 @@ Raster angezeigten Bilder vom Suchfilter betroffen.
 Untertypen: Wählen Sie einen Untertyp (z. B. "Erdbefund"), werden ausschließlich Ressourcen des entsprechenden
 Typs angezeigt. Wählen Sie dagegen einen Obertyp (z. B. "Stratigraphische Einheit"), werden Ressourcen des
 ausgewählten Typs sowie aller seiner Untertypen (z. B. "Erdbefund", "Grab", "Architektur", "Fußboden" etc.)
-angezeigt. Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab.   
+berücksichtigt. Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab: In der Übersicht
+können Maßnahmentypen gewählt werden, in der Bilderverwaltung Bildtypen etc. 
 
 
 #### Textfilter
@@ -145,8 +146,8 @@ wählen die entsprechende Ressource aus.
 
 ### Erweiterter Suchmodus
 
-In der Übersicht und in den Maßnahmenansichten können Sie durch einen Klick auf den Lupen-Button in den
-erweiterten Suchmodus wechseln.
+In der **Übersicht** und in den **Maßnahmenansichten** können Sie durch einen Klick auf den Lupen-Button in
+den erweiterten Suchmodus wechseln.
  
 <p align="center"><img src="images/search/extended_search_button.png" alt="Button zur Aktivierung des erweiterten Suchmodus"/></p>
  
@@ -157,9 +158,9 @@ Ein blauer Lupen-Button zeigt an, dass der erweiterte Suchmodus aktiviert ist.
 
 Im erweiterten Suchmodus ist eine Suche über größere Datenmengen möglich:
 * In der **Übersicht** wird über alle im Projekt angelegten Ressourcen gesucht.
-* In den Maßnahmenübersichten können Sie wählen, ob die Suche innerhalb einer Maßnahme oder über alle
+* In den **Maßnahmenansichten** können Sie wählen, ob die Suche innerhalb einer Maßnahme oder über alle
 Maßnahmen des jeweiligen Typs (z. B. alle Schnitte in der Ansicht **Ausgrabung**) erfolgen soll. Hierzu
-steht in der Maßnahmen-Auswahl die Option "Alle" zur Verfügung.
+steht im Maßnahmen-Auswahlmenü die Option "Alle" zur Verfügung.
 
 <p align="center"><img src="images/search/all_operations.png" alt="Suche über alle Maßnahmen eines Typs"/></p>
 
@@ -239,8 +240,8 @@ erhalten.
 #### Gruppierung nach Grobdatierung
 
 Aktivieren Sie diese Option, um die stratigraphischen Einheiten in der Matrix anhand des Eintrags im Feld
-**Grobdatierung** zu gruppieren. Sind als Grobdatierung zwei Werte (von/bis) eingetragen, wird jeweils nur
-der Wert aus **Grobdatierung (von)** verwendet. Stratigraphische Einheiten mit gleichen Werten für die
+"Grobdatierung" zu gruppieren. Sind als Grobdatierung zwei Werte (von/bis) eingetragen, wird jeweils nur
+der Wert aus "Grobdatierung (von)" verwendet. Stratigraphische Einheiten mit gleichen Werten für die
 Grobdatierung werden nun nahe beieinander platziert und mit Rechtecken umrahmt.
 
 <p align="center"><img src="images/matrix/matrix_phases.png" alt="Gruppierung nach Grobdatierung"/></p>

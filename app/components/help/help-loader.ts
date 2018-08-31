@@ -1,6 +1,6 @@
 import {DomSanitizer} from '@angular/platform-browser';
 import {Converter} from 'showdown';
-import * as fs from "fs";
+import * as fs from 'fs';
 
 export type Chapter = { id: string, label: string };
 

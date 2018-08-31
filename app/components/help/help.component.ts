@@ -3,6 +3,9 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import * as fs from 'fs';
 import {Converter} from 'showdown';
 
+type Chapter = { id: string, label: string; };
+
+
 @Component({
     moduleId: module.id,
     selector: 'help',
@@ -14,6 +17,7 @@ import {Converter} from 'showdown';
 export class HelpComponent implements OnInit {
 
     public html: SafeHtml;
+    public chapters: Array<Chapter> = [];
 
     private static filePath: string = 'manual/manual.md';
 
@@ -23,16 +27,24 @@ export class HelpComponent implements OnInit {
 
     async ngOnInit() {
 
-        this.html = await this.loadHtml();
+        await this.load();
     }
 
 
-    private async loadHtml(): Promise<SafeHtml> {
+    public scrollToChapter(chapter: Chapter) {
+
+        const element = document.getElementById(chapter.id);
+        if (element) element.scrollIntoView(true);
+    }
+
+
+    private async load() {
 
         const markdown: string = await this.getMarkdown();
         const htmlString: string = HelpComponent.createMarkdownConverter().makeHtml(markdown);
 
-        return this.domSanitizer.bypassSecurityTrustHtml(htmlString);
+        this.html = this.domSanitizer.bypassSecurityTrustHtml(htmlString);
+        this.chapters = HelpComponent.getChapters(htmlString);
     }
 
 
@@ -69,5 +81,23 @@ export class HelpComponent implements OnInit {
         converter.setOption('prefixHeaderId', 'chapter');
 
         return converter;
+    }
+
+
+    private static getChapters(htmlString: string): Array<Chapter> {
+
+        const chapters: Array<Chapter> = [];
+
+        const document = new DOMParser().parseFromString(htmlString, 'text/html');
+        const elements = document.getElementsByTagName('h2');
+
+        for (let i = 0; i < elements.length; i++) {
+            chapters.push({
+                id: elements.item(i).id,
+                label: elements.item(i).textContent as string
+            });
+        }
+
+        return chapters;
     }
 }

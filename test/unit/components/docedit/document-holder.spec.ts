@@ -1,6 +1,7 @@
 import {ProjectConfiguration, Document} from 'idai-components-2';
 import {DocumentHolder} from '../../../../app/components/docedit/document-holder';
 import {M} from '../../../../app/m';
+import {clone} from '../../../../app/util/object-util';
 
 /**
  * @author Daniel de Oliveira
@@ -70,12 +71,8 @@ describe('DocumentHolder', () => {
             return Promise.resolve(changedDocument);
         });
 
-        const typeUtility = jasmine.createSpyObj('TypeUtility', ['getSubtypes']);
-        typeUtility.getSubtypes.and.callFake(typeName => {
-            return typeName === 'Operation'
-                ? { 'Operation': { name: 'o' }, 'Trench': {} }
-                : { 'Image': {}, 'Drawing': {} }
-        });
+        const typeUtility = jasmine.createSpyObj('TypeUtility', ['getRegularTypeNames']);
+        typeUtility.getRegularTypeNames.and.returnValue(['Find']);
 
         const usernameProvider = jasmine.createSpyObj('UsernameProvider', ['getUsername']);
         datastore = jasmine.createSpyObj('Datastore', ['get']);
@@ -95,6 +92,10 @@ describe('DocumentHolder', () => {
 
     it('remove empty and undefined relations', async done => {
 
+        const cloned = clone(defaultDocument);
+        delete cloned.resource.relations.undefrel;
+        docHolder.setClonedDocument(cloned);
+
         docHolder.clonedDocument = defaultDocument;
         const savedDocument: Document = await docHolder.save();
 
@@ -106,12 +107,34 @@ describe('DocumentHolder', () => {
 
     it('remove empty and undefined fields', async done => {
 
+        const cloned = clone(defaultDocument);
+        delete cloned.resource.undeffield;
+        docHolder.setClonedDocument(cloned);
+
         docHolder.clonedDocument = defaultDocument;
         const savedDocument: Document = await docHolder.save();
 
         expect(savedDocument.resource.undeffield).toBeUndefined();
         expect(savedDocument.resource.emptyfield).toBeUndefined();
         expect(savedDocument.resource.type).not.toBeUndefined();
+        done();
+    });
+
+
+    it('do not remove undefined field if it was part of the original object', async done => {
+
+        docHolder.setClonedDocument(defaultDocument);
+        const savedDocument: Document = await docHolder.save();
+        expect(savedDocument.resource.undeffield).toEqual('some');
+        done();
+    });
+
+
+    it('do not remove undefined relation if it was part of the original object', async done => {
+
+        docHolder.setClonedDocument(defaultDocument);
+        const savedDocument: Document = await docHolder.save();
+        expect(savedDocument.resource.relations.undefrel[0]).toEqual('2');
         done();
     });
 
@@ -129,7 +152,7 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        docHolder.clonedDocument = document;
+        docHolder.setClonedDocument(document);
 
         try {
             await docHolder.save();
@@ -157,7 +180,7 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        docHolder.clonedDocument = document;
+        docHolder.setClonedDocument(document);
 
         try {
             await docHolder.save();
@@ -182,7 +205,7 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        docHolder.clonedDocument = document;
+        docHolder.setClonedDocument(document);
 
         try {
             await docHolder.save();

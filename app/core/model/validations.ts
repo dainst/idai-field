@@ -146,25 +146,15 @@ export module Validations {
 
     export function validatePolylineCoordinates(coordinates: number[][]): boolean {
 
-        if (coordinates.length < 2) return false;
-
-        for (let i in coordinates) {
-            if (!validatePointCoordinates(coordinates[i])) return false;
-        }
-
-        return true;
+        return coordinates.length >= 2
+            && coordinates.every(validatePointCoordinates);
     }
 
 
     export function validateMultiPolylineCoordinates(coordinates: number[][][]): boolean {
 
-        if (coordinates.length == 0) return false;
-
-        for (let i in coordinates) {
-            if (!validatePolylineCoordinates(coordinates[i])) return false;
-        }
-
-        return true;
+        return coordinates.length !== 0
+            && coordinates.every(validatePolylineCoordinates);
     }
 
 
@@ -186,12 +176,7 @@ export module Validations {
 
     export function validateMultiPolygonCoordinates(coordinates: number[][][][]): boolean {
 
-        if (coordinates.length == 0) return false;
-
-        for (let i in coordinates) {
-            if (!validatePolygonCoordinates(coordinates[i])) return false;
-        }
-
-        return true;
+        return coordinates.length !== 0
+            && coordinates.every(validatePolygonCoordinates);
     }
 }

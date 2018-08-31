@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {flow, jsonEqual, uniteObject} from 'tsfun';
+import {flow, jsonEqual, uniteObject, isNot, includedIn, isEmpty} from 'tsfun';
 import {DatastoreErrors, Document, ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
@@ -61,8 +61,6 @@ export class DocumentHolder {
     public changeType(newType: string) {
 
         this.clonedDocument.resource.type = newType;
-        // this.documentEditChangeMonitor.setChanged();
-        // TODO set changed
 
         return {
             invalidFields: this.validateFields(),
@@ -82,12 +80,10 @@ export class DocumentHolder {
     public async save(): Promise<Document> {
 
         if (this.isIsRecordedInRelationMissing(this.clonedDocument)) throw [M.VALIDATION_ERROR_NORECORDEDIN];
+        await this.validator.validate(this.clonedDocument, true);
 
-        const document: Document = await this.cleanup(this.clonedDocument);
-
-        await this.validator.validate(document);
         const savedDocument: Document = await this.persistenceManager.persist(
-            document,
+            this.cleanup(this.clonedDocument),
             this.usernameProvider.getUsername(),
             this.oldVersion,
             this.inspectedRevisions
@@ -113,7 +109,7 @@ export class DocumentHolder {
     }
 
 
-    private async cleanup(document: Document): Promise<Document> {
+    private cleanup(document: Document): Document {
 
         return flow(
             document,
@@ -125,10 +121,10 @@ export class DocumentHolder {
     }
 
 
-    private fetchLatestRevision(id: string): Promise<Document> {
+    private async fetchLatestRevision(id: string): Promise<Document> {
 
         try {
-            return this.datastore.get(id, { skip_cache: true });
+            return await this.datastore.get(id, { skip_cache: true });
         } catch (e) {
             throw [M.DATASTORE_NOT_FOUND];
         }
@@ -141,7 +137,7 @@ export class DocumentHolder {
 
         if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
         try {
-            await this.imagestore.remove(this.clonedDocument.resource.id as any);
+            await this.imagestore.remove(this.clonedDocument.resource.id);
         } catch (_) {
             return [M.IMAGESTORE_ERROR_DELETE, this.clonedDocument.resource.id];
         }
@@ -154,30 +150,38 @@ export class DocumentHolder {
             await this.persistenceManager.remove(this.clonedDocument, this.usernameProvider.getUsername())
         } catch (removeError) {
             console.error('removeWithPersistenceManager', removeError);
-            if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) {
-                throw [M.DOCEDIT_DELETE_ERROR];
-            }
+            if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) throw [M.DOCEDIT_DELETE_ERROR];
         }
     }
 
 
     private validateFields(): Array<string> {
 
-        return Validations.validateFields(this.clonedDocument.resource, this.projectConfiguration);
+        return this.validateButKeepInvalidOldVersionFields(Validations.validateFields);
     }
 
 
     private validateRelationFields(): Array<string> {
 
-        return Validations.validateRelations(this.clonedDocument.resource, this.projectConfiguration);
+        return this.validateButKeepInvalidOldVersionFields(Validations.validateRelations);
     }
+
+
+    private validateButKeepInvalidOldVersionFields(validate: (_: any, __: any) => Array<string>): Array<string> {
+
+        const validationResultClonedVersion = validate(this.clonedDocument.resource, this.projectConfiguration);
+        const validationResultOldVersion = validate(this.oldVersion.resource, this.projectConfiguration);
+
+        return validationResultClonedVersion.filter(isNot(includedIn(validationResultOldVersion)));
+    }
+
 
 
     private getEmptyRelationFields(): Array<string> {
 
-        return Object.keys(this.clonedDocument.resource.relations).filter(relationName =>
-                this.clonedDocument.resource.relations[relationName].length === 0
-            );
+        return Object
+            .keys(this.clonedDocument.resource.relations)
+            .filter(relationName => isEmpty(this.clonedDocument.resource.relations[relationName]));
     }
 
 
@@ -200,11 +204,10 @@ export class DocumentHolder {
 
     private isExpectedToHaveIsRecordedInRelation(document: Document): boolean {
 
-        if (!this.typeUtility) return false;
-
-        return !Object.keys(
-            uniteObject(this.typeUtility.getSubtypes('Operation'))
-            (this.typeUtility.getSubtypes('Image'))
-        ).concat(['Place']).includes(document.resource.type);
+        return !this.typeUtility
+            ? false
+            : this.typeUtility
+                .getRegularTypeNames()
+                .includes(document.resource.type);
     }
 }

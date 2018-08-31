@@ -1,4 +1,4 @@
-# Erste Schritte
+## Erste Schritte
 
 Nach dem ersten Start des Clients befinden Sie sich zunächst im Projekt "test", das es
 Ihnen ermöglicht, die Funktionen des Programms anhand einiger Testdaten auszuprobieren.
@@ -40,7 +40,7 @@ anzulegen.
 <hr>
 
 
-# Suche
+## Suche
 
 In der **Übersicht**, den Maßnahmenansichten **Ausgrabung**, **Bauaufnahme** und **Survey** sowie in der 
 Bilderverwaltung (Menüpunkt **Bilder**) steht ein **Suchfilter** zur Verfügung, den Sie verwenden können, um
@@ -53,7 +53,7 @@ Ihnen, die Suche auf einen größeren Bereich auszuweiten (beispielsweise auf al
 Projekt) und zusätzliche feldspezifische Suchkriterien zu definieren.
 
 
-## Suchfilter
+### Suchfilter
 
 Der Suchfilter stellt eine schnelle Möglichkeit dar, Ressourcen nach bestimmten Kriterien anzuzeigen bzw.
 auszublenden, und besteht aus einem *Textfilter* (Eingabefeld) sowie einem *Typfilter* (blauer Button).
@@ -67,7 +67,7 @@ Kartenansicht) bzw. die Elemente der Liste (in der Listenansicht). In der Bilder
 Raster angezeigten Bilder vom Suchfilter betroffen.
 
 
-### Typfilter
+#### Typfilter
 
 <p align="center"><img src="images/search/filter_menu.png" alt="Typfilter-Auswahl"/></p>
 
@@ -78,7 +78,7 @@ ausgewählten Typs sowie aller seiner Untertypen (z. B. "Erdbefund", "Grab", "Ar
 angezeigt. Welche Typen zur Auswahl stehen, hängt jeweils vom gerade aktiven Kontext ab.   
 
 
-### Textfilter
+#### Textfilter
 
 Suchbegriffe werden derzeit mit den Feldern "Bezeichner" und "Kurzbeschreibung" von Ressourcen abgeglichen. 
  
@@ -110,7 +110,7 @@ sowohl (1) als auch (2) als Suchtreffer. Eine Suche nach "Schn" liefert (1), (2)
 nach "itt" oder "chni" hingegen nichts.
 
 
-### Platzhaltersuche
+#### Platzhaltersuche
 
 Im Textfilter ist auch eine Platzhaltersuche möglich: Statt eines Zeichens können Sie innerhalb eckiger
 Klammern eine Menge unterschiedlicher erlaubter Zeichen angeben. Ein solcher Platzhalter kann pro Suchanfrage
@@ -131,7 +131,7 @@ Eine Suche nach "Landscape-00[01]1" liefert (1) und (4), da die Ziffer nach dem 
 muss.
 
 
-### Suchergebnisse aus anderen Kontexten
+#### Suchergebnisse aus anderen Kontexten
 
 Werden bei gesetztem Suchfilter keine Suchergebnisse im aktuellen Kontext gefunden, werden unterhalb des
 Textfelds Suchergebnisse aus anderen Kontexten angezeigt.
@@ -142,7 +142,7 @@ Durch einen Klick auf eine der angezeigten Ressourcen wechseln Sie sofort in den
 wählen die entsprechende Ressource aus.
 
 
-## Erweiterter Suchmodus
+### Erweiterter Suchmodus
 
 In der Übersicht und in den Maßnahmenansichten können Sie durch einen Klick auf den Lupen-Button in den
 erweiterten Suchmodus wechseln.
@@ -152,7 +152,7 @@ erweiterten Suchmodus wechseln.
 Ein blauer Lupen-Button zeigt an, dass der erweiterte Suchmodus aktiviert ist.
 
 
-### Besonderheiten
+#### Besonderheiten
 
 Im erweiterten Suchmodus ist eine Suche über größere Datenmengen möglich:
 * In der **Übersicht** wird über alle im Projekt angelegten Ressourcen gesucht.
@@ -172,7 +172,7 @@ beschränkt. Das Programm zeigt die weiteren Ressourcen nicht an, weist aber dar
 die ausgeblendeten Ressourcen zugreifen zu können.
  
 
-### Feldspezifische Suchkriterien
+#### Feldspezifische Suchkriterien
  
 Ist der erweiterte Suchmodus aktiviert, können Sie bei aktiviertem Typfilter eine Suche über spezifische
 Felder einer Ressource anzustoßen, indem Sie auf den Plus-Button links neben dem Typfilter-Button klicken.
@@ -198,7 +198,7 @@ entsprechende Kriterium auswählen.
 <hr>
 
 
-# Matrix
+## Matrix
 
 Unter dem Menüpunkt **Matrix** finden Sie für jeden Schnitt des Projekts eine Matrix vor, die automatisch aus
 den stratigraphischen Einheiten des jeweiligen Schnitts generiert wird. Die Kanten der Matrix werden dabei
@@ -210,7 +210,7 @@ Wählen Sie den Schnitt, für den Sie eine Matrix generieren möchten, über den
 Toolbar aus.
 
 
-## Optionen
+### Optionen
 
 Über den **Optionsbutton** in der rechten oberen Ecke der Matrixansicht können Sie verschiedene Einstellungen
 vornehmen, mit denen Sie die Darstellung der Matrix individuell anpassen können. Die gewählten Einstellungen
@@ -220,7 +220,7 @@ erhalten.
 <p align="center"><img src="images/matrix/matrix_tools.png" alt="Optionsmenü"/></p>
 
 
-### Relationen
+#### Relationen
 
 * *Zeitlich*: Kanten werden auf Basis der Relationen "Zeitlich vor", "Zeitlich nach" und "Zeitgleich mit"
   erstellt.
@@ -228,14 +228,14 @@ erhalten.
   geschnitten von" erstellt.
 
 
-### Kanten
+#### Kanten
 
 * *Gerade*: Alle Kanten bestehen aus geraden Linien.
 * *Gebogen*: Kanten können gebogen sein, wenn keine direkte Verbindungslinie zwischen zwei Einheiten der
   Matrix gezogen werden kann.
 
 
-### Gruppierung nach Grobdatierung
+#### Gruppierung nach Grobdatierung
 
 Aktivieren Sie diese Option, um die stratigraphischen Einheiten in der Matrix anhand des Eintrags im Feld
 **Grobdatierung** zu gruppieren. Sind als Grobdatierung zwei Werte (von/bis) eingetragen, wird jeweils nur
@@ -245,7 +245,7 @@ Grobdatierung werden nun nahe beieinander platziert und mit Rechtecken umrahmt.
 <p align="center"><img src="images/matrix/matrix_phases.png" alt="Gruppierung nach Grobdatierung"/></p>
 
 
-## Navigation
+### Navigation
 
 Bewegen Sie die Maus bei gedrückter **rechter Maustaste**, um die Position der Matrix innerhalb des
 Anzeigebereichs zu verändern. Verwenden Sie das **Mausrad** oder die **Zoom-Buttons** in der linken oberen
@@ -258,7 +258,7 @@ Grüne Linien zeigen Verbindungen zu Einheiten auf höheren Ebenen an, blaue zu 
 und orange zu Einheiten auf der gleichen Ebene innerhalb der Matrix.
 
 
-## Editierung
+### Editierung
 
 Standardmäßig befinden Sie sich im **Editierungsmodus**: Klicken Sie auf eine Einheit in der Matrix, um ein
 Fenster zu öffnen, in dem Sie die entsprechende Ressource bearbeiten können. Über den Reiter **Relationen**
@@ -267,7 +267,7 @@ Einheit innerhalb der Matrix verändern. Nach einem Klick auf den Button **Speic
 automatisch auf Grundlage der geänderten Daten aktualisiert.
 
 
-## Anzeige von Teilmatrizen
+### Anzeige von Teilmatrizen
 
 Um die Übersicht in großen Matrizen zu erleichtern, können auch Teilmatrizen aus ausgewählten Einheiten
 der Matrix generiert werden. Verwenden Sie die Buttons auf der rechten Seite der Toolbar, um Einheiten zu

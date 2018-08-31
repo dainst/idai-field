@@ -20,6 +20,8 @@ export class FulltextIndexer {
         }
     };
 
+    private static tokenizationPattern: RegExp = /[ -]/;
+
 
     constructor(private projectConfiguration: ProjectConfiguration,
                 private showWarnings = true) {
@@ -57,7 +59,7 @@ export class FulltextIndexer {
             .filter(field => document.resource[field])
             .filter(field => document.resource[field] !== '')
             .map(field => document.resource[field]),
-            flatMap((content: string) => content.split(' ')))
+            flatMap((content: string) => content.split(FulltextIndexer.tokenizationPattern)))
             .map(token => token.toLowerCase())
             .map(token => Array.from(token))
             .forEach(indexToken.bind(this));
@@ -94,7 +96,7 @@ export class FulltextIndexer {
         }
 
         return s
-            .split(' ')
+            .split(FulltextIndexer.tokenizationPattern)
             .filter(token => token.length > 0)
             .reduce(getFromIndex.bind(this), ResultSets.make())
             .collapse() as Array<IndexItem>;

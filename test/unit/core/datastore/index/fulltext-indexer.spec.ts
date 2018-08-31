@@ -143,10 +143,11 @@ describe('FulltextIndexer', () => {
     });
 
 
-    it('ignore additional spaces', () => {
+    it('ignore additional spaces and hyphens', () => {
 
         fi.put(doc('1', 'identifier1', 'type', 'a short description'));
         expect(fi.get(' a    short  description  ', ['type'])).toEqual([indexItem('1')]);
+        expect(fi.get('-a----short--description--', ['type'])).toEqual([indexItem('1')]);
     });
 
 
@@ -190,10 +191,12 @@ describe('FulltextIndexer', () => {
 
     it('tokenize fields', () => {
 
-        const d = doc('1', 'hello token', 'type');
-        fi.put(d);
+        fi.put(doc('1', 'hello token', 'type'));
+        fi.put(doc('2', 'another-one', 'type'));
         expect(fi.get('hello', ['type'])).toEqual([indexItem('1','hello token')]);
         expect(fi.get('token', ['type'])).toEqual([indexItem('1','hello token')]);
+        expect(fi.get('another', ['type'])).toEqual([indexItem('2','another-one')]);
+        expect(fi.get('one', ['type'])).toEqual([indexItem('2','another-one')]);
     });
 
 

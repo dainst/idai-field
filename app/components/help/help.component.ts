@@ -30,7 +30,7 @@ export class HelpComponent implements OnInit {
     private async loadHtml(): Promise<SafeHtml> {
 
         const markdown: string = await this.getMarkdown();
-        const htmlString: string = new Converter().makeHtml(markdown);
+        const htmlString: string = HelpComponent.createMarkdownConverter().makeHtml(markdown);
 
         return this.domSanitizer.bypassSecurityTrustHtml(htmlString);
     }
@@ -60,5 +60,14 @@ export class HelpComponent implements OnInit {
     private static adjustImageLinks(markdown: string): string {
 
         return markdown.replace(/img src="images/g, 'img src="manual/images');
+    }
+
+
+    private static createMarkdownConverter(): Converter {
+
+        const converter: Converter = new Converter();
+        converter.setOption('prefixHeaderId', 'chapter');
+
+        return converter;
     }
 }

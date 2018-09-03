@@ -4605,51 +4605,6 @@
       "range": [
         "Building"
       ]
-    },
-    {
-      "domain": [
-        "Drilling",
-        "Sample",
-        "Burial",
-        "Inscription"
-      ],
-      "inverse": "includes",
-      "name": "liesWithin",
-      "range": [
-        "Feature",
-        "DrillCoreLayer",
-        "Floor",
-        "Grave",
-        "Layer",
-        "Other",
-        "Architecture",
-        "SurveyUnit",
-        "Planum",
-        "Room",
-        "Burial"
-      ]
-    },
-    {
-      "domain": [
-        "SurveyUnit",
-        "Planum",
-        "Room"
-      ],
-      "inverse": "liesWithin",
-      "name": "includes",
-      "range": [
-        "Feature",
-        "DrillCoreLayer",
-        "Floor",
-        "Grave",
-        "Layer",
-        "Other",
-        "Architecture",
-        "Drilling",
-        "Sample",
-        "Burial",
-        "Inscription"
-      ]
     }
   ]
 }

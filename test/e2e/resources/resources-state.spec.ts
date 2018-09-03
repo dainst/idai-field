@@ -452,7 +452,7 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('c2', 'feature');
         ResourcesPage.clickMoveIntoButton('c2');
         ResourcesPage.performCreateResource('i1', 'inscription');
-        ResourcesPage.performCreateRelation('i1', 'testf1', 2);
+        ResourcesPage.performCreateRelation('i1', 'testf1', 0);
 
         RelationsViewPage.clickRelation(0);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);

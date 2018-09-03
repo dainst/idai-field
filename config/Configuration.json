@@ -4693,46 +4693,6 @@
     },
     {
       "domain": [
-        "Planum",
-        "Sample"
-      ],
-      "inverse": "isBelow",
-      "name": "isAbove",
-      "range": [
-        "Feature",
-        "DrillCoreLayer",
-        "Floor",
-        "Grave",
-        "Layer",
-        "Other",
-        "Architecture",
-        "Planum",
-        "Sample",
-        "Burial"
-      ]
-    },
-    {
-      "domain": [
-        "Planum",
-        "Sample"
-      ],
-      "inverse": "isAbove",
-      "name": "isBelow",
-      "range": [
-        "Feature",
-        "DrillCoreLayer",
-        "Floor",
-        "Grave",
-        "Layer",
-        "Other",
-        "Architecture",
-        "Planum",
-        "Sample",
-        "Burial"
-      ]
-    },
-    {
-      "domain": [
         "Feature",
         "DrillCoreLayer",
         "Floor",

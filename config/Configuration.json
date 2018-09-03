@@ -4650,52 +4650,6 @@
         "Burial",
         "Inscription"
       ]
-    },
-    {
-      "domain": [
-        "Find",
-        "Brick",
-        "Bone",
-        "Coin",
-        "Glass",
-        "Metal",
-        "Mollusk",
-        "PlasterFragment",
-        "Pottery",
-        "Stone",
-        "Terracotta",
-        "Wood",
-        "Floor",
-        "Other"
-      ],
-      "inverse": "isFoundOn",
-      "name": "bears",
-      "range": [
-        "Inscription"
-      ]
-    },
-    {
-      "domain": [
-        "Inscription"
-      ],
-      "inverse": "bears",
-      "name": "isFoundOn",
-      "range": [
-        "Find",
-        "Brick",
-        "Bone",
-        "Coin",
-        "Glass",
-        "Metal",
-        "Mollusk",
-        "PlasterFragment",
-        "Pottery",
-        "Stone",
-        "Terracotta",
-        "Wood",
-        "Floor",
-        "Other"
-      ]
     }
   ]
 }

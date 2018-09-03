@@ -78,10 +78,10 @@ describe('matrix --', () => {
 
         MatrixPage.clickNode('si1');
         DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(5, 1);
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(5);
-        DoceditRelationsTabPage.typeInRelationByIndices(5, 1, 'SE4');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(5, 1, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(10, 1);
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(10);
+        DoceditRelationsTabPage.typeInRelationByIndices(10, 1, 'SE4');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(10, 1, 0);
         DoceditPage.clickSaveDocument();
 
         browser.wait(EC.stalenessOf(MatrixPage.getAboveEdge('si1', 'si5')), delays.ECWaitTime);

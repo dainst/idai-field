@@ -4666,23 +4666,12 @@
         "Terracotta",
         "Wood",
         "Floor",
-        "Other",
-        "Wall_surface"
+        "Other"
       ],
       "inverse": "isFoundOn",
       "name": "bears",
       "range": [
         "Inscription"
-      ]
-    },
-    {
-      "domain": [
-        "Architecture"
-      ],
-      "inverse": "isFoundOn",
-      "name": "bears",
-      "range": [
-        "Wall_surface"
       ]
     },
     {
@@ -4705,18 +4694,7 @@
         "Terracotta",
         "Wood",
         "Floor",
-        "Other",
-        "Wall_surface"
-      ]
-    },
-    {
-      "domain": [
-        "Wall_surface"
-      ],
-      "inverse": "bears",
-      "name": "isFoundOn",
-      "range": [
-        "Architecture"
+        "Other"
       ]
     }
   ]

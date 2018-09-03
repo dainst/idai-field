@@ -4653,56 +4653,6 @@
     },
     {
       "domain": [
-        "Feature",
-        "DrillCoreLayer",
-        "Floor",
-        "Grave",
-        "Layer",
-        "Other",
-        "Architecture",
-        "Profile",
-        "Burial"
-      ],
-      "inverse": "isCutBy",
-      "name": "cuts",
-      "range": [
-        "Feature",
-        "DrillCoreLayer",
-        "Floor",
-        "Grave",
-        "Layer",
-        "Other",
-        "Architecture",
-        "Burial"
-      ]
-    },
-    {
-      "domain": [
-        "Feature",
-        "DrillCoreLayer",
-        "Floor",
-        "Grave",
-        "Layer",
-        "Other",
-        "Architecture",
-        "Burial"
-      ],
-      "inverse": "cuts",
-      "name": "isCutBy",
-      "range": [
-        "Feature",
-        "DrillCoreLayer",
-        "Floor",
-        "Grave",
-        "Layer",
-        "Other",
-        "Architecture",
-        "Profile",
-        "Burial"
-      ]
-    },
-    {
-      "domain": [
         "Find",
         "Brick",
         "Bone",
@@ -4767,34 +4717,6 @@
       "name": "isFoundOn",
       "range": [
         "Architecture"
-      ]
-    },
-    {
-      "domain": [
-        "Room",
-        "Feature",
-        "DrillCoreLayer",
-        "Floor",
-        "Grave",
-        "Layer",
-        "Other",
-        "Architecture",
-        "SurveyUnit",
-        "Burial"
-      ],
-      "inverse": "borders",
-      "name": "borders",
-      "range": [
-        "Room",
-        "Feature",
-        "DrillCoreLayer",
-        "Floor",
-        "Grave",
-        "Layer",
-        "Other",
-        "Architecture",
-        "SurveyUnit",
-        "Burial"
       ]
     }
   ]

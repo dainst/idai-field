@@ -4581,7 +4581,6 @@
   "relations": [
     {
       "domain": [
-        "Floor",
         "ProcessUnit",
         "Drilling",
         "Planum",

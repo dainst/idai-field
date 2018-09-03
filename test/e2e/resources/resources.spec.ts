@@ -476,7 +476,7 @@ describe('resources --', () => {
     });
 
 
-    it('typechange -- should delete invalid relations when changing the type of a resource to a sibling type', () => {
+    xit('typechange -- should delete invalid relations when changing the type of a resource to a sibling type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'wall_surface');

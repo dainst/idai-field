@@ -4359,7 +4359,6 @@
   "relations": [
     {
       "domain": [
-        "Inscription",
         "Wall_surface"
       ],
       "name": "isRecordedIn",

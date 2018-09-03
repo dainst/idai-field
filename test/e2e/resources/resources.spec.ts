@@ -369,11 +369,11 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.openEditByDoubleClickResource('2');
-        expect(DoceditRelationsTabPage.getRelationButtonText(4, 0, 0)).toEqual('1');
+        expect(DoceditRelationsTabPage.getRelationButtonText(9, 0, 0)).toEqual('1');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSelectResource('1');
         DetailSidebarPage.performEditDocument();
-        expect(DoceditRelationsTabPage.getRelationButtonText(5, 0, 0)).toEqual('2');
+        expect(DoceditRelationsTabPage.getRelationButtonText(10, 0, 0)).toEqual('2');
         DoceditPage.clickCloseEdit();
 
     });

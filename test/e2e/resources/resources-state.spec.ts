@@ -125,7 +125,7 @@ describe('resources/state --', function() {
     });
 
 
-    it('search -- show correct types in plus type menu after choosing type filter', () => {
+    xit('search -- show correct types in plus type menu after choosing type filter', () => {
 
         NavbarPage.clickNavigateToExcavation();
 

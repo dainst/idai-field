@@ -1,3 +1,12 @@
+ some test chars, release related
+TODO remove
+
+
+
+
+
+
+
 ## Erste Schritte
 
 Nach dem ersten Start des Clients befinden Sie sich zunächst im Projekt "test", das es

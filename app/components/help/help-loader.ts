@@ -1,6 +1,8 @@
 import {DomSanitizer} from '@angular/platform-browser';
 import {Converter} from 'showdown';
 import * as fs from 'fs';
+import {Http} from '@angular/http';
+import {HttpReader} from '../../core/import/http-reader';
 
 export type Chapter = { id: string, label: string };
 
@@ -9,9 +11,9 @@ export type Chapter = { id: string, label: string };
  */
 export module HelpLoader {
 
-    export async function load(filePath: string, domSanitizer: DomSanitizer) {
+    export async function load(filePath: string, http: Http, domSanitizer: DomSanitizer) {
 
-        const markdown: string = await getMarkdown(filePath);
+        const markdown: string = await getMarkdown(filePath, http);
         const htmlString: string = createMarkdownConverter().makeHtml(markdown);
 
         return {
@@ -53,23 +55,24 @@ export module HelpLoader {
     }
 
 
-    async function getMarkdown(filePath: string): Promise<string> {
+    async function getMarkdown(filePath: string, http: Http): Promise<string> {
 
-        const markdown: string = await readFile(filePath);
+        const reader = new HttpReader(filePath, http);
+        const markdown: string = await reader.go();
         return adjustImageLinks(markdown);
     }
 
 
-    function readFile(filePath: string): Promise<string> {
-
-        return new Promise<string>(resolve => {
-            fs.readFile(filePath, 'utf-8', (err: any, content: string) => {
-                if (err) {
-                    resolve('');
-                } else {
-                    resolve(content);
-                }
-            });
-        });
-    }
+    // function readFile(filePath: string): Promise<string> {
+    //
+    //     return new Promise<string>(resolve => {
+    //         fs.readFile(filePath, 'utf-8', (err: any, content: string) => {
+    //             if (err) {
+    //                 resolve('');
+    //             } else {
+    //                 resolve(content);
+    //             }
+    //         });
+    //     });
+    // }
 }

@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Chapter, HelpLoader} from './help-loader';
+import {Http} from '@angular/http';
 
 
 @Component({
@@ -24,12 +25,12 @@ export class HelpComponent implements OnInit {
     private static headerTopOffset: number = -62;
 
 
-    constructor(private domSanitizer: DomSanitizer) {}
+    constructor(private domSanitizer: DomSanitizer, private http: Http) {}
 
 
     async ngOnInit() {
 
-        const {html, chapters} = await HelpLoader.load(HelpComponent.filePath, this.domSanitizer);
+        const {html, chapters} = await HelpLoader.load(HelpComponent.filePath, this.http, this.domSanitizer);
         this.html = html;
         this.chapters = chapters;
         if (this.chapters.length > 0) this.activeChapter = this.chapters[0];

@@ -1,10 +1,11 @@
 {
     "Architecture": [
         "markDescription",
-        "mark"
-    ],
-    "Brick": [
-        "specificType"
+        "mark",
+        "publicationDatingFinds",
+        "publicationDatingScientific",
+        "publicationDatingStratigraphy",
+        "publicationRemark"
     ],
     "Building": [
         "buildingHistory",
@@ -19,33 +20,24 @@
         "publicationDatingFinds",
         "publicationDatingStratigraphy"
     ],
-    "Architecture": [
-        "publicationDatingFinds",
-        "publicationDatingScientific",
-        "publicationDatingStratigraphy",
-        "publicationRemark"
-    ],
     "Grave": [
         "publicationDatingFinds",
         "publicationDatingScientific",
         "publicationDatingStratigraphy",
         "publicationRemark"
     ], 
-    "Findspot": [
-        "buildingHistory",
-        "excavationHistory"
-    ],
     "Layer": [
         "appearance"
     ],
     "Metal": [
         "materialDescription"
     ],
-    "Part": [
-        "specificType"
-    ],
     "Photo": [
         "originalType"
+    ],
+    "Find": [
+        "publicationMaterialSummary",
+        "publicationRemark"
     ],
     "Planum": [
         "horizontalLocation"

@@ -5,7 +5,8 @@
         "publicationDatingFinds",
         "publicationDatingScientific",
         "publicationDatingStratigraphy",
-        "publicationRemark"
+        "publicationRemark", 
+        "findingPlace"
     ],
     "Building": [
         "buildingHistory",
@@ -18,13 +19,15 @@
     ],
     "Burial": [
         "publicationDatingFinds",
-        "publicationDatingStratigraphy"
+        "publicationDatingStratigraphy", 
+        "findingPlace"
     ],
     "Grave": [
         "publicationDatingFinds",
         "publicationDatingScientific",
         "publicationDatingStratigraphy",
-        "publicationRemark"
+        "publicationRemark",
+        "findingPlace"
     ], 
     "Layer": [
         "appearance"

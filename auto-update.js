@@ -46,13 +46,6 @@ const setUp = (mainWindow) => {
         });
     });
 
-    autoUpdater.on('error', error => {
-        dialog.showErrorBox(
-            'Error: ',
-            error == null ? 'unknown' : (error.stack || error).toString()
-        );
-    });
-
     autoUpdater.checkForUpdates();
     initialized = true;
 };

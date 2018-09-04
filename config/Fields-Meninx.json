@@ -27,13 +27,6 @@
       }
     }
   },
-  "Wall_surface": {
-    "fields": {
-      "dating": {
-        "inputType": "dating"
-      }
-    }
-  },
   "Inscription": {
     "fields": {
       "dating": {
@@ -137,6 +130,328 @@
     "fields": {
       "hasDecorationPattern": {
         "inputType": "boolean"
+      }
+    }
+  },
+  "Wall_surface": {
+    "fields": {
+      "area": {
+        "inputType": "unsignedFloat"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "constructionDetailsDescription": {
+        "inputType": "input"
+      },
+      "description": {
+        "inputType": "text"
+      },
+      "markDescription": {
+        "inputType": "input"
+      },
+      "hasPlasterDecoration": {
+        "inputType": "boolean"
+      },
+      "plasterOlder": {
+        "inputType": "input"
+      },
+      "processor": {
+        "inputType": "input"
+      },
+      "surfaceDecoration": {
+        "inputType": "input"
+      },
+      "wallConstructionTechnique": {
+        "inputType": "input"
+      },
+      "blockTreatment": {
+        "inputType": "radio",
+        "valuelist": [
+          "bossiert",
+          "bruchbau",
+          "fein geglättet",
+          "gespitzt",
+          "gestockt",
+          "grob behauen",
+          "grob geglättet",
+          "scharriert",
+          "unbehauen"
+        ]
+      },
+      "buildingTechnique": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Blockverbandmauerwerk",
+          "Bruchsteinmauerwerk",
+          "Feldsteinmauerwerk",
+          "Kyklopenmauerwerk",
+          "Lehmziegelmauerwerk",
+          "Mischform Polygonal-/Quadermauerwerk",
+          "Opus Caementitium",
+          "Polygonalmauerwerk",
+          "Quadermauerwerk",
+          "Spolienmauerwerk",
+          "Unregelmäßiges Polygonalmauerwerk",
+          "Würfel-/Handquadermauerwerk",
+          "Ziegelmauerwerk",
+          "irreguläres Mauerwerk",
+          "regelmäßiges Polygonalmauerwerk",
+          "regelmäßiges Quadermauerwerk",
+          "regelmäßiges Trapezoidalmauerwerk",
+          "unregelmäßiges Quadermauerwerk",
+          "unregelmäßiges Trapezoidalmauerwerk",
+          "unspezifisches Mauerwerk"
+        ]
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "beige",
+          "blass-",
+          "blau",
+          "braun",
+          "cremefarben",
+          "dunkel-",
+          "gelb",
+          "grau",
+          "grün",
+          "hell-",
+          "leuchtend-",
+          "ocker",
+          "orange",
+          "rosa",
+          "rot",
+          "schwarz",
+          "türkis",
+          "violett",
+          "weiß"
+        ]
+      },
+      "condition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut",
+          "schlecht",
+          "sehr gut",
+          "sehr schlecht"
+        ]
+      },
+      "conditionAmount": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Fragmentarisch",
+          "Vollständig",
+          "Vollständig zerstört"
+        ]
+      },
+      "constructionDetails": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Abflussöffnung",
+          "Angelloch",
+          "Balkenloch",
+          "Bleirohr",
+          "Durchgang/Tür",
+          "Entlastungsbogen",
+          "Fallrohr",
+          "Fenster",
+          "Fontäne",
+          "Halnsäule",
+          "Laibung",
+          "Nische",
+          "Regalloch",
+          "Riegelloch",
+          "Sonstiges Loch",
+          "Sturzauflager"
+        ]
+      },
+      "period": {
+        "inputType": "dropdownRange"
+      },
+      "dating": {
+        "inputType": "dating"
+      },
+      "dimensionHeight": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "dimensionWidth": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "jointsCondition": {
+        "inputType": "radio",
+        "valuelist": [
+          "Mörtel abplatzend",
+          "ausgewaschen",
+          "bündig verfugt",
+          "flächig ausgehöhlt",
+          "partiell ausgehöhlt"
+        ]
+      },
+      "jointsType": {
+        "inputType": "radio",
+        "valuelist": [
+          "Gerade",
+          "Gerundet",
+          "Hohl",
+          "Mit Mörtel gefüllt",
+          "Mit Steinen gefüllt",
+          "Schmal",
+          "Unregelmäßg",
+          "Weit"
+        ]
+      },
+      "mark": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "A",
+          "AC"
+        ]
+      },
+      "plasterComponents": {
+        "inputType": "radio",
+        "valuelist": [
+          "Feinsand",
+          "Grus",
+          "Sand"
+        ]
+      },
+      "wallOrientation": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Norden",
+          "Nordost",
+          "Nordwest",
+          "Osten",
+          "Süden",
+          "Südost",
+          "Südwest",
+          "Westen"
+        ]
+      },
+      "roomSide": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Norden",
+          "Nordost",
+          "Nordwest",
+          "Osten",
+          "Süden",
+          "Südost",
+          "Südwest",
+          "Westen"
+        ]
+      },
+      "wallSide": {
+        "inputType": "radio",
+        "valuelist": [
+          "Norden",
+          "Nordost",
+          "Nordwest",
+          "Osten",
+          "Süden",
+          "Südost",
+          "Südwest",
+          "Westen"
+        ]
+      }
+    }
+  },
+  "Other": {
+    "fields": {
+      "isNatural": {
+        "inputType": "boolean"
+      },
+      "consistency": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Durch Brand versiegelt",
+          "Oberfläche abgewaschen",
+          "Oberfläche verhärtet",
+          "fest",
+          "flüssig",
+          "gut formbar",
+          "hart",
+          "lehmig",
+          "locker",
+          "mittel bindend",
+          "mittel formbar",
+          "nicht bindend",
+          "nicht formbar",
+          "porös",
+          "sandig",
+          "schwach bindend",
+          "schwach formbar",
+          "sehr gut formbar",
+          "sehr hart",
+          "sehr schwach formbar",
+          "sehr weich",
+          "stark bindend",
+          "steif",
+          "weich"
+        ]
+      },
+      "distinguishingCriteria": {
+        "inputType": "radio",
+        "valuelist": [
+          "Farbe",
+          "Form",
+          "Grenzen",
+          "Konsistenz",
+          "Komposition"
+        ]
+      },
+      "otherClassification": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Abfallgrube",
+          "Brunnen",
+          "Feuerstelle",
+          "Graben",
+          "Grube",
+          "Kalkbrennofen",
+          "Keramikofen",
+          "Materialentnahmegrube",
+          "Ofen",
+          "Pfosten",
+          "Pfostenstandspur",
+          "Rennfeuerofen",
+          "Schmelzofen",
+          "Spitzgraben",
+          "Wasserreservoir"
+        ]
+      },
+      "soilType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Feinsand",
+          "Feinstsand",
+          "Grobsand",
+          "Lehm",
+          "Lehmiger Sand",
+          "Lehmiger Schluff",
+          "Lehmiger Ton",
+          "Mergel",
+          "Mittlerer Sand",
+          "Sand",
+          "Sandiger Lehm",
+          "Sandiger Schluff",
+          "Sandiger Ton",
+          "Schluff",
+          "Schluffiger Lehm",
+          "Schluffiger Sand",
+          "Schluffiger Ton",
+          "Ton",
+          "Toniger Lehm",
+          "Toniger Sand",
+          "Toniger Schluff"
+        ]
       }
     }
   }

@@ -111,10 +111,12 @@ export class FulltextIndexer {
 
     private getFieldsToIndex(typeName: string): string[] {
 
-        return Object.values(this.projectConfiguration.getTypesMap()[typeName].fields)
-            .filter((field: FieldDefinition) => field.fulltextIndexed)
-            .map((field: FieldDefinition) => field.name)
-            .concat(this.defaultFieldsToIndex);
+        return !this.projectConfiguration.getTypesMap()[typeName]
+            ? []
+            : Object.values(this.projectConfiguration.getTypesMap()[typeName].fields)
+                .filter((field: FieldDefinition) => field.fulltextIndexed)
+                .map((field: FieldDefinition) => field.name)
+                .concat(this.defaultFieldsToIndex);
     }
 
 

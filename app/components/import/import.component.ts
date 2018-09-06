@@ -57,6 +57,7 @@ export class ImportComponent {
     public url: string|undefined;
     public mainTypeDocuments: Array<Document> = [];
     public mainTypeDocumentId?: string;
+    public allowOverwritexistingResources = false;
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 

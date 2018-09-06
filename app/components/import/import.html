@@ -67,7 +67,7 @@
 
                 </div>
 
-                <div class="form-group" *ngIf="format == 'native'">
+                <div class="form-group" *ngIf="format === 'native'">
 
                     <label class="control-label col-form-label"
                            for="mainTypeDocumentSelect">Daten einer Maßnahme zuordnen</label>
@@ -78,7 +78,25 @@
                             {{getDocumentLabel(document)}}
                         </option>
                     </select>
+                </div>
 
+                <div *ngIf="format === 'native'" class="form-group">
+                    <label>Vorhandene Ressourcen ergänzen&nbsp;</label>
+                    <div class="btn-group btn-group-toggle">
+                        <label class="btn-primary-outline">
+                            <input type="checkbox" ngbButton [(ngModel)]="allowOverwriteExistingResources">
+                        </label>
+                    </div>
+                </div>
+
+                <div *ngIf="format == 'native'" class="geojson-info">
+                    Ist diese Option angewählt, so werden Datensätze, die bereits in der Anwendung sind, mit
+                    den Daten aus der Importdatei ergänzt. Das heißt, das Felder,
+                    die im jeweiligen Importdatensatz vorhanden sind,
+                    Felder im existierenden Datensatz überschreiben, die übrigen Felder des Datensatzes
+                    jedoch erhalten bleiben.
+                    Die Zuordnung von Datensätzen geschieht per Bezeichner
+                    (Feld 'identifier').
                 </div>
 
                 <div *ngIf="format == 'geojson'" class="geojson-info">

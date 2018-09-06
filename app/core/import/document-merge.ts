@@ -18,9 +18,7 @@ export module DocumentMerge {
                 .filter(differentFrom('id'))
                 .filter(differentFrom('identifier'))
                 .reduce((acc: Resource, key: string) => {
-                    if (source.resource[key] !== undefined) {
-                        acc[key] = source.resource[key];
-                    }
+                    if (source.resource[key] !== undefined) acc[key] = source.resource[key];
                     return acc;
                 }, clonedTarget.resource);
 

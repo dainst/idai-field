@@ -93,6 +93,7 @@ Daten einer Maßnahme zuordnen
 Import starten
 Export starten
 Vorhandene Ressourcen überschreiben
+Vorhandene Ressourcen ergänzen
 
 
 

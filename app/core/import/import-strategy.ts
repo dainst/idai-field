@@ -5,5 +5,5 @@ import {Document} from 'idai-components-2'
  */
 export interface ImportStrategy {
 
-    importDoc(doc: Document): Promise<Document>;
+    importDoc(doc: Document): Promise<Document|undefined>;
 }

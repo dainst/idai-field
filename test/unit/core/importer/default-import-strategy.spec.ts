@@ -40,7 +40,7 @@ describe('DefaultImportStrategy', () => {
 
     it('merge if exists', async done => {
 
-        mockValidator.validate.and.returnValue(Promise.reject([M.MODEL_VALIDATION_ERROR_IDEXISTS]));
+        mockValidator.validate.and.returnValue(Promise.resolve(undefined));
         mockDatastore.find.and.returnValue(Promise.resolve({
             totalCount: 1,
             documents: [{resource: {identifier: '123', id: '1'}}]

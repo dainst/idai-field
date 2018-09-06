@@ -107,7 +107,7 @@ export class ImportComponent {
                 this.mainTypeDocumentId,
                 this.allowMergingExistingResources),
             ImportComponent.createRelationsStrategy(this.format, new RelationsCompleter(this.datastore, this.projectConfiguration, this.usernameProvider)),
-            ImportComponent.createRollbackStrategy(this.format, this.datastore));
+            ImportComponent.createRollbackStrategy(this.format, this.datastore, this.allowMergingExistingResources));
         this.remoteChangesStream.setAutoCacheUpdate(true);
 
         uploadReady = true;
@@ -237,7 +237,9 @@ export class ImportComponent {
     }
 
 
-    private static createRollbackStrategy(format: ImportFormat, datastore: DocumentDatastore): RollbackStrategy {
+    private static createRollbackStrategy(format: ImportFormat,
+                                          datastore: DocumentDatastore,
+                                          allowMergeExistingResources: boolean): RollbackStrategy {
 
         switch (format) {
             case 'meninxfind':
@@ -247,7 +249,9 @@ export class ImportComponent {
             case 'idig':
                 return new DefaultRollbackStrategy(datastore);
             default: // 'native'
-                return new DefaultRollbackStrategy(datastore);
+                return allowMergeExistingResources
+                    ? new NoRollbackStrategy() // TODO check it
+                    : new DefaultRollbackStrategy(datastore);
         }
     }
 }

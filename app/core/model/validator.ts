@@ -24,7 +24,8 @@ export class Validator {
      */
     public async validate(
         doc: Document|NewDocument,
-        suppressFieldsAndRelationsCheck = false
+        suppressFieldsAndRelationsCheck = false,
+        suppressIdentifierCheck = false
     ): Promise<void> {
 
         let resource = doc.resource;
@@ -71,7 +72,7 @@ export class Validator {
         let msgWithParams = Validator.validateGeometry(doc.resource.geometry as any);
         if (msgWithParams) throw msgWithParams;
 
-        return this.datastore ? this.validateIdentifier(doc as any) : undefined;
+        return this.datastore && !suppressIdentifierCheck ? this.validateIdentifier(doc as any) : undefined;
     }
 
 

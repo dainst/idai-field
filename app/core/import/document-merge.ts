@@ -1,5 +1,6 @@
 import {Document, Resource} from 'idai-components-2';
 import {clone} from '../../util/object-util';
+import {differentFrom} from 'tsfun';
 
 
 /**
@@ -13,9 +14,9 @@ export module DocumentMerge {
 
         clonedTarget.resource =
             Object.keys(source.resource)
-                .filter(key => key !== 'relations')
-                .filter(key => key !== 'id')
-                .filter(key => key !== 'identifier')
+                .filter(differentFrom('relations'))
+                .filter(differentFrom('id'))
+                .filter(differentFrom('identifier'))
                 .reduce((acc: Resource, key: string) => {
                     if (source.resource[key] !== undefined) {
                         acc[key] = source.resource[key];

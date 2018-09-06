@@ -44,23 +44,25 @@ describe('DocumentMerge', () => {
     });
 
 
-    it('dont overwrite identifier', () => {
+    it('dont overwrite identifier, id, relations', () => {
 
         const source = {
 
             modified: [],
             created: undefined,
             resource: {
-                id: 'id1',
+                id: 'id2',
                 type: 'Object',
                 identifier: 'identifier2',
                 shortDescription: 'shortDescription2',
                 anotherField: 'field2',
-                relations: {}
+                relations: {dde: []}
             }
         };
 
         const result = DocumentMerge.merge(target, source);
         expect(result.resource.identifier).toEqual('identifier1');
+        expect(result.resource.id).toEqual('id1');
+        expect(result.resource.relations).toEqual({});
     });
 });

@@ -15,36 +15,46 @@ export class DefaultImportStrategy implements ImportStrategy {
                 private datastore: DocumentDatastore,
                 private projectConfiguration: ProjectConfiguration,
                 private username: string,
-                private overwriteIfExists = false,
-                private mainTypeDocumentId?: string) { }
+                private mergeIfExists = false,
+                private mainTypeDocumentId?: string) {
+    }
 
 
     /**
      * @throws errorWithParams
      */
-    public async importDoc(
-            document: NewDocument
-        ): Promise<Document> {
+    public async importDoc(document: NewDocument): Promise<Document> {
 
-
-        if (this.mainTypeDocumentId) {
-            await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
-        }
-
-        await this.validator.validate(document as Document);
+        if (this.mainTypeDocumentId) await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
 
         let exists = false;
-        if (document.resource.id) try {
-            await this.datastore.get(document.resource.id);
-            exists = true;
-        } catch (_) {}
+        try {
+            await this.validator.validate(document as Document);
+        } catch (e) {
+            if (this.mergeIfExists && // TODO test this
+                e && e.length > 0 && e[0] === M.MODEL_VALIDATION_ERROR_IDEXISTS) exists = true;
+            else throw e;
+        }
 
-        if (this.overwriteIfExists && exists) {
-            return await this.datastore.update(document as Document, this.username);
+        if (exists && this.mergeIfExists) {
+            // TODO merge documents generically
+            const existingDocument = await this.findByIdentifier(document.resource.identifier);
+            existingDocument.resource.shortDescription = document.resource.shortDescription;
+            return await this.datastore.update(existingDocument as Document, this.username);
         } else {
-            // throws if !overwriteIfExists and exists
+            // throws if !mergeIfExists and exists
             return await this.datastore.create(document, this.username);
         }
+    }
+
+
+    private findByIdentifier(identifier: string) {
+
+        return this.datastore.find({ constraints: { 'identifier:match': identifier }})
+            .then(result => {
+                if (result.totalCount === 1) return Promise.resolve(result.documents[0]);
+                else throw "not found";
+            }).catch(() => Promise.reject([M.ALL_FIND_ERROR]));
     }
 
 

@@ -94,6 +94,7 @@ Import starten
 Export starten
 Vorhandene Ressourcen überschreiben
 Vorhandene Ressourcen ergänzen
+Vorhandene Felder überschreiben
 
 
 

@@ -57,7 +57,7 @@ export class ImportComponent {
     public url: string|undefined;
     public mainTypeDocuments: Array<Document> = [];
     public mainTypeDocumentId?: string;
-    public allowOverwritexistingResources = false;
+    public allowMergingExistingResources = false;
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
@@ -98,8 +98,14 @@ export class ImportComponent {
         const importReport = await Import.go(
             reader,
             ImportComponent.createParser(this.format),
-            ImportComponent.createImportStrategy(this.format,
-                this.validator, this.datastore, this.usernameProvider, this.projectConfiguration, this.mainTypeDocumentId),
+            ImportComponent.createImportStrategy(
+                this.format,
+                this.validator,
+                this.datastore,
+                this.usernameProvider,
+                this.projectConfiguration,
+                this.mainTypeDocumentId,
+                this.allowMergingExistingResources),
             ImportComponent.createRelationsStrategy(this.format, new RelationsCompleter(this.datastore, this.projectConfiguration, this.usernameProvider)),
             ImportComponent.createRollbackStrategy(this.format, this.datastore));
         this.remoteChangesStream.setAutoCacheUpdate(true);
@@ -191,9 +197,13 @@ export class ImportComponent {
     }
 
 
-    private static createImportStrategy(format: ImportFormat, validator: Validator, datastore: DocumentDatastore,
-                                        usernameProvider: UsernameProvider, projectConfiguration: ProjectConfiguration,
-                                        mainTypeDocumentId?: string): ImportStrategy {
+    private static createImportStrategy(format: ImportFormat,
+                                        validator: Validator,
+                                        datastore: DocumentDatastore,
+                                        usernameProvider: UsernameProvider,
+                                        projectConfiguration: ProjectConfiguration,
+                                        mainTypeDocumentId?: string,
+                                        allowMergingExistingResources = false): ImportStrategy {
 
         switch (format) {
             case 'meninxfind':
@@ -207,7 +217,7 @@ export class ImportComponent {
             default: // 'native'
                 return new DefaultImportStrategy(validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    false, mainTypeDocumentId);
+                    allowMergingExistingResources, mainTypeDocumentId);
         }
     }
 

@@ -1,5 +1,6 @@
 import {DefaultImportStrategy} from '../../../../app/core/import/default-import-strategy';
 import {ImportStrategy} from '../../../../app/core/import/import-strategy';
+import {M} from '../../../../app/m';
 
 /**
  * @author Daniel de Oliveira
@@ -13,7 +14,7 @@ describe('DefaultImportStrategy', () => {
 
     beforeEach(() => {
 
-        mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get']);
+        mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', ['validate']);
 
         mockValidator.validate.and.returnValue(Promise.resolve());
@@ -37,9 +38,13 @@ describe('DefaultImportStrategy', () => {
     });
 
 
-    it('overwrite if exists', async done => {
+    it('merge if exists', async done => {
 
-        mockDatastore.get.and.returnValue(Promise.resolve({}));
+        mockValidator.validate.and.returnValue(Promise.reject([M.MODEL_VALIDATION_ERROR_IDEXISTS]));
+        mockDatastore.find.and.returnValue(Promise.resolve({
+            totalCount: 1,
+            documents: [{resource: {identifier: '123', id: '1'}}]
+        }));
 
         await new DefaultImportStrategy(
             mockValidator,

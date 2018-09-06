@@ -81,22 +81,24 @@
                 </div>
 
                 <div *ngIf="format === 'native'" class="form-group">
-                    <label>Vorhandene Ressourcen ergänzen&nbsp;</label>
+                    <label>Vorhandene Felder überschreiben&nbsp;</label>
                     <div class="btn-group btn-group-toggle">
                         <label class="btn-primary-outline">
-                            <input type="checkbox" ngbButton [(ngModel)]="allowOverwriteExistingResources">
+                            <input type="checkbox" ngbButton [(ngModel)]="allowMergingExistingResources">
                         </label>
                     </div>
                 </div>
 
                 <div *ngIf="format == 'native'" class="geojson-info">
                     Ist diese Option angewählt, so werden Datensätze, die bereits in der Anwendung sind, mit
-                    den Daten aus der Importdatei ergänzt. Das heißt, das Felder,
+                    den Daten aus der Importdatei ergänzt. Das heißt, dass Felder,
                     die im jeweiligen Importdatensatz vorhanden sind,
                     Felder im existierenden Datensatz überschreiben, die übrigen Felder des Datensatzes
-                    jedoch erhalten bleiben.
+                    jedoch erhalten bleiben. Relationen werden nicht verändert.
                     Die Zuordnung von Datensätzen geschieht per Bezeichner
-                    (Feld 'identifier').
+                    (Feld 'identifier'). Bitte beachten Sie auch, dass wenn ein vorhandener Datensatz ergänzt wird,
+                    dessen Zuordnung zu einer Maßnahme unverändert bleibt und die Option "Daten einer Maßnahme zuordnen"
+                    in diesem Fall keine Wirkung hat.
                 </div>
 
                 <div *ngIf="format == 'geojson'" class="geojson-info">

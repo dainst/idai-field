@@ -3,6 +3,7 @@ import {ImportStrategy} from './import-strategy';
 import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
+import {DocumentMerge} from './document-merge';
 
 /**
  * @author Daniel de Oliveira
@@ -30,16 +31,17 @@ export class DefaultImportStrategy implements ImportStrategy {
         await this.validator.validate(document as Document, false, true);
 
 
+        const existingDocument = await this.findByIdentifier(document.resource.identifier);
         if (this.mergeIfExists) {
 
-            const existingDocument = await this.findByIdentifier(document.resource.identifier);
             if (!existingDocument) return undefined;
 
-            // TODO merge documents generically
-            existingDocument.resource.shortDescription = document.resource.shortDescription;
-            return await this.datastore.update(existingDocument as Document, this.username);
+            const updatedDocument = DocumentMerge.merge(existingDocument, document as Document);
+            return await this.datastore.update(updatedDocument as Document, this.username);
 
         } else {
+            if (existingDocument) throw [M.MODEL_VALIDATION_ERROR_IDEXISTS, existingDocument.resource.identifier];
+
             // throws if !mergeIfExists and exists
             return await this.datastore.create(document, this.username);
         }
@@ -48,8 +50,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
     private async findByIdentifier(identifier: string) {
 
-        const result = await this.datastore.find({ constraints: { 'identifier:match': identifier }})
-
+        const result = await this.datastore.find({ constraints: { 'identifier:match': identifier }});
         if (result.totalCount === 1) return Promise.resolve(result.documents[0]);
         else return undefined;
     }

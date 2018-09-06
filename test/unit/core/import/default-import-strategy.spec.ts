@@ -1,6 +1,4 @@
 import {DefaultImportStrategy} from '../../../../app/core/import/default-import-strategy';
-import {ImportStrategy} from '../../../../app/core/import/import-strategy';
-import {M} from '../../../../app/m';
 
 /**
  * @author Daniel de Oliveira
@@ -19,6 +17,7 @@ describe('DefaultImportStrategy', () => {
 
         mockValidator.validate.and.returnValue(Promise.resolve());
         mockDatastore.create.and.callFake((a) => Promise.resolve(a));
+        mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
         importStrategy = new DefaultImportStrategy(
             mockValidator,

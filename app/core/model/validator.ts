@@ -20,6 +20,7 @@ export class Validator {
     /**
      * @param doc
      * @param suppressFieldsAndRelationsCheck
+     * @param suppressIdentifierCheck
      * @returns resolves with () or rejects with msgsWithParams
      */
     public async validate(

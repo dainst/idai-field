@@ -1,4 +1,4 @@
-# iDAI.field 2
+# iDAI.field
 
 ![idai-field](img/README-1.png) 
    

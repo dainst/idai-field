@@ -87,6 +87,13 @@ Räumliche Einordnung
 Inschrift
 Inschriften
 
+Quelle
+Format
+Daten einer Maßnahme zuordnen
+Import starten
+Export starten
+Vorhandene Ressourcen überschreiben
+
 
 
 

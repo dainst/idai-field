@@ -6,7 +6,7 @@ import {Validator} from '../../../app/core/model/validator';
 /**
  * @author Daniel de Oliveira
  */
-describe('Import/ImporterBuilder/Subsystem', () => {
+describe('Import/Subsystem', () => {
 
     let datastore;
     let h;

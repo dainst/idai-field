@@ -1,11 +1,11 @@
-/**
- * @author Daniel de Oliveira
- */
 import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
 import {DAOsHelper} from './daos-helper';
 import {ImporterBuilder} from '../../../app/core/import/importer-builder';
 import {Validator} from '../../../app/core/model/validator';
 
+/**
+ * @author Daniel de Oliveira
+ */
 describe('Import/ImporterBuilder/Subsystem', () => {
 
     let datastore;

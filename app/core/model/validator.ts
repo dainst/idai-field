@@ -18,67 +18,54 @@ export class Validator {
                 private datastore: IdaiFieldDocumentDatastore) {}
 
     /**
-     * @param doc
+     * @param document
      * @param suppressFieldsAndRelationsCheck
      * @param suppressIdentifierCheck
      * @returns resolves with () or rejects with msgsWithParams
      */
     public async validate(
-        doc: Document|NewDocument,
+        document: Document|NewDocument,
         suppressFieldsAndRelationsCheck = false,
         suppressIdentifierCheck = false
     ): Promise<void> {
 
-        let resource = doc.resource;
-
-        if (!Validations.validateType(resource, this.projectConfiguration)) {
-            throw [M.VALIDATION_ERROR_INVALIDTYPE, resource.type];
+        if (!Validations.validateType(document.resource, this.projectConfiguration)) {
+            throw [M.VALIDATION_ERROR_INVALIDTYPE, document.resource.type];
         }
 
-        let missingProperties = Validations.getMissingProperties(resource, this.projectConfiguration);
+        const missingProperties = Validations.getMissingProperties(document.resource, this.projectConfiguration);
         if (missingProperties.length > 0) {
-            throw [M.VALIDATION_ERROR_MISSINGPROPERTY, resource.type]
+            throw [M.VALIDATION_ERROR_MISSINGPROPERTY, document.resource.type]
                 .concat(missingProperties.join((', ')));
         }
 
-        if (!suppressFieldsAndRelationsCheck) {
-            const invalidFields = Validations.validateFields(resource, this.projectConfiguration);
-            if (invalidFields.length > 0) {
-                throw [invalidFields.length === 1 ?
-                    M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS]
-                    .concat([resource.type])
-                    .concat(invalidFields.join(', '));
-            }
+        if (!suppressFieldsAndRelationsCheck) this.validateFieldsAndRelations(document as Document);
 
-            const invalidRelationFields = Validations.validateRelations(resource, this.projectConfiguration);
-            if (invalidRelationFields.length > 0) {
-                throw [invalidRelationFields.length === 1 ?
-                        M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
-                        M.VALIDATION_ERROR_INVALIDRELATIONFIELDS]
-                    .concat([resource.type])
-                    .concat([invalidRelationFields.join(', ')]);
-            }
-        }
-
-        let invalidNumericValues = Validations.validateNumericValues(resource, this.projectConfiguration);
+        const invalidNumericValues = Validations.validateNumericValues(document.resource, this.projectConfiguration);
         if (invalidNumericValues ) {
             throw [invalidNumericValues.length === 1 ?
                     M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
                     M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES]
-                .concat([resource.type])
+                .concat([document.resource.type])
                 .concat([invalidNumericValues.join(', ')]);
         }
 
 
-        let msgWithParams = Validator.validateGeometry(doc.resource.geometry as any);
+        const msgWithParams = Validator.validateGeometry(document.resource.geometry as any);
         if (msgWithParams) throw msgWithParams;
 
-        return this.datastore && !suppressIdentifierCheck ? this.validateIdentifier(doc as any) : undefined;
+
+        if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) {
+            const invalidRelationTarget = await this.validateRelationTargets(document as Document, 'isRecordedIn');
+            if (invalidRelationTarget) throw [M.VALIDATION_ERROR_NORECORDEDINTARGET, invalidRelationTarget.join(',')];
+        }
+
+        if (this.datastore && !suppressIdentifierCheck) this.validateIdentifier(document as any);
     }
 
 
-    public async validateRelationTargets(document: IdaiFieldDocument,
-                                         relationName: string): Promise<string[]> {
+    private async validateRelationTargets(document: Document,
+                                         relationName: string): Promise<string[]|undefined> {
 
         if (!Document.hasRelations(document, relationName)) return [];
 
@@ -88,15 +75,34 @@ export class Validator {
             if (!(await this.isExistingRelationTarget(targetId))) invalidRelationTargetIds.push(targetId);
         }
 
-        return invalidRelationTargetIds;
+        return invalidRelationTargetIds.length > 0 ? invalidRelationTargetIds : undefined;
     }
 
 
     private async isExistingRelationTarget(targetId: string): Promise<boolean> {
 
-        return (await this.datastore.find({
-                constraints: {'id:match': targetId}
-            })).documents.length === 1;
+        return (await this.datastore.find({constraints: {'id:match': targetId}})).documents.length === 1;
+    }
+
+
+    private validateFieldsAndRelations(document: Document) {
+
+        const invalidFields = Validations.validateFields(document.resource, this.projectConfiguration);
+        if (invalidFields.length > 0) {
+            throw [invalidFields.length === 1 ?
+                M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS]
+                .concat([document.resource.type])
+                .concat(invalidFields.join(', '));
+        }
+
+        const invalidRelationFields = Validations.validateRelations(document.resource, this.projectConfiguration);
+        if (invalidRelationFields.length > 0) {
+            throw [invalidRelationFields.length === 1 ?
+                M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
+                M.VALIDATION_ERROR_INVALIDRELATIONFIELDS]
+                .concat([document.resource.type])
+                .concat([invalidRelationFields.join(', ')]);
+        }
     }
 
 

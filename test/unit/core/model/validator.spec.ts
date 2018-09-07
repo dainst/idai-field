@@ -14,56 +14,26 @@ describe('Validator', () => {
                 {
                     type: 'T',
                     fields: [
-                        {
-                            name: 'id',
-                        },
-                        {
-                            name: 'type',
-                        },
-                        {
-                            name: 'optional',
-                        },
-                        {
-                            name: 'mandatory',
-                            mandatory: true
-                        },
-                        {
-                            name: 'number1',
-                            label: 'number1',
-                            inputType: 'float'
-                        },
-                        {
-                            name: 'number2',
-                            label: 'number2',
-                            inputType: 'float'
-                        }
+                        {name: 'id',},
+                        {name: 'type',},
+                        {name: 'optional',},
+                        {name: 'mandatory', mandatory: true},
+                        {name: 'number1', label: 'number1', inputType: 'float'},
+                        {name: 'number2', label: 'number2', inputType: 'float'}
                     ]
                 },
                 {
                     type: 'T2',
                     fields: [
-                        {
-                            name: 'id',
-                        },
-                        {
-                            name: 'type',
-                        }
+                        {name: 'id',},
+                        {name: 'type',}
                     ]
                 },
             ],
             relations: [
-                {
-                    name: 'isRelatedTo',
-                    domain: ['T'],
-                    range: ['T'],
-                    inverse: 'NO-INVERSE'
-                },
-                {
-                    name: 'isDepictedIn',
-                    domain: ['T'],
-                    range: ['T2'],
-                    inverse: 'NO-INVERSE'
-                }
+                {name: 'isRelatedTo', domain: ['T'], range: ['T'], inverse: 'NO-INVERSE'},
+                {name: 'isDepictedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'},
+                {name: 'isRecordedIn', domain: ['T'], range: ['T2'], inverse: 'NO-INVERSE'}
             ]
         }
     );
@@ -86,7 +56,24 @@ describe('Validator', () => {
     });
 
 
-    it('should report nothing when omitting optional property', done => {
+    it('should report missing isRecordedInTarget', async done => {
+
+        const datastore = jasmine.createSpyObj('datastore',['find']);
+        datastore.find.and.returnValues(Promise.resolve({documents: []}));
+
+        const doc = {resource: {id: '1', type: 'T', mandatory: 'm', relations: {'isRecordedIn': ['notexisting']}}};
+
+        try {
+            await new Validator(projectConfiguration, datastore).validate(doc);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([M.VALIDATION_ERROR_NORECORDEDINTARGET, 'notexisting']);
+        }
+        done();
+    });
+
+
+    it('should report nothing when omitting optional property', async done => {
 
         const doc = {
             resource: {

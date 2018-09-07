@@ -131,7 +131,7 @@ export module ImporterBuilder {
                 return new DefaultRollbackStrategy(datastore);
             default: // 'native'
                 return allowMergeExistingResources
-                    ? new NoRollbackStrategy() // TODO check it
+                    ? new NoRollbackStrategy()
                     : new DefaultRollbackStrategy(datastore);
         }
     }

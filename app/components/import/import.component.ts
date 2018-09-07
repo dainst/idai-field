@@ -54,7 +54,7 @@ export class ImportComponent {
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
         private modalService: NgbModal,
-        private settingsService: SettingsService
+        private settingsService: SettingsService // TODO remove
     ) {
         this.viewFacade.getAllOperations().then(
             documents => this.mainTypeDocuments = documents,

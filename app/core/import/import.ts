@@ -76,6 +76,7 @@ export module Import {
         if (importReport.errors.length === 0) {
 
             try {
+
                 await relationsStrategy.completeInverseRelations(importReport.importedResourcesIds);
 
             } catch (msgWithParams) {
@@ -90,6 +91,7 @@ export module Import {
         }
 
         if (importReport.errors.length !== 0) {
+
             try {
                 await rollbackStrategy.rollback(importReport.importedResourcesIds);
             } catch (err) {

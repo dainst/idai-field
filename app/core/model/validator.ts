@@ -60,7 +60,7 @@ export class Validator {
             if (invalidRelationTarget) throw [M.VALIDATION_ERROR_NORECORDEDINTARGET, invalidRelationTarget.join(',')];
         }
 
-        if (this.datastore && !suppressIdentifierCheck) this.validateIdentifier(document as any);
+        if (this.datastore && !suppressIdentifierCheck) await this.validateIdentifier(document as any);
     }
 
 
@@ -106,20 +106,23 @@ export class Validator {
     }
 
 
-    private validateIdentifier(doc: IdaiFieldDocument): Promise<any> {
+    private async validateIdentifier(doc: IdaiFieldDocument): Promise<any> {
 
-        return this.datastore.find({
-            constraints: {
-                'identifier:match': doc.resource.identifier
-            }
-        }).then(result => {
-            if (result.totalCount > 0 && Validator.isDuplicate(result.documents[0], doc)) {
-                return Promise.reject([M.MODEL_VALIDATION_ERROR_IDEXISTS, doc.resource.identifier]);
-            }
-            return Promise.resolve();
-        }, () => {
-            return Promise.reject([M.ALL_FIND_ERROR]);
-        });
+        let result;
+
+        try {
+            result = await this.datastore.find({
+                constraints: {
+                    'identifier:match': doc.resource.identifier
+                }
+            });
+        } catch (e) {
+            throw ([M.ALL_FIND_ERROR]);
+        }
+
+        if (result.totalCount > 0 && Validator.isDuplicate(result.documents[0], doc)) {
+            return Promise.reject([M.MODEL_VALIDATION_ERROR_IDEXISTS, doc.resource.identifier]);
+        }
     }
 
 

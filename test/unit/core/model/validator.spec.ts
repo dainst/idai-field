@@ -15,8 +15,9 @@ describe('Validator', () => {
                     type: 'T',
                     fields: [
                         {name: 'id',},
+                        {name: 'identifier'},
                         {name: 'type',},
-                        {name: 'optional',},
+                        {name: 'optional'},
                         {name: 'mandatory', mandatory: true},
                         {name: 'number1', label: 'number1', inputType: 'float'},
                         {name: 'number2', label: 'number2', inputType: 'float'}
@@ -71,6 +72,28 @@ describe('Validator', () => {
         }
         done();
     });
+
+
+    it('should report duplicate id', async done => {
+
+        const datastore = jasmine.createSpyObj('datastore',['find']);
+        datastore.find.and.returnValues(
+            Promise.resolve({totalCount: 1, documents: [{resource: {id: '2', identifier: 'eins' }}]}));
+
+        const doc = {
+            resource: {
+                id: '1', identifier: 'eins', type: 'T', mandatory: 'm', relations: {'isRecordedIn': []}}
+        };
+
+        try {
+            await new Validator(projectConfiguration, datastore).validate(doc);
+            fail();
+        } catch (expected) {
+            expect(expected).toEqual([M.MODEL_VALIDATION_ERROR_IDEXISTS, 'eins']);
+        }
+        done();
+    });
+
 
 
     it('should report nothing when omitting optional property', async done => {

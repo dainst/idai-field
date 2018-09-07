@@ -26,6 +26,8 @@ export type ImportFormat = 'native' | 'idig' | 'geojson' | 'meninxfind';
 
 
 /**
+ * Maintains contraints on how imports are validly composed
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */

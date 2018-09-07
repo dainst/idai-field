@@ -133,12 +133,10 @@ export module ImporterBuilder {
                 return new DefaultRollbackStrategy(datastore);
             default: // 'native'
                 return allowMergeExistingResources
-                    // no restore to previous versions of resources once modified
-                    //
+                    // no restore to previous versions of resources once modified.
                     // we keep the use cases of merge and of creation strictly separated.
-                    //
                     // on merge for example resources which cannot be matched get ignored (instead of created)
-                    // and on creation we do never merge resources but throw an error if the resource already exists
+                    // and on creation we do never merge resources but throw an error if the resource already exists.
                     ? new NoRollbackStrategy()
                     : new DefaultRollbackStrategy(datastore);
         }

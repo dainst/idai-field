@@ -130,4 +130,11 @@ describe('Import/Subsystem', () => {
         expect(result.documents[0].resource.shortDescription).toBe('feature_1');
         done();
     });
+
+
+    // TODO test that in merge unmatched get ignore
+
+    // TODO test that on creation existing get rolled back and an error is thrown
+
+    // TODO get rid of some e2es when done
 });

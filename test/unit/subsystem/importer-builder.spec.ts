@@ -1,13 +1,15 @@
 /**
  * @author Daniel de Oliveira
  */
-import {ImporterBuilder} from '../../../../app/core/import/importer-builder';
-import {Validator} from '../../../../app/core/model/validator';
 import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
+import {DAOsHelper} from './daos-helper';
+import {ImporterBuilder} from '../../../app/core/import/importer-builder';
+import {Validator} from '../../../app/core/model/validator';
 
-describe('ImporterBuilder', () => { // TODO convert to subsystem test
+describe('Import/ImporterBuilder/Subsystem', () => {
 
     let datastore;
+    let h;
 
 
     const projectConfiguration = new ProjectConfiguration(
@@ -39,19 +41,13 @@ describe('ImporterBuilder', () => { // TODO convert to subsystem test
     );
 
 
-    beforeEach(() => {
+    beforeEach(async done => {
 
-        datastore = jasmine.createSpyObj('datastore',['find', 'create', 'remove', 'get', 'update']);
-        datastore.find.and.returnValues(Promise.resolve({totalCount: 0, documents: []}));
-        datastore.create.and.callFake((doc: any) => {
-            doc.resource.id = '1';
-            return Promise.resolve(doc)
-        });
-        datastore.update.and.callFake((doc: any) => {
-            doc.resource.id = '1';
-            return Promise.resolve(doc)
-        });
-        datastore.get.and.returnValue(Promise.resolve({resource: {id: '1'}}));
+        h = new DAOsHelper();
+        await h.init(projectConfiguration);
+        datastore = h.idaiFieldDocumentDatastore;
+
+        done();
     });
 
 
@@ -69,7 +65,10 @@ describe('ImporterBuilder', () => { // TODO convert to subsystem test
                 '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}')});
 
         await ifunction();
-        expect(datastore.create).toHaveBeenCalled();
+
+        const result = await datastore.find({});
+        expect(result.documents.length).toBe(1);
+        expect(result.documents[0].resource.identifier).toBe('f1');
         done();
     });
 
@@ -92,18 +91,21 @@ describe('ImporterBuilder', () => { // TODO convert to subsystem test
     it('rollback', async done => {
 
         await createRollbackTestImportFunction(false)();
-        expect(datastore.create).toHaveBeenCalledTimes(1);
-        expect(datastore.remove).toHaveBeenCalledTimes(1);
+        const result = await datastore.find({});
+        expect(result.documents.length).toBe(0);
         done();
     });
 
 
-    it('no rollback', async done => {
+    it('no rollback, because after merge we will not perform it', async done => {
 
-        datastore.find.and.returnValues(Promise.resolve({totalCount: 1, documents: [{resource: {identifier: 'f1'}}]}));
+        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: {}}});
+
         await createRollbackTestImportFunction(true)();
-        expect(datastore.update).toHaveBeenCalledTimes(1);
-        expect(datastore.remove).not.toHaveBeenCalled();
+
+        const result = await datastore.find({});
+        expect(result.documents.length).toBe(1);
+        expect(result.documents[0].resource.identifier).toBe('f1');
         done();
     });
 });

@@ -40,7 +40,7 @@ export class DAOsHelper {
         ]
     });
 
-    constructor(projectConfiguration?: ProjectConfiguration) {}
+    constructor() {}
 
 
 

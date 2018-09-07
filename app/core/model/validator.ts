@@ -40,16 +40,7 @@ export class Validator {
         }
 
         if (!suppressFieldsAndRelationsCheck) this.validateFieldsAndRelations(document as Document);
-
-        const invalidNumericValues = Validations.validateNumericValues(document.resource, this.projectConfiguration);
-        if (invalidNumericValues ) {
-            throw [invalidNumericValues.length === 1 ?
-                    M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
-                    M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES]
-                .concat([document.resource.type])
-                .concat([invalidNumericValues.join(', ')]);
-        }
-
+        this.validateNumericalValues(document as Document);
 
         const msgWithParams = Validator.validateGeometry(document.resource.geometry as any);
         if (msgWithParams) throw msgWithParams;
@@ -60,7 +51,7 @@ export class Validator {
             if (invalidRelationTarget) throw [M.VALIDATION_ERROR_NORECORDEDINTARGET, invalidRelationTarget.join(',')];
         }
 
-        if (this.datastore && !suppressIdentifierCheck) await this.validateIdentifier(document as any);
+        if (!suppressIdentifierCheck) await this.validateIdentifier(document as any);
     }
 
 
@@ -82,6 +73,19 @@ export class Validator {
     private async isExistingRelationTarget(targetId: string): Promise<boolean> {
 
         return (await this.datastore.find({constraints: {'id:match': targetId}})).documents.length === 1;
+    }
+
+
+    private validateNumericalValues(document: Document) {
+
+        const invalidNumericValues = Validations.validateNumericValues(document.resource, this.projectConfiguration);
+        if (invalidNumericValues ) {
+            throw [invalidNumericValues.length === 1 ?
+                M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
+                M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES]
+                .concat([document.resource.type])
+                .concat([invalidNumericValues.join(', ')]);
+        }
     }
 
 

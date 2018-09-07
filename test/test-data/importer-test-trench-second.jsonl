@@ -1,0 +1,2 @@
+{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "relations" : { "isRecordedIn" : ["imported_trench1"]} }
+{ "type": "Trench", "identifier" : "importedTrench", "shortDescription" : "ImportedTrench", "id" : "imported_trench1" }

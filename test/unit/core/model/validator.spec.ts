@@ -40,7 +40,10 @@ describe('Validator', () => {
     );
 
 
-    it('should report nothing', done => {
+    it('should report nothing', async done => {
+
+        const datastore = jasmine.createSpyObj('datastore',['find']);
+        datastore.find.and.returnValues(Promise.resolve({totalCount: 0, documents: []}));
 
         const doc = {
             resource: {
@@ -52,8 +55,9 @@ describe('Validator', () => {
                 },
             }
         };
-        new Validator(projectConfiguration, undefined)
+        await new Validator(projectConfiguration, datastore)
             .validate(doc).then(() => done(), msgWithParams => fail(msgWithParams));
+        done();
     });
 
 
@@ -98,6 +102,9 @@ describe('Validator', () => {
 
     it('should report nothing when omitting optional property', async done => {
 
+        const datastore = jasmine.createSpyObj('datastore',['find']);
+        datastore.find.and.returnValues(Promise.resolve({totalCount: 0, documents: []}));
+
         const doc = {
             resource: {
                 id: '1',
@@ -107,7 +114,7 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined)
+        new Validator(projectConfiguration, datastore)
             .validate(doc).then(() => done(), msgWithParams => fail(msgWithParams));
     });
 

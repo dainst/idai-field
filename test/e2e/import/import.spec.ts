@@ -99,11 +99,4 @@ describe('import --', function() {
         importIt('./test/test-data/importer-test-unsupported-geometry-type.jsonl');
         NavbarPage.awaitAlert('nicht unterstützt', false);
     });
-
-
-    it('abort if a resource must not be linked to an existing main type resource', () => {
-
-        importIt('./test/test-data/importer-test-ok.jsonl', 1);
-        NavbarPage.awaitAlert('nicht zugeordnet werden', false);
-    });
 });

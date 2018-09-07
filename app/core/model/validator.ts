@@ -25,7 +25,19 @@ export class Validator {
      * @param suppressFieldsAndRelationsCheck
      * @param suppressIdentifierCheck
      * @param suppressIsRecordedInCheck
-     * @returns resolves with () or rejects with msgsWithParams
+     * @returns resolves with () if validation passed
+     * @throws [INVALID_TYPE] if type is not configured in projectConfiguration
+     * @throws [NO_ISRECORDEDIN] if type should have a isRecordedIn but doesn't have one
+     * @throws [NO_ISRECORDEDIN_TARGET]
+     * @throws [IDENTIFIER_EXISTS]
+     * @throws [MISSING_PROPERTY]
+     * @throws [MISSING_GEOMETRYTYPE]
+     * @throws [MISSING_COORDINATES]
+     * @throws [INVALID_COORDINATES]
+     * @throws [UNSUPPORTED_GEOMETRY_TYPE]
+     * @throws [INVALID_RELATIONS]
+     * @throws [INVALID_FIELDS]
+     * @throws [INVALID_NUMERICAL_VALUE]
      */
     public async validate(
         document: Document|NewDocument,
@@ -48,8 +60,8 @@ export class Validator {
                 .concat(missingProperties.join((', ')));
         }
 
-        if (!suppressFieldsAndRelationsCheck) this.validateFieldsAndRelations(document as Document);
-        this.validateNumericalValues(document as Document);
+        if (!suppressFieldsAndRelationsCheck) Validator.validateFieldsAndRelations(document as Document, this.projectConfiguration);
+        Validator.validateNumericalValues(document as Document, this.projectConfiguration);
 
         const msgWithParams = Validator.validateGeometry(document.resource.geometry as any);
         if (msgWithParams) throw msgWithParams;
@@ -82,7 +94,7 @@ export class Validator {
 
 
     private async validateRelationTargets(document: Document,
-                                         relationName: string): Promise<string[]|undefined> {
+                                          relationName: string): Promise<string[]|undefined> {
 
         if (!Document.hasRelations(document, relationName)) return [];
 
@@ -99,40 +111,6 @@ export class Validator {
     private async isExistingRelationTarget(targetId: string): Promise<boolean> {
 
         return (await this.datastore.find({constraints: {'id:match': targetId}})).documents.length === 1;
-    }
-
-
-    private validateNumericalValues(document: Document) {
-
-        const invalidNumericValues = Validations.validateNumericValues(document.resource, this.projectConfiguration);
-        if (invalidNumericValues ) {
-            throw [invalidNumericValues.length === 1 ?
-                M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
-                M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES]
-                .concat([document.resource.type])
-                .concat([invalidNumericValues.join(', ')]);
-        }
-    }
-
-
-    private validateFieldsAndRelations(document: Document) {
-
-        const invalidFields = Validations.validateFields(document.resource, this.projectConfiguration);
-        if (invalidFields.length > 0) {
-            throw [invalidFields.length === 1 ?
-                M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS]
-                .concat([document.resource.type])
-                .concat(invalidFields.join(', '));
-        }
-
-        const invalidRelationFields = Validations.validateRelations(document.resource, this.projectConfiguration);
-        if (invalidRelationFields.length > 0) {
-            throw [invalidRelationFields.length === 1 ?
-                M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
-                M.VALIDATION_ERROR_INVALIDRELATIONFIELDS]
-                .concat([document.resource.type])
-                .concat([invalidRelationFields.join(', ')]);
-        }
     }
 
 
@@ -194,6 +172,40 @@ export class Validator {
         }
 
         return null;
+    }
+
+
+    private static validateFieldsAndRelations(document: Document, projectConfiguration: ProjectConfiguration) {
+
+        const invalidFields = Validations.validateFields(document.resource, projectConfiguration);
+        if (invalidFields.length > 0) {
+            throw [invalidFields.length === 1 ?
+                M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS]
+                .concat([document.resource.type])
+                .concat(invalidFields.join(', '));
+        }
+
+        const invalidRelationFields = Validations.validateRelations(document.resource, projectConfiguration);
+        if (invalidRelationFields.length > 0) {
+            throw [invalidRelationFields.length === 1 ?
+                M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
+                M.VALIDATION_ERROR_INVALIDRELATIONFIELDS]
+                .concat([document.resource.type])
+                .concat([invalidRelationFields.join(', ')]);
+        }
+    }
+
+
+    private static validateNumericalValues(document: Document, projectConfiguration: ProjectConfiguration) {
+
+        const invalidNumericValues = Validations.validateNumericValues(document.resource, projectConfiguration);
+        if (invalidNumericValues ) {
+            throw [invalidNumericValues.length === 1 ?
+                M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
+                M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES]
+                .concat([document.resource.type])
+                .concat([invalidNumericValues.join(', ')]);
+        }
     }
 
 

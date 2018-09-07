@@ -33,6 +33,18 @@ export type ImportFormat = 'native' | 'idig' | 'geojson' | 'meninxfind';
  */
 export module ImporterBuilder {
 
+    /**
+     * Acts as a facade to the import subsystem
+     *
+     * @param format
+     * @param validator
+     * @param datastore
+     * @param usernameProvider
+     * @param projectConfiguration
+     * @param mainTypeDocumentId
+     * @param allowMergingExistingResources
+     * @param reader
+     */
     export function createImportFunction(format: ImportFormat,
         validator: Validator,
         datastore: DocumentDatastore,

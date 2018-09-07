@@ -120,9 +120,7 @@ export class Validator {
 
         try {
             result = await this.datastore.find({
-                constraints: {
-                    'identifier:match': doc.resource.identifier
-                }
+                constraints: { 'identifier:match': doc.resource.identifier }
             });
         } catch (e) {
             throw ([M.ALL_FIND_ERROR]);

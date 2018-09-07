@@ -20,6 +20,7 @@ import {DefaultRelationsStrategy} from './default-relations-strategy';
 import {RollbackStrategy} from './rollback-strategy';
 import {NoRollbackStrategy} from './no-rollback-strategy';
 import {DefaultRollbackStrategy} from './default-rollback-strategy';
+import {TypeUtility} from '../model/type-utility';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'meninxfind';
@@ -46,13 +47,13 @@ export module ImporterBuilder {
      * @param reader
      */
     export function createImportFunction(format: ImportFormat,
-        validator: Validator,
-        datastore: DocumentDatastore,
-        usernameProvider: UsernameProvider,
-        projectConfiguration: ProjectConfiguration,
-        mainTypeDocumentId: string|undefined,
-        allowMergingExistingResources: boolean,
-        reader: Reader) {
+                                         validator: Validator,
+                                         datastore: DocumentDatastore,
+                                         usernameProvider: UsernameProvider,
+                                         projectConfiguration: ProjectConfiguration,
+                                         mainTypeDocumentId: string|undefined,
+                                         allowMergingExistingResources: boolean,
+                                         reader: Reader) {
 
         return () => Import.go(
             reader,
@@ -63,7 +64,8 @@ export module ImporterBuilder {
                 datastore,
                 usernameProvider,
                 projectConfiguration,
-                mainTypeDocumentId,
+                new TypeUtility(projectConfiguration),
+                !allowMergingExistingResources ? mainTypeDocumentId : undefined,
                 allowMergingExistingResources),
             createRelationsStrategy(
                 format,
@@ -94,24 +96,25 @@ export module ImporterBuilder {
 
 
     function createImportStrategy(format: ImportFormat,
-        validator: Validator,
-        datastore: DocumentDatastore,
-        usernameProvider: UsernameProvider,
-        projectConfiguration: ProjectConfiguration,
-        mainTypeDocumentId?: string,
-        allowMergingExistingResources = false): ImportStrategy {
+                                  validator: Validator,
+                                  datastore: DocumentDatastore,
+                                  usernameProvider: UsernameProvider,
+                                  projectConfiguration: ProjectConfiguration,
+                                  typeUtility: TypeUtility,
+                                  mainTypeDocumentId?: string,
+                                  allowMergingExistingResources = false): ImportStrategy {
 
         switch (format) {
             case 'meninxfind':
                 return new MeninxFindImportStrategy(validator, datastore,
                     projectConfiguration, usernameProvider.getUsername());
             case 'idig':
-                return new DefaultImportStrategy(validator, datastore,
+                return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername());
             case 'geojson':
                 return new MergeGeometriesImportStrategy(validator, datastore, usernameProvider.getUsername());
             default: // 'native'
-                return new DefaultImportStrategy(validator, datastore,
+                return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
                     allowMergingExistingResources, mainTypeDocumentId);
         }

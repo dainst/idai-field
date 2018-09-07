@@ -2,6 +2,7 @@ import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-
 import {DAOsHelper} from './daos-helper';
 import {ImporterBuilder} from '../../../app/core/import/importer-builder';
 import {Validator} from '../../../app/core/model/validator';
+import {M} from '../../../app/m';
 
 /**
  * @author Daniel de Oliveira
@@ -10,13 +11,24 @@ describe('Import/Subsystem', () => {
 
     let datastore;
     let h;
+    let typeUtility;
 
 
     const projectConfiguration = new ProjectConfiguration(
         {
             types: [
                 {
+                    type: 'Operation',
+                    fields: [
+                        {name: 'id',},
+                        {name: 'identifier'},
+                        {name: 'shortDescription'},
+                        {name: 'type'},
+                    ]
+                },
+                {
                     type: 'Trench',
+                    parent: 'Operation',
                     fields: [
                         {name: 'id',},
                         {name: 'identifier'},
@@ -46,6 +58,7 @@ describe('Import/Subsystem', () => {
         h = new DAOsHelper();
         await h.init(projectConfiguration);
         datastore = h.idaiFieldDocumentDatastore;
+        typeUtility = h.typeUtility;
 
         done();
     });
@@ -81,7 +94,7 @@ describe('Import/Subsystem', () => {
             datastore,
             { getUsername: () => 'testuser'},
             projectConfiguration,
-            undefined,
+            typeUtility,
             allowMergingExistingResources,
             { go: () => Promise.resolve(
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
@@ -132,9 +145,34 @@ describe('Import/Subsystem', () => {
     });
 
 
+    it('import trench not allowed, when import into operation is activated', async done => {
+
+        await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our trench 1', relations: {}}});
+
+        const importReport = await ImporterBuilder.createImportFunction(
+            'native',
+            new Validator(projectConfiguration, datastore),
+            datastore,
+            { getUsername: () => 'testuser'},
+            projectConfiguration,
+            'f1',
+            false,
+            { go: () => Promise.resolve(
+                    '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}')})();
+
+        expect(importReport.errors[0]).toEqual([M.IMPORT_FAILURE_OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION]);
+
+        const result = await datastore.find({});
+        expect(result.documents[0].resource.identifier).toBe('t1');
+        done();
+    });
+
+
     // TODO test that in merge unmatched get ignore
 
     // TODO test that on creation existing get rolled back and an error is thrown
 
     // TODO get rid of some e2es when done
+
+    // TODO test that an assignment to an operation has to be done in any case
 });

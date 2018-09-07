@@ -49,6 +49,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_FAILURE_MISSING_RESOURCE = 'importer/failure/missingresource';
     public static IMPORT_FAILURE_MISSING_RELATION_TARGET = 'importer/failure/missingrelationtarget';
     public static IMPORT_FAILURE_INVALID_MAIN_TYPE_DOCUMENT = 'importer/failure/invalidmaintypedocument';
+    public static IMPORT_FAILURE_OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION = 'importer/failure/operationsnotallowedonimporttooperation';
     public static IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE = 'importer/failure/nooperationassignable';
     public static IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE = 'importer/failure/nofeatureassignable';
 
@@ -289,6 +290,12 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 'vom Typ {1} nicht zugeordnet werden.',
             level: 'danger',
             params: [ '?', '?' ],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_FAILURE_OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION]={
+            content: 'Wenn Daten zu Maßnahme zuordnen gewählt ist, darf die Importdatei keine Maßnahmen enthalten.',
+            level: 'danger',
+            params: [],
             hidden: false
         };
         this.msgs[M.BACKUP_DUMP_SUCCESS]={

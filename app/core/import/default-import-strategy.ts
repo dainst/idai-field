@@ -4,6 +4,7 @@ import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
 import {DocumentMerge} from './document-merge';
+import {TypeUtility} from '../model/type-utility';
 
 /**
  * @author Daniel de Oliveira
@@ -12,7 +13,8 @@ import {DocumentMerge} from './document-merge';
 export class DefaultImportStrategy implements ImportStrategy {
 
 
-    constructor(private validator: Validator,
+    constructor(private typeUtility: TypeUtility,
+                private validator: Validator,
                 private datastore: DocumentDatastore,
                 private projectConfiguration: ProjectConfiguration,
                 private username: string,
@@ -22,11 +24,17 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
+     * @returns {Document} the stored document if it has been imported, undefined otherwise
      * @throws errorWithParams
      */
     public async importDoc(document: NewDocument): Promise<Document|undefined> {
 
-        if (this.mainTypeDocumentId) await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
+        if (this.mainTypeDocumentId) {
+            if (this.typeUtility.isSubtype(document.resource.type, 'Operation')) {
+                throw [M.IMPORT_FAILURE_OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION];
+            }
+            await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
+        }
 
         await this.validator.validate(document as Document, false, true);
 

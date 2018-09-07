@@ -80,7 +80,7 @@ describe('ViewFacade/Subsystem', () => {
         spyOn(console, 'debug'); // suppress console.debug
 
         projectConfiguration = new ProjectConfiguration(pc);
-        const daosSpecHelper = new DAOsHelper(projectConfiguration);
+        const daosSpecHelper = new DAOsHelper();
         const {datastore, documentCache, indexFacade} = await daosSpecHelper.init(projectConfiguration);
 
         idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(

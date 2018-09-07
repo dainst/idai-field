@@ -7,6 +7,7 @@ describe('DefaultImportStrategy', () => {
 
     let mockDatastore;
     let mockValidator;
+    let mockTypeUtility;
     let importStrategy: DefaultImportStrategy;
 
 
@@ -14,12 +15,14 @@ describe('DefaultImportStrategy', () => {
 
         mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', ['validate']);
+        mockTypeUtility = jasmine.createSpyObj('typeUtility', ['isSubtype']);
 
         mockValidator.validate.and.returnValue(Promise.resolve());
         mockDatastore.create.and.callFake((a) => Promise.resolve(a));
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
 
         importStrategy = new DefaultImportStrategy(
+            mockTypeUtility,
             mockValidator,
             mockDatastore,
             null,
@@ -46,6 +49,7 @@ describe('DefaultImportStrategy', () => {
         }));
 
         await new DefaultImportStrategy(
+            mockTypeUtility,
             mockValidator,
             mockDatastore,
             null,
@@ -64,6 +68,7 @@ describe('DefaultImportStrategy', () => {
         mockDatastore.get.and.returnValue(Promise.resolve({}));
 
         await new DefaultImportStrategy(
+            mockTypeUtility,
             mockValidator,
             mockDatastore,
             null,

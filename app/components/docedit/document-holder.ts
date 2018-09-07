@@ -79,7 +79,6 @@ export class DocumentHolder {
 
     public async save(): Promise<Document> {
 
-        if (this.isIsRecordedInRelationMissing(this.clonedDocument)) throw [M.VALIDATION_ERROR_NORECORDEDIN];
         await this.validator.validate(this.clonedDocument, true);
 
         const savedDocument: Document = await this.persistenceManager.persist(
@@ -192,22 +191,5 @@ export class DocumentHolder {
                 (typeof(this.clonedDocument.resource[_]) === 'string')
                 && this.clonedDocument.resource[_].length === 0
             );
-    }
-
-
-    private isIsRecordedInRelationMissing(document: Document): boolean {
-
-        return this.isExpectedToHaveIsRecordedInRelation(document)
-            && !Document.hasRelations(document, 'isRecordedIn');
-    }
-
-
-    private isExpectedToHaveIsRecordedInRelation(document: Document): boolean {
-
-        return !this.typeUtility
-            ? false
-            : this.typeUtility
-                .getRegularTypeNames()
-                .includes(document.resource.type);
     }
 }

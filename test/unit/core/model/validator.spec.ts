@@ -1,6 +1,7 @@
-import {ConfigLoader, ProjectConfiguration} from 'idai-components-2';
+import {ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../../../../app/core/model/validator';
 import {M} from '../../../../app/m';
+import {TypeUtility} from '../../../../app/core/model/type-utility';
 
 /**
  * @author Daniel de Oliveira
@@ -55,8 +56,8 @@ describe('Validator', () => {
                 },
             }
         };
-        await new Validator(projectConfiguration, datastore)
-            .validate(doc).then(() => done(), msgWithParams => fail(msgWithParams));
+        await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
+            .validate(doc, false, false, true).then(() => done(), msgWithParams => fail(msgWithParams));
         done();
     });
 
@@ -69,7 +70,8 @@ describe('Validator', () => {
         const doc = {resource: {id: '1', type: 'T', mandatory: 'm', relations: {'isRecordedIn': ['notexisting']}}};
 
         try {
-            await new Validator(projectConfiguration, datastore).validate(doc);
+            await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
+                .validate(doc, false, false, true);
             fail();
         } catch (expected) {
             expect(expected).toEqual([M.VALIDATION_ERROR_NORECORDEDINTARGET, 'notexisting']);
@@ -90,7 +92,8 @@ describe('Validator', () => {
         };
 
         try {
-            await new Validator(projectConfiguration, datastore).validate(doc);
+            await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
+                .validate(doc, false, false, true);
             fail();
         } catch (expected) {
             expect(expected).toEqual([M.MODEL_VALIDATION_ERROR_IDEXISTS, 'eins']);
@@ -114,8 +117,8 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, datastore)
-            .validate(doc).then(() => done(), msgWithParams => fail(msgWithParams));
+        new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
+            .validate(doc, false, false, true).then(() => done(), msgWithParams => fail(msgWithParams));
     });
 
 
@@ -129,8 +132,8 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined)
-            .validate(doc).then(() => fail(), msgWithParams => {
+        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+            .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
             expect(msgWithParams).toEqual([M.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
             done();
         });
@@ -148,8 +151,8 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined)
-            .validate(doc).then(() => fail(), msgWithParams => {
+        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+            .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
                 done();
             });
@@ -168,8 +171,8 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined)
-            .validate(doc).then(() => fail(), msgWithParams => {
+        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+            .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
             expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDFIELD, 'T', 'a']);
             done();
         });
@@ -189,8 +192,8 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined)
-            .validate(doc).then(() => fail(), msgWithParams => {
+        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+            .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
             expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDFIELDS, 'T', 'a, b']);
             done();
         });
@@ -209,7 +212,8 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined).validate(doc).then(
+        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+            .validate(doc, false, false, true).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDRELATIONFIELD, 'T2',
@@ -232,7 +236,8 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined).validate(doc).then(
+        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+            .validate(doc, false, false, true).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDRELATIONFIELDS, 'T2',
@@ -254,7 +259,8 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined).validate(doc).then(
+        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+            .validate(doc, false, false, true).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE, 'T', 'number1']);
@@ -276,7 +282,8 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined).validate(doc).then(
+        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+            .validate(doc, false, false, true).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES, 'T',

@@ -5,6 +5,7 @@ import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
 import {DocumentMerge} from './document-merge';
 import {TypeUtility} from '../model/type-utility';
+import {Validations} from '../model/validations';
 
 /**
  * @author Daniel de Oliveira
@@ -30,13 +31,20 @@ export class DefaultImportStrategy implements ImportStrategy {
     public async importDoc(document: NewDocument): Promise<Document|undefined> {
 
         if (this.mainTypeDocumentId) {
+            if (!Validations.validateType(document.resource, this.projectConfiguration)) { // has to be done before calling isSubtype, duplicate code with first part of validate
+                throw [M.VALIDATION_ERROR_INVALIDTYPE, document.resource.type];
+            }
             if (this.typeUtility.isSubtype(document.resource.type, 'Operation')) {
                 throw [M.IMPORT_FAILURE_OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION];
             }
             await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
         }
 
-        await this.validator.validate(document as Document, false, true);
+        await this.validator.validate(
+            document as Document,
+            false,
+            true,
+            this.mergeIfExists);
 
         const existingDocument = await this.findByIdentifier(document.resource.identifier);
         if (this.mergeIfExists) {

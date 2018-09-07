@@ -3,6 +3,8 @@ import {DAOsHelper} from './daos-helper';
 import {ImporterBuilder} from '../../../app/core/import/importer-builder';
 import {Validator} from '../../../app/core/model/validator';
 import {M} from '../../../app/m';
+import {TypeUtility} from '../../../app/core/model/type-utility';
+import {to} from 'tsfun';
 
 /**
  * @author Daniel de Oliveira
@@ -45,9 +47,19 @@ describe('Import/Subsystem', () => {
                         {name: 'type'},
                     ]
                 },
+                {
+                    type: 'Find',
+                    fields: [
+                        {name: 'id',},
+                        {name: 'identifier'},
+                        {name: 'shortDescription'},
+                        {name: 'type'},
+                    ]
+                }
             ],
             relations: [
-                {name: 'isRecordedIn', domain: ['Feature'], range: ['Trench'], inverse: 'NO-INVERSE'}
+                {name: 'isRecordedIn', domain: ['Feature'], range: ['Trench'], inverse: 'NO-INVERSE'},
+                {name: 'isRecordedIn', domain: ['Find'], range: ['Trench'], inverse: 'NO-INVERSE'}
             ]
         }
     );
@@ -58,43 +70,67 @@ describe('Import/Subsystem', () => {
         h = new DAOsHelper();
         await h.init(projectConfiguration);
         datastore = h.idaiFieldDocumentDatastore;
-        typeUtility = h.typeUtility;
 
         done();
     });
 
 
-    it('create one', async done => {
+    it('create one operation', async done => {
 
         const ifunction = ImporterBuilder.createImportFunction(
             'native',
-            new Validator(projectConfiguration, datastore),
+            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
             projectConfiguration,
             undefined,
             undefined,
             { go: () => Promise.resolve(
-                '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}')});
+                '{ "type": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}')});
 
         await ifunction();
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
-        expect(result.documents[0].resource.identifier).toBe('f1');
+        expect(result.documents[0].resource.identifier).toBe('t1');
         done();
     });
 
 
-    function createRollbackTestImportFunction(allowMergingExistingResources: boolean) {
+    it('create one find, connect to existing operation ', async done => {
 
-        return ImporterBuilder.createImportFunction(
+        const stored = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
+
+        const ifunction = ImporterBuilder.createImportFunction(
             'native',
-            new Validator(projectConfiguration, datastore),
+            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
             projectConfiguration,
-            typeUtility,
+            stored.resource.id,
+            false,
+            { go: () => Promise.resolve(
+                    '{ "type": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}')});
+
+        await ifunction();
+
+        const result = await datastore.find({});
+        expect(result.documents.length).toBe(2);
+        expect(result.documents.map(to('resource.identifier'))).toContain('t1');
+        expect(result.documents.map(to('resource.identifier'))).toContain('f1');
+        done();
+    });
+
+
+    function createRollbackTestImportFunction(allowMergingExistingResources: boolean, resourceId: string) {
+
+        return ImporterBuilder.createImportFunction(
+            'native',
+            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
+            datastore,
+            { getUsername: () => 'testuser'},
+            projectConfiguration,
+            resourceId,
             allowMergingExistingResources,
             { go: () => Promise.resolve(
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
@@ -104,22 +140,30 @@ describe('Import/Subsystem', () => {
 
     it('rollback', async done => {
 
-        await createRollbackTestImportFunction(false)();
+        const id = (await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}})).resource.id;
+
+        const importReport = await createRollbackTestImportFunction(false, id)();
+        expect(importReport.errors[0]).toEqual([M.VALIDATION_ERROR_INVALIDTYPE, "InvalidType"]);
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(0);
+        expect(result.documents.length).toBe(1);
         done();
     });
 
 
     it('no rollback, because after merge we will not perform it', async done => {
 
-        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: {}}});
+        const id = (await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}})).resource.id;
+        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'f1', relations: { isRecordedIn: ["t1"]}}});
 
-        await createRollbackTestImportFunction(true)();
+        const importReport = await createRollbackTestImportFunction(true, id)();
+        expect(importReport.errors[0]).toEqual([M.VALIDATION_ERROR_INVALIDTYPE, "InvalidType"]);
 
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(1);
-        expect(result.documents[0].resource.identifier).toBe('f1');
+        expect(result.documents.length).toBe(2);
+        expect(result.documents.map(to('resource.identifier'))).toContain('f1');
+        expect(result.documents.map(to('resource.identifier'))).toContain('t1');
+        expect(result.documents.map(to('resource.shortDescription'))).toContain('feature1'); // updated
+        expect(result.documents.map(to('resource.shortDescription'))).toContain('Our Trench 1');
         done();
     });
 
@@ -130,7 +174,7 @@ describe('Import/Subsystem', () => {
 
         await ImporterBuilder.createImportFunction(
             'native',
-            new Validator(projectConfiguration, datastore),
+            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
             projectConfiguration,
@@ -145,13 +189,36 @@ describe('Import/Subsystem', () => {
     });
 
 
+    it('unmatched items get ignored on merge', async done => {
+
+        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: {}}});
+
+        await ImporterBuilder.createImportFunction(
+            'native',
+            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
+            datastore,
+            { getUsername: () => 'testuser'},
+            projectConfiguration,
+            undefined,
+            true,
+            { go: () => Promise.resolve(
+                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}' + "\n"
+                + '{ "type": "Feature", "identifier" : "f2", "shortDescription" : "feature_2"}')})();
+
+        const result = await datastore.find({});
+        expect(result.documents.length).toBe(1);
+        expect(result.documents[0].resource.shortDescription).toBe('feature_1');
+        done();
+    });
+
+
     it('import trench not allowed, when import into operation is activated', async done => {
 
         await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our trench 1', relations: {}}});
 
         const importReport = await ImporterBuilder.createImportFunction(
             'native',
-            new Validator(projectConfiguration, datastore),
+            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
             projectConfiguration,
@@ -168,11 +235,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    // TODO test that in merge unmatched get ignore
-
     // TODO test that on creation existing get rolled back and an error is thrown
 
     // TODO get rid of some e2es when done
-
-    // TODO test that an assignment to an operation has to be done in any case
 });

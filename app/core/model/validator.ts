@@ -4,33 +4,42 @@ import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
 import {M} from '../../m';
 import {Validations} from './validations';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
-import {to} from 'tsfun';
+import {TypeUtility} from './type-utility';
 
 
 @Injectable()
 /**
+ * Validates against data model of ProjectConfiguration and TypeUtility and contents of Database
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
 export class Validator {
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private datastore: IdaiFieldDocumentDatastore) {}
+                private datastore: IdaiFieldDocumentDatastore,
+                private typeUtility: TypeUtility) {}
 
     /**
      * @param document
      * @param suppressFieldsAndRelationsCheck
      * @param suppressIdentifierCheck
+     * @param suppressIsRecordedInCheck
      * @returns resolves with () or rejects with msgsWithParams
      */
     public async validate(
         document: Document|NewDocument,
         suppressFieldsAndRelationsCheck = false,
-        suppressIdentifierCheck = false
+        suppressIdentifierCheck = false,
+        suppressIsRecordedInCheck = false,
     ): Promise<void> {
 
         if (!Validations.validateType(document.resource, this.projectConfiguration)) {
             throw [M.VALIDATION_ERROR_INVALIDTYPE, document.resource.type];
+        }
+
+        if (!suppressIsRecordedInCheck && this.isIsRecordedInRelationMissing(document as Document)) {
+            throw [M.VALIDATION_ERROR_NORECORDEDIN]; // TODO test in validator
         }
 
         const missingProperties = Validations.getMissingProperties(document.resource, this.projectConfiguration);
@@ -48,10 +57,27 @@ export class Validator {
 
         if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) {
             const invalidRelationTarget = await this.validateRelationTargets(document as Document, 'isRecordedIn');
-            if (invalidRelationTarget) throw [M.VALIDATION_ERROR_NORECORDEDINTARGET, invalidRelationTarget.join(',')];
+            if (invalidRelationTarget) throw [M.VALIDATION_ERROR_NORECORDEDINTARGET, invalidRelationTarget.join(', ')];
         }
 
         if (!suppressIdentifierCheck) await this.validateIdentifier(document as any);
+    }
+
+
+    private isIsRecordedInRelationMissing(document: Document): boolean {
+
+        return this.isExpectedToHaveIsRecordedInRelation(document)
+            && !Document.hasRelations(document, 'isRecordedIn');
+    }
+
+
+    private isExpectedToHaveIsRecordedInRelation(document: Document): boolean {
+
+        return !this.typeUtility
+            ? false
+            : this.typeUtility
+                .getRegularTypeNames()
+                .includes(document.resource.type);
     }
 
 

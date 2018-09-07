@@ -139,7 +139,7 @@ describe('DocumentHolder', () => {
     });
 
 
-    it('throw exception if isRecordedIn relation is missing', async done => {
+    xit('throw exception if isRecordedIn relation is missing', async done => {
 
         const document: Document = {
             resource: {

@@ -88,6 +88,7 @@ describe('Import/ImporterBuilder/Subsystem', () => {
                     + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}')})
     }
 
+
     it('rollback', async done => {
 
         await createRollbackTestImportFunction(false)();

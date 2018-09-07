@@ -123,7 +123,7 @@ export class Validator {
                 constraints: { 'identifier:match': doc.resource.identifier }
             });
         } catch (e) {
-            throw ([M.ALL_FIND_ERROR]);
+            throw ([M.ALL_FIND_ERROR]); // TODO make generic or unknown error or something
         }
 
         if (result.totalCount > 0 && Validator.isDuplicate(result.documents[0], doc)) {

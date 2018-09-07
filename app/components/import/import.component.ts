@@ -2,39 +2,21 @@ import {Component} from '@angular/core';
 import {Http} from '@angular/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
-import {Import, ImportReport} from '../../core/import/import';
+import {ImportReport} from '../../core/import/import';
 import {Reader} from '../../core/import/reader';
 import {FileSystemReader} from '../../core/import/file-system-reader';
 import {HttpReader} from '../../core/import/http-reader';
-import {Parser} from '../../core/import/parser';
-import {NativeJsonlParser} from '../../core/import/native-jsonl-parser';
-import {IdigCsvParser} from '../../core/import/idig-csv-parser';
-import {GeojsonParser} from '../../core/import/geojson-parser';
 import {M} from '../../m';
-import {ImportStrategy} from '../../core/import/import-strategy';
-import {DefaultImportStrategy} from '../../core/import/default-import-strategy';
-import {MergeGeometriesImportStrategy} from '../../core/import/merge-geometries-import-strategy';
-import {RelationsStrategy} from '../../core/import/relations-strategy';
-import {DefaultRelationsStrategy} from '../../core/import/default-relations-strategy';
-import {NoRelationsStrategy} from '../../core/import/no-relations-strategy';
-import {RollbackStrategy} from '../../core/import/rollback-strategy';
-import {DefaultRollbackStrategy} from '../../core/import/default-rollback-strategy';
-import {NoRollbackStrategy} from '../../core/import/no-rollback-strategy';
-import {RelationsCompleter} from '../../core/import/relations-completer';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
 import {Validator} from '../../core/model/validator';
-import {MeninxFindCsvParser} from '../../core/import/meninx-find-csv-parser';
 import {UsernameProvider} from '../../core/settings/username-provider';
-import {MeninxFindImportStrategy} from '../../core/import/meninx-find-import-strategy';
-import {Settings} from '../../core/settings/settings';
 import {SettingsService} from '../../core/settings/settings-service';
+import {ImporterBuilder, ImportFormat} from '../../core/import/importer-builder';
 
-
-type ImportFormat = 'native' | 'idig' | 'geojson' | 'meninxfind';
 
 @Component({
     moduleId: module.id,
@@ -95,19 +77,16 @@ export class ImportComponent {
         }, 200);
 
         this.remoteChangesStream.setAutoCacheUpdate(false);
-        const importReport = await Import.go(
-            reader,
-            ImportComponent.createParser(this.format),
-            ImportComponent.createImportStrategy(
-                this.format,
-                this.validator,
-                this.datastore,
-                this.usernameProvider,
-                this.projectConfiguration,
-                this.mainTypeDocumentId,
-                this.allowMergingExistingResources),
-            ImportComponent.createRelationsStrategy(this.format, new RelationsCompleter(this.datastore, this.projectConfiguration, this.usernameProvider)),
-            ImportComponent.createRollbackStrategy(this.format, this.datastore, this.allowMergingExistingResources));
+        const importReport = await ImporterBuilder.createImportFunction(
+            this.format,
+            this.validator,
+            this.datastore,
+            this.usernameProvider,
+            this.projectConfiguration,
+            this.mainTypeDocumentId,
+            this.allowMergingExistingResources,
+            reader
+        )();
         this.remoteChangesStream.setAutoCacheUpdate(true);
 
         uploadReady = true;
@@ -118,12 +97,9 @@ export class ImportComponent {
 
     public isReady(): boolean|undefined {
 
-        switch (this.sourceType) {
-            case 'file':
-                return (this.file != undefined);
-            case 'http':
-                return (this.url != undefined);
-        }
+        return this.sourceType === 'file'
+            ? this.file != undefined
+            : this.url != undefined;
     }
     
 
@@ -173,85 +149,8 @@ export class ImportComponent {
 
     private static createReader(sourceType: string, file: File, url: string, http: Http): Reader|undefined {
 
-        switch (sourceType) {
-            case 'file':
-                return new FileSystemReader(file);
-            case 'http':
-                return new HttpReader(url, http);
-        }
-    }
-
-
-    private static createParser(format: ImportFormat): Parser {
-
-        switch (format) {
-            case 'meninxfind':
-                return new MeninxFindCsvParser();
-            case 'idig':
-                return new IdigCsvParser();
-            case 'geojson':
-                return new GeojsonParser();
-            default: // 'native'
-                return new NativeJsonlParser() as any;
-        }
-    }
-
-
-    private static createImportStrategy(format: ImportFormat,
-                                        validator: Validator,
-                                        datastore: DocumentDatastore,
-                                        usernameProvider: UsernameProvider,
-                                        projectConfiguration: ProjectConfiguration,
-                                        mainTypeDocumentId?: string,
-                                        allowMergingExistingResources = false): ImportStrategy {
-
-        switch (format) {
-            case 'meninxfind':
-                return new MeninxFindImportStrategy(validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername());
-            case 'idig':
-                return new DefaultImportStrategy(validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername());
-            case 'geojson':
-                return new MergeGeometriesImportStrategy(validator, datastore, usernameProvider.getUsername());
-            default: // 'native'
-                return new DefaultImportStrategy(validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername(),
-                    allowMergingExistingResources, mainTypeDocumentId);
-        }
-    }
-
-
-    private static createRelationsStrategy(format: ImportFormat, relationsCompleter: RelationsCompleter): RelationsStrategy {
-
-        switch (format) {
-            case 'meninxfind':
-                return new NoRelationsStrategy();
-            case 'idig':
-                return new DefaultRelationsStrategy(relationsCompleter);
-            case 'geojson':
-                return new NoRelationsStrategy();
-            default: // 'native'
-                return new DefaultRelationsStrategy(relationsCompleter);
-        }
-    }
-
-
-    private static createRollbackStrategy(format: ImportFormat,
-                                          datastore: DocumentDatastore,
-                                          allowMergeExistingResources: boolean): RollbackStrategy {
-
-        switch (format) {
-            case 'meninxfind':
-                return new NoRollbackStrategy();
-            case 'geojson':
-                return new NoRollbackStrategy();
-            case 'idig':
-                return new DefaultRollbackStrategy(datastore);
-            default: // 'native'
-                return allowMergeExistingResources
-                    ? new NoRollbackStrategy() // TODO check it
-                    : new DefaultRollbackStrategy(datastore);
-        }
+        return sourceType === 'file'
+            ? new FileSystemReader(file)
+            : new HttpReader(url, http);
     }
 }

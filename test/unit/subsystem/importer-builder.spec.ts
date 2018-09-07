@@ -85,7 +85,7 @@ describe('Import/ImporterBuilder/Subsystem', () => {
             allowMergingExistingResources,
             { go: () => Promise.resolve(
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
-                    + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}')})
+                    + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}')});
     }
 
 
@@ -107,6 +107,27 @@ describe('Import/ImporterBuilder/Subsystem', () => {
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
         expect(result.documents[0].resource.identifier).toBe('f1');
+        done();
+    });
+
+
+    it('update shortDescription', async done => {
+
+        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: {}}});
+
+        await ImporterBuilder.createImportFunction(
+            'native',
+            new Validator(projectConfiguration, datastore),
+            datastore,
+            { getUsername: () => 'testuser'},
+            projectConfiguration,
+            undefined,
+            true,
+            { go: () => Promise.resolve(
+                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}')})();
+
+        const result = await datastore.find({});
+        expect(result.documents[0].resource.shortDescription).toBe('feature_1');
         done();
     });
 });

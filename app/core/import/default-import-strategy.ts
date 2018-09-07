@@ -30,7 +30,6 @@ export class DefaultImportStrategy implements ImportStrategy {
 
         await this.validator.validate(document as Document, false, true);
 
-
         const existingDocument = await this.findByIdentifier(document.resource.identifier);
         if (this.mergeIfExists) {
 

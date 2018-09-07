@@ -31,7 +31,7 @@ export class DefaultImportStrategy implements ImportStrategy {
     public async importDoc(document: NewDocument): Promise<Document|undefined> {
 
         if (this.mainTypeDocumentId) {
-            if (!Validations.validateType(document.resource, this.projectConfiguration)) { // has to be done before calling isSubtype, duplicate code with first part of validate
+            if (!Validations.validateType(document.resource, this.projectConfiguration)) {
                 throw [M.VALIDATION_ERROR_INVALIDTYPE, document.resource.type];
             }
             if (this.typeUtility.isSubtype(document.resource.type, 'Operation')) {

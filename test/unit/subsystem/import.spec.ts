@@ -234,6 +234,8 @@ describe('Import/Subsystem', () => {
         done();
     });
 
+    // TODO test: merge mode, but isRecordedIn is set. decide how we deal with it.
 
-    // TODO get rid of some e2es when done
+
+    // TODO get rid of some e2es
 });

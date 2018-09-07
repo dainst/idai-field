@@ -101,20 +101,6 @@ describe('import --', function() {
     });
 
 
-    it('link imported resources to an existing main type resource', () => {
-
-        importIt('./test/test-data/importer-test-no-trench.jsonl', 1);
-
-        browser.sleep(delays.shortRest);
-        NavbarPage.clickNavigateToExcavation();
-
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob1')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob2')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob3')), delays.ECWaitTime);
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('obob4')), delays.ECWaitTime);
-    });
-
-
     it('abort if a resource must not be linked to an existing main type resource', () => {
 
         importIt('./test/test-data/importer-test-ok.jsonl', 1);

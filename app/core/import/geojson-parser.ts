@@ -4,6 +4,7 @@ import {AbstractParser} from './abstract-parser';
 import {Observer} from 'rxjs/Observer';
 import {duplicates} from 'tsfun';
 import {M} from '../../components/m';
+import {ImportErrors} from './import-errors';
 
 export interface Geojson {
     type: string,
@@ -35,7 +36,7 @@ export class GeojsonParser extends AbstractParser {
             try {
                 content_ = JSON.parse(content) as Geojson;
             } catch (e) {
-                return observer.error([M.IMPORT_FAILURE_INVALIDJSON, e.toString()]);
+                return observer.error([ImportErrors.FILE_INVALID_JSON, e.toString()]);
             }
 
             const msgWithParams = GeojsonParser.validate(content_);
@@ -66,7 +67,7 @@ export class GeojsonParser extends AbstractParser {
         const supportedGeometryTypes = ['Point', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'];
 
         function structErr(text: any) {
-            return [M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT, text];
+            return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, text];
         }
         if (content.type != 'FeatureCollection') {
             return structErr('"type": "FeatureCollection" not found at top level.');
@@ -77,10 +78,10 @@ export class GeojsonParser extends AbstractParser {
         for (let feature of content.features) {
             if (feature.properties == undefined
                 || feature.properties['identifier'] == undefined)  {
-                return [M.IMPORT_FAILURE_MISSING_IDENTIFIER];
+                return [ImportErrors.MISSING_IDENTIFIER];
             }
             if (typeof feature.properties['identifier'] != 'string')  {
-                return [M.IMPORT_FAILURE_IDENTIFIER_FORMAT];
+                return [ImportErrors.WRONG_IDENTIFIER_FORMAT];
             }
             if (feature.type == undefined) {
                 return structErr('Property "type" not found for at least one feature.');

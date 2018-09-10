@@ -1,5 +1,6 @@
 import {NativeJsonlParser} from '../../../../app/core/import/native-jsonl-parser';
 import {M} from '../../../../app/components/m';
+import {ImportErrors} from '../../../../app/core/import/import-errors';
 
 /**
  * @author Sebastian Cuy
@@ -51,7 +52,7 @@ describe('NativeJsonlParser', () => {
         }, (error) => {
             expect(objects.length).toEqual(1);
             expect(objects[0]['resource']['id']).toEqual('id1');
-            expect(error).toEqual([M.IMPORT_FAILURE_INVALIDJSONL,2]);
+            expect(error).toEqual([ImportErrors.FILE_INVALID_JSONL,2]);
             done();
         });
 

@@ -2,6 +2,7 @@ import {Document, ProjectConfiguration, Resource} from 'idai-components-2';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {UsernameProvider} from '../settings/username-provider';
 import {M} from '../../components/m';
+import {ImportErrors} from './import-errors';
 
 /**
  * @author Thomas Kleinke
@@ -127,7 +128,7 @@ export class RelationsCompleter {
                 }, () => {
                     switch (mode) {
                         case 'create':
-                            reject([M.IMPORT_FAILURE_MISSING_RELATION_TARGET, targetId]);
+                            reject([ImportErrors.MISSING_RELATION_TARGET, targetId]);
                             break;
                         case 'remove':
                             resolve();

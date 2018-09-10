@@ -6,6 +6,7 @@ import {DocumentMerge} from './document-merge';
 import {TypeUtility} from '../model/type-utility';
 import {Validations} from '../model/validations';
 import {M} from '../../components/m';
+import {ImportErrors} from './import-errors';
 
 /**
  * @author Daniel de Oliveira
@@ -35,7 +36,7 @@ export class DefaultImportStrategy implements ImportStrategy {
                 throw [M.IMPORT_VALIDATION_ERROR_INVALIDTYPE, document.resource.type];
             }
             if (this.typeUtility.isSubtype(document.resource.type, 'Operation')) {
-                throw [M.IMPORT_FAILURE_OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION];
+                throw [ImportErrors.OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION];
             }
             await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
         }
@@ -78,7 +79,7 @@ export class DefaultImportStrategy implements ImportStrategy {
         if (!this.projectConfiguration.isAllowedRelationDomainType(document.resource.type,
                 mainTypeDocument.resource.type, 'isRecordedIn')) {
 
-            throw [M.IMPORT_FAILURE_INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
+            throw [ImportErrors.INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
                 mainTypeDocument.resource.type];
         }
 

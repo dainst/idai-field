@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import {AbstractParser} from './abstract-parser';
 import {M} from '../../components/m';
+import {ImportErrors} from './import-errors';
 // import * as Papa from 'papaparse'; TODO this does not work in production, fixes only unit test
 
 /**
@@ -14,7 +15,7 @@ export class MeninxFindCsvParser extends AbstractParser {
 
         return Observable.create((observer: Observer<Document>) => {
 
-            let errorCallback = (e: any) => observer.error([M.IMPORT_FAILURE_INVALIDCSV, e.row]);
+            let errorCallback = (e: any) => observer.error([ImportErrors.INVALID_CSV, e.row]);
 
             let completeCallback = (result: any) => {
                 result.errors.forEach( (e: any) => errorCallback(e) );
@@ -60,7 +61,7 @@ export class MeninxFindCsvParser extends AbstractParser {
                     complete: completeCallback
                 });
             } catch (e) {
-                observer.error([M.IMPORT_FAILURE_GENERICCSVERROR]);
+                observer.error([ImportErrors.GENERIC_CSV_ERROR]);
             }
         });
     }

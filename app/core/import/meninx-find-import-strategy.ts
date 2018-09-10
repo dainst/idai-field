@@ -5,6 +5,8 @@ import {Validator} from '../model/validator';
 import {IdaiFieldFindResult} from '../datastore/core/cached-read-datastore';
 import {clone} from '../../util/object-util';
 import {M} from '../../components/m';
+import {ImportErrors} from './import-errors';
+import {ValidationErrors} from '../model/validation-errors';
 
 
 const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {
@@ -77,7 +79,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
                 types: ['Trench']});
             return trench.documents[0].resource.id;
         } catch (err) {
-            throw [M.IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE, trenchIdentifier];
+            throw [ImportErrors.NO_OPERATION_ASSIGNABLE, trenchIdentifier];
         }
     }
 
@@ -90,12 +92,12 @@ export class MeninxFindImportStrategy implements ImportStrategy {
                 constraints: { 'identifier:match': liesWithinIdentifier},
                 types: ['Feature', 'DrillCoreLayer', 'Floor', 'Grave', 'Layer', 'Other', 'Architecture', 'SurveyUnit', 'Planum', 'Room', 'Burial']});
         } catch (err) {
-            throw [M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE, liesWithinIdentifier];
+            throw [ImportErrors.NO_FEATURE_ASSIGNABLE, liesWithinIdentifier];
         }
 
         if (liesWithinTargetFindResult.documents.length > 1) {
             console.error('cannot get liesWithinId for identifier', liesWithinIdentifier);
-            throw [M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE, 'More than one SU found for identifier ' +
+            throw [ImportErrors.NO_FEATURE_ASSIGNABLE, 'More than one SU found for identifier ' +
                 liesWithinTargetFindResult.documents.map(_ => _.resource.identifier).join(' -- ')];
         }
 

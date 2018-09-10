@@ -4,7 +4,7 @@ import {Parser} from './parser';
 import {ImportStrategy} from './import-strategy';
 import {RelationsStrategy} from './relations-strategy';
 import {RollbackStrategy} from './rollback-strategy';
-import {M} from '../../components/m';
+import {ImportErrors} from './import-errors';
 
 
 export interface ImportReport {
@@ -31,12 +31,26 @@ export module Import {
      * containing the number of resources imported successfully as well as information on errors that occurred,
      * if any.
      *
-     * There are four common errors which can occur:
+     * @throws [FILE_UNREADABLE]
+     * @throws [INVALID_JSON]
+     * @throws [INVALID_JSONL]
+     * @throws [INVALID_GEOJSON_IMPORT_STRUCT]
+     * @throws [MISSING_IDENTIFIER]
+     * @throws [WRONG_IDENTIFIER_FORMAT]
+     * @throws [INVALID_CSV]
+     * @throws [GENERIC_CSV_ERROR]
+     * @throws [MANDATORY_CSV_FIELD_MISSING]
+     * @throws [GENERIC_DATASTORE_ERROR]
+     * @throws [INVALID_GEOMETRY]
+     * @throws [ROLLBACK_ERROR]
+     * @throws [MISSING_RESOURCE]
+     * @throws [MISSING_RELATION_TARGET]
+     * @throws [INVALID_MAIN_TYPE_DOCUMENT]
+     * @throws [OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION]
+     * @throws [NO_OPERATION_ASSIGNABLE]
+     * @throws [NO_FEATURE_ASSIGNABLE]
      *
-     * 1. Error during updating the datastore which can also happen due to constraint violations detected there.
-     * 2. Error reading a json line.
-     * 3. Error validating a resource.
-     * 4. The file is unreadable.
+     * @throws Any error of module ValidationErrors
      */
     export function go(reader: Reader,
               parser: Parser,
@@ -96,7 +110,7 @@ export module Import {
                 await rollbackStrategy.rollback(importReport.importedResourcesIds);
             } catch (err) {
                 console.error("rollback error", err);
-                importReport.errors.push([M.IMPORT_FAILURE_ROLLBACKERROR]);
+                importReport.errors.push([ImportErrors.ROLLBACK_ERROR]);
             }
         }
         return importReport;

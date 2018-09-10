@@ -5,6 +5,7 @@ import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
 import {clone} from '../../util/object-util';
 import {M} from '../../components/m';
+import {ImportErrors} from './import-errors';
 
 /**
  * @author Daniel de Oliveira
@@ -30,7 +31,7 @@ export class MergeGeometriesImportStrategy implements ImportStrategy {
                 if (result.totalCount > 0) {
                     existingDocument = result.documents[0] as IdaiFieldDocument;
                 } else {
-                    return Promise.reject([M.IMPORT_FAILURE_MISSING_RESOURCE, document.resource.identifier]);
+                    return Promise.reject([ImportErrors.MISSING_RESOURCE, document.resource.identifier]);
                 }
 
                 existingDocument.resource.geometry = document.resource.geometry;

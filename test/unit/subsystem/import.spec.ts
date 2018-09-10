@@ -6,6 +6,7 @@ import {TypeUtility} from '../../../app/core/model/type-utility';
 import {to} from 'tsfun';
 import {ValidationErrors} from '../../../app/core/model/validation-errors';
 import {M} from '../../../app/components/m';
+import {ImportErrors} from '../../../app/core/import/import-errors';
 
 /**
  * @author Daniel de Oliveira
@@ -228,7 +229,7 @@ describe('Import/Subsystem', () => {
             { go: () => Promise.resolve(
                     '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}')})();
 
-        expect(importReport.errors[0]).toEqual([M.IMPORT_FAILURE_OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION]);
+        expect(importReport.errors[0]).toEqual([ImportErrors.OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION]);
 
         const result = await datastore.find({});
         expect(result.documents[0].resource.identifier).toBe('t1');

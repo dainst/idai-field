@@ -2,7 +2,7 @@ import {Observable} from 'rxjs/Observable';
 import {NewDocument, Document} from 'idai-components-2';
 import {AbstractParser} from './abstract-parser';
 import {Observer} from 'rxjs/Observer';
-import {M} from '../../components/m';
+import {ImportErrors} from './import-errors';
 
 /**
  * @author Sebastian Cuy
@@ -32,7 +32,7 @@ export class NativeJsonlParser extends AbstractParser {
                 if (lines[i].length > 0) observer.next(NativeJsonlParser.makeDoc(lines[i]));
             } catch (e) {
                 console.error('parse content error. reason: ', e);
-                observer.error([M.IMPORT_FAILURE_INVALIDJSONL, i + 1]);
+                observer.error([ImportErrors.FILE_INVALID_JSONL, i + 1]);
                 break;
             }
         }

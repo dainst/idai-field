@@ -36,7 +36,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE = 'validation/error/missinggeometrytype';
     public static MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE = 'validation/error/unsupportedgeometrytype';
 
-    // Import Package
+    // ImportComponent
 
     public static IMPORT_START= 'importer/start';
     public static IMPORT_GENERIC_START_ERROR= 'importer/genericstarterror';
@@ -44,6 +44,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_SUCCESS_MULTIPLE= 'importer/success/multiple';
     public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER= 'importer/warning/geojsonduplicateidentifier';
     public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS= 'importer/warning/geojsonduplicateidentifiers';
+
     public static IMPORT_FAILURE_FILEUNREADABLE = 'importer/failure/fileunreadable';
     public static IMPORT_FAILURE_INVALIDJSON = 'importer/failure/invalidjson';
     public static IMPORT_FAILURE_INVALIDJSONL = 'importer/failure/invalidjsonl';
@@ -62,6 +63,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_FAILURE_OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION = 'importer/failure/operationsnotallowedonimporttooperation';
     public static IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE = 'importer/failure/nooperationassignable';
     public static IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE = 'importer/failure/nofeatureassignable';
+
     public static IMPORT_VALIDATION_ERROR_MISSINGPROPERTY = 'import/validation/error/missingproperty';
     public static IMPORT_VALIDATION_ERROR_MISSINGVIEWTYPE = 'import/validation/error/missingviewtype';
     public static IMPORT_VALIDATION_ERROR_NONOPERATIONVIEWTYPE = 'import/validation/error/nonoperationviewtype';

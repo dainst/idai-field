@@ -1,8 +1,14 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {includedIn, isNot} from 'tsfun';
-import {Document, Messages, IdaiFieldDocument, DatastoreErrors, IdaiFieldImageDocument, ProjectConfiguration}
-    from 'idai-components-2';
+import {
+    DatastoreErrors,
+    Document,
+    IdaiFieldDocument,
+    IdaiFieldImageDocument,
+    Messages,
+    ProjectConfiguration
+} from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../util/object-util';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
@@ -13,7 +19,6 @@ import {DocumentHolder} from './document-holder';
 import {TypeUtility} from '../../core/model/type-utility';
 import {ValidationErrors} from '../../core/model/validation-errors';
 import {M} from '../m';
-import {ImportErrors} from '../../core/import/import-errors';
 
 
 @Component({

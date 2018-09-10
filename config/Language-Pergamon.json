@@ -70,6 +70,139 @@
           "label": "Zeichnung/Photo"
         }
       }
+    },
+    "ProcessUnit": {
+      "label": "Arbeitsgang",
+      "fields": {
+        "date": {
+          "label": "Datum",
+          "description": "Datum der Durchführung"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "processor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin des Arbeitsgangs."
+        },
+        "operationClassification": {
+          "label": "Klassifikation Arbeitsgang"
+        }
+      }
+    },
+    "Drilling": {
+      "label": "Bohrung",
+      "fields": {
+        "dimensionDiameter": {
+          "label": "Durchmesser",
+          "description": "Angabe des Objektdurchmessers"
+        },
+        "dimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+        },
+        "drillingEquipment": {
+          "label": "Bohrausrüstung",
+          "description": "Welche Art des Bohrers wurde verwendet?"
+        }
+      }
+    },
+    "Planum": {
+      "label": "Planum",
+      "fields": {
+        "area": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "dimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge."
+        },
+        "dimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+        },
+        "dimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
+        },
+        "horizontalLocation": {
+          "label": "Horizontallage",
+          "description": "Ausrichtung des Planums"
+        },
+        "orientation": {
+          "label": "Orientierung",
+          "description": "Ausrichtung nach Himmelsrichtung des Profils."
+        },
+        "planumForm": {
+          "label": "Form Planum",
+          "description": "Form des angelegten Planums"
+        }
+      }
+    },
+    "Sample": {
+      "label": "Probe",
+      "fields": {
+        "labNumber": {
+          "label": "Labornummer",
+          "description": "Nummer der Probe, vergeben im untersuchenden Labor."
+        },
+        "weight": {
+          "label": "Gewicht (g)",
+          "description": "Gewicht in Gramm"
+        },
+        "sampleType": {
+          "label": "Art der Probe",
+          "description": "Welche Probe wird genommen?\nWelche Untersuchungen sollen vorgenommen werden?"
+        },
+        "soilType": {
+          "label": "Bodenart",
+          "description": "Bezeichnung des Bodens nach Bodenkundlicher Kartieranleitung."
+        }
+      }
+    },
+    "SurveyUnit": {
+      "label": "Planquadrat",
+      "fields": {
+        "area": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "finds": {
+          "label": "Fundmaterial",
+          "description": "Ja/Nein Feld zum Vorhandensein von Fundmaterial."
+        },
+        "dimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge."
+        },
+        "dimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
+        }
+      }
+    },
+    "Profile": {
+      "label": "Profil",
+      "fields": {
+        "dimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufnivau."
+        },
+        "orientation": {
+          "label": "Orientierung",
+          "description": "Ausrichtung nach Himmelsrichtung des Profils."
+        }
+      }
     }
   }
 }

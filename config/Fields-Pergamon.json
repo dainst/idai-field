@@ -216,5 +216,227 @@
         ]
       }
     }
+  },
+  "ProcessUnit": {
+    "color": "#08306b",
+    "fields": {
+      "date": {
+        "inputType": "date"
+      },
+      "description": {
+        "inputType": "text"
+      },
+      "processor": {
+        "inputType": "input"
+      },
+      "operationClassification": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Abhub",
+          "Bohrung",
+          "Laufspur",
+          "Planum",
+          "Profil",
+          "Sondage"
+        ]
+      }
+    }
+  },
+  "Drilling": {
+    "color": "#08519c",
+    "parent": "ProcessUnit",
+    "fields": {
+      "dimensionDiameter": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "dimensionHeight": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "dimensionVerticalExtent": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Oberkante",
+          "Unterkante"]
+      },
+      "drillingEquipment": {
+        "inputType": "radio",
+        "valuelist": [
+          "Pürckhauer"
+        ]
+      }
+    }
+  },
+  "Planum": {
+    "color": "#2171b5",
+    "parent": "ProcessUnit",
+    "fields": {
+      "area": {
+        "inputType": "unsignedFloat"
+      },
+      "dimensionLength": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "dimensionVerticalExtent": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Oberkante",
+          "Unterkante"]
+      },
+      "dimensionWidth": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "horizontalLocation": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Abfallend nach Norden",
+          "Abfallend nach Osten",
+          "Abfallend nach Süden",
+          "Abfallend nach Westen",
+          "Ansteigend nach Norden",
+          "Ansteigend nach Osten",
+          "Ansteigend nach Süden",
+          "Ansteigend nach Westen"
+        ]
+      },
+      "orientation": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "N-S",
+          "NNO - SSW",
+          "NNW-SSO",
+          "NO-SW",
+          "NW-SO",
+          "W-O",
+          "WNW-OSO",
+          "WSW-ONO"
+        ]
+      },
+      "planumForm": {
+        "inputType": "radio",
+        "valuelist": [
+          "L-förmig",
+          "Quadratisch",
+          "Rechtwinklig",
+          "Schachbrettmuster"
+        ]
+      }
+    }
+  },
+  "SurveyUnit": {
+    "color": "#6baed6",
+    "parent": "ProcessUnit",
+    "fields": {
+      "area": {
+        "inputType": "unsignedFloat"
+      },
+      "finds": {
+        "inputType": "boolean"
+      },
+      "dimensionLength": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "dimensionWidth": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"
+        ]
+      }
+    }
+  },
+  "Sample": {
+    "color": "#9ecae1",
+    "parent": "ProcessUnit",
+    "fields": {
+      "labNumber": {
+        "inputType": "input"
+      },
+      "weight": {
+        "inputType": "unsignedFloat"
+      },
+      "sampleType": {
+        "inputType": "radio",
+        "valuelist": [
+          "Bodenprobe",
+          "C14-Analyse",
+          "Dendroprobe",
+          "Hammerschlagsprobe",
+          "Phosphatanalyse",
+          "Pollenanalyse"
+        ]
+      },
+      "soilType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Feinsand",
+          "Feinstsand",
+          "Grobsand",
+          "Lehm",
+          "Lehmiger Sand",
+          "Lehmiger Schluff",
+          "Lehmiger Ton",
+          "Mergel",
+          "Mittlerer Sand",
+          "Sand",
+          "Sandiger Lehm",
+          "Sandiger Schluff",
+          "Sandiger Ton",
+          "Schluff",
+          "Schluffiger Lehm",
+          "Schluffiger Sand",
+          "Schluffiger Ton",
+          "Ton",
+          "Toniger Lehm",
+          "Toniger Sand",
+          "Toniger Schluff"
+        ]
+      }
+    }
+  },
+  "Profile": {
+    "color": "#c6dbef",
+    "parent": "ProcessUnit",
+    "fields": {
+      "dimensionHeight": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "dimensionVerticalExtent": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Oberkante",
+          "Unterkante"]
+      },
+      "orientation": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "N-S",
+          "NNO - SSW",
+          "NNW-SSO",
+          "NO-SW",
+          "NW-SO",
+          "W-O",
+          "WNW-OSO",
+          "WSW-ONO"
+        ]
+      }
+    }
   }
 }

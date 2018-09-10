@@ -109,12 +109,14 @@ export class SettingsService {
 
         // config
 
-        const applyMeninxConfiguration = this.getSelectedProject().indexOf('meninx-project') === 0;
+        let customProjectName = undefined;
+        if (this.getSelectedProject().indexOf('meninx-project') === 0) customProjectName = 'Meninx';
+        if (this.getSelectedProject().indexOf('pergamongrabung') === 0) customProjectName = 'Pergamon';
 
         try {
             return await this.appConfigurator.go(
                 remote.getGlobal('configurationDirPath'),
-                applyMeninxConfiguration
+                customProjectName
             );
         } catch (msgsWithParams) {
             if (msgsWithParams.length > 0) {

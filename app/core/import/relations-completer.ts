@@ -1,7 +1,6 @@
 import {Document, ProjectConfiguration, Resource} from 'idai-components-2';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {UsernameProvider} from '../settings/username-provider';
-import {M} from '../../components/m';
 import {ImportErrors} from './import-errors';
 
 /**
@@ -40,6 +39,7 @@ export class RelationsCompleter {
      * Iterates over all relations of the given resources and either creates or removes the corresponding inverse
      * relations of the relation targets.
      * @param mode: Can be either 'create' or 'remove'
+     * @param resourceIds
      */
     private alterInverseRelations(mode: string, resourceIds: string[]): Promise<any> {
 
@@ -65,6 +65,7 @@ export class RelationsCompleter {
     /**
      * Creates/removes inverse relations for a single resource.
      * @param mode: Can be either 'create' or 'remove'
+     * @param resourceId
      */
     private alterInverseRelationsForResource(mode: string, resourceId: string): Promise<any> {
 
@@ -104,6 +105,9 @@ export class RelationsCompleter {
     /**
      * Either adds (in mode 'create') oder removes (in mode 'remove') an relation.
      * @param mode Can be either 'create' or 'remove'
+     * @param resource
+     * @param targetId
+     * @param relationName
      */
     private alterRelation(mode: string, resource: Resource, targetId: string,
                                  relationName: string): Promise<any> {

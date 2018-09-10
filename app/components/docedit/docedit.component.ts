@@ -130,7 +130,7 @@ export class DoceditComponent {
         this.documentHolder.save().then(
             async (documentAfterSave: Document) => {
                 await this.handleSaveSuccess(documentBeforeSave, documentAfterSave, viaSaveButton);
-            }, msgWithParams => this.handleSaveError(msgWithParams)
+            }, this.handleSaveError.bind(this)
         );
     }
 

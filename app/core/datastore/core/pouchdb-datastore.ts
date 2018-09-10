@@ -1,4 +1,4 @@
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {DatastoreErrors, Document, NewDocument} from 'idai-components-2';
 import {IdGenerator} from './id-generator';
 import {ObserverUtil} from '../../../util/observer-util';

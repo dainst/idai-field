@@ -1,6 +1,6 @@
 import {Parser} from "./parser";
-import {Observable} from "rxjs/Observable";
-import {NewDocument, Document} from "idai-components-2";
+import {Observable} from "rxjs";
+import {Document} from "idai-components-2";
 
 /**
  * @author Daniel de Oliveira
@@ -8,14 +8,18 @@ import {NewDocument, Document} from "idai-components-2";
  */
 export abstract class AbstractParser implements Parser {
 
+
     protected warnings: string[][] = []; // array of msgWithParams
 
+
     abstract parse(content: string): Observable<Document>;
+
 
     public getWarnings(): string[][] {
 
         return this.warnings;
     }
+
 
     protected addToWarnings(keyOfM: any) {
 

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Observer} from 'rxjs/Observer';
-import {Observable} from 'rxjs/Observable';
+import {Observer} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Document} from 'idai-components-2';
 import {Constraint, Query} from 'idai-components-2';
 import {ConstraintIndexer} from './constraint-indexer';

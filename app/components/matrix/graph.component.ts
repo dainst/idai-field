@@ -3,7 +3,7 @@ import {Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnDestroy
 import {DOCUMENT} from '@angular/platform-browser';
 import 'viz.js';
 import * as svgPanZoom from 'svg-pan-zoom';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {GraphManipulation} from './graph-manipulation';
 import {SelectionRectangle} from './selection-rectangle';
 import {MatrixSelection, MatrixSelectionChange} from './matrix-selection';

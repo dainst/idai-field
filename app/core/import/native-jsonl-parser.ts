@@ -1,7 +1,7 @@
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {NewDocument, Document} from 'idai-components-2';
 import {AbstractParser} from './abstract-parser';
-import {Observer} from 'rxjs/Observer';
+import {Observer} from 'rxjs';
 import {ImportErrors} from './import-errors';
 
 /**

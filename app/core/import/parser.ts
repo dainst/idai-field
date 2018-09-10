@@ -1,4 +1,4 @@
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {Document} from "idai-components-2";
 
 export interface Parser {

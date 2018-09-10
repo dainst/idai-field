@@ -78,7 +78,7 @@ export class ImportComponent {
         }, 200);
 
         this.remoteChangesStream.setAutoCacheUpdate(false);
-        const importReport = await ImportFacade.createImportFunction(
+        const importReport = await ImportFacade.doImport(
             this.format,
             this.validator,
             this.datastore,
@@ -87,7 +87,7 @@ export class ImportComponent {
             this.mainTypeDocumentId,
             this.allowMergingExistingResources,
             reader
-        )();
+        );
         this.remoteChangesStream.setAutoCacheUpdate(true);
 
         uploadReady = true;

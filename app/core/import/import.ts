@@ -30,27 +30,6 @@ export module Import {
      * Returns a promise which resolves to an importReport object with detailed information about the import,
      * containing the number of resources imported successfully as well as information on errors that occurred,
      * if any.
-     *
-     * @throws [FILE_UNREADABLE]
-     * @throws [INVALID_JSON]
-     * @throws [INVALID_JSONL]
-     * @throws [INVALID_GEOJSON_IMPORT_STRUCT]
-     * @throws [MISSING_IDENTIFIER]
-     * @throws [WRONG_IDENTIFIER_FORMAT]
-     * @throws [INVALID_CSV]
-     * @throws [GENERIC_CSV_ERROR]
-     * @throws [MANDATORY_CSV_FIELD_MISSING]
-     * @throws [GENERIC_DATASTORE_ERROR]
-     * @throws [INVALID_GEOMETRY]
-     * @throws [ROLLBACK_ERROR]
-     * @throws [MISSING_RESOURCE]
-     * @throws [MISSING_RELATION_TARGET]
-     * @throws [INVALID_MAIN_TYPE_DOCUMENT]
-     * @throws [OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION]
-     * @throws [NO_OPERATION_ASSIGNABLE]
-     * @throws [NO_FEATURE_ASSIGNABLE]
-     *
-     * @throws Any error of module ValidationErrors
      */
     export function go(reader: Reader,
               parser: Parser,

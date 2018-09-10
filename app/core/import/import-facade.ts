@@ -43,17 +43,38 @@ export module ImportFacade {
      * @param mainTypeDocumentId
      * @param allowMergingExistingResources
      * @param reader
+     *
+     * @throws [FILE_UNREADABLE]
+     * @throws [INVALID_JSON]
+     * @throws [INVALID_JSONL]
+     * @throws [INVALID_GEOJSON_IMPORT_STRUCT]
+     * @throws [MISSING_IDENTIFIER]
+     * @throws [WRONG_IDENTIFIER_FORMAT]
+     * @throws [INVALID_CSV]
+     * @throws [GENERIC_CSV_ERROR]
+     * @throws [MANDATORY_CSV_FIELD_MISSING]
+     * @throws [GENERIC_DATASTORE_ERROR]
+     * @throws [INVALID_GEOMETRY]
+     * @throws [ROLLBACK_ERROR]
+     * @throws [MISSING_RESOURCE]
+     * @throws [MISSING_RELATION_TARGET]
+     * @throws [INVALID_MAIN_TYPE_DOCUMENT]
+     * @throws [OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION]
+     * @throws [NO_OPERATION_ASSIGNABLE]
+     * @throws [NO_FEATURE_ASSIGNABLE]
+     *
+     * @throws Any error of module ValidationErrors
      */
-    export function createImportFunction(format: ImportFormat,
-                                         validator: Validator,
-                                         datastore: DocumentDatastore,
-                                         usernameProvider: UsernameProvider,
-                                         projectConfiguration: ProjectConfiguration,
-                                         mainTypeDocumentId: string|undefined,
-                                         allowMergingExistingResources: boolean,
-                                         reader: Reader) {
+    export function doImport(format: ImportFormat,
+                             validator: Validator,
+                             datastore: DocumentDatastore,
+                             usernameProvider: UsernameProvider,
+                             projectConfiguration: ProjectConfiguration,
+                             mainTypeDocumentId: string|undefined,
+                             allowMergingExistingResources: boolean,
+                             reader: Reader) {
 
-        return () => Import.go(
+        return Import.go(
             reader,
             createParser(format),
             createImportStrategy(

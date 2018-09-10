@@ -163,6 +163,10 @@ export class DoceditComponent {
             if (errorWithParams[0] === ValidationErrors.MISSING_PROPERTY) replacement = M.IMPORT_VALIDATION_ERROR_MISSINGPROPERTY;
             // if (errorWithParams[0] === ImportErrors.MISSING_IDENTIFIER) replacement = M.IMPORT_FAILURE_MISSING_IDENTIFIER;
 
+            // TODO replace M msg by a msg specific to docedit component
+            if (errorWithParams[0] === ValidationErrors.NO_ISRECORDEDIN) replacement = M.IMPORT_VALIDATION_ERROR_NORECORDEDIN;
+
+
             if (replacement) {
                 errorWithParams[0] = replacement;
             }

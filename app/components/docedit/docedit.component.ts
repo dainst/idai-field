@@ -17,8 +17,8 @@ import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
 import {TypeUtility} from '../../core/model/type-utility';
-import {ValidationErrors} from '../../core/model/validation-errors';
 import {M} from '../m';
+import {MessagesConversion} from './messages-conversion';
 
 
 @Component({
@@ -155,27 +155,11 @@ export class DoceditComponent {
         if (errorWithParams[0] == DatastoreErrors.DOCUMENT_NOT_FOUND) {
             this.handleDeletedConflict();
             return undefined;
-        } else if (errorWithParams.length > 0) {
-
-            let replacement = undefined;
-            if (errorWithParams[0] === ValidationErrors.IDENTIFIER_EXISTS) replacement = M.MODEL_VALIDATION_ERROR_IDEXISTS;
-            // TODO this gets thrown if missing identifier, probably because this is detected first
-            if (errorWithParams[0] === ValidationErrors.MISSING_PROPERTY) replacement = M.IMPORT_VALIDATION_ERROR_MISSINGPROPERTY;
-            // if (errorWithParams[0] === ImportErrors.MISSING_IDENTIFIER) replacement = M.IMPORT_FAILURE_MISSING_IDENTIFIER;
-
-            // TODO replace M msg by a msg specific to docedit component
-            if (errorWithParams[0] === ValidationErrors.NO_ISRECORDEDIN) replacement = M.IMPORT_VALIDATION_ERROR_NORECORDEDIN;
-
-
-            if (replacement) {
-                errorWithParams[0] = replacement;
-            }
-
-            this.messages.add(errorWithParams);
-        } else {
-            console.error(errorWithParams);
-            return [M.DOCEDIT_SAVE_ERROR];
         }
+
+        if (errorWithParams.length > 0) this.messages.add(MessagesConversion.convertMessage(errorWithParams));
+        else return [M.DOCEDIT_SAVE_ERROR];
+
     }
 
 
@@ -277,7 +261,7 @@ export class DoceditComponent {
             ConflictDeletedModalComponent, {size: 'lg', windowClass: 'conflict-deleted-modal'}
         ).result.then(() => {
             this.documentHolder.makeClonedDocAppearNew();
-        }).catch(() => {});
+        }).catch(() => {}); // TODO make nop routine
     }
 
 
@@ -289,6 +273,6 @@ export class DoceditComponent {
         if (!conflictsBeforeSave && conflictsAfterSave && conflictsAfterSave.length >= 1) return true;
         if (!conflictsAfterSave) return false;
 
-        return conflictsAfterSave.find(isNot(includedIn(conflictsBeforeSave))) != undefined;
+        return conflictsAfterSave.find(isNot(includedIn(conflictsBeforeSave))) !== undefined;
     }
 }

@@ -14,9 +14,9 @@ import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stre
 import {Validator} from '../../core/model/validator';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {SettingsService} from '../../core/settings/settings-service';
-import {ImporterBuilder, ImportFormat} from '../../core/import/importer-builder';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../m';
+import {ImportFacade, ImportFormat} from '../../core/import/import-facade';
 
 
 @Component({
@@ -78,7 +78,7 @@ export class ImportComponent {
         }, 200);
 
         this.remoteChangesStream.setAutoCacheUpdate(false);
-        const importReport = await ImporterBuilder.createImportFunction(
+        const importReport = await ImportFacade.createImportFunction(
             this.format,
             this.validator,
             this.datastore,

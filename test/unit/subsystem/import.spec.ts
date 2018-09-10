@@ -1,12 +1,12 @@
 import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
 import {DAOsHelper} from './daos-helper';
-import {ImporterBuilder} from '../../../app/core/import/importer-builder';
 import {Validator} from '../../../app/core/model/validator';
 import {TypeUtility} from '../../../app/core/model/type-utility';
 import {to} from 'tsfun';
 import {ValidationErrors} from '../../../app/core/model/validation-errors';
 import {M} from '../../../app/components/m';
 import {ImportErrors} from '../../../app/core/import/import-errors';
+import {ImportFacade} from '../../../app/core/import/import-facade';
 
 /**
  * @author Daniel de Oliveira
@@ -79,7 +79,7 @@ describe('Import/Subsystem', () => {
 
     it('create one operation', async done => {
 
-        const ifunction = ImporterBuilder.createImportFunction(
+        const ifunction = ImportFacade.createImportFunction(
             'native',
             new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
             datastore,
@@ -103,7 +103,7 @@ describe('Import/Subsystem', () => {
 
         const stored = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
 
-        const ifunction = ImporterBuilder.createImportFunction(
+        const ifunction = ImportFacade.createImportFunction(
             'native',
             new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
             datastore,
@@ -126,7 +126,7 @@ describe('Import/Subsystem', () => {
 
     function createRollbackTestImportFunction(allowMergingExistingResources: boolean, resourceId: string) {
 
-        return ImporterBuilder.createImportFunction(
+        return ImportFacade.createImportFunction(
             'native',
             new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
             datastore,
@@ -174,7 +174,7 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: {}}});
 
-        await ImporterBuilder.createImportFunction(
+        await ImportFacade.createImportFunction(
             'native',
             new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
             datastore,
@@ -195,7 +195,7 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: {}}});
 
-        await ImporterBuilder.createImportFunction(
+        await ImportFacade.createImportFunction(
             'native',
             new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
             datastore,
@@ -218,7 +218,7 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our trench 1', relations: {}}});
 
-        const importReport = await ImporterBuilder.createImportFunction(
+        const importReport = await ImportFacade.createImportFunction(
             'native',
             new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
             datastore,

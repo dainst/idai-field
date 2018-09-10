@@ -32,11 +32,9 @@ export type ImportFormat = 'native' | 'idig' | 'geojson' | 'meninxfind';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export module ImporterBuilder {
+export module ImportFacade {
 
     /**
-     * Acts as a facade to the import subsystem
-     *
      * @param format
      * @param validator
      * @param datastore

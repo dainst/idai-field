@@ -56,6 +56,7 @@ describe('Import/Subsystem', () => {
                         {name: 'identifier'},
                         {name: 'shortDescription'},
                         {name: 'type'},
+                        {name: 'geometry'}
                     ]
                 }
             ],
@@ -95,6 +96,49 @@ describe('Import/Subsystem', () => {
         expect(result.documents[0].resource.identifier).toBe('t1');
         done();
     });
+
+
+
+    it('produce validation error', async done => {
+
+        const trench = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
+
+        const report = await ImportFacade.doImport(
+            'native',
+            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
+            datastore,
+            { getUsername: () => 'testuser'},
+            projectConfiguration,
+            trench.resource.id,
+            undefined,
+            { go: () => Promise.resolve(
+                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "UnsupportedGeometryType", "coordinates": [1, 2] } }')});
+
+        expect(report.errors[0]).toEqual([ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, "UnsupportedGeometryType"]);
+        done();
+    });
+
+
+    // TODO this test has to be removed since 'produce validation error' already shows that validation error works
+    it('produce validation error 2', async done => {
+
+        const trench = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
+
+        const report = await ImportFacade.doImport(
+            'native',
+            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
+            datastore,
+            { getUsername: () => 'testuser'},
+            projectConfiguration,
+            trench.resource.id,
+            undefined,
+            { go: () => Promise.resolve(
+                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "Polygon", "coordinates": [[1, 2, 3]] } }')});
+
+        expect(report.errors[0]).toEqual([ValidationErrors.INVALID_COORDINATES, "Polygon"]);
+        done();
+    });
+
 
 
     it('create one find, connect to existing operation ', async done => {
@@ -232,8 +276,9 @@ describe('Import/Subsystem', () => {
         done();
     });
 
+
+
+
+
     // TODO test: merge mode, but isRecordedIn is set. decide how we deal with it.
-
-
-    // TODO get rid of some e2es
 });

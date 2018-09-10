@@ -51,22 +51,7 @@ describe('import --', function() {
     };
 
 
-    it('delete already imported iDAI.field documents if an error occurs', () => {
-
-        importIt('./test/test-data/importer-test-constraint-violation.jsonl');
-
-        NavbarPage.awaitAlert('existiert bereits', false);
-        element(by.css('.alert button')).click();
-        NavbarPage.clickNavigateToExcavation();
-
-        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
-
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob1'));
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob2'));
-    });
-
-
-    it('import a valid iDAI.field JSONL file via HTTP', () => {
+    it('perform successful import', () => {
 
         importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(delays.shortRest * 4);
@@ -80,23 +65,17 @@ describe('import --', function() {
     });
 
 
-    it('abort if an empty geometry is found', () => {
+    it('perform unsuccessful import with rollback', () => {
 
-        importIt('./test/test-data/importer-test-empty-geometry.jsonl');
-        NavbarPage.awaitAlert('nicht definiert', false);
-    });
+        importIt('./test/test-data/importer-test-constraint-violation.jsonl');
 
+        NavbarPage.awaitAlert('existiert bereits', false);
+        element(by.css('.alert button')).click();
+        NavbarPage.clickNavigateToExcavation();
 
-    it('abort if a geometry with invalid coordinates is found', () => {
+        browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
 
-        importIt('./test/test-data/importer-test-invalid-geometry-coordinates.jsonl');
-        NavbarPage.awaitAlert('sind nicht valide', false);
-    });
-
-
-    it('abort if a geometry with an unsupported type is found', () => {
-
-        importIt('./test/test-data/importer-test-unsupported-geometry-type.jsonl');
-        NavbarPage.awaitAlert('nicht unterstützt', false);
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob1'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).not.toEqual('obob2'));
     });
 });

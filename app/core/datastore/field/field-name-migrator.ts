@@ -1,5 +1,6 @@
 import {Document} from 'idai-components-2';
 import {migrationMap, subFieldsMigrationMap} from './migration-map';
+import {isObject} from 'tsfun';
 
 
 /**
@@ -15,11 +16,7 @@ export module FieldNameMigrator {
            const newFieldName: string = migrationMap[fieldName] ? migrationMap[fieldName] : fieldName;
 
            let field: any = document.resource[fieldName];
-           if (Array.isArray(field)) {
-                if (!field.some(_ => typeof _ === 'string')) {
-                   field = migrateArrayField(field);
-               }
-           }
+           if (Array.isArray(field) && (field.some(isObject))) field = migrateArrayField(field);
 
            resource[newFieldName] = field;
         });

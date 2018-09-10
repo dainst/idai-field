@@ -5,13 +5,14 @@ import {Document, Messages, IdaiFieldDocument, DatastoreErrors, IdaiFieldImageDo
     from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../util/object-util';
-import {M} from '../../m';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
 import {DeleteModalComponent} from './dialog/delete-modal.component';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {DocumentHolder} from './document-holder';
 import {TypeUtility} from '../../core/model/type-utility';
+import {ValidationErrors} from '../../core/model/validation-errors';
+import {M} from '../m';
 
 
 @Component({
@@ -149,6 +150,14 @@ export class DoceditComponent {
             this.handleDeletedConflict();
             return undefined;
         } else if (errorWithParams.length > 0) {
+
+            let replacement = undefined;
+            if (errorWithParams[0] === ValidationErrors.IDENTIFIER_EXISTS) replacement = M.MODEL_VALIDATION_ERROR_IDEXISTS;
+
+            if (replacement) {
+                errorWithParams[0] = replacement;
+            }
+
             this.messages.add(errorWithParams);
         } else {
             console.error(errorWithParams);

@@ -2,10 +2,10 @@ import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, Elemen
 import {Messages, Document} from 'idai-components-2';
 import {IdaiFieldImageDocument} from 'idai-components-2';
 import {ImageGridConstruction} from './image-grid-builder';
-import {M} from '../../m';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {ImageUploadResult} from '../imageupload/image-uploader';
+import {M} from '../m';
 
 
 @Component({

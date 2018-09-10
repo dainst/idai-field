@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {IdaiFieldDocument} from 'idai-components-2';
 import {IdaiType, Messages} from 'idai-components-2';
-import {M} from '../../../m';
 import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../view/view-facade';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
@@ -9,6 +8,7 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai
 import {NavigationService} from '../navigation/navigation-service';
 import {Validator} from '../../../core/model/validator';
 import {UsernameProvider} from '../../../core/settings/username-provider';
+import {M} from '../../m';
 
 
 const RETURN_KEY = 13;

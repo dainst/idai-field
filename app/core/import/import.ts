@@ -4,7 +4,7 @@ import {Parser} from './parser';
 import {ImportStrategy} from './import-strategy';
 import {RelationsStrategy} from './relations-strategy';
 import {RollbackStrategy} from './rollback-strategy';
-import {M} from '../../m';
+import {M} from '../../components/m';
 
 
 export interface ImportReport {

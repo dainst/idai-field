@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges} from '@angular/core';
 import {Relations, Resource, IdaiFieldDocument, IdaiFieldResource, Document, Messages, ProjectConfiguration}
     from 'idai-components-2';
-import {M} from '../../../m';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
+import {M} from '../../m';
 
 const moment = require('moment');
 

@@ -1,5 +1,5 @@
 import {Reader} from './reader';
-import {M} from '../../m';
+import {M} from '../../components/m';
 
 /**
  * Reads contents of a file.

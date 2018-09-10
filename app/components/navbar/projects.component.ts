@@ -2,8 +2,8 @@ import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
-import {M} from '../../m';
 import {DoceditComponent} from "../docedit/docedit.component";
+import {M} from '../m';
 
 const remote = require('electron').remote;
 

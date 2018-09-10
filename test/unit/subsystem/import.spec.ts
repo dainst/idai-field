@@ -2,9 +2,10 @@ import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-
 import {DAOsHelper} from './daos-helper';
 import {ImporterBuilder} from '../../../app/core/import/importer-builder';
 import {Validator} from '../../../app/core/model/validator';
-import {M} from '../../../app/m';
 import {TypeUtility} from '../../../app/core/model/type-utility';
 import {to} from 'tsfun';
+import {ValidationErrors} from '../../../app/core/model/validation-errors';
+import {M} from '../../../app/components/m';
 
 /**
  * @author Daniel de Oliveira
@@ -143,7 +144,7 @@ describe('Import/Subsystem', () => {
         const id = (await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}})).resource.id;
 
         const importReport = await createRollbackTestImportFunction(false, id)();
-        expect(importReport.errors[0]).toEqual([M.VALIDATION_ERROR_INVALIDTYPE, "InvalidType"]);
+        expect(importReport.errors[0]).toEqual([M.IMPORT_VALIDATION_ERROR_INVALIDTYPE, "InvalidType"]); // TODO should be validation error
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
         done();
@@ -156,7 +157,7 @@ describe('Import/Subsystem', () => {
         await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'f1', relations: { isRecordedIn: ["t1"]}}});
 
         const importReport = await createRollbackTestImportFunction(true, id)();
-        expect(importReport.errors[0]).toEqual([M.VALIDATION_ERROR_INVALIDTYPE, "InvalidType"]);
+        expect(importReport.errors[0]).toEqual([ValidationErrors.INVALID_TYPE, "InvalidType"]);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(2);

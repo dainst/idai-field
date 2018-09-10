@@ -2,7 +2,7 @@ import {Document} from 'idai-components-2';
 import {Observable} from 'rxjs/Observable';
 import {Observer} from 'rxjs/Observer';
 import {AbstractParser} from './abstract-parser';
-import {M} from '../../m';
+import {M} from '../../components/m';
 // import * as Papa from 'papaparse'; TODO this does not work in production, fixes only unit test
 
 /**

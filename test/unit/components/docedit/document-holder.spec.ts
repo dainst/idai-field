@@ -1,7 +1,7 @@
 import {ProjectConfiguration, Document} from 'idai-components-2';
 import {DocumentHolder} from '../../../../app/components/docedit/document-holder';
-import {M} from '../../../../app/m';
 import {clone} from '../../../../app/util/object-util';
+import {M} from '../../../../app/components/m';
 
 /**
  * @author Daniel de Oliveira
@@ -159,7 +159,7 @@ describe('DocumentHolder', () => {
             fail();
             done();
         } catch (e) {
-            expect(e).toEqual([M.VALIDATION_ERROR_NORECORDEDIN]);
+            expect(e).toEqual([M.IMPORT_VALIDATION_ERROR_NORECORDEDIN]);
             done();
         }
     });

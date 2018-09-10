@@ -2,7 +2,7 @@
  * @author Daniel de Oliveira
  */
 import {ProjectsComponent} from '../../../../app/components/navbar/projects.component';
-import {M} from '../../../../app/m';
+import {M} from '../../../../app/components/m';
 
 describe('ProjectsComponent', () => {
 

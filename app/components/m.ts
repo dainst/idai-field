@@ -26,6 +26,16 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static SETTINGS_ACTIVATED = 'settings/activated';
     public static SETTINGS_MALFORMED_ADDRESS = 'settings/malformed_address';
 
+    // Validation
+
+    // Model Package
+
+    public static MODEL_VALIDATION_ERROR_IDEXISTS = 'validation/error/idexists';
+    public static MODEL_VALIDATION_ERROR_MISSING_COORDINATES = 'validation/error/missingcoordinates';
+    public static MODEL_VALIDATION_ERROR_INVALID_COORDINATES = 'validation/error/invalidcoordinates';
+    public static MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE = 'validation/error/missinggeometrytype';
+    public static MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE = 'validation/error/unsupportedgeometrytype';
+
     // Import Package
 
     public static IMPORT_START= 'importer/start';
@@ -52,6 +62,23 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_FAILURE_OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION = 'importer/failure/operationsnotallowedonimporttooperation';
     public static IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE = 'importer/failure/nooperationassignable';
     public static IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE = 'importer/failure/nofeatureassignable';
+    public static IMPORT_VALIDATION_ERROR_MISSINGPROPERTY = 'import/validation/error/missingproperty';
+    public static IMPORT_VALIDATION_ERROR_MISSINGVIEWTYPE = 'import/validation/error/missingviewtype';
+    public static IMPORT_VALIDATION_ERROR_NONOPERATIONVIEWTYPE = 'import/validation/error/nonoperationviewtype';
+    public static IMPORT_VALIDATION_ERROR_TOPLEVELTYPEHASPARENT = 'import/validation/error/topleveltypehasparent';
+    public static IMPORT_VALIDATION_ERROR_INCOMPLETERECORDEDIN = 'import/validation/error/incompleterecordedin';
+    public static IMPORT_VALIDATION_ERROR_NOPROJECTRECORDEDIN = 'import/validation/error/noprojectrecordedin';
+    public static IMPORT_VALIDATION_ERROR_NORECORDEDIN = 'import/validation/error/norecordedin';
+    public static IMPORT_VALIDATION_ERROR_NORECORDEDINTARGET = 'import/validation/error/norecordedintarget';
+    public static IMPORT_VALIDATION_ERROR_INVALIDINPUTTYPE = 'import/validation/error/invalidinputtype';
+    public static IMPORT_VALIDATION_ERROR_INVALIDTYPE = 'import/validation/error/invalidtype';
+    public static IMPORT_VALIDATION_ERROR_INVALIDFIELD = 'import/validation/error/invalidfield';
+    public static IMPORT_VALIDATION_ERROR_INVALIDFIELDS = 'import/validation/error/invalidfields';
+    public static IMPORT_VALIDATION_ERROR_INVALIDRELATIONFIELD = 'import/validation/error/invalidrelationfield';
+    public static IMPORT_VALIDATION_ERROR_INVALIDRELATIONFIELDS = 'import/validation/error/invalidrelationfields';
+    public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'import/validation/error/invalidnumericvalue';
+    public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'import/validation/error/invalidnumericvalues';
+
 
     // Backup Package
     public static BACKUP_DUMP_SUCCESS = 'backup/dumpsuccess';
@@ -101,14 +128,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGESTORE_ERROR_INVALID_WORLDFILE = 'images/error/mediastore/invalidworldfile';
     public static IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS = 'images/error/mediastore/unsupportedexts';
 
-    // Model Package
-
-    public static MODEL_VALIDATION_ERROR_IDEXISTS = 'validation/error/idexists';
-    public static MODEL_VALIDATION_ERROR_MISSING_COORDINATES = 'validation/error/missingcoordinates';
-    public static MODEL_VALIDATION_ERROR_INVALID_COORDINATES = 'validation/error/invalidcoordinates';
-    public static MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE = 'validation/error/missinggeometrytype';
-    public static MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE = 'validation/error/unsupportedgeometrytype';
-
     // Resources Package
 
     public static RESOURCES_SUCCESS_IMAGE_UPLOADED = 'resources/success/imageimported';
@@ -123,29 +142,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources/error/oneprojectmustexist';
     public static RESOURCES_ERROR_PROJECT_DELETED = 'resources/error/projectdeleted';
 
-    // Validation
-
-    public static VALIDATION_ERROR_MISSINGPROPERTY = 'validation/error/missingproperty';
-    public static VALIDATION_ERROR_MISSINGVIEWTYPE = 'validation/error/missingviewtype';
-    public static VALIDATION_ERROR_NONOPERATIONVIEWTYPE = 'validation/error/nonoperationviewtype';
-    public static VALIDATION_ERROR_TOPLEVELTYPEHASPARENT = 'validation/error/topleveltypehasparent';
-    public static VALIDATION_ERROR_INCOMPLETERECORDEDIN = 'validation/error/incompleterecordedin';
-    public static VALIDATION_ERROR_NOPROJECTRECORDEDIN = 'validation/error/noprojectrecordedin';
-    public static VALIDATION_ERROR_NORECORDEDIN = 'validation/error/norecordedin';
-    public static VALIDATION_ERROR_NORECORDEDINTARGET = 'validation/error/norecordedintarget';
-    public static VALIDATION_ERROR_INVALIDINPUTTYPE = 'validation/error/invalidinputtype';
-    public static VALIDATION_ERROR_INVALIDTYPE = 'validation/error/invalidtype';
-    public static VALIDATION_ERROR_INVALIDFIELD = 'validation/error/invalidfield';
-    public static VALIDATION_ERROR_INVALIDFIELDS = 'validation/error/invalidfields';
-    public static VALIDATION_ERROR_INVALIDRELATIONFIELD = 'validation/error/invalidrelationfield';
-    public static VALIDATION_ERROR_INVALIDRELATIONFIELDS = 'validation/error/invalidrelationfields';
-    public static VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'validation/error/invalidnumericvalue';
-    public static VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'validation/error/invalidnumericvalues';
-
     // Matrix Package
     public static MATRIX_WARNING_LOOP_DOCUMENT = 'matrix/warning/loopdocument';
-
-
 
     // Keys END /////////////////////////////////
 
@@ -651,97 +649,97 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_INVALIDTYPE]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALIDTYPE]={
             content: 'Ungültige Typdefinition: \'{0}\'',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_INVALIDFIELD]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALIDFIELD]={
             content: 'Fehlende Felddefinition für das Feld \'{1}\' der Ressource vom Typ \'{0}\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_INVALIDFIELDS]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALIDFIELDS]={
             content: 'Fehlende Felddefinitionen für die Felder \'{1}\' der Ressource vom Typ \'{0}\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_INVALIDRELATIONFIELD]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALIDRELATIONFIELD]={
             content: 'Fehlende Definition für die Relation \'{1}\' der Ressource vom Typ \'{0}\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_INVALIDRELATIONFIELDS]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALIDRELATIONFIELDS]={
             content: 'Fehlende Definitionen für die Relationen \'{1}\' der Ressource vom Typ \'{0}\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE]={
             content: 'Falsche Zahlenwerte für das Feld \'{1}\' der Ressource vom Typ \'{0}\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES]={
             content: 'Falsche Zahlenwerte für die Felder \'{1}\' der Ressource vom Typ \'{0}\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_MISSINGPROPERTY]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_MISSINGPROPERTY]={
             content: 'Eigenschaft(en) der Ressource vom Typ \'{0}\' müssen vorhanden sein: \'{1}\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_MISSINGVIEWTYPE]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_MISSINGVIEWTYPE]={
             content: 'Im View-Teil der Configuration.json wird auf den nicht definierten Typ \'{0}\' verwiesen.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_NONOPERATIONVIEWTYPE]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_NONOPERATIONVIEWTYPE]={
             content: 'Im View-Teil der Configuration.json wird auf den Typ \'{0}\' verwiesen. Dieser ist als Nicht-Maßnahmen-Typ nicht unterstützt.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_TOPLEVELTYPEHASPARENT]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_TOPLEVELTYPEHASPARENT]={
             content: 'Top-Level-Type \'{0}\' darf kein parent besitzen.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_INCOMPLETERECORDEDIN]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INCOMPLETERECORDEDIN]={
             content: 'Fehlende oder unvollständige Definition von \'recordedIn\' für Top-Level-Type \'{0}\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_NOPROJECTRECORDEDIN]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_NOPROJECTRECORDEDIN]={
             content: 'Fehlende Definition von \'recordedIn\' für den Type \'project\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_NORECORDEDIN]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_NORECORDEDIN]={
             content: 'Fehlende Definition von \'Aufgenommen in Maßnahme\'. Eine Zuordnung muss vorgenommen werden.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_NORECORDEDINTARGET]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_NORECORDEDINTARGET]={
             content: 'Fehlende Ziel einer Relation vom Typ \'Aufgenommen in Maßnahme\'. Ziel Id: {0}.',
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.VALIDATION_ERROR_INVALIDINPUTTYPE]={
+        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALIDINPUTTYPE]={
             content: 'Ungültiger Wert \'{1}\' für \'inputType\' in Felddefinition für \'{0}\'. Erlaubte Werte: {2}.',
             level: 'danger',
             params: [],

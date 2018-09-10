@@ -1,7 +1,7 @@
 import {ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../../../../app/core/model/validator';
-import {M} from '../../../../app/m';
 import {TypeUtility} from '../../../../app/core/model/type-utility';
+import {ValidationErrors} from '../../../../app/core/model/validation-errors';
 
 /**
  * @author Daniel de Oliveira
@@ -74,7 +74,7 @@ describe('Validator', () => {
                 .validate(doc, false, false, true);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([M.VALIDATION_ERROR_NORECORDEDINTARGET, 'notexisting']);
+            expect(expected).toEqual([ValidationErrors.NO_ISRECORDEDIN_TARGET, 'notexisting']);
         }
         done();
     });
@@ -96,7 +96,7 @@ describe('Validator', () => {
                 .validate(doc, false, false, true);
             fail();
         } catch (expected) {
-            expect(expected).toEqual([M.MODEL_VALIDATION_ERROR_IDEXISTS, 'eins']);
+            expect(expected).toEqual([ValidationErrors.IDENTIFIER_EXISTS, 'eins']);
         }
         done();
     });
@@ -134,7 +134,7 @@ describe('Validator', () => {
 
         new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
             .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
-            expect(msgWithParams).toEqual([M.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
+            expect(msgWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
             done();
         });
     });
@@ -153,7 +153,7 @@ describe('Validator', () => {
 
         new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
             .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
-                expect(msgWithParams).toEqual([M.VALIDATION_ERROR_MISSINGPROPERTY, 'T', 'mandatory']);
+                expect(msgWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
                 done();
             });
     });
@@ -173,7 +173,7 @@ describe('Validator', () => {
 
         new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
             .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
-            expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDFIELD, 'T', 'a']);
+            expect(msgWithParams).toEqual([ValidationErrors.INVALID_FIELDS, 'T', 'a']);
             done();
         });
     });
@@ -194,7 +194,7 @@ describe('Validator', () => {
 
         new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
             .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
-            expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDFIELDS, 'T', 'a, b']);
+            expect(msgWithParams).toEqual([ValidationErrors.INVALID_FIELDS, 'T', 'a, b']);
             done();
         });
     });
@@ -216,7 +216,7 @@ describe('Validator', () => {
             .validate(doc, false, false, true).then(
             () => fail(),
             msgWithParams => {
-                expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDRELATIONFIELD, 'T2',
+                expect(msgWithParams).toEqual([ValidationErrors.INVALID_RELATIONS, 'T2',
                     'isRelatedTo']);
                 done();
             });
@@ -240,7 +240,7 @@ describe('Validator', () => {
             .validate(doc, false, false, true).then(
             () => fail(),
             msgWithParams => {
-                expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALIDRELATIONFIELDS, 'T2',
+                expect(msgWithParams).toEqual([ValidationErrors.INVALID_RELATIONS, 'T2',
                     'isRelatedTo, isDepictedIn']);
                 done();
             });
@@ -263,7 +263,7 @@ describe('Validator', () => {
             .validate(doc, false, false, true).then(
             () => fail(),
             msgWithParams => {
-                expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE, 'T', 'number1']);
+                expect(msgWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
                 done();
             });
     });
@@ -286,7 +286,7 @@ describe('Validator', () => {
             .validate(doc, false, false, true).then(
             () => fail(),
             msgWithParams => {
-                expect(msgWithParams).toEqual([M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES, 'T',
+                expect(msgWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T',
                     'number1, number2']);
                 done();
             });

@@ -1,5 +1,5 @@
 import {NativeJsonlParser} from '../../../../app/core/import/native-jsonl-parser';
-import {M} from '../../../../app/m';
+import {M} from '../../../../app/components/m';
 
 /**
  * @author Sebastian Cuy

@@ -1,9 +1,9 @@
 import {Observable} from 'rxjs/Observable';
 import {Document} from 'idai-components-2';
-import {M} from '../../m';
 import {AbstractParser} from './abstract-parser';
 import {Observer} from 'rxjs/Observer';
 import {duplicates} from 'tsfun';
+import {M} from '../../components/m';
 
 export interface Geojson {
     type: string,

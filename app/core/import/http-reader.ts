@@ -1,6 +1,6 @@
 import {Reader} from "./reader";
 import {Http} from "@angular/http";
-import {M} from "../../m";
+import {M} from '../../components/m';
 
 /**
  * @author Daniel de Oliveira

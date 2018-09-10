@@ -1,11 +1,11 @@
 import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {ImportStrategy} from './import-strategy';
-import {M} from '../../m';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
 import {DocumentMerge} from './document-merge';
 import {TypeUtility} from '../model/type-utility';
 import {Validations} from '../model/validations';
+import {M} from '../../components/m';
 
 /**
  * @author Daniel de Oliveira
@@ -32,7 +32,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
         if (this.mainTypeDocumentId) {
             if (!Validations.validateType(document.resource, this.projectConfiguration)) {
-                throw [M.VALIDATION_ERROR_INVALIDTYPE, document.resource.type];
+                throw [M.IMPORT_VALIDATION_ERROR_INVALIDTYPE, document.resource.type];
             }
             if (this.typeUtility.isSubtype(document.resource.type, 'Operation')) {
                 throw [M.IMPORT_FAILURE_OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION];

@@ -1,7 +1,7 @@
 import {BackupLoadingComponent} from '../../../../app/components/backup/backup-loading.component';
-import {M} from '../../../../app/m';
 import PouchDB = require('pouchdb');
 import {Backup} from '../../../../app/components/backup/backup';
+import {M} from '../../../../app/components/m';
 
 /**
  * @author Daniel de Oliviera

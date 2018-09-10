@@ -1,8 +1,8 @@
 import {Observable} from 'rxjs/Observable';
 import {NewDocument, Document} from 'idai-components-2';
-import {M} from '../../m';
 import {AbstractParser} from './abstract-parser';
 import {Observer} from 'rxjs/Observer';
+import {M} from '../../components/m';
 
 /**
  * @author Sebastian Cuy

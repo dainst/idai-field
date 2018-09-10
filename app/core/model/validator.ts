@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
-import {M} from '../../m';
 import {Validations} from './validations';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
 import {TypeUtility} from './type-utility';
+import {ValidationErrors} from './validation-errors';
+import {M} from '../../components/m';
 
 
 @Injectable()
@@ -47,16 +48,16 @@ export class Validator {
     ): Promise<void> {
 
         if (!Validations.validateType(document.resource, this.projectConfiguration)) {
-            throw [M.VALIDATION_ERROR_INVALIDTYPE, document.resource.type];
+            throw [ValidationErrors.INVALID_TYPE, document.resource.type];
         }
 
         if (!suppressIsRecordedInCheck && this.isIsRecordedInRelationMissing(document as Document)) {
-            throw [M.VALIDATION_ERROR_NORECORDEDIN]; // TODO test in validator
+            throw [ValidationErrors.NO_ISRECORDEDIN]; // TODO test in validator
         }
 
         const missingProperties = Validations.getMissingProperties(document.resource, this.projectConfiguration);
         if (missingProperties.length > 0) {
-            throw [M.VALIDATION_ERROR_MISSINGPROPERTY, document.resource.type]
+            throw [ValidationErrors.MISSING_PROPERTY, document.resource.type]
                 .concat(missingProperties.join((', ')));
         }
 
@@ -69,7 +70,7 @@ export class Validator {
 
         if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) {
             const invalidRelationTarget = await this.validateRelationTargets(document as Document, 'isRecordedIn');
-            if (invalidRelationTarget) throw [M.VALIDATION_ERROR_NORECORDEDINTARGET, invalidRelationTarget.join(', ')];
+            if (invalidRelationTarget) throw [ValidationErrors.NO_ISRECORDEDIN_TARGET, invalidRelationTarget.join(', ')];
         }
 
         if (!suppressIdentifierCheck) await this.validateIdentifier(document as any);
@@ -127,7 +128,7 @@ export class Validator {
         }
 
         if (result.totalCount > 0 && Validator.isDuplicate(result.documents[0], doc)) {
-            return Promise.reject([M.MODEL_VALIDATION_ERROR_IDEXISTS, doc.resource.identifier]);
+            return Promise.reject([ValidationErrors.IDENTIFIER_EXISTS, doc.resource.identifier]);
         }
     }
 
@@ -136,37 +137,37 @@ export class Validator {
 
         if (!geometry) return null;
 
-        if (!geometry.type) return [ M.MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE ];
-        if (!geometry.coordinates) return [ M.MODEL_VALIDATION_ERROR_MISSING_COORDINATES ];
+        if (!geometry.type) return [ ValidationErrors.MISSING_GEOMETRY_TYPE ];
+        if (!geometry.coordinates) return [ ValidationErrors.MISSING_COORDINATES ];
 
         switch(geometry.type) {
             case 'Point':
                 if (!Validations.validatePointCoordinates(geometry.coordinates)) {
-                    return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'Point' ];
+                    return [ ValidationErrors.INVALID_COORDINATES, 'Point' ];
                 }
                 break;
             case 'LineString':
                 if (!Validations.validatePolylineCoordinates(geometry.coordinates)) {
-                    return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'LineString' ];
+                    return [ ValidationErrors.INVALID_COORDINATES, 'LineString' ];
                 }
                 break;
             case 'MultiLineString':
                 if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
-                    return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'MultiLineString' ];
+                    return [ ValidationErrors.INVALID_COORDINATES, 'MultiLineString' ];
                 }
                 break;
             case 'Polygon':
                 if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
-                    return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'Polygon' ];
+                    return [ ValidationErrors.INVALID_COORDINATES, 'Polygon' ];
                 }
                 break;
             case 'MultiPolygon':
                 if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
-                    return [ M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES, 'MultiPolygon' ];
+                    return [ ValidationErrors.INVALID_COORDINATES, 'MultiPolygon' ];
                 }
                 break;
             default:
-                return [ M.MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE, geometry.type ];
+                return [ ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type ];
         }
 
         return null;
@@ -177,17 +178,14 @@ export class Validator {
 
         const invalidFields = Validations.validateFields(document.resource, projectConfiguration);
         if (invalidFields.length > 0) {
-            throw [invalidFields.length === 1 ?
-                M.VALIDATION_ERROR_INVALIDFIELD : M.VALIDATION_ERROR_INVALIDFIELDS]
+            throw [ValidationErrors.INVALID_FIELDS]
                 .concat([document.resource.type])
                 .concat(invalidFields.join(', '));
         }
 
         const invalidRelationFields = Validations.validateRelations(document.resource, projectConfiguration);
         if (invalidRelationFields.length > 0) {
-            throw [invalidRelationFields.length === 1 ?
-                M.VALIDATION_ERROR_INVALIDRELATIONFIELD :
-                M.VALIDATION_ERROR_INVALIDRELATIONFIELDS]
+            throw [ValidationErrors.INVALID_RELATIONS]
                 .concat([document.resource.type])
                 .concat([invalidRelationFields.join(', ')]);
         }
@@ -198,9 +196,7 @@ export class Validator {
 
         const invalidNumericValues = Validations.validateNumericValues(document.resource, projectConfiguration);
         if (invalidNumericValues ) {
-            throw [invalidNumericValues.length === 1 ?
-                M.VALIDATION_ERROR_INVALID_NUMERIC_VALUE :
-                M.VALIDATION_ERROR_INVALID_NUMERIC_VALUES]
+            throw [ValidationErrors.INVALID_NUMERICAL_VALUES]
                 .concat([document.resource.type])
                 .concat([invalidNumericValues.join(', ')]);
         }

@@ -2,9 +2,9 @@ import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {ImportStrategy} from './import-strategy';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validator} from '../model/validator';
-import {M} from '../../m';
 import {IdaiFieldFindResult} from '../datastore/core/cached-read-datastore';
 import {clone} from '../../util/object-util';
+import {M} from '../../components/m';
 
 
 const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {

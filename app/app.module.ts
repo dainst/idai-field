@@ -9,7 +9,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigLoader, ConfigReader, IdaiDocumentsModule, IdaiMessagesModule, MD, Messages,
     ProjectConfiguration, IdaiWidgetsModule, IdaiFieldAppConfigurator} from 'idai-components-2';
 import {routing} from './app.routing';
-import {M} from './m';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './components/resources/resources.module';
 import {Imagestore} from './core/imagestore/imagestore';
@@ -42,6 +41,7 @@ import {FulltextIndexer} from './core/datastore/index/fulltext-indexer';
 import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
 import {HelpComponent} from './components/help/help.component';
 import {TaskbarUpdateComponent} from './components/navbar/taskbar-update.component';
+import {M} from './components/m';
 
 
 const remote = require('electron').remote;

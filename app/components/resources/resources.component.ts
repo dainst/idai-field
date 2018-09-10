@@ -7,8 +7,8 @@ import {Messages} from 'idai-components-2';
 import {Loading} from '../../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
-import {M} from '../../m';
 import {ViewFacade} from './view/view-facade';
+import {M} from '../m';
 
 
 @Component({

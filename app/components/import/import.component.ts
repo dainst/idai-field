@@ -6,7 +6,6 @@ import {ImportReport} from '../../core/import/import';
 import {Reader} from '../../core/import/reader';
 import {FileSystemReader} from '../../core/import/file-system-reader';
 import {HttpReader} from '../../core/import/http-reader';
-import {M} from '../../m';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
@@ -16,6 +15,8 @@ import {Validator} from '../../core/model/validator';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {SettingsService} from '../../core/settings/settings-service';
 import {ImporterBuilder, ImportFormat} from '../../core/import/importer-builder';
+import {MessagesConversion} from './messages-conversion';
+import {M} from '../m';
 
 
 @Component({
@@ -143,7 +144,8 @@ export class ImportComponent {
 
     private showMessages(messages: string[][]) {
 
-        messages.forEach(msgWithParams => this.messages.add(msgWithParams));
+        messages.forEach(msgWithParams => this.messages.add(
+            MessagesConversion.convertMessage(msgWithParams)));
     }
 
 

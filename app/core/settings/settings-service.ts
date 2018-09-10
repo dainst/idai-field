@@ -7,11 +7,11 @@ import {Imagestore} from '../imagestore/imagestore';
 import {Observable} from 'rxjs/Rx';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
-import {M} from '../../m';
 import {Observer} from 'rxjs/Observer';
 import {unique} from 'tsfun';
 import {IdaiFieldSampleDataLoader} from '../datastore/field/idai-field-sample-data-loader';
 import {Converter} from '../imagestore/converter';
+import {M} from '../../components/m';
 
 const {remote, ipcRenderer} = require('electron');
 

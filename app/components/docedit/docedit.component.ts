@@ -261,7 +261,7 @@ export class DoceditComponent {
             ConflictDeletedModalComponent, {size: 'lg', windowClass: 'conflict-deleted-modal'}
         ).result.then(() => {
             this.documentHolder.makeClonedDocAppearNew();
-        }).catch(() => {}); // TODO make nop routine
+        }).catch(doNothing);
     }
 
 
@@ -276,3 +276,6 @@ export class DoceditComponent {
         return conflictsAfterSave.find(isNot(includedIn(conflictsBeforeSave))) !== undefined;
     }
 }
+
+
+const doNothing = () => {}; // TODO move to tsfun;

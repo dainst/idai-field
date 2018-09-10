@@ -4,12 +4,15 @@
 
 !Configuration.json
 !Fields-Custom.json
+!Fields-Pergamon.json
 !Fields-Meninx.json
 !Hidden.json
 !Hidden-Custom.json
+!Hidden-Pergamon.json
 !Language.json
 !Language-Custom.json
 !Language-Meninx.json
+!Language-Pergamon.json
 !Order.json
 !Search.json
 !Periods.json

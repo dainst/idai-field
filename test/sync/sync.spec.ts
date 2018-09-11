@@ -19,12 +19,14 @@ import {ResourcesStateManager} from '../../app/components/resources/view/resourc
 import {ViewDefinition} from '../../app/components/resources/view/state/view-definition';
 import {OperationViews} from '../../app/components/resources/view/state/operation-views';
 import {StandardStateSerializer} from '../../app/common/standard-state-serializer';
+import {IdaiFieldAppConfigurator, ConfigLoader, ConfigReader} from 'idai-components-2';
+import {FsConfigReader} from '../../app/core/util/fs-config-reader';
 
 const expressPouchDB = require('express-pouchdb');
 const cors = require('pouchdb-server/lib/cors');
 
 
-describe('sync', () => {
+describe('sync from remote to local db', () => {
 
     let syncTestSimulatedRemoteDb;
     let server; // TODO close when done
@@ -34,19 +36,6 @@ describe('sync', () => {
             return Math.floor(Math.random() * 10000000).toString();
         }
     }
-
-    const projectConfiguration = new ProjectConfiguration({
-        'types': [
-            {
-                'type': 'Trench',
-                'fields': []
-            },
-            {
-                'type': 'Object',
-                'fields': []
-            }
-        ]
-    });
 
 
     async function createApp(pouchdbmanager, projectConfiguration, settingsService) {
@@ -141,7 +130,7 @@ describe('sync', () => {
                 undefined, undefined, pouchdbmanager.getDbProxy()) as Imagestore,
             pouchdbmanager,
             undefined,
-            undefined,
+            new IdaiFieldAppConfigurator(new ConfigLoader(new FsConfigReader() as ConfigReader)),
             undefined
         );
 
@@ -159,7 +148,8 @@ describe('sync', () => {
             username: 'synctestuser'
         });
 
-        return settingsService;
+        const projectConfiguration = await settingsService.loadConfiguration('./config/');
+        return {settingsService, projectConfiguration};
     }
 
 
@@ -187,7 +177,7 @@ describe('sync', () => {
         '_id': 'zehn',
         created: {"user": "sample_data", "date": "2018-09-11T20:46:15.408Z"},
         modified: [{"user": "sample_data", "date": "2018-09-11T20:46:15.408Z"}],
-        resource: { type: 'Object', id: 'zehn', identifier: 'Zehn', relations: {}}
+        resource: { type: 'Trench', id: 'zehn', identifier: 'Zehn', relations: {}}
     };
 
 
@@ -197,7 +187,7 @@ describe('sync', () => {
         await setupSyncTestSimulatedRemoteDb();
         await setupSyncTestDb();
         const pouchdbmanager = new PouchdbManager();
-        const settingsService = await setupSettingsService(pouchdbmanager);
+        const {settingsService, projectConfiguration} = await setupSettingsService(pouchdbmanager);
 
 
         const {remoteChangesStream, viewFacade} = await createApp(
@@ -206,12 +196,14 @@ describe('sync', () => {
             settingsService
         );
 
-        await viewFacade.selectView('excavation');
 
-        remoteChangesStream.notifications().subscribe(async (changes: any) => {
+        remoteChangesStream.notifications().subscribe(async () => {
 
-            expect(changes.resource.id).toEqual('zehn');
-            // console.log(":", await viewFacade.getDocuments());
+            await viewFacade.selectView('project');
+            await viewFacade.populateDocumentList();
+            const documents = await viewFacade.getDocuments();
+
+            expect(documents[0].resource.id).toEqual('zehn');
             return syncTestSimulatedRemoteDb.close().then(() => done());
         });
 

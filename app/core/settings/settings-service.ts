@@ -107,7 +107,7 @@ export class SettingsService {
     }
 
 
-    public async loadConfiguration(): Promise<ProjectConfiguration> {
+    public async loadConfiguration(configurationDirPath: string): Promise<ProjectConfiguration> {
 
         let customProjectName = undefined;
         if (this.getSelectedProject().indexOf('meninx-project') === 0) customProjectName = 'Meninx';
@@ -115,7 +115,7 @@ export class SettingsService {
 
         try {
             return await this.appConfigurator.go(
-                remote.getGlobal('configurationDirPath'),
+                configurationDirPath,
                 customProjectName
             );
         } catch (msgsWithParams) {

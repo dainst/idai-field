@@ -98,7 +98,7 @@ registerLocaleData(localeDe, 'de');
             useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager) => () =>
                 (new SettingsSerializer).load().then(settings =>
                     settingsService.bootProjectDb(settings).then(() =>
-                        settingsService.loadConfiguration())).then(configuration => {
+                        settingsService.loadConfiguration(remote.getGlobal('configurationDirPath')))).then(configuration => {
 
                     projectConfiguration = configuration;
 

@@ -196,6 +196,17 @@ describe('sync from remote to local db', function () {
             }
         });
     }); });
+    afterEach(function (done) { return __awaiter(_this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, server.close()];
+                case 1:
+                    _a.sent();
+                    done();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     it('sync from remote to localdb', function (done) { return __awaiter(_this, void 0, void 0, function () {
         var _this = this;
         return __generator(this, function (_a) {

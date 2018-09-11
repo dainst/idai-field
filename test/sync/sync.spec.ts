@@ -181,6 +181,13 @@ describe('sync from remote to local db', () => {
     });
 
 
+    afterEach(async done => {
+
+        await server.close();
+        done();
+    });
+
+
     it('sync from remote to localdb', async done => {
 
         _remoteChangesStream.notifications().subscribe(async () => {

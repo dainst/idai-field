@@ -194,7 +194,8 @@ describe('sync', function () {
                     return [4 /*yield*/, settingsService.bootProjectDb(settings)];
                 case 3:
                     _a.sent();
-                    return [4 /*yield*/, createRemoteChangesStream(pouchdbmanager, projectConfiguration // TODO get that one from settings service
+                    return [4 /*yield*/, createRemoteChangesStream(// TODO simulate view facade instead
+                        pouchdbmanager, projectConfiguration // TODO get that one from settings service
                         )];
                 case 4:
                     (_a.sent()).notifications().subscribe(function (changes) {

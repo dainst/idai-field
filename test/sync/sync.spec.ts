@@ -171,7 +171,7 @@ describe('sync', () => {
 
         await settingsService.bootProjectDb(settings);
 
-        (await createRemoteChangesStream(
+        (await createRemoteChangesStream( // TODO simulate view facade instead
             pouchdbmanager,
             projectConfiguration // TODO get that one from settings service
         )).notifications().subscribe((changes: any) => {

@@ -49,11 +49,10 @@ var type_utility_1 = require("../../app/core/model/type-utility");
 var indexer_configuration_1 = require("../../app/indexer-configuration");
 var view_facade_1 = require("../../app/components/resources/view/view-facade");
 var idai_field_document_datastore_1 = require("../../app/core/datastore/field/idai-field-document-datastore");
-var resources_state_manager_1 = require("../../app/components/resources/view/resources-state-manager");
-var operation_views_1 = require("../../app/components/resources/view/state/operation-views");
 var standard_state_serializer_1 = require("../../app/common/standard-state-serializer");
 var idai_components_2_1 = require("idai-components-2");
 var fs_config_reader_1 = require("../../app/core/util/fs-config-reader");
+var resources_state_manager_configuration_1 = require("../../app/components/resources/view/resources-state-manager-configuration");
 var expressPouchDB = require('express-pouchdb');
 var cors = require('pouchdb-server/lib/cors');
 describe('sync from remote to local db', function () {
@@ -69,7 +68,7 @@ describe('sync from remote to local db', function () {
     }());
     function createApp(pouchdbmanager, projectConfiguration, settingsService) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade, datastore, documentCache, typeConverter, idaiFieldDocumentDatastore, remoteChangesStream, views, resourcesStateManager, viewFacade;
+            var _a, createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade, datastore, documentCache, typeConverter, idaiFieldDocumentDatastore, remoteChangesStream, resourcesStateManager, viewFacade;
             return __generator(this, function (_b) {
                 _a = indexer_configuration_1.IndexerConfiguration.configureIndexers(projectConfiguration), createdConstraintIndexer = _a.createdConstraintIndexer, createdFulltextIndexer = _a.createdFulltextIndexer, createdIndexFacade = _a.createdIndexFacade;
                 datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbmanager.getDbProxy(), new IdGenerator(), true);
@@ -77,24 +76,7 @@ describe('sync from remote to local db', function () {
                 typeConverter = new idai_field_type_converter_1.IdaiFieldTypeConverter(new type_utility_1.TypeUtility(projectConfiguration));
                 idaiFieldDocumentDatastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(datastore, createdIndexFacade, documentCache, typeConverter);
                 remoteChangesStream = new remote_changes_stream_1.RemoteChangesStream(datastore, createdIndexFacade, documentCache, typeConverter, { getUsername: function () { return 'fakeuser'; } });
-                views = [
-                    {
-                        "label": "Ausgrabung",
-                        "name": "excavation",
-                        "operationSubtype": "Trench"
-                    },
-                    {
-                        "label": "Bauaufnahme",
-                        "name": "Building",
-                        "operationSubtype": "Building"
-                    },
-                    {
-                        "label": "Survey",
-                        "name": "survey",
-                        "operationSubtype": "Survey"
-                    }
-                ];
-                resourcesStateManager = new resources_state_manager_1.ResourcesStateManager(idaiFieldDocumentDatastore, new standard_state_serializer_1.StandardStateSerializer(settingsService), new operation_views_1.OperationViews(views), ['Place'], 'synctest', true);
+                resourcesStateManager = resources_state_manager_configuration_1.ResourcesStateManagerConfiguration.build(projectConfiguration, idaiFieldDocumentDatastore, new standard_state_serializer_1.StandardStateSerializer(settingsService), 'synctest', true);
                 viewFacade = new view_facade_1.ViewFacade(projectConfiguration, idaiFieldDocumentDatastore, remoteChangesStream, resourcesStateManager, undefined);
                 return [2 /*return*/, { remoteChangesStream: remoteChangesStream, viewFacade: viewFacade }];
             });
@@ -203,8 +185,7 @@ describe('sync from remote to local db', function () {
                     return [4 /*yield*/, setupSettingsService(pouchdbmanager)];
                 case 3:
                     _a = _c.sent(), settingsService = _a.settingsService, projectConfiguration = _a.projectConfiguration;
-                    return [4 /*yield*/, createApp(pouchdbmanager, projectConfiguration, // TODO get that one from settings service
-                        settingsService)];
+                    return [4 /*yield*/, createApp(pouchdbmanager, projectConfiguration, settingsService)];
                 case 4:
                     _b = _c.sent(), remoteChangesStream = _b.remoteChangesStream, viewFacade = _b.viewFacade;
                     remoteChangesStream.notifications().subscribe(function () { return __awaiter(_this, void 0, void 0, function () {

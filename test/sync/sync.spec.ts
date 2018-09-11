@@ -11,16 +11,13 @@ import {DocumentCache} from '../../app/core/datastore/core/document-cache';
 import {IdaiFieldDocument} from 'idai-components-2/src/model/idai-field-document';
 import {IdaiFieldTypeConverter} from '../../app/core/datastore/field/idai-field-type-converter';
 import {TypeUtility} from '../../app/core/model/type-utility';
-import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
 import {IndexerConfiguration} from '../../app/indexer-configuration';
 import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/field/idai-field-document-datastore';
-import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
-import {ViewDefinition} from '../../app/components/resources/view/state/view-definition';
-import {OperationViews} from '../../app/components/resources/view/state/operation-views';
 import {StandardStateSerializer} from '../../app/common/standard-state-serializer';
-import {IdaiFieldAppConfigurator, ConfigLoader, ConfigReader} from 'idai-components-2';
+import {ConfigLoader, ConfigReader, IdaiFieldAppConfigurator} from 'idai-components-2';
 import {FsConfigReader} from '../../app/core/util/fs-config-reader';
+import {ResourcesStateManagerConfiguration} from '../../app/components/resources/view/resources-state-manager-configuration';
 
 const expressPouchDB = require('express-pouchdb');
 const cors = require('pouchdb-server/lib/cors');
@@ -62,29 +59,10 @@ describe('sync from remote to local db', () => {
             typeConverter,
             { getUsername: () => 'fakeuser' });
 
-        const views: ViewDefinition[] = [ // TODO remove duplicate code
-            {
-                "label": "Ausgrabung",
-                "name": "excavation",
-                "operationSubtype": "Trench"
-            },
-            {
-                "label": "Bauaufnahme",
-                "name": "Building",
-                "operationSubtype": "Building"
-            },
-            {
-                "label": "Survey",
-                "name": "survey",
-                "operationSubtype": "Survey"
-            }
-        ];
-
-        const resourcesStateManager = new ResourcesStateManager(
+        const resourcesStateManager = ResourcesStateManagerConfiguration.build(
+            projectConfiguration,
             idaiFieldDocumentDatastore,
             new StandardStateSerializer(settingsService),
-            new OperationViews(views),
-            ['Place'],
             'synctest',
             true
         );
@@ -192,7 +170,7 @@ describe('sync from remote to local db', () => {
 
         const {remoteChangesStream, viewFacade} = await createApp(
             pouchdbmanager,
-            projectConfiguration, // TODO get that one from settings service
+            projectConfiguration,
             settingsService
         );
 

@@ -39,6 +39,7 @@ import {ViewDefinition} from './view/state/view-definition';
 import {OperationViews} from './view/state/operation-views';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {SearchConstraintsComponent} from './searchbar/search-constraints.component';
+import {ResourcesStateManagerConfiguration} from './view/resources-state-manager-configuration';
 
 const remote = require('electron').remote;
 
@@ -85,35 +86,13 @@ const remote = require('electron').remote;
                          projectConfiguration: ProjectConfiguration,
                          settingsService: SettingsService) => {
 
-                const views: ViewDefinition[] = [
-                    {
-                        "label": "Ausgrabung",
-                        "name": "excavation",
-                        "operationSubtype": "Trench"
-                    },
-                    {
-                        "label": "Bauaufnahme",
-                        "name": "Building",
-                        "operationSubtype": "Building"
-                    },
-                    {
-                        "label": "Survey",
-                        "name": "survey",
-                        "operationSubtype": "Survey"
-                    }
-                ];
-                for (let view of views) {
-                    (view as any)['mainTypeLabel'] = projectConfiguration.getLabelForType(view.operationSubtype) as any;
-                }
-
                 const projectName = settingsService.getSelectedProject();
                 if (!projectName) throw 'project not set';
 
-                return new ResourcesStateManager(
+                return ResourcesStateManagerConfiguration.build(
+                    projectConfiguration,
                     datastore,
                     stateSerializer,
-                    new OperationViews(views),
-                    ['Place'],
                     projectName,
                     remote.getGlobal('switches').suppress_map_load_for_test
                 );

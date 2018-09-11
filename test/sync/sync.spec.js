@@ -161,20 +161,12 @@ describe('sync', function () {
             });
         });
     }
-    function createDocToPut() {
-        return { '_id': 'zehn',
-            created: {
-                "user": "sample_data",
-                "date": "2018-09-11T20:46:15.408Z"
-            },
-            modified: [
-                {
-                    "user": "sample_data",
-                    "date": "2018-09-11T20:46:15.408Z"
-                }
-            ],
-            resource: { type: 'Object', id: 'zehn', identifier: 'Zehn', relations: {} } };
-    }
+    var docToPut = {
+        '_id': 'zehn',
+        created: { "user": "sample_data", "date": "2018-09-11T20:46:15.408Z" },
+        modified: [{ "user": "sample_data", "date": "2018-09-11T20:46:15.408Z" }],
+        resource: { type: 'Object', id: 'zehn', identifier: 'Zehn', relations: {} }
+    };
     it('sync from remote to localdb', function (done) { return __awaiter(_this, void 0, void 0, function () {
         var pouchdbmanager;
         return __generator(this, function (_a) {
@@ -197,7 +189,7 @@ describe('sync', function () {
                         expect(changes.resource.id).toEqual('zehn');
                         return syncTestSimulatedRemoteDb.close().then(function () { return done(); });
                     });
-                    return [4 /*yield*/, syncTestSimulatedRemoteDb.put(createDocToPut())];
+                    return [4 /*yield*/, syncTestSimulatedRemoteDb.put(docToPut)];
                 case 5:
                     _a.sent();
                     return [2 /*return*/];

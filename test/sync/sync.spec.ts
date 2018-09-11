@@ -129,21 +129,13 @@ describe('sync', () => {
     }
 
 
-    function createDocToPut() {
+    const docToPut = {
+        '_id': 'zehn',
+        created: {"user": "sample_data", "date": "2018-09-11T20:46:15.408Z"},
+        modified: [{"user": "sample_data", "date": "2018-09-11T20:46:15.408Z"}],
+        resource: { type: 'Object', id: 'zehn', identifier: 'Zehn', relations: {}}
+    };
 
-        return {'_id': 'zehn',
-            created: {
-            "user": "sample_data",
-                "date": "2018-09-11T20:46:15.408Z"
-        },
-        modified: [
-            {
-                "user": "sample_data",
-                "date": "2018-09-11T20:46:15.408Z"
-            }
-        ],
-        resource: { type: 'Object', id: 'zehn', identifier: 'Zehn', relations: {}}}
-    }
 
 
     it('sync from remote to localdb', async done => {
@@ -162,6 +154,6 @@ describe('sync', () => {
             return syncTestSimulatedRemoteDb.close().then(() => done());
         });
 
-        await syncTestSimulatedRemoteDb.put(createDocToPut());
+        await syncTestSimulatedRemoteDb.put(docToPut);
     });
 });

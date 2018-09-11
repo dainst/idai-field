@@ -31,6 +31,12 @@ build/Release
 # PouchDB data directories
 _users/
 pouch__all_dbs__/
+proddb
+remotedb
+synctestdb
+synctest
+sycntestdb
+synctestremotedb
 
 
 ######

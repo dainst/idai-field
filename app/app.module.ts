@@ -42,6 +42,7 @@ import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
 import {HelpComponent} from './components/help/help.component';
 import {TaskbarUpdateComponent} from './components/navbar/taskbar-update.component';
 import {M} from './components/m';
+import {SettingsSerializer} from './core/settings/settings-serializer';
 
 
 const remote = require('electron').remote;
@@ -94,7 +95,10 @@ registerLocaleData(localeDe, 'de');
             multi: true,
             deps: [SettingsService, PouchdbManager],
             useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager) => () =>
-                settingsService.bootProject().then(configuration => {
+                (new SettingsSerializer).load().then(settings =>
+                    settingsService.bootProjectDb(settings).then(() =>
+                        settingsService.loadConfiguration())).then(configuration => {
+
                     projectConfiguration = configuration;
 
                     fulltextIndexer = new FulltextIndexer(projectConfiguration, true);

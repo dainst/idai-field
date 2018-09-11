@@ -12,6 +12,7 @@
     "convert-sass": "gulp convert-sass",
     "start": "electron . dev",
     "test": "jasmine JASMINE_CONFIG_PATH=test/unit/config/jasmine.json",
+    "synctest": "jasmine JASMINE_CONFIG_PATH=test/sync/jasmine.json",
     "pree2e": "rimraf test/e2e-screenshots/*.png",
     "e2e": "node test/e2e/spectron.js",
     "package": "build -mw --publish never",

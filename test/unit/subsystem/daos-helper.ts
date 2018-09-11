@@ -95,9 +95,9 @@ export class DAOsHelper {
         await pouchdbManager.loadProjectDb(dbname, undefined);
 
         return {
-            datastore: datastore,
-            documentCache: documentCache,
-            indexFacade: indexFacade
+            datastore,
+            documentCache,
+            indexFacade
         }
     }
 }

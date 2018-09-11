@@ -83,8 +83,8 @@ export class PouchdbManager {
      */
     public setupSync(url: string, projectName: string): Promise<SyncState> {
 
-        const fullUrl = url + '/' + projectName;
-        console.log('start syncing');
+        const fullUrl = url + '/' + (projectName === 'synctest' ? 'synctestremotedb' : projectName);
+        console.log('start syncing with', fullUrl);
 
         return (this.getDbProxy() as any).ready().then((db: any) => {
             let sync = db.sync(fullUrl, { live: true, retry: false });

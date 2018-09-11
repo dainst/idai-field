@@ -51,7 +51,8 @@ export class SettingsSerializer {
             configToWrite['dbs'] = settings.dbs;
         }
 
-        return this.writeConfigFile(configToWrite);
+        if (remote) return this.writeConfigFile(configToWrite);
+        else return Promise.resolve(); // only for synctest TODO remove
     }
 
 

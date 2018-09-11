@@ -95,19 +95,19 @@ export class SettingsService {
     }
 
 
-    public async bootProject(): Promise<ProjectConfiguration> {
+    public async bootProjectDb(settings: Settings): Promise<void> {
 
-        await this.updateSettings(await this.settingsSerializer.load());
-
+        await this.updateSettings(settings);
         await this.pouchdbManager.loadProjectDb(
             this.getSelectedProject(),
             new IdaiFieldSampleDataLoader(this.converter, this.settings.imagestorePath));
 
         if (this.settings.isSyncActive) await this.startSync();
-
         await this.loadProjectDocument(true);
+    }
 
-        // config
+
+    public async loadConfiguration(): Promise<ProjectConfiguration> {
 
         let customProjectName = undefined;
         if (this.getSelectedProject().indexOf('meninx-project') === 0) customProjectName = 'Meninx';
@@ -181,11 +181,11 @@ export class SettingsService {
                 throw 'malformed_address';
         }
 
-        ipcRenderer.send('settingsChanged', this.settings);
+        if (ipcRenderer) ipcRenderer.send('settingsChanged', this.settings);
 
         return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject() as any)
             .catch((errWithParams: any) => {
-                if (errWithParams.length > 0 && errWithParams[0] == ImagestoreErrors.INVALID_PATH) {
+                if (errWithParams.length > 0 && errWithParams[0] === ImagestoreErrors.INVALID_PATH) {
                     this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
                 } else {
                     console.error("something went wrong with imagestore.setPath",errWithParams);
@@ -205,7 +205,8 @@ export class SettingsService {
 
         console.log('SettingsService.startSync()');
 
-        return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject()).then(syncState => {
+        return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject())
+            .then(syncState => {
 
             // avoid issuing 'connected' too early
             const msg = setTimeout(() => this.syncStatusObservers.forEach((o: Observer<any>) => o.next('connected')), 500);
@@ -213,10 +214,14 @@ export class SettingsService {
             syncState.onError.subscribe(() => {
                 clearTimeout(msg); // stop 'connected' msg if error
                 syncState.cancel();
+                console.log("syncState error")
                 this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
                 this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
             });
-            syncState.onChange.subscribe(() => this.syncStatusObservers.forEach((o: Observer<any>) => o.next('changed')));
+            syncState.onChange.subscribe(() => {
+                console.log("syncState changed")
+                return this.syncStatusObservers.forEach((o: Observer<any>) => o.next('changed'))
+            });
         });
     }
 
@@ -292,7 +297,7 @@ export class SettingsService {
     private static initSettings(settings: Settings): Settings {
 
         if (!settings.username) settings.username = 'anonymous';
-        if (!settings.dbs || settings.dbs.length == 0) settings.dbs = ['test'];
+        if (!settings.dbs || settings.dbs.length === 0) settings.dbs = ['test'];
         if (!settings.isSyncActive) settings.isSyncActive = false;
 
         if (settings.imagestorePath) {

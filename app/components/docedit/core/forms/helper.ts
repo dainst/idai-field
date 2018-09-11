@@ -13,13 +13,13 @@ export module Helper {
 
         if (!resource || !fieldName || !resource[fieldName] || !valuelist) return undefined;
 
-        const result = isArray(resource[fieldName])
+        const itemsNotIncludedInValueList = isArray(resource[fieldName])
             ? resource[fieldName].filter(isNot(includedIn(valuelist)))
             : isNot(includedIn(valuelist))(resource[fieldName])
                 ? [resource[fieldName]]
                 : [];
 
-        return (result.length > 0) ? result : undefined;
+        return itemsNotIncludedInValueList.length > 0 ? itemsNotIncludedInValueList : undefined;
     }
 }
 

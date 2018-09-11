@@ -54,7 +54,7 @@ var expressPouchDB = require('express-pouchdb');
 var cors = require('pouchdb-server/lib/cors');
 describe('sync', function () {
     var syncTestSimulatedRemoteDb;
-    var server;
+    var server; // TODO close when done
     var IdGenerator = /** @class */ (function () {
         function IdGenerator() {
         }

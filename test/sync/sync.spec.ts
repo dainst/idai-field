@@ -23,7 +23,7 @@ const cors = require('pouchdb-server/lib/cors');
 describe('sync', () => {
 
     let syncTestSimulatedRemoteDb;
-    let server;
+    let server; // TODO close when done
 
     class IdGenerator {
         public generateId() {

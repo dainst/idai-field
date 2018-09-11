@@ -73,18 +73,12 @@ describe('sync', function () {
             }
         ]
     });
-    var UsernameProvider = /** @class */ (function () {
-        function UsernameProvider() {
-            this.getUsername = function () { return 'fakeuser'; };
-        }
-        return UsernameProvider;
-    }());
     function createRemoteChangesStream(pouchdbmanager, projectConfiguration) {
         return __awaiter(this, void 0, void 0, function () {
             var _a, createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade;
             return __generator(this, function (_b) {
                 _a = indexer_configuration_1.IndexerConfiguration.configureIndexers(projectConfiguration), createdConstraintIndexer = _a.createdConstraintIndexer, createdFulltextIndexer = _a.createdFulltextIndexer, createdIndexFacade = _a.createdIndexFacade;
-                return [2 /*return*/, new remote_changes_stream_1.RemoteChangesStream(new pouchdb_datastore_1.PouchdbDatastore(pouchdbmanager.getDbProxy(), new IdGenerator(), true), createdIndexFacade, new document_cache_1.DocumentCache(), new idai_field_type_converter_1.IdaiFieldTypeConverter(new type_utility_1.TypeUtility(projectConfiguration)), new UsernameProvider())];
+                return [2 /*return*/, new remote_changes_stream_1.RemoteChangesStream(new pouchdb_datastore_1.PouchdbDatastore(pouchdbmanager.getDbProxy(), new IdGenerator(), true), createdIndexFacade, new document_cache_1.DocumentCache(), new idai_field_type_converter_1.IdaiFieldTypeConverter(new type_utility_1.TypeUtility(projectConfiguration)), { getUsername: function () { return 'fakeuser'; } })];
             });
         });
     }

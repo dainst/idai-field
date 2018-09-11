@@ -43,11 +43,6 @@ describe('sync', () => {
     });
 
 
-    class UsernameProvider {
-
-        getUsername = () => 'fakeuser';
-    }
-
     async function createRemoteChangesStream(pouchdbmanager, projectConfiguration) {
 
         const {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade} =
@@ -61,7 +56,7 @@ describe('sync', () => {
             createdIndexFacade,
             new DocumentCache<IdaiFieldDocument>(),
             new IdaiFieldTypeConverter(new TypeUtility(projectConfiguration)),
-            new UsernameProvider());
+            { getUsername: () => 'fakeuser' });
     }
 
 

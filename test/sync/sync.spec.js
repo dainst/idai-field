@@ -57,6 +57,8 @@ var expressPouchDB = require('express-pouchdb');
 var cors = require('pouchdb-server/lib/cors');
 describe('sync from remote to local db', function () {
     var syncTestSimulatedRemoteDb;
+    var _remoteChangesStream;
+    var _viewFacade;
     var server; // TODO close when done
     var IdGenerator = /** @class */ (function () {
         function IdGenerator() {
@@ -170,9 +172,8 @@ describe('sync from remote to local db', function () {
         modified: [{ "user": "sample_data", "date": "2018-09-11T20:46:15.408Z" }],
         resource: { type: 'Trench', id: 'zehn', identifier: 'Zehn', relations: {} }
     };
-    it('sync from remote to localdb', function (done) { return __awaiter(_this, void 0, void 0, function () {
+    beforeEach(function (done) { return __awaiter(_this, void 0, void 0, function () {
         var pouchdbmanager, _a, settingsService, projectConfiguration, _b, remoteChangesStream, viewFacade;
-        var _this = this;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0: return [4 /*yield*/, setupSyncTestSimulatedRemoteDb()];
@@ -188,17 +189,29 @@ describe('sync from remote to local db', function () {
                     return [4 /*yield*/, createApp(pouchdbmanager, projectConfiguration, settingsService)];
                 case 4:
                     _b = _c.sent(), remoteChangesStream = _b.remoteChangesStream, viewFacade = _b.viewFacade;
-                    remoteChangesStream.notifications().subscribe(function () { return __awaiter(_this, void 0, void 0, function () {
+                    _remoteChangesStream = remoteChangesStream;
+                    _viewFacade = viewFacade;
+                    done();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('sync from remote to localdb', function (done) { return __awaiter(_this, void 0, void 0, function () {
+        var _this = this;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _remoteChangesStream.notifications().subscribe(function () { return __awaiter(_this, void 0, void 0, function () {
                         var documents;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
-                                case 0: return [4 /*yield*/, viewFacade.selectView('project')];
+                                case 0: return [4 /*yield*/, _viewFacade.selectView('project')];
                                 case 1:
                                     _a.sent();
-                                    return [4 /*yield*/, viewFacade.populateDocumentList()];
+                                    return [4 /*yield*/, _viewFacade.populateDocumentList()];
                                 case 2:
                                     _a.sent();
-                                    return [4 /*yield*/, viewFacade.getDocuments()];
+                                    return [4 /*yield*/, _viewFacade.getDocuments()];
                                 case 3:
                                     documents = _a.sent();
                                     expect(documents[0].resource.id).toEqual('zehn');
@@ -211,8 +224,8 @@ describe('sync from remote to local db', function () {
                         });
                     }); });
                     return [4 /*yield*/, syncTestSimulatedRemoteDb.put(docToPut)];
-                case 5:
-                    _c.sent();
+                case 1:
+                    _a.sent();
                     return [2 /*return*/];
             }
         });

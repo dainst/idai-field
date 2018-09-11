@@ -26,6 +26,8 @@ const cors = require('pouchdb-server/lib/cors');
 describe('sync from remote to local db', () => {
 
     let syncTestSimulatedRemoteDb;
+    let _remoteChangesStream;
+    let _viewFacade;
     let server; // TODO close when done
 
     class IdGenerator {
@@ -159,14 +161,13 @@ describe('sync from remote to local db', () => {
     };
 
 
-
-    it('sync from remote to localdb', async done => {
+    beforeEach(async done => {
 
         await setupSyncTestSimulatedRemoteDb();
         await setupSyncTestDb();
+
         const pouchdbmanager = new PouchdbManager();
         const {settingsService, projectConfiguration} = await setupSettingsService(pouchdbmanager);
-
 
         const {remoteChangesStream, viewFacade} = await createApp(
             pouchdbmanager,
@@ -174,12 +175,19 @@ describe('sync from remote to local db', () => {
             settingsService
         );
 
+        _remoteChangesStream = remoteChangesStream;
+        _viewFacade = viewFacade;
+        done();
+    });
 
-        remoteChangesStream.notifications().subscribe(async () => {
 
-            await viewFacade.selectView('project');
-            await viewFacade.populateDocumentList();
-            const documents = await viewFacade.getDocuments();
+    it('sync from remote to localdb', async done => {
+
+        _remoteChangesStream.notifications().subscribe(async () => {
+
+            await _viewFacade.selectView('project');
+            await _viewFacade.populateDocumentList();
+            const documents = await _viewFacade.getDocuments();
 
             expect(documents[0].resource.id).toEqual('zehn');
             await syncTestSimulatedRemoteDb.close();

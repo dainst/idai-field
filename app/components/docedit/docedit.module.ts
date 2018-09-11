@@ -27,7 +27,6 @@ import {DropdownComponent} from './core/forms/dropdown.component';
 import {InputComponent} from './core/forms/input.component';
 import {DimensionComponent} from './core/forms/dimension.component';
 import {InputsComponent} from './core/forms/inputs.component';
-import {MultiselectComponent} from './core/forms/multiselect.component';
 import {RadioComponent} from './core/forms/radio.component';
 import {TextComponent} from './core/forms/text.component';
 import {DatingComponent} from './core/forms/dating.component';
@@ -73,7 +72,6 @@ import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
         DropdownComponent,
         InputComponent,
         InputsComponent,
-        MultiselectComponent,
         RadioComponent,
         TextComponent,
         DatingComponent,

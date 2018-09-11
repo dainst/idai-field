@@ -155,7 +155,7 @@ describe('sync', () => {
             undefined
             );
 
-        const settings: Settings = {
+        await settingsService.bootProjectDb({
             isAutoUpdateActive: true,
             isSyncActive: true,
             remoteSites: [],
@@ -167,9 +167,7 @@ describe('sync', () => {
             dbs: ['synctest'],
             imagestorePath: '/tmp/abc',
             username: 'synctestuser'
-        };
-
-        await settingsService.bootProjectDb(settings);
+        });
 
         (await createRemoteChangesStream( // TODO simulate view facade instead
             pouchdbmanager,

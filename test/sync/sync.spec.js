@@ -165,7 +165,7 @@ describe('sync', function () {
             resource: { type: 'Object', id: 'zehn', identifier: 'Zehn', relations: {} } };
     }
     it('test', function (done) { return __awaiter(_this, void 0, void 0, function () {
-        var pouchDbFsImagestore, settingsService, settings;
+        var pouchDbFsImagestore, settingsService;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, setupSyncTestSimulatedRemoteDb()];
@@ -177,21 +177,20 @@ describe('sync', function () {
                     pouchdbmanager = new pouchdb_manager_1.PouchdbManager();
                     pouchDbFsImagestore = new pouch_db_fs_imagestore_1.PouchDbFsImagestore(undefined, undefined, pouchdbmanager.getDbProxy());
                     settingsService = new settings_service_1.SettingsService(pouchDbFsImagestore, pouchdbmanager, undefined, undefined, undefined);
-                    settings = {
-                        isAutoUpdateActive: true,
-                        isSyncActive: true,
-                        remoteSites: [],
-                        syncTarget: new /** @class */ (function () {
-                            function class_1() {
-                                this.address = 'http://localhost:3003/';
-                            }
-                            return class_1;
-                        }()),
-                        dbs: ['synctest'],
-                        imagestorePath: '/tmp/abc',
-                        username: 'synctestuser'
-                    };
-                    return [4 /*yield*/, settingsService.bootProjectDb(settings)];
+                    return [4 /*yield*/, settingsService.bootProjectDb({
+                            isAutoUpdateActive: true,
+                            isSyncActive: true,
+                            remoteSites: [],
+                            syncTarget: new /** @class */ (function () {
+                                function class_1() {
+                                    this.address = 'http://localhost:3003/';
+                                }
+                                return class_1;
+                            }()),
+                            dbs: ['synctest'],
+                            imagestorePath: '/tmp/abc',
+                            username: 'synctestuser'
+                        })];
                 case 3:
                     _a.sent();
                     return [4 /*yield*/, createRemoteChangesStream(// TODO simulate view facade instead

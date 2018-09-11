@@ -84,11 +84,9 @@ describe('sync', () => {
      */
     async function setupSettingsService(pouchdbmanager) {
 
-        const pouchDbFsImagestore = new PouchDbFsImagestore(
-            undefined, undefined, pouchdbmanager.getDbProxy()) as Imagestore;
-
         const settingsService = new SettingsService(
-            pouchDbFsImagestore,
+            new PouchDbFsImagestore(
+                undefined, undefined, pouchdbmanager.getDbProxy()) as Imagestore,
             pouchdbmanager,
             undefined,
             undefined,

@@ -103,12 +103,11 @@ describe('sync', function () {
      */
     function setupSettingsService(pouchdbmanager) {
         return __awaiter(this, void 0, void 0, function () {
-            var pouchDbFsImagestore, settingsService;
+            var settingsService;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        pouchDbFsImagestore = new pouch_db_fs_imagestore_1.PouchDbFsImagestore(undefined, undefined, pouchdbmanager.getDbProxy());
-                        settingsService = new settings_service_1.SettingsService(pouchDbFsImagestore, pouchdbmanager, undefined, undefined, undefined);
+                        settingsService = new settings_service_1.SettingsService(new pouch_db_fs_imagestore_1.PouchDbFsImagestore(undefined, undefined, pouchdbmanager.getDbProxy()), pouchdbmanager, undefined, undefined, undefined);
                         return [4 /*yield*/, settingsService.bootProjectDb({
                                 isAutoUpdateActive: true,
                                 isSyncActive: true,

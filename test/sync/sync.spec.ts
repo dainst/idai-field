@@ -182,7 +182,8 @@ describe('sync from remote to local db', () => {
             const documents = await viewFacade.getDocuments();
 
             expect(documents[0].resource.id).toEqual('zehn');
-            return syncTestSimulatedRemoteDb.close().then(() => done());
+            await syncTestSimulatedRemoteDb.close();
+            done();
         });
 
         await syncTestSimulatedRemoteDb.put(docToPut);

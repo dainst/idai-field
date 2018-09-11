@@ -202,7 +202,11 @@ describe('sync from remote to local db', function () {
                                 case 3:
                                     documents = _a.sent();
                                     expect(documents[0].resource.id).toEqual('zehn');
-                                    return [2 /*return*/, syncTestSimulatedRemoteDb.close().then(function () { return done(); })];
+                                    return [4 /*yield*/, syncTestSimulatedRemoteDb.close()];
+                                case 4:
+                                    _a.sent();
+                                    done();
+                                    return [2 /*return*/];
                             }
                         });
                     }); });

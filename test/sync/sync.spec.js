@@ -48,6 +48,11 @@ var idai_field_type_converter_1 = require("../../app/core/datastore/field/idai-f
 var type_utility_1 = require("../../app/core/model/type-utility");
 var project_configuration_1 = require("idai-components-2/src/configuration/project-configuration");
 var indexer_configuration_1 = require("../../app/indexer-configuration");
+var view_facade_1 = require("../../app/components/resources/view/view-facade");
+var idai_field_document_datastore_1 = require("../../app/core/datastore/field/idai-field-document-datastore");
+var resources_state_manager_1 = require("../../app/components/resources/view/resources-state-manager");
+var operation_views_1 = require("../../app/components/resources/view/state/operation-views");
+var standard_state_serializer_1 = require("../../app/common/standard-state-serializer");
 var expressPouchDB = require('express-pouchdb');
 var cors = require('pouchdb-server/lib/cors');
 describe('sync', function () {
@@ -73,12 +78,36 @@ describe('sync', function () {
             }
         ]
     });
-    function createRemoteChangesStream(pouchdbmanager, projectConfiguration) {
+    function createApp(pouchdbmanager, projectConfiguration, settingsService) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade;
+            var _a, createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade, datastore, documentCache, typeConverter, idaiFieldDocumentDatastore, remoteChangesStream, views, resourcesStateManager, viewFacade;
             return __generator(this, function (_b) {
                 _a = indexer_configuration_1.IndexerConfiguration.configureIndexers(projectConfiguration), createdConstraintIndexer = _a.createdConstraintIndexer, createdFulltextIndexer = _a.createdFulltextIndexer, createdIndexFacade = _a.createdIndexFacade;
-                return [2 /*return*/, new remote_changes_stream_1.RemoteChangesStream(new pouchdb_datastore_1.PouchdbDatastore(pouchdbmanager.getDbProxy(), new IdGenerator(), true), createdIndexFacade, new document_cache_1.DocumentCache(), new idai_field_type_converter_1.IdaiFieldTypeConverter(new type_utility_1.TypeUtility(projectConfiguration)), { getUsername: function () { return 'fakeuser'; } })];
+                datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbmanager.getDbProxy(), new IdGenerator(), true);
+                documentCache = new document_cache_1.DocumentCache();
+                typeConverter = new idai_field_type_converter_1.IdaiFieldTypeConverter(new type_utility_1.TypeUtility(projectConfiguration));
+                idaiFieldDocumentDatastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(datastore, createdIndexFacade, documentCache, typeConverter);
+                remoteChangesStream = new remote_changes_stream_1.RemoteChangesStream(datastore, createdIndexFacade, documentCache, typeConverter, { getUsername: function () { return 'fakeuser'; } });
+                views = [
+                    {
+                        "label": "Ausgrabung",
+                        "name": "excavation",
+                        "operationSubtype": "Trench"
+                    },
+                    {
+                        "label": "Bauaufnahme",
+                        "name": "Building",
+                        "operationSubtype": "Building"
+                    },
+                    {
+                        "label": "Survey",
+                        "name": "survey",
+                        "operationSubtype": "Survey"
+                    }
+                ];
+                resourcesStateManager = new resources_state_manager_1.ResourcesStateManager(idaiFieldDocumentDatastore, new standard_state_serializer_1.StandardStateSerializer(settingsService), new operation_views_1.OperationViews(views), ['Place'], 'synctest', true);
+                viewFacade = new view_facade_1.ViewFacade(projectConfiguration, idaiFieldDocumentDatastore, remoteChangesStream, resourcesStateManager, undefined);
+                return [2 /*return*/, { remoteChangesStream: remoteChangesStream, viewFacade: viewFacade }];
             });
         });
     }
@@ -124,7 +153,7 @@ describe('sync', function () {
                             })];
                     case 1:
                         _a.sent();
-                        return [2 /*return*/];
+                        return [2 /*return*/, settingsService];
                 }
             });
         });
@@ -168,30 +197,37 @@ describe('sync', function () {
         resource: { type: 'Object', id: 'zehn', identifier: 'Zehn', relations: {} }
     };
     it('sync from remote to localdb', function (done) { return __awaiter(_this, void 0, void 0, function () {
-        var pouchdbmanager;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var pouchdbmanager, settingsService, _a, remoteChangesStream, viewFacade;
+        var _this = this;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0: return [4 /*yield*/, setupSyncTestSimulatedRemoteDb()];
                 case 1:
-                    _a.sent();
+                    _b.sent();
                     return [4 /*yield*/, setupSyncTestDb()];
                 case 2:
-                    _a.sent();
+                    _b.sent();
                     pouchdbmanager = new pouchdb_manager_1.PouchdbManager();
                     return [4 /*yield*/, setupSettingsService(pouchdbmanager)];
                 case 3:
-                    _a.sent();
-                    return [4 /*yield*/, createRemoteChangesStream(// TODO simulate view facade instead
-                        pouchdbmanager, projectConfiguration // TODO get that one from settings service
-                        )];
+                    settingsService = _b.sent();
+                    return [4 /*yield*/, createApp(pouchdbmanager, projectConfiguration, // TODO get that one from settings service
+                        settingsService)];
                 case 4:
-                    (_a.sent()).notifications().subscribe(function (changes) {
-                        expect(changes.resource.id).toEqual('zehn');
-                        return syncTestSimulatedRemoteDb.close().then(function () { return done(); });
-                    });
-                    return [4 /*yield*/, syncTestSimulatedRemoteDb.put(docToPut)];
+                    _a = _b.sent(), remoteChangesStream = _a.remoteChangesStream, viewFacade = _a.viewFacade;
+                    return [4 /*yield*/, viewFacade.selectView('excavation')];
                 case 5:
-                    _a.sent();
+                    _b.sent();
+                    remoteChangesStream.notifications().subscribe(function (changes) { return __awaiter(_this, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            expect(changes.resource.id).toEqual('zehn');
+                            // console.log(":", await viewFacade.getDocuments());
+                            return [2 /*return*/, syncTestSimulatedRemoteDb.close().then(function () { return done(); })];
+                        });
+                    }); });
+                    return [4 /*yield*/, syncTestSimulatedRemoteDb.put(docToPut)];
+                case 6:
+                    _b.sent();
                     return [2 /*return*/];
             }
         });

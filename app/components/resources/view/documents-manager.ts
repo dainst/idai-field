@@ -146,7 +146,7 @@ export class DocumentsManager {
 
     public async populateDocumentList(skipResetRemoteDocs = false) {
 
-        this.loading.start();
+        if (this.loading) this.loading.start();
 
         if (!skipResetRemoteDocs) this.newDocumentsFromRemote = [];
         this.documents = [];
@@ -155,7 +155,7 @@ export class DocumentsManager {
         this.documents = result.documents;
         this.totalDocumentCount = result.totalCount;
 
-        this.loading.stop();
+        if (this.loading) this.loading.stop();
         ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
     }
 

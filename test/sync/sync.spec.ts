@@ -13,6 +13,12 @@ import {IdaiFieldTypeConverter} from '../../app/core/datastore/field/idai-field-
 import {TypeUtility} from '../../app/core/model/type-utility';
 import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
 import {IndexerConfiguration} from '../../app/indexer-configuration';
+import {ViewFacade} from '../../app/components/resources/view/view-facade';
+import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/field/idai-field-document-datastore';
+import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
+import {ViewDefinition} from '../../app/components/resources/view/state/view-definition';
+import {OperationViews} from '../../app/components/resources/view/state/operation-views';
+import {StandardStateSerializer} from '../../app/common/standard-state-serializer';
 
 const expressPouchDB = require('express-pouchdb');
 const cors = require('pouchdb-server/lib/cors');
@@ -43,20 +49,66 @@ describe('sync', () => {
     });
 
 
-    async function createRemoteChangesStream(pouchdbmanager, projectConfiguration) {
+    async function createApp(pouchdbmanager, projectConfiguration, settingsService) {
 
         const {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade} =
             IndexerConfiguration.configureIndexers(projectConfiguration);
 
-        return new RemoteChangesStream(
-            new PouchdbDatastore(
-                pouchdbmanager.getDbProxy(),
-                new IdGenerator(),
-                true),
+        const datastore = new PouchdbDatastore(
+            pouchdbmanager.getDbProxy(),
+            new IdGenerator(),
+            true);
+
+        const documentCache = new DocumentCache<IdaiFieldDocument>();
+
+        const typeConverter = new IdaiFieldTypeConverter(new TypeUtility(projectConfiguration));
+
+        const idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
+            datastore, createdIndexFacade, documentCache, typeConverter);
+
+        const remoteChangesStream = new RemoteChangesStream(
+            datastore,
             createdIndexFacade,
-            new DocumentCache<IdaiFieldDocument>(),
-            new IdaiFieldTypeConverter(new TypeUtility(projectConfiguration)),
+            documentCache,
+            typeConverter,
             { getUsername: () => 'fakeuser' });
+
+        const views: ViewDefinition[] = [ // TODO remove duplicate code
+            {
+                "label": "Ausgrabung",
+                "name": "excavation",
+                "operationSubtype": "Trench"
+            },
+            {
+                "label": "Bauaufnahme",
+                "name": "Building",
+                "operationSubtype": "Building"
+            },
+            {
+                "label": "Survey",
+                "name": "survey",
+                "operationSubtype": "Survey"
+            }
+        ];
+
+        const resourcesStateManager = new ResourcesStateManager(
+            idaiFieldDocumentDatastore,
+            new StandardStateSerializer(settingsService),
+            new OperationViews(views),
+            ['Place'],
+            'synctest',
+            true
+        );
+
+        const viewFacade = new ViewFacade(
+            projectConfiguration,
+            idaiFieldDocumentDatastore,
+            remoteChangesStream,
+            resourcesStateManager,
+            undefined
+        );
+
+        return {remoteChangesStream, viewFacade}
     }
 
 
@@ -106,6 +158,8 @@ describe('sync', () => {
             imagestorePath: '/tmp/abc',
             username: 'synctestuser'
         });
+
+        return settingsService;
     }
 
 
@@ -143,14 +197,21 @@ describe('sync', () => {
         await setupSyncTestSimulatedRemoteDb();
         await setupSyncTestDb();
         const pouchdbmanager = new PouchdbManager();
-        await setupSettingsService(pouchdbmanager);
+        const settingsService = await setupSettingsService(pouchdbmanager);
 
-        (await createRemoteChangesStream( // TODO simulate view facade instead
+
+        const {remoteChangesStream, viewFacade} = await createApp(
             pouchdbmanager,
-            projectConfiguration // TODO get that one from settings service
-        )).notifications().subscribe((changes: any) => {
+            projectConfiguration, // TODO get that one from settings service
+            settingsService
+        );
+
+        await viewFacade.selectView('excavation');
+
+        remoteChangesStream.notifications().subscribe(async (changes: any) => {
 
             expect(changes.resource.id).toEqual('zehn');
+            // console.log(":", await viewFacade.getDocuments());
             return syncTestSimulatedRemoteDb.close().then(() => done());
         });
 

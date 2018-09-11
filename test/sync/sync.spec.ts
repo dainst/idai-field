@@ -158,6 +158,7 @@ describe('sync', () => {
             projectConfiguration // TODO get that one from settings service
         )).notifications().subscribe((changes: any) => {
 
+            expect(changes.resource.id).toEqual('zehn');
             return syncTestSimulatedRemoteDb.close().then(() => done());
         });
 

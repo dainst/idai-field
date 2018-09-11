@@ -194,6 +194,7 @@ describe('sync', function () {
                         )];
                 case 4:
                     (_a.sent()).notifications().subscribe(function (changes) {
+                        expect(changes.resource.id).toEqual('zehn');
                         return syncTestSimulatedRemoteDb.close().then(function () { return done(); });
                     });
                     return [4 /*yield*/, syncTestSimulatedRemoteDb.put(createDocToPut())];

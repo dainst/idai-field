@@ -214,12 +214,10 @@ export class SettingsService {
             syncState.onError.subscribe(() => {
                 clearTimeout(msg); // stop 'connected' msg if error
                 syncState.cancel();
-                console.log("syncState error")
                 this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
                 this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
             });
             syncState.onChange.subscribe(() => {
-                console.log("syncState changed")
                 return this.syncStatusObservers.forEach((o: Observer<any>) => o.next('changed'))
             });
         });

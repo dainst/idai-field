@@ -24,7 +24,6 @@ describe('sync', () => {
 
     let syncTestSimulatedRemoteDb;
     let server;
-    let pouchdbmanager;
 
     class IdGenerator {
         public generateId() {
@@ -101,6 +100,38 @@ describe('sync', () => {
 
 
     /**
+     * Boot project via settings service such that it immediately starts syncinc with http://localhost:3003/synctestremotedb
+     */
+    async function setupSettingsService(pouchdbmanager) {
+
+        const pouchDbFsImagestore = new PouchDbFsImagestore(
+            undefined, undefined, pouchdbmanager.getDbProxy()) as Imagestore;
+
+        const settingsService = new SettingsService(
+            pouchDbFsImagestore,
+            pouchdbmanager,
+            undefined,
+            undefined,
+            undefined
+        );
+
+        await settingsService.bootProjectDb({
+            isAutoUpdateActive: true,
+            isSyncActive: true,
+            remoteSites: [],
+            syncTarget: new class implements SyncTarget {
+                address: string = 'http://localhost:3003/';
+                password: string;
+                username: string;
+            },
+            dbs: ['synctest'],
+            imagestorePath: '/tmp/abc',
+            username: 'synctestuser'
+        });
+    }
+
+
+    /**
      * Creates the db that is in the simulated client app
      */
     async function setupSyncTestDb() {
@@ -137,37 +168,12 @@ describe('sync', () => {
     }
 
 
-    it('test', async done => {
+    it('sync from remote to localdb', async done => {
 
         await setupSyncTestSimulatedRemoteDb();
         await setupSyncTestDb();
-
-
-        pouchdbmanager = new PouchdbManager();
-        const pouchDbFsImagestore = new PouchDbFsImagestore(
-            undefined, undefined, pouchdbmanager.getDbProxy()) as Imagestore;
-
-        const settingsService = new SettingsService(
-            pouchDbFsImagestore,
-            pouchdbmanager,
-            undefined,
-            undefined,
-            undefined
-            );
-
-        await settingsService.bootProjectDb({
-            isAutoUpdateActive: true,
-            isSyncActive: true,
-            remoteSites: [],
-            syncTarget: new class implements SyncTarget {
-                address: string = 'http://localhost:3003/';
-                password: string;
-                username: string;
-            },
-            dbs: ['synctest'],
-            imagestorePath: '/tmp/abc',
-            username: 'synctestuser'
-        });
+        const pouchdbmanager = new PouchdbManager();
+        await setupSettingsService(pouchdbmanager);
 
         (await createRemoteChangesStream( // TODO simulate view facade instead
             pouchdbmanager,

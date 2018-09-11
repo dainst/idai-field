@@ -43,6 +43,7 @@ import {HelpComponent} from './components/help/help.component';
 import {TaskbarUpdateComponent} from './components/navbar/taskbar-update.component';
 import {M} from './components/m';
 import {SettingsSerializer} from './core/settings/settings-serializer';
+import {IndexerConfiguration} from './indexer-configuration';
 
 
 const remote = require('electron').remote;
@@ -101,19 +102,12 @@ registerLocaleData(localeDe, 'de');
 
                     projectConfiguration = configuration;
 
-                    fulltextIndexer = new FulltextIndexer(projectConfiguration, true);
-                    constraintIndexer = new ConstraintIndexer({
-                         'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
-                         'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
-                         'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
-                         'depicts:contain': { path: 'resource.relations.depicts', type: 'contain' },
-                         'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
-                         'identifier:match': { path: 'resource.identifier', type: 'match' },
-                         'id:match': { path: 'resource.id', type: 'match' },
-                         'georeference:exist': { path: 'resource.georeference', type: 'exist' },
-                         'conflicts:exist': { path: '_conflicts', type: 'exist' }
-                     }, projectConfiguration, true);
-                    return new IndexFacade(constraintIndexer, fulltextIndexer);
+                    const {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade} =
+                        IndexerConfiguration.configureIndexers(projectConfiguration);
+                    constraintIndexer = createdConstraintIndexer;
+                    fulltextIndexer = createdFulltextIndexer;
+                    return createdIndexFacade;
+
                  }).then(facade => {
                      indexFacade = facade;
                      return pouchdbManager.reindex(indexFacade);

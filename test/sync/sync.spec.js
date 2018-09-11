@@ -42,14 +42,12 @@ var pouchdb_manager_1 = require("../../app/core/datastore/core/pouchdb-manager")
 var PouchDB = require("pouchdb");
 var pouchdb_datastore_1 = require("../../app/core/datastore/core/pouchdb-datastore");
 var express = require("express");
-var constraint_indexer_1 = require("../../app/core/datastore/index/constraint-indexer");
-var fulltext_indexer_1 = require("../../app/core/datastore/index/fulltext-indexer");
 var remote_changes_stream_1 = require("../../app/core/datastore/core/remote-changes-stream");
-var index_facade_1 = require("../../app/core/datastore/index/index-facade");
 var document_cache_1 = require("../../app/core/datastore/core/document-cache");
 var idai_field_type_converter_1 = require("../../app/core/datastore/field/idai-field-type-converter");
 var type_utility_1 = require("../../app/core/model/type-utility");
 var project_configuration_1 = require("idai-components-2/src/configuration/project-configuration");
+var indexer_configuration_1 = require("../../app/indexer-configuration");
 var expressPouchDB = require('express-pouchdb');
 var cors = require('pouchdb-server/lib/cors');
 describe('sync', function () {
@@ -75,17 +73,6 @@ describe('sync', function () {
             }
         ]
     });
-    function createIndexers(projectConfiguration) {
-        var constraintIndexer = new constraint_indexer_1.ConstraintIndexer({
-            'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
-            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
-            'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
-            'identifier:match': { path: 'resource.identifier', type: 'match' },
-            'id:match': { path: 'resource.id', type: 'match' }
-        }, projectConfiguration, false);
-        var fulltextIndexer = new fulltext_indexer_1.FulltextIndexer(projectConfiguration, false);
-        return [constraintIndexer, fulltextIndexer];
-    }
     var UsernameProvider = /** @class */ (function () {
         function UsernameProvider() {
             this.getUsername = function () { return 'fakeuser'; };
@@ -94,10 +81,10 @@ describe('sync', function () {
     }());
     function createRemoteChangesStream(pouchdbmanager, projectConfiguration) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, constraintIndexer, fulltextIndexer;
+            var _a, createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade;
             return __generator(this, function (_b) {
-                _a = createIndexers(projectConfiguration), constraintIndexer = _a[0], fulltextIndexer = _a[1];
-                return [2 /*return*/, new remote_changes_stream_1.RemoteChangesStream(new pouchdb_datastore_1.PouchdbDatastore(pouchdbmanager.getDbProxy(), new IdGenerator(), true), new index_facade_1.IndexFacade(constraintIndexer, fulltextIndexer), new document_cache_1.DocumentCache(), new idai_field_type_converter_1.IdaiFieldTypeConverter(new type_utility_1.TypeUtility(projectConfiguration)), new UsernameProvider())];
+                _a = indexer_configuration_1.IndexerConfiguration.configureIndexers(projectConfiguration), createdConstraintIndexer = _a.createdConstraintIndexer, createdFulltextIndexer = _a.createdFulltextIndexer, createdIndexFacade = _a.createdIndexFacade;
+                return [2 /*return*/, new remote_changes_stream_1.RemoteChangesStream(new pouchdb_datastore_1.PouchdbDatastore(pouchdbmanager.getDbProxy(), new IdGenerator(), true), createdIndexFacade, new document_cache_1.DocumentCache(), new idai_field_type_converter_1.IdaiFieldTypeConverter(new type_utility_1.TypeUtility(projectConfiguration)), new UsernameProvider())];
             });
         });
     }

@@ -1,15 +1,13 @@
-import {ProjectConfiguration, IdaiFieldDocument, Document, NewDocument} from 'idai-components-2';
+import {IdaiFieldDocument, ProjectConfiguration} from 'idai-components-2';
 import {IdaiFieldImageDocumentDatastore} from '../../../app/core/datastore/field/idai-field-image-document-datastore';
 import {IdaiFieldDocumentDatastore} from '../../../app/core/datastore/field/idai-field-document-datastore';
 import {DocumentDatastore} from '../../../app/core/datastore/document-datastore';
 import {IdaiFieldTypeConverter} from '../../../app/core/datastore/field/idai-field-type-converter';
 import {TypeUtility} from '../../../app/core/model/type-utility';
 import {PouchdbDatastore} from '../../../app/core/datastore/core/pouchdb-datastore';
-import {IndexFacade} from '../../../app/core/datastore/index/index-facade';
 import {PouchdbManager} from '../../../app/core/datastore/core/pouchdb-manager';
 import {DocumentCache} from '../../../app/core/datastore/core/document-cache';
-import {ConstraintIndexer} from '../../../app/core/datastore/index/constraint-indexer';
-import {FulltextIndexer} from '../../../app/core/datastore/index/fulltext-indexer';
+import {IndexerConfiguration} from '../../../app/indexer-configuration';
 
 
 class IdGenerator {
@@ -40,9 +38,6 @@ export class DAOsHelper {
         ]
     });
 
-    constructor() {}
-
-
 
     public async init(projectConfiguration?: ProjectConfiguration) {
 
@@ -64,28 +59,12 @@ export class DAOsHelper {
     }
 
 
-
-
-    public createIndexers() {
-
-        const constraintIndexer = new ConstraintIndexer({
-            'isRecordedIn:contain': { path: 'resource.relations.isRecordedIn', type: 'contain' },
-            'liesWithin:contain': { path: 'resource.relations.liesWithin', type: 'contain' },
-            'liesWithin:exist': { path: 'resource.relations.liesWithin', type: 'exist' },
-            'identifier:match': { path: 'resource.identifier', type: 'match' },
-            'id:match': { path: 'resource.id', type: 'match' }
-        }, this.projectConfiguration, false);
-        const fulltextIndexer = new FulltextIndexer(this.projectConfiguration, false);
-        return [constraintIndexer, fulltextIndexer] as [ConstraintIndexer, FulltextIndexer];
-    }
-
-
     public async createPouchdbDatastore(dbname) {
 
-        const [constraintIndexer, fulltextIndexer] = this.createIndexers();
+        const {createdIndexFacade} =
+            IndexerConfiguration.configureIndexers(this.projectConfiguration);
 
         const documentCache = new DocumentCache<IdaiFieldDocument>();
-        const indexFacade = new IndexFacade(constraintIndexer, fulltextIndexer);
         const pouchdbManager = new PouchdbManager();
 
         const datastore = new PouchdbDatastore(
@@ -94,6 +73,7 @@ export class DAOsHelper {
             false);
         await pouchdbManager.loadProjectDb(dbname, undefined);
 
+        const indexFacade = createdIndexFacade;
         return {
             datastore,
             documentCache,

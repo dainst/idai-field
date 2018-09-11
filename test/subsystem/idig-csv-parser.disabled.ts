@@ -1,7 +1,6 @@
 import {IdaiFieldDocument} from 'idai-components-2';
-import {IdigCsvParser} from '../../../app/core/import/idig-csv-parser';
-import {M} from '../../../app/components/m';
-import {ImportErrors} from '../../../app/core/import/import-errors';
+import {IdigCsvParser} from '../../app/core/import/idig-csv-parser';
+import {ImportErrors} from '../../app/core/import/import-errors';
 
 /**
  * @author Sebastian Cuy

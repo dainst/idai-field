@@ -1,12 +1,12 @@
 import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
 import {DAOsHelper} from './daos-helper';
-import {Validator} from '../../../app/core/model/validator';
-import {TypeUtility} from '../../../app/core/model/type-utility';
 import {to} from 'tsfun';
-import {ValidationErrors} from '../../../app/core/model/validation-errors';
-import {M} from '../../../app/components/m';
-import {ImportErrors} from '../../../app/core/import/import-errors';
-import {ImportFacade} from '../../../app/core/import/import-facade';
+import {ImportFacade} from '../../app/core/import/import-facade';
+import {Validator} from '../../app/core/model/validator';
+import {TypeUtility} from '../../app/core/model/type-utility';
+import {ValidationErrors} from '../../app/core/model/validation-errors';
+import {M} from '../../app/components/m';
+import {ImportErrors} from '../../app/core/import/import-errors';
 
 /**
  * @author Daniel de Oliveira

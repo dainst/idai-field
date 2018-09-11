@@ -1,17 +1,17 @@
 import {ProjectConfiguration, Document} from 'idai-components-2';
 import {IdaiFieldDocument} from 'idai-components-2';
-import {toResourceId} from '../../../app/components/resources/view/state/navigation-path-segment';
-import {DAOsHelper} from './daos-helper';
-import {ViewDefinition} from '../../../app/components/resources/view/state/view-definition';
-import {ViewFacade} from '../../../app/components/resources/view/view-facade';
-import {ResourcesStateManager} from '../../../app/components/resources/view/resources-state-manager';
-import {CachedDatastore} from '../../../app/core/datastore/core/cached-datastore';
-import {IdaiFieldTypeConverter} from '../../../app/core/datastore/field/idai-field-type-converter';
-import {TypeUtility} from '../../../app/core/model/type-utility';
-import {IdaiFieldDocumentDatastore} from '../../../app/core/datastore/field/idai-field-document-datastore';
-import {Static} from '../static';
-import {OperationViews} from '../../../app/components/resources/view/state/operation-views';
 import * as PouchDB from 'pouchdb';
+import {ViewFacade} from '../../app/components/resources/view/view-facade';
+import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
+import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
+import {DAOsHelper} from './daos-helper';
+import {TypeUtility} from '../../app/core/model/type-utility';
+import {IdaiFieldTypeConverter} from '../../app/core/datastore/field/idai-field-type-converter';
+import {Static} from '../unit/static';
+import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/field/idai-field-document-datastore';
+import {OperationViews} from '../../app/components/resources/view/state/operation-views';
+import {toResourceId} from '../../app/components/resources/view/state/navigation-path-segment';
+import {ViewDefinition} from '../../app/components/resources/view/state/view-definition';
 
 /**
  * This is a subsystem test.

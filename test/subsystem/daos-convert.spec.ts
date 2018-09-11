@@ -8,8 +8,8 @@
  * @author Thomas Kleinke
  */
 import {DAOsHelper} from './daos-helper';
-import {Static} from '../static';
 import * as PouchDB from 'pouchdb';
+import {Static} from '../unit/static';
 
 
 describe('DAOs/Convert/Subsystem', () => {

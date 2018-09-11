@@ -1,8 +1,8 @@
 import {Query} from 'idai-components-2';
 import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
-import {DAOsHelper} from '../../../subsystem/daos-helper';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
+import {DAOsHelper} from '../../../../subsystem/daos-helper';
 
 
 /**

@@ -1,13 +1,13 @@
 import {IdaiFieldDocument, ProjectConfiguration} from 'idai-components-2';
-import {IdaiFieldImageDocumentDatastore} from '../../../app/core/datastore/field/idai-field-image-document-datastore';
-import {IdaiFieldDocumentDatastore} from '../../../app/core/datastore/field/idai-field-document-datastore';
-import {DocumentDatastore} from '../../../app/core/datastore/document-datastore';
-import {IdaiFieldTypeConverter} from '../../../app/core/datastore/field/idai-field-type-converter';
-import {TypeUtility} from '../../../app/core/model/type-utility';
-import {PouchdbDatastore} from '../../../app/core/datastore/core/pouchdb-datastore';
-import {PouchdbManager} from '../../../app/core/datastore/core/pouchdb-manager';
-import {DocumentCache} from '../../../app/core/datastore/core/document-cache';
-import {IndexerConfiguration} from '../../../app/indexer-configuration';
+import {IdaiFieldImageDocumentDatastore} from '../../app/core/datastore/field/idai-field-image-document-datastore';
+import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/field/idai-field-document-datastore';
+import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
+import {TypeUtility} from '../../app/core/model/type-utility';
+import {IdaiFieldTypeConverter} from '../../app/core/datastore/field/idai-field-type-converter';
+import {IndexerConfiguration} from '../../app/indexer-configuration';
+import {PouchdbDatastore} from '../../app/core/datastore/core/pouchdb-datastore';
+import {DocumentCache} from '../../app/core/datastore/core/document-cache';
+import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 
 
 class IdGenerator {

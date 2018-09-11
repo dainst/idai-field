@@ -1,5 +1,5 @@
 import {Resource} from 'idai-components-2/src/model/core/resource';
-import {includedIn, isNot} from 'tsfun';
+import {includedIn, isNot, isArray} from 'tsfun';
 
 
 // @author Daniel de Oliveira
@@ -13,7 +13,11 @@ export module Helper {
 
         if (!resource || !fieldName || !resource[fieldName] || !valuelist) return undefined;
 
-        const result = resource[fieldName].filter(isNot(includedIn(valuelist)));
+        const result = isArray(resource[fieldName])
+            ? resource[fieldName].filter(isNot(includedIn(valuelist)))
+            : isNot(includedIn(valuelist))(resource[fieldName])
+                ? [resource[fieldName]]
+                : [];
 
         return (result.length > 0) ? result : undefined;
     }

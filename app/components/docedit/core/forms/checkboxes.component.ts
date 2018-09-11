@@ -34,7 +34,7 @@ export class CheckboxesComponent {
     public toggleBox(item: any) {
 
         if (!this.resource[this.field.name]) this.resource[this.field.name] = [];
-        if (!this.removeItem(name)) this.resource[this.field.name].push(item);
+        if (!this.removeItem(item)) this.resource[this.field.name].push(item);
         if (this.resource[this.field.name].length === 0) delete this.resource[this.field.name];
     }
 

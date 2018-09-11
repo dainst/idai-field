@@ -1,18 +1,17 @@
 import {Component, Input} from '@angular/core';
 import {Resource} from 'idai-components-2';
+import {Helper} from './helper';
+
 
 
 @Component({
+    moduleId: module.id,
     selector: 'dai-dropdown',
-    template: `<select [(ngModel)]="resource[field.name]" (change)="setValue($event.target.value)"
-                       class="form-control">
-        <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
-        <option *ngFor="let item of field.valuelist" value="{{item}}">{{item}}</option>
-    </select>`
+    templateUrl: './dropdown.html'
 })
-
 /**
  * @author Fabian Z.
+ * @author Daniel de Oliveira
  */
 export class DropdownComponent {
 
@@ -20,11 +19,20 @@ export class DropdownComponent {
     @Input() field: any;
 
 
-    constructor() {}
+    public notIncludedInValueList() {
+
+        return Helper.notIncludedInValueList(this.resource, this.field.name, this.field.valuelist);
+    }
 
 
     public setValue(value: any) {
         
-        if (value === '') delete this.resource[this.field.name];
+        if (value === '') this.deleteItem();
+    }
+
+
+    public deleteItem() {
+
+        delete this.resource[this.field.name];
     }
 }

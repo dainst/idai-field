@@ -193,19 +193,6 @@ describe('syncing --', function() {
     });
 
 
-    xit('resource created in client should be synced to other db', done => {
-
-        NavbarPage.clickNavigateToExcavation()
-            .then(() => {
-                changes = db.changes({since: 'now', live: true, include_docs: true}).on('change', change => {
-                    if (change.doc.resource && change.doc.resource.identifier == 'test3')
-                        done();
-                });
-                ResourcesPage.performCreateResource('test3');
-            }).catch(err => { fail(err); done(); });
-    });
-
-
     it('resolve a save conflict via conflict resolver', async done => {
 
         const nr = '6';

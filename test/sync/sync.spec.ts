@@ -18,6 +18,7 @@ import {StandardStateSerializer} from '../../app/common/standard-state-serialize
 import {ConfigLoader, ConfigReader, IdaiFieldAppConfigurator} from 'idai-components-2';
 import {FsConfigReader} from '../../app/core/util/fs-config-reader';
 import {ResourcesStateManagerConfiguration} from '../../app/components/resources/view/resources-state-manager-configuration';
+import {PersistenceManager} from '../../app/core/model/persistence-manager';
 
 const expressPouchDB = require('express-pouchdb');
 const cors = require('pouchdb-server/lib/cors');
@@ -27,6 +28,7 @@ describe('sync from remote to local db', () => {
 
     let syncTestSimulatedRemoteDb;
     let _remoteChangesStream;
+    let _persistenceManager;
     let _viewFacade;
     let server; // TODO close when done
     let rev;
@@ -50,7 +52,9 @@ describe('sync from remote to local db', () => {
 
         const documentCache = new DocumentCache<IdaiFieldDocument>();
 
-        const typeConverter = new IdaiFieldTypeConverter(new TypeUtility(projectConfiguration));
+        const typeUtility = new TypeUtility(projectConfiguration)
+
+        const typeConverter = new IdaiFieldTypeConverter(typeUtility);
 
         const idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
             datastore, createdIndexFacade, documentCache, typeConverter);
@@ -78,7 +82,17 @@ describe('sync from remote to local db', () => {
             undefined
         );
 
-        return {remoteChangesStream, viewFacade}
+        const persistenceManager = new PersistenceManager(
+            idaiFieldDocumentDatastore,
+            projectConfiguration,
+            typeUtility,
+        );
+
+        return {
+            remoteChangesStream,
+            viewFacade,
+            persistenceManager // TODO do it via document holder later
+        }
     }
 
 
@@ -170,12 +184,13 @@ describe('sync from remote to local db', () => {
         const pouchdbmanager = new PouchdbManager();
         const {settingsService, projectConfiguration} = await setupSettingsService(pouchdbmanager);
 
-        const {remoteChangesStream, viewFacade} = await createApp(
+        const {remoteChangesStream, viewFacade, persistenceManager} = await createApp(
             pouchdbmanager,
             projectConfiguration,
             settingsService
         );
 
+        _persistenceManager = persistenceManager;
         _remoteChangesStream = remoteChangesStream;
         _viewFacade = viewFacade;
         done();
@@ -192,6 +207,7 @@ describe('sync from remote to local db', () => {
 
     it('sync from remote to localdb', async done => {
 
+        let d = false;
         _remoteChangesStream.notifications().subscribe(async () => {
 
             await _viewFacade.selectView('project');
@@ -200,9 +216,11 @@ describe('sync from remote to local db', () => {
 
             // TODO test that it is marked as new from remote, and existing item is not new from remote
 
-            expect(documents[0].resource.id).toEqual('zehn');
-
-            done();
+            if (!d) {
+                expect(documents[0].resource.id).toEqual('zehn');
+                d = true;
+                done();
+            }
         });
 
         rev = (await syncTestSimulatedRemoteDb.put(docToPut)).rev;
@@ -211,6 +229,7 @@ describe('sync from remote to local db', () => {
 
     it('sync modified from remote to localdb', async done => {
 
+        let d = false;
         _remoteChangesStream.notifications().subscribe(async () => {
 
             await _viewFacade.selectView('project');
@@ -219,12 +238,39 @@ describe('sync from remote to local db', () => {
 
             // TODO test that it is marked as new from remote, and existing item is not new from remote
 
-            expect(documents[0].resource.identifier).toEqual('Zehn!');
-            done();
+            if (!d) {
+                expect(documents[0].resource.identifier).toEqual('Zehn!');
+                d = true;
+                done();
+            }
         });
 
         docToPut['_rev'] = rev;
         docToPut.resource.identifier = 'Zehn!';
         await syncTestSimulatedRemoteDb.put(docToPut, {force: true});
+    });
+
+
+    it('sync to remote db', async done => {
+
+        const docToPut = {
+            created: {"user": "sample_data", "date": "2018-09-11T20:46:15.408Z"},
+            modified: [{"user": "sample_data", "date": "2018-09-11T20:46:15.408Z"}],
+            resource: { type: 'Trench', identifier: 'Elf', relations: {}}
+        };
+
+
+        syncTestSimulatedRemoteDb.changes({
+            live: true,
+            include_docs: true, // we do this and fetch it later because there is a possible leak, as reported in https://github.com/pouchdb/pouchdb/issues/6502
+            conflicts: true,
+            since: 'now'
+        }).on('change', (change: any) => {
+
+            expect(change.doc.resource.identifier).toEqual('Elf');
+            done();
+        });
+
+        await _persistenceManager.persist(docToPut);
     });
 });

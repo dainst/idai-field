@@ -206,40 +206,6 @@ describe('syncing --', function() {
     });
 
 
-    xit('show changes made in other db', async (done) => {
-
-        const nr = '5';
-
-        let retries = 0;
-        const waitForText = () => {
-            ResourcesPage.getListItemEl('testf' + nr).getText().then(text => {
-                if (retries == 5) {
-                    fail('5 retries and no result');
-                    return done();
-                }
-                if(text.indexOf('altered') !== -1) {
-                    done();
-                } else {
-                    browser.sleep(delays.shortRest);
-                    retries++;
-                    waitForText();
-                }
-            })
-        };
-
-        const testDocument = await createOneDocument(nr);
-        await NavbarPage.clickNavigateToExcavation();
-        await browser.sleep(delays.shortRest * 10);
-        testDocument.resource.shortDescription = 'altered';
-        await updateTestDoc(testDocument);
-
-
-        NavbarPage.performNavigateToSettings();
-        NavbarPage.clickNavigateToExcavation();
-        waitForText();
-    });
-
-
     it('resolve a save conflict via conflict resolver', async done => {
 
         const nr = '6';

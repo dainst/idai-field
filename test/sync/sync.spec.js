@@ -60,6 +60,7 @@ describe('sync from remote to local db', function () {
     var _remoteChangesStream;
     var _viewFacade;
     var server; // TODO close when done
+    var rev;
     var IdGenerator = /** @class */ (function () {
         function IdGenerator() {
         }
@@ -172,7 +173,7 @@ describe('sync from remote to local db', function () {
         modified: [{ "user": "sample_data", "date": "2018-09-11T20:46:15.408Z" }],
         resource: { type: 'Trench', id: 'zehn', identifier: 'Zehn', relations: {} }
     };
-    beforeEach(function (done) { return __awaiter(_this, void 0, void 0, function () {
+    beforeAll(function (done) { return __awaiter(_this, void 0, void 0, function () {
         var pouchdbmanager, _a, settingsService, projectConfiguration, _b, remoteChangesStream, viewFacade;
         return __generator(this, function (_c) {
             switch (_c.label) {
@@ -196,11 +197,14 @@ describe('sync from remote to local db', function () {
             }
         });
     }); });
-    afterEach(function (done) { return __awaiter(_this, void 0, void 0, function () {
+    afterAll(function (done) { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, server.close()];
                 case 1:
+                    _a.sent();
+                    return [4 /*yield*/, syncTestSimulatedRemoteDb.close()];
+                case 2:
                     _a.sent();
                     done();
                     return [2 /*return*/];
@@ -227,15 +231,46 @@ describe('sync from remote to local db', function () {
                                     documents = _a.sent();
                                     // TODO test that it is marked as new from remote, and existing item is not new from remote
                                     expect(documents[0].resource.id).toEqual('zehn');
-                                    return [4 /*yield*/, syncTestSimulatedRemoteDb.close()];
-                                case 4:
-                                    _a.sent();
                                     done();
                                     return [2 /*return*/];
                             }
                         });
                     }); });
                     return [4 /*yield*/, syncTestSimulatedRemoteDb.put(docToPut)];
+                case 1:
+                    rev = (_a.sent()).rev;
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('sync modified from remote to localdb', function (done) { return __awaiter(_this, void 0, void 0, function () {
+        var _this = this;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _remoteChangesStream.notifications().subscribe(function () { return __awaiter(_this, void 0, void 0, function () {
+                        var documents;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0: return [4 /*yield*/, _viewFacade.selectView('project')];
+                                case 1:
+                                    _a.sent();
+                                    return [4 /*yield*/, _viewFacade.populateDocumentList()];
+                                case 2:
+                                    _a.sent();
+                                    return [4 /*yield*/, _viewFacade.getDocuments()];
+                                case 3:
+                                    documents = _a.sent();
+                                    // TODO test that it is marked as new from remote, and existing item is not new from remote
+                                    expect(documents[0].resource.identifier).toEqual('Zehn!');
+                                    done();
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); });
+                    docToPut['_rev'] = rev;
+                    docToPut.resource.identifier = 'Zehn!';
+                    return [4 /*yield*/, syncTestSimulatedRemoteDb.put(docToPut, { force: true })];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];

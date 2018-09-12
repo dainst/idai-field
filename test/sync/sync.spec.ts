@@ -29,6 +29,7 @@ describe('sync from remote to local db', () => {
     let _remoteChangesStream;
     let _viewFacade;
     let server; // TODO close when done
+    let rev;
 
     class IdGenerator {
         public generateId() {
@@ -161,7 +162,7 @@ describe('sync from remote to local db', () => {
     };
 
 
-    beforeEach(async done => {
+    beforeAll(async done => {
 
         await setupSyncTestSimulatedRemoteDb();
         await setupSyncTestDb();
@@ -181,9 +182,10 @@ describe('sync from remote to local db', () => {
     });
 
 
-    afterEach(async done => {
+    afterAll(async done => {
 
         await server.close();
+        await syncTestSimulatedRemoteDb.close();
         done();
     });
 
@@ -199,10 +201,30 @@ describe('sync from remote to local db', () => {
             // TODO test that it is marked as new from remote, and existing item is not new from remote
 
             expect(documents[0].resource.id).toEqual('zehn');
-            await syncTestSimulatedRemoteDb.close();
+
             done();
         });
 
-        await syncTestSimulatedRemoteDb.put(docToPut);
+        rev = (await syncTestSimulatedRemoteDb.put(docToPut)).rev;
+    });
+
+
+    it('sync modified from remote to localdb', async done => {
+
+        _remoteChangesStream.notifications().subscribe(async () => {
+
+            await _viewFacade.selectView('project');
+            await _viewFacade.populateDocumentList();
+            const documents = await _viewFacade.getDocuments();
+
+            // TODO test that it is marked as new from remote, and existing item is not new from remote
+
+            expect(documents[0].resource.identifier).toEqual('Zehn!');
+            done();
+        });
+
+        docToPut['_rev'] = rev;
+        docToPut.resource.identifier = 'Zehn!';
+        await syncTestSimulatedRemoteDb.put(docToPut, {force: true});
     });
 });

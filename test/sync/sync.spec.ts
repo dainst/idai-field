@@ -15,13 +15,6 @@ describe('sync from remote to local db', () => {
     let server; // TODO close when done
     let rev;
 
-    class IdGenerator {
-        public generateId() {
-            return Math.floor(Math.random() * 10000000).toString();
-        }
-    }
-
-
     /**
      * Creates a db simulated to be on a remote machine
      */

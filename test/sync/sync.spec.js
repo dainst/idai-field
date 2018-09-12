@@ -48,14 +48,6 @@ describe('sync from remote to local db', function () {
     var _viewFacade;
     var server; // TODO close when done
     var rev;
-    var IdGenerator = /** @class */ (function () {
-        function IdGenerator() {
-        }
-        IdGenerator.prototype.generateId = function () {
-            return Math.floor(Math.random() * 10000000).toString();
-        };
-        return IdGenerator;
-    }());
     /**
      * Creates a db simulated to be on a remote machine
      */

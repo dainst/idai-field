@@ -74,27 +74,34 @@ describe('sync from remote to local db', function () {
         };
         return IdGenerator;
     }());
-    function createApp(pouchdbmanager, projectConfiguration, settingsService) {
+    function createApp() {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade, datastore, documentCache, typeUtility, typeConverter, idaiFieldDocumentDatastore, documentDatastore, remoteChangesStream, resourcesStateManager, viewFacade, persistenceManager, documentHolder;
-            return __generator(this, function (_b) {
-                _a = indexer_configuration_1.IndexerConfiguration.configureIndexers(projectConfiguration), createdConstraintIndexer = _a.createdConstraintIndexer, createdFulltextIndexer = _a.createdFulltextIndexer, createdIndexFacade = _a.createdIndexFacade;
-                datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbmanager.getDbProxy(), new IdGenerator(), true);
-                documentCache = new document_cache_1.DocumentCache();
-                typeUtility = new type_utility_1.TypeUtility(projectConfiguration);
-                typeConverter = new idai_field_type_converter_1.IdaiFieldTypeConverter(typeUtility);
-                idaiFieldDocumentDatastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(datastore, createdIndexFacade, documentCache, typeConverter);
-                documentDatastore = new document_datastore_1.DocumentDatastore(datastore, createdIndexFacade, documentCache, typeConverter);
-                remoteChangesStream = new remote_changes_stream_1.RemoteChangesStream(datastore, createdIndexFacade, documentCache, typeConverter, { getUsername: function () { return 'fakeuser'; } });
-                resourcesStateManager = resources_state_manager_configuration_1.ResourcesStateManagerConfiguration.build(projectConfiguration, idaiFieldDocumentDatastore, new standard_state_serializer_1.StandardStateSerializer(settingsService), 'synctest', true);
-                viewFacade = new view_facade_1.ViewFacade(projectConfiguration, idaiFieldDocumentDatastore, remoteChangesStream, resourcesStateManager, undefined);
-                persistenceManager = new persistence_manager_1.PersistenceManager(idaiFieldDocumentDatastore, projectConfiguration, typeUtility);
-                documentHolder = new document_holder_1.DocumentHolder(projectConfiguration, persistenceManager, new validator_1.Validator(projectConfiguration, idaiFieldDocumentDatastore, typeUtility), undefined, typeUtility, { getUsername: function () { return 'fakeuser'; } }, documentDatastore);
-                return [2 /*return*/, {
-                        remoteChangesStream: remoteChangesStream,
-                        viewFacade: viewFacade,
-                        documentHolder: documentHolder
-                    }];
+            var pouchdbmanager, _a, settingsService, projectConfiguration, _b, createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade, datastore, documentCache, typeUtility, typeConverter, idaiFieldDocumentDatastore, documentDatastore, remoteChangesStream, resourcesStateManager, viewFacade, persistenceManager, documentHolder;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        pouchdbmanager = new pouchdb_manager_1.PouchdbManager();
+                        return [4 /*yield*/, setupSettingsService(pouchdbmanager)];
+                    case 1:
+                        _a = _c.sent(), settingsService = _a.settingsService, projectConfiguration = _a.projectConfiguration;
+                        _b = indexer_configuration_1.IndexerConfiguration.configureIndexers(projectConfiguration), createdConstraintIndexer = _b.createdConstraintIndexer, createdFulltextIndexer = _b.createdFulltextIndexer, createdIndexFacade = _b.createdIndexFacade;
+                        datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbmanager.getDbProxy(), new IdGenerator(), true);
+                        documentCache = new document_cache_1.DocumentCache();
+                        typeUtility = new type_utility_1.TypeUtility(projectConfiguration);
+                        typeConverter = new idai_field_type_converter_1.IdaiFieldTypeConverter(typeUtility);
+                        idaiFieldDocumentDatastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(datastore, createdIndexFacade, documentCache, typeConverter);
+                        documentDatastore = new document_datastore_1.DocumentDatastore(datastore, createdIndexFacade, documentCache, typeConverter);
+                        remoteChangesStream = new remote_changes_stream_1.RemoteChangesStream(datastore, createdIndexFacade, documentCache, typeConverter, { getUsername: function () { return 'fakeuser'; } });
+                        resourcesStateManager = resources_state_manager_configuration_1.ResourcesStateManagerConfiguration.build(projectConfiguration, idaiFieldDocumentDatastore, new standard_state_serializer_1.StandardStateSerializer(settingsService), 'synctest', true);
+                        viewFacade = new view_facade_1.ViewFacade(projectConfiguration, idaiFieldDocumentDatastore, remoteChangesStream, resourcesStateManager, undefined);
+                        persistenceManager = new persistence_manager_1.PersistenceManager(idaiFieldDocumentDatastore, projectConfiguration, typeUtility);
+                        documentHolder = new document_holder_1.DocumentHolder(projectConfiguration, persistenceManager, new validator_1.Validator(projectConfiguration, idaiFieldDocumentDatastore, typeUtility), undefined, typeUtility, { getUsername: function () { return 'fakeuser'; } }, documentDatastore);
+                        return [2 /*return*/, {
+                                remoteChangesStream: remoteChangesStream,
+                                viewFacade: viewFacade,
+                                documentHolder: documentHolder
+                            }];
+                }
             });
         });
     }
@@ -187,22 +194,18 @@ describe('sync from remote to local db', function () {
         resource: { type: 'Trench', id: 'zehn', identifier: 'Zehn', relations: {} }
     };
     beforeAll(function (done) { return __awaiter(_this, void 0, void 0, function () {
-        var pouchdbmanager, _a, settingsService, projectConfiguration, _b, remoteChangesStream, viewFacade, documentHolder;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var _a, remoteChangesStream, viewFacade, documentHolder;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0: return [4 /*yield*/, setupSyncTestSimulatedRemoteDb()];
                 case 1:
-                    _c.sent();
+                    _b.sent();
                     return [4 /*yield*/, setupSyncTestDb()];
                 case 2:
-                    _c.sent();
-                    pouchdbmanager = new pouchdb_manager_1.PouchdbManager();
-                    return [4 /*yield*/, setupSettingsService(pouchdbmanager)];
+                    _b.sent();
+                    return [4 /*yield*/, createApp()];
                 case 3:
-                    _a = _c.sent(), settingsService = _a.settingsService, projectConfiguration = _a.projectConfiguration;
-                    return [4 /*yield*/, createApp(pouchdbmanager, projectConfiguration, settingsService)];
-                case 4:
-                    _b = _c.sent(), remoteChangesStream = _b.remoteChangesStream, viewFacade = _b.viewFacade, documentHolder = _b.documentHolder;
+                    _a = _b.sent(), remoteChangesStream = _a.remoteChangesStream, viewFacade = _a.viewFacade, documentHolder = _a.documentHolder;
                     _documentHolder = documentHolder;
                     _remoteChangesStream = remoteChangesStream;
                     _viewFacade = viewFacade;

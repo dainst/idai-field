@@ -43,7 +43,11 @@ describe('sync from remote to local db', () => {
     }
 
 
-    async function createApp(pouchdbmanager, projectConfiguration, settingsService) {
+    async function createApp() {
+
+        const pouchdbmanager = new PouchdbManager();
+
+        const {settingsService, projectConfiguration} = await setupSettingsService(pouchdbmanager);
 
         const {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade} =
             IndexerConfiguration.configureIndexers(projectConfiguration);
@@ -55,7 +59,7 @@ describe('sync from remote to local db', () => {
 
         const documentCache = new DocumentCache<IdaiFieldDocument>();
 
-        const typeUtility = new TypeUtility(projectConfiguration)
+        const typeUtility = new TypeUtility(projectConfiguration);
 
         const typeConverter = new IdaiFieldTypeConverter(typeUtility);
 
@@ -196,14 +200,7 @@ describe('sync from remote to local db', () => {
         await setupSyncTestSimulatedRemoteDb();
         await setupSyncTestDb();
 
-        const pouchdbmanager = new PouchdbManager();
-        const {settingsService, projectConfiguration} = await setupSettingsService(pouchdbmanager);
-
-        const {remoteChangesStream, viewFacade, documentHolder} = await createApp(
-            pouchdbmanager,
-            projectConfiguration,
-            settingsService
-        );
+        const {remoteChangesStream, viewFacade, documentHolder} = await createApp();
 
         _documentHolder = documentHolder;
         _remoteChangesStream = remoteChangesStream;

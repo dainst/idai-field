@@ -72,38 +72,6 @@ describe('sync from remote to local db', function () {
             });
         }).then(function (newDb) { return syncTestSimulatedRemoteDb = newDb; });
     }
-    /**
-     * Creates the db that is in the simulated client app
-     */
-    function setupSyncTestDb() {
-        return __awaiter(this, void 0, void 0, function () {
-            var synctest;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        synctest = new PouchDB('synctest');
-                        return [4 /*yield*/, synctest.destroy()];
-                    case 1:
-                        _a.sent();
-                        synctest = new PouchDB('synctest');
-                        return [4 /*yield*/, synctest.put({
-                                '_id': 'project',
-                                'resource': {
-                                    'type': 'Project',
-                                    'id': 'project',
-                                    'identifier': 'synctest'
-                                }
-                            })];
-                    case 2:
-                        _a.sent();
-                        return [4 /*yield*/, synctest.close()];
-                    case 3:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    }
     var docToPut = {
         '_id': 'zehn',
         created: { "user": "sample_data", "date": "2018-09-11T20:46:15.408Z" },
@@ -117,10 +85,10 @@ describe('sync from remote to local db', function () {
                 case 0: return [4 /*yield*/, setupSyncTestSimulatedRemoteDb()];
                 case 1:
                     _b.sent();
-                    return [4 /*yield*/, setupSyncTestDb()];
+                    return [4 /*yield*/, daos_helper_1.setupSyncTestDb('synctestdb')];
                 case 2:
                     _b.sent();
-                    return [4 /*yield*/, daos_helper_1.createApp()];
+                    return [4 /*yield*/, daos_helper_1.createApp('synctest', true)];
                 case 3:
                     _a = _b.sent(), remoteChangesStream = _a.remoteChangesStream, viewFacade = _a.viewFacade, documentHolder = _a.documentHolder;
                     _documentHolder = documentHolder;

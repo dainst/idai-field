@@ -1,9 +1,19 @@
-import {Query} from 'idai-components-2';
+import {ProjectConfiguration, Query, IdaiFieldDocument} from 'idai-components-2';
 import {IndexFacade} from '../../../../../app/core/datastore/index/index-facade';
 import {Static} from '../../../static';
 import {IndexerConfiguration} from '../../../../../app/indexer-configuration';
-import {DAOsHelper} from '../../../../subsystem/daos-helper';
+import {IdaiFieldTypeConverter} from '../../../../../app/core/datastore/field/idai-field-type-converter';
+import {TypeUtility} from '../../../../../app/core/model/type-utility';
+import {DocumentCache} from '../../../../../app/core/datastore/core/document-cache';
+import {PouchdbManager} from '../../../../../app/core/datastore/core/pouchdb-manager';
+import {PouchdbDatastore} from '../../../../../app/core/datastore/core/pouchdb-datastore';
 
+
+class IdGenerator {
+    public generateId() {
+        return Math.floor(Math.random() * 10000000).toString();
+    }
+}
 
 /**
  * @author Daniel de Oliveira
@@ -12,14 +22,46 @@ import {DAOsHelper} from '../../../../subsystem/daos-helper';
  */
 describe('IndexFacade', () => {
 
+    async function createPouchdbDatastore(dbname, projectConfiguration) {
+
+        const {createdIndexFacade} =
+            IndexerConfiguration.configureIndexers(projectConfiguration);
+
+        const documentCache = new DocumentCache<IdaiFieldDocument>();
+        const pouchdbManager = new PouchdbManager();
+
+        const datastore = new PouchdbDatastore(
+            pouchdbManager.getDbProxy(),
+            new IdGenerator(),
+            false);
+        await pouchdbManager.loadProjectDb(dbname, undefined);
+
+        const indexFacade = createdIndexFacade;
+        return {
+            datastore,
+            documentCache,
+            indexFacade
+        }
+    }
+
+    async function init(projectConfiguration: ProjectConfiguration) {
+
+        const {datastore, documentCache, indexFacade} =
+            await createPouchdbDatastore('testdb', projectConfiguration);
+        const converter = new IdaiFieldTypeConverter(
+            new TypeUtility(projectConfiguration));
+
+        return {datastore, documentCache, indexFacade};
+    }
+
     let indexFacade: IndexFacade;
 
 
     beforeEach(async done => {
 
-        const h = new DAOsHelper();
-        await h.init(createMockProjectConfiguration());
-        const {createdIndexFacade} = IndexerConfiguration.configureIndexers(createMockProjectConfiguration());
+        await init(createMockProjectConfiguration());
+        const {createdIndexFacade} =
+            IndexerConfiguration.configureIndexers(createMockProjectConfiguration());
         indexFacade = createdIndexFacade;
         done();
     });

@@ -1,5 +1,5 @@
 import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
-import {DAOsHelper} from './daos-helper';
+import {createApp, setupSyncTestDb} from './daos-helper';
 import {to} from 'tsfun';
 import {ImportFacade} from '../../app/core/import/import-facade';
 import {Validator} from '../../app/core/model/validator';
@@ -70,9 +70,18 @@ describe('Import/Subsystem', () => {
 
     beforeEach(async done => {
 
-        h = new DAOsHelper();
-        await h.init(projectConfiguration);
-        datastore = h.idaiFieldDocumentDatastore;
+        await setupSyncTestDb();
+
+        const {
+            remoteChangesStream,
+            viewFacade,
+            documentHolder,
+            documentDatastore,
+            idaiFieldDocumentDatastore,
+            idaiFieldImageDocumentDatastore
+        } = await createApp();
+
+        datastore = idaiFieldDocumentDatastore;
 
         done();
     });

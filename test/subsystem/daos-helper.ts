@@ -1,4 +1,4 @@
-import {IdaiFieldDocument, ProjectConfiguration, IdaiFieldAppConfigurator, ConfigLoader, ConfigReader} from 'idai-components-2';
+import {IdaiFieldDocument, ProjectConfiguration, IdaiFieldAppConfigurator, ConfigLoader, ConfigReader, Document} from 'idai-components-2';
 import {IdaiFieldImageDocumentDatastore} from '../../app/core/datastore/field/idai-field-image-document-datastore';
 import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/field/idai-field-document-datastore';
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
@@ -20,7 +20,7 @@ import {Validator} from '../../app/core/model/validator';
 import {SyncTarget} from '../../app/core/settings/settings';
 import {FsConfigReader} from '../../app/core/util/fs-config-reader';
 import {SettingsService} from '../../app/core/settings/settings-service';
-
+import * as PouchDB from 'pouchdb';
 
 class IdGenerator {
     public generateId() {
@@ -28,77 +28,13 @@ class IdGenerator {
     }
 }
 
-/**
- * @author Daniel de Oliveira
- */
-export class DAOsHelper {
 
-    public idaiFieldImageDocumentDatastore: IdaiFieldImageDocumentDatastore;
-    public idaiFieldDocumentDatastore: IdaiFieldDocumentDatastore;
-    public documentDatastore: DocumentDatastore;
-
-    private projectConfiguration = new ProjectConfiguration({
-        'types': [
-            {
-                'type': 'Trench',
-                'fields': []
-            },
-            {
-                'type': 'Image',
-                'fields': []
-            }
-        ]
-    });
-
-
-    public async init(projectConfiguration?: ProjectConfiguration) {
-
-        if (projectConfiguration) this.projectConfiguration = projectConfiguration;
-
-        const {datastore, documentCache, indexFacade} = await this.createPouchdbDatastore('testdb');
-        const converter = new IdaiFieldTypeConverter(
-            new TypeUtility(this.projectConfiguration));
-
-
-        this.idaiFieldImageDocumentDatastore = new IdaiFieldImageDocumentDatastore(
-            datastore, indexFacade, documentCache as any, converter);
-        this.idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
-            datastore, indexFacade, documentCache, converter);
-        this.documentDatastore = new DocumentDatastore(
-            datastore, indexFacade, documentCache, converter);
-
-        return {datastore, documentCache, indexFacade};
-    }
-
-
-    public async createPouchdbDatastore(dbname) {
-
-        const {createdIndexFacade} =
-            IndexerConfiguration.configureIndexers(this.projectConfiguration);
-
-        const documentCache = new DocumentCache<IdaiFieldDocument>();
-        const pouchdbManager = new PouchdbManager();
-
-        const datastore = new PouchdbDatastore(
-            pouchdbManager.getDbProxy(),
-            new IdGenerator(),
-            false);
-        await pouchdbManager.loadProjectDb(dbname, undefined);
-
-        const indexFacade = createdIndexFacade;
-        return {
-            datastore,
-            documentCache,
-            indexFacade
-        }
-    }
-}
 
 
 /**
  * Boot project via settings service such that it immediately starts syncinc with http://localhost:3003/synctestremotedb
  */
-export async function setupSettingsService(pouchdbmanager) {
+export async function setupSettingsService(pouchdbmanager, projectName = 'testdb', startSync = false) {
 
     const settingsService = new SettingsService(
         new PouchDbFsImagestore(
@@ -110,15 +46,15 @@ export async function setupSettingsService(pouchdbmanager) {
     );
 
     await settingsService.bootProjectDb({
-        isAutoUpdateActive: true,
-        isSyncActive: true,
+        isAutoUpdateActive: false,
+        isSyncActive: startSync,
         remoteSites: [],
         syncTarget: new class implements SyncTarget {
             address: string = 'http://localhost:3003/';
             password: string;
             username: string;
         },
-        dbs: ['synctest'],
+        dbs: [projectName],
         imagestorePath: '/tmp/abc',
         username: 'synctestuser'
     });
@@ -128,11 +64,12 @@ export async function setupSettingsService(pouchdbmanager) {
 }
 
 
-export async function createApp() {
+export async function createApp(projectName = 'testdb', startSync = false) {
 
     const pouchdbmanager = new PouchdbManager();
 
-    const {settingsService, projectConfiguration} = await setupSettingsService(pouchdbmanager);
+    const {settingsService, projectConfiguration} = await setupSettingsService(
+        pouchdbmanager, projectName, startSync);
 
     const {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade} =
         IndexerConfiguration.configureIndexers(projectConfiguration);
@@ -142,14 +79,16 @@ export async function createApp() {
         new IdGenerator(),
         true);
 
-    const documentCache = new DocumentCache<IdaiFieldDocument>();
+    const documentCache = new DocumentCache<Document>();
 
     const typeUtility = new TypeUtility(projectConfiguration);
 
     const typeConverter = new IdaiFieldTypeConverter(typeUtility);
 
     const idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
-        datastore, createdIndexFacade, documentCache, typeConverter);
+        datastore, createdIndexFacade, documentCache as any, typeConverter);
+    const idaiFieldImageDocumentDatastore = new IdaiFieldImageDocumentDatastore(
+        datastore, createdIndexFacade, documentCache as any, typeConverter);
     const documentDatastore = new DocumentDatastore(
         datastore, createdIndexFacade, documentCache, typeConverter);
 
@@ -195,6 +134,30 @@ export async function createApp() {
     return {
         remoteChangesStream,
         viewFacade,
-        documentHolder
+        documentHolder,
+        documentDatastore,
+        idaiFieldDocumentDatastore,
+        idaiFieldImageDocumentDatastore,
+        settingsService
     }
+}
+
+
+/**
+ * Creates the db that is in the simulated client app
+ */
+export async function setupSyncTestDb(projectName = 'testdb') {
+
+    let synctest = new PouchDB(projectName);
+    await synctest.destroy();
+    synctest = new PouchDB(projectName);
+    await synctest.put({
+        '_id': 'project',
+        'resource': {
+            'type': 'Project',
+            'id': 'project',
+            'identifier': projectName
+        }
+    });
+    await synctest.close();
 }

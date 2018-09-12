@@ -1,6 +1,6 @@
 import * as PouchDB from 'pouchdb';
 import * as express from 'express';
-import {createApp} from '../subsystem/daos-helper';
+import {createApp, setupSyncTestDb} from '../subsystem/daos-helper';
 
 const expressPouchDB = require('express-pouchdb');
 const cors = require('pouchdb-server/lib/cors');
@@ -41,26 +41,6 @@ describe('sync from remote to local db', () => {
     }
 
 
-    /**
-     * Creates the db that is in the simulated client app
-     */
-    async function setupSyncTestDb() {
-
-        let synctest = new PouchDB('synctest');
-        await synctest.destroy();
-        synctest = new PouchDB('synctest');
-        await synctest.put({
-            '_id': 'project',
-            'resource': {
-                'type': 'Project',
-                'id': 'project',
-                'identifier': 'synctest'
-            }
-        });
-        await synctest.close();
-    }
-
-
     const docToPut = {
         '_id': 'zehn',
         created: {"user": "sample_data", "date": "2018-09-11T20:46:15.408Z"},
@@ -72,9 +52,9 @@ describe('sync from remote to local db', () => {
     beforeAll(async done => {
 
         await setupSyncTestSimulatedRemoteDb();
-        await setupSyncTestDb();
+        await setupSyncTestDb('synctestdb');
 
-        const {remoteChangesStream, viewFacade, documentHolder} = await createApp();
+        const {remoteChangesStream, viewFacade, documentHolder} = await createApp('synctest', true);
 
         _documentHolder = documentHolder;
         _remoteChangesStream = remoteChangesStream;

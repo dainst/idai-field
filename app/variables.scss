@@ -18,10 +18,13 @@ $brand-primary:         #37588e !default;
 $font-family-sans-serif:  'Roboto', Helvetica, Arial, sans-serif;
 
 //== Media queries breakpoints
-$screen-xs:                  480px !default;
-$screen-sm:                  768px !default;
-$screen-md:                  992px !default;
-$screen-lg:                  1200px !default;
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 1200px,
+  xl: 1600px
+) !default;
 
 //== Navbar
 $navbar-default-color:       #fff !default;
@@ -41,10 +44,3 @@ $ctrl-button-bg:                  rgba(85, 114, 161, 0);
 
 //== Forms
 $input-border-focus:             lighten($brand-primary, 40%) !default;
-
-// Navbar collapse
-//** Point at which the navbar becomes uncollapsed.
-// Bootstrap default: $grid-float-breakpoint:     $screen-sm-min !default;
-$grid-float-breakpoint:     $screen-xs !default;
-//** Point at which the navbar begins collapsing.
-$grid-float-breakpoint-max: ($grid-float-breakpoint - 1) !default;

@@ -1,11 +1,9 @@
-<div class="row">
-    <div id="sidebar-list-container" class="col-lg-3 col-xl-2">
+<div class="row flex-nowrap">
+    <div id="sidebar-list-container" class="col">
         <sidebar-list></sidebar-list>
     </div>
 
-    <div [class.col-lg-9]="!isDocumentSelected()"
-         [class.col-lg-6]="isDocumentSelected()"
-         class="px-0">
+    <div class="col px-0">
         <editable-map [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
                       [parentDocuments]="parentDocuments"
@@ -18,7 +16,7 @@
     </div>
 
     <div *ngIf="isDocumentSelected()"
-         class="col-lg-3 col-xl-2 px-0 detail-sidebar-container">
+         class="col px-0 detail-sidebar-container">
         <document-view-sidebar></document-view-sidebar>
     </div>
 </div>

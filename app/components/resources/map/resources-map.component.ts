@@ -95,6 +95,13 @@ export class ResourcesMapComponent {
     }
 
 
+    public isDocumentSelected() {
+        
+        const selectedDocument = this.viewFacade.getSelectedDocument();
+        return selectedDocument && selectedDocument.resource.id;
+    }
+
+
     private async save() {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();

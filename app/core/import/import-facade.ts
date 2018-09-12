@@ -146,7 +146,8 @@ export module ImportFacade {
         }
     }
 
-    function createRelationsStrategy(format: ImportFormat, relationsCompleter: RelationsCompleter): RelationsStrategy {
+    function createRelationsStrategy(format: ImportFormat,
+                                     relationsCompleter: RelationsCompleter): RelationsStrategy {
 
         switch (format) {
             case 'meninxfind':

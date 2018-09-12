@@ -1,5 +1,5 @@
 import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
-import {createApp, setupSyncTestDb} from './daos-helper';
+import {createApp, setupSettingsService, setupSyncTestDb} from './daos-helper';
 import {to} from 'tsfun';
 import {ImportFacade} from '../../app/core/import/import-facade';
 import {Validator} from '../../app/core/model/validator';
@@ -7,6 +7,7 @@ import {TypeUtility} from '../../app/core/model/type-utility';
 import {ValidationErrors} from '../../app/core/model/validation-errors';
 import {M} from '../../app/components/m';
 import {ImportErrors} from '../../app/core/import/import-errors';
+import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 
 /**
  * @author Daniel de Oliveira
@@ -14,75 +15,15 @@ import {ImportErrors} from '../../app/core/import/import-errors';
 describe('Import/Subsystem', () => {
 
     let datastore;
-    let h;
-    let typeUtility;
-
-
-    const projectConfiguration = new ProjectConfiguration(
-        {
-            types: [
-                {
-                    type: 'Operation',
-                    fields: [
-                        {name: 'id',},
-                        {name: 'identifier'},
-                        {name: 'shortDescription'},
-                        {name: 'type'},
-                    ]
-                },
-                {
-                    type: 'Trench',
-                    parent: 'Operation',
-                    fields: [
-                        {name: 'id',},
-                        {name: 'identifier'},
-                        {name: 'shortDescription'},
-                        {name: 'type'},
-                    ]
-                },
-                {
-                    type: 'Feature',
-                    fields: [
-                        {name: 'id',},
-                        {name: 'identifier'},
-                        {name: 'shortDescription'},
-                        {name: 'type'},
-                    ]
-                },
-                {
-                    type: 'Find',
-                    fields: [
-                        {name: 'id',},
-                        {name: 'identifier'},
-                        {name: 'shortDescription'},
-                        {name: 'type'},
-                        {name: 'geometry'}
-                    ]
-                }
-            ],
-            relations: [
-                {name: 'isRecordedIn', domain: ['Feature'], range: ['Trench'], inverse: 'NO-INVERSE'},
-                {name: 'isRecordedIn', domain: ['Find'], range: ['Trench'], inverse: 'NO-INVERSE'}
-            ]
-        }
-    );
-
+    let _projectConfiguration;
 
     beforeEach(async done => {
 
         await setupSyncTestDb();
-
-        const {
-            remoteChangesStream,
-            viewFacade,
-            documentHolder,
-            documentDatastore,
-            idaiFieldDocumentDatastore,
-            idaiFieldImageDocumentDatastore
-        } = await createApp();
-
+        const {projectConfiguration} = await setupSettingsService(new PouchdbManager());
+        _projectConfiguration = projectConfiguration;
+        const {idaiFieldDocumentDatastore} = await createApp();
         datastore = idaiFieldDocumentDatastore;
-
         done();
     });
 
@@ -91,10 +32,10 @@ describe('Import/Subsystem', () => {
 
         await ImportFacade.doImport(
             'native',
-            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
+            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
-            projectConfiguration,
+            _projectConfiguration,
             undefined,
             undefined,
             { go: () => Promise.resolve(
@@ -114,10 +55,10 @@ describe('Import/Subsystem', () => {
 
         const report = await ImportFacade.doImport(
             'native',
-            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
+            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
-            projectConfiguration,
+            _projectConfiguration,
             trench.resource.id,
             undefined,
             { go: () => Promise.resolve(
@@ -135,10 +76,10 @@ describe('Import/Subsystem', () => {
 
         const report = await ImportFacade.doImport(
             'native',
-            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
+            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
-            projectConfiguration,
+            _projectConfiguration,
             trench.resource.id,
             undefined,
             { go: () => Promise.resolve(
@@ -156,10 +97,10 @@ describe('Import/Subsystem', () => {
 
         await ImportFacade.doImport(
             'native',
-            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
+            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
-            projectConfiguration,
+            _projectConfiguration,
             stored.resource.id,
             false,
             { go: () => Promise.resolve(
@@ -177,10 +118,10 @@ describe('Import/Subsystem', () => {
 
         return ImportFacade.doImport(
             'native',
-            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
+            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
-            projectConfiguration,
+            _projectConfiguration,
             resourceId,
             allowMergingExistingResources,
             { go: () => Promise.resolve(
@@ -225,10 +166,10 @@ describe('Import/Subsystem', () => {
 
         await ImportFacade.doImport(
             'native',
-            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
+            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
-            projectConfiguration,
+            _projectConfiguration,
             undefined,
             true,
             { go: () => Promise.resolve(
@@ -246,10 +187,10 @@ describe('Import/Subsystem', () => {
 
         await ImportFacade.doImport(
             'native',
-            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
+            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
-            projectConfiguration,
+            _projectConfiguration,
             undefined,
             true,
             { go: () => Promise.resolve(
@@ -269,10 +210,10 @@ describe('Import/Subsystem', () => {
 
         const importReport = await ImportFacade.doImport(
             'native',
-            new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)),
+            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
-            projectConfiguration,
+            _projectConfiguration,
             'f1',
             false,
             { go: () => Promise.resolve(

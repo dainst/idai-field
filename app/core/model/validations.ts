@@ -1,6 +1,6 @@
 import {FieldDefinition, ProjectConfiguration, RelationDefinition} from 'idai-components-2';
 import {Resource, NewResource} from 'idai-components-2';
-import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../util/number-util';
+import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../core/util/number-util';
 import {on} from 'tsfun';
 
 export module Validations {

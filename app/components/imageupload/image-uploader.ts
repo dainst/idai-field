@@ -4,7 +4,7 @@ import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
 import {UploadModalComponent} from './upload-modal.component';
-import {ExtensionUtil} from '../../util/extension-util';
+import {ExtensionUtil} from '../../core/util/extension-util';
 import {UploadStatus} from './upload-status';
 import {PersistenceManager} from '../../core/model/persistence-manager';
 import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';

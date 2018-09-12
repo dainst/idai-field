@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Document, NewDocument, ProjectConfiguration, toResourceId} from 'idai-components-2';
+import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {filter, flatMap, flow, includedIn, isNot, mapTo, on, subtract, to, isDefined, isUndefined, isUndefinedOrEmpty, arrayEquivalent, isArray} from 'tsfun';
+import {arrayEquivalent, isArray, isNot, isUndefinedOrEmpty, mapTo, on} from 'tsfun';
 import {TypeUtility} from './type-utility';
 import {ConnectedDocsWriter} from './connected-docs-writer';
-import {clone} from '../../util/object-util';
+import {clone} from '../util/object-util';
 
 
 @Injectable()

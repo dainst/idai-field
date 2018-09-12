@@ -2,7 +2,7 @@ import {Observer} from 'rxjs';
 import {Observable} from 'rxjs';
 import {IdaiFieldFeatureDocument} from 'idai-components-2';
 import {on} from 'tsfun';
-import {ObserverUtil} from '../../util/observer-util';
+import {ObserverUtil} from '../../core/util/observer-util';
 
 
 export type MatrixSelectionMode = 'single'|'rect'|'none';

@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
 import {IdaiFieldDocument} from 'idai-components-2';
-import {clone} from '../../../../util/object-util';
+import {clone} from '../../../../core/util/object-util';
 import {ViewContext} from './view-context';
 import {differentFrom, NavigationPathSegment, toResourceId} from './navigation-path-segment';
 import {takeUntil, takeWhile, on} from 'tsfun';

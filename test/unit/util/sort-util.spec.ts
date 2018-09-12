@@ -1,4 +1,4 @@
-import {SortUtil} from '../../../app/util/sort-util';
+import {SortUtil} from '../../../app/core/util/sort-util';
 
 /**
  * @author Sebastian Cuy

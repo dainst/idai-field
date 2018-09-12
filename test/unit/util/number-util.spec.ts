@@ -1,4 +1,4 @@
-import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../../app/util/number-util';
+import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../../app/core/util/number-util';
 
 
 /**

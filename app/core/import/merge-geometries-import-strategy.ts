@@ -3,7 +3,7 @@ import {IdaiFieldDocument} from 'idai-components-2';
 import {ImportStrategy} from './import-strategy';
 import {DocumentDatastore} from "../datastore/document-datastore";
 import {Validator} from '../model/validator';
-import {clone} from '../../util/object-util';
+import {clone} from '../util/object-util';
 import {M} from '../../components/m';
 import {ImportErrors} from './import-errors';
 

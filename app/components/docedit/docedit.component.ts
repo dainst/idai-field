@@ -10,7 +10,7 @@ import {
     ProjectConfiguration
 } from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
-import {clone} from '../../util/object-util';
+import {clone} from '../../core/util/object-util';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
 import {DeleteModalComponent} from './dialog/delete-modal.component';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';

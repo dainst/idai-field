@@ -7,9 +7,9 @@ import {StateSerializer} from '../../../common/state-serializer';
 import {OperationViews} from './state/operation-views';
 import {ViewState} from './state/view-state';
 import {NavigationPath} from './state/navigation-path';
-import {ObserverUtil} from '../../../util/observer-util';
+import {ObserverUtil} from '../../../core/util/observer-util';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
-import {clone} from '../../../util/object-util';
+import {clone} from '../../../core/util/object-util';
 
 
 @Injectable()

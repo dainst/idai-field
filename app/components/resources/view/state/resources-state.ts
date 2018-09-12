@@ -1,6 +1,6 @@
 import {IdaiFieldDocument} from 'idai-components-2';
 import {ViewState} from './view-state';
-import {clone} from '../../../../util/object-util';
+import {clone} from '../../../../core/util/object-util';
 import {NavigationPath} from './navigation-path';
 import {ViewContext} from './view-context';
 

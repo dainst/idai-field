@@ -1,5 +1,5 @@
 import {Action, Document} from 'idai-components-2';
-import {SortUtil} from '../../../util/sort-util';
+import {SortUtil} from '../../../core/util/sort-util';
 
 
 export interface SimpleIndexItem {

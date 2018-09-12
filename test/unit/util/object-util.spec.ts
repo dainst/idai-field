@@ -1,4 +1,4 @@
-import {clone} from "../../../app/util/object-util";
+import {clone} from "../../../app/core/util/object-util";
 
 /**
  * @author Daniel de Oliveira

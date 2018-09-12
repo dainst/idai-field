@@ -3,7 +3,7 @@ import {ImportStrategy} from './import-strategy';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validator} from '../model/validator';
 import {IdaiFieldFindResult} from '../datastore/core/cached-read-datastore';
-import {clone} from '../../util/object-util';
+import {clone} from '../util/object-util';
 import {ImportErrors} from './import-errors';
 
 

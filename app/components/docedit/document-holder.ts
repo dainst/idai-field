@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {flow, jsonEqual, uniteObject, isNot, includedIn, isEmpty} from 'tsfun';
+import {flow, includedIn, isEmpty, isNot, jsonEqual} from 'tsfun';
 import {DatastoreErrors, Document, ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
@@ -8,7 +8,7 @@ import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {Validations} from '../../core/model/validations';
 import {TypeUtility} from '../../core/model/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
-import {clone} from '../../util/object-util';
+import {clone} from '../../core/util/object-util';
 import {M} from '../m';
 
 

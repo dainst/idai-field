@@ -1,7 +1,7 @@
 import {intersection, NestedArray, subtract, union} from 'tsfun';
 import {uniteObject, intersectObject, empty} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
-import {clone} from '../../../util/object-util';
+import {clone} from '../../util/object-util';
 
 
 type IndexItemMap = {[id: string]: SimpleIndexItem};

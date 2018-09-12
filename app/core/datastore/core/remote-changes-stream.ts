@@ -6,7 +6,7 @@ import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
-import {ObserverUtil} from '../../../util/observer-util';
+import {ObserverUtil} from '../../../core/util/observer-util';
 import {UsernameProvider} from '../../settings/username-provider';
 
 

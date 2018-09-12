@@ -7,7 +7,7 @@ import {ConstraintIndexer} from './constraint-indexer';
 import {FulltextIndexer} from './fulltext-indexer';
 import {ResultSets} from './result-sets';
 import {IndexItem} from './index-item';
-import {ObserverUtil} from '../../../util/observer-util';
+import {ObserverUtil} from '../../util/observer-util';
 
 
 @Injectable()

@@ -196,6 +196,8 @@ describe('sync from remote to local db', () => {
             await _viewFacade.populateDocumentList();
             const documents = await _viewFacade.getDocuments();
 
+            // TODO test that it is marked as new from remote, and existing item is not new from remote
+
             expect(documents[0].resource.id).toEqual('zehn');
             await syncTestSimulatedRemoteDb.close();
             done();

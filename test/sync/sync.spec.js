@@ -225,6 +225,7 @@ describe('sync from remote to local db', function () {
                                     return [4 /*yield*/, _viewFacade.getDocuments()];
                                 case 3:
                                     documents = _a.sent();
+                                    // TODO test that it is marked as new from remote, and existing item is not new from remote
                                     expect(documents[0].resource.id).toEqual('zehn');
                                     return [4 /*yield*/, syncTestSimulatedRemoteDb.close()];
                                 case 4:

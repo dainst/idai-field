@@ -1,4 +1,4 @@
-import {IdaiFieldDocument, ProjectConfiguration, IdaiFieldAppConfigurator, ConfigLoader, ConfigReader, Document} from 'idai-components-2';
+import {IdaiFieldAppConfigurator, ConfigLoader, ConfigReader, Document} from 'idai-components-2';
 import {IdaiFieldImageDocumentDatastore} from '../../app/core/datastore/field/idai-field-image-document-datastore';
 import {IdaiFieldDocumentDatastore} from '../../app/core/datastore/field/idai-field-document-datastore';
 import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
@@ -27,8 +27,6 @@ class IdGenerator {
         return Math.floor(Math.random() * 10000000).toString();
     }
 }
-
-
 
 
 /**

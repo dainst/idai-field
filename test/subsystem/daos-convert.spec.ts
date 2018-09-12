@@ -7,7 +7,7 @@
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-import {createApp, setupSyncTestDb} from './daos-helper';
+import {createApp, setupSyncTestDb} from './subsystem-helper';
 import * as PouchDB from 'pouchdb';
 import {Static} from '../unit/static';
 

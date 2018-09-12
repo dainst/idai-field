@@ -3,7 +3,7 @@ import * as PouchDB from 'pouchdb';
 import {ViewFacade} from '../../app/components/resources/view/view-facade';
 import {ResourcesStateManager} from '../../app/components/resources/view/resources-state-manager';
 import {CachedDatastore} from '../../app/core/datastore/core/cached-datastore';
-import {createApp, setupSyncTestDb} from './daos-helper';
+import {createApp, setupSyncTestDb} from './subsystem-helper';
 import {Static} from '../unit/static';
 import {toResourceId} from '../../app/components/resources/view/state/navigation-path-segment';
 

@@ -38,7 +38,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var PouchDB = require("pouchdb");
 var express = require("express");
-var daos_helper_1 = require("../subsystem/daos-helper");
+var subsystem_helper_1 = require("../subsystem/subsystem-helper");
 var expressPouchDB = require('express-pouchdb');
 var cors = require('pouchdb-server/lib/cors');
 describe('sync from remote to local db', function () {
@@ -85,10 +85,10 @@ describe('sync from remote to local db', function () {
                 case 0: return [4 /*yield*/, setupSyncTestSimulatedRemoteDb()];
                 case 1:
                     _b.sent();
-                    return [4 /*yield*/, daos_helper_1.setupSyncTestDb('synctestdb')];
+                    return [4 /*yield*/, subsystem_helper_1.setupSyncTestDb('synctestdb')];
                 case 2:
                     _b.sent();
-                    return [4 /*yield*/, daos_helper_1.createApp('synctest', true)];
+                    return [4 /*yield*/, subsystem_helper_1.createApp('synctest', true)];
                 case 3:
                     _a = _b.sent(), remoteChangesStream = _a.remoteChangesStream, viewFacade = _a.viewFacade, documentHolder = _a.documentHolder;
                     _documentHolder = documentHolder;

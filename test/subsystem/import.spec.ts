@@ -1,5 +1,4 @@
-import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
-import {createApp, setupSettingsService, setupSyncTestDb} from './daos-helper';
+import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-helper';
 import {to} from 'tsfun';
 import {ImportFacade} from '../../app/core/import/import-facade';
 import {Validator} from '../../app/core/model/validator';

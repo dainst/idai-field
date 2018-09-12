@@ -1,6 +1,6 @@
 import * as PouchDB from 'pouchdb';
 import * as express from 'express';
-import {createApp, setupSyncTestDb} from '../subsystem/daos-helper';
+import {createApp, setupSyncTestDb} from '../subsystem/subsystem-helper';
 
 const expressPouchDB = require('express-pouchdb');
 const cors = require('pouchdb-server/lib/cors');
@@ -54,7 +54,8 @@ describe('sync from remote to local db', () => {
         await setupSyncTestSimulatedRemoteDb();
         await setupSyncTestDb('synctestdb');
 
-        const {remoteChangesStream, viewFacade, documentHolder} = await createApp('synctest', true);
+        const {remoteChangesStream, viewFacade, documentHolder} =
+            await createApp('synctest', true);
 
         _documentHolder = documentHolder;
         _remoteChangesStream = remoteChangesStream;

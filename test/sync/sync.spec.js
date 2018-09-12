@@ -54,12 +54,15 @@ var idai_components_2_1 = require("idai-components-2");
 var fs_config_reader_1 = require("../../app/core/util/fs-config-reader");
 var resources_state_manager_configuration_1 = require("../../app/components/resources/view/resources-state-manager-configuration");
 var persistence_manager_1 = require("../../app/core/model/persistence-manager");
+var document_holder_1 = require("../../app/components/docedit/document-holder");
+var validator_1 = require("../../app/core/model/validator");
+var document_datastore_1 = require("../../app/core/datastore/document-datastore");
 var expressPouchDB = require('express-pouchdb');
 var cors = require('pouchdb-server/lib/cors');
 describe('sync from remote to local db', function () {
     var syncTestSimulatedRemoteDb;
     var _remoteChangesStream;
-    var _persistenceManager;
+    var _documentHolder;
     var _viewFacade;
     var server; // TODO close when done
     var rev;
@@ -73,7 +76,7 @@ describe('sync from remote to local db', function () {
     }());
     function createApp(pouchdbmanager, projectConfiguration, settingsService) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade, datastore, documentCache, typeUtility, typeConverter, idaiFieldDocumentDatastore, remoteChangesStream, resourcesStateManager, viewFacade, persistenceManager;
+            var _a, createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade, datastore, documentCache, typeUtility, typeConverter, idaiFieldDocumentDatastore, documentDatastore, remoteChangesStream, resourcesStateManager, viewFacade, persistenceManager, documentHolder;
             return __generator(this, function (_b) {
                 _a = indexer_configuration_1.IndexerConfiguration.configureIndexers(projectConfiguration), createdConstraintIndexer = _a.createdConstraintIndexer, createdFulltextIndexer = _a.createdFulltextIndexer, createdIndexFacade = _a.createdIndexFacade;
                 datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbmanager.getDbProxy(), new IdGenerator(), true);
@@ -81,14 +84,16 @@ describe('sync from remote to local db', function () {
                 typeUtility = new type_utility_1.TypeUtility(projectConfiguration);
                 typeConverter = new idai_field_type_converter_1.IdaiFieldTypeConverter(typeUtility);
                 idaiFieldDocumentDatastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(datastore, createdIndexFacade, documentCache, typeConverter);
+                documentDatastore = new document_datastore_1.DocumentDatastore(datastore, createdIndexFacade, documentCache, typeConverter);
                 remoteChangesStream = new remote_changes_stream_1.RemoteChangesStream(datastore, createdIndexFacade, documentCache, typeConverter, { getUsername: function () { return 'fakeuser'; } });
                 resourcesStateManager = resources_state_manager_configuration_1.ResourcesStateManagerConfiguration.build(projectConfiguration, idaiFieldDocumentDatastore, new standard_state_serializer_1.StandardStateSerializer(settingsService), 'synctest', true);
                 viewFacade = new view_facade_1.ViewFacade(projectConfiguration, idaiFieldDocumentDatastore, remoteChangesStream, resourcesStateManager, undefined);
                 persistenceManager = new persistence_manager_1.PersistenceManager(idaiFieldDocumentDatastore, projectConfiguration, typeUtility);
+                documentHolder = new document_holder_1.DocumentHolder(projectConfiguration, persistenceManager, new validator_1.Validator(projectConfiguration, idaiFieldDocumentDatastore, typeUtility), undefined, typeUtility, { getUsername: function () { return 'fakeuser'; } }, documentDatastore);
                 return [2 /*return*/, {
                         remoteChangesStream: remoteChangesStream,
                         viewFacade: viewFacade,
-                        persistenceManager: persistenceManager // TODO do it via document holder later
+                        documentHolder: documentHolder
                     }];
             });
         });
@@ -182,7 +187,7 @@ describe('sync from remote to local db', function () {
         resource: { type: 'Trench', id: 'zehn', identifier: 'Zehn', relations: {} }
     };
     beforeAll(function (done) { return __awaiter(_this, void 0, void 0, function () {
-        var pouchdbmanager, _a, settingsService, projectConfiguration, _b, remoteChangesStream, viewFacade, persistenceManager;
+        var pouchdbmanager, _a, settingsService, projectConfiguration, _b, remoteChangesStream, viewFacade, documentHolder;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0: return [4 /*yield*/, setupSyncTestSimulatedRemoteDb()];
@@ -197,8 +202,8 @@ describe('sync from remote to local db', function () {
                     _a = _c.sent(), settingsService = _a.settingsService, projectConfiguration = _a.projectConfiguration;
                     return [4 /*yield*/, createApp(pouchdbmanager, projectConfiguration, settingsService)];
                 case 4:
-                    _b = _c.sent(), remoteChangesStream = _b.remoteChangesStream, viewFacade = _b.viewFacade, persistenceManager = _b.persistenceManager;
-                    _persistenceManager = persistenceManager;
+                    _b = _c.sent(), remoteChangesStream = _b.remoteChangesStream, viewFacade = _b.viewFacade, documentHolder = _b.documentHolder;
+                    _documentHolder = documentHolder;
                     _remoteChangesStream = remoteChangesStream;
                     _viewFacade = viewFacade;
                     done();
@@ -301,11 +306,6 @@ describe('sync from remote to local db', function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    docToPut = {
-                        created: { "user": "sample_data", "date": "2018-09-11T20:46:15.408Z" },
-                        modified: [{ "user": "sample_data", "date": "2018-09-11T20:46:15.408Z" }],
-                        resource: { type: 'Trench', identifier: 'Elf', relations: {} }
-                    };
                     syncTestSimulatedRemoteDb.changes({
                         live: true,
                         include_docs: true,
@@ -315,7 +315,13 @@ describe('sync from remote to local db', function () {
                         expect(change.doc.resource.identifier).toEqual('Elf');
                         done();
                     });
-                    return [4 /*yield*/, _persistenceManager.persist(docToPut)];
+                    docToPut = {
+                        created: { "user": "sample_data", "date": "2018-09-11T20:46:15.408Z" },
+                        modified: [{ "user": "sample_data", "date": "2018-09-11T20:46:15.408Z" }],
+                        resource: { type: 'Trench', identifier: 'Elf', relations: {} }
+                    };
+                    _documentHolder.setClonedDocument(docToPut);
+                    return [4 /*yield*/, _documentHolder.save(true)];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];

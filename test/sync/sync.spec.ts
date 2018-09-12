@@ -19,6 +19,9 @@ import {ConfigLoader, ConfigReader, IdaiFieldAppConfigurator} from 'idai-compone
 import {FsConfigReader} from '../../app/core/util/fs-config-reader';
 import {ResourcesStateManagerConfiguration} from '../../app/components/resources/view/resources-state-manager-configuration';
 import {PersistenceManager} from '../../app/core/model/persistence-manager';
+import {DocumentHolder} from '../../app/components/docedit/document-holder';
+import {Validator} from '../../app/core/model/validator';
+import {DocumentDatastore} from '../../app/core/datastore/document-datastore';
 
 const expressPouchDB = require('express-pouchdb');
 const cors = require('pouchdb-server/lib/cors');
@@ -28,7 +31,7 @@ describe('sync from remote to local db', () => {
 
     let syncTestSimulatedRemoteDb;
     let _remoteChangesStream;
-    let _persistenceManager;
+    let _documentHolder;
     let _viewFacade;
     let server; // TODO close when done
     let rev;
@@ -57,6 +60,8 @@ describe('sync from remote to local db', () => {
         const typeConverter = new IdaiFieldTypeConverter(typeUtility);
 
         const idaiFieldDocumentDatastore = new IdaiFieldDocumentDatastore(
+            datastore, createdIndexFacade, documentCache, typeConverter);
+        const documentDatastore = new DocumentDatastore(
             datastore, createdIndexFacade, documentCache, typeConverter);
 
         const remoteChangesStream = new RemoteChangesStream(
@@ -88,10 +93,20 @@ describe('sync from remote to local db', () => {
             typeUtility,
         );
 
+        const documentHolder = new DocumentHolder(
+            projectConfiguration,
+            persistenceManager,
+            new Validator(projectConfiguration, idaiFieldDocumentDatastore, typeUtility),
+            undefined,
+            typeUtility,
+            { getUsername: () => 'fakeuser' },
+            documentDatastore
+        );
+
         return {
             remoteChangesStream,
             viewFacade,
-            persistenceManager // TODO do it via document holder later
+            documentHolder
         }
     }
 
@@ -184,13 +199,13 @@ describe('sync from remote to local db', () => {
         const pouchdbmanager = new PouchdbManager();
         const {settingsService, projectConfiguration} = await setupSettingsService(pouchdbmanager);
 
-        const {remoteChangesStream, viewFacade, persistenceManager} = await createApp(
+        const {remoteChangesStream, viewFacade, documentHolder} = await createApp(
             pouchdbmanager,
             projectConfiguration,
             settingsService
         );
 
-        _persistenceManager = persistenceManager;
+        _documentHolder = documentHolder;
         _remoteChangesStream = remoteChangesStream;
         _viewFacade = viewFacade;
         done();
@@ -253,13 +268,6 @@ describe('sync from remote to local db', () => {
 
     it('sync to remote db', async done => {
 
-        const docToPut = {
-            created: {"user": "sample_data", "date": "2018-09-11T20:46:15.408Z"},
-            modified: [{"user": "sample_data", "date": "2018-09-11T20:46:15.408Z"}],
-            resource: { type: 'Trench', identifier: 'Elf', relations: {}}
-        };
-
-
         syncTestSimulatedRemoteDb.changes({
             live: true,
             include_docs: true, // we do this and fetch it later because there is a possible leak, as reported in https://github.com/pouchdb/pouchdb/issues/6502
@@ -271,6 +279,13 @@ describe('sync from remote to local db', () => {
             done();
         });
 
-        await _persistenceManager.persist(docToPut);
+
+        const docToPut = {
+            created: {"user": "sample_data", "date": "2018-09-11T20:46:15.408Z"},
+            modified: [{"user": "sample_data", "date": "2018-09-11T20:46:15.408Z"}],
+            resource: { type: 'Trench', identifier: 'Elf', relations: {}}
+        };
+        _documentHolder.setClonedDocument(docToPut);
+        await _documentHolder.save(true);
     });
 });

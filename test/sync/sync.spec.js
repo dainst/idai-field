@@ -36,27 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
-var settings_service_1 = require("../../app/core/settings/settings-service");
-var pouch_db_fs_imagestore_1 = require("../../app/core/imagestore/pouch-db-fs-imagestore");
-var pouchdb_manager_1 = require("../../app/core/datastore/core/pouchdb-manager");
 var PouchDB = require("pouchdb");
-var pouchdb_datastore_1 = require("../../app/core/datastore/core/pouchdb-datastore");
 var express = require("express");
-var remote_changes_stream_1 = require("../../app/core/datastore/core/remote-changes-stream");
-var document_cache_1 = require("../../app/core/datastore/core/document-cache");
-var idai_field_type_converter_1 = require("../../app/core/datastore/field/idai-field-type-converter");
-var type_utility_1 = require("../../app/core/model/type-utility");
-var indexer_configuration_1 = require("../../app/indexer-configuration");
-var view_facade_1 = require("../../app/components/resources/view/view-facade");
-var idai_field_document_datastore_1 = require("../../app/core/datastore/field/idai-field-document-datastore");
-var standard_state_serializer_1 = require("../../app/common/standard-state-serializer");
-var idai_components_2_1 = require("idai-components-2");
-var fs_config_reader_1 = require("../../app/core/util/fs-config-reader");
-var resources_state_manager_configuration_1 = require("../../app/components/resources/view/resources-state-manager-configuration");
-var persistence_manager_1 = require("../../app/core/model/persistence-manager");
-var document_holder_1 = require("../../app/components/docedit/document-holder");
-var validator_1 = require("../../app/core/model/validator");
-var document_datastore_1 = require("../../app/core/datastore/document-datastore");
+var daos_helper_1 = require("../subsystem/daos-helper");
 var expressPouchDB = require('express-pouchdb');
 var cors = require('pouchdb-server/lib/cors');
 describe('sync from remote to local db', function () {
@@ -74,37 +56,6 @@ describe('sync from remote to local db', function () {
         };
         return IdGenerator;
     }());
-    function createApp() {
-        return __awaiter(this, void 0, void 0, function () {
-            var pouchdbmanager, _a, settingsService, projectConfiguration, _b, createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade, datastore, documentCache, typeUtility, typeConverter, idaiFieldDocumentDatastore, documentDatastore, remoteChangesStream, resourcesStateManager, viewFacade, persistenceManager, documentHolder;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        pouchdbmanager = new pouchdb_manager_1.PouchdbManager();
-                        return [4 /*yield*/, setupSettingsService(pouchdbmanager)];
-                    case 1:
-                        _a = _c.sent(), settingsService = _a.settingsService, projectConfiguration = _a.projectConfiguration;
-                        _b = indexer_configuration_1.IndexerConfiguration.configureIndexers(projectConfiguration), createdConstraintIndexer = _b.createdConstraintIndexer, createdFulltextIndexer = _b.createdFulltextIndexer, createdIndexFacade = _b.createdIndexFacade;
-                        datastore = new pouchdb_datastore_1.PouchdbDatastore(pouchdbmanager.getDbProxy(), new IdGenerator(), true);
-                        documentCache = new document_cache_1.DocumentCache();
-                        typeUtility = new type_utility_1.TypeUtility(projectConfiguration);
-                        typeConverter = new idai_field_type_converter_1.IdaiFieldTypeConverter(typeUtility);
-                        idaiFieldDocumentDatastore = new idai_field_document_datastore_1.IdaiFieldDocumentDatastore(datastore, createdIndexFacade, documentCache, typeConverter);
-                        documentDatastore = new document_datastore_1.DocumentDatastore(datastore, createdIndexFacade, documentCache, typeConverter);
-                        remoteChangesStream = new remote_changes_stream_1.RemoteChangesStream(datastore, createdIndexFacade, documentCache, typeConverter, { getUsername: function () { return 'fakeuser'; } });
-                        resourcesStateManager = resources_state_manager_configuration_1.ResourcesStateManagerConfiguration.build(projectConfiguration, idaiFieldDocumentDatastore, new standard_state_serializer_1.StandardStateSerializer(settingsService), 'synctest', true);
-                        viewFacade = new view_facade_1.ViewFacade(projectConfiguration, idaiFieldDocumentDatastore, remoteChangesStream, resourcesStateManager, undefined);
-                        persistenceManager = new persistence_manager_1.PersistenceManager(idaiFieldDocumentDatastore, projectConfiguration, typeUtility);
-                        documentHolder = new document_holder_1.DocumentHolder(projectConfiguration, persistenceManager, new validator_1.Validator(projectConfiguration, idaiFieldDocumentDatastore, typeUtility), undefined, typeUtility, { getUsername: function () { return 'fakeuser'; } }, documentDatastore);
-                        return [2 /*return*/, {
-                                remoteChangesStream: remoteChangesStream,
-                                viewFacade: viewFacade,
-                                documentHolder: documentHolder
-                            }];
-                }
-            });
-        });
-    }
     /**
      * Creates a db simulated to be on a remote machine
      */
@@ -120,40 +71,6 @@ describe('sync from remote to local db', function () {
                 });
             });
         }).then(function (newDb) { return syncTestSimulatedRemoteDb = newDb; });
-    }
-    /**
-     * Boot project via settings service such that it immediately starts syncinc with http://localhost:3003/synctestremotedb
-     */
-    function setupSettingsService(pouchdbmanager) {
-        return __awaiter(this, void 0, void 0, function () {
-            var settingsService, projectConfiguration;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        settingsService = new settings_service_1.SettingsService(new pouch_db_fs_imagestore_1.PouchDbFsImagestore(undefined, undefined, pouchdbmanager.getDbProxy()), pouchdbmanager, undefined, new idai_components_2_1.IdaiFieldAppConfigurator(new idai_components_2_1.ConfigLoader(new fs_config_reader_1.FsConfigReader())), undefined);
-                        return [4 /*yield*/, settingsService.bootProjectDb({
-                                isAutoUpdateActive: true,
-                                isSyncActive: true,
-                                remoteSites: [],
-                                syncTarget: new /** @class */ (function () {
-                                    function class_1() {
-                                        this.address = 'http://localhost:3003/';
-                                    }
-                                    return class_1;
-                                }()),
-                                dbs: ['synctest'],
-                                imagestorePath: '/tmp/abc',
-                                username: 'synctestuser'
-                            })];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, settingsService.loadConfiguration('./config/')];
-                    case 2:
-                        projectConfiguration = _a.sent();
-                        return [2 /*return*/, { settingsService: settingsService, projectConfiguration: projectConfiguration }];
-                }
-            });
-        });
     }
     /**
      * Creates the db that is in the simulated client app
@@ -203,7 +120,7 @@ describe('sync from remote to local db', function () {
                     return [4 /*yield*/, setupSyncTestDb()];
                 case 2:
                     _b.sent();
-                    return [4 /*yield*/, createApp()];
+                    return [4 /*yield*/, daos_helper_1.createApp()];
                 case 3:
                     _a = _b.sent(), remoteChangesStream = _a.remoteChangesStream, viewFacade = _a.viewFacade, documentHolder = _a.documentHolder;
                     _documentHolder = documentHolder;

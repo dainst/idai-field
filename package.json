@@ -48,7 +48,6 @@
     "url": "https://github.com/dainst/idai-field.git"
   },
   "dependencies": {
-    "@angular/animations": "6.1.4",
     "@angular/common": "6.1.4",
     "@angular/core": "6.1.4",
     "@angular/http": "6.1.4",

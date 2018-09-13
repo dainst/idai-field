@@ -1,5 +1,5 @@
-<div class="row image-view detail-sidebar-container bg-light">
-    <div *ngIf="image.document" id="image-container" class="col-md-9 px-0">
+<div class="row flex-nowrap image-view bg-light">
+    <div *ngIf="image.document" id="image-container" class="col px-0">
         <div *ngIf="image.imgSrc" class="d-flex align-items-center justify-content-center">
             <img id="original-image" [src]="image.imgSrc">
         </div>
@@ -13,8 +13,8 @@
         </div>
     </div>
 
-    <div *ngIf="image.document" class="col-md-3 px-0 detail-sidebar">
-        <div class="card-block">
+    <div *ngIf="image.document" class="col-md-3 px-0 detail-sidebar-container">
+        <div class="card-block detail-sidebar">
             <button *ngIf="image.document._conflicts" class="btn btn-link btn-xs"
                     id="document-view-button-solve-conflicts"
                     (click)="startEdit('conflicts')">
@@ -77,5 +77,3 @@
         </div>
     </div>
 </div>
-
-

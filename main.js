@@ -114,7 +114,8 @@ const createWindow = () => {
         webPreferences: {
             nodeIntegration: true,
             webSecurity: !isInTestEnvironment()
-        }
+        },
+        titleBarStyle: 'hiddenInset'
     });
 
     const menu = electron.Menu.buildFromTemplate(menuTemplate);

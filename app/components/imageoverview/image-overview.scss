@@ -1,12 +1,12 @@
 .image-overview {
-  margin-top: 62px;
-  height: calc(100vh - 119px);
+  margin-top: 52px;
+  height: calc(100vh - 98px);
   overflow-y: auto;
   overflow-x: hidden;
   padding: 0 !important;
 
   .image-grid {
-    margin-top: 5px !important;
+    margin-top: 15px !important;
   }
 
   #remove-link-btn {
@@ -18,7 +18,7 @@
     z-index: 1001;
     right: 0;
     left: 0;
-    top: 58px;
+    top: 46px;
     margin: 0;
     height: 55px;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);

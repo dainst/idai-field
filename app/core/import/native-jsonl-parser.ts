@@ -23,7 +23,10 @@ export class NativeJsonlParser extends AbstractParser {
 
     private static parseContent(content: string, observer: Observer<NewDocument>) {
 
-        const lines = content.split('\n');
+        const lines = content
+            .replace(/\r\n|\n\r|\n|\r/g,'\n') // accept unix and windows line endings
+            .split('\n');
+
         const len = lines.length;
 
         for (let i = 0; i < len; i++) {

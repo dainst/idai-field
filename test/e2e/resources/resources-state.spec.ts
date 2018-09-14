@@ -474,10 +474,10 @@ describe('resources/state --', function() {
 
         ResourcesPage.openEditByDoubleClickResource('testf1');
         DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0);
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(1);
-        DoceditRelationsTabPage.typeInRelationByIndices(1, 0, 'context2');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(1, 0, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(2, 0);
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(2);
+        DoceditRelationsTabPage.typeInRelationByIndices(2, 0, 'context2');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(2, 0, 0);
         DoceditPage.clickSaveDocument();
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);

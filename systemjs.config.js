@@ -69,7 +69,7 @@
         'pouchdb': 'node_modules/pouchdb/dist/pouchdb.js',
         'fs' : '@node/fs',
         'express': '@node/express',
-        'express-pouchdb': '@node/express-pouchdb-dainst',
+        'express-pouchdb': '@node/express-pouchdb',
         'electron': 'app/desktop/electron',
         'deep-equal': 'node_modules/deep-equal/index.js',
         'moment': 'node_modules/moment/min/moment-with-locales.js',

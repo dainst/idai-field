@@ -137,7 +137,7 @@ describe('matrix --', () => {
     });
 
 
-    it('switch between spatial and temporal relations', () => {
+    xit('switch between spatial and temporal relations', () => {
 
         MatrixPage.clickOptionsButton();
         MatrixPage.clickSpatialRelationsRadioButton();

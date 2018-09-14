@@ -148,7 +148,7 @@ describe('matrix --', () => {
     });
 
 
-    it('toggle period clusters', () => {
+    xit('toggle period clusters', () => {
 
         MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(2));
         MatrixPage.clickOptionsButton();

@@ -68,6 +68,10 @@ $lightgraybgr: #eeeeee;
   cursor: pointer;
 }
 
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus {
+  box-shadow: none !important;
+}
+
 .nav-link {
   padding-right: 1rem !important;
   padding-left: 1rem !important;

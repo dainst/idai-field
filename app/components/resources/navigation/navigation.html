@@ -2,7 +2,8 @@
 
     <div *ngIf="showSwitchHierarchyModeButton()"
          id="hierarchy-mode-switch"
-         class="btn {{getBypassHierarchy() ? 'btn-primary' : 'btn-outline-primary'}} mr-2"
+         class="btn btn-outline-primary mr-2"
+         [ngClass]="{ 'active': getBypassHierarchy() }"
          ngbTooltip="{{getTooltip()}}"
          placement="right"
          container="body"
@@ -37,20 +38,20 @@
 
         <div *ngIf="showOperationAsFirstSegment()"
              id="selected-operation-type-document" type="button" class="btn btn-outline-primary navigation-button"
-             [class.root-document]="!navigationPath.selectedSegmentId"
+             [class.active]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
             {{viewFacade.getSelectedOperations()[0].resource.identifier}}
         </div>
 
         <div *ngIf="showOperationsAllAsFirstSegment()"
              id="selected-all-operation-type-documents" type="button" class="btn btn-outline-primary navigation-button"
-             [class.root-document]="!navigationPath.selectedSegmentId"
+             [class.active]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
             <em>Alle</em>
         </div>
 
         <div *ngFor="let document of getSegments()" class="btn btn-outline-primary navigation-button"
-             [class.root-document]="document.resource.id === navigationPath.selectedSegmentId"
+             [class.active]="document.resource.id === navigationPath.selectedSegmentId"
              (click)="moveInto(document)">
             {{document.resource.identifier}}
         </div>

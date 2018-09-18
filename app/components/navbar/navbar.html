@@ -3,7 +3,8 @@
      (dragleave)="false"
      (drop)="false">
 
-    <div class="navbar-brand" id="idai-field-brand">
+    <div class="navbar-brand" id="idai-field-brand"
+            [class.navbar-brand-mac]="isRunningOnMac()">
         <div id="brand-text">
             <span id="brand-text-idai">iDAI.</span><span id="brand-text-field">field</span>
         </div>

@@ -1,6 +1,6 @@
 .navbar {
   -webkit-app-region: drag;
-  padding: 0;
+  padding: 0 10px;
 }
 
 .navbar.bg-primary {
@@ -52,8 +52,7 @@
 }
 
 #idai-field-brand {
-  padding-top: 0;
-  margin-top: 3px;
+  padding: 0;
   margin-right: 20px;
   user-select: none;
 

@@ -23,6 +23,32 @@
 .navbar-dark .navbar-tabbed a.nav-link.active {
   background-color: $gray-100;
   color: #000;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  position: relative;
+
+  &:before,
+  &:after {
+    position: absolute;
+    bottom: -1px;
+    width: 6px;
+    height: 6px;
+    content: " ";
+  }
+  &:before {
+    left: -5px;
+    border-bottom-right-radius: 6px;
+    border-bottom: 1px solid $gray-100;
+    border-right: 1px solid $gray-100;
+    box-shadow: 2px 2px 0 $gray-100;
+  }
+  &:after {
+    right: -5px;
+    border-bottom-left-radius: 6px;
+    border-bottom: 1px solid $gray-100;
+    border-left: 1px solid $gray-100;
+    box-shadow: -2px 2px 0 $gray-100;
+  }
 }
 
 #idai-field-brand {

@@ -1,6 +1,6 @@
 .navbar {
   -webkit-app-region: drag;
-  padding: 0.3rem 1rem;
+  padding: 0;
 }
 
 .navbar.bg-primary {
@@ -13,6 +13,16 @@
 
 .navbar a {
   color: #fff;
+}
+
+.navbar-tabbed .nav-link {
+  padding: 0.7em 1em;
+  margin-top: 0.3em;
+}
+
+.navbar-dark .navbar-tabbed a.nav-link.active {
+  background-color: $gray-100;
+  color: #000;
 }
 
 #idai-field-brand {
@@ -52,11 +62,6 @@
 .navbar-nav {
   margin-top: 0 !important;
   user-select: none;
-}
-
-.navbar-hover-element.active,
-.navbar-hover-element:hover {
-  text-shadow: 1px 1px 10px #fff, 1px 1px 10px #ccc;
 }
 
 .navbar-hover-element {

@@ -68,7 +68,7 @@ export class IndexFacade {
 
     private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
 
-        const q = !query.q || query.q.trim() == '' ? '*' : query.q;
+        const q = !query.q || query.q.trim() === '' ? '*' : query.q;
         return resultSets.combine(this.fulltextIndexer.get(q, query.types));
     }
 

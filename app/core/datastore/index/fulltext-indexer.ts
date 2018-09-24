@@ -86,12 +86,13 @@ export class FulltextIndexer {
      */
     public get(s: string, types: string[]|undefined): Array<IndexItem> {
 
-        if (Object.keys(this.index).length == 0) return [];
+        if (Object.keys(this.index).length === 0) return [];
 
         function getFromIndex(resultSets: ResultSets, token: string) {
             return resultSets.combine(
-                    FulltextIndexer.getForToken(
-                        this.index, token, types ? types : Object.keys(this.index))
+                FulltextIndexer.getForToken(
+                    this.index, token, types ? types : Object.keys(this.index)
+                )
             );
         }
 
@@ -137,7 +138,7 @@ export class FulltextIndexer {
         function get(resultSets: ResultSets, type: string): ResultSets {
 
             const {hasPlaceholder, tokens} = FulltextIndexer.extractReplacementTokens(s);
-            return (hasPlaceholder)
+            return hasPlaceholder
                 ? this.getWithPlaceholder(index, resultSets, s, type, tokens)
                 : this.addKeyToResultSets(index, resultSets, type, s);
         }

@@ -116,7 +116,7 @@ export class ImportComponent {
     public selectFile(event: any) {
 
         const files = event.target.files;
-        this.file = (!files || files.length == 0)
+        this.file = !files || files.length === 0
             ? undefined
             : files[0];
     }

@@ -31,7 +31,7 @@ export module FieldNameMigrator {
 
         const result: any[] = [];
 
-        arrayField.forEach(entry => {
+        arrayField.forEach(entry => { // TODO filter that only objects are considered
             result.push(migrateSubFieldNames(entry));
         });
 

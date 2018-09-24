@@ -3,7 +3,6 @@ import * as fs from 'fs';
 import {BlobMaker, BlobUrlSet} from './blob-maker';
 import {Converter} from './converter';
 import {Imagestore} from './imagestore';
-import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {ImagestoreErrors} from './imagestore-errors';
 import {SafeResourceUrl} from '@angular/platform-browser';
 import {PouchdbProxy} from '../datastore/core/pouchdb-proxy';
@@ -179,7 +178,7 @@ export class PouchDbFsImagestore /*implements Imagestore */{
                         console.error(key);
                         return reject([ImagestoreErrors.GENERIC_ERROR])
                     });
-            })
+            });
         });
     }
 
@@ -187,15 +186,15 @@ export class PouchDbFsImagestore /*implements Imagestore */{
     private write(key: any, data: any, update: any, documentExists: any): Promise<any> {
 
         let flag = update ? 'w' : 'wx';
+
         return new Promise((resolve, reject) => {
-            fs.writeFile(this.projectPath + key, Buffer.from(data), {flag: flag}, (err) => {
+            fs.writeFile(this.projectPath + key, Buffer.from(data), { flag: flag }, err => {
                 if (err) {
                     console.error(err);
                     console.error(key);
                     reject([ImagestoreErrors.GENERIC_ERROR]);
                 }
                 else {
-
                     this.putAttachment(data, key, documentExists)
                         .then(() => resolve()
                     ).catch((err: any) => {

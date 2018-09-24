@@ -88,7 +88,18 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         try {
             liesWithinTargetFindResult = await this.datastore.find({
                 constraints: { 'identifier:match': liesWithinIdentifier},
-                types: ['Feature', 'DrillCoreLayer', 'Floor', 'Grave', 'Layer', 'Other', 'Architecture', 'SurveyUnit', 'Planum', 'Room', 'Burial']});
+                types: [
+                    'Feature',
+                    'DrillCoreLayer',
+                    'Floor',
+                    'Grave',
+                    'Layer',
+                    'Other',
+                    'Architecture',
+                    'SurveyUnit',
+                    'Planum',
+                    'Room',
+                    'Burial']});
         } catch (err) {
             throw [ImportErrors.NO_FEATURE_ASSIGNABLE, liesWithinIdentifier];
         }
@@ -97,6 +108,10 @@ export class MeninxFindImportStrategy implements ImportStrategy {
             console.error('cannot get liesWithinId for identifier', liesWithinIdentifier);
             throw [ImportErrors.NO_FEATURE_ASSIGNABLE, 'More than one SU found for identifier ' +
                 liesWithinTargetFindResult.documents.map(_ => _.resource.identifier).join(' -- ')];
+        }
+
+        if (liesWithinTargetFindResult.documents.length === 0) {
+            throw [ImportErrors.NO_FEATURE_ASSIGNABLE, 'No target SU found for identifier ' + liesWithinIdentifier];
         }
 
         return liesWithinTargetFindResult.documents[0].resource.id;

@@ -1,6 +1,8 @@
 import {ValidationErrors} from '../../core/model/validation-errors';
 import {M} from '../m';
 import {ImportErrors} from '../../core/import/import-errors';
+import {isArray} from 'tsfun';
+
 
 /**
  * Converts messages of Validator / Importer to messages of M for ImportComponent.
@@ -10,6 +12,11 @@ import {ImportErrors} from '../../core/import/import-errors';
 export module MessagesConversion {
 
     export function convertMessage(msgWithParams: string[]): string[] {
+
+        if (!isArray(msgWithParams)) {
+            console.warn('convertMessage. arg not of type array', msgWithParams);
+            return [];
+        }
 
         if (msgWithParams.length === 0) return [];
         let replacement = undefined;

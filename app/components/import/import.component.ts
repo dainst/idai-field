@@ -17,6 +17,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../m';
 import {ImportFacade, ImportFormat} from '../../core/import/import-facade';
+import {isNot, empty} from 'tsfun';
 
 
 @Component({
@@ -144,8 +145,10 @@ export class ImportComponent {
 
     private showMessages(messages: string[][]) {
 
-        messages.forEach(msgWithParams => this.messages.add(
-            MessagesConversion.convertMessage(msgWithParams)));
+        messages
+            .map(MessagesConversion.convertMessage)
+            .filter(isNot(empty))
+            .forEach(msgWithParams => this.messages.add(msgWithParams));
     }
 
 

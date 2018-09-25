@@ -1,5 +1,5 @@
 {
-  "types": ["Operation", "Trench", "Building", "Survey", "Place", "Feature", "Layer", "Grave", "Burial", "Architecture", "Floor", "DrillCoreLayer", "Other", "Wall_surface", "Room", "Find", "Pottery", "Terracotta", "Brick", "Bone", "Glass", "Metal", "Stone", "Wood", "Coin", "PlasterFragment", "Mollusk", "Inscription", "ProcessUnit", "Profile", "Planum", "Drilling", "Sample", "SurveyUnit", "Image", "Drawing", "Photo"],
+  "types": ["Operation", "Trench", "Building", "Survey", "Place", "Feature", "Layer", "Grave", "Burial", "Architecture", "Floor", "DrillCoreLayer", "Other", "Wall_surface", "Room", "SurveyUnit", "Find", "Pottery", "Terracotta", "Brick", "Bone", "Glass", "Metal", "Stone", "Wood", "Coin", "PlasterFragment", "Mollusk", "Inscription", "ProcessUnit", "Profile", "Planum", "Drilling", "Sample", "Image", "Drawing", "Photo"],
   "fields": {
     "Project": ["description", "institution", "supervisor", "contactPerson", "contactMail", "projectURI", "externalReference", "gazId", "latitude", "longitude", "epsgId", "coordinateReferenceSystem"],
     "Operation": ["description", "beginningDate", "endDate", "processor", "supervisor", "campaign", "area", "diaryAbstract"],

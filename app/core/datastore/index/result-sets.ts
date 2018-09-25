@@ -1,4 +1,4 @@
-import {intersection, NestedArray, union, uniteObject, empty} from 'tsfun';
+import {NestedArray, union, uniteObject, empty} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 import {clone} from '../../util/object-util';
 
@@ -34,9 +34,7 @@ export class ResultSets {
     }
 
 
-    public combine(
-        indexItems: Array<SimpleIndexItem>,
-        mode: string = 'add'): ResultSets {
+    public combine(indexItems: Array<SimpleIndexItem>, mode: string = 'add'): ResultSets {
 
         const indexItemsMap = ResultSets.intoObject(indexItems);
 
@@ -52,7 +50,7 @@ export class ResultSets {
 
     public collapse(): Array<SimpleIndexItem> {
 
-        const addSetIds: string[] = intersection(this.addSets);
+        const addSetIds: string[] = ResultSets.getIntersecting(this.addSets);
 
         return this.pickFromMap(
             this.subtractSets.length === 0
@@ -96,5 +94,22 @@ export class ResultSets {
     private static subtract(ids: string[], idsToSubtract: string[]) {
 
         return ids.filter(id => !idsToSubtract.includes(id));
+    }
+
+
+    private static getIntersecting(idSets: string[][]) {
+
+        let result: string[] = idSets[0];
+
+        if (idSets.length > 1) {
+            result = result.filter(id => {
+                for (let idSet of idSets.slice(1)) {
+                    if (!idSet.includes(id)) return false;
+                }
+                return true;
+            });
+        }
+
+        return result;
     }
 }

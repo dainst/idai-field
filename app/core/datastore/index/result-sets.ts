@@ -1,4 +1,4 @@
-import {intersection, NestedArray, subtract, union, uniteObject, empty} from 'tsfun';
+import {intersection, NestedArray, union, uniteObject, empty} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 import {clone} from '../../util/object-util';
 
@@ -57,7 +57,7 @@ export class ResultSets {
         return this.pickFromMap(
             this.subtractSets.length === 0
                 ? addSetIds
-                : subtract(...this.subtractSets)(addSetIds)
+                : ResultSets.subtract(addSetIds, union(this.subtractSets))
         );
     }
 
@@ -70,7 +70,7 @@ export class ResultSets {
     }
 
 
-    private pickFromMap(ids: Array<string>) {
+    private pickFromMap(ids: string[]) {
 
         return ids.map(id => this.map[id]);
     }
@@ -90,5 +90,11 @@ export class ResultSets {
 
         return indexItems
             .reduce((acc: IndexItemMap, item) => (acc[item.id] = item, acc), {});
+    }
+
+
+    private static subtract(ids: string[], idsToSubtract: string[]) {
+
+        return ids.filter(id => !idsToSubtract.includes(id));
     }
 }

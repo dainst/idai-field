@@ -13,17 +13,17 @@ export class SortUtil {
      * @param b another string
      * @returns {number} -1 if a < b, 1 if a > b, 0 if a == b
      */
-    public static alnumCompare(a: any, b: any): number {
+    public static alnumCompare(a: string, b: string): number {
 
         let arrayA = SortUtil.makeAlNumArray(a);
         let arrayB = SortUtil.makeAlNumArray(b);
 
-        for (let i=0; i < arrayA.length; i++) {
+        for (let i = 0; i < arrayA.length; i++) {
             // a is longer than b
             if (i >= arrayB.length) return 1;
-            if (typeof arrayA[i] == 'number') {
+            if (typeof arrayA[i] === 'number') {
                 // both elements are numbers
-                if (typeof arrayB[i] == 'number') {
+                if (typeof arrayB[i] === 'number') {
                     if (arrayA[i] > arrayB[i]) return 1;
                     if (arrayA[i] < arrayB[i]) return -1;
                 // a is number, b is string
@@ -32,7 +32,7 @@ export class SortUtil {
                 }
             } else {
                 // both elements are strings
-                if (typeof arrayB[i] == 'string') {
+                if (typeof arrayB[i] === 'string') {
                     let cmp =  arrayA[i].localeCompare(arrayB[i]);
                     if (cmp > 0) return 1;
                     if (cmp < 0) return -1;
@@ -49,6 +49,7 @@ export class SortUtil {
         return 0;
     }
 
+
     /**
      * Compares two objects with standard comparison operators.
      *
@@ -57,12 +58,14 @@ export class SortUtil {
      * @returns {number}
      */
     public static compare(a: any, b: any): number {
+
         if (a > b)
             return 1;
         if (a < b)
             return -1;
         return 0;
     }
+
 
     /**
      * Wraps a compare function in order to reverse sorting.
@@ -83,7 +86,7 @@ export class SortUtil {
     private static makeAlNumArray(s: any) {
 
         return s.split(/(\d+)/)
-            .map((s: any) => /^\d+$/.test(s) ? parseInt(s) : s);
+            .map((s: any) => isNaN(s) ? s : parseInt(s));
     }
 
 }

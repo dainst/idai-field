@@ -1692,6 +1692,190 @@
           "description": "Spezielle Form des Gefäßes"
         }
       }
+    },
+    "ArchitecturalUnit": {
+      "label": "Bauwerksteil",
+      "fields": {
+        "area": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "beginningDate": {
+          "label": "Startdatum",
+          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit begann"
+        },
+        "endDate": {
+          "label": "Enddatum",
+          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit endete"
+        },
+        "comparison": {
+          "label": "Vergleich(e)",
+          "description": "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"
+        },
+        "diary": {
+          "label": "Tagebuch",
+          "description": "Verweis auf Grabungstagebuch"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasDisturbance": {
+          "label": "Störung",
+          "description": "Liegt eine Störung des Befundes vor?"
+        },
+        "featureAmount": {
+          "label": "Befundanteil",
+          "description": "Prozentuale Menge des Einschlusses im Vergleich zum Gesamtbefund; je nach Grabungsmethodik Einteilung prozentual ('5-10%') oder textuell ('wenig')"
+        },
+        "processor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der stratigraphischen Einheit"
+        },
+        "color": {
+          "label": "Farbe und Intensität",
+          "description": "Farbe, soweit erkennbar"
+        },
+        "period": {
+          "label": "Grobdatierung"
+        },
+        "dating": {
+          "label": "Datierung"
+        },
+        "dimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+        },
+        "dimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+        },
+        "featureBorders": {
+          "label": "Grenzen der stratigraphischen Einheit",
+          "description": "Bestimmung der Grenzen des Befundes"
+        },
+        "featureForm": {
+          "label": "Form der stratigraphischen Einheit",
+          "description": "Form der stratigraphischen Einheit im Planum bzw. Profil: Welche erkennbare Form kann identifiziert werden?"
+        },
+        "bibliography": {
+          "label": "Bibliographie"
+        },
+        "conditionComment": {
+          "label": "Kommentar zum Erhaltungszustand"
+        },
+        "constructionDetailsDescription": {
+          "label": "Beschreibung Konstruktionsdetails",
+          "description": "Nähere Beschreibung zur Konstruktion der Fundamente/Ecken/Lagen o. Ä."
+        },
+        "descriptionOfBuildingTechnique": {
+          "label": "Beschreibung der Bautechnik",
+          "description": "Nähere Beschreibung der Bautechnik (z. B. Feldsteinmauerwerk oder Ziegelmauer)"
+        },
+        "findingPlace": {
+          "label": "Fundort",
+          "description": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)"
+        },
+        "hasGrouting": {
+          "label": "Verfugung",
+          "description": "Ist die Mauer verfugt?"
+        },
+        "layerAmount": {
+          "label": "Lagenanzahl",
+          "description": "Anzahl der Mauerlagen"
+        },
+        "layerHeight": {
+          "label": "Lagenhöhe",
+          "description": "Anzahl der Mauerlagen"
+        },
+        "markDescription": {
+          "label": "Werkzeichen-Beschreibung",
+          "description": "Erklärungen und Erkenntnisse zum vorhandenen Werkzeichen"
+        },
+        "materialCharacteristic": {
+          "label": "Materialcharakteristik",
+          "description": "Charakteristische Materialeigenschaften"
+        },
+        "materialForm": {
+          "label": "Materialform",
+          "description": "Weitere Beschreibung zu Ziegeln/Steinen etc."
+        },
+        "muralCrown": {
+          "label": "Mauerkrone",
+          "description": "Kurze Definition des Zustands der Mauerkrone"
+        },
+        "publicationDatingFinds": {
+          "label": "Datierung (Funde)",
+          "description": "Z. B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
+        },
+        "publicationDatingScientific": {
+          "label": "Datierung (Naturwissenschaftlich)",
+          "description": "Beschreibung zur Publikation, Hinweis auf vorhandene Datierungen"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Datierung (Stratigraphie)",
+          "description": "Z. B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
+        },
+        "publicationRemark": {
+          "label": "Anmerkung",
+          "description": "Anmerkung zur Publikation"
+        },
+        "spatialLocation": {
+          "label": "Lage",
+          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle (z. B.: 'Ausgrabung unterhalb Akropolis am...')"
+        },
+        "blockProcessing": {
+          "label": "Art der Steinblöcke"
+        },
+        "blockTreatment": {
+          "label": "Steinblockbearbeitung",
+          "description": "Bearbeitung des Blocks/Bearbeitungsspuren"
+        },
+        "brickwork": {
+          "label": "Mauerwerksverband"
+        },
+        "condition": {
+          "label": "Erhaltungszustand",
+          "description": "Beschreibung des Erhaltungszustands"
+        },
+        "conditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original"
+        },
+        "construction": {
+          "label": "Konstruktion",
+          "description": "Welche Art der Mauerkonstruktion liegt vor?"
+        },
+        "mark": {
+          "label": "Steinmetzzeichen",
+          "description": "Auflistung möglicher Steinmetzzeichen"
+        },
+        "mortarBinder": {
+          "label": "Mörtelzuschlag",
+          "description": "Wie hoch ist der Zuschlag von Fremdmaterial?"
+        },
+        "mortarColor": {
+          "label": "Mörtelfarbe"
+        },
+        "mortarConsistency": {
+          "label": "Mörtelkonsistenz"
+        },
+        "orientation": {
+          "label": "Orientierung",
+          "description": "Ausrichtung nach Himmelsrichtung des Profils"
+        },
+        "wallClassification": {
+          "label": "Klassifikation Mauer"
+        },
+        "wallType": {
+          "label": "Mauertyp",
+          "description": "Typ des Mauerwerks"
+        }
+      }
     }
   },
   "relations": {

@@ -5,6 +5,8 @@ import {ImageGridComponent} from '../../../imagegrid/image-grid.component';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/field/idai-field-image-document-read-datastore';
 import {ImageUploadResult} from '../../../imageupload/image-uploader';
 import {M} from '../../../m';
+import {ViewFacade} from '../../view/view-facade';
+import {on} from 'tsfun';
 
 @Component({
     selector: 'thumbnail-view',
@@ -27,7 +29,8 @@ export class ThumbnailViewComponent implements OnChanges {
 
 
     constructor(private datastore: IdaiFieldImageDocumentReadDatastore,
-                private messages: Messages) {}
+                private messages: Messages,
+                private viewFacade: ViewFacade) {}
 
 
     ngOnChanges() {
@@ -38,13 +41,24 @@ export class ThumbnailViewComponent implements OnChanges {
 
     public onResize() {
 
-        if (!this.documents || this.documents.length == 0) return;
+        if (!this.documents || this.documents.length === 0) return;
 
         this.imageGrid.calcGrid();
     }
 
 
     public async onImagesUploaded(uploadResult: ImageUploadResult) {
+
+        // This is small hack to show the updated document, since this.document, which came via viewFacade.getSelectedDocument()
+        // is stale and points to the old version of the document. It is stale because there is no proper input for the selectedDocument
+        // in DocumentDetailSidebar and hence there is also no onChanges that could be triggered
+        const updatedDoc = this.viewFacade.getDocuments().find(on('resource.id')(this.document));
+        if (updatedDoc) {
+            this.document = updatedDoc;
+            // so that other callers (like Docedit) work with the latest version, too
+            this.viewFacade.setSelectedDocument(this.document.resource.id);
+        }
+        //
 
         this.updateGrid();
         this.showUploadResultMessage(uploadResult);

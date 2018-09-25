@@ -334,31 +334,6 @@
       }
     }
   },
-  "SurveyUnit": {
-    "color": "#6baed6",
-    "parent": "ProcessUnit",
-    "fields": {
-      "area": {
-        "inputType": "unsignedFloat"
-      },
-      "finds": {
-        "inputType": "boolean"
-      },
-      "dimensionLength": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"]
-      },
-      "dimensionWidth": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      }
-    }
-  },
   "Sample": {
     "color": "#9ecae1",
     "parent": "ProcessUnit",

@@ -166,27 +166,6 @@
         }
       }
     },
-    "SurveyUnit": {
-      "label": "Planquadrat",
-      "fields": {
-        "area": {
-          "label": "Fläche in m2",
-          "description": "Flächenangabe in Quadratmetern"
-        },
-        "finds": {
-          "label": "Fundmaterial",
-          "description": "Ja/Nein Feld zum Vorhandensein von Fundmaterial."
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge."
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung."
-        }
-      }
-    },
     "Profile": {
       "label": "Profil",
       "fields": {

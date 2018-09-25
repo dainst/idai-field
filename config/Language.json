@@ -399,6 +399,18 @@
         "dimensionWidth": {
           "label": "Breite",
           "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+        },
+        "date": {
+          "label": "Datum",
+          "description": "Datum der Durchführung"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "processor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin des Arbeitsgangs."
         }
       }
     },

@@ -4030,6 +4030,39 @@
           ]
         }
       }
+    },
+    "SurveyUnit": {
+      "color": "#6baed6",
+      "fields": {
+        "area": {
+          "inputType": "unsignedFloat"
+        },
+        "finds": {
+          "inputType": "boolean"
+        },
+        "dimensionLength": {
+          "inputType": "dimension",
+          "positionValues": [
+            "Maximale Ausdehnung",
+            "Minimale Ausdehnung"]
+        },
+        "dimensionWidth": {
+          "inputType": "dimension",
+          "positionValues": [
+            "Maximale Ausdehnung",
+            "Minimale Ausdehnung"
+          ]
+        },
+        "date": {
+          "inputType": "date"
+        },
+        "description": {
+          "inputType": "text"
+        },
+        "processor": {
+          "inputType": "input"
+        }
+      }
     }
   },
   "relations": [

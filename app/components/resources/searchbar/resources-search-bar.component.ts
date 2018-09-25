@@ -54,12 +54,6 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     }
 
 
-    public onKeyUp(event: KeyboardEvent) {
-
-        this.onQueryStringChanged.emit(this.q);
-    }
-
-
     public isTypeSelected(): boolean {
 
         return this.types !== undefined && this.types.length > 0;

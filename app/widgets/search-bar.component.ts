@@ -40,6 +40,8 @@ export class SearchBarComponent implements OnChanges {
 
     protected filterOptions: Array<IdaiType> = [];
 
+    private emitQueryTimeout: any = undefined;
+
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
@@ -71,9 +73,14 @@ export class SearchBarComponent implements OnChanges {
     }
 
 
-    public onKeyUp(event?: KeyboardEvent) {
+    public onKeyUp() {
 
-        this.onQueryStringChanged.emit(this.q);
+        if (this.emitQueryTimeout) clearTimeout(this.emitQueryTimeout);
+
+        this.emitQueryTimeout = setTimeout(() => {
+            this.emitQueryTimeout = undefined;
+            this.onQueryStringChanged.emit(this.q);
+        }, 200);
     }
 
 

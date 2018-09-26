@@ -321,5 +321,321 @@
         ]
       }
     }
+  },
+  "BuildingPart": {
+    "fields": {
+      "area": {
+        "inputType": "unsignedFloat"
+      },
+      "beginningDate": {
+        "inputType": "date"
+      },
+      "endDate": {
+        "inputType": "date"
+      },
+      "dating": {
+        "inputType": "dating"
+      },
+      "comparison": {
+        "inputType": "text"
+      },
+      "diary": {
+        "inputType": "input"
+      },
+      "description": {
+        "inputType": "text"
+      },
+      "hasDisturbance": {
+        "inputType": "boolean"
+      },
+      "featureAmount": {
+        "inputType": "input"
+      },
+      "processor": {
+        "inputType": "input"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "beige",
+          "blass-",
+          "blau",
+          "braun",
+          "cremefarben",
+          "dunkel-",
+          "gelb",
+          "grau",
+          "grün",
+          "hell-",
+          "leuchtend-",
+          "ocker",
+          "orange",
+          "rosa",
+          "rot",
+          "schwarz",
+          "türkis",
+          "violett",
+          "weiß"
+        ]
+      },
+      "dimensionLength": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "dimensionVerticalExtent": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Oberkante",
+          "Unterkante"]
+      },
+      "dimensionWidth": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "featureBorders": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "deutlich",
+          "diffus",
+          "eben",
+          "erahnbar",
+          "erkennbar",
+          "etwas verwaschen",
+          "fließend",
+          "geneigt",
+          "gezackt",
+          "regelmäßig",
+          "scharf",
+          "sehr deutlich",
+          "undeutlich",
+          "uneben",
+          "unklar",
+          "unregelmäßig",
+          "verwaschen",
+          "wellig"
+        ]
+      },
+      "featureForm": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Befundrest",
+          "U-förmig",
+          "V-förmig",
+          "annähernd",
+          "formlos",
+          "halbmondförmig",
+          "kesselförmig",
+          "langgezogen",
+          "oval",
+          "rechteckig",
+          "regelmäßig",
+          "rund",
+          "sanduhrförmig",
+          "trapezförmig",
+          "trichterförmig",
+          "unregelmäßig",
+          "wannenförmig"
+        ]
+      },
+      "bibliography": {
+        "inputType": "text"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "constructionDetailsDescription": {
+        "inputType": "input"
+      },
+      "descriptionOfBuildingTechnique": {
+        "inputType": "input"
+      },
+      "findingPlace": {
+        "inputType": "input"
+      },
+      "hasGrouting": {
+        "inputType": "boolean"
+      },
+      "layerAmount": {
+        "inputType": "unsignedInt"
+      },
+      "layerHeight": {
+        "inputType": "unsignedFloat"
+      },
+      "markDescription": {
+        "inputType": "input"
+      },
+      "materialCharacteristic": {
+        "inputType": "input"
+      },
+      "materialForm": {
+        "inputType": "input"
+      },
+      "muralCrown": {
+        "inputType": "input"
+      },
+      "publicationDatingFinds": {
+        "inputType": "text"
+      },
+      "publicationDatingScientific": {
+        "inputType": "text"
+      },
+      "publicationDatingStratigraphy": {
+        "inputType": "text"
+      },
+      "publicationRemark": {
+        "inputType": "input"
+      },
+      "spatialLocation": {
+        "inputType": "input"
+      },
+      "blockProcessing": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Bruchsteine",
+          "Hausteine",
+          "Lesesteine",
+          "Werksteine"
+        ]
+      },
+      "blockTreatment": {
+        "inputType": "radio",
+        "valuelist": [
+          "bossiert",
+          "bruchbau",
+          "fein geglättet",
+          "gespitzt",
+          "gestockt",
+          "grob behauen",
+          "grob geglättet",
+          "scharriert",
+          "unbehauen"
+        ]
+      },
+      "brickwork": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Binderverband",
+          "Blockverband",
+          "Flämischer Verband",
+          "Holländischer Verband",
+          "Kreuzverband",
+          "Läuferverband",
+          "Märkischer Verband"
+        ]
+      },
+      "condition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut",
+          "schlecht",
+          "sehr gut",
+          "sehr schlecht"
+        ]
+      },
+      "conditionAmount": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Fragmentarisch",
+          "Vollständig",
+          "Vollständig zerstört"
+        ]
+      },
+      "construction": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Fundament: Geschüttet",
+          "Fundament: gesetzt",
+          "Mauerkern: Lesesteine",
+          "einschalig vor Feld/Hang",
+          "ohne Schalen/keine durchgehenden Lagen",
+          "ohne Schalen/nur durchgehende Lagen",
+          "zweischalig",
+          "zweischalig mit Binderlagen"
+        ]
+      },
+      "mark": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "A",
+          "AC"
+        ]
+      },
+      "mortarBinder": {
+        "inputType": "radio",
+        "valuelist": [
+          "dominant",
+          "gering",
+          "hoch",
+          "mittel"
+        ]
+      },
+      "mortarColor": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "beige",
+          "dunkelbraun",
+          "dunkelrot",
+          "gelb",
+          "hellbraun",
+          "hellgrau",
+          "mittelbraun",
+          "ocker",
+          "orange",
+          "orangerot",
+          "rosa",
+          "rot",
+          "rotbraun",
+          "schwarz",
+          "weiß"
+        ]
+      },
+      "mortarConsistency": {
+        "inputType": "radio",
+        "valuelist": [
+          "brüchig",
+          "erdig/lehmig",
+          "fest",
+          "hart",
+          "locker",
+          "mittelfein",
+          "pulverig",
+          "sandig"
+        ]
+      },
+      "orientation": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "N-S",
+          "NNO - SSW",
+          "NNW-SSO",
+          "NO-SW",
+          "NW-SO",
+          "W-O",
+          "WNW-OSO",
+          "WSW-ONO"
+        ]
+      },
+      "wallClassification": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Aufgehendes",
+          "Fensterzusetzung",
+          "Flickung",
+          "Fundament",
+          "Gewölbe",
+          "Mauer",
+          "Mauerbettung",
+          "Mauerdurchbruch",
+          "Mosaik",
+          "Opus sectile",
+          "Türzusetzung",
+          "Wandgestaltung"
+        ]
+      }
+    }
   }
 }

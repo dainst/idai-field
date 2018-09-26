@@ -33,9 +33,9 @@ export class IndexFacade {
             this.performConstraints(query.constraints) :
             ResultSets.make();
 
-        resultSets = (Query.isEmpty(query) && !resultSets.isEmpty()
+        resultSets = resultSets.containsOnlyEmptyAddSets() || (Query.isEmpty(query) && !resultSets.isEmpty())
             ? resultSets
-            : this.performFulltext(query, resultSets));
+            : this.performFulltext(query, resultSets);
 
         return IndexItem.generateOrderedResultList(resultSets.collapse());
     }

@@ -1,4 +1,4 @@
-import {NestedArray, union, uniteObject, empty} from 'tsfun';
+import {NestedArray, union, uniteObject} from 'tsfun';
 import {SimpleIndexItem} from './index-item';
 import {clone} from '../../util/object-util';
 
@@ -30,7 +30,19 @@ export class ResultSets {
 
     public isEmpty(): boolean {
 
-        return empty(this.addSets) && empty(this.subtractSets);
+        return this.addSets.length === 0 && this.subtractSets.length === 0;
+    }
+
+
+    public containsOnlyEmptyAddSets(): boolean {
+
+        if (this.addSets.length === 0) return false;
+
+        for (let addSet of this.addSets) {
+            if (addSet.length > 0) return false;
+        }
+
+        return true;
     }
 
 

@@ -9,12 +9,18 @@
 
     <li class="nav-item navbar-hover-element pr-2">
         <a href="#" routerLink="/settings">
-            <span class="mdi mdi-cloud" *ngIf="connected"
+            <span class="mdi mdi-cloud" *ngIf="connected && !receivingRemoteChanges"
                   ngbTooltip="Synchronisation ist aktiv"
-                  placement="bottom" container="body"></span>
-            <span class="mdi mdi-cloud-off-outline" *ngIf="!connected"
+                  placement="bottom" container="body">
+            </span>
+            <span class="mdi mdi-cloud-off-outline" *ngIf="!connected && !receivingRemoteChanges"
                   ngbTooltip="Synchronisation ist deaktiviert"
-                  placement="bottom" container="body"></span>
+                  placement="bottom" container="body">
+            </span>
+            <span class="mdi mdi-cloud-download" *ngIf="receivingRemoteChanges"
+                  ngbTooltip="Daten werden empfangen..."
+                  placement="bottom" container="body">
+            </span>
         </a>
     </li>
 

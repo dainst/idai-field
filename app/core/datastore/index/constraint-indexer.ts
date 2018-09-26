@@ -123,13 +123,13 @@ export class ConstraintIndexer {
                 break;
 
             case 'match':
-                if (!elForPath && elForPath !== false) break;
+                if ((!elForPath && elForPath !== false) || Array.isArray(elForPath)) break;
                 ConstraintIndexer.addToIndex(this.matchIndex, doc, indexDefinition.path, elForPath.toString(),
                     this.showWarnings);
                 break;
 
             case 'contain':
-                if (!elForPath) break;
+                if (!elForPath || !Array.isArray(elForPath)) break;
                 for (let target of elForPath) {
                     ConstraintIndexer.addToIndex(this.containIndex, doc, indexDefinition.path, target, this.showWarnings);
                 }
@@ -200,7 +200,9 @@ export class ConstraintIndexer {
             .filter((field: FieldDefinition) => field.constraintIndexed)
             .filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
                 return self.indexOf(
-                    self.find((f: FieldDefinition) => f.name === field.name) as FieldDefinition
+                    self.find((f: FieldDefinition) => {
+                        return f.name === field.name && ConstraintIndexer.getDefaultIndexType(f) === ConstraintIndexer.getDefaultIndexType(field);
+                    }) as FieldDefinition
                 ) === index;
             })
             .map((field: FieldDefinition) => ConstraintIndexer.makeIndexDefinition(field))
@@ -208,17 +210,6 @@ export class ConstraintIndexer {
                 result[definition.name] = definition.indexDefinition;
                 return result;
             }, defaultIndexDefinitions);
-    }
-
-
-    public static getDefaultIndexType(field: FieldDefinition): string {
-
-        switch (field.inputType) {
-            case 'checkboxes':
-                return 'contain';
-            default:
-                return 'match';
-        }
     }
 
 
@@ -234,6 +225,17 @@ export class ConstraintIndexer {
                 type: indexType
             }
         };
+    }
+
+
+    public static getDefaultIndexType(field: FieldDefinition): string {
+
+        switch (field.inputType) {
+            case 'checkboxes':
+                return 'contain';
+            default:
+                return 'match';
+        }
     }
 
 

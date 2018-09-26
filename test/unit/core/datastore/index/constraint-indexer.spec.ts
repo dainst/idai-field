@@ -32,13 +32,13 @@ describe('ConstraintIndexer', () => {
     });
 
 
-    function doc(id): Document {
+    function doc(id: string, type: string = 'type'): Document {
 
         return {
             resource: {
                 id: id,
                 identifier: 'identifier' + id,
-                type: 'type',
+                type: type,
                 relations: {}
             },
             created:
@@ -386,5 +386,34 @@ describe('ConstraintIndexer', () => {
         expect(ci.get('customField1:match', 'testValue')).toEqual([indexItem('1')]);
         expect(ci.get('customField2:match', 'false')).toEqual([indexItem('1')]);
         expect(ci.get('customField3:contain', 'testValue1')).toEqual([indexItem('1')]);
+    });
+
+
+    it('index a single value field and an array field of the same name', () => {
+
+        projectConfiguration.getTypesMap.and.returnValue({
+            type1: {
+                fields: [
+                    { name: 'field', inputType: 'input', constraintIndexed: true }
+                ]
+            },
+            type2: {
+                fields: [
+                    { name: 'field', inputType: 'checkboxes', constraintIndexed: true }
+                ]
+            },
+        });
+
+        const docs = [doc('1', 'type1'), doc('2', 'type2')];
+        docs[0].resource.field = 'value';
+        docs[1].resource.field = ['value'];
+
+        ci = new ConstraintIndexer({}, projectConfiguration, false);
+
+        ci.put(docs[0]);
+        ci.put(docs[1]);
+
+        expect(ci.get('field:match', 'value')).toEqual([indexItem('1')]);
+        expect(ci.get('field:contain', 'value')).toEqual([indexItem('2')]);
     });
 });

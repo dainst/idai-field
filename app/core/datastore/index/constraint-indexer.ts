@@ -47,7 +47,7 @@ export class ConstraintIndexer {
                 private projectConfiguration: ProjectConfiguration,
                 private showWarnings = true) {
 
-        this.indexDefinitions = this.getIndexDefinitions(
+        this.indexDefinitions = ConstraintIndexer.getIndexDefinitions(
             defaultIndexDefinitions,
             Object.values(this.projectConfiguration.getTypesMap())
         );
@@ -191,32 +191,63 @@ export class ConstraintIndexer {
     }
 
 
-    private getIndexDefinitions(defaultIndexDefinitions: { [name: string]: IndexDefinition },
-                                types: Array<IdaiType>): { [name: string]: IndexDefinition } {
+    public static getIndexType(field: FieldDefinition): string {
 
-        return (types.reduce((result: Array<FieldDefinition>, type: IdaiType) => {
+        switch (field.inputType) {
+            case 'checkboxes':
+                return 'contain';
+            default:
+                return 'match';
+        }
+    }
+
+
+    private static getIndexDefinitions(defaultIndexDefinitions: { [name: string]: IndexDefinition },
+                                       types: Array<IdaiType>): { [name: string]: IndexDefinition } {
+
+        const definitionsFromConfiguration: Array<{ name: string, indexDefinition: IndexDefinition }> =
+            this.getFieldsToIndex(types)
+                .map((field: FieldDefinition) => ConstraintIndexer.makeIndexDefinition(field));
+
+        return this.combine(definitionsFromConfiguration, defaultIndexDefinitions);
+    }
+
+
+    private static getFieldsToIndex(types: Array<IdaiType>): Array<FieldDefinition> {
+
+        const fields: Array<FieldDefinition> =
+            (types.reduce((result: Array<FieldDefinition>, type: IdaiType) => {
                 return result.concat(type.fields);
-            }, []) as any)
-            .filter((field: FieldDefinition) => field.constraintIndexed)
+            }, []) as any).filter((field: FieldDefinition) => field.constraintIndexed);
+
+        return this.getUniqueFields(fields);
+    }
+
+
+    private static getUniqueFields(fields: Array<FieldDefinition>): Array<FieldDefinition> {
+
+        return fields
             .filter((field: FieldDefinition, index: number, self: Array<FieldDefinition>) => {
                 return self.indexOf(
                     self.find((f: FieldDefinition) => {
-                        return f.name === field.name && ConstraintIndexer.getDefaultIndexType(f) === ConstraintIndexer.getDefaultIndexType(field);
+                        return this.resultsInSameIndexDefinition(f, field);
                     }) as FieldDefinition
                 ) === index;
-            })
-            .map((field: FieldDefinition) => ConstraintIndexer.makeIndexDefinition(field))
-            .reduce((result: any, definition: any) => {
-                result[definition.name] = definition.indexDefinition;
-                return result;
-            }, defaultIndexDefinitions);
+            });
+    }
+
+
+    private static resultsInSameIndexDefinition(field1: FieldDefinition, field2: FieldDefinition): boolean {
+
+        return field1.name === field2.name
+            && ConstraintIndexer.getIndexType(field1) === ConstraintIndexer.getIndexType(field2);
     }
 
 
     private static makeIndexDefinition(field: FieldDefinition)
             : { name: string, indexDefinition: IndexDefinition } {
 
-        const indexType: string = this.getDefaultIndexType(field);
+        const indexType: string = this.getIndexType(field);
 
         return {
             name: field.name + ':' + indexType,
@@ -228,14 +259,14 @@ export class ConstraintIndexer {
     }
 
 
-    public static getDefaultIndexType(field: FieldDefinition): string {
+    private static combine(indexDefinitionsFromConfiguration
+                               : Array<{ name: string, indexDefinition: IndexDefinition }>,
+                           defaultIndexDefinitions: { [name: string]: IndexDefinition }) {
 
-        switch (field.inputType) {
-            case 'checkboxes':
-                return 'contain';
-            default:
-                return 'match';
-        }
+        return indexDefinitionsFromConfiguration.reduce((result: any, definition: any) => {
+            result[definition.name] = definition.indexDefinition;
+            return result;
+        }, defaultIndexDefinitions);
     }
 
 
@@ -252,8 +283,8 @@ export class ConstraintIndexer {
     }
 
 
-    private static addToIndex(
-        index: any, doc: Document, path: string, target: string, showWarnings: boolean) {
+    private static addToIndex(index: any, doc: Document, path: string, target: string,
+                              showWarnings: boolean) {
 
         const indexItem = IndexItem.from(doc, showWarnings);
         if (!indexItem) return;

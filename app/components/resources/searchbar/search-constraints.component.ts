@@ -92,7 +92,7 @@ export class SearchConstraintsComponent implements OnChanges {
 
         const constraints: { [name: string]: string } = this.viewFacade.getCustomConstraints();
         const constraintName: string = this.selectedField.name
-            + ':' + ConstraintIndexer.getDefaultIndexType(this.selectedField);
+            + ':' + ConstraintIndexer.getIndexType(this.selectedField);
         constraints[constraintName] = this.searchTerm;
         await this.viewFacade.setCustomConstraints(constraints);
 

@@ -322,6 +322,22 @@
       }
     }
   },
+  "SurveyUnit": {
+    "fields": {
+      "finds": {
+        "inputType": "boolean"
+      },
+      "date": {
+        "inputType": "date"
+      },
+      "description": {
+        "inputType": "text"
+      },
+      "processor": {
+        "inputType": "input"
+      }
+    }
+  },
   "BuildingPart": {
     "fields": {
       "area": {

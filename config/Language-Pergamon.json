@@ -183,6 +183,26 @@
         }
       }
     },
+    "SurveyUnit": {
+      "fields": {
+        "finds": {
+          "label": "Fundmaterial",
+          "description": "Ist Fundmaterial vorhanden?"
+        },
+        "date": {
+          "label": "Datum",
+          "description": "Datum der Durchführung"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "processor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin des Arbeitsgangs."
+        }
+      }
+    },
     "BuildingPart": {
       "fields": {
         "area": {

@@ -388,10 +388,6 @@
           "label": "Fläche in m2",
           "description": "Flächenangabe in Quadratmetern"
         },
-        "hasFinds": {
-          "label": "Fundmaterial",
-          "description": "Ist Fundmaterial vorhanden?"
-        },
         "dimensionLength": {
           "label": "Länge",
           "description": "Angabe der Länge"
@@ -399,18 +395,6 @@
         "dimensionWidth": {
           "label": "Breite",
           "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
-        },
-        "date": {
-          "label": "Datum",
-          "description": "Datum der Durchführung"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin des Arbeitsgangs."
         }
       }
     },

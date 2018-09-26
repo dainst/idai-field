@@ -260,6 +260,10 @@ html [type='button'],
 .form-control {
   border-radius: 1px !important;
   -webkit-appearance: none;
+
+  &:focus {
+    box-shadow: none;
+  }
 }
 
 select.form-control:not([size]):not([multiple]) {

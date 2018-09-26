@@ -341,5 +341,136 @@ export const DOCS: NewDocument[] = [
                 'topRightCoordinates': [39.1413672328, 27.1894859555]
             }
         }
+    },
+    {
+        'resource': {
+            'id': 'sa1',
+            'identifier': 'Areal 1',
+            'shortDescription': 'Survey Areal',
+            'type': 'Survey',
+            'relations': {},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            27.18937349319458,
+                            39.141260862350464
+                        ],
+                        [
+                            27.189372777938843,
+                            39.1412456035614
+                        ],
+                        [
+                            27.18937849998474,
+                            39.14121985435486
+                        ],
+                        [
+                            27.189371585845947,
+                            39.14120292663574
+                        ],
+                        [
+                            27.189374685287476,
+                            39.141199827194214
+                        ],
+                        [
+                            27.18941354751587,
+                            39.14121198654175
+                        ],
+                        [
+                            27.189414501190186,
+                            39.141263484954834
+                        ]
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        'resource': {
+            'id': 'syu1',
+            'identifier': 'PQ1',
+            'shortDescription': 'Planquadrat 1',
+            'type': 'SurveyUnit',
+            'relations': {
+                'isRecordedIn': ['sa1']
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            27.189372777938843,
+                            39.1412456035614
+                        ],
+                        [
+                            27.189391613006592,
+                            39.14124584197998
+                        ],
+                        [
+                            27.189392059649148,
+                            39.14126204974
+                        ],
+                        [
+                            27.18937349319458,
+                            39.141260862350464
+                        ]
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        'resource': {
+            'id': 'syu2',
+            'identifier': 'PQ2',
+            'shortDescription': 'Planquadrat 2',
+            'type': 'SurveyUnit',
+            'relations': {
+                'isRecordedIn': ['sa1']
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            27.189392059649148,
+                            39.14126204974
+                        ],
+                        [
+                            27.189391613006592,
+                            39.14124584197998
+                        ],
+                        [
+                            27.189414169512915,
+                            39.1412455743823
+                        ],
+                        [
+                            27.189414501190186,
+                            39.141263484954834
+                        ]
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        'resource': {
+            'id': 'st1',
+            'identifier': 'PQ2-ST1',
+            'shortDescription': 'Ein Stein',
+            'type': 'SurveyUnit',
+            'relations': {
+                'isRecordedIn': ['sa1'],
+                'liesWithin': ['syu1']
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    27.189382433891296,
+                    39.1412538588047
+                ]
+            }
+        }
     }
 ];

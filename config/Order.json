@@ -38,6 +38,7 @@
     "SurveyUnit": ["area", "dimensionLength", "dimensionWidth", "hasFinds"],
     "Image": ["description", "draughtsmen", "processor"],
     "Drawing": ["drawingMaterial", "drawingTool", "drawingType", "scale"],
-    "Photo": ["originalType"]
+    "Photo": ["originalType"],
+    "ArchitecturalUnit": ["diary", "description", "processor", "beginningDate", "endDate", "period", "dating", "area", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison", "featureAmount", "dimensionLength", "dimensionVerticalExtent", "dimensionWidth", "orientation", "spatialLocation", "condition", "conditionAmount", "conditionComment", "layerAmount", "layerHeight", "muralCrown", "mortarBinder", "mortarColor", "mortarConsistency", "materialForm", "materialCharacteristic", "construction", "constructionDetailsDescription", "descriptionOfBuildingTechnique", "brickwork", "blockTreatment", "blockProcessing", "mark", "markDescription", "bibliography", "findingPlace", "publicationDatingFinds", "publicationDatingStratigraphy", "publicationDatingScientific", "publicationRemark"]
   }
 }

@@ -69,7 +69,9 @@ export class IndexFacade {
     private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
 
         const q = !query.q || query.q.trim() === '' ? '*' : query.q;
-        return resultSets.combine(this.fulltextIndexer.get(q, query.types));
+        resultSets.combine(this.fulltextIndexer.get(q, query.types));
+
+        return resultSets;
     }
 
 
@@ -77,10 +79,9 @@ export class IndexFacade {
 
         return Object.keys(constraints)
             .reduce((resultSets: ResultSets, name: string) => {
-
                 const {type, value} = Constraint.convertTo(constraints[name]);
-                return resultSets.combine(this.constraintIndexer.get(name, value), type)
-
+                resultSets.combine(this.constraintIndexer.get(name, value), type);
+                return resultSets;
             }, ResultSets.make());
     }
 }

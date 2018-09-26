@@ -89,11 +89,12 @@ export class FulltextIndexer {
         if (Object.keys(this.index).length === 0) return [];
 
         function getFromIndex(resultSets: ResultSets, token: string) {
-            return resultSets.combine(
+            resultSets.combine(
                 FulltextIndexer.getForToken(
                     this.index, token, types ? types : Object.keys(this.index)
                 )
             );
+            return resultSets;
         }
 
         return s
@@ -147,20 +148,21 @@ export class FulltextIndexer {
     }
 
 
-    private static getWithPlaceholder(index: any, resultSets: any, s: string, type: string, tokens: string): ResultSets {
+    private static getWithPlaceholder(index: any, resultSets: ResultSets, s: string, type: string, tokens: string): ResultSets {
 
         return tokens.split('').reduce((_resultSets, nextChar: string) =>
-                FulltextIndexer.addKeyToResultSets(index,
-                    _resultSets, type, s.replace('['+tokens+']',nextChar))
-            , resultSets.copy());
+                FulltextIndexer.addKeyToResultSets(
+                    index, _resultSets, type, s.replace('[' + tokens + ']', nextChar)
+                )
+            , resultSets);
     }
 
 
-    private static addKeyToResultSets(index: any, resultSets: any, type: string, s: string): ResultSets {
+    private static addKeyToResultSets(index: any, resultSets: ResultSets, type: string, s: string): ResultSets {
 
-        return (!index[type] || !index[type][s]) ?
-            resultSets.copy() :
-            resultSets.copy().combine(
-                Object.keys(index[type][s]).map(id => clone(index[type][s][id])));
+        if (!index[type] || !index[type][s]) return resultSets;
+
+        resultSets.combine(Object.keys(index[type][s]).map(id => clone(index[type][s][id])));
+        return resultSets;
     }
 }

@@ -10,9 +10,9 @@ describe('ResultSets', () => {
 
         let r: ResultSets = ResultSets.make();
 
-        r = r.combine([{id:'1'},{id:'2'}]);
-        r = r.combine([{id:'2'},{id:'2'}]);
-        r = r.combine([{id:'2'},{id:'3'}]);
+        r.combine([{id:'1'},{id:'2'}]);
+        r.combine([{id:'2'},{id:'2'}]);
+        r.combine([{id:'2'},{id:'3'}]);
 
         expect(r.collapse()).toEqual([{id:'2'}]);
     });
@@ -22,8 +22,8 @@ describe('ResultSets', () => {
 
         let r: ResultSets = ResultSets.make();
 
-        r = r.combine([{id:'1'},{id:'2'}]);
-        r = r.combine([{id:'3'},{id:'4'}]);
+        r.combine([{id:'1'},{id:'2'}]);
+        r.combine([{id:'3'},{id:'4'}]);
 
         expect(r.collapse()).toEqual([]);
     });
@@ -33,9 +33,9 @@ describe('ResultSets', () => {
 
         let r: ResultSets = ResultSets.make();
 
-        r = r.combine([{id:'1'},{id:'2'}]);
-        r = r.combine([{id:'2'},{id:'3'}]);
-        r = r.combine([{id:'4'},{id:'5'}]);
+        r.combine([{id:'1'},{id:'2'}]);
+        r.combine([{id:'2'},{id:'3'}]);
+        r.combine([{id:'4'},{id:'5'}]);
 
         expect(r.collapse()).toEqual([]);
     });
@@ -45,8 +45,8 @@ describe('ResultSets', () => {
 
         let r: ResultSets = ResultSets.make();
 
-        r = r.combine([{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }]);
-        r = r.combine([{ id: '3' }, { id: '4' }], 'subtract');
+        r.combine([{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }]);
+        r.combine([{ id: '3' }, { id: '4' }], 'subtract');
 
         expect(r.collapse()).toEqual([{ id: '1' }, { id: '2' }]);
     });
@@ -56,10 +56,10 @@ describe('ResultSets', () => {
 
         let r: ResultSets = ResultSets.make();
 
-        r = r.combine([{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }]);
-        r = r.combine([{ id: '2' }, { id: '3' }, { id: '4' }, { id: '5' }]);
-        r = r.combine([{ id: '3' }], 'subtract');
-        r = r.combine([{ id: '4' }], 'subtract');
+        r.combine([{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }]);
+        r.combine([{ id: '2' }, { id: '3' }, { id: '4' }, { id: '5' }]);
+        r.combine([{ id: '3' }], 'subtract');
+        r.combine([{ id: '4' }], 'subtract');
 
         expect(r.collapse()).toEqual([{ id: '2' }]);
     });

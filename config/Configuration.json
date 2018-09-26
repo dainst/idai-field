@@ -4064,7 +4064,7 @@
         }
       }
     },
-    "ArchitecturalUnit": {
+    "BuildingPart": {
       "color": "#707070",
       "fields": {
         "area": {

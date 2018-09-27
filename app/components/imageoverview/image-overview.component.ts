@@ -64,8 +64,6 @@ export class ImageOverviewComponent implements OnInit {
 
     public refreshGrid = () => this.imageOverviewFacade.fetchDocuments();
 
-    public resetSearch = () => this.imageOverviewFacade.resetSearch();
-
 
     public ngOnInit() {
 

@@ -72,13 +72,6 @@ export class ImageOverviewFacade {
     }
 
 
-    public resetSearch() {
-
-        this.imagesState.setQuery(this.getDefaultQuery());
-        this.imagesState.setMainTypeDocumentFilterOption('');
-    }
-
-
     public setTypeFilters(types: string[]) {
 
         const query: Query = this.imagesState.getQuery();

@@ -1,9 +1,7 @@
-import {AfterViewChecked, ChangeDetectorRef, Component, Renderer2} from '@angular/core';
+import {AfterViewChecked, ChangeDetectorRef, Component, OnDestroy, Renderer2} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
-import {Document} from 'idai-components-2';
-import {Messages} from 'idai-components-2';
+import {Observable, Subscription} from 'rxjs';
+import {Document, IdaiFieldDocument, IdaiFieldGeometry, Messages} from 'idai-components-2';
 import {Loading} from '../../widgets/loading';
 import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
@@ -21,13 +19,16 @@ import {M} from '../m';
  * @author Jan G. Wieners
  * @author Thomas Kleinke
  */
-export class ResourcesComponent implements AfterViewChecked {
+export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
     public isEditingGeometry: boolean = false;
 
     private scrollTarget: IdaiFieldDocument|undefined;
-
     private clickEventObservers: Array<any> = [];
+
+    private deselectionSubscription: Subscription;
+    private populateDocumentsSubscription: Subscription;
+    private changedDocumentFromRemoteSubscription: Subscription;
 
 
     constructor(route: ActivatedRoute,
@@ -80,6 +81,16 @@ export class ResourcesComponent implements AfterViewChecked {
             if (ResourcesComponent.scrollToDocument(this.scrollTarget)) {
                 this.scrollTarget = undefined;
             }
+        }
+    }
+
+
+    ngOnDestroy() {
+
+        if (this.deselectionSubscription) this.deselectionSubscription.unsubscribe();
+        if (this.populateDocumentsSubscription) this.populateDocumentsSubscription.unsubscribe();
+        if (this.changedDocumentFromRemoteSubscription) {
+            this.changedDocumentFromRemoteSubscription.unsubscribe();
         }
     }
 
@@ -170,17 +181,20 @@ export class ResourcesComponent implements AfterViewChecked {
 
     private initializeSubscriptions() {
 
-        this.viewFacade.deselectionNotifications().subscribe(deselectedDocument => {
-            this.quitGeometryEditing(deselectedDocument);
-        });
+        this.deselectionSubscription =
+            this.viewFacade.deselectionNotifications().subscribe(deselectedDocument => {
+                this.quitGeometryEditing(deselectedDocument);
+            });
 
-        this.viewFacade.populateDocumentNotifications().subscribe(() => {
-            this.changeDetectorRef.detectChanges();
-        });
+        this.populateDocumentsSubscription =
+            this.viewFacade.populateDocumentNotifications().subscribe(() => {
+                this.changeDetectorRef.detectChanges();
+            });
 
-        this.viewFacade.documentChangedFromRemoteNotifications().subscribe(() => {
-            this.changeDetectorRef.detectChanges();
-        });
+        this.changedDocumentFromRemoteSubscription =
+            this.viewFacade.documentChangedFromRemoteNotifications().subscribe(() => {
+                this.changeDetectorRef.detectChanges();
+            });
     }
 
 

@@ -28,6 +28,7 @@ export class DocumentsManager {
 
     private deselectionObservers: Array<Observer<Document>> = [];
     private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
+    private documentChangedFromRemoteObservers: Array<Observer<undefined>> = [];
 
     private static documentLimit: number = 200;
 
@@ -47,10 +48,14 @@ export class DocumentsManager {
 
     public getTotalDocumentCount = () => this.totalDocumentCount;
 
-    public deselectionNotifications = (): Observable<Document> => ObserverUtil.register(this.deselectionObservers);
+    public deselectionNotifications = (): Observable<Document> =>
+        ObserverUtil.register(this.deselectionObservers);
 
     public populateDocumentsNotifactions = (): Observable<Array<Document>> =>
         ObserverUtil.register(this.populateDocumentsObservers);
+
+    public documentChangedFromRemoteNotifications = (): Observable<undefined> =>
+        ObserverUtil.register(this.documentChangedFromRemoteObservers);
 
 
     public isNewDocumentFromRemote(document: Document): boolean {
@@ -204,7 +209,10 @@ export class DocumentsManager {
     private async handleRemoteChange(changedDocument: Document) {
 
         if (!this.documents) return;
-        if (this.documents.find(hasEqualId(changedDocument))) return;
+
+        if (this.documents.find(hasEqualId(changedDocument))) {
+            return ObserverUtil.notify(this.documentChangedFromRemoteObservers, undefined);
+        }
 
         if (changedDocument.resource.type == this.resourcesStateManager.getViewType()) {
             return this.operationTypeDocumentsManager.populate();

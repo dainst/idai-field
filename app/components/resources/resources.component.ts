@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, Renderer2} from '@angular/core';
+import {AfterViewChecked, ChangeDetectorRef, Component, Renderer2} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';
 import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
@@ -36,7 +36,8 @@ export class ResourcesComponent implements AfterViewChecked {
                 private doceditLauncher: DoceditLauncher,
                 private renderer: Renderer2,
                 private messages: Messages,
-                private loading: Loading
+                private loading: Loading,
+                private changeDetectorRef: ChangeDetectorRef
     ) {
         routingService.routeParams(route).subscribe(async (params: any) => {
             if (params['id']) {
@@ -45,10 +46,7 @@ export class ResourcesComponent implements AfterViewChecked {
         });
 
         this.initializeClickEventListener();
-
-        this.viewFacade.deselectionNotifications().subscribe(deselectedDocument => {
-            this.quitGeometryEditing(deselectedDocument);
-        });
+        this.initializeSubscriptions();
     }
 
 
@@ -167,6 +165,22 @@ export class ResourcesComponent implements AfterViewChecked {
 
         this.renderer.listen('document', 'click', (event: any) =>
             this.clickEventObservers.forEach(observer => observer.next(event)));
+    }
+
+
+    private initializeSubscriptions() {
+
+        this.viewFacade.deselectionNotifications().subscribe(deselectedDocument => {
+            this.quitGeometryEditing(deselectedDocument);
+        });
+
+        this.viewFacade.populateDocumentNotifications().subscribe(() => {
+            this.changeDetectorRef.detectChanges();
+        });
+
+        this.viewFacade.documentChangedFromRemoteNotifications().subscribe(() => {
+            this.changeDetectorRef.detectChanges();
+        });
     }
 
 

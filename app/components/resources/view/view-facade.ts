@@ -119,6 +119,8 @@ export class ViewFacade {
 
     public populateDocumentNotifications = () => this.documentsManager.populateDocumentsNotifactions();
 
+    public documentChangedFromRemoteNotifications = () => this.documentsManager.documentChangedFromRemoteNotifications();
+
     public isReady = () => this.ready;
 
 

@@ -1,5 +1,3 @@
-// TODO fundmaterial hasFinds finds
-
 export const migrationMap: { [oldName: string]: string } = {
     'hasAgeDetermination': 'ageDetermination',
     'hasAgeDeterminationBasis': 'ageDeterminationBasis',

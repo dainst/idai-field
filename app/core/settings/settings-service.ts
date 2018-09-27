@@ -114,14 +114,10 @@ export class SettingsService {
         if (this.getSelectedProject().indexOf('pergamongrabung') === 0) customProjectName = 'Pergamon';
 
         try {
-            const pconf = await this.appConfigurator.go(
+            return await this.appConfigurator.go(
                 configurationDirPath,
                 customProjectName
             );
-
-            console.log(pconf);
-            return pconf;
-
         } catch (msgsWithParams) {
             if (msgsWithParams.length > 0) {
                 msgsWithParams.forEach((msg: any) => console.error('err in project configuration', msg));

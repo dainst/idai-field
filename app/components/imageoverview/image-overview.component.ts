@@ -1,19 +1,18 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Document} from 'idai-components-2';
-import {IdaiFieldImageDocument} from 'idai-components-2';
+import {Document, IdaiFieldImageDocument, Messages} from 'idai-components-2';
 import {ImageGridComponent} from '../imagegrid/image-grid.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {RoutingService} from '../routing-service';
+import {ImageUploadResult} from '../imageupload/image-uploader';
+import {M} from '../m';
 
 @Component({
     moduleId: module.id,
     templateUrl: './image-overview.html'
 })
 /**
- * Displays images as a grid of tiles.
- *
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  * @author Jan G. Wieners
@@ -34,7 +33,8 @@ export class ImageOverviewComponent implements OnInit {
     constructor(
         public viewFacade: ViewFacade,
         private imageOverviewFacade: ImageOverviewFacade,
-        private routingService: RoutingService
+        private routingService: RoutingService,
+        private messages: Messages
     ) {
         this.imageOverviewFacade.initialize();
     }
@@ -71,14 +71,14 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public setGridSize(size: string) {
+    public async setGridSize(size: string) {
 
         const _size = parseInt(size);
 
         if (_size >= this.minGridSize && _size <= this.maxGridSize) {
             this.imageOverviewFacade.setGridSize(_size);
             this.imageGrid.nrOfColumns = _size;
-            this.refreshGrid();
+            await this.refreshGrid();
         }
     }
 
@@ -86,5 +86,17 @@ export class ImageOverviewComponent implements OnInit {
     public chooseMainTypeDocumentFilterOption(filterOption: string) {
 
         this.imageOverviewFacade.chooseMainTypeDocumentFilterOption(filterOption);
+    }
+
+
+    public async onImagesUploaded(uploadResult: ImageUploadResult) {
+
+        this.messages.add(
+            uploadResult.uploadedImages > 1
+                ? [M.IMAGES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString()]
+                : [M.IMAGES_SUCCESS_IMAGE_UPLOADED]
+        );
+
+        await this.refreshGrid();
     }
 }

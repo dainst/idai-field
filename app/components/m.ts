@@ -110,6 +110,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Images Package
 
+    public static IMAGES_SUCCESS_IMAGE_UPLOADED = 'images/success/imageimported';
+    public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images/success/imagesimported';
     public static IMAGES_SUCCESS_WORLDFILE_UPLOADED = 'images/success/worldfileuploaded';
     public static IMAGES_SUCCESS_GEOREFERENCE_DELETED = 'images/success/georeferencedeleted';
     public static IMAGES_ERROR_FILEREADER = 'images/error/filereader';
@@ -483,6 +485,18 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.IMAGES_SUCCESS_IMAGE_UPLOADED] = {
+            content: 'Das Bild wurde erfolgreich importiert.',
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGES_SUCCESS_IMAGES_UPLOADED] = {
+            content: '{0} Bilder wurden erfolgreich importiert.',
+            level: 'success',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMAGES_SUCCESS_WORLDFILE_UPLOADED] = {
             content: "Das Worldfile wurde erfolgreich geladen.",
             level: 'success',
@@ -634,7 +648,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.RESOURCES_SUCCESS_IMAGE_UPLOADED] = {
-            content: 'Ein Bild wurde erfolgreich importiert und mit der Ressource {0} verknüpft.',
+            content: 'Das Bild wurde erfolgreich importiert und mit der Ressource {0} verknüpft.',
             level: 'success',
             params: [],
             hidden: false

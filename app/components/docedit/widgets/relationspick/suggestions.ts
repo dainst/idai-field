@@ -1,4 +1,4 @@
-import {Document, Query, ReadDatastore, RelationDefinition, Resource} from 'idai-components-2';
+import {Document, RelationDefinition, Resource} from 'idai-components-2';
 import {filter, flow, isNot, on, take} from 'tsfun';
 
 /**
@@ -12,7 +12,7 @@ export module Suggestions {
                                         relationDefinition: any,
                                         maxSuggestions: number) {
 
-        return flow<any>(documents,
+        return flow(documents,
             filter(isNot(on('resource.id:')(resource.id))), // Don't suggest the resource itself
             filter(isNot(alreadyIncluded(resource, relationDefinition))),
             filter(isNot(includedInTargetRelationList(resource, relationDefinition))),
@@ -26,7 +26,7 @@ export module Suggestions {
     function alreadyIncluded(resource: Resource, relDef: RelationDefinition) {
 
         return (suggestionDocument: Document) => resource.relations[relDef.name]
-            .includes(suggestionDocument.resource.id as any);
+            .includes(suggestionDocument.resource.id);
     }
 
 

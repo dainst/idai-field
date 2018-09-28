@@ -4,6 +4,9 @@
  * @author Thomas Kleinke
  */
 .image-view {
+  position: relative;
+  z-index: 1001;
+
   .detail-sidebar {
     .tab-view-container {
       height: calc(100vh - 154px);

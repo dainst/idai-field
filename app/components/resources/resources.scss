@@ -18,13 +18,11 @@
 @import 'searchbar/search-constraints';
 
 
-#resources {
-  position: fixed;
-  width: 100%;
+.resources-nav {
+  position: relative;
   z-index: 1001;
-  padding-top: 8px;
-  padding-bottom: 7px;
-  height: 56px;
+  padding-top: 3px;
+  padding-bottom: 6px;
 
   #search-bar-container {
     padding-right: 8px;
@@ -53,8 +51,7 @@
   }
 }
 
-#resources-content {
-  padding-top: 55px;
+.resources-container{
 
   .no-main-type-resource-alert {
     position: absolute;

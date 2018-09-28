@@ -2,12 +2,13 @@
  * @author Thomas Kleinke
  */
 
-#help {
+.help {
   position: relative;
-  top: 5px;
   height: calc(100vh - 51px);
   overflow-y: auto;
   overflow-x: hidden;
+  background-color: white;
+  z-index: 1001;
 
   #help-container {
     padding: 15px 0;

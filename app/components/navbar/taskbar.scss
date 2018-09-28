@@ -15,6 +15,10 @@
     color: #fff;
   }
 
+  .dropdown-menu {
+    z-index: 1050;
+  }
+
   .dropdown-toggle::after {
     display: none;
   }

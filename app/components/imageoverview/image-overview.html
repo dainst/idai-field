@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <div (window:resize)="onResize($event)">
+        <div (window:resize)="onResize($event)" class="image-grid-container">
             <image-grid #imageGrid
                     [nrOfColumns]="getGridSize()"
                     [documents]="getDocuments()"

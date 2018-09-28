@@ -1,112 +1,115 @@
-<div id="import"
+<div class="import row"
      (dragover)="false"
      (dragleave)="false"
      (drop)="false">
 
-    <header class="bg-light">
+    <div class="col">
 
-        <button id="importStartButton"
-                class="btn btn-primary"
-                [ngClass]="{ 'disabled': !isReady() }"
-                (click)="!isReady() || startImport()">
-            <span class="mdi mdi-file-import" style="color: white"></span>
-            Import starten
-        </button>
-
-    </header>
-
-    <main>
-        <div class="form-group row">
-
-            <div class="col-lg-6 mx-lg-auto">
-                <div class="form-group">
-
-                    <label class="control-label col-form-label"
-                           for="importSourceSelect">Quelle</label>
-
-                    <select id="importSourceSelect" class="form-control"
-                            [(ngModel)]="sourceType"
-                            (ngModelChange)="reset()">
-                        <option value="file">Datei</option>
-                        <option value="http">HTTP</option>
-                    </select>
-
-                </div>
-
-                <div class="form-group" *ngIf="sourceType == 'file'">
-
-                    <label class="control-label col-form-label">Pfad</label>
-                    <input id="importFileInput" type="file"
-                           class="form-control-file"
-                           (change)="selectFile($event)">
-
-                </div>
-
-                <div class="form-group" *ngIf="sourceType == 'http'">
-
-                    <label class="control-label col-form-label">URL</label>
-                    <input class="form-control" id="importUrlInput"
-                           type="text"
-                           [(ngModel)]="url">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label class="control-label col-form-label"
-                           for="importFormatSelect">Format</label>
-                    <select id="importFormatSelect" class="form-control"
-                            [(ngModel)]="format">
-                        <option value="native">iDAI.field - jsonl</option>
-                        <option *ngIf="settingsService.getSelectedProject().indexOf('test') !== -1" value="idig">iDig (experimentell) - csv</option>
-                        <option value="geojson">GeoJSON - jsonl</option>
-
-                        <option *ngIf="settingsService.getSelectedProject().indexOf('meninx-project') !== -1" value="meninxfind">Meninx/Funde (experimentell) - csv</option>
-
-                    </select>
-
-                </div>
-
-                <div class="form-group" *ngIf="format === 'native' && !allowMergingExistingResources">
-
-                    <label class="control-label col-form-label"
-                           for="mainTypeDocumentSelect">Daten einer Maßnahme zuordnen</label>
-                    <select id="mainTypeDocumentSelect" class="form-control"
-                            [(ngModel)]="mainTypeDocumentId">
-                        <option value="">Keine Zuordnung</option>
-                        <option *ngFor="let document of mainTypeDocuments" value="{{document.resource.id}}">
-                            {{getDocumentLabel(document)}}
-                        </option>
-                    </select>
-                </div>
-
-                <div *ngIf="format === 'native'" class="form-group">
-                    <label>Vorhandene Felder überschreiben&nbsp;</label>
-                    <div class="btn-group btn-group-toggle">
-                        <label class="btn-primary-outline">
-                            <input type="checkbox" ngbButton [(ngModel)]="allowMergingExistingResources">
-                        </label>
-                    </div>
-                </div>
-
-                <div *ngIf="format == 'native'" class="geojson-info">
-                    Ist diese Option angewählt, so werden Datensätze, die bereits in der Anwendung sind, mit
-                    den Daten aus der Importdatei ergänzt. Das heißt, dass Felder,
-                    die im jeweiligen Importdatensatz vorhanden sind,
-                    Felder im existierenden Datensatz überschreiben, die übrigen Felder des Datensatzes
-                    jedoch erhalten bleiben. Relationen werden nicht verändert.
-                    Die Zuordnung von Datensätzen geschieht per Bezeichner
-                    (Feld 'identifier'). Datensätze in der Importdatei, die nicht zugeordnet werden können,
-                    werden ignoriert.
-                </div>
-
-                <div *ngIf="format == 'geojson'" class="geojson-info">
-                    Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen
-                    Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben
-                    werden.
-                </div>
-
+        <div class="row">
+            <div class="col import-nav bg-light py-2 text-right">
+                <button id="importStartButton"
+                        class="btn btn-primary"
+                        [ngClass]="{ 'disabled': !isReady() }"
+                        (click)="!isReady() || startImport()">
+                    <span class="mdi mdi-file-import" style="color: white"></span>
+                    Import starten
+                </button>
             </div>
         </div>
-    </main>
+
+        <div class="row">
+            <div class="form-group col import-container">
+
+                <div class="col-lg-6 mx-lg-auto py-4">
+                    <div class="form-group">
+
+                        <label class="control-label col-form-label"
+                               for="importSourceSelect">Quelle</label>
+
+                        <select id="importSourceSelect" class="form-control"
+                                [(ngModel)]="sourceType"
+                                (ngModelChange)="reset()">
+                            <option value="file">Datei</option>
+                            <option value="http">HTTP</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group" *ngIf="sourceType == 'file'">
+
+                        <label class="control-label col-form-label">Pfad</label>
+                        <input id="importFileInput" type="file"
+                               class="form-control-file"
+                               (change)="selectFile($event)">
+
+                    </div>
+
+                    <div class="form-group" *ngIf="sourceType == 'http'">
+
+                        <label class="control-label col-form-label">URL</label>
+                        <input class="form-control" id="importUrlInput"
+                               type="text"
+                               [(ngModel)]="url">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="control-label col-form-label"
+                               for="importFormatSelect">Format</label>
+                        <select id="importFormatSelect" class="form-control"
+                                [(ngModel)]="format">
+                            <option value="native">iDAI.field - jsonl</option>
+                            <option *ngIf="settingsService.getSelectedProject().indexOf('test') !== -1" value="idig">iDig (experimentell) - csv</option>
+                            <option value="geojson">GeoJSON - jsonl</option>
+
+                            <option *ngIf="settingsService.getSelectedProject().indexOf('meninx-project') !== -1" value="meninxfind">Meninx/Funde (experimentell) - csv</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group" *ngIf="format === 'native' && !allowMergingExistingResources">
+
+                        <label class="control-label col-form-label"
+                               for="mainTypeDocumentSelect">Daten einer Maßnahme zuordnen</label>
+                        <select id="mainTypeDocumentSelect" class="form-control"
+                                [(ngModel)]="mainTypeDocumentId">
+                            <option value="">Keine Zuordnung</option>
+                            <option *ngFor="let document of mainTypeDocuments" value="{{document.resource.id}}">
+                                {{getDocumentLabel(document)}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="format === 'native'" class="form-group">
+                        <label>Vorhandene Felder überschreiben&nbsp;</label>
+                        <div class="btn-group btn-group-toggle">
+                            <label class="btn-primary-outline">
+                                <input type="checkbox" ngbButton [(ngModel)]="allowMergingExistingResources">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div *ngIf="format == 'native'" class="geojson-info">
+                        Ist diese Option angewählt, so werden Datensätze, die bereits in der Anwendung sind, mit
+                        den Daten aus der Importdatei ergänzt. Das heißt, dass Felder,
+                        die im jeweiligen Importdatensatz vorhanden sind,
+                        Felder im existierenden Datensatz überschreiben, die übrigen Felder des Datensatzes
+                        jedoch erhalten bleiben. Relationen werden nicht verändert.
+                        Die Zuordnung von Datensätzen geschieht per Bezeichner
+                        (Feld 'identifier'). Datensätze in der Importdatei, die nicht zugeordnet werden können,
+                        werden ignoriert.
+                    </div>
+
+                    <div *ngIf="format == 'geojson'" class="geojson-info">
+                        Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen
+                        Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben
+                        werden.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

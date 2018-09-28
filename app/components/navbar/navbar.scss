@@ -1,3 +1,6 @@
+$tab-bg-color: $gray-100;
+$tab-bg-color-hover: lighten($navbar-default-bg, 10%);
+
 .navbar {
   -webkit-app-region: drag;
   padding: 0 10px;
@@ -20,9 +23,8 @@
   margin-top: 0.3em;
 }
 
-.navbar-dark .navbar-tabbed a.nav-link.active {
-  background-color: $gray-100;
-  color: #000;
+.navbar-dark .navbar-tabbed a.nav-link {
+
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   position: relative;
@@ -37,18 +39,54 @@
   }
   &:before {
     left: -5px;
-    border-bottom-right-radius: 6px;
-    border-bottom: 1px solid $gray-100;
-    border-right: 1px solid $gray-100;
-    box-shadow: 2px 2px 0 $gray-100;
   }
   &:after {
     right: -5px;
-    border-bottom-left-radius: 6px;
-    border-bottom: 1px solid $gray-100;
-    border-left: 1px solid $gray-100;
-    box-shadow: -2px 2px 0 $gray-100;
   }
+
+  &.active {
+    background-color: $tab-bg-color;
+    color: #000;
+    z-index: 10;
+
+    &:before {
+      border-color: $tab-bg-color;
+      box-shadow: 2px 2px 0 $tab-bg-color;
+      border-bottom-right-radius: 6px;
+      border-bottom: 1px solid $tab-bg-color;
+      border-right: 1px solid $tab-bg-color;
+    }
+
+    &:after {
+      border-color: $tab-bg-color;
+      box-shadow: -2px 2px 0 $tab-bg-color;
+      border-bottom-left-radius: 6px;
+      border-bottom: 1px solid $tab-bg-color;
+      border-left: 1px solid $tab-bg-color;
+    }
+  }
+
+  &:hover:not(.active) {
+    background-color: $tab-bg-color-hover;
+    z-index: 5;
+
+    &:before {
+      border-color: $tab-bg-color-hover;
+      box-shadow: 2px 2px 0 $tab-bg-color-hover;
+      border-bottom-right-radius: 6px;
+      border-bottom: 1px solid $tab-bg-color-hover;
+      border-right: 1px solid $tab-bg-color-hover;
+    }
+
+    &:after {
+      border-color: $tab-bg-color-hover;
+      box-shadow: -2px 2px 0 $tab-bg-color-hover;
+      border-bottom-left-radius: 6px;
+      border-bottom: 1px solid $tab-bg-color-hover;
+      border-left: 1px solid $tab-bg-color-hover;
+    }
+  }
+
 }
 
 #idai-field-brand {

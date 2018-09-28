@@ -5,28 +5,20 @@
  * @author: Thomas Kleinke
  */
 
-#import {
-  padding: 0 !important;
+.import {
 
-  header {
-    position: fixed;
-    width: 100%;
+  .import-nav {
+    position: relative;
     z-index: 1001;
-    margin-left: -15px;
-    top: 45px;
-    height: 56px;
-    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid $gray-200;
   }
 
-  header button {
-    position: absolute;
-    right: 6px;
-    bottom: 6px;
-  }
-
-  main {
-    padding: 7px;
-    margin-top: 70px;
+  .import-container {
+    height: calc(100vh - 107px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
   }
 
   .spinner {

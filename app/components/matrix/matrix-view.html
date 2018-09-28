@@ -1,20 +1,24 @@
-<div id="matrix-view" class="bg-light">
+<div id="matrix-view" class="row bg-light">
 
-    <div *ngIf="showTrenchSelector()" class="btn-group operation-document-selector"
-         ngbDropdown placement="bottom-left" role="group">
-        <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
-        <div class="dropdown-menu" ngbDropdownMenu>
-            <button *ngFor="let trench of trenches" class="dropdown-item" (click)="selectTrench(trench)">
-                {{getDocumentLabel(trench)}}
-            </button>
-        </div>
+    <div class="col">
+        <div class="row">
+            <div *ngIf="showTrenchSelector()" class="btn-group operation-document-selector"
+                 ngbDropdown placement="bottom-left" role="group">
+                <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button *ngFor="let trench of trenches" class="dropdown-item" (click)="selectTrench(trench)">
+                        {{getDocumentLabel(trench)}}
+                    </button>
+                </div>
 
-        <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">
-            {{getDocumentLabel(selectedTrench)}}
+                <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">
+                    {{getDocumentLabel(selectedTrench)}}
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="float-right">
+    <div class="col text-right toolbar">
         <div class="btn-group">
             <div id="edit-mode-button"
                  class="btn btn-primary"
@@ -125,4 +129,3 @@
            (onSelectForEdit)="edit($event)">
     </graph>
 </div>
-

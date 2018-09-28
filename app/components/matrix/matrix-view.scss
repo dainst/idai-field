@@ -7,13 +7,10 @@
 @import 'matrix-options-menu';
 
 #matrix-view {
-  position: fixed;
-  width: 100%;
-  margin-left: -15px;
-  padding-top: 7px;
+  position: relative;
+  padding-top: 3px;
   padding-bottom: 6px;
-  height: 56px;
-  box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid $gray-200;
   z-index: 1001;
   user-select: none;
   cursor: default;
@@ -24,6 +21,10 @@
 
   .btn {
     margin-right: 4px;
+  }
+
+  .toolbar {
+    padding-right: 5px;
   }
 
   .btn-group {
@@ -39,11 +40,7 @@
 }
 
 #matrix-container {
-  position: absolute;
-  left: 0;
-  padding-top: 58px;
-  width: 100%;
-  height: calc(100vh - 47px);
+  height: calc(100vh - 104px);
   overflow: hidden;
 
   .no-main-type-resource-alert {

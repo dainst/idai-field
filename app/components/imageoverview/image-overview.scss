@@ -1,9 +1,4 @@
 .image-overview {
-  margin-top: 52px;
-  height: calc(100vh - 98px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding: 0 !important;
 
   .image-grid {
     margin-top: 15px !important;
@@ -14,14 +9,9 @@
   }
 
   .image-overview-nav {
-    position: fixed;
+    position: relative;
     z-index: 1001;
-    right: 0;
-    left: 0;
-    top: 46px;
-    margin: 0;
-    height: 55px;
-    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid $gray-200;
   }
 
   #image-overview-buttons {
@@ -87,5 +77,13 @@
       background: $primary;
       cursor: pointer;
     }
+  }
+
+  .image-grid-container {
+    height: calc(100vh - 107px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 !important;
+    margin: 0 -15px;
   }
 }

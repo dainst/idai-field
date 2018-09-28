@@ -1,26 +1,33 @@
-<div id="backup-creation">
-    <header class="bg-light">
-        <button id="createBackupButton"
-                class="btn btn-primary"
-                [ngClass]="{ 'disabled': running }"
-                (click)="createBackup()"
-                placement="bottom">
-            <span class="mdi mdi-database-export" style="color: white"></span>
-            Backup erstellen
-        </button>
-    </header>
+<div class="backup-creation row">
 
-    <main>
-        <div class="form-group row">
-            <div class="col-lg-6 mx-lg-auto">
-                Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die
-                Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten
-                gesicherten Zwischenstand wiederherzustellen.
+    <div class="col">
 
-                <br><br>
-                Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
-                in dem unter <i>Einstellungen</i> angezeigten Pfad und sollten separat gesichert werden.
+        <div class="row">
+            <div class="col backup-nav bg-light py-2 text-right">
+                <button id="createBackupButton"
+                        class="btn btn-primary"
+                        [ngClass]="{ 'disabled': running }"
+                        (click)="createBackup()"
+                        placement="bottom">
+                    <span class="mdi mdi-database-export" style="color: white"></span>
+                    Backup erstellen
+                </button>
             </div>
         </div>
-    </main>
+
+        <div class="row">
+            <div class="form-group col backup-container">
+                <div class="col-lg-6 mx-lg-auto py-4">
+                    Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die
+                    Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten
+                    gesicherten Zwischenstand wiederherzustellen.
+
+                    <br><br>
+                    Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
+                    in dem unter <i>Einstellungen</i> angezeigten Pfad und sollten separat gesichert werden.
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>

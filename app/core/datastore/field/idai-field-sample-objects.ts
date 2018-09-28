@@ -345,8 +345,8 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'sa1',
-            'identifier': 'Areal 1',
-            'shortDescription': 'Survey Areal',
+            'identifier': 'A1',
+            'shortDescription': 'Survey Areal 1',
             'type': 'Survey',
             'relations': {},
             "geometry": {
@@ -457,7 +457,7 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'st1',
-            'identifier': 'PQ2-ST1',
+            'identifier': 'PQ1-ST1',
             'shortDescription': 'Ein Stein',
             'type': 'SurveyUnit',
             'relations': {

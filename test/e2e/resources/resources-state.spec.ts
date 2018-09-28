@@ -402,9 +402,11 @@ describe('resources/state --', function() {
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 
         NavbarPage.clickNavigateToProject();
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('S1'));
-        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('S2'));
-        ResourcesPage.getListItemIdentifierText(2).then(text => expect(text).toEqual('trench3'));
+        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('A1'));
+        ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('B1'));
+        ResourcesPage.getListItemIdentifierText(2).then(text => expect(text).toEqual('S1'));
+        ResourcesPage.getListItemIdentifierText(3).then(text => expect(text).toEqual('S2'));
+        ResourcesPage.getListItemIdentifierText(4).then(text => expect(text).toEqual('trench3'));
     });
 
 
@@ -474,10 +476,10 @@ describe('resources/state --', function() {
 
         ResourcesPage.openEditByDoubleClickResource('testf1');
         DoceditPage.clickRelationsTab();
-        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(2, 0);
-        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(2);
-        DoceditRelationsTabPage.typeInRelationByIndices(2, 0, 'context2');
-        DoceditRelationsTabPage.clickChooseRelationSuggestion(2, 0, 0);
+        DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(1, 0);
+        DoceditRelationsTabPage.clickAddRelationForGroupWithIndex(1);
+        DoceditRelationsTabPage.typeInRelationByIndices(1, 0, 'context2');
+        DoceditRelationsTabPage.clickChooseRelationSuggestion(1, 0, 0);
         DoceditPage.clickSaveDocument();
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);

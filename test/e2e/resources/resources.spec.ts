@@ -414,6 +414,7 @@ describe('resources --', () => {
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('2');
         DoceditPage.clickConfirmDeleteInModal();
+        browser.sleep(delays.shortRest);
         ResourcesPage.clickSelectResource('1');
         RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
     });

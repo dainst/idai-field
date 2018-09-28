@@ -6,7 +6,7 @@ const expressPouchDB = require('express-pouchdb');
 const cors = require('pouchdb-server/lib/cors');
 
 
-describe('sync from remote to local db', () => {
+xdescribe('sync from remote to local db', () => {
 
     let syncTestSimulatedRemoteDb;
     let _remoteChangesStream;
@@ -54,7 +54,7 @@ describe('sync from remote to local db', () => {
         _remoteChangesStream = remoteChangesStream;
         _viewFacade = viewFacade;
         done();
-    }, 5000);
+    });
 
 
     afterAll(async done => {
@@ -84,7 +84,7 @@ describe('sync from remote to local db', () => {
         });
 
         rev = (await syncTestSimulatedRemoteDb.put(docToPut)).rev;
-    }, 5000);
+    });
 
 
     it('sync modified from remote to localdb', async done => {
@@ -108,7 +108,7 @@ describe('sync from remote to local db', () => {
         docToPut['_rev'] = rev;
         docToPut.resource.identifier = 'Zehn!';
         await syncTestSimulatedRemoteDb.put(docToPut, {force: true});
-    }, 5000);
+    });
 
 
     it('sync to remote db', async done => {
@@ -132,5 +132,5 @@ describe('sync from remote to local db', () => {
         };
         _documentHolder.setClonedDocument(docToPut);
         await _documentHolder.save(true);
-    }, 5000);
+    });
 });

@@ -90,7 +90,7 @@ describe('sync from remote to local db', function () {
                     return [2 /*return*/];
             }
         });
-    }); });
+    }); }, 5000);
     afterAll(function (done) { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -141,7 +141,7 @@ describe('sync from remote to local db', function () {
                     return [2 /*return*/];
             }
         });
-    }); });
+    }); }, 5000);
     it('sync modified from remote to localdb', function (done) { return __awaiter(_this, void 0, void 0, function () {
         var d;
         var _this = this;
@@ -180,7 +180,7 @@ describe('sync from remote to local db', function () {
                     return [2 /*return*/];
             }
         });
-    }); });
+    }); }, 5000);
     it('sync to remote db', function (done) { return __awaiter(_this, void 0, void 0, function () {
         var docToPut;
         return __generator(this, function (_a) {
@@ -207,6 +207,6 @@ describe('sync from remote to local db', function () {
                     return [2 /*return*/];
             }
         });
-    }); });
+    }); }, 5000);
 });
 //# sourceMappingURL=sync.spec.js.map

@@ -1,5 +1,6 @@
 $tab-bg-color: $gray-100;
 $tab-bg-color-hover: lighten($navbar-default-bg, 10%);
+$link-hover-color: lighten($navbar-default-bg, 30%);
 
 .navbar {
   -webkit-app-region: drag;
@@ -16,6 +17,15 @@ $tab-bg-color-hover: lighten($navbar-default-bg, 10%);
 
 .navbar a {
   color: #fff;
+  cursor: default;
+
+  &:hover {
+    color: $link-hover-color;
+  }
+}
+
+.navbar .mdi:hover {
+  color: $link-hover-color;
 }
 
 .navbar-tabbed .nav-link {
@@ -69,6 +79,7 @@ $tab-bg-color-hover: lighten($navbar-default-bg, 10%);
   &:hover:not(.active) {
     background-color: $tab-bg-color-hover;
     z-index: 5;
+    color: white;
 
     &:before {
       border-color: $tab-bg-color-hover;

@@ -6,7 +6,7 @@ const expressPouchDB = require('express-pouchdb');
 const cors = require('pouchdb-server/lib/cors');
 
 
-xdescribe('sync from remote to local db', () => {
+describe('sync from remote to local db', () => {
 
     let syncTestSimulatedRemoteDb;
     let _remoteChangesStream;

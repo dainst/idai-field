@@ -41,7 +41,7 @@ var express = require("express");
 var subsystem_helper_1 = require("../subsystem/subsystem-helper");
 var expressPouchDB = require('express-pouchdb');
 var cors = require('pouchdb-server/lib/cors');
-xdescribe('sync from remote to local db', function () {
+describe('sync from remote to local db', function () {
     var syncTestSimulatedRemoteDb;
     var _remoteChangesStream;
     var _documentHolder;

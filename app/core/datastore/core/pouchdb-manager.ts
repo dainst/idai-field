@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
+import * as express from 'express';
 import * as PouchDB from 'pouchdb';
 import {PouchdbProxy} from './pouchdb-proxy';
 import {SampleDataLoader} from './sample-data-loader';
 import {SyncState} from './sync-state';
 import {IndexFacade} from '../index/index-facade';
 
-const remote = require('electron').remote;
+const expressPouchDB = require('express-pouchdb');
 
 
 @Injectable()
@@ -47,6 +48,27 @@ export class PouchdbManager {
     public destroyDb = (dbName: string) => PouchdbManager.createPouchDBObject(dbName).destroy();
 
 
+    /**
+     * Provides Fauxton
+     */
+    public setupServer(): Promise<any> {
+
+        return new Promise(resolve => {
+            const app = express();
+            app.use('/', expressPouchDB(PouchDB, {
+                mode: 'fullCouchDB',
+                overrideMode: {
+                    include: ['routes/fauxton']
+                }
+            }));
+            app.listen(3000, function() {
+                console.log('PouchDB Server listening on port 3000');
+                resolve();
+            });
+        });
+    }
+
+
     public async resetForE2E() {
 
         const dbReady = new Promise(resolve => this.resolveDbReady = resolve);
@@ -62,12 +84,12 @@ export class PouchdbManager {
 
     public async loadProjectDb(name: string, sampleDataLoader?: SampleDataLoader) {
 
-        let db = await PouchdbManager.createPouchDBObject(name);
+        let db = PouchdbManager.createPouchDBObject(name);
 
         if (name === 'test' && sampleDataLoader) {
             this.sampleDataLoader = sampleDataLoader;
             await db.destroy();
-            db = await PouchdbManager.createPouchDBObject(name);
+            db = PouchdbManager.createPouchDBObject(name);
             await sampleDataLoader.go(db, name);
         }
 
@@ -130,7 +152,7 @@ export class PouchdbManager {
         }
 
         try {
-            await db.get(name)
+            await db.get('project');
         } catch (_) {
             // create project only if it does not exist,
             // which can happen if the db already existed

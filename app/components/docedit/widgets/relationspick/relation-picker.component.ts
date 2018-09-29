@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnChanges} from '@angular/core';
-import {Document, Query, ReadDatastore, Resource} from 'idai-components-2';
-import {Suggestions} from './suggestions';
+import {Document, ReadDatastore} from 'idai-components-2';
 import {isNot, undefinedOrEmpty} from 'tsfun';
+import {RelationPickerSuggestions} from './relation-picker-suggestions';
 
 
 @Component({
@@ -15,8 +15,6 @@ import {isNot, undefinedOrEmpty} from 'tsfun';
  * @author Daniel de Oliveira
  */
 export class RelationPickerComponent implements OnChanges {
-
-    private static MAX_SUGGESTIONS = 5;
 
     @Input() document: any;
     
@@ -217,19 +215,9 @@ export class RelationPickerComponent implements OnChanges {
         if (this.updateSuggestionsMode) return;
         this.updateSuggestionsMode = true;
 
-        const query: Query = {};
-        if (this.idSearchString) {
-            query.q = this.idSearchString;
-        }
-
         try {
-
-            this.suggestions = Suggestions.makeSuggestionsFrom(
-                (await this.datastore.find(query)).documents,
-                this.document.resource,
-                this.relationDefinition,
-                RelationPickerComponent.MAX_SUGGESTIONS);
-
+            this.suggestions = await RelationPickerSuggestions
+                .getSuggestions(this.datastore, this.document, this.relationDefinition, this.idSearchString);
         } catch (err) {
             console.debug(err);
         } finally {

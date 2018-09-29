@@ -193,7 +193,7 @@ export class PouchdbDatastore {
         try {
             for (let revisionId of squashRevisionsIds) await this.db.remove(resourceId, revisionId);
         } catch (err) {
-            console.error("error while removing revision", err);
+            console.error('Error while removing revision', err);
             throw [DatastoreErrors.GENERIC_ERROR, err];
         }
     }

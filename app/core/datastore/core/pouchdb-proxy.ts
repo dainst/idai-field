@@ -13,7 +13,7 @@ export class PouchdbProxy {
     }
 
 
-    public put(document: any, options?: any): Promise<any> {
+    public put(document: any, options: any = {}): Promise<any> {
 
         return this.rdy.then(db => db.put(document, options));
     }
@@ -25,27 +25,27 @@ export class PouchdbProxy {
     }
 
 
-    public query(index: any, opts: any): Promise<any> {
+    public query(index: any, options: any): Promise<any> {
 
-        return this.rdy.then(db => db.query(index, opts));
+        return this.rdy.then(db => db.query(index, options));
     }
 
 
-    public sync(url: any, opts: any): Promise<any> {
+    public sync(url: any, options: any): Promise<any> {
 
-        return this.rdy.then(db => db.sync(url, opts));
+        return this.rdy.then(db => db.sync(url, options));
     }
 
 
-    public get(id: any, opts={}): Promise<any> {
+    public get(id: any, options = {}): Promise<any> {
 
-        return this.rdy.then(db => db.get(id, opts));
+        return this.rdy.then(db => db.get(id, options));
     }
 
 
-    public changes(opts: any): Promise<any> {
+    public changes(options: any): Promise<any> {
 
-        return this.rdy.then(db => db.changes(opts));
+        return this.rdy.then(db => db.changes(options));
     }
 
 

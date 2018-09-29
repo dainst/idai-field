@@ -6,7 +6,7 @@ import {Document, ReadDatastore, Query, Constraint, RelationDefinition} from 'id
  */
 export module RelationPickerSuggestions {
 
-    const MAX_SUGGESTIONS: number = 5;
+    export const MAX_SUGGESTIONS: number = 5;
 
 
     export async function getSuggestions(datastore: ReadDatastore, document: Document,
@@ -58,9 +58,9 @@ export module RelationPickerSuggestions {
      */
     function getForbiddenIds(document: Document, relationDefinition: RelationDefinition): string[] {
 
-        let ids: string[] = document.resource.relations[relationDefinition.name]
-            .filter((id: string) => id.length > 0)
-            .concat([document.resource.id]);
+        let ids: string[] = [document.resource.id]
+            .concat(document.resource.relations[relationDefinition.name])
+            .filter((id: string) => id.length > 0);
 
         if (relationDefinition.inverse && relationDefinition.name !== relationDefinition.inverse
                 && Document.hasRelations(document, relationDefinition.inverse)) {

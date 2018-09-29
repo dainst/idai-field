@@ -1,5 +1,14 @@
 #relations-form {
-  .list-group-item:hover {
-    z-index: auto;
+  .list-group-item {
+    display: block;
+
+    &:hover {
+      z-index: auto;
+    }
+
+    ul {
+      margin-left: 0;
+      padding-left: 1px;
+    }
   }
 }

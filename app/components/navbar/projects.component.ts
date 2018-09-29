@@ -59,6 +59,8 @@ export class ProjectsComponent implements OnInit {
 
     public async selectProject() {
 
+        this.settingsService.stopSync();
+
         await this.settingsService.selectProject(this.selectedProject);
         ProjectsComponent.reload();
     }
@@ -77,9 +79,9 @@ export class ProjectsComponent implements OnInit {
         }
 
         const allowed = /^[0-9a-z\-_]+$/.test(this.newProject);
-        if (!allowed) {
-            return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_SYMBOLS]);
-        }
+        if (!allowed) return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_SYMBOLS]);
+
+        this.settingsService.stopSync();
 
         await this.settingsService.createProject(
             this.newProject,
@@ -92,6 +94,9 @@ export class ProjectsComponent implements OnInit {
     public async deleteProject() {
 
         if (!this.canDeleteProject()) return;
+
+        this.settingsService.stopSync();
+
         await this.settingsService.deleteProject(this.selectedProject);
         this.selectedProject = this.getProjects()[0];
         ProjectsComponent.reload();

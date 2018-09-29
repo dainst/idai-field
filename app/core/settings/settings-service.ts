@@ -242,6 +242,14 @@ export class SettingsService {
     }
 
 
+    public stopSync() {
+
+        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
+        this.pouchdbManager.stopSync();
+        this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
+    }
+
+
     /**
      * Observe synchronization status changes. The following states can be
      * subscribed to:
@@ -255,14 +263,6 @@ export class SettingsService {
         return Observable.create((o: Observer<any>) => {
             this.syncStatusObservers.push(o as never);
         });
-    }
-
-
-    private stopSync() {
-
-        if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
-        this.pouchdbManager.stopSync();
-        this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
     }
 
 

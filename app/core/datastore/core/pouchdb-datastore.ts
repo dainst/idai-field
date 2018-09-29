@@ -121,14 +121,19 @@ export class PouchdbDatastore {
 
         this.deletedOnes.push(doc.resource.id as never);
 
-        let docFromGet;
+        let fetchedDocument: any;
         try {
-            docFromGet = await this.db.get(doc.resource.id);
+            fetchedDocument = await this.fetch(doc.resource.id);
         } catch (e) {
             throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
         }
+
+        if (fetchedDocument['_conflicts'] && fetchedDocument['_conflicts'].length > 0) {
+            await this.removeRevisions(fetchedDocument.resource.id, fetchedDocument['_conflicts']);
+        }
+
         try {
-            await this.db.remove(docFromGet)
+            await this.db.remove(fetchedDocument)
         } catch (genericerror) {
             throw [DatastoreErrors.GENERIC_ERROR, genericerror];
         }

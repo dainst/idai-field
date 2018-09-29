@@ -75,7 +75,7 @@ export class PersistenceManager {
     public async remove(document: Document, username: string) {
 
         // don't rely on isRecordedIn alone. Make sure it is really an operation subtype
-        if (this.typeUtility.isSubtype(document.resource.type, "Operation")) {
+        if (this.typeUtility.isSubtype(document.resource.type, 'Operation')) {
             for (let recordedInDoc of (await this.findDocsRecordedInDocs(document.resource.id))) {
                 await this.removeWithConnections(recordedInDoc, username);
             }

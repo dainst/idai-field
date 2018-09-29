@@ -32,8 +32,6 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    // create
-
     it('create: create an id', async done => {
 
         try {
@@ -112,7 +110,6 @@ describe('PouchdbDatastore', () => {
         done();
     });
 
-    // update
 
     it('update: should update an existing document with no identifier conflict', async done => {
 
@@ -164,7 +161,6 @@ describe('PouchdbDatastore', () => {
         }
         done();
     });
-
 
 
     it('update: should squash old revisions', async done => {
@@ -223,7 +219,6 @@ describe('PouchdbDatastore', () => {
     });
 
 
-
     it('update: add modified date', async done => {
 
         const doc = Static.doc('id2');
@@ -251,10 +246,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    // fetch
-
-
-    it('should get if existent', async done => {
+    it('get: should get if existent', async done => {
 
         pouchdbProxy.get.and.callFake(async resourceId => {
             return {resource: {
@@ -273,7 +265,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('should reject with keyOfM in when trying to get a non existing document', async done => {
+    it('get: should reject with keyOfM in when trying to get a non existing document', async done => {
 
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
@@ -287,9 +279,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    // remove
-
-    it('should remove if existent', async (done) => {
+    it('remove: should remove if existent', async (done) => {
 
         await datastore.remove(Static.doc('sd1', 'identifier1', 'Find', 'id1'));
         expect(pouchdbProxy.remove).toHaveBeenCalled();
@@ -297,7 +287,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('should throw when no resource id', async done => {
+    it('remove: should throw when no resource id', async done => {
 
         try {
             await datastore.remove(Static.doc('sd2'));
@@ -309,7 +299,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('should throw when trying to remove and not existent', async done => {
+    it('remove: should throw when trying to remove and not existent', async done => {
 
         pouchdbProxy.get.and.returnValue(Promise.reject(undefined));
 
@@ -321,6 +311,21 @@ describe('PouchdbDatastore', () => {
         } catch (expected) {
             expect(expected[0]).toEqual(DatastoreErrors.DOCUMENT_NOT_FOUND);
         }
+        done();
+    });
+
+
+    it('remove: remove all conflicting revisions', async done => {
+
+        const document = Static.doc('shortDescription1', 'identifier1', 'Find', 'id1');
+        document['_conflicts'] = ['revision1', 'revision2'];
+
+        pouchdbProxy.get.and.returnValue(Promise.resolve(document));
+
+        await datastore.remove(document);
+        expect(pouchdbProxy.remove).toHaveBeenCalledWith(document);
+        expect(pouchdbProxy.remove).toHaveBeenCalledWith('id1', 'revision1');
+        expect(pouchdbProxy.remove).toHaveBeenCalledWith('id1', 'revision2');
         done();
     });
 });

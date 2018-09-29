@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
+import {Observable, Observer} from 'rxjs';
+import {unique} from 'tsfun';
 import {Messages, ProjectConfiguration, Document} from 'idai-components-2';
 import {IdaiFieldAppConfigurator} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
-import {Observable} from 'rxjs';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
-import {Observer} from 'rxjs';
-import {unique} from 'tsfun';
 import {IdaiFieldSampleDataLoader} from '../datastore/field/idai-field-sample-data-loader';
 import {Converter} from '../imagestore/converter';
 import {M} from '../../components/m';
@@ -78,7 +77,7 @@ export class SettingsService {
         try { // new
             this.projectDocument = await this.pouchdbManager.getDbProxy().get('project');
         } catch (_) {
-            console.warn('didn\'t find new style project document, try old method');
+            console.warn('Didn\'t find new style project document, try old method');
         }
 
         if (!this.projectDocument) {
@@ -86,9 +85,11 @@ export class SettingsService {
                 this.projectDocument = await this.pouchdbManager.getDbProxy().get(this.getSelectedProject());
             } catch (_) {
                 if (isBoot) {
-                    this.selectProject('test'); // load alternative at next startup
-                    console.error('didn\'t find old style project document either');
-                    throw 'could not boot project';
+                    console.warn('Didn\'t find old style project document either, creating new one');
+                    await this.pouchdbManager.getDbProxy().put(
+                        SettingsService.createProjectDocument(this.getSelectedProject(), this.getUsername())
+                    );
+                    this.projectDocument = await this.pouchdbManager.getDbProxy().get('project');
                 }
             }
         }
@@ -127,7 +128,7 @@ export class SettingsService {
             if (msgsWithParams.length > 1) {
                 console.error('num errors in project configuration', msgsWithParams.length);
             }
-            throw "could not boot project";
+            throw 'Could not boot project';
         }
     }
 
@@ -160,7 +161,7 @@ export class SettingsService {
 
         await this.pouchdbManager.createDb(
             name,
-            SettingsService.makeProjectDoc(name, this.getUsername()),
+            SettingsService.createProjectDocument(name, this.getUsername()),
             destroyBeforeCreate
         );
     }
@@ -188,7 +189,7 @@ export class SettingsService {
                 if (errWithParams.length > 0 && errWithParams[0] === ImagestoreErrors.INVALID_PATH) {
                     this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
                 } else {
-                    console.error("something went wrong with imagestore.setPath",errWithParams);
+                    console.error('Something went wrong with imagestore.setPath', errWithParams);
                 }
             })
             .then(() => this.settingsSerializer.store(this.settings));
@@ -312,7 +313,7 @@ export class SettingsService {
     }
 
 
-    private static makeProjectDoc(name: string, username: string) {
+    private static createProjectDocument(name: string, username: string): any {
 
         return {
             _id: 'project',

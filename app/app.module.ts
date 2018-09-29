@@ -96,22 +96,23 @@ registerLocaleData(localeDe, 'de');
             multi: true,
             deps: [SettingsService, PouchdbManager],
             useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager) => () =>
-                (new SettingsSerializer).load().then(settings =>
-                    settingsService.bootProjectDb(settings).then(() =>
-                        settingsService.loadConfiguration(remote.getGlobal('configurationDirPath')))).then(configuration => {
+                pouchdbManager.setupServer()
+                    .then(() => (new SettingsSerializer).load())
+                    .then(settings =>
+                        settingsService.bootProjectDb(settings).then(() =>
+                            settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'))))
+                    .then(configuration => {
+                        projectConfiguration = configuration;
 
-                    projectConfiguration = configuration;
-
-                    const {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade} =
-                        IndexerConfiguration.configureIndexers(projectConfiguration);
-                    constraintIndexer = createdConstraintIndexer;
-                    fulltextIndexer = createdFulltextIndexer;
-                    return createdIndexFacade;
-
-                 }).then(facade => {
-                     indexFacade = facade;
-                     return pouchdbManager.reindex(indexFacade);
-                })
+                        const {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade} =
+                            IndexerConfiguration.configureIndexers(projectConfiguration);
+                        constraintIndexer = createdConstraintIndexer;
+                        fulltextIndexer = createdFulltextIndexer;
+                        return createdIndexFacade;
+                     }).then(facade => {
+                         indexFacade = facade;
+                         return pouchdbManager.reindex(indexFacade);
+                    })
         },
         SettingsService,
         { provide: UsernameProvider, useExisting: SettingsService },

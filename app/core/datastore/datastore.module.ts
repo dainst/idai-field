@@ -3,7 +3,6 @@ import {Datastore, Document, ReadDatastore} from 'idai-components-2';
 import {IdaiFieldDocument} from 'idai-components-2';
 import {DocumentCache} from './core/document-cache';
 import {PouchdbDatastore} from './core/pouchdb-datastore';
-import {PouchdbServerDatastore} from './pouchdb-server-datastore';
 import {PouchdbManager} from './core/pouchdb-manager';
 import {IdaiFieldDocumentDatastore} from './field/idai-field-document-datastore';
 import {IdaiFieldDocumentReadDatastore} from './field/idai-field-document-read-datastore';
@@ -39,8 +38,7 @@ import {IdaiFieldFeatureDocument} from 'idai-components-2';
             useFactory: function(pouchdbManager: PouchdbManager,
                                  idGenerator: IdGenerator): PouchdbDatastore {
 
-                return new PouchdbServerDatastore(pouchdbManager.getDbProxy(), // Provides fauxton
-                    idGenerator);
+                return new PouchdbDatastore(pouchdbManager.getDbProxy(), idGenerator);
             },
             deps: [PouchdbManager, IdGenerator]
         },

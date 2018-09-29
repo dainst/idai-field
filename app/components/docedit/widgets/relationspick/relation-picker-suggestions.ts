@@ -11,7 +11,7 @@ export module RelationPickerSuggestions {
 
     export async function getSuggestions(datastore: ReadDatastore, document: Document,
                                          relationDefinition: RelationDefinition,
-                                         idSearchString: string): Promise<Array<Document>> {
+                                         idSearchString?: string): Promise<Array<Document>> {
 
         return (await datastore.find(
             makeQuery(document, relationDefinition, idSearchString)
@@ -20,7 +20,7 @@ export module RelationPickerSuggestions {
 
 
     function makeQuery(document: Document, relationDefinition: RelationDefinition,
-                       idSearchString: string): Query {
+                       idSearchString?: string): Query {
 
         return {
             q: idSearchString ? idSearchString : '',

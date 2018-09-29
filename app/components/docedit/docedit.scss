@@ -105,6 +105,20 @@
     user-select: none;
   }
 
+  #loading-icon-container {
+    height: calc(100vh - 150px);
+
+    loading-icon {
+      position: relative;
+      top: 100px;
+    }
+
+    #deletion-info {
+      position: absolute;
+      left: calc(50% - 93px);
+      user-select: none;
+    }
+  }
 }
 
 #confirm-delete-info {

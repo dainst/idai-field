@@ -24,28 +24,30 @@
             <div>
                 <button *ngIf="documentHolder.clonedDocument && documentHolder.clonedDocument.resource.id
                             && documentHolder.clonedDocument.resource.type != 'Project'"
-                        class="btn btn-danger pull-right" id="document-edit-button-delete-document"
-                         (click)="openDeleteModal();">
+                        id="document-edit-button-delete-document"
+                        class="btn btn-danger pull-right"
+                        [class.disabled]="isLoading()"
+                        (click)="isLoading() || openDeleteModal()">
                     <span class="mdi mdi-delete"></span>
                     <span class="button-label">Löschen</span>
                 </button>
                 <button class="btn btn-success disabled pull-right"
                         id="document-edit-button-save-document"
-                        [class.disabled]="!isChanged()"
-                        (click)="!isChanged() || save(true);">
+                        [class.disabled]="!isChanged() || isLoading()"
+                        (click)="!isChanged() || isLoading() || save(true)">
                     <span class="mdi mdi-content-save"></span>
                     <span class="button-label">Speichern</span>
                 </button>
                 <button class="btn btn-primary"
                         id="document-edit-button-goto-view"
-                        (click)="cancel()">
+                        [class.disabled]="isLoading()"
+                        (click)="isLoading() || cancel()">
                     <span class="mdi mdi-close"></span>
                 </button>
             </div>
         </header>
         <main>
-
-            <div *ngIf="documentHolder.clonedDocument" class="container">
+            <div *ngIf="documentHolder.clonedDocument && !isLoading()" class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <ngb-tabset (tabChange)="changeActiveTab($event)" activeId="{{getActiveTab()}}">
@@ -99,9 +101,12 @@
                                 </ng-template>
                             </ngb-tab>
                         </ngb-tabset>
-
                     </div>
                 </div>
+            </div>
+            <div *ngIf="isLoading()" id="loading-icon-container">
+                <loading-icon></loading-icon>
+                <div id="deletion-info">Ressource wird gelöscht...</div>
             </div>
         </main>
     </section>

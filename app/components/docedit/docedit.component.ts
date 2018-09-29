@@ -1,14 +1,8 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {includedIn, isNot} from 'tsfun';
-import {
-    DatastoreErrors,
-    Document,
-    IdaiFieldDocument,
-    IdaiFieldImageDocument,
-    Messages,
-    ProjectConfiguration
-} from 'idai-components-2';
+import {DatastoreErrors, Document, IdaiFieldDocument, IdaiFieldImageDocument, Messages,
+    ProjectConfiguration} from 'idai-components-2';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {clone} from '../../core/util/object-util';
 import {DoceditActiveTabService} from './docedit-active-tab-service';
@@ -19,6 +13,7 @@ import {DocumentHolder} from './document-holder';
 import {TypeUtility} from '../../core/model/type-utility';
 import {M} from '../m';
 import {MessagesConversion} from './messages-conversion';
+import {Loading} from '../../widgets/loading';
 
 
 @Component({
@@ -49,11 +44,14 @@ export class DoceditComponent {
         private datastore: DocumentDatastore,
         private typeUtility: TypeUtility,
         private activeTabService: DoceditActiveTabService,
-        private projectConfiguration: ProjectConfiguration) {
+        private projectConfiguration: ProjectConfiguration,
+        private loading: Loading) {
     }
 
 
     public isChanged = () => this.documentHolder.isChanged();
+
+    public isLoading = () => this.loading.isLoading();
 
     public getFieldDefinitionLabel: (_: string) => string;
 
@@ -115,7 +113,7 @@ export class DoceditComponent {
         ref.componentInstance.setDocument(this.documentHolder.getClonedDocument());
         ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.getClonedDocument()));
         const decision = await ref.result;
-        if (decision === 'delete') this.deleteDoc();
+        if (decision === 'delete') await this.deleteDocument();
     }
 
 
@@ -235,7 +233,9 @@ export class DoceditComponent {
     }
 
 
-    private async deleteDoc() {
+    private async deleteDocument() {
+
+        this.loading.start();
 
         try {
             await this.documentHolder.remove();
@@ -244,6 +244,8 @@ export class DoceditComponent {
         } catch(err) {
             this.messages.add(err);
         }
+
+        this.loading.stop();
     }
 
 

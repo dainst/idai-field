@@ -144,6 +144,10 @@ body {
   cursor: not-allowed;
 }
 
+.btn-danger:disabled, .btn-danger.disabled {
+  cursor: not-allowed;
+}
+
 .btn-light {
   color: $link-color;
 }

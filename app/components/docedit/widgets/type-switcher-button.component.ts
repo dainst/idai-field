@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, OnChanges, ViewChild} from '@angular/core';
-import {Messages} from 'idai-components-2';
 import {ProjectConfiguration, IdaiType} from 'idai-components-2';
+import {Loading} from '../../../widgets/loading';
 
 @Component({
     moduleId: module.id,
@@ -26,7 +26,7 @@ export class TypeSwitcherButtonComponent implements OnChanges{
 
 
     constructor(private projectConfiguration: ProjectConfiguration,
-                private messages: Messages) {}
+                private loading: Loading) {}
 
 
     ngOnChanges() {
@@ -40,7 +40,8 @@ export class TypeSwitcherButtonComponent implements OnChanges{
         return this.typesTreeList
             && this.typesTreeList.length > 0
             && this.typesTreeList[0].children
-            && this.typesTreeList[0].children.length > 0;
+            && this.typesTreeList[0].children.length > 0
+            && !this.loading.isLoading();
     }
 
 

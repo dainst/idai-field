@@ -106,7 +106,7 @@
             </div>
             <div *ngIf="isLoading()" id="loading-icon-container">
                 <loading-icon [context]="'docedit'"></loading-icon>
-                <div id="operation-in-progress-info">
+                <div id="operation-in-progress-info" class="alert alert-primary">
                     <span *ngIf="operationInProgress === 'save'">Ressource wird gespeichert...</span>
                     <span *ngIf="operationInProgress === 'delete'">Ressource wird gelöscht...</span>
                 </div>

@@ -111,12 +111,10 @@
 
     loading-icon {
       position: relative;
-      top: 100px;
+      top: 110px;
     }
 
     #operation-in-progress-info {
-      position: absolute;
-      left: calc(50% - 93px);
       user-select: none;
       cursor: default;
     }

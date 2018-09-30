@@ -25,23 +25,24 @@ export class DoceditConflictsTabComponent implements OnChanges {
     private ready = false;
 
 
-    constructor(
-        private datastore: DocumentReadDatastore,
-        private messages: Messages,
-        private projectConfiguration: ProjectConfiguration) {}
+    constructor(private datastore: DocumentReadDatastore,
+                private messages: Messages,
+                private projectConfiguration: ProjectConfiguration) {}
 
 
     async ngOnChanges() {
 
         for (let revisionId of (this.document as any)['_conflicts']) {
-            if (this.inspectedRevisions.map(_ => _.resource.id).includes(revisionId)) continue;
+            if (this.inspectedRevisions.find((revision: any) => revision['_rev'] === revisionId)) {
+                continue;
+            }
 
             try {
                 this.conflictedRevisions.push(
                     await this.datastore.getRevision(this.document.resource.id, revisionId)
                 );
-            } catch (_) {
-                console.error("revision not found " + this.document.resource.id + " " + revisionId);
+            } catch (err) {
+                console.error('Revision not found: ' + this.document.resource.id + ' ' + revisionId);
                 this.messages.add([M.DATASTORE_NOT_FOUND])
             }
         }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Loading} from './loading';
 
 @Component({
@@ -14,4 +14,6 @@ import {Loading} from './loading';
 export class LoadingIconComponent {
 
     constructor(public loading: Loading) {}
+
+    @Input() context: string;
 }

@@ -34,6 +34,7 @@ export class DoceditComponent {
 
     private parentLabel: string|undefined = undefined;
     private showDoceditImagesTab: boolean = false;
+    private operationInProgress: 'save'|'delete'|'none' = 'none';
 
 
     constructor(
@@ -123,11 +124,16 @@ export class DoceditComponent {
      */
     public async save(viaSaveButton: boolean) {
 
+        this.operationInProgress = 'save';
+        this.loading.start('docedit');
+
         const documentBeforeSave: Document = clone(this.documentHolder.getClonedDocument());
 
         this.documentHolder.save().then(
             async (documentAfterSave: Document) => {
                 await this.handleSaveSuccess(documentBeforeSave, documentAfterSave, viaSaveButton);
+                this.loading.stop();
+                this.operationInProgress = 'none';
             }, this.handleSaveError.bind(this)
         );
     }
@@ -235,7 +241,8 @@ export class DoceditComponent {
 
     private async deleteDocument() {
 
-        this.loading.start();
+        this.operationInProgress = 'delete';
+        this.loading.start('docedit');
 
         try {
             await this.documentHolder.remove();
@@ -246,6 +253,7 @@ export class DoceditComponent {
         }
 
         this.loading.stop();
+        this.operationInProgress = 'none';
     }
 
 

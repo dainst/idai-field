@@ -8,10 +8,12 @@ import {Injectable} from '@angular/core';
 export class Loading {
 
     private loading: number = 0;
+    private context: string|undefined;
 
 
-    public start() {
+    public start(context?: string) {
 
+        if (context && !this.context) this.context = context;
         this.loading++;
     }
 
@@ -19,11 +21,18 @@ export class Loading {
     public stop() {
 
         this.loading--;
+        if (this.loading === 0) this.context = undefined;
     }
 
 
     public isLoading(): boolean {
 
         return this.loading > 0;
+    }
+
+
+    public getContext(): string|undefined {
+
+        return this.context;
     }
 }

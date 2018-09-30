@@ -129,13 +129,15 @@ export class DoceditComponent {
 
         const documentBeforeSave: Document = clone(this.documentHolder.getClonedDocument());
 
-        this.documentHolder.save().then(
-            async (documentAfterSave: Document) => {
-                await this.handleSaveSuccess(documentBeforeSave, documentAfterSave, viaSaveButton);
-                this.loading.stop();
-                this.operationInProgress = 'none';
-            }, this.handleSaveError.bind(this)
-        );
+        try {
+            const documentAfterSave: Document = await this.documentHolder.save();
+            await this.handleSaveSuccess(documentBeforeSave, documentAfterSave, viaSaveButton);
+        } catch (errorWithParams) {
+            await this.handleSaveError(errorWithParams);
+        } finally {
+            this.loading.stop();
+            this.operationInProgress = 'none';
+        }
     }
 
 

@@ -55,19 +55,19 @@ export class MatrixPage {
 
     public static clickTemporalRelationsRadioButton() {
 
-        return common.click(element(by.id('relations-radio-temporal')));
+        return common.click(element(by.id('relations-radio-temporal-label')));
     }
 
 
     public static clickSpatialRelationsRadioButton() {
 
-        return common.click(element(by.id('relations-radio-spatial')));
+        return common.click(element(by.id('relations-radio-spatial-label')));
     }
 
 
     public static clickPeriodCheckbox() {
 
-        return common.click(element(by.id('period-check')));
+        return common.click(element(by.id('period-check-label')));
     }
 
 

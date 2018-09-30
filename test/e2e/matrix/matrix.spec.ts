@@ -137,7 +137,7 @@ describe('matrix --', () => {
     });
 
 
-    xit('switch between spatial and temporal relations', () => {
+    it('switch between spatial and temporal relations', () => {
 
         MatrixPage.clickOptionsButton();
         MatrixPage.clickSpatialRelationsRadioButton();
@@ -148,7 +148,7 @@ describe('matrix --', () => {
     });
 
 
-    xit('toggle period clusters', () => {
+    it('toggle period clusters', () => {
 
         MatrixPage.getClusters().then(clusters => expect(clusters.length).toBe(2));
         MatrixPage.clickOptionsButton();

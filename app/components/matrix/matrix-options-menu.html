@@ -14,7 +14,11 @@
                            type="radio"
                            [checked]="getRelationsMode() === 'temporal'"
                            (change)="setRelationsMode('temporal')">
-                    <label class="form-check-label" for="relations-radio-temporal">Zeitlich</label>
+                    <label id="relations-radio-temporal-label"
+                           class="form-check-label"
+                           for="relations-radio-temporal">
+                        Zeitlich
+                    </label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input id="relations-radio-spatial"
@@ -23,7 +27,11 @@
                            type="radio"
                            [checked]="getRelationsMode() === 'spatial'"
                            (change)="setRelationsMode('spatial')">
-                    <label class="form-check-label" for="relations-radio-spatial">Räumlich</label>
+                    <label id="relations-radio-spatial-label"
+                           class="form-check-label"
+                           for="relations-radio-spatial">
+                        Räumlich
+                    </label>
                 </div>
             </fieldset>
 
@@ -36,7 +44,11 @@
                            type="radio"
                            [checked]="getLineMode() === 'ortho'"
                            (change)="setLineMode('ortho')">
-                    <label class="form-check-label" for="line-radio-ortho">Gerade</label>
+                    <label id="line-radio-ortho-label"
+                           class="form-check-label"
+                           for="line-radio-ortho">
+                        Gerade
+                    </label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input id="line-radio-curved"
@@ -45,7 +57,11 @@
                            type="radio"
                            [checked]="getLineMode() === 'curved'"
                            (change)="setLineMode('curved')">
-                    <label class="form-check-label" for="line-radio-curved">Gebogen</label>
+                    <label id="line-radio-curved-label"
+                           class="form-check-label"
+                           for="line-radio-curved">
+                        Gebogen
+                    </label>
                 </div>
             </fieldset>
 
@@ -57,7 +73,11 @@
                            type="checkbox"
                            [checked]="getClusterMode() === 'periods'"
                            (change)="toggleClusterMode()">
-                    <label class="form-check-label" for="period-check">Gruppierung nach Grobdatierung</label>
+                    <label id="period-check-label"
+                           class="form-check-label"
+                           for="period-check">
+                        Gruppierung nach Grobdatierung
+                    </label>
                 </div>
             </fieldset>
         </form>

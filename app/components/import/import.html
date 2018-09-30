@@ -69,8 +69,27 @@
 
                     </div>
 
-                    <div class="form-group" *ngIf="format === 'native' && !allowMergingExistingResources">
+                    <div *ngIf="format === 'native'" class="form-group checkbox-group">
+                        <label>Vorhandene Felder überschreiben&nbsp;</label>
+                        <div class="btn-group btn-group-toggle">
+                            <label class="btn-primary-outline">
+                                <input type="checkbox" ngbButton [(ngModel)]="allowMergingExistingResources">
+                            </label>
+                        </div>
+                    </div>
 
+                    <div *ngIf="format == 'native'" class="import-info">
+                        Ist diese Option angewählt, so werden Datensätze, die bereits in der Anwendung sind, mit
+                        den Daten aus der Importdatei ergänzt. Das heißt, dass Felder,
+                        die im jeweiligen Importdatensatz vorhanden sind,
+                        Felder im existierenden Datensatz überschreiben, die übrigen Felder des Datensatzes
+                        jedoch erhalten bleiben. Relationen werden nicht verändert.
+                        Die Zuordnung von Datensätzen geschieht per Bezeichner
+                        (Feld 'identifier'). Datensätze in der Importdatei, die nicht zugeordnet werden können,
+                        werden ignoriert.
+                    </div>
+
+                    <div class="form-group" *ngIf="format === 'native' && !allowMergingExistingResources">
                         <label class="control-label col-form-label"
                                for="mainTypeDocumentSelect">Daten einer Maßnahme zuordnen</label>
                         <select id="mainTypeDocumentSelect" class="form-control"
@@ -82,32 +101,11 @@
                         </select>
                     </div>
 
-                    <div *ngIf="format === 'native'" class="form-group">
-                        <label>Vorhandene Felder überschreiben&nbsp;</label>
-                        <div class="btn-group btn-group-toggle">
-                            <label class="btn-primary-outline">
-                                <input type="checkbox" ngbButton [(ngModel)]="allowMergingExistingResources">
-                            </label>
-                        </div>
-                    </div>
-
-                    <div *ngIf="format == 'native'" class="geojson-info">
-                        Ist diese Option angewählt, so werden Datensätze, die bereits in der Anwendung sind, mit
-                        den Daten aus der Importdatei ergänzt. Das heißt, dass Felder,
-                        die im jeweiligen Importdatensatz vorhanden sind,
-                        Felder im existierenden Datensatz überschreiben, die übrigen Felder des Datensatzes
-                        jedoch erhalten bleiben. Relationen werden nicht verändert.
-                        Die Zuordnung von Datensätzen geschieht per Bezeichner
-                        (Feld 'identifier'). Datensätze in der Importdatei, die nicht zugeordnet werden können,
-                        werden ignoriert.
-                    </div>
-
-                    <div *ngIf="format == 'geojson'" class="geojson-info">
+                    <div *ngIf="format == 'geojson'" class="import-info">
                         Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen
                         Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben
                         werden.
                     </div>
-
                 </div>
             </div>
         </div>

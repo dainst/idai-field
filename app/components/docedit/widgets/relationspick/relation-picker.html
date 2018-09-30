@@ -1,16 +1,16 @@
 <div *ngIf="!disabled">
     <div id="relation-picker">
-        <div class="delete-relation small-circular-button red-button mdi mdi-delete" (click)="deleteRelation()"></div>
+        <div class="delete-relation small-circular-button red-button" (click)="deleteRelation()">
+            <span class="mdi mdi-delete"></span>
+        </div>
 
         <div *ngIf="!selectedTarget">
             <input [(ngModel)]="idSearchString" (keydown)="keyDown($event)" (keyup)="keyUp($event)"
                    (focus)="enterSuggestionMode()" (blur)="leaveSuggestionMode()" class="form-control">
 
-            <!-- SUGGESTIONS -->
             <div *ngIf="suggestionsVisible" class="suggestion-container" (mouseleave)="selectedSuggestionIndex = -1">
 
                 <div *ngIf="suggestions && suggestions.length > 0">
-
                     <div *ngFor="let suggestion of suggestions; let i = index">
                         <div *ngIf="selectedSuggestionIndex != i"
                              class="suggestion"
@@ -29,7 +29,6 @@
                     Keine Ziele gefunden
                 </div>
             </div>
-            <!-- SUGGESTIONS -->
 
         </div>
         <div *ngIf="selectedTarget">

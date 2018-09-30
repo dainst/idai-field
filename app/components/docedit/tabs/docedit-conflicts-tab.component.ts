@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {Relations, Resource, IdaiFieldDocument, IdaiFieldResource, Document, Messages, ProjectConfiguration}
-    from 'idai-components-2';
-import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
+import {Relations, Resource, Document, Messages, ProjectConfiguration} from 'idai-components-2';
+import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {M} from '../../m';
 
 const moment = require('moment');
@@ -16,18 +15,18 @@ const moment = require('moment');
 })
 export class DoceditConflictsTabComponent implements OnChanges {
 
-    @Input() document: IdaiFieldDocument;
+    @Input() document: Document;
     @Input() inspectedRevisions: Document[];
 
-    private conflictedRevisions: Array<IdaiFieldDocument> = [];
-    private selectedRevision: IdaiFieldDocument|undefined;
+    private conflictedRevisions: Array<Document> = [];
+    private selectedRevision: Document|undefined;
     private differingFields: any[];
-    private relationTargets: { [targetId: string]: IdaiFieldDocument|undefined };
+    private relationTargets: { [targetId: string]: Document|undefined };
     private ready = false;
 
 
     constructor(
-        private datastore: IdaiFieldDocumentReadDatastore,
+        private datastore: DocumentReadDatastore,
         private messages: Messages,
         private projectConfiguration: ProjectConfiguration) {}
 
@@ -35,11 +34,12 @@ export class DoceditConflictsTabComponent implements OnChanges {
     async ngOnChanges() {
 
         for (let revisionId of (this.document as any)['_conflicts']) {
-            if (this.inspectedRevisions.map(_ => _.resource.id)
-                    .includes(revisionId)) continue;
+            if (this.inspectedRevisions.map(_ => _.resource.id).includes(revisionId)) continue;
 
             try {
-                this.conflictedRevisions.push(await this.datastore.getRevision(this.document.resource.id, revisionId));
+                this.conflictedRevisions.push(
+                    await this.datastore.getRevision(this.document.resource.id, revisionId)
+                );
             } catch (_) {
                 console.error("revision not found " + this.document.resource.id + " " + revisionId);
                 this.messages.add([M.DATASTORE_NOT_FOUND])
@@ -56,7 +56,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    public setSelectedRevision(revision: IdaiFieldDocument) {
+    public setSelectedRevision(revision: Document) {
 
         this.selectedRevision = revision;
 
@@ -96,7 +96,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    private markRevisionAsInspected(revision: IdaiFieldDocument) {
+    private markRevisionAsInspected(revision: Document) {
 
         let index = this.conflictedRevisions.indexOf(revision);
         this.conflictedRevisions.splice(index, 1);
@@ -119,13 +119,13 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    private fetchRelationTargetsOfField(resource: IdaiFieldResource, fieldName: string) {
+    private fetchRelationTargetsOfField(resource: Resource, fieldName: string) {
 
         if (resource.relations[fieldName]) {
             for (let targetId of resource.relations[fieldName]) {
                 this.datastore.get(targetId).then(
-                    doc => { this.relationTargets[targetId] = <IdaiFieldDocument> doc; },
-                    () => { this.relationTargets[targetId] = undefined; }
+                    doc => { this.relationTargets[targetId] = doc; },
+                    (err) => { console.error(err); this.relationTargets[targetId] = undefined; }
                 );
             }
         }
@@ -139,7 +139,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
         for (let targetId of targetIds) {
             if (result.length > 0) result += ', ';
             result += this.relationTargets[targetId]
-                ? (this.relationTargets[targetId] as IdaiFieldDocument).resource.identifier
+                ? (this.relationTargets[targetId] as Document).resource.identifier
                 : 'Gelöschte Ressource';
         }
 
@@ -189,7 +189,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    public getRevisionLabel(revision: IdaiFieldDocument): string {
+    public getRevisionLabel(revision: Document): string {
 
         moment.locale('de');
         return Document.getLastModified(revision).user
@@ -198,7 +198,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    public getFieldContent(field: any, revision: IdaiFieldDocument): string {
+    public getFieldContent(field: any, revision: Document): string {
 
         const fieldContent: any = revision.resource[field.name];
 
@@ -223,7 +223,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    private static createDiff(document: IdaiFieldDocument, revision: IdaiFieldDocument,
+    private static createDiff(document: Document, revision: Document,
                               projectConfiguration: ProjectConfiguration): any[] {
 
         let differingFields: any[] = [];

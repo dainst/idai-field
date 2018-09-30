@@ -25,7 +25,8 @@
   user-select: none;
 
   .card-body {
-    padding-bottom: 15px;
+    padding-left: 25px;
+    padding-bottom: 20px;
   }
 
   .form-group {
@@ -39,14 +40,21 @@
     }
 
     .form-check {
-      margin-left: 20px;
+      position: relative;
+      top: 1px;
       margin-right: 10px;
+
+      &.form-radiobuttons {
+        margin-left: 20px;
+      }
 
       .form-check-input {
         cursor: default !important;
       }
 
       .form-check-label {
+        position: relative;
+        top: 2px;
         margin-left: -20px;
       }
     }

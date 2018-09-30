@@ -69,13 +69,12 @@
 
                     </div>
 
-                    <div *ngIf="format === 'native'" class="form-group checkbox-group">
-                        <label>Vorhandene Felder überschreiben&nbsp;</label>
-                        <div class="btn-group btn-group-toggle">
-                            <label class="btn-primary-outline">
-                                <input type="checkbox" ngbButton [(ngModel)]="allowMergingExistingResources">
-                            </label>
-                        </div>
+                    <div *ngIf="format === 'native'" class="form-group form-check-inline">
+                        <input type="checkbox" id="merging-checkbox" class="form-check-input"
+                               [(ngModel)]="allowMergingExistingResources">
+                        <label for="merging-checkbox" class="form-check-label">
+                            Felder in vorhandenen Ressourcen überschreiben
+                        </label>
                     </div>
 
                     <div *ngIf="format == 'native'" class="import-info">

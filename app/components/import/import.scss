@@ -6,7 +6,6 @@
  */
 
 .import {
-
   .import-nav {
     position: relative;
     z-index: 1001;
@@ -36,7 +35,13 @@
     margin-bottom: 12px;
   }
 
-  .checkbox-group {
-    margin-bottom: 0;
+  .form-check-inline {
+    margin-bottom: 8px;
+
+    .form-check-label {
+      position: relative;
+      top: 2px;
+      user-select: none;
+    }
   }
 }

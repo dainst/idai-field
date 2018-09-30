@@ -1,10 +1,5 @@
-<div class="import row"
-     (dragover)="false"
-     (dragleave)="false"
-     (drop)="false">
-
+<div class="import row" (dragover)="false" (dragleave)="false" (drop)="false">
     <div class="col">
-
         <div class="row">
             <div class="col import-nav bg-light py-2 text-right">
                 <button id="importStartButton"
@@ -35,7 +30,7 @@
 
                     </div>
 
-                    <div class="form-group" *ngIf="sourceType == 'file'">
+                    <div class="form-group" *ngIf="sourceType === 'file'">
 
                         <label class="control-label col-form-label">Pfad</label>
                         <input id="importFileInput" type="file"
@@ -44,7 +39,7 @@
 
                     </div>
 
-                    <div class="form-group" *ngIf="sourceType == 'http'">
+                    <div class="form-group" *ngIf="sourceType === 'http'">
 
                         <label class="control-label col-form-label">URL</label>
                         <input class="form-control" id="importUrlInput"
@@ -73,19 +68,17 @@
                         <input type="checkbox" id="merging-checkbox" class="form-check-input"
                                [(ngModel)]="allowMergingExistingResources">
                         <label for="merging-checkbox" class="form-check-label">
-                            Felder in vorhandenen Ressourcen überschreiben
+                            Vorhandene Ressourcen ergänzen
                         </label>
                     </div>
 
-                    <div *ngIf="format == 'native'" class="import-info">
-                        Ist diese Option angewählt, so werden Datensätze, die bereits in der Anwendung sind, mit
-                        den Daten aus der Importdatei ergänzt. Das heißt, dass Felder,
-                        die im jeweiligen Importdatensatz vorhanden sind,
-                        Felder im existierenden Datensatz überschreiben, die übrigen Felder des Datensatzes
-                        jedoch erhalten bleiben. Relationen werden nicht verändert.
-                        Die Zuordnung von Datensätzen geschieht per Bezeichner
-                        (Feld 'identifier'). Datensätze in der Importdatei, die nicht zugeordnet werden können,
-                        werden ignoriert.
+                    <div *ngIf="format === 'native'" class="import-info">
+                        Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
+                        den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
+                        dabei gleichnamige Felder im existierenden Datensatz, die übrigen Felder bleiben
+                        jedoch erhalten. Relationen werden nicht verändert. Die Zuordnung von Datensätzen
+                        geschieht per Bezeichner (Feld <em>identifier</em>). Datensätze in der Importdatei, die nicht
+                        zugeordnet werden können, werden ignoriert.
                     </div>
 
                     <div class="form-group" *ngIf="format === 'native' && !allowMergingExistingResources">
@@ -100,10 +93,10 @@
                         </select>
                     </div>
 
-                    <div *ngIf="format == 'geojson'" class="import-info">
-                        Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden Ressourcen
-                        Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene Geometrien dabei überschrieben
-                        werden.
+                    <div *ngIf="format === 'geojson'" class="import-info">
+                        Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
+                        Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
+                        Geometrien dabei überschrieben werden.
                     </div>
                 </div>
             </div>

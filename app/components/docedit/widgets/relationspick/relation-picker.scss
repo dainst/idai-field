@@ -28,7 +28,7 @@
   .suggestion-container {
     position: absolute;
     left: 71px;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #fff;
     box-shadow: 3px 3px 3px #ccc;
     z-index: 100;
   }
@@ -36,10 +36,10 @@
   .suggestion {
     padding: 7px 25px 7px 25px;
     cursor: pointer;
-  }
 
-  .suggestion.selected-suggestion {
-    background-color: #ccc;
+    &.selected-suggestion {
+      background-color: #e8e8e8;
+    }
   }
 
   .btn-default,

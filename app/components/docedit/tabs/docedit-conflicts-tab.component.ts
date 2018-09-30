@@ -22,7 +22,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     private conflictedRevisions: Array<IdaiFieldDocument> = [];
     private selectedRevision: IdaiFieldDocument|undefined;
     private differingFields: any[];
-    private relationTargets: { [targetId: string]: IdaiFieldDocument };
+    private relationTargets: { [targetId: string]: IdaiFieldDocument|undefined };
     private ready = false;
 
 
@@ -125,7 +125,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
             for (let targetId of resource.relations[fieldName]) {
                 this.datastore.get(targetId).then(
                     doc => { this.relationTargets[targetId] = <IdaiFieldDocument> doc; },
-                    () => this.messages.add([M.DATASTORE_NOT_FOUND])
+                    () => { this.relationTargets[targetId] = undefined; }
                 );
             }
         }
@@ -137,10 +137,10 @@ export class DoceditConflictsTabComponent implements OnChanges {
         let result: string = '';
 
         for (let targetId of targetIds) {
-            if (this.relationTargets[targetId]) {
-                if (result.length > 0) result += ', ';
-                result += this.relationTargets[targetId].resource.identifier;
-            }
+            if (result.length > 0) result += ', ';
+            result += this.relationTargets[targetId]
+                ? (this.relationTargets[targetId] as IdaiFieldDocument).resource.identifier
+                : 'Gelöschte Ressource';
         }
 
         return result;

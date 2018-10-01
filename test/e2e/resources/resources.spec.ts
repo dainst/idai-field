@@ -477,6 +477,7 @@ describe('resources --', () => {
     });
 
 
+    // TODO Check if this test can be removed completely. Currently there are no sibling types with differing relations.
     xit('typechange -- should delete invalid relations when changing the type of a resource to a sibling type', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');

@@ -346,7 +346,7 @@ export const DOCS: NewDocument[] = [
         'resource': {
             'id': 'sa1',
             'identifier': 'A1',
-            'shortDescription': 'Survey Areal 1',
+            'shortDescription': 'Survey-Areal 1',
             'type': 'Survey',
             'relations': {},
             "geometry": {

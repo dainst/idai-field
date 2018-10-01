@@ -12,23 +12,19 @@
     text-align: left;
   }
 
-  .btn:hover {
-    z-index: auto;
-  }
-
-  .navigation-button.active ~ .navigation-button,
-  .navigation-button.active ~ .navigation-button:active {
+  .root-document ~ .navigation-button,
+  .root-document ~ .navigation-button:active {
     color: lighten(#5572A1, 30%);
     border-color: lighten(#5572A1, 30%);
   }
 
-  .navigation-button.active ~ .navigation-button:hover {
+  .root-document ~ .navigation-button:hover {
     color: lighten(#5572A1, 35%);
     border-color: lighten(#5572A1, 35%);
   }
 
-  .navigation-button.active + .navigation-button,
-  .navigation-button.active + .navigation-button:hover {
+  .root-document + .navigation-button,
+  .root-document + .navigation-button:hover {
     border-left-color: #5572A1;
   }
 
@@ -41,7 +37,7 @@
     border: solid transparent;
     content: '';
     pointer-events: none;
-    z-index: 2;
+    z-index: 10000;
   }
 
   .navigation-button:not(:last-child):before {
@@ -50,19 +46,13 @@
     margin-top: -6px;
   }
 
-  .navigation-button.active:not(:last-child):before {
-    border-left-color: #37588e;
-    border-width: 6px;
-    margin-top: -6px;
-  }
-
-  .navigation-button:not(:last-child):not(.active):after {
+  .navigation-button:not(:last-child):after {
     border-left-color: #fff;
     border-width: 5px;
     margin-top: -5px;
   }
 
-  .active ~ .navigation-button:not(:last-child):before {
+  .root-document ~ .navigation-button:not(:last-child):before {
     border-left-color: lighten(#5572A1, 30%);
   }
 

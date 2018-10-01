@@ -125,7 +125,7 @@ describe('resources/state --', function() {
     });
 
 
-    xit('search -- show correct types in plus type menu after choosing type filter', () => {
+    it('search -- show correct types in plus type menu after choosing type filter', () => {
 
         NavbarPage.clickNavigateToExcavation();
 
@@ -135,13 +135,13 @@ describe('resources/state --', function() {
             ResourcesPage.clickCreateResource();
             browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
             browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
-            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('processunit')), delays.ECWaitTime);
-            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('processunit-drilling')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
+            browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('find-pottery')), delays.ECWaitTime);
 
-            SearchBarPage.clickChooseTypeFilter('processunit');
+            SearchBarPage.clickChooseTypeFilter('find');
             ResourcesPage.clickCreateResource();
-            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit-drilling')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('find-pottery')), delays.ECWaitTime);
             browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
             browser.wait(EC.stalenessOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
 
@@ -149,8 +149,8 @@ describe('resources/state --', function() {
             ResourcesPage.clickCreateResource();
             browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature')), delays.ECWaitTime);
             browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('feature-architecture')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit')), delays.ECWaitTime);
-            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('processunit-drilling')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('find')), delays.ECWaitTime);
+            browser.wait(EC.presenceOf(ResourcesPage.getResourceTypeOption('find-pottery')), delays.ECWaitTime);
         };
 
         checkTypeOptions();

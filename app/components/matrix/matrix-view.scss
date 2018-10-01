@@ -36,6 +36,8 @@
   #selected-trench-label {
     position: absolute;
     left: 37px;
+
+    @extend .btn-outline-primary:active;
   }
 }
 

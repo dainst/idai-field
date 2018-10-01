@@ -204,8 +204,6 @@ export class SettingsService {
         if (!this.currentSyncUrl) return Promise.resolve();
         if (!this.getSelectedProject()) return Promise.resolve();
 
-        console.log('SettingsService.startSync()');
-
         return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject())
             .then(syncState => {
 

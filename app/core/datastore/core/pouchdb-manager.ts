@@ -62,7 +62,7 @@ export class PouchdbManager {
                 }
             }));
             app.listen(3000, function() {
-                console.log('PouchDB Server listening on port 3000');
+                console.debug('PouchDB Server is listening on port 3000');
                 resolve();
             });
         });
@@ -106,7 +106,7 @@ export class PouchdbManager {
     public setupSync(url: string, projectName: string): Promise<SyncState> {
 
         const fullUrl = url + '/' + (projectName === 'synctest' ? 'synctestremotedb' : projectName);
-        console.log('start syncing with', fullUrl);
+        console.debug('Start syncing');
 
         return (this.getDbProxy() as any).ready().then((db: any) => {
             let sync = db.sync(fullUrl, { live: true, retry: false });
@@ -126,10 +126,9 @@ export class PouchdbManager {
 
     public stopSync() {
 
-        console.log('stop sync');
+        console.debug('Stop syncing');
 
         for (let handle of this.syncHandles) {
-            console.debug('stop sync', handle);
             (handle as any).cancel();
         }
         this.syncHandles = [];

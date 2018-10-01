@@ -12,6 +12,10 @@
     text-align: left;
   }
 
+  .root-document {
+    @extend .btn-outline-primary:active;
+  }
+
   .root-document ~ .navigation-button,
   .root-document ~ .navigation-button:active {
     color: lighten(#5572A1, 30%);
@@ -37,7 +41,7 @@
     border: solid transparent;
     content: '';
     pointer-events: none;
-    z-index: 10000;
+    z-index: 2;
   }
 
   .navigation-button:not(:last-child):before {

@@ -1,4 +1,4 @@
-<div *ngIf="conflicts.length">
+<div id="taskbar-conflicts-container" *ngIf="conflicts.length">
     <ng-template #popContent>
         <ul class="list-group conflicts-popover-content">
             <li *ngFor="let document of conflicts" class="list-group-item"

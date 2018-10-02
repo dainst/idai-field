@@ -20,7 +20,7 @@ Geo information can be imported or created directly in app.
 ![idai-field](img/README-FEATURES-8.png)
 
 A Harris style matrix is automatically calculated for every trench
-from its stratigraphical units and their temporal relations. 
+from its stratigraphical units and their temporal or spatial relations. 
 
 ## Image management
 

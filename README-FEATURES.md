@@ -15,12 +15,12 @@ via a JSON based configuration.
  
 Geo information can be imported or created directly in app.
 
-## Harris Matrix
+## Matrix
 
 ![idai-field](img/README-FEATURES-8.png)
 
 A Harris style matrix is automatically calculated for every trench
-from its stratigraphical units and their temporal relations. 
+from its stratigraphical units and their temporal or spatial relations. 
 
 ## Image management
 
@@ -35,7 +35,7 @@ maps to provide a visual context to your resources.
 ![idai-field](img/README-FEATURES-6.png) ![idai-field](img/README-FEATURES-7.png)
 
 Multiple clients can be synced to each other to edit the same data on the field site.
-Syncing can also be done to a database server to collect the excavations records
+Syncing can also be done to a database server to collect the project's records
 on a single central system later on.
 
 ## Table view

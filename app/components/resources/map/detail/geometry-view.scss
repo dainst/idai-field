@@ -26,7 +26,8 @@ $buttoncolor: #657faa;
 #document-view-button-create-point,
 #document-view-button-edit-geometry {
     margin-top: 1px;
-    padding: 0;
+    margin-left: 3px;
+    padding: 0 7px;
     font-size: 23px;
     color: $buttoncolor !important;
 }

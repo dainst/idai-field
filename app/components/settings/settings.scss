@@ -4,21 +4,6 @@
  */
 
 .settings {
-
-  .settings-nav {
-    position: relative;
-    z-index: 1001;
-    border-bottom: 1px solid $gray-200;
-  }
-
-  .settings-container {
-    height: calc(100vh - 107px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0;
-    margin: 0;
-  }
-
   #save-settings-button:active,
   #save-settings-button:focus {
     outline: none;

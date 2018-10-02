@@ -1,9 +1,7 @@
 <div class="backup-loading row">
-
     <div class="col">
-
         <div class="row">
-            <div class="col backup-nav bg-light py-2 text-right">
+            <div class="col default-nav bg-light text-right">
                 <button id="loadBackupButton"
                         class="btn btn-primary"
                         [ngClass]="{ 'disabled': running }"
@@ -15,7 +13,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col backup-container">
+            <div class="form-group col default-container">
                 <div class="col-lg-6 mx-lg-auto py-4">
                     Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank /
                     eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten
@@ -53,6 +51,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>

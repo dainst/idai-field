@@ -1,25 +1,19 @@
-<div class="settings row"
-     (dragover)="false"
-     (dragleave)="false"
-     (drop)="false">
+<div class="settings row" (dragover)="false" (dragleave)="false" (drop)="false">
 
     <div class="col">
-
         <div class="row">
-            <div class="col settings-nav bg-light py-2 text-right">
-
+            <div class="col default-nav bg-light text-right">
                 <button id="save-settings-button" class="btn btn-primary"
                         [ngClass]="{ 'disabled': saving }"
                         (click)="saving || save()">
                     <span class="mdi mdi-settings" style="color: white"></span>
                     Einstellungen übernehmen
                 </button>
-
             </div>
         </div>
 
         <div class="row">
-            <div class="form-group col settings-container">
+            <div class="form-group col default-container">
 
                 <div class="col-lg-6 mx-lg-auto py-4">
 

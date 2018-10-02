@@ -1,7 +1,7 @@
 <div class="import row" (dragover)="false" (dragleave)="false" (drop)="false">
     <div class="col">
         <div class="row">
-            <div class="col import-nav bg-light py-2 text-right">
+            <div class="col default-nav bg-light text-right">
                 <button id="importStartButton"
                         class="btn btn-primary"
                         [ngClass]="{ 'disabled': !isReady() }"
@@ -13,7 +13,7 @@
         </div>
 
         <div class="row">
-            <div class="form-group col import-container">
+            <div class="form-group col default-container">
 
                 <div class="col-lg-6 mx-lg-auto py-4">
                     <div class="form-group">

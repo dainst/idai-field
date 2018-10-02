@@ -50,30 +50,37 @@
   top: 32px;
 }
 
-#map-editor-button-ok {
-  right: 119px;
-  bottom: 8px;
-}
+#map-editor-buttons {
+  .mdi-24px {
+    position: relative;
+    bottom: 3px;
+  }
 
-#map-editor-button-abort {
-  right: 8px;
-  bottom: 8px;
-}
+  #map-editor-button-ok {
+    right: 119px;
+    bottom: 8px;
+  }
 
-#map-editor-button-delete,
-#map-editor-button-delete-disabled {
-  left: 10px;
-  bottom: 8px;
-  height: 38px;
-  width: 38px;
-  padding: 3px;
-}
+  #map-editor-button-abort {
+    right: 8px;
+    bottom: 8px;
+  }
 
-#map-editor-button-add-polygon,
-#map-editor-button-add-polyline {
-  left: 56px;
-  bottom: 8px;
-  height: 38px;
-  width: 38px;
-  padding: 3px;
+  #map-editor-button-delete,
+  #map-editor-button-delete-disabled {
+    left: 10px;
+    bottom: 8px;
+    height: 38px;
+    width: 38px;
+    padding: 3px;
+  }
+
+  #map-editor-button-add-polygon,
+  #map-editor-button-add-polyline {
+    left: 56px;
+    bottom: 8px;
+    height: 38px;
+    width: 38px;
+    padding: 3px;
+  }
 }

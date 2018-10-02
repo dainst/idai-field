@@ -15,7 +15,7 @@ via a JSON based configuration.
  
 Geo information can be imported or created directly in app.
 
-## Harris Matrix
+## Matrix
 
 ![idai-field](img/README-FEATURES-8.png)
 

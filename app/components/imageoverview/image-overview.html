@@ -6,14 +6,14 @@
          (drop)="false">
 
         <div class="row bg-light image-overview-nav">
-            <div *ngIf="!getSelected().length" class="col-sm-7 py-2">
+            <div *ngIf="!getSelected().length" class="col-sm-7 image-overview-nav-content">
                 <search-bar [q]="getQuery().q"
                             [types]="getQuery().types" [parentType]="'Image'" [hidden]="getSelected().length"
                             (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setTypeFilters($event)">
                 </search-bar>
             </div>
 
-            <div *ngIf="!getSelected().length" class="col-sm-3 py-2">
+            <div *ngIf="!getSelected().length" class="col-sm-3 image-overview-nav-content">
                 <select id="main-type-document-filter-select" class="form-control"
                         [ngModel]="getMainTypeDocumentFilterOption()"
                         (ngModelChange)="chooseMainTypeDocumentFilterOption($event)">

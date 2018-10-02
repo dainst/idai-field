@@ -23,7 +23,7 @@
                 </select>
             </div>
 
-            <div *ngIf="getSelected().length" class="col-sm-10 py-2">
+            <div *ngIf="getSelected().length" id="taskbar-container" class="col-sm-10">
                 <image-overview-taskbar [imageGrid]="imageGrid"></image-overview-taskbar>
             </div>
 

@@ -12,6 +12,11 @@
     position: relative;
     z-index: 1001;
     border-bottom: 1px solid $gray-200;
+    height: 56px;
+  }
+
+  #taskbar-container {
+    padding-top: 7px !important;
   }
 
   #image-overview-buttons {

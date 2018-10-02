@@ -1,5 +1,4 @@
 .projects-modal {
-
     .project-select{
         padding-top: 8px;
     }
@@ -24,4 +23,7 @@
 
 #projects-badge {
     padding: 0.5em !important;
+    max-width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

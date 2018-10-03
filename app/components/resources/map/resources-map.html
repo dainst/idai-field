@@ -3,7 +3,7 @@
         <sidebar-list></sidebar-list>
     </div>
 
-    <div class="col px-0">
+    <div id="map-component-container" class="col px-0" [class.small-container]="isDocumentSelected()">
         <editable-map *ngIf="mapMode === '2d'" [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
                       [parentDocuments]="parentDocuments"

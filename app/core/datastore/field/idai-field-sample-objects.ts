@@ -551,7 +551,7 @@ export const DOCS: NewDocument[] = [
         'resource': {
             'id': 't3',
             'identifier': 'S3',
-            'shortDescription': 'Schnitt',
+            'shortDescription': 'Schnitt 3',
             'relations': {
                 'isRecordedIn': [],
                 'isDepictedIn': ['example_model']

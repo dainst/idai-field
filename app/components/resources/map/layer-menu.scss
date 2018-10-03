@@ -20,7 +20,7 @@ $layer-menu-button-inactive-color: grey;
 }
 
 .layer-menu {
-  top: 51px;
+  top: 52px;
   max-height: 314px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -41,6 +41,7 @@ $layer-menu-button-inactive-color: grey;
 
 .layer-menu-button {
   padding: 0;
+  margin-right: 5px;
   font-size: 18px;
   cursor: pointer !important;
 }

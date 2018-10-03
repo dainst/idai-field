@@ -3,20 +3,33 @@
          (click)="toggle()">
         <span class="mdi mdi-cube-outline mdi-18px"></span>
     </div>
-    <div *ngIf="opened" id="layer-3d-menu" class="card card-block form-group layer-menu">
-        <div *ngFor="let layer of layers" class="layer-entry">
-            <span *ngIf="isActiveLayer(layer)">
-                <span class="mdi mdi-eye layer-menu-button layer-active" (click)="toggleLayer(layer)"
-                      data-toggle="tooltip" title="3D-Modell ausblenden"></span>
-                <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
-                      data-toggle="tooltip" title="3D-Modell fokussieren" (click)="focusLayer(layer)"></span>
-            </span>
-            <span *ngIf="!isActiveLayer(layer)">
-                <span class="mdi mdi-eye-off layer-menu-button layer-inactive" (click)="toggleLayer(layer)"
-                      data-toggle="tooltip" title="3D-Modell anzeigen"></span>
-                <span class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive"></span>
-            </span>
-            <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
+    <div *ngIf="opened" id="layer-3d-menu" class="card layer-menu">
+        <div class="card-body">
+            <div class="layer-menu-container">
+                <form>
+                    <fieldset class="form-group">
+                        <div *ngFor="let layer of layers" class="layer-entry">
+                            <span class="mdi layer-menu-button"
+                                  [class.mdi-eye]="isActiveLayer(layer)"
+                                  [class.mdi-eye-off]="!isActiveLayer(layer)"
+                                  [class.layer-active]="isActiveLayer(layer)"
+                                  [class.layer-inactive]="!isActiveLayer(layer)"
+                                  (click)="toggleLayer(layer)">
+                            </span>
+
+                            <span *ngIf="isActiveLayer(layer)"
+                                  class="mdi mdi-image-filter-center-focus layer-menu-button layer-active"
+                                  (click)="focusLayer(layer)">
+                            </span>
+                            <span *ngIf="!isActiveLayer(layer)"
+                                  class="mdi mdi-image-filter-center-focus layer-menu-button layer-inactive">
+                            </span>
+
+                            <span class="layer-menu-label">{{getLayerLabel(layer)}}</span>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     </div>
 </div>

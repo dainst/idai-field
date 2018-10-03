@@ -1,0 +1,15 @@
+<div id="thumbnail-view" (window:resize)="onResize($event)">
+    <image-grid #imageGrid
+                [nrOfColumns]="1"
+                [documents]="documents"
+                [showLinkBadges]="false"
+                [showIdentifier]="true"
+                [showShortDescription]="true"
+                [showDropArea]="true"
+                [compressDropArea]="true"
+                [dropAreaDepictsRelationTarget]="document"
+                [paddingRight]="4"
+                (onClick)="clickRelation($event)"
+                (onFilesUploaded)="onFilesUploaded($event)">
+    </image-grid>
+</div>

@@ -1,27 +1,25 @@
-<div class="row resources-map">
-    <div class="col-lg-3 col-md-3 col-sm-3" id="objectOverview">
+<div class="row flex-nowrap">
+    <div id="sidebar-list-container" class="col">
         <sidebar-list></sidebar-list>
     </div>
 
-    <div [class.col-sm-9]="!viewFacade.getSelectedDocument() || !viewFacade.getSelectedDocument().resource.id"
-         [class.col-sm-6]="viewFacade.getSelectedDocument() && viewFacade.getSelectedDocument().resource.id"
-         class="px-0">
-        <editable-map *ngIf="mapMode == '2d'" [documents]="viewFacade.getDocuments()"
+    <div class="col px-0">
+        <editable-map *ngIf="mapMode === '2d'" [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
-                      [mainTypeDocument]="resourcesComponent.getIsRecordedInTarget()"
+                      [parentDocuments]="parentDocuments"
+                      [mainTypeDocumentIds]="mainTypeIds()"
                       [isEditing]="resourcesComponent.isEditingGeometry"
                       [projectDocument]="resourcesComponent.projectDocument"
-                      [update]="resourcesComponent.ready"
+                      [update]="viewFacade.isReady()"
                       (onSelectDocument)="select($event)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>
-        <map-3d *ngIf="mapMode == '3d'" [documents]="viewFacade.getDocuments()"
+        <map-3d *ngIf="mapMode === '3d'" [documents]="viewFacade.getDocuments()"
                 [selectedDocument]="viewFacade.getSelectedDocument()"
-                [mainTypeDocument]="resourcesComponent.getIsRecordedInTarget()"
+                [mainTypeDocumentIds]="mainTypeIds()"
                 (onSelectDocument)="select($event)"></map-3d>
     </div>
 
-    <div *ngIf="viewFacade.getSelectedDocument() && viewFacade.getSelectedDocument().resource.id"
-         class="col-sm-3 document-info px-0">
-        <document-view-sidebar [showGeometryEditingOptions]="mapMode == '2d'"></document-view-sidebar>
+    <div *ngIf="isDocumentSelected()" class="col px-0 detail-sidebar-container">
+        <document-view-sidebar [showGeometryEditingOptions]="mapMode === '2d'"></document-view-sidebar>
     </div>
 </div>

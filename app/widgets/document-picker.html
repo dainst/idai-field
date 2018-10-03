@@ -1,10 +1,9 @@
-<div class="resource-picker">
-
+<div id="document-picker">
     <search-bar [showFiltersMenu]="true"
                 [relationName]="relationName"
                 [relationRangeType]="relationRangeType"
                 (onQueryStringChanged)="setQueryString($event)"
-                (onTypesChanged)="setQueryTypes($event)"></search-bar>
+                (onTypesChanged)="setTypeFilters($event)"></search-bar>
 
     <ul *ngIf="documents && documents.length > 0" class="list-group" id="document-picker-list">
         <li *ngFor="let document of documents; let index = index"
@@ -16,8 +15,10 @@
         </li>
     </ul>
 
-    <div *ngIf="!documents || documents.length == 0">
+    <div id="document-picker-placeholder" *ngIf="!documents || documents.length == 0">
         <br>
-        Keine Ziele gefunden
+        <loading-icon></loading-icon>
+        <span *ngIf="!isQuerySpecified()">Keine Suchkriterien angegeben</span>
+        <span *ngIf="isQuerySpecified() && !isLoading()">Keine Ziele gefunden</span>
     </div>
 </div>

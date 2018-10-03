@@ -1,7 +1,6 @@
 import * as THREE from 'three';
-import {Input, OnChanges} from '@angular/core';
-import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {OnChanges} from '@angular/core';
+import {Document} from 'idai-components-2';
 import {Map3DComponent} from '../map-3d.component';
 import {LayerManager, ListDiffResult} from '../../layer-manager';
 import {LayerMeshManager} from './layer-mesh-manager';
@@ -12,8 +11,6 @@ import {MeshLoadingProgress} from '../../../../core-3d/mesh-loading/mesh-loading
  * @author Thomas Kleinke
  */
 export class LayersComponent implements OnChanges {
-
-    @Input() mainTypeDocument: IdaiFieldDocument;
 
     public layers: Array<Document> = [];
 
@@ -39,7 +36,7 @@ export class LayersComponent implements OnChanges {
 
         const id: string = layer.resource.id as string;
 
-        this.layerManager.toggleLayer(id, this.mainTypeDocument);
+        this.layerManager.toggleLayer(id);
 
         if (this.layerManager.isActiveLayer(id)) {
             await this.addLayerMesh(id);
@@ -62,8 +59,7 @@ export class LayersComponent implements OnChanges {
 
     private async updateLayers() {
 
-        const { layers, activeLayersChange }
-            = await this.layerManager.initializeLayers(this.mainTypeDocument);
+        const { layers, activeLayersChange } = await this.layerManager.initializeLayers();
 
         this.layers = layers;
         this.handleActiveLayersChange(activeLayersChange);

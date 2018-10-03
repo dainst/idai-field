@@ -1,7 +1,8 @@
 import {Settings} from './settings';
 
 const remote = require('electron').remote;
-const fs = remote.require('fs');
+import * as fs from 'fs';
+
 
 /**
  * @author Thomas Kleinke
@@ -12,15 +13,12 @@ export class SettingsSerializer {
     public load(): Promise<Settings> {
 
         return new Promise((resolve,reject) => {
-
             fs.readFile(remote.getGlobal('configPath'), 'utf-8', (err: any, content: any) => {
                 if (err) {
                     reject(err);
                 } else {
                     let settings = JSON.parse(content);
-                    if (!settings.syncTarget) settings.syncTarget = {};
-                    if (!settings.remoteSites) settings.remoteSites = [];
-                    resolve(settings);
+                    resolve(remote.getGlobal('setConfigDefaults')(settings));
                 }
             });
         });
@@ -33,9 +31,8 @@ export class SettingsSerializer {
 
         let configToWrite: any = {};
 
-        if (settings.isSyncActive) {
-            configToWrite['isSyncActive'] = settings.isSyncActive;
-        }
+        configToWrite['isAutoUpdateActive'] = settings.isAutoUpdateActive;
+        configToWrite['isSyncActive'] = settings.isSyncActive;
 
         if (settings.syncTarget && (settings.syncTarget['username'] || settings.syncTarget['password']
                 || settings.syncTarget['address'])) {
@@ -58,7 +55,8 @@ export class SettingsSerializer {
             configToWrite['dbs'] = settings.dbs;
         }
 
-        return this.writeConfigFile(configToWrite);
+        if (remote) return this.writeConfigFile(configToWrite);
+        else return Promise.resolve(); // only for synctest TODO remove
     }
 
 

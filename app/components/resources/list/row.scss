@@ -1,15 +1,47 @@
-.list-row {
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
-}
+.row-wrapper {
+  display: grid;
+  grid-template-columns: 4fr 6fr 9fr 1fr;
+  grid-gap: 1px;
+  color: #444;
 
-.list-row-left {
-  user-select: none;
-  cursor: default;
+  div {
+    background-color: white;
 
-  .plus-button-wrapper {
-    margin-top: -8px;
-    display: inline-block;
-    width: 24px;
-    float: right;
+    div {
+      font-size: 14px;
+      display: inline-block;
+    }
+  }
+
+  .label-field {
+    padding: 6px 5px 0 10px;
+  }
+
+  .input-field {
+    padding: 4px 5px 0 2px;
+  }
+
+  .move-into-button {
+    position: relative;
+    top: -2px;
+    right: -1px;
+    padding: 2px 2px 2px 4px;
+    color: #868e96;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+  .list-edit-button {
+    cursor: pointer;
+  }
+
+  .move-into-button:hover {
+    color: darken(#868e96, 5%);
+    background-color: darken(#fff, 5%);
+    transition: background-color .4s ease;
+  }
+
+  input {
+    border: 0;
   }
 }

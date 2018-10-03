@@ -1,0 +1,46 @@
+{
+  "types": {
+    "Feature": {
+      "fields": {
+        "colorSoil": {
+          "label": "Farbe des Bodens",
+          "description": "Farbe des Sediments"
+        },
+        "dimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        }
+      }
+    },
+    "Wall_surface": {
+      "fields": {
+        "dimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        }
+      }
+    },
+    "Inscription": {
+      "fields": {
+        "dimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Objekthöhe"
+        }
+      }
+    },
+    "Pottery": {
+      "fields": {
+        "comment": {
+            "label": "Kommentar"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "fields": {
+        "hasDecorationPattern": {
+          "label": "Dekorationsmuster"
+        }
+      }
+    }
+  }
+}

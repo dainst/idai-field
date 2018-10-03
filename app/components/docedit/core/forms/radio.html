@@ -1,0 +1,27 @@
+<div *ngFor="let item of field.valuelist"
+     class="radio form-check form-check-inline">
+    <label class="form-check-label">
+        <input class="form-check-input" value="{{item}}" type="radio"
+               name="{{field.name}}"
+               (click)="setValue(item)"
+               [checked]="item == resource[field.name]">
+        {{item}}
+    </label>
+</div>
+<div class="form-check form-check-inline">
+    <label class="form-check-label">
+        <input class="form-check-input" value="" type="radio"
+               name="{{resource[field.name]}}"
+               (click)="resetValue()"
+               [checked]="!resource.hasOwnProperty(field.name)">
+        --
+    </label>
+</div>
+
+
+<br *ngIf="notIncludedInValueList()"> <!-- TODO remove duplicate code -->
+<span *ngIf="notIncludedInValueList()">
+    <small>Die Ressource enthält nicht in Werteliste enthaltene Einträge:
+        <button (click)="resetValue()" class="btn btn-sm mr-1" *ngFor="let item of notIncludedInValueList()">{{item}} <span class="mdi mdi-close-circle-outline"></span></button>
+    </small>
+</span>

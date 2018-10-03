@@ -1,13 +1,11 @@
-import {Component, Input, OnChanges} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
+import {Component, Input} from '@angular/core';
+import {IdaiFieldDocument} from 'idai-components-2';
+import {IdaiType, ProjectConfiguration} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
-import {Node} from './node';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
-import {IdaiFieldDocumentDatastore} from '../../../core/datastore/idai-field-document-datastore';
-import {TreeBuilder} from './tree-builder';
-import {FoldState} from './fold-state';
+import {BaseList} from '../base-list';
+
 
 @Component({
     selector: 'list',
@@ -15,107 +13,32 @@ import {FoldState} from './fold-state';
     templateUrl: './list.html'
 })
 /**
- * A hierarchical view of resources
- *
  * @author Fabian Z.
  * @author Thomas Kleinke
+ * @author Philipp Gerth
  */
-export class ListComponent implements OnChanges {
+export class ListComponent extends BaseList {
 
-    @Input() ready: boolean;
-    @Input() documents: IdaiFieldDocument[];
+    @Input() documents: Array<IdaiFieldDocument>;
 
     public typesMap: { [type: string]: IdaiType };
 
-    public treeBuilder: TreeBuilder;
-    public tree: Node[] = [];
-
-    private docs: IdaiFieldDocument[] = [];
-
-    private newResourceCreated: boolean = false;
-
 
     constructor(
-        private datastore: IdaiFieldDocumentDatastore,
-        public resourcesComponent: ResourcesComponent,
-        private loading: Loading,
-        projectConfiguration: ProjectConfiguration,
-        public viewFacade: ViewFacade,
-        private foldState: FoldState
+        resourcesComponent: ResourcesComponent,
+        viewFacade: ViewFacade,
+        loading: Loading,
+        projectConfiguration: ProjectConfiguration
     ) {
-        this.typesMap = projectConfiguration.getTypesMap();
-        this.treeBuilder = new TreeBuilder(datastore, foldState);
+        super(resourcesComponent, viewFacade, loading);
+        this.typesMap = projectConfiguration.getTypesMap()
     }
 
 
-    ngOnChanges() {
+    public async createNewDocument(doc: IdaiFieldDocument) {
 
-        if (!this.ready) return;
-        this.loading.start();
-
-        // The timeout is necessary to make the loading icon appear
-        setTimeout(async () => {
-            this.clearFoldStateIfNecessary();
-
-            if (this.viewFacade.getDocuments()) {
-                if (!this.resourcesComponent.getIsRecordedInTarget()) return Promise.resolve();
-                this.docs = this.viewFacade.getDocuments() as IdaiFieldDocument[];
-                this.tree = await this.treeBuilder.from(this.viewFacade.getDocuments() as IdaiFieldDocument[]);
-            }
-            this.loading.stop();
-        }, 1);
-    }
-
-
-    public documentsInclude(doc: IdaiFieldDocument): boolean {
-
-        return this.docs.some(d => d.resource.id == doc.resource.id );
-    }
-
-
-    public showPlusButton() {
-
-        if (this.resourcesComponent.ready && !this.loading.showIcons && this.viewFacade.getQuery().q == '') {
-            if (this.viewFacade.isInOverview()) return true;
-            if (this.viewFacade.getSelectedMainTypeDocument()) return true;
-        }
-
-        return false;
-    }
-
-
-    public async createNewDocument(newDoc: IdaiFieldDocument) {
-
-        const docs: Array<IdaiFieldDocument> = this.viewFacade.getDocuments() as IdaiFieldDocument[];
-        
-        for (let doc of docs) {
-            if (!doc.resource.id) {
-                docs.splice(docs.indexOf(doc),1);
-                break;
-            }
-        }
-        docs.push(newDoc);
-
-        // if newDoc as parent, ensure that it's children are shown 
-        if (newDoc.resource.relations['liesWithin']) {
-            const parentDocId = newDoc.resource.relations['liesWithin'][0];
-            if (parentDocId && this.foldState.childrenShownForIds.indexOf(parentDocId) == -1) {
-                this.foldState.childrenShownForIds.push(parentDocId);
-            }
-        }
-
-        this.docs = docs;
-        this.newResourceCreated = true;
-        this.tree = await this.treeBuilder.from(docs);
-    }
-
-
-    private clearFoldStateIfNecessary() {
-
-        if (!this.newResourceCreated) {
-            this.foldState.clear();
-        } else {
-            this.newResourceCreated = false;
-        }
+        this.documents = this.documents
+            .filter(_ => _.resource.id)
+            .concat([doc]);
     }
 }

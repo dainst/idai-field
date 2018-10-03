@@ -1,0 +1,36 @@
+<ul id="objectList" class="list-group object-list">
+    <li *ngFor="let document of viewFacade.getDocuments()"
+        (click)="select(document)"
+        (dblclick)="resourcesComponent.editDocument(document, 'fields')"
+        class="list-group-item"
+        [class.new-from-remote]="viewFacade.isNewDocumentFromRemote(document)"
+        [class.conflicted]="document['_conflicts']"
+        [class.selected]="viewFacade.getSelectedDocument()
+                && viewFacade.getSelectedDocument().resource.id === document.resource.id"
+        [id]="'resource-' + document.resource.identifier">
+
+        <div *ngIf="showMoveIntoOption(document)"
+              class="move-into-button btn float-right"
+              (click)="moveInto(document); $event.stopPropagation();">
+            <span class="mdi mdi-subdirectory-arrow-right mdi-18px"></span>
+        </div>
+
+        <div class="document-teaser-container">
+            <document-teaser [document]="document"></document-teaser>
+        </div>
+    </li>
+
+    <li *ngIf="isDocumentLimitExceeded()" id="document-limit-info">
+        Es werden die ersten {{viewFacade.getDocuments().length}} von {{viewFacade.getTotalDocumentCount()}}
+        Ressourcen angezeigt. Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten Suchmodus,
+        um auf die übrigen Ressourcen zuzugreifen.
+        <br><br><br>
+    </li>
+</ul>
+
+<plus-button *ngIf="isPlusButtonShown()" id="create-document-button" [placement]="'top'"
+             [preselectedType]="getCurrentFilterType()"
+             [liesWithin]="getSelectedSegmentDoc()"
+             [isRecordedIn]="viewFacade.getSelectedOperations()[0]"
+             [status]="getPlusButtonStatus()"></plus-button>
+<loading-icon></loading-icon>

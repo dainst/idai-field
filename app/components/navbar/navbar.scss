@@ -1,3 +1,12 @@
+$tab-bg-color: $gray-100;
+$tab-bg-color-hover: lighten($navbar-default-bg, 10%);
+$link-hover-color: lighten($navbar-default-bg, 30%);
+
+.navbar {
+  -webkit-app-region: drag;
+  padding: 0 10px;
+}
+
 .navbar.bg-primary {
   background-color: $navbar-default-bg !important;
 }
@@ -8,25 +17,100 @@
 
 .navbar a {
   color: #fff;
+  cursor: default;
+
+  &:hover {
+    color: $link-hover-color;
+  }
+}
+
+.navbar .mdi:hover {
+  color: $link-hover-color;
+}
+
+.navbar-tabbed .nav-link {
+  padding: 0.7em 1em;
+  margin-top: 0.3em;
+}
+
+.navbar-dark .navbar-tabbed a.nav-link {
+
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  position: relative;
+
+  &:before,
+  &:after {
+    position: absolute;
+    bottom: -1px;
+    width: 6px;
+    height: 6px;
+    content: " ";
+  }
+  &:before {
+    left: -5px;
+  }
+  &:after {
+    right: -5px;
+  }
+
+  &.active {
+    background-color: $tab-bg-color;
+    color: #000;
+    z-index: 10;
+
+    &:before {
+      border-color: $tab-bg-color;
+      box-shadow: 2px 2px 0 $tab-bg-color;
+      border-bottom-right-radius: 6px;
+      border-bottom: 1px solid $tab-bg-color;
+      border-right: 1px solid $tab-bg-color;
+    }
+
+    &:after {
+      border-color: $tab-bg-color;
+      box-shadow: -2px 2px 0 $tab-bg-color;
+      border-bottom-left-radius: 6px;
+      border-bottom: 1px solid $tab-bg-color;
+      border-left: 1px solid $tab-bg-color;
+    }
+  }
+
+  &:hover:not(.active) {
+    background-color: $tab-bg-color-hover;
+    z-index: 5;
+    color: white;
+
+    &:before {
+      border-color: $tab-bg-color-hover;
+      box-shadow: 2px 2px 0 $tab-bg-color-hover;
+      border-bottom-right-radius: 6px;
+      border-bottom: 1px solid $tab-bg-color-hover;
+      border-right: 1px solid $tab-bg-color-hover;
+    }
+
+    &:after {
+      border-color: $tab-bg-color-hover;
+      box-shadow: -2px 2px 0 $tab-bg-color-hover;
+      border-bottom-left-radius: 6px;
+      border-bottom: 1px solid $tab-bg-color-hover;
+      border-left: 1px solid $tab-bg-color-hover;
+    }
+  }
+
 }
 
 #idai-field-brand {
-  padding-top: 0;
-  margin-top: 3px;
-  margin-right: 40px;
+  padding: 0;
+  margin-right: 20px;
   user-select: none;
 
-  img {
-    height: 38px;
-    width: 38px;
-    float: left;
+  &.navbar-brand-mac {
+    margin-left: 70px;
   }
 
   #brand-text {
     display: inline-block;
-    padding-top: 5px;
-    margin-top: -2px;
-    margin-left: 5px;
     cursor: default;
 
     #brand-text-idai {
@@ -52,11 +136,6 @@
 .navbar-nav {
   margin-top: 0 !important;
   user-select: none;
-}
-
-.navbar-hover-element.active,
-.navbar-hover-element:hover {
-  text-shadow: 1px 1px 10px #fff, 1px 1px 10px #ccc;
 }
 
 .navbar-hover-element {

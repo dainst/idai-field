@@ -1,12 +1,13 @@
-import {Component, SimpleChanges} from '@angular/core';
-import {MapComponent} from 'idai-components-2/idai-field-map';
-import {Messages} from 'idai-components-2/messages';
-import {ConfigLoader} from 'idai-components-2/configuration';
+import {Component, Input, SimpleChanges} from '@angular/core';
+import {MapComponent} from 'idai-components-2';
+import {Messages} from 'idai-components-2';
+import {ProjectConfiguration} from 'idai-components-2';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
 import {ImageLayerManager} from './image-layer-manager';
 import {ListDiffResult} from '../layer-manager';
 import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {LayerImageProvider} from './layer-image-provider';
+import {IdaiFieldGeoreference} from 'idai-components-2';
 
 
 @Component({
@@ -20,27 +21,37 @@ import {LayerImageProvider} from './layer-image-provider';
  */
 export class LayerMapComponent extends MapComponent {
 
+    @Input() mainTypeDocumentIds: string;
+
     public layers: Array<IdaiFieldImageDocument> = [];
 
     private panes: { [resourceId: string]: any } = {};
     private imageOverlays: { [resourceId: string]: L.ImageOverlay } = {};
-    private layersUpdate: boolean = false;
+    private layersUpdate: boolean = true;
 
 
     constructor(private layerManager: ImageLayerManager,
                 private layerImageProvider: LayerImageProvider,
                 protected messages: Messages,
-                configLoader: ConfigLoader) {
+                projectConfiguration: ProjectConfiguration) {
 
-        super(configLoader);
+        super(projectConfiguration);
 
         this.layerManager.reset();
     }
 
 
+    async ngOnChanges(changes: SimpleChanges) {
+
+        if (LayerMapComponent.isLayersUpdateNecessary(changes)) this.layersUpdate = true;
+
+        await super.ngOnChanges(changes);
+    }
+
+
     public async toggleLayer(layer: IdaiFieldImageDocument) {
 
-        this.layerManager.toggleLayer(layer.resource.id as any, this.mainTypeDocument);
+        this.layerManager.toggleLayer(layer.resource.id as any);
 
         if (this.layerManager.isActiveLayer(layer.resource.id as any)) {
             await this.addLayerToMap(layer.resource.id as any);
@@ -68,8 +79,6 @@ export class LayerMapComponent extends MapComponent {
      */
     protected async updateMap(changes: SimpleChanges): Promise<any> {
 
-        if (LayerMapComponent.isLayersUpdateNecessary(changes)) this.layersUpdate = true;
-
         if (!this.update) return Promise.resolve();
 
         await super.updateMap(changes);
@@ -85,8 +94,7 @@ export class LayerMapComponent extends MapComponent {
 
         this.layerImageProvider.reset();
 
-        const { layers, activeLayersChange } =
-            await this.layerManager.initializeLayers(this.mainTypeDocument);
+        const { layers, activeLayersChange } = await this.layerManager.initializeLayers();
 
         this.layers = layers;
         this.initializePanes();
@@ -126,12 +134,12 @@ export class LayerMapComponent extends MapComponent {
 
         const imageContainer: ImageContainer = await this.layerImageProvider.getImageContainer(resourceId);
 
-        const georeference = layerDocument.resource.georeference;
+        const georeference = layerDocument.resource.georeference as IdaiFieldGeoreference;
         this.imageOverlays[resourceId] = L.imageOverlay(
             imageContainer.imgSrc ? imageContainer.imgSrc : imageContainer.thumbSrc as any,
-            [(georeference as any).topLeftCoordinates,
-            (georeference as any).topRightCoordinates,
-            (georeference as any).bottomLeftCoordinates],
+            [georeference.topLeftCoordinates,
+            georeference.topRightCoordinates,
+            georeference.bottomLeftCoordinates],
             { pane: layerDocument.resource.id }).addTo(this.map);
     }
 
@@ -158,8 +166,8 @@ export class LayerMapComponent extends MapComponent {
         // Update layers after switching main type document.
         // Update layers after switching to another view with an existing main type document or coming from
         // a view with an existing main type document.
-        if (changes['mainTypeDocument']
-            && (changes['mainTypeDocument'].currentValue || changes['mainTypeDocument'].previousValue)) {
+        if (changes['mainTypeDocumentIds']
+            && (changes['mainTypeDocumentIds'].currentValue || changes['mainTypeDocumentIds'].previousValue)) {
             return true;
         }
 

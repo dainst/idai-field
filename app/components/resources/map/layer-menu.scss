@@ -15,10 +15,12 @@ $layer-menu-button-inactive-color: grey;
 
 .layer-button {
   top: 11px;
+  height: 41px;
+  padding-top: 8px;
 }
 
 .layer-menu {
-  top: 50px;
+  top: 51px;
   max-height: 314px;
   padding-bottom: 10px;
   overflow-y: auto;

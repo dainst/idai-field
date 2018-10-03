@@ -5,72 +5,34 @@ import {Injectable} from '@angular/core';
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class Loading { // TODO move this to resources/service. it seems to only be used in the resources package
-
-
-    public showIcons: boolean = false;
+export class Loading {
 
     private loading: number = 0;
-    private timeoutReference: number|undefined;
-    private showIconsDelay: boolean = false;
+    private context: string|undefined;
 
 
-    public start() {
+    public start(context?: string) {
 
+        if (context && !this.context) this.context = context;
         this.loading++;
-        this.updateIconStatus();
     }
 
 
     public stop() {
 
         this.loading--;
-        this.updateIconStatus();
+        if (this.loading === 0) this.context = undefined;
     }
 
 
-    public setShowIconsDelay(showIconsDelay: boolean) {
+    public isLoading(): boolean {
 
-        this.showIconsDelay = showIconsDelay;
+        return this.loading > 0;
     }
 
 
-    private updateIconStatus() {
+    public getContext(): string|undefined {
 
-        if (this.showIconsDelay) {
-            this.updateIconStatusWithDelay();
-        } else {
-            this.updateIconStatusWithoutDelay();
-        }
-    }
-
-
-    private updateIconStatusWithoutDelay() {
-
-        this.clearTimeout();
-        this.showIcons = this.loading > 0;
-    }
-
-
-    private updateIconStatusWithDelay() {
-
-        if (this.loading && !this.timeoutReference) {
-            this.timeoutReference = window.setTimeout(() => {
-                this.timeoutReference = undefined;
-                this.showIcons = true;
-            }, 1000);
-        } else if (!this.loading) {
-            this.clearTimeout();
-            this.showIcons = false;
-        }
-    }
-
-
-    private clearTimeout() {
-
-        if (this.timeoutReference) {
-            window.clearTimeout(this.timeoutReference);
-            this.timeoutReference = undefined;
-        }
+        return this.context;
     }
 }

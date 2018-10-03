@@ -1,0 +1,105 @@
+.object-list {
+  height: calc(100vh - 103px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 !important;
+  background-color: #f8f9fa;
+
+  .list-group-item {
+    display: block;
+    cursor: pointer;
+    border: 0;
+    border-radius: 0;
+    margin: 0 0 1px 0 !important;
+    font-size: 1em;
+    padding: 10px 5px 10px 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    min-height: 66px;
+    height: 66px;
+
+    .document-teaser-container {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 9px;
+      width: calc(100% - 70px);
+      height: 66px;
+
+      .document-teaser {
+        display: flex;
+        align-items: center;
+        height: 66px;
+
+        .subtitle {
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+      }
+    }
+
+    .move-into-button {
+      position: relative;
+      top: 3px;
+      right: 7px;
+      color: #868e96;
+    }
+
+    .move-into-button:hover {
+      color: darken(#868e96, 10%);
+      background-color: darken($list-item-hover-color, 10%);
+      transition: background-color .65s ease;
+    }
+  }
+
+  .list-group-item:hover {
+    background-color: darken($list-item-hover-color, 5%);
+    transition: background-color .65s ease;
+  }
+
+  .selected {
+    background-color: darken($list-item-hover-color, 5%);
+  }
+
+  .title {
+    color: #111;
+  }
+
+  .subtitle {
+    font-size: 0.7em;
+    color: #999;
+  }
+
+  .new {
+    color: #111;
+    font-style: italic;
+  }
+
+  .conflicted {
+    border-right: 2px solid red !important;
+    transition: border-right 1s ease;
+  }
+
+  .new-from-remote {
+    background-color: #d7ffd9;
+  }
+
+  #document-limit-info {
+    padding: 10px;
+    font-style: italic;
+    user-select: none;
+    cursor: default;
+  }
+}
+
+#create-document-button .circular-button {
+  left: 45%;
+  margin: -45px auto auto auto;
+  z-index: 100;
+}

@@ -1,0 +1,61 @@
+/**
+ * @author Thomas Kleinke
+ */
+
+.help {
+  position: relative;
+  height: calc(100vh - 51px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: white;
+  z-index: 1001;
+
+  #help-container {
+    padding: 15px 0;
+    hyphens: auto;
+    text-align: justify;
+
+    h2 {
+      font-size: 1.65em;
+    }
+
+    h3 {
+      font-size: 1.4em;
+    }
+
+    h4 {
+      font-size: 1.15em;
+    }
+
+    pre {
+      background-color: #e9ecef;
+      padding: 10px;
+    }
+
+    img {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+  }
+
+  #table-of-contents-placeholder {
+    border-right: 1px solid #eee;
+  }
+
+  #table-of-contents {
+    position: fixed;
+    margin-top: 10px;
+    user-select: none;
+
+    .nav {
+      margin: 5px 12px;
+
+      .nav-link {
+        cursor: pointer !important;
+
+        &.active {
+          background-color: #5572a1;
+        }
+      }
+    }
+  }
+}

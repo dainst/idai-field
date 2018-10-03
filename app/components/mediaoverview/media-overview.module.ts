@@ -2,8 +2,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiDocumentsModule} from 'idai-components-2/documents';
-import {IdaiWidgetsModule} from 'idai-components-2/widgets'
+import {IdaiDocumentsModule, IdaiWidgetsModule} from 'idai-components-2';
 import {mediaRouting} from './media-overview.routing';
 import {MediaOverviewComponent} from './media-overview.component';
 import {WidgetsModule} from '../../widgets/widgets.module';

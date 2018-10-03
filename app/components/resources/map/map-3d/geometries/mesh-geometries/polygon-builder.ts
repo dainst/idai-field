@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import earcut from 'earcut';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {ProjectConfiguration, IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
 import {MeshGeometry} from './mesh-geometry';
 import {DepthMap} from '../../../../../core-3d/helpers/depth-map';
 import {MeshPreparationUtility} from '../../../../../core-3d/mesh-loading/mesh-preparation-utility';

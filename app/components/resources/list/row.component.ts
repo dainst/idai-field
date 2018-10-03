@@ -1,100 +1,115 @@
-import {Component, Input} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {Validator} from 'idai-components-2/persist';
-import {Messages} from 'idai-components-2/messages';
-import {IdaiType} from 'idai-components-2/configuration';
-import {M} from '../../../m';
-import {SettingsService} from '../../../core/settings/settings-service';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {IdaiFieldDocument} from 'idai-components-2';
+import {IdaiType, Messages} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
-import {ListComponent} from './list.component';
-import {Node} from './node';
 import {ViewFacade} from '../view/view-facade';
-import {IdaiFieldDocumentDatastore} from '../../../core/datastore/idai-field-document-datastore';
-import {PersistenceManager} from '../../../core/persist/persistence-manager';
-import {FoldState} from './fold-state';
+import {PersistenceManager} from '../../../core/model/persistence-manager';
+import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
+import {NavigationService} from '../navigation/navigation-service';
+import {Validator} from '../../../core/model/validator';
+import {UsernameProvider} from '../../../core/settings/username-provider';
+import {M} from '../../m';
+
+
+const RETURN_KEY = 13;
+
 
 @Component({
     selector: 'row',
     moduleId: module.id,
     templateUrl: './row.html'
 })
-
 /**
  * @author Fabian Z.
- * @autor Thomas Kleinke
+ * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
-export class RowComponent {
+export class RowComponent implements AfterViewInit {
 
-    @Input() node: Node;
-    @Input() depth: number;
+    @Input() document: IdaiFieldDocument;
     @Input() typesMap: { [type: string]: IdaiType };
+
+    @ViewChild('identifierInput') identifierInput: ElementRef;
 
     private initialValueOfCurrentlyEditedField: string|undefined;
 
 
     constructor(
         public resourcesComponent: ResourcesComponent,
-        public listComponent: ListComponent,
         public viewFacade: ViewFacade,
-        public foldState: FoldState,
         private messages: Messages,
         private persistenceManager: PersistenceManager,
-        private settingsService: SettingsService,
+        private usernameProvider: UsernameProvider,
         private validator: Validator,
-        private datastore: IdaiFieldDocumentDatastore
-    ) {  }
+        private datastore: IdaiFieldDocumentReadDatastore,
+        private navigationService: NavigationService
+    ) {}
 
 
-    public startEditing(fieldValue: string) {
+    ngAfterViewInit = () => this.focusIdentifierInputIfDocumentIsNew();
 
+    public editDocument = () => this.resourcesComponent.editDocument(this.document);
+
+    public startEditing = (fieldValue: string) => this.initialValueOfCurrentlyEditedField = fieldValue;
+
+    public showMoveIntoOption = () => this.navigationService.showMoveIntoOption(this.document);
+
+    public moveInto = () => this.navigationService.moveInto(this.document);
+
+    public getLabel = () => this.typesMap[this.document.resource.type].label;
+
+    public makeId = () => this.document.resource.id ? 'resource-' + this.document.resource.identifier : 'new-resource';
+
+
+    public stopEditing(fieldValue: string) {
+
+        if (this.initialValueOfCurrentlyEditedField != fieldValue) this.save();
         this.initialValueOfCurrentlyEditedField = fieldValue;
     }
 
 
-    public stopEditing(document: IdaiFieldDocument, fieldValue: string) {
+    public onKeyup(event: KeyboardEvent, fieldValue: string) {
 
-        if (this.initialValueOfCurrentlyEditedField != fieldValue) this.save(document);
-        this.initialValueOfCurrentlyEditedField = fieldValue;
+        if (event.keyCode == RETURN_KEY) this.stopEditing(fieldValue);
     }
 
 
-    public onKeyup(event: KeyboardEvent, document: IdaiFieldDocument, fieldValue: string) {
+    private async save() {
 
-        if (event.keyCode == 13) { // Return key
-            this.stopEditing(document, fieldValue);
+        try {
+            await this.validator.validate(this.document);
+        } catch(msgWithParams) {
+            this.messages.add(msgWithParams);
+            this.restoreIdentifier(this.document);
+            return;
+        }
+
+        try {
+            Object.assign(
+                this.document,
+                await this.persistenceManager.persist(this.document, this.usernameProvider.getUsername())
+            );
+        } catch(msgWithParams) {
+            this.messages.add(msgWithParams);
         }
     }
 
 
-    public save(document: IdaiFieldDocument) {
+    private async restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
 
-        const oldVersion = JSON.parse(JSON.stringify(document));
-
-        this.validator.validate(document)
-            .then(() => this.persistenceManager.persist(document, this.settingsService.getUsername(),
-                [oldVersion]))
-            .then(() => {
-                this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
-                // new document 
-                if (!oldVersion.resource.id) {
-                    this.viewFacade.populateDocumentList();
-                }
-            })
-            .catch(msgWithParams => {
-                this.messages.add(msgWithParams);
-                return this.restoreIdentifier(document);
-            }).catch(msgWithParams => this.messages.add(msgWithParams));
+        try {
+            Object.assign(
+                this.document,
+                await this.datastore.get(document.resource.id as any, {skip_cache: true})
+            );
+        } catch(_) {
+            this.messages.add([M.DATASTORE_NOT_FOUND]);
+        }
     }
 
 
-    private restoreIdentifier(document: IdaiFieldDocument): Promise<any> {
+    private focusIdentifierInputIfDocumentIsNew() {
 
-        return this.datastore.get(document.resource.id as any, { skip_cache: true })
-            .then(
-                latestRevision => {
-                    document.resource.identifier = latestRevision.resource.identifier;
-                }
-            )
-            .catch(() => Promise.reject([M.DATASTORE_NOT_FOUND]))
+        if (!this.document.resource.identifier) this.identifierInput.nativeElement.focus();
     }
 }

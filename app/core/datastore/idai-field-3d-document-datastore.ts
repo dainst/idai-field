@@ -3,6 +3,7 @@ import {DocumentCache} from './core/document-cache';
 import {TypeConverter} from './core/type-converter';
 import {CachedDatastore} from './core/cached-datastore';
 import {IdaiField3DDocument} from '../model/idai-field-3d-document';
+import {IndexFacade} from './index/index-facade';
 
 
 /**
@@ -11,9 +12,10 @@ import {IdaiField3DDocument} from '../model/idai-field-3d-document';
 export class IdaiField3DDocumentDatastore extends CachedDatastore<IdaiField3DDocument> {
 
     constructor(datastore: PouchdbDatastore,
+                indexFacade: IndexFacade,
                 documentCache: DocumentCache<IdaiField3DDocument>,
-                documentConverter: TypeConverter) {
+                documentConverter: TypeConverter<IdaiField3DDocument>) {
 
-        super(datastore, documentCache, documentConverter, 'IdaiField3DDocument');
+        super(datastore, indexFacade, documentCache, documentConverter, 'IdaiField3DDocument');
     }
 }

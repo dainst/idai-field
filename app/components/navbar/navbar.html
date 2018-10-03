@@ -1,13 +1,12 @@
-<nav *ngIf="views" class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary"
+<nav *ngIf="views" class="navbar navbar-expand-lg navbar-dark bg-primary"
      (dragover)="false"
      (dragleave)="false"
      (drop)="false">
 
-    <div class="navbar-brand" id="idai-field-brand">
-        <img src="img/logo.png">
+    <div class="navbar-brand" id="idai-field-brand"
+            [class.navbar-brand-mac]="isRunningOnMac()">
         <div id="brand-text">
             <span id="brand-text-idai">iDAI.</span><span id="brand-text-field">field</span>
-            <small id="brand-text-number">2.0</small>
         </div>
     </div>
 
@@ -18,20 +17,27 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="nav navbar-nav mr-auto">
+        <ul class="nav navbar-nav navbar-tabbed mr-auto">
             <li class="nav-item">
                 <a class="nav-link navbar-hover-element" [class.active]="isActiveRoute('/resources/project')"
                    href="#" routerLink="/resources/project">Übersicht</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link navbar-separator-element">|</a>
+                <span class="nav-link navbar-separator-element">|</span>
             </li>
             <li *ngFor="let view of views; let i=index" class="nav-item">
                 <a class="nav-link navbar-hover-element" [class.active]="isActiveRoute('/resources/' + view.name)"
                    href="#" routerLink="/resources/{{view.name}}">{{view.label}}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link navbar-separator-element">|</a>
+                <span class="nav-link navbar-separator-element">|</span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link navbar-hover-element" [class.active]="isActiveRoute('/matrix')"
+                   href="#" routerLink="/matrix">Matrix</a>
+            </li>
+            <li class="nav-item">
+                <span class="nav-link navbar-separator-element">|</span>
             </li>
             <li class="nav-item">
                 <a class="nav-link navbar-hover-element" [class.active]="isActiveRoute('/media')"

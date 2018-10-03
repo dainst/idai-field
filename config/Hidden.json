@@ -1,0 +1,58 @@
+{
+    "Architecture": [
+        "markDescription",
+        "mark",
+        "publicationDatingFinds",
+        "publicationDatingScientific",
+        "publicationDatingStratigraphy",
+        "publicationRemark", 
+        "findingPlace"
+    ],
+    "Building": [
+        "buildingHistory",
+        "excavationHistory",
+        "history",
+        "architecturalOrders"
+    ],
+    "Feature": [
+        "featureAmount"
+    ],
+    "Burial": [
+        "publicationDatingFinds",
+        "publicationDatingStratigraphy", 
+        "findingPlace"
+    ],
+    "Grave": [
+        "publicationDatingFinds",
+        "publicationDatingScientific",
+        "publicationDatingStratigraphy",
+        "publicationRemark",
+        "findingPlace"
+    ], 
+    "Layer": [
+        "appearance"
+    ],
+    "Metal": [
+        "materialDescription"
+    ],
+    "Photo": [
+        "originalType"
+    ],
+    "Find": [
+        "publicationMaterialSummary",
+        "publicationRemark"
+    ],
+    "Planum": [
+        "horizontalLocation"
+    ],
+    "Trench": [
+        "researchQuestion"
+    ],
+    "Wall_surface": [
+        "markDescription",
+        "mark",
+        "hasPlasterDecoration",
+        "plasterOlder",
+        "surfaceDecoration"
+    ]
+}

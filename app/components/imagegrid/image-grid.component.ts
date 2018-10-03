@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, ElementRef} from '@angular/core';
-import {Messages} from 'idai-components-2/messages';
-import {IdaiFieldImageDocument} from '../../core/model/idai-field-image-document';
-import {ImageGridBuilder} from './image-grid-builder';
-import {M} from '../../m';
+import {Messages, Document, IdaiFieldImageDocument} from 'idai-components-2';
+import {ImageGridConstruction} from './image-grid-builder';
 import {Imagestore} from '../../core/imagestore/imagestore';
-import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/idai-field-document-read-datastore';
 import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
+import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
+import {UploadResult} from '../upload/upload-result';
+import {M} from '../m';
 
 
 @Component({
@@ -27,13 +27,16 @@ export class ImageGridComponent implements OnChanges {
     @Input() showLinkBadges: boolean = true;
     @Input() showIdentifier: boolean = true;
     @Input() showShortDescription: boolean = true;
-    @Input() showDropArea: boolean = false;
-    @Input() showGeoIcon: boolean = false; // TODO why is this configurable? it seems that it would do not harm to show it always
+    @Input() showGeoIcon: boolean = false;
     @Input() showTooltips: boolean = false;
+    @Input() showDropArea: boolean = false;
+    @Input() compressDropArea: boolean = false;
+    @Input() dropAreaDepictsRelationTarget: Document;
+    @Input() paddingRight: number;
 
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
-    @Output() onImagesUploaded: EventEmitter<any> = new EventEmitter<any>();
+    @Output() onImagesUploaded: EventEmitter<UploadResult> = new EventEmitter<UploadResult>();
 
     public resourceIdentifiers: {[id: string]: string} = {};
     public moreRowsMsg: string|undefined = undefined;
@@ -55,7 +58,6 @@ export class ImageGridComponent implements OnChanges {
 
     constructor(
         private el: ElementRef,
-        private imageGridBuilder: ImageGridBuilder, // TODO create with new, not via DI
         private messages: Messages,
         private imagestore: Imagestore,
         private datastore: IdaiFieldDocumentReadDatastore
@@ -103,38 +105,36 @@ export class ImageGridComponent implements OnChanges {
 
     private async _calcGrid() {
 
-        if (!this.documents) return Promise.resolve();
+        if (!this.documents) return;
 
-        const rows = this.imageGridBuilder.calcGrid(
-            this.documents, this.nrOfColumns, this.el.nativeElement.children[0].clientWidth);
+        const rows = ImageGridConstruction.calcGrid(
+            this.documents, this.nrOfColumns, this.el.nativeElement.children[0].clientWidth,
+            this.paddingRight
+        );
 
         this.moreRowsMsg = undefined;
-        console.debug('fetching images for grid start');
         await this.loadImages(rows);
-        console.debug('fetching images for grid end');
         this.rows = rows;
-
-        // TODO Show error message if one or more images were not found (possibly using method showImagesNotFoundMessage)
     }
 
 
-    private loadImages(rows: any) {
+    private async loadImages(rows: any) {
 
-        let promise: any = Promise.resolve();
         for (let row of rows) {
             for (let cell of row) {
-                if (!cell.document || !cell.document.resource || !cell.document.resource.id) continue;
 
-                promise = promise.then(() =>
-                    this.imagestore.read(cell.document.resource.id).then(url =>
-                        cell.imgSrc = url
-                    ).catch(e => {
-                        console.error('error fetching image', e)
-                    })
-                )
+                if (!cell.document
+                    || !cell.document.resource
+                    || !cell.document.resource.id
+                    || cell.document.resource.id === 'droparea') continue;
+
+                try {
+                    cell.imgSrc = await this.imagestore.read(cell.document.resource.id)
+                } catch(e) {
+                    console.error('error fetching image', e);
+                }
             }
         }
-        return promise;
     }
 
 
@@ -177,10 +177,10 @@ export class ImageGridComponent implements OnChanges {
 
         if (!this.documents) this.documents = [];
 
-        this.documents.unshift(<IdaiFieldMediaDocument>{
+        this.documents.unshift({
             id: 'droparea',
-            resource: { identifier: '', shortDescription:'', type: '', originalFilename: '',
-                width: 1, height: 1, relations: { depicts: [] } }
-        });
+            resource: { id: 'droparea', identifier: '', shortDescription:'', type: '', originalFilename: '',
+                width: 1, height: this.compressDropArea ? 0.2 : 1, relations: { depicts: [] } }
+        } as any);
     }
 }

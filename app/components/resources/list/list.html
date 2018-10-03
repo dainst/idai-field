@@ -1,20 +1,35 @@
-<div id="list" *ngIf="typesMap">
-    <div id="list-header" class="row py-2 font-weight-bold">
-        <div class="col-md-3">Typ</div>
-        <div class="col-md-3">Bezeichner</div>
-        <div class="col-md-4">Kurzbeschreibung</div>
-        <div class="col-md-2">Optionen</div>
-    </div>
-    <div id="list-body">
-        <div *ngFor="let docRef of tree">
-            <row [node]="docRef" [depth]=0 [typesMap]="typesMap"></row>
+<div id="list">
+    <div *ngIf="typesMap">
+        <div id="list-header">
+            <div>Typ</div>
+            <div>Bezeichner</div>
+            <div>Kurzbeschreibung</div>
+            <div></div>
+            <div id="header-placeholder"></div>
+        </div>
+        <div id="list-body">
+            <div class="row-grid">
+                <div *ngFor="let document of documents">
+                    <row [document]="document" [typesMap]="typesMap"></row>
+                </div>
+                <li *ngIf="isDocumentLimitExceeded()" id="document-limit-info">
+                    Es werden die ersten {{viewFacade.getDocuments().length}} von
+                    {{viewFacade.getTotalDocumentCount()}} Ressourcen angezeigt. Schränken Sie die Suche
+                    weiter ein oder wechseln Sie in die Hierarchie-Ansicht, um auf die übrigen Ressourcen
+                    zuzugreifen.
+                </li>
+            </div>
         </div>
     </div>
-    <plus-button *ngIf="showPlusButton()"
+</div>
+<div id="list-background" class="bg-light">
+    <plus-button *ngIf="isPlusButtonShown()"
                  id="create-document-button" [placement]="'top'" [preselectedGeometryType]="'none'"
-                 [preselectedType]="viewFacade.getCurrentFilterType()"
-                 [isRecordedIn]="resourcesComponent.getIsRecordedInTarget()"
+                 [preselectedType]="getCurrentFilterType()"
+                 [liesWithin]="getSelectedSegmentDoc()"
+                 [isRecordedIn]="viewFacade.getSelectedOperations()[0]"
                  [skipFormAndReturnNewDocument]="true"
+                 [status]="getPlusButtonStatus()"
                  (documentRequested)="createNewDocument($event)"></plus-button>
     <loading-icon></loading-icon>
 </div>

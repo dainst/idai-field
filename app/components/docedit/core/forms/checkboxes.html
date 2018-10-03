@@ -1,0 +1,18 @@
+<div *ngFor="let item of field.valuelist"
+     class="checkbox form-check form-check-inline">
+    <label class="form-check-label">
+        <input class="form-check-input" value="{{item}}" type="checkbox"
+               (click)="toggleBox(item)"
+               [checked]="resource[field.name] && resource[field.name].indexOf(item) > -1">
+        {{item}}
+    </label>
+
+</div>
+
+
+<br *ngIf="notIncludedInValueList()">
+<span *ngIf="notIncludedInValueList()">
+    <small>Die Ressource enthält nicht in Werteliste enthaltene Einträge:
+        <button (click)="removeOutlier(item)" class="btn btn-sm mr-1" *ngFor="let item of notIncludedInValueList()">{{item}} <span class="mdi mdi-close-circle-outline"></span></button>
+    </small>
+</span>

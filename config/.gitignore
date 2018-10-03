@@ -2,6 +2,21 @@
 
 # Explicitely mention files which should be part of the repo.
 
-!Configuration.json.template
+!Configuration.json
+!Fields-Custom.json
+!Fields-Pergamon.json
+!Fields-Meninx.json
+!Hidden.json
+!Hidden-Custom.json
+!Hidden-Pergamon.json
+!Language.json
+!Language-Custom.json
+!Language-Meninx.json
+!Language-Pergamon.json
+!Order.json
+!Search.json
+!Periods.json
+!Periods-Meninx.json
 !README.md
-
+!Fields.json
+!Dictionary.txt

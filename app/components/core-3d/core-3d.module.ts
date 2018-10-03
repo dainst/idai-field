@@ -3,7 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MeshLoadingProgressBarComponent} from './mesh-loading/mesh-loading-progress-bar.component';
 import {MeshLoadingProgress} from './mesh-loading/mesh-loading-progress';
-import {ZoomButtonsComponent} from './zoom-buttons/zoom-buttons.component';
 import {MeshPreparationUtility} from './mesh-loading/mesh-preparation-utility';
 import {MeshLoader} from './mesh-loading/mesh-loader';
 import {Model3DStore} from './model-3d-store';
@@ -14,8 +13,7 @@ import {Model3DStore} from './model-3d-store';
         NgbModule
     ],
     declarations: [
-        MeshLoadingProgressBarComponent,
-        ZoomButtonsComponent
+        MeshLoadingProgressBarComponent
     ],
     providers: [
         MeshLoadingProgress,
@@ -24,8 +22,7 @@ import {Model3DStore} from './model-3d-store';
         MeshPreparationUtility
     ],
     exports: [
-        MeshLoadingProgressBarComponent,
-        ZoomButtonsComponent
+        MeshLoadingProgressBarComponent
     ]
 })
 

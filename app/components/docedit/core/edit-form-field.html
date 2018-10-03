@@ -1,0 +1,34 @@
+<dai-input *ngIf="field.inputType === 'input' || field.inputType === 'unsignedInt'
+                            || field.inputType === 'float' || field.inputType == 'unsignedFloat'
+                            || (field.inputType === undefined && field.inner == undefined)"
+           [resource]="resource" [fieldName]="field.name"></dai-input>
+
+<dai-inputs *ngIf="field.inputType === 'inputs'" [resource]="resource"
+            [fieldName]="field.name"></dai-inputs>
+
+<dai-text *ngIf="field.inputType === 'text'" [resource]="resource"
+          [fieldName]="field.name"></dai-text>
+
+<dai-dropdown *ngIf="field.inputType === 'dropdown'" [resource]="resource"
+              [field]="field"></dai-dropdown>
+
+<dai-dropdown-range *ngIf="field.inputType === 'dropdownRange'" [resource]="resource"
+              [field]="field"></dai-dropdown-range>
+
+<dai-radio *ngIf="field.inputType === 'radio'" [resource]="resource"
+           [field]="field"></dai-radio>
+
+<dai-boolean *ngIf="field.inputType === 'boolean'" [resource]="resource"
+             [fieldName]="field.name"></dai-boolean>
+
+<dai-checkboxes *ngIf="field.inputType === 'checkboxes'" [resource]="resource"
+                [field]="field"></dai-checkboxes>
+
+<dai-dating *ngIf="field.inputType === 'dating'" [resource]="resource"
+            [field]="field"></dai-dating>
+
+<dai-date *ngIf="field.inputType === 'date'" [resource]="resource"
+          [field]="field"></dai-date>
+
+<dai-dimension *ngIf="field.inputType === 'dimension'" [resource]="resource"
+               [field]="field"></dai-dimension>

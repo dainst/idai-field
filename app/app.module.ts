@@ -1,50 +1,62 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {HttpModule} from '@angular/http';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
+import {HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
+import localeDe from '@angular/common/locales/de';
 import {FormsModule} from '@angular/forms';
-import {IdaiMessagesModule, MD, Messages} from 'idai-components-2/messages';
-import {DocumentEditChangeMonitor, IdaiDocumentsModule} from 'idai-components-2/documents';
-import {Validator} from 'idai-components-2/persist';
-import {IdaiFieldValidator} from './core/model/idai-field-validator';
-import {ConfigLoader, ProjectConfiguration} from 'idai-components-2/configuration';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ConfigLoader, ConfigReader, IdaiDocumentsModule, IdaiMessagesModule, MD, Messages,
+    ProjectConfiguration, IdaiWidgetsModule, IdaiFieldAppConfigurator} from 'idai-components-2';
 import {routing} from './app.routing';
-import {M} from './m';
 import {AppComponent} from './app.component';
 import {ResourcesModule} from './components/resources/resources.module';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {Imagestore} from './core/imagestore/imagestore';
 import {ReadImagestore} from './core/imagestore/read-imagestore';
 import {MediaOverviewModule} from './components/mediaoverview/media-overview.module';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {BlobMaker} from './core/imagestore/blob-maker';
 import {Converter} from './core/imagestore/converter';
-import {IdaiWidgetsModule} from 'idai-components-2/widgets';
 import {SettingsModule} from './components/settings/settings.module';
-import {IdaiFieldAppConfigurator} from 'idai-components-2/idai-field-model';
 import {SettingsService} from './core/settings/settings-service';
 import {TaskbarComponent} from './components/navbar/taskbar.component';
 import {WidgetsModule} from './widgets/widgets.module';
-import {TypeUtility} from './common/type-utility';
 import {PouchDbFsImagestore} from './core/imagestore/pouch-db-fs-imagestore';
-import {AppState} from './core/settings/app-state';
 import {ProjectsComponent} from './components/navbar/projects.component';
 import {ImportModule} from './components/import/import-module';
-import {ExportModule} from './components/export/export.module';
+import {BackupModule} from './components/backup/backup.module';
 import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-service';
 import {ImageViewModule} from './components/imageview/image-view.module';
 import {View3DModule} from './components/view-3d/view-3d.module';
-import {StateSerializer} from './common/state-serializer';
 import {AppController} from './app-controller';
 import {DatastoreModule} from './core/datastore/datastore.module';
-import {IdaiFieldDocumentDatastore} from './core/datastore/idai-field-document-datastore';
-import {PersistenceManager} from './core/persist/persistence-manager';
-import {DocumentDatastore} from './core/datastore/document-datastore';
+import {PersistenceManager} from './core/model/persistence-manager';
+import {Validator} from './core/model/validator';
+import {MatrixModule} from './components/matrix/matrix.module';
+import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
+import {TaskbarConflictsComponent} from './components/navbar/taskbar-conflicts.component';
+import {TypeUtility} from './core/model/type-utility';
+import {UsernameProvider} from './core/settings/username-provider';
+import {IndexFacade} from './core/datastore/index/index-facade';
+import {FulltextIndexer} from './core/datastore/index/fulltext-indexer';
+import {ConstraintIndexer} from './core/datastore/index/constraint-indexer';
+import {HelpComponent} from './components/help/help.component';
+import {TaskbarUpdateComponent} from './components/navbar/taskbar-update.component';
+import {M} from './components/m';
+import {SettingsSerializer} from './core/settings/settings-serializer';
+import {IndexerConfiguration} from './indexer-configuration';
 
 
 const remote = require('electron').remote;
 
-let pconf: any = undefined;
+let projectConfiguration: ProjectConfiguration|undefined = undefined;
+let fulltextIndexer: FulltextIndexer|undefined = undefined;
+let constraintIndexer: ConstraintIndexer|undefined = undefined;
+let indexFacade: IndexFacade|undefined = undefined;
+
+
+registerLocaleData(localeDe, 'de');
+
 
 @NgModule({
     imports: [
@@ -56,6 +68,7 @@ let pconf: any = undefined;
         BrowserModule,
         FormsModule,
         HttpModule,
+        HttpClientModule,
         NgbModule.forRoot(),
         IdaiDocumentsModule,
         IdaiMessagesModule,
@@ -63,42 +76,48 @@ let pconf: any = undefined;
         IdaiWidgetsModule,
         WidgetsModule,
         ImportModule,
-        ExportModule,
-        DatastoreModule
+        BackupModule,
+        DatastoreModule,
+        MatrixModule
     ],
     declarations: [
         AppComponent,
         NavbarComponent,
         TaskbarComponent,
-        ProjectsComponent
+        TaskbarConflictsComponent,
+        TaskbarUpdateComponent,
+        ProjectsComponent,
+        HelpComponent
     ],
     providers: [
+        ConfigReader,
+        ConfigLoader,
+        IdaiFieldAppConfigurator,
         {
             provide: APP_INITIALIZER,
             multi: true,
-            deps: [IdaiFieldAppConfigurator, ConfigLoader, SettingsService],
-            useFactory: function(appConfigurator: IdaiFieldAppConfigurator, configLoader: ConfigLoader, settingsService: SettingsService) {
+            deps: [SettingsService, PouchdbManager],
+            useFactory: (settingsService: SettingsService, pouchdbManager: PouchdbManager) => () =>
+                pouchdbManager.setupServer()
+                    .then(() => (new SettingsSerializer).load())
+                    .then(settings =>
+                        settingsService.bootProjectDb(settings).then(() =>
+                            settingsService.loadConfiguration(remote.getGlobal('configurationDirPath'))))
+                    .then(configuration => {
+                        projectConfiguration = configuration;
 
-                return() => {
-                    const PROJECT_CONFIGURATION_PATH = remote.getGlobal('configurationPath');
-                    appConfigurator.go(PROJECT_CONFIGURATION_PATH);
-
-                    return (configLoader.getProjectConfiguration() as any).then((pc: any) => {
-                        pconf = pc as any;
-                    }).catch((msgsWithParams: any) => {
-                        msgsWithParams.forEach((msg: any) => {
-                            console.error('err in project configuration', msg)
-                        });
-                        if (msgsWithParams.length > 1) {
-                            console.error('num errors in project configuration', msgsWithParams.length);
-                        }
+                        const {createdConstraintIndexer, createdFulltextIndexer, createdIndexFacade} =
+                            IndexerConfiguration.configureIndexers(projectConfiguration);
+                        constraintIndexer = createdConstraintIndexer;
+                        fulltextIndexer = createdFulltextIndexer;
+                        return createdIndexFacade;
+                     }).then(facade => {
+                         indexFacade = facade;
+                         return pouchdbManager.reindex(indexFacade);
                     })
-                    .then(() => settingsService.init());
-                }
-            }
         },
-        AppState,
         SettingsService,
+        { provide: UsernameProvider, useExisting: SettingsService },
         {
             provide: Messages,
             useFactory: function(md: MD) {
@@ -106,38 +125,67 @@ let pconf: any = undefined;
             },
             deps: [MD]
         },
+        {
+            provide: Imagestore,
+            useFactory: function(pouchdbManager: PouchdbManager, converter: Converter, blobMaker: BlobMaker) {
+                return new PouchDbFsImagestore(converter, blobMaker, pouchdbManager.getDbProxy());
+            },
+            deps: [PouchdbManager, Converter, BlobMaker]
+        },
         TypeUtility,
-        { provide: Imagestore, useClass: PouchDbFsImagestore },
         { provide: ReadImagestore, useExisting: Imagestore },
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         BlobMaker,
         Converter,
         AppController,
-        IdaiFieldAppConfigurator,
-        ConfigLoader,
         {
             provide: ProjectConfiguration,
             useFactory: () => {
-                if (!pconf) {
-                    console.error('pconf has not yet been provided');
-                    throw 'pconf has not yet been provided';
+                if (!projectConfiguration) {
+                    console.error('project configuration has not yet been provided');
+                    throw 'project configuration has not yet been provided';
                 }
-                return pconf;
+                return projectConfiguration;
+            },
+            deps: []
+        },
+        {
+            provide: FulltextIndexer,
+            useFactory: () => {
+                if (!fulltextIndexer) {
+                    console.error('fulltext indexer has not yet been provided');
+                    throw 'fulltext indexer has not yet been provided';
+                }
+                return fulltextIndexer;
+            },
+            deps: []
+        },
+        {
+            provide: ConstraintIndexer,
+            useFactory: () => {
+                if (!constraintIndexer) {
+                    console.error('constraint indexer has not yet been provided');
+                    throw 'constraint indexer has not yet been provided';
+                }
+                return constraintIndexer;
+            },
+            deps: []
+        },
+        {
+            provide: IndexFacade,
+            useFactory: () => {
+                if (!indexFacade) {
+                    console.error('index facade has not yet been provided');
+                    throw 'index facade has not yet been provided';
+                }
+                return indexFacade;
             },
             deps: []
         },
         PersistenceManager,
-        DocumentEditChangeMonitor,
-        {
-            provide: Validator,
-            useFactory: function(configLoader: ConfigLoader, datastore: IdaiFieldDocumentDatastore) {
-                return new IdaiFieldValidator(configLoader, datastore);
-            },
-            deps: [ConfigLoader, DocumentDatastore]
-        },
+        Validator,
         { provide: MD, useClass: M},
-        DoceditActiveTabService,
-        StateSerializer
+        DoceditActiveTabService
     ],
     bootstrap: [ AppComponent ]
 })

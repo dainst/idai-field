@@ -1,0 +1,131 @@
+<div id="matrix-view" class="row bg-light">
+
+    <div class="col">
+        <div class="row">
+            <div *ngIf="showTrenchSelector()" class="btn-group operation-document-selector"
+                 ngbDropdown placement="bottom-left" role="group">
+                <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button *ngFor="let trench of trenches" class="dropdown-item" (click)="selectTrench(trench)">
+                        {{getDocumentLabel(trench)}}
+                    </button>
+                </div>
+
+                <div *ngIf="selectedTrench" id="selected-trench-label" class="btn btn-outline-primary">
+                    {{getDocumentLabel(selectedTrench)}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col text-right toolbar">
+        <div class="btn-group">
+            <div id="edit-mode-button"
+                 class="btn btn-primary"
+                 [class.active]="getSelectionMode() === 'none'"
+                 ngbTooltip="Bearbeitungsmodus"
+                 placement="bottom"
+                 container="body"
+                 triggers="manual"
+                 #selectionTooltip1="ngbTooltip"
+                 (mouseover)="selectionTooltip1.open()"
+                 (mouseleave)="selectionTooltip1.close()"
+                 (click)="selectionTooltip1.close(); setSelectionMode('none');">
+                <span class="mdi mdi-pencil"></span>
+            </div>
+            <div id="single-selection-mode-button"
+                 class="btn btn-primary"
+                 [class.active]="getSelectionMode() === 'single'"
+                 ngbTooltip="Einzelauswahlmodus"
+                 placement="bottom"
+                 container="body"
+                 triggers="manual"
+                 #selectionTooltip2="ngbTooltip"
+                 (mouseover)="selectionTooltip2.open()"
+                 (mouseleave)="selectionTooltip2.close()"
+                 (click)="selectionTooltip2.close(); setSelectionMode('single');">
+                <span class="mdi mdi-cursor-default-outline"></span>
+            </div>
+            <div id="group-selection-mode-button"
+                 class="btn btn-primary"
+                 [class.active]="getSelectionMode() === 'rect'"
+                 ngbTooltip="Gruppenauswahlmodus"
+                 placement="bottom"
+                 container="body"
+                 triggers="manual"
+                 #selectionTooltip3="ngbTooltip"
+                 (mouseover)="selectionTooltip3.open()"
+                 (mouseleave)="selectionTooltip3.close()"
+                 (click)="selectionTooltip3.close(); setSelectionMode('rect');">
+                <span class="mdi mdi-select"></span>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <div id="clear-selection-button"
+                 class="btn btn-primary"
+                 [class.disabled]="!documentsSelected()"
+                 ngbTooltip="Auswahl aufheben"
+                 placement="bottom"
+                 container="body"
+                 triggers="manual"
+                 #clearSelectionTooltip="ngbTooltip"
+                 (mouseover)="clearSelectionTooltip.open()"
+                 (mouseleave)="clearSelectionTooltip.close()"
+                 (click)="clearSelectionTooltip.close(); clearSelection();">
+                <span class="mdi mdi-select-off"></span>
+            </div>
+
+            <div id="create-graph-from-selection-button"
+                 class="btn btn-primary"
+                 [class.disabled]="!documentsSelected()"
+                 ngbTooltip="Matrix aus Auswahl erstellen"
+                 placement="left"
+                 container="body"
+                 triggers="manual"
+                 #matrixFromSelectionTooltip="ngbTooltip"
+                 (mouseover)="matrixFromSelectionTooltip.open()"
+                 (mouseleave)="matrixFromSelectionTooltip.close()"
+                 (click)="matrixFromSelectionTooltip.close(); createGraphFromSelection();">
+                <span class="mdi mdi-transfer"></span>
+            </div>
+
+            <div id="reload-graph-button"
+                 class="btn btn-primary"
+                 [class.disabled]="!graphFromSelection"
+                 ngbTooltip="Matrix neu laden"
+                 placement="left"
+                 container="body"
+                 triggers="manual"
+                 #reloadGraphTooltip="ngbTooltip"
+                 (mouseover)="reloadGraphTooltip.open()"
+                 (mouseleave)="reloadGraphTooltip.close()"
+                 (click)="reloadGraphTooltip.close(); reloadGraph();">
+                <span class="mdi mdi-reload"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="matrix-container">
+    <loading-icon></loading-icon>
+    <matrix-options-menu (onChange)="calculateGraph()"></matrix-options-menu>
+
+    <div *ngIf="showNoTrenchesWarning()"
+         class="col-8 text-center alert alert-warning no-main-type-resource-alert">
+        <em>Legen Sie eine Ressource vom Typ 'Schnitt' in der
+            <a href="#" routerLink="/resources/project">Übersicht</a> an, um hier mit ihr arbeiten zu können.
+        </em>
+    </div>
+
+    <div *ngIf="showNoResourcesWarning()"
+         class="col-8 text-center alert alert-warning no-main-type-resource-alert">
+        <em>Legen Sie für den ausgewählten Schnitt Ressourcen vom Typ 'Stratigrafische Einheit' in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen Relationen.
+        </em>
+    </div>
+
+    <graph [graph]="graph"
+           [selection]="selection"
+           (onSelectForEdit)="edit($event)">
+    </graph>
+</div>

@@ -1,0 +1,36 @@
+/**
+ * @author Thomas Kleinke
+ */
+#search-suggestions {
+  position: absolute;
+  text-align: left;
+  width: calc(100% - 11px);
+  background-color: rgb(238, 238, 238);
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  user-select: none;
+
+  h6 {
+    background-color: #f7f7f7;
+    padding: 10px;
+    margin-bottom: 0;
+    cursor: default;
+  }
+
+  .suggestion-container {
+    padding: 12px;
+    background-color: white;
+    margin-bottom: 1px;
+    cursor: pointer;
+  }
+
+  .suggestion-container:hover {
+    background-color: darken($list-item-hover-color, 5%);
+    transition: background-color .65s ease;
+  }
+
+  #no-results-info {
+    background-color: white;
+    padding: 12px;
+    cursor: default;
+  }
+}

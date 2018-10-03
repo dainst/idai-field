@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {Query} from 'idai-components-2/datastore';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
-import {IdaiFieldDocumentDatastore} from '../core/datastore/idai-field-document-datastore';
+import {Query} from 'idai-components-2';
+import {IdaiFieldDocument} from 'idai-components-2';
+import {ProjectConfiguration} from 'idai-components-2';
+import {IdaiFieldDocumentDatastore} from '../core/datastore/field/idai-field-document-datastore';
+import {Loading} from './loading';
 
 @Component({
     selector: 'document-picker',
@@ -22,60 +23,68 @@ export class DocumentPickerComponent implements OnChanges {
     @Output() documentSelected: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
     public documents: Array<IdaiFieldDocument>;
-    protected query: Query = {};
 
-    private fetchDocsRunning = false;
+    protected query: Query = { limit: 50 };
 
 
     constructor(private datastore: IdaiFieldDocumentDatastore,
-                private projectConfiguration: ProjectConfiguration) {
+                private projectConfiguration: ProjectConfiguration,
+                private loading: Loading) {}
 
-        this.query = {};
-        this.fetchDocuments();
+
+    public isLoading = () => this.loading.isLoading();
+
+
+    async ngOnChanges() {
+
+        await this.updateResultList();
     }
 
 
-    ngOnChanges() {
-
-        this.fetchDocuments();
-    }
-
-
-    public setQueryString(q: string) {
+    public async setQueryString(q: string) {
 
         this.query.q = q;
-        this.fetchDocuments();
+        await this.updateResultList();
     }
 
 
-    public setQueryTypes(types: string[]) {
+    public async setQueryTypes(types: string[]) {
 
         if (types && types.length > 0) {
             this.query.types = types;
         } else {
             delete this.query.types;
         }
-        this.fetchDocuments();
+        await this.updateResultList();
     }
 
 
-    /**
-     * Populates the document list with all documents
-     * from the datastore which match the current query.
-     */
-    public fetchDocuments() { // TODO make private
+    public isQuerySpecified(): boolean {
 
-        if (this.fetchDocsRunning) return;
-        this.fetchDocsRunning = true;
+        return ((this.query.q !== undefined && this.query.q.length > 0)
+            || (this.query.types !== undefined && this.query.types.length > 0));
+    }
 
-        console.debug('doc picker fetch docs');
-        this.datastore.find(this.query)
-            .then(result => {
-                console.debug('doc picker fetch docs end');
-                this.documents = this.filterNotAllowedRelationDomainTypes(result.documents);
-                this.fetchDocsRunning = false;
-            },
-            err => console.error(err));
+
+    private async updateResultList() {
+
+        this.documents = [];
+        if (this.isQuerySpecified()) await this.fetchDocuments();
+    }
+
+
+    private async fetchDocuments() {
+
+        this.loading.start();
+
+        try {
+            const result = await this.datastore.find(this.query);
+            this.documents = this.filterNotAllowedRelationDomainTypes(result.documents);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.loading.stop();
+        }
     }
 
 

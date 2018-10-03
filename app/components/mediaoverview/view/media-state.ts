@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Query} from 'idai-components-2/datastore';
-import {StateSerializer} from '../../../common/state-serializer';
+import {Query} from 'idai-components-2';
 
 @Injectable()
 /**
@@ -15,7 +14,7 @@ export class MediaState {
     private initialized: boolean = false;
 
 
-    constructor(private serializer: StateSerializer) {}
+    constructor() {}
 
 
     public resetForE2E() {
@@ -24,18 +23,10 @@ export class MediaState {
     }
 
 
-    public initialize(): Promise<any> {
+    public async initialize(): Promise<any> {
 
-        if (this.initialized) return Promise.resolve();
-
-        return this.serializer.load(StateSerializer.MEDIA_STATE)
-            .then(result => {
-                if (result.query) this.query = result.query;
-                if (result.mainTypeDocumentFilterOption) this.mainTypeDocumentFilterOption
-                    = result.mainTypeDocumentFilterOption;
-                if (result.gridSize) this.gridSize = result.gridSize;
-                this.initialized = true;
-            });
+        if (this.initialized) return;
+        this.initialized = true;
     }
 
 
@@ -48,7 +39,6 @@ export class MediaState {
     public setQuery(query: Query) {
 
         this.query = query;
-        this.serializer.store(StateSerializer.MEDIA_STATE, this.getSerializableObject());
     }
 
 
@@ -67,7 +57,6 @@ export class MediaState {
     public setMainTypeDocumentFilterOption(mainTypeDocumentFilterOption: string) {
 
         this.mainTypeDocumentFilterOption = mainTypeDocumentFilterOption;
-        this.serializer.store(StateSerializer.MEDIA_STATE, this.getSerializableObject());
     }
 
 
@@ -80,16 +69,5 @@ export class MediaState {
     public setGridSize(value: number) {
 
         this.gridSize = value;
-        this.serializer.store(StateSerializer.MEDIA_STATE, this.getSerializableObject());
-    }
-
-
-    private getSerializableObject(): any {
-
-        return {
-            query: this.query,
-            mainTypeDocumentFilterOption: this.mainTypeDocumentFilterOption,
-            gridSize: this.gridSize
-        };
     }
 }

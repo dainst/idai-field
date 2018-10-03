@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {subtract, unique} from 'tsfun';
+import {Document, IdaiFieldDocument} from 'idai-components-2';
 import {ViewFacade} from '../view/view-facade';
-import {ListUtil} from '../../../util/list-util';
 
 
 export interface LayersInitializationResult<T> {
@@ -31,31 +30,23 @@ export abstract class LayerManager<T extends Document> {
     constructor(protected viewFacade: ViewFacade) {}
 
 
-    public abstract async initializeLayers(mainTypeDocument: IdaiFieldDocument | undefined)
-            : Promise<LayersInitializationResult<T>>;
+    public abstract async initializeLayers(skipRemoval?: boolean): Promise<LayersInitializationResult<T>>;
 
 
-    public reset() {
+    public reset = () => this.activeLayerIds = [];
 
-        this.activeLayerIds = [];
-    }
-
-
-    public isActiveLayer(resourceId: string): boolean {
-
-        return this.activeLayerIds.indexOf(resourceId) > -1;
-    }
+    public isActiveLayer = (resourceId: string) => this.activeLayerIds.includes(resourceId);
 
 
-    public toggleLayer(resourceId: string, mainTypeDocument: IdaiFieldDocument | undefined) {
+    public toggleLayer(resourceId: string) {
 
         this.activeLayerIds = this.isActiveLayer(resourceId) ?
-            ListUtil.remove(this.activeLayerIds, resourceId) :
-            ListUtil.add(this.activeLayerIds, resourceId);
+            subtract([resourceId])(this.activeLayerIds) :
+            unique(this.activeLayerIds.concat([resourceId]));
 
-        if (mainTypeDocument) this.saveActiveLayerIds(mainTypeDocument);
+        this.saveActiveLayerIds();
     }
 
 
-    protected abstract saveActiveLayerIds(mainTypeDocument: IdaiFieldDocument): void;
+    protected abstract saveActiveLayerIds(): void;
 }

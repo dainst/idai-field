@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {TypeUtility} from '../../../../common/type-utility';
-import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/idai-field-image-document-read-datastore';
+import {unique, subtract} from 'tsfun';
+import {IdaiFieldImageDocument} from 'idai-components-2';
+import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/field/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../view/view-facade';
-import {ListUtil} from '../../../../util/list-util';
 import {LayerManager, LayersInitializationResult, ListDiffResult} from '../layer-manager';
-import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 
 
 @Injectable()
@@ -16,51 +14,71 @@ import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-do
 export class ImageLayerManager extends LayerManager<IdaiFieldImageDocument> {
 
     constructor(private datastore: IdaiFieldImageDocumentReadDatastore,
-                private typeUtility: TypeUtility,
                 viewFacade: ViewFacade) {
 
         super(viewFacade);
     }
 
 
-    public async initializeLayers(mainTypeDocument: IdaiFieldDocument | undefined)
+    public async initializeLayers(skipRemoval: boolean = false)
             : Promise<LayersInitializationResult<IdaiFieldImageDocument>> {
+
+        if (!skipRemoval) await this.removeNonExistingLayers();
+
+        const activeLayersChange = ImageLayerManager.computeActiveLayersChange(
+            this.viewFacade.getActiveLayersIds(),
+            this.activeLayerIds);
+
+        this.activeLayerIds = this.viewFacade.getActiveLayersIds();
 
         try {
             return {
-                layers: (await this.datastore.find({
-                    q: '',
-                    types: this.typeUtility.getImageTypeNames(),
-                    constraints: { 'georeference:exist': 'KNOWN' }
-                })).documents,
-                activeLayersChange: this.fetchActiveLayersFromResourcesState(mainTypeDocument)
+                layers: await this.fetchLayers(),
+                activeLayersChange: activeLayersChange
             };
         } catch(e) {
             console.error('error with datastore.find', e);
+            throw undefined;
         }
-
-        return Promise.reject(undefined);
     }
 
 
-    private fetchActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument | undefined)
-            : ListDiffResult {
+    private async removeNonExistingLayers() {
 
-        const newActiveLayerIds = mainTypeDocument ?
-            this.viewFacade.getActiveLayersIds(mainTypeDocument.resource.id as any) : [];
-        const oldActiveLayerIds = this.activeLayerIds.slice(0);
-        this.activeLayerIds = newActiveLayerIds;
+        const newActiveLayersIds = this.viewFacade.getActiveLayersIds();
+
+        let i = newActiveLayersIds.length;
+        while (i--) {
+            try {
+                await this.datastore.get(newActiveLayersIds[i])
+            } catch (_) {
+                newActiveLayersIds.splice(i, 1);
+                this.viewFacade.setActiveLayersIds(newActiveLayersIds);
+            }
+        }
+    }
+
+
+    private async fetchLayers() {
+
+        return (await this.datastore.find({
+            constraints: { 'georeference:exist': 'KNOWN' }
+        })).documents;
+    }
+
+
+    protected saveActiveLayerIds() {
+
+        this.viewFacade.setActiveLayersIds(this.activeLayerIds);
+    }
+
+
+    private static computeActiveLayersChange(newActiveLayerIds: Array<string>,
+                                             oldActiveLayerIds: Array<string>): ListDiffResult {
 
         return {
-            removed: ListUtil.subtract(oldActiveLayerIds, newActiveLayerIds),
-            added: ListUtil.subtract(newActiveLayerIds, oldActiveLayerIds)
+            removed: subtract(newActiveLayerIds)(oldActiveLayerIds),
+            added: subtract(oldActiveLayerIds)(newActiveLayerIds)
         };
-    }
-
-
-    protected saveActiveLayerIds(mainTypeDocument: IdaiFieldDocument) {
-
-        this.viewFacade.setActiveLayersIds(mainTypeDocument.resource.id as any,
-            this.activeLayerIds);
     }
 }

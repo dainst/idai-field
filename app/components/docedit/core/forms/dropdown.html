@@ -1,0 +1,13 @@
+<select [(ngModel)]="resource[field.name]" (change)="setValue($event.target.value)"
+        class="form-control">
+    <option value="" [selected]="!resource.hasOwnProperty(field.name)"></option>
+    <option *ngFor="let item of field.valuelist" value="{{item}}">{{item}}</option>
+</select>
+
+
+<br *ngIf="notIncludedInValueList()">
+<span *ngIf="notIncludedInValueList()">
+    <small>Die Ressource enthält nicht in Werteliste enthaltene Einträge:
+        <button (click)="deleteItem()" class="btn btn-sm mr-1" *ngFor="let item of notIncludedInValueList()">{{item}} <span class="mdi mdi-close-circle-outline"></span></button>
+    </small>
+</span>

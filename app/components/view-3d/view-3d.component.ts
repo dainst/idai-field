@@ -1,14 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2/core';
-import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {Document} from 'idai-components-2';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {RoutingService} from '../routing-service';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {ObjectUtil} from '../../util/object-util';
 import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
 import {IdaiField3DDocumentReadDatastore} from '../../core/datastore/idai-field-3d-document-read-datastore';
+import {isEmpty} from 'tsfun';
 
 
 @Component({
@@ -33,7 +32,6 @@ export class View3DComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private modalService: NgbModal,
-        private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private doceditActiveTabService: DoceditActiveTabService,
         private routingService: RoutingService,
         private datastore: IdaiField3DDocumentReadDatastore
@@ -74,8 +72,7 @@ export class View3DComponent implements OnInit {
             if (result.document) this.document = result.document;
             this.setNextDocumentViewActiveTab();
         } catch (closeReason) {
-            this.documentEditChangeMonitor.reset();
-            if (closeReason == 'deleted') await this.deselect();
+            if (closeReason === 'deleted') await this.deselect();
         }
     }
 
@@ -84,7 +81,10 @@ export class View3DComponent implements OnInit {
 
         if (!this.document) return false;
 
-        return !ObjectUtil.isEmpty(this.document.resource.relations);
+        const relations: any = this.document.resource.relations;
+        if (isEmpty(relations)) return false;
+
+        return Object.keys(relations).filter(name => relations[name].length > 0).length > 0;
     }
 
 
@@ -98,7 +98,7 @@ export class View3DComponent implements OnInit {
                 console.error('Fatal error: Could not load document for id ', id);
             }
 
-            if (menu == 'edit') {
+            if (menu === 'edit') {
                 await this.startEdit(tab);
             } else if (tab) {
                 this.activeTab = tab;

@@ -1,11 +1,13 @@
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 
 /**
  * @author Daniel de Oliveira
  */
-export abstract class TypeConverter {
+export abstract class TypeConverter<T> {
 
-    public abstract validate(types: string[]|undefined, typeClass: string): string[]|undefined;
+    public abstract validateTypeToBeOfClass(types: string, typeClass: string): void;
 
-    public abstract convert<T>(doc: Document): T;
+    public abstract convert(doc: Document): T;
+
+    public abstract getTypesForClass(typeClass: string): string[]|undefined;
 }

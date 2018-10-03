@@ -1,4 +1,4 @@
-import {Resource} from 'idai-components-2/core';
+import {Resource} from 'idai-components-2';
 import {IdaiFieldMediaRelations} from './idai-field-media-relations';
 
 

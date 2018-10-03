@@ -13,20 +13,41 @@ $roboto-font-path: '../fonts/';
 @import 'desktop/info-window';
 @import 'spinner';
 @import 'buttons';
+@import 'default-page';
 @import 'components/resources/resources';
 @import 'components/import/import';
-@import 'components/export/export';
 @import 'components/settings/settings';
 @import 'components/imageview/imageview';
-@import 'widgets/widgets';
 @import 'components/docedit/docedit';
 @import 'components/imagegrid/image-grid';
 @import 'components/mediaoverview/media-overview';
 @import 'components/upload/upload';
 @import 'components/core-3d/mesh-loading/mesh-loading-progress-bar';
-@import 'components/core-3d/zoom-buttons/zoom-buttons';
 @import 'components/model-3d-viewer/model-3d-viewer';
 @import 'components/view-3d/view-3d';
+@import 'components/matrix/matrix-view';
+@import 'components/help/help';
+@import 'widgets/widgets';
+
+.search-help-tooltip {
+  .tooltip-inner {
+    width: 400px;
+    max-width: 400px;
+  }
+  animation-name: delayedFadeIn;
+  animation-duration: 1s; /* Adjust this duration */
+}
+
+.tooltip > div {
+  animation-name: delayedFadeIn;
+  animation-duration: 1s; /* Adjust this duration */
+  }
+
+@Keyframes delayedFadeIn {
+  0% {opacity: 0;}
+  75% {opacity: 0;} /* Set this to 99% for no fade-in. */
+  100% {opacity: 1;}
+}
 
 html {
   position: relative;
@@ -35,10 +56,6 @@ html {
 
 body {
   font-family: Roboto, sans-serif !important;
-}
-
-#app {
-  margin-top: 57px;
 }
 
 #idaifieldlogo {
@@ -79,6 +96,25 @@ body {
   border-color: saturate(rgba(85, 114, 161, 1), 10%);
 }
 
+.btn-outline-primary {
+  border-color: #5572A1;
+  color: #5572A1;
+  background-color: white;
+}
+
+.btn-outline-primary:hover {
+  border-color: lighten(#5572A1, 10%);
+  color: lighten(#5572A1, 10%);
+  background-color: white;
+}
+
+.btn-outline-primary:disabled, .btn-outline-primary.disabled {
+  border-color: darken(#5572A1, 10%);
+  color: darken(#5572A1, 10%);
+  cursor: not-allowed;
+  background-color: white;
+}
+
 .btn-secondary {
   color: #fff;
   background-color: #727b84;
@@ -106,6 +142,14 @@ body {
   background-color: darken(#6ca378, 10%);
   border-color: darken(#6ca378, 10%);
   cursor: not-allowed;
+}
+
+.btn-danger:disabled, .btn-danger.disabled {
+  cursor: not-allowed;
+}
+
+.btn-light {
+  color: $link-color;
 }
 
 .md-form {
@@ -173,7 +217,7 @@ html [type='button'],
 }
 
 .popover-item:hover {
-  background-color: $list-item-hover-colour;
+  background-color: $list-item-hover-color;
   transition: background-color .65s ease;
 }
 
@@ -216,6 +260,10 @@ html [type='button'],
 .form-control {
   border-radius: 1px !important;
   -webkit-appearance: none;
+
+  &:focus {
+    box-shadow: none;
+  }
 }
 
 select.form-control:not([size]):not([multiple]) {
@@ -267,17 +315,8 @@ relations-view .fieldvalue:hover {
   background-color: #ddd;
 }
 
-/* Workaround for showing ngbootstraps modals in bootstrap v4 */
-.fade.in {
-  opacity: 1;
-}
-.modal.in .modal-dialog {
-  -webkit-transform: translate(0, 0);
-  -o-transform: translate(0, 0);
-  transform: translate(0, 0);
-}
-.modal-backdrop.in {
-  opacity: 0.5;
+.fade {
+  transition: none;
 }
 
 /* wider modals */
@@ -285,33 +324,13 @@ relations-view .fieldvalue:hover {
   min-width: 86%;
 }
 
-/* Document view is used in map and image overview */
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
 
-.document-info {
-
-  .card-header {
-    background-color: transparent !important;
-  }
-
-  .card {
-    margin-bottom: 0;
-    box-sizing: border-box;
-    background-color: transparent !important;
-  }
-
-  .tab-content {
-    padding-top: 1em;
-    height: calc(100vh - 238px);
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  .empty-tab {
-    color: #5a6269;
-  }
-
-  .empty-tab-info {
-    font-style: italic;
-    font-size: 0.9em;
-  }
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }

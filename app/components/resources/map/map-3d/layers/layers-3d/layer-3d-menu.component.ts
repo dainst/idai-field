@@ -13,8 +13,7 @@ import {Layer3DManager} from './layer-3d-manager';
  */
 export class Layer3DMenuComponent extends LayerMenuComponent {
 
-    constructor(layerManager: Layer3DManager,
-                renderer: Renderer2) {
+    constructor(layerManager: Layer3DManager, renderer: Renderer2) {
 
         super(layerManager, renderer, 'layer-3d-menu-button', 'layer-3d-menu');
     }

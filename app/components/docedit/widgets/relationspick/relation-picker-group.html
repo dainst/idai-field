@@ -1,0 +1,13 @@
+<div *ngFor="let relation of relations[relationDefinition.name]; let i = index">
+    <relation-picker [(document)]="document" [relationDefinition]="relationDefinition" [relationIndex]="i" [primary]="primary"></relation-picker>
+</div>
+
+<div class="circular-button add-relation"
+     *ngIf="showPlusButton()"
+     type="button"
+     (click)="createRelation()">+</div>
+
+
+<div class="circular-button add-relation-disabled"
+     *ngIf="!showPlusButton()"
+     type="button">+</div>

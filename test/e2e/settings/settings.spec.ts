@@ -3,15 +3,12 @@ import {NavbarPage} from '../navbar.page';
 import * as PouchDB from 'pouchdb';
 import {SettingsPage} from './settings.page';
 import {MediaOverviewPage} from '../media/media-overview.page';
-import {DocumentViewPage} from '../widgets/document-view.page';
 import {DoceditPage} from '../docedit/docedit.page';
+import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 
 PouchDB.plugin(require('pouchdb-adapter-memory'));
 
 const delays = require('../config/delays');
-const cors = require('pouchdb-server/lib/cors');
-const express = require('express');
-
 const path = require('path');
 const common = require('../common');
 
@@ -22,12 +19,16 @@ const common = require('../common');
 describe('settings --', function() {
 
     beforeAll(done => {
+
         common.resetConfigJson().then(done);
     });
 
+
     afterEach(done => {
+
         common.resetConfigJson().then(done);
     });
+
 
     it('save syncing settings to config file and load them after restart', done => {
 
@@ -49,26 +50,28 @@ describe('settings --', function() {
             });
     });
 
+
     it('show warnings if an invalid imagestore path is set', () => {
 
         SettingsPage.get();
         common.typeIn(SettingsPage.getImagestorePathInput(), '/invalid/path/to/imagestore');
         SettingsPage.clickSaveSettingsButton();
         NavbarPage.awaitAlert('Das Bilderverzeichnis konnte nicht gefunden werden', false);
-        NavbarPage.clickCloseMessage(1);
+        NavbarPage.clickCloseAllMessages();
 
         NavbarPage.clickNavigateToMediaOverview();
         browser.sleep(delays.shortRest * 50); // TODO replace by wait for el im clickUploadArea
         MediaOverviewPage.clickUploadArea();
         MediaOverviewPage.uploadFile(path.resolve(__dirname, '../../test-data/Aldrin_Apollo_11.jpg'));
+
         NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
-        NavbarPage.clickCloseMessage();
+        NavbarPage.clickCloseAllMessages();
 
         MediaOverviewPage.doubleClickCell(0);
         NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
-        NavbarPage.clickCloseMessage();
-
-        DocumentViewPage.performEditDocument();
+        NavbarPage.clickCloseAllMessages();
+        //
+        DetailSidebarPage.performEditDocument();
         DoceditPage.clickDeleteDocument();
         DoceditPage.typeInIdentifierInConfirmDeletionInputField('mapLayerTest2.png');
         DoceditPage.clickConfirmDeleteInModal();

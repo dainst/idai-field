@@ -1,0 +1,39 @@
+#search-bar {
+
+  #object-search {
+    width: calc(100% - 50px);
+    padding: 9px;
+  }
+
+  #filter-button {
+    position: absolute;
+    right: 16px;
+
+    #searchfilter {
+      z-index: 3;
+      padding: 4px 1em;
+      border: none;
+      width: 50px;
+      height: 40px;
+
+      .mdi-filter {
+        line-height: 30px;
+      }
+
+      type-icon {
+        margin-left: -6px;
+
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}
+
+.popover-content .filtermenu .list-group {
+  max-height: calc(100vh - 350px) !important;
+  width: 270px;
+  overflow: auto;
+}

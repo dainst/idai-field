@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
-import {Observable} from 'rxjs/Observable';
-import {Observer} from 'rxjs/Observer';
-import {Document} from 'idai-components-2/core';
-import {ProjectConfiguration, RelationDefinition} from 'idai-components-2/configuration';
-import {TypeUtility} from '../common/type-utility';
+import {Observable} from 'rxjs';
+import {Observer} from 'rxjs';
+import {Document, ProjectConfiguration} from 'idai-components-2';
 import {ViewFacade} from './resources/view/view-facade';
 import {DocumentReadDatastore} from '../core/datastore/document-read-datastore';
+import {TypeUtility} from '../core/model/type-utility';
 
 
 @Injectable()
@@ -30,9 +29,7 @@ export class RoutingService {
                 private location: Location,
                 private typeUtility: TypeUtility,
                 private projectConfiguration: ProjectConfiguration,
-                private datastore: DocumentReadDatastore
-    ) {
-    }
+                private datastore: DocumentReadDatastore) {}
 
 
     // For ResourcesComponent
@@ -44,60 +41,69 @@ export class RoutingService {
     }
 
 
-    // Currently used from SidebarListComponent
     public async jumpToMainTypeHomeView(document: Document) {
 
-        const viewName = this.viewFacade.getMainTypeHomeViewName(document.resource.type);
-        if (viewName == this.viewFacade.getCurrentViewName()) return;
+        await this.router.navigate(['resources',
+            this.viewFacade.getMainTypeHomeViewName(document.resource.type)]);
 
-        await this.router.navigate(['resources', viewName, document.resource.id]);
-        this.viewFacade.selectMainTypeDocument(document);
+        await this.viewFacade.selectOperation(document.resource.id);
     }
 
 
     // Currently used from DocumentViewSidebar and ImageViewComponent
     public jumpToRelationTarget(documentToSelect: Document, tab?: string,
-                                comingFromOutsideOverviewComponent: boolean = false) {
+                                comingFromOutsideResourcesComponent: boolean = false) {
 
-        if (comingFromOutsideOverviewComponent) this.currentRoute = undefined; // TODO see also comment below. it feels actually a bit unfortunate have this kind of state (this.currentRoute) here at all at all.
+        if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
 
-        // TODO we really have two separate public methods instead of this check
-        if (this.typeUtility.isImageType(documentToSelect.resource.type)) {
-            this.jumpToImageTypeRelationTarget(documentToSelect);
-        } else if (documentToSelect.resource.type == 'Model3D') {
-            this.jumpTo3DTypeRelationTarget(documentToSelect);
+        if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Image')) {
+            this.jumpToImageTypeRelationTarget(documentToSelect, comingFromOutsideResourcesComponent);
+        } else if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Model3D')) {
+            this.jumpTo3DTypeRelationTarget(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
-            this.jumpToResourceTypeRelationTarget(
-                documentToSelect, tab, comingFromOutsideOverviewComponent);
+            this.jumpToResourceTypeRelationTarget(documentToSelect, tab, comingFromOutsideResourcesComponent);
         }
     }
 
 
-    public jumpToConflictResolver(document: Document) {
+    public async jumpToConflictResolver(document: Document) {
 
-        if (this.typeUtility.isImageType(document.resource.type)) {
+        if (this.typeUtility.isSubtype(document.resource.type, 'Image')) {
             return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
+        }  else if (this.typeUtility.isSubtype(document.resource.type, 'Model3D')) {
+            return this.router.navigate(['3d', document.resource.id, 'edit', 'conflicts']);
         } else {
-            this.getMainTypeNameForDocument(document).then(mainTypeName =>
-                this.viewFacade.getMainTypeHomeViewName(mainTypeName)
-            ).then(viewName => {
-                this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
-            });
+            const mainTypeName = await this.getMainTypeNameForDocument(document);
+            if (!mainTypeName) return;
+
+            const viewName = this.viewFacade.getMainTypeHomeViewName(mainTypeName);
+            if (this.router.url.includes('resources')) {
+                // indirect away first to reload the resources component, in case you are already there
+                await this.router.navigate(['resources', viewName]);
+            }
+            return this.router.navigate(['resources', viewName, document.resource.id, 'edit', 'conflicts']);
         }
     }
 
 
-    public getMainTypeNameForDocument(document: Document): Promise<string> {
+    public async getMainTypeNameForDocument(document: Document): Promise<string|undefined> {
 
-        const relations = document.resource.relations['isRecordedIn'];
-        return (relations && relations.length > 0) ?
-            this.datastore.get(relations[0]).then(mainTypeDocument => mainTypeDocument.resource.type) :
-            RoutingService.handleNoRelationdInGetMainTypeNameForDocument(
-                this.projectConfiguration.getRelationDefinitions(document.resource.type));
+        if (this.typeUtility.isSubtype(document.resource.type, 'Operation')
+                || document.resource.type === 'Place') return 'Project';
+
+        if (!document.resource.relations['isRecordedIn']
+            || document.resource.relations['isRecordedIn'].length === 0) return 'Project';
+
+        try {
+            return (await this.datastore.get(document.resource.relations['isRecordedIn'][0])).resource.type
+        } catch (_) {
+            console.error("targetDocument does not exist",document.resource.relations['isRecordedIn'][0]);
+        }
     }
 
 
-    private jumpToImageTypeRelationTarget(documentToSelect: Document) {
+    private jumpToImageTypeRelationTarget(documentToSelect: Document,
+                                          comingFromOutsideResourcesComponent: boolean) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (selectedDocument) {
@@ -107,13 +113,14 @@ export class RoutingService {
         }
 
         this.router.navigate(
-            ['images', documentToSelect.resource.id, 'show', 'relations'],
+            ['images', documentToSelect.resource.id, 'show', comingFromOutsideResourcesComponent ? 'fields' : 'relations'],
             { queryParams: { from: this.currentRoute } }
         );
     }
 
 
-    private async jumpTo3DTypeRelationTarget(documentToSelect: Document) {
+    private async jumpTo3DTypeRelationTarget(documentToSelect: Document,
+                                             comingFromOutsideResourcesComponent: boolean) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (selectedDocument) {
@@ -123,31 +130,26 @@ export class RoutingService {
         }
 
         await this.router.navigate(
-            ['3d', documentToSelect.resource.id, 'show', 'relations'],
+            ['3d', documentToSelect.resource.id, 'show', comingFromOutsideResourcesComponent ? 'fields' : 'relations'],
             { queryParams: { from: this.currentRoute } }
         );
     }
 
 
     private async jumpToResourceTypeRelationTarget(documentToSelect: Document, tab?: string,
-                                                   comingFromOutsideOverviewComponent: boolean = false) {
+                                                   comingFromOutsideResourcesComponent: boolean = false) {
 
-        const viewName = await this.viewFacade.getMainTypeHomeViewName(
-            await this.getMainTypeNameForDocument(documentToSelect));
+        const mainTypeName = await this.getMainTypeNameForDocument(documentToSelect);
+        if (!mainTypeName) return;
 
-        if (comingFromOutsideOverviewComponent ||
-            viewName != this.viewFacade.getCurrentViewName()) {
+        const viewName = await this.viewFacade.getMainTypeHomeViewName(mainTypeName);
 
-            if (tab) {
-                return this.router.navigate(['resources', viewName,
-                    documentToSelect.resource.id, 'view', tab]);
-            } else {
-                return this.router.navigate(['resources', viewName,
-                    documentToSelect.resource.id]);
-            }
+        if (comingFromOutsideResourcesComponent || viewName != this.viewFacade.getView()) {
+            this.router.navigate(tab ?
+                ['resources', viewName, documentToSelect.resource.id, 'view', tab] :
+                ['resources', viewName, documentToSelect.resource.id]);
         } else {
-
-            this.viewFacade.setSelectedDocument(documentToSelect)
+            this.viewFacade.setSelectedDocument(documentToSelect.resource.id)
         }
     }
 
@@ -163,33 +165,12 @@ export class RoutingService {
             this.location.replaceState('resources/' + params['view']);
 
             try {
-                await this.viewFacade.setupView(params['view'], params['id']);
+                await this.viewFacade.selectView(params['view']);
                 observer.next(params);
             } catch (msgWithParams) {
                 if (msgWithParams) console.error(
                     'got msgWithParams in GeneralRoutingService#setRoute: ', msgWithParams);
             }
         });
-    }
-
-
-    private static async handleNoRelationdInGetMainTypeNameForDocument(
-        relationDefinitions: Array<RelationDefinition>|undefined) {
-
-        try {
-            let mainTypeName: string = '';
-
-            if (relationDefinitions) {
-                
-                for (let relationDefinition of relationDefinitions) {
-                    if (relationDefinition.name == 'isRecordedIn') {
-                        mainTypeName = relationDefinition.range[0];
-                        break;
-                    }
-                }
-            }
-            return Promise.resolve(mainTypeName);
-
-        } catch (e) {}
     }
 }

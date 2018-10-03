@@ -1,17 +1,10 @@
-import {Observable} from 'rxjs/Observable';
-import {Observer} from 'rxjs/Observer';
-import {Constraint, DatastoreErrors, Query} from 'idai-components-2/datastore';
-import {Document} from 'idai-components-2/core';
+import {Observable} from 'rxjs';
+import {DatastoreErrors, Document, NewDocument} from 'idai-components-2';
 import {IdGenerator} from './id-generator';
-import {PouchdbManager} from './pouchdb-manager';
-import {ResultSets} from '../index/result-sets';
-import {ConstraintIndexer} from '../index/constraint-indexer';
-import {FulltextIndexer} from '../index/fulltext-indexer';
-import {AppState} from '../../settings/app-state';
-import {ConflictResolvingExtension} from './conflict-resolving-extension';
-import {ConflictResolver} from './conflict-resolver';
-import {ChangeHistoryUtil} from '../../model/change-history-util';
-import {IndexItem} from "../index/index-item";
+import {ObserverUtil} from '../../util/observer-util';
+import {PouchdbProxy} from './pouchdb-proxy';
+import {ChangeHistoryMerge} from './change-history-merge';
+import {clone} from '../../util/object-util';
 
 /**
  * @author Sebastian Cuy
@@ -20,9 +13,10 @@ import {IndexItem} from "../index/index-item";
  */
 export class PouchdbDatastore {
 
-    protected db: any;
-    private allChangesAndDeletionsObservers = [];
-    private remoteChangesObservers = [];
+    public ready = () => this.db.ready();
+
+    private changesObservers = [];
+    private deletedObservers = [];
 
     // There is an issue where docs pop up in }).on('change',
     // despite them beeing deleted in remove before. When they
@@ -33,73 +27,88 @@ export class PouchdbDatastore {
 
 
     constructor(
-        private pouchdbManager: PouchdbManager,
-        private constraintIndexer: ConstraintIndexer,
-        private fulltextIndexer: FulltextIndexer,
-        private appState: AppState,
-        private conflictResolvingExtension: ConflictResolvingExtension,
-        private conflictResolver: ConflictResolver
+        private db: PouchdbProxy,
+        private idGenerator: IdGenerator,
+        setupChangesEmitterAndServer = true
         ) {
 
-        this.db = pouchdbManager.getDb();
-        conflictResolvingExtension.setDatastore(this);
-        conflictResolvingExtension.setDb(this.db);
-        conflictResolvingExtension.setConflictResolver(conflictResolver);
-
-        this.setupServer().then(() => this.setupChangesEmitter());
+        if (setupChangesEmitterAndServer) {
+            this.setupServer().then(() => this.setupChangesEmitter());
+        }
     }
+
+    public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.changesObservers);
+
+    public deletedNotifications = (): Observable<Document> => ObserverUtil.register(this.deletedObservers);
 
 
     /**
-     * @returns {Promise<Document>} newest revision of the document fetched from db
+     * @returns newest revision of the document fetched from db
      * @throws [INVALID_DOCUMENT] - in case either the document given as param or
      *   the document fetched directly after db.put is not valid
      */
-    public async create(document: Document): Promise<Document> {
+    public async create(document: NewDocument, username: string): Promise<Document> {
 
-        if (!Document.isValid(document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
+        if (!Document.isValid(document as Document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
+
+        let exists = false;
         if (document.resource.id) try {
             await this.db.get(document.resource.id);
-            throw 'exists';
-        } catch (expected) {
-            if (expected === 'exists') throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS]
+            exists = true;
+        } catch (_) {}
+        if (exists) throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
+
+        const clonedDocument = clone(document);
+        if (!clonedDocument.resource.id) clonedDocument.resource.id = this.idGenerator.generateId();
+        (clonedDocument as any)['_id'] = clonedDocument.resource.id;
+        (clonedDocument as any)['created'] = { user: username, date: new Date() };
+        (clonedDocument as any)['modified'] = [];
+
+        try {
+            return await this.performPut(clonedDocument);
+        } catch (err) {
+            throw [DatastoreErrors.GENERIC_ERROR, err];
         }
-
-        const resetFun = this.resetDocOnErr(document);
-        if (!document.resource.id) document.resource.id = IdGenerator.generateId();
-        (document as any)['_id'] = document.resource.id;
-
-        return this.performPut(document, resetFun, (err: any) =>
-            Promise.reject([DatastoreErrors.GENERIC_ERROR, err])
-        );
     }
 
 
     /**
-     * @returns {Promise<Document>} newest revision of the document fetched from db
+     * @returns newest revision of the document fetched from db
      * @throws [INVALID_DOCUMENT] - in case either the document given as param or
      *   the document fetched directly after db.put is not valid
      */
-    public async update(document: Document): Promise<Document> {
+    public async update(
+        document: Document,
+        username: string,
+        squashRevisionsIds?: string[]): Promise<Document> {
 
-        if (!Document.isValid(document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
+        if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
+
+        let existingDoc;
         try {
-            await this.db.get(document.resource.id);
+            existingDoc = await this.fetch(document.resource.id);
         } catch (e) {
             throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
         }
 
-        const resetFun = this.resetDocOnErr(document);
-        (document as any)['_id'] = document.resource.id;
+        const clonedDocument = clone(document);
+        clonedDocument.created = existingDoc.created;
+        clonedDocument.modified = existingDoc.modified;
+        if (squashRevisionsIds) {
+            await this.mergeModifiedDates(clonedDocument, squashRevisionsIds);
+            await this.removeRevisions(clonedDocument.resource.id, squashRevisionsIds);
+        }
+        clonedDocument.modified.push({ user: username, date: new Date() });
+        (clonedDocument as any)['_id'] = clonedDocument.resource.id;
 
-        return this.performPut(document, resetFun, (err: any) => {
-            if (err.name && err.name == 'conflict') {
-                throw [DatastoreErrors.SAVE_CONFLICT];
-            } else {
-                throw [DatastoreErrors.GENERIC_ERROR, err];
-            }
-        })
+        try {
+            return await this.performPut(clonedDocument);
+        } catch (err) {
+            throw err.name && err.name === 'conflict'
+                ? [DatastoreErrors.SAVE_CONFLICT]
+                : [DatastoreErrors.GENERIC_ERROR, err];
+        }
     }
 
 
@@ -111,59 +120,22 @@ export class PouchdbDatastore {
         if (!doc.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
 
         this.deletedOnes.push(doc.resource.id as never);
-        // we want the doc removed from the indices asap,
-        // in order to not risk someone finding it still with findIds due to
-        // issues that are theoretically possible because we cannot know
-        // when .on('change' fires. so we do remove it here,
-        // although we know it will be done again for the same doc
-        // in .on('change'
-        this.constraintIndexer.remove(doc);
-        this.fulltextIndexer.remove(doc);
 
-        this.notifyAllChangesAndDeletionsObservers();
-
-        let docFromGet;
+        let fetchedDocument: any;
         try {
-            docFromGet = await this.db.get(doc.resource.id);
+            fetchedDocument = await this.fetch(doc.resource.id);
         } catch (e) {
             throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
         }
+
+        if (fetchedDocument['_conflicts'] && fetchedDocument['_conflicts'].length > 0) {
+            await this.removeRevisions(fetchedDocument.resource.id, fetchedDocument['_conflicts']);
+        }
+
         try {
-            await this.db.remove(docFromGet)
+            await this.db.remove(fetchedDocument)
         } catch (genericerror) {
             throw [DatastoreErrors.GENERIC_ERROR, genericerror];
-        }
-    }
-
-
-    // TODO improve error handling, consider using PouchdbDatastore#remove
-    public async removeRevision(docId: string, revisionId: string): Promise<any> {
-
-        try {
-            await this.db.remove(docId, revisionId);
-            await this.reindex(docId);
-        } catch (genericerr) {
-            throw [DatastoreErrors.GENERIC_ERROR, genericerr];
-        }
-    }
-
-
-    /**
-     * @param query
-     * @return an array of the resource ids of the documents the query matches.
-     *   the sort order of the ids is determinded in that way that ids of documents with newer modified
-     *   dates come first. they are sorted by last modfied descending, so to speak.
-     *   if two or more documents have the same last modifed date, their sort order is unspecified.
-     *   the modified date is taken from document.modified[document.modified.length-1].date
-     */
-    public async findIds(query: Query): Promise<string[]> {
-
-        if (!query) return [];
-
-        try {
-            return this.perform(query);
-        } catch (err) {
-            throw [DatastoreErrors.GENERIC_ERROR, err];
         }
     }
 
@@ -176,12 +148,13 @@ export class PouchdbDatastore {
                  options: any = { conflicts: true }): Promise<Document> {
         // Beware that for this to work we need to make sure
         // the document _id/id and the resource.id are always the same.
+
         return this.db.get(resourceId, options)
             .then(
                 (result: any) => {
                     if (!Document.isValid(result)) return Promise.reject([DatastoreErrors.INVALID_DOCUMENT]);
                     PouchdbDatastore.convertDates(result);
-                    return result as Document;
+                    return Promise.resolve(result as Document);
                 },
                 (err: any) => Promise.reject([DatastoreErrors.DOCUMENT_NOT_FOUND]))
     }
@@ -197,130 +170,36 @@ export class PouchdbDatastore {
     }
 
 
-    public async fetchConflictedRevisions(resourceId: string): Promise<Array<Document>> {
+    protected async setupServer() {}
 
-        const conflictedRevisions: Array<Document> = [];
 
-        const document: Document = await this.fetch(resourceId);
+    private async performPut(document: any) {
 
-        if ((document as any)['_conflicts']) {
-            for (let revisionId of (document as any)['_conflicts']) {
-                conflictedRevisions.push(await this.fetchRevision(document.resource.id as string, revisionId));
-            }
+        await this.db.put(document, { force: true });
+        return this.fetch(document.resource.id);
+    }
+
+
+    private async mergeModifiedDates(document: Document, squashRevisionsIds: string[]) {
+
+        for (let revisionId of squashRevisionsIds) {
+            ChangeHistoryMerge.mergeChangeHistories(
+                document,
+                await this.fetchRevision(document.resource.id, revisionId)
+            );
         }
-
-        return Promise.resolve(conflictedRevisions);
     }
 
 
-    public async findConflicted(): Promise<Document[]> {
+    private async removeRevisions(resourceId: string|undefined, squashRevisionsIds: string[]): Promise<any> {
 
-        return (await this.db.query('conflicted', {
-            include_docs: true,
-            conflicts: true,
-            descending: true
-        })).rows.map((result: any) => result.doc);
-    }
-
-
-    public allChangesAndDeletionsNotifications(): Observable<void> {
-
-        return Observable.create((observer: Observer<void>) => {
-            this.allChangesAndDeletionsObservers.push(observer as never);
-        });
-    }
-
-
-    public remoteChangesNotifications(): Observable<Document> {
-
-        return Observable.create((observer: Observer<Document>) => {
-            this.remoteChangesObservers.push(observer as never);
-        });
-    }
-
-
-    protected setupServer() {
-
-        return Promise.resolve();
-    }
-
-
-    private async perform(query: Query): Promise<any> {
-
-        await this.db.ready();
-
-        const resultSets = query.constraints ?
-            this.performThem(query.constraints) :
-            ResultSets.make();
-
-        return IndexItem.generateOrderedResultList(
-            (Query.isEmpty(query) && !resultSets.isEmpty() ?
-                resultSets :
-                this.performFulltext(query, resultSets))
-            .collapse() as Array<IndexItem>);
-    }
-
-
-    private performFulltext(query: Query, resultSets: ResultSets): ResultSets {
-
-        return resultSets.combine(
-            this.fulltextIndexer.get(
-                !query.q || query.q.trim() == '' ? '*' : query.q,
-                query.types));
-    }
-
-
-    /**
-     * @param constraints
-     * @returns {any} undefined if there is no usable constraint
-     */
-    private performThem(constraints: { [name: string]: Constraint|string }): ResultSets {
-
-        return Object.keys(constraints).reduce((setsAcc: ResultSets, name: string) => {
-
-                const {type, value} = Constraint.convertTo(constraints[name]);
-                return setsAcc.combine(
-                    this.constraintIndexer.get(name, value), type);
-
-            }, ResultSets.make());
-    }
-
-
-    private async performPut(document: any, resetFun: any, errFun: any) {
+        if (!resourceId) return;
 
         try {
-            document['_rev'] = (await this.db.put(document, { force: true })).rev;
-            return this.reindex(document.resource.id);
+            for (let revisionId of squashRevisionsIds) await this.db.remove(resourceId, revisionId);
         } catch (err) {
-            resetFun(document);
-            return errFun(err);
-        }
-    }
-
-
-    private async reindex(resourceId: string): Promise<Document> {
-
-        const newestRevision: Document = await this.fetch(resourceId);
-
-        this.constraintIndexer.put(newestRevision);
-        this.fulltextIndexer.put(newestRevision);
-
-        this.notifyAllChangesAndDeletionsObservers();
-
-        return newestRevision;
-    }
-
-
-    private resetDocOnErr(original: Document) {
-
-        const created = JSON.parse(JSON.stringify(original.created));
-        const modified = JSON.parse(JSON.stringify(original.modified));
-        const id = original.resource.id;
-        return function(document: Document) {
-            delete (document as any)['_id'];
-            document.resource.id = id;
-            document.created = created;
-            document.modified = modified;
+            console.error('Error while removing revision', err);
+            throw [DatastoreErrors.GENERIC_ERROR, err];
         }
     }
 
@@ -337,15 +216,12 @@ export class PouchdbDatastore {
             }).on('change', (change: any) => {
                 // it is noteworthy that currently often after a deletion of a document we get a change that does not reflect deletion.
                 // neither is change.deleted set nor is sure if the document already is deleted (meaning fetch still works)
-                // TODO do further investigation, maybe file an issue for pouchdb
 
-                if (change && change.id && (change.id.indexOf('_design') == 0)) return; // starts with _design
                 if (!change || !change.id) return;
+                if (change.id.indexOf('_design') == 0) return; // starts with _design
 
                 if (change.deleted || this.deletedOnes.indexOf(change.id as never) != -1) {
-                    this.constraintIndexer.remove({resource: {id: change.id}} as Document);
-                    this.fulltextIndexer.remove({resource: {id: change.id}} as Document);
-                    this.notifyAllChangesAndDeletionsObservers();
+                    ObserverUtil.notify(this.deletedObservers, {resource: {id: change.id}} as Document);
                     return;
                 }
 
@@ -362,62 +238,19 @@ export class PouchdbDatastore {
 
     private async handleNonDeletionChange(changeId: string): Promise<void> {
 
-        let document: Document;
         try {
-            document = await this.fetch(changeId);
+            ObserverUtil.notify(this.changesObservers, await this.fetch(changeId));
         } catch (e) {
             console.warn('Document from remote change not found or not valid', changeId);
             throw e;
         }
-
-        let conflictedRevisions: Array<Document>;
-        try {
-            conflictedRevisions = await this.fetchConflictedRevisions(changeId);
-        } catch (e) {
-            console.warn('Failed to fetch conflicted revisions for document', changeId);
-            throw e;
-        }
-
-        if (!ChangeHistoryUtil.isRemoteChange(document, conflictedRevisions, this.appState.getCurrentUser())) {
-            return;
-        }
-
-        this.constraintIndexer.put(document);
-        this.fulltextIndexer.put(document);
-
-        try {
-            this.notifyRemoteChangesObservers(document);
-        } catch (e) {
-            console.error('Error while notifying observers');
-        }
-
-        this.notifyAllChangesAndDeletionsObservers();
-    }
-
-
-    private notifyAllChangesAndDeletionsObservers() {
-
-        if (this.allChangesAndDeletionsObservers) {
-            this.allChangesAndDeletionsObservers.forEach((observer: any) => observer.next());
-        }
-    }
-
-
-    private notifyRemoteChangesObservers(document: Document) {
-
-        if (this.remoteChangesObservers) this.remoteChangesObservers.
-            forEach((observer: Observer<Document>) => observer.next(document));
     }
 
 
     private static convertDates(result: any): Document {
 
         result.created.date = new Date(result.created.date);
-
-        for (let modified of result.modified) {
-            modified.date = new Date(modified.date);
-        }
-
+        for (let modified of result.modified) modified.date = new Date(modified.date);
         return result;
     }
 }

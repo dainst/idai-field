@@ -1,5 +1,4 @@
-import {Resource} from 'idai-components-2/core';
-import {IdaiFieldGeoreference} from './idai-field-georeference';
+import {Resource, IdaiFieldGeoreference} from 'idai-components-2';
 import {IdaiFieldMediaRelations} from './idai-field-media-relations';
 
 export interface IdaiFieldImageResource extends Resource {

@@ -1,12 +1,7 @@
 .media-overview {
 
-  margin-top: 62px;
-  height: calc(100vh - 119px);
-  overflow-y: auto;
-  overflow-x: hidden;
-
   .image-grid {
-    margin-top: 5px !important;
+    margin-top: 15px !important;
   }
 
   #remove-link-btn {
@@ -14,17 +9,22 @@
   }
 
   .media-overview-nav {
-    position: fixed;
+    position: relative;
     z-index: 1001;
-    right: 0;
-    left: 0;
-    top: 62px;
-    margin: 0;
-    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid $gray-200;
+    height: 50px;
+
+    .media-overview-nav-content {
+      padding-top: 3px;
+    }
+  }
+
+  #taskbar-container {
+    padding-top: 4px;
   }
 
   #media-overview-buttons {
-    height: 40px;
+    height: 39px;
 
     div {
       margin-top: 1px;
@@ -35,10 +35,16 @@
   #search-bar {
     margin-top: 2px;
     margin-bottom: -2px;
+
+    input,
+    #searchfilter {
+      height: 39px !important;
+    }
   }
 
   #main-type-document-filter-select {
-    margin-top: 3px;
+    height: 39px;
+    margin-top: 2px;
     margin-bottom: -3px;
     user-select: none;
   }
@@ -51,6 +57,7 @@
   }
 
   .slider-container {
+    padding-top: 14px;
     user-select: none;
     cursor: default;
 
@@ -76,8 +83,16 @@
       width: 15px;
       height: 15px;
       border-radius: 50%;
-      background: $primary-color;
+      background: $primary;
       cursor: pointer;
     }
+  }
+
+  .image-grid-container {
+    height: calc(100vh - 107px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 !important;
+    margin: 0 -15px;
   }
 }

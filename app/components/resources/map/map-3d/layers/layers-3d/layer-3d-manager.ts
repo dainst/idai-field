@@ -1,18 +1,20 @@
 import {Injectable} from '@angular/core';
-import {Document} from 'idai-components-2/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
+import {subtract} from 'tsfun';
 import {ViewFacade} from '../../../../view/view-facade';
-import {ListUtil} from '../../../../../../util/list-util';
-import {LayerManager, LayersInitializationResult, ListDiffResult} from '../../../layer-manager';
-import {IdaiField3DDocumentReadDatastore} from '../../../../../../core/datastore/idai-field-3d-document-read-datastore';
+import {LayerManager, ListDiffResult} from '../../../layer-manager';
+import {LayersInitializationResult} from '../../../layer-manager';
 import {IdaiField3DDocument} from '../../../../../../core/model/idai-field-3d-document';
+import {IdaiField3DDocumentReadDatastore} from '../../../../../../core/datastore/idai-field-3d-document-read-datastore';
 
+
+// TODO Move more methods to LayerManager
 
 @Injectable()
 /**
  * @author Thomas Kleinke
+ * @author Daniel de Oliveira
  */
-export class Layer3DManager extends LayerManager<Document> {
+export class Layer3DManager extends LayerManager<IdaiField3DDocument> {
 
     constructor(private datastore: IdaiField3DDocumentReadDatastore,
                 viewFacade: ViewFacade) {
@@ -21,44 +23,67 @@ export class Layer3DManager extends LayerManager<Document> {
     }
 
 
-    public async initializeLayers(mainTypeDocument: IdaiFieldDocument | undefined)
+    public async initializeLayers(skipRemoval: boolean = false)
             : Promise<LayersInitializationResult<IdaiField3DDocument>> {
+
+        if (!skipRemoval) await this.removeNonExistingLayers();
+
+        const activeLayersChange = Layer3DManager.computeActiveLayersChange(
+            this.viewFacade.getActive3DLayersIds(),
+            this.activeLayerIds);
+
+        this.activeLayerIds = this.viewFacade.getActive3DLayersIds();
 
         try {
             return {
-                layers: (await this.datastore.find({
-                    q: '',
-                    types: ['Model3D'],
-                    constraints: { 'georeferenced:exist': 'KNOWN' }
-                })).documents,
-                activeLayersChange: this.fetchActiveLayersFromResourcesState(mainTypeDocument)
+                layers: await this.fetchLayers(),
+                activeLayersChange: activeLayersChange
             };
         } catch(e) {
-            console.error('Error in datastore.find', e);
+            console.error('error with datastore.find', e);
+            throw undefined;
         }
-
-        return Promise.reject(undefined);
     }
 
 
-    private fetchActiveLayersFromResourcesState(mainTypeDocument: IdaiFieldDocument | undefined)
-            : ListDiffResult {
+    private async removeNonExistingLayers() {
 
-        const newActiveLayerIds = mainTypeDocument ?
-            this.viewFacade.getActive3DLayersIds(mainTypeDocument.resource.id as any) : [];
-        const oldActiveLayerIds = this.activeLayerIds.slice(0);
-        this.activeLayerIds = newActiveLayerIds;
+        const newActiveLayersIds = this.viewFacade.getActive3DLayersIds();
+
+        let i = newActiveLayersIds.length;
+        while (i--) {
+            try {
+                await this.datastore.get(newActiveLayersIds[i])
+            } catch (_) {
+                newActiveLayersIds.splice(i, 1);
+                this.viewFacade.setActive3DLayersIds(newActiveLayersIds);
+            }
+        }
+    }
+
+
+    private async fetchLayers() {
+
+        return (await this.datastore.find({
+            q: '',
+            types: ['Model3D'],
+            constraints: { 'georeferenced:exist': 'KNOWN' }
+        })).documents;
+    }
+
+
+    protected saveActiveLayerIds() {
+
+        this.viewFacade.setActive3DLayersIds(this.activeLayerIds);
+    }
+
+
+    private static computeActiveLayersChange(newActiveLayerIds: Array<string>,
+                                             oldActiveLayerIds: Array<string>): ListDiffResult {
 
         return {
-            removed: ListUtil.subtract(oldActiveLayerIds, newActiveLayerIds),
-            added: ListUtil.subtract(newActiveLayerIds, oldActiveLayerIds),
+            removed: subtract(newActiveLayerIds)(oldActiveLayerIds),
+            added: subtract(oldActiveLayerIds)(newActiveLayerIds)
         };
-    }
-
-
-    protected saveActiveLayerIds(mainTypeDocument: IdaiFieldDocument) {
-
-        this.viewFacade.setActive3DLayersIds(mainTypeDocument.resource.id as any,
-            this.activeLayerIds);
     }
 }

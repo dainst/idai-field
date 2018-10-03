@@ -1,4 +1,4 @@
-import {browser, protractor, element} from 'protractor';
+import {browser, protractor} from 'protractor';
 
 let EC = protractor.ExpectedConditions;
 let delays = require('./config/delays');
@@ -9,6 +9,7 @@ const fs = require('fs');
  */
 
 function typeIn(inputField, text) {
+
     browser.wait(EC.visibilityOf(inputField), delays.ECWaitTime);
     inputField.clear();
     for (let i in text) {
@@ -17,10 +18,13 @@ function typeIn(inputField, text) {
     return inputField;
 }
 
+
 function click(el) {
+
     browser.wait(EC.visibilityOf(el), delays.ECWaitTime);
     return el.click();
 }
+
 
 function resetConfigJson(): Promise<any> {
 
@@ -35,8 +39,20 @@ function resetConfigJson(): Promise<any> {
     });
 }
 
+
+function resetApp(): Promise<any> {
+
+    return new Promise(resolve => {
+        require('request').post('http://localhost:3003/reset', () => {
+            resolve();
+        });
+    });
+}
+
+
 module.exports = {
     typeIn: typeIn,
     click: click,
-    resetConfigJson: resetConfigJson
+    resetConfigJson: resetConfigJson,
+    resetApp: resetApp
 };

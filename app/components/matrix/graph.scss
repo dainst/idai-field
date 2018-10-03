@@ -1,0 +1,69 @@
+/**
+ * @author Thomas Kleinke
+ * @author Daniel de Oliveira
+ */
+
+graph {
+  #graph-container {
+    height: 100% !important;
+
+    &.selection-mode-rect {
+      svg {
+        cursor: crosshair;
+      }
+
+      .node {
+        cursor: crosshair;
+
+        text {
+          cursor: crosshair;
+        }
+      }
+
+      text {
+        cursor: crosshair;
+      }
+    }
+
+    &.selection-active {
+      ellipse {
+        opacity: 0.25;
+
+        &.selected {
+          opacity: 1;
+        }
+      }
+    }
+
+    svg {
+      width: 100% !important;
+      height: 100% !important;
+      user-select: none;
+      cursor: default;
+
+      .node {
+        cursor: pointer;
+
+        text {
+          cursor: pointer;
+        }
+      }
+
+      .cluster {
+        text {
+          font-size: 13px;
+        }
+      }
+
+      text {
+        cursor: default;
+      }
+    }
+  }
+
+  zoom-buttons {
+    position: absolute;
+    top: 67px;
+    left: 8px;
+  }
+}

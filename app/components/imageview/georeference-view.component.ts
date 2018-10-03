@@ -1,10 +1,10 @@
-import {Component, Input, ViewChild, ElementRef} from '@angular/core';
-import {Messages} from 'idai-components-2/messages';
-import {M} from '../../m';
-import {IdaiFieldGeoreference} from '../../core/model/idai-field-georeference';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Messages} from 'idai-components-2';
+import {IdaiFieldGeoreference} from 'idai-components-2';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {SettingsService} from '../../core/settings/settings-service';
-import {PersistenceManager} from "../../core/persist/persistence-manager";
+import {PersistenceManager} from "../../core/model/persistence-manager";
+import {UsernameProvider} from '../../core/settings/username-provider';
+import {M} from '../m';
 
 
 @Component({
@@ -21,12 +21,11 @@ export class GeoreferenceViewComponent {
 
     @ViewChild('worldfileInput') worldfileInput: ElementRef;
 
-
     constructor(
         private persistenceManager: PersistenceManager,
         private messages: Messages,
         private modalService: NgbModal,
-        private settingsService: SettingsService
+        private usernameProvider: UsernameProvider
     ) {}
 
 
@@ -59,7 +58,7 @@ export class GeoreferenceViewComponent {
         reader.onloadend = (that => {
             return () => {
                 this.worldfileInput.nativeElement.value = '';
-                const worldfileContent = reader.result.split("\n");
+                const worldfileContent = (reader.result as any).split("\n");
                 that.importWorldfile(worldfileContent, file);
             }
         })(this);
@@ -113,16 +112,17 @@ export class GeoreferenceViewComponent {
     }
 
 
-    private save(): Promise<any> {
+    private async save(): Promise<void> {
 
-        return new Promise<any>((resolve, reject) => {
-            this.persistenceManager.setOldVersions([this.document]);
-
-            this.persistenceManager.persist(this.document, this.settingsService.getUsername()).then(
-                () => { resolve(); },
-                err => { console.error(err); reject([M.APP_GENERIC_SAVE_ERROR]); }
+        try {
+            Object.assign(
+                this.document,
+                await this.persistenceManager.persist(this.document, this.usernameProvider.getUsername())
             );
-        });
+        } catch (err) {
+            console.error(err);
+            throw [M.APP_GENERIC_SAVE_ERROR];
+        }
     }
 
 

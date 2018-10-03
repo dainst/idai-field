@@ -1,17 +1,15 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2/core';
-import {IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
+import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2';
 import {Imagestore} from '../../../core/imagestore/imagestore';
 import {ImageTypePickerModalComponent} from './image-type-picker-modal.component';
-import {SettingsService} from '../../../core/settings/settings-service';
 import {UploadStatus} from '../upload-status';
-import {IdaiFieldImageDocument} from '../../../core/model/idai-field-image-document';
-import {PersistenceManager} from '../../../core/persist/persistence-manager';
+import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {UploadResult} from '../upload-result';
 import {Uploader} from '../uploader';
-import {M} from '../../../m';
+import {M} from '../../m';
+import {UsernameProvider} from '../../../core/settings/username-provider';
 
 
 @Injectable()
@@ -29,7 +27,7 @@ export class ImageUploader extends Uploader {
         private imagestore: Imagestore,
         private persistenceManager: PersistenceManager,
         private projectConfiguration: ProjectConfiguration,
-        private settingsService: SettingsService, // TODO remove this dependency. replace by username param. it would be nice to get rid of depencency to settings package altogether
+        private usernameProvider: UsernameProvider,
         modalService: NgbModal,
         datastore: DocumentReadDatastore,
         uploadStatus: UploadStatus
@@ -82,8 +80,11 @@ export class ImageUploader extends Uploader {
             reader.onloadend = (that => {
                 return () => {
                     that.createImageDocument(file, type, depictsRelationTarget)
-                        .then(doc => that.imagestore.create(doc.resource.id, reader.result,
-                            true))
+                        .then(doc => that.imagestore.create(doc.resource.id, reader.result as ArrayBuffer, true)
+                        .then(() =>
+                            // to refresh the thumbnail in cache, which is done to prevent a conflict afterwards
+                            this.datastore.get(doc.resource.id, { skip_cache: true })
+                        ))
                         .then(() => resolve())
                         .catch(error => {
                             console.error(error);
@@ -109,7 +110,7 @@ export class ImageUploader extends Uploader {
             let img = new Image();
             img.src = URL.createObjectURL(file);
             img.onload = () => {
-                const doc: IdaiFieldImageDocument = {
+                const doc: any = {
                     resource: {
                         identifier: this.getIdentifier(file.name),
                         shortDescription: '',
@@ -118,8 +119,7 @@ export class ImageUploader extends Uploader {
                         width: img.width,
                         height: img.height,
                         relations: {
-                            depicts: [],
-                            isRecordedIn: []
+                            depicts: []
                         }
                     }
                 };
@@ -128,9 +128,9 @@ export class ImageUploader extends Uploader {
                     doc.resource.relations['depicts'] = [depictsRelationTarget.resource.id];
                 }
 
-                this.persistenceManager.persist(doc, this.settingsService.getUsername(), [doc])
-                    .then(result => resolve(result))
-                    .catch(error => reject(error));
+                this.persistenceManager.persist(doc, this.usernameProvider.getUsername(), [doc] as any)
+                    .then((result: any) => resolve(result))
+                    .catch((error: any) => reject(error));
             };
         });
     }

@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import * as THREE from 'three';
+import {IdaiFieldGeoreference} from 'idai-components-2'
 import {SettingsService} from '../../../../../../core/settings/settings-service';
-import {AppState} from '../../../../../../core/settings/app-state';
-import {IdaiFieldImageDocumentReadDatastore} from '../../../../../../core/datastore/idai-field-image-document-read-datastore';
-import {IdaiFieldImageDocument} from '../../../../../../core/model/idai-field-image-document';
-import {IdaiFieldGeoreference} from '../../../../../../core/model/idai-field-georeference';
+import {IdaiFieldImageDocumentReadDatastore} from '../../../../../../core/datastore/field/idai-field-image-document-read-datastore';
+import {IdaiFieldImageDocument} from '../../../../../../core/model/idai-field-image-document';;
 import {MeshPreparationUtility} from '../../../../../core-3d/mesh-loading/mesh-preparation-utility';
 import {getPointVector} from '../../../../../../util/util-3d';
 
@@ -16,7 +15,6 @@ import {getPointVector} from '../../../../../../util/util-3d';
 export class Layer2DMeshBuilder {
 
     constructor(private settingsService: SettingsService,
-                private appState: AppState,
                 private datastore: IdaiFieldImageDocumentReadDatastore) {}
 
 
@@ -57,7 +55,7 @@ export class Layer2DMeshBuilder {
 
     private getFilePath(imageResourceId: string): string {
 
-        return this.appState.getImagestorePath()
+        return this.settingsService.getSettings().imagestorePath
             + this.settingsService.getSelectedProject()
             + '/' + imageResourceId;
     }

@@ -1,5 +1,5 @@
 import {Input, Output, EventEmitter, Renderer2} from '@angular/core';
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 import {LayerManager} from './layer-manager';
 import {MenuComponent} from '../../../widgets/menu.component';
 

@@ -1,9 +1,6 @@
-import {
-    Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, Output, EventEmitter, SimpleChanges,
-    Renderer2
-} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {Component, ViewChild, ElementRef, OnChanges, OnDestroy, Input, Output, EventEmitter, SimpleChanges,
+    Renderer2} from '@angular/core';
+import {ProjectConfiguration, IdaiFieldDocument} from 'idai-components-2';
 import {Map3DControls} from './map-3d-controls';
 import {Map3DControlState} from './map-3d-control-state';
 import {Viewer3D} from '../../../core-3d/viewer-3d';
@@ -26,7 +23,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
     @Input() documents: Array<IdaiFieldDocument>;
     @Input() selectedDocument: IdaiFieldDocument;
-    @Input() mainTypeDocument: IdaiFieldDocument;
+    @Input() mainTypeDocumentIds: string[];
 
     @Output() onSelectDocument: EventEmitter<IdaiFieldDocument|undefined>
         = new EventEmitter<IdaiFieldDocument|undefined>();
@@ -75,7 +72,7 @@ export class Map3DComponent implements OnChanges, OnDestroy {
 
         if (!this.viewer) this.initialize();
 
-        if (changes['mainTypeDocument']) this.geometriesBounds.reset();
+        if (changes['mainTypeDocumentIds']) this.geometriesBounds.reset();
         if (changes['selectedDocument']) this.controls.setSelectedDocument(this.selectedDocument);
     }
 

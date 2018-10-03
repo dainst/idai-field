@@ -1,0 +1,47 @@
+<form id="search-bar" class="form-inline">
+    <span id="input-wrapper">
+        <input #searchInput
+               id="object-search"
+               class="form-control"
+               [class.small-search-input]="extendedSearch"
+               [(ngModel)]="q"
+               (keyup)="onKeyUp()"
+               (focus)="showSuggestions()"
+               name="searchInput"
+               type="text"
+               placeholder="Suchen...">
+        <search-suggestions [maxSuggestions]="5"
+                            [visible]="suggestionsVisible">
+        </search-suggestions>
+    </span>
+
+    <search-constraints *ngIf="extendedSearch"
+                        [type]="isTypeSelected() ? types[0] : undefined">
+    </search-constraints>
+
+    <div *ngIf="showFiltersMenu" id="filter-button" class="input-group-btn">
+        <button id="searchfilter"
+                class="btn btn-primary"
+                type="button"
+                (click)="hideSuggestions()"
+                [ngbPopover]="filterMenu"
+                [autoClose]="false"
+                #p="ngbPopover"
+                placement="bottom">
+            <span *ngIf="!isTypeSelected()" class="mdi mdi-filter"></span>
+            <span *ngIf="isTypeSelected()">
+                <type-icon [type]="types[0]" size="30"></type-icon>
+            </span>
+        </button>
+
+        <ng-template #filterMenu>
+            <div class="filtermenu">
+                <div class="popover-custom-title">Nach Ressourcentyp filtern:</div>
+                <type-picker [typesTreeList]="filterOptions" [allTypesOptionVisible]="!parentType"
+                             [selectedTypes]="types" [allowPickingAbstractTypes]="true"
+                             (onTypePicked)="chooseTypeFilter($event); p.close();">
+                </type-picker>
+            </div>
+        </ng-template>
+    </div>
+</form>

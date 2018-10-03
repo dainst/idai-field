@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as rimraf from 'rimraf';
 import {IdaiField3DDocument} from '../../core/model/idai-field-3d-document';
-import {M} from '../../m';
+import {M} from '../m';
 import {SettingsService} from '../../core/settings/settings-service';
 import {PouchdbManager} from '../../core/datastore/core/pouchdb-manager';
 import {IdaiField3DDocumentDatastore} from '../../core/datastore/idai-field-3d-document-datastore';
@@ -39,7 +39,7 @@ export class Model3DStore {
 
         if (!blob) return;
 
-        await this.pouchdbManager.getDb().putAttachment(
+        await this.pouchdbManager.getDbProxy().putAttachment(
             document.resource.id,
             'thumb',
             (document as any)['_rev'],

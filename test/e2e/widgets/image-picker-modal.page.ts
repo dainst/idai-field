@@ -1,9 +1,8 @@
-import {browser, protractor, element, by} from 'protractor';
-
 'use strict';
-const common = require("../common.js");
-const EC = protractor.ExpectedConditions;
-const delays = require('../config/delays');
+
+import {protractor, element, by} from 'protractor';
+
+const common = require('../common.js');
 
 /**
  * @author Daniel de Oliveira
@@ -18,10 +17,12 @@ export class MediaResourcePickerModalPage {
         common.click(element(by.css('#media-resource-picker-modal-header #add-media-resource')));
     }
 
+
     public static clickAddMediaResources() {
 
         common.click(element(by.css('#media-resource-picker-modal-header #add-media-resources')));
     }
+
 
     // typeIn
 
@@ -29,6 +30,7 @@ export class MediaResourcePickerModalPage {
 
        common.typeIn(element(by.css('#media-resource-picker-modal #object-search')), identifier);
     }
+
 
     // elements
 

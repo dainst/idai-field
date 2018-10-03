@@ -2,28 +2,51 @@
 
 const electron = require('electron');
 const fs = require('fs');
+const os = require('os');
 const menuTemplate = require('./menu.js');
+const autoUpdate = require('./auto-update.js');
+
+// needed to fix notifications in win 10
+// see https://github.com/electron/electron/issues/10864
+electron.app.setAppUserModelId('org.dainst.field');
 
 // Copy config file to appData if no config file exists in appData
-function copyConfigFile(destPath, appDataPath) {
+const copyConfigFile = (destPath, appDataPath) => {
 
     if (!fs.existsSync(appDataPath)) fs.mkdirSync(appDataPath);
 
     if (!fs.existsSync(destPath)) {
         console.log('Create config.json at ' + destPath);
-        fs.writeFileSync(destPath, JSON.stringify({"dbs":["test"]}));
+        fs.writeFileSync(destPath, JSON.stringify({ 'dbs': ['test'] }));
     }
-}
+};
+
+
+global.setConfigDefaults = config => {
+
+    if (!config.syncTarget) config.syncTarget = {};
+    if (!config.remoteSites) config.remoteSites = [];
+    if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
+    if (os.type() === 'Linux') config.isAutoUpdateActive = false;
+
+    return config;
+};
+
 
 // CONFIGURATION ---
 
-var env = undefined;
+let env = undefined;
 if (process.argv && process.argv.length > 2) {
     env = process.argv[2];
 }
 if (env) { // is environment 'dev' (npm start) or 'test' (npm run e2e)
-    global.configurationPath = 'config/Configuration.json';
+    global.configurationDirPath = 'config';
 }
+
+const isInTestEnvironment = () => {
+
+    return env && env.indexOf('test') !== -1;
+};
 
 
 if (!env || // is environment 'production' (packaged app)
@@ -34,7 +57,7 @@ if (!env || // is environment 'production' (packaged app)
     global.configPath = global.appDataPath + '/config.json';
 
     if (!env) { // is environment 'production' (packaged app)
-        global.configurationPath = '../config/Configuration.json'
+        global.configurationDirPath = '../config';
     }
 
 } else { // is environment 'test' (npm run e2e)
@@ -44,7 +67,9 @@ if (!env || // is environment 'production' (packaged app)
 }
 
 console.log('Using config file: ' + global.configPath);
-global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
+global.config = global.setConfigDefaults(
+    JSON.parse(fs.readFileSync(global.configPath, 'utf-8'))
+);
 
 
 // -- CONFIGURATION
@@ -54,24 +79,29 @@ global.config = JSON.parse(fs.readFileSync(global.configPath, 'utf-8'));
 global.switches = {
     prevent_reload: false,
     destroy_before_create: false,
-    messages_timeout: 3500
+    messages_timeout: 3500,
+    suppress_map_load_for_test: false,
+    provide_reset: false
 };
 
-if (env && env.indexOf('test') !== -1) { // is environment 'test'
+if (isInTestEnvironment()) {
     global.switches.messages_timeout = undefined;
     global.switches.prevent_reload = true;
     global.switches.destroy_before_create = true;
+    global.switches.suppress_map_load_for_test = true;
+    global.switches.provide_reset = true;
 }
 
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 
 
 // -- OTHER GLOBALS
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-var mainWindow;
+let mainWindow;
 
-function createWindow() {
+const createWindow = () => {
 
     const screenWidth = electron.screen.getPrimaryDisplay().workAreaSize.width;
     const screenHeight = electron.screen.getPrimaryDisplay().workAreaSize.height;
@@ -79,15 +109,14 @@ function createWindow() {
     mainWindow = new electron.BrowserWindow({
         width: screenWidth >= 1680 ? 1680 : 1280,
         height: screenHeight >= 1050 ? 1050 : 800,
-        minWidth: 1000,
+        minWidth: 1220, // to allow for displaying project names like 'mmmmmmmmmmmmmmmmmm'
         minHeight: 600,
         webPreferences: {
             nodeIntegration: true,
-            webSecurity: false
-        }
+            webSecurity: !isInTestEnvironment()
+        },
+        titleBarStyle: 'hiddenInset'
     });
-
-    // mainWindow.webContents
 
     const menu = electron.Menu.buildFromTemplate(menuTemplate);
     electron.Menu.setApplicationMenu(menu);
@@ -99,19 +128,28 @@ function createWindow() {
     // mainWindow.webContents.openDevTools();
 
     // Emitted when the window is closed.
-    mainWindow.on('closed', function() {
+    mainWindow.on('closed', () => {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         mainWindow = null;
     });
-}
+
+    return mainWindow;
+};
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-electron.app.on('ready', createWindow);
+electron.app.on('ready', () => {
+    const mainWindow = createWindow();
+    if (global.config.isAutoUpdateActive) autoUpdate.setUp(mainWindow);
 
-electron.app.on('activate', function() {
+    electron.ipcMain.on('settingsChanged', (event, settings) => {
+        if (settings.isAutoUpdateActive) autoUpdate.setUp(mainWindow);
+    });
+});
+
+electron.app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) {
@@ -120,7 +158,7 @@ electron.app.on('activate', function() {
 });
 
 // Quit when all windows are closed.
-electron.app.on('window-all-closed', function() {
+electron.app.on('window-all-closed', () => {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {

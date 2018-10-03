@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Messages} from 'idai-components-2/messages';
+import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
-import {M} from '../../m';
 import {Settings} from '../../core/settings/settings';
+import {M} from '../m';
 
 const ip = require('ip');
 
@@ -16,9 +16,7 @@ const ip = require('ip');
  */
 export class SettingsComponent implements OnInit {
 
-
     public settings: Settings;
-    public ready: boolean = false;
     public saving: boolean = false;
     public ipAddress: string = ip.address();
 
@@ -30,16 +28,19 @@ export class SettingsComponent implements OnInit {
 
     ngOnInit() {
 
-        this.settingsService.ready.then(() => {
-            this.ready = true;
-            this.settings = this.settingsService.getSettings();
-        });
+        this.settings = this.settingsService.getSettings();
     }
 
 
     public toggleSync() {
 
         this.settings.isSyncActive = !this.settings.isSyncActive;
+    }
+
+
+    public toggleAutoUpdate() {
+
+        this.settings.isAutoUpdateActive = !this.settings.isAutoUpdateActive;
     }
 
 

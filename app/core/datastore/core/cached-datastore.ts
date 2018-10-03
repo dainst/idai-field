@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Datastore} from 'idai-components-2/datastore';
-import {Document} from 'idai-components-2/core';
+import {Datastore} from 'idai-components-2';
+import {Document, NewDocument} from 'idai-components-2';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CachedReadDatastore} from './cached-read-datastore';
 import {TypeConverter} from './type-converter';
+import {IndexFacade} from "../index/index-facade";
 
 
 @Injectable()
@@ -23,11 +24,12 @@ export abstract class CachedDatastore<T extends Document>
 
     constructor(
         datastore: PouchdbDatastore,
+        indexFacade: IndexFacade,
         documentCache: DocumentCache<T>,
-        typeConverter: TypeConverter,
+        typeConverter: TypeConverter<T>,
         typeClass: string) {
 
-        super(datastore, documentCache, typeConverter, typeClass);
+        super(datastore, indexFacade, documentCache, typeConverter, typeClass);
     }
 
 
@@ -37,33 +39,31 @@ export abstract class CachedDatastore<T extends Document>
      * @throws if document is not of type T, determined by resource.type
      * @throws if resource.type is unknown
      */
-    public async create(document: Document): Promise<T> {
+    public async create(document: NewDocument, username: string): Promise<T> {
 
-        this.typeConverter.validate([document.resource.type], this.typeClass);
-
-        return this.documentCache.set(this.typeConverter.
-            convert<T>(await this.datastore.create(document)));
+        this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
+        return this.updateIndex(await this.datastore.create(document, username));
     }
 
 
     /**
      * Implements {@link Datastore#update}
-     *
      * @throws if document is not of type T, determined by resource.type
      */
-    public async update(document: Document): Promise<T> {
+    public async update(document: Document, username: string, squashRevisionsIds?: string[]): Promise<T> {
 
-        this.typeConverter.validate([document.resource.type], this.typeClass);
+        this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
+        return this.updateIndex(await this.datastore.update(document, username, squashRevisionsIds));
+    }
 
-        const updatedDocument = this.typeConverter.
-            convert<T>(await this.datastore.update(document));
 
-        if (!this.documentCache.get(document.resource.id as any)) {
-            return this.documentCache.set(updatedDocument);
-        } else {
-            this.documentCache.reassign(updatedDocument);
-            return this.documentCache.get(document.resource.id as any);
-        }
+    private updateIndex(document: Document) {
+
+        this.indexFacade.put(document);
+        const convertedDocument = this.typeConverter.convert(document);
+        return !this.documentCache.get(document.resource.id as any)
+            ? this.documentCache.set(convertedDocument)
+            : this.documentCache.reassign(convertedDocument);
     }
 
 
@@ -72,15 +72,17 @@ export abstract class CachedDatastore<T extends Document>
      */
     public async remove(document: Document): Promise<void> {
 
-        this.typeConverter.validate([document.resource.type], this.typeClass);
+        this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
+
+        // we want the doc removed from the indices asap,
+        // in order to not risk someone finding it still with findIds due to
+        // issues that are theoretically possible because we cannot know
+        // when .on('change' (pouchdbdatastore) fires. so we do remove it here,
+        // although we know it will be done again for the same doc
+        // in .on('change'
+        this.indexFacade.remove(document);
 
         await this.datastore.remove(document);
         this.documentCache.remove(document.resource.id);
-    }
-
-
-    public removeRevision(docId: string, revisionId: string): Promise<void> {
-
-        return this.datastore.removeRevision(docId, revisionId);
     }
 }

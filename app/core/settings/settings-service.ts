@@ -1,16 +1,19 @@
 import {Injectable} from '@angular/core';
-import {Messages} from 'idai-components-2/messages';
+import {Observable, Observer} from 'rxjs';
+import {unique} from 'tsfun';
+import {Messages, ProjectConfiguration, Document} from 'idai-components-2';
+import {IdaiFieldAppConfigurator} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
-import {Observable} from 'rxjs/Rx';
 import {PouchdbManager} from '../datastore/core/pouchdb-manager';
-import {AppState} from './app-state';
 import {ImagestoreErrors} from '../imagestore/imagestore-errors';
-import {M} from '../../m';
-import {Observer} from 'rxjs/Observer';
+import {IdaiFieldSampleDataLoader} from '../datastore/field/idai-field-sample-data-loader';
+import {Converter} from '../imagestore/converter';
+import {M} from '../../components/m';
 
-const app = require('electron').remote.app;
+const {remote, ipcRenderer} = require('electron');
+
 
 @Injectable()
 /**
@@ -27,82 +30,19 @@ const app = require('electron').remote.app;
  */
 export class SettingsService {
 
-
     private syncStatusObservers = [];
     private settings: Settings;
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
     private currentSyncUrl = '';
     private currentSyncTimeout: any;
-
-    public ready: Promise<any>;
+    private projectDocument: Document;
 
 
     constructor(private imagestore: Imagestore,
                 private pouchdbManager: PouchdbManager,
-                private appState: AppState,
-                private messages: Messages) {
-    }
-
-
-    public init() {
-
-        this.ready = this.settingsSerializer.load()
-            .then(settings => this.updateSettings(settings))
-            .then(() => this.pouchdbManager.setProject(this.getSelectedProject() as any))
-            .then(() => this.setProjectSettings(this.settings.dbs, this.getSelectedProject() as any, false))
-            .then(() => {
-                if (this.settings.isSyncActive)
-                    return this.startSync();
-            });
-
-        return this.ready;
-    }
-
-
-    public getSelectedProject(): string|undefined {
-        
-        if (this.settings.dbs && this.settings.dbs.length > 0) return this.settings.dbs[0];
-    }
-
-
-    public getUsername(): string {
-
-        return this.settings.username;
-    }
-
-
-    /**
-     * Sets, validates and persists the settings state.
-     * Project settings have to be set separately.
-     *
-     * @param settings
-     * @return Promise encoding string
-     *   'malformed_address'
-     */
-    public updateSettings(settings: Settings): Promise<any> {
-
-        settings = JSON.parse(JSON.stringify(settings)); // deep copy
-        this.settings = SettingsService.initSettings(settings);
-
-        if (this.settings.syncTarget.address) {
-            this.settings.syncTarget.address = this.settings.syncTarget.address.trim();
-            if (!SettingsService.validateAddress(this.settings.syncTarget.address))
-                Promise.reject('malformed_address');
-        }
-
-        this.appState.setCurrentUser(settings.username);
-        this.appState.setImagestorePath(settings.imagestorePath);
-        this.appState.setModel3DStorePath(settings.model3DStorePath);
-
-        return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject() as any)
-            .catch((errWithParams: any) => {
-                if (errWithParams.length > 0 && errWithParams[0] == ImagestoreErrors.INVALID_PATH) {
-                    this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
-                } else {
-                    console.error("something went wrong with imagestore.setPath",errWithParams);
-                }
-            })
-            .then(() => this.storeSettings());
+                private messages: Messages,
+                private appConfigurator: IdaiFieldAppConfigurator,
+                private converter: Converter) {
     }
 
 
@@ -112,46 +52,148 @@ export class SettingsService {
      * object from being changed without explicitly saving the settings.
      * @returns {Settings} the current settings
      */
-    public getSettings(): Settings {
+    public getSettings = (): Settings => JSON.parse(JSON.stringify(this.settings)); // deep copy
 
-        return JSON.parse(JSON.stringify(this.settings)); // deep copy
+    public getUsername = () => this.settings.username;
+
+    public getDbs = () => this.settings.dbs;
+
+    public getProjectDocument = () => this.projectDocument;
+
+    public getSelectedProject(): string {
+
+        return this.settings.dbs && this.settings.dbs.length > 0
+            ? this.settings.dbs[0]
+            : 'test';
+    }
+
+    public isAutoUpdateActive = () => this.settings.isAutoUpdateActive;
+
+
+    public async loadProjectDocument(isBoot = false): Promise<void> {
+
+        delete this.projectDocument; // making sure we start fresh
+
+        try { // new
+            this.projectDocument = await this.pouchdbManager.getDbProxy().get('project');
+        } catch (_) {
+            console.warn('Didn\'t find new style project document, try old method');
+        }
+
+        if (!this.projectDocument) {
+            try { // old
+                this.projectDocument = await this.pouchdbManager.getDbProxy().get(this.getSelectedProject());
+            } catch (_) {
+                if (isBoot) {
+                    console.warn('Didn\'t find old style project document either, creating new one');
+                    await this.pouchdbManager.getDbProxy().put(
+                        SettingsService.createProjectDocument(this.getSelectedProject(), this.getUsername())
+                    );
+                    this.projectDocument = await this.pouchdbManager.getDbProxy().get('project');
+                }
+            }
+        }
+    }
+
+
+    public async bootProjectDb(settings: Settings): Promise<void> {
+
+        await this.updateSettings(settings);
+        await this.pouchdbManager.loadProjectDb(
+            this.getSelectedProject(),
+            new IdaiFieldSampleDataLoader(this.converter, this.settings.imagestorePath,
+                this.settings.model3DStorePath));
+
+        if (this.settings.isSyncActive) await this.startSync();
+        await this.loadProjectDocument(true);
+    }
+
+
+    public async loadConfiguration(configurationDirPath: string): Promise<ProjectConfiguration> {
+
+        let customProjectName = undefined;
+        if (this.getSelectedProject().indexOf('meninx-project') === 0) customProjectName = 'Meninx';
+        if (this.getSelectedProject().indexOf('pergamongrabung') === 0) customProjectName = 'Pergamon';
+
+        try {
+            return await this.appConfigurator.go(
+                configurationDirPath,
+                customProjectName
+            );
+        } catch (msgsWithParams) {
+            if (msgsWithParams.length > 0) {
+                msgsWithParams.forEach((msg: any) => console.error('err in project configuration', msg));
+            } else { // should not happen normally
+                console.error(msgsWithParams);
+            }
+            if (msgsWithParams.length > 1) {
+                console.error('num errors in project configuration', msgsWithParams.length);
+            }
+            throw 'Could not boot project';
+        }
+    }
+
+
+    public async addProject(name: string) {
+
+        this.settings.dbs = unique(this.settings.dbs.concat([name]));
+        await this.settingsSerializer.store(this.settings);
+    }
+
+
+    public async selectProject(name: string) {
+
+        this.settings.dbs = unique([name].concat(this.settings.dbs));
+        await this.settingsSerializer.store(this.settings);
+    }
+
+
+    public async deleteProject(name: string) {
+
+        await this.pouchdbManager.destroyDb(name);
+        this.settings.dbs.splice(this.settings.dbs.indexOf(name), 1);
+        await this.settingsSerializer.store(this.settings);
+    }
+
+
+    public async createProject(name: string, destroyBeforeCreate: boolean) {
+
+        await this.selectProject(name);
+
+        await this.pouchdbManager.createDb(
+            name,
+            SettingsService.createProjectDocument(name, this.getUsername()),
+            destroyBeforeCreate
+        );
     }
 
 
     /**
-     * Sets project settings
-     *
-     * @param projects
-     * @param selectedProject
-     * @param storeSettings if set to false, settings get not persisted
-     * @param create
-     * @returns {any}
+     * Sets, validates and persists the settings state.
+     * Project settings have to be set separately.
      */
-    public setProjectSettings(projects: string[], selectedProject: string,
-                              storeSettings: boolean = true, create: boolean = false): Promise<any> {
+    public async updateSettings(settings: Settings) {
 
-        this.settings.dbs = projects.slice(0);
-        this.makeFirstOfDbsArray(selectedProject);
+        settings = JSON.parse(JSON.stringify(settings)); // deep copy
+        this.settings = SettingsService.initSettings(settings);
 
-        let p: Promise<any> = Promise.resolve();
-        if (storeSettings) {
-            p = p.then(() => this.storeSettings());
+        if (this.settings.syncTarget.address) {
+            this.settings.syncTarget.address = this.settings.syncTarget.address.trim();
+            if (!SettingsService.validateAddress(this.settings.syncTarget.address))
+                throw 'malformed_address';
         }
 
-        if (create) {
-            p = p.then(() => {
-                return this.pouchdbManager.createDb(
-                    selectedProject, this.makeProjectDoc(selectedProject));
-            });
-        }
+        if (ipcRenderer) ipcRenderer.send('settingsChanged', this.settings);
 
-        return p;
-    }
-
-
-    public deleteProject(name: string) {
-
-        return this.pouchdbManager.destroyDb(name);
+        return this.imagestore.setPath(settings.imagestorePath, this.getSelectedProject() as any)
+            .catch((errWithParams: any) => {
+                if (errWithParams.length > 0 && errWithParams[0] === ImagestoreErrors.INVALID_PATH) {
+                    this.messages.add([M.IMAGESTORE_ERROR_INVALID_PATH, settings.imagestorePath]);
+                } else {
+                    console.error('Something went wrong with imagestore.setPath', errWithParams);
+                }
+            })
+            .then(() => this.settingsSerializer.store(this.settings));
     }
 
 
@@ -161,10 +203,10 @@ export class SettingsService {
 
         this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
         if (!this.currentSyncUrl) return Promise.resolve();
+        if (!this.getSelectedProject()) return Promise.resolve();
 
-        console.log('SettingsService.startSync()');
-
-        return this.pouchdbManager.setupSync(this.currentSyncUrl).then(syncState => {
+        return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject())
+            .then(syncState => {
 
             // avoid issuing 'connected' too early
             const msg = setTimeout(() => this.syncStatusObservers.forEach((o: Observer<any>) => o.next('connected')), 500);
@@ -175,7 +217,9 @@ export class SettingsService {
                 this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
                 this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
             });
-            syncState.onChange.subscribe(() => this.syncStatusObservers.forEach((o: Observer<any>) => o.next('changed')));
+            syncState.onChange.subscribe(() => {
+                return this.syncStatusObservers.forEach((o: Observer<any>) => o.next('changed'))
+            });
         });
     }
 
@@ -189,7 +233,7 @@ export class SettingsService {
                 || !(this.settings.dbs.length > 0))
             return Promise.resolve();
 
-        return new Promise<any>((resolve) => {
+        return new Promise<any>(resolve => {
                 setTimeout(() => {
                     this.startSync().then(() => resolve());
                 }, 1000);
@@ -197,47 +241,11 @@ export class SettingsService {
     }
 
 
-    private stopSync() {
+    public stopSync() {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         this.pouchdbManager.stopSync();
         this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
-    }
-
-
-    private makeProjectDoc(name: string) {
-
-        return {
-            _id: name,
-            resource: {
-                type: 'Project',
-                identifier: name,
-                id: name,
-                coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
-                relations: {}
-            },
-            created: { user: this.settings.username, date: new Date() },
-            modified: [{ user: this.settings.username, date: new Date() }]
-        };
-    }
-
-
-    private static validateAddress(address: any) {
-
-        if (address == '') return true;
-
-        const re = new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$');
-        return re.test(address);
-    }
-
-
-    private makeFirstOfDbsArray(projectName: string) {
-
-        const index = this.settings.dbs.indexOf(projectName);
-        if (index != -1) {
-            this.settings.dbs.splice(index, 1);
-            this.settings.dbs.unshift(projectName);
-        }
     }
 
 
@@ -257,24 +265,25 @@ export class SettingsService {
     }
 
 
+    private static validateAddress(address: any) {
+
+        return (address == '')
+            ? true
+            : new RegExp('^(https?:\/\/)?([0-9a-z\.-]+)(:[0-9]+)?(\/.*)?$').test(address);
+    }
+
+
     private static makeUrlFromSyncTarget(serverSetting: any) {
 
         let address = serverSetting['address'];
-
         if (!address) return false;
 
         if (address.indexOf('http') == -1) address = 'http://' + address;
 
-        if (!serverSetting['username'] || !serverSetting['password']) return address;
-
-        return address.replace(/(https?):\/\//, '$1://' +
-            serverSetting['username'] + ':' + serverSetting['password'] + '@');
-    }
-
-
-    private storeSettings(): Promise<any> {
-
-        return this.settingsSerializer.store(this.settings);
+        return !serverSetting['username'] || !serverSetting['password']
+            ? address
+            : address.replace(/(https?):\/\//, '$1://' +
+                serverSetting['username'] + ':' + serverSetting['password'] + '@');
     }
 
 
@@ -286,25 +295,49 @@ export class SettingsService {
     private static initSettings(settings: Settings): Settings {
 
         if (!settings.username) settings.username = 'anonymous';
-
-        if (!settings.dbs || settings.dbs.length == 0) settings.dbs = ['test'];
-
+        if (!settings.dbs || settings.dbs.length === 0) settings.dbs = ['test'];
         if (!settings.isSyncActive) settings.isSyncActive = false;
 
-        settings.imagestorePath = SettingsService.initPath(settings.imagestorePath, 'imagestore');
-        settings.model3DStorePath = SettingsService.initPath(settings.model3DStorePath, 'model3DStore');
+        if (settings.imagestorePath) {
+            let path: string = settings.imagestorePath;
+            if (path.substr(-1) != '/') path += '/';
+            settings.imagestorePath = path;
+        } else {
+            if (remote.app) { // jasmine unit tests
+                settings.imagestorePath = remote.app.getPath('appData') + '/'
+                    + remote.app.getName() + '/imagestore/';
+            }
+        }
+
+        // TODO Write method to handle both store paths
+        if (settings.model3DStorePath) {
+            let path: string = settings.model3DStorePath;
+            if (path.substr(-1) != '/') path += '/';
+            settings.model3DStorePath = path;
+        } else {
+            if (remote.app) { // jasmine unit tests
+                settings.model3DStorePath = remote.app.getPath('appData') + '/'
+                    + remote.app.getName() + '/model3DStorePath/';
+            }
+        }
 
         return settings;
     }
 
 
-    private static initPath(path: string|undefined, storeName: string): string {
+    private static createProjectDocument(name: string, username: string): any {
 
-        if (path && path.substr(-1) != '/') path += '/';
-
-        if (!path) path = app.getPath('appData') + '/' + app.getName() + '/' + storeName + '/';
-
-        return path;
+        return {
+            _id: 'project',
+            resource: {
+                type: 'Project',
+                identifier: name,
+                id: 'project',
+                coordinateReferenceSystem: 'Eigenes Koordinatenbezugssystem',
+                relations: {}
+            },
+            created: { user: username, date: new Date() },
+            modified: [{ user: username, date: new Date() }]
+        };
     }
-
 }

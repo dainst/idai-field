@@ -1,24 +1,24 @@
-<div *ngIf="typesTreeList">
-    <div *ngIf="getButtonType() == 'multipleTypes'"
+<div *ngIf="typesTreeList && status === 'enabled'">
+    <div *ngIf="getButtonType() === 'multipleTypes'"
              class="circular-button green-button"
              [ngbPopover]="newObjectMenu" #popover="ngbPopover"
-             triggers="manual" (click)="reset(); popover.toggle();"
-             onclick="window.scrollTo(0, 0)" placement="{{placement}}">
+             [triggers]="manual" [autoClose]="false" (click)="reset(); popover.toggle();"
+             [placement]="placement">
         <span class="mdi mdi-plus"></span>
     </div>
 
-    <div *ngIf="getButtonType() == 'singleType' && preselectedGeometryType != 'none'"
+    <div *ngIf="getButtonType() === 'singleType' && preselectedGeometryType !== 'none'"
              class="circular-button type-button"
              [ngbPopover]="newObjectMenu" #popover="ngbPopover"
-             triggers="manual" (click)="reset(); popover.toggle();"
-             onclick="window.scrollTo(0, 0)" placement="{{placement}}">
+             triggers="manual" [autoClose]="false" (click)="reset(); popover.toggle();"
+             [placement]="placement">
         <type-icon [type]="typesTreeList[0].name" size="41"></type-icon>
         <div class="plus-sign-circle">
             <span class="mdi mdi-plus mdi-18px"></span>
         </div>
     </div>
 
-    <div *ngIf="getButtonType() == 'singleType' && preselectedGeometryType == 'none'"
+    <div *ngIf="getButtonType() === 'singleType' && preselectedGeometryType === 'none'"
             class="circular-button type-button" (click)="chooseType(typesTreeList[0])">
         <type-icon [type]="typesTreeList[0].name" size="41"></type-icon>
         <div class="plus-sign-circle">
@@ -27,37 +27,42 @@
     </div>
 </div>
 
+<div *ngIf="status !== 'enabled'" class="circular-button green-button disabled"
+     ngbTooltip="{{getTooltip()}}">
+    <span class="mdi mdi-plus"></span>
+</div>
+
 <ng-template #newObjectMenu>
+    <div>
+        <div *ngIf="!selectedType" id="new-object-menu">
+            <div class="popover-custom-title">Bitte wählen Sie einen Typ aus.</div>
+            <type-picker [typesTreeList]="typesTreeList" (onTypePicked)="chooseType($event)"></type-picker>
+        </div>
 
-    <div *ngIf="!type" id="new-object-menu">
-        <div class="popover-custom-title">Bitte wählen Sie einen Typ aus.</div>
-        <type-picker [typesTreeList]="typesTreeList" (onTypePicked)="chooseType($event)"></type-picker>
+        <div *ngIf="selectedType" id="geometry-type-selection">
+            <div class="popover-custom-title">Bitte wählen Sie einen Geometrietyp aus.</div>
+            <ul class="list-group">
+                <li id="choose-geometry-option-polygon" class="list-group-item popover-item"
+                    (click)="startDocumentCreation('Polygon');">
+                    <span class="mdi mdi-shape-polygon-plus mdi-18px choose-geometry-icon"></span>
+                    Polygon
+                </li>
+                <li id="choose-geometry-option-polyline" class="list-group-item popover-item"
+                    (click)="startDocumentCreation('LineString');">
+                    <span class="mdi mdi-vector-polyline mdi-18px choose-geometry-icon"></span>
+                    Polyline
+                </li>
+                <li id="choose-geometry-option-point" class="list-group-item popover-item"
+                    (click)="startDocumentCreation('Point');">
+                    <span class="mdi mdi-map-marker-plus mdi-18px choose-geometry-icon"></span>
+                    Punkt
+                </li>
+                <li id="choose-geometry-option-none" class="list-group-item popover-item"
+                    (click)="startDocumentCreation('none');">
+                    <span class="mdi mdi-close-circle-outline mdi-18px choose-geometry-icon"></span>
+                    Keine Geometriedaten
+                </li>
+            </ul>
+        </div>
     </div>
-
-    <div *ngIf="type" id="geometry-type-selection">
-        <div class="popover-custom-title">Bitte wählen Sie einen Geometrietyp aus.</div>
-        <ul class="list-group">
-            <li id="choose-geometry-option-polygon" class="list-group-item popover-item"
-                (click)="startDocumentCreation('Polygon');">
-                <span class="mdi mdi-shape-polygon-plus mdi-18px choose-geometry-icon"></span>
-                Polygon
-            </li>
-            <li id="choose-geometry-option-polyline" class="list-group-item popover-item"
-                (click)="startDocumentCreation('LineString');">
-                <span class="mdi mdi-vector-polyline mdi-18px choose-geometry-icon"></span>
-                Polyline
-            </li>
-            <li id="choose-geometry-option-point" class="list-group-item popover-item"
-                (click)="startDocumentCreation('Point');">
-                <span class="mdi mdi-map-marker-plus mdi-18px choose-geometry-icon"></span>
-                Punkt
-            </li>
-            <li id="choose-geometry-option-none" class="list-group-item popover-item"
-                (click)="startDocumentCreation('none');">
-                <span class="mdi mdi-close-circle-outline mdi-18px choose-geometry-icon"></span>
-                Keine Geometriedaten
-            </li>
-        </ul>
-    </div>
-
 </ng-template>

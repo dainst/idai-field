@@ -1,35 +1,23 @@
 import {Component} from '@angular/core';
 import {Http} from '@angular/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2/core';
-import {Messages} from 'idai-components-2/messages';
-import {Validator} from 'idai-components-2/persist';
-import {ConfigLoader} from 'idai-components-2/configuration';
-import {Importer, ImportReport} from '../../core/importer/importer';
-import {Reader} from '../../core/importer/reader';
-import {FileSystemReader} from '../../core/importer/file-system-reader';
-import {HttpReader} from '../../core/importer/http-reader';
-import {Parser} from '../../core/importer/parser';
-import {NativeJsonlParser} from '../../core/importer/native-jsonl-parser';
-import {IdigCsvParser} from '../../core/importer/idig-csv-parser';
-import {GeojsonParser} from '../../core/importer/geojson-parser';
-import {M} from '../../m';
-import {ImportStrategy} from '../../core/importer/import-strategy';
-import {DefaultImportStrategy} from '../../core/importer/default-import-strategy';
-import {MergeGeometriesImportStrategy} from '../../core/importer/merge-geometries-import-strategy';
-import {RelationsStrategy} from '../../core/importer/relations-strategy';
-import {DefaultRelationsStrategy} from '../../core/importer/default-relations-strategy';
-import {NoRelationsStrategy} from '../../core/importer/no-relations-strategy';
-import {RollbackStrategy} from '../../core/importer/rollback-strategy';
-import {DefaultRollbackStrategy} from '../../core/importer/default-rollback-strategy';
-import {NoRollbackStrategy} from '../../core/importer/no-rollback-strategy';
-import {RelationsCompleter} from '../../core/importer/relations-completer';
-import {SettingsService} from '../../core/settings/settings-service';
+import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
+import {ImportReport} from '../../core/import/import';
+import {Reader} from '../../core/import/reader';
+import {FileSystemReader} from '../../core/import/file-system-reader';
+import {HttpReader} from '../../core/import/http-reader';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
-import {ChangesStream} from '../../core/datastore/core/changes-stream';
+import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
+import {Validator} from '../../core/model/validator';
+import {UsernameProvider} from '../../core/settings/username-provider';
+import {SettingsService} from '../../core/settings/settings-service';
+import {MessagesConversion} from './messages-conversion';
+import {M} from '../m';
+import {ImportFacade, ImportFormat} from '../../core/import/import-facade';
+import {isNot, empty} from 'tsfun';
 
 
 @Component({
@@ -48,51 +36,40 @@ import {ChangesStream} from '../../core/datastore/core/changes-stream';
 export class ImportComponent {
 
     public sourceType: string = 'file';
-    public format: string = 'native';
+    public format: ImportFormat = 'native';
     public file: File|undefined;
     public url: string|undefined;
     public mainTypeDocuments: Array<Document> = [];
-    public mainTypeDocumentId: string = '';
+    public mainTypeDocumentId?: string;
+    public allowMergingExistingResources = false;
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
 
     constructor(
         private messages: Messages,
-        private importer: Importer,
         private datastore: DocumentDatastore,
-        private changesStream: ChangesStream,
+        private remoteChangesStream: RemoteChangesStream,
         private validator: Validator,
         private http: Http,
-        private relationsCompleter: RelationsCompleter,
-        private settingsService: SettingsService,
-        private configLoader: ConfigLoader,
+        private usernameProvider: UsernameProvider,
+        private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private settingsService: SettingsService // TODO remove
     ) {
-        this.viewFacade.getAllOperationSubtypeWithViewDocuments().then(
+        this.viewFacade.getAllOperations().then(
             documents => this.mainTypeDocuments = documents,
             msgWithParams => messages.add(msgWithParams)
         );
     }
 
     
-    public startImport() {
+    public async startImport() {
 
         const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.file as any,
             this.url as any, this.http);
-        const parser: Parser|undefined = ImportComponent.createParser(this.format);
-        const importStrategy: ImportStrategy|undefined = ImportComponent.createImportStrategy(this.format,
-            this.validator, this.datastore, this.settingsService, this.configLoader, this.mainTypeDocumentId);
-        const relationsStrategy: RelationsStrategy|undefined
-            = ImportComponent.createRelationsStrategy(this.format, this.relationsCompleter);
-        const rollbackStrategy: RollbackStrategy|undefined
-            = ImportComponent.createRollbackStrategy(this.format, this.datastore);
-
-        this.messages.clear();
-        if (!reader || !parser || !importStrategy || !rollbackStrategy) {
-            return this.messages.add([M.IMPORT_GENERIC_START_ERROR]);
-        }
+        if (!reader) return this.messages.add([M.IMPORT_GENERIC_START_ERROR]);
 
         let uploadModalRef: any = undefined;
         let uploadReady = false;
@@ -100,87 +77,48 @@ export class ImportComponent {
             if (!uploadReady) uploadModalRef = this.modalService.open(UploadModalComponent,
                 { backdrop: 'static', keyboard: false });
         }, 200);
-        this.importer.importResources(reader, parser, importStrategy, relationsStrategy as any, rollbackStrategy,
-            this.datastore, this.changesStream)
-            .then(importReport => {
-                uploadReady = true;
-                if(uploadModalRef) uploadModalRef.close();
-                this.showImportResult(importReport)
-            });
+
+        this.remoteChangesStream.setAutoCacheUpdate(false);
+        const importReport = await ImportFacade.doImport(
+            this.format,
+            this.validator,
+            this.datastore,
+            this.usernameProvider,
+            this.projectConfiguration,
+            this.mainTypeDocumentId,
+            this.allowMergingExistingResources,
+            reader
+        );
+        this.remoteChangesStream.setAutoCacheUpdate(true);
+
+        uploadReady = true;
+        if(uploadModalRef) uploadModalRef.close();
+        this.showImportResult(importReport);
     }
 
 
     public isReady(): boolean|undefined {
 
-        switch (this.sourceType) {
-            case 'file':
-                return (this.file != undefined);
-            case 'http':
-                return (this.url != undefined);
-        }
+        return this.sourceType === 'file'
+            ? this.file != undefined
+            : this.url != undefined;
     }
     
 
     public reset(): void {
 
-        this.messages.clear();
-
+        this.messages.removeAllMessages();
         this.file = undefined;
         this.url = undefined;
-    }
-    
-
-    private static createImportStrategy(format: string, validator: Validator, datastore: DocumentDatastore,
-                                        settingsService: SettingsService, configLoader: ConfigLoader,
-                                        mainTypeDocumentId: string): ImportStrategy|undefined {
-
-        switch (format) {
-            case 'native':
-                return new DefaultImportStrategy(validator, datastore, settingsService, configLoader,
-                    mainTypeDocumentId);
-            case 'idig':
-                return new DefaultImportStrategy(validator, datastore, settingsService, configLoader);
-            case 'geojson':
-                return new MergeGeometriesImportStrategy(validator, datastore as any, settingsService);
-        }
-    }
-
-    
-    private static createRelationsStrategy(format: string, relationsCompleter: RelationsCompleter): RelationsStrategy|undefined {
-
-        switch (format) {
-            case 'native':
-                return new DefaultRelationsStrategy(relationsCompleter);
-            case 'idig':
-                return new DefaultRelationsStrategy(relationsCompleter);
-            case 'geojson':
-                return new NoRelationsStrategy();
-        }
-    }
-    
-
-    private static createRollbackStrategy(format: string, datastore: DocumentDatastore): RollbackStrategy|undefined {
-
-        switch (format) {
-            case 'native':
-                return new DefaultRollbackStrategy(datastore);
-            case 'idig':
-                return new DefaultRollbackStrategy(datastore);
-            case 'geojson':
-                return new NoRollbackStrategy();
-        }
     }
 
 
     public selectFile(event: any) {
 
-        let files = event.target.files;
-
-        if (!files || files.length == 0) {
-            this.file = undefined;
-        } else {
-            this.file = files[0];
-        }
+        const files = event.target.files;
+        this.file = !files || files.length === 0
+            ? undefined
+            : files[0];
     }
 
 
@@ -197,7 +135,7 @@ export class ImportComponent {
 
     private showSuccessMessage(importedResourcesIds: string[]) {
 
-        if (importedResourcesIds.length == 1) {
+        if (importedResourcesIds.length === 1) {
             this.messages.add([M.IMPORT_SUCCESS_SINGLE]);
         } else if (importedResourcesIds.length > 1) {
             this.messages.add([M.IMPORT_SUCCESS_MULTIPLE, importedResourcesIds.length.toString()]);
@@ -207,32 +145,17 @@ export class ImportComponent {
 
     private showMessages(messages: string[][]) {
 
-        for (let msgWithParams of messages) {
-            this.messages.add(msgWithParams);
-        }
+        messages
+            .map(MessagesConversion.convertMessage)
+            .filter(isNot(empty))
+            .forEach(msgWithParams => this.messages.add(msgWithParams));
     }
 
 
     private static createReader(sourceType: string, file: File, url: string, http: Http): Reader|undefined {
 
-        switch (sourceType) {
-            case 'file':
-                return new FileSystemReader(file);
-            case 'http':
-                return new HttpReader(url, http);
-        }
-    }
-
-
-    private static createParser(format: string): Parser|undefined {
-
-        switch (format) {
-            case 'native':
-                return new NativeJsonlParser();
-            case 'idig':
-                return new IdigCsvParser();
-            case 'geojson':
-                return new GeojsonParser();
-        }
+        return sourceType === 'file'
+            ? new FileSystemReader(file)
+            : new HttpReader(url, http);
     }
 }

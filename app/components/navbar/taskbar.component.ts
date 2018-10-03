@@ -1,9 +1,7 @@
-import {Component, ElementRef, Renderer, ViewChild} from '@angular/core';
-import {Document} from 'idai-components-2/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {SettingsService} from '../../core/settings/settings-service';
-import {RoutingService} from '../routing-service';
-import {DocumentReadDatastore} from '../../core/datastore/document-read-datastore';
-import {ChangesStream} from '../../core/datastore/core/changes-stream';
+import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
+
 
 @Component({
     moduleId: module.id,
@@ -17,93 +15,46 @@ import {ChangesStream} from '../../core/datastore/core/changes-stream';
  */
 export class TaskbarComponent {
 
-    public connected = false;
-    public conflicts: Array<Document> = [];
+    public connected: boolean = false;
+    public receivingRemoteChanges: boolean = false;
 
-    @ViewChild('popover') private popover: any;
-
-    private cancelClickListener: Function;
+    private remoteChangesTimeout: any = undefined;
 
 
-    constructor(private datastore: DocumentReadDatastore,
-                private changesStream: ChangesStream,
-                private settings: SettingsService,
-                private elementRef: ElementRef,
-                private renderer: Renderer,
-                private routingService: RoutingService) {
+    constructor(private changeDetectorRef: ChangeDetectorRef,
+                settingsService: SettingsService,
+                remoteChangesStream: RemoteChangesStream) {
 
-        this.fetchConflicts();
-        this.subscribeForChanges();
+        this.listenToSyncStatusChanges(settingsService);
+        this.listenToRemoteChanges(remoteChangesStream);
+    }
 
-        settings.syncStatusChanges().subscribe(c => {
-            if (c == 'disconnected') {
-                this.connected = false;
-            } else if (c == 'connected') {
+
+    private listenToSyncStatusChanges(settingsService: SettingsService) {
+
+        settingsService.syncStatusChanges().subscribe(status => {
+            if (status === 'connected') {
                 this.connected = true;
+                this.changeDetectorRef.detectChanges();
+            } else if (status === 'disconnected') {
+                this.connected = false;
+                this.changeDetectorRef.detectChanges();
             }
         });
     }
 
 
-    public openConflictResolver = (document: Document) => this.routingService.jumpToConflictResolver(document);
+    private listenToRemoteChanges(remoteChangesStream: RemoteChangesStream) {
 
+        remoteChangesStream.notifications().subscribe(() => {
+            this.receivingRemoteChanges = true;
+            this.changeDetectorRef.detectChanges();
 
-    public togglePopover() {
-
-        if (this.popover.isOpen()) {
-            this.closePopover();
-        } else {
-            this.popover.open();
-            this.cancelClickListener = this.startClickListener();
-        }
-    }
-
-
-    private subscribeForChanges(): void {
-
-        this.changesStream.allChangesAndDeletionsNotifications().subscribe(() => {
-            this.fetchConflicts();
+            if (this.remoteChangesTimeout) clearTimeout(this.remoteChangesTimeout);
+            this.remoteChangesTimeout = setTimeout(() => {
+                this.receivingRemoteChanges = false;
+                this.changeDetectorRef.detectChanges();
+            }, 2000);
         });
-    }
-
-
-    private fetchConflicts() {
-
-        this.datastore.find({ constraints: { 'conflicts:exist': 'KNOWN' } }).then(result => {
-            this.conflicts = result.documents;
-        });
-    }
-
-
-    private startClickListener(): Function {
-
-        return this.renderer.listenGlobal('document', 'click', (event: any) => {
-            this.handleClick(event);
-        });
-    }
-
-
-    private closePopover() {
-
-        this.popover.close();
-        this.cancelClickListener();
-        this.cancelClickListener = undefined as any;
-    }
-
-
-    private handleClick(event: any) {
-
-        let target = event.target;
-        let inside = false;
-
-        do {
-            if (target === this.elementRef.nativeElement) {
-                inside = true;
-                break;
-            }
-            target = target.parentNode;
-        } while (target);
-
-        if (!inside) this.closePopover();
     }
 }

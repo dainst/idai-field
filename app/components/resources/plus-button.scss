@@ -1,0 +1,18 @@
+/*
+ * @author Thomas Kleinke
+ */
+
+.green-button.disabled {
+  background-color: #ababab;
+  cursor: not-allowed;
+
+  &:hover {
+    background-color: #ababab;
+  }
+}
+
+#new-object-menu {
+  li:last-child {
+    border-bottom: 0 !important;
+  }
+}

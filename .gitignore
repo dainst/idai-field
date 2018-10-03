@@ -1,3 +1,5 @@
+*.rb
+
 # Logs
 logs
 *.log
@@ -29,6 +31,15 @@ build/Release
 # PouchDB data directories
 _users/
 pouch__all_dbs__/
+proddb
+remotedb
+synctest
+synctest1
+synctest0
+sycntestdb
+synctestremotedb0
+synctestremotedb1
+synctestremotedb
 
 
 ######
@@ -59,3 +70,4 @@ test/LOCK
 test/LOG
 test/CURRENT
 test/MANIFEST*
+testdb

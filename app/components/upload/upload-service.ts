@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Document} from 'idai-components-2/core';
+import {Document} from 'idai-components-2';
 import {ImageUploader} from './image/image-uploader';
 import {Model3DUploader} from './model3d/model-3d-uploader';
 import {UploadResult} from './upload-result';
-import {ExtensionUtil} from '../../util/extension-util';
-import {M} from '../../m';
+import {ExtensionUtil} from '../../core/util/extension-util';
+import {M} from '../m';
 import {Uploader} from './uploader';
 
 
@@ -82,7 +82,7 @@ export class UploadService {
         const files: Array<File> = [];
 
         for (let i = 0; i < fileList.length; i++) {
-            files.push(fileList.item(i));
+            files.push(fileList.item(i) as File);
         }
 
         return files;

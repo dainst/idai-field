@@ -1,92 +1,65 @@
 <div class="modal-body p-0">
 
-    <ng-template #deleteModal let-c="close">
-        <div class="modal-header">
-            <h4 class="modal-title">Ressource löschen?</h4>
-        </div>
-        <div class="modal-body">
-            <div *ngIf="isRecordedInResourcesCount == 1" class="text-center alert alert-warning">
-                Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
-            </div>
-            <div *ngIf="isRecordedInResourcesCount > 1" class="text-center alert alert-warning">
-                Zu dieser Ressource gehören insgesamt {{isRecordedInResourcesCount}} Ressourcen, die beim Löschen
-                ebenfalls entfernt werden.
-            </div>
-            <div id="confirm-delete-info">
-                Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen.
-            </div>
-            <div class="input-group">
-                <input id="delete-resource-input" type="text" class="form-control"
-                       [(ngModel)]="confirmDeletionIdentifier"/>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button id="delete-resource-confirm" class="btn btn-danger" type="button"
-                    [ngClass]="{ 'disabled': confirmDeletionIdentifier != document.resource.identifier }"
-                    (click)="confirmDeletionIdentifier != document.resource.identifier || c('delete')">
-                Löschen
-            </button>
-            <button type="button" id="delete-resource-cancel" class="btn btn-secondary" (click)="c('cancel')">
-                Abbrechen
-            </button>
-        </div>
-    </ng-template>
-
     <section id="document-edit-wrapper">
         <header class="overview-document-heading d-flex justify-content-between">
             <div id="type-switcher-button-container">
-                <type-switcher-button [type]="clonedDocument.resource.type"
+                <type-switcher-button [type]="documentHolder.clonedDocument.resource.type"
                                   (onTypeChanged)="changeType($event)">
                 </type-switcher-button>
             </div>
-            
-            <div *ngIf="projectConfiguration && clonedDocument"
+
+            <div *ngIf="documentHolder.clonedDocument"
                   class="docedit-header-label text-truncate">
-                <small>
-                    {{projectConfiguration.getLabelForType(this.clonedDocument.resource.type)}}
-                    <span *ngIf="clonedDocument.resource.id">bearbeiten</span>
-                    <span *ngIf="!clonedDocument.resource.id">anlegen</span>
-                </small><br>
-                <strong>{{clonedDocument.resource.identifier}}</strong>
+                <small *ngIf="!documentHolder.clonedDocument.resource.id">
+                    {{projectConfiguration.getLabelForType(this.documentHolder.clonedDocument.resource.type)}}
+                    in {{parentLabel}} anlegen
+                </small>
+                <small *ngIf="documentHolder.clonedDocument.resource.id">
+                    {{projectConfiguration.getLabelForType(this.documentHolder.clonedDocument.resource.type)}} bearbeiten
+                </small>
+                <br>
+                <strong>{{documentHolder.clonedDocument.resource.identifier}}</strong>
             </div>
+
             <div>
-                <button *ngIf="clonedDocument && clonedDocument.resource.id
-                            && clonedDocument.resource.type != 'Project'"
-                        class="btn btn-danger pull-right" id="document-edit-button-delete-document"
-                         (click)="openDeleteModal(deleteModal);">
+                <button *ngIf="documentHolder.clonedDocument && documentHolder.clonedDocument.resource.id
+                            && documentHolder.clonedDocument.resource.type != 'Project'"
+                        id="document-edit-button-delete-document"
+                        class="btn btn-danger pull-right"
+                        [class.disabled]="isLoading()"
+                        (click)="isLoading() || openDeleteModal()">
                     <span class="mdi mdi-delete"></span>
                     <span class="button-label">Löschen</span>
                 </button>
                 <button class="btn btn-success disabled pull-right"
                         id="document-edit-button-save-document"
-                        [class.disabled]="!documentEditChangeMonitor.isChanged()"
-                        (click)="!documentEditChangeMonitor.isChanged() || save(true);">
+                        [class.disabled]="!isChanged() || isLoading()"
+                        (click)="!isChanged() || isLoading() || save(true)">
                     <span class="mdi mdi-content-save"></span>
                     <span class="button-label">Speichern</span>
                 </button>
-                <button *ngIf="showBackButton" class="btn btn-primary"
+                <button class="btn btn-primary"
                         id="document-edit-button-goto-view"
-                        
-                        (click)="cancel()">
+                        [class.disabled]="isLoading()"
+                        (click)="isLoading() || cancel()">
                     <span class="mdi mdi-close"></span>
                 </button>
             </div>
         </header>
         <main>
-
-            <div *ngIf="clonedDocument" class="container">
+            <div *ngIf="documentHolder.clonedDocument && !isLoading()" class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <ngb-tabset (tabChange)="changeActiveTab($event)" activeId="docedit-{{activeTabService.getActiveTab()}}-tab">
+                        <ngb-tabset (tabChange)="changeActiveTab($event)" activeId="{{getActiveTab()}}">
                             <ngb-tab id="docedit-fields-tab">
                                 <ng-template ngbTabTitle>
                                     <span class="mdi mdi-format-list-bulleted"></span>
                                     Metadaten
                                 </ng-template>
                                 <ng-template ngbTabContent>
-                                    <edit-form *ngIf="projectConfiguration" [(document)]="clonedDocument"
+                                    <edit-form *ngIf="projectConfiguration" [(document)]="documentHolder.clonedDocument"
                                                [fieldDefinitions]="projectConfiguration.getFieldDefinitions
-                                                    (clonedDocument.resource.type)">
+                                                    (documentHolder.clonedDocument.resource.type)">
                                     </edit-form>
                                 </ng-template>
                             </ngb-tab>
@@ -98,48 +71,46 @@
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <relations-form
-                                            [(document)]="clonedDocument"
+                                            [(document)]="documentHolder.clonedDocument"
                                             [primary]="'identifier'"
                                             [relationDefinitions]="getRelationDefinitions()">
                                     </relations-form>
                                 </ng-template>
                             </ngb-tab>
 
-                            <ngb-tab *ngIf="!isMediaDocument()"
-                                     id="docedit-media-tab">
+                            <ngb-tab *ngIf="showDoceditMediaTab" id="docedit-media-tab">
                                 <ng-template ngbTabTitle>
                                     <span class="mdi mdi-image"></span>
                                     Medienressourcen
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <docedit-media-tab
-                                            [(document)]="clonedDocument">
+                                            [(document)]="documentHolder.clonedDocument">
                                     </docedit-media-tab>
                                 </ng-template>
                             </ngb-tab>
 
-                            <ngb-tab *ngIf="clonedDocument._conflicts" id="docedit-conflicts-tab">
+                            <ngb-tab *ngIf="documentHolder.clonedDocument._conflicts" id="docedit-conflicts-tab">
                                 <ng-template ngbTabTitle><span class="mdi mdi-alert-outline"></span> Konflikte
                                 </ng-template>
                                 <ng-template ngbTabContent>
-                                    <docedit-conflicts-tab [(document)]="clonedDocument"
-                                                       [(inspectedRevisionsIds)]="inspectedRevisionsIds">
+                                    <docedit-conflicts-tab [(document)]="documentHolder.clonedDocument"
+                                                       [(inspectedRevisions)]="documentHolder.inspectedRevisions">
                                     </docedit-conflicts-tab>
                                 </ng-template>
                             </ngb-tab>
                         </ngb-tabset>
-
                     </div>
+                </div>
+            </div>
+            <div *ngIf="isLoading()" id="loading-icon-container">
+                <loading-icon [context]="'docedit'"></loading-icon>
+                <div id="operation-in-progress-info" class="alert alert-primary">
+                    <span *ngIf="operationInProgress === 'save'">Ressource wird gespeichert...</span>
+                    <span *ngIf="operationInProgress === 'delete'">Ressource wird gelöscht...</span>
                 </div>
             </div>
         </main>
     </section>
 </div>
-<ng-template #modalTemplate>
-    <edit-save-dialog
-            (onSave)="save(); dialog.close();"
-            (onDiscard)="activeModal.dismiss('discard'); dialog.close();"
-            (onCancel)="dialog.close();">
-    </edit-save-dialog>
-</ng-template>
 

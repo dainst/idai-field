@@ -4,54 +4,67 @@
  * @author Thomas Kleinke
  */
 
+@import 'plus-button';
+@import 'navigation/navigation';
 @import 'map/map/map';
 @import 'map/resources-map';
 @import 'map/layer-menu';
-@import 'map/docview/geometry-view';
-@import 'map/docview/thumbnail-view';
-@import 'map/docview/document-view-sidebar';
 @import 'map/map-3d/map-3d';
 @import 'map/map-3d/control-buttons';
 @import 'map/map-3d/geometries/geometries';
 @import 'map/map-3d/layers/layers-2d/layers-2d';
 @import 'map/map-3d/layers/layers-3d/layers-3d';
+@import 'map/detail/document-detail-sidebar';
+@import 'map/detail/geometry-view';
+@import 'map/detail/thumbnail-view';
 @import 'list/list';
 @import 'list/row';
+@import 'searchbar/resources-search-bar';
+@import 'searchbar/search-suggestions';
+@import 'searchbar/search-constraints';
 
-#objectOverview {
-  overflow: hidden;
-  z-index: 100;
-}
+.resources-nav {
+  position: relative;
+  z-index: 1001;
+  height: 49px;
+  padding-top: 2px;
+  padding-bottom: 6px;
 
-#objectOverview,
-#imageOverview {
-  padding: 0 !important;
-  background-color: #f7f7f7;
+  #search-bar-container {
+    padding-right: 8px;
 
-  main {
-    padding: 7px;
+    #search-bar,
+    #mainTypeSelectBox,
+    #mainTypeSelectBoxSubstitute {
+      margin-top: 2px;
+      margin-bottom: -3px;
+    }
+  }
+
+  #buttons-container {
+    padding-left: 0;
+    padding-right: 8px;
+
+    .resources-mode-buttons {
+      margin-top: 3px;
+      margin-bottom: -1px;
+      width: 100% !important;
+
+      button {
+        width: 50% !important;
+      }
+    }
   }
 }
 
-#resources {
-  #search-bar,
-  #mainTypeSelectBox,
-  #mainTypeSelectBoxSubstitute {
-    margin-top: 3px;
-    margin-bottom: -3px;
-  }
+.resources-container{
 
-  .resources-mode-buttons {
-    margin-top: 3px;
-    margin-bottom: -1px;
+  .no-main-type-resource-alert {
+    position: absolute;
+    padding: 10px;
+    margin: 35vh 16.6vw 0;
+    z-index: 900;
+    user-select: none;
+    cursor: default;
   }
-}
-
-.no-main-type-resource-alert {
-  position: absolute;
-  padding: 10px;
-  margin: 35vh 16.6vw 0;
-  z-index: 900;
-  user-select: none;
-  cursor: default;
 }

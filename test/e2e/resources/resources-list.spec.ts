@@ -1,10 +1,10 @@
-import {browser, protractor} from 'protractor';
+import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from './resources.page';
-import {SearchBarPage} from '../widgets/search-bar.page';
 
 const delays = require('../config/delays');
-const EC = protractor.ExpectedConditions;
+const common = require('../common');
+
 
 describe('resources/list --', () => {
 
@@ -13,20 +13,28 @@ describe('resources/list --', () => {
 
     beforeAll(function() {
         ResourcesPage.get();
+        browser.sleep(delays.shortRest);
         ResourcesPage.clickListModeButton();
+        browser.sleep(delays.shortRest);
     });
 
 
-    beforeEach(() => {
+    beforeEach(async done => {
+
         if (index > 0) {
             NavbarPage.performNavigateToSettings();
-            require('request').post('http://localhost:3003/reset', {});
+            await common.resetApp();
             browser.sleep(delays.shortRest);
+            NavbarPage.clickNavigateToProject();
+            browser.sleep(delays.shortRest * 2);
             NavbarPage.clickNavigateToExcavation();
+            browser.sleep(delays.shortRest);
             ResourcesPage.clickListModeButton();
             browser.sleep(delays.shortRest);
         }
+
         index++;
+        done();
     });
 
 
@@ -44,9 +52,18 @@ describe('resources/list --', () => {
 
         ResourcesPage.typeInListModeInputField('1', 1, 'Changed resource 1');
         ResourcesPage.getListModeInputField('2', 0).click();
+    });
 
-        expect(NavbarPage.getMessageText()).toContain('erfolgreich');
-        NavbarPage.clickCloseAllMessages();
+
+    it('navigate to child item view in list mode and create a new child object', () => {
+
+        ResourcesPage.performCreateResourceInList('5', 'feature-architecture');
+        ResourcesPage.clickMoveIntoButton('5');
+        ResourcesPage.performCreateResourceInList('child1', 'find');
+        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToExcavation();
+
+        ResourcesPage.getListModeInputFieldValue('child1', 0).then(inputValue => expect(inputValue).toEqual('child1'));
     });
 
 
@@ -64,33 +81,5 @@ describe('resources/list --', () => {
         ResourcesPage.getListModeInputFieldValue('2', 0).then(inputValue => expect(inputValue).toEqual('2'));
         NavbarPage.clickCloseAllMessages();
 
-    });
-
-
-    it('perform a fulltext search', () => {
-
-        SearchBarPage.typeInSearchField('context');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).not.toContain('no-search-result');
-
-        SearchBarPage.typeInSearchField('testf1');
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
-
-        SearchBarPage.typeInSearchField('abc');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
-    });
-
-
-    it('perform a type filter search', () => {
-
-        SearchBarPage.clickChooseTypeFilter('find');
-        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        expect(ResourcesPage.getListItemEl('context1').getAttribute('class')).toContain('no-search-result');
-
-        SearchBarPage.clickChooseTypeFilter('processunit');
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
-        browser.wait(EC.invisibilityOf(ResourcesPage.getListItemEl('context1')), delays.ECWaitTime);
     });
 });

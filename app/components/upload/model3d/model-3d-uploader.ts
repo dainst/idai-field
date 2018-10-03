@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {Document} from 'idai-components-2/core';
-import {IdaiType, ProjectConfiguration} from 'idai-components-2/configuration';
+import {Document, IdaiType, ProjectConfiguration} from 'idai-components-2';
 import {SettingsService} from '../../../core/settings/settings-service';
 import {UploadStatus} from '../upload-status';
-import {PersistenceManager} from '../../../core/persist/persistence-manager';
+import {PersistenceManager} from '../../../core/model/persistence-manager';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {Uploader} from '../uploader';
 import {IdaiField3DDocument} from '../../../core/model/idai-field-3d-document';
@@ -49,6 +48,7 @@ export class Model3DUploader extends Uploader {
         const updatedDocument: IdaiField3DDocument = await this.complete(document, width, height,
             relationTarget);
         await this.model3DStore.saveThumbnail(updatedDocument, blob);
+        await this.datastore.get(updatedDocument.resource.id);
     }
 
 
@@ -75,7 +75,7 @@ export class Model3DUploader extends Uploader {
 
     private async create3DDocument(file: File, type: IdaiType): Promise<IdaiField3DDocument> {
 
-        const document: IdaiField3DDocument = {
+        const document: any = {
             resource: {
                 identifier: this.getIdentifier(file.name),
                 shortDescription: '',
@@ -91,7 +91,7 @@ export class Model3DUploader extends Uploader {
         };
 
         return this.persistenceManager.persist(document, this.settingsService.getUsername(),
-            [document]);
+            document) as any;
     }
 
 
@@ -106,7 +106,7 @@ export class Model3DUploader extends Uploader {
         }
 
         return this.persistenceManager.persist(document, this.settingsService.getUsername(),
-            [document]);
+            [document] as any);
     }
 
 

@@ -1,8 +1,8 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} from '@angular/core';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
+import {IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from 'idai-components-2';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
-import {IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from "idai-components-2/idai-field-map";
 
 declare global { namespace L { namespace PM { namespace Draw { interface Line { _finishShape(): void
                      _layer: any } }
@@ -20,15 +20,8 @@ declare global { namespace L { namespace PM { namespace Draw { interface Line { 
  */
 export class EditableMapComponent extends LayerMapComponent {
 
-    @Input() documents: Array<IdaiFieldDocument>;
-    @Input() selectedDocument: IdaiFieldDocument;
-    @Input() mainTypeDocument: IdaiFieldDocument;
-    @Input() projectDocument: IdaiFieldDocument;
-    @Input() update: boolean;
     @Input() isEditing: boolean;
 
-    @Output() onSelectDocument: EventEmitter<IdaiFieldDocument|undefined|null> =
-        new EventEmitter<IdaiFieldDocument|undefined|null>();
     @Output() onQuitEditing: EventEmitter<IdaiFieldGeometry> =
         new EventEmitter<IdaiFieldGeometry>();
 
@@ -47,12 +40,12 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private startPointEditing() {
 
-        this.editableMarker = this.markers[this.selectedDocument.resource.id as string];
+        this.editableMarker = this.markers[this.selectedDocument.resource.id];
         if (!this.editableMarker) return;
 
         this.editableMarker.unbindTooltip();
-        let color = this.typeColors[this.selectedDocument.resource.type];
-        this.editableMarker.setIcon(this.generateMarkerIcon(color, 'active'));
+        const color = this.typeColors[this.selectedDocument.resource.type];
+        this.editableMarker.setIcon(EditableMapComponent.generateMarkerIcon(color, 'active'));
         (this.editableMarker.dragging as any).enable();
         this.editableMarker.setZIndexOffset(1000);
     }
@@ -74,7 +67,6 @@ export class EditableMapComponent extends LayerMapComponent {
         this.map.pm.enableDraw(drawMode, drawOptions);
         this.drawMode = drawMode;
     }
-
 
 
     public finishEditing() {
@@ -123,9 +115,9 @@ export class EditableMapComponent extends LayerMapComponent {
 
     private createEditableMarker(position: L.LatLng) {
 
-        let color = this.typeColors[this.selectedDocument.resource.type];
+        const color = this.typeColors[this.selectedDocument.resource.type];
         this.editableMarker = L.marker(position, {
-            icon: this.generateMarkerIcon(color, 'active'),
+            icon: EditableMapComponent.generateMarkerIcon(color, 'active'),
             draggable: true,
             zIndexOffset: 1000
         });
@@ -399,8 +391,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
         const mapComponent = this;
         this.map.on('pm:create', function(event: L.LayerEvent) { 
-            let polygon: L.Polygon = <L.Polygon> event.layer; 
-            let latLngs: Array<any> = polygon.getLatLngs();
+            const polygon: L.Polygon = <L.Polygon> event.layer; 
+            const latLngs: Array<any> = polygon.getLatLngs();
             if (latLngs.length == 1 && latLngs[0].length >= 3) {
                 mapComponent.editablePolygons.push(polygon);
                 mapComponent.setupEditablePolygon(polygon);
@@ -437,8 +429,8 @@ export class EditableMapComponent extends LayerMapComponent {
     private removePolygon(polygon: L.Polygon) {
 
         polygon.pm.disable();
-        this.map.removeLayer(polygon);  
-        this.removeElement(polygon, this.editablePolygons);
+        this.map.removeLayer(polygon);
+        EditableMapComponent.removeElement(polygon, this.editablePolygons);
     }
 
 
@@ -503,7 +495,7 @@ export class EditableMapComponent extends LayerMapComponent {
         polyline.pm.enable({draggable: true, snappable: true, snapDistance: 30 });
 
         const mapComponent = this;
-        polyline.on('pm:edit', function() {;
+        polyline.on('pm:edit', function() {
             if (this.getLatLngs().length <= 1) mapComponent.deleteGeometry();
         });
         this.selectedPolyline = polyline;
@@ -514,7 +506,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         polyline.pm.disable();
         this.map.removeLayer(polyline);
-        this.removeElement(polyline, this.editablePolylines);
+        EditableMapComponent.removeElement(polyline, this.editablePolylines);
     }
 
 
@@ -562,7 +554,7 @@ export class EditableMapComponent extends LayerMapComponent {
     protected deselect() {
 
         if (!this.isEditing) {
-            this.onSelectDocument.emit(null);
+            this.onSelectDocument.emit(undefined);
         }
     }
 
@@ -588,7 +580,7 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private removeElement(element: any, list: Array<any>) {
+    private static removeElement(element: any, list: Array<any>) {
 
         for (let listElement of list) {
             if (element == listElement) {

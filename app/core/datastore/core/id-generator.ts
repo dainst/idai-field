@@ -1,10 +1,9 @@
-import {UUID} from "angular2-uuid/index";
+import {UUID} from 'angular2-uuid';
 
 
 export class IdGenerator {
 
-
-    static generateId():string {
+    public generateId():string {
 
         return UUID.UUID();
     }

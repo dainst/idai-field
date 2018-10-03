@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {ViewDefinition} from 'idai-components-2/configuration';
 import {ViewFacade} from '../resources/view/view-facade';
+import {ViewDefinition} from '../resources/view/state/view-definition';
 
 @Component({
     moduleId: module.id,
@@ -14,7 +14,6 @@ import {ViewFacade} from '../resources/view/view-facade';
  * @author Daniel de Oliveira
  */
 export class NavbarComponent implements OnInit {
-
 
     public views: Array<ViewDefinition>;
     public activeRoute: string;
@@ -37,5 +36,10 @@ export class NavbarComponent implements OnInit {
 
         if (!this.activeRoute) return;
         return this.activeRoute.startsWith(route);
+    }
+
+    public isRunningOnMac() {
+
+        return navigator.appVersion.indexOf("Mac") != -1;
     }
 }

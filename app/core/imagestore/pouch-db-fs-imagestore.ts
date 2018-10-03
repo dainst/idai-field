@@ -3,9 +3,9 @@ import * as fs from 'fs';
 import {BlobMaker, BlobUrlSet} from './blob-maker';
 import {Converter} from './converter';
 import {Imagestore} from './imagestore';
-import {PouchdbManager} from '../datastore/core/pouchdb-manager';
 import {ImagestoreErrors} from './imagestore-errors';
 import {SafeResourceUrl} from '@angular/platform-browser';
+import {PouchdbProxy} from '../datastore/core/pouchdb-proxy';
 
 
 @Injectable()
@@ -16,10 +16,9 @@ import {SafeResourceUrl} from '@angular/platform-browser';
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export class PouchDbFsImagestore implements Imagestore {
+export class PouchDbFsImagestore /*implements Imagestore */{
 
     private projectPath: string|undefined = undefined;
-    private db: any = undefined;
 
     private thumbBlobUrls: { [key: string]: BlobUrlSet } = {};
     private originalBlobUrls: { [key: string]: BlobUrlSet } = {};
@@ -28,18 +27,13 @@ export class PouchDbFsImagestore implements Imagestore {
     constructor(
         private converter: Converter,
         private blobMaker: BlobMaker,
-        pouchdbManager: PouchdbManager) {
-
-        this.db = pouchdbManager.getDb();
+        private db: PouchdbProxy) {
     }
 
-    
-    public getPath(): string|undefined {
 
-        return this.projectPath;
-    }
+    public getPath = (): string|undefined => this.projectPath;
 
-    
+
     public setPath(imagestorePath: string, projectName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
@@ -93,9 +87,6 @@ export class PouchDbFsImagestore implements Imagestore {
      */
     public read(key: string, sanitizeAfter: boolean = false, thumb: boolean = true): Promise<string | SafeResourceUrl> {
 
-        if (thumb) console.log('read THUMB ' + key);
-        if (!thumb) console.log('read ORIGINAL ' + key);
-
         const readFun = thumb ? this.readThumb.bind(this) : this.readOriginal.bind(this);
         const blobUrls = thumb ? this.thumbBlobUrls : this.originalBlobUrls;
 
@@ -108,7 +99,7 @@ export class PouchDbFsImagestore implements Imagestore {
                 return Promise.reject([ImagestoreErrors.EMPTY]);
             }
 
-            if (thumb && data.size == 2) return Promise.reject('thumb broken');
+            if (thumb && (data.size == 0 || data.size == 2)) return Promise.reject('thumb broken');
 
             blobUrls[key] = this.blobMaker.makeBlob(data);
 
@@ -124,7 +115,7 @@ export class PouchDbFsImagestore implements Imagestore {
 
             // temporary fix
             // if thumb and original present then recreate thumb
-            return this.readOriginal(key).then((data: any) => {
+            return (this.readOriginal(key) as any).then((data: any) => {
 
                 console.debug('recreate thumb');
                 return this.putAttachment(data, key, true)
@@ -187,7 +178,7 @@ export class PouchDbFsImagestore implements Imagestore {
                         console.error(key);
                         return reject([ImagestoreErrors.GENERIC_ERROR])
                     });
-            })
+            });
         });
     }
 
@@ -195,15 +186,15 @@ export class PouchDbFsImagestore implements Imagestore {
     private write(key: any, data: any, update: any, documentExists: any): Promise<any> {
 
         let flag = update ? 'w' : 'wx';
+
         return new Promise((resolve, reject) => {
-            fs.writeFile(this.projectPath + key, Buffer.from(data), {flag: flag}, (err) => {
+            fs.writeFile(this.projectPath + key, Buffer.from(data), { flag: flag }, err => {
                 if (err) {
                     console.error(err);
                     console.error(key);
                     reject([ImagestoreErrors.GENERIC_ERROR]);
                 }
                 else {
-
                     this.putAttachment(data, key, documentExists)
                         .then(() => resolve()
                     ).catch((err: any) => {
@@ -241,7 +232,7 @@ export class PouchDbFsImagestore implements Imagestore {
     }
 
     
-    private readOriginal(key: string): Promise<ArrayBuffer> {
+    private readOriginal(key: string): /*Promise<ArrayBuffer>TODO*/ Promise<any> {
 
         let path = this.projectPath + key;
         return new Promise((resolve, reject) => {

@@ -1,0 +1,30 @@
+<div class="backup-creation row">
+    <div class="col">
+        <div class="row">
+            <div class="col default-nav bg-light text-right">
+                <button id="createBackupButton"
+                        class="btn btn-primary"
+                        [ngClass]="{ 'disabled': running }"
+                        (click)="createBackup()"
+                        placement="bottom">
+                    <span class="mdi mdi-database-export" style="color: white"></span>
+                    Backup erstellen
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col default-container">
+                <div class="col-lg-6 mx-lg-auto py-4">
+                    Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die
+                    Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten
+                    gesicherten Zwischenstand wiederherzustellen.
+
+                    <br><br>
+                    Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
+                    in dem unter <i>Einstellungen</i> angezeigten Pfad und sollten separat gesichert werden.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

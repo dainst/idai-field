@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
-import {FindResult, Query, ReadDatastore} from 'idai-components-2/datastore';
-import {Document} from 'idai-components-2/core';
+import {FindResult, Query, ReadDatastore, DatastoreErrors} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
+import {IndexFacade} from '../index/index-facade';
+import {jsonClone} from 'tsfun';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -33,10 +35,13 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
  */
 export abstract class CachedReadDatastore<T extends Document> implements ReadDatastore {
 
+    public suppressWait = false;
+
     constructor(
         protected datastore: PouchdbDatastore,
+        protected indexFacade: IndexFacade,
         protected documentCache: DocumentCache<T>,
-        protected typeConverter: TypeConverter,
+        protected typeConverter: TypeConverter<T>,
         protected typeClass: string) { }
 
 
@@ -55,9 +60,9 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         }
 
         const document = await this.datastore.fetch(id);
-        this.typeConverter.validate([document.resource.type], this.typeClass);
+        this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
 
-        return this.documentCache.set(this.typeConverter.convert<T>(document));
+        return this.documentCache.set(this.typeConverter.convert(document));
     }
 
 
@@ -72,15 +77,19 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     public async find(query: Query): Promise<IdaiFieldFindResult<T>> {
 
-        query.types = this.typeConverter.validate(query.types, this.typeClass);
+        if (!this.suppressWait) await this.datastore.ready();
 
-        const ids: string[] = await this.datastore.findIds(query);
+        const clonedQuery: Query = jsonClone(query);
 
-        const {docs, failures} = await this.getDocumentsForIds(ids, query.limit);
-        return {
-            documents: docs,
-            totalCount: ids.length - failures
-        };
+        if (clonedQuery.types) {
+            clonedQuery.types.forEach(type => {
+                this.typeConverter.validateTypeToBeOfClass(type, this.typeClass);
+            });
+        } else {
+            clonedQuery.types = this.typeConverter.getTypesForClass(this.typeClass);
+        }
+
+        return this.getDocumentsForIds(this.findIds(clonedQuery), clonedQuery.limit);
     }
 
 
@@ -92,20 +101,31 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
      */
     public async getRevision(docId: string, revisionId: string): Promise<T> {
 
-        return this.typeConverter.convert<T>(
+        return this.typeConverter.convert(
             await this.datastore.fetchRevision(docId, revisionId));
     }
 
 
-    public async getConflictedRevisions(docId: string): Promise<Array<T>> {
+    /**
+     * @param query
+     * @return an array of the resource ids of the documents the query matches.
+     *   the sort order of the ids is determinded in that way that ids of documents with newer modified
+     *   dates come first. they are sorted by last modfied descending, so to speak.
+     *   if two or more documents have the same last modifed date, their sort order is unspecified.
+     *   the modified date is taken from document.modified[document.modified.length-1].date
+     */
+    private findIds(query: Query): string[] {
 
-        return (await this.datastore.fetchConflictedRevisions(docId))
-            .map(document => this.typeConverter.convert<T>(document));
+        try {
+            return this.indexFacade.perform(query);
+        } catch (err) {
+            throw [DatastoreErrors.GENERIC_ERROR, err];
+        }
     }
 
 
     private async getDocumentsForIds(ids: string[], limit?: number):
-        Promise<{docs:Array<T>, failures: number}> {
+        Promise<{documents:Array<T>, totalCount: number}> {
 
         const docs: Array<T> = [];
         let failures = 0;
@@ -122,8 +142,8 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             }
         }
         return {
-            docs: docs,
-            failures: failures
+            documents: docs,
+            totalCount: ids.length - failures
         };
     }
 }

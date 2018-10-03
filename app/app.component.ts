@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Event, NavigationStart, Router} from '@angular/router';
-import {Messages} from 'idai-components-2/messages';
+import {Messages} from 'idai-components-2';
 import {AppController} from './app-controller';
 import {ReadImagestore} from './core/imagestore/read-imagestore';
 
@@ -34,7 +34,7 @@ export class AppComponent {
         router.events.subscribe((event: Event) => {
             if (event instanceof NavigationStart) {
                 imagestore.revokeAll();
-                this.messages.clear();
+                this.messages.removeAllMessages();
             }
         });
 

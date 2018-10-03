@@ -1,0 +1,40 @@
+/**
+ * @author Thomas Kleinke
+ */
+resources-search-bar {
+
+  form {
+    align-items: inherit !important;
+    padding-top: 1px;
+
+    #input-wrapper {
+      position: relative;
+      width: 100%;
+
+      input {
+        height: 39px;
+      }
+    }
+
+    #object-search {
+      width: calc(100% - 60px) !important;
+    }
+
+    #object-search.small-search-input {
+      width: calc(100% - 101px) !important;
+    }
+
+    #filter-button {
+      right: 19px !important;
+
+      #searchfilter {
+        height: 39px !important;
+      }
+    }
+
+    search-constraints {
+      position: absolute;
+      top: 39px;
+    }
+  }
+}

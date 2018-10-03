@@ -1,0 +1,55 @@
+<div class="backup-loading row">
+    <div class="col">
+        <div class="row">
+            <div class="col default-nav bg-light text-right">
+                <button id="loadBackupButton"
+                        class="btn btn-primary"
+                        [ngClass]="{ 'disabled': running }"
+                        (click)="loadBackup()">
+                    <span class="mdi mdi-database-import" style="color: white"></span>
+                    Backup einlesen
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col default-container">
+                <div class="col-lg-6 mx-lg-auto py-4">
+                    Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank /
+                    eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten
+                    Projekt übereinstimmen.
+
+                    <br><br>
+
+                    Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten
+                    errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.
+
+                    <br><br>
+
+                    <b>Achtung:</b> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene
+                    Zieldatenbank mit dem angegebenen Namen <b>vollständig überschrieben</b>.
+
+                    <br>
+                    <br>
+                    <label>Pfad</label>
+                    <div class="input-group">
+                        <input [(ngModel)]="path"
+                               class="form-control">
+                        <span class="input-group-btn">
+                            <input id="path-file-input" type="file"
+                                   (change)="path = $event.target.files[0].path"
+                                   style="display: none">
+                            <label for="path-file-input" class="btn btn-secondary">
+                                <span class="mdi mdi-folder"></span>
+                            </label>
+                        </span>
+                    </div>
+
+                    <label>Projekt</label>
+                    <input type="text" class="form-control" id="projectName"
+                           [(ngModel)]="projectName" name="projectName">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

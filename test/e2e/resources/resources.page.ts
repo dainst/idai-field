@@ -3,10 +3,11 @@
 import {browser, protractor, element, by} from 'protractor';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
+import {NavbarPage} from '../navbar.page';
 
-let common = require('../common.js');
-let EC = protractor.ExpectedConditions;
-let delays = require('../config/delays');
+const common = require('../common.js');
+const EC = protractor.ExpectedConditions;
+const delays = require('../config/delays');
 
 
 export class ResourcesPage {
@@ -22,18 +23,6 @@ export class ResourcesPage {
     public static clickCreateResource() {
 
         common.click(ResourcesPage.getCreateDocumentButton());
-    }
-
-
-    public static clickCreateMainTypeResource() {
-
-        common.click(element(by.css('#create-main-type-document-button .circular-button')));
-    }
-
-
-    public static clickEditMainTypeResource() {
-
-        common.click(element(by.id('edit-main-type-document-button')));
     }
 
 
@@ -72,9 +61,9 @@ export class ResourcesPage {
     }
 
 
-    public static clickGoToMainTypeViewByIdentifier(identifier) {
+    public static clickMoveIntoButton(identifier) {
 
-        return common.click(element(by.css('#resource-'+identifier + ' .selectInMainTypeViewBtn')));
+        return common.click(element(by.css('#resource-' + identifier + ' .move-into-button')));
     }
 
 
@@ -93,6 +82,13 @@ export class ResourcesPage {
     public static clickListModeButton() {
 
         common.click(element(by.id('list-mode-button')));
+        browser.actions().mouseUp().mouseMove({x: 200, y: 200}).perform(); // avoid tooltip
+    }
+
+
+    public static clickMainTypeDocumentNavigationButton() {
+
+        common.click(element(by.id('selected-operation-type-document')));
     }
 
 
@@ -100,13 +96,6 @@ export class ResourcesPage {
 
         if (!typeName) typeName = "feature-architecture";
         return common.click(element(by.id('choose-type-option-' + typeName)));
-    }
-
-
-    public static clickSelectMainTypeDocument(optionIndex) {
-
-        browser.wait(EC.presenceOf(element(by.id('mainTypeSelectBox'))), delays.ECWaitTime);
-        element.all(by.css('#mainTypeSelectBox option')).get(optionIndex).click();
     }
 
 
@@ -140,8 +129,8 @@ export class ResourcesPage {
 
     public static getSelectedMainTypeDocumentOption() {
 
-        browser.wait(EC.presenceOf(element(by.css('#mainTypeSelectBox option:checked'))), delays.ECWaitTime);
-        return element.all(by.css('#mainTypeSelectBox option:checked')).getText();
+        browser.wait(EC.presenceOf(element(by.id('selected-operation-type-document'))), delays.ECWaitTime);
+        return element(by.id('selected-operation-type-document')).getText();
     }
 
 
@@ -182,6 +171,13 @@ export class ResourcesPage {
     }
 
 
+    public static getDocumentTeaserTypeCharacter() {
+
+        browser.wait(EC.visibilityOf(element(by.css('.document-teaser div.type-icon'))), delays.ECWaitTime);
+        return element(by.css('.document-teaser div.type-icon')).getText();
+    }
+
+
     // elements
 
     public static getListItemEl(identifier) {
@@ -216,13 +212,6 @@ export class ResourcesPage {
     }
 
 
-    public static isListMode() {
-
-        let listBtn = element(by.css('#list-mode-button.active'));
-        return listBtn.isPresent();
-    }
-
-
     public static getResourceTypeOption(typeName: string) {
 
         return element(by.id('choose-type-option-' + typeName));
@@ -235,18 +224,25 @@ export class ResourcesPage {
     }
 
 
+    public static getNavigationButtons() {
+
+        return element.all(by.css('.navigation-button'));
+    }
+
+
     // type in
 
-    public static typeInListModeInputField(identifier, index, inputText) {
+    public static typeInListModeInputField(identifier: string, index: number, inputText: string) {
 
         return common.typeIn(this.getListModeInputField(identifier, index), inputText);
     }
 
 
-    public static typeInNewResourceAndHitEnterInList (inputText) {
+    public static typeInNewResourceAndHitEnterInList(inputText: string) {
   
-        browser.wait(EC.visibilityOf(element(by.css('#new-resource input'))), delays.ECWaitTime);
-        common.typeIn(element(by.css('#new-resource input')), inputText);
+        browser.wait(EC.visibilityOf(element.all(by.css('#list .identifier-input')).first()),
+            delays.ECWaitTime);
+        common.typeIn(element.all(by.css('#list .identifier-input')).last(), inputText);
         browser.actions().sendKeys(protractor.Key.ENTER).perform();
     }
 
@@ -254,7 +250,8 @@ export class ResourcesPage {
     // sequences
 
     public static performCreateResource(identifier: string, typeName?: string, inputFieldName?: string,
-                                                   inputFieldText?: string, skipGeometry?: boolean, clickMsgAway: boolean = true) {
+                                        inputFieldText?: string, skipGeometry?: boolean,
+                                        clickMsgAway: boolean = true, waitForModalToClose: boolean = true) {
 
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType(typeName);
@@ -265,11 +262,12 @@ export class ResourcesPage {
             DoceditPage.typeInInputField(inputFieldName, inputFieldText);
         }
         ResourcesPage.scrollUp();
-        DoceditPage.clickSaveDocument(clickMsgAway);
+        DoceditPage.clickSaveDocument(clickMsgAway, waitForModalToClose);
     }
 
 
     public static performCreateResourceInList(identifier: string, typeName: string) {
+
         ResourcesPage.clickCreateResource();
         ResourcesPage.clickSelectResourceType(typeName);
         ResourcesPage.typeInNewResourceAndHitEnterInList(identifier);
@@ -278,12 +276,9 @@ export class ResourcesPage {
 
     public static performCreateMainTypeResource(identifier: string) {
 
-        ResourcesPage.clickCreateMainTypeResource();
-        ResourcesPage.clickSelectGeometryType();
-        DoceditPage.typeInInputField('identifier', identifier);
-        ResourcesPage.scrollUp();
-        DoceditPage.clickSaveDocument();
-        browser.sleep(delays.shortRest);
+        NavbarPage.clickNavigateToProject();
+        this.performCreateResource(identifier, 'trench');
+        this.clickMoveIntoButton(identifier);
     }
 
 
@@ -304,7 +299,7 @@ export class ResourcesPage {
 
         ResourcesPage.performCreateResource('1', "feature-architecture");
         ResourcesPage.performCreateResource('2', "feature-architecture");
-        ResourcesPage.performCreateRelation('2', '1', 1);
+        ResourcesPage.performCreateRelation('2', '1', 9);
     }
 
 

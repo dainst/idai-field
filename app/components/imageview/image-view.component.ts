@@ -1,18 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Messages} from 'idai-components-2/messages';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {DocumentEditChangeMonitor} from 'idai-components-2/documents';
+import {Messages} from 'idai-components-2';
+import {IdaiFieldDocument} from 'idai-components-2';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
-import {ObjectUtil} from '../../util/object-util';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
 import {ImageContainer} from '../../core/imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
-import {M} from '../../m';
 import {RoutingService} from '../routing-service';
-import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/idai-field-image-document-read-datastore';
+import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/field/idai-field-image-document-read-datastore';
+import {isEmpty} from 'tsfun';
+import {M} from '../m';
 
 
 @Component({
@@ -42,7 +41,6 @@ export class ImageViewComponent implements OnInit {
         private messages: Messages,
         private router: Router,
         private modalService: NgbModal,
-        private documentEditChangeMonitor: DocumentEditChangeMonitor,
         private doceditActiveTabService: DoceditActiveTabService,
         private routingService: RoutingService
     ) {
@@ -80,8 +78,9 @@ export class ImageViewComponent implements OnInit {
             this.setNextDocumentViewActiveTab();
         } catch (closeReason) {
 
-            this.documentEditChangeMonitor.reset();
-            if (closeReason == 'deleted') this.deselect();
+            // this.documentEditChangeMonitor.reset();
+            // TODO reset document
+            if (closeReason === 'deleted') this.deselect();
         }
     }
 
@@ -91,7 +90,10 @@ export class ImageViewComponent implements OnInit {
         if (!this.image) return false;
         if (!this.image.document) return false;
 
-        return !ObjectUtil.isEmpty(this.image.document.resource.relations);
+        const relations: any = this.image.document.resource.relations;
+        if (isEmpty(relations)) return false;
+
+        return Object.keys(relations).filter(name => relations[name].length > 0).length > 0;
     }
 
 

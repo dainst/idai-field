@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Query} from 'idai-components-2/datastore';
+import {Query} from 'idai-components-2';
 import {MediaState} from './media-state';
 import {MediaDocumentsManager} from './media-documents-manager';
 import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
@@ -70,14 +70,7 @@ export class MediaOverviewFacade {
     }
 
 
-    public resetSearch() {
-
-        this.mediaState.setQuery(this.getDefaultQuery());
-        this.mediaState.setMainTypeDocumentFilterOption('');
-    }
-
-
-    public setQueryTypes(types: string[]) {
+    public setTypeFilters(types: string[]) {
 
         const query: Query = this.mediaState.getQuery();
         query.types = types;

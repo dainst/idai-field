@@ -1,64 +1,18 @@
-import {Injectable} from '@angular/core';
-import {SettingsService} from '../core/settings/settings-service';
+import {StateType} from './standard-state-serializer';
 
-const remote = require('electron').remote;
-const fs = remote.require('fs');
-
-@Injectable()
 /**
- * @author Thomas Kleinke
+ * This base class is necessary for the ViewFacade subsystem tests to work
  */
 export class StateSerializer {
 
-    public static RESOURCES_STATE: string = 'resources-state';
-    public static MEDIA_STATE: string = 'media-state';
+    public async load(stateType: StateType): Promise<any> {
 
-    constructor(private settingsService: SettingsService) {}
-
-
-    /**
-     * @param stateType can be either RESOURCES_STATE or MEDIA_STATE
-     */
-    public load(stateType: string): Promise<any> {
-
-        return new Promise(resolve => {
-
-            if (this.settingsService.getSelectedProject() == 'test') return resolve({});
-
-            fs.readFile(this.getFilePath(stateType), 'utf-8', (err: any, content: any) => {
-                if (err) {
-                    resolve({});
-                } else {
-                    resolve(JSON.parse(content));
-                }
-            });
-        });
-    }
+        return null;
+    };
 
 
-    /**
-     * @param stateType can be either RESOURCES_STATE or MEDIA_STATE
-     */
-    public store(stateType: string, stateObject: any): Promise<any> {
+    public async store(stateObject: any, stateType: StateType): Promise<any> {
 
-        return new Promise((resolve, reject) => {
-
-            if (this.settingsService.getSelectedProject() == 'test') return resolve();
-
-            fs.writeFile(this.getFilePath(stateType), JSON.stringify(stateObject), (err: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve();
-                }
-            });
-        });
-    }
-
-
-    private getFilePath(stateType: string): string {
-
-        return remote.getGlobal('appDataPath') + '/' + stateType + '-'
-            + this.settingsService.getSelectedProject() + '.json';
+        return null;
     }
 }

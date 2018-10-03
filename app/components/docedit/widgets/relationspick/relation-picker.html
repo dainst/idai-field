@@ -1,0 +1,40 @@
+<div *ngIf="!disabled">
+    <div id="relation-picker">
+        <div class="delete-relation small-circular-button red-button" (click)="deleteRelation()">
+            <span class="mdi mdi-delete"></span>
+        </div>
+
+        <div *ngIf="!selectedTarget">
+            <input [(ngModel)]="idSearchString" (keydown)="keyDown($event)" (keyup)="keyUp($event)"
+                   (focus)="enterSuggestionMode()" (blur)="leaveSuggestionMode()" class="form-control">
+
+            <div *ngIf="suggestionsVisible" class="suggestion-container" (mouseleave)="selectedSuggestionIndex = -1">
+
+                <div *ngIf="suggestions && suggestions.length > 0">
+                    <div *ngFor="let suggestion of suggestions; let i = index">
+                        <div *ngIf="selectedSuggestionIndex != i"
+                             class="suggestion"
+                             (mousedown)="createRelation(suggestion)"
+                             (mouseover)="selectedSuggestionIndex = i">
+                            <span class="badge">{{suggestion['resource'][primary]}}</span>
+                        </div>
+                        <div *ngIf="selectedSuggestionIndex == i"
+                             class="suggestion selected-suggestion"
+                             (mousedown)="createRelation(suggestion)">
+                            <span class="badge">{{suggestion['resource'][primary]}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="badge" *ngIf="!suggestions || suggestions.length == 0">
+                    Keine Ziele gefunden
+                </div>
+            </div>
+
+        </div>
+        <div *ngIf="selectedTarget">
+            <button class="btn btn-default" type="button" (click)="editTarget()">
+                <span class="badge">{{selectedTarget['resource'][primary]}}</span>
+            </button>
+        </div>
+    </div>
+</div>

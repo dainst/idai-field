@@ -1,0 +1,26 @@
+/**
+ * @author Thomas Kleinke
+ */
+taskbar-update {
+  position: relative;
+  left: 14px;
+  bottom: 2px;
+  cursor: default !important;
+
+  #taskbar-update {
+    position: relative;
+
+    .mdi-arrow-down-bold {
+      color: #fff;
+      position: relative;
+      top: -8px;
+      left: -7px;
+      width: 28px;
+    }
+
+    .badge-pill {
+      width: 32px;
+      text-align: center;
+    }
+  }
+}

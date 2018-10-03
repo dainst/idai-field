@@ -1,6 +1,5 @@
 import * as THREE from 'three';
-import {Observer} from 'rxjs/Observer';
-import {Observable} from 'rxjs/Observable';
+import {Observer, Observable} from 'rxjs';
 
 
 const GEOMETRIES_BOUNDS_OFFSET: number = 1;

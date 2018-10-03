@@ -1,4 +1,4 @@
-import {Relations} from "idai-components-2/core";
+import {Relations} from 'idai-components-2';
 
 /**
  * @author Daniel de Oliveira

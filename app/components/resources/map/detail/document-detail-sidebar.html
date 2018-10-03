@@ -1,0 +1,94 @@
+<div id="document-detail-sidebar" class="detail-sidebar">
+
+    <div *ngIf="viewFacade.getSelectedDocument()" class="card-block">
+
+        <button *ngIf="viewFacade.getSelectedDocument()._conflicts"
+                class="btn btn-link btn-xs solve-button"
+                id="document-view-button-solve-conflicts"
+                (click)="resourcesComponent.solveConflicts(viewFacade.getSelectedDocument())">
+            <span class="mdi mdi-alert-outline"></span>
+        </button>
+
+        <button class="close-button btn btn-link btn-xs"
+                id="back-to-map"
+                (click)="viewFacade.deselect()">
+            <span class="mdi mdi-close"></span>
+        </button>
+
+        <ngb-tabset #tabs [activeId]="'document-view-' + viewFacade.getActiveDocumentViewTab() + '-tab'"
+                    (tabChange)="onTabChange($event)">
+
+            <ngb-tab id="document-view-fields-tab">
+                <ng-template ngbTabTitle>
+                    <span class="mdi mdi-format-list-bulleted"></span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <div class="btn btn-light btn-block edit-button"
+                            (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'fields')">
+                        <span>Metadaten bearbeiten</span>
+                    </div>
+
+                    <div class="tab-view-container">
+                        <description-view [document]="viewFacade.getSelectedDocument()"></description-view>
+                        <fields-view [resource]="viewFacade.getSelectedDocument().resource"></fields-view>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+
+            <ngb-tab id="document-view-geometry-tab">
+                <ng-template ngbTabTitle>
+                    <span class="mdi mdi-map" [class.empty-tab]="!viewFacade.getSelectedDocument().resource.geometry"></span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <div class="tab-view-container">
+                        <geometry-view [document]="viewFacade.getSelectedDocument()"
+                                       (onEditGeometry)="resourcesComponent.isEditingGeometry = true;"
+                                       (onCreateGeometry)="resourcesComponent.createGeometry($event)"
+                                       [showEditingOptions]="showGeometryEditingOptions">
+                        </geometry-view>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+
+            <ngb-tab id="document-view-relations-tab">
+                <ng-template ngbTabTitle>
+                    <span class="mdi mdi-sitemap" [class.empty-tab]="!hasVisibleRelations()"></span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <div class="btn btn-light btn-block edit-button"
+                            (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'relations')">
+                        <span>Relationen bearbeiten</span>
+                    </div>
+
+                    <div class="tab-view-container">
+                        <relations-view *ngIf="hasVisibleRelations()" [resource]="viewFacade.getSelectedDocument().resource"
+                                        (onRelationTargetClicked)="jumpToRelationTarget($event)"
+                                        [hideRelations]="relationsToHide">
+                        </relations-view>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+
+            <ngb-tab id="document-view-media-tab">
+                <ng-template ngbTabTitle>
+                    <span class="mdi mdi-image"
+                          [class.empty-tab]="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn']">
+                    </span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <div class="btn btn-light btn-block edit-button"
+                            (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'media')">
+                        <span>Verknüpfungen zu Medienressourcen bearbeiten</span>
+                    </div>
+
+                    <div class="tab-view-container">
+                        <thumbnail-view [document]="viewFacade.getSelectedDocument()"
+                                        (onRelationTargetClicked)="jumpToRelationTarget($event)">
+                        </thumbnail-view>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+
+    </div>
+</div>

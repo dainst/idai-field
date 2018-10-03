@@ -1,11 +1,7 @@
-import {browser} from 'protractor';
 import {MediaOverviewPage} from './media-overview.page';
-import {ProjectPage} from '../project.page';
 import {NavbarPage} from '../navbar.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 
-const fs = require('fs');
-const delays = require('../config/delays');
 const common = require('../common');
 
 /**
@@ -13,51 +9,10 @@ const common = require('../common');
  */
 describe('media/media-overview/state --', () => {
 
-    const appDataPath = browser.params.appDataPath;
+    beforeEach(() => MediaOverviewPage.getAndWaitForImageCells());
 
 
-    beforeAll(() => {
-
-        removeMediaStateFile();
-    });
-
-
-    beforeEach(() => {
-
-        return MediaOverviewPage.getAndWaitForImageCells();
-    });
-
-
-    afterEach(done => {
-
-        removeMediaStateFile();
-        common.resetConfigJson().then(done);
-    });
-
-
-    function removeMediaStateFile() {
-
-        const filePath = appDataPath + '/media-state-' + 'abc.json';
-        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-    }
-
-
-    it('restore media state after restarting client', () => {
-
-        ProjectPage.performCreateProject();
-        MediaOverviewPage.get();
-
-        SearchBarPage.typeInSearchField('test');
-        SearchBarPage.clickChooseTypeFilter('image-drawing');
-        MediaOverviewPage.clickIncreaseGridSizeButton();
-
-        MediaOverviewPage.get();
-        SearchBarPage.getSelectedTypeFilterCharacter().then(value => expect(value).toEqual('Z'));
-        SearchBarPage.getSearchBarInputFieldValue().then(value => expect(value).toEqual('test'));
-        MediaOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
-
-        // TODO Add check for main type document filter select
-    });
+    afterEach(done => common.resetConfigJson().then(done));
 
 
     it('autoselect last selected type filter after returning to media overview', () => {
@@ -100,7 +55,4 @@ describe('media/media-overview/state --', () => {
 
         MediaOverviewPage.getGridSizeSliderValue().then(value => expect(value).toEqual('5'));
     });
-
-    // TODO Write test for main type document filter select
-
 });

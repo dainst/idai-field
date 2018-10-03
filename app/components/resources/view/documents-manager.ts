@@ -1,11 +1,18 @@
-import {Query} from 'idai-components-2/datastore';
-import {Document} from 'idai-components-2/core';
-import {MainTypeDocumentsManager} from './main-type-documents-manager';
-import {ViewManager} from './view-manager';
-import {SettingsService} from '../../../core/settings/settings-service';
-import {ChangeHistoryUtil} from '../../../core/model/change-history-util';
-import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/idai-field-document-read-datastore';
-import {ChangesStream} from '../../../core/datastore/core/changes-stream';
+import {Observer} from 'rxjs';
+import {Observable} from 'rxjs';
+import {Document, Query} from 'idai-components-2';
+import {IdaiFieldDocument} from 'idai-components-2';
+import {OperationsManager} from './operations-manager';
+import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
+import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
+import {ObserverUtil} from '../../../core/util/observer-util';
+import {Loading} from '../../../widgets/loading';
+import {hasEqualId, hasId} from '../../../core/model/model-util';
+import {subtract, unique, jsonClone} from 'tsfun';
+import {ResourcesStateManager} from './resources-state-manager';
+import {IdaiFieldFindResult} from '../../../core/datastore/core/cached-read-datastore';
+import {ResourcesState} from './state/resources-state';
+
 
 /**
  * @author Thomas Kleinke
@@ -14,263 +21,321 @@ import {ChangesStream} from '../../../core/datastore/core/changes-stream';
  */
 export class DocumentsManager {
 
-    public projectDocument: Document;
-    private selectedDocument: Document|undefined;
     private documents: Array<Document>;
-    private newDocumentsFromRemote: Array<Document> = [];
+    private newDocumentsFromRemote: Array<string /* resourceId */> = [];
+
+    private totalDocumentCount: number;
+
+    private deselectionObservers: Array<Observer<Document>> = [];
+    private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
+    private documentChangedFromRemoteObservers: Array<Observer<undefined>> = [];
+
+    private static documentLimit: number = 200;
 
 
     constructor(
         private datastore: IdaiFieldDocumentReadDatastore,
-        private changesStream: ChangesStream,
-        private settingsService: SettingsService,
-        private viewManager: ViewManager,
-        private operationTypeDocumentsManager: MainTypeDocumentsManager
+        private remoteChangesStream: RemoteChangesStream,
+        private operationTypeDocumentsManager: OperationsManager,
+        private resourcesStateManager: ResourcesStateManager,
+        private loading: Loading
     ) {
-
-        changesStream.remoteChangesNotifications().
-            subscribe(changedDocument => this.handleChange(changedDocument));
+        remoteChangesStream.notifications().subscribe(document => this.handleRemoteChange(document));
     }
 
 
-    public populateProjectDocument() {
+    public getDocuments = () => this.documents;
 
-        return this.datastore.get(this.settingsService.getSelectedProject() as any)
-            .then(document => this.projectDocument = document)
-            .catch(() => {console.log('cannot find project document');
-                return Promise.reject(undefined)});
+    public getTotalDocumentCount = () => this.totalDocumentCount;
+
+    public deselectionNotifications = (): Observable<Document> =>
+        ObserverUtil.register(this.deselectionObservers);
+
+    public populateDocumentsNotifactions = (): Observable<Array<Document>> =>
+        ObserverUtil.register(this.populateDocumentsObservers);
+
+    public documentChangedFromRemoteNotifications = (): Observable<undefined> =>
+        ObserverUtil.register(this.documentChangedFromRemoteObservers);
+
+
+    public isNewDocumentFromRemote(document: Document): boolean {
+
+        if (!document.resource.id) return false;
+        return this.newDocumentsFromRemote.includes(document.resource.id);
     }
 
 
-    public getDocuments() {
+    public async setQueryString(q: string, populate: boolean = true) {
 
-        return this.documents;
+        this.resourcesStateManager.setQueryString(q);
+        if (populate) await this.populateAndDeselectIfNecessary();
     }
 
 
-    public getSelectedDocument() {
+    public async setTypeFilters(types: string[]) {
 
-        return this.selectedDocument;
+        this.resourcesStateManager.setTypeFilters(types);
+        this.resourcesStateManager.setCustomConstraints({});
+        await this.populateAndDeselectIfNecessary();
     }
 
 
-    public setQueryString(q: string): Promise<boolean> {
+    public async setCustomConstraints(constraints: { [name: string]: string}) {
 
-        this.viewManager.setQueryString(q);
-
-        let result = true;
-        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(this.selectedDocument)) {
-            result = false;
-            this.deselect();
-        }
-
-        return this.populateDocumentList().then(() => Promise.resolve(result));
+        this.resourcesStateManager.setCustomConstraints(constraints);
+        await this.populateAndDeselectIfNecessary();
     }
 
 
-    public setQueryTypes(types: string[]): boolean {
+    public async setBypassHierarchy(bypassHierarchy: boolean) {
 
-        this.viewManager.setFilterTypes(types);
-
-        let result = true;
-        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(this.selectedDocument)) {
-            result = false;
-            this.deselect();
-        }
-
-        this.populateDocumentList();
-        return result;
+        this.resourcesStateManager.setBypassHierarchy(bypassHierarchy);
+        await this.populateAndDeselectIfNecessary();
     }
 
 
-    private removeFromListOfNewDocumentsFromRemote(document: Document) { // TODO make generic static method
+    public async setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy: boolean) {
 
-        let index = this.newDocumentsFromRemote.indexOf(document);
-        if (index > -1) this.newDocumentsFromRemote.splice(index, 1);
+        this.resourcesStateManager.setSelectAllOperationsOnBypassHierarchy(selectAllOperationsOnBypassHierarchy);
+        await this.populateAndDeselectIfNecessary();
+    }
+
+
+    public async moveInto(document: IdaiFieldDocument|undefined) {
+
+        await this.resourcesStateManager.moveInto(document);
+        await this.populateAndDeselectIfNecessary();
     }
 
 
     public deselect() {
 
-        this.selectedDocument = undefined;
-        this.removeEmptyDocuments();
-        this.viewManager.setActiveDocumentViewTab(undefined);
+        if (ResourcesState.getSelectedDocument(this.resourcesStateManager.get())) {
+
+            this.selectAndNotify(undefined);
+            this.documents = this.documents.filter(hasId);
+            this.resourcesStateManager.setActiveDocumentViewTab(undefined);
+        }
     }
 
 
-    public setSelectedById(resourceId: string) {
+    public addNewDocument(document: IdaiFieldDocument) {
 
-        return this.datastore.get(resourceId).then(
-            document => {
-                return this.setSelected(document);
+        this.documents.unshift(document);
+        this.selectAndNotify(document);
+    }
+
+
+    public async setSelected(resourceId: string): Promise<any> {
+
+        this.documents = this.documents.filter(hasId);
+
+        try {
+            const documentToSelect = await this.datastore.get(resourceId);
+
+            this.newDocumentsFromRemote = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
+
+            if (!(await this.createUpdatedDocumentList()).documents.find(hasEqualId(documentToSelect))) {
+
+                await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
+                await this.populateDocumentList();
             }
+
+            this.selectAndNotify(documentToSelect);
+
+        } catch (e) {
+            console.error('documentToSelect undefined in DocumentsManager.setSelected()');
+        }
+    }
+
+
+    public async populateDocumentList(skipResetRemoteDocs = false) {
+
+        if (this.loading) this.loading.start();
+
+        if (!skipResetRemoteDocs) this.newDocumentsFromRemote = [];
+        this.documents = [];
+
+        const result: IdaiFieldFindResult<IdaiFieldDocument> = await this.createUpdatedDocumentList();
+        this.documents = result.documents;
+        this.totalDocumentCount = result.totalCount;
+
+        if (this.loading) this.loading.stop();
+        ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
+    }
+
+
+    public async createUpdatedDocumentList(): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
+
+        const isRecordedInTarget = this.makeIsRecordedInTarget();
+        if (!isRecordedInTarget && !this.resourcesStateManager.isInOverview()) {
+            return { documents: [], totalCount: 0 };
+        }
+
+        const state = this.resourcesStateManager.get();
+
+        const isRecordedInTargetIdOrIds = DocumentsManager.chooseIsRecordedInTargetIdOrIds(isRecordedInTarget,
+            () => this.operationTypeDocumentsManager.getDocuments().map(document => document.resource.id),
+            ResourcesState.getBypassHierarchy(state),
+            ResourcesState.getSelectAllOperationsOnBypassHierarchy(state));
+
+        return (await this.fetchDocuments(
+                DocumentsManager.buildQuery(
+                    isRecordedInTargetIdOrIds,
+                    state,
+                    this.resourcesStateManager.isInOverview(),
+                    this.resourcesStateManager.getOverviewTypeNames()))
         );
     }
 
 
-    public setSelected(documentToSelect: Document): Promise<any|undefined> {
+    private selectAndNotify(document: IdaiFieldDocument|undefined) {
 
-        if (!this.viewManager.isInOverview() &&
-                documentToSelect == this.operationTypeDocumentsManager.getSelectedDocument()) {
-            return Promise.resolve(undefined);
+        if (ResourcesState.getSelectedDocument(this.resourcesStateManager.get())) {
+            ObserverUtil.notify(this.deselectionObservers,
+                ResourcesState.getSelectedDocument(this.resourcesStateManager.get()) as Document|undefined);
         }
-
-        if (documentToSelect == this.selectedDocument) return Promise.resolve(undefined);
-
-        if (!documentToSelect) this.viewManager.setActiveDocumentViewTab(undefined);
-
-        this.selectedDocument = documentToSelect;
-
-        this.removeEmptyDocuments();
-        if (documentToSelect && documentToSelect.resource && !documentToSelect.resource.id &&
-            documentToSelect.resource.type != this.viewManager.getViewType()) {
-
-            this.documents.unshift(documentToSelect);
-        }
-
-        if (this.isNewDocumentFromRemote(documentToSelect)) {
-            this.removeFromListOfNewDocumentsFromRemote(documentToSelect);
-        }
-
-        const res1 = this.operationTypeDocumentsManager.
-            selectLinkedOperationTypeDocumentForSelectedDocument(this.selectedDocument);
-        const res2 = this.invalidateQuerySettingsIfNecessary();
-
-        let promise = Promise.resolve();
-        if (res1 || res2) promise = this.populateDocumentList();
-
-        return promise;
+        this.resourcesStateManager.setSelectedDocument(document);
     }
 
 
-    private async handleChange(changedDocument: Document) {
+    private async populateAndDeselectIfNecessary() {
 
-        if (!changedDocument || !this.documents) return;
-        if (DocumentsManager.isExistingDoc(changedDocument, this.documents)) return;
-
-        if (changedDocument.resource.type == this.viewManager.getViewType()) {
-            return this.operationTypeDocumentsManager.populate();
-        }
-
-        let oldDocuments = this.documents;
         await this.populateDocumentList();
-
-        for (let document of this.documents) {
-            const conflictedRevisions: Array<Document>
-                = await this.datastore.getConflictedRevisions(document.resource.id as string);
-
-            if (oldDocuments.indexOf(document) == -1 && ChangeHistoryUtil.isRemoteChange(document, conflictedRevisions,
-                    this.settingsService.getUsername())) {
-                this.newDocumentsFromRemote.push(document);
-            }
-        }
+        if (!this.documents.find(hasEqualId(ResourcesState.getSelectedDocument(this.resourcesStateManager.get())))) this.deselect();
     }
 
 
-    /**
-     * Populates the document list with all documents from
-     * the datastore which match a <code>query</code>
-     */
-    public populateDocumentList() {
-
-        this.newDocumentsFromRemote = [];
-        this.documents = undefined as any;
-
-        let isRecordedInTarget;
-        if (this.viewManager.isInOverview()) {
-            isRecordedInTarget = this.projectDocument;
-        } else {
-            if (!this.operationTypeDocumentsManager.getSelectedDocument()) {
-                return Promise.resolve();
-            }
-            isRecordedInTarget = this.operationTypeDocumentsManager.getSelectedDocument();
-        }
-        if (!isRecordedInTarget) return Promise.reject('no isRecordedInTarget in populate doc list');
-        if (!isRecordedInTarget.resource.id) return Promise.reject('no id in populate doc list');
-
-        return this.fetchDocuments(DocumentsManager.makeDocsQuery(
-            {q: this.viewManager.getQueryString(), types: this.viewManager.getQueryTypes()},
-                isRecordedInTarget.resource.id))
-            .then(documents => this.documents = documents)
-            .then(() => this.removeEmptyDocuments());
-    }
-
-
-    private removeEmptyDocuments() {
+    private async handleRemoteChange(changedDocument: Document) {
 
         if (!this.documents) return;
 
-        for (let document of this.documents) {
-            if (!document.resource.id) this.remove(document);
+        if (this.documents.find(hasEqualId(changedDocument))) {
+            return ObserverUtil.notify(this.documentChangedFromRemoteObservers, undefined);
+        }
+
+        if (changedDocument.resource.type == this.resourcesStateManager.getViewType()) {
+            return this.operationTypeDocumentsManager.populate();
+        }
+
+        this.newDocumentsFromRemote = unique(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
+        await this.populateDocumentList(true);
+    }
+
+
+    private makeIsRecordedInTarget(): string|undefined {
+
+        return this.resourcesStateManager.isInOverview()
+            ? undefined
+            : ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get());
+    }
+
+
+    private async makeSureSelectedDocumentAppearsInList(documentToSelect: IdaiFieldDocument) {
+
+        this.operationTypeDocumentsManager.selectLinkedOperationForSelectedDocument(documentToSelect);
+        await this.resourcesStateManager.updateNavigationPathForDocument(documentToSelect);
+        await this.adjustQuerySettingsIfNecessary(documentToSelect);
+    }
+
+
+    private async adjustQuerySettingsIfNecessary(documentToSelect: Document) {
+
+        if (!(await this.updatedDocumentListContainsSelectedDocument(documentToSelect))) {
+
+            this.resourcesStateManager.setQueryString('');
+            this.resourcesStateManager.setTypeFilters([]);
+            this.resourcesStateManager.setCustomConstraints({});
         }
     }
 
 
-    public remove(document: Document) {
+    private async updatedDocumentListContainsSelectedDocument(documentToSelect: Document) {
 
-        this.documents.splice(this.documents.indexOf(document), 1);
+        return (await this.createUpdatedDocumentList()).documents.find(hasEqualId(documentToSelect));
     }
 
 
-    public isNewDocumentFromRemote(document: Document): boolean {
+    private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
 
-        if (!document) return false;
-
-        return this.newDocumentsFromRemote.indexOf(document) > -1;
-    }
-
-
-    /**
-     * @returns {boolean} true if list needs to be reloaded afterwards
-     */
-    public invalidateQuerySettingsIfNecessary(): boolean {
-
-        let result = false;
-        if (!this.viewManager.isSelectedDocumentMatchedByQueryString(
-                this.selectedDocument)) {
-            this.viewManager.setQueryString('');
-            result = true;
+        try {
+            return await this.datastore.find(query);
+        } catch (errWithParams) {
+            DocumentsManager.handleFindErr(errWithParams, query);
+            return { documents: [], totalCount: 0 };
         }
-        if (!this.viewManager.isSelectedDocumentTypeInTypeFilters(
-                this.selectedDocument)) {
-            this.viewManager.setFilterTypes([]);
-            result = true;
-        }
-        return result;
     }
 
 
-    private fetchDocuments(query: Query): Promise<any> {
+    private static chooseIsRecordedInTargetIdOrIds(
+        mainTypeDocumentResourceId: string|undefined,
+        operationTypeDocumentIds: () => string[],
+        bypassHierarchy: boolean,
+        selectAllOperationsOnBypassHierarchy: boolean): string|string[]|undefined {
 
-        return this.datastore.find(query as any)
-            .then(result => result.documents)
-            .catch(errWithParams => DocumentsManager.handleFindErr(errWithParams, query));
+        if (!mainTypeDocumentResourceId) return undefined;
+
+        return bypassHierarchy && selectAllOperationsOnBypassHierarchy
+            ? operationTypeDocumentIds()
+            : mainTypeDocumentResourceId;
+    }
+
+
+    private static buildQuery(
+        isRecordedInTargetIdOrIds: string|string[]|undefined,
+        state: ResourcesState,
+        isInOverview: boolean,
+        overviewTypeNames: string[]
+    ): Query {
+
+        const bypassHierarchy = ResourcesState.getBypassHierarchy(state);
+        const typeFilters = ResourcesState.getTypeFilters(state);
+        const customConstraints = ResourcesState.getCustomConstraints(state);
+
+        return {
+            q: ResourcesState.getQueryString(state),
+
+            constraints: DocumentsManager.buildConstraints(
+                customConstraints,
+                isRecordedInTargetIdOrIds,
+                ResourcesState.getNavigationPath(state).selectedSegmentId,
+                !bypassHierarchy),
+
+            types: (typeFilters.length > 0)
+                ? typeFilters
+                : !isRecordedInTargetIdOrIds && isInOverview && !bypassHierarchy
+                    ? overviewTypeNames
+                    : undefined,
+
+            limit: bypassHierarchy ? DocumentsManager.documentLimit : undefined
+        };
+    }
+
+
+    private static buildConstraints(customConstraints: { [name: string]: string },
+                                    isRecordedInIdOrIds: string|string[]|undefined,
+                                    liesWithinId: string|undefined,
+                                    addLiesWithinConstraints: boolean): { [name: string]: string|string[]} {
+
+        const constraints: { [name: string]: string|string[] } = jsonClone(customConstraints) as any;
+
+        if (addLiesWithinConstraints) {
+            if (liesWithinId) {
+                constraints['liesWithin:contain'] = liesWithinId;
+            } else {
+                constraints['liesWithin:exist'] = 'UNKNOWN';
+            }
+        }
+
+        if (isRecordedInIdOrIds) constraints['isRecordedIn:contain'] = isRecordedInIdOrIds;
+
+        return constraints;
     }
 
 
     private static handleFindErr(errWithParams: Array<string>, query: Query) {
 
         console.error('Error with find. Query:', query);
-        if (errWithParams.length == 2) console.error('Error with find. Cause:', errWithParams[1]);
-    }
-
-
-    private static isExistingDoc(changedDocument: Document, documents: Array<Document>): boolean {
-
-        for (let doc of documents) {
-            if (!doc.resource || !changedDocument.resource) continue;
-            if (!doc.resource.id || !changedDocument.resource.id) continue;
-            if (doc.resource.id == changedDocument.resource.id) return true;
-        }
-
-        return false;
-    }
-
-
-    private static makeDocsQuery(query: Query, mainTypeDocumentResourceId: string): Query {
-
-        const clonedQuery = JSON.parse(JSON.stringify(query));
-        clonedQuery.constraints = { 'isRecordedIn:contain': mainTypeDocumentResourceId };
-        return clonedQuery;
+        if (errWithParams.length === 2) console.error('Error with find. Cause:', errWithParams[1]);
     }
 }

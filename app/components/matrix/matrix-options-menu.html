@@ -1,0 +1,85 @@
+<div id="matrix-options-button" class="btn btn-primary" [class.active]="opened"
+     (click)="toggle()">
+    <span class="mdi mdi-settings mdi-18px"></span>
+</div>
+<div *ngIf="opened" id="matrix-options-menu" class="card">
+    <div class="card-body">
+        <form>
+            <fieldset class="form-group">
+                <label class="pre-label">Relationen:</label>
+                <div class="form-check form-check-inline form-radiobuttons">
+                    <input id="relations-radio-temporal"
+                           class="form-check-input"
+                           name="relations-mode-radios"
+                           type="radio"
+                           [checked]="getRelationsMode() === 'temporal'"
+                           (change)="setRelationsMode('temporal')">
+                    <label id="relations-radio-temporal-label"
+                           class="form-check-label"
+                           for="relations-radio-temporal">
+                        Zeitlich
+                    </label>
+                </div>
+                <div class="form-check form-check-inline form-radiobuttons">
+                    <input id="relations-radio-spatial"
+                           class="form-check-input"
+                           name="relations-mode-radios"
+                           type="radio"
+                           [checked]="getRelationsMode() === 'spatial'"
+                           (change)="setRelationsMode('spatial')">
+                    <label id="relations-radio-spatial-label"
+                           class="form-check-label"
+                           for="relations-radio-spatial">
+                        Räumlich
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label class="pre-label">Kanten:</label>
+                <div class="form-check form-check-inline form-radiobuttons">
+                    <input id="line-radio-ortho"
+                           class="form-check-input"
+                           name="line-mode-radios"
+                           type="radio"
+                           [checked]="getLineMode() === 'ortho'"
+                           (change)="setLineMode('ortho')">
+                    <label id="line-radio-ortho-label"
+                           class="form-check-label"
+                           for="line-radio-ortho">
+                        Gerade
+                    </label>
+                </div>
+                <div class="form-check form-check-inline form-radiobuttons">
+                    <input id="line-radio-curved"
+                           class="form-check-input"
+                           name="line-mode-radios"
+                           type="radio"
+                           [checked]="getLineMode() === 'curved'"
+                           (change)="setLineMode('curved')">
+                    <label id="line-radio-curved-label"
+                           class="form-check-label"
+                           for="line-radio-curved">
+                        Gebogen
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-group">
+                <div class="form-check form-check-inline">
+                    <input id="period-check"
+                           class="form-check-input"
+                           name="period-check"
+                           type="checkbox"
+                           [checked]="getClusterMode() === 'periods'"
+                           (change)="toggleClusterMode()">
+                    <label id="period-check-label"
+                           class="form-check-label"
+                           for="period-check">
+                        Gruppierung nach Grobdatierung
+                    </label>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

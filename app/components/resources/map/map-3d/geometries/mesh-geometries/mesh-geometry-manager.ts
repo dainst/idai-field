@@ -1,6 +1,5 @@
 import * as THREE from 'three';
-import {IdaiFieldDocument} from 'idai-components-2/idai-field-model';
-import {ProjectConfiguration} from 'idai-components-2/configuration';
+import {ProjectConfiguration, IdaiFieldDocument} from 'idai-components-2';
 import {Viewer3D} from '../../../../../core-3d/viewer-3d';
 import {MeshGeometry} from './mesh-geometry';
 import {LineBuilder} from './line-builder';

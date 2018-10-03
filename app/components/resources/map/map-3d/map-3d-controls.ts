@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2/idai-field-model';
+import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
 import {Map3DControlState} from './map-3d-control-state';
 import {MeshGeometryManager} from './geometries/mesh-geometries/mesh-geometry-manager';
 import {IntersectionHelper} from '../../../core-3d/helpers/intersection-helper';

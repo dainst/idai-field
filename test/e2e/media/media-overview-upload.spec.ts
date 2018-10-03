@@ -7,10 +7,12 @@ const path = require('path');
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 
-describe('media/media-overview/upload --', function() {
+
+describe('media/media-overview/upload --', () => {
 
     // image is already present in mediastore folder since uploading does not work in HttpMediastore
     const imageUploadFileName: string = 'Aldrin_Apollo_11.jpg';
+
 
     const uploadImage = () => {
 
@@ -19,21 +21,26 @@ describe('media/media-overview/upload --', function() {
         MediaOverviewPage.chooseImageSubtype(0);
     };
 
+
     beforeEach(() => {
 
         MediaOverviewPage.getAndWaitForImageCells();
     });
 
+
     it('image upload should create a JSON document, which in turn gets displayed in the grid', () => {
 
         uploadImage();
-        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier(imageUploadFileName)), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier(imageUploadFileName)),
+            delays.ECWaitTime);
     });
+
 
     it('do not allow uploading an image with a duplicate filename', () => {
 
         uploadImage();
-        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier(imageUploadFileName)), delays.ECWaitTime);
+        browser.wait(EC.presenceOf(MediaOverviewPage.getCellByIdentifier(imageUploadFileName)),
+            delays.ECWaitTime);
         uploadImage();
         NavbarPage.awaitAlert('Eine Ressource mit dem gleichen Dateinamen existiert bereits', false);
     });

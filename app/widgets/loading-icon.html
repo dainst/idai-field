@@ -1,1 +1,1 @@
-<div *ngIf="loading.showIcons" class="loading-icon spinner"></div>
+<div *ngIf="loading.isLoading() && loading.getContext() === context" class="loading-icon spinner"></div>

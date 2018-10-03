@@ -11,12 +11,6 @@ const template = [{
         role: 'about'
     }, {
         type: 'separator'
-    },{
-        label: 'Beenden',
-        accelerator: 'Command+Q',
-        click: function () {
-            app.quit()
-        }
     }]
 },{
     label: 'Datei',
@@ -101,10 +95,6 @@ const template = [{
         label: 'Minimieren',
         accelerator: 'CmdOrCtrl+M',
         role: 'minimize'
-    }, {
-        label: 'Schließen',
-        accelerator: 'CmdOrCtrl+W',
-        role: 'close'
     }]
 }, {
     label: 'Hilfe',

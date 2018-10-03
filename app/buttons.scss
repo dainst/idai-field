@@ -68,6 +68,10 @@ $lightgraybgr: #eeeeee;
   cursor: pointer;
 }
 
+.btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus {
+  box-shadow: none !important;
+}
+
 .nav-link {
   padding-right: 1rem !important;
   padding-left: 1rem !important;
@@ -124,7 +128,7 @@ type-switcher-button {
   }
 
   .menu-down-sign-circle {
-    background-color: $primary-color;
+    background-color: $primary;
   }
 }
 
@@ -143,5 +147,43 @@ type-switcher-button {
   .menu-down-sign-circle {
     filter: brightness(1.25);
     transition: filter .3s ease;
+  }
+}
+
+.btn-outline-primary:active,
+.btn-outline-primary:focus {
+  color: #5572A1 !important;
+  background-color: #fff !important;
+  border-color: #5572A1 !important;
+}
+
+.btn-outline-primary:active {
+  box-shadow: inset 5px 5px 9px -7px rgba(0, 0, 0, 0.7) !important;
+}
+
+.show > .btn-outline-primary.dropdown-toggle {
+  @extend :active;
+  border-color: #5572A1;
+}
+
+.operation-document-selector {
+  height: 39px;
+
+  .dropdown-item {
+    cursor: pointer;
+  }
+
+  .dropdown-item:hover {
+    background-color: $list-item-hover-color;
+  }
+
+  .dropdown-item:active {
+    background-color: darken($list-item-hover-color, 5%);
+    color: #000;
+    outline: 0;
+  }
+
+  hr {
+    margin: 7px 0 9px 0;
   }
 }

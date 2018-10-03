@@ -1,6 +1,6 @@
 <div *ngIf="layers.length > 0">
     <div id="layer-3d-menu-button" class="btn btn-primary layer-button" [class.active]="opened"
-         (mouseenter)="open()">
+         (click)="toggle()">
         <span class="mdi mdi-cube-outline mdi-18px"></span>
     </div>
     <div *ngIf="opened" id="layer-3d-menu" class="card card-block form-group layer-menu">

@@ -14,8 +14,6 @@ export class DepthMap {
     private material: THREE.MeshDepthMaterial;
     private renderTarget: THREE.WebGLRenderTarget;
 
-    private ready: boolean = false;
-
     private observers: Array<Observer<void>> = [];
 
 
@@ -29,8 +27,6 @@ export class DepthMap {
 
 
     public update() {
-
-        if (!this.ready) throw 'Called update before depth map was ready';
 
         const defaultRenderTarget: THREE.RenderTarget = this.renderer.getRenderTarget();
 
@@ -50,26 +46,12 @@ export class DepthMap {
 
     public getDepth(position: THREE.Vector2): number {
 
-        if (!this.ready) throw 'Called getDepth before depth map was ready';
-
         const buffer: Uint8Array = new Uint8Array(4);
 
         this.renderer.readRenderTargetPixels(this.renderTarget, position.x,
             this.renderTarget.height - position.y, 1, 1, buffer);
 
         return getDepthInWorldSpace(buffer, this.camera.near, this.camera.far);
-    }
-
-
-    public isReady(): boolean {
-
-        return this.ready;
-    }
-
-
-    public setReady(ready: boolean) {
-
-        this.ready = ready;
     }
 
 

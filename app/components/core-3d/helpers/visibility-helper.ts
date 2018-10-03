@@ -26,8 +26,6 @@ export class VisibilityHelper {
                      camera: THREE.PerspectiveCamera|THREE.OrthographicCamera,
                      depthMap: DepthMap): boolean {
 
-        if (!depthMap.isReady()) return false;
-
         const distanceToIntersection: number = this.getDistanceToNearestIntersection(pointOnCanvas, depthMap);
 
         if (distanceToIntersection == camera.near) return true;

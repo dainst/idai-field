@@ -110,7 +110,7 @@ export class Viewer3D {
 
         requestAnimationFrame(this.animate.bind(this));
 
-        if (this.depthMap && this.depthMap.isReady()) this.depthMap.update();
+        if (this.depthMap) this.depthMap.update();
 
         this.renderer.render(this.sceneManager.getScene(), this.cameraManager.getCamera());
     }
@@ -129,7 +129,6 @@ export class Viewer3D {
             this.cameraManager.resize(width, height);
 
             this.resized = true;
-            if (this.depthMap) this.depthMap.setReady(true);
             if (this.notifyForResize) this.notifyForResize();
         }
     }

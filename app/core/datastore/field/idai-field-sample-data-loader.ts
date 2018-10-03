@@ -63,8 +63,6 @@ export class IdaiFieldSampleDataLoader implements SampleDataLoader {
 
     private loadSample3DModels(db: any, project: string): Promise<any> {
 
-        console.log('m3DSP!', this.model3DStorePath);
-
         const base: string = '/test/test-data/model3DStore-samples/';
 
         let path: string = process.cwd() + base;

@@ -19,8 +19,8 @@
                      [hoverDocument]="controlState ? controlState.hoverDocument : undefined">
     </mesh-geometries>
 
-    <layers-2d></layers-2d>
-    <layers-3d></layers-3d>
+    <layers-2d [mainTypeDocumentIds]="mainTypeDocumentIds"></layers-2d>
+    <layers-3d [mainTypeDocumentIds]="mainTypeDocumentIds"></layers-3d>
 
     <control-buttons (onCameraModeChanged)="recreateLineGeometries()"> </control-buttons>
 

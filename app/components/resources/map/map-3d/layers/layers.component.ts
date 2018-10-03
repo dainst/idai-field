@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {OnChanges} from '@angular/core';
+import {Input, OnChanges} from '@angular/core';
 import {Document} from 'idai-components-2';
 import {Map3DComponent} from '../map-3d.component';
 import {LayerManager, ListDiffResult} from '../../layer-manager';
@@ -11,6 +11,8 @@ import {MeshLoadingProgress} from '../../../../core-3d/mesh-loading/mesh-loading
  * @author Thomas Kleinke
  */
 export class LayersComponent implements OnChanges {
+
+    @Input() mainTypeDocumentIds: string[];
 
     public layers: Array<Document> = [];
 

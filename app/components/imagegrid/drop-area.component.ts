@@ -17,7 +17,7 @@ export class DropAreaComponent {
 
     @Input() depictsRelationTarget: Document|undefined;
 
-    @Output() onImagesUploaded: EventEmitter<UploadResult> = new EventEmitter<UploadResult>();
+    @Output() onFilesUploaded: EventEmitter<UploadResult> = new EventEmitter<UploadResult>();
 
     private dragOverActive = false;
 
@@ -67,7 +67,7 @@ export class DropAreaComponent {
 
     private handleUploadResult(uploadResult: UploadResult) {
 
-        if (uploadResult.uploadedFiles > 0) this.onImagesUploaded.emit(uploadResult);
+        if (uploadResult.uploadedFiles > 0) this.onFilesUploaded.emit(uploadResult);
 
         for (let msgWithParams of uploadResult.messages) {
             this.messages.add(msgWithParams);

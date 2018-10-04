@@ -42,9 +42,8 @@
                     [showLinkBadges]="false"
                     [showShortDescription]="false"
                     (onClick)="select($event)"
-                    (onImagesUploaded)="refreshGrid()"
-                    (onUploadError)="showUploadErrorMsg($event)"
-            >
+                    (onFilesUploaded)="refreshGrid()"
+                    (onUploadError)="showUploadErrorMsg($event)">
             </image-grid>
         </div>
     </div>

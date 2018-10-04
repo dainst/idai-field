@@ -36,7 +36,7 @@ export class ImageGridComponent implements OnChanges {
 
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
-    @Output() onImagesUploaded: EventEmitter<UploadResult> = new EventEmitter<UploadResult>();
+    @Output() onFilesUploaded: EventEmitter<UploadResult> = new EventEmitter<UploadResult>();
 
     public resourceIdentifiers: {[id: string]: string} = {};
     public moreRowsMsg: string|undefined = undefined;

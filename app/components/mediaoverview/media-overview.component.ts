@@ -95,7 +95,7 @@ export class MediaOverviewComponent implements OnInit {
     }
 
 
-    public async onImagesUploaded(uploadResult: UploadResult) {
+    public async onFilesUploaded(uploadResult: UploadResult) {
 
         this.messages.add(
             uploadResult.uploadedFiles > 1

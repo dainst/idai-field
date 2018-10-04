@@ -41,6 +41,9 @@ if (process.argv && process.argv.length > 2) {
 }
 if (env) { // is environment 'dev' (npm start) or 'test' (npm run e2e)
     global.configurationDirPath = 'config';
+    global.mode = 'development';
+} else {
+    global.mode = 'production';
 }
 
 const isInTestEnvironment = () => {

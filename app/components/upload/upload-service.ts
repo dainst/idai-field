@@ -24,7 +24,6 @@ export class UploadService {
 
         const files = UploadService.getFiles(event);
 
-
         const result = ExtensionUtil.reportUnsupportedFileTypes(files, UploadService.getSupportedFileTypes());
         if (result[1]) uploadResult.messages.push([M.UPLOAD_ERROR_UNSUPPORTED_EXTS, result[1]]);
         if (result[0] == 0) return Promise.resolve(uploadResult);

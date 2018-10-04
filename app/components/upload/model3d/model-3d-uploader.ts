@@ -90,8 +90,7 @@ export class Model3DUploader extends Uploader {
             }
         };
 
-        return this.persistenceManager.persist(document, this.settingsService.getUsername(),
-            document) as any;
+        return this.persistenceManager.persist(document, this.settingsService.getUsername(), document) as any;
     }
 
 
@@ -105,8 +104,7 @@ export class Model3DUploader extends Uploader {
             document.resource.relations.depicts = [relationTarget.resource.id];
         }
 
-        return this.persistenceManager.persist(document, this.settingsService.getUsername(),
-            [document] as any);
+        return this.persistenceManager.persist(document, this.settingsService.getUsername(), document);
     }
 
 

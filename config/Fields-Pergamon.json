@@ -116,7 +116,7 @@
   },
   "SurveyUnit": {
     "fields": {
-      "finds": {
+      "hasFinds": {
         "inputType": "boolean"
       },
       "date": {

@@ -36,6 +36,10 @@
       max-height: 100%;
     }
 
+    img {
+      object-fit: scale-down;
+    }
+
     #thumbnail-image-container {
       height: calc(100% - 66px);
     }

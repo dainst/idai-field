@@ -1,8 +1,10 @@
 .image-picker {
-
   .modal-body {
     height: calc(100vh - 138px);
     overflow: auto;
-  }
 
+    input {
+      width: 100% !important;
+    }
+  }
 }

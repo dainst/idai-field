@@ -35,10 +35,10 @@
                     [selected]="selectedDocuments"
                     [showLinkBadges]="false"
                     [showShortDescription]="false"
+                    [paddingRight]="12"
                     (onClick)="select($event)"
                     (onImagesUploaded)="refreshGrid()"
-                    (onUploadError)="showUploadErrorMsg($event)"
-            >
+                    (onUploadError)="showUploadErrorMsg($event)">
             </image-grid>
         </div>
     </div>

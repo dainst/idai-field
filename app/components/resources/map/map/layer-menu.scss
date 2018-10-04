@@ -47,6 +47,7 @@ $layer-menu-button-inactive-color: grey;
 
       .layer-menu-button {
         padding: 0;
+        margin-right: 5px;
         font-size: 18px;
         cursor: pointer !important;
       }
@@ -69,7 +70,7 @@ $layer-menu-button-inactive-color: grey;
 
       .layer-menu-label {
         position: relative;
-        top: -1px;
+        bottom: 2px;
         font-size: 14px;
       }
     }

@@ -42,7 +42,7 @@ export class MeshGeometryManager {
     }
 
 
-    public async updateSelected(document: IdaiFieldDocument, selected: boolean) {
+    public updateSelected(document: IdaiFieldDocument, selected: boolean) {
 
         // Use timeout to make sure canvas size has been updated
         setTimeout(() => {

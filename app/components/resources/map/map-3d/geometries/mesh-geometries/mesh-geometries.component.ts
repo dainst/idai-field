@@ -78,17 +78,17 @@ export class MeshGeometriesComponent implements OnChanges {
     }
 
 
-    private async updateSelected(selecedDocumentChange: SimpleChange) {
+    private updateSelected(selecedDocumentChange: SimpleChange) {
 
         if (selecedDocumentChange.previousValue) {
-            await this.map3DComponent.getMeshGeometryManager().updateSelected(
+            this.map3DComponent.getMeshGeometryManager().updateSelected(
                 selecedDocumentChange.previousValue,
                 false
             );
         }
 
         if (selecedDocumentChange.currentValue) {
-            await this.map3DComponent.getMeshGeometryManager().updateSelected(
+            this.map3DComponent.getMeshGeometryManager().updateSelected(
                 selecedDocumentChange.currentValue,
                 true
             );

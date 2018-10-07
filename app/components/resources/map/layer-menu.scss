@@ -25,15 +25,18 @@ $layer-menu-button-inactive-color: grey;
 #image-layer-menu,
 #layer-3d-menu {
   top: 52px;
-  max-height: 314px;
   overflow-y: auto;
   overflow-x: hidden;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(0, 0, 0, 0.15) !important;
   border-radius: 0.25rem !important;
 
-  .form-group {
-    margin-bottom: 0;
+  .layer-menu-container {
+    max-height: 296px;
+
+    .form-group {
+      margin-bottom: 0;
+    }
   }
 }
 

@@ -60,7 +60,7 @@ export module RelationPickerSuggestions {
 
         let ids: string[] = [document.resource.id]
             .concat(document.resource.relations[relationDefinition.name])
-            .filter((id: string) => id.length > 0);
+            .filter((id: string) => id && id.length > 0);
 
         if (relationDefinition.inverse && relationDefinition.name !== relationDefinition.inverse
                 && Document.hasRelations(document, relationDefinition.inverse)) {

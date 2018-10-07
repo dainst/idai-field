@@ -29,12 +29,10 @@ export class PouchdbDatastore {
     constructor(
         private db: PouchdbProxy,
         private idGenerator: IdGenerator,
-        setupChangesEmitterAndServer = true
+        setupChangesEmitter = true
         ) {
 
-        if (setupChangesEmitterAndServer) {
-            this.setupServer().then(() => this.setupChangesEmitter());
-        }
+        if (setupChangesEmitter) this.setupChangesEmitter();
     }
 
     public changesNotifications = (): Observable<Document> => ObserverUtil.register(this.changesObservers);
@@ -168,9 +166,6 @@ export class PouchdbDatastore {
 
         return this.fetch(resourceId, { rev: revisionId });
     }
-
-
-    protected async setupServer() {}
 
 
     private async performPut(document: any) {

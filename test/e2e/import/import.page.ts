@@ -70,6 +70,11 @@ export class ImportPage {
         return element(by.id('importStartButton')).click();
     };
 
+    public static getImportModal = function () {
+
+        return element(by.id('import-upload-modal'));
+    };
+
     public static get = function() {
 
         return browser.get('#/import/');

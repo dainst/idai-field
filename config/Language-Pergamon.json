@@ -131,7 +131,7 @@
     },
     "SurveyUnit": {
       "fields": {
-        "finds": {
+        "hasFinds": {
           "label": "Fundmaterial",
           "description": "Ist Fundmaterial vorhanden?"
         },

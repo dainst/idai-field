@@ -48,6 +48,7 @@ describe('import --', function() {
         ImportPage.clickMainTypeDocumentOption(mainTypeDocumentOption);
         common.typeIn(ImportPage.getImportURLInput(), url);
         ImportPage.clickStartImportButton();
+        browser.wait(EC.stalenessOf(ImportPage.getImportModal()), delays.ECWaitTime);
     };
 
 

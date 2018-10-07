@@ -41,6 +41,7 @@
                     [selected]="selectedDocuments"
                     [showLinkBadges]="false"
                     [showShortDescription]="false"
+                    [paddingRight]="12"
                     (onClick)="select($event)"
                     (onFilesUploaded)="refreshGrid()"
                     (onUploadError)="showUploadErrorMsg($event)">

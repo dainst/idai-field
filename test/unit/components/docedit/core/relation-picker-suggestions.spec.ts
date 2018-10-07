@@ -106,4 +106,38 @@ describe('RelationPickerSuggestions', () => {
 
         done();
     });
+
+
+    it('show suggestions for new document without id', async done => {
+
+        const document: Document
+            = Static.doc('shortDescription', 'identifier', 'Type','id');
+        document.resource.relations['relation'] = [''];
+        delete document.resource.id;
+
+        const relationDefinition: RelationDefinition = {
+            name: 'relation',
+            range: ['RangeType'],
+            sameMainTypeResource: true
+        };
+
+        try {
+            await RelationPickerSuggestions.getSuggestions(datastore, document, relationDefinition);
+        } catch (err) {
+            fail();
+        }
+
+        expect(datastore.find).toHaveBeenCalledWith({
+            q: '',
+            types: ['RangeType'],
+            constraints: {
+                'id:match': {
+                    value: [],
+                    type: 'subtract'
+                },
+            }, limit: RelationPickerSuggestions.MAX_SUGGESTIONS
+        });
+
+        done();
+    });
 });

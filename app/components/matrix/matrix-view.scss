@@ -43,7 +43,8 @@
 }
 
 #matrix-container {
-  height: calc(100vh - 104px);
+  height: calc(100vh - 101px);
+  margin: 0 -15px;
   overflow: hidden;
 
   .no-main-type-resource-alert {

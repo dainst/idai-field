@@ -3,7 +3,7 @@
         <div *ngIf="image.imgSrc" class="d-flex align-items-center justify-content-center">
             <img id="original-image" [src]="image.imgSrc">
         </div>
-        <div *ngIf="originalNotFound">
+        <div *ngIf="originalNotFound" id="thumbnail-image-container">
             <div *ngIf="image.thumbSrc" class="alert alert-info" role="alert">
                 Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
             </div>

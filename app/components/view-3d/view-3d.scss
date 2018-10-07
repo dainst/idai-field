@@ -1,0 +1,31 @@
+/**
+ * @author Thomas Kleinke
+ */
+#view-3d {
+  position: relative;
+  z-index: 1001;
+
+  .canvas-container {
+    height: calc(100vh - 51px);
+    max-width: calc(100vw - 300px);
+  }
+
+  .detail-sidebar {
+    min-width: 300px;
+    max-width: 300px;
+
+    .tab-view-container {
+      height: calc(100vh - 158px);
+    }
+
+    #document-view-button-solve-conflicts {
+      position: relative;
+      right: 10px;
+      bottom: 1px;
+    }
+
+    #back-to-map {
+      box-shadow: none;
+    }
+  }
+}

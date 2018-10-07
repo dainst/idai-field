@@ -46,6 +46,12 @@ export class GeoreferenceViewComponent {
     }
 
 
+    public getHeight(): number {
+
+        return this.document.resource.georeferenceHeight || 0;
+    }
+
+
     private readFile(file: File) {
 
         const reader = new FileReader();
@@ -58,7 +64,7 @@ export class GeoreferenceViewComponent {
         })(this);
         reader.onerror = (that => {
             return () => {
-                that.messages.add([M.IMAGES_ERROR_FILEREADER, file.name]);
+                that.messages.add([M.UPLOAD_ERROR_FILEREADER, file.name]);
             }
         })(this);
         reader.readAsText(file);

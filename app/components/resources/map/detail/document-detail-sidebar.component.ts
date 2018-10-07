@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 import {ProjectConfiguration} from 'idai-components-2';
 import {IdaiFieldDocument} from 'idai-components-2';
@@ -19,6 +19,8 @@ import {isEmpty} from 'tsfun';
  * @author Sebastian Cuy
  */
 export class DocumentViewSidebarComponent {
+
+    @Input() showGeometryEditingOptions: boolean;
 
     @ViewChild('tabs') tabs: NgbTabset;
 

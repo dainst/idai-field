@@ -21,17 +21,20 @@ export class IdaiFieldTypeConverter extends TypeConverter<Document> {
     public validateTypeToBeOfClass(type: string, typeClass: string): void {
 
         if (typeClass === 'IdaiFieldImageDocument') {
-
             if (!this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must be IdaiFieldImageDocument';
-
         } else if (typeClass === 'IdaiFieldFeatureDocument') {
-
             if (!this.typeUtility.isSubtype(type, 'Feature')) throw 'Wrong type class: must be IdaiFieldFeatureDocument';
-
         } else if (typeClass === 'IdaiFieldDocument') {
-
-            if (this.typeUtility.isSubtype(type, 'Image')) throw 'Wrong type class: must not be IdaiFieldImageDocument';
+            if (this.typeUtility.isSubtype(type, 'Image') || this.typeUtility.isSubtype(type, 'Model3D')) {
+                throw 'Wrong type class: must not be IdaiFieldImageDocument';
+            }
             // feature docs are allowed to also be idai field documents
+        } else if (typeClass === 'IdaiField3DDocument') {
+            if (!this.typeUtility.isSubtype(type, 'Model3D')) throw 'Wrong type class: must be IdaiField3DDocument';
+        } else if (typeClass === 'IdaiFieldMediaDocument') {
+            if (!this.typeUtility.isSubtype(type, 'Image') && !this.typeUtility.isSubtype(type, 'Model3D')) {
+                throw 'Wrong type class: must be IdaiFieldMediaDocument';
+            }
         }
     }
 
@@ -39,23 +42,23 @@ export class IdaiFieldTypeConverter extends TypeConverter<Document> {
     public getTypesForClass(typeClass: string): string[]|undefined {
 
         if (typeClass === 'IdaiFieldImageDocument') {
-
             return this.typeUtility.getImageTypeNames();
-
         } else if (typeClass === 'IdaiFieldFeatureDocument') {
-
             return this.typeUtility.getFeatureTypeNames();
-
         } else if (typeClass === 'IdaiFieldDocument') {
-
-            return this.typeUtility.getNonImageTypeNames();
+            return this.typeUtility.getNonMediaTypeNames();
+        } else if (typeClass === 'IdaiField3DDocument') {
+           return this.typeUtility.get3DTypeNames();
+        } else if (typeClass === 'IdaiFieldMediaDocument') {
+            return this.typeUtility.getMediaTypeNames();
         }
     }
 
 
     public convert<T extends Document>(document: Document): T {
 
-        if (this.typeUtility.isSubtype(document.resource.type, 'Image')) {
+        if (this.typeUtility.isSubtype(document.resource.type, 'Image')
+                || this.typeUtility.isSubtype(document.resource.type, 'Model3D')) {
             takeOrMake(document,'resource.identifier','');
             takeOrMake(document,'resource.relations.depicts', []);
         } else {

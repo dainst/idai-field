@@ -6,12 +6,12 @@
         <span *ngIf="document.resource.geometry.type == 'LineString'" class="fieldvalue">Polyline</span>
         <span *ngIf="document.resource.geometry.type == 'MultiLineString'" class="fieldvalue">Multipolyline</span>
         <span *ngIf="document.resource.geometry.type == 'Point'" class="fieldvalue">Punkt</span>
-        <button class="btn btn-link btn-sm" id="document-view-button-edit-geometry"
+        <button *ngIf="showEditingOptions" class="btn btn-link btn-sm" id="document-view-button-edit-geometry"
                (click)="onEditGeometry.emit(document)" >
             <span class="mdi mdi-pencil mdi-18px"></span>
         </button>
     </div>
-    <div *ngIf="!document.resource.geometry">
+    <div *ngIf="!document.resource.geometry && showEditingOptions">
         <span class="fieldvalue">Keine</span>
         <button class="btn btn-link btn-sm" id="document-view-button-create-polygon"
                 (click)="onCreateGeometry.emit('Polygon')" >

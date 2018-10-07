@@ -13,7 +13,7 @@ import {AppComponent} from './app.component';
 import {ResourcesModule} from './components/resources/resources.module';
 import {Imagestore} from './core/imagestore/imagestore';
 import {ReadImagestore} from './core/imagestore/read-imagestore';
-import {ImageOverviewModule} from './components/imageoverview/image-overview.module';
+import {MediaOverviewModule} from './components/mediaoverview/media-overview.module';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {BlobMaker} from './core/imagestore/blob-maker';
 import {Converter} from './core/imagestore/converter';
@@ -27,6 +27,7 @@ import {ImportModule} from './components/import/import-module';
 import {BackupModule} from './components/backup/backup.module';
 import {DoceditActiveTabService} from './components/docedit/docedit-active-tab-service';
 import {ImageViewModule} from './components/imageview/image-view.module';
+import {View3DModule} from './components/view-3d/view-3d.module';
 import {AppController} from './app-controller';
 import {DatastoreModule} from './core/datastore/datastore.module';
 import {PersistenceManager} from './core/model/persistence-manager';
@@ -59,8 +60,9 @@ registerLocaleData(localeDe, 'de');
 
 @NgModule({
     imports: [
-        ImageOverviewModule,
+        MediaOverviewModule,
         ImageViewModule,
+        View3DModule,
         ResourcesModule,
         SettingsModule,
         BrowserModule,

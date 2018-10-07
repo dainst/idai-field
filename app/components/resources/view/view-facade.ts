@@ -79,11 +79,15 @@ export class ViewFacade {
 
     public getActiveLayersIds = () => ResourcesState.getActiveLayersIds(this.resourcesStateManager.get());
 
+    public getActive3DLayersIds = () => ResourcesState.getActive3DLayersIds(this.resourcesStateManager.get());
+
     public deselect = () => this.documentsManager.deselect();
 
     public setActiveLayersIds = (activeLayersIds: string[]) => this.resourcesStateManager.setActiveLayersIds(activeLayersIds);
 
-    public setMode = (mode: 'map' | 'list') => this.resourcesStateManager.setMode(mode);
+    public setActive3DLayersIds = (activeLayersIds: string[]) => this.resourcesStateManager.setActive3DLayersIds(activeLayersIds);
+
+    public setMode = (mode: 'map'|'3dMap'|'list') => this.resourcesStateManager.setMode(mode);
 
     public isNewDocumentFromRemote = (document: Document) => this.documentsManager.isNewDocumentFromRemote(document);
 

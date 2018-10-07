@@ -58,6 +58,8 @@ export class RoutingService {
 
         if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Image')) {
             this.jumpToImageTypeRelationTarget(documentToSelect, comingFromOutsideResourcesComponent);
+        } else if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Model3D')) {
+            this.jumpTo3DTypeRelationTarget(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
             this.jumpToResourceTypeRelationTarget(documentToSelect, tab, comingFromOutsideResourcesComponent);
         }
@@ -68,6 +70,8 @@ export class RoutingService {
 
         if (this.typeUtility.isSubtype(document.resource.type, 'Image')) {
             return this.router.navigate(['images', document.resource.id, 'edit', 'conflicts']);
+        }  else if (this.typeUtility.isSubtype(document.resource.type, 'Model3D')) {
+            return this.router.navigate(['3d', document.resource.id, 'edit', 'conflicts']);
         } else {
             const mainTypeName = await this.getMainTypeNameForDocument(document);
             if (!mainTypeName) return;
@@ -98,7 +102,8 @@ export class RoutingService {
     }
 
 
-    private jumpToImageTypeRelationTarget(documentToSelect: Document, comingFromOutsideResourcesComponent: boolean) {
+    private jumpToImageTypeRelationTarget(documentToSelect: Document,
+                                          comingFromOutsideResourcesComponent: boolean) {
 
         const selectedDocument = this.viewFacade.getSelectedDocument();
         if (selectedDocument) {
@@ -109,6 +114,23 @@ export class RoutingService {
 
         this.router.navigate(
             ['images', documentToSelect.resource.id, 'show', comingFromOutsideResourcesComponent ? 'fields' : 'relations'],
+            { queryParams: { from: this.currentRoute } }
+        );
+    }
+
+
+    private async jumpTo3DTypeRelationTarget(documentToSelect: Document,
+                                             comingFromOutsideResourcesComponent: boolean) {
+
+        const selectedDocument = this.viewFacade.getSelectedDocument();
+        if (selectedDocument) {
+            if (this.currentRoute && selectedDocument.resource && selectedDocument.resource.id) {
+                this.currentRoute += '/' + selectedDocument.resource.id + '/show/3d';
+            }
+        }
+
+        await this.router.navigate(
+            ['3d', documentToSelect.resource.id, 'show', comingFromOutsideResourcesComponent ? 'fields' : 'relations'],
             { queryParams: { from: this.currentRoute } }
         );
     }

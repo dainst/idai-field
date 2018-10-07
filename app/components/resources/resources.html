@@ -21,11 +21,19 @@
                 <div class="btn-group resources-mode-buttons">
                     <button id="map-mode-button"
                             (click)="switchMode('map')"
-                            ngbTooltip="Kartendarstellung der Ressourcen"
+                            ngbTooltip="2D-Kartendarstellung der Ressourcen"
                             placement="left"
                             class="btn btn-primary m-0"
                             [class.active]="currentModeIs('map')">
                         <span class="mdi mdi-map"></span>
+                    </button>
+                    <button id="3d-map-mode-button"
+                            (click)="switchMode('3dMap')"
+                            ngbTooltip="3D-Kartendarstellung der Ressourcen"
+                            placement="left"
+                            class="btn btn-primary m-0"
+                            [class.active]="currentModeIs('3dMap')">
+                        <span class="mdi mdi-cube-outline"></span>
                     </button>
                     <button id="list-mode-button"
                             (click)="switchMode('list')"
@@ -55,8 +63,9 @@
 
     <!--<div *ngIf="(view && view.mainType == 'project') || mainTypeManager.selectedMainTypeDocument || isEditing" class="col-lg-12 col-md-12 col-sm-12">-->
     <div class="col-lg-12 col-md-12 col-sm-12 bg-light">
-        <resources-map *ngIf="viewFacade.getMode() == 'map'"></resources-map>
-        <list *ngIf="viewFacade.getMode() == 'list'" [documents]="viewFacade.getDocuments()"></list>
+        <resources-map *ngIf="viewFacade.getMode() === 'map'" [mapMode]="'2d'"></resources-map>
+        <resources-map *ngIf="viewFacade.getMode() === '3dMap'" [mapMode]="'3d'"></resources-map>
+        <list *ngIf="viewFacade.getMode() === 'list'" [documents]="viewFacade.getDocuments()"></list>
     </div>
 
 </div>

@@ -2,8 +2,9 @@ import {Component, EventEmitter, Input, OnChanges, SimpleChanges, Output, Elemen
 import {Messages, Document, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImageGridConstruction} from './image-grid-builder';
 import {Imagestore} from '../../core/imagestore/imagestore';
+import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
-import {ImageUploadResult} from '../imageupload/image-uploader';
+import {UploadResult} from '../upload/upload-result';
 import {M} from '../m';
 
 
@@ -20,8 +21,8 @@ import {M} from '../m';
 export class ImageGridComponent implements OnChanges {
 
     @Input() nrOfColumns: number = 1;
-    @Input() documents: IdaiFieldImageDocument[];
-    @Input() selected: IdaiFieldImageDocument[] = [];
+    @Input() documents: Array<IdaiFieldMediaDocument>;
+    @Input() selected: Array<IdaiFieldMediaDocument> = [];
     @Input() totalDocumentCount: number = 0;
     @Input() showLinkBadges: boolean = true;
     @Input() showIdentifier: boolean = true;
@@ -35,7 +36,7 @@ export class ImageGridComponent implements OnChanges {
 
     @Output() onClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
-    @Output() onImagesUploaded: EventEmitter<ImageUploadResult> = new EventEmitter<ImageUploadResult>();
+    @Output() onFilesUploaded: EventEmitter<UploadResult> = new EventEmitter<UploadResult>();
 
     public resourceIdentifiers: {[id: string]: string} = {};
     public moreRowsMsg: string|undefined = undefined;

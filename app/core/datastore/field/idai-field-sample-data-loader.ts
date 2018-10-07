@@ -14,12 +14,16 @@ import {SampleDataLoader} from '../core/sample-data-loader';
 export class IdaiFieldSampleDataLoader implements SampleDataLoader {
 
 
-    constructor(private converter: Converter, private imagestorePath: string) { }
+    constructor(private converter: Converter,
+                private imagestorePath: string,
+                private model3DStorePath: string) { }
 
 
-    public go(db: any, project: string): Promise<any> {
+    public async go(db: any, project: string): Promise<any> {
 
-        return this.loadSampleObjects(db).then(() => this.loadSampleImages(db, project));
+        await this.loadSampleObjects(db);
+        await this.loadSampleImages(db, project);
+        await this.loadSample3DModels(db, project);
     }
 
 
@@ -48,16 +52,32 @@ export class IdaiFieldSampleDataLoader implements SampleDataLoader {
 
     private loadSampleImages(db: any, project: string): Promise<any> {
 
-        const base = '/test/test-data/imagestore-samples/';
+        const base: string = '/test/test-data/imagestore-samples/';
 
-        let path = process.cwd() + base;
+        let path: string = process.cwd() + base;
         if (!fs.existsSync(path)) path = process.resourcesPath + base;
 
-        return this.loadDirectory(db, path, this.imagestorePath + project);
+        return this.loadImagesFromDirectory(db, path, this.imagestorePath + project);
     }
 
 
-    private loadDirectory(db: any, path: any, dest: any): Promise<any> {
+    private loadSample3DModels(db: any, project: string): Promise<any> {
+
+        const base: string = '/test/test-data/model3DStore-samples/';
+
+        let path: string = process.cwd() + base;
+        if (!fs.existsSync(path)) path = process.resourcesPath + base;
+
+        const projectPath: string = this.model3DStorePath + project;
+
+        if (!fs.existsSync(this.model3DStorePath)) fs.mkdirSync(this.model3DStorePath);
+        if (!fs.existsSync(projectPath)) fs.mkdirSync(projectPath);
+
+        return this.load3DModelsFromDirectory(db, path, projectPath);
+    }
+
+
+    private loadImagesFromDirectory(db: any, path: string, dest: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
@@ -87,7 +107,7 @@ export class IdaiFieldSampleDataLoader implements SampleDataLoader {
                         });
                     }
 
-                    Promise.all(promises).then(()=>{
+                    Promise.all(promises).then(() => {
                         console.debug('Successfully put samples from ' + path + ' to ' + dest );
                         resolve();
                     }).catch(err => {
@@ -99,4 +119,63 @@ export class IdaiFieldSampleDataLoader implements SampleDataLoader {
         });
     }
 
+
+    private async load3DModelsFromDirectory(db: any, path: string, dest: string): Promise<void> {
+
+        const fileNames: string[] = fs.readdirSync(path);
+
+        const thumbnailFileNames: string[]
+            = fileNames.filter(fileName => fileName.startsWith('thumbnail'));
+        const directoryNames: string[]
+            = fileNames.filter(fileName => fs.statSync(path + fileName).isDirectory());
+
+        await this.createThumbnails(db, path, thumbnailFileNames);
+        await this.copy3DModelDirectories(path, directoryNames, dest);
+    }
+
+
+    private async createThumbnails(db: any, path: string, thumbnailFileNames: string[]): Promise<void> {
+
+        for (let fileName of thumbnailFileNames) {
+            const id: string = fileName.substring('thumbnail-'.length);
+            const blob = this.converter.convert(fs.readFileSync(path + fileName));
+            const document = await db.get(id);
+            await db.putAttachment(id, 'thumb', document._rev, new Blob([blob]), 'image/jpeg');
+        }
+    }
+
+
+    private copy3DModelDirectories(path: string, directoryNames: string[], dest: string): Promise<void[]> {
+
+        const promises: Array<Promise<void>> = [];
+
+        for (let directoryName of directoryNames) {
+            const targetDirectoryPath: string = dest + '/' + directoryName;
+
+            if (!fs.existsSync(targetDirectoryPath)) fs.mkdirSync(targetDirectoryPath);
+
+            for (let fileName of fs.readdirSync(path + directoryName)) {
+                promises.push(
+                    this.copyFile(path + directoryName + '/' + fileName,
+                        targetDirectoryPath + '/' + fileName)
+                );
+            }
+        }
+
+        return Promise.all(promises);
+    }
+
+
+    private copyFile(source: string, dest: string): Promise<void> {
+
+        return new Promise<void>((resolve, reject) => {
+            const writeStream = fs.createWriteStream(dest);
+            writeStream.on('close', () => resolve());
+            writeStream.on('error', () => {
+                reject('Failed to copy file ' + source + ' to ' + dest)
+            });
+
+            fs.createReadStream(source).pipe(writeStream);
+        });
+    }
 }

@@ -128,7 +128,7 @@ export class ResourcesStateManager {
     }
 
 
-    public setMode(mode: 'map' | 'list') {
+    public setMode(mode: 'map'|'3dMap'|'list') {
 
         this.resourcesState = ResourcesState.setMode(this.resourcesState, mode);
     }
@@ -155,9 +155,23 @@ export class ResourcesStateManager {
     }
 
 
+    public setActive3DLayersIds(active3DLayersIds: string[]) {
+
+        this.resourcesState = ResourcesState.setActive3DLayerIds(this.resourcesState, active3DLayersIds);
+        this.serialize();
+    }
+
+
     public removeActiveLayersIds() {
 
         this.resourcesState = ResourcesState.removeActiveLayersIds(this.resourcesState);
+        this.serialize();
+    }
+
+
+    public removeActive3DLayersIds() {
+
+        this.resourcesState = ResourcesState.removeActive3DLayersIds(this.resourcesState);
         this.serialize();
     }
 
@@ -260,6 +274,9 @@ export class ResourcesStateManager {
             objectToSerialize[viewName] = {} as any;
             if (ResourcesState.getLayerIds(state)) {
                 (objectToSerialize[viewName] as any).layerIds = ResourcesState.getLayerIds(state);
+            }
+            if (ResourcesState.get3DLayerIds(state)) {
+                (objectToSerialize[viewName] as any).layer3DIds = ResourcesState.get3DLayerIds(state);
             }
         }
 

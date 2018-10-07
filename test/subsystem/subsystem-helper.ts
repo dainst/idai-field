@@ -54,6 +54,7 @@ export async function setupSettingsService(pouchdbmanager, projectName = 'testdb
         },
         dbs: [projectName],
         imagestorePath: '/tmp/abc',
+        model3DStorePath: '/tmp/def',
         username: 'synctestuser'
     });
 
@@ -123,6 +124,7 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         projectConfiguration,
         persistenceManager,
         new Validator(projectConfiguration, idaiFieldDocumentDatastore, typeUtility),
+        undefined,
         undefined,
         typeUtility,
         { getUsername: () => 'fakeuser' },

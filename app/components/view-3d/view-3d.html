@@ -1,0 +1,62 @@
+<div id="view-3d" class="row flex-nowrap bg-light">
+    <div *ngIf="document" class="col px-0">
+        <model-3d-viewer [document]="document"></model-3d-viewer>
+    </div>
+
+    <div *ngIf="document" class="col-md-3 px-0 detail-sidebar-container">
+        <div class="card-block detail-sidebar">
+            <button *ngIf="document._conflicts" class="btn btn-link btn-xs"
+                    id="document-view-button-solve-conflicts"
+                    (click)="startEdit('conflicts')">
+                <span class="mdi mdi-alert-outline"></span>
+            </button>
+
+            <button class="close-button btn btn-link btn-xs"
+                    id="back-to-map"
+                    (click)="deselect()">
+                <span class="mdi mdi-close"></span>
+            </button>
+
+            <ngb-tabset activeId="document-view-{{activeTab}}-tab">
+                <ngb-tab id="document-view-fields-tab">
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-format-list-bulleted"></span>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+                        <div id="document-view-button-edit-document"
+                             class="btn btn-light btn-block edit-button"
+                             (click)="startEdit()">
+                            <span>Metadaten bearbeiten</span>
+                        </div>
+
+                        <div class="tab-view-container">
+                            <description-view [document]="document"></description-view>
+                            <fields-view [resource]="document.resource"></fields-view>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+
+                <ngb-tab id="document-view-relations-tab">
+                    <ng-template ngbTabTitle>
+                        <span class="mdi mdi-sitemap" [class.empty-tab]="!hasRelations()"></span>
+                    </ng-template>
+                    <ng-template ngbTabContent>
+                        <div id="document-view-button-edit-document"
+                             class="btn btn-light btn-block edit-button"
+                             (click)="startEdit('relations')">
+                            <span>Relationen bearbeiten</span>
+                        </div>
+
+                        <div class="tab-view-container">
+                            <relations-view *ngIf="hasRelations()" [resource]="document.resource"
+                                            (onRelationTargetClicked)="jumpToRelationTarget($event)">
+                            </relations-view>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </div>
+    </div>
+</div>
+
+

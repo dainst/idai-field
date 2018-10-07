@@ -1,0 +1,21 @@
+<div *ngIf="getGeometryInfoPosition()"
+     class="map-3d-geometry-info"
+     [style.left]="getGeometryInfoPosition().x + 'px'"
+     [style.top]="getGeometryInfoPosition().y + 'px'">
+    <div class="map-3d-type-icon">
+        <type-icon [size]="25" [type]="hoverDocument.resource.type"></type-icon>
+    </div>
+    <span class="map-3d-label" [attr.data-outline-text]="hoverDocument.resource.identifier">
+        {{hoverDocument.resource.identifier}}
+    </span>
+</div>
+
+<div id="toggle-line-geometries-button" class="btn btn-light" [class.activated]="showLineGeometries"
+     (click)="toggleLineGeometries()">
+    <span class="mdi mdi-vector-polyline"></span>
+</div>
+
+<div id="toggle-polygon-geometries-button" class="btn btn-light" [class.activated]="showPolygonGeometries"
+     (click)="togglePolygonGeometries()">
+    <span class="mdi mdi-vector-polygon"></span>
+</div>

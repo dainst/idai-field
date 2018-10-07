@@ -7,8 +7,8 @@ import {PouchdbManager} from './core/pouchdb-manager';
 import {IdaiFieldDocumentDatastore} from './field/idai-field-document-datastore';
 import {IdaiFieldDocumentReadDatastore} from './field/idai-field-document-read-datastore';
 import {IdaiFieldImageDocumentDatastore} from './field/idai-field-image-document-datastore';
-import {IdaiFieldImageDocument} from 'idai-components-2';
 import {IdaiFieldImageDocumentReadDatastore} from './field/idai-field-image-document-read-datastore';
+import {IdaiFieldImageDocument} from '../model/idai-field-image-document';
 import {TypeConverter} from './core/type-converter';
 import {DocumentDatastore} from './document-datastore';
 import {DocumentReadDatastore} from './document-read-datastore';
@@ -19,6 +19,12 @@ import {IdGenerator} from './core/id-generator';
 import {IdaiFieldFeatureDocumentDatastore} from './field/idai-field-feature-document-datastore';
 import {IdaiFieldFeatureDocumentReadDatastore} from './field/idai-field-feature-document-read-datastore';
 import {IdaiFieldFeatureDocument} from 'idai-components-2';
+import {IdaiField3DDocumentDatastore} from './idai-field-3d-document-datastore';
+import {IdaiField3DDocument} from '../model/idai-field-3d-document';
+import {IdaiField3DDocumentReadDatastore} from './idai-field-3d-document-read-datastore';
+import {IdaiFieldMediaDocument} from '../model/idai-field-media-document';
+import {IdaiFieldMediaDocumentDatastore} from './idai-field-media-document-datastore';
+import {IdaiFieldMediaDocumentReadDatastore} from './idai-field-media-document-read-datastore';
 
 /**
  * There is the top level package, in which everything idai-field specific resides,
@@ -114,6 +120,31 @@ import {IdaiFieldFeatureDocument} from 'idai-components-2';
         },
         { provide: IdaiFieldImageDocumentReadDatastore, useExisting: IdaiFieldImageDocumentDatastore }, // read-only version of it
 
+        {
+            provide: IdaiField3DDocumentDatastore,
+            useFactory: function(pouchdbDatastore: PouchdbDatastore,
+                                 indexFacade: IndexFacade,
+                                 documentCache: DocumentCache<IdaiField3DDocument>,
+                                 documentConverter: TypeConverter<IdaiField3DDocument>,
+            ): IdaiField3DDocumentDatastore {
+                return new IdaiField3DDocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
+            },
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
+        },
+        { provide: IdaiField3DDocumentReadDatastore, useExisting: IdaiField3DDocumentDatastore },
+
+        {
+            provide: IdaiFieldMediaDocumentDatastore,
+            useFactory: function(pouchdbDatastore: PouchdbDatastore,
+                                 indexFacade: IndexFacade,
+                                 documentCache: DocumentCache<IdaiFieldMediaDocument>,
+                                 documentConverter: TypeConverter<IdaiFieldMediaDocument>
+            ): IdaiFieldMediaDocumentDatastore {
+                return new IdaiFieldMediaDocumentDatastore(pouchdbDatastore, indexFacade, documentCache, documentConverter);
+            },
+            deps: [PouchdbDatastore, IndexFacade, DocumentCache, TypeConverter]
+        },
+        { provide: IdaiFieldMediaDocumentReadDatastore, useExisting: IdaiFieldMediaDocumentDatastore },
 
         // idai-field datastore
         // knows IdaiFieldFeatureDocument, guarantees for its instances to be null-checked, i.e. all declared fields are defined

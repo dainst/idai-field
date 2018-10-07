@@ -101,6 +101,7 @@ export class OperationsManager {
                 this.resourcesStateManager.setMainTypeDocument(document.resource.id);
             } catch(e) {
                 this.resourcesStateManager.removeActiveLayersIds();
+                this.resourcesStateManager.removeActive3DLayersIds();
                 this.selectFirstOperationFromList();
             }
         }

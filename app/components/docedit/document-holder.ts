@@ -10,6 +10,7 @@ import {TypeUtility} from '../../core/model/type-utility';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {clone} from '../../core/util/object-util';
 import {M} from '../m';
+import {Model3DStore} from '../core-3d/model-3d-store';
 
 
 @Injectable()
@@ -40,6 +41,7 @@ export class DocumentHolder {
         private persistenceManager: PersistenceManager,
         private validator: Validator,
         private imagestore: Imagestore,
+        private model3DStore: Model3DStore,
         private typeUtility: TypeUtility,
         private usernameProvider: UsernameProvider,
         private datastore: DocumentDatastore) {
@@ -103,7 +105,7 @@ export class DocumentHolder {
 
     public async remove() {
 
-        await this.removeImageWithImageStore();
+        await this.removeAssociatedMediaFiles();
         await this.removeWithPersistenceManager();
     }
 
@@ -130,15 +132,19 @@ export class DocumentHolder {
     }
 
 
-    private async removeImageWithImageStore(): Promise<any> {
+    private async removeAssociatedMediaFiles(): Promise<any> {
 
-        if (!this.typeUtility.isSubtype(this.clonedDocument.resource.type, 'Image')) return undefined;
-
-        if (!this.imagestore.getPath()) throw [M.IMAGESTORE_ERROR_INVALID_PATH_DELETE];
-        try {
-            await this.imagestore.remove(this.clonedDocument.resource.id);
-        } catch (_) {
-            return [M.IMAGESTORE_ERROR_DELETE, this.clonedDocument.resource.id];
+        if (this.typeUtility.isSubtype(this.clonedDocument.resource.type, 'Image')) {
+            if (!this.imagestore.getPath()) {
+                return Promise.reject([M.IMAGESTORE_ERROR_INVALID_PATH_DELETE]);
+            }
+            return this.imagestore.remove(this.clonedDocument.resource.id).catch(() => {
+                return [M.IMAGESTORE_ERROR_DELETE, this.clonedDocument.resource.id];
+            });
+        } else if (this.typeUtility.isSubtype(this.clonedDocument.resource.type, 'Model3D')) {
+            return this.model3DStore.remove(this.clonedDocument.resource.id);
+        } else {
+            return Promise.resolve();
         }
     }
 
@@ -173,7 +179,6 @@ export class DocumentHolder {
 
         return validationResultClonedVersion.filter(isNot(includedIn(validationResultOldVersion)));
     }
-
 
 
     private getEmptyRelationFields(): Array<string> {

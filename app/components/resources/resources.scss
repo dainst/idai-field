@@ -8,6 +8,12 @@
 @import 'navigation/navigation';
 @import 'map/map/map';
 @import 'map/resources-map';
+@import 'map/layer-menu';
+@import 'map/map-3d/map-3d';
+@import 'map/map-3d/control-buttons';
+@import 'map/map-3d/geometries/geometries';
+@import 'map/map-3d/layers/layers-2d/layers-2d';
+@import 'map/map-3d/layers/layers-3d/layers-3d';
 @import 'map/detail/document-detail-sidebar';
 @import 'map/detail/geometry-view';
 @import 'map/detail/thumbnail-view';
@@ -16,7 +22,6 @@
 @import 'searchbar/resources-search-bar';
 @import 'searchbar/search-suggestions';
 @import 'searchbar/search-constraints';
-
 
 .resources-nav {
   position: relative;

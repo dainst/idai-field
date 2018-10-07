@@ -1,0 +1,18 @@
+<div id="turn-clockwise-button" (click)="turnClockwise()"></div>
+<div id="compass-needle" [style.-webkit-transform]="'rotate(' + compassRotationDegrees + 'deg)'"></div>
+<div id="turn-counterclockwise-button" (click)="turnCounterclockwise()"></div>
+
+<div id="change-camera-mode-button"
+     class="btn btn-light"
+     [class.activated]="getCameraProjectionMode() == 'perspective'"
+     (click)="changeCameraProjectionMode()">
+    <span>3D</span>
+</div>
+
+<div *ngIf="getCameraProjectionMode() == 'perspective'"
+     id="reset-camera-angle-button"
+     class="btn btn-light"
+     [class.activated]="isDefaultAngle()"
+     (click)="resetCameraAngle()">
+    <span class="mdi mdi-arrow-bottom-left"></span>
+</div>

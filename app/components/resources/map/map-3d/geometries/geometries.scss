@@ -1,0 +1,36 @@
+/**
+ * @author Thomas Kleinke
+ */
+
+@import 'point-geometries/point-geometries';
+@import 'mesh-geometries/mesh-geometries';
+
+point-geometries,
+mesh-geometries {
+  .map-3d-type-icon {
+    border-radius: 50%;
+    width: 27px;
+    height: 27px;
+    border: 1px solid #000;
+  }
+
+  .map-3d-label {
+    position: absolute;
+    left: 31px;
+    top: 2px;
+    font-size: 16px;
+    color: #fff;
+    background: transparent;
+    z-index: 0;
+  }
+
+  .map-3d-label:before {
+    position: absolute;
+    margin: -5px;
+    padding: 5px;
+    content: attr(data-outline-text);
+    -webkit-text-stroke: 0.2em #000;
+    left: 0;
+    z-index: -1;
+  }
+}

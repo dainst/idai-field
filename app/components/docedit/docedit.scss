@@ -1,8 +1,8 @@
+@import 'tabs/docedit-media-tab';
 @import 'core/relations-form';
-@import 'tabs/docedit-image-tab';
 @import 'tabs/docedit-conflicts-tab';
 @import 'widgets/type-switcher-button';
-@import 'widgets/image-picker';
+@import 'widgets/media-resource-picker';
 @import 'widgets/relationspick/relation-picker';
 @import 'widgets/relationspick/relation-picker-group';
 
@@ -101,7 +101,7 @@
 
   #docedit-fields-tab,
   #docedit-relations-tab,
-  #docedit-images-tab,
+  #docedit-media-tab,
   #docedit-conflicts-tab {
     user-select: none;
   }

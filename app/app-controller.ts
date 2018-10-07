@@ -1,13 +1,13 @@
-/// <reference path="desktop/express-import" />
+/// <reference path='desktop/express-import' />
 
 import {Injectable} from '@angular/core';
 import * as express from 'express';
 import {Document} from 'idai-components-2';
 import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
 import {DocumentCache} from './core/datastore/core/document-cache';
-import {ImagesState} from './components/imageoverview/view/images-state';
 import {ResourcesStateManager} from './components/resources/view/resources-state-manager';
 import {IndexFacade} from './core/datastore/index/index-facade';
+import {MediaState} from './components/mediaoverview/view/media-state';
 
 const remote = require('electron').remote;
 
@@ -22,7 +22,7 @@ export class AppController {
         private pouchdbManager: PouchdbManager,
         private resourcesState: ResourcesStateManager,
         private documentCache: DocumentCache<Document>,
-        private imagesState: ImagesState,
+        private mediaState: MediaState,
         private indexFacade: IndexFacade) {
     }
     
@@ -35,10 +35,8 @@ export class AppController {
 
             const control = express();
             control.post('/reset', async (req: any, res: any) => {
-
                 this.resourcesState.resetForE2E();
-                this.imagesState.resetForE2E();
-
+                this.mediaState.resetForE2E();
                 this.documentCache.resetForE2E();
                 await this.pouchdbManager.resetForE2E();
                 await this.pouchdbManager.reindex(this.indexFacade);

@@ -6,20 +6,21 @@ const common = require('../common.js');
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
-export class ImagePickerModalPage {
+export class MediaResourcePickerModalPage {
 
     // click
 
-    public static clickAddImage() {
+    public static clickAddMediaResource() {
 
-        common.click(element(by.css('#image-picker-modal-header #add-image')));
+        common.click(element(by.css('#media-resource-picker-modal-header #add-media-resource')));
     }
 
 
-    public static clickAddImages() {
+    public static clickAddMediaResources() {
 
-        common.click(element(by.css('#image-picker-modal-header #add-images')));
+        common.click(element(by.css('#media-resource-picker-modal-header #add-media-resources')));
     }
 
 
@@ -27,7 +28,7 @@ export class ImagePickerModalPage {
 
     public static typeInIdentifierInSearchField(identifier) {
 
-       common.typeIn(element(by.css('#image-picker-modal #object-search')), identifier);
+       common.typeIn(element(by.css('#media-resource-picker-modal #object-search')), identifier);
     }
 
 

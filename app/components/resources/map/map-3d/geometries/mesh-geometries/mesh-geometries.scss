@@ -1,0 +1,37 @@
+/**
+ * @author Thomas Kleinke
+ */
+
+mesh-geometries {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  .map-3d-geometry-info {
+    position: absolute;
+    -webkit-transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  #toggle-line-geometries-button,
+  #toggle-polygon-geometries-button {
+    position: absolute;
+    bottom: 15px;
+    z-index: 1000;
+    color: #aaa;
+
+    &.activated .mdi {
+      color: #5572a1;
+    }
+  }
+
+  #toggle-line-geometries-button {
+    left: 65px;
+  }
+
+  #toggle-polygon-geometries-button {
+    left: 115px;
+  }
+}

@@ -20,9 +20,9 @@ describe('CachedDatastore', () => {
     ) {
 
         const mockTypeUtility = jasmine.createSpyObj('mockTypeUtility',
-            ['isSubtype', 'validate', 'getNonImageTypeNames']);
+            ['isSubtype', 'validate', 'getNonMediaTypeNames']);
         mockTypeUtility.isSubtype.and.returnValue(false);
-        mockTypeUtility.getNonImageTypeNames.and.returnValue(['Find']);
+        mockTypeUtility.getNonMediaTypeNames.and.returnValue(['Find']);
 
         const documentCache = new DocumentCache<IdaiFieldDocument>();
         const docDatastore = new IdaiFieldDocumentDatastore(

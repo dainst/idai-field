@@ -1,6 +1,7 @@
+import {UploadResult} from '../upload/upload-result';
+import {UploadService} from '../upload/upload-service';
 import {Component, Output, EventEmitter, Input} from '@angular/core';
 import {Messages, Document} from 'idai-components-2';
-import {ImageUploader, ImageUploadResult} from '../imageupload/image-uploader';
 
 @Component({
     selector: 'drop-area',
@@ -16,13 +17,13 @@ export class DropAreaComponent {
 
     @Input() depictsRelationTarget: Document|undefined;
 
-    @Output() onImagesUploaded: EventEmitter<ImageUploadResult> = new EventEmitter<ImageUploadResult>();
+    @Output() onFilesUploaded: EventEmitter<UploadResult> = new EventEmitter<UploadResult>();
 
     private dragOverActive = false;
 
 
     public constructor(
-        private imageUploader: ImageUploader,
+        private uploadService: UploadService,
         private messages: Messages
     ) {}
 
@@ -48,8 +49,8 @@ export class DropAreaComponent {
 
         event.preventDefault();
 
-        const uploadResult: ImageUploadResult
-            = await this.imageUploader.startUpload(event, this.depictsRelationTarget);
+        const uploadResult: UploadResult = await this.uploadService.startUpload(event,
+            this.depictsRelationTarget);
         this.handleUploadResult(uploadResult);
 
         this.onDragLeave(event);
@@ -58,15 +59,15 @@ export class DropAreaComponent {
 
     public async onSelectImages(event: any) {
 
-        const uploadResult: ImageUploadResult
-            = await this.imageUploader.startUpload(event, this.depictsRelationTarget);
+        const uploadResult: UploadResult = await this.uploadService.startUpload(event,
+            this.depictsRelationTarget);
         this.handleUploadResult(uploadResult);
     }
 
 
-    private handleUploadResult(uploadResult: ImageUploadResult) {
+    private handleUploadResult(uploadResult: UploadResult) {
 
-        if (uploadResult.uploadedImages > 0) this.onImagesUploaded.emit(uploadResult);
+        if (uploadResult.uploadedFiles > 0) this.onFilesUploaded.emit(uploadResult);
 
         for (let msgWithParams of uploadResult.messages) {
             this.messages.add(msgWithParams);

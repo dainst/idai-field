@@ -2,7 +2,7 @@ import {browser} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import * as PouchDB from 'pouchdb';
 import {SettingsPage} from './settings.page';
-import {ImageOverviewPage} from '../images/image-overview.page';
+import {MediaOverviewPage} from '../media/media-overview.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 
@@ -59,14 +59,15 @@ describe('settings --', function() {
         NavbarPage.awaitAlert('Das Bilderverzeichnis konnte nicht gefunden werden', false);
         NavbarPage.clickCloseAllMessages();
 
-        NavbarPage.clickNavigateToImages();
-        browser.sleep(delays.shortRest * 50);
-        ImageOverviewPage.clickUploadArea();
-        ImageOverviewPage.uploadImage(path.resolve(__dirname, '../../test-data/Aldrin_Apollo_11.jpg'));
+        NavbarPage.clickNavigateToMediaOverview();
+        browser.sleep(delays.shortRest * 50); // TODO replace by wait for el im clickUploadArea
+        MediaOverviewPage.clickUploadArea();
+        MediaOverviewPage.uploadFile(path.resolve(__dirname, '../../test-data/Aldrin_Apollo_11.jpg'));
+
         NavbarPage.awaitAlert('Es können keine Dateien im Bilderverzeichnis gespeichert werden', false);
         NavbarPage.clickCloseAllMessages();
 
-        ImageOverviewPage.doubleClickCell(0);
+        MediaOverviewPage.doubleClickCell(0);
         NavbarPage.awaitAlert('Es können keine Dateien aus dem Bilderverzeichnis gelesen werden', false);
         NavbarPage.clickCloseAllMessages();
         //

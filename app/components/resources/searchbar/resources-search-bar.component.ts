@@ -82,7 +82,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     private addFilterTypesForOverview() {
 
         const types: Array<IdaiType> = this.extendedSearch ?
-            this.typeUtility.getNonImageTypes().filter(type => !type.parentType) :
+            this.typeUtility.getNonMediaTypes().filter(type => !type.parentType) :
             this.typeUtility.getOverviewTypes();
 
         types.forEach(type => this.addFilterOption(type));

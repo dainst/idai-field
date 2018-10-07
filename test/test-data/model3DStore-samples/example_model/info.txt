@@ -1,0 +1,9 @@
+Example model taken from: https://sketchfab.com/models/9ad26891140d4e2b8fb4e532b9c39d1a
+Original OBJ file converted to COLLADA.
+
+Author: agisoft
+
+Partially excavated Ancient Greek (IV-III B.C.) villa Ortli in Crimea.
+
+License: Attribution-NonCommercial-ShareAlike 4.0
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode

@@ -8,9 +8,7 @@ import {GeoreferenceViewComponent} from './georeference-view.component';
 import {WidgetsModule} from '../../widgets/widgets.module';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {imageViewRouting} from './image-view.routing';
-import {ImageDocumentsManager} from '../imageoverview/view/image-documents-manager';
-import {ImageOverviewFacade} from '../imageoverview/view/imageoverview-facade';
-import {PersistenceHelper} from '../imageoverview/service/persistence-helper';
+
 
 @NgModule({
     imports: [
@@ -25,11 +23,6 @@ import {PersistenceHelper} from '../imageoverview/service/persistence-helper';
     declarations: [
         ImageViewComponent,
         GeoreferenceViewComponent
-    ],
-    providers: [
-        ImageDocumentsManager,
-        ImageOverviewFacade,
-        PersistenceHelper
     ]
 })
 

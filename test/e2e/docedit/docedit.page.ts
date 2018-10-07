@@ -30,9 +30,9 @@ export class DoceditPage {
     };
 
 
-    public static clickImagesTab = function() {
+    public static clickMediaTab = function() {
 
-        common.click(element(by.id('docedit-images-tab')));
+        common.click(element(by.id('docedit-media-tab')));
     };
 
 

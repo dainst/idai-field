@@ -1,0 +1,20 @@
+<div id="model-3d-viewer"
+     [class.drag]="isCurrentAction('drag')"
+     [class.rotate]="isCurrentAction('rotate')">
+
+    <div class="canvas-container" #container
+         (mousedown)="onMouseDown($event)"
+         (wheel)="onWheel($event)"
+         (contextmenu)="$event.preventDefault()">
+    </div>
+
+    <mesh-options-menu [mesh]="mesh"></mesh-options-menu>
+
+    <div id="focus-button" class="btn btn-light" (click)="focusMesh()">
+        <span class="mdi mdi-image-filter-center-focus"></span>
+    </div>
+
+    <zoom-buttons (onZoomInClicked)="zoomIn()" (onZoomOutClicked)="zoomOut()"></zoom-buttons>
+
+    <mesh-loading-progress-bar></mesh-loading-progress-bar>
+</div>

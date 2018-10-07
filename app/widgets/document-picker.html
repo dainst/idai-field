@@ -3,7 +3,7 @@
                 [relationName]="relationName"
                 [relationRangeType]="relationRangeType"
                 (onQueryStringChanged)="setQueryString($event)"
-                (onTypesChanged)="setQueryTypes($event)"></search-bar>
+                (onTypesChanged)="setTypeFilters($event)"></search-bar>
 
     <ul *ngIf="documents && documents.length > 0" class="list-group" id="document-picker-list">
         <li *ngFor="let document of documents; let index = index"

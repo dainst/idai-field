@@ -1,15 +1,14 @@
-import {Document} from 'idai-components-2';
-import {IdaiFieldImageResource} from 'idai-components-2';
 import {ImageContainer} from '../../core/imagestore/image-container';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
+import {IdaiFieldMediaDocument} from '../../core/model/idai-field-media-document';
 
 
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 export module ImageGridConstruction {
-
 
     /**
      * @param documents
@@ -20,7 +19,7 @@ export module ImageGridConstruction {
      *   and msgsWithParams containing one or more msgWithParams.
      */
     export function calcGrid(
-        documents: Array<Document>,
+        documents: Array<IdaiFieldMediaDocument>,
         nrOfColumns: number,
         gridWidth: number,
         paddingRight: number): any {
@@ -43,7 +42,8 @@ export module ImageGridConstruction {
     /**
      * @returns {Promise<any>} cellsWithMessages
      */
-    function calcRow(documents: Array<Document>, rowIndex: any, calculatedHeight: any, nrOfColumns: any) {
+    function calcRow(documents: Array<IdaiFieldMediaDocument>, rowIndex: any, calculatedHeight: any,
+                     nrOfColumns: any) {
 
         const row = [] as any;
 
@@ -63,7 +63,7 @@ export module ImageGridConstruction {
 
 
     function calculatedHeight(
-        documents: Array<Document>,
+        documents: Array<IdaiFieldMediaDocument>,
         rowIndex: any, nrOfColumns: any, gridWidth: any, paddingRight: number) {
 
         const rowWidth = Math.ceil(gridWidth - paddingRight);
@@ -71,7 +71,7 @@ export module ImageGridConstruction {
     }
 
 
-    function nrOfRows(documents: Array<Document>, nrOfColumns: number): number {
+    function nrOfRows(documents: Array<IdaiFieldMediaDocument>, nrOfColumns: number): number {
 
         return Math.ceil(documents.length / nrOfColumns);
     }
@@ -90,7 +90,7 @@ export module ImageGridConstruction {
                 naturalRowWidth += naturalRowWidth * (nrOfColumns - columnIndex) / columnIndex;
                 break;
             }
-            naturalRowWidth += document.resource.width / parseFloat(document.resource.height);
+            naturalRowWidth += getWidth(document) / getHeight(document);
         }
 
         return naturalRowWidth;
@@ -100,11 +100,22 @@ export module ImageGridConstruction {
     function newCell(document: any, calculatedHeight: any): ImageContainer {
 
         const cell: ImageContainer = {};
-        const image = document.resource as IdaiFieldImageResource;
         cell.document = document;
-        cell.calculatedWidth = image.width * calculatedHeight / image.height;
+        cell.calculatedWidth = getWidth(document) * calculatedHeight / getHeight(document);
         cell.calculatedHeight = calculatedHeight;
 
         return cell;
+    }
+
+
+    function getWidth(document: IdaiFieldMediaDocument): number {
+
+        return parseFloat(document.resource.width || document.resource.thumbnailWidth);
+    }
+
+
+    function getHeight(document: IdaiFieldMediaDocument): number {
+
+        return parseFloat(document.resource.height || document.resource.thumbnailHeight);
     }
 }

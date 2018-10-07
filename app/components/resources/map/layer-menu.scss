@@ -1,0 +1,78 @@
+/**
+ * @author Thomas Kleinke
+ */
+
+$layer-menu-button-color: #657faa;
+$layer-menu-button-inactive-color: grey;
+
+.layer-button,
+.layer-menu {
+  position: absolute;
+  z-index: 1000;
+}
+
+.layer-button {
+  top: 11px;
+  height: 41px;
+  padding-top: 8px;
+
+  span {
+    position: relative;
+    bottom: 1px;
+  }
+}
+
+#image-layer-menu,
+#layer-3d-menu {
+  top: 52px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  border-radius: 0.25rem !important;
+
+  .layer-menu-container {
+    max-height: 296px;
+
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.layer-entry {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+.layer-menu-button {
+  padding: 0;
+  margin-right: 5px;
+  font-size: 18px;
+  cursor: pointer !important;
+}
+
+.layer-menu-button.layer-active {
+  color: $layer-menu-button-color !important;
+}
+
+.layer-menu-button.layer-inactive {
+  color: $layer-menu-button-inactive-color !important;
+}
+
+.layer-menu-button:hover {
+  color: lighten($layer-menu-button-color, 10%) !important;
+}
+
+.layer-menu-button.layer-inactive.mdi-image-filter-center-focus {
+  visibility: hidden;
+}
+
+.layer-menu-label {
+  position: relative;
+  top: -1px;
+  font-size: 14px;
+}

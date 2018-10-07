@@ -136,12 +136,12 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
     }
 
 
-    public switchMode(mode: 'map' | 'list') {
+    public switchMode(mode: 'map'|'3dMap'|'list') {
 
         if (!this.isReady()) return;
 
         // This is so that new elements are properly included and sorted when coming back to list
-        if (this.viewFacade.getMode() === 'list' && mode === 'map') {
+        if (this.viewFacade.getMode() === 'list' && (mode === 'map' || mode === '3dMap')) {
             this.viewFacade.populateDocumentList();
         }
 

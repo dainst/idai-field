@@ -1,0 +1,36 @@
+/**
+ * @author Thomas Kleinke
+ */
+
+#map-3d {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 100px);
+  overflow: hidden;
+  cursor: default;
+
+  &.drag {
+    cursor: -webkit-grabbing;
+  }
+
+  &.hover:not(.drag):not(.rotate) {
+    cursor: pointer;
+  }
+
+  .canvas-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  zoom-buttons {
+    position: absolute;
+    top: 11px;
+    left: 11px;
+  }
+
+  mesh-loading-progress-bar {
+    position: absolute;
+    top: 20px;
+    left: 65px;
+  }
+}

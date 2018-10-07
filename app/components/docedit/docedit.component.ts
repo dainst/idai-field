@@ -49,7 +49,6 @@ export class DoceditComponent {
         private loading: Loading) {
     }
 
-
     public isChanged = () => this.documentHolder.isChanged();
 
     public isLoading = () => this.loading.isLoading();

@@ -90,9 +90,26 @@ export module ResourcesState {
     }
 
 
+    // TODO Use common function for 2D and 3D layer ids
+    export function getActive3DLayersIds(state: ResourcesState): string[] {
+
+        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(state);
+        if (!mainTypeDocumentResourceId) return [];
+
+        const layer3DIds = viewState(state).layer3DIds[isAllSelection(viewState(state)) ? '_all' : mainTypeDocumentResourceId];
+        return layer3DIds ? layer3DIds : [];
+    }
+
+
     export function getLayerIds(state: ResourcesState): {[mainTypeDocumentId: string]: string[]} {
 
         return viewState(state).layerIds;
+    }
+
+
+    export function get3DLayerIds(state: ResourcesState): {[mainTypeDocumentId: string]: string[]} {
+
+        return viewState(state).layer3DIds;
     }
 
 
@@ -112,7 +129,7 @@ export module ResourcesState {
     }
 
 
-    export function setMode(state: ResourcesState, mode: 'map' | 'list'): ResourcesState {
+    export function setMode(state: ResourcesState, mode: 'map'|'3dMap'|'list'): ResourcesState {
 
         const cloned: any = clone(state);
         cloned.mode = mode;
@@ -192,12 +209,39 @@ export module ResourcesState {
     }
 
 
+    // TODO Use common function for 2D and 3D layer ids
+    export function setActive3DLayerIds(state: ResourcesState, activeLayer3DIds: string[]): ResourcesState {
+
+        const cloned = clone(state);
+
+        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
+        if (!mainTypeDocumentResourceId) return cloned;
+
+        const layerContextId = isAllSelection(viewState(cloned)) ? '_all' : mainTypeDocumentResourceId;
+        viewState(cloned).layer3DIds[layerContextId] = activeLayer3DIds.slice(0);
+
+        return cloned;
+    }
+
+
     export function removeActiveLayersIds(state: ResourcesState): ResourcesState {
 
         const cloned = clone(state);
 
         const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
         if (mainTypeDocumentResourceId) delete viewState(cloned).layerIds[mainTypeDocumentResourceId];
+
+        return cloned;
+    }
+
+
+    // TODO Use common function for 2D and 3D layer ids
+    export function removeActive3DLayersIds(state: ResourcesState): ResourcesState {
+
+        const cloned = clone(state);
+
+        const mainTypeDocumentResourceId = getMainTypeDocumentResourceId(cloned);
+        if (mainTypeDocumentResourceId) delete viewState(cloned).layer3DIds[mainTypeDocumentResourceId];
 
         return cloned;
     }
@@ -222,6 +266,7 @@ export module ResourcesState {
             viewStates: {
                 project: {
                     layerIds: {'project': ['o25']},
+                    layer3DIds: {},
                     bypassHierarchy: false,
                     selectAllOperationsOnBypassHierarchy: false,
                     navigationPaths: {},
@@ -235,6 +280,7 @@ export module ResourcesState {
                         't1': NavigationPath.empty()
                     },
                     layerIds: {'t1': ['o25']},
+                    layer3DIds: {},
                     searchContext: ViewContext.empty(),
                     customConstraints: {}
                 }

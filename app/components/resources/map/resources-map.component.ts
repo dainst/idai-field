@@ -23,6 +23,7 @@ import {NavigationPath} from '../view/state/navigation-path';
 export class ResourcesMapComponent {
 
     @Input() activeTab: string;
+    @Input() mapMode: '2d'|'3d';
 
     public parentDocuments: Array<Document>;
 

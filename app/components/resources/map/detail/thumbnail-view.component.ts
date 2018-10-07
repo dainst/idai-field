@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {Document, Messages} from 'idai-components-2';
-import {IdaiFieldImageDocument} from 'idai-components-2';
+import {IdaiFieldImageDocument} from '../../../../core/model/idai-field-image-document';
 import {ImageGridComponent} from '../../../imagegrid/image-grid.component';
-import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/field/idai-field-image-document-read-datastore';
-import {ImageUploadResult} from '../../../imageupload/image-uploader';
 import {M} from '../../../m';
 import {ViewFacade} from '../../view/view-facade';
 import {on} from 'tsfun';
+import {UploadResult} from '../../../upload/upload-result';
+import {IdaiFieldMediaDocumentReadDatastore} from '../../../../core/datastore/idai-field-media-document-read-datastore';
 
 @Component({
     selector: 'thumbnail-view',
@@ -28,7 +28,7 @@ export class ThumbnailViewComponent implements OnChanges {
     @Output() onRelationTargetClicked: EventEmitter<Document> = new EventEmitter<Document>();
 
 
-    constructor(private datastore: IdaiFieldImageDocumentReadDatastore,
+    constructor(private datastore: IdaiFieldMediaDocumentReadDatastore,
                 private messages: Messages,
                 private viewFacade: ViewFacade) {}
 
@@ -47,7 +47,7 @@ export class ThumbnailViewComponent implements OnChanges {
     }
 
 
-    public async onImagesUploaded(uploadResult: ImageUploadResult) {
+    public async onFilesUploaded(uploadResult: UploadResult) {
 
         // This is small hack to show the updated document, since this.document, which came via viewFacade.getSelectedDocument()
         // is stale and points to the old version of the document. It is stale because there is no proper input for the selectedDocument
@@ -89,12 +89,12 @@ export class ThumbnailViewComponent implements OnChanges {
     }
     
     
-    private showUploadResultMessage(uploadResult: ImageUploadResult) {
+    private showUploadResultMessage(uploadResult: UploadResult) {
 
-        if (uploadResult.uploadedImages == 1) {
-            this.messages.add([M.RESOURCES_SUCCESS_IMAGE_UPLOADED, this.document.resource.identifier]);
-        } else if (uploadResult.uploadedImages > 1) {
-            this.messages.add([M.RESOURCES_SUCCESS_IMAGES_UPLOADED, uploadResult.uploadedImages.toString(),
+        if (uploadResult.uploadedFiles == 1) {
+            this.messages.add([M.RESOURCES_SUCCESS_FILE_UPLOADED, this.document.resource.identifier]);
+        } else if (uploadResult.uploadedFiles > 1) {
+            this.messages.add([M.RESOURCES_SUCCESS_FILES_UPLOADED, uploadResult.uploadedFiles.toString(),
                 this.document.resource.identifier]);
         }
     }

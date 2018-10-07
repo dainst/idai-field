@@ -11,7 +11,7 @@
                  [style.width.px]="cell['calculatedWidth']"
                  [style.height.px]="cell['calculatedHeight'] + 25">
                 <drop-area [depictsRelationTarget]="dropAreaDepictsRelationTarget"
-                           (onImagesUploaded)="onImagesUploaded.emit($event)">
+                           (onFilesUploaded)="onFilesUploaded.emit($event)">
                 </drop-area>
             </div>
 

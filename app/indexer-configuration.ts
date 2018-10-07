@@ -20,6 +20,7 @@ export module IndexerConfiguration {
             'identifier:match': { path: 'resource.identifier', type: 'match' },
             'id:match': { path: 'resource.id', type: 'match' },
             'georeference:exist': { path: 'resource.georeference', type: 'exist' },
+            'georeferenced:exist': { path: 'resource.georeferenced', type: 'exist' },
             'conflicts:exist': { path: '_conflicts', type: 'exist' }
         }, projectConfiguration, true);
         const createdFulltextIndexer = new FulltextIndexer(projectConfiguration, true);

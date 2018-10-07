@@ -1,0 +1,41 @@
+/**
+ * @author Thomas Kleinke
+ */
+
+@import 'mesh-options-menu';
+
+#model-3d-viewer {
+  overflow: hidden;
+  cursor: default;
+
+  &.drag {
+    cursor: -webkit-grabbing;
+  }
+
+  &.rotate {
+    cursor: none;
+  }
+
+  .canvas-container {
+    width: 100%;
+  }
+
+  zoom-buttons {
+    position: absolute;
+    top: 15px;
+    left: 12px;
+  }
+
+  mesh-loading-progress-bar {
+    position: absolute;
+    top: 24px;
+    left: 65px;
+  }
+
+  #focus-button {
+    position: absolute;
+    z-index: 1000;
+    right: 11px;
+    top: 15px;
+  }
+}

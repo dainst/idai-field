@@ -101,7 +101,8 @@ export class SettingsService {
         await this.updateSettings(settings);
         await this.pouchdbManager.loadProjectDb(
             this.getSelectedProject(),
-            new IdaiFieldSampleDataLoader(this.converter, this.settings.imagestorePath));
+            new IdaiFieldSampleDataLoader(this.converter, this.settings.imagestorePath,
+                this.settings.model3DStorePath));
 
         if (this.settings.isSyncActive) await this.startSync();
         await this.loadProjectDocument(true);
@@ -302,11 +303,24 @@ export class SettingsService {
             if (path.substr(-1) != '/') path += '/';
             settings.imagestorePath = path;
         } else {
-            if (remote.app){ // jasmine unit tests
+            if (remote.app) { // jasmine unit tests
                 settings.imagestorePath = remote.app.getPath('appData') + '/'
                     + remote.app.getName() + '/imagestore/';
             }
         }
+
+        // TODO Write method to handle both store paths
+        if (settings.model3DStorePath) {
+            let path: string = settings.model3DStorePath;
+            if (path.substr(-1) != '/') path += '/';
+            settings.model3DStorePath = path;
+        } else {
+            if (remote.app) { // jasmine unit tests
+                settings.model3DStorePath = remote.app.getPath('appData') + '/'
+                    + remote.app.getName() + '/model3DStorePath/';
+            }
+        }
+
         return settings;
     }
 

@@ -4053,6 +4053,20 @@
   "BuildingPart": {
     "color": "#707070",
     "fields": {}
+  },
+  "Model3D": {
+    "fields": {
+      "hasCreator": {},
+      "georeferenced": {
+        "inputType": "boolean"
+      },
+      "originalFilename": {},
+      "thumbnailWidth": {
+        "inputType": "unsignedInt"
+      },
+      "thumbnailHeight": {
+        "inputType": "unsignedInt"
+      }
+    }
   }
-
 }

@@ -21,11 +21,23 @@ import {RoutingService} from '../routing-service';
 import {DoceditLauncher} from './service/docedit-launcher';
 import {ViewFacade} from './view/view-facade';
 import {SettingsService} from '../../core/settings/settings-service';
+import {ImageLayerManager} from './map/map/image-layer-manager';
+import {ImageLayerMenuComponent} from './map/map/image-layer-menu.component';
+import {Map3DComponent} from './map/map-3d/map-3d.component';
+import {PointGeometriesComponent} from './map/map-3d/geometries/point-geometries/point-geometries.component';
+import {MeshGeometriesComponent} from './map/map-3d/geometries/mesh-geometries/mesh-geometries.component';
+import {Layer3DMenuComponent} from './map/map-3d/layers/layers-3d/layer-3d-menu.component';
+import {Layer3DManager} from './map/map-3d/layers/layers-3d/layer-3d-manager';
+import {Layers3DComponent} from './map/map-3d/layers/layers-3d/layers-3d.component';
+import {Core3DModule} from '../core-3d/core-3d.module';
+import {ControlButtonsComponent} from './map/map-3d/control-buttons.component';
+import {Layer3DMeshManager} from './map/map-3d/layers/layers-3d/layer-3d-mesh-manager';
+import {Layers2DComponent} from './map/map-3d/layers/layers-2d/layers-2d.component';
+import {Layer2DMeshManager} from './map/map-3d/layers/layers-2d/layer-2d-mesh-manager';
+import {Layer2DMeshBuilder} from './map/map-3d/layers/layers-2d/layer-2d-mesh-builder';
 import {SidebarListComponent} from './map/list/sidebar-list.component';
 import {IdaiFieldDocumentDatastore} from '../../core/datastore/field/idai-field-document-datastore';
-import {LayerManager} from './map/map/layer-manager';
 import {LayerImageProvider} from './map/map/layer-image-provider';
-import {LayerMenuComponent} from './map/map/layer-menu.component';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
 import {NavigationComponent} from './navigation/navigation.component';
 import {NavigationService} from './navigation/navigation-service';
@@ -35,13 +47,12 @@ import {StandardStateSerializer} from '../../common/standard-state-serializer';
 import {StateSerializer} from '../../common/state-serializer';
 import {Loading} from '../../widgets/loading';
 import {ResourcesStateManager} from './view/resources-state-manager';
-import {ViewDefinition} from './view/state/view-definition';
-import {OperationViews} from './view/state/operation-views';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {SearchConstraintsComponent} from './searchbar/search-constraints.component';
 import {ResourcesStateManagerConfiguration} from './view/resources-state-manager-configuration';
 
 const remote = require('electron').remote;
+
 
 @NgModule({
     imports: [
@@ -52,20 +63,28 @@ const remote = require('electron').remote;
         WidgetsModule,
         ImageGridModule,
         IdaiWidgetsModule,
-        DoceditModule
+        DoceditModule,
+        Core3DModule
     ],
     declarations: [
         ResourcesComponent,
         GeometryViewComponent,
         EditableMapComponent,
         ResourcesMapComponent,
-        LayerMenuComponent,
+        ImageLayerMenuComponent,
         ListComponent,
         RowComponent,
         PlusButtonComponent,
         ThumbnailViewComponent,
         DocumentViewSidebarComponent,
         SidebarListComponent,
+        Map3DComponent,
+        Layers2DComponent,
+        Layers3DComponent,
+        Layer3DMenuComponent,
+        PointGeometriesComponent,
+        MeshGeometriesComponent,
+        ControlButtonsComponent,
         NavigationComponent,
         ResourcesSearchBarComponent,
         SearchSuggestionsComponent,
@@ -77,8 +96,12 @@ const remote = require('electron').remote;
         ResourcesStateManager,
         RoutingService,
         DoceditLauncher,
-        LayerManager,
+        ImageLayerManager,
+        Layer3DManager,
+        Layer2DMeshManager,
+        Layer3DMeshManager,
         LayerImageProvider,
+        Layer2DMeshBuilder,
         {
             provide: ResourcesStateManager,
             useFactory: (datastore: IdaiFieldDocumentReadDatastore,
@@ -124,7 +147,7 @@ const remote = require('electron').remote;
                 ResourcesStateManager,
                 Loading
             ]
-        },
+        }
     ],
     exports: [
         GeometryViewComponent

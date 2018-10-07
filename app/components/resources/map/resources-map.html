@@ -3,8 +3,8 @@
         <sidebar-list></sidebar-list>
     </div>
 
-    <div class="col px-0">
-        <editable-map [documents]="viewFacade.getDocuments()"
+    <div id="map-component-container" class="col px-0" [class.small-container]="isDocumentSelected()">
+        <editable-map *ngIf="mapMode === '2d'" [documents]="viewFacade.getDocuments()"
                       [selectedDocument]="viewFacade.getSelectedDocument()"
                       [parentDocuments]="parentDocuments"
                       [mainTypeDocumentIds]="mainTypeIds()"
@@ -13,10 +13,13 @@
                       [update]="viewFacade.isReady()"
                       (onSelectDocument)="select($event)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>
+        <map-3d *ngIf="mapMode === '3d'" [documents]="viewFacade.getDocuments()"
+                [selectedDocument]="viewFacade.getSelectedDocument()"
+                [mainTypeDocumentIds]="mainTypeIds()"
+                (onSelectDocument)="select($event)"></map-3d>
     </div>
 
-    <div *ngIf="isDocumentSelected()"
-         class="col px-0 detail-sidebar-container">
-        <document-view-sidebar></document-view-sidebar>
+    <div *ngIf="isDocumentSelected()" class="col px-0 detail-sidebar-container">
+        <document-view-sidebar [showGeometryEditingOptions]="mapMode === '2d'"></document-view-sidebar>
     </div>
 </div>

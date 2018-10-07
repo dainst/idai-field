@@ -10,6 +10,7 @@ export interface ViewState {
     readonly mainTypeDocumentResourceId?: string;
 
     readonly layerIds: {[mainTypeDocumentId: string]: string[]};
+    readonly layer3DIds: {[mainTypeDocumentId: string]: string[]};
     readonly navigationPaths: {[mainTypeDocumentId: string]: NavigationPath};
 
     // bypassHierarchy (search mode) related
@@ -30,6 +31,7 @@ export class ViewState {
             selectAllOperationsOnBypassHierarchy: false,
             navigationPaths: {},
             layerIds: {},
+            layer3DIds: {},
             searchContext: ViewContext.empty(),
             customConstraints: {}
         };
@@ -38,19 +40,26 @@ export class ViewState {
 
     public static complete(viewState: ViewState) {
 
-        if (!viewState.layerIds || Array.isArray(viewState.layerIds)) {
-            (viewState as any).layerIds = {};
-        } else {
-            for (let key of Object.keys(viewState.layerIds)) {
-                if (!Array.isArray(viewState.layerIds[key])) {
-                    delete viewState.layerIds[key];
-                }
-            }
-        }
+        this.validateLayerIds(viewState, 'layerIds');
+        this.validateLayerIds(viewState, 'layer3DIds');
 
         (viewState as any).bypassHierarchy = false;
         (viewState as any).searchContext = ViewContext.empty();
         (viewState as any).navigationPaths = {};
         (viewState as any).customConstraints = {};
+    }
+
+
+    private static validateLayerIds(viewState: ViewState, fieldName: 'layerIds'|'layer3DIds') {
+
+        if (!viewState[fieldName] || Array.isArray(viewState[fieldName])) {
+            (viewState as any)[fieldName] = {};
+        } else {
+            for (let key of Object.keys(viewState[fieldName])) {
+                if (!Array.isArray(viewState[fieldName][key])) {
+                    delete viewState[fieldName][key];
+                }
+            }
+        }
     }
 }

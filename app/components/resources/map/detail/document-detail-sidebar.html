@@ -43,7 +43,8 @@
                     <div class="tab-view-container">
                         <geometry-view [document]="viewFacade.getSelectedDocument()"
                                        (onEditGeometry)="resourcesComponent.isEditingGeometry = true;"
-                                       (onCreateGeometry)="resourcesComponent.createGeometry($event)">
+                                       (onCreateGeometry)="resourcesComponent.createGeometry($event)"
+                                       [showEditingOptions]="showGeometryEditingOptions">
                         </geometry-view>
                     </div>
                 </ng-template>
@@ -68,7 +69,7 @@
                 </ng-template>
             </ngb-tab>
 
-            <ngb-tab id="document-view-images-tab">
+            <ngb-tab id="document-view-media-tab">
                 <ng-template ngbTabTitle>
                     <span class="mdi mdi-image"
                           [class.empty-tab]="!viewFacade.getSelectedDocument().resource.relations['isDepictedIn']">
@@ -76,8 +77,8 @@
                 </ng-template>
                 <ng-template ngbTabContent>
                     <div class="btn btn-light btn-block edit-button"
-                            (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'images')">
-                        <span>Bildverknüpfungen bearbeiten</span>
+                            (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'media')">
+                        <span>Medienverknüpfungen bearbeiten</span>
                     </div>
 
                     <div class="tab-view-container">

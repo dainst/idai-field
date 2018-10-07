@@ -1,0 +1,25 @@
+<div *ngFor="let marker of getMarkers()"
+     class="map-3d-marker"
+     [class.hidden]="!marker.visible"
+     [style.left]="marker.canvasPosition.x + 'px'"
+     [style.top]="'calc(' + marker.canvasPosition.y + 'px - 50px)'">
+    <div class="map-3d-marker-head"
+         (mouseenter)="setHoverDocument(marker.document)"
+         (mouseleave)="setHoverDocument(undefined)"
+         (click)="select(marker.document)"
+         (wheel)="onWheel($event)">
+        <div class="map-3d-type-icon">
+            <type-icon [size]="25" [type]="marker.document.resource.type"></type-icon>
+        </div>
+        <div class="map-3d-label"
+              [class.selected]="isSelected(marker.document)"
+              [attr.data-outline-text]="marker.document.resource.identifier">
+            {{marker.document.resource.identifier}}
+        </div>
+    </div>
+</div>
+
+<div id="toggle-point-geometries-button" class="btn btn-light" [class.activated]="showMarkers"
+     (click)="toggleMarkers()">
+    <span class="mdi mdi-map-marker"></span>
+</div>

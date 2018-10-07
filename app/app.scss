@@ -18,13 +18,16 @@ $roboto-font-path: '../fonts/';
 @import 'components/import/import';
 @import 'components/settings/settings';
 @import 'components/imageview/imageview';
-@import 'widgets/widgets';
 @import 'components/docedit/docedit';
 @import 'components/imagegrid/image-grid';
-@import 'components/imageoverview/image-overview';
-@import 'components/imageupload/image-upload';
+@import 'components/mediaoverview/media-overview';
+@import 'components/upload/upload';
+@import 'components/core-3d/mesh-loading/mesh-loading-progress-bar';
+@import 'components/model-3d-viewer/model-3d-viewer';
+@import 'components/view-3d/view-3d';
 @import 'components/matrix/matrix-view';
 @import 'components/help/help';
+@import 'widgets/widgets';
 
 .search-help-tooltip {
   .tooltip-inner {
@@ -40,14 +43,11 @@ $roboto-font-path: '../fonts/';
   animation-duration: 1s; /* Adjust this duration */
   }
 
-
-
 @Keyframes delayedFadeIn {
   0% {opacity: 0;}
   75% {opacity: 0;} /* Set this to 99% for no fade-in. */
   100% {opacity: 1;}
 }
-
 
 html {
   position: relative;

@@ -3,7 +3,7 @@ import {NavbarPage} from '../navbar.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
 import {ProjectPage} from '../project.page';
-import {ImageOverviewPage} from '../images/image-overview.page';
+import {MediaOverviewPage} from '../media/media-overview.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
 import {RelationsViewPage} from '../widgets/relations-view.page';
@@ -11,10 +11,12 @@ import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {OperationBarPage} from '../operation-bar.page';
 import {ResourcesSearchBarPage} from './resources-search-bar.page';
 
+
 const fs = require('fs');
 const delays = require('../config/delays');
 const EC = protractor.ExpectedConditions;
 const common = require('../common');
+
 
 /**
  * @author Daniel de Oliveira
@@ -63,15 +65,15 @@ describe('resources/state --', function() {
 
     function createDepictsRelation() {
 
-        NavbarPage.clickNavigateToImages();
+        NavbarPage.clickNavigateToMediaOverview();
         browser.sleep(delays.shortRest * 5);
-        ImageOverviewPage.createDepictsRelation('S1');
+        MediaOverviewPage.createDepictsRelation('S1');
     }
 
 
     function clickDepictsRelationLink() {
 
-        ImageOverviewPage.doubleClickCell(0);
+        MediaOverviewPage.doubleClickCell(0);
         RelationsViewPage.clickRelation(0);
     }
 

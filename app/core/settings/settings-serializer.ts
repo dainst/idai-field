@@ -47,6 +47,10 @@ export class SettingsSerializer {
             configToWrite['imagestorePath'] = settings.imagestorePath;
         }
 
+        if (settings.model3DStorePath) {
+            configToWrite['model3DStorePath'] = settings.model3DStorePath;
+        }
+
         if (settings.dbs) {
             configToWrite['dbs'] = settings.dbs;
         }

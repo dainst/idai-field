@@ -26,7 +26,7 @@ export class NavbarPage {
     };
 
 
-    public static clickNavigateToImages() {
+    public static clickNavigateToMediaOverview() {
 
         return common.click(element.all(by.css('.nav-link')).get(8));
     };

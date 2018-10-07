@@ -50,17 +50,18 @@ export class TypeUtility {
     }
 
 
-    public getNonImageTypes(): Array<IdaiType> {
+    public getNonMediaTypes(): Array<IdaiType> {
 
         return this.projectConfiguration.getTypesList()
             .filter(type => !this.isSubtype(type.name, 'Image'))
+            .filter(type => !this.isSubtype(type.name, 'Model3D'))
             .filter(type => !TypeUtility.isProjectType(type.name))
     }
 
 
-    public getNonImageTypeNames(): string[] {
+    public getNonMediaTypeNames(): string[] {
 
-        return this.getNonImageTypes().map(type => type.name);
+        return this.getNonMediaTypes().map(type => type.name);
     }
 
 
@@ -76,6 +77,18 @@ export class TypeUtility {
     }
 
 
+    public get3DTypeNames(): string[] {
+
+        return Object.keys(this.getSubtypes('Model3D'));
+    }
+
+
+    public getMediaTypeNames(): string[] {
+
+        return this.getImageTypeNames().concat(this.get3DTypeNames());
+    }
+
+
     public getRegularTypeNames(): string[] {
 
         return this.projectConfiguration
@@ -84,7 +97,8 @@ export class TypeUtility {
             .filter(typename => typename !== 'Place')
             .filter(typename => typename !== 'Project')
             .filter(typename => !this.isSubtype(typename, 'Operation'))
-            .filter(typename => !this.isSubtype(typename, 'Image'));
+            .filter(typename => !this.isSubtype(typename, 'Image'))
+            .filter(typename => !this.isSubtype(typename, 'Model3D'));
     }
 
 

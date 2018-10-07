@@ -8,13 +8,13 @@ import {RouterModule} from '@angular/router';
 import {IdaiWidgetsModule} from 'idai-components-2';
 import {IdaiMessagesModule} from 'idai-components-2';
 import {WidgetsModule} from '../../widgets/widgets.module';
-import {DoceditImageTabComponent} from './tabs/docedit-image-tab.component';
+import {DoceditMediaTabComponent} from './tabs/docedit-media-tab.component';
 import {DoceditConflictsTabComponent} from './tabs/docedit-conflicts-tab.component';
 import {ConflictDeletedModalComponent} from './dialog/conflict-deleted-modal.component';
 import {EditSaveDialogComponent} from './dialog/edit-save-dialog.component';
 import {TypeSwitcherButtonComponent} from './widgets/type-switcher-button.component';
-import {ImagePickerComponent} from "./widgets/image-picker.component";
-import {ImageGridModule} from "../imagegrid/image-grid.module";
+import {MediaResourcePickerComponent} from './widgets/media-resource-picker.component';
+import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {DeleteModalComponent} from './dialog/delete-modal.component';
 import {DocumentHolder} from './document-holder';
 import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
@@ -58,10 +58,10 @@ import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
         DeleteModalComponent,
         DoceditComponent,
         EditSaveDialogComponent,
-        DoceditImageTabComponent,
+        DoceditMediaTabComponent,
         DoceditConflictsTabComponent,
         TypeSwitcherButtonComponent,
-        ImagePickerComponent,
+        MediaResourcePickerComponent,
         EditFormComponent,
         EditFormFieldComponent,
         RelationsFormComponent,
@@ -86,7 +86,7 @@ import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
     entryComponents: [
         DoceditComponent,
         ConflictDeletedModalComponent,
-        ImagePickerComponent,
+        MediaResourcePickerComponent,
         DeleteModalComponent,
         EditSaveDialogComponent
     ]

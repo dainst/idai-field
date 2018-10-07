@@ -10,11 +10,7 @@ import {SceneManager} from './scene-manager';
 export class Viewer3D {
 
     private renderer: THREE.WebGLRenderer;
-
     private depthMap: DepthMap|undefined;
-
-    private resized: boolean = false;
-    private notifyForResize: Function;
 
 
     constructor(private containerElement: HTMLElement,
@@ -56,18 +52,6 @@ export class Viewer3D {
         canvasCoordinates.y = Math.round((-projectedPosition.y + 1) * canvas.height / 2);
 
         return canvasCoordinates;
-    }
-
-
-    public waitForSizeAdjustment(): Promise<void> {
-
-        return new Promise<void>(resolve => {
-            if (this.resized) {
-                resolve();
-            } else {
-                this.notifyForResize = resolve;
-            }
-        });
     }
 
 
@@ -127,9 +111,6 @@ export class Viewer3D {
             this.renderer.setSize(width, height, false);
             if (this.depthMap) this.depthMap.setSize(width, height);
             this.cameraManager.resize(width, height);
-
-            this.resized = true;
-            if (this.notifyForResize) this.notifyForResize();
         }
     }
 }

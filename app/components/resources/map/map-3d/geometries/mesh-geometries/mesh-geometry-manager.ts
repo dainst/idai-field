@@ -33,8 +33,6 @@ export class MeshGeometryManager {
     public async update(documents: Array<IdaiFieldDocument>, showLineGeometries: boolean,
                         showPolygonGeometries: boolean) {
 
-        await this.viewer.waitForSizeAdjustment();
-
         const geometryDocuments: Array<IdaiFieldDocument>
             = MeshGeometryManager.getMeshGeometryDocuments(documents, showLineGeometries,
                 showPolygonGeometries);

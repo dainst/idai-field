@@ -4,6 +4,9 @@ Nach dem ersten Start des Clients befinden Sie sich zunächst im Projekt "test",
 Ihnen ermöglicht, die Funktionen des Programms anhand einiger Testdaten auszuprobieren.
 Bitte beachten Sie, dass neu angelegte Datensätze nach einem Neustart des Clients
 gelöscht und alle Änderungen zurückgesetzt werden, solange das Testprojekt ausgewählt ist.
+Aus diesem Grund findet im Testprojekt grundsätzlich keine Synchronisation mit anderen Clients
+oder Datenbanken statt.
+
 Um mit dem Client produktiv zu arbeiten, sollten Sie zunächst die folgenden Schritte
 durchführen:
 

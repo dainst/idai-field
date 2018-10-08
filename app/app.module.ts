@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core';
 import {HttpModule} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
@@ -89,6 +89,10 @@ registerLocaleData(localeDe, 'de');
         HelpComponent
     ],
     providers: [
+        {
+            provide: LOCALE_ID,
+            useValue: remote.getGlobal('config').locale
+        },
         ConfigReader,
         ConfigLoader,
         IdaiFieldAppConfigurator,

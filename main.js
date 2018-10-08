@@ -26,6 +26,7 @@ global.setConfigDefaults = config => {
 
     if (!config.syncTarget) config.syncTarget = {};
     if (!config.remoteSites) config.remoteSites = [];
+    if (!config.locale) config.locale = 'de';
     if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
     if (os.type() === 'Linux') config.isAutoUpdateActive = false;
 

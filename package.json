@@ -17,7 +17,8 @@
     "e2e": "node test/e2e/spectron.js",
     "package": "build -mw --publish never",
     "package-mac": "build -m",
-    "package-win": "build -w nsis"
+    "package-win": "build -w nsis",
+    "i18n": "./node_modules/.bin/ng-xi18n --locale de --project app && ./node_modules/.bin/xliffmerge --profile xliff-merge.json && rm app/messages.xlf"
   },
   "build": {
     "appId": "org.dainst.field",
@@ -113,6 +114,7 @@
     "gulp-webserver": "0.9.1",
     "jasmine": "2.5.2",
     "jasmine-core": "2.5.2",
+    "ngx-i18nsupport": "0.17.1",
     "pouchdb-adapter-memory": "^6.3.4",
     "protractor": "5.1.2",
     "protractor-console-plugin": "0.1.1",

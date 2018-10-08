@@ -31,6 +31,7 @@ export class SettingsSerializer {
 
         let configToWrite: any = {};
 
+        configToWrite['locale'] = settings.locale;
         configToWrite['isAutoUpdateActive'] = settings.isAutoUpdateActive;
         configToWrite['isSyncActive'] = settings.isSyncActive;
 

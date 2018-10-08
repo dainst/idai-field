@@ -202,7 +202,7 @@ export class SettingsService {
 
         this.currentSyncUrl = SettingsService.makeUrlFromSyncTarget(this.settings.syncTarget);
         if (!this.currentSyncUrl) return Promise.resolve();
-        if (!this.getSelectedProject()) return Promise.resolve();
+        if (!SettingsService.isSynchronizationAllowed(this.getSelectedProject())) return Promise.resolve();
 
         return this.pouchdbManager.setupSync(this.currentSyncUrl, this.getSelectedProject())
             .then(syncState => {
@@ -261,6 +261,12 @@ export class SettingsService {
         return Observable.create((o: Observer<any>) => {
             this.syncStatusObservers.push(o as never);
         });
+    }
+
+
+    private static isSynchronizationAllowed(project: string): boolean {
+
+        return project !== undefined && (project !== 'test' || remote.getGlobal('mode') === 'test');
     }
 
 

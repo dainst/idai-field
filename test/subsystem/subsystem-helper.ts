@@ -45,6 +45,7 @@ export async function setupSettingsService(pouchdbmanager, projectName = 'testdb
     );
 
     await settingsService.bootProjectDb({
+        locale: 'de',
         isAutoUpdateActive: false,
         isSyncActive: startSync,
         remoteSites: [],

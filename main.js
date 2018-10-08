@@ -44,31 +44,25 @@ if (env) { // is environment 'dev' (npm start) or 'test' (npm run e2e)
     global.configurationDirPath = 'config';
 }
 
-if (!env || env === 'test') {
+if (!env) {
+    // Packaged app
     global.mode = 'production';
+} else if (env === 'test') {
+    // npm run e2e
+    global.mode = 'test';
 } else {
+    // npm start
     global.mode = 'development';
 }
 
-const isInTestEnvironment = () => {
 
-    return env && env.indexOf('test') !== -1;
-};
-
-
-if (!env || // is environment 'production' (packaged app)
-    env.indexOf('dev') !== -1) { // is environment 'development' (npm start)
-
+if (['production', 'development'].includes(global.mode)) {
     global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
     copyConfigFile(global.appDataPath + '/config.json', global.appDataPath);
     global.configPath = global.appDataPath + '/config.json';
 
-    if (!env) { // is environment 'production' (packaged app)
-        global.configurationDirPath = '../config';
-    }
-
-} else { // is environment 'test' (npm run e2e)
-
+    if (global.mode === 'production') global.configurationDirPath = '../config';
+} else {
     global.configPath = 'config/config.test.json';
     global.appDataPath = 'test/test-temp';
 }
@@ -91,7 +85,7 @@ global.switches = {
     provide_reset: false
 };
 
-if (isInTestEnvironment()) {
+if (global.mode === 'test') {
     global.switches.messages_timeout = undefined;
     global.switches.prevent_reload = true;
     global.switches.destroy_before_create = true;
@@ -120,7 +114,7 @@ const createWindow = () => {
         minHeight: 600,
         webPreferences: {
             nodeIntegration: true,
-            webSecurity: !isInTestEnvironment()
+            webSecurity: global.mode !== 'test'
         },
         titleBarStyle: 'hiddenInset'
     });

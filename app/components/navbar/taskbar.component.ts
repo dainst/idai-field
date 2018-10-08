@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {SettingsService} from '../../core/settings/settings-service';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
+import {SynchronizationStatus} from '../../core/settings/synchronization-status';
 
 
 @Component({
@@ -15,33 +15,20 @@ import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stre
  */
 export class TaskbarComponent {
 
-    public connected: boolean = false;
     public receivingRemoteChanges: boolean = false;
 
     private remoteChangesTimeout: any = undefined;
 
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
-                settingsService: SettingsService,
+                private synchronizationStatus: SynchronizationStatus,
                 remoteChangesStream: RemoteChangesStream) {
 
-        this.listenToSyncStatusChanges(settingsService);
         this.listenToRemoteChanges(remoteChangesStream);
     }
 
 
-    private listenToSyncStatusChanges(settingsService: SettingsService) {
-
-        settingsService.syncStatusChanges().subscribe(status => {
-            if (status === 'connected') {
-                this.connected = true;
-                this.changeDetectorRef.detectChanges();
-            } else if (status === 'disconnected') {
-                this.connected = false;
-                this.changeDetectorRef.detectChanges();
-            }
-        });
-    }
+    public isConnected = (): boolean => this.synchronizationStatus.isConnected();
 
 
     private listenToRemoteChanges(remoteChangesStream: RemoteChangesStream) {

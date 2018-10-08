@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Observable, Observer} from 'rxjs';
 import {unique} from 'tsfun';
-import {Messages, ProjectConfiguration, Document} from 'idai-components-2';
-import {IdaiFieldAppConfigurator} from 'idai-components-2';
+import {Messages, ProjectConfiguration, Document, IdaiFieldAppConfigurator} from 'idai-components-2';
 import {Settings} from './settings';
 import {SettingsSerializer} from './settings-serializer';
 import {Imagestore} from '../imagestore/imagestore';
@@ -11,6 +9,7 @@ import {ImagestoreErrors} from '../imagestore/imagestore-errors';
 import {IdaiFieldSampleDataLoader} from '../datastore/field/idai-field-sample-data-loader';
 import {Converter} from '../imagestore/converter';
 import {M} from '../../components/m';
+import {SynchronizationStatus} from './synchronization-status';
 
 const {remote, ipcRenderer} = require('electron');
 
@@ -30,7 +29,6 @@ const {remote, ipcRenderer} = require('electron');
  */
 export class SettingsService {
 
-    private syncStatusObservers = [];
     private settings: Settings;
     private settingsSerializer: SettingsSerializer = new SettingsSerializer();
     private currentSyncUrl = '';
@@ -42,7 +40,8 @@ export class SettingsService {
                 private pouchdbManager: PouchdbManager,
                 private messages: Messages,
                 private appConfigurator: IdaiFieldAppConfigurator,
-                private converter: Converter) {
+                private converter: Converter,
+                private synchronizationStatus: SynchronizationStatus) {
     }
 
 
@@ -208,16 +207,13 @@ export class SettingsService {
             .then(syncState => {
 
             // avoid issuing 'connected' too early
-            const msg = setTimeout(() => this.syncStatusObservers.forEach((o: Observer<any>) => o.next('connected')), 500);
+            const msg = setTimeout(() => this.synchronizationStatus.setConnected(true), 500);
 
             syncState.onError.subscribe(() => {
                 clearTimeout(msg); // stop 'connected' msg if error
                 syncState.cancel();
-                this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
+                this.synchronizationStatus.setConnected(false);
                 this.currentSyncTimeout = setTimeout(() => this.startSync(), 5000); // retry
-            });
-            syncState.onChange.subscribe(() => {
-                return this.syncStatusObservers.forEach((o: Observer<any>) => o.next('changed'))
             });
         });
     }
@@ -244,23 +240,7 @@ export class SettingsService {
 
         if (this.currentSyncTimeout) clearTimeout(this.currentSyncTimeout);
         this.pouchdbManager.stopSync();
-        this.syncStatusObservers.forEach((o: Observer<any>) => o.next('disconnected'));
-    }
-
-
-    /**
-     * Observe synchronization status changes. The following states can be
-     * subscribed to:
-     * * 'connected': The connection to the server has been established
-     * * 'disconnected': The connection to the server has been lost
-     * * 'changed': A changed document has been transmitted
-     * @returns Observable<string>
-     */
-    public syncStatusChanges(): Observable<string> {
-
-        return Observable.create((o: Observer<any>) => {
-            this.syncStatusObservers.push(o as never);
-        });
+        this.synchronizationStatus.setConnected(false);
     }
 
 

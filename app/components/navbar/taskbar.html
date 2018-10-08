@@ -9,11 +9,11 @@
 
     <li class="nav-item navbar-hover-element pr-2">
         <a href="#" routerLink="/settings">
-            <span class="mdi mdi-cloud" *ngIf="connected && !receivingRemoteChanges"
+            <span class="mdi mdi-cloud" *ngIf="this.isConnected() && !receivingRemoteChanges"
                   ngbTooltip="Synchronisation ist aktiv"
                   placement="bottom" container="body">
             </span>
-            <span class="mdi mdi-cloud-off-outline" *ngIf="!connected && !receivingRemoteChanges"
+            <span class="mdi mdi-cloud-off-outline" *ngIf="!this.isConnected() && !receivingRemoteChanges"
                   ngbTooltip="Synchronisation ist deaktiviert"
                   placement="bottom" container="body">
             </span>

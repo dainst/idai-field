@@ -44,6 +44,7 @@ import {TaskbarUpdateComponent} from './components/navbar/taskbar-update.compone
 import {M} from './components/m';
 import {SettingsSerializer} from './core/settings/settings-serializer';
 import {IndexerConfiguration} from './indexer-configuration';
+import {SynchronizationStatus} from './core/settings/synchronization-status';
 
 
 const remote = require('electron').remote;
@@ -183,7 +184,8 @@ registerLocaleData(localeDe, 'de');
         PersistenceManager,
         Validator,
         { provide: MD, useClass: M},
-        DoceditActiveTabService
+        DoceditActiveTabService,
+        SynchronizationStatus
     ],
     bootstrap: [ AppComponent ]
 })

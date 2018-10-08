@@ -7,4 +7,6 @@ unit/**/*.js
 unit/**/*.js.map
 subsystem/**/*.js
 subsystem/**/*.js.map
+sync/**/*.js
+sync/**/*.js.map
 !subsystem/config

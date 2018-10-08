@@ -40,6 +40,7 @@ export async function setupSettingsService(pouchdbmanager, projectName = 'testdb
         pouchdbmanager,
         undefined,
         new IdaiFieldAppConfigurator(new ConfigLoader(new FsConfigReader() as ConfigReader)),
+        undefined,
         undefined
     );
 

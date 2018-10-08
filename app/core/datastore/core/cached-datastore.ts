@@ -1,6 +1,4 @@
-import {Injectable} from '@angular/core';
-import {Datastore} from 'idai-components-2';
-import {Document, NewDocument} from 'idai-components-2';
+import {Datastore, Document, NewDocument} from 'idai-components-2';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {CachedReadDatastore} from './cached-read-datastore';
@@ -8,7 +6,6 @@ import {TypeConverter} from './type-converter';
 import {IndexFacade} from "../index/index-facade";
 
 
-@Injectable()
 /**
  * Returns fully checked instances of
  * IdaiFieldDocument and IdaiFieldImageDocument respectively,
@@ -19,8 +16,7 @@ import {IndexFacade} from "../index/index-facade";
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  */
-export abstract class CachedDatastore<T extends Document>
-    extends CachedReadDatastore<T> {
+export abstract class CachedDatastore<T extends Document> extends CachedReadDatastore<T> {
 
     constructor(
         datastore: PouchdbDatastore,

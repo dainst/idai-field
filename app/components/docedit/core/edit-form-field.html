@@ -3,9 +3,6 @@
                             || field.inputType === undefined"
            [resource]="resource" [fieldName]="field.name"></dai-input>
 
-<dai-inputs *ngIf="field.inputType === 'inputs'" [resource]="resource"
-            [fieldName]="field.name"></dai-inputs>
-
 <dai-text *ngIf="field.inputType === 'text'" [resource]="resource"
           [fieldName]="field.name"></dai-text>
 

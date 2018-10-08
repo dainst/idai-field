@@ -1,4 +1,3 @@
-import {Injectable} from '@angular/core';
 import {FindResult, Query, ReadDatastore, DatastoreErrors} from 'idai-components-2';
 import {Document} from 'idai-components-2';
 import {PouchdbDatastore} from './pouchdb-datastore';
@@ -14,7 +13,6 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
 }
 
 
-@Injectable()
 /**
  * This datastore provides everything necessary
  * to power a idai-field application:

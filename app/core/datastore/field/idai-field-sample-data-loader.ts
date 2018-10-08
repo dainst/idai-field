@@ -1,18 +1,15 @@
-import {Injectable} from '@angular/core';
 import * as fs from 'fs';
 import {DOCS} from './idai-field-sample-objects';
 import {Converter} from '../../imagestore/converter';
 import {SampleDataLoader} from '../core/sample-data-loader';
 
 
-@Injectable()
 /**
  * @author Sebastian Cuy
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
 export class IdaiFieldSampleDataLoader implements SampleDataLoader {
-
 
     constructor(private converter: Converter, private imagestorePath: string) { }
 

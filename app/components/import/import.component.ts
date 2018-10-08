@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Http} from '@angular/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {isNot, empty} from 'tsfun';
 import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
 import {ImportReport} from '../../core/import/import';
 import {Reader} from '../../core/import/reader';
@@ -17,7 +18,6 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../m';
 import {ImportFacade, ImportFormat} from '../../core/import/import-facade';
-import {isNot, empty} from 'tsfun';
 
 
 @Component({
@@ -56,13 +56,16 @@ export class ImportComponent {
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
         private modalService: NgbModal,
-        private settingsService: SettingsService // TODO remove
+        private settingsService: SettingsService
     ) {
         this.viewFacade.getAllOperations().then(
             documents => this.mainTypeDocuments = documents,
             msgWithParams => messages.add(msgWithParams)
         );
     }
+
+
+    public getProject = () => this.settingsService.getSelectedProject();
 
     
     public async startImport() {

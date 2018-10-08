@@ -3,7 +3,7 @@
 </div>
 
 <div class="modal-body">
-    <div *ngIf="isRecordedInResourcesCount == 1" class="text-center alert alert-warning">
+    <div *ngIf="isRecordedInResourcesCount === 1" class="text-center alert alert-warning">
         Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
     </div>
     <div *ngIf="isRecordedInResourcesCount > 1" class="text-center alert alert-warning">
@@ -21,8 +21,8 @@
 
 <div class="modal-footer" *ngIf="document">
     <button id="delete-resource-confirm" class="btn btn-danger" type="button"
-            [ngClass]="{ 'disabled': confirmDeletionIdentifier != document.resource.identifier }"
-            (click)="confirmDeletionIdentifier != document.resource.identifier || activeModal.close('delete')">
+            [ngClass]="{ 'disabled': confirmDeletionIdentifier !== document.resource.identifier }"
+            (click)="confirmDeletionIdentifier !== document.resource.identifier || activeModal.close('delete')">
         Löschen
     </button>
     <button type="button" id="delete-resource-cancel" class="btn btn-secondary" (click)="activeModal.close('cancel')">

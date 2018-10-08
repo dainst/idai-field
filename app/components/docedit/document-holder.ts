@@ -46,9 +46,6 @@ export class DocumentHolder {
     }
 
 
-    public getClonedDocument = () => this.clonedDocument;
-
-
     public isChanged(): boolean {
 
         if (!this.clonedDocument) return false;

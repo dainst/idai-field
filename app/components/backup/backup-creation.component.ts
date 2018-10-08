@@ -18,7 +18,8 @@ import {M} from '../m';
  */
 export class BackupCreationComponent {
 
-    private running: boolean = false;
+    public running: boolean = false;
+
     private modalRef: NgbModalRef|undefined;
 
     private static TIMEOUT: number = 200;

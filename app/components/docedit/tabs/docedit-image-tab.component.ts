@@ -1,7 +1,6 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiFieldDocument} from 'idai-components-2';
-import {IdaiFieldImageDocument} from 'idai-components-2';
+import {IdaiFieldDocument, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {IdaiFieldImageDocumentReadDatastore} from "../../../core/datastore/field/idai-field-image-document-read-datastore";
@@ -18,11 +17,11 @@ import {IdaiFieldImageDocumentReadDatastore} from "../../../core/datastore/field
 export class DoceditImageTabComponent {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
-    public documents: IdaiFieldImageDocument[];
-
-    public selected: IdaiFieldImageDocument[] = [];
 
     @Input() document: IdaiFieldDocument;
+
+    public documents: IdaiFieldImageDocument[];
+    public selected: IdaiFieldImageDocument[] = [];
 
 
     constructor(

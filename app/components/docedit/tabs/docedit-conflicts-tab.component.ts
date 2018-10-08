@@ -18,11 +18,12 @@ export class DoceditConflictsTabComponent implements OnChanges {
     @Input() document: Document;
     @Input() inspectedRevisions: Document[];
 
+    public ready = false;
+
     private conflictedRevisions: Array<Document> = [];
     private selectedRevision: Document|undefined;
     private differingFields: any[];
     private relationTargets: { [targetId: string]: Document|undefined };
-    private ready = false;
 
 
     constructor(private datastore: DocumentReadDatastore,

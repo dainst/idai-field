@@ -1,12 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
-import {Document, Messages} from 'idai-components-2';
-import {IdaiFieldImageDocument} from 'idai-components-2';
+import {on} from 'tsfun';
+import {Document, Messages, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../../imagegrid/image-grid.component';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/field/idai-field-image-document-read-datastore';
 import {ImageUploadResult} from '../../../imageupload/image-uploader';
 import {M} from '../../../m';
 import {ViewFacade} from '../../view/view-facade';
-import {on} from 'tsfun';
 
 @Component({
     selector: 'thumbnail-view',

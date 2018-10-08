@@ -39,8 +39,8 @@ export class DoceditComponent {
 
     constructor(
         public activeModal: NgbActiveModal,
+        public documentHolder: DocumentHolder,
         private messages: Messages,
-        private documentHolder: DocumentHolder,
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
         private typeUtility: TypeUtility,
@@ -48,7 +48,6 @@ export class DoceditComponent {
         private projectConfiguration: ProjectConfiguration,
         private loading: Loading) {
     }
-
 
     public isChanged = () => this.documentHolder.isChanged();
 
@@ -58,7 +57,7 @@ export class DoceditComponent {
 
 
     public getRelationDefinitions = () => this.projectConfiguration.getRelationDefinitions(
-        this.documentHolder.getClonedDocument().resource.type, false, 'editable');
+        this.documentHolder.clonedDocument.resource.type, false, 'editable');
 
 
     public getActiveTab() {
@@ -111,8 +110,8 @@ export class DoceditComponent {
     public async openDeleteModal() {
 
         const ref = this.modalService.open(DeleteModalComponent);
-        ref.componentInstance.setDocument(this.documentHolder.getClonedDocument());
-        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.getClonedDocument()));
+        ref.componentInstance.setDocument(this.documentHolder.clonedDocument);
+        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.clonedDocument));
         const decision = await ref.result;
         if (decision === 'delete') await this.deleteDocument();
     }
@@ -127,7 +126,7 @@ export class DoceditComponent {
         this.operationInProgress = 'save';
         this.loading.start('docedit');
 
-        const documentBeforeSave: Document = clone(this.documentHolder.getClonedDocument());
+        const documentBeforeSave: Document = clone(this.documentHolder.clonedDocument);
 
         try {
             const documentAfterSave: Document = await this.documentHolder.save();

@@ -6,11 +6,11 @@
     </div>
     <div class="card-block">
 
-        <div id="image-tab-container" (window:resize)="onResize($event)">
+        <div id="image-tab-container" (window:resize)="onResize()">
 
             <div class="btn-toolbar">
                 <button type="button" id="create-depicts-relations-btn"
-                        class="btn btn-primary pull-right" (click)="openImagePicker(imagePicker)">
+                        class="btn btn-primary pull-right" (click)="openImagePicker()">
                     <span class="mdi mdi-plus-circle"></span>
                     Weitere Bilder verknüpfen
                 </button>

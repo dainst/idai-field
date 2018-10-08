@@ -37,6 +37,7 @@ export class ImageGridComponent implements OnChanges {
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onImagesUploaded: EventEmitter<ImageUploadResult> = new EventEmitter<ImageUploadResult>();
 
+    public rows = [];
     public resourceIdentifiers: {[id: string]: string} = {};
     public moreRowsMsg: string|undefined = undefined;
 
@@ -51,8 +52,6 @@ export class ImageGridComponent implements OnChanges {
     // only if the user leaves the component and comes back again,
     // the message would be displayed again.
     private imagesNotFoundMessageDisplayed = false;
-
-    private rows = [];
 
 
     constructor(

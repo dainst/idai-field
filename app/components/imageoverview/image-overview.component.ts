@@ -71,9 +71,9 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public async setGridSize(size: string) {
+    public async setGridSize(size: string|number) {
 
-        const _size = parseInt(size);
+        const _size: number = typeof size === 'string' ? parseInt(size): size;
 
         if (_size >= this.minGridSize && _size <= this.maxGridSize) {
             this.imageOverviewFacade.setGridSize(_size);

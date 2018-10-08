@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiFieldDocument} from 'idai-components-2';
-import {ProjectConfiguration} from 'idai-components-2';
-import {IdaiFieldFeatureDocument} from 'idai-components-2';
 import {on, tripleEqual, doWhen, isEmpty} from 'tsfun';
+import {IdaiFieldDocument, ProjectConfiguration, IdaiFieldFeatureDocument} from 'idai-components-2';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {ModelUtil} from '../../core/model/model-util';
 import {DoceditComponent} from '../docedit/docedit.component';
@@ -33,15 +31,13 @@ export class MatrixViewComponent implements OnInit {
     public graph: string|undefined;
 
     public graphFromSelection: boolean = false;
+    public selection: MatrixSelection = new MatrixSelection();
 
-    private trenches: Array<IdaiFieldDocument> = [];
-    private selectedTrench: IdaiFieldDocument|undefined;
-    private selection: MatrixSelection = new MatrixSelection();
+    public trenches: Array<IdaiFieldDocument> = [];
+    public selectedTrench: IdaiFieldDocument|undefined;
 
     private featureDocuments: Array<IdaiFieldFeatureDocument> = [];
     private totalFeatureDocuments: Array<IdaiFieldFeatureDocument> = [];
-
-
     private trenchesLoaded: boolean = false;
 
 

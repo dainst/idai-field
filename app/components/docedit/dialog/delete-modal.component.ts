@@ -11,10 +11,12 @@ import {Document} from 'idai-components-2';
 export class DeleteModalComponent {
 
     public document: any;
-
     public isRecordedInResourcesCount: number;
+    public confirmDeletionIdentifier: string;
+
 
     constructor(public activeModal: NgbActiveModal) {}
+
 
     public setDocument = (document: Document) => this.document = document;
 

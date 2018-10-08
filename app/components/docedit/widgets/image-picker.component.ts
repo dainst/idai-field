@@ -1,9 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {Messages} from 'idai-components-2';
-import {Query} from 'idai-components-2';
-import {IdaiFieldDocument} from 'idai-components-2';
-import {IdaiFieldImageDocument} from 'idai-components-2';
+import {Messages, Query, IdaiFieldDocument, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/field/idai-field-image-document-read-datastore';
 import {TypeUtility} from '../../../core/model/type-utility';
@@ -24,7 +21,6 @@ export class ImagePickerComponent implements OnInit {
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
     public documents: IdaiFieldImageDocument[];
-
     public document: IdaiFieldDocument;
     public selectedDocuments: Array<IdaiFieldImageDocument> = [];
 
@@ -78,8 +74,11 @@ export class ImagePickerComponent implements OnInit {
      */
     public select(document: IdaiFieldImageDocument) {
 
-        if (this.selectedDocuments.indexOf(document) == -1) this.selectedDocuments.push(document);
-        else this.selectedDocuments.splice(this.selectedDocuments.indexOf(document), 1);
+        if (this.selectedDocuments.indexOf(document) == -1) {
+            this.selectedDocuments.push(document);
+        } else {
+            this.selectedDocuments.splice(this.selectedDocuments.indexOf(document), 1);
+        }
     }
 
 

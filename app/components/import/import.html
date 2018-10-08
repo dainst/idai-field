@@ -55,10 +55,10 @@
                         <select id="importFormatSelect" class="form-control"
                                 [(ngModel)]="format">
                             <option value="native">iDAI.field - jsonl</option>
-                            <option *ngIf="settingsService.getSelectedProject().indexOf('test') !== -1" value="idig">iDig (experimentell) - csv</option>
+                            <option *ngIf="getProject().indexOf('test') !== -1" value="idig">iDig (experimentell) - csv</option>
                             <option value="geojson">GeoJSON - jsonl</option>
 
-                            <option *ngIf="settingsService.getSelectedProject().indexOf('meninx-project') !== -1" value="meninxfind">Meninx/Funde (experimentell) - csv</option>
+                            <option *ngIf="getProject().indexOf('meninx-project') !== -1" value="meninxfind">Meninx/Funde (experimentell) - csv</option>
 
                         </select>
 

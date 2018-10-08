@@ -32,7 +32,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
 
     constructor(route: ActivatedRoute,
-                private viewFacade: ViewFacade,
+                public viewFacade: ViewFacade,
                 private routingService: RoutingService,
                 private doceditLauncher: DoceditLauncher,
                 private renderer: Renderer2,

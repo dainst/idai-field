@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Messages} from 'idai-components-2';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {isEmpty} from 'tsfun';
+import {Messages, IdaiFieldDocument} from 'idai-components-2';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
@@ -10,7 +10,6 @@ import {ImageContainer} from '../../core/imagestore/image-container';
 import {DoceditActiveTabService} from '../docedit/docedit-active-tab-service';
 import {RoutingService} from '../routing-service';
 import {IdaiFieldImageDocumentReadDatastore} from '../../core/datastore/field/idai-field-image-document-read-datastore';
-import {isEmpty} from 'tsfun';
 import {M} from '../m';
 
 
@@ -23,10 +22,10 @@ import {M} from '../m';
  */
 export class ImageViewComponent implements OnInit {
 
-    protected image: ImageContainer = {};
-    protected activeTab: string;
+    public image: ImageContainer = {};
+    public activeTab: string;
+    public originalNotFound: boolean = false;
 
-    private originalNotFound = false;
     private comingFrom: Array<any>|undefined = undefined;
 
     // for clean and refactor safe template, and to help find usages

@@ -27,7 +27,7 @@
                     [showFiltersMenu]="false"
                     (onQueryStringChanged)="setQueryString($event)">
         </search-bar>
-        <div class="image-grid" (window:resize)="onResize($event)">
+        <div class="image-grid" (window:resize)="onResize()">
 
             <image-grid #imageGrid
                     [nrOfColumns]="3"
@@ -36,9 +36,7 @@
                     [showLinkBadges]="false"
                     [showShortDescription]="false"
                     [paddingRight]="12"
-                    (onClick)="select($event)"
-                    (onImagesUploaded)="refreshGrid()"
-                    (onUploadError)="showUploadErrorMsg($event)">
+                    (onClick)="select($event)">
             </image-grid>
         </div>
     </div>

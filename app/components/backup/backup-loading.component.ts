@@ -18,10 +18,10 @@ import {M} from '../m';
  */
 export class BackupLoadingComponent {
 
+    public running: boolean = false;
     public path: string;
     public projectName: string;
 
-    private running: boolean = false;
     private modalRef: NgbModalRef|undefined;
 
     private static TIMEOUT: number = 200;

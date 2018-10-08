@@ -1,9 +1,5 @@
 <div class="image-overview row">
-
-    <div class="col-sm-12"
-         (dragover)="false"
-         (dragleave)="false"
-         (drop)="false">
+    <div class="col-sm-12" (dragover)="false" (dragleave)="false" (drop)="false">
 
         <div class="row bg-light image-overview-nav">
             <div *ngIf="!getSelected().length" class="col-sm-7 image-overview-nav-content">
@@ -29,17 +25,17 @@
 
             <div class="col-sm-2 text-right slider-container">
                 <span id="decrease-grid-size-button" class="mdi mdi-view-grid align-middle"
-                      (click)="setGridSize(getGridSize()-1)"></span>
+                      (click)="setGridSize(getGridSize() - 1)"></span>
                 <input id="grid-size-slider" #gridSize type="range" min="{{minGridSize}}"
                        max="{{maxGridSize}}" value="{{getGridSize()}}"
                        class="slider align-middle"
                        (change)="setGridSize(gridSize.value)">
                 <span id="increase-grid-size-button" class="mdi mdi-apps align-middle"
-                      (click)="setGridSize(getGridSize()+1)"></span>
+                      (click)="setGridSize(getGridSize() + 1)"></span>
             </div>
         </div>
 
-        <div (window:resize)="onResize($event)" class="image-grid-container">
+        <div (window:resize)="onResize()" class="image-grid-container">
             <image-grid #imageGrid
                     [nrOfColumns]="getGridSize()"
                     [documents]="getDocuments()"

@@ -6,7 +6,7 @@ const remote = require('electron').remote;
 const fs = require('fs');
 
 
-if (remote.getGlobal('mode') === 'production') enableProdMode();
+if (['production', 'test'].includes(remote.getGlobal('mode'))) enableProdMode();
 
 platformBrowserDynamic().bootstrapModule(AppModule, {
     providers: [

@@ -3,13 +3,8 @@ e2e/**/*.js.map
 !e2e/config
 !e2e/*.ts
 browser/references.js*
-unit/**/*.spec.js
-unit/**/*.spec.js.map
 unit/**/*.js
-subsystem/**/*.spec.js
-subsystem/**/*.spec.js.map
+unit/**/*.js.map
 subsystem/**/*.js
+subsystem/**/*.js.map
 !subsystem/config
-
-
-

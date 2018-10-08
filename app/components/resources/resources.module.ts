@@ -2,9 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiDocumentsModule} from 'idai-components-2';
-import {IdaiWidgetsModule} from 'idai-components-2';
-import {ProjectConfiguration} from 'idai-components-2';
+import {IdaiDocumentsModule, IdaiWidgetsModule, ProjectConfiguration} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/detail/geometry-view.component';
 import {EditableMapComponent} from './map/map/editable-map.component';
@@ -35,11 +33,10 @@ import {StandardStateSerializer} from '../../common/standard-state-serializer';
 import {StateSerializer} from '../../common/state-serializer';
 import {Loading} from '../../widgets/loading';
 import {ResourcesStateManager} from './view/resources-state-manager';
-import {ViewDefinition} from './view/state/view-definition';
-import {OperationViews} from './view/state/operation-views';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {SearchConstraintsComponent} from './searchbar/search-constraints.component';
 import {ResourcesStateManagerConfiguration} from './view/resources-state-manager-configuration';
+import {LayerMapComponent} from './map/map/layer-map.component';
 
 const remote = require('electron').remote;
 
@@ -57,6 +54,7 @@ const remote = require('electron').remote;
     declarations: [
         ResourcesComponent,
         GeometryViewComponent,
+        LayerMapComponent,
         EditableMapComponent,
         ResourcesMapComponent,
         LayerMenuComponent,
@@ -74,7 +72,6 @@ const remote = require('electron').remote;
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },
         NavigationService,
-        ResourcesStateManager,
         RoutingService,
         DoceditLauncher,
         LayerManager,
@@ -108,7 +105,6 @@ const remote = require('electron').remote;
                 resourcesStateManager: ResourcesStateManager,
                 loading: Loading
             ) {
-
                 return new ViewFacade(
                     projectConfiguration,
                     datastore,

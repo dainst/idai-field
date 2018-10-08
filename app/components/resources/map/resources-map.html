@@ -9,7 +9,7 @@
                       [parentDocuments]="parentDocuments"
                       [mainTypeDocumentIds]="mainTypeIds()"
                       [isEditing]="resourcesComponent.isEditingGeometry"
-                      [projectDocument]="resourcesComponent.projectDocument"
+                      [projectDocument]="getProjectDocument()"
                       [update]="viewFacade.isReady()"
                       (onSelectDocument)="select($event)"
                       (onQuitEditing)="quitEditing($event)"></editable-map>

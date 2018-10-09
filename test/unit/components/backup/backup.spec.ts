@@ -10,22 +10,25 @@ import PouchDB = require('pouchdb');
  */
 describe('Backup', () => {
 
-    const backupFilePath = 'store/backup_test_file.txt';
+    const backupFilePath = process.cwd() + '/store/backup_test_file.txt';
 
 
     beforeEach(() => spyOn(console, 'warn'));
 
 
-    afterEach(done => rimraf(backupFilePath,
-        () => new PouchDB('unittest').destroy().then(done)));
+    afterEach(done => {
+
+        rimraf(backupFilePath, () => {
+            rimraf(process.cwd() + '/unittest', () => done());
+        });
+    });
 
 
     it('do a backup', async done => {
 
         const db = await new PouchDB('unittest');
-        await db.put({'_id' : 'a1', a: {b: 'c'}});
-        await db.put({'_id' : 'a2', a: {b: 'd'}});
-
+        await db.put({ '_id' : 'a1', a: { b: 'c' }});
+        await db.put({ '_id' : 'a2', a: { b: 'd' }});
         await Backup.dump(backupFilePath, 'unittest');
 
         const data = fs.readFileSync(backupFilePath);
@@ -35,6 +38,7 @@ describe('Backup', () => {
         expect(docs[1].a.b).toEqual('d');
         expect(docs[0]['_id']).toEqual('a1');
         expect(docs[1]['_id']).toEqual('a2');
+
         db.close();
         done();
     });

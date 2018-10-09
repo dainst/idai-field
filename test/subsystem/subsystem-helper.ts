@@ -55,7 +55,7 @@ export async function setupSettingsService(pouchdbmanager, projectName = 'testdb
             username: string;
         },
         dbs: [projectName],
-        imagestorePath: '/tmp/abc',
+        imagestorePath: process.cwd() + '/test-temp/imagestore',
         username: 'synctestuser'
     });
 

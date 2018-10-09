@@ -38,8 +38,9 @@ export class NavbarComponent implements OnInit {
         return this.activeRoute.startsWith(route);
     }
 
+
     public isRunningOnMac() {
 
-        return navigator.appVersion.indexOf("Mac") != -1;
+        return navigator.appVersion.indexOf('Mac') !== -1;
     }
 }

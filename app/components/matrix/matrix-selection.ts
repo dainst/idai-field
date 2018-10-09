@@ -1,7 +1,6 @@
-import {Observer} from 'rxjs';
-import {Observable} from 'rxjs';
-import {IdaiFieldFeatureDocument} from 'idai-components-2';
+import {Observer, Observable} from 'rxjs';
 import {on} from 'tsfun';
+import {IdaiFieldFeatureDocument} from 'idai-components-2';
 import {ObserverUtil} from '../../core/util/observer-util';
 
 

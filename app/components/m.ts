@@ -1,13 +1,14 @@
-import {Injectable} from "@angular/core";
-import {MD,Message} from "idai-components-2"
+import {Injectable} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
+import {MD, Message} from 'idai-components-2';
 
 /**
  * @author Daniel de Oliveira
  * @author Jan G. Wieners
+ * @author Thomas Kleinke
  */
 @Injectable()
 export class M extends MD { // = Messages Dictionary. For reasons of brevity of calls to it just "M".
-
 
     // Keys BEGIN /////////////////////
 
@@ -153,22 +154,31 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     public msgs : { [id: string]: Message } = {};
 
-    constructor() {
+    constructor(private i18n: I18n) {
         super();
-        this.msgs[M.ALL_FIND_ERROR]={
-            content: 'Beim Laden von Ressourcen ist ein Fehler aufgetreten.',
+        this.msgs[M.ALL_FIND_ERROR] = {
+            content: i18n({
+                id: 'messages.all.findError',
+                value: 'Beim Laden von Ressourcen ist ein Fehler aufgetreten.'
+            }),
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.SETTINGS_ACTIVATED]={
-            content: 'Die Einstellungen wurden erfolgreich aktiviert.',
+        this.msgs[M.SETTINGS_ACTIVATED] = {
+            content: i18n({
+                id: 'messages.settings.activated',
+                value: 'Die Einstellungen wurden erfolgreich aktiviert.'
+            }),
             level: 'success',
             params: [],
             hidden: false
         };
-        this.msgs[M.SETTINGS_MALFORMED_ADDRESS]={
-            content: 'Die angegebene Serveradresse entspricht nicht dem angegebenen Format.',
+        this.msgs[M.SETTINGS_MALFORMED_ADDRESS] = {
+            content: i18n({
+                id: 'messages.settings.malformedAddress',
+                value: 'Die angegebene Serveradresse entspricht nicht dem angegebenen Format.'
+            }),
             level: 'danger',
             params: [],
             hidden: false
@@ -186,7 +196,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.APP_ERRORS_IN_CONFIG]={
+        this.msgs[M.APP_ERRORS_IN_CONFIG] = {
             content: 'Insgesamt {0} Fehler in Configuration.json:',
             level: 'danger',
             params: [],

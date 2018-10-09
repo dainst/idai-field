@@ -18,7 +18,7 @@
     "package": "build -mw --publish never",
     "package-mac": "build -m",
     "package-win": "build -w nsis",
-    "i18n": "./node_modules/.bin/ng-xi18n --locale de --project app && ./node_modules/.bin/xliffmerge --profile xliff-merge.json && rm app/messages.xlf"
+    "i18n": "./node_modules/.bin/ng-xi18n --locale de --project app && ./node_modules/.bin/ngx-extractor -i \"./app/**/*.ts\" -o ./app/messages.xlf -l de && ./node_modules/.bin/xliffmerge --profile xliff-merge.json && rm app/messages.xlf"
   },
   "build": {
     "appId": "org.dainst.field",
@@ -93,6 +93,7 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "6.1.9",
+    "@ngx-translate/i18n-polyfill": "1.0.0",
     "@types/geojson": "0.0.32",
     "@types/jasmine": "~2.5.41",
     "@types/leaflet": "1.0.69",

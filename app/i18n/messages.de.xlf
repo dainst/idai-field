@@ -258,6 +258,38 @@
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.all.findError" datatype="html">
+        <source>Beim Laden von Ressourcen ist ein Fehler aufgetreten.</source>
+        <target state="final">Beim Laden von Ressourcen ist ein Fehler aufgetreten.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.settings.activated" datatype="html">
+        <source>Die Einstellungen wurden erfolgreich aktiviert.</source>
+        <target state="final">Die Einstellungen wurden erfolgreich aktiviert.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.settings.malformedAddress" datatype="html">
+        <source>Die angegebene Serveradresse entspricht nicht dem angegebenen Format.</source>
+        <target state="final">Die angegebene Serveradresse entspricht nicht dem angegebenen Format.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.tooltip.deactivated" datatype="html">
+        <source>Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu können.</source>
+        <target state="final">Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu können.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/resources/plus-button.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

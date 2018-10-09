@@ -1,4 +1,5 @@
 import {Component, Input, ElementRef, ViewChild, OnChanges, EventEmitter, Output} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Relations, IdaiType, ProjectConfiguration, IdaiFieldDocument, Messages} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {TypeUtility} from '../../core/model/type-utility';
@@ -30,10 +31,10 @@ export class PlusButtonComponent implements OnChanges {
 
     @Output() documentRequested: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
 
+    @ViewChild('popover') private popover: any;
+
     public selectedType: string|undefined;
     public typesTreeList: Array<IdaiType>;
-
-    @ViewChild('popover') private popover: any;
 
 
     constructor(
@@ -41,7 +42,8 @@ export class PlusButtonComponent implements OnChanges {
         private resourcesComponent: ResourcesComponent,
         private projectConfiguration: ProjectConfiguration,
         private messages: Messages,
-        private typeUtility: TypeUtility) {
+        private typeUtility: TypeUtility,
+        private i18n: I18n) {
 
         this.resourcesComponent.listenToClickEvents().subscribe(event => {
             this.handleClick(event);
@@ -104,8 +106,10 @@ export class PlusButtonComponent implements OnChanges {
             case 'enabled':
                 return '';
             case 'disabled-hierarchy':
-                return 'Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu '
-                    + 'können.';
+                return this.i18n({
+                    id: 'resources.plusButton.tooltip.deactivated',
+                    value: 'Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu können.'
+                });
         }
     }
 

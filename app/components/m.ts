@@ -197,7 +197,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.APP_ERRORS_IN_CONFIG] = {
-            content: 'Insgesamt {0} Fehler in Configuration.json:',
+            content: 'Insgesamt [0] Fehler in Configuration.json:',
             level: 'danger',
             params: [],
             hidden: false
@@ -221,46 +221,46 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_SUCCESS_MULTIPLE]={
-            content: '{0} Ressourcen wurden erfolgreich importiert.',
+            content: '[0] Ressourcen wurden erfolgreich importiert.',
             level: 'success',
             params: [ "Mehrere"],
             hidden: false
         };
         this.msgs[M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER]={
-            content: 'In den GeoJSON-Daten ist der Ressourcen-Identifier {0} mehrfach eingetragen. ' +
+            content: 'In den GeoJSON-Daten ist der Ressourcen-Identifier [0] mehrfach eingetragen. ' +
             'Bitte beachten Sie, dass lediglich die zuletzt aufgeführten Geometriedaten importiert wurden.',
             level: 'warning',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS]={
-            content: 'In den GeoJSON-Daten sind folgende Ressourcen-Identifier mehrfach eingetragen: {0}. ' +
+            content: 'In den GeoJSON-Daten sind folgende Ressourcen-Identifier mehrfach eingetragen: [0]. ' +
                 'Bitte beachten Sie, dass lediglich die jeweils zuletzt aufgeführten Geometriedaten importiert wurden.',
             level: 'warning',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_FILEUNREADABLE]={
-            content: 'Beim Import ist ein Fehler aufgetreten: Die Datei {0} konnte nicht gelesen werden.',
+            content: 'Beim Import ist ein Fehler aufgetreten: Die Datei [0] konnte nicht gelesen werden.',
             level: 'danger',
             params: [ "" ],
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_INVALIDJSON]={
             content: 'Beim Import ist ein Fehler aufgetreten: Das JSON ist nicht valide. Die ursprüngliche ' +
-                'Fehlermeldung lautet: {0}.',
+                'Fehlermeldung lautet: [0].',
             level: 'danger',
             params: [ "?" ],
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_INVALIDJSONL]={
-            content: 'Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile {0} ist nicht valide.',
+            content: 'Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile [0] ist nicht valide.',
             level: 'danger',
             params: [ "?" ],
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_INVALID_GEOJSON_IMPORT_STRUCT]={
-            content: 'Fehlerhafte GeoJSON-Importstruktur. Grund: {0}.',
+            content: 'Fehlerhafte GeoJSON-Importstruktur. Grund: [0].',
             level: 'danger',
             params: [ "?" ],
             hidden: false
@@ -280,7 +280,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_INVALIDCSV]={
-            content: 'Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile {0} konnte nicht gelesen werden.',
+            content: 'Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.',
             level: 'danger',
             params: [ "?" ],
             hidden: false
@@ -292,14 +292,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_MANDATORYCSVFIELDMISSING]={
-            content: 'Beim Import ist ein Fehler aufgetreten: In Zeile {0} fehlt das Pflichtfeld \"{1}\".',
+            content: 'Beim Import ist ein Fehler aufgetreten: In Zeile [0] fehlt das Pflichtfeld \"[1]\".',
             level: 'danger',
             params: [ "?", "?" ],
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_INVALID_MAIN_TYPE_DOCUMENT]={
-            content: 'Beim Import ist ein Fehler aufgetreten: Ressourcen vom Typ {0} können der gewählten Maßnahme ' +
-                'vom Typ {1} nicht zugeordnet werden.',
+            content: 'Beim Import ist ein Fehler aufgetreten: Ressourcen vom Typ [0] können der gewählten Maßnahme ' +
+                'vom Typ [1] nicht zugeordnet werden.',
             level: 'danger',
             params: [ '?', '?' ],
             hidden: false
@@ -353,7 +353,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.MODEL_VALIDATION_ERROR_IDEXISTS]={
-            content: 'Der Ressourcen-Identifier {0} existiert bereits.',
+            content: 'Der Ressourcen-Identifier [0] existiert bereits.',
             level: 'danger',
             params: [ "" ],
             hidden: false
@@ -365,7 +365,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES]={
-            content: 'Die Koordinaten einer Geometrie vom Typ {0} sind nicht valide.',
+            content: 'Die Koordinaten einer Geometrie vom Typ [0] sind nicht valide.',
             level: 'danger',
             params: [ "?" ],
             hidden: false
@@ -377,20 +377,20 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE]={
-            content: 'Der Geometrietyp {0} wird von der Anwendung nicht unterstützt.',
+            content: 'Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.',
             level: 'danger',
             params: [ "?" ],
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_GENERICDATASTOREERROR]={
-            content: 'Beim Import ist ein Fehler aufgetreten: Die Ressource {0} konnte nicht ' +
+            content: 'Beim Import ist ein Fehler aufgetreten: Die Ressource [0] konnte nicht ' +
                      'gespeichert werden.',
             level: 'danger',
             params: [ "?" ],
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_INVALIDGEOMETRY] = {
-            content: "Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile {0}.",
+            content: "Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile [0].",
             level: 'danger',
             params: ["?"],
             hidden: false
@@ -402,7 +402,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_MISSING_RESOURCE] = {
-                content: 'Die Zuordnung zu einer Ressource mit dem Identifier {0} ist fehlgeschlagen. Die Ressource ' +
+                content: 'Die Zuordnung zu einer Ressource mit dem Identifier [0] ist fehlgeschlagen. Die Ressource ' +
                 'wurde nicht gefunden.',
             level: 'danger',
             params: [ "?"],
@@ -410,19 +410,19 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMPORT_FAILURE_MISSING_RELATION_TARGET] = {
             content: "Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der "
-            + "ID {0} konnte nicht gefunden werden.",
+            + "ID [0] konnte nicht gefunden werden.",
             level: 'danger',
             params: ["?"],
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_NO_OPERATION_ASSIGNABLE] = {
-            content: "Beim Import ist ein Fehler aufgetreten: Ressource konnte keiner Maßnahme mit dem Bezeichner \"{0}\" zugeordnet werden.",
+            content: "Beim Import ist ein Fehler aufgetreten: Ressource konnte keiner Maßnahme mit dem Bezeichner \"[0]\" zugeordnet werden.",
             level: 'danger',
             params: ["?"],
             hidden: false
         };
         this.msgs[M.IMPORT_FAILURE_NO_FEATURE_ASSIGNABLE] = {
-            content: "Beim Import ist ein Fehler aufgetreten: Ressource konnte nicht einer Stratigraphischen Einheit zugeordnet werden. Ziel Identifier oder Fehler: \"{0}\"",
+            content: "Beim Import ist ein Fehler aufgetreten: Ressource konnte nicht einer Stratigraphischen Einheit zugeordnet werden. Ziel Identifier oder Fehler: \"[0]\"",
             level: 'danger',
             params: ["?"],
             hidden: false
@@ -458,14 +458,14 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.DOCEDIT_TYPE_CHANGE_FIELDS_WARNING]={
-            content: 'Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: {0}',
+            content: 'Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]',
             level: 'warning',
             params: [''],
             hidden: false
         };
         this.msgs[M.DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING]={
             content: 'Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren ' +
-                'gehen: {0}',
+                'gehen: [0]',
             level: 'warning',
             params: [''],
             hidden: false
@@ -502,7 +502,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMAGES_SUCCESS_IMAGES_UPLOADED] = {
-            content: '{0} Bilder wurden erfolgreich importiert.',
+            content: '[0] Bilder wurden erfolgreich importiert.',
             level: 'success',
             params: [],
             hidden: false
@@ -520,13 +520,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMAGES_ERROR_FILEREADER]={
-            content: "Datei '{0}' konnte nicht vom lokalen Dateisystem gelesen werden.",
+            content: "Datei '[0]' konnte nicht vom lokalen Dateisystem gelesen werden.",
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMAGES_ERROR_DUPLICATE_FILENAME]={
-            content: "Die Bilddatei '{0}' konnte nicht hinzugefügt werden. Ein Bild mit dem gleichen Dateinamen " +
+            content: "Die Bilddatei '[0]' konnte nicht hinzugefügt werden. Ein Bild mit dem gleichen Dateinamen " +
                 "existiert bereits.",
             level: 'danger',
             params: [],
@@ -534,7 +534,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.IMAGES_ERROR_DUPLICATE_FILENAMES]={
             content: "Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen " +
-                " Dateinamen bereits existieren: {0}",
+                " Dateinamen bereits existieren: [0]",
             level: 'danger',
             params: [],
             hidden: false
@@ -552,7 +552,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMAGESTORE_ERROR_INVALID_PATH]={
-            content: "Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad '{0}' ist " +
+            content: "Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad '[0]' ist " +
                 "ungültig.",
             level: 'warning',
             params: [],
@@ -580,37 +580,37 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMAGESTORE_ERROR_READ]={
-            content: "Datei '{0}' konnte nicht aus dem Bilderverzeichnis gelesen werden.",
+            content: "Datei '[0]' konnte nicht aus dem Bilderverzeichnis gelesen werden.",
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMAGESTORE_ERROR_WRITE]={
-            content: "Datei '{0}' konnte nicht im Bilderverzeichnis gespeichert werden.",
+            content: "Datei '[0]' konnte nicht im Bilderverzeichnis gespeichert werden.",
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMAGESTORE_ERROR_DELETE]={
-            content: "Fehler beim Löschen des Bilds '{0}'.",
+            content: "Fehler beim Löschen des Bilds '[0]'.",
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMAGESTORE_ERROR_INVALID_WORLDFILE] = {
-            content: "Datei '{0}' ist kein gültiges World-File.",
+            content: "Datei '[0]' ist kein gültiges World-File.",
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS] = {
-            content: "Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ({0}). Die entsprechenden Dateien werden ignoriert.",
+            content: "Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.",
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.RESOURCES_ERROR_TYPE_NOT_FOUND] = {
-            content: "Typdefinition für \'{0}\' fehlt in Configuration.json.",
+            content: "Typdefinition für \'[0]\' fehlt in Configuration.json.",
             level: 'danger',
             params: [],
             hidden: false
@@ -622,13 +622,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.RESOURCES_ERROR_PROJECT_NAME_EXISTS] = {
-            content: 'Ein Projekt mit dem Namen \'{0}\' existiert bereits.',
+            content: 'Ein Projekt mit dem Namen \'[0]\' existiert bereits.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.RESOURCES_ERROR_PROJECT_NAME_LENGTH] = {
-            content: 'Der angegebene Projektname ist um {0} Zeichen zu lang.',
+            content: 'Der angegebene Projektname ist um [0] Zeichen zu lang.',
             level: 'danger',
             params: [],
             hidden: false
@@ -658,13 +658,13 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.RESOURCES_SUCCESS_IMAGE_UPLOADED] = {
-            content: 'Das Bild wurde erfolgreich importiert und mit der Ressource {0} verknüpft.',
+            content: 'Das Bild wurde erfolgreich importiert und mit der Ressource [0] verknüpft.',
             level: 'success',
             params: [],
             hidden: false
         };
         this.msgs[M.RESOURCES_SUCCESS_IMAGES_UPLOADED] = {
-            content: '{0} Bilder wurden erfolgreich importiert und mit der Ressource {1} verknüpft.',
+            content: '[0] Bilder wurden erfolgreich importiert und mit der Ressource [1] verknüpft.',
             level: 'success',
             params: [],
             hidden: false
@@ -676,73 +676,73 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALIDTYPE]={
-            content: 'Ungültige Typdefinition: \'{0}\'',
+            content: 'Ungültige Typdefinition: \'[0]\'',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALIDFIELD]={
-            content: 'Fehlende Felddefinition für das Feld \'{1}\' der Ressource vom Typ \'{0}\'.',
+            content: 'Fehlende Felddefinition für das Feld \'[1]\' der Ressource vom Typ \'[0]\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALIDFIELDS]={
-            content: 'Fehlende Felddefinitionen für die Felder \'{1}\' der Ressource vom Typ \'{0}\'.',
+            content: 'Fehlende Felddefinitionen für die Felder \'[1]\' der Ressource vom Typ \'[0]\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALIDRELATIONFIELD]={
-            content: 'Fehlende Definition für die Relation \'{1}\' der Ressource vom Typ \'{0}\'.',
+            content: 'Fehlende Definition für die Relation \'[1]\' der Ressource vom Typ \'[0]\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALIDRELATIONFIELDS]={
-            content: 'Fehlende Definitionen für die Relationen \'{1}\' der Ressource vom Typ \'{0}\'.',
+            content: 'Fehlende Definitionen für die Relationen \'[1]\' der Ressource vom Typ \'[0]\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE]={
-            content: 'Falsche Zahlenwerte für das Feld \'{1}\' der Ressource vom Typ \'{0}\'.',
+            content: 'Falsche Zahlenwerte für das Feld \'[1]\' der Ressource vom Typ \'[0]\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES]={
-            content: 'Falsche Zahlenwerte für die Felder \'{1}\' der Ressource vom Typ \'{0}\'.',
+            content: 'Falsche Zahlenwerte für die Felder \'[1]\' der Ressource vom Typ \'[0]\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_MISSINGPROPERTY]={
-            content: 'Eigenschaft(en) der Ressource vom Typ \'{0}\' müssen vorhanden sein: \'{1}\'.',
+            content: 'Eigenschaft(en) der Ressource vom Typ \'[0]\' müssen vorhanden sein: \'[1]\'.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_MISSINGVIEWTYPE]={
-            content: 'Im View-Teil der Configuration.json wird auf den nicht definierten Typ \'{0}\' verwiesen.',
+            content: 'Im View-Teil der Configuration.json wird auf den nicht definierten Typ \'[0]\' verwiesen.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_NONOPERATIONVIEWTYPE]={
-            content: 'Im View-Teil der Configuration.json wird auf den Typ \'{0}\' verwiesen. Dieser ist als Nicht-Maßnahmen-Typ nicht unterstützt.',
+            content: 'Im View-Teil der Configuration.json wird auf den Typ \'[0]\' verwiesen. Dieser ist als Nicht-Maßnahmen-Typ nicht unterstützt.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_TOPLEVELTYPEHASPARENT]={
-            content: 'Top-Level-Type \'{0}\' darf kein parent besitzen.',
+            content: 'Top-Level-Type \'[0]\' darf kein parent besitzen.',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INCOMPLETERECORDEDIN]={
-            content: 'Fehlende oder unvollständige Definition von \'recordedIn\' für Top-Level-Type \'{0}\'.',
+            content: 'Fehlende oder unvollständige Definition von \'recordedIn\' für Top-Level-Type \'[0]\'.',
             level: 'danger',
             params: [],
             hidden: false
@@ -760,19 +760,19 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_NORECORDEDINTARGET]={
-            content: 'Fehlende Ziel einer Relation vom Typ \'Aufgenommen in Maßnahme\'. Ziel Id: {0}.',
+            content: 'Fehlende Ziel einer Relation vom Typ \'Aufgenommen in Maßnahme\'. Ziel Id: [0].',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALIDINPUTTYPE]={
-            content: 'Ungültiger Wert \'{1}\' für \'inputType\' in Felddefinition für \'{0}\'. Erlaubte Werte: {2}.',
+            content: 'Ungültiger Wert \'[1]\' für \'inputType\' in Felddefinition für \'[0]\'. Erlaubte Werte: [2].',
             level: 'danger',
             params: [],
             hidden: false
         };
         this.msgs[M.MATRIX_WARNING_LOOP_DOCUMENT]={
-            content: 'Widersprüchliche Relationen gefunden: Die Ressource \'{0}\' taucht in mehr als einer '
+            content: 'Widersprüchliche Relationen gefunden: Die Ressource \'[0]\' taucht in mehr als einer '
                 + 'Ebene der Hierarchie auf.',
             level: 'warning',
             params: [],

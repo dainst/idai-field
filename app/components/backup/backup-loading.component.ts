@@ -3,7 +3,7 @@ import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2';
 import {Backup} from './backup';
 import {SettingsService} from '../../core/settings/settings-service';
-import {ReadDumpModalComponent} from './read-dump-modal.component';
+import {BackupLoadingModalComponent} from './backup-loading-modal.component';
 import {BackupProvider} from './backup-provider';
 import {M} from '../m';
 
@@ -83,7 +83,7 @@ export class BackupLoadingComponent {
 
         setTimeout(() => {
             if (this.running) this.modalRef = this.modalService.open(
-                ReadDumpModalComponent,
+                BackupLoadingModalComponent,
                 { backdrop: 'static', keyboard: false });
         }, BackupLoadingComponent.TIMEOUT);
     }

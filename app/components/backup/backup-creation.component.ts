@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
-import {DumpModalComponent} from './dump-modal.component';
+import {BackupCreationModalComponent} from './backup-creation-modal.component';
 import {DialogProvider} from './dialog-provider';
 import {BackupProvider} from './backup-provider';
 import {M} from '../m';
@@ -68,7 +68,7 @@ export class BackupCreationComponent {
         setTimeout(() => {
             if (this.running) {
                 this.modalRef = this.modalService.open(
-                    DumpModalComponent,
+                    BackupCreationModalComponent,
                     { backdrop: 'static', keyboard: false }
                 );
             }

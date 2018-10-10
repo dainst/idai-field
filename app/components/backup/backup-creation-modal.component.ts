@@ -3,12 +3,12 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     moduleId: module.id,
-    templateUrl: './dump-modal.html'
+    templateUrl: './backup-creation-modal.html'
 })
 /**
  * @author Daniel de Oliveira
  */
-export class DumpModalComponent {
+export class BackupCreationModalComponent {
 
     constructor(public activeModal: NgbActiveModal) {}
 }

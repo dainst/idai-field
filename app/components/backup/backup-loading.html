@@ -7,7 +7,7 @@
                         [ngClass]="{ 'disabled': running }"
                         (click)="loadBackup()">
                     <span class="mdi mdi-database-import" style="color: white"></span>
-                    Backup einlesen
+                    <span i18n="@@backup.loading.loadBackup">Backup einlesen</span>
                 </button>
             </div>
         </div>
@@ -15,23 +15,31 @@
         <div class="row">
             <div class="form-group col default-container">
                 <div class="col-lg-6 mx-lg-auto py-4">
-                    Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank /
-                    eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten
-                    Projekt übereinstimmen.
+                    <span i18n="@@backup.loading.info.1">
+                        Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank /
+                        eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten
+                        Projekt übereinstimmen.
+                    </span>
 
                     <br><br>
 
-                    Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten
-                    errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.
+                    <span i18n="@@backup.loading.info.2">
+                        Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten
+                        errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.
+                    </span>
 
                     <br><br>
 
-                    <b>Achtung:</b> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene
-                    Zieldatenbank mit dem angegebenen Namen <b>vollständig überschrieben</b>.
+                    <b i18n="@@backup.loading.info.important">Achtung: </b>
+                    <span i18n="@@backup.loading.info.3.1">
+                        Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene
+                        Zieldatenbank mit dem angegebenen Namen
+                    </span>
+                    <b i18n="@@backup.loading.info.3.2"> vollständig überschrieben</b>.
 
                     <br>
                     <br>
-                    <label>Pfad</label>
+                    <label i18n="@@backup.loading.path">Pfad</label>
                     <div class="input-group">
                         <input [(ngModel)]="path"
                                class="form-control">
@@ -45,7 +53,7 @@
                         </span>
                     </div>
 
-                    <label>Projekt</label>
+                    <label i18n="@@backup.loading.project">Projekt</label>
                     <input type="text" class="form-control" id="projectName"
                            [(ngModel)]="projectName" name="projectName">
                 </div>

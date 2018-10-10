@@ -287,6 +287,90 @@
           <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="backup.loading.loadBackup" datatype="html">
+        <source>Backup einlesen</source>
+        <target state="final">Restore backup</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-loading.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.info.1" datatype="html">
+        <source>
+                        Geben Sie hier den vollständigen Pfad einer Backup-Datei sowie den Namen einer Zieldatenbank /
+                        eines Zielprojekts ein. Der Name des Zielprojekts darf nicht mit dem aktuell geöffneten
+                        Projekt übereinstimmen.
+                    </source>
+        <target state="final">
+                        Please enter the complete path to a backup file as well as the name of a target database /
+                        a target project. The name of the target project must not match the name of the currently
+                        open project.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-loading.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.info.2" datatype="html">
+        <source>
+                        Hinweis: Nach dem Einspielen eines Backups werden Vorschaubilder erneut aus den Originaldaten
+                        errechnet, weshalb die Anwendung zunächst möglicherweise etwas langsamer laufen kann.
+                    </source>
+        <target state="final">
+                        Please note: After restoring a backup, all preview images will be computed anew based on the
+                        original image data. For this reason, the application may initially run slower than usual.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-loading.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.info.important" datatype="html">
+        <source>Achtung: </source>
+        <target state="final">Important: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-loading.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.info.3.1" datatype="html">
+        <source>
+                        Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene
+                        Zieldatenbank mit dem angegebenen Namen
+                    </source>
+        <target state="final">
+                        While restoring a backup file, a possibly existing target database of the specified name will
+                        be
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-loading.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.info.3.2" datatype="html">
+        <source> vollständig überschrieben</source>
+        <target state="final"> overwritten entirely</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-loading.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.path" datatype="html">
+        <source>Pfad</source>
+        <target state="final">Path</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-loading.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.project" datatype="html">
+        <source>Projekt</source>
+        <target state="final">Project</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-loading.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.overview" datatype="html">
         <source>Übersicht</source>
         <target state="final">Overview</target>

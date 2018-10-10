@@ -258,6 +258,30 @@
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.messages.unknownError" datatype="html">
+        <source>Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</source>
+        <target state="final">An unknown error occurred. Details can be found in the developer console.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configuration.genericError" datatype="html">
+        <source>Fehler beim Auswerten eines Konfigurationsobjektes.</source>
+        <target state="final">Error while evaluating a configuration object.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.configReader.invalidJson" datatype="html">
+        <source>Fehler beim Parsen der Konfigurationsdatei '[0]': Das JSON ist nicht valide.</source>
+        <target state="final">Error while parsing configuration file '[0]': The JSON is not valid.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.all.findError" datatype="html">
         <source>Beim Laden von Ressourcen ist ein Fehler aufgetreten.</source>
         <target state="final">An error occurred while loading resources.</target>

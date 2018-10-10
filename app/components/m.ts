@@ -10,35 +10,32 @@ import {MD, Message} from 'idai-components-2';
 @Injectable()
 export class M extends MD { // = Messages Dictionary. For reasons of brevity of calls to it just "M".
 
-    // Keys BEGIN /////////////////////
+    // Internal messages from components
+    // The original messages in the internal dictionary are overwritten with the translated ones
+    public static MESSAGES_UNKNOWN_ERROR: string = 'messages/unknownerror';
+    public static PROJECT_CONFIGURATION_GENERIC_ERROR: string = 'projectconfiguration/generic';
+    public static CONFIG_READER_INVALID_JSON: string = 'configreader/invalidjson';
 
-    // all packages
-
+    // All packages
     public static ALL_FIND_ERROR = 'all/finderror';
 
     // App Package
-
     public static APP_NO_PROJECT_IDENTIFIER = 'app/noprojectidentifier';
     public static APP_GENERIC_SAVE_ERROR = 'app/genericsaveerror';
     public static APP_ERRORS_IN_CONFIG = 'app/errorsinconfig';
 
     // Settings Package
-
     public static SETTINGS_ACTIVATED = 'settings/activated';
     public static SETTINGS_MALFORMED_ADDRESS = 'settings/malformed_address';
 
-    // Validation
-
     // Model Package
-
     public static MODEL_VALIDATION_ERROR_IDEXISTS = 'validation/error/idexists';
     public static MODEL_VALIDATION_ERROR_MISSING_COORDINATES = 'validation/error/missingcoordinates';
     public static MODEL_VALIDATION_ERROR_INVALID_COORDINATES = 'validation/error/invalidcoordinates';
     public static MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE = 'validation/error/missinggeometrytype';
     public static MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE = 'validation/error/unsupportedgeometrytype';
 
-    // ImportComponent
-
+    // Import Package
     public static IMPORT_START= 'importer/start';
     public static IMPORT_GENERIC_START_ERROR= 'importer/genericstarterror';
     public static IMPORT_SUCCESS_SINGLE= 'importer/success/single';
@@ -82,7 +79,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'import/validation/error/invalidnumericvalue';
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'import/validation/error/invalidnumericvalues';
 
-
     // Backup Package
     public static BACKUP_DUMP_SUCCESS = 'backup/dumpsuccess';
     public static BACKUP_DUMP_ERROR = 'backup/dumperror';
@@ -93,13 +89,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_DUMP_ERROR_SAME_PROJECT_NAME = 'backup/readdumperror/sameprojectname';
 
     // Datastore Package
-
     public static DATASTORE_RESOURCE_ID_EXISTS = 'datastore/resourceidexists';
     public static DATASTORE_NOT_FOUND = 'datastore/notfound';
     public static DATASTORE_GENERIC_ERROR = 'datastore/genericerr';
 
     // Docedit Package
-
     public static DOCEDIT_SAVE_SUCCESS = 'docedit/savesuccess';
     public static DOCEDIT_DELETE_SUCCESS = 'docedit/deletesuccess';
     public static DOCEDIT_SAVE_ERROR = 'docedit/saveerror';
@@ -110,7 +104,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_LIESWITHIN_RELATION_REMOVED_WARNING = 'docedit/lieswithinrelationremovedwarning';
 
     // Images Package
-
     public static IMAGES_SUCCESS_IMAGE_UPLOADED = 'images/success/imageimported';
     public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images/success/imagesimported';
     public static IMAGES_SUCCESS_WORLDFILE_UPLOADED = 'images/success/worldfileuploaded';
@@ -122,7 +115,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGES_N_NOT_FOUND = 'images/error/notfound';
 
     // Imagestore Package
-
     public static IMAGESTORE_ERROR_INVALID_PATH = 'images/error/mediastore/invalidpath';
     public static IMAGESTORE_ERROR_INVALID_PATH_READ = 'images/error/mediastore/invalidpathread';
     public static IMAGESTORE_ERROR_INVALID_PATH_WRITE = 'images/error/mediastore/invalidpathwrite';
@@ -134,7 +126,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS = 'images/error/mediastore/unsupportedexts';
 
     // Resources Package
-
     public static RESOURCES_SUCCESS_IMAGE_UPLOADED = 'resources/success/imageimported';
     public static RESOURCES_SUCCESS_IMAGES_UPLOADED = 'resources/success/imagesimported';
     public static RESOURCES_SUCCESS_PROJECT_DELETED = 'resources/success/projectdeleted';
@@ -150,12 +141,39 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Matrix Package
     public static MATRIX_WARNING_LOOP_DOCUMENT = 'matrix/warning/loopdocument';
 
-    // Keys END /////////////////////////////////
 
     public msgs : { [id: string]: Message } = {};
 
+
     constructor(private i18n: I18n) {
         super();
+        this.msgs[M.MESSAGES_UNKNOWN_ERROR] = {
+            content: i18n({
+                id: 'messages.messages.unknownError',
+                value: 'Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.',
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.PROJECT_CONFIGURATION_GENERIC_ERROR] = {
+            content: i18n({
+                id: 'messages.configuration.genericError',
+                value: 'Fehler beim Auswerten eines Konfigurationsobjektes.',
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.CONFIG_READER_INVALID_JSON] = {
+            content: i18n({
+                id: 'messages.configReader.invalidJson',
+                value: 'Fehler beim Parsen der Konfigurationsdatei \'[0]\': Das JSON ist nicht valide.',
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.ALL_FIND_ERROR] = {
             content: i18n({
                 id: 'messages.all.findError',

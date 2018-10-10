@@ -260,7 +260,7 @@
       </trans-unit>
       <trans-unit id="messages.messages.error.unknownMessage" datatype="html">
         <source>Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</source>
-        <target state="new">Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</target>
+        <target state="final">An unknown error has occurred. Details can be found in the developer console.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -268,7 +268,7 @@
       </trans-unit>
       <trans-unit id="messages.configuration.error.generic" datatype="html">
         <source>Fehler beim Auswerten eines Konfigurationsobjektes.</source>
-        <target state="new">Fehler beim Auswerten eines Konfigurationsobjektes.</target>
+        <target state="final">Error while evaluating a configuration object.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -276,7 +276,7 @@
       </trans-unit>
       <trans-unit id="messages.configReader.error.invalidJson" datatype="html">
         <source>Fehler beim Parsen der Konfigurationsdatei '[0]': Das JSON ist nicht valide.</source>
-        <target state="new">Fehler beim Parsen der Konfigurationsdatei '[0]': Das JSON ist nicht valide.</target>
+        <target state="final">Error while parsing the configuration file '[0]': The JSON is not valid.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -284,7 +284,7 @@
       </trans-unit>
       <trans-unit id="messages.all.error.find" datatype="html">
         <source>Beim Laden von Ressourcen ist ein Fehler aufgetreten.</source>
-        <target state="new">Beim Laden von Ressourcen ist ein Fehler aufgetreten.</target>
+        <target state="final">An error has occurred while loading resources.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -292,7 +292,7 @@
       </trans-unit>
       <trans-unit id="messages.settings.success" datatype="html">
         <source>Die Einstellungen wurden erfolgreich aktiviert.</source>
-        <target state="new">Die Einstellungen wurden erfolgreich aktiviert.</target>
+        <target state="final">The settings have been activated successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -300,7 +300,7 @@
       </trans-unit>
       <trans-unit id="messages.settings.error.malformedAddress" datatype="html">
         <source>Die angegebene Serveradresse entspricht nicht dem angegebenen Format.</source>
-        <target state="new">Die angegebene Serveradresse entspricht nicht dem angegebenen Format.</target>
+        <target state="final">The specified server address does not correspond to the expected format.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -308,7 +308,7 @@
       </trans-unit>
       <trans-unit id="messages.app.error.genericSaveError" datatype="html">
         <source>Beim Speichern der Ressource ist ein Fehler aufgetreten.</source>
-        <target state="new">Beim Speichern der Ressource ist ein Fehler aufgetreten.</target>
+        <target state="final">An error has occurred while saving the resource.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -316,7 +316,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.write.success" datatype="html">
         <source>Die Datenbank wurde erfolgreich gesichert.</source>
-        <target state="new">Die Datenbank wurde erfolgreich gesichert.</target>
+        <target state="final">The database has been saved successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -324,7 +324,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.success" datatype="html">
         <source>Das Backup wurde erfolgreich eingelesen.</source>
-        <target state="new">Das Backup wurde erfolgreich eingelesen.</target>
+        <target state="final">The backup has been restored successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -332,7 +332,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.write.error.generic" datatype="html">
         <source>Beim Sichern der Datenbank ist ein Fehler aufgetreten.</source>
-        <target state="new">Beim Sichern der Datenbank ist ein Fehler aufgetreten.</target>
+        <target state="final">An error has occurred while creating a backup of the database.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -340,7 +340,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.generic" datatype="html">
         <source>Beim Einlesen der Backup-Datei ist ein Fehler aufgetreten.</source>
-        <target state="new">Beim Einlesen der Backup-Datei ist ein Fehler aufgetreten.</target>
+        <target state="final">An error has occurred while reading the backup file.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -348,7 +348,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.fileNotFound" datatype="html">
         <source>Die angegebene Datei konnte nicht gefunden werden.</source>
-        <target state="new">Die angegebene Datei konnte nicht gefunden werden.</target>
+        <target state="final">The specified file could not be found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -356,7 +356,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.noProjectName" datatype="html">
         <source>Geben Sie einen Projektnamen an, um fortzufahren.</source>
-        <target state="new">Geben Sie einen Projektnamen an, um fortzufahren.</target>
+        <target state="final">Please enter a project name to proceed.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -364,7 +364,7 @@
       </trans-unit>
       <trans-unit id="messages.backup.read.error.sameProjectName" datatype="html">
         <source>Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</source>
-        <target state="new">Bitte wählen Sie als Ziel ein anderes als das gerade ausgewählte Projekt.</target>
+        <target state="final">Please do not choose the active project as the target project.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -372,7 +372,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.identifierExists" datatype="html">
         <source>Der Ressourcen-Bezeichner [0] existiert bereits.</source>
-        <target state="new">Der Ressourcen-Bezeichner [0] existiert bereits.</target>
+        <target state="final">The resource identifier [0] already exists.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -380,7 +380,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.missingCoordinates" datatype="html">
         <source>Die Koordinaten einer Geometrie sind nicht definiert.</source>
-        <target state="new">Die Koordinaten einer Geometrie sind nicht definiert.</target>
+        <target state="final">The coordinates of a geometry are not defined.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -388,7 +388,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.invalidCoordinates" datatype="html">
         <source>Die Koordinaten einer Geometrie vom Typ [0] sind nicht valide.</source>
-        <target state="new">Die Koordinaten einer Geometrie vom Typ [0] sind nicht valide.</target>
+        <target state="final">The coordinates of a geometry of type [0] are not valid.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -396,7 +396,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.missingGeometryType" datatype="html">
         <source>Der Typ einer Geometrie ist nicht definiert.</source>
-        <target state="new">Der Typ einer Geometrie ist nicht definiert.</target>
+        <target state="final">The type of a geometry is not defined.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -404,7 +404,7 @@
       </trans-unit>
       <trans-unit id="messages.model.validation.error.unsupportedGeometryType" datatype="html">
         <source>Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.</source>
-        <target state="new">Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.</target>
+        <target state="final">The geometry type [0] is not supported by the application.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -412,7 +412,7 @@
       </trans-unit>
       <trans-unit id="messages.import.success.single" datatype="html">
         <source>Eine Ressource wurde erfolgreich importiert.</source>
-        <target state="new">Eine Ressource wurde erfolgreich importiert.</target>
+        <target state="final">One resource has been imported successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -420,7 +420,7 @@
       </trans-unit>
       <trans-unit id="messages.import.success.multiple" datatype="html">
         <source>[0] Ressourcen wurden erfolgreich importiert.</source>
-        <target state="new">[0] Ressourcen wurden erfolgreich importiert.</target>
+        <target state="final">[0] resources have been imported successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -428,7 +428,7 @@
       </trans-unit>
       <trans-unit id="messages.import.success.multiple.defaultParameter" datatype="html">
         <source>Mehrere</source>
-        <target state="new">Mehrere</target>
+        <target state="final">Multiple</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -436,7 +436,7 @@
       </trans-unit>
       <trans-unit id="messages.import.warning.geojson.duplicateIdentifier" datatype="html">
         <source>In den GeoJSON-Daten ist der Ressourcen-Bezeichner [0] mehrfach eingetragen. Bitte beachten Sie, dass lediglich die zuletzt aufgeführten Geometriedaten importiert wurden.</source>
-        <target state="new">In den GeoJSON-Daten ist der Ressourcen-Bezeichner [0] mehrfach eingetragen. Bitte beachten Sie, dass lediglich die zuletzt aufgeführten Geometriedaten importiert wurden.</target>
+        <target state="final">The resource identifier [0] is recorded more than once in the GeoJSON data. Please note that only the last specified geometry data has been imported.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -444,7 +444,7 @@
       </trans-unit>
       <trans-unit id="messages.import.warning.geojson.duplicateIdentifiers" datatype="html">
         <source>In den GeoJSON-Daten sind folgende Ressourcen-Bezeichner mehrfach eingetragen: [0]. Bitte beachten Sie, dass lediglich die jeweils zuletzt aufgeführten Geometriedaten importiert wurden.</source>
-        <target state="new">In den GeoJSON-Daten sind folgende Ressourcen-Bezeichner mehrfach eingetragen: [0]. Bitte beachten Sie, dass lediglich die jeweils zuletzt aufgeführten Geometriedaten importiert wurden.</target>
+        <target state="final">The following resource identifiers are specified more than once in the GeoJSON data: [0]. Please note that in each case only the last specified geometry data has been imported.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -452,7 +452,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.genericStartError" datatype="html">
         <source>Import kann nicht gestartet werden.</source>
-        <target state="new">Import kann nicht gestartet werden.</target>
+        <target state="final">Failed to start import.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -460,7 +460,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.fileUnreadable" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die Datei [0] konnte nicht gelesen werden.</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Die Datei [0] konnte nicht gelesen werden.</target>
+        <target state="final">An error has occurred during import: Failed to read file [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -468,7 +468,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.invalidJson" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Das JSON ist nicht valide. Die ursprüngliche Fehlermeldung lautet: [0].</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Das JSON ist nicht valide. Die ursprüngliche Fehlermeldung lautet: [0].</target>
+        <target state="final">An error has occurred during import: The JSON is not valid. Original error message: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -476,7 +476,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.invalidJsonl" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile [0] ist nicht valide.</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Das JSON in Zeile [0] ist nicht valide.</target>
+        <target state="final">An error has occurred during import: The JSON in line [0] is not valid.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -484,7 +484,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.invalidGeojsonImportStruct" datatype="html">
         <source>Fehlerhafte GeoJSON-Importstruktur. Grund: [0].</source>
-        <target state="new">Fehlerhafte GeoJSON-Importstruktur. Grund: [0].</target>
+        <target state="final">Incorrect GeoJSON import structure. Cause: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -492,7 +492,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.missingIdentifier" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Features ohne properties.identifier wurden gefunden.</target>
+        <target state="final">An error has occurred during import: One or more features without properties.identifier have been found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -500,7 +500,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.identifierFormat" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: properties.identifier muss eine Zeichenkette sein, keine Zahl.</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: properties.identifier muss eine Zeichenkette sein, keine Zahl.</target>
+        <target state="final">An error has occurred during import: properties.identifier must be a string instead of a number.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -508,7 +508,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.invalidCsv" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Das CSV in Zeile [0] konnte nicht gelesen werden.</target>
+        <target state="final">An error has occurred during import: Failed to read CSV in line [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -516,7 +516,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.genericCsvError" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die CSV-Daten konnten nicht gelesen werden.</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Die CSV-Daten konnten nicht gelesen werden.</target>
+        <target state="final">An error has occurred during import: Failed to read CSV data.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -524,7 +524,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.mandatoryCsvFieldMissing" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: In Zeile [0] fehlt das Pflichtfeld '[1]'.</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: In Zeile [0] fehlt das Pflichtfeld '[1]'.</target>
+        <target state="final">An error has occurred during import: The mandatory field '[1]' is missing in line [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -532,7 +532,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.invalidOperationResource" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Ressourcen vom Typ [0] können der gewählten Maßnahme vom Typ [1] nicht zugeordnet werden.</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Ressourcen vom Typ [0] können der gewählten Maßnahme vom Typ [1] nicht zugeordnet werden.</target>
+        <target state="final">An error has occurred during import: Failed to assign resources of type [0] to the chosen operation of type [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -540,7 +540,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.operationsNotAllowed" datatype="html">
         <source>Wenn die Option 'Daten einer Maßnahme zuordnen' gewählt ist, darf die Import-Datei keine Maßnahmen enthalten.</source>
-        <target state="new">Wenn die Option 'Daten einer Maßnahme zuordnen' gewählt ist, darf die Import-Datei keine Maßnahmen enthalten.</target>
+        <target state="final">The import file must not contain any operations if the option 'Assign data to an operation' is active.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -548,7 +548,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.genericDatastoreError" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die Ressource [0] konnte nicht gespeichert werden.</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Die Ressource [0] konnte nicht gespeichert werden.</target>
+        <target state="final">An error has occurred during import: Failed to save resource [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -556,7 +556,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.invalidGeometry" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile [0].</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Invalide Geometriedaten in Zeile [0].</target>
+        <target state="final">An error has occurred during import: Invalid geometry data in line [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -564,7 +564,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.rollbackError" datatype="html">
         <source>Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.</source>
-        <target state="new">Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.</target>
+        <target state="final">An error has occurred while attempting to delete already imported data.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -572,7 +572,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.missingResource" datatype="html">
         <source>Die Zuordnung zu einer Ressource mit dem Bezeichner [0] ist fehlgeschlagen. Die Ressource wurde nicht gefunden.</source>
-        <target state="new">Die Zuordnung zu einer Ressource mit dem Bezeichner [0] ist fehlgeschlagen. Die Ressource wurde nicht gefunden.</target>
+        <target state="final">An assignment to a resource with the identifier [0] has failed. The resource could not be found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -580,7 +580,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.missingRelationTarget" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.</target>
+        <target state="final">An error has occurred during import: The relation target resource with the identifier [0] could not be found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -588,7 +588,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.noOperationAssignable" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner Maßnahme mit dem Bezeichner '[0]' zugeordnet werden.</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner Maßnahme mit dem Bezeichner '[0]' zugeordnet werden.</target>
+        <target state="final">An error has occurred during import: Failed to assign a resource to an operation with the identifier '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -596,7 +596,7 @@
       </trans-unit>
       <trans-unit id="messages.import.error.noFeatureAssignable" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner stratigraphischen Einheit zugeordnet werden. Ziel-Bezeichner oder Fehler: '[0]'</source>
-        <target state="new">Beim Import ist ein Fehler aufgetreten: Eine Ressource konnte keiner stratigraphischen Einheit zugeordnet werden. Ziel-Bezeichner oder Fehler: '[0]'</target>
+        <target state="final">An error has occurred during import: Failed to assign a resource to a stratigraphical unit. Target identifier or error: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -604,7 +604,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidType" datatype="html">
         <source>Ungültige Typdefinition: '[0]'</source>
-        <target state="new">Ungültige Typdefinition: '[0]'</target>
+        <target state="final">Invalid type definition: '[0]'</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -612,7 +612,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidField" datatype="html">
         <source>Fehlende Felddefinition für das Feld '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="new">Fehlende Felddefinition für das Feld '[1]' der Ressource vom Typ '[0]'.</target>
+        <target state="final">Missing field definition for the field '[1]' of the resource of type '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -620,7 +620,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidFields" datatype="html">
         <source>Fehlende Felddefinitionen für die Felder '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="new">Fehlende Felddefinitionen für die Felder '[1]' der Ressource vom Typ '[0]'.</target>
+        <target state="final">Missing field definitions for the fields '[1]' of the resource of type '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -628,7 +628,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidRelationField" datatype="html">
         <source>Fehlende Definition für die Relation '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="new">Fehlende Definition für die Relation '[1]' der Ressource vom Typ '[0]'.</target>
+        <target state="final">Missing definition for the relation '[1]' of the resource of type '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -636,7 +636,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidRelationFields" datatype="html">
         <source>Fehlende Definitionen für die Relationen '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="new">Fehlende Definitionen für die Relationen '[1]' der Ressource vom Typ '[0]'.</target>
+        <target state="final">Missing definitions for the relations '[1]' of the resource of type '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -644,7 +644,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidNumericValue" datatype="html">
         <source>Falsche Zahlenwerte für das Feld '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="new">Falsche Zahlenwerte für das Feld '[1]' der Ressource vom Typ '[0]'.</target>
+        <target state="final">Invalid number values for the field '[1]' of the resource of type '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -652,7 +652,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidNumericValues" datatype="html">
         <source>Falsche Zahlenwerte für die Felder '[1]' der Ressource vom Typ '[0]'.</source>
-        <target state="new">Falsche Zahlenwerte für die Felder '[1]' der Ressource vom Typ '[0]'.</target>
+        <target state="final">Invalid number values for the fields '[1]' of the resource of type '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -660,7 +660,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.missingProperty" datatype="html">
         <source>Eigenschaft(en) der Ressource vom Typ '[0]' müssen vorhanden sein: '[1]'.</source>
-        <target state="new">Eigenschaft(en) der Ressource vom Typ '[0]' müssen vorhanden sein: '[1]'.</target>
+        <target state="final">The following property or properties of the resource of type '[0]' must be present: '[1]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -668,7 +668,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedIn" datatype="html">
         <source>Fehlende Definition von 'Aufgenommen in Maßnahme'. Eine Zuordnung muss vorgenommen werden.</source>
-        <target state="new">Fehlende Definition von 'Aufgenommen in Maßnahme'. Eine Zuordnung muss vorgenommen werden.</target>
+        <target state="final">Missing definition for 'Recorded in operation'. This assignment is mandatory.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -676,7 +676,7 @@
       </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedInTarget" datatype="html">
         <source>Fehlende Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel Id: [0].</source>
-        <target state="new">Fehlende Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel Id: [0].</target>
+        <target state="final">Missing target for a relation of type 'Recorded in operation'. Target id: [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -684,7 +684,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.success.save" datatype="html">
         <source>Die Ressource wurde erfolgreich gespeichert.</source>
-        <target state="new">Die Ressource wurde erfolgreich gespeichert.</target>
+        <target state="final">The resource has been saved successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -692,7 +692,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.success.delete" datatype="html">
         <source>Die Ressource wurde erfolgreich gelöscht.</source>
-        <target state="new">Die Ressource wurde erfolgreich gelöscht.</target>
+        <target state="final">The resource has been deleted successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -700,7 +700,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.warning.saveConflict" datatype="html">
         <source>Beim Speichern der Ressource ist ein Konflikt aufgetreten.</source>
-        <target state="new">Beim Speichern der Ressource ist ein Konflikt aufgetreten.</target>
+        <target state="final">A conflict occurred while saving the resource.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -708,7 +708,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.warning.typeChange.fields" datatype="html">
         <source>Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</source>
-        <target state="new">Bitte beachten Sie, dass die Daten der folgenden Felder beim Speichern verloren gehen: [0]</target>
+        <target state="final">Please note that the data of the following fields will be removed when saving the resource: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -716,7 +716,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.warning.typeChange.relations" datatype="html">
         <source>Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]</source>
-        <target state="new">Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern verloren gehen: [0]</target>
+        <target state="final">Please note that the relations of the following relation types will be removed when saving the resource: [0]</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -724,7 +724,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.error.save" datatype="html">
         <source>Beim Speichern der Ressource ist ein Fehler aufgetreten.</source>
-        <target state="new">Beim Speichern der Ressource ist ein Fehler aufgetreten.</target>
+        <target state="final">An error has occurred while saving the resource.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -732,7 +732,7 @@
       </trans-unit>
       <trans-unit id="messages.docedit.error.delete" datatype="html">
         <source>Beim Löschen der Ressource ist ein Fehler aufgetreten.</source>
-        <target state="new">Beim Löschen der Ressource ist ein Fehler aufgetreten.</target>
+        <target state="final">An error has occurred while deleting the resource.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -740,7 +740,7 @@
       </trans-unit>
       <trans-unit id="messages.datastore.error.notFound" datatype="html">
         <source>Die Ressource konnte nicht gefunden werden.</source>
-        <target state="new">Die Ressource konnte nicht gefunden werden.</target>
+        <target state="final">The resource could not be found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -748,7 +748,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imageUploaded" datatype="html">
         <source>Das Bild wurde erfolgreich importiert.</source>
-        <target state="new">Das Bild wurde erfolgreich importiert.</target>
+        <target state="final">The image has been imported successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -756,7 +756,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.imagesUploaded" datatype="html">
         <source>[0] Bilder wurden erfolgreich importiert.</source>
-        <target state="new">[0] Bilder wurden erfolgreich importiert.</target>
+        <target state="final">[0] images have been imported successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -764,7 +764,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.worldfileUploaded" datatype="html">
         <source>Das Worldfile wurde erfolgreich geladen.</source>
-        <target state="new">Das Worldfile wurde erfolgreich geladen.</target>
+        <target state="final">The world file has been loaded successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -772,7 +772,7 @@
       </trans-unit>
       <trans-unit id="messages.images.success.georeferenceDeleted" datatype="html">
         <source>Die Georeferenzdaten wurden erfolgreich gelöscht.</source>
-        <target state="new">Die Georeferenzdaten wurden erfolgreich gelöscht.</target>
+        <target state="final">The georeference data has been deleted successfully.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -780,7 +780,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.fileReader" datatype="html">
         <source>Datei '[0]' konnte nicht vom lokalen Dateisystem gelesen werden.</source>
-        <target state="new">Datei '[0]' konnte nicht vom lokalen Dateisystem gelesen werden.</target>
+        <target state="final">Failed to read the file '[0]' from the local file system.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -788,7 +788,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.duplicateFilename" datatype="html">
         <source>Die Bilddatei '[0]' konnte nicht hinzugefügt werden. Ein Bild mit dem gleichen Dateinamen existiert bereits.</source>
-        <target state="new">Die Bilddatei '[0]' konnte nicht hinzugefügt werden. Ein Bild mit dem gleichen Dateinamen existiert bereits.</target>
+        <target state="final">Failed to import the image file '[0]'. An image of the same file name already exists.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -796,7 +796,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.duplicateFilenames" datatype="html">
         <source>Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen Dateinamen bereits existieren: [0]</source>
-        <target state="new">Die folgenden Bilddateien konnten nicht hinzugefügt werden, da Bilder mit identischen Dateinamen bereits existieren: [0]</target>
+        <target state="final">Failed to import the following image files: [0]. Images of the same file names already exist.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -804,7 +804,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.notFound.single" datatype="html">
         <source>Das Bild konnte nicht gefunden werden.</source>
-        <target state="new">Das Bild konnte nicht gefunden werden.</target>
+        <target state="final">The image could not be found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -812,7 +812,7 @@
       </trans-unit>
       <trans-unit id="messages.images.error.notFound.multiple" datatype="html">
         <source>Einige Bilder konnten nicht gefunden werden.</source>
-        <target state="new">Einige Bilder konnten nicht gefunden werden.</target>
+        <target state="final">Several images could not be found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -820,7 +820,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath" datatype="html">
         <source>Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad '[0]' ist ungültig.</source>
-        <target state="new">Das Bilderverzeichnis konnte nicht gefunden werden. Der Verzeichnispfad '[0]' ist ungültig.</target>
+        <target state="final">The image directory could not be found. The directory path '[0]' is invalid.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -828,7 +828,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath.read" datatype="html">
         <source>Es können keine Dateien aus dem Bilderverzeichnis gelesen werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</source>
-        <target state="new">Es können keine Dateien aus dem Bilderverzeichnis gelesen werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</target>
+        <target state="final">Failed to read files from the image directory. Please enter a valid directory path in the settings.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -836,7 +836,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath.write" datatype="html">
         <source>Es können keine Dateien im Bilderverzeichnis gespeichert werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</source>
-        <target state="new">Es können keine Dateien im Bilderverzeichnis gespeichert werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</target>
+        <target state="final">Failed to write files in the image directory. Please enter a valid directory path in the settings.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -844,7 +844,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidPath.delete" datatype="html">
         <source>Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</source>
-        <target state="new">Es können keine Dateien aus dem Bilderverzeichnis gelöscht werden. Bitte geben Sie einen gültigen Verzeichnispfad in den Einstellungen an.</target>
+        <target state="final">Failed to remove files from the image directory. Please enter a valid directory path in the settings.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -852,7 +852,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.write" datatype="html">
         <source>Die Datei '[0]' konnte nicht im Bilderverzeichnis gespeichert werden.</source>
-        <target state="new">Die Datei '[0]' konnte nicht im Bilderverzeichnis gespeichert werden.</target>
+        <target state="final">Failed to save the file '[0]' in the image directory.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -860,7 +860,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.delete" datatype="html">
         <source>Fehler beim Löschen des Bilds '[0]'.</source>
-        <target state="new">Fehler beim Löschen des Bilds '[0]'.</target>
+        <target state="final">Failed to delete the image '[0]'.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -868,7 +868,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.error.invalidWorldfile" datatype="html">
         <source>Die Datei '[0]' ist kein gültiges World-File.</source>
-        <target state="new">Die Datei '[0]' ist kein gültiges World-File.</target>
+        <target state="final">The file '[0]' is not a valid world file.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -876,7 +876,7 @@
       </trans-unit>
       <trans-unit id="messages.imagestore.dropArea.error.unsupportedExtensions" datatype="html">
         <source>Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.</source>
-        <target state="new">Diese Auswahl ein oder mehrerer Dateien enhält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.</target>
+        <target state="final">This selection of one or more files contains invalid file formats ([0]). The corresponding files are ignored.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -884,7 +884,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.imageUploaded" datatype="html">
         <source>Das Bild wurde erfolgreich importiert und mit der Ressource [0] verknüpft.</source>
-        <target state="new">Das Bild wurde erfolgreich importiert und mit der Ressource [0] verknüpft.</target>
+        <target state="final">The image has been successfully imported and linked to the resource [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -892,7 +892,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.success.imagesUploaded" datatype="html">
         <source>[0] Bilder wurden erfolgreich importiert und mit der Ressource [1] verknüpft.</source>
-        <target state="new">[0] Bilder wurden erfolgreich importiert und mit der Ressource [1] verknüpft.</target>
+        <target state="final">[0] images have been successfully imported and linked to the resource [1].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -900,7 +900,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.warning.projectNameNotSame" datatype="html">
         <source>Die Namen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</source>
-        <target state="new">Die Namen stimmen nicht miteinander überein. Das Projekt wird nicht gelöscht.</target>
+        <target state="final">The names do not match. The project is not being deleted.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -908,7 +908,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.typeNotFound" datatype="html">
         <source>Typdefinition für '[0]' fehlt in Configuration.json.</source>
-        <target state="new">Typdefinition für '[0]' fehlt in Configuration.json.</target>
+        <target state="final">Missing type definition for '[0]' in Configuration.json.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -916,7 +916,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.noProjectName" datatype="html">
         <source>Bitte geben Sie einen Namen für das neue Projekt ein.</source>
-        <target state="new">Bitte geben Sie einen Namen für das neue Projekt ein.</target>
+        <target state="final">Please enter a name for the new project.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -924,7 +924,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.projectNameExists" datatype="html">
         <source>Ein Projekt mit dem Namen '[0]' existiert bereits.</source>
-        <target state="new">Ein Projekt mit dem Namen '[0]' existiert bereits.</target>
+        <target state="final">A project of the name '[0]' already exists.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -932,7 +932,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.projectNameLength" datatype="html">
         <source>Der angegebene Projektname ist um [0] Zeichen zu lang.</source>
-        <target state="new">Der angegebene Projektname ist um [0] Zeichen zu lang.</target>
+        <target state="final">The specified project name is [0] characters too long.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -940,7 +940,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.projectNameSymbols" datatype="html">
         <source>Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie _ und -.</source>
-        <target state="new">Erlaubte Zeichen sind Kleinbuchstaben und Ziffern sowie _ und -.</target>
+        <target state="final">Allowed characters are lowercase letters and numbers as well as _ and -.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -948,7 +948,7 @@
       </trans-unit>
       <trans-unit id="messages.resources.error.oneProjectMustExist" datatype="html">
         <source>Das Projekt kann nicht gelöscht werden. Es muss mindestens ein Projekt vorhanden sein.</source>
-        <target state="new">Das Projekt kann nicht gelöscht werden. Es muss mindestens ein Projekt vorhanden sein.</target>
+        <target state="final">The project may not be deleted. There always has to be at least one project.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

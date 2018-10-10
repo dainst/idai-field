@@ -595,7 +595,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET] = {
             content: i18n({
                 id: 'messages.import.validation.error.noRecordedInTarget',
-                value: 'Fehlende Ziel einer Relation vom Typ \'Aufgenommen in Maßnahme\'. Ziel Id: [0].'
+                value: 'Fehlendes Ziel einer Relation vom Typ \'Aufgenommen in Maßnahme\'. Ziel-ID: [0].'
             }),
             level: 'danger',
             params: [],
@@ -856,7 +856,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.RESOURCES_ERROR_TYPE_NOT_FOUND] = {
             content: i18n({
                 id: 'messages.resources.error.typeNotFound',
-                value: 'Typdefinition für \'[0]\' fehlt in Configuration.json.'
+                value: 'Typdefinition für \'[0]\' fehlt in Fields.json.'
             }),
             level: 'danger',
             params: [],

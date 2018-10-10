@@ -675,8 +675,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.import.validation.error.noRecordedInTarget" datatype="html">
-        <source>Fehlende Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel Id: [0].</source>
-        <target state="final">Fehlende Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel Id: [0].</target>
+        <source>Fehlendes Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel-ID: [0].</source>
+        <target state="final">Fehlendes Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel-ID: [0].</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>
@@ -907,8 +907,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.resources.error.typeNotFound" datatype="html">
-        <source>Typdefinition für '[0]' fehlt in Configuration.json.</source>
-        <target state="final">Typdefinition für '[0]' fehlt in Configuration.json.</target>
+        <source>Typdefinition für '[0]' fehlt in Fields.json.</source>
+        <target state="final">Typdefinition für '[0]' fehlt in Fields.json.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

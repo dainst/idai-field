@@ -17,116 +17,118 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static CONFIG_READER_INVALID_JSON: string = 'configreader/invalidjson';
 
     // All packages
-    public static ALL_ERROR_FIND = 'all/finderror';
+    public static ALL_ERROR_FIND = 'all.error.find';
 
     // App Package
-    public static APP_ERROR_GENERIC_SAVE_ERROR = 'app/genericsaveerror';
+    public static APP_ERROR_GENERIC_SAVE_ERROR = 'app.error.genericSaveError';
 
     // Settings Package
-    public static SETTINGS_SUCCESS = 'settings/activated';
-    public static SETTINGS_ERROR_MALFORMED_ADDRESS = 'settings/malformed_address';
+    public static SETTINGS_SUCCESS = 'settings.success';
+    public static SETTINGS_ERROR_MALFORMED_ADDRESS = 'settings.error.malformedAddress';
 
     // Model Package
-    public static MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS = 'validation/error/idexists';
-    public static MODEL_VALIDATION_ERROR_MISSING_COORDINATES = 'validation/error/missingcoordinates';
-    public static MODEL_VALIDATION_ERROR_INVALID_COORDINATES = 'validation/error/invalidcoordinates';
-    public static MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE = 'validation/error/missinggeometrytype';
-    public static MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE = 'validation/error/unsupportedgeometrytype';
+    public static MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS = 'model.validation.error.identifierExists';
+    public static MODEL_VALIDATION_ERROR_MISSING_COORDINATES = 'model.validation.error.missingCoordinates';
+    public static MODEL_VALIDATION_ERROR_INVALID_COORDINATES = 'model.validation.error.invalidCoordinates';
+    public static MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE = 'model.validation.error.missingGeometryType';
+    public static MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE = 'model.validation.error.unsupportedGeometryType';
 
     // Backup Package
-    public static BACKUP_WRITE_SUCCESS = 'backup/dumpsuccess';
-    public static BACKUP_READ_SUCCESS = 'backup/readdumpsuccess';
-    public static BACKUP_WRITE_ERROR_GENERIC = 'backup/dumperror';
-    public static BACKUP_READ_ERROR_GENERIC = 'backup/readdumperror';
-    public static BACKUP_READ_ERROR_FILE_NOT_FOUND = 'backup/readdumperror/filenotexist';
-    public static BACKUP_READ_ERROR_NO_PROJECT_NAME = 'backup/readdumperror/noprojectname';
-    public static BACKUP_READ_ERROR_SAME_PROJECT_NAME = 'backup/readdumperror/sameprojectname';
+    public static BACKUP_WRITE_SUCCESS = 'backup.write.success';
+    public static BACKUP_READ_SUCCESS = 'backup.read.success';
+    public static BACKUP_WRITE_ERROR_GENERIC = 'backup.write.error.generic';
+    public static BACKUP_READ_ERROR_GENERIC = 'backup.read.error.generic';
+    public static BACKUP_READ_ERROR_FILE_NOT_FOUND = 'backup.read.error.fileNotFound';
+    public static BACKUP_READ_ERROR_NO_PROJECT_NAME = 'backup.read.error.noProjectName';
+    public static BACKUP_READ_ERROR_SAME_PROJECT_NAME = 'backup.read.error.sameProjectName';
 
     // Import Package
-    public static IMPORT_SUCCESS_SINGLE= 'importer/success/single';
-    public static IMPORT_SUCCESS_MULTIPLE= 'importer/success/multiple';
-    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER= 'importer/warning/geojsonduplicateidentifier';
-    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS= 'importer/warning/geojsonduplicateidentifiers';
-    public static IMPORT_ERROR_GENERIC_START_ERROR= 'importer/genericstarterror';
-    public static IMPORT_ERROR_FILE_UNREADABLE = 'importer/failure/fileunreadable';
-    public static IMPORT_ERROR_INVALID_JSON = 'importer/failure/invalidjson';
-    public static IMPORT_ERROR_INVALID_JSONL = 'importer/failure/invalidjsonl';
-    public static IMPORT_ERROR_INVALID_GEOJSON_IMPORT_STRUCT = 'importer/failure/invalidgeojsonimportstruct';
-    public static IMPORT_ERROR_MISSING_IDENTIFIER = 'importer/failure/missingidentifier';
-    public static IMPORT_ERROR_IDENTIFIER_FORMAT = 'importer/failure/identifierforma';
-    public static IMPORT_ERROR_INVALID_CSV = 'importer/failure/invalidcsv';
-    public static IMPORT_ERROR_GENERIC_CSV_ERROR = 'importer/failure/genericcsverror';
-    public static IMPORT_ERROR_MANDATORY_CSV_FIELD_MISSING = 'importer/failure/mandatorycsvfieldmissing';
-    public static IMPORT_ERROR_GENERIC_DATASTORE_ERROR = 'importer/failure/genericdatastoreerrror';
-    public static IMPORT_ERROR_INVALID_GEOMETRY = 'importer/failure/invalidgeometry';
-    public static IMPORT_ERROR_ROLLBACK_ERROR = 'importer/failure/rollbackerror';
-    public static IMPORT_ERROR_MISSING_RESOURCE = 'importer/failure/missingresource';
-    public static IMPORT_ERROR_MISSING_RELATION_TARGET = 'importer/failure/missingrelationtarget';
-    public static IMPORT_ERROR_INVALID_OPERATION_RESOURCE = 'importer/failure/invalidmaintypedocument';
-    public static IMPORT_ERROR_OPERATIONS_NOT_ALLOWED = 'importer/failure/operationsnotallowedonimporttooperation';
-    public static IMPORT_ERROR_NO_OPERATION_ASSIGNABLE = 'importer/failure/nooperationassignable';
-    public static IMPORT_ERROR_NO_FEATURE_ASSIGNABLE = 'importer/failure/nofeatureassignable';
-    public static IMPORT_VALIDATION_ERROR_MISSING_PROPERTY = 'import/validation/error/missingproperty';
-    public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN = 'import/validation/error/norecordedin';
-    public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'import/validation/error/norecordedintarget';
-    public static IMPORT_VALIDATION_ERROR_INVALID_TYPE = 'import/validation/error/invalidtype';
-    public static IMPORT_VALIDATION_ERROR_INVALID_FIELD = 'import/validation/error/invalidfield';
-    public static IMPORT_VALIDATION_ERROR_INVALID_FIELDS = 'import/validation/error/invalidfields';
-    public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELD = 'import/validation/error/invalidrelationfield';
-    public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELDS = 'import/validation/error/invalidrelationfields';
-    public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'import/validation/error/invalidnumericvalue';
-    public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'import/validation/error/invalidnumericvalues';
+    public static IMPORT_SUCCESS_SINGLE= 'importer.success.single';
+    public static IMPORT_SUCCESS_MULTIPLE= 'importer.success.multiple';
+    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER= 'importer.warning.geojsonDuplicateIdentifier';
+    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS= 'importer.warning.geojsonDuplicateIdentifiers';
+    public static IMPORT_ERROR_GENERIC_START_ERROR= 'importer.error.genericStartError';
+    public static IMPORT_ERROR_FILE_UNREADABLE = 'importer.error.fileUnreadable';
+    public static IMPORT_ERROR_INVALID_JSON = 'importer.error.invalidJson';
+    public static IMPORT_ERROR_INVALID_JSONL = 'importer.error.invalidJsonl';
+    public static IMPORT_ERROR_INVALID_GEOJSON_IMPORT_STRUCT = 'importer.error.invalidGeojsonImportStruct';
+    public static IMPORT_ERROR_MISSING_IDENTIFIER = 'importer.error.missingIdentifier';
+    public static IMPORT_ERROR_IDENTIFIER_FORMAT = 'importer.error.identifierFormat';
+    public static IMPORT_ERROR_INVALID_CSV = 'importer.error.invalidCsv';
+    public static IMPORT_ERROR_GENERIC_CSV_ERROR = 'importer.error.genericCsvError';
+    public static IMPORT_ERROR_MANDATORY_CSV_FIELD_MISSING = 'importer.error.mandatoryCsvFieldMissing';
+    public static IMPORT_ERROR_GENERIC_DATASTORE_ERROR = 'importer.error.genericDatastoreError';
+    public static IMPORT_ERROR_INVALID_GEOMETRY = 'importer.error.invalidGeometry';
+    public static IMPORT_ERROR_ROLLBACK_ERROR = 'importer.error.rollbackError';
+    public static IMPORT_ERROR_MISSING_RESOURCE = 'importer.error.missingResource';
+    public static IMPORT_ERROR_MISSING_RELATION_TARGET = 'importer.error.missingRelationTarget';
+    public static IMPORT_ERROR_INVALID_OPERATION_RESOURCE = 'importer.error.invalidOperationResource';
+    public static IMPORT_ERROR_OPERATIONS_NOT_ALLOWED = 'importer.error.operationsNotAllowed';
+    public static IMPORT_ERROR_NO_OPERATION_ASSIGNABLE = 'importer.error.noOperationAssignable';
+    public static IMPORT_ERROR_NO_FEATURE_ASSIGNABLE = 'importer.error.noFeatureAssignable';
+    public static IMPORT_VALIDATION_ERROR_MISSING_PROPERTY = 'import.validation.error.missingProperty';
+    public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN = 'import.validation.error.noRecordedin';
+    public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'import.validation.error.noRecordedinTarget';
+    public static IMPORT_VALIDATION_ERROR_INVALID_TYPE = 'import.validation.error.invalidType';
+    public static IMPORT_VALIDATION_ERROR_INVALID_FIELD = 'import.validation.error.invalidField';
+    public static IMPORT_VALIDATION_ERROR_INVALID_FIELDS = 'import.validation.error.invalidFields';
+    public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELD = 'import.validation.error.invalidRelationField';
+    public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELDS = 'import.validation.error.invalidRelationFields';
+    public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'import.validation.error.invalidNumericValue';
+    public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'import.validation.error.invalidNumericValues';
 
     // Datastore Package
-    public static DATASTORE_ERROR_NOT_FOUND = 'datastore/notfound';
+    public static DATASTORE_ERROR_NOT_FOUND = 'datastore.error.notFound';
 
     // Docedit Package
-    public static DOCEDIT_SUCCESS_SAVE = 'docedit/savesuccess';
-    public static DOCEDIT_SUCCESS_DELETE = 'docedit/deletesuccess';
-    public static DOCEDIT_WARNING_SAVE_CONFLICT = 'docedit/saveconflict';
-    public static DOCEDIT_WARNING_TYPE_CHANGE_FIELDS = 'docedit/typechangefieldswarning';
-    public static DOCEDIT_WARNING_TYPE_CHANGE_RELATIONS = 'docedit/typechangerelationswarning';
-    public static DOCEDIT_ERROR_SAVE = 'docedit/saveerror';
-    public static DOCEDIT_ERROR_DELETE = 'docedit/deleteerror';
+    public static DOCEDIT_SUCCESS_SAVE = 'docedit.success.save';
+    public static DOCEDIT_SUCCESS_DELETE = 'docedit.success.delete';
+    public static DOCEDIT_WARNING_SAVE_CONFLICT = 'docedit.warning.saveConflict';
+    public static DOCEDIT_WARNING_TYPE_CHANGE_FIELDS = 'docedit.warning.typeChange.fields';
+    public static DOCEDIT_WARNING_TYPE_CHANGE_RELATIONS = 'docedit.warning.typeChange.relations';
+    public static DOCEDIT_ERROR_SAVE = 'docedit.error.save';
+    public static DOCEDIT_ERROR_DELETE = 'docedit.error.delete';
 
     // Images Package
-    public static IMAGES_SUCCESS_IMAGE_UPLOADED = 'images/success/imageimported';
-    public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images/success/imagesimported';
-    public static IMAGES_SUCCESS_WORLDFILE_UPLOADED = 'images/success/worldfileuploaded';
-    public static IMAGES_SUCCESS_GEOREFERENCE_DELETED = 'images/success/georeferencedeleted';
-    public static IMAGES_ERROR_FILEREADER = 'images/error/filereader';
-    public static IMAGES_ERROR_DUPLICATE_FILENAME = 'images/error/duplicatefilename';
-    public static IMAGES_ERROR_DUPLICATE_FILENAMES = 'images/error/duplicatefilenames';
-    public static IMAGES_ERROR_NOT_FOUND_SINGLE = 'images/error/one_notfound';
-    public static IMAGES_ERROR_NOT_FOUND_MULTIPLE = 'images/error/notfound';
+    public static IMAGES_SUCCESS_IMAGE_UPLOADED = 'images.success.imageUploaded';
+    public static IMAGES_SUCCESS_IMAGES_UPLOADED = 'images.success.imagesUploaded';
+    public static IMAGES_SUCCESS_WORLDFILE_UPLOADED = 'images.success.worldfileUploaded';
+    public static IMAGES_SUCCESS_GEOREFERENCE_DELETED = 'images.success.georeferenceDeleted';
+    public static IMAGES_ERROR_FILEREADER = 'images.error.fileReader';
+    public static IMAGES_ERROR_DUPLICATE_FILENAME = 'images.error.duplicateFilename';
+    public static IMAGES_ERROR_DUPLICATE_FILENAMES = 'images.error.duplicateFilenames';
+    public static IMAGES_ERROR_NOT_FOUND_SINGLE = 'images.error.notFound.single';
+    public static IMAGES_ERROR_NOT_FOUND_MULTIPLE = 'images.error.notFound.multiple';
 
     // Imagestore Package
-    public static IMAGESTORE_ERROR_INVALID_PATH = 'images/error/mediastore/invalidpath';
-    public static IMAGESTORE_ERROR_INVALID_PATH_READ = 'images/error/mediastore/invalidpathread';
-    public static IMAGESTORE_ERROR_INVALID_PATH_WRITE = 'images/error/mediastore/invalidpathwrite';
-    public static IMAGESTORE_ERROR_INVALID_PATH_DELETE = 'images/error/mediastore/invalidpathdelete';
-    public static IMAGESTORE_ERROR_WRITE = 'images/error/mediastore/write';
-    public static IMAGESTORE_ERROR_DELETE = 'images/error/mediastore/delete';
-    public static IMAGESTORE_ERROR_INVALID_WORLDFILE = 'images/error/mediastore/invalidworldfile';
-    public static IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS = 'images/error/mediastore/unsupportedexts';
+    public static IMAGESTORE_ERROR_INVALID_PATH = 'imagestore.error.invalidPath';
+    public static IMAGESTORE_ERROR_INVALID_PATH_READ = 'imagestore.error.invalidPath.read';
+    public static IMAGESTORE_ERROR_INVALID_PATH_WRITE = 'imagestore.error.invalidPath.write';
+    public static IMAGESTORE_ERROR_INVALID_PATH_DELETE = 'imagestore.error.invalidPath.delete';
+    public static IMAGESTORE_ERROR_WRITE = 'imagestore.error.write';
+    public static IMAGESTORE_ERROR_DELETE = 'imagestore.error.delete';
+    public static IMAGESTORE_ERROR_INVALID_WORLDFILE = 'imagestore.error.invalidWorldfile';
+    public static IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS = 'imagestore.dropArea.error.unsupportedExtensions';
 
     // Resources Package
-    public static RESOURCES_SUCCESS_IMAGE_UPLOADED = 'resources/success/imageimported';
-    public static RESOURCES_SUCCESS_IMAGES_UPLOADED = 'resources/success/imagesimported';
-    public static RESOURCES_WARNING_PROJECT_NAME_NOT_SAME = 'resources/error/projectnamenotsame';
-    public static RESOURCES_ERROR_TYPE_NOT_FOUND = 'resources/error/typenotfound';
-    public static RESOURCES_ERROR_NO_PROJECT_NAME = 'resources/error/noprojectname';
-    public static RESOURCES_ERROR_PROJECT_NAME_LENGTH = 'resources/error/projectnamelength';
-    public static RESOURCES_ERROR_PROJECT_NAME_SYMBOLS = 'resources/error/projectnamesymbols';
-    public static RESOURCES_ERROR_PROJECT_NAME_EXISTS = 'resources/error/projectnamexists';
-    public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources/error/oneprojectmustexist';
+    public static RESOURCES_SUCCESS_IMAGE_UPLOADED = 'resources.success.imageImported';
+    public static RESOURCES_SUCCESS_IMAGES_UPLOADED = 'resources.success.imagesImported';
+    public static RESOURCES_WARNING_PROJECT_NAME_NOT_SAME = 'resources.error.projectNameNotSame';
+    public static RESOURCES_ERROR_TYPE_NOT_FOUND = 'resources.error.typeNotFound';
+    public static RESOURCES_ERROR_NO_PROJECT_NAME = 'resources.error.noProjectName';
+    public static RESOURCES_ERROR_PROJECT_NAME_LENGTH = 'resources.error.projectNameLength';
+    public static RESOURCES_ERROR_PROJECT_NAME_SYMBOLS = 'resources.error.projectNameSymbols';
+    public static RESOURCES_ERROR_PROJECT_NAME_EXISTS = 'resources.error.projectNameExists';
+    public static RESOURCES_ERROR_ONE_PROJECT_MUST_EXIST = 'resources.error.oneProjectMustExist';
 
 
     public msgs : { [id: string]: Message } = {};
 
 
     constructor(private i18n: I18n) {
+
         super();
+
         this.msgs[M.MESSAGES_UNKNOWN_ERROR] = {
             content: i18n({
                 id: 'messages.messages.unknownError',
@@ -259,7 +261,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Der Ressourcen-Bezeichner [0] existiert bereits.'
             }),
             level: 'danger',
-            params: [ '' ],
+            params: [''],
             hidden: false
         };
         this.msgs[M.MODEL_VALIDATION_ERROR_MISSING_COORDINATES] = {
@@ -277,7 +279,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Die Koordinaten einer Geometrie vom Typ [0] sind nicht valide.'
             }),
             level: 'danger',
-            params: [ '?' ],
+            params: ['?'],
             hidden: false
         };
         this.msgs[M.MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE] = {
@@ -295,7 +297,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Der Geometrietyp [0] wird von der Anwendung nicht unterstützt.'
             }),
             level: 'danger',
-            params: [ '?' ],
+            params: ['?'],
             hidden: false
         };
         this.msgs[M.IMPORT_SUCCESS_SINGLE] = {

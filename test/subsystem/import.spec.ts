@@ -134,7 +134,7 @@ describe('Import/Subsystem', () => {
         const id = (await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}})).resource.id;
 
         const importReport = await createRollbackTestImportFunction(false, id);
-        expect(importReport.errors[0]).toEqual([M.IMPORT_VALIDATION_ERROR_INVALIDTYPE, "InvalidType"]); // TODO should be validation error
+        expect(importReport.errors[0]).toEqual([M.IMPORT_VALIDATION_ERROR_INVALID_TYPE, "InvalidType"]); // TODO should be validation error
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
         done();

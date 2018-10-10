@@ -167,7 +167,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 await this.viewFacade.setActiveDocumentViewTab(tab)
             }
         } catch (e) {
-            this.messages.add([M.DATASTORE_NOT_FOUND]);
+            this.messages.add([M.DATASTORE_ERROR_NOT_FOUND]);
         }
     }
 

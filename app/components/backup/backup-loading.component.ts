@@ -54,11 +54,11 @@ export class BackupLoadingComponent {
 
     private validateInputs(): string|undefined {
 
-        if (!this.projectName) return M.BACKUP_READ_DUMP_ERROR_NO_PROJECT_NAME;
+        if (!this.projectName) return M.BACKUP_READ_ERROR_NO_PROJECT_NAME;
         if (this.projectName === this.settingsService.getSelectedProject()) {
-            return M.BACKUP_READ_DUMP_ERROR_SAME_PROJECT_NAME;
+            return M.BACKUP_READ_ERROR_SAME_PROJECT_NAME;
         }
-        if (!this.path) return M.BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST;
+        if (!this.path) return M.BACKUP_READ_ERROR_FILE_NOT_FOUND;
     }
 
 
@@ -67,12 +67,12 @@ export class BackupLoadingComponent {
         try {
             await this.backupProvider.readDump(this.path, this.projectName);
             await this.settingsService.addProject(this.projectName);
-            this.messages.add([M.BACKUP_READ_DUMP_SUCCESS]);
+            this.messages.add([M.BACKUP_READ_SUCCESS]);
         } catch (err) {
             if (err === Backup.FILE_NOT_EXIST) {
-                this.messages.add([M.BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST]);
+                this.messages.add([M.BACKUP_READ_ERROR_FILE_NOT_FOUND]);
             } else {
-                this.messages.add([M.BACKUP_READ_DUMP_ERROR]);
+                this.messages.add([M.BACKUP_READ_ERROR_GENERIC]);
                 console.error('Error while reading backup file', err);
             }
         }

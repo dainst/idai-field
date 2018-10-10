@@ -125,7 +125,7 @@ export class ImageViewComponent implements OnInit {
                     }
                 } catch(e) {
                     this.image.imgSrc = BlobMaker.blackImg;
-                    this.messages.add([M.IMAGES_ONE_NOT_FOUND]);
+                    this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
                 }
             } catch(e) {
                 console.error('Fatal error: could not load document for id ', id);

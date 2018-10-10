@@ -106,7 +106,7 @@ export class ImagePickerComponent implements OnInit {
                 if (errWithParams.length == 2) {
                     console.error('error in find, cause', errWithParams[1]);
                 }
-                this.messages.add([M.ALL_FIND_ERROR]);
+                this.messages.add([M.ALL_ERROR_FIND]);
             });
     }
 }

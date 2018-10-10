@@ -58,7 +58,7 @@ export class ImageUploader {
 
         const files = ImageUploader.getFiles(event);
         const result = ExtensionUtil.reportUnsupportedFileTypes(files, ImageUploader.supportedFileTypes);
-        if (result[1]) uploadResult.messages.push([M.IMAGESTORE_DROP_AREA_UNSUPPORTED_EXTS, result[1]]);
+        if (result[1]) uploadResult.messages.push([M.IMAGESTORE_DROP_AREA_ERROR_UNSUPPORTED_EXTENSIONS, result[1]]);
         if (result[0] == 0) return Promise.resolve(uploadResult);
 
         let uploadModalRef: any;

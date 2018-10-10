@@ -159,7 +159,7 @@ describe('DocumentHolder', () => {
             fail();
             done();
         } catch (e) {
-            expect(e).toEqual([M.IMPORT_VALIDATION_ERROR_NORECORDEDIN]);
+            expect(e).toEqual([M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN]);
             done();
         }
     });

@@ -143,7 +143,7 @@ export class ImageGridComponent implements OnChanges {
             result.errsWithParams.length > 0 &&
             !this.imagesNotFoundMessageDisplayed) {
 
-            this.messages.add([M.IMAGES_N_NOT_FOUND]);
+            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_MULTIPLE]);
             this.imagesNotFoundMessageDisplayed = true;
         }
     }

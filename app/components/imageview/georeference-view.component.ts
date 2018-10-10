@@ -115,7 +115,7 @@ export class GeoreferenceViewComponent {
             );
         } catch (err) {
             console.error(err);
-            throw [M.APP_GENERIC_SAVE_ERROR];
+            throw [M.APP_ERROR_GENERIC_SAVE_ERROR];
         }
     }
 

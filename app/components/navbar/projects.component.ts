@@ -123,7 +123,7 @@ export class ProjectsComponent implements OnInit {
             return false;
         }
         if (this.projectToDelete !== this.selectedProject) {
-            this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_NOT_SAME]);
+            this.messages.add([M.RESOURCES_WARNING_PROJECT_NAME_NOT_SAME]);
             return false;
         }
         if (this.getProjects().length < 2) {

@@ -44,7 +44,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
                 );
             } catch (err) {
                 console.error('Revision not found: ' + this.document.resource.id + ' ' + revisionId);
-                this.messages.add([M.DATASTORE_NOT_FOUND])
+                this.messages.add([M.DATASTORE_ERROR_NOT_FOUND])
             }
         }
 

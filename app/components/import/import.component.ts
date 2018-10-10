@@ -72,7 +72,7 @@ export class ImportComponent {
 
         const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.file as any,
             this.url as any, this.http);
-        if (!reader) return this.messages.add([M.IMPORT_GENERIC_START_ERROR]);
+        if (!reader) return this.messages.add([M.IMPORT_ERROR_GENERIC_START_ERROR]);
 
         let uploadModalRef: any = undefined;
         let uploadReady = false;

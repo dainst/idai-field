@@ -16,13 +16,13 @@ export module MessagesConversion {
         const msg = msgWithParams[0];
 
 
-        if (msg === ValidationErrors.IDENTIFIER_EXISTS) replacement = M.MODEL_VALIDATION_ERROR_IDEXISTS;
+        if (msg === ValidationErrors.IDENTIFIER_EXISTS) replacement = M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS;
         // TODO this gets thrown if missing identifier, probably because this is detected first
-        if (msg === ValidationErrors.MISSING_PROPERTY) replacement = M.IMPORT_VALIDATION_ERROR_MISSINGPROPERTY;
-        // if (errorWithParams[0] === ImportErrors.MISSING_IDENTIFIER) replacement = M.IMPORT_FAILURE_MISSING_IDENTIFIER;
+        if (msg === ValidationErrors.MISSING_PROPERTY) replacement = M.IMPORT_VALIDATION_ERROR_MISSING_PROPERTY;
+        // if (errorWithParams[0] === ImportErrors.MISSING_IDENTIFIER) replacement = M.IMPORT_ERROR_MISSING_IDENTIFIER;
 
         // TODO replace M msg by a msg specific to docedit component
-        if (msg === ValidationErrors.NO_ISRECORDEDIN) replacement = M.IMPORT_VALIDATION_ERROR_NORECORDEDIN;
+        if (msg === ValidationErrors.NO_ISRECORDEDIN) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN;
 
 
         if (replacement) (msgWithParams as any)[0] = replacement;

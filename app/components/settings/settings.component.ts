@@ -52,7 +52,7 @@ export class SettingsComponent implements OnInit {
             this.settingsService.restartSync().then(
                 () => {
                     this.saving = false;
-                    this.messages.add([M.SETTINGS_ACTIVATED]);
+                    this.messages.add([M.SETTINGS_SUCCESS]);
                 },
                 err => {
                     this.saving = false;
@@ -61,7 +61,7 @@ export class SettingsComponent implements OnInit {
             );
         }).catch(() => {
             this.saving = false;
-            this.messages.add([M.SETTINGS_MALFORMED_ADDRESS]);
+            this.messages.add([M.SETTINGS_ERROR_MALFORMED_ADDRESS]);
         });
     }
 }

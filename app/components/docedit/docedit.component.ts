@@ -163,7 +163,7 @@ export class DoceditComponent {
         }
 
         if (errorWithParams.length > 0) this.messages.add(MessagesConversion.convertMessage(errorWithParams));
-        else return [M.DOCEDIT_SAVE_ERROR];
+        else return [M.DOCEDIT_ERROR_SAVE];
 
     }
 
@@ -208,7 +208,7 @@ export class DoceditComponent {
 
         if (invalidFields.length > 0) {
             this.messages.add([
-                M.DOCEDIT_TYPE_CHANGE_FIELDS_WARNING,
+                M.DOCEDIT_WARNING_TYPE_CHANGE_FIELDS,
                 invalidFields
                     .map(this.getFieldDefinitionLabel)
                     .reduce((acc, fieldLabel) => acc + ', ' + fieldLabel)
@@ -221,7 +221,7 @@ export class DoceditComponent {
 
         if (invalidRelations.length > 0) {
             this.messages.add([
-                M.DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING,
+                M.DOCEDIT_WARNING_TYPE_CHANGE_RELATIONS,
                 invalidRelations
                     .map((relationName: string) => this.projectConfiguration.getRelationDefinitionLabel(relationName))
                     .reduce((acc, relationLabel) => acc + ', ' + relationLabel)
@@ -236,7 +236,7 @@ export class DoceditComponent {
             document: (await this.datastore.get(resourceId)),
             viaSaveButton: viaSaveButton
         });
-        this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
+        this.messages.add([M.DOCEDIT_SUCCESS_SAVE]);
     }
 
 
@@ -248,7 +248,7 @@ export class DoceditComponent {
         try {
             await this.documentHolder.remove();
             this.activeModal.dismiss('deleted');
-            this.messages.add([M.DOCEDIT_DELETE_SUCCESS]);
+            this.messages.add([M.DOCEDIT_SUCCESS_DELETE]);
         } catch(err) {
             this.messages.add(err);
         }
@@ -262,7 +262,7 @@ export class DoceditComponent {
 
         this.documentHolder.setClonedDocument(documentAfterSave);
         this.activeTabService.setActiveTab('conflicts');
-        this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
+        this.messages.add([M.DOCEDIT_WARNING_SAVE_CONFLICT]);
     }
 
 

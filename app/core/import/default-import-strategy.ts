@@ -33,7 +33,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
         if (this.mainTypeDocumentId) {
             if (!Validations.validateType(document.resource, this.projectConfiguration)) {
-                throw [M.IMPORT_VALIDATION_ERROR_INVALIDTYPE, document.resource.type];
+                throw [M.IMPORT_VALIDATION_ERROR_INVALID_TYPE, document.resource.type];
             }
             if (this.typeUtility.isSubtype(document.resource.type, 'Operation')) {
                 throw [ImportErrors.OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION];
@@ -56,7 +56,7 @@ export class DefaultImportStrategy implements ImportStrategy {
             return await this.datastore.update(updatedDocument as Document, this.username);
 
         } else {
-            if (existingDocument) throw [M.MODEL_VALIDATION_ERROR_IDEXISTS, existingDocument.resource.identifier];
+            if (existingDocument) throw [M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS, existingDocument.resource.identifier];
 
             // throws if !mergeIfExists and exists
             return await this.datastore.create(document, this.username);

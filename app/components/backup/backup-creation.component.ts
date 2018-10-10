@@ -55,9 +55,9 @@ export class BackupCreationComponent {
 
         try {
             await this.backupProvider.dump(filePath, this.settingsService.getSelectedProject());
-            this.messages.add([M.BACKUP_DUMP_SUCCESS]);
+            this.messages.add([M.BACKUP_WRITE_SUCCESS]);
         } catch (err) {
-            this.messages.add([M.BACKUP_DUMP_ERROR]);
+            this.messages.add([M.BACKUP_WRITE_ERROR_GENERIC]);
             console.error('Error while writing backup file', err);
         }
     }

@@ -8,7 +8,7 @@
                         (click)="createBackup()"
                         placement="bottom">
                     <span class="mdi mdi-database-export" style="color: white"></span>
-                    Backup erstellen
+                    <span i18n="@@backup.creation.createBackup">Backup erstellen</span>
                 </button>
             </div>
         </div>
@@ -16,13 +16,19 @@
         <div class="row">
             <div class="form-group col default-container">
                 <div class="col-lg-6 mx-lg-auto py-4">
-                    Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die
-                    Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten
-                    gesicherten Zwischenstand wiederherzustellen.
+                    <span i18n="@@backup.creation.info.1">
+                        Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die
+                        Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten
+                        gesicherten Zwischenstand wiederherzustellen.
+                    </span>
 
                     <br><br>
-                    Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
-                    in dem unter <i>Einstellungen</i> angezeigten Pfad und sollten separat gesichert werden.
+                    <span i18n="@@backup.creation.info.2.1">
+                        Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
+                        in dem unter
+                    </span>
+                    <i i18n="@@backup.creation.info.settings">Einstellungen</i>
+                    <span i18n="@@backup.creation.info.2.2"> angezeigten Pfad und sollten separat gesichert werden.</span>
                 </div>
             </div>
         </div>

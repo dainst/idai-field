@@ -234,6 +234,60 @@
           <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="backup.creation.createBackup" datatype="html">
+        <source>Backup erstellen</source>
+        <target state="final">Backup erstellen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-creation.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.creation.info.1" datatype="html">
+        <source>
+                        Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die
+                        Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten
+                        gesicherten Zwischenstand wiederherzustellen.
+                    </source>
+        <target state="final">
+                        Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die
+                        Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten
+                        gesicherten Zwischenstand wiederherzustellen.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-creation.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.creation.info.2.1" datatype="html">
+        <source>
+                        Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
+                        in dem unter
+                    </source>
+        <target state="final">
+                        Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
+                        in dem unter
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-creation.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.creation.info.settings" datatype="html">
+        <source>Einstellungen</source>
+        <target state="final">Einstellungen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-creation.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.creation.info.2.2" datatype="html">
+        <source> angezeigten Pfad und sollten separat gesichert werden.</source>
+        <target state="final"> angezeigten Pfad und sollten separat gesichert werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-creation.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.overview" datatype="html">
         <source>Übersicht</source>
         <target state="final">Übersicht</target>

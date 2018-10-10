@@ -234,6 +234,14 @@
           <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="backup.creation.modal.info" datatype="html">
+        <source>Datenbank wird gesichert.</source>
+        <target state="final">Saving database...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-creation-modal.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="backup.creation.createBackup" datatype="html">
         <source>Backup erstellen</source>
         <target state="final">Create backup</target>
@@ -285,6 +293,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/backup/backup-creation.html</context>
           <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="backup.loading.modal.info" datatype="html">
+        <source>Datenbank wird eingelesen.</source>
+        <target state="final">Restoring database...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/backup/backup-loading-modal.html</context>
+          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.loadBackup" datatype="html">

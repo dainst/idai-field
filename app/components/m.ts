@@ -315,7 +315,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: '[0] Ressourcen wurden erfolgreich importiert.'
             }),
             level: 'success',
-            params: ['Mehrere'],
+            params: [
+                i18n({
+                    id: 'messages.import.success.multiple.defaultParameter',
+                    value: 'Mehrere'
+                })],
             hidden: false
         };
         this.msgs[M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER] = {
@@ -477,7 +481,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Die Zuordnung zu einer Ressource mit dem Bezeichner [0] ist fehlgeschlagen. Die Ressource wurde nicht gefunden.'
             }),
             level: 'danger',
-            params: [ '?'],
+            params: ['?'],
             hidden: false
         };
         this.msgs[M.IMPORT_ERROR_MISSING_RELATION_TARGET] = {

@@ -426,6 +426,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.success.multiple.defaultParameter" datatype="html">
+        <source>Mehrere</source>
+        <target state="new">Mehrere</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.warning.geojson.duplicateIdentifier" datatype="html">
         <source>In den GeoJSON-Daten ist der Ressourcen-Bezeichner [0] mehrfach eingetragen. Bitte beachten Sie, dass lediglich die zuletzt aufgeführten Geometriedaten importiert wurden.</source>
         <target state="new">In den GeoJSON-Daten ist der Ressourcen-Bezeichner [0] mehrfach eingetragen. Bitte beachten Sie, dass lediglich die zuletzt aufgeführten Geometriedaten importiert wurden.</target>

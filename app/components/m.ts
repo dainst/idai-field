@@ -12,9 +12,9 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
     // Internal messages from components
     // The original messages in the internal dictionary are overwritten with the translated ones
-    public static MESSAGES_UNKNOWN_ERROR: string = 'messages/unknownerror';
-    public static PROJECT_CONFIGURATION_GENERIC_ERROR: string = 'projectconfiguration/generic';
-    public static CONFIG_READER_INVALID_JSON: string = 'configreader/invalidjson';
+    public static MESSAGES_ERROR_UNKNOWN_MESSAGE: string = 'messages.error.unknownMessage';
+    public static PROJECT_CONFIGURATION_ERROR_GENERIC: string = 'projectConfiguration.error.generic';
+    public static CONFIG_READER_ERROR_INVALID_JSON: string = 'configReader.error.invalidJson';
 
     // All packages
     public static ALL_ERROR_FIND = 'all.error.find';
@@ -129,27 +129,27 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
 
         super();
 
-        this.msgs[M.MESSAGES_UNKNOWN_ERROR] = {
+        this.msgs[M.MESSAGES_ERROR_UNKNOWN_MESSAGE] = {
             content: i18n({
-                id: 'messages.messages.unknownError',
+                id: 'messages.messages.error.unknownMessage',
                 value: 'Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.',
             }),
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.PROJECT_CONFIGURATION_GENERIC_ERROR] = {
+        this.msgs[M.PROJECT_CONFIGURATION_ERROR_GENERIC] = {
             content: i18n({
-                id: 'messages.configuration.genericError',
+                id: 'messages.configuration.error.generic',
                 value: 'Fehler beim Auswerten eines Konfigurationsobjektes.',
             }),
             level: 'danger',
             params: [],
             hidden: false
         };
-        this.msgs[M.CONFIG_READER_INVALID_JSON] = {
+        this.msgs[M.CONFIG_READER_ERROR_INVALID_JSON] = {
             content: i18n({
-                id: 'messages.configReader.invalidJson',
+                id: 'messages.configReader.error.invalidJson',
                 value: 'Fehler beim Parsen der Konfigurationsdatei \'[0]\': Das JSON ist nicht valide.',
             }),
             level: 'danger',
@@ -597,6 +597,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.DATASTORE_ERROR_NOT_FOUND] = {
+            content: i18n({
+                id: 'messages.datastore.error.notFound',
+                value: 'Die Ressource konnte nicht gefunden werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.DOCEDIT_SUCCESS_SAVE] = {
             content: i18n({
                 id: 'messages.docedit.success.save',
@@ -655,15 +664,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.docedit.error.delete',
                 value: 'Beim Löschen der Ressource ist ein Fehler aufgetreten.'
-            }),
-            level: 'danger',
-            params: [],
-            hidden: false
-        };
-        this.msgs[M.DATASTORE_ERROR_NOT_FOUND] = {
-            content: i18n({
-                id: 'messages.datastore.error.notFound',
-                value: 'Die Ressource konnte nicht gefunden werden.'
             }),
             level: 'danger',
             params: [],

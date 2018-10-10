@@ -258,7 +258,7 @@
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.messages.unknownError" datatype="html">
+      <trans-unit id="messages.messages.error.unknownMessage" datatype="html">
         <source>Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</source>
         <target state="final">Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</target>
         <context-group purpose="location">
@@ -266,7 +266,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.configuration.genericError" datatype="html">
+      <trans-unit id="messages.configuration.error.generic" datatype="html">
         <source>Fehler beim Auswerten eines Konfigurationsobjektes.</source>
         <target state="final">Fehler beim Auswerten eines Konfigurationsobjektes.</target>
         <context-group purpose="location">
@@ -274,7 +274,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.configReader.invalidJson" datatype="html">
+      <trans-unit id="messages.configReader.error.invalidJson" datatype="html">
         <source>Fehler beim Parsen der Konfigurationsdatei '[0]': Das JSON ist nicht valide.</source>
         <target state="final">Fehler beim Parsen der Konfigurationsdatei '[0]': Das JSON ist nicht valide.</target>
         <context-group purpose="location">

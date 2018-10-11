@@ -1348,13 +1348,13 @@
         <source>
                     Es werden die ersten <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> von
                     <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Ressourcen angezeigt. Schränken Sie die Suche
-                    weiter ein oder wechseln Sie in die Hierarchie-Ansicht, um auf die übrigen Ressourcen
+                    weiter ein oder verlassen Sie den erweiterten Suchmodus, um auf die übrigen Ressourcen
                     zuzugreifen.
                 </source>
         <target state="final">
                     The first <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> of a total of
                     <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> resources are displayed. Please restrict the search
-                    further or switch into hierarchy view in order to access the other resources.
+                    further or leave the extended search mode in order to access the other resources.
                 </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/list/list.html</context>

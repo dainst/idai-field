@@ -1352,13 +1352,13 @@
         <source>
                     Es werden die ersten <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> von
                     <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Ressourcen angezeigt. Schränken Sie die Suche
-                    weiter ein oder wechseln Sie in die Hierarchie-Ansicht, um auf die übrigen Ressourcen
+                    weiter ein oder verlassen Sie den erweiterten Suchmodus, um auf die übrigen Ressourcen
                     zuzugreifen.
                 </source>
         <target state="final">
                     Es werden die ersten <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> von
                     <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Ressourcen angezeigt. Schränken Sie die Suche
-                    weiter ein oder wechseln Sie in die Hierarchie-Ansicht, um auf die übrigen Ressourcen
+                    weiter ein oder verlassen Sie den erweiterten Suchmodus, um auf die übrigen Ressourcen
                     zuzugreifen.
                 </target>
         <context-group purpose="location">

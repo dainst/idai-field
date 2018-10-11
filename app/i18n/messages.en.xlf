@@ -508,6 +508,10 @@
           <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="buttons.cancel" datatype="html">
         <source>Abbrechen</source>
@@ -535,6 +539,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
           <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
@@ -847,6 +855,86 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/imagegrid/drop-area.html</context>
           <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.originalNotFoundWarning" datatype="html">
+        <source>
+                Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
+            </source>
+        <target state="final">
+                The original version of the image could not be found in the image directory.
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.editMetadata" datatype="html">
+        <source>Metadaten bearbeiten</source>
+        <target state="final">Edit metadata</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.editRelations" datatype="html">
+        <source>Relationen bearbeiten</source>
+        <target state="final">Edit relations</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/image-view.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.georeferenceView.deleteModal.question" datatype="html">
+        <source>
+        Möchten Sie die Georeferenzdaten, die für dieses Bild hinterlegt wurden, wirklich löschen?
+    </source>
+        <target state="final">
+        Do you really want to delete the georeference data stored for this image?
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.georeferenceView.georeferenceData" datatype="html">
+        <source>Georeferenzdaten</source>
+        <target state="final">Georeference data</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.georeferenceView.present" datatype="html">
+        <source>Vorhanden</source>
+        <target state="final">Present</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.georeferenceView.tooltips.deleteGeoreferenceData" datatype="html">
+        <source>Georeferenzdaten löschen</source>
+        <target state="final">Delete georeference data</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.georeferenceView.notPresent" datatype="html">
+        <source>Nicht vorhanden</source>
+        <target state="final">Not present</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageView.georeferenceView.tooltips.loadWorldfile" datatype="html">
+        <source>Worldfile laden</source>
+        <target state="final">Load world file</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageview/georeference-view.html</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImage" datatype="html">

@@ -4,7 +4,8 @@
             <img id="original-image" [src]="image.imgSrc">
         </div>
         <div *ngIf="originalNotFound" id="thumbnail-image-container">
-            <div *ngIf="image.thumbSrc" class="alert alert-info" role="alert">
+            <div *ngIf="image.thumbSrc" class="alert alert-info" role="alert"
+                 i18n="@@imageView.originalNotFoundWarning">
                 Die Original-Version des Bilds befindet sich nicht im Bilderverzeichnis.
             </div>
             <div class="d-flex align-items-center justify-content-center">
@@ -36,7 +37,7 @@
                         <div id="document-view-button-edit-document"
                                 class="btn btn-light btn-block edit-button"
                                 (click)="startEdit()">
-                            <span>Metadaten bearbeiten</span>
+                            <span i18n="@@imageView.editMetadata">Metadaten bearbeiten</span>
                         </div>
 
                         <div class="tab-view-container">
@@ -63,7 +64,7 @@
                         <div id="document-view-button-edit-document"
                                 class="btn btn-light btn-block edit-button"
                                 (click)="startEdit('relations')">
-                            <span>Relationen bearbeiten</span>
+                            <span i18n="@@imageView.editRelations">Relationen bearbeiten</span>
                         </div>
 
                         <div class="tab-view-container">

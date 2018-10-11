@@ -76,6 +76,7 @@ export class MatrixViewComponent implements OnInit {
 
         await this.matrixState.load();
         await this.populateTrenches();
+        this.trenchesLoaded = true;
     }
 
 
@@ -145,14 +146,12 @@ export class MatrixViewComponent implements OnInit {
         if (previouslySelectedTrench) return this.selectTrench(previouslySelectedTrench);
 
         await this.selectTrench(this.trenches[0]);
-
-        this.trenchesLoaded = true;
     }
 
 
     private async selectTrench(trench: IdaiFieldDocument) {
 
-        if (trench == this.selectedTrench) return;
+        if (trench === this.selectedTrench) return;
 
         this.selection.clear(false);
 

@@ -234,6 +234,168 @@
           <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="import.uploadModal.info" datatype="html">
+        <source>Datensätze werden eingelesen...</source>
+        <target state="final">Datensätze werden eingelesen...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/upload-modal.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.startImport" datatype="html">
+        <source>Import starten</source>
+        <target state="final">Import starten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.source" datatype="html">
+        <source>Quelle</source>
+        <target state="final">Quelle</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.file" datatype="html">
+        <source>Datei</source>
+        <target state="final">Datei</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.http" datatype="html">
+        <source>HTTP</source>
+        <target state="final">HTTP</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.path" datatype="html">
+        <source>Pfad</source>
+        <target state="final">Pfad</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.url" datatype="html">
+        <source>URL</source>
+        <target state="final">URL</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.format" datatype="html">
+        <source>Format</source>
+        <target state="final">Format</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.formats.native" datatype="html">
+        <source>iDAI.field – JSONL</source>
+        <target state="final">iDAI.field – JSONL</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.formats.iDig" datatype="html">
+        <source>iDig (experimentell) – CSV</source>
+        <target state="final">iDig (experimentell) – CSV</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.formats.geoJson" datatype="html">
+        <source>GeoJSON – JSONL</source>
+        <target state="final">GeoJSON – JSONL</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.formats.meninx" datatype="html">
+        <source>Meninx/Funde (experimentell) – CSV</source>
+        <target state="final">Meninx/Funde (experimentell) – CSV</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.label" datatype="html">
+        <source>
+                            Vorhandene Ressourcen ergänzen
+                        </source>
+        <target state="final">
+                            Vorhandene Ressourcen ergänzen
+                        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.mergeOption.info" datatype="html">
+        <source>
+                        Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
+                        den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
+                        dabei gleichnamige Felder im existierenden Datensatz, die übrigen Felder bleiben
+                        jedoch erhalten. Relationen werden nicht verändert. Die Zuordnung von Datensätzen
+                        geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
+                        zugeordnet werden können, werden ignoriert.
+                    </source>
+        <target state="final">
+                        Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
+                        den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
+                        dabei gleichnamige Felder im existierenden Datensatz, die übrigen Felder bleiben
+                        jedoch erhalten. Relationen werden nicht verändert. Die Zuordnung von Datensätzen
+                        geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
+                        zugeordnet werden können, werden ignoriert.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.assignToOperation.label" datatype="html">
+        <source>Daten einer Maßnahme zuordnen</source>
+        <target state="final">Daten einer Maßnahme zuordnen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
+        <source>Keine Zuordnung</source>
+        <target state="final">Keine Zuordnung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.geoJson.info" datatype="html">
+        <source>
+                        Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
+                        Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
+                        Geometrien dabei überschrieben werden.
+                    </source>
+        <target state="final">
+                        Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
+                        Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
+                        Geometrien dabei überschrieben werden.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
         <source>Datenbank wird gesichert.</source>
         <target state="final">Datenbank wird gesichert.</target>

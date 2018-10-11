@@ -1,7 +1,7 @@
+import {isArray} from 'tsfun';
 import {ValidationErrors} from '../../core/model/validation-errors';
 import {M} from '../m';
 import {ImportErrors} from '../../core/import/import-errors';
-import {isArray} from 'tsfun';
 
 
 /**

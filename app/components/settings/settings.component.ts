@@ -5,6 +5,8 @@ import {Settings} from '../../core/settings/settings';
 import {M} from '../m';
 
 const ip = require('ip');
+const remote = require('electron').remote;
+
 
 @Component({
     moduleId: module.id,
@@ -47,21 +49,30 @@ export class SettingsComponent implements OnInit {
     public save() {
 
         this.saving = true;
+        const localeChanged: boolean = this.settings.locale !== this.settingsService.getSettings().locale;
 
         this.settingsService.updateSettings(this.settings).then(() => {
-            this.settingsService.restartSync().then(
-                () => {
-                    this.saving = false;
-                    this.messages.add([M.SETTINGS_SUCCESS]);
-                },
-                err => {
-                    this.saving = false;
-                    console.error(err);
-                }
-            );
+            remote.getGlobal('updateConfig')(this.settings);
+            if (localeChanged) {
+                window.location.reload();
+            } else {
+                this.settingsService.restartSync().then(
+                    () => {
+                        this.saving = false;
+                        this.messages.add([M.SETTINGS_SUCCESS]);
+                    },
+                    err => {
+                        this.saving = false;
+                        console.error(err);
+                    }
+                );
+            }
         }).catch(() => {
             this.saving = false;
             this.messages.add([M.SETTINGS_ERROR_MALFORMED_ADDRESS]);
         });
     }
+
+
+
 }

@@ -33,6 +33,14 @@ global.setConfigDefaults = config => {
 };
 
 
+global.updateConfig = config => {
+
+    const oldLocale = global.config.locale;
+    global.config = config;
+    if (global.config.locale !== oldLocale) createMenu();
+};
+
+
 // CONFIGURATION ---
 
 let env = undefined;
@@ -135,8 +143,6 @@ const createWindow = () => {
 
 const loadConfig = () => {
 
-    console.log('Using config file: ' + global.configPath);
-
     global.config = global.setConfigDefaults(
         JSON.parse(fs.readFileSync(global.configPath, 'utf-8'))
     );
@@ -145,7 +151,7 @@ const loadConfig = () => {
 
 const createMenu = () => {
 
-    const menu = electron.Menu.buildFromTemplate(require('./menu.js'));
+    const menu = electron.Menu.buildFromTemplate(require('./menu.js')());
     electron.Menu.setApplicationMenu(menu);
 };
 

@@ -2002,6 +2002,26 @@
           <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="settings.general" datatype="html">
+        <source>Allgemeine Einstellungen</source>
+        <target state="final">Allgemeine Einstellungen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.general.language" datatype="html">
+        <source>
+                            Sprache
+                        </source>
+        <target state="final">
+                            Sprache
+                        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="settings.userName" datatype="html">
         <source>
                             Name des Bearbeiters
@@ -2011,7 +2031,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.userName.info" datatype="html">
@@ -2035,7 +2055,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization" datatype="html">
@@ -2043,7 +2063,7 @@
         <target state="final">Synchronisation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.activate" datatype="html">
@@ -2051,7 +2071,7 @@
         <target state="final">Synchronisation aktivieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.address" datatype="html">
@@ -2059,7 +2079,7 @@
         <target state="final">Adresse</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.user" datatype="html">
@@ -2067,7 +2087,7 @@
         <target state="final">Benutzer</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.password" datatype="html">
@@ -2075,7 +2095,7 @@
         <target state="final">Passwort</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.ownAddress" datatype="html">
@@ -2087,7 +2107,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.synchronization.ownAddress.info" datatype="html">
@@ -2101,7 +2121,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images" datatype="html">
@@ -2109,7 +2129,7 @@
         <target state="final">Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path" datatype="html">
@@ -2121,7 +2141,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.images.path.info" datatype="html">
@@ -2145,7 +2165,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update" datatype="html">
@@ -2153,7 +2173,7 @@
         <target state="final">Update</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="settings.update.activate" datatype="html">
@@ -2161,7 +2181,7 @@
         <target state="final">Automatische Prüfung auf Updates aktivieren</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/settings/settings.html</context>
-          <context context-type="linenumber">140</context>
+          <context context-type="linenumber">156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="matrix.view.tooltips.editMode" datatype="html">

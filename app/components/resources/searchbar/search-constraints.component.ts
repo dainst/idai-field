@@ -121,7 +121,15 @@ export class SearchConstraintsComponent implements OnChanges {
     public getSearchTermLabel(constraintListItem: ConstraintListItem): string {
 
         if (constraintListItem.searchInputType === 'boolean') {
-            return (constraintListItem.searchTerm === 'true') ? 'Ja' : 'Nein';
+            return (constraintListItem.searchTerm === 'true')
+                ? this.i18n({
+                    id: 'boolean.yes',
+                    value: 'Ja'
+                })
+                : this.i18n({
+                    id: 'boolean.no',
+                    value: 'Nein'
+                });
         } else {
             return constraintListItem.searchTerm;
         }

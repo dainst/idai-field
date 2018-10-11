@@ -1,0 +1,12 @@
+<div class="modal-body" id="link-modal">
+    <p i18n="@@imageOverview.linkModal.chooseResourcesToLink">Zu verknüpfende Ressource wählen:</p>
+    <document-picker [relationName]="'isDepictedIn'"
+                     [relationRangeType]="'Image'"
+                     (documentSelected)="activeModal.close($event)"></document-picker>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('dismissedByCancel')">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </button>
+</div>

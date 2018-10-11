@@ -505,6 +505,10 @@
           <context context-type="sourcefile">components/docedit/docedit.html</context>
           <context context-type="linenumber">32</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="buttons.cancel" datatype="html">
         <source>Abbrechen</source>
@@ -516,6 +520,18 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/dialog/edit-save-dialog.html</context>
           <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/link-modal.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/remove-link-modal.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
+          <context context-type="linenumber">16</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
@@ -668,6 +684,114 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/imagegrid/image-grid.html</context>
           <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.filter.all" datatype="html">
+        <source>Alle Bilder</source>
+        <target state="final">Alle Bilder</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.filter.unlinked" datatype="html">
+        <source>Unverknüpfte Bilder</source>
+        <target state="final">Unverknüpfte Bilder</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.filter.linked" datatype="html">
+        <source>Verknüpfte Bilder</source>
+        <target state="final">Verknüpfte Bilder</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">
+        <source>Zu verknüpfende Ressource wählen:</source>
+        <target state="final">Zu verknüpfende Ressource wählen:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/link-modal.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.removeLinkModal.info" datatype="html">
+        <source>
+    Bei den ausgewählten Bildern werden sämtliche Verknüpfungen zu anderen Ressourcen entfernt.
+</source>
+        <target state="final">
+    Bei den ausgewählten Bildern werden sämtliche Verknüpfungen zu anderen Ressourcen entfernt.
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/remove-link-modal.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.removeLinkModal.removeLinks" datatype="html">
+        <source>Verknüpfungen löschen</source>
+        <target state="final">Verknüpfungen löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/remove-link-modal.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.taskbar.deleteModal.question.multiple" datatype="html">
+        <source>
+            Möchten Sie die <x id="INTERPOLATION" equiv-text="{{getSelected().length}}"/> markierten Bilder wirklich löschen?
+        </source>
+        <target state="final">
+            Möchten Sie die <x id="INTERPOLATION" equiv-text="{{getSelected().length}}"/> markierten Bilder wirklich löschen?
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.taskbar.deleteModal.question.single" datatype="html">
+        <source>
+            Möchten Sie das markierte Bild wirklich löschen?
+        </source>
+        <target state="final">
+            Möchten Sie das markierte Bild wirklich löschen?
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.taskbar.tooltips.delete" datatype="html">
+        <source>Löschen</source>
+        <target state="final">Löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.taskbar.tooltips.removeLinks" datatype="html">
+        <source>Verknüpfungen entfernen</source>
+        <target state="final">Verknüpfungen entfernen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.taskbar.tooltips.createLink" datatype="html">
+        <source>Verknüpfen</source>
+        <target state="final">Verknüpfen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageOverview.taskbar.tooltips.deselect" datatype="html">
+        <source>Auswahl aufheben</source>
+        <target state="final">Auswahl aufheben</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageGrid.dropArea.tooltip" datatype="html">

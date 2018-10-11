@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Query} from 'idai-components-2';
-import {IdaiFieldImageDocument} from 'idai-components-2';
+import {Query, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
 import {TypeUtility} from '../../../core/model/type-utility';

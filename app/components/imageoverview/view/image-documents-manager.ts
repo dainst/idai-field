@@ -12,10 +12,10 @@ import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/field
  */
 export class ImageDocumentsManager {
 
+    public selected: Array<IdaiFieldImageDocument>  = [];
+
     private documents: Array<IdaiFieldImageDocument>;
     private totalDocumentCount: number;
-
-    public selected: Array<IdaiFieldImageDocument>  = [];
 
     private depictsRelationsSelected: boolean = false;
 
@@ -24,8 +24,7 @@ export class ImageDocumentsManager {
         public viewFacade: ViewFacade,
         private imagesState: ImagesState,
         private imageDatastore: IdaiFieldImageDocumentReadDatastore
-    ) {
-    }
+    ) {}
 
 
     public getSelected = (): Array<IdaiFieldImageDocument> => this.selected;

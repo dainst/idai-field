@@ -14,7 +14,6 @@ import {M} from '../../m';
  */
 export class PersistenceHelper {
 
-
     constructor(
         private imageOverviewFacade: ImageOverviewFacade,
         private persistenceManager: PersistenceManager,

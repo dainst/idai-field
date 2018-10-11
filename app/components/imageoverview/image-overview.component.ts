@@ -30,12 +30,11 @@ export class ImageOverviewComponent implements OnInit {
             undefined, true);
 
 
-    constructor(
-        public viewFacade: ViewFacade,
-        private imageOverviewFacade: ImageOverviewFacade,
-        private routingService: RoutingService,
-        private messages: Messages
-    ) {
+    constructor(public viewFacade: ViewFacade,
+                private imageOverviewFacade: ImageOverviewFacade,
+                private routingService: RoutingService,
+                private messages: Messages) {
+
         this.imageOverviewFacade.initialize();
     }
 

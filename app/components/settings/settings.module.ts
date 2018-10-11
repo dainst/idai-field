@@ -17,8 +17,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     declarations: [
         SettingsComponent
     ],
-    providers: [
-    ]
+    providers: []
 })
 
 /**

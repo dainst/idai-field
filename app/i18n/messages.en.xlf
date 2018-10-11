@@ -1957,6 +1957,173 @@
           <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="settings.applySettings" datatype="html">
+        <source>Einstellungen übernehmen</source>
+        <target state="final">Apply settings</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.userName" datatype="html">
+        <source>
+                            Name des Bearbeiters
+                        </source>
+        <target state="final">
+                            Editor name
+                        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.userName.info" datatype="html">
+        <source>
+                        Dieser Name wird in der Bearbeitungshistorie gespeichert,
+                        damit Änderungen an Datensätzen einer Person zugeordnet werden können.
+                        Diese Einstellung ist sehr <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>wichtig<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> bei der Datenbanksynchronisation,
+                        sowohl zwischen Nutzern als auch zum iDAI.field-Server, da das System so eventuelle
+                        Konflikte besser zuordnen und lösen kann. Sie sollte also in jedem Fall vor Inbetriebnahme
+                        gesetzt werden. Empfohlen wird, den vollen Namen des aktuellen Datenbanknutzers
+                        einzutragen.
+                    </source>
+        <target state="final">
+                        The editor name is saved in the editing history in order to allow dataset changes to be attributable to a person.
+                        This setting is very <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>important<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> when synchronizing data
+                        between users or to the iDAI.field server, as it allows the system to attribute and resolve possible conflicts.
+                        Therefore it should be set before starting to work on a project. It is recommended to enter the
+                        full name of the user working with this client.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.synchronization" datatype="html">
+        <source>Synchronisation</source>
+        <target state="final">Synchronization</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.synchronization.activate" datatype="html">
+        <source>Synchronisation aktivieren</source>
+        <target state="final">Activate synchronization</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.synchronization.address" datatype="html">
+        <source>Adresse</source>
+        <target state="final">Address</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.synchronization.user" datatype="html">
+        <source>Benutzer</source>
+        <target state="final">User</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.synchronization.password" datatype="html">
+        <source>Passwort</source>
+        <target state="final">Password</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.synchronization.ownAddress" datatype="html">
+        <source>
+                            Eigene Adresse: http://<x id="INTERPOLATION" equiv-text="{{ipAddress}}"/>:3000
+                        </source>
+        <target state="final">
+                            Your address: http://<x id="INTERPOLATION" equiv-text="{{ipAddress}}"/>:3000
+                        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.synchronization.ownAddress.info" datatype="html">
+        <source>
+                            Diese Adresse kann in anderen iDAI.field-Clients eingetragen werden, um
+                            eine Synchronisationsverbindung zu diesem Client herzustellen.
+                        </source>
+        <target state="final">
+                            This address can be entered in other iDAI.field clients in order to establish a
+                            synchronization connection to this client.
+                        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.images" datatype="html">
+        <source>Bilder</source>
+        <target state="final">Images</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.images.path" datatype="html">
+        <source>
+                            Pfad
+                        </source>
+        <target state="final">
+                            Path
+                        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.images.path.info" datatype="html">
+        <source>
+                            Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
+                            sein, ihn zu verändern, wenn das von iDAI.field genutzte Bilderverzeichnis auf einem
+                            Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern geteilt wird.
+                            Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an.
+                            Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch iDAI.field
+                            verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der
+                            Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.
+                        </source>
+        <target state="final">
+                            This path can be left in its original setting in most cases. It may be necessary to change
+                            it if the image directory used by iDAI.field is stored on a network device (NAS)
+                            shared between multiple users. Within this directory, a subdirectory is created by
+                            the application for each project. The image files stored in these directories are managed by
+                            iDAI.field. Images files should not be placed there manually but instead be imported in
+                            the image overview or the image tab of the resource view.
+                        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">122</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.update" datatype="html">
+        <source>Update</source>
+        <target state="final">Update</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">136</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="settings.update.activate" datatype="html">
+        <source>Automatische Prüfung auf Updates aktivieren</source>
+        <target state="final">Activate automatic check for updates</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/settings/settings.html</context>
+          <context context-type="linenumber">140</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="matrix.view.tooltips.editMode" datatype="html">
         <source>Bearbeitungsmodus</source>
         <target state="final">Edit mode</target>

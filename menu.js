@@ -1,66 +1,65 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-
-var name = app.getName();
+const messages = require('./messages');
 
 const template = [{
-    label: name,
+    label: 'iDAI.field',
     submenu: [{
-        label: 'Über ' + name,
+        label: messages.get('menu.about'),
         role: 'about'
     }, {
         type: 'separator'
     }]
 },{
-    label: 'Datei',
+    label: messages.get('menu.file'),
     submenu: [
         {
-            label: 'Beenden',
+            label: messages.get('menu.file.exit'),
             accelerator: 'CmdOrCtrl+Q',
             click: function () {
                 app.quit()
             }
         }]
 }, {
-    label: 'Bearbeiten',
+    label: messages.get('menu.edit'),
     submenu: [{
-        label: 'Rückgängig',
+        label: messages.get('menu.edit.undo'),
         accelerator: 'CmdOrCtrl+Z',
         role: 'undo'
     }, {
-        label: 'Wiederholen',
+        label: messages.get('menu.edit.redo'),
         accelerator: 'Shift+CmdOrCtrl+Z',
         role: 'redo'
     }, {
         type: 'separator'
     }, {
-        label: 'Ausschneiden',
+        label: messages.get('menu.edit.cut'),
         accelerator: 'CmdOrCtrl+X',
         role: 'cut'
     }, {
-        label: 'Kopieren',
+        label: messages.get('menu.edit.copy'),
         accelerator: 'CmdOrCtrl+C',
         role: 'copy'
     }, {
-        label: 'Einfügen',
+        label: messages.get('menu.edit.paste'),
         accelerator: 'CmdOrCtrl+V',
         role: 'paste'
     }, {
-        label: 'Alle auswählen',
+        label: messages.get('menu.edit.selectAll'),
         accelerator: 'CmdOrCtrl+A',
         role: 'selectall'
     }]
 }, {
-    label: 'Anzeige',
+    label: messages.get('menu.view'),
     submenu: [{
-        label: 'Neu laden',
+        label: messages.get('menu.view.reload'),
         accelerator: 'CmdOrCtrl+R',
         click: function (item, focusedWindow) {
             if (focusedWindow) focusedWindow.reload();
         }
     }, {
-        label: 'Vollbild An/Aus',
+        label: messages.get('menu.view.toggleFullscreen'),
         accelerator: (function () {
             if (process.platform === 'darwin') {
                 return 'Ctrl+Command+F'
@@ -74,7 +73,7 @@ const template = [{
             }
         }
     }, {
-        label: 'Developer Tools an-/ausschalten',
+        label: messages.get('menu.view.toggleDeveloperTools'),
         accelerator: (function () {
             if (process.platform === 'darwin') {
                 return 'Alt+Command+I'
@@ -89,18 +88,18 @@ const template = [{
         }
     }]
 }, {
-    label: 'Fenster',
+    label: messages.get('menu.window'),
     role: 'window',
     submenu: [{
-        label: 'Minimieren',
+        label: messages.get('menu.window.minimize'),
         accelerator: 'CmdOrCtrl+M',
         role: 'minimize'
     }]
 }, {
-    label: 'Hilfe',
+    label: messages.get('menu.help'),
     role: 'help',
     submenu: [{
-        label: 'Über ' + name,
+        label: messages.get('menu.about'),
         click: function createInfoWindow() {
             var infoWindow = new BrowserWindow({
                 width: 300,

@@ -3,7 +3,6 @@
 const electron = require('electron');
 const fs = require('fs');
 const os = require('os');
-const menuTemplate = require('./menu.js');
 const autoUpdate = require('./auto-update.js');
 
 // needed to fix notifications in win 10
@@ -120,7 +119,7 @@ const createWindow = () => {
         titleBarStyle: 'hiddenInset'
     });
 
-    const menu = electron.Menu.buildFromTemplate(menuTemplate);
+    const menu = electron.Menu.buildFromTemplate(require('./menu.js'));
     electron.Menu.setApplicationMenu(menu);
 
     // and load the index.html of the app.

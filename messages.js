@@ -8,7 +8,24 @@ const messageDictionary = {
         'autoUpdate.downloaded.title': 'Update installieren',
         'autoUpdate.downloaded.message.1': 'Version ',
         'autoUpdate.downloaded.message.2': ' von iDAI.field wurde geladen. Starten Sie die Anwendung neu, um sie zu '
-            + 'installieren.'
+            + 'installieren.',
+        'menu.about': 'Über iDAI.field',
+        'menu.file': 'Datei',
+        'menu.file.exit': 'Beenden',
+        'menu.edit': 'Bearbeiten',
+        'menu.edit.undo': 'Rückgängig',
+        'menu.edit.redo': 'Wiederherstellen',
+        'menu.edit.cut': 'Ausschneiden',
+        'menu.edit.copy': 'Kopieren',
+        'menu.edit.paste': 'Einfügen',
+        'menu.edit.selectAll': 'Alles auswählen',
+        'menu.view': 'Anzeige',
+        'menu.view.reload': 'Neu laden',
+        'menu.view.toggleFullscreen': 'Vollbild an/aus',
+        'menu.view.toggleDeveloperTools': 'Entwicklertools an/aus',
+        'menu.window': 'Fenster',
+        'menu.window.minimize': 'Minimieren',
+        'menu.help': 'Hilfe'
     },
     en: {
         'autoUpdate.available.title': 'Update available',
@@ -19,7 +36,24 @@ const messageDictionary = {
         'autoUpdate.downloaded.title': 'Install update',
         'autoUpdate.downloaded.message.1': 'Version ',
         'autoUpdate.downloaded.message.2': ' of iDAI.field has been downloaded. Please restart the application to' +
-            'install it.'
+            'install it.',
+        'menu.about': 'About iDAI.field',
+        'menu.file': 'File',
+        'menu.file.exit': 'Exit',
+        'menu.edit': 'Edit',
+        'menu.edit.undo': 'Undo',
+        'menu.edit.redo': 'Redo',
+        'menu.edit.cut': 'Cut',
+        'menu.edit.copy': 'Copy',
+        'menu.edit.paste': 'Paste',
+        'menu.edit.selectAll': 'Select all',
+        'menu.view': 'View',
+        'menu.view.reload': 'Reload',
+        'menu.view.toggleFullscreen': 'Fullscreen on/off',
+        'menu.view.toggleDeveloperTools': 'Developer tools on/off',
+        'menu.window': 'Window',
+        'menu.window.minimize': 'Minimize',
+        'menu.help': 'Help'
     },
 };
 

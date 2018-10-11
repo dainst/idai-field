@@ -643,6 +643,39 @@
           <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="imageGrid.moreRowsMessage.1" datatype="html">
+        <source>
+                Es werden die ersten <x id="INTERPOLATION" equiv-text="{{documents.length - 1}}"/> von insgesamt <x id="INTERPOLATION_1" equiv-text="{{totalDocumentCount}}"/> Suchtreffern
+                angezeigt. Schränken Sie die Suche weiter ein, um alle Ergebnisse auf einen Blick zu
+                sehen</source>
+        <target state="final">
+                The first <x id="INTERPOLATION" equiv-text="{{documents.length - 1}}"/> of a total of <x id="INTERPOLATION_1" equiv-text="{{totalDocumentCount}}"/> search results
+                are displayed. Please restrict the search further in order to view all results at a glance</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imagegrid/image-grid.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageGrid.moreRowsMessage.2" datatype="html">
+        <source>
+                oder erhöhen Sie den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.
+            </source>
+        <target state="final">
+                or increase the zoom level to view more images at once.
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imagegrid/image-grid.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageGrid.dropArea.tooltip" datatype="html">
+        <source>Um Bilder hinzuzufügen, ziehen Sie sie in die markierte Fläche oder öffnen Sie per Klick ein Auswahlmenü</source>
+        <target state="final">Drag images to the marked area to import them, or click to open a file selection dialog.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imagegrid/drop-area.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImage" datatype="html">
         <source>Bild verknüpfen</source>
         <target state="final">Link image</target>

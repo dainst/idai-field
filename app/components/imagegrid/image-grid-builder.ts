@@ -1,5 +1,4 @@
-import {Document} from 'idai-components-2';
-import {IdaiFieldImageResource} from 'idai-components-2';
+import {Document, IdaiFieldImageResource} from 'idai-components-2';
 import {ImageContainer} from '../../core/imagestore/image-container';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
 
@@ -19,11 +18,8 @@ export module ImageGridConstruction {
      * @returns an object with rows containing the rows of the calculated grid
      *   and msgsWithParams containing one or more msgWithParams.
      */
-    export function calcGrid(
-        documents: Array<Document>,
-        nrOfColumns: number,
-        gridWidth: number,
-        paddingRight: number): any {
+    export function calcGrid(documents: Array<Document>, nrOfColumns: number, gridWidth: number,
+                             paddingRight: number): any {
 
         if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');
 
@@ -48,7 +44,6 @@ export module ImageGridConstruction {
         const row = [] as any;
 
         for (let i = 0; i < nrOfColumns; i++) {
-
             const document = documents[rowIndex * nrOfColumns + i];
             if (!document) break;
 
@@ -62,9 +57,8 @@ export module ImageGridConstruction {
     }
 
 
-    function calculatedHeight(
-        documents: Array<Document>,
-        rowIndex: any, nrOfColumns: any, gridWidth: any, paddingRight: number) {
+    function calculatedHeight(documents: Array<Document>, rowIndex: any, nrOfColumns: any, gridWidth: any,
+                              paddingRight: number) {
 
         const rowWidth = Math.ceil(gridWidth - paddingRight);
         return rowWidth / calcNaturalRowWidth(documents, nrOfColumns, rowIndex);

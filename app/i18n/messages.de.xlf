@@ -522,6 +522,10 @@
           <context context-type="linenumber">13</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/link-modal.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
@@ -658,6 +662,52 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
           <context context-type="linenumber">115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageTypePickerModal.warning" datatype="html">
+        <source>
+       Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann.
+    </source>
+        <target state="final">
+       Bitte beachten Sie, dass das Einlesen von <x id="INTERPOLATION" equiv-text="{{fileCount}}"/> Bilddateien einige Zeit in Anspruch nehmen kann.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageTypePickerModal.linkInfo.single" datatype="html">
+        <source>
+            Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft.
+        </source>
+        <target state="final">
+            Das importierte Bild wird mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> verknüpft.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageTypePickerModal.linkInfo.multiple" datatype="html">
+        <source>
+            Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>
+            verknüpft.
+        </source>
+        <target state="final">
+            Die importierten Bilder werden mit der Ressource <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{depictsRelationTarget.resource.identifier}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>
+            verknüpft.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.imageTypePickerModal.chooseType" datatype="html">
+        <source>Bitte wählen Sie den gewünschten Typ aus.</source>
+        <target state="final">Bitte wählen Sie den gewünschten Typ aus.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageGrid.moreRowsMessage.1" datatype="html">
@@ -1184,12 +1234,40 @@
         <source>OK</source>
         <target state="final">OK</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
           <context context-type="linenumber">121</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
           <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">
+        <source>
+                Bild wird eingelesen...
+            </source>
+        <target state="final">
+                Bild wird eingelesen...
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageupload/upload-modal.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="imageUpload.uploadModal.info.multiple" datatype="html">
+        <source>
+                <x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Bilder eingelesen...
+            </source>
+        <target state="final">
+                <x id="INTERPOLATION" equiv-text="{{uploadStatus.getHandledImages()}}"/> / <x id="INTERPOLATION_1" equiv-text="{{uploadStatus.getTotalImages()}}"/> Bilder eingelesen...
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageupload/upload-modal.html</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.forms.dating.add" datatype="html">

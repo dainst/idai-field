@@ -37,7 +37,9 @@
 
         <ng-template #filterMenu>
             <div class="filtermenu">
-                <div class="popover-custom-title" i18n="@@resources.searchBar.typeFilter">Nach Ressourcentyp filtern:</div>
+                <div class="popover-custom-title">
+                    <span i18n="@@widgets.searchBar.resourceTypeFilter">Nach Ressourcentyp filtern:</span>
+                </div>
                 <type-picker [typesTreeList]="filterOptions" [allTypesOptionVisible]="!parentType"
                              [selectedTypes]="types" [allowPickingAbstractTypes]="true"
                              (onTypePicked)="chooseTypeFilter($event); p.close();">

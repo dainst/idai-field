@@ -298,6 +298,22 @@
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
+        <source>Keine Suchkriterien angegeben</source>
+        <target state="final">Keine Suchkriterien angegeben</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/document-picker.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.documentPicker.noSearchResults" datatype="html">
+        <source>Keine Ziele gefunden</source>
+        <target state="final">Keine Ziele gefunden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/document-picker.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="import.uploadModal.info" datatype="html">
         <source>Datensätze werden eingelesen...</source>
         <target state="final">Datensätze werden eingelesen...</target>
@@ -1412,16 +1428,32 @@
         <source>Suchen...</source>
         <target state="final">Suchen...</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-bar.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/searchbar/resources-search-bar.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="resources.searchBar.typeFilter" datatype="html">
+      <trans-unit id="widgets.searchBar.resourceTypeFilter" datatype="html">
         <source>Nach Ressourcentyp filtern:</source>
         <target state="final">Nach Ressourcentyp filtern:</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-bar.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/searchbar/resources-search-bar.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.typePicker.allTypes" datatype="html">
+        <source>Alle Typen</source>
+        <target state="final">Alle Typen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/type-picker.html</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.searchBar.suggestions.resultsInOtherContexts" datatype="html">

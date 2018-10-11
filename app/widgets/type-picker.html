@@ -3,7 +3,7 @@
         class="list-group-item popover-item"
         (click)="pickType(undefined)"
         [ngClass]="{ 'selected-type': !selectedTypes || selectedTypes.length == 0 }">
-        <i class="all-types-label">Alle Typen</i>
+        <i class="all-types-label" i18n="@@widgets.typePicker.allTypes">Alle Typen</i>
     </li>
     <li *ngFor="let type of typesTreeList; let index = index"
         class="list-group-item popover-item"

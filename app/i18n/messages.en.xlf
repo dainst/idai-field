@@ -836,9 +836,9 @@
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.tabs.images.cancelSelection" datatype="html">
+      <trans-unit id="docedit.tabs.images.deselect" datatype="html">
         <source>Auswahl aufheben</source>
-        <target state="final">Cancel selection</target>
+        <target state="final">Deselect</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/tabs/docedit-image-tab.html</context>
           <context context-type="linenumber">27</context>

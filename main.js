@@ -26,7 +26,7 @@ global.setConfigDefaults = config => {
     if (!config.syncTarget) config.syncTarget = {};
     if (!config.remoteSites) config.remoteSites = [];
     if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
-    if (!config.locale) config.locale = electron.app.getLocale().includes('de') ? 'de' : 'en';
+    if (!config.locale) config.locale = electron.app.getLocale().includes('de') || global.mode === 'test' ? 'de' : 'en';
     if (os.type() === 'Linux') config.isAutoUpdateActive = false;
 
     return config;

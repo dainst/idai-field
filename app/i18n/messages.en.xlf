@@ -250,49 +250,25 @@
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.creation.info.1" datatype="html">
+      <trans-unit id="backup.creation.info" datatype="html">
         <source>
                         Erstellt ein Backup des aktuell geöffneten Projekts. Regelmäßige Backups erhöhen die
                         Datensicherheit und erlauben es bei Datenverlusten, die Datenbank aus dem letzten
                         gesicherten Zwischenstand wiederherzustellen.
+                        <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
+                        Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
+                        in dem unter<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>Einstellungen<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> angezeigten Pfad und sollten separat gesichert werden.
                     </source>
         <target state="final">
                         Creates a backup of the currently opened project. Regular backups increase data security
                         and allow restoring the database from the last saved state in case of data loss.
+                        <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
+                        Please note that image originals are not stored in the backup file. These can be found in the
+                        directory specified in the <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i>"/>settings<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i>"/> and should be saved separately.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/backup/backup-creation.html</context>
           <context context-type="linenumber">19</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="backup.creation.info.2.1" datatype="html">
-        <source>
-                        Bitte beachten Sie, dass Originale von Bildern nicht mitgesichert werden. Diese befinden sich
-                        in dem unter
-                    </source>
-        <target state="final">
-                        Please note that image originals are not stored in the backup file. These can be found in the
-                        directory specified in the
-                    </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/backup/backup-creation.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="backup.creation.info.settings" datatype="html">
-        <source>Einstellungen</source>
-        <target state="final">settings</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/backup/backup-creation.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="backup.creation.info.2.2" datatype="html">
-        <source> angezeigten Pfad und sollten separat gesichert werden.</source>
-        <target state="final"> and should be saved separately.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/backup/backup-creation.html</context>
-          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.modal.info" datatype="html">
@@ -341,34 +317,18 @@
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="backup.loading.info.important" datatype="html">
-        <source>Achtung: </source>
-        <target state="final">Important: </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/backup/backup-loading.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="backup.loading.info.3.1" datatype="html">
+      <trans-unit id="backup.loading.info.3" datatype="html">
         <source>
-                        Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene
-                        Zieldatenbank mit dem angegebenen Namen
+                        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Achtung:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Beim Einspielen einer Backup-Datei wird eine eventuell vorhandene Zieldatenbank
+                        mit dem angegebenen Namen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>vollständig überschrieben<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>.
                     </source>
         <target state="final">
-                        While restoring a backup file, a possibly existing target database of the specified name will
-                        be
+                        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Important:<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> While restoring a backup file, a possibly existing target database of the specified name will
+                        be <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>overwritten entirely<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/backup/backup-loading.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="backup.loading.info.3.2" datatype="html">
-        <source> vollständig überschrieben</source>
-        <target state="final"> overwritten entirely</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/backup/backup-loading.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.path" datatype="html">
@@ -376,7 +336,7 @@
         <target state="final">Path</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/backup/backup-loading.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.loading.project" datatype="html">
@@ -384,7 +344,7 @@
         <target state="final">Project</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/backup/backup-loading.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.overview" datatype="html">

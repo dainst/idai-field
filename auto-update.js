@@ -9,7 +9,33 @@ autoUpdater.logger = log;
 let updateVersion;
 let initialized = false;
 
-const setUp = (mainWindow) => {
+const messages = {
+    de: {
+        'updateAvailable.title': 'Update verfügbar',
+        'updateAvailable.message.1': 'Eine neue Version von iDAI.field (',
+        'updateAvailable.message.2': ') ist verfügbar. Möchten Sie sie herunterladen und installieren?',
+        'updateAvailable.yes': 'Ja',
+        'updateAvailable.no': 'Nein',
+        'updateDownloaded.title': 'Update installieren',
+        'updateDownloaded.message.1': 'Version ',
+        'updateDownloaded.message.2': ' von iDAI.field wurde geladen. Starten Sie die Anwendung neu, um sie zu '
+            + 'installieren.'
+    },
+    en: {
+        'updateAvailable.title': 'Update available',
+        'updateAvailable.message.1': 'A new version of iDAI.field (',
+        'updateAvailable.message.2': ') is available. Do you want to download and install it?',
+        'updateAvailable.yes': ' Yes ',
+        'updateAvailable.no': ' No ',
+        'updateDownloaded.title': 'Install update',
+        'updateDownloaded.message.1': 'Version ',
+        'updateDownloaded.message.2': ' of iDAI.field has been downloaded. Please restart the application to install '
+            + 'it.'
+    },
+};
+
+
+const setUp = (mainWindow, locale) => {
 
     if (initialized) return;
 
@@ -18,10 +44,12 @@ const setUp = (mainWindow) => {
 
         dialog.showMessageBox({
             type: 'info',
-            title: 'Update verfügbar',
-            message: 'Eine neue Version von iDAI.field (' + updateInfo.version + ') ist verfügbar. '
-                + 'Möchten Sie sie herunterladen und installieren?',
-            buttons: ['Ja', 'Nein']
+            title: messages[locale]['updateAvailable.title'],
+            message: messages[locale]['updateAvailable.message.1']
+                + updateInfo.version
+                + messages[locale]['updateAvailable.message.2'],
+            buttons: [messages[locale]['updateAvailable.yes'], messages[locale]['updateAvailable.no']],
+            noLink: true
         }, (buttonIndex) => {
             if (buttonIndex === 0) {
                 autoUpdater.downloadUpdate();
@@ -40,9 +68,11 @@ const setUp = (mainWindow) => {
         mainWindow.webContents.send('updateDownloaded');
 
         dialog.showMessageBox({
-            title: 'Update installieren',
-            message: 'Version ' + updateInfo.version + ' von iDAI.field wurde geladen. '
-                + 'Starten Sie die Anwendung neu, um sie zu installieren.'
+            title: messages[locale]['updateDownloaded.title'],
+            message: messages[locale]['updateDownloaded.message.1']
+                + updateInfo.version
+                + messages[locale]['updateDownloaded.message.2'],
+            noLink: true
         });
     });
 

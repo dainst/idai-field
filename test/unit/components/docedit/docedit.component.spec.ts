@@ -27,7 +27,8 @@ describe('DoceditComponent', () => {
             typeUtility,
             activeTabService,
             projectConfiguration,
-            undefined
+            undefined,
+            (() => 'Projekt') as any
         );
     });
 

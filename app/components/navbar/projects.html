@@ -4,7 +4,7 @@
 
 <ng-template #projectsModalTemplate>
     <div class="modal-header">
-        <h4 class="modal-title">Projekte verwalten</h4>
+        <h4 class="modal-title" i18n="@@navbar.projects.manageProject">Projekte verwalten</h4>
     </div>
     <div class="modal-body projects-modal">
 
@@ -44,11 +44,15 @@
 
         <ng-template #newProjectMenu>
             <div id="new-project-menu">
-                <div class="popover-custom-title">Bitte geben Sie den Namen des neuen Projekts ein.</div>
+                <div class="popover-custom-title" i18n="@@navbar.projects.newProject.enterName">
+                    Bitte geben Sie den Namen des neuen Projekts ein.
+                </div>
                 <div class="input-group">
                     <input type="text" class="project-name-input form-control" [(ngModel)]="newProject"/>
                     <span class="input-group-btn">
-                        <button class="project-option-ok btn btn-primary" (click)="createProject()">OK</button>
+                        <button class="project-option-ok btn btn-primary" (click)="createProject()">
+                            <span i18n="@@buttons.ok">OK</span>
+                        </button>
                     </span>
                 </div>
             </div>
@@ -56,13 +60,15 @@
 
         <ng-template #deleteProjectMenu>
             <div id="delete-project-menu">
-                <div class="popover-custom-title">
+                <div class="popover-custom-title" i18n="@@navbar.projects.deleteProject.enterName">
                     Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
                 </div>
                 <div class="input-group">
                     <input type="text" class="project-name-input form-control" [(ngModel)]="projectToDelete"/>
                     <span class="input-group-btn">
-                        <button class="project-option-ok btn btn-primary" (click)="deleteProject()">OK</button>
+                        <button class="project-option-ok btn btn-primary" (click)="deleteProject()">
+                            <span i18n="@@buttons.ok">OK</span>
+                        </button>
                     </span>
                 </div>
             </div>
@@ -71,7 +77,8 @@
     </div>
     <div class="modal-footer">
         <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
-                (click)="modalRef.close()">Schließen
+                (click)="modalRef.close()">
+            <span i18n="@@buttons.close">Schließen</span>
         </button>
     </div>
 </ng-template>

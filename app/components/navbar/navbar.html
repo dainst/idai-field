@@ -1,8 +1,5 @@
 <nav *ngIf="views" class="navbar navbar-expand-lg navbar-dark bg-primary"
-     (dragover)="false"
-     (dragleave)="false"
-     (drop)="false">
-
+     (dragover)="false" (dragleave)="false" (drop)="false">
     <div class="navbar-brand" id="idai-field-brand"
             [class.navbar-brand-mac]="isRunningOnMac()">
         <div id="brand-text">
@@ -47,5 +44,4 @@
 
         <taskbar></taskbar>
     </div>
-
 </nav>

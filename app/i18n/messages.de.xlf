@@ -515,7 +515,7 @@
         <target state="final">Übersicht</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/navbar.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.matrix" datatype="html">
@@ -523,7 +523,7 @@
         <target state="final">Matrix</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/navbar.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.images" datatype="html">
@@ -531,7 +531,103 @@
         <target state="final">Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/navbar.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.active" datatype="html">
+        <source>Synchronisation ist aktiv</source>
+        <target state="final">Synchronisation ist aktiv</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.deactivated" datatype="html">
+        <source>Synchronisation ist deaktiviert</source>
+        <target state="final">Synchronisation ist deaktiviert</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.synchronization.receivingData" datatype="html">
+        <source>Daten werden empfangen...</source>
+        <target state="final">Daten werden empfangen...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.dropdown.help" datatype="html">
+        <source>Hilfe</source>
+        <target state="final">Hilfe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.dropdown.import" datatype="html">
+        <source>Import</source>
+        <target state="final">Import</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.dropdown.createBackup" datatype="html">
+        <source>Backup erstellen</source>
+        <target state="final">Backup erstellen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.dropdown.restoreBackup" datatype="html">
+        <source>Backup einlesen</source>
+        <target state="final">Backup einlesen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.dropdown.settings" datatype="html">
+        <source>Einstellungen</source>
+        <target state="final">Einstellungen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.conflicts" datatype="html">
+        <source>Konflikte</source>
+        <target state="final">Konflikte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-conflicts.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.downloading" datatype="html">
+        <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wird heruntergeladen...</source>
+        <target state="final">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wird heruntergeladen...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.downloadComplete" datatype="html">
+        <source>Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</source>
+        <target state="final">Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde heruntergeladen und wird beim Neustart installiert</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.deactivated" datatype="html">
+        <source>Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field.</source>
+        <target state="final">Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.header" datatype="html">
@@ -792,6 +888,26 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/docedit.html</context>
           <context context-type="linenumber">115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.projects.manageProject" datatype="html">
+        <source>Projekte verwalten</source>
+        <target state="final">Projekte verwalten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/projects.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.projects.newProject.enterName" datatype="html">
+        <source>
+                    Bitte geben Sie den Namen des neuen Projekts ein.
+                </source>
+        <target state="final">
+                    Bitte geben Sie den Namen des neuen Projekts ein.
+                </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/projects.html</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.imageTypePickerModal.warning" datatype="html">
@@ -1444,6 +1560,14 @@
         <source>OK</source>
         <target state="final">OK</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/projects.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/projects.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
           <context context-type="linenumber">39</context>
         </context-group>
@@ -1454,6 +1578,26 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
           <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="navbar.projects.deleteProject.enterName" datatype="html">
+        <source>
+                    Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
+                </source>
+        <target state="final">
+                    Bitte bestätigen Sie den Namen des ausgewählten Projekts, um es zu löschen.
+                </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/projects.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.close" datatype="html">
+        <source>Schließen</source>
+        <target state="final">Schließen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/projects.html</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageUpload.uploadModal.info.single" datatype="html">

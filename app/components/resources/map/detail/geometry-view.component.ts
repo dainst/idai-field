@@ -17,5 +17,4 @@ export class GeometryViewComponent {
     @Input() document: IdaiFieldDocument;
     @Output() onCreateGeometry: EventEmitter<string> = new EventEmitter<string>();
     @Output() onEditGeometry: EventEmitter<IdaiFieldDocument> = new EventEmitter<IdaiFieldDocument>();
-
 }

@@ -1,14 +1,12 @@
-import {Observer} from 'rxjs';
-import {Observable} from 'rxjs';
-import {Document, Query} from 'idai-components-2';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {Observer, Observable} from 'rxjs';
+import {subtract, unique, jsonClone} from 'tsfun';
+import {Document, Query, IdaiFieldDocument} from 'idai-components-2';
 import {OperationsManager} from './operations-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RemoteChangesStream} from '../../../core/datastore/core/remote-changes-stream';
 import {ObserverUtil} from '../../../core/util/observer-util';
 import {Loading} from '../../../widgets/loading';
 import {hasEqualId, hasId} from '../../../core/model/model-util';
-import {subtract, unique, jsonClone} from 'tsfun';
 import {ResourcesStateManager} from './resources-state-manager';
 import {IdaiFieldFindResult} from '../../../core/datastore/core/cached-read-datastore';
 import {ResourcesState} from './state/resources-state';

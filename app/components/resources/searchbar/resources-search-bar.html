@@ -9,7 +9,8 @@
                (focus)="showSuggestions()"
                name="searchInput"
                type="text"
-               placeholder="Suchen...">
+               placeholder="Suchen..."
+               i18n-placeholder="@@widgets.searchBar.placeholder">
         <search-suggestions [maxSuggestions]="5"
                             [visible]="suggestionsVisible">
         </search-suggestions>
@@ -36,7 +37,7 @@
 
         <ng-template #filterMenu>
             <div class="filtermenu">
-                <div class="popover-custom-title">Nach Ressourcentyp filtern:</div>
+                <div class="popover-custom-title" i18n="@@resources.searchBar.typeFilter">Nach Ressourcentyp filtern:</div>
                 <type-picker [typesTreeList]="filterOptions" [allTypesOptionVisible]="!parentType"
                              [selectedTypes]="types" [allowPickingAbstractTypes]="true"
                              (onTypePicked)="chooseTypeFilter($event); p.close();">

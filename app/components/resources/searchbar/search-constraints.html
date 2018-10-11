@@ -11,9 +11,9 @@
 </div>
 
 <div *ngIf="showConstraintsMenu" id="constraints-menu">
-    <h6>Suchkriterien</h6>
+    <h6 i18n="@@resources.searchBar.constraints.header">Suchkriterien</h6>
 
-    <div *ngIf="!type" id="constraints-type-filter-info">
+    <div *ngIf="!type" id="constraints-type-filter-info" i18n="@@resources.searchBar.constraints.typeFilterInfo">
         Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
     </div>
 
@@ -28,7 +28,8 @@
 
     <div *ngIf="fields && fields.length > 0" class="form-inline">
         <select id="constraint-field-select" (change)="selectField($event.target.value)" class="form-control">
-            <option value="" [selected]="!selectedField" hidden>Feld wählen</option>
+            <option value="" [selected]="!selectedField" hidden
+                    i18n="@@resources.searchBar.constraints.chooseField">Feld wählen</option>
             <option value=""></option>
             <option *ngFor="let field of fields"
                     id="constraint-field-select-option-{{field.name}}"
@@ -40,21 +41,25 @@
 
         <input *ngIf="getSearchInputType(selectedField) === 'input'"
                id="constraint-search-term-input" type="text" placeholder="Suchbegriff eingeben"
+               i18n-placeholder="@@resources.searchBar.constraints.enterSearchTerm"
                [(ngModel)]="searchTerm" class="form-control">
 
         <select *ngIf="getSearchInputType(selectedField) === 'dropdown'"
                 id="constraint-search-term-select" [(ngModel)]="searchTerm" class="form-control">
-            <option value="" hidden [selected]="searchTerm.length === 0">Suchbegriff wählen</option>
+            <option value="" hidden [selected]="searchTerm.length === 0"
+                    i18n="@@resources.searchBar.constraints.selectSearchTerm">Suchbegriff wählen</option>
             <option value=""></option>
             <option *ngFor="let value of selectedField.valuelist" value="{{value}}">{{value}}</option>
         </select>
 
         <select *ngIf="getSearchInputType(selectedField) === 'boolean'"
                 id="constraint-search-term-boolean-select" [(ngModel)]="searchTerm" class="form-control">
-            <option value="" hidden [selected]="searchTerm.length === 0">Suchbegriff wählen</option>
+            <option value="" hidden [selected]="searchTerm.length === 0"
+                    i18n="@@resources.searchBar.constraints.selectSearchTerm">Suchbegriff wählen</option>
             <option value=""></option>
-            <option id="constraint-search-term-boolean-select-option-true" value="true">Ja</option>
-            <option id="constraint-search-term-boolean-select-option-false" value="false">Nein</option>
+            <option id="constraint-search-term-boolean-select-option-true" value="true" i18n="@@boolean.yes">Ja</option>
+            <option id="constraint-search-term-boolean-select-option-false" value="false"
+                    i18n="@@boolean.no">Nein</option>
         </select>
 
         <div *ngIf="searchTerm.length > 0" id="add-constraint-button" class="btn btn-primary"

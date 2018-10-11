@@ -25,6 +25,10 @@
          class="btn btn-success" (click)="addPolyline()">
         <span class="mdi mdi-vector-polyline mdi-24px"></span>
     </div>
-    <div id="map-editor-button-ok" class="btn btn-primary" (click)="finishEditing()">OK</div>
-    <div id="map-editor-button-abort" class="btn btn-secondary" (click)="abortEditing()">Abbrechen</div>
+    <div id="map-editor-button-ok" class="btn btn-primary" (click)="finishEditing()">
+        <span i18n="@@buttons.ok">OK</span>
+    </div>
+    <div id="map-editor-button-abort" class="btn btn-secondary" (click)="abortEditing()">
+        <span i18n="@@buttons.cancel">Abbrechen</span>
+    </div>
 </div>

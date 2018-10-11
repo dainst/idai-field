@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2';
-import {IdaiType, Messages} from 'idai-components-2';
+import {IdaiFieldDocument, IdaiType, Messages} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../view/view-facade';
 import {PersistenceManager} from '../../../core/model/persistence-manager';

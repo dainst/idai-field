@@ -234,6 +234,70 @@
           <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.geometry" datatype="html">
+        <source>Geometrie</source>
+        <target state="final">Geometry</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.polygon" datatype="html">
+        <source>Polygon</source>
+        <target state="final">Polygon</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.multipolygon" datatype="html">
+        <source>Multipolygon</source>
+        <target state="final">Multipolygon</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.polyline" datatype="html">
+        <source>Polyline</source>
+        <target state="final">Polyline</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.multipolyline" datatype="html">
+        <source>Multipolyline</source>
+        <target state="final">Multipolyline</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.point" datatype="html">
+        <source>Punkt</source>
+        <target state="final">Point</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.none" datatype="html">
+        <source>Keine</source>
+        <target state="final">None</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.coordinates" datatype="html">
+        <source>Koordinaten</source>
+        <target state="final">Coordinates</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="import.uploadModal.info" datatype="html">
         <source>Datensätze werden eingelesen...</source>
         <target state="final">Importing datasets...</target>
@@ -762,6 +826,10 @@
           <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
           <context context-type="linenumber">125</context>
         </context-group>
@@ -1174,6 +1242,271 @@
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.tooltips.mode.map" datatype="html">
+        <source>Kartendarstellung</source>
+        <target state="final">Map view</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/resources.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.tooltips.mode.list" datatype="html">
+        <source>Listendarstellung</source>
+        <target state="final">List view</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/resources.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.noOperationsWarning" datatype="html">
+        <source>
+            Legen Sie eine Ressource vom Typ '<x id="INTERPOLATION" equiv-text="{{viewFacade.getOperationLabel()}}"/>' in der
+            <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> an, um hier mit ihr arbeiten zu können.
+        </source>
+        <target state="final">
+            Create a resource of type '<x id="INTERPOLATION" equiv-text="{{viewFacade.getOperationLabel()}}"/>' in the
+            <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>overview<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/> in order to work with it here.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/resources.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.selectType" datatype="html">
+        <source>Bitte wählen Sie einen Typ aus.</source>
+        <target state="final">Please select a type.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/plus-button.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.selectGeometryType" datatype="html">
+        <source>Bitte wählen Sie einen Geometrietyp aus.</source>
+        <target state="final">Please select a geometry type.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/plus-button.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.selectGeometryType.polygon" datatype="html">
+        <source>Polygon</source>
+        <target state="final">Polygon</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/plus-button.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.selectGeometryType.polyline" datatype="html">
+        <source>Polyline</source>
+        <target state="final">Polyline</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/plus-button.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.selectGeometryType.point" datatype="html">
+        <source>Punkt</source>
+        <target state="final">Point</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/plus-button.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.plusButton.selectGeometryType.noGeometryData" datatype="html">
+        <source>Keine Geometriedaten</source>
+        <target state="final">No geometry data</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/plus-button.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.list.headers.type" datatype="html">
+        <source>Typ</source>
+        <target state="final">Type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/list.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.list.headers.identifier" datatype="html">
+        <source>Bezeichner</source>
+        <target state="final">Identifier</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/list.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.list.headers.shortDescription" datatype="html">
+        <source>Kurzbeschreibung</source>
+        <target state="final">Short description</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/list.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.list.resourceLimitInfo" datatype="html">
+        <source>
+                    Es werden die ersten <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> von
+                    <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> Ressourcen angezeigt. Schränken Sie die Suche
+                    weiter ein oder wechseln Sie in die Hierarchie-Ansicht, um auf die übrigen Ressourcen
+                    zuzugreifen.
+                </source>
+        <target state="final">
+                    The first <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> of a total of
+                    <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/> resources are displayed. Please restrict the search
+                    further or switch into hierarchy view in order to access the other resources.
+                </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/list/list.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.editMetadata" datatype="html">
+        <source>Metadaten bearbeiten</source>
+        <target state="final">Edit metadata</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/detail/document-detail-sidebar.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.editRelations" datatype="html">
+        <source>Relationen bearbeiten</source>
+        <target state="final">Edit relations</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/detail/document-detail-sidebar.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.detailSidebar.editImageLinks" datatype="html">
+        <source>Bildverknüpfungen bearbeiten</source>
+        <target state="final">Edit image links</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/detail/document-detail-sidebar.html</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.sidebarList.resourceLimitInfo" datatype="html">
+        <source>
+        Es werden die ersten <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> von <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/>
+        Ressourcen angezeigt. Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten Suchmodus,
+        um auf die übrigen Ressourcen zuzugreifen.
+        <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
+    </source>
+        <target state="final">
+        The first <x id="INTERPOLATION" equiv-text="{{viewFacade.getDocuments().length}}"/> of a total of <x id="INTERPOLATION_1" equiv-text="{{viewFacade.getTotalDocumentCount()}}"/>
+        resources are displayed. Please restrict the search further or leave the extended search mode in order to access
+        the other resources.
+        <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.searchBar.placeholder" datatype="html">
+        <source>Suchen...</source>
+        <target state="final">Search...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/searchbar/resources-search-bar.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.typeFilter" datatype="html">
+        <source>Nach Ressourcentyp filtern:</source>
+        <target state="final">Resource type filter:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/searchbar/resources-search-bar.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.suggestions.resultsInOtherContexts" datatype="html">
+        <source>Suchergebnisse in anderen Kontexten</source>
+        <target state="final">Search results in other contexts</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/searchbar/search-suggestions.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.suggestions.noResourcesFound" datatype="html">
+        <source>Keine Ressourcen gefunden.</source>
+        <target state="final">No resources found.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/searchbar/search-suggestions.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.header" datatype="html">
+        <source>Suchkriterien</source>
+        <target state="final">Search criteria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.typeFilterInfo" datatype="html">
+        <source>
+        Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
+    </source>
+        <target state="final">
+        Please choose a type filter before specifying additional search constraints.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.chooseField" datatype="html">
+        <source>Feld wählen</source>
+        <target state="final">Select field</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.enterSearchTerm" datatype="html">
+        <source>Suchbegriff eingeben</source>
+        <target state="final">Enter search term</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.selectSearchTerm" datatype="html">
+        <source>Suchbegriff wählen</source>
+        <target state="final">Enter search term</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="boolean.yes" datatype="html">
+        <source>Ja</source>
+        <target state="final">Yes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="boolean.no" datatype="html">
+        <source>Nein</source>
+        <target state="final">No</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImage" datatype="html">
         <source>Bild verknüpfen</source>
         <target state="final">Link image</target>
@@ -1386,22 +1719,6 @@
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.forms.boolean.yes" datatype="html">
-        <source>Ja</source>
-        <target state="final">Yes</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="docedit.forms.boolean.no" datatype="html">
-        <source>Nein</source>
-        <target state="final">No</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="docedit.forms.dating.imprecise" datatype="html">
         <source>Ungenau</source>
         <target state="final">Imprecise</target>
@@ -1544,6 +1861,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageupload/image-type-picker-modal.html</context>
           <context context-type="linenumber">39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
@@ -2516,11 +2837,43 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.navigation.tooltips.deactivateExtendedSearchMode" datatype="html">
+        <source>Erweiterten Suchmodus deaktivieren</source>
+        <target state="final">Deactivate extended search mode</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/resources/navigation/navigation.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.navigation.tooltips.activateExtendedSearchMode" datatype="html">
+        <source>Erweiterten Suchmodus aktivieren</source>
+        <target state="final">Activate extended search mode</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/resources/navigation/navigation.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.plusButton.tooltip.deactivated" datatype="html">
         <source>Bitte deaktivieren Sie den erweiterten Suchmodus, um neue Ressourcen anlegen zu können.</source>
         <target state="final">Please deactivate the extended search mode before creating new resources.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/resources/plus-button.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.tooltips.setupAdditionalSearchCriteria" datatype="html">
+        <source>Weitere Suchkriterien einstellen</source>
+        <target state="final">Specify additional search criteria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/resources/searchbar/search-constraints.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.tooltips.activeSearchCriteria" datatype="html">
+        <source>Aktive Suchkriterien</source>
+        <target state="final">Active search criteria</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/resources/searchbar/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

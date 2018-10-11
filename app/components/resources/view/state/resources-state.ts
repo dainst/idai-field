@@ -221,7 +221,7 @@ export module ResourcesState {
         return {
             viewStates: {
                 project: {
-                    layerIds: {'project': ['o25']},
+                    layerIds: { 'project': ['o25'] },
                     bypassHierarchy: false,
                     selectAllOperationsOnBypassHierarchy: false,
                     navigationPaths: {},
@@ -234,7 +234,7 @@ export module ResourcesState {
                     navigationPaths: {
                         't1': NavigationPath.empty()
                     },
-                    layerIds: {'t1': ['o25']},
+                    layerIds: { 't1': ['o25'] },
                     searchContext: ViewContext.empty(),
                     customConstraints: {}
                 }

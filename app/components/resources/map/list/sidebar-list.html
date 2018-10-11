@@ -20,7 +20,7 @@
         </div>
     </li>
 
-    <li *ngIf="isDocumentLimitExceeded()" id="document-limit-info">
+    <li *ngIf="isDocumentLimitExceeded()" id="document-limit-info" i18n="@@resources.sidebarList.resourceLimitInfo">
         Es werden die ersten {{viewFacade.getDocuments().length}} von {{viewFacade.getTotalDocumentCount()}}
         Ressourcen angezeigt. Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten Suchmodus,
         um auf die übrigen Ressourcen zuzugreifen.

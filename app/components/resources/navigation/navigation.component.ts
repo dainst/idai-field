@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {I18n} from '@ngx-translate/i18n-polyfill';
+import {IdaiFieldDocument, ProjectConfiguration} from 'idai-components-2';
 import {ViewFacade} from '../view/view-facade';
 import {ModelUtil} from '../../../core/model/model-util';
 import {NavigationPath} from '../view/state/navigation-path';
 import {Loading} from '../../../widgets/loading';
-import {ProjectConfiguration} from 'idai-components-2';
 
 
 @Component({
@@ -23,8 +23,9 @@ export class NavigationComponent {
 
     constructor(
         public viewFacade: ViewFacade,
+        public projectConfiguration: ProjectConfiguration,
         private loading: Loading,
-        public projectConfiguration: ProjectConfiguration) {
+        private i18n: I18n) {
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
@@ -51,8 +52,14 @@ export class NavigationComponent {
     public getTooltip() {
 
         return this.viewFacade.getBypassHierarchy()
-            ? 'Erweiterten Suchmodus deaktivieren'
-            : 'Erweiterten Suchmodus aktivieren';
+            ? this.i18n({
+                id: 'resources.navigation.tooltips.deactivateExtendedSearchMode',
+                value: 'Erweiterten Suchmodus deaktivieren'
+            })
+            : this.i18n({
+                id: 'resources.navigation.tooltips.activateExtendedSearchMode',
+                value: 'Erweiterten Suchmodus aktivieren'
+            });
     }
 
 

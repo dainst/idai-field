@@ -1,9 +1,9 @@
 <div id="list">
     <div *ngIf="typesMap">
         <div id="list-header">
-            <div>Typ</div>
-            <div>Bezeichner</div>
-            <div>Kurzbeschreibung</div>
+            <div i18n="@@resources.list.headers.type">Typ</div>
+            <div i18n="@@resources.list.headers.identifier">Bezeichner</div>
+            <div i18n="@@resources.list.headers.shortDescription">Kurzbeschreibung</div>
             <div></div>
             <div id="header-placeholder"></div>
         </div>
@@ -12,7 +12,8 @@
                 <div *ngFor="let document of documents">
                     <row [document]="document" [typesMap]="typesMap"></row>
                 </div>
-                <li *ngIf="isDocumentLimitExceeded()" id="document-limit-info">
+                <li *ngIf="isDocumentLimitExceeded()" id="document-limit-info"
+                    i18n="@@resources.list.resourceLimitInfo">
                     Es werden die ersten {{viewFacade.getDocuments().length}} von
                     {{viewFacade.getTotalDocumentCount()}} Ressourcen angezeigt. Schränken Sie die Suche
                     weiter ein oder wechseln Sie in die Hierarchie-Ansicht, um auf die übrigen Ressourcen

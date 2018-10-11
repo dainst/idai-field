@@ -1,18 +1,23 @@
 <div class="document-view-field" id="document-view-field-geometry">
-    <div class="fieldname">Geometrie</div>
+    <div class="fieldname" i18n="@@resources.detailSidebar.geometryView.geometry">Geometrie</div>
     <div *ngIf="document.resource.geometry">
-        <span *ngIf="document.resource.geometry.type == 'Polygon'" class="fieldvalue">Polygon</span>
-        <span *ngIf="document.resource.geometry.type == 'MultiPolygon'" class="fieldvalue">Multipolygon</span>
-        <span *ngIf="document.resource.geometry.type == 'LineString'" class="fieldvalue">Polyline</span>
-        <span *ngIf="document.resource.geometry.type == 'MultiLineString'" class="fieldvalue">Multipolyline</span>
-        <span *ngIf="document.resource.geometry.type == 'Point'" class="fieldvalue">Punkt</span>
+        <span *ngIf="document.resource.geometry.type == 'Polygon'" class="fieldvalue"
+              i18n="@@resources.detailSidebar.geometryView.polygon">Polygon</span>
+        <span *ngIf="document.resource.geometry.type == 'MultiPolygon'" class="fieldvalue"
+              i18n="@@resources.detailSidebar.geometryView.multipolygon">Multipolygon</span>
+        <span *ngIf="document.resource.geometry.type == 'LineString'" class="fieldvalue"
+              i18n="@@resources.detailSidebar.geometryView.polyline">Polyline</span>
+        <span *ngIf="document.resource.geometry.type == 'MultiLineString'" class="fieldvalue"
+              i18n="@@resources.detailSidebar.geometryView.multipolyline">Multipolyline</span>
+        <span *ngIf="document.resource.geometry.type == 'Point'" class="fieldvalue"
+              i18n="@@resources.detailSidebar.geometryView.point">Punkt</span>
         <button class="btn btn-link btn-sm" id="document-view-button-edit-geometry"
                (click)="onEditGeometry.emit(document)" >
             <span class="mdi mdi-pencil mdi-18px"></span>
         </button>
     </div>
     <div *ngIf="!document.resource.geometry">
-        <span class="fieldvalue">Keine</span>
+        <span class="fieldvalue" i18n="@@resources.detailSidebar.geometryView.none">Keine</span>
         <button class="btn btn-link btn-sm" id="document-view-button-create-polygon"
                 (click)="onCreateGeometry.emit('Polygon')" >
             <span class="mdi mdi-shape-polygon-plus mdi-18px"></span>
@@ -28,7 +33,7 @@
     </div>
 
     <div *ngIf="document.resource.geometry && document.resource.geometry.coordinates" class="fieldname">
-        Koordinaten
+        <span i18n="@@resources.detailSidebar.geometryView.coordinates">Koordinaten</span>
     </div>
     <pre *ngIf="document.resource.geometry && document.resource.geometry.coordinates">{{document.resource.geometry.coordinates | json}}</pre>
 </div>

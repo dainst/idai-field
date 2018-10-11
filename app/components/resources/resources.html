@@ -1,5 +1,4 @@
 <div class="resources-nav row bg-light">
-
     <div class="col-md-6">
         <navigation></navigation>
     </div>
@@ -21,7 +20,8 @@
                 <div class="btn-group resources-mode-buttons">
                     <button id="map-mode-button"
                             (click)="switchMode('map')"
-                            ngbTooltip="Kartendarstellung der Ressourcen"
+                            ngbTooltip="Kartendarstellung"
+                            i18n-ngbTooltip="@@resources.tooltips.mode.map"
                             placement="left"
                             class="btn btn-primary m-0"
                             [class.active]="currentModeIs('map')">
@@ -30,7 +30,8 @@
                     <button id="list-mode-button"
                             (click)="switchMode('list')"
                             class="btn btn-primary m-0"
-                            ngbTooltip="Listendarstellung der Ressourcen"
+                            ngbTooltip="Listendarstellung"
+                            i18n-ngbTooltip="@@resources.tooltips.mode.list"
                             placement="left"
                             [class.active]="currentModeIs('list')">
                         <span class="mdi mdi-table"></span>
@@ -48,15 +49,14 @@
 
     <div *ngIf="isViewWithoutMainTypeDocuments()"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
-        <em>Legen Sie eine Ressource vom Typ '{{viewFacade.getOperationLabel()}}' in der
+        <em i18n="@@resources.noOperationsWarning">
+            Legen Sie eine Ressource vom Typ '{{viewFacade.getOperationLabel()}}' in der
             <a href="#" routerLink="/resources/project">Übersicht</a> an, um hier mit ihr arbeiten zu können.
         </em>
     </div>
 
-    <!--<div *ngIf="(view && view.mainType == 'project') || mainTypeManager.selectedMainTypeDocument || isEditing" class="col-lg-12 col-md-12 col-sm-12">-->
     <div class="col-lg-12 col-md-12 col-sm-12 bg-light">
-        <resources-map *ngIf="viewFacade.getMode() == 'map'"></resources-map>
-        <list *ngIf="viewFacade.getMode() == 'list'" [documents]="viewFacade.getDocuments()"></list>
+        <resources-map *ngIf="viewFacade.getMode() === 'map'"></resources-map>
+        <list *ngIf="viewFacade.getMode() === 'list'" [documents]="viewFacade.getDocuments()"></list>
     </div>
-
 </div>

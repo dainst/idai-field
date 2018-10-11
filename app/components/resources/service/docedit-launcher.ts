@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Document, NewDocument} from 'idai-components-2';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {Document, NewDocument, IdaiFieldDocument} from 'idai-components-2';
 import {DoceditComponent} from '../../docedit/docedit.component';
 import {DoceditActiveTabService} from '../../docedit/docedit-active-tab-service';
 import {ViewFacade} from '../view/view-facade';
@@ -61,7 +60,7 @@ export class DoceditLauncher {
         // this.documentEditChangeMonitor.reset();
         // TODO reset
 
-        if (closeReason == 'deleted') {
+        if (closeReason === 'deleted') {
             this.viewFacade.deselect();
             await this.viewFacade.rebuildNavigationPath();
             await this.viewFacade.populateDocumentList();

@@ -1,5 +1,5 @@
 <div *ngFor="let field of fieldDefinitions" id="edit-form-element-{{field.name}}">
-    <div *ngIf="field && (field.editable==true)" class="form-group card">
+    <div *ngIf="field && (field.editable === true)" class="form-group card">
         <div class="card-header h4">
             <span class="card-title" *ngIf="field.label">{{field.label}}</span>
             <span class="card-title" *ngIf="!field.label">{{field.name}}</span>

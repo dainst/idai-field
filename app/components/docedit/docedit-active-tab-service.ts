@@ -3,7 +3,6 @@
  */
 export class DoceditActiveTabService {
 
-
     private activeTab: any;
 
 

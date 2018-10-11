@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, isNot} from 'tsfun';
 import {DatastoreErrors, Document, IdaiFieldDocument, IdaiFieldImageDocument, Messages,
     ProjectConfiguration} from 'idai-components-2';
@@ -46,7 +47,8 @@ export class DoceditComponent {
         private typeUtility: TypeUtility,
         private activeTabService: DoceditActiveTabService,
         private projectConfiguration: ProjectConfiguration,
-        private loading: Loading) {
+        private loading: Loading,
+        private i18n: I18n) {
     }
 
     public isChanged = () => this.documentHolder.isChanged();
@@ -172,7 +174,7 @@ export class DoceditComponent {
 
         return !document.resource.relations.isRecordedIn
                 || document.resource.relations.isRecordedIn.length === 0
-            ? 'Projekt'
+            ? this.i18n({ id: 'docedit.parentLabel.project', value: 'Projekt' })
             : document.resource.id
                 ? undefined
                 : (await this.datastore.get(

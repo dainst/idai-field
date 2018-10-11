@@ -1,14 +1,18 @@
 <div class="modal-header">
-    <b>Konflikt behandeln</b>
+    <b i18n="@@docedit.conflictDeletedModal.header">Konflikt behandeln</b>
 </div>
 
 <div class="modal-body">
-    <p>Das aktuelle Dokument wurde in der Zwischenzeit von jemand anderem gelöscht.
-        In der Editieransicht kann das Dokument neu gespeichert werden. Bei Klick auf
-        <b>Abbrechen</b> wird es verworfen.</p>
+    <p i18n="@@docedit.conflictDeletedModal.info">
+        Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gelöscht.
+        Sie können die Ressource neu anlegen, indem Sie <b>Speichern</b> wählen. Bei Klick auf
+        <b>Abbrechen</b> wird sie verworfen.
+    </p>
 </div>
-<div class="modal-footer conflict-modal-footer">
 
-    <button type="button" class="btn btn-secondary"
-            (click)="activeModal.close('close')">Zurück zur Editieransicht</button>
+<div class="modal-footer conflict-modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('close')"
+            i18n="@@docedit.conflictDeletedModal.close">
+        Zurück zur Editieransicht
+    </button>
 </div>

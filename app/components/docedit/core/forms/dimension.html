@@ -18,7 +18,7 @@
 </div>
 
 <div class="input-group" *ngIf="!newDimension">
-	<input placeholder="Hinzufügen ..." type="text" disabled class="form-control">
+	<input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.dimension.add" type="text" disabled class="form-control">
     <span class="input-group-btn">
     	<button class="btn btn-success" (click)="createNewDimension()"><span class="mdi mdi-plus-circle"></span></button>
     </span>
@@ -36,8 +36,8 @@
 		<div class="card-block">
 
 			<select class="form-control w100 mb-2" [(ngModel)]="dimension.isRange">
-		        <option [ngValue]="false">Einzelwert</option>
-		        <option [ngValue]="true">Bereich</option>
+		        <option [ngValue]="false" i18n="@@docedit.forms.dimension.singleValue">Einzelwert</option>
+		        <option [ngValue]="true" i18n="@@docedit.forms.dimension.range">Bereich</option>
 		    </select>
 
 		 
@@ -60,7 +60,7 @@
 				<span *ngIf="this.field.unitSuffix" class="ml-1">{{this.field.unitSuffix}}</span>
 			</div>
 			<div class="form-inline form-group mx-2">
-				<label>Gemessen an</label>
+				<label i18n="@@docedit.forms.dimension.asMeasuredBy">Gemessen an</label>
 				<select *ngIf="this.field.positionValues" [(ngModel)]="dimension.measurementPosition" class="ml-2 form-control">
 					<option value=""></option>
 					<option *ngFor="let item of field.positionValues" value="{{item}}">{{item}}</option>
@@ -73,20 +73,18 @@
 					<input class="form-check-input" type="checkbox"
 						   [checked]="dimension.isImprecise"
 						   (change)="dimension.isImprecise = !dimension.isImprecise">
-					Ungenau
+					<span i18n="@@docedit.forms.dimension.imprecise">Ungenau</span>
 				</label>
 			</div>
 
 		    <div class="form-group">
-		    	<label>Kommentar:</label>
+		    	<label i18n="@@docedit.forms.dimension.comment">Kommentar:</label>
 		    	<input [(ngModel)]="dimension.measurementComment" type="text" class="form-control" name="measurementComment">
 		    </div>
 		</div>
 		<div class="card-footer" align="right">
-
-	    	<button class="btn btn-primary" (click)="saveDimension(dimension)">OK</button>
-	    	<button class="btn btn-secondary" *ngIf="newDimension == dimension" (click)="cancelNewDimension()">Abbrechen</button>
-
+	    	<button class="btn btn-primary" (click)="saveDimension(dimension)" i18n="@@buttons.ok">OK</button>
+	    	<button class="btn btn-secondary" *ngIf="newDimension == dimension" (click)="cancelNewDimension()" i18n="@@buttons.cancel">Abbrechen</button>
 		</div>
 	</div>
 

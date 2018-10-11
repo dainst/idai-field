@@ -23,7 +23,6 @@ export class RadioComponent {
 
         return Helper.notIncludedInValueList(this.resource, this.field.name, this.field.valuelist);
     }
-
     
 
     public setValue(value: any) {

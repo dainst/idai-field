@@ -7,7 +7,8 @@
 
 <br *ngIf="notIncludedInValueList()">
 <span *ngIf="notIncludedInValueList()">
-    <small>Die Ressource enthält nicht in Werteliste enthaltene Einträge:
+    <small>
+        <span i18n="@@docedit.forms.outliersInfo">Die Ressource enthält nicht in der Werteliste enthaltene Einträge:</span>
         <button (click)="deleteItem()" class="btn btn-sm mr-1" *ngFor="let item of notIncludedInValueList()">{{item}} <span class="mdi mdi-close-circle-outline"></span></button>
     </small>
 </span>

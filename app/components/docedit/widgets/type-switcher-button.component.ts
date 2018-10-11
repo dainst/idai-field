@@ -52,18 +52,7 @@ export class TypeSwitcherButtonComponent implements OnChanges{
     }
 
 
-    private initializeTypes() {
-
-        const typeObject: IdaiType = this.projectConfiguration.getTypesMap()[this.type];
-        if (typeObject.parentType && !typeObject.parentType.isAbstract) {
-            this.typesTreeList = [typeObject.parentType];
-        } else {
-            this.typesTreeList = [typeObject];
-        }
-    }
-
-
-    private handleClick(event: any) {
+    public handleClick(event: any) {
 
         if (!this.popover) return;
 
@@ -80,6 +69,17 @@ export class TypeSwitcherButtonComponent implements OnChanges{
 
         if (!inside) {
             this.popover.close();
+        }
+    }
+
+
+    private initializeTypes() {
+
+        const typeObject: IdaiType = this.projectConfiguration.getTypesMap()[this.type];
+        if (typeObject.parentType && !typeObject.parentType.isAbstract) {
+            this.typesTreeList = [typeObject.parentType];
+        } else {
+            this.typesTreeList = [typeObject];
         }
     }
 }

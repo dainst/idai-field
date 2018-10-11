@@ -1,30 +1,34 @@
 <div *ngIf="ready" id="conflict-resolver">
     <div class="card">
         <div class="card-header">
-            <h3 *ngIf="conflictedRevisions.length == 0 && inspectedRevisions.length > 0" class="card-title">
+            <h3 *ngIf="conflictedRevisions.length === 0 && inspectedRevisions.length > 0" class="card-title"
+                i18n="@@docedit.tabs.conflicts.header.allResolved">
                 Alle Konflikte wurden gelöst.
             </h3>
-            <h3 *ngIf="conflictedRevisions.length == 1" class="card-title">
+            <h3 *ngIf="conflictedRevisions.length === 1" class="card-title"
+                i18n="@@docedit.tabs.conflicts.header.oneConflict">
                 Es besteht <b>ein</b> Konflikt.
             </h3>
-            <h3 *ngIf="conflictedRevisions.length > 1" class="card-title">
+            <h3 *ngIf="conflictedRevisions.length > 1" class="card-title"
+                i18n="@@docedit.tabs.conflicts.header.multipleConflicts">
                 Es bestehen <b>{{conflictedRevisions.length}}</b> Konflikte.
             </h3>
         </div>
         <div *ngIf="conflictedRevisions.length > 0">
             <div class="row h-100">
                 <div class="col-md-1 my-auto radio-button-field" (click)="setWinningSide(false)">
-                    <input type="radio" name="radiobutton-revisions" [checked]="getWinningSide() == 'left'" />
+                    <input type="radio" name="radiobutton-revisions" [checked]="getWinningSide() === 'left'" />
                 </div>
                 <div class="col-md-5 my-auto conflict-resolver-field" (click)="setWinningSide(false)">
-                    <div>Aktuelle Version:</div>
+                    <div i18n="@@docedit.tabs.conflicts.currentVersion">Aktuelle Version:</div>
                     <div>{{getRevisionLabel(document)}}</div>
                 </div>
                 <div class="col-md-1 my-auto radio-button-field" (click)="setWinningSide(true)">
-                    <input type="radio" name="radiobutton-revisions" [checked]="getWinningSide() == 'right'" />
+                    <input type="radio" name="radiobutton-revisions" [checked]="getWinningSide() === 'right'" />
                 </div>
                 <div class="col-md-5 my-auto conflict-resolver-field">
-                    <div (click)="setWinningSide(true)"> Konkurrierende Version:</div>
+                    <div (click)="setWinningSide(true)"
+                         i18n="@@docedit.tabs.conflicts.competingVersion"> Konkurrierende Version:</div>
                     <select [ngModel]="selectedRevision" (ngModelChange)="setSelectedRevision($event)"
                             class="form-control">
                         <option *ngFor="let revision of conflictedRevisions" [ngValue]="revision">
@@ -45,28 +49,36 @@
             </div>
             <div class="col-md-5 my-auto conflict-resolver-field" [class.winning-side]="!field.rightSideWinning"
                  [class.losing-side]="field.rightSideWinning" (click)="setWinningSideForField(field, false)">
-                <div *ngIf="field.type == 'field'" >
+                <div *ngIf="field.type === 'field'" >
                     <div *ngIf="document.resource[field.name]" [innerHTML]="getFieldContent(field, document)">
                     </div>
-                    <div *ngIf="!document.resource[field.name]"><em>Nicht gesetzt</em></div>
+                    <div *ngIf="!document.resource[field.name]">
+                        <em i18n="@@docedit.tabs.conflicts.notSet">Nicht gesetzt</em>
+                    </div>
                 </div>
-                <div *ngIf="field.type == 'geometry'">
-                    <div *ngIf="document.resource.geometry">
+                <div *ngIf="field.type === 'geometry'">
+                    <div *ngIf="document.resource.geometry" i18n="@@docedit.tabs.conflicts.geometryOfType">
                         Geometrie vom Typ {{document.resource.geometry.type}}
                     </div>
-                    <div *ngIf="!document.resource.geometry"><em>Nicht gesetzt</em></div>
+                    <div *ngIf="!document.resource.geometry">
+                        <em i18n="@@docedit.tabs.conflicts.notSet">Nicht gesetzt</em>
+                    </div>
                 </div>
-                <div *ngIf="field.type == 'georeference'">
-                    <div *ngIf="document.resource.georeference">
+                <div *ngIf="field.type === 'georeference'">
+                    <div *ngIf="document.resource.georeference" i18n="@@docedit.tabs.conflicts.georeferenceData">
                         Georeferenzdaten
                     </div>
-                    <div *ngIf="!document.resource.georeference"><em>Nicht gesetzt</em></div>
+                    <div *ngIf="!document.resource.georeference">
+                        <em i18n="@@docedit.tabs.conflicts.notSet">Nicht gesetzt</em>
+                    </div>
                 </div>
-                <div *ngIf="field.type == 'relation'">
+                <div *ngIf="field.type === 'relation'">
                     <div *ngIf="document.resource.relations[field.name]">
                         {{getTargetIdentifiers(document.resource.relations[field.name])}}
                     </div>
-                    <div *ngIf="!document.resource.relations[field.name]"><em>Nicht gesetzt</em></div>
+                    <div *ngIf="!document.resource.relations[field.name]">
+
+                    </div>
                 </div>
             </div>
             <div class="col-md-1 my-auto radio-button-field" (click)="setWinningSideForField(field, true)">
@@ -74,35 +86,44 @@
             </div>
             <div class="col-md-5 my-auto conflict-resolver-field" [class.winning-side]="field.rightSideWinning"
                  [class.losing-side]="!field.rightSideWinning" (click)="setWinningSideForField(field, true)">
-                <div *ngIf="field.type == 'field'">
+                <div *ngIf="field.type === 'field'">
                     <div *ngIf="selectedRevision.resource[field.name]"
                          [innerHTML]="getFieldContent(field, selectedRevision)"></div>
-                    <div *ngIf="!selectedRevision.resource[field.name]"><em>Nicht gesetzt</em></div>
+                    <div *ngIf="!selectedRevision.resource[field.name]">
+                        <em i18n="@@docedit.tabs.conflicts.notSet">Nicht gesetzt</em>
+                    </div>
                 </div>
-                <div *ngIf="field.type == 'geometry'">
-                    <div *ngIf="selectedRevision.resource.geometry">
+                <div *ngIf="field.type === 'geometry'">
+                    <div *ngIf="selectedRevision.resource.geometry" i18n="@@docedit.tabs.conflicts.geometryOfType">
                         Geometrie vom Typ {{selectedRevision.resource.geometry.type}}
                     </div>
-                    <div *ngIf="!selectedRevision.resource.geometry"><em>Nicht gesetzt</em></div>
+                    <div *ngIf="!selectedRevision.resource.geometry">
+                        <em i18n="@@docedit.tabs.conflicts.notSet">Nicht gesetzt</em>
+                    </div>
                 </div>
-                <div *ngIf="field.type == 'georeference'">
-                    <div *ngIf="selectedRevision.resource.georeference">
+                <div *ngIf="field.type === 'georeference'">
+                    <div *ngIf="selectedRevision.resource.georeference"
+                         i18n="@@docedit.tabs.conflicts.georeferenceData">
                         Georeferenzdaten
                     </div>
-                    <div *ngIf="!selectedRevision.resource.georeference"><em>Nicht gesetzt</em></div>
+                    <div *ngIf="!selectedRevision.resource.georeference">
+                        <em i18n="@@docedit.tabs.conflicts.notSet">Nicht gesetzt</em>
+                    </div>
                 </div>
-                <div *ngIf="field.type == 'relation'">
+                <div *ngIf="field.type === 'relation'">
                     <div *ngIf="selectedRevision.resource.relations[field.name]">
                         {{getTargetIdentifiers(selectedRevision.resource.relations[field.name])}}
                     </div>
-                    <div *ngIf="!selectedRevision.resource.relations[field.name]"><em>Nicht gesetzt</em></div>
+                    <div *ngIf="!selectedRevision.resource.relations[field.name]">
+                        <em i18n="@@docedit.tabs.conflicts.notSet">Nicht gesetzt</em>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div *ngIf="selectedRevision" class="text-center">
         <button class="btn btn-primary" id="solve-conflict-button" (click)="solveConflict()">
-            Konflikt lösen
+            <span i18n="@@docedit.tabs.conflicts.resolveConflict">Konflikt lösen</span>
         </button>
     </div>
 </div>

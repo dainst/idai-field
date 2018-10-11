@@ -17,7 +17,7 @@
                 <input class="form-check-input" type="checkbox"
                        [checked]="dating.isImprecise"
                        (change)="dating.isImprecise = !dating.isImprecise">
-                Ungenau
+                <span i18n="@@docedit.forms.dating.imprecise">Ungenau</span>
             </label>
         </div>
         <div class="form-check form-check-inline" *ngIf="hide != 'isUncertain'">
@@ -25,7 +25,7 @@
                 <input class="form-check-input" type="checkbox"
                        [checked]="dating.isUncertain"
                        (change)="dating.isUncertain = !dating.isUncertain">
-                Unsicher
+                <span i18n="@@docedit.forms.dating.uncertain">Unsicher</span>
             </label>
         </div>
     </div>
@@ -39,23 +39,22 @@
             <div class="card-header">
                 <div>
                     <select class="form-control" [(ngModel)]="dating.type" name="type">
-                        <option value="range">Zeitraum</option>
-                        <option value="exact">Exakt</option>
-                        <option value="before">Vor</option>
-                        <option value="after">Nach</option>
-                        <option value="scientific">Naturwissenschaftlich</option>
+                        <option value="range" i18n="@@docedit.forms.dating.period">Zeitraum</option>
+                        <option value="exact" i18n="@@docedit.forms.dating.exact">Exakt</option>
+                        <option value="before" i18n="@@docedit.forms.dating.before">Vor</option>
+                        <option value="after" i18n="@@docedit.forms.dating.after">Nach</option>
+                        <option value="scientific" i18n="@@docedit.forms.dating.scientific">Naturwissenschaftlich</option>
                     </select>
                 </div>
             </div>
 
             <div class="card-block">
-
-                <div *ngIf="dating.type == 'range'">
+                <div *ngIf="dating.type === 'range'">
                     <div class="form-group">
                         <div class="form-inline">
                             <ng-container [ngTemplateOutlet]="editDate"
                                           [ngTemplateOutletContext]="{ date: dating.dates[0], index: 0 }"></ng-container>
-                            <span style="width: 60px; text-align:center;">bis</span>
+                            <span style="width: 60px; text-align:center;" i18n="@@docedit.forms.dating.until">bis</span>
                             <ng-container [ngTemplateOutlet]="editDate"
                                           [ngTemplateOutletContext]="{ date: dating.dates[1], index: 1 }"></ng-container>
                         </div>
@@ -64,7 +63,7 @@
                                   [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
                 </div>
 
-                <div *ngIf="dating.type == 'exact'">
+                <div *ngIf="dating.type === 'exact'">
                     <div class="form-group">
                         <div class="form-inline">
                             <ng-container [ngTemplateOutlet]="editDate"
@@ -75,7 +74,7 @@
                                   [ngTemplateOutletContext]="{ dating: dating, hide: 'isImprecise' }"></ng-container>
                 </div>
 
-                <div *ngIf="dating.type == 'before'">
+                <div *ngIf="dating.type === 'before'">
                     <div class="form-group">
                         <div class="form-inline">
                             <ng-container [ngTemplateOutlet]="editDate"
@@ -86,7 +85,7 @@
                                   [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
                 </div>
 
-                <div *ngIf="dating.type == 'after'">
+                <div *ngIf="dating.type === 'after'">
                     <div class="form-group">
                         <div class="form-inline">
                             <ng-container [ngTemplateOutlet]="editDate"
@@ -97,7 +96,7 @@
                                   [ngTemplateOutletContext]="{ dating: dating }"></ng-container>
                 </div>
 
-                <div *ngIf="dating.type == 'scientific'">
+                <div *ngIf="dating.type === 'scientific'">
                     <div class="form-group">
                         <div class="form-inline">
                             <ng-container [ngTemplateOutlet]="editDate"
@@ -119,17 +118,14 @@
             <div class="card-footer" align="right">
                 <button type="submit" class="btn btn-primary"
                         [disabled]="!convertDating(dating)">
-                    OK
+                    <span i18n="@@buttons.ok">OK</span>
                 </button>
                 <button type="button" class="btn btn-secondary"
                         (click)="newDating = null">
-                    Abbrechen
+                    <span i18n="@@buttons.cancel">Abbrechen</span>
                 </button>
             </div>
-
-
         </div>
-
     </form>
 </ng-template>
 
@@ -144,7 +140,7 @@
     </div>
 </div>
 <div class="input-group">
-    <input placeholder="Hinzufügen ..." type="text" disabled class="form-control">
+    <input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.dating.add" type="text" disabled class="form-control">
     <span class="input-group-btn">
         <button class="btn btn-success" type="button" (click)="createNewDating()">
             <span class="mdi mdi-plus-circle"></span>

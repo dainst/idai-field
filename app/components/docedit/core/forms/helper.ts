@@ -1,12 +1,12 @@
-import {Resource} from 'idai-components-2/src/model/core/resource';
 import {includedIn, isNot, isArray} from 'tsfun';
+import {Resource} from 'idai-components-2';
 
 
-// @author Daniel de Oliveira
+// TODO Rename
 
-
-
-
+/**
+ * @author Daniel de Oliveira
+ */
 export module Helper {
 
     export function notIncludedInValueList(resource: Resource|undefined, fieldName: string|undefined, valuelist: string[]|undefined) {

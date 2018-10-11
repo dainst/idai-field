@@ -1,4 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {Relations, Resource, Document, Messages, ProjectConfiguration} from 'idai-components-2';
 import {DocumentReadDatastore} from '../../../core/datastore/document-read-datastore';
 import {M} from '../../m';
@@ -28,7 +29,8 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
     constructor(private datastore: DocumentReadDatastore,
                 private messages: Messages,
-                private projectConfiguration: ProjectConfiguration) {}
+                private projectConfiguration: ProjectConfiguration,
+                private i18n: I18n) {}
 
 
     async ngOnChanges() {
@@ -61,9 +63,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     public setSelectedRevision(revision: Document) {
 
         this.selectedRevision = revision;
-
-        this.differingFields = DoceditConflictsTabComponent.createDiff(
-            this.document, revision, this.projectConfiguration);
+        this.differingFields = this.createDiff(this.document, revision, this.projectConfiguration);
 
         this.fetchRelationTargets();
     }
@@ -142,7 +142,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
             if (result.length > 0) result += ', ';
             result += this.relationTargets[targetId]
                 ? (this.relationTargets[targetId] as Document).resource.identifier
-                : 'Gelöschte Ressource';
+                : this.i18n({ id: 'docedit.tabs.conflicts.deletedResource', value: 'Gelöschte Ressource' });
         }
 
         return result;
@@ -225,8 +225,7 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    private static createDiff(document: Document, revision: Document,
-                              projectConfiguration: ProjectConfiguration): any[] {
+    private createDiff(document: Document, revision: Document, projectConfiguration: ProjectConfiguration): any[] {
 
         let differingFields: any[] = [];
 
@@ -241,10 +240,10 @@ export class DoceditConflictsTabComponent implements OnChanges {
 
             if (fieldName === 'geometry') {
                 type = 'geometry';
-                label = 'Geometrie';
+                label = this.i18n({ id: 'docedit.tabs.conflicts.geometry', value: 'Geometrie' });
             } else if (fieldName === 'georeference') {
                 type = 'georeference';
-                label = 'Georeferenz';
+                label = this.i18n({ id: 'docedit.tabs.conflicts.georeference', value: 'Georeferenz' });
             } else {
                 type = 'field';
                 label = projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);

@@ -1,18 +1,16 @@
 <div class="form-group card">
     <div class="card-header">
-        <h3 class="card-title">
-            Verknüpfte Bilder
-        </h3>
+        <h3 class="card-title" i18n="@@docedit.tabs.images.linkedImages">Verknüpfte Bilder</h3>
     </div>
-    <div class="card-block">
 
+    <div class="card-block">
         <div id="image-tab-container" (window:resize)="onResize()">
 
             <div class="btn-toolbar">
                 <button type="button" id="create-depicts-relations-btn"
                         class="btn btn-primary pull-right" (click)="openImagePicker()">
                     <span class="mdi mdi-plus-circle"></span>
-                    Weitere Bilder verknüpfen
+                    <span i18n="@@docedit.tabs.images.linkMoreImages">Weitere Bilder verknüpfen</span>
                 </button>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -26,7 +24,7 @@
                     </div>
                     <div class="btn-group">
                         <button id="deselect-images" type="button" class="btn btn-secondary" (click)="clearSelection()">
-                            Auswahl aufheben
+                            <span i18n="@@docedit.tabs.images.cancelSelection">Auswahl aufheben</span>
                         </button>
                     </div>
                 </span>
@@ -41,8 +39,6 @@
                         [paddingRight]="15"
                         (onClick)="select($event)">
             </image-grid>
-
         </div>
-
     </div>
 </div>

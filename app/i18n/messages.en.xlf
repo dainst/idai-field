@@ -411,6 +411,676 @@
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="docedit.conflictDeletedModal.header" datatype="html">
+        <source>Konflikt behandeln</source>
+        <target state="final">Handle conflict</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/conflict-deleted-modal.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.conflictDeletedModal.info" datatype="html">
+        <source>
+        Die aktuelle Ressource wurde in der Zwischenzeit von jemand anderem gelöscht.
+        Sie können die Ressource neu anlegen, indem Sie <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Speichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wählen. Bei Klick auf
+        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Abbrechen<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> wird sie verworfen.
+    </source>
+        <target state="final">
+        The current resource has just been deleted by another user.
+        You can create the resource anew by choosing <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Save<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>. On clicking
+        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Abort<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>, the resource will be discarded.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/conflict-deleted-modal.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.conflictDeletedModal.close" datatype="html">
+        <source>
+        Zurück zur Editieransicht
+    </source>
+        <target state="final">
+        Back to the edit form
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/conflict-deleted-modal.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.deleteModal.header" datatype="html">
+        <source>Ressource löschen?</source>
+        <target state="final">Delete resource?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.deleteModal.warning.single" datatype="html">
+        <source>
+        Zu dieser Ressource gehört eine weitere Ressource, die beim Löschen ebenfalls entfernt wird.
+    </source>
+        <target state="final">
+        Another resource belongs to this resource, which will be deleted as well.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.deleteModal.warning.multiple" datatype="html">
+        <source>
+        Zu dieser Ressource gehören insgesamt <x id="INTERPOLATION" equiv-text="{{isRecordedInResourcesCount}}"/> Ressourcen, die beim Löschen
+        ebenfalls entfernt werden.
+    </source>
+        <target state="final">
+        There are <x id="INTERPOLATION" equiv-text="{{isRecordedInResourcesCount}}"/> resources belonging to this resource,
+        which will be deleted as well.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.deleteModal.confirmDeleteInfo" datatype="html">
+        <source>
+        Bitte geben Sie den Bezeichner der Ressource ein, um den Löschvorgang zu bestätigen.
+    </source>
+        <target state="final">
+        Please enter the identifier of the resource to confirm the deletion.
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.delete" datatype="html">
+        <source>Löschen</source>
+        <target state="final">Delete</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.cancel" datatype="html">
+        <source>Abbrechen</source>
+        <target state="final">Cancel</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/delete-modal.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/edit-save-dialog.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.saveModal.header" datatype="html">
+        <source>Speichern?</source>
+        <target state="final">Save?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/edit-save-dialog.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.saveModal.question" datatype="html">
+        <source>Die Ressource wurde geändert. Möchten Sie die Änderungen speichern?</source>
+        <target state="final">The resource has been changed. Do you want to save the changes?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/edit-save-dialog.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.save" datatype="html">
+        <source>Speichern</source>
+        <target state="final">Save</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/edit-save-dialog.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.discardChanges" datatype="html">
+        <source>Änderungen verwerfen</source>
+        <target state="final">Discard changes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/dialog/edit-save-dialog.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.header.create" datatype="html">
+        <source>
+                    <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForType(this.documentHolder.clonedDocument.resource.type)}}"/>
+                    in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/> anlegen
+                </source>
+        <target state="final">
+                    Create <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForType(this.documentHolder.clonedDocument.resource.type)}}"/>
+                    in <x id="INTERPOLATION_1" equiv-text="{{parentLabel}}"/>
+                </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.header.edit" datatype="html">
+        <source>
+                    <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForType(this.documentHolder.clonedDocument.resource.type)}}"/> bearbeiten
+                </source>
+        <target state="final">
+                    Edit <x id="INTERPOLATION" equiv-text="{{projectConfiguration.getLabelForType(this.documentHolder.clonedDocument.resource.type)}}"/>
+                </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.metadata" datatype="html">
+        <source>Metadaten</source>
+        <target state="final">Metadata</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.relations" datatype="html">
+        <source>Relationen</source>
+        <target state="final">Relations</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.images" datatype="html">
+        <source>Bilder</source>
+        <target state="final">Images</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts" datatype="html">
+        <source>Konflikte</source>
+        <target state="final">Conflicts</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.loadingInfo.save" datatype="html">
+        <source>
+                        Ressource wird gespeichert...
+                    </source>
+        <target state="final">
+                        Saving resource...
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.loadingInfo.delete" datatype="html">
+        <source>
+                        Ressource wird gelöscht...
+                    </source>
+        <target state="final">
+                        Deleting resource...
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/docedit.html</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.imagePicker.linkImage" datatype="html">
+        <source>Bild verknüpfen</source>
+        <target state="final">Link image</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/widgets/image-picker.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/widgets/image-picker.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.imagePicker.linkImages" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder verknüpfen</source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Link images</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/widgets/image-picker.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.images.linkedImages" datatype="html">
+        <source>Verknüpfte Bilder</source>
+        <target state="final">Linked images</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-image-tab.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.images.linkMoreImages" datatype="html">
+        <source>Weitere Bilder verknüpfen</source>
+        <target state="final">Link more images</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-image-tab.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.images.cancelSelection" datatype="html">
+        <source>Auswahl aufheben</source>
+        <target state="final">Cancel selection</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-image-tab.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.header.allResolved" datatype="html">
+        <source>
+                Alle Konflikte wurden gelöst.
+            </source>
+        <target state="final">
+                All conflicts have been resolved.
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.header.oneConflict" datatype="html">
+        <source>
+                Es besteht <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>ein<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Konflikt.
+            </source>
+        <target state="final">
+                There is <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>one<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> conflict left.
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.header.multipleConflicts" datatype="html">
+        <source>
+                Es bestehen <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Konflikte.
+            </source>
+        <target state="final">
+                There are <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/><x id="INTERPOLATION" equiv-text="{{conflictedRevisions.length}}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> conflicts left.
+            </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.currentVersion" datatype="html">
+        <source>Aktuelle Version:</source>
+        <target state="final">Current version:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.competingVersion" datatype="html">
+        <source> Konkurrierende Version:</source>
+        <target state="final"> Competing version:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.notSet" datatype="html">
+        <source>Nicht gesetzt</source>
+        <target state="final">Not set</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.geometryOfType" datatype="html">
+        <source>
+                        Geometrie vom Typ <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/>
+                    </source>
+        <target state="final">
+                        Geometry of type <x id="INTERPOLATION" equiv-text="{{document.resource.geometry.type}}"/>
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.georeferenceData" datatype="html">
+        <source>
+                        Georeferenzdaten
+                    </source>
+        <target state="final">
+                        Georeference data
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">106</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.resolveConflict" datatype="html">
+        <source>Konflikt lösen</source>
+        <target state="final">Resolve conflict</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.typeSwitcherButton.changeType" datatype="html">
+        <source>Ressourcentyp ändern</source>
+        <target state="final">Change resource type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/widgets/type-switcher-button.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.relations" datatype="html">
+        <source>Relationen</source>
+        <target state="final">Relations</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/relations-form.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.relationsPicker.noTargetsFound" datatype="html">
+        <source>Keine Ziele gefunden</source>
+        <target state="final">No targets found</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/widgets/relationspick/relation-picker.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.outliersInfo" datatype="html">
+        <source>
+        Die Ressource enthält nicht in der Werteliste enthaltene Einträge:
+    </source>
+        <target state="final">
+        The resource contains entries not included in the corresponding value list:
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/checkboxes.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dropdown.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/radio.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.boolean.yes" datatype="html">
+        <source>Ja</source>
+        <target state="final">Yes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.boolean.no" datatype="html">
+        <source>Nein</source>
+        <target state="final">No</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.imprecise" datatype="html">
+        <source>Ungenau</source>
+        <target state="final">Imprecise</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.uncertain" datatype="html">
+        <source>Unsicher</source>
+        <target state="final">Uncertain</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.period" datatype="html">
+        <source>Zeitraum</source>
+        <target state="final">Period</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.exact" datatype="html">
+        <source>Exakt</source>
+        <target state="final">Exact</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.before" datatype="html">
+        <source>Vor</source>
+        <target state="final">Before</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.after" datatype="html">
+        <source>Nach</source>
+        <target state="final">After</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.scientific" datatype="html">
+        <source>Naturwissenschaftlich</source>
+        <target state="final">Scientific</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.until" datatype="html">
+        <source>bis</source>
+        <target state="final">until</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dimension.add" datatype="html">
+        <source>Hinzufügen...</source>
+        <target state="final">Add...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dimension.singleValue" datatype="html">
+        <source>Einzelwert</source>
+        <target state="final">Single value</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dimension.range" datatype="html">
+        <source>Bereich</source>
+        <target state="final">Range</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dimension.asMeasuredBy" datatype="html">
+        <source>Gemessen an</source>
+        <target state="final">As measured by</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dimension.imprecise" datatype="html">
+        <source>Ungenau</source>
+        <target state="final">Imprecise</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dimension.comment" datatype="html">
+        <source>Kommentar:</source>
+        <target state="final">Comment:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dropdownRange.from" datatype="html">
+        <source>von</source>
+        <target state="final">from</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dropdown-range.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dropdownRange.to" datatype="html">
+        <source>bis</source>
+        <target state="final">to</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dropdown-range.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="buttons.ok" datatype="html">
+        <source>OK</source>
+        <target state="final">OK</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dimension.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dating.add" datatype="html">
+        <source>Hinzufügen...</source>
+        <target state="final">Add...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.date.notParsedInfo" datatype="html">
+        <source>
+    <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Achtung.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> Das Datum liegt in einem veralteten Format vor und konnte nicht eingelesen werden.
+    <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
+    <x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p>"/>
+    Gespeicherter Wert: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>"<x id="INTERPOLATION" equiv-text="{{resource[_field.name]}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>
+    <x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p>"/>
+    Bitte tragen Sie das Datum erneut ein und es wird beim nächsten Speichern ersetzt.
+</source>
+        <target state="final">
+    <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>Warning.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/> The date could not be parsed because its format is obsolete.
+    <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
+    <x id="START_PARAGRAPH" ctype="x-p" equiv-text="&lt;p>"/>
+    Stored value: <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b>"/>"<x id="INTERPOLATION" equiv-text="{{resource[_field.name]}}"/>"<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b>"/>
+    <x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p>"/>
+    Please enter the date another time, and it will be replaced on save.
+</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/date.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.forms.dropdownRange.tooltip" datatype="html">
+        <source>Start- und Endzeitraum angeben</source>
+        <target state="final">Specify start and end period</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/core/forms/dropdown-range.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.parentLabel.project" datatype="html">
+        <source>Projekt</source>
+        <target state="final">Project</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/docedit.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.deletedResource" datatype="html">
+        <source>Gelöschte Ressource</source>
+        <target state="final">Deleted resource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.geometry" datatype="html">
+        <source>Geometrie</source>
+        <target state="final">Geometry</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="docedit.tabs.conflicts.georeference" datatype="html">
+        <source>Georeferenz</source>
+        <target state="final">Georeference</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.messages.error.unknownMessage" datatype="html">
         <source>Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</source>
         <target state="final">An unknown error has occurred. Details can be found in the developer console.</target>

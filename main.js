@@ -25,8 +25,8 @@ global.setConfigDefaults = config => {
 
     if (!config.syncTarget) config.syncTarget = {};
     if (!config.remoteSites) config.remoteSites = [];
-    if (!config.locale) config.locale = 'de';
     if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
+    if (!config.locale) config.locale = electron.app.getLocale().includes('de') ? 'de' : 'en';
     if (os.type() === 'Linux') config.isAutoUpdateActive = false;
 
     return config;
@@ -67,13 +67,8 @@ if (['production', 'development'].includes(global.mode)) {
     global.appDataPath = 'test/test-temp';
 }
 
-console.log('Using config file: ' + global.configPath);
-global.config = global.setConfigDefaults(
-    JSON.parse(fs.readFileSync(global.configPath, 'utf-8'))
-);
-
-
 // -- CONFIGURATION
+
 
 // OTHER GLOBALS --
 
@@ -102,6 +97,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
+
 const createWindow = () => {
 
     const screenWidth = electron.screen.getPrimaryDisplay().workAreaSize.width;
@@ -118,9 +114,6 @@ const createWindow = () => {
         },
         titleBarStyle: 'hiddenInset'
     });
-
-    const menu = electron.Menu.buildFromTemplate(require('./menu.js'));
-    electron.Menu.setApplicationMenu(menu);
 
     // and load the index.html of the app.
     mainWindow.loadURL('file://' + __dirname + '/index.html');
@@ -139,10 +132,31 @@ const createWindow = () => {
     return mainWindow;
 };
 
+
+const loadConfig = () => {
+
+    console.log('Using config file: ' + global.configPath);
+
+    global.config = global.setConfigDefaults(
+        JSON.parse(fs.readFileSync(global.configPath, 'utf-8'))
+    );
+};
+
+
+const createMenu = () => {
+
+    const menu = electron.Menu.buildFromTemplate(require('./menu.js'));
+    electron.Menu.setApplicationMenu(menu);
+};
+
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 electron.app.on('ready', () => {
     const mainWindow = createWindow();
+    loadConfig();
+    createMenu();
+
     if (global.config.isAutoUpdateActive) autoUpdate.setUp(mainWindow);
 
     electron.ipcMain.on('settingsChanged', (event, settings) => {

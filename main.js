@@ -144,10 +144,10 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 electron.app.on('ready', () => {
     const mainWindow = createWindow();
-    if (global.config.isAutoUpdateActive) autoUpdate.setUp(mainWindow, global.config['locale']);
+    if (global.config.isAutoUpdateActive) autoUpdate.setUp(mainWindow);
 
     electron.ipcMain.on('settingsChanged', (event, settings) => {
-        if (settings.isAutoUpdateActive) autoUpdate.setUp(mainWindow, global.config['locale']);
+        if (settings.isAutoUpdateActive) autoUpdate.setUp(mainWindow);
     });
 });
 

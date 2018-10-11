@@ -1492,6 +1492,158 @@
           <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="matrix.view.tooltips.editMode" datatype="html">
+        <source>Bearbeitungsmodus</source>
+        <target state="final">Edit mode</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-view.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.tooltips.singleSelectionMode" datatype="html">
+        <source>Einzelauswahlmodus</source>
+        <target state="final">Single selection mode</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-view.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.tooltips.groupSelectionMode" datatype="html">
+        <source>Gruppenauswahlmodus</source>
+        <target state="final">Group selection mode</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-view.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.tooltips.deselect" datatype="html">
+        <source>Auswahl aufheben</source>
+        <target state="final">Deselect</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-view.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.tooltips.createMatrixFromSelection" datatype="html">
+        <source>Matrix aus Auswahl erstellen</source>
+        <target state="final">Create matrix from selection</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-view.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.tooltips.reloadMatrix" datatype="html">
+        <source>Matrix neu laden</source>
+        <target state="final">Reload matrix</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-view.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.noTrenchesWarning" datatype="html">
+        <source>
+            Legen Sie eine Ressource vom Typ 'Schnitt' in der <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>Übersicht<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
+            an, um hier mit ihr arbeiten zu können.
+        </source>
+        <target state="final">
+            Please create a resource of type 'Trench' in the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a>"/>overview<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a>"/>
+            in order to work with it here.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-view.html</context>
+          <context context-type="linenumber">122</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.view.noResourcesWarning" datatype="html">
+        <source>
+            Legen Sie für den ausgewählten Schnitt Ressourcen vom Typ 'Stratigraphische Einheit' in der
+            Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen.
+        </source>
+        <target state="final">
+            Please create resources of type 'Stratigraphical Unit' in the excavation view and link them using
+            temporal or spatial relations.
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-view.html</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.optionsMenu.relations.label" datatype="html">
+        <source>Relationen:</source>
+        <target state="final">Relations:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-options-menu.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.optionsMenu.relations.temporal" datatype="html">
+        <source>
+                        Zeitlich
+                    </source>
+        <target state="final">
+                        Temporal
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-options-menu.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.optionsMenu.relations.spatial" datatype="html">
+        <source>
+                        Räumlich
+                    </source>
+        <target state="final">
+                        Spatial
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-options-menu.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.optionsMenu.edges.label" datatype="html">
+        <source>Kanten:</source>
+        <target state="final">Edges:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-options-menu.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.optionsMenu.edges.straight" datatype="html">
+        <source>
+                        Gerade
+                    </source>
+        <target state="final">
+                        Straight
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-options-menu.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.optionsMenu.edges.curved" datatype="html">
+        <source>
+                        Gebogen
+                    </source>
+        <target state="final">
+                        Curved
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-options-menu.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="matrix.optionsMenu.clusterOption" datatype="html">
+        <source>
+                        Gruppierung nach Grobdatierung
+                    </source>
+        <target state="final">
+                        Group by period
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/matrix/matrix-options-menu.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="docedit.parentLabel.project" datatype="html">
         <source>Projekt</source>
         <target state="final">Project</target>

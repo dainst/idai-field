@@ -101,9 +101,9 @@ export module GraphManipulation {
 
         const elementType: ElementType = getElementType(element);
 
-        if (elementType == 'node') {
+        if (elementType === 'node') {
             setEdgesHighlighting(graphContainer, getResourceId(element), highlight);
-        } else if (elementType == 'edge') {
+        } else if (elementType === 'edge') {
             setEdgeHighlighting(element, highlight, getEdgeType(element));
         }
     }

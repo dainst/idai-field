@@ -1519,6 +1519,10 @@
         <source>Ja</source>
         <target state="final">Yes</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">../node_modules/idai-components-2/src/documents/docview/fields-view.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
           <context context-type="linenumber">60</context>
         </context-group>
@@ -1531,12 +1535,24 @@
         <source>Nein</source>
         <target state="final">No</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">../node_modules/idai-components-2/src/documents/docview/fields-view.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
           <context context-type="linenumber">62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
           <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="components.documents.documentTeaser.newResource" datatype="html">
+        <source>Neue Ressource</source>
+        <target state="final">New resource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">../node_modules/idai-components-2/src/documents/document-teaser.html</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.imagePicker.linkImage" datatype="html">
@@ -3101,6 +3117,30 @@
         <target state="final">Active search criteria</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/resources/searchbar/search-constraints.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="components.documents.docView.fieldsView.period" datatype="html">
+        <source>Grobdatierung</source>
+        <target state="final">Period</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/documents/docview/fields-view.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="components.documents.docView.fieldsView.period.from" datatype="html">
+        <source> (von)</source>
+        <target state="final"> (from)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/documents/docview/fields-view.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="components.documents.docView.fieldsView.period.to" datatype="html">
+        <source>Grobdatierung (bis)</source>
+        <target state="final">Period (to)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/documents/docview/fields-view.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

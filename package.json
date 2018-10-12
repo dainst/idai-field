@@ -18,7 +18,7 @@
     "package": "build -mw --publish never",
     "package-mac": "build -m",
     "package-win": "build -w nsis",
-    "i18n": "ng-xi18n --locale de --project app && ngx-extractor -i \"./app/**/*.ts\" -o ./app/messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf app/messages.xlf"
+    "i18n": "ng-xi18n --locale de --project app && ngx-extractor -i \"./app/**/*.ts\" \"./node_modules/idai-components-2/src/**/*.ts\" -o ./app/messages.xlf -l de && xliffmerge --profile xliff-merge.json && rimraf app/messages.xlf"
   },
   "build": {
     "appId": "org.dainst.field",
@@ -67,7 +67,7 @@
     "es6-shim": "0.35.0",
     "express": "4.15.0",
     "express-pouchdb": "4.1.0",
-    "idai-components-2": "1.26.10",
+    "idai-components-2": "1.26.12",
     "ip": "1.1.5",
     "leaflet": "1.2.0",
     "leaflet-imageoverlay-rotated": "0.1.1",

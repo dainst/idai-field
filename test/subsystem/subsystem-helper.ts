@@ -39,7 +39,10 @@ export async function setupSettingsService(pouchdbmanager, projectName = 'testdb
             undefined, undefined, pouchdbmanager.getDbProxy()) as Imagestore,
         pouchdbmanager,
         undefined,
-        new IdaiFieldAppConfigurator(new ConfigLoader(new FsConfigReader() as ConfigReader)),
+        new IdaiFieldAppConfigurator(
+            new ConfigLoader(new FsConfigReader() as ConfigReader, () => ''),
+            () => ''
+        ),
         undefined,
         undefined
     );

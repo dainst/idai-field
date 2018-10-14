@@ -3128,6 +3128,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="configuration.defaultFields.type" datatype="html">
+        <source>Typ</source>
+        <target state="final">Typ</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/configuration/config-loader.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="components.documents.docView.fieldsView.period" datatype="html">
         <source>Grobdatierung</source>
         <target state="final">Grobdatierung</target>
@@ -3149,6 +3157,254 @@
         <target state="final">Grobdatierung (bis)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/documents/docview/fields-view.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.image.height" datatype="html">
+        <source>Höhe</source>
+        <target state="final">Höhe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.image.width" datatype="html">
+        <source>Breite</source>
+        <target state="final">Breite</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.project" datatype="html">
+        <source>Projekt</source>
+        <target state="final">Projekt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.project.crs" datatype="html">
+        <source>Koordinatenbezugssystem</source>
+        <target state="final">Koordinatenbezugssystem</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.defaultFields.shortDescription" datatype="html">
+        <source>Kurzbeschreibung</source>
+        <target state="final">Kurzbeschreibung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.defaultFields.identifier.description" datatype="html">
+        <source>Eindeutiger Bezeichner dieser Ressource</source>
+        <target state="final">Eindeutiger Bezeichner dieser Ressource</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.defaultFields.identifier" datatype="html">
+        <source>Bezeichner</source>
+        <target state="final">Bezeichner</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.depicts" datatype="html">
+        <source>Zeigt</source>
+        <target state="final">Zeigt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isDepictedIn" datatype="html">
+        <source>Wird gezeigt in</source>
+        <target state="final">Wird gezeigt in</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isLocatedIn" datatype="html">
+        <source>Liegt im Ort</source>
+        <target state="final">Liegt im Ort</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.locates" datatype="html">
+        <source>Enthält Maßnahme</source>
+        <target state="final">Enthält Maßnahme</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isAfter" datatype="html">
+        <source>Zeitlich nach</source>
+        <target state="final">Zeitlich nach</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isBefore" datatype="html">
+        <source>Zeitlich vor</source>
+        <target state="final">Zeitlich vor</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isContemporaryWith" datatype="html">
+        <source>Zeitgleich mit</source>
+        <target state="final">Zeitgleich mit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isAbove" datatype="html">
+        <source>Liegt über</source>
+        <target state="final">Liegt über</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isBelow" datatype="html">
+        <source>Liegt unter</source>
+        <target state="final">Liegt unter</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.cuts" datatype="html">
+        <source>Schneidet</source>
+        <target state="final">Schneidet</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isCutBy" datatype="html">
+        <source>Wird geschnitten von</source>
+        <target state="final">Wird geschnitten von</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.borders" datatype="html">
+        <source>Grenzt an</source>
+        <target state="final">Grenzt an</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isRecordedIn" datatype="html">
+        <source>Aufgenommen in Maßnahme</source>
+        <target state="final">Aufgenommen in Maßnahme</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.includes" datatype="html">
+        <source>Beinhaltet</source>
+        <target state="final">Beinhaltet</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.liesWithin" datatype="html">
+        <source>Liegt in</source>
+        <target state="final">Liegt in</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.bears" datatype="html">
+        <source>Trägt</source>
+        <target state="final">Trägt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="configuration.relations.isFoundOn" datatype="html">
+        <source>Ist aufgebracht auf</source>
+        <target state="final">Ist aufgebracht auf</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

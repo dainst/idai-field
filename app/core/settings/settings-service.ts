@@ -116,7 +116,8 @@ export class SettingsService {
         try {
             return await this.appConfigurator.go(
                 configurationDirPath,
-                customProjectName
+                customProjectName,
+                this.getSettings().locale
             );
         } catch (msgsWithParams) {
             if (msgsWithParams.length > 0) {

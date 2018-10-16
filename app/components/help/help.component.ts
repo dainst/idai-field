@@ -1,7 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {Chapter, HelpLoader} from './help-loader';
 import {Http} from '@angular/http';
+import {Chapter, HelpLoader} from './help-loader';
+import {SettingsService} from '../../core/settings/settings-service';
 
 
 @Component({
@@ -20,17 +21,23 @@ export class HelpComponent implements OnInit {
 
     @ViewChild('help') rootElement: ElementRef;
 
-    private static filePath: string = 'manual/manual.md';
     private static scrollOffset: number = -15;
     private static headerTopOffset: number = -62;
 
 
-    constructor(private domSanitizer: DomSanitizer, private http: Http) {}
+    constructor(private domSanitizer: DomSanitizer,
+                private http: Http,
+                private settingsService: SettingsService) {}
 
 
     async ngOnInit() {
 
-        const {html, chapters} = await HelpLoader.load(HelpComponent.filePath, this.http, this.domSanitizer);
+        const {html, chapters} = await HelpLoader.load(
+            HelpComponent.getFilePath(this.settingsService.getSettings().locale),
+            this.http,
+            this.domSanitizer
+        );
+
         this.html = html;
         this.chapters = chapters;
         if (this.chapters.length > 0) this.activeChapter = this.chapters[0];
@@ -58,6 +65,12 @@ export class HelpComponent implements OnInit {
                 this.activeChapter = chapter;
             }
         });
+    }
+
+
+    private static getFilePath(locale: string): string {
+
+        return 'manual/manual.' + locale + '.md';
     }
 
 

@@ -14,7 +14,7 @@ durchführen:
 rechten Bildschirmecke erreichen, können Sie grundlegende Einstellungen vornehmen,
 die für sämtliche Projekte gelten. Legen Sie hier bitte zunächst Ihren Bearbeiternamen
 fest. Dieser Name wird bei allen von Ihnen vorgenommenen Änderungen in der
-Datenbank hinterlegt und sollte unbedingt gesetzt werden, wenn Daten mit anderen
+Datenbank hinterlegt und sollte unbedingt gesetzt werden, insbesondere wenn Daten mit anderen
 Clients synchronisiert werden sollen.
 
 2. Darüber hinaus können Sie im Menü **Einstellungen** den Pfad des Bilderverzeichnisses
@@ -22,9 +22,9 @@ Clients synchronisiert werden sollen.
 das auf einem Netzwerk-Gerät (NAS) liegt und das von mehreren Nutzern bzw. Nutzerinnen
 gleichzeitig verwendet wird. Bitte beachten Sie, dass Bilder in jedem Fall über den
 Client importiert werden müssen. Bilddateien, die manuell in das Bilderverzeichnis
-eingefügt werden, können von der Anwendung **nicht** korrekt erkannt werden. 
+eingefügt werden, können von der Anwendung **nicht** verwendet werden. 
 
-3. Klicken Sie auf den Projektnamen *"test"*, um die **Projektverwaltung** aufzurufen. Hier
+3. Klicken Sie auf den Projektnamen "test", um die **Projektverwaltung** aufzurufen. Hier
 können Sie über den Plus-Button ein neues Projekt anlegen. Erlaubte Zeichen für den
 Projektnamen sind Buchstaben, Zahlen und Bindestriche. Sobald das neue Projekt
 geladen wurde, können Sie über den Editierungs-Button in der Projektverwaltung allgemeine
@@ -33,7 +33,7 @@ Metadaten des Projekts eingeben.
 Beginnnen Sie mit der Dateneingabe, indem Sie in den Bereich **Übersicht** wechseln, wo
 Sie Datensätze für Maßnahmen (Schnitte, Bauwerke, Survey-Areale) anlegen können. In den
 Bereichen **Ausgrabung**, **Bauaufnahme** und **Survey** können Sie anschließend Ressourcen
-innerhalb von Maßnahmen anlegen. 
+(z. B. stratigraphische Einheiten, Funde oder Bauwerksteile) innerhalb von Maßnahmen anlegen. 
 
 Verwenden Sie das Menü **Backup erstellen**, das Sie ebenfalls über das Dropdown-Menü
 in der oberen rechten Ecke des Bildschirms erreichen, um regelmäßig Sicherungen Ihrer Projektdaten

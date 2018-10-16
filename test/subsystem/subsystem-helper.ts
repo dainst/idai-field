@@ -107,7 +107,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         idaiFieldDocumentDatastore,
         new StandardStateSerializer(settingsService),
         'synctest',
-        true
+        true,
+        'de'
     );
 
     const viewFacade = new ViewFacade(

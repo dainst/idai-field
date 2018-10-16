@@ -91,7 +91,8 @@ const remote = require('electron').remote;
                     datastore,
                     stateSerializer,
                     projectName,
-                    remote.getGlobal('switches').suppress_map_load_for_test
+                    remote.getGlobal('switches').suppress_map_load_for_test,
+                    settingsService.getSettings().locale
                 );
             },
             deps: [IdaiFieldDocumentReadDatastore, StateSerializer, ProjectConfiguration, SettingsService]

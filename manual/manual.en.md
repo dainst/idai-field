@@ -49,7 +49,7 @@ area (e. g. to all trenches or the whole project) and to define additional field
 The search filter is a fast way to show or hide resources based on specific criteria. It consists of a
 *text filter* (an input field) and a *type filter* (a blue button).
 
-<p align="center"><img src="images/search/search_filter.png" alt="Search filter"/></p>
+<p align="center"><img src="images/en/search/search_filter.png" alt="Search filter"/></p>
 
 After entering a search term and/or choosing a resource type, only the resources matching these filter criteria are
 shown. In the **overview** and the **operation views**, this affects all resources in the left sidebar and on the
@@ -59,7 +59,7 @@ in the grid are affected by the search filter.
 
 #### Type filter
 
-<p align="center"><img src="images/search/filter_menu.png" alt="Type filter selection"/></p>
+<p align="center"><img src="images/en/search/filter_menu.png" alt="Type filter selection"/></p>
 
 The type filter button allows you to choose a resource type. There are supertypes and subtypes: If you choose a
 subtype (e. g. "Layer"), only the resources of the respective type are shown. In constrast, if you choose a
@@ -125,7 +125,7 @@ A search for "Landscape-00[01]1" returns (1) and (4), as the digit after the pla
 If no search results are found in the current context, search results from other contexts are shown below the
 text input field.
 
-<p align="center"><img src="images/search/other_contexts.png" alt="Search results from other contexts"/></p>
+<p align="center"><img src="images/en/search/other_contexts.png" alt="Search results from other contexts"/></p>
 
 By clicking one of the resources, you can immediately switch to the corresponding context and select the
 resource.
@@ -135,7 +135,7 @@ resource.
 In the **overview** as well as in the **operation views**, you can switch to the extended search mode by clicking
 the magnifier button.
  
-<p align="center"><img src="images/search/extended_search_button.png" alt="Extended search mode button"/></p>
+<p align="center"><img src="images/en/search/extended_search_button.png" alt="Extended search mode button"/></p>
  
 A blue magnifier button indicates that the extended search mode is activated.
 
@@ -148,7 +148,7 @@ The extended search mode allows searching over larger amounts of data:
 operations of the respective type (e. g. over all trenches in the view **Excavation**). For this purpose, the option
 "All" is available in the operation selection menu.
 
-<p align="center"><img src="images/search/all_operations.png" alt="Search over all operations of a type"/></p>
+<p align="center"><img src="images/en/search/all_operations.png" alt="Search over all operations of a type"/></p>
 
 Please note that the hierarchy resulting from the created "Lies within" relations is not shown in the extended
 search mode and the creation of new resources is not possible. For these tasks, leave the extended search mode
@@ -167,7 +167,7 @@ those corresponding to the respective type definition. You can choose as many fi
 multiple search criteria. Of course, you can also use the field specific search criteria in combination with the text
 filter. 
 
-<p align="center"><img src="images/search/criteria_search.png" alt="Field specific search criteria"/></p>
+<p align="center"><img src="images/en/search/criteria_search.png" alt="Field specific search criteria"/></p>
 
 In case of a text field, just enter the search term directly; for fields with value lists, choose the term from
 a list of all allowed values in a dropdown menu. 
@@ -189,7 +189,7 @@ remove.
 The **Matrix** view displays a matrix for each trench of the project, generated automatically from the stratigraphical
 units of the respective trench. The edges of the matrix are built on the basis of the relations created for the units.
 
-<p align="center"><img src="images/matrix/trench_selection.png" alt="Trench selection"/></p>
+<p align="center"><img src="images/en/matrix/trench_selection.png" alt="Trench selection"/></p>
 
 Choose the trench for which a matrix shall be generated via the dropdown button on the left side of the toolbar.
 
@@ -200,7 +200,7 @@ Via the **Options button** in the upper right corner of the matrix view, you can
 adjusting different settings. The chosen settings are applied to all matrices for all of the project's trenches and
 are preserved when restarting the application.
 
-<p align="center"><img src="images/matrix/matrix_tools.png" alt="Options menu"/></p>
+<p align="center"><img src="images/en/matrix/matrix_tools.png" alt="Options menu"/></p>
 
 
 #### Relations
@@ -221,7 +221,7 @@ Activate this option in order to group the stratigraphical units of the matrix b
 "Period". If two values are set for the field (from/until), the value of "Period (from)" is used in each case.
 Stratigraphical units with equal period values are placed close to each other and framed by a rectangle. 
 
-<p align="center"><img src="images/matrix/matrix_phases.png" alt="Group by period"/></p>
+<p align="center"><img src="images/en/matrix/matrix_phases.png" alt="Group by period"/></p>
 
 
 ### Navigation
@@ -250,13 +250,13 @@ To facilitate the overview in large matrices, sub-matrices can also be generated
 Use the buttons on the right side of the toolbar in order to select units and create a new sub-matrix from the
 current selection: 
 
-<p align="center"><img src="images/matrix/interaction_mode_buttons.png" alt="Interaction mode buttons"/></p>
+<p align="center"><img src="images/en/matrix/interaction_mode_buttons.png" alt="Interaction mode buttons"/></p>
 
 * *Edit mode*: Units can be edited by left click.
 * *Single selection mode*: Units can be selected and deselected separately by left click.
 * *Group selection mode*: Units can be selected in groups by drawing a rectangle using the mouse.
 
-<p align="center"><img src="images/matrix/subgraph_buttons.png" alt="Sub-matrix creation buttons"/></p>
+<p align="center"><img src="images/en/matrix/subgraph_buttons.png" alt="Sub-matrix creation buttons"/></p>
   
 * *Deselect*: All units are deselected.
 * *Create matrix from selection*: A new matrix is generated consisting only of the selected units. Edges are still

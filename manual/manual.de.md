@@ -61,7 +61,7 @@ Projekt) und zusätzliche feldspezifische Suchkriterien zu definieren.
 Der Suchfilter stellt eine schnelle Möglichkeit dar, Ressourcen nach bestimmten Kriterien anzuzeigen bzw.
 auszublenden, und besteht aus einem *Textfilter* (Eingabefeld) sowie einem *Typfilter* (blauer Button).
 
-<p align="center"><img src="images/search/search_filter.png" alt="Suchfilter"/></p>
+<p align="center"><img src="images/de/search/search_filter.png" alt="Suchfilter"/></p>
 
 Nach der Eingabe eines Suchbegriffes und/oder der Auswahl eines Ressourcentyps wird die Menge der aktuell
 angezeigten Ressourcen so eingeschränkt, dass sie den Filterkriterien entspricht. In der **Übersicht** und den
@@ -72,7 +72,7 @@ Raster angezeigten Bilder vom Suchfilter betroffen.
 
 #### Typfilter
 
-<p align="center"><img src="images/search/filter_menu.png" alt="Typfilter-Auswahl"/></p>
+<p align="center"><img src="images/de/search/filter_menu.png" alt="Typfilter-Auswahl"/></p>
 
 Über den Typfilter-Button können Sie einen Ressourcentyp wählen. Unterschieden wird zwischen Obertypen und
 Untertypen: Wählen Sie einen Untertyp (z. B. "Erdbefund"), werden ausschließlich Ressourcen des entsprechenden
@@ -140,7 +140,7 @@ muss.
 Werden bei gesetztem Suchfilter keine Suchergebnisse im aktuellen Kontext gefunden, werden unterhalb des
 Textfelds Suchergebnisse aus anderen Kontexten angezeigt.
 
-<p align="center"><img src="images/search/other_contexts.png" alt="Suchergebnisse in anderen Kontexten"/></p>
+<p align="center"><img src="images/de/search/other_contexts.png" alt="Suchergebnisse in anderen Kontexten"/></p>
 
 Durch einen Klick auf eine der angezeigten Ressourcen wechseln Sie sofort in den dazugehörigen Kontext und
 wählen die entsprechende Ressource aus.
@@ -151,7 +151,7 @@ wählen die entsprechende Ressource aus.
 In der **Übersicht** und in den **Maßnahmenansichten** können Sie durch einen Klick auf den Lupen-Button in
 den erweiterten Suchmodus wechseln.
  
-<p align="center"><img src="images/search/extended_search_button.png" alt="Button zur Aktivierung des erweiterten Suchmodus"/></p>
+<p align="center"><img src="images/de/search/extended_search_button.png" alt="Button zur Aktivierung des erweiterten Suchmodus"/></p>
  
 Ein blauer Lupen-Button zeigt an, dass der erweiterte Suchmodus aktiviert ist.
 
@@ -164,7 +164,7 @@ Im erweiterten Suchmodus ist eine Suche über größere Datenmengen möglich:
 Maßnahmen des jeweiligen Typs (z. B. alle Schnitte in der Ansicht **Ausgrabung**) erfolgen soll. Hierzu
 steht im Maßnahmen-Auswahlmenü die Option "Alle" zur Verfügung.
 
-<p align="center"><img src="images/search/all_operations.png" alt="Suche über alle Maßnahmen eines Typs"/></p>
+<p align="center"><img src="images/de/search/all_operations.png" alt="Suche über alle Maßnahmen eines Typs"/></p>
 
 Bitte beachten Sie, dass die Hierarchie, die sich anhand der angelegten "Liegt in"-Relationen ergibt, im
 erweiterten Suchmodus nicht dargestellt wird und das Anlegen neuer Ressourcen nicht möglich ist. Verlassen
@@ -185,7 +185,7 @@ beliebig viele Felder auswählen, sodass Sie mehrere Suchkriterien miteinander k
 hinaus können Sie die feldspezifischen Suchkriterien selbstverständlich auch in Kombination mit dem Textfilter
 verwenden.
 
-<p align="center"><img src="images/search/criteria_search.png" alt="Feldspezifische Suchkriterien"/></p>
+<p align="center"><img src="images/de/search/criteria_search.png" alt="Feldspezifische Suchkriterien"/></p>
 
 Handelt es sich um Freitextfelder, so geben Sie den Suchbegriff direkt ein; bei Feldern mit Wertelisten
 wählen Sie den Begriff aus der Liste aller erlaubten Werte in einem Dropdown-Menü aus. 
@@ -208,7 +208,7 @@ Unter dem Menüpunkt **Matrix** finden Sie für jeden Schnitt des Projekts eine 
 den stratigraphischen Einheiten des jeweiligen Schnitts generiert wird. Die Kanten der Matrix werden dabei
 auf Grundlage der Relationen erstellt, die für die Einheiten angelegt wurden.
 
-<p align="center"><img src="images/matrix/trench_selection.png" alt="Schnitt-Auswahl"/></p>
+<p align="center"><img src="images/de/matrix/trench_selection.png" alt="Schnitt-Auswahl"/></p>
 
 Wählen Sie den Schnitt, für den Sie eine Matrix generieren möchten, über den Dropdown-Button links oben in der
 Toolbar aus.
@@ -221,7 +221,7 @@ vornehmen, mit denen Sie die Darstellung der Matrix individuell anpassen können
 gelten für alle Matrizen in allen Schnitten des Projekts und bleiben auch nach einem Programmneustart
 erhalten.
 
-<p align="center"><img src="images/matrix/matrix_tools.png" alt="Optionsmenü"/></p>
+<p align="center"><img src="images/de/matrix/matrix_tools.png" alt="Optionsmenü"/></p>
 
 
 #### Relationen
@@ -246,7 +246,7 @@ Aktivieren Sie diese Option, um die stratigraphischen Einheiten in der Matrix an
 der Wert aus "Grobdatierung (von)" verwendet. Stratigraphische Einheiten mit gleichen Werten für die
 Grobdatierung werden nun nahe beieinander platziert und mit einem Rechteck umrahmt.
 
-<p align="center"><img src="images/matrix/matrix_phases.png" alt="Gruppierung nach Grobdatierung"/></p>
+<p align="center"><img src="images/de/matrix/matrix_phases.png" alt="Gruppierung nach Grobdatierung"/></p>
 
 
 ### Navigation
@@ -277,7 +277,7 @@ Um die Übersicht in großen Matrizen zu erleichtern, können auch Teilmatrizen 
 der Matrix generiert werden. Verwenden Sie die Buttons auf der rechten Seite der Toolbar, um Einheiten zu
 selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 
-<p align="center"><img src="images/matrix/interaction_mode_buttons.png" alt="Interaktionsmodus-Buttons"/></p>
+<p align="center"><img src="images/de/matrix/interaction_mode_buttons.png" alt="Interaktionsmodus-Buttons"/></p>
 
 * *Bearbeitungsmodus*: Einheiten können per Linksklick editiert werden.
 * *Einzelauswahlmodus*: Einheiten können einzeln per Linksklick selektiert und (bei erneutem Klick)
@@ -285,7 +285,7 @@ selektieren und eine neue Teilmatrix aus der aktuellen Selektion zu erstellen:
 * *Gruppenauswahlmodus*: Einheiten können gruppenweise selektiert werden, indem ein Rechteck mit der Maus
   gezogen wird.
 
-<p align="center"><img src="images/matrix/subgraph_buttons.png" alt="Buttons zur Erstellung von Teilmatrizen"/></p>
+<p align="center"><img src="images/de/matrix/subgraph_buttons.png" alt="Buttons zur Erstellung von Teilmatrizen"/></p>
   
 * *Auswahl aufheben*: Alle Einheiten werden deselektiert.
 * *Matrix aus Auswahl erstellen*: Eine neue Matrix wird generiert, in der ausschließlich die selektierten

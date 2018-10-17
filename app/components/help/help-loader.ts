@@ -1,7 +1,6 @@
 import {DomSanitizer} from '@angular/platform-browser';
-import {Converter} from 'showdown';
-import * as fs from 'fs';
 import {Http} from '@angular/http';
+import {Converter} from 'showdown';
 import {HttpReader} from '../../core/import/http-reader';
 
 export type Chapter = { id: string, label: string };
@@ -61,18 +60,4 @@ export module HelpLoader {
         const markdown: string = await reader.go();
         return adjustImageLinks(markdown);
     }
-
-
-    // function readFile(filePath: string): Promise<string> {
-    //
-    //     return new Promise<string>(resolve => {
-    //         fs.readFile(filePath, 'utf-8', (err: any, content: string) => {
-    //             if (err) {
-    //                 resolve('');
-    //             } else {
-    //                 resolve(content);
-    //             }
-    //         });
-    //     });
-    // }
 }

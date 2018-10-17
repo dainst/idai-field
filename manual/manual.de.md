@@ -103,8 +103,7 @@ In der Übersicht werden die folgenden drei Schnitte angezeigt:
     Kurzbeschreibung: "Mein Schnitt 1" 
 
 **Mögliche Suchbegriffe** sind die jeweils durch Leerzeichen oder Bindestriche getrennten Textfolgen in den
-Bezeichnern und Kurzbeschreibungen, also im Beispiel: "S01", "S02", "ms1", "Schnitt", "01", "02", "Mein",
-"Schnitt", "1".
+Bezeichnern und Kurzbeschreibungen, also im Beispiel: "S01", "S02", "ms1", "Schnitt", "01", "02", "Mein", "1".
   
 Der Suchbegriff "s01" liefert beispielsweise die Ressource (1), die Suche nach "mein" liefert (3) als
 Suchtreffer. **Groß- bzw. Kleinschreibung** spielt dabei keine Rolle und wird ignoriert.
@@ -180,7 +179,7 @@ die ausgeblendeten Ressourcen zugreifen zu können.
 #### Feldspezifische Suchkriterien
  
 Ist der erweiterte Suchmodus aktiviert, können Sie bei aktiviertem Typfilter eine Suche über spezifische
-Felder einer Ressource anzustoßen, indem Sie auf den Plus-Button links neben dem Typfilter-Button klicken.
+Felder einer Ressource anstoßen, indem Sie auf den Plus-Button links neben dem Typfilter-Button klicken.
 Dabei werden Felder zur Suche angeboten, die der entsprechenden Typendefinition entsprechen. Sie können
 beliebig viele Felder auswählen, sodass Sie mehrere Suchkriterien miteinander kombinieren können. Darüber
 hinaus können Sie die feldspezifischen Suchkriterien selbstverständlich auch in Kombination mit dem Textfilter

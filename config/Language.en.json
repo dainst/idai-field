@@ -1200,7 +1200,7 @@
       }
     },
     "Survey": {
-      "label": "Survey areal",
+      "label": "Survey area",
       "fields": {
         "researchMethod": {
           "label": "Research method"

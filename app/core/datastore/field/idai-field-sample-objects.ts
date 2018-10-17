@@ -1,11 +1,11 @@
 import {NewDocument} from 'idai-components-2';
 
-export const DOCS: NewDocument[] = [
+export const getSampleDocuments = (locale: string): NewDocument[] => [
     {
         'resource': {
             'id': 'project',
             'identifier': 'test',
-            'shortDescription': 'Testprojekt',
+            'shortDescription': locale === 'de' ? 'Testprojekt' : 'Test project',
             'relations': {},
             'type': 'Project'
         }
@@ -13,8 +13,8 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 't1',
-            'identifier': 'S1',
-            'shortDescription': 'Schnitt 1',
+            'identifier': locale === 'de' ? 'S1' : 'T1',
+            'shortDescription': locale === 'de' ? 'Schnitt 1' : 'Trench 1',
             'relations': {
                 'isRecordedIn': []
             },
@@ -33,8 +33,8 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 't2',
-            'identifier': 'S2',
-            'shortDescription': 'Schnitt 2',
+            'identifier': locale === 'de' ? 'S2' : 'T2',
+            'shortDescription': locale === 'de' ? 'Schnitt 2' : 'Trench 2',
             'relations': {
                 'isRecordedIn': []
             },
@@ -53,8 +53,8 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'si1',
-            'identifier': 'SE1',
-            'shortDescription': 'Ein Befund',
+            'identifier': locale === 'de' ? 'SE1' : 'SU1',
+            'shortDescription': locale === 'de' ? 'Stratigraphische Einheit' : 'Stratrigraphical unit',
             'hasPeriod': 'Kaiserzeitlich',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -89,8 +89,8 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'si2',
-            'identifier': 'SE2',
-            'shortDescription': 'Ein Erdbefund',
+            'identifier': locale === 'de' ? 'SE2' : 'SU2',
+            'shortDescription': locale === 'de' ? 'Erdbefund' : 'Layer',
             'hasPeriod': 'Kaiserzeitlich',
             'relations': {
                 'isRecordedIn': ['t2'],
@@ -126,9 +126,9 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'si3',
-            'identifier': 'SE3',
+            'identifier': locale === 'de' ? 'SE3' : 'SU3',
             'hasPeriod': 'Bronzezeitlich',
-            'shortDescription': 'Architektur',
+            'shortDescription': locale === 'de' ? 'Architektur' : 'Architecture',
             'relations': {
                 'isRecordedIn': ['t2'],
                 'isBefore': ['si2'],
@@ -176,9 +176,9 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'si4',
-            'identifier': 'SE4',
+            'identifier': locale === 'de' ? 'SE4' : 'SU4',
             'hasPeriod': 'Bronzezeitlich',
-            'shortDescription': 'Ein Grab',
+            'shortDescription': locale === 'de' ? 'Grab' : 'Grave',
             'relations': {
                 'isRecordedIn': ['t2'],
                 'isBefore': ['si3'],
@@ -212,9 +212,9 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'si5',
-            'identifier': 'SE5',
+            'identifier': locale === 'de' ? 'SE5' : 'SU5',
             'hasPeriod': 'Bronzezeitlich',
-            'shortDescription': 'Ein Befund',
+            'shortDescription': locale === 'de' ? 'Erdbefund' : 'Layer',
             'relations': {
                 'isRecordedIn': ['t2'],
                 'isBefore': ['si1'],
@@ -273,9 +273,9 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'si0',
-            'identifier': 'SE0',
-            'shortDescription': 'Ein Befund',
-            'relations': {
+            'identifier': locale === 'de' ? 'SE0' : 'SU0',
+            'shortDescription': locale === 'de' ? 'Stratigraphische Einheit' : 'Stratigraphical unit',
+                'relations': {
                 'isRecordedIn': ['t1'],
                 'includes': ['tf1']
             },
@@ -296,7 +296,7 @@ export const DOCS: NewDocument[] = [
         'resource': {
             'id': 'tf1',
             'identifier': 'testf1',
-            'shortDescription': 'Testfund',
+            'shortDescription': locale === 'de' ? 'Testfund' : 'Test find',
             'relations': {
                 'isRecordedIn': ['t1'],
                 'liesWithin': ['si0']
@@ -346,12 +346,12 @@ export const DOCS: NewDocument[] = [
         'resource': {
             'id': 'sa1',
             'identifier': 'A1',
-            'shortDescription': 'Survey-Areal 1',
+            'shortDescription': locale === 'de' ? 'Survey-Areal 1' : 'Survey area 1',
             'type': 'Survey',
             'relations': {},
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
+            'geometry': {
+                'type': 'Polygon',
+                'coordinates': [
                     [
                         [
                             27.18937349319458,
@@ -389,15 +389,15 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'syu1',
-            'identifier': 'PQ1',
-            'shortDescription': 'Planquadrat 1',
+            'identifier': locale === 'de' ? 'PQ1' : 'SUR1',
+            'shortDescription': locale === 'de' ? 'Planquadrat 1' : 'Survey unit 1',
             'type': 'SurveyUnit',
             'relations': {
                 'isRecordedIn': ['sa1']
             },
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
+            'geometry': {
+                'type': 'Polygon',
+                'coordinates': [
                     [
                         [
                             27.189372777938843,
@@ -423,15 +423,15 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'syu2',
-            'identifier': 'PQ2',
-            'shortDescription': 'Planquadrat 2',
+            'identifier': locale === 'de' ? 'PQ2' : 'SUR2',
+            'shortDescription': locale === 'de' ? 'Planquadrat 2' : 'Survey unit 2',
             'type': 'SurveyUnit',
             'relations': {
                 'isRecordedIn': ['sa1']
             },
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
+            'geometry': {
+                'type': 'Polygon',
+                'coordinates': [
                     [
                         [
                             27.189392059649148,
@@ -457,16 +457,16 @@ export const DOCS: NewDocument[] = [
     {
         'resource': {
             'id': 'st1',
-            'identifier': 'PQ1-ST1',
-            'shortDescription': 'Ein Stein',
+            'identifier': locale === 'de' ? 'PQ1-ST1' : 'SUR1-ST1',
+            'shortDescription': locale === 'de' ? 'Ein Stein' : 'A stone',
             'type': 'SurveyUnit',
             'relations': {
                 'isRecordedIn': ['sa1'],
                 'liesWithin': ['syu1']
             },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
+            'geometry': {
+                'type': 'Point',
+                'coordinates': [
                     27.189382433891296,
                     39.1412538588047
                 ]
@@ -477,12 +477,12 @@ export const DOCS: NewDocument[] = [
         'resource': {
             'id': 'bu1',
             'identifier': 'B1',
-            'shortDescription': 'Gebäude 1',
+            'shortDescription': locale === 'de' ? 'Gebäude 1' : 'Building 1',
             'type': 'Building',
             'relations': {},
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
+            'geometry': {
+                'type': 'Polygon',
+                'coordinates': [
                     [
                         [
                             27.18925452232361,
@@ -509,14 +509,14 @@ export const DOCS: NewDocument[] = [
         'resource': {
             'id': 'r1',
             'identifier': 'R1',
-            'shortDescription': 'Raum 1',
+            'shortDescription': locale === 'de' ? 'Raum 1' : 'Room 1',
             'type': 'Room',
             'relations': {
                 'isRecordedIn': ['bu1']
             },
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
+            'geometry': {
+                'type': 'Polygon',
+                'coordinates': [
                     [
                         [
                             27.189267694950104,

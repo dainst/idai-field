@@ -1,7 +1,7 @@
 import * as fs from 'fs';
-import {DOCS} from './idai-field-sample-objects';
 import {Converter} from '../../imagestore/converter';
 import {SampleDataLoader} from '../core/sample-data-loader';
+import {getSampleDocuments} from './idai-field-sample-objects';
 
 
 /**
@@ -11,7 +11,9 @@ import {SampleDataLoader} from '../core/sample-data-loader';
  */
 export class IdaiFieldSampleDataLoader implements SampleDataLoader {
 
-    constructor(private converter: Converter, private imagestorePath: string) { }
+    constructor(private converter: Converter,
+                private imagestorePath: string,
+                private locale: string) { }
 
 
     public go(db: any, project: string): Promise<any> {
@@ -23,7 +25,7 @@ export class IdaiFieldSampleDataLoader implements SampleDataLoader {
     private loadSampleObjects(db: any): Promise<any> {
 
         let promises = [] as any;
-        for (let doc of DOCS) {
+        for (let doc of getSampleDocuments(this.locale)) {
             (doc as any)['created'] = { user: 'sample_data', date: new Date() };
             (doc as any)['modified'] = [{ user: 'sample_data', date: new Date() }];
             (doc as any)['_id'] = doc.resource.id;

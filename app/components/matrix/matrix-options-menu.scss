@@ -24,9 +24,32 @@
   cursor: default !important;
   user-select: none;
 
+  #form-check-relations-temporal,
+  #form-check-edges-ortho {
+    position: absolute;
+    left: 98px;
+  }
+
+  #form-check-relations-spatial,
+  #form-check-edges-curved {
+    position: absolute;
+    left: 200px;
+  }
+
+  #form-check-relations-temporal,
+  #form-check-relations-spatial {
+    top: 21px;
+  }
+
+  #form-check-edges-curved,
+  #form-check-edges-ortho {
+    top: 52px;
+  }
+
   .card-body {
     padding-left: 25px;
     padding-bottom: 20px;
+    width: 327px;
   }
 
   .form-group {

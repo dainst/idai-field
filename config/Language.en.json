@@ -8,36 +8,28 @@
           "description": "Reference to excavation diary"
         },
         "researchQuestion": {
-          "label": "Research question",
-          "description": "Fragestellung bzw. Hintergrund der Freilegung der Fläche, z. B. 'Spezifizierung und Datierung der im Magnetogramm entdeckten Struktur zur...'"
+          "label": "Research question"
         },
         "spatialLocation": {
-          "label": "Spatial location",
-          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle 'Ausgrabung unterhalb Akropolis am...'"
+          "label": "Spatial location"
         },
         "trenchComment": {
-          "label": "Trench comment",
-          "description": "Schnittkommentar zur Auswertung und Dokumentation, Bericht für die Grabungsleitung"
+          "label": "Trench comment"
         },
         "dimensionLength": {
-          "label": "Length",
-          "description": "Angabe der Länge"
+          "label": "Length"
         },
         "dimensionVerticalExtent": {
-          "label": "Vertical extent",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+          "label": "Vertical extent"
         },
         "dimensionWidth": {
-          "label": "Width",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+          "label": "Width"
         },
         "excavationType": {
-          "label": "Excavation type",
-          "description": "Art der durchgeführten Ausgrabung"
+          "label": "Excavation type"
         },
         "orientation": {
-          "label": "Orientation",
-          "description": "Ausrichtung nach Himmelsrichtung des Profils"
+          "label": "Orientation"
         }
       }
     },
@@ -45,43 +37,34 @@
       "label": "Glass",
       "fields": {
         "decorationDescription": {
-          "label": "Decoration description",
-          "description": "Weiteres Beschreibungsfeld zur näheren Ausführung der Dekoration"
+          "label": "Decoration description"
         },
         "color": {
-          "label": "Color and intensity",
-          "description": "Farbe, soweit erkennbar"
+          "label": "Color and intensity"
         },
         "decorationTechnique": {
-          "label": "Specifics of the surface or decoration technique TO CHECK!",
-          "description": "Technik, mit der Dekor auf das Glas angebracht wurde"
+          "label": "Specifics of the surface or decoration technique TO CHECK!"
         },
         "formDescription": {
-          "label": "Form description",
-          "description": "Nähere Beschreibung der allgemeinen Form"
+          "label": "Form description"
         },
         "manufacturingMethod": {
-          "label": "Manufacturing method",
-          "description": "Verwendete Technik zur Herstellung des Objekts; erkennbare Bearbeitungsspuren"
+          "label": "Manufacturing method"
         },
         "objectType": {
           "label": "Designation or type of the object TO CHECK!"
         },
         "provenance": {
-          "label": "Provenance",
-          "description": "Herkunftsort"
+          "label": "Provenance"
         },
         "transparency": {
-          "label": "Transparency",
-          "description": "Wie durchscheinend ist das Objekt?"
+          "label": "Transparency"
         },
         "vesselForm": {
-          "label": "Basic vessel form",
-          "description": "Grundform des Gefäßes"
+          "label": "Basic vessel form"
         },
         "vesselFormSpecific": {
-          "label": "Specific vessel form",
-          "description": "Spezielle Form des Gefäßes"
+          "label": "Specific vessel form"
         }
       }
     },
@@ -89,20 +72,16 @@
       "label": "Drilling",
       "fields": {
         "dimensionDiameter": {
-          "label": "Diameter",
-          "description": "Angabe des Objektdurchmessers"
+          "label": "Diameter"
         },
         "dimensionHeight": {
-          "label": "Height",
-          "description": "Angabe der Objekthöhe"
+          "label": "Height"
         },
         "dimensionVerticalExtent": {
-          "label": "Vertical extent",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+          "label": "Vertical extent"
         },
         "drillingEquipment": {
-          "label": "Drilling equipment",
-          "description": "Welche Art von Bohrer wurde verwendet?"
+          "label": "Drilling equipment"
         }
       }
     },
@@ -114,32 +93,25 @@
       "label": "Planum",
       "fields": {
         "area": {
-          "label": "Area in m2",
-          "description": "Flächenangabe in Quadratmetern"
+          "label": "Area in m2"
         },
         "dimensionLength": {
-          "label": "Length",
-          "description": "Angabe der Länge"
+          "label": "Length"
         },
         "dimensionVerticalExtent": {
-          "label": "Vertical extent",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+          "label": "Vertical extent"
         },
         "dimensionWidth": {
-          "label": "Width",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+          "label": "Width"
         },
         "horizontalLocation": {
-          "label": "Horizontal location",
-          "description": "Ausrichtung des Planums"
+          "label": "Horizontal location"
         },
         "orientation": {
-          "label": "Orientation",
-          "description": "Ausrichtung nach Himmelsrichtung des Profils"
+          "label": "Orientation"
         },
         "planumForm": {
-          "label": "Planum form",
-          "description": "Form des angelegten Planums"
+          "label": "Planum form"
         }
       }
     },
@@ -148,7 +120,7 @@
       "fields": {
         "featureText": {
           "label": "Seal text(s) TO CHECK!",
-          "description": "Um- oder Abschrift des Stempeltexts"
+          "description": "Transcript of the seal text"
         },
         "brickForm": {
           "label": "Brick form or usage TO CHECK!"
@@ -169,8 +141,7 @@
           "label": "Specifics of the surface or decoration technique TO CHECK!"
         },
         "formDescription": {
-          "label": "Form description",
-          "description": "Nähere Beschreibung der allgemeinen Form"
+          "label": "Form description"
         },
         "manufacturing": {
           "label": "Description of material TO CHECK!"
@@ -179,16 +150,13 @@
           "label": "Manufacturing method"
         },
         "provenance": {
-          "label": "Provenance",
-          "description": "Herkunftsort"
+          "label": "Provenance"
         },
         "specificType": {
-          "label": "Format TO CHECK!",
-          "description": "Format der Steine und Ziegel, sofern erkennbar"
+          "label": "Format TO CHECK!"
         },
         "temper": {
-          "label": "Temper",
-          "description": "Grundsätzliche Art der Magerung"
+          "label": "Temper"
         }
       }
     },
@@ -197,47 +165,41 @@
       "fields": {
         "contactMail": {
           "label": "Mail address of the contact person",
-          "description": "Mailadresse des Projekts bzw. der Kontaktperson"
+          "description": "Mail address of the project or a contact person"
         },
         "contactPerson": {
-          "label": "Contact person",
-          "description": "Kontaktperson des Projekts"
+          "label": "Contact person"
         },
         "description": {
-          "label": "Description",
-          "description": "Freies Beschreibungsfeld"
+          "label": "Description"
         },
         "epsgId": {
           "label": "EPSG Code",
-          "description": "Angabe des EPSG-Codes (siehe http://spatialreference.org/, z. B. 3004)"
+          "description": "Specification of the EPSG code (see http://spatialreference.org/, e. g. 3004)"
         },
         "externalReference": {
-          "label": "Project homepage",
-          "description": "Externe Referenz(en) des Projekts"
+          "label": "Project homepage TO CHECK! Unterschied zu projectURI?",
+          "description": "External reference(s) of the project"
         },
         "gazId": {
-          "label": "Gazetteer ID",
-          "description": "ID-Nummer des Ortslexikons"
+          "label": "Gazetteer ID"
         },
         "institution": {
           "label": "Institution",
-          "description": "Für das Projekt verantwortliche Institution"
+          "description": "Institution responsible for the project"
         },
         "latitude": {
-          "label": "Latitude",
-          "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind möglich"
+          "label": "Latitude"
         },
         "longitude": {
-          "label": "Longitude",
-          "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind möglich"
+          "label": "Longitude"
         },
         "projectURI": {
-          "label": "Project URL",
-          "description": "Hinweis auf eine externe Projektseite mit weiteren Informationen"
+          "label": "Project URL TO CHECK! Unterschied zu externalReference?"
         },
         "supervisor": {
           "label": "Supervisor",
-          "description": "Leitende Person einer Kampagne oder Maßnahme"
+          "description": "Person in charge of the campaign"
         }
       }
     },
@@ -264,18 +226,16 @@
         },
         "findingPlace": {
           "label": "Finding place",
-          "description": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)"
+          "description": "For entering multiple other resources as finding place, e. g. (PE07 So 04,002)"
         },
         "palaeopathologicalReport": {
           "label": "Palaeopathological report"
         },
         "publicationDatingFinds": {
-          "label": "Dating (finds)",
-          "description": "z. B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
+          "label": "Dating (finds)"
         },
         "publicationDatingStratigraphy": {
-          "label": "Dating (stratigraphy)",
-          "description": "z. B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
+          "label": "Dating (stratigraphy)"
         },
         "sexDetermination": {
           "label": "Sex determination"
@@ -290,8 +250,7 @@
           "label": "Burial order (primary/secondary) TO CHECK!"
         },
         "burialDocumentation": {
-          "label": "Documentation",
-          "description": "Welche Form(en) der Dokumentation kamen zum Einsatz?"
+          "label": "Documentation"
         },
         "graveFeature": {
           "label": "Burial type TO CHECK!"
@@ -311,31 +270,25 @@
       "label": "Building",
       "fields": {
         "buildingHistory": {
-          "label": "Building history",
-          "description": "Historische Abhandlung des Bauwerks"
+          "label": "Building history"
         },
         "buildingResearchHistory": {
-          "label": "Research history",
-          "description": "Vorgeschichte aller am Bauwerk vorgenommenen Forschungen einschließlich Grabungen"
+          "label": "Research history"
         },
         "conditionComment": {
           "label": "Condition comment"
         },
         "excavationHistory": {
-          "label": "Excavation history",
-          "description": "Abhandlung über die Grabungsprojekte auf der Fundstelle"
+          "label": "Excavation history"
         },
         "history": {
-          "label": "History",
-          "description": "Historische Vergangenheit des Bauwerks"
+          "label": "History TO CHECK! Unterschied zu Building history?"
         },
         "hasRestoration": {
-          "label": "Restoration",
-          "description": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?"
+          "label": "Restoration"
         },
         "architecturalOrders": {
-          "label": "Architectural orders TO CHECK!",
-          "description": "Angabe der architektonischen Säulenordnung"
+          "label": "Architectural orders TO CHECK!"
         },
         "buildingCategory": {
           "label": "Building category"
@@ -344,31 +297,26 @@
           "label": "Building category (specific)"
         },
         "buildingTechnique": {
-          "label": "Building technique",
-          "description": "Bezeichnung der verwendeten Technik bei der Errichtung des Bauwerks"
+          "label": "Building technique"
         },
         "buildingType": {
           "label": "Building type"
         },
         "condition": {
-          "label": "Condition",
-          "description": "Beschreibung des Erhaltungszustands"
+          "label": "Condition"
         },
         "conditionAmount": {
           "label": "Preserved amount TO CHECK!",
-          "description": "Erhaltener Anteil im Vergleich zum Original"
+          "description": "Preserved amount in comparison to the original"
         },
         "context": {
-          "label": "Context",
-          "description": "In welchem Kontext liegt das Bauwerk?"
+          "label": "Context"
         },
         "dimensionLength": {
-          "label": "Length",
-          "description": "Angabe der Länge"
+          "label": "Length"
         },
         "dimensionWidth": {
-          "label": "Width",
-          "description": "Angabe der Breite"
+          "label": "Width"
         },
         "material": {
           "label": "Material"
@@ -385,16 +333,13 @@
       "label": "Survey unit",
       "fields": {
         "area": {
-          "label": "Area in m2",
-          "description": "Flächenangabe in Quadratmetern"
+          "label": "Area in m2"
         },
         "dimensionLength": {
-          "label": "Length",
-          "description": "Angabe der Länge"
+          "label": "Length"
         },
         "dimensionWidth": {
-          "label": "Width",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+          "label": "Width"
         }
       }
     },
@@ -402,15 +347,13 @@
       "label": "Wood",
       "fields": {
         "color": {
-          "label": "Color",
-          "description": "Farbe des Fundes oder der Holzstruktur"
+          "label": "Color"
         },
         "objectType": {
           "label": "Designation or type of the object TO CHECK!"
         },
         "typeOfWood": {
-          "label": "Type of wood",
-          "description": "Holzartenbestimmung am Objekt"
+          "label": "Type of wood"
         }
       }
     },
@@ -424,94 +367,75 @@
           "label": "Condition comment"
         },
         "constructionDetailsDescription": {
-          "label": "Description of construction details",
-          "description": "Nähere Beschreibung zur Konstruktion der Fundamente/Ecken/Lagen o. Ä."
+          "label": "Description of construction details"
         },
         "descriptionOfBuildingTechnique": {
-          "label": "Description of building technique",
-          "description": "Nähere Beschreibung der Bautechnik (z. B. Feldsteinmauerwerk oder Ziegelmauer)"
+          "label": "Description of building technique"
         },
         "findingPlace": {
           "label": "Finding place",
-          "description": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)"
+          "description": "For entering multiple other resources as finding place, e. g. (PE07 So 04,002)"
         },
         "hasGrouting": {
-          "label": "Grouting",
-          "description": "Ist die Mauer verfugt?"
+          "label": "Grouting"
         },
         "layerAmount": {
-          "label": "Number of layers",
-          "description": "Anzahl der Mauerlagen"
+          "label": "Number of layers"
         },
         "layerHeight": {
-          "label": "Layer height",
-          "description": "Anzahl der Mauerlagen"
+          "label": "Layer height"
         },
         "markDescription": {
-          "label": "Description of mark",
-          "description": "Erklärungen und Erkenntnisse zum vorhandenen Werkzeichen"
+          "label": "Description of mark"
         },
         "materialCharacteristic": {
-          "label": "Material characteristic",
-          "description": "Charakteristische Materialeigenschaften"
+          "label": "Material characteristic"
         },
         "materialForm": {
-          "label": "Material form",
-          "description": "Weitere Beschreibung zu Ziegeln/Steinen etc."
+          "label": "Material form"
         },
         "muralCrown": {
-          "label": "Mural crown",
-          "description": "Kurze Definition des Zustands der Mauerkrone"
+          "label": "Mural crown"
         },
         "publicationDatingFinds": {
-          "label": "Dating (finds)",
-          "description": "Z. B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
+          "label": "Dating (finds)"
         },
         "publicationDatingScientific": {
-          "label": "Dating (scientific)",
-          "description": "Beschreibung zur Publikation, Hinweis auf vorhandene Datierungen"
+          "label": "Dating (scientific)"
         },
         "publicationDatingStratigraphy": {
-          "label": "Dating (stratigraphy)",
-          "description": "Z. B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
+          "label": "Dating (stratigraphy)"
         },
         "publicationRemark": {
-          "label": "Publication remark",
-          "description": "Anmerkung zur Publikation"
+          "label": "Publication remark"
         },
         "spatialLocation": {
-          "label": "Spatial location",
-          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle (z. B.: 'Ausgrabung unterhalb Akropolis am...')"
+          "label": "Spatial location"
         },
         "blockProcessing": {
           "label": "Type of blocks TO CHECK!"
         },
         "blockTreatment": {
-          "label": "Block treatment TO CHECK!",
-          "description": "Bearbeitung des Blocks/Bearbeitungsspuren"
+          "label": "Block treatment TO CHECK!"
         },
         "brickwork": {
           "label": "Brickwork"
         },
         "condition": {
-          "label": "Condition",
-          "description": "Beschreibung des Erhaltungszustands"
+          "label": "Condition"
         },
         "conditionAmount": {
           "label": "Preserved amount TO CHECK!",
-          "description": "Erhaltener Anteil im Vergleich zum Original"
+          "description": "Preserved amount in comparison to the original"
         },
         "construction": {
-          "label": "Contruction",
-          "description": "Welche Art der Mauerkonstruktion liegt vor?"
+          "label": "Contruction"
         },
         "mark": {
-          "label": "Mark of the stonemason TO CHECK!",
-          "description": "Auflistung möglicher Steinmetzzeichen"
+          "label": "Mark of the stonemason TO CHECK!"
         },
         "mortarBinder": {
-          "label": "Mortar binder",
-          "description": "Wie hoch ist der Zuschlag von Fremdmaterial?"
+          "label": "Mortar binder"
         },
         "mortarColor": {
           "label": "Mortar color"
@@ -520,15 +444,13 @@
           "label": "Mortar consistency"
         },
         "orientation": {
-          "label": "Orientation",
-          "description": "Ausrichtung nach Himmelsrichtung des Profils"
+          "label": "Orientation"
         },
         "wallClassification": {
           "label": "Wall classification"
         },
         "wallType": {
-          "label": "Wall type",
-          "description": "Typ des Mauerwerks"
+          "label": "Wall type"
         }
       }
     },
@@ -536,32 +458,28 @@
       "label": "Operation",
       "fields": {
         "area": {
-          "label": "Area in m2",
-          "description": "Flächenangabe in Quadratmetern"
+          "label": "Area in m2"
         },
         "beginningDate": {
           "label": "Beginning date",
-          "description": "Datum, an dem die Aufnahme der Maßnahme begonnen wurde"
+          "description": "Date on which the recording of the operation was started"
         },
         "endDate": {
           "label": "End date",
-          "description": "Datum, an dem die Aufnahme der Maßnahme abgeschlossen wurde"
+          "description": "Date on which the recording of the operation was finished"
         },
         "description": {
-          "label": "Description",
-          "description": "Freies Beschreibungsfeld"
+          "label": "Description"
         },
         "diaryAbstract": {
-          "label": "Diary abstract TO CHECK!",
-          "description": "Darstellung des Projekt- oder Grabungsverlaufs, ggfs. Zusammenfassung des Tagebuchs"
+          "label": "Diary abstract TO CHECK!"
         },
         "processor": {
-          "label": "Processor",
-          "description": "Bearbeiter bzw. Bearbeiterin der Maßnahme"
+          "label": "Processor"
         },
         "supervisor": {
           "label": "Supervisor",
-          "description": "Leitende Person einer Kampagne oder Maßnahme"
+          "description": "Person in charge of the operation"
         },
         "campaign": {
           "label": "Campaign"
@@ -572,36 +490,29 @@
       "label": "Place",
       "fields": {
         "gazId": {
-          "label": "Gazetteer ID",
-          "description": "ID-Nummer des Ortslexikons"
+          "label": "Gazetteer ID"
         },
         "placeName": {
-          "label": "Place name",
-          "description": "Name der Ortschaft bzw. Gemarkung"
+          "label": "Place name"
         },
         "buildingHistory": {
-          "label": "Building history",
-          "description": "Historische Abhandlung des Bauwerks"
+          "label": "Building history TO CHECK! Wieso Building history beim Type Place?"
         },
         "buildingResearchHistory": {
-          "label": "Research history",
-          "description": "Vorgeschichte aller am Bauwerk vorgenommenen Forschungen einschließlich Grabungen"
+          "label": "Research history TO CHECK! Wieso Building research history beim Type Place?"
         },
         "description": {
-          "label": "Description",
-          "description": "Freies Beschreibungsfeld"
+          "label": "Description"
         },
         "excavationHistory": {
-          "label": "Excavation history",
-          "description": "Abhandlung über die Grabungsprojekte auf der Fundstelle"
+          "label": "Excavation history"
         },
         "findSituation": {
           "label": "Find situation",
-          "description": "Nähere Beschreibung, unter welchen Bedingungen und von wem der Fundplatz entdeckt wurde"
+          "description": "Description of the circumstances of the finding place discovery and the persons involved"
         },
         "modernIntervention": {
-          "label": "Modern intervention",
-          "description": "Beschreibung, ob der Fundplatz rezent Beschädigungen ausgesetzt war. (z. B.: Steinbruch/Grube/Mine, Überbauung, Aufschüttung, Raubgrabung, Ackerbau, Wiederaufforstung, Abraumhalden)"
+          "label": "Modern intervention"
         },
         "findspotClassification": {
           "label": "Findspot classification"
@@ -619,29 +530,25 @@
       "fields": {
         "appearance": {
           "label": "Appearance TO CHECK!",
-          "description": "Beschreibung der Entstehung der Schicht, z. B. 'Versturz der östlichen Lehmziegelmauer'"
+          "description": "Beschreibung der Entstehung der Schicht, z. B. 'Versturz der östlichen Lehmziegelmauer' TO CHECK! Passt das wirklich zum Feldnamen?"
         },
         "isNatural": {
-          "label": "Natural",
-          "description": "Ist die Schicht natürlich? ('Ja' z. B. bei Erosion)"
+          "label": "Natural"
         },
         "consistency": {
           "label": "Consistency"
         },
         "dimensionThickness": {
-          "label": "Thickness",
-          "description": "Dicke bzw. Stärke des Objekts"
+          "label": "Thickness"
         },
         "distinguishingCriteria": {
-          "label": "Distinguishing criteria",
-          "description": "Welches Kriterium wurde zur Abgrenzung der stratigraphischen Einheit gewählt?"
+          "label": "Distinguishing criteria"
         },
         "layerClassification": {
           "label": "Designation or classification of the layer TO CHECK!"
         },
         "soilType": {
-          "label": "Soil type",
-          "description": "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"
+          "label": "Soil type"
         }
       }
     },
@@ -649,44 +556,36 @@
       "label": "Stratigraphical unit",
       "fields": {
         "area": {
-          "label": "Area in m2",
-          "description": "Flächenangabe in Quadratmetern"
+          "label": "Area in m2"
         },
         "beginningDate": {
           "label": "Beginning date",
-          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit begann"
+          "description": "Date on which the recording of the stratigraphical unit was started"
         },
         "endDate": {
           "label": "End date",
-          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit endete"
+          "description": "Date on which the recording of the stratigraphical unit was finished"
         },
         "comparison": {
-          "label": "Comparison",
-          "description": "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"
+          "label": "Comparison"
         },
         "diary": {
-          "label": "Diary",
-          "description": "Verweis auf Grabungstagebuch"
+          "label": "Diary"
         },
         "description": {
-          "label": "Description",
-          "description": "Freies Beschreibungsfeld"
+          "label": "Description"
         },
         "hasDisturbance": {
-          "label": "Disturbance",
-          "description": "Liegt eine Störung des Befundes vor?"
+          "label": "Disturbance"
         },
         "featureAmount": {
-          "label": "Feature amount TO CHECK!",
-          "description": "Prozentuale Menge des Einschlusses im Vergleich zum Gesamtbefund; je nach Grabungsmethodik Einteilung prozentual ('5-10%') oder textuell ('wenig')"
+          "label": "Feature amount TO CHECK!"
         },
         "processor": {
-          "label": "Processor",
-          "description": "Bearbeiter bzw. Bearbeiterin der stratigraphischen Einheit"
+          "label": "Processor"
         },
         "color": {
-          "label": "Color and intensity",
-          "description": "Farbe, soweit erkennbar"
+          "label": "Color and intensity"
         },
         "period": {
           "label": "Period"
@@ -695,24 +594,19 @@
           "label": "Dating"
         },
         "dimensionLength": {
-          "label": "Length",
-          "description": "Angabe der Länge"
+          "label": "Length"
         },
         "dimensionVerticalExtent": {
-          "label": "Vertical extent",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+          "label": "Vertical extent"
         },
         "dimensionWidth": {
-          "label": "Width",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+          "label": "Width"
         },
         "featureBorders": {
-          "label": "Borders of the stratigraphical unit",
-          "description": "Bestimmung der Grenzen des Befundes"
+          "label": "Borders of the stratigraphical unit"
         },
         "featureForm": {
-          "label": "Form of the stratigraphical unit",
-          "description": "Form der stratigraphischen Einheit im Planum bzw. Profil: Welche erkennbare Form kann identifiziert werden?"
+          "label": "Form of the stratigraphical unit"
         }
       }
     },
@@ -723,19 +617,17 @@
           "label": "Condition comment"
         },
         "condition": {
-          "label": "Condition",
-          "description": "Beschreibung des Erhaltungszustandes"
+          "label": "Condition"
         },
         "conditionAmount": {
           "label": "Preserved amount TO CHECK!",
-          "description": "Erhaltener Anteil im Vergleich zum Original"
+          "description": "Preserved amount in comparison to the original"
         },
         "consistency": {
           "label": "Consistency"
         },
         "distinguishingCriteria": {
-          "label": "Distinguishing criteria",
-          "description": "Welches Kriterium wurde zur Abgrenzung der stratigraphischen Einheit gewählt?"
+          "label": "Distinguishing criteria"
         },
         "floorClassification": {
           "label": "Floor classification"
@@ -744,8 +636,7 @@
           "label": "Layer classification"
         },
         "mortarBinder": {
-          "label": "Mortar binder",
-          "description": "Wie hoch ist der Zuschlag von Fremdmaterial?"
+          "label": "Mortar binder"
         }
       }
     },
@@ -753,8 +644,7 @@
       "label": "Inscription",
       "fields": {
         "comparison": {
-          "label": "Comparison",
-          "description": "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"
+          "label": "Comparison"
         },
         "conditionComment": {
           "label": "Condition comment"
@@ -763,23 +653,20 @@
           "label": "Transcription TO CHECK!"
         },
         "description": {
-          "label": "Description",
-          "description": "Freies Beschreibungsfeld"
+          "label": "Description"
         },
         "language": {
           "label": "Language"
         },
         "processor": {
-          "label": "Processor",
-          "description": "Bearbeiter bzw. Bearbeiterin der Inschrift"
+          "label": "Processor"
         },
         "condition": {
-          "label": "Condition",
-          "description": "Beschreibung des Erhaltungszustandss"
+          "label": "Condition"
         },
         "conditionAmount": {
           "label": "Preserved amount TO CHECK!",
-          "description": "Erhaltener Anteil im Vergleich zum Original"
+          "description": "Preserved amount in comparison to the original"
         },
         "period": {
           "label": "Period"
@@ -788,8 +675,7 @@
           "label": "Dating"
         },
         "dimensionWidth": {
-          "label": "Width",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+          "label": "Width"
         },
         "objectType": {
           "label": "Designation or type of inscription"
@@ -800,16 +686,15 @@
       "label": "Image",
       "fields": {
         "description": {
-          "label": "Description",
-          "description": "Freies Beschreibungsfeld"
+          "label": "Description"
         },
         "draughtsmen": {
-          "label": "Draughtsmen TO CHECK! (müsste das Feld nicht 'draughtsman' heißen?",
-          "description": "Ersteller der Abbildung, Fotograf/Fotografin bzw. Zeichner/Zeichnerin"
+          "label": "Draughtsmen TO CHECK! (müsste das Feld nicht 'draughtsman' heißen? bzw. ein Begriff, der auch den Fotografen mit einbezieht?)",
+          "description": "Creator of the image, photographer respectively draughtsman"
         },
         "processor": {
           "label": "Processor",
-          "description": "Bearbeiter bzw. Bearbeiterin der Abbildung, falls nach der Aufnahme Änderungen erfolgten"
+          "description": "Processor of the image in case of changes after the creation of the image"
         }
       }
     },
@@ -847,8 +732,7 @@
           "label": "Number of other sherds"
         },
         "amountSherdsPercent": {
-          "label": "Quantification in percent TO CHECK!",
-          "description": "Eingabe erfolgt als Kommazahl, Negativwerte sind nicht möglich"
+          "label": "Quantification in percent TO CHECK!"
         },
         "amountSherdsLid": {
           "label": "Number of lids"
@@ -866,28 +750,23 @@
           "label": "Coat"
         },
         "decorationDescription": {
-          "label": "Decoration description",
-          "description": "Weiteres Beschreibungsfeld zur näheren Ausführung der Dekoration"
+          "label": "Decoration description"
         },
         "breakStructure": {
-          "label": "Notes about the break (Structure, porousness etc.)",
-          "description": "Beschreibung der Struktur und der Porosität des Bruches"
+          "label": "Notes about the break (Structure, porousness etc.)"
         },
         "residueAnalysis": {
-          "label": "Residue analysis",
-          "description": "Angabe zur Rückstandsanalyse"
+          "label": "Residue analysis"
         },
         "sample": {
-          "label": "Sample",
-          "description": "Angaben zu entnommener Probe"
+          "label": "Sample"
         },
         "purpose": {
-          "label": "Purpose",
-          "description": "Zweck bzw. Verwendung des Objekts"
+          "label": "Purpose"
         },
         "typeNumber": {
           "label": "Type number",
-          "description": "Nummer aus dem Typenkatalog"
+          "description": "Type catalogue number"
         },
         "clayColorBreak": {
           "label": "Break: Clay color and intensity"
@@ -923,8 +802,7 @@
           "label": "Specifics of the surface or decoration technique TO CHECK!"
         },
         "formDescription": {
-          "label": "Form description",
-          "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)"
+          "label": "Form description"
         },
         "manufacturing": {
           "label": "Description of material TO CHECK!"
@@ -933,8 +811,7 @@
           "label": "Manufacturing method"
         },
         "materialType": {
-          "label": "Material type",
-          "description": "Welcher Machart ist das vorgefundene Objekt?"
+          "label": "Material type"
         },
         "objectType": {
           "label": "Object type"
@@ -943,19 +820,16 @@
           "label": "Pottery type of ware TO CHECK!"
         },
         "provenance": {
-          "label": "Provenance",
-          "description": "Herkunftsort"
+          "label": "Provenance"
         },
         "temper": {
-          "label": "Temper",
-          "description": "Grundsätzliche Art der Magerung, z. B. 'Organische Partikel'"
+          "label": "Temper"
         },
         "temperAmount": {
           "label": "Number of inclusions TO CHECK!"
         },
         "temperParticles": {
-          "label": "Temper particles",
-          "description": "Größe der Magerungspartikel"
+          "label": "Temper particles"
         },
         "temperTypeClay": {
           "label": "Clay type TO CHECK! Wieso temper im Feldnamen?"
@@ -964,8 +838,7 @@
           "label": "Basic vessel form"
         },
         "vesselFormSpecific": {
-          "label": "Specific vessel form",
-          "description": "Spezielle Form des Gefäßes"
+          "label": "Specific vessel form"
         }
       }
     },
@@ -973,20 +846,16 @@
       "label": "Drill core layer",
       "fields": {
         "hasFinds": {
-          "label": "Finds",
-          "description": "Ist Fundmaterial vorhanden?"
+          "label": "Finds"
         },
         "dimensionThickness": {
-          "label": "Thickness",
-          "description": "Dicke bzw. Stärke des Objekts"
+          "label": "Thickness"
         },
         "dimensionVerticalExtent": {
-          "label": "Vertical extent",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+          "label": "Vertical extent"
         },
         "soilType": {
-          "label": "Soil type",
-          "description": "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"
+          "label": "Soil type"
         }
       }
     },
@@ -1001,39 +870,32 @@
         },
         "findingPlace": {
           "label": "Finding place",
-          "description": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)"
+          "description": "For entering multiple other resources as finding place, e. g. (PE07 So 04,002)"
         },
         "publicationDatingFinds": {
-          "label": "Dating (finds)",
-          "description": "Z. B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
+          "label": "Dating (finds)"
         },
         "publicationDatingScientific": {
-          "label": "Dating (scientific)",
-          "description": "Beschreibung zur Publikation, Hinweis auf vorhandene Datierungen"
+          "label": "Dating (scientific)"
         },
         "publicationDatingStratigraphy": {
-          "label": "Dating (stratigraphy)",
-          "description": "z. B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
+          "label": "Dating (stratigraphy)"
         },
         "publication": {
-          "label": "Publication remark",
-          "description": "Anmerkung zur Publikation"
+          "label": "Publication remark"
         },
         "spatialLocation": {
-          "label": "Spatial location",
-          "description": "Beschreibung der räumlichen Lage der Ausgrabung/der stratigraphischen Einheit im restlichen Raum der Fundstelle (z. B.: 'Ausgrabung unterhalb Akropolis am...')"
+          "label": "Spatial location"
         },
         "condition": {
-          "label": "Condition",
-          "description": "Beschreibung des Erhaltungszustands"
+          "label": "Condition"
         },
         "conditionAmount": {
           "label": "Preserved amount TO CHECK!",
-          "description": "Erhaltener Anteil im Vergleich zum Original"
+          "description": "Preserved amount in comparison to the original"
         },
         "distinguishingCriteria": {
-          "label": "Distinguishing criteria",
-          "description": "Welches Kriterium wurde zur Abgrenzung der stratigraphischen Einheit gewählt?"
+          "label": "Distinguishing criteria"
         },
         "graveType": {
           "label": "Grave type"
@@ -1042,8 +904,7 @@
           "label": "Specific grave type"
         },
         "soilType": {
-          "label": "Soil type",
-          "description": "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"
+          "label": "Soil type"
         },
         "tombBuilding": {
           "label": "Tomb building"
@@ -1055,7 +916,7 @@
       "fields": {
         "biologicalAge": {
           "label": "Biological age",
-          "description": "Alter des Menschen oder Tieres zum Todeszeitpunkt (z. B. Infans I)"
+          "description": "Age of the human or animal at the time of death (e. g. Infans I)"
         },
         "boneClassification": {
           "label": "Bone classification"
@@ -1067,15 +928,13 @@
           "label": "Burning grade of the bones (according to Wahl 1982)"
         },
         "sex": {
-          "label": "Sex",
-          "description": "Geschlecht des Menschen oder Tieres"
+          "label": "Sex"
         },
         "objectType": {
           "label": "Designation or type of the object TO CHECK!"
         },
         "species": {
-          "label": "Species",
-          "description": "Vorliegende Tierart"
+          "label": "Species"
         }
       }
     },
@@ -1083,30 +942,26 @@
       "label": "Room",
       "fields": {
         "area": {
-          "label": "Area in m2",
-          "description": "Flächenangabe in Quadratmetern"
+          "label": "Area in m2"
         },
         "conditionComment": {
           "label": "Condition comment"
         },
         "description": {
-          "label": "Description",
-          "description": "Freies Beschreibungsfeld"
+          "label": "Description"
         },
         "processor": {
-          "label": "Processor",
-          "description": "Bearbeiter bzw. Bearbeiterin des Raumes"
+          "label": "Processor"
         },
         "campaign": {
           "label": "Campaign"
         },
         "condition": {
-          "label": "Condition",
-          "description": "Beschreibung des Erhaltungszustands"
+          "label": "Condition"
         },
         "conditionAmount": {
           "label": "Preserved amount TO CHECK!",
-          "description": "Erhaltener Anteil im Vergleich zum Original"
+          "description": "Preserved amount in comparison to the original"
         },
         "period": {
           "label": "Period"
@@ -1115,20 +970,16 @@
           "label": "Dating"
         },
         "dimensionHeight": {
-          "label": "Height",
-          "description": "Angabe der Objekthöhe"
+          "label": "Height"
         },
         "dimensionLength": {
-          "label": "Length",
-          "description": "Angabe der Länge"
+          "label": "Length"
         },
         "dimensionVerticalExtent": {
-          "label": "Vertical extent",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+          "label": "Vertical extent"
         },
         "dimensionWidth": {
-          "label": "Width",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+          "label": "Width"
         }
       }
     },
@@ -1136,16 +987,13 @@
       "label": "Process unit",
       "fields": {
         "date": {
-          "label": "Date",
-          "description": "Datum der Durchführung"
+          "label": "Date"
         },
         "description": {
-          "label": "Description",
-          "description": "Freies Beschreibungsfeld"
+          "label": "Description"
         },
         "processor": {
-          "label": "Processor",
-          "description": "Bearbeiter bzw. Bearbeiterin des Arbeitsgangs"
+          "label": "Processor"
         },
         "operationClassification": {
           "label": "Operation classification"
@@ -1165,8 +1013,7 @@
           "label": "Outside: Clay color and intensity"
         },
         "clayStructure": {
-          "label": "Structure",
-          "description": "Welcher Art ist die Terrakotta-Struktur?"
+          "label": "Structure"
         },
         "coatColorInside": {
           "label": "Coat (inside): Color and intensity"
@@ -1178,41 +1025,34 @@
           "label": "Specifics of the surface or decoration technique TO CHECK!"
         },
         "formDescription": {
-          "label": "Form description",
-          "description": "Nähere Beschreibung der allgemeinen Form"
+          "label": "Form description"
         },
         "manufacturingMethod": {
           "label": "Manufacturing method"
         },
         "provenance": {
-          "label": "Provenance",
-          "description": "Herkunftsort"
+          "label": "Provenance"
         },
         "surfaceCondition": {
-          "label": "Surface condition",
-          "description": "Angabe zum Zustand der Oberfläche"
+          "label": "Surface condition"
         },
         "temper": {
-          "label": "Temper",
-          "description": "Grundsätzliche Art der Magerung"
+          "label": "Temper"
         },
         "temperAmount": {
           "label": "Number of inclusions TO CHECK!"
         },
         "temperParticles": {
-          "label": "Temper particles",
-          "description": "Größe der Magerungspartikel"
+          "label": "Temper particles"
         },
         "terracottaType": {
-          "label": "Terracotta type",
-          "description": "Massivität des Terrakotta-Objekts, z. B. 'Innen hohl'"
+          "label": "Terracotta type"
         },
         "vesselForm": {
           "label": "Basic vessel form"
         },
         "vesselFormSpecific": {
-          "label": "Specific vessel form",
-          "description": "Spezielle Form des Gefäßes"
+          "label": "Specific vessel form"
         }
       }
     },
@@ -1220,67 +1060,53 @@
       "label": "Wall surface",
       "fields": {
         "area": {
-          "label": "Area in m2",
-          "description": "Flächenangabe in Quadratmetern"
+          "label": "Area in m2"
         },
         "conditionComment": {
           "label": "Condition comment"
         },
         "constructionDetailsDescription": {
-          "label": "Description of construction details",
-          "description": "Nähere Beschreibung zur Konstruktion der Fundamente/Ecken/Lagen o. Ä."
+          "label": "Description of construction details"
         },
         "description": {
-          "label": "Description",
-          "description": "Freies Beschreibungsfeld"
+          "label": "Description"
         },
         "markDescription": {
-          "label": "Description of mark",
-          "description": "Erklärungen und Erkenntnisse zum vorhandenen Werkzeichen"
+          "label": "Description of mark"
         },
         "hasPlasterDecoration": {
-          "label": "Plaster decoration",
-          "description": "Beschreibung der Dekoration des Putzes"
+          "label": "Plaster decoration"
         },
         "plasterOlder": {
-          "label": "Older plaster",
-          "description": "Beschreibung der älteren Putzschichten"
+          "label": "Older plaster"
         },
         "processor": {
-          "label": "Processor",
-          "description": "Bearbeiter bzw. Bearbeiterin der Wandoberfläche"
+          "label": "Processor"
         },
         "surfaceDecoration": {
-          "label": "Surface decoration",
-          "description": "Z. B. Bemalung oder sonstige Verzierungen"
+          "label": "Surface decoration"
         },
         "wallConstructionTechnique": {
-          "label": "Wall construction technique",
-          "description": "Beschreibung zu möglichen Bindern/Abfolge von Lagen o. Ä."
+          "label": "Wall construction technique"
         },
         "blockTreatment": {
-          "label": "Block treatment",
-          "description": "Bearbeitung des Blocks/Bearbeitungsspuren"
+          "label": "Block treatment"
         },
         "buildingTechnique": {
-          "label": "Building technique",
-          "description": "Bezeichnung der verwendeten Technik bei der Errichtung des Bauwerks"
+          "label": "Building technique"
         },
         "color": {
-          "label": "Color and intensity",
-          "description": "Farbe, soweit erkennbar"
+          "label": "Color and intensity"
         },
         "condition": {
-          "label": "Condition",
-          "description": "Beschreibung des Erhaltungszustands"
+          "label": "Condition"
         },
         "conditionAmount": {
           "label": "Preserved amount TO CHECK!",
-          "description": "Erhaltener Anteil im Vergleich zum Original"
+          "description": "Preserved amount in comparison to the original"
         },
         "constructionDetails": {
-          "label": "Construction details",
-          "description": "Welcher Art ist die Mauerkonstruktion?"
+          "label": "Construction details"
         },
         "period": {
           "label": "Period"
@@ -1289,39 +1115,32 @@
           "label": "Dating"
         },
         "dimensionHeight": {
-          "label": "Height",
-          "description": "Angabe der Objekthöhe"
+          "label": "Height"
         },
         "dimensionWidth": {
-          "label": "Width",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+          "label": "Width"
         },
         "jointsCondition": {
           "label": "Joints condition",
-          "description": "Aktueller Erhaltungszustand der Dachziegel"
+          "description": "Aktueller Erhaltungszustand der Dachziegel TO CHECK! Wieso Dachziegel beim Feld jointsCondition?"
         },
         "jointsType": {
-          "label": "Joints type",
-          "description": "Gestaltung und Erhalt der Mauerfugen"
+          "label": "Joints type"
         },
         "mark": {
-          "label": "Mark of the stonemason TO CHECK!",
-          "description": "Auflistung möglicher Steinmetzzeichen"
+          "label": "Mark of the stonemason TO CHECK!"
         },
         "plasterComponents": {
           "label": "Plaster components"
         },
         "wallOrientation": {
-          "label": "Wall orientation",
-          "description": "Orientierung der Wand"
+          "label": "Wall orientation"
         },
         "roomSide": {
-          "label": "Room side",
-          "description": "Auf welcher Seite des Raumes wird die Wand aufgenommen?"
+          "label": "Room side"
         },
         "wallSide": {
-          "label": "Wall side",
-          "description": "Angabe der 'Blickrichtung' der Wandoberfläche"
+          "label": "Wall side"
         }
       }
     },
@@ -1329,22 +1148,19 @@
       "label": "Other",
       "fields": {
         "isNatural": {
-          "label": "Natural",
-          "description": "Ist die Schicht natürlich? ('Ja' z. B. bei Erosion)"
+          "label": "Natural"
         },
         "consistency": {
           "label": "Consistency"
         },
         "distinguishingCriteria": {
-          "label": "Distinguishing criteria",
-          "description": "Welches Kriterium wurde zur Abgrenzung der stratigraphischen Einheit gewählt?"
+          "label": "Distinguishing criteria"
         },
         "otherClassification": {
           "label": "Classification Other"
         },
         "soilType": {
-          "label": "Soil type",
-          "description": "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"
+          "label": "Soil type"
         }
       }
     },
@@ -1352,20 +1168,16 @@
       "label": "Sample",
       "fields": {
         "labNumber": {
-          "label": "Laboratory number",
-          "description": "Nummer der Probe, vergeben im untersuchenden Labor"
+          "label": "Laboratory number"
         },
         "weight": {
-          "label": "Weight (g)",
-          "description": "Gewicht in Gramm"
+          "label": "Weight (g)"
         },
         "sampleType": {
-          "label": "Sample type",
-          "description": "Welche Probe wird genommen? Welche Untersuchungen sollen vorgenommen werden?"
+          "label": "Sample type"
         },
         "soilType": {
-          "label": "Soil type",
-          "description": "Bezeichnung des Bodens nach bodenkundlicher Kartieranleitung"
+          "label": "Soil type"
         }
       }
     },
@@ -1374,11 +1186,10 @@
       "fields": {
         "drawingMaterial": {
           "label": "Drawing material",
-          "description": "Verwendetes Material/Programm zur Anfertigung der Zeichnung"
+          "description": "Material/application used for creating the drawing"
         },
         "drawingTool": {
-          "label": "Drawing tool",
-          "description": "Mit welcher Art Werkzeug wurde gezeichnet?"
+          "label": "Drawing tool"
         },
         "drawingType": {
           "label": "Drawing type"
@@ -1392,8 +1203,7 @@
       "label": "Survey areal",
       "fields": {
         "researchMethod": {
-          "label": "Research method",
-          "description": "Welche Surveymethode findet Anwendung?"
+          "label": "Research method"
         }
       }
     },
@@ -1401,27 +1211,22 @@
       "label": "Stone",
       "fields": {
         "purpose": {
-          "label": "Purpose",
-          "description": "Zweck bzw. Verwendung des Objekts"
+          "label": "Purpose"
         },
         "treatment": {
-          "label": "Treatment",
-          "description": "Beschreibungsfeld zum Vorhandensein von antiken Bearbeitungspuren (z. B.: 'Steinmetzzeichen auf Standfuß')"
+          "label": "Treatment"
         },
         "workmanship": {
-          "label": "Workmanship",
-          "description": "Beschreibung der Qualität, in der ein bearbeiteter Stein, der z. B. als Träger einer Inschrift verwendet wurde, vorliegt"
+          "label": "Workmanship"
         },
         "architectureElement": {
           "label": "Architectural element TO CHECK! (müsste das nicht per Relation zu einer Architecture gelöst werden?)"
         },
         "color": {
-          "label": "Color and intensity",
-          "description": "Farbe, soweit erkennbar"
+          "label": "Color and intensity"
         },
         "formDescription": {
-          "label": "Form description",
-          "description": "Nähere Beschreibung der allgemeinen Form"
+          "label": "Form description"
         },
         "material": {
           "label": "Material"
@@ -1430,12 +1235,10 @@
           "label": "Object type"
         },
         "origin": {
-          "label": "Origin of material",
-          "description": "Herkunftsort des Materials"
+          "label": "Origin of material"
         },
         "provenance": {
-          "label": "Provenance",
-          "description": "Herkunftsort"
+          "label": "Provenance"
         },
         "temperAmount": {
           "label": "Number of inclusions TO CHECK!"
@@ -1446,20 +1249,17 @@
       "label": "Coin",
       "fields": {
         "frontSideDescription": {
-          "label": "Front side description",
-          "description": "Beschreibung der Vorderseite der Münze"
+          "label": "Front side description"
         },
         "preservedDiameter": {
           "label": "Preserved diameter",
-          "description": "Durchmesser der Münze in Millimetern"
+          "description": "Diameter of the coin in millimeters"
         },
         "reverseSideDescription": {
-          "label": "Reverse side description",
-          "description": "Beschreibung der Rückseite der Münze"
+          "label": "Reverse side description"
         },
         "denomination": {
-          "label": "Denomination TO CHECK!",
-          "description": "Name der Münzeinheit"
+          "label": "Denomination TO CHECK!"
         },
         "manufacturingMethod": {
           "label": "Manufacturing method"
@@ -1469,19 +1269,18 @@
         },
         "mint": {
           "label": "Mint",
-          "description": "Ort, in dem Münze geprägt wurde"
+          "description": "Place where the coin was minted"
         },
         "mintingRuler": {
           "label": "Minting ruler",
-          "description": "Person oder Körperschaft, die für die Prägung der Münze verantwortlich ist"
+          "description": "Person or corporate body responsible for the coinage"
         },
         "provenance": {
-          "label": "Provenance",
-          "description": "Herkunftsort"
+          "label": "Provenance"
         },
         "stampPositioning": {
           "label": "Stamp positioning",
-          "description": "Verdrehung des Stempels der Rückseite im Verhältnis zur Vorderseite; Angabe in 1-12h analog zur Uhr (z. B. '12' bei gleicher Stellung)"
+          "description": "Rotation of the stamp on the reverse side in comparison to the front side; specification in 1-12h analogous to the clock face (e. g. '12' for equal rotation)"
         }
       }
     },
@@ -1489,66 +1288,53 @@
       "label": "Find",
       "fields": {
         "amount": {
-          "label": "Total number TO CHECK!",
-          "description": "Anzahl der aufgehobenen bzw. inventarisierten Fundstücke"
+          "label": "Total number TO CHECK!"
         },
         "bibliography": {
           "label": "Bibliography"
         },
         "catalogueNumber": {
-          "label": "Catalogue number",
-          "description": "Vergebene Nummer bei der Aufnahme des Fundstücks in einen Katalog"
+          "label": "Catalogue number"
         },
         "comparison": {
-          "label": "Comparison",
-          "description": "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"
+          "label": "Comparison"
         },
         "conditionComment": {
           "label": "Condition comment"
         },
         "conditionPercent": {
-          "label": "Condition in percent",
-          "description": "Erhaltene Menge in Prozent"
+          "label": "Condition in percent"
         },
         "date": {
-          "label": "Find date",
-          "description": "Datum der Aufnahme des Fundes"
+          "label": "Find date"
         },
         "description": {
-          "label": "Description",
-          "description": "Freies Beschreibungsfeld"
+          "label": "Description"
         },
         "processor": {
-          "label": "Processor",
-          "description": "Bearbeiter bzw. Bearbeiterin des Fundes"
+          "label": "Processor"
         },
         "publicationMaterialSummary": {
-          "label": "Material TO CHECK! Description scheint nicht zum Feld zu passen",
-          "description": "Ausführliche Beschreibung zur Publikation"
+          "label": "Material TO CHECK! Description scheint nicht zum Feld zu passen"
         },
         "publicationRemark": {
-          "label": "Publication remark",
-          "description": "Anmerkung zur Publikation"
+          "label": "Publication remark"
         },
         "hasRestoration": {
-          "label": "Restoration",
-          "description": "Wurden Maßnahmen zur Restaurierung und Konservierung unternommen?"
+          "label": "Restoration"
         },
         "storageInventoryNumber": {
-          "label": "Inventory number",
-          "description": "Vergebene Nummer während der Inventarisierung in einer Sammlung oder einem Depot"
+          "label": "Inventory number"
         },
         "weight": {
-          "label": "Weight (g)",
-          "description": "Gewicht in Gramm"
+          "label": "Weight (g)"
         },
         "condition": {
-          "label": "Condition",
-          "description": "Beschreibung des Erhaltungszustandes"
+          "label": "Condition"
         },
         "conditionAmount": {
           "label": "Preserved amount TO CHECK!",
-          "description": "Erhaltener Anteil im Vergleich zum Original"
+          "description": "Preserved amount in comparison to the original"
         },
         "period": {
           "label": "Period"
@@ -1557,40 +1343,32 @@
           "label": "Dating"
         },
         "dimensionDiameter": {
-          "label": "Diameter",
-          "description": "Angabe des Objektdurchmessers"
+          "label": "Diameter"
         },
         "dimensionHeight": {
-          "label": "Height",
-          "description": "Angabe der Objekthöhe"
+          "label": "Height"
         },
         "dimensionLength": {
-          "label": "Length",
-          "description": "Angabe der Länge"
+          "label": "Length"
         },
         "dimensionPerimeter": {
-          "label": "Perimeter",
-          "description": "Angabe des Umfangs des Objekts"
+          "label": "Perimeter"
         },
         "dimensionThickness": {
-          "label": "Thickness",
-          "description": "Dicke bzw. Stärke des Objekts"
+          "label": "Thickness"
         },
         "dimensionVerticalExtent": {
-          "label": "Vertical extent",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+          "label": "Vertical extent"
         },
         "dimensionWidth": {
-          "label": "Width",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+          "label": "Width"
         },
         "dimensionOther": {
           "label": "Other dimensions",
-          "description": "Andere Maße können hier eingegeben werden; bitte kommentieren"
+          "description": "Other dimensions can be entered here; please comment"
         },
         "storagePlace": {
-          "label": "Storage place",
-          "description": "Aufbewahrungsort des Fundes"
+          "label": "Storage place"
         }
       }
     },
@@ -1598,20 +1376,16 @@
       "label": "Plaster fragment",
       "fields": {
         "area": {
-          "label": "Area in m2",
-          "description": "Flächenangabe in Quadratmetern"
+          "label": "Area in m2"
         },
         "composition": {
-          "label": "Composition",
-          "description": "Beschreibung des Aufbaus des Putzes"
+          "label": "Composition"
         },
         "hasDecoration": {
-          "label": "Decoration",
-          "description": "Beschreibung der Bemalung des Putzes"
+          "label": "Decoration"
         },
         "color": {
-          "label": "Color and intensity",
-          "description": "Farbe, soweit erkennbar"
+          "label": "Color and intensity"
         },
         "plasterComponents": {
           "label": "Plaster components"
@@ -1623,7 +1397,7 @@
       "fields": {
         "originalType": {
           "label": "Original type TO CHECK!",
-          "description": "Ursprungsformat des Bildes; bei Digitalisaten ursprüngliches analoges Format"
+          "description": "Original format of the image; in case of digitalized images the original analogous format"
         }
       }
     },
@@ -1631,16 +1405,13 @@
       "label": "Profile",
       "fields": {
         "dimensionHeight": {
-          "label": "Height",
-          "description": "Angabe der Objekthöhe"
+          "label": "Height"
         },
         "dimensionVerticalExtent": {
-          "label": "Vertical extent",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+          "label": "Vertical extent"
         },
         "orientation": {
-          "label": "Orientation",
-          "description": "Ausrichtung nach Himmelsrichtung des Profils"
+          "label": "Orientation"
         }
       }
     },
@@ -1648,15 +1419,13 @@
       "label": "Metal",
       "fields": {
         "materialDescription": {
-          "label": "Material description",
-          "description": "Beschreibung des verwendeten Materials; möglicherweise exakte Beschreibung des Metalls oder der Legierung"
+          "label": "Material description"
         },
         "decorationTechnique": {
           "label": "Specifics of the surface or decoration technique TO CHECK!"
         },
         "formDescription": {
-          "label": "Form description",
-          "description": "Nähere Beschreibung der allgemeinen Form"
+          "label": "Form description"
         },
         "manufacturingMethod": {
           "label": "Manufacturing methid"
@@ -1665,15 +1434,13 @@
           "label": "Designation or type of the object TO CHECK!"
         },
         "provenance": {
-          "label": "Provenance",
-          "description": "Herkunftsort"
+          "label": "Provenance"
         },
         "vesselForm": {
           "label": "Basic vessel form"
         },
         "vesselFormSpecific": {
-          "label": "Specific vessel form",
-          "description": "Spezielle Form des Gefäßes"
+          "label": "Specific vessel form"
         }
       }
     },

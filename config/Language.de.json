@@ -237,7 +237,7 @@
         },
         "supervisor": {
           "label": "Leiter/Leiterin",
-          "description": "Leitende Person einer Kampagne oder Maßnahme"
+          "description": "Leitende Person der Kampagne"
         }
       }
     },
@@ -561,7 +561,7 @@
         },
         "supervisor": {
           "label": "Leiter/Leiterin",
-          "description": "Leitende Person einer Kampagne oder Maßnahme"
+          "description": "Leitende Person der Maßnahme"
         },
         "campaign": {
           "label": "Kampagne"

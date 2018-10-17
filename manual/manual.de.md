@@ -244,7 +244,7 @@ erhalten.
 Aktivieren Sie diese Option, um die stratigraphischen Einheiten in der Matrix anhand des Eintrags im Feld
 "Grobdatierung" zu gruppieren. Sind als Grobdatierung zwei Werte (von/bis) eingetragen, wird jeweils nur
 der Wert aus "Grobdatierung (von)" verwendet. Stratigraphische Einheiten mit gleichen Werten für die
-Grobdatierung werden nun nahe beieinander platziert und mit Rechtecken umrahmt.
+Grobdatierung werden nun nahe beieinander platziert und mit einem Rechteck umrahmt.
 
 <p align="center"><img src="images/matrix/matrix_phases.png" alt="Gruppierung nach Grobdatierung"/></p>
 

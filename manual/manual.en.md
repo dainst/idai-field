@@ -144,7 +144,7 @@ A blue magnifier button indicates that the extended search mode is activated.
 
 The extended search mode allows searching over larger amounts of data:
 * In the **overview**, the search is performed over all of the project's resources.
-* In the **operation views**, you can choose if the search should be performed within a single operation or over all
+* In the **operation views**, you can choose if the search shall be performed within a single operation or over all
 operations of the respective type (e. g. over all trenches in the view **Excavation**). For this purpose, the option
 "All" is available in the operation selection menu.
 
@@ -179,3 +179,88 @@ results.
 The number appearing next to the type filter button indicates the number of active search criteria. You can
 remove search criteria by clicking the number. This opens up the menu again and you can choose the search criterium to
 remove.
+
+
+<hr>
+
+
+## Matrix
+
+The **Matrix** view displays a matrix for each trench of the project, generated automatically from the stratigraphical
+units of the respective trench. The edges of the matrix are built on the basis of the relations created for the units.
+
+<p align="center"><img src="images/matrix/trench_selection.png" alt="Trench selection"/></p>
+
+Choose the trench for which a matrix shall be generated via the dropdown button on the left side of the toolbar.
+
+
+### Options
+
+Via the **Options button** in the upper right corner of the matrix view, you can customize the matrix visualization by
+adjusting different settings. The chosen settings are applied to all matrices for all of the project's trenches and
+are preserved when restarting the application.
+
+<p align="center"><img src="images/matrix/matrix_tools.png" alt="Options menu"/></p>
+
+
+#### Relations
+
+* *Temporal*: Edges are built based on the relations "Before", "After" and "Contemporary with". 
+* *Spatial*: Edges are built based on the relations "Above", "Below", "Cuts" and "Cut by".
+
+
+#### Edges
+
+* *Straight*: All edges are composed of straight lines.
+* *Curved*: Edges may be curved if there is no direct connecting line between two units of the matrix.
+
+
+#### Group by period
+
+Activate this option in order to group the stratigraphical units of the matrix based on the value of the field
+"Period". If two values are set for the field (from/until), the value of "Period (from)" is used in each case.
+Stratigraphical units with equal period values are placed close to each other and framed by a rectangle. 
+
+<p align="center"><img src="images/matrix/matrix_phases.png" alt="Group by period"/></p>
+
+
+### Navigation
+
+Move the mouse with the **right mouse button** pressed in order to change the position of the matrix within the
+display area. Use the **mouse wheel** or the **zoom buttons** in the upper left corner of the display area to adjust
+the zoom level. By using the **left mouse button**, you can interact with units of the matrix; the type of
+interaction (editing or selection) depends on the selected interaction mode.
+
+When the mouse cursor is moved over a unit, the edges starting at this unit are highlighted in color: Green lines
+show connections to units on higher levels, blue ones to units on lower levels and orange ones to units on the
+same level of the matrix. 
+
+
+### Editing
+
+By default, the **edit mode** is active: Click a unit in the matrix in order to open up a window allowing you to
+edit the corresponding resource. In this way, you can also change the position of the unit within the matrix by editing
+the temporal respectively spatial relations in the tab **Relations**. After clicking **Save**, the matrix is updated
+automatically on the basis of the changed data. 
+
+
+### Display of sub-matrices
+
+To facilitate the overview in large matrices, sub-matrices can also be generated from selected units of the matrix.
+Use the buttons on the right side of the toolbar in order to select units and create a new sub-matrix from the
+current selection: 
+
+<p align="center"><img src="images/matrix/interaction_mode_buttons.png" alt="Interaction mode buttons"/></p>
+
+* *Edit mode*: Units can be edited by left click.
+* *Single selection mode*: Units can be selected and deselected separately by left click.
+* *Group selection mode*: Units can be selected in groups by drawing a rectangle using the mouse.
+
+<p align="center"><img src="images/matrix/subgraph_buttons.png" alt="Sub-matrix creation buttons"/></p>
+  
+* *Deselect*: All units are deselected.
+* *Create matrix from selection*: A new matrix is generated consisting only of the selected units. Edges are still
+  built on the basis of all stratigraphical units of the trench; thus the function can also be used as a fast way to
+  check if two units are connected across multiple relations/resources.
+* *Reload matrix*: The original matrix with all stratigraphical units of the selected trench is restored.
+  

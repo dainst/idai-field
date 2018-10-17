@@ -24,7 +24,7 @@
             <div class="dropdown-menu" ngbDropdownMenu>
                 <button *ngIf="showSelectAllOperationsOption()" class="dropdown-item"
                         (click)="activateBypassOperationTypeSelection()">
-                    <em>Alle</em>
+                    <em i18n="@@resources.navigation.all">Alle</em>
                 </button>
                 <hr *ngIf="showSelectAllOperationsOption()">
 
@@ -46,7 +46,7 @@
              id="selected-all-operation-type-documents" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
-            <em>Alle</em>
+            <em i18n="@@resources.navigation.all">Alle</em>
         </div>
 
         <div *ngFor="let document of getSegments()" class="btn btn-outline-primary navigation-button"

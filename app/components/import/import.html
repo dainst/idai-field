@@ -14,42 +14,42 @@
 
         <div class="row">
             <div class="form-group col default-container">
-
                 <div class="col-lg-6 mx-lg-auto py-4">
                     <div class="form-group">
-
                         <label class="control-label col-form-label" for="importSourceSelect"
                                i18n="@@import.source">Quelle</label>
-
                         <select id="importSourceSelect" class="form-control"
                                 [(ngModel)]="sourceType"
                                 (ngModelChange)="reset()">
                             <option value="file" i18n="@@import.file">Datei</option>
                             <option value="http" i18n="@@import.http">HTTP</option>
                         </select>
-
                     </div>
 
-                    <div class="form-group" *ngIf="sourceType === 'file'">
-
+                    <div *ngIf="sourceType === 'file'" class="form-group">
                         <label class="control-label col-form-label" i18n="@@import.path">Pfad</label>
-                        <input id="importFileInput" type="file"
-                               class="form-control-file"
-                               (change)="selectFile($event)">
 
+                        <div class="input-group">
+                            <input [ngModel]="file ? file.path : ''" class="form-control"
+                                   placeholder="Datei auswählen..."
+                                   i18n-placeholder="@@import.chooseFile"
+                                   disabled>
+                            <input id="importFileInput" class="file-input-button" type="file"
+                                   (change)="selectFile($event)">
+                            <label for="importFileInput" class="btn btn-secondary file-input-label">
+                                <span class="mdi mdi-folder"></span>
+                            </label>
+                        </div>
                     </div>
 
-                    <div class="form-group" *ngIf="sourceType === 'http'">
-
+                    <div *ngIf="sourceType === 'http'" class="form-group">
                         <label class="control-label col-form-label" i18n="@@import.url">URL</label>
                         <input class="form-control" id="importUrlInput"
                                type="text"
                                [(ngModel)]="url">
-
                     </div>
 
                     <div class="form-group">
-
                         <label class="control-label col-form-label"
                                for="importFormatSelect" i18n="@@import.format">Format</label>
                         <select id="importFormatSelect" class="form-control"
@@ -61,7 +61,6 @@
                             <option *ngIf="getProject().indexOf('meninx-project') !== -1" value="meninxfind"
                                     i18n="@@import.formats.meninx">Meninx/Funde (experimentell) – CSV</option>
                         </select>
-
                     </div>
 
                     <div *ngIf="format === 'native'" class="form-group form-check-inline">

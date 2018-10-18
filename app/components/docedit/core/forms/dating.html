@@ -132,21 +132,17 @@
 <div *ngFor="let item of resource[field.name]; index as i"  class="checkbox">
     <div class="input-group mb-2">
         <input value="{{item.label}}" type="text" disabled class="form-control">
-        <span class="input-group-btn">
-            <button class="btn btn-danger" type="button" (click)="removeDating(i)">
-                <span class="mdi mdi-delete"></span>
-            </button>
-        </span>
+        <button class="btn btn-danger" type="button" (click)="removeDating(i)">
+            <span class="mdi mdi-delete"></span>
+        </button>
     </div>
 </div>
 <div class="input-group">
     <input placeholder="Hinzufügen..." i18n-placeholder="@@docedit.forms.dating.add" type="text"
            disabled class="form-control">
-    <span class="input-group-btn">
-        <button class="btn btn-success" type="button" (click)="createNewDating()">
-            <span class="mdi mdi-plus-circle"></span>
-        </button>
-    </span>
+    <button class="btn btn-success" type="button" (click)="createNewDating()">
+        <span class="mdi mdi-plus-circle"></span>
+    </button>
 </div>
 <div *ngIf="newDating" class="mt-2">
     <ng-container [ngTemplateOutlet]="editDating"

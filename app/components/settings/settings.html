@@ -124,14 +124,11 @@
                                    [ngModel]="settings.imagestorePath"
                                    (ngModelChange)="settings.imagestorePath = $event"
                                    class="form-control">
-                            <span class="input-group-btn">
-                                <input id="imagestorepath-file" type="file" webkitdirectory directory
-                                       (change)="settings.imagestorePath = $event.target.files[0].path + '/'"
-                                       style="display: none">
-                                <label for="imagestorepath-file" class="btn btn-secondary">
-                                    <span class="mdi mdi-folder"></span>
-                                </label>
-                            </span>
+                            <input id="imagestorepath-file" class="file-input" type="file" webkitdirectory directory
+                                   (change)="settings.imagestorePath = $event.target.files[0].path + '/'">
+                            <label for="imagestorepath-file" class="btn btn-secondary file-input-label">
+                                <span class="mdi mdi-folder"></span>
+                            </label>
                         </div>
 
                         <div class="settings-info" style="margin-top: 13px;" i18n="@@settings.images.path.info">

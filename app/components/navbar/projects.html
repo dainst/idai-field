@@ -49,11 +49,9 @@
                 </div>
                 <div class="input-group">
                     <input type="text" class="project-name-input form-control" [(ngModel)]="newProject"/>
-                    <span class="input-group-btn">
-                        <button class="project-option-ok btn btn-primary" (click)="createProject()">
-                            <span i18n="@@buttons.ok">OK</span>
-                        </button>
-                    </span>
+                    <button class="project-option-ok btn btn-primary" (click)="createProject()">
+                        <span i18n="@@buttons.ok">OK</span>
+                    </button>
                 </div>
             </div>
         </ng-template>
@@ -65,11 +63,9 @@
                 </div>
                 <div class="input-group">
                     <input type="text" class="project-name-input form-control" [(ngModel)]="projectToDelete"/>
-                    <span class="input-group-btn">
-                        <button class="project-option-ok btn btn-primary" (click)="deleteProject()">
-                            <span i18n="@@buttons.ok">OK</span>
-                        </button>
-                    </span>
+                    <button class="project-option-ok btn btn-primary" (click)="deleteProject()">
+                        <span i18n="@@buttons.ok">OK</span>
+                    </button>
                 </div>
             </div>
         </ng-template>

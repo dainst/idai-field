@@ -441,7 +441,7 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToProject();
         ResourcesPage.performCreateResource('t2', 'trench');
-        ResourcesPage.clickMoveIntoButton('t2');
+        ResourcesPage.clickHierarchyButton('t2');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));
         ResourcesPage.getSelectedMainTypeDocumentOption().then(value => expect(value).toContain('t2'));
     });
@@ -452,7 +452,7 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.performCreateResource('c2', 'feature');
-        ResourcesPage.clickMoveIntoButton('c2');
+        ResourcesPage.clickHierarchyButton('c2');
         ResourcesPage.performCreateResource('i1', 'inscription');
         ResourcesPage.performCreateRelation('i1', 'testf1', 0);
 
@@ -472,7 +472,7 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.performCreateResource('context2', 'feature');
-        ResourcesPage.clickMoveIntoButton('SE0');
+        ResourcesPage.clickHierarchyButton('SE0');
 
         ResourcesPage.openEditByDoubleClickResource('testf1');
         DoceditPage.clickRelationsTab();
@@ -495,7 +495,7 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
 
-        ResourcesPage.clickMoveIntoButton('SE0');
+        ResourcesPage.clickHierarchyButton('SE0');
         ResourcesPage.clickMainTypeDocumentNavigationButton();
 
         ResourcesPage.openEditByDoubleClickResource('SE0');
@@ -516,7 +516,7 @@ describe('resources/state --', function() {
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
-        ResourcesPage.clickMoveIntoButton('SE0');
+        ResourcesPage.clickHierarchyButton('SE0');
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('testf1'));
         OperationBarPage.clickSwitchHierarchyMode();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));

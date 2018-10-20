@@ -32,9 +32,6 @@ export class NavigationComponent {
         });
     }
 
-    public showOperationAsFirstSegment = () => !this.viewFacade.getBypassHierarchy() || !this.viewFacade.getSelectAllOperationsOnBypassHierarchy();
-
-    public showOperationsAllAsFirstSegment = () => this.viewFacade.getBypassHierarchy() && this.viewFacade.getSelectAllOperationsOnBypassHierarchy();
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
@@ -71,21 +68,29 @@ export class NavigationComponent {
     }
 
 
-    public showNavigation() {
-
-        return !this.viewFacade.isInOverview() && this.viewFacade.getSelectedOperations().length > 0;
-    }
-
-
-    public showSwitchHierarchyModeButton() {
+    public showNavigation(): boolean {
 
         return this.viewFacade.isInOverview() || this.viewFacade.getSelectedOperations().length > 0;
     }
 
 
-    public showSelectAllOperationsOption() {
+    public showSelectAllOperationsOption(): boolean {
 
         return this.viewFacade.getBypassHierarchy() && this.viewFacade.getOperations().length > 1;
+    }
+
+
+    public showOperationAsFirstSegment(): boolean {
+
+        return !this.viewFacade.isInOverview()
+            && (!this.viewFacade.getBypassHierarchy() || !this.viewFacade.getSelectAllOperationsOnBypassHierarchy());
+    }
+
+
+    public showOperationsAllAsFirstSegment(): boolean {
+
+        return !this.viewFacade.isInOverview()
+            && (this.viewFacade.getBypassHierarchy() && this.viewFacade.getSelectAllOperationsOnBypassHierarchy());
     }
 
 

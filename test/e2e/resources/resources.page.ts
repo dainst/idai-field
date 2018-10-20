@@ -61,9 +61,9 @@ export class ResourcesPage {
     }
 
 
-    public static clickMoveIntoButton(identifier) {
+    public static clickHierarchyButton(identifier) {
 
-        return common.click(element(by.css('#resource-' + identifier + ' .move-into-button')));
+        return common.click(element(by.css('#resource-' + identifier + ' .hierarchy-button')));
     }
 
 
@@ -278,7 +278,7 @@ export class ResourcesPage {
 
         NavbarPage.clickNavigateToProject();
         this.performCreateResource(identifier, 'trench');
-        this.clickMoveIntoButton(identifier);
+        this.clickHierarchyButton(identifier);
     }
 
 

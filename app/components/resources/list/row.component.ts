@@ -53,7 +53,11 @@ export class RowComponent implements AfterViewInit {
 
     public showMoveIntoOption = () => this.navigationService.showMoveIntoOption(this.document);
 
+    public showJumpToViewOption = () => this.navigationService.showJumpToViewOption(this.document);
+
     public moveInto = () => this.navigationService.moveInto(this.document);
+
+    public jumpToView = () => this.navigationService.jumpToView(this.document);
 
     public getLabel = () => this.typesMap[this.document.resource.type].label;
 

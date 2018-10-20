@@ -34,7 +34,11 @@ export class SidebarListComponent extends BaseList {
 
     public moveInto = (document: IdaiFieldDocument) => this.navigationService.moveInto(document);
 
+    public jumpToView = (document: IdaiFieldDocument) => this.navigationService.jumpToView(document);
+
     public showMoveIntoOption = (document: IdaiFieldDocument) => this.navigationService.showMoveIntoOption(document);
+
+    public showJumpToViewOption = (document: IdaiFieldDocument) => this.navigationService.showJumpToViewOption(document);
 
 
     public async select(document: IdaiFieldDocument, autoScroll: boolean = false) {

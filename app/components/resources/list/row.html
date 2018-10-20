@@ -6,9 +6,15 @@
        </div>
 
         <button *ngIf="showMoveIntoOption()"
-                class="move-into-button btn float-right align-middle"
+                class="hierarchy-button btn float-right align-middle"
                 (click)="moveInto()">
             <span class="mdi mdi-subdirectory-arrow-right mdi-18px float-right"></span>
+        </button>
+
+        <button *ngIf="showJumpToViewOption()"
+                class="hierarchy-button btn float-right align-middle"
+                (click)="jumpToView()">
+            <span class="mdi mdi-arrow-right mdi-18px float-right"></span>
         </button>
     </div>
     <div class="input-field">

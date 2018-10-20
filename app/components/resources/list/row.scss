@@ -21,7 +21,7 @@
     padding: 4px 5px 0 2px;
   }
 
-  .move-into-button {
+  .hierarchy-button {
     position: relative;
     top: -2px;
     right: -1px;
@@ -29,16 +29,16 @@
     color: #868e96;
     background-color: #fff;
     cursor: pointer;
+
+    &:hover {
+      color: darken(#868e96, 5%);
+      background-color: darken(#fff, 5%);
+      transition: background-color .4s ease;
+    }
   }
 
   .list-edit-button {
     cursor: pointer;
-  }
-
-  .move-into-button:hover {
-    color: darken(#868e96, 5%);
-    background-color: darken(#fff, 5%);
-    transition: background-color .4s ease;
   }
 
   input {

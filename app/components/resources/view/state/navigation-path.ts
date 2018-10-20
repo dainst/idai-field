@@ -70,22 +70,23 @@ export module NavigationPath {
      * (NO SELECTED SEGMENT)
      * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
      *
-     * @param navPath
-     * @param newSelectedSegmentDoc
      * @return a new path object with updated state
      */
-    export function setNewSelectedSegmentDoc(navPath: NavigationPath,
+    export function setNewSelectedSegmentDoc(navigationPath: NavigationPath,
                                              newSelectedSegmentDoc: IdaiFieldDocument|undefined): NavigationPath {
 
-        const updatedNavigationPath = clone(navPath);
+        const updatedNavigationPath = clone(navigationPath);
 
         if (newSelectedSegmentDoc) {
             (updatedNavigationPath as any).segments = rebuildElements(
-                navPath.segments,
-                navPath.selectedSegmentId,
+                navigationPath.segments,
+                navigationPath.selectedSegmentId,
                 newSelectedSegmentDoc);
         }
-        (updatedNavigationPath as any).selectedSegmentId = newSelectedSegmentDoc ? newSelectedSegmentDoc.resource.id : undefined;
+
+        (updatedNavigationPath as any).selectedSegmentId = newSelectedSegmentDoc
+            ? newSelectedSegmentDoc.resource.id
+            : undefined;
 
         return updatedNavigationPath;
     }

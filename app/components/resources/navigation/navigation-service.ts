@@ -17,15 +17,15 @@ export class NavigationService {
     }
 
 
-    public moveInto(document: IdaiFieldDocument) {
+    public async moveInto(document: IdaiFieldDocument) {
 
-        this.viewFacade.moveInto(document);
+        await this.viewFacade.moveInto(document);
     }
 
 
-    public jumpToView(document: IdaiFieldDocument) {
+    public async jumpToView(document: IdaiFieldDocument) {
 
-        this.routingService.jumpToMainTypeHomeView(document);
+        await this.routingService.jumpToMainTypeHomeView(document);
     }
 
 

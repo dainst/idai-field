@@ -1439,6 +1439,14 @@
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.navigation.project" datatype="html">
+        <source>Projekt</source>
+        <target state="final">Project</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/navigation/navigation.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="widgets.searchBar.placeholder" datatype="html">
         <source>Suchen...</source>
         <target state="final">Search...</target>
@@ -3358,7 +3366,7 @@
       </trans-unit>
       <trans-unit id="configuration.relations.includes" datatype="html">
         <source>Beinhaltet</source>
-        <target state="translated">Includes</target>
+        <target state="final">Includes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
           <context context-type="linenumber">1</context>

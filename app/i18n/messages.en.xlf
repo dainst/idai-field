@@ -1424,7 +1424,7 @@
     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/list/sidebar-list.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.all" datatype="html">
@@ -1432,11 +1432,11 @@
         <target state="final">All</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.searchBar.placeholder" datatype="html">
@@ -3244,22 +3244,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="configuration.relations.isLocatedIn" datatype="html">
-        <source>Liegt im Ort</source>
-        <target state="final">Located in place</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="configuration.relations.locates" datatype="html">
-        <source>Enthält Maßnahme</source>
-        <target state="final">Contains operation</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="configuration.relations.isAfter" datatype="html">
         <source>Zeitlich nach</source>
         <target state="final">After</target>
@@ -3374,7 +3358,7 @@
       </trans-unit>
       <trans-unit id="configuration.relations.includes" datatype="html">
         <source>Beinhaltet</source>
-        <target state="final">Includes</target>
+        <target state="translated">Includes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">node_modules/idai-components-2/src/model/idai-field-app-configurator.ts</context>
           <context context-type="linenumber">1</context>

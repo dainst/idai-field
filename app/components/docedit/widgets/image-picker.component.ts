@@ -5,6 +5,7 @@ import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/field/idai-field-image-document-read-datastore';
 import {TypeUtility} from '../../../core/model/type-utility';
 import {M} from '../../m';
+import {clone} from '../../../core/util/object-util';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class ImagePickerComponent implements OnInit {
     public selectedDocuments: Array<IdaiFieldImageDocument> = [];
 
     private query: Query = { q: '' };
+    private currentQueryId: string;
 
     private static documentLimit: number = 24;
 
@@ -44,22 +46,22 @@ export class ImagePickerComponent implements OnInit {
         // resizing and invoke recalculation of imageGrid
         let modalEl = this.el.nativeElement.parentElement.parentElement;
         modalEl.addEventListener('transitionend', (event: any) => {
-            if (event.propertyName == 'transform') this.onResize();
+            if (event.propertyName === 'transform') this.onResize();
         });
     }
 
 
-    public setDocument(document: IdaiFieldDocument) {
+    public async setDocument(document: IdaiFieldDocument) {
 
         this.document = document;
-        this.fetchDocuments(this.query);
+        await this.fetchDocuments(this.query);
     }
 
 
-    public setQueryString(q: string) {
+    public async setQueryString(q: string) {
 
         this.query.q = q;
-        this.fetchDocuments(this.query);
+        await this.fetchDocuments(this.query);
     }
 
 
@@ -74,7 +76,7 @@ export class ImagePickerComponent implements OnInit {
      */
     public select(document: IdaiFieldImageDocument) {
 
-        if (this.selectedDocuments.indexOf(document) == -1) {
+        if (!this.selectedDocuments.includes(document)) {
             this.selectedDocuments.push(document);
         } else {
             this.selectedDocuments.splice(this.selectedDocuments.indexOf(document), 1);
@@ -98,13 +100,17 @@ export class ImagePickerComponent implements OnInit {
         };
         this.query.limit = ImagePickerComponent.documentLimit;
 
-        return this.datastore.find(this.query)
-            // .catch(msgWithParams => this.messages.add(msgWithParams)
-            .then(result => this.documents = result.documents)
+        this.currentQueryId = new Date().toISOString();
+        this.query.id = this.currentQueryId;
+
+        return this.datastore.find(clone(this.query))
+            .then(result => {
+                if (result.queryId === this.currentQueryId) this.documents = result.documents
+            })
             .catch(errWithParams => {
-                console.error('error in find with query', this.query);
-                if (errWithParams.length == 2) {
-                    console.error('error in find, cause', errWithParams[1]);
+                console.error('Error in find with query', this.query);
+                if (errWithParams.length === 2) {
+                    console.error('Error in find', errWithParams[1]);
                 }
                 this.messages.add([M.ALL_ERROR_FIND]);
             });

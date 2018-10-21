@@ -147,12 +147,14 @@ export class DocumentsManager {
     }
 
 
-    public async populateDocumentList(skipResetRemoteDocs = false) {
+    public async populateDocumentList(reset: boolean = true) {
 
         if (this.loading) this.loading.start();
 
-        if (!skipResetRemoteDocs) this.newDocumentsFromRemote = [];
-        this.documents = [];
+        if (reset) {
+            this.newDocumentsFromRemote = [];
+            this.documents = [];
+        }
 
         const result: IdaiFieldFindResult<IdaiFieldDocument> = await this.createUpdatedDocumentList();
         this.documents = result.documents;
@@ -217,7 +219,7 @@ export class DocumentsManager {
         }
 
         this.newDocumentsFromRemote = unique(this.newDocumentsFromRemote.concat([changedDocument.resource.id]));
-        await this.populateDocumentList(true);
+        await this.populateDocumentList(false);
     }
 
 

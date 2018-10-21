@@ -18,13 +18,12 @@ export class ImageDocumentsManager {
     private totalDocumentCount: number;
 
     private depictsRelationsSelected: boolean = false;
+    private currentQueryId: string;
 
 
-    constructor(
-        public viewFacade: ViewFacade,
-        private imagesState: ImagesState,
-        private imageDatastore: IdaiFieldImageDocumentReadDatastore
-    ) {}
+    constructor(public viewFacade: ViewFacade,
+                private imagesState: ImagesState,
+                private imageDatastore: IdaiFieldImageDocumentReadDatastore) {}
 
 
     public getSelected = (): Array<IdaiFieldImageDocument> => this.selected;
@@ -77,11 +76,16 @@ export class ImageDocumentsManager {
      */
     public async fetchDocuments(limit: number) {
 
+        this.currentQueryId = new Date().toISOString();
+
         const query: Query = JSON.parse(JSON.stringify(this.imagesState.getQuery()));
         query.limit = limit;
+        query.id = this.currentQueryId;
 
         try {
-            const {documents, totalCount} = await this.imageDatastore.find(query);
+            const {documents, totalCount, queryId} = await this.imageDatastore.find(query);
+            if (queryId !== this.currentQueryId) return;
+
             this.documents = documents;
             this.totalDocumentCount = totalCount;
         } catch (errWithParams) {

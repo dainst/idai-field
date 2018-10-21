@@ -28,6 +28,8 @@ export class DocumentsManager {
     private populateDocumentsObservers: Array<Observer<Array<Document>>> = [];
     private documentChangedFromRemoteObservers: Array<Observer<undefined>> = [];
 
+    private currentQueryId: string;
+
     private static documentLimit: number = 200;
 
 
@@ -130,11 +132,9 @@ export class DocumentsManager {
 
         try {
             const documentToSelect = await this.datastore.get(resourceId);
-
             this.newDocumentsFromRemote = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
             if (!(await this.createUpdatedDocumentList()).documents.find(hasEqualId(documentToSelect))) {
-
                 await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
                 await this.populateDocumentList();
             }
@@ -156,16 +156,20 @@ export class DocumentsManager {
             this.documents = [];
         }
 
-        const result: IdaiFieldFindResult<IdaiFieldDocument> = await this.createUpdatedDocumentList();
+        this.currentQueryId = new Date().toISOString();
+        const result: IdaiFieldFindResult<IdaiFieldDocument> = await this.createUpdatedDocumentList(this.currentQueryId);
+
+        if (this.loading) this.loading.stop();
+        if (result.queryId !== this.currentQueryId) return;
+
         this.documents = result.documents;
         this.totalDocumentCount = result.totalCount;
 
-        if (this.loading) this.loading.stop();
         ObserverUtil.notify(this.populateDocumentsObservers, this.documents);
     }
 
 
-    public async createUpdatedDocumentList(): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
+    public async createUpdatedDocumentList(queryId?: string): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
 
         const isRecordedInTarget = this.makeIsRecordedInTarget();
         if (!isRecordedInTarget && !this.resourcesStateManager.isInOverview()) {
@@ -184,7 +188,10 @@ export class DocumentsManager {
                     isRecordedInTargetIdOrIds,
                     state,
                     this.resourcesStateManager.isInOverview(),
-                    this.resourcesStateManager.getOverviewTypeNames()))
+                    this.resourcesStateManager.getOverviewTypeNames(),
+                    queryId
+                )
+            )
         );
     }
 
@@ -195,6 +202,7 @@ export class DocumentsManager {
             ObserverUtil.notify(this.deselectionObservers,
                 ResourcesState.getSelectedDocument(this.resourcesStateManager.get()) as Document|undefined);
         }
+
         this.resourcesStateManager.setSelectedDocument(document);
     }
 
@@ -202,7 +210,10 @@ export class DocumentsManager {
     private async populateAndDeselectIfNecessary() {
 
         await this.populateDocumentList();
-        if (!this.documents.find(hasEqualId(ResourcesState.getSelectedDocument(this.resourcesStateManager.get())))) this.deselect();
+
+        if (!this.documents.find(hasEqualId(ResourcesState.getSelectedDocument(this.resourcesStateManager.get())))) {
+            this.deselect();
+        }
     }
 
 
@@ -242,7 +253,6 @@ export class DocumentsManager {
     private async adjustQuerySettingsIfNecessary(documentToSelect: Document) {
 
         if (!(await this.updatedDocumentListContainsSelectedDocument(documentToSelect))) {
-
             this.resourcesStateManager.setQueryString('');
             this.resourcesStateManager.setTypeFilters([]);
             this.resourcesStateManager.setCustomConstraints({});
@@ -250,16 +260,16 @@ export class DocumentsManager {
     }
 
 
-    private async updatedDocumentListContainsSelectedDocument(documentToSelect: Document) {
+    private async updatedDocumentListContainsSelectedDocument(documentToSelect: Document): Promise<boolean> {
 
-        return (await this.createUpdatedDocumentList()).documents.find(hasEqualId(documentToSelect));
+        return (await this.createUpdatedDocumentList()).documents.find(hasEqualId(documentToSelect)) !== undefined;
     }
 
 
     private async fetchDocuments(query: Query): Promise<IdaiFieldFindResult<IdaiFieldDocument>> {
 
         try {
-            return await this.datastore.find(query);
+            return this.datastore.find(query);
         } catch (errWithParams) {
             DocumentsManager.handleFindErr(errWithParams, query);
             return { documents: [], totalCount: 0 };
@@ -267,11 +277,10 @@ export class DocumentsManager {
     }
 
 
-    private static chooseIsRecordedInTargetIdOrIds(
-        mainTypeDocumentResourceId: string|undefined,
-        operationTypeDocumentIds: () => string[],
-        bypassHierarchy: boolean,
-        selectAllOperationsOnBypassHierarchy: boolean): string|string[]|undefined {
+    private static chooseIsRecordedInTargetIdOrIds(mainTypeDocumentResourceId: string|undefined,
+                                                   operationTypeDocumentIds: () => string[],
+                                                   bypassHierarchy: boolean,
+                                                   selectAllOperationsOnBypassHierarchy: boolean): string|string[]|undefined {
 
         if (!mainTypeDocumentResourceId) return undefined;
 
@@ -281,12 +290,8 @@ export class DocumentsManager {
     }
 
 
-    private static buildQuery(
-        isRecordedInTargetIdOrIds: string|string[]|undefined,
-        state: ResourcesState,
-        isInOverview: boolean,
-        overviewTypeNames: string[]
-    ): Query {
+    private static buildQuery(isRecordedInTargetIdOrIds: string|string[]|undefined, state: ResourcesState,
+                              isInOverview: boolean, overviewTypeNames: string[], queryId?: string): Query {
 
         const bypassHierarchy = ResourcesState.getBypassHierarchy(state);
         const typeFilters = ResourcesState.getTypeFilters(state);
@@ -294,20 +299,19 @@ export class DocumentsManager {
 
         return {
             q: ResourcesState.getQueryString(state),
-
             constraints: DocumentsManager.buildConstraints(
                 customConstraints,
                 isRecordedInTargetIdOrIds,
                 ResourcesState.getNavigationPath(state).selectedSegmentId,
-                !bypassHierarchy),
-
+                !bypassHierarchy
+            ),
             types: (typeFilters.length > 0)
                 ? typeFilters
                 : !isRecordedInTargetIdOrIds && isInOverview && !bypassHierarchy
                     ? overviewTypeNames
                     : undefined,
-
-            limit: bypassHierarchy ? DocumentsManager.documentLimit : undefined
+            limit: bypassHierarchy ? DocumentsManager.documentLimit : undefined,
+            id: queryId
         };
     }
 

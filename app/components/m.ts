@@ -88,6 +88,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static DOCEDIT_WARNING_TYPE_CHANGE_RELATIONS = 'docedit.warning.typeChange.relations';
     public static DOCEDIT_ERROR_SAVE = 'docedit.error.save';
     public static DOCEDIT_ERROR_DELETE = 'docedit.error.delete';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'docedit.validation.error.invalidNumericValue';
+    public static DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'docedit.validation.error.invalidNumericValues';
+    public static DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY = 'docedit.validation.error.missingProperty';
+    public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN = 'docedit.validation.error.noRecordedIn';
+    public static DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'docedit.validation.error.noRecordedInTarget';
 
     // Images Package
     public static IMAGES_SUCCESS_IMAGE_UPLOADED = 'images.success.imageUploaded';
@@ -668,6 +673,51 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.docedit.error.delete',
                 value: 'Beim Löschen der Ressource ist ein Fehler aufgetreten.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.invalidNumericValue',
+                value: 'Bitte tragen Sie im Feld \'[1]\' einen gültigen Zahlenwert ein.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.invalidNumericValues',
+                value: 'Bitte tragen Sie in den Feldern \'[1]\' gültige Zahlenwerte ein.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.missingProperty',
+                value: 'Bitte füllen Sie das Feld \'[1]\' aus.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.noRecordedIn',
+                value: 'Bitte wählen Sie eine Zielressource für die Relation \'Aufgenommen in Maßnahme\' aus.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET] = {
+            content: i18n({
+                id: 'messages.docedit.validation.error.noRecordedInTarget',
+                value: 'Die Zielressource [0] der Relation \'Aufgenommen in Maßnahme\' konnte nicht gefunden werden.'
             }),
             level: 'danger',
             params: [],

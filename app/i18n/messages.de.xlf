@@ -2900,6 +2900,46 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidNumericValue" datatype="html">
+        <source>Bitte tragen Sie im Feld '[1]' einen gültigen Zahlenwert ein.</source>
+        <target state="final">Bitte tragen Sie im Feld '[1]' einen gültigen Zahlenwert ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.invalidNumericValues" datatype="html">
+        <source>Bitte tragen Sie in den Feldern '[1]' gültige Zahlenwerte ein.</source>
+        <target state="final">Bitte tragen Sie in den Feldern '[1]' gültige Zahlenwerte ein.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.missingProperty" datatype="html">
+        <source>Bitte füllen Sie das Feld '[1]' aus.</source>
+        <target state="final">Bitte füllen Sie das Feld '[1]' aus.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.noRecordedIn" datatype="html">
+        <source>Bitte wählen Sie eine Zielressource für die Relation 'Aufgenommen in Maßnahme' aus.</source>
+        <target state="final">Bitte wählen Sie eine Zielressource für die Relation 'Aufgenommen in Maßnahme' aus.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.docedit.validation.error.noRecordedInTarget" datatype="html">
+        <source>Die Zielressource [0] der Relation 'Aufgenommen in Maßnahme' konnte nicht gefunden werden.</source>
+        <target state="final">Die Zielressource [0] der Relation 'Aufgenommen in Maßnahme' konnte nicht gefunden werden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.datastore.error.notFound" datatype="html">
         <source>Die Ressource konnte nicht gefunden werden.</source>
         <target state="final">Die Ressource konnte nicht gefunden werden.</target>

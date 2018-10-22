@@ -22,7 +22,6 @@ export module MessagesConversion {
         let replacement = undefined;
         const msg = msgWithParams[0];
 
-
         if (msg === ValidationErrors.INVALID_TYPE) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_TYPE;
         if (msg === ValidationErrors.NO_ISRECORDEDIN) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN;
         if (msg === ValidationErrors.NO_ISRECORDEDIN_TARGET) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET;
@@ -54,7 +53,6 @@ export module MessagesConversion {
         if (msg === ImportErrors.NO_OPERATION_ASSIGNABLE) replacement = M.IMPORT_ERROR_NO_OPERATION_ASSIGNABLE;
         if (msg === ImportErrors.NO_FEATURE_ASSIGNABLE) replacement = M.IMPORT_ERROR_NO_FEATURE_ASSIGNABLE;
 
-
         if (msg === ValidationErrors.INVALID_FIELDS) {
             replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
                 ? M.IMPORT_VALIDATION_ERROR_INVALID_FIELDS
@@ -71,7 +69,8 @@ export module MessagesConversion {
                 : M.IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE
         }
 
-        if (replacement) (msgWithParams as any)[0] = replacement;
+        if (replacement) msgWithParams[0] = replacement;
+
         return msgWithParams;
     }
 }

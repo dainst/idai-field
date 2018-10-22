@@ -286,8 +286,7 @@ describe('Validator', () => {
             .validate(doc, false, false, true).then(
             () => fail(),
             msgWithParams => {
-                expect(msgWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T',
-                    'number1, number2']);
+                expect(msgWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
                 done();
             });
     });

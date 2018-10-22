@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
+import {Document, NewDocument, ProjectConfiguration, IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
 import {Validations} from './validations';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
 import {TypeUtility} from './type-utility';
@@ -40,12 +39,8 @@ export class Validator {
      * @throws [INVALID_FIELDS]
      * @throws [INVALID_NUMERICAL_VALUE]
      */
-    public async validate(
-        document: Document|NewDocument,
-        suppressFieldsAndRelationsCheck = false,
-        suppressIdentifierCheck = false,
-        suppressIsRecordedInCheck = false,
-    ): Promise<void> {
+    public async validate(document: Document|NewDocument, suppressFieldsAndRelationsCheck = false,
+                          suppressIdentifierCheck = false, suppressIsRecordedInCheck = false): Promise<void> {
 
         if (!Validations.validateType(document.resource, this.projectConfiguration)) {
             throw [ValidationErrors.INVALID_TYPE, document.resource.type];
@@ -178,16 +173,20 @@ export class Validator {
 
         const invalidFields = Validations.validateFields(document.resource, projectConfiguration);
         if (invalidFields.length > 0) {
-            throw [ValidationErrors.INVALID_FIELDS]
-                .concat([document.resource.type])
-                .concat(invalidFields.join(', '));
+            throw [
+                ValidationErrors.INVALID_FIELDS,
+                document.resource.type,
+                invalidFields.join(', ')
+            ];
         }
 
         const invalidRelationFields = Validations.validateRelations(document.resource, projectConfiguration);
         if (invalidRelationFields.length > 0) {
-            throw [ValidationErrors.INVALID_RELATIONS]
-                .concat([document.resource.type])
-                .concat([invalidRelationFields.join(', ')]);
+            throw [
+                ValidationErrors.INVALID_RELATIONS,
+                document.resource.type,
+                invalidRelationFields.join(', ')
+            ];
         }
     }
 
@@ -196,9 +195,11 @@ export class Validator {
 
         const invalidNumericValues = Validations.validateNumericValues(document.resource, projectConfiguration);
         if (invalidNumericValues ) {
-            throw [ValidationErrors.INVALID_NUMERICAL_VALUES]
-                .concat([document.resource.type])
-                .concat([invalidNumericValues.join(', ')]);
+            throw [
+                ValidationErrors.INVALID_NUMERICAL_VALUES,
+                document.resource.type,
+                invalidNumericValues.join(', ')
+            ];
         }
     }
 

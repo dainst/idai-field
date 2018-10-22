@@ -31,11 +31,9 @@ export module Import {
      * containing the number of resources imported successfully as well as information on errors that occurred,
      * if any.
      */
-    export function go(reader: Reader,
-              parser: Parser,
-              importStrategy: ImportStrategy,
-              relationsStrategy: RelationsStrategy,
-              rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
+    export function go(reader: Reader, parser: Parser, importStrategy: ImportStrategy,
+                       relationsStrategy: RelationsStrategy,
+                       rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
 
         return new Promise<ImportReport>(async resolve => {
 
@@ -61,10 +59,8 @@ export module Import {
     }
 
 
-    async function finishImport(
-        importReport: ImportReport,
-        relationsStrategy: RelationsStrategy,
-        rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
+    async function finishImport(importReport: ImportReport, relationsStrategy: RelationsStrategy,
+                                rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
 
         if (importReport.errors.length === 0) {
 
@@ -88,7 +84,7 @@ export module Import {
             try {
                 await rollbackStrategy.rollback(importReport.importedResourcesIds);
             } catch (err) {
-                console.error("rollback error", err);
+                console.error('Rollback error', err);
                 importReport.errors.push([ImportErrors.ROLLBACK_ERROR]);
             }
         }
@@ -96,9 +92,7 @@ export module Import {
     }
 
 
-    async function parseFileContent(
-        parser: Parser,
-        fileContent: string): Promise<[Document[],string[][]]> {
+    async function parseFileContent(parser: Parser, fileContent: string): Promise<[Document[],string[][]]> {
 
         const docsToUpdate: Document[] = [];
         await parser
@@ -109,10 +103,8 @@ export module Import {
     }
 
 
-    async function update(
-        docsToUpdate: Document[],
-        importReport: ImportReport,
-        importStrategy: ImportStrategy): Promise<void> {
+    async function update(docsToUpdate: Document[], importReport: ImportReport,
+                          importStrategy: ImportStrategy): Promise<void> {
 
         for (let docToUpdate of docsToUpdate) {
             if (importReport.errors.length !== 0) return;

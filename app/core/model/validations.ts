@@ -108,8 +108,8 @@ export module Validations {
             let value = resource[fieldDefinition.name];
 
             if (value && numericInputTypes.includes(fieldDefinition.inputType as string)
-                && !validateNumber(value, fieldDefinition.inputType as string)) {
-                invalidFields.push(fieldDefinition.label as any);
+                    && !validateNumber(value, fieldDefinition.inputType as string)) {
+                invalidFields.push(fieldDefinition.name);
             }
         });
 

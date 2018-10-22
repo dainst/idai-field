@@ -54,7 +54,7 @@ export class Validator {
         if (missingProperties.length > 0) {
             throw [
                 ValidationErrors.MISSING_PROPERTY,
-                this.projectConfiguration.getLabelForType(document.resource.type),
+                document.resource.type,
                 missingProperties.join(', ')
             ];
         }
@@ -186,7 +186,7 @@ export class Validator {
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_FIELDS,
-                projectConfiguration.getLabelForType(document.resource.type),
+                document.resource.type,
                 invalidFields.join(', ')
             ];
         }
@@ -195,7 +195,7 @@ export class Validator {
         if (invalidRelationFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_RELATIONS,
-                projectConfiguration.getLabelForType(document.resource.type),
+                document.resource.type,
                 invalidRelationFields.join(', ')
             ];
         }
@@ -208,7 +208,7 @@ export class Validator {
         if (invalidNumericValues ) {
             throw [
                 ValidationErrors.INVALID_NUMERICAL_VALUES,
-                projectConfiguration.getLabelForType(document.resource.type),
+                document.resource.type,
                 invalidNumericValues.join(', ')
             ];
         }

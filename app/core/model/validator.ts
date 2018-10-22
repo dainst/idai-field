@@ -52,11 +52,17 @@ export class Validator {
 
         const missingProperties = Validations.getMissingProperties(document.resource, this.projectConfiguration);
         if (missingProperties.length > 0) {
-            throw [ValidationErrors.MISSING_PROPERTY, document.resource.type]
-                .concat(missingProperties.join((', ')));
+            throw [
+                ValidationErrors.MISSING_PROPERTY,
+                this.projectConfiguration.getLabelForType(document.resource.type),
+                missingProperties.join(', ')
+            ];
         }
 
-        if (!suppressFieldsAndRelationsCheck) Validator.validateFieldsAndRelations(document as Document, this.projectConfiguration);
+        if (!suppressFieldsAndRelationsCheck) {
+            Validator.validateFieldsAndRelations(document as Document, this.projectConfiguration);
+        }
+        
         Validator.validateNumericalValues(document as Document, this.projectConfiguration);
 
         const msgWithParams = Validator.validateGeometry(document.resource.geometry as any);
@@ -64,8 +70,13 @@ export class Validator {
 
 
         if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) {
-            const invalidRelationTarget = await this.validateRelationTargets(document as Document, 'isRecordedIn');
-            if (invalidRelationTarget) throw [ValidationErrors.NO_ISRECORDEDIN_TARGET, invalidRelationTarget.join(', ')];
+            const invalidRelationTargets = await this.validateRelationTargets(document as Document, 'isRecordedIn');
+            if (invalidRelationTargets) {
+                throw [
+                    ValidationErrors.NO_ISRECORDEDIN_TARGET,
+                    invalidRelationTargets.join(', ')
+                ];
+            }
         }
 
         if (!suppressIdentifierCheck) await this.validateIdentifier(document as any);
@@ -106,7 +117,7 @@ export class Validator {
 
     private async isExistingRelationTarget(targetId: string): Promise<boolean> {
 
-        return (await this.datastore.find({constraints: {'id:match': targetId}})).documents.length === 1;
+        return (await this.datastore.find({ constraints: { 'id:match': targetId } })).documents.length === 1;
     }
 
 
@@ -132,37 +143,37 @@ export class Validator {
 
         if (!geometry) return null;
 
-        if (!geometry.type) return [ ValidationErrors.MISSING_GEOMETRY_TYPE ];
-        if (!geometry.coordinates) return [ ValidationErrors.MISSING_COORDINATES ];
+        if (!geometry.type) return [ValidationErrors.MISSING_GEOMETRY_TYPE];
+        if (!geometry.coordinates) return [ValidationErrors.MISSING_COORDINATES];
 
         switch(geometry.type) {
             case 'Point':
                 if (!Validations.validatePointCoordinates(geometry.coordinates)) {
-                    return [ ValidationErrors.INVALID_COORDINATES, 'Point' ];
+                    return [ValidationErrors.INVALID_COORDINATES, 'Point'];
                 }
                 break;
             case 'LineString':
                 if (!Validations.validatePolylineCoordinates(geometry.coordinates)) {
-                    return [ ValidationErrors.INVALID_COORDINATES, 'LineString' ];
+                    return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
                 }
                 break;
             case 'MultiLineString':
                 if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
-                    return [ ValidationErrors.INVALID_COORDINATES, 'MultiLineString' ];
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiLineString'];
                 }
                 break;
             case 'Polygon':
                 if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
-                    return [ ValidationErrors.INVALID_COORDINATES, 'Polygon' ];
+                    return [ValidationErrors.INVALID_COORDINATES, 'Polygon'];
                 }
                 break;
             case 'MultiPolygon':
                 if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
-                    return [ ValidationErrors.INVALID_COORDINATES, 'MultiPolygon' ];
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPolygon'];
                 }
                 break;
             default:
-                return [ ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type ];
+                return [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type];
         }
 
         return null;
@@ -175,7 +186,7 @@ export class Validator {
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_FIELDS,
-                document.resource.type,
+                projectConfiguration.getLabelForType(document.resource.type),
                 invalidFields.join(', ')
             ];
         }
@@ -184,7 +195,7 @@ export class Validator {
         if (invalidRelationFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_RELATIONS,
-                document.resource.type,
+                projectConfiguration.getLabelForType(document.resource.type),
                 invalidRelationFields.join(', ')
             ];
         }
@@ -197,7 +208,7 @@ export class Validator {
         if (invalidNumericValues ) {
             throw [
                 ValidationErrors.INVALID_NUMERICAL_VALUES,
-                document.resource.type,
+                projectConfiguration.getLabelForType(document.resource.type),
                 invalidNumericValues.join(', ')
             ];
         }

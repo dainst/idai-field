@@ -177,7 +177,7 @@ describe('resources --', () => {
             'shortDescription', 'Text', undefined,
             false, false);
 
-        NavbarPage.awaitAlert('identifier', false);
+        NavbarPage.awaitAlert('Bezeichner', false);
         NavbarPage.clickCloseAllMessages();
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();

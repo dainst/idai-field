@@ -891,7 +891,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preservation assessmen",
+          "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
         },
         "distinguishingCriteria": {
@@ -960,7 +960,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preservation assessmen",
+          "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
         },
         "period": {
@@ -1102,7 +1102,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preservation assessmen",
+          "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
         },
         "constructionDetails": {
@@ -1333,7 +1333,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preservation assessmen",
+          "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
         },
         "period": {

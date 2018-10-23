@@ -178,7 +178,7 @@
           "description": "Specification of the EPSG code (see http://spatialreference.org/, e. g. 3004)"
         },
         "externalReference": {
-          "label": "Project homepage TO CHECK! Unterschied zu projectURI?",
+          "label": "Project homepage",
           "description": "External reference(s) of the project"
         },
         "gazId": {
@@ -195,7 +195,7 @@
           "label": "Longitude"
         },
         "projectURI": {
-          "label": "Project URL TO CHECK! Unterschied zu externalReference?"
+          "label": "Project URL"
         },
         "supervisor": {
           "label": "Supervisor",
@@ -270,7 +270,7 @@
       "label": "Building",
       "fields": {
         "buildingHistory": {
-          "label": "Building history TO CHECK! Unterschied zu history?"
+          "label": "Building history"
         },
         "buildingResearchHistory": {
           "label": "Research history"
@@ -282,7 +282,7 @@
           "label": "Excavation history"
         },
         "history": {
-          "label": "History TO CHECK! Unterschied zu Building history?"
+          "label": "History"
         },
         "hasRestoration": {
           "label": "Restoration"
@@ -499,7 +499,7 @@
           "label": "Building research history"
         },
         "buildingResearchHistory": {
-          "label": "Research history TO CHECK! Wieso Building research history beim Type Place?"
+          "label": "Research history"
         },
         "description": {
           "label": "Description"
@@ -530,7 +530,7 @@
       "fields": {
         "appearance": {
           "label": "Formation",
-          "description": "Description of the formation of the layer, e.g. 'Collapsed mudbrick wall of building xy' TO CHECK! Passt das wirklich zum Feldnamen?"
+          "description": "Description of the formation of the layer, e.g. 'Collapsed mudbrick wall of building xy'"
         },
         "isNatural": {
           "label": "Natural"
@@ -579,7 +579,7 @@
           "label": "Disturbance"
         },
         "featureAmount": {
-          "label": "Feature amount TO CHECK!"
+          "label": "Feature amount"
         },
         "processor": {
           "label": "Processor"
@@ -732,7 +732,7 @@
           "label": "Number of other sherds"
         },
         "amountSherdsPercent": {
-          "label": "Quantification in percent TO CHECK!"
+          "label": "Quantification in percent"
         },
         "amountSherdsLid": {
           "label": "Number of lids"
@@ -826,13 +826,13 @@
           "label": "Temper"
         },
         "temperAmount": {
-          "label": "Number of inclusions"
+          "label": "Amount of inclusions"
         },
         "temperParticles": {
           "label": "Temper particles"
         },
         "temperTypeClay": {
-          "label": "Clay type TO CHECK! Wieso temper im Feldnamen?"
+          "label": "Clay type"
         },
         "vesselForm": {
           "label": "Basic vessel form"
@@ -891,7 +891,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preservation assessment",
+          "label": "Preservation assessmen",
           "description": "Preserved amount in comparison to the original"
         },
         "distinguishingCriteria": {
@@ -931,7 +931,7 @@
           "label": "Sex"
         },
         "objectType": {
-          "label": "Designation or type of the object TO CHECK!"
+          "label": "Designation or type of the object"
         },
         "species": {
           "label": "Species"
@@ -960,7 +960,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preservation assessment",
+          "label": "Preservation assessmen",
           "description": "Preserved amount in comparison to the original"
         },
         "period": {
@@ -1040,7 +1040,7 @@
           "label": "Temper"
         },
         "temperAmount": {
-          "label": "Number of inclusions TO CHECK!"
+          "label": "Amount of inclusions"
         },
         "temperParticles": {
           "label": "Temper particles"
@@ -1057,7 +1057,7 @@
       }
     },
     "Wall_surface": {
-      "label": "Wall surface TO CHECK!--Wall_surface??",
+      "label": "Wall surface",
       "fields": {
         "area": {
           "label": "Area in m2"
@@ -1102,7 +1102,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preservation assessment",
+          "label": "Preservation assessmen",
           "description": "Preserved amount in comparison to the original"
         },
         "constructionDetails": {
@@ -1122,7 +1122,7 @@
         },
         "jointsCondition": {
           "label": "Joints condition",
-          "description": "Aktueller Erhaltungszustand der Fugen TO CHECK! Wieso Dachziegel beim Feld jointsCondition? - ersetzt durch fugen"
+          "description": "Aktueller Erhaltungszustand der Fugen"
         },
         "jointsType": {
           "label": "Joints type"
@@ -1220,7 +1220,7 @@
           "label": "Workmanship"
         },
         "architectureElement": {
-          "label": "Architectural element TO CHECK! (müsste das nicht per Relation zu einer Architecture gelöst werden?) - hier ist der architekturelement typ gemeint, so wie ich das lese."
+          "label": "Architectural element"
         },
         "color": {
           "label": "Color and intensity"
@@ -1241,7 +1241,7 @@
           "label": "Provenance"
         },
         "temperAmount": {
-          "label": "Number of inclusions TO CHECK!"
+          "label": "Amount of inclusions"
         }
       }
     },
@@ -1259,7 +1259,7 @@
           "label": "Reverse side description"
         },
         "denomination": {
-          "label": "Denomination TO CHECK!"
+          "label": "Denomination"
         },
         "manufacturingMethod": {
           "label": "Manufacturing method"
@@ -1288,7 +1288,7 @@
       "label": "Find",
       "fields": {
         "amount": {
-          "label": "Total number TO CHECK!"
+          "label": "Total number"
         },
         "bibliography": {
           "label": "Bibliography"
@@ -1315,7 +1315,7 @@
           "label": "Processor"
         },
         "publicationMaterialSummary": {
-          "label": "Material TO CHECK! Description scheint nicht zum Feld zu passen"
+          "label": "Material summary"
         },
         "publicationRemark": {
           "label": "Publication remark"
@@ -1333,7 +1333,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preservation assessment",
+          "label": "Preservation assessmen",
           "description": "Preserved amount in comparison to the original"
         },
         "period": {
@@ -1396,7 +1396,7 @@
       "label": "Photo",
       "fields": {
         "originalType": {
-          "label": "Original type TO CHECK!",
+          "label": "Original type",
           "description": "Original format of the image; in case of digitalized images the original analogous format"
         }
       }
@@ -1431,7 +1431,7 @@
           "label": "Manufacturing methid"
         },
         "objectType": {
-          "label": "Designation or type of the object TO CHECK!"
+          "label": "Designation or type of the object"
         },
         "provenance": {
           "label": "Provenance"

@@ -43,7 +43,7 @@
           "label": "Color and intensity"
         },
         "decorationTechnique": {
-          "label": "Specifics of the surface or decoration technique TO CHECK!"
+          "label": "Surface treatment or decoration technique"
         },
         "formDescription": {
           "label": "Form description"
@@ -52,7 +52,7 @@
           "label": "Manufacturing method"
         },
         "objectType": {
-          "label": "Designation or type of the object TO CHECK!"
+          "label": "Designation or type of the object"
         },
         "provenance": {
           "label": "Provenance"
@@ -119,14 +119,14 @@
       "label": "Brick",
       "fields": {
         "featureText": {
-          "label": "Seal text(s) TO CHECK!",
-          "description": "Transcript of the seal text"
+          "label": "Stamp text(s)",
+          "description": "Transcript of the stamp text"
         },
         "brickForm": {
-          "label": "Brick form or usage TO CHECK!"
+          "label": "Brick form"
         },
         "brickUsage": {
-          "label": "Usage of the bricks in the context of the architecture TO CHECK!"
+          "label": "Placement of the brick(s) as part of the architecture"
         },
         "clayColorOutside": {
           "label": "Outside: Clay color and intensity"
@@ -138,13 +138,13 @@
           "label": "Coat (outside): Color and intensity"
         },
         "decorationTechnique": {
-          "label": "Specifics of the surface or decoration technique TO CHECK!"
+          "label": "Surface treatment or decoration technique"
         },
         "formDescription": {
           "label": "Form description"
         },
         "manufacturing": {
-          "label": "Description of material TO CHECK!"
+          "label": "Manufacturing"
         },
         "manufacturingMethod": {
           "label": "Manufacturing method"
@@ -153,7 +153,7 @@
           "label": "Provenance"
         },
         "specificType": {
-          "label": "Format TO CHECK!"
+          "label": "Format"
         },
         "temper": {
           "label": "Temper"
@@ -216,7 +216,7 @@
           "label": "Body height and robustness"
         },
         "burialRite": {
-          "label": "Burial rite TO CHECK!"
+          "label": "Burial rite or treatment of the deceased"
         },
         "conditionComment": {
           "label": "Condition comment"
@@ -244,16 +244,16 @@
           "label": "Basis of sex determination"
         },
         "amountIndividuals": {
-          "label": "Burial type - amount TO CHECK!"
+          "label": "Burial type"
         },
         "burialCharacteristic": {
-          "label": "Burial order (primary/secondary) TO CHECK!"
+          "label": "Burial sequence (primary/secondary)"
         },
         "burialDocumentation": {
           "label": "Documentation"
         },
         "graveFeature": {
-          "label": "Burial type TO CHECK!"
+          "label": "Method of interment"
         },
         "positionArms": {
           "label": "Position of arms"
@@ -262,7 +262,7 @@
           "label": "Position of legs"
         },
         "positioningIndividuals": {
-          "label": "Position of the deceased TO CHECK!"
+          "label": "Positioning of the deceased"
         }
       }
     },
@@ -270,7 +270,7 @@
       "label": "Building",
       "fields": {
         "buildingHistory": {
-          "label": "Building history"
+          "label": "Building history TO CHECK! Unterschied zu history?"
         },
         "buildingResearchHistory": {
           "label": "Research history"
@@ -288,7 +288,7 @@
           "label": "Restoration"
         },
         "architecturalOrders": {
-          "label": "Architectural orders TO CHECK!"
+          "label": "Architectural orders"
         },
         "buildingCategory": {
           "label": "Building category"
@@ -306,7 +306,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preserved amount TO CHECK!",
+          "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
         },
         "context": {
@@ -350,7 +350,7 @@
           "label": "Color"
         },
         "objectType": {
-          "label": "Designation or type of the object TO CHECK!"
+          "label": "Designation or type of the object"
         },
         "typeOfWood": {
           "label": "Type of wood"
@@ -413,10 +413,10 @@
           "label": "Spatial location"
         },
         "blockProcessing": {
-          "label": "Type of blocks TO CHECK!"
+          "label": "Block processing"
         },
         "blockTreatment": {
-          "label": "Block treatment TO CHECK!"
+          "label": "Block treatment"
         },
         "brickwork": {
           "label": "Brickwork"
@@ -425,14 +425,14 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preserved amount TO CHECK!",
+          "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
         },
         "construction": {
           "label": "Contruction"
         },
         "mark": {
-          "label": "Mark of the stonemason TO CHECK!"
+          "label": "Masonry seal(s)"
         },
         "mortarBinder": {
           "label": "Mortar binder"
@@ -472,7 +472,7 @@
           "label": "Description"
         },
         "diaryAbstract": {
-          "label": "Diary abstract TO CHECK!"
+          "label": "Diary abstract"
         },
         "processor": {
           "label": "Processor"
@@ -496,7 +496,7 @@
           "label": "Place name"
         },
         "buildingHistory": {
-          "label": "Building history TO CHECK! Wieso Building history beim Type Place?"
+          "label": "Building research history"
         },
         "buildingResearchHistory": {
           "label": "Research history TO CHECK! Wieso Building research history beim Type Place?"
@@ -529,8 +529,8 @@
       "label": "Layer",
       "fields": {
         "appearance": {
-          "label": "Appearance TO CHECK!",
-          "description": "Beschreibung der Entstehung der Schicht, z. B. 'Versturz der östlichen Lehmziegelmauer' TO CHECK! Passt das wirklich zum Feldnamen?"
+          "label": "Formation",
+          "description": "Description of the formation of the layer, e.g. 'Collapsed mudbrick wall of building xy' TO CHECK! Passt das wirklich zum Feldnamen?"
         },
         "isNatural": {
           "label": "Natural"
@@ -545,7 +545,7 @@
           "label": "Distinguishing criteria"
         },
         "layerClassification": {
-          "label": "Designation or classification of the layer TO CHECK!"
+          "label": "Designation or classification of the layer"
         },
         "soilType": {
           "label": "Soil type"
@@ -620,7 +620,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preserved amount TO CHECK!",
+          "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
         },
         "consistency": {
@@ -650,7 +650,7 @@
           "label": "Condition comment"
         },
         "content": {
-          "label": "Transcription TO CHECK!"
+          "label": "Transcription"
         },
         "description": {
           "label": "Description"
@@ -665,7 +665,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preserved amount TO CHECK!",
+          "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
         },
         "period": {
@@ -689,7 +689,7 @@
           "label": "Description"
         },
         "draughtsmen": {
-          "label": "Draughtsmen TO CHECK! (müsste das Feld nicht 'draughtsman' heißen? bzw. ein Begriff, der auch den Fotografen mit einbezieht?)",
+          "label": "Creator",
           "description": "Creator of the image, photographer respectively draughtsman"
         },
         "processor": {
@@ -790,22 +790,22 @@
           "label": "Coat (inside)"
         },
         "coatInsideType": {
-          "label": "Treatment (inside) TO CHECK!"
+          "label": "Treatment (inside)"
         },
         "coatOutside": {
           "label": "Coat (outside)"
         },
         "coatOutsideType": {
-          "label": "Treatement (outside) TO CHECK!"
+          "label": "Treatement (outside)"
         },
         "decorationTechnique": {
-          "label": "Specifics of the surface or decoration technique TO CHECK!"
+          "label": "Surface treatment or decoration technique"
         },
         "formDescription": {
           "label": "Form description"
         },
         "manufacturing": {
-          "label": "Description of material TO CHECK!"
+          "label": "Manufacturing"
         },
         "manufacturingMethod": {
           "label": "Manufacturing method"
@@ -817,7 +817,7 @@
           "label": "Object type"
         },
         "specificType": {
-          "label": "Pottery type of ware TO CHECK!"
+          "label": "Pottery type, ware"
         },
         "provenance": {
           "label": "Provenance"
@@ -826,7 +826,7 @@
           "label": "Temper"
         },
         "temperAmount": {
-          "label": "Number of inclusions TO CHECK!"
+          "label": "Amount of inclusions"
         },
         "temperParticles": {
           "label": "Temper particles"
@@ -891,7 +891,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preserved amount TO CHECK!",
+          "label": "Preservation assessmen",
           "description": "Preserved amount in comparison to the original"
         },
         "distinguishingCriteria": {
@@ -960,7 +960,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preserved amount TO CHECK!",
+          "label": "Preservation assessmen",
           "description": "Preserved amount in comparison to the original"
         },
         "period": {
@@ -1022,7 +1022,7 @@
           "label": "Coat (outside): Color and intensity"
         },
         "decorationTechnique": {
-          "label": "Specifics of the surface or decoration technique TO CHECK!"
+          "label": "Surface treatment or decoration technique"
         },
         "formDescription": {
           "label": "Form description"
@@ -1057,7 +1057,7 @@
       }
     },
     "Wall_surface": {
-      "label": "Wall surface",
+      "label": "Wall surface TO CHECK!--Wall_surface??",
       "fields": {
         "area": {
           "label": "Area in m2"
@@ -1102,7 +1102,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preserved amount TO CHECK!",
+          "label": "Preservation assessmen",
           "description": "Preserved amount in comparison to the original"
         },
         "constructionDetails": {
@@ -1122,13 +1122,13 @@
         },
         "jointsCondition": {
           "label": "Joints condition",
-          "description": "Aktueller Erhaltungszustand der Dachziegel TO CHECK! Wieso Dachziegel beim Feld jointsCondition?"
+          "description": "Aktueller Erhaltungszustand der Fugen TO CHECK! Wieso Dachziegel beim Feld jointsCondition? - ersetzt durch fugen"
         },
         "jointsType": {
           "label": "Joints type"
         },
         "mark": {
-          "label": "Mark of the stonemason TO CHECK!"
+          "label": "Masonry seal(s)"
         },
         "plasterComponents": {
           "label": "Plaster components"
@@ -1220,7 +1220,7 @@
           "label": "Workmanship"
         },
         "architectureElement": {
-          "label": "Architectural element TO CHECK! (müsste das nicht per Relation zu einer Architecture gelöst werden?)"
+          "label": "Architectural element TO CHECK! (müsste das nicht per Relation zu einer Architecture gelöst werden?) - hier ist der architekturelement typ gemeint, so wie ich das lese."
         },
         "color": {
           "label": "Color and intensity"
@@ -1333,7 +1333,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preserved amount TO CHECK!",
+          "label": "Preservation assessmen",
           "description": "Preserved amount in comparison to the original"
         },
         "period": {
@@ -1422,7 +1422,7 @@
           "label": "Material description"
         },
         "decorationTechnique": {
-          "label": "Specifics of the surface or decoration technique TO CHECK!"
+          "label": "Surface treatment or decoration technique"
         },
         "formDescription": {
           "label": "Form description"

@@ -77,8 +77,7 @@
           "label": "Width"
         },
         "jointsCondition": {
-          "label": "Joints condition",
-          "description": "Aktueller Erhaltungszustand der Fugen"
+          "label": "Joints condition"
         },
         "jointsType": {
           "label": "Joints type"

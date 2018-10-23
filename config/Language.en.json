@@ -826,7 +826,7 @@
           "label": "Temper"
         },
         "temperAmount": {
-          "label": "Amount of inclusions"
+          "label": "Number of inclusions"
         },
         "temperParticles": {
           "label": "Temper particles"

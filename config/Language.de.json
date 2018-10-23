@@ -173,7 +173,7 @@
           "description": "Nähere Beschreibung der allgemeinen Form"
         },
         "manufacturing": {
-          "label": "Materialbeschreibung"
+          "label": "Fabrikat"
         },
         "manufacturingMethod": {
           "label": "Herstellungstechnik"
@@ -581,7 +581,7 @@
         },
         "buildingHistory": {
           "label": "Baugeschichte",
-          "description": "Historische Abhandlung des Bauwerks"
+          "description": "Abhandlung über die Bauforschungsprojekte auf der Fundstelle"
         },
         "buildingResearchHistory": {
           "label": "Forschungsgeschichte",
@@ -927,7 +927,7 @@
           "description": "Nähere Beschreibung der allgemeinen Form (hochoval etc.)"
         },
         "manufacturing": {
-          "label": "Materialbeschreibung"
+          "label": "Fabrikat"
         },
         "manufacturingMethod": {
           "label": "Herstellungstechnik"
@@ -1298,7 +1298,7 @@
         },
         "jointsCondition": {
           "label": "Fugenerhaltung",
-          "description": "Aktueller Erhaltungszustand der Dachziegel"
+          "description": "Aktueller Erhaltungszustand der Fugen"
         },
         "jointsType": {
           "label": "Fugengestaltung",

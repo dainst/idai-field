@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {isEmpty} from 'tsfun';
-import {Messages, IdaiFieldDocument} from 'idai-components-2';
+import {Messages, IdaiFieldDocument, IdaiFieldImageDocument} from 'idai-components-2';
 import {Imagestore} from '../../core/imagestore/imagestore';
 import {DoceditComponent} from '../docedit/docedit.component';
 import {BlobMaker} from '../../core/imagestore/blob-maker';
@@ -56,10 +56,13 @@ export class ImageViewComponent implements OnInit {
     }
 
 
-    public deselect() {
+    public async deselect() {
 
-        if (this.comingFrom) this.router.navigate(this.comingFrom);
-        else this.router.navigate(['images']);
+        if (this.comingFrom) {
+            await this.router.navigate(this.comingFrom);
+        } else {
+            await this.router.navigate(['images']);
+        }
     }
 
 
@@ -79,7 +82,7 @@ export class ImageViewComponent implements OnInit {
 
             // this.documentEditChangeMonitor.reset();
             // TODO reset document
-            if (closeReason === 'deleted') this.deselect();
+            if (closeReason === 'deleted') await this.deselect();
         }
     }
 
@@ -102,33 +105,35 @@ export class ImageViewComponent implements OnInit {
 
         this.getRouteParams(async (id: string, menu: string, tab?: string) => {
 
+            let document: IdaiFieldImageDocument;
+
             try {
-                const doc = await this.datastore.get(id);
-                if (!doc.resource.id) return;
+                document = await this.datastore.get(id);
+                if (!document.resource.id) return await this.router.navigate(['images']);
+            } catch (e) {
+                return await this.router.navigate(['images']);
+            }
 
-                this.image.document = doc as any;
+            this.image.document = document;
 
-                try {
-                    // read original (empty if not present)
-                    let url = await this.imagestore.read(doc.resource.id, false, false);
-                    if (!url || url == '') this.originalNotFound = true;
-                    this.image.imgSrc = url;
+            try {
+                // read original (empty if not present)
+                let url = await this.imagestore.read(document.resource.id, false, false);
+                if (!url || url == '') this.originalNotFound = true;
+                this.image.imgSrc = url;
 
-                    // read thumb
-                    url = await this.imagestore.read(doc.resource.id, false, true);
-                    this.image.thumbSrc = url;
+                // read thumb
+                url = await this.imagestore.read(document.resource.id, false, true);
+                this.image.thumbSrc = url;
 
-                    if (menu == 'edit') {
-                        await this.startEdit(tab);
-                    } else if (tab) {
-                        this.activeTab = tab;
-                    }
-                } catch(e) {
-                    this.image.imgSrc = BlobMaker.blackImg;
-                    this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
+                if (menu === 'edit') {
+                    await this.startEdit(tab);
+                } else if (tab) {
+                    this.activeTab = tab;
                 }
-            } catch(e) {
-                console.error('Fatal error: could not load document for id ', id);
+            } catch (e) {
+                this.image.imgSrc = BlobMaker.blackImg;
+                this.messages.add([M.IMAGES_ERROR_NOT_FOUND_SINGLE]);
             }
         });
     }

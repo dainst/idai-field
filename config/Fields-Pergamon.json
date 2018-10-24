@@ -445,5 +445,105 @@
         ]
       }
     }
+  },
+  "Area": {
+    "fields": {
+      "description": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Excavation": {
+    "fields": {
+      "beginningDate": {
+        "inputType": "date"
+      },
+      "endDate": {
+        "inputType": "date"
+      },
+      "dating": {
+        "inputType": "dating"
+      },
+      "diary": {
+        "inputType": "input"
+      },
+      "description": {
+        "inputType": "text"
+      },
+      "hasDisturbance": {
+        "inputType": "boolean"
+      },
+      "processor": {
+        "inputType": "input"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "beige",
+          "blass-",
+          "blau",
+          "braun",
+          "cremefarben",
+          "dunkel-",
+          "gelb",
+          "grau",
+          "grün",
+          "hell-",
+          "leuchtend-",
+          "ocker",
+          "orange",
+          "rosa",
+          "rot",
+          "schwarz",
+          "türkis",
+          "violett",
+          "weiß"
+        ]
+      },
+      "dimensionLength": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "dimensionVerticalExtent": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Oberkante",
+          "Unterkante"]
+      },
+      "dimensionWidth": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "featureBorders": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "deutlich",
+          "diffus",
+          "eben",
+          "erahnbar",
+          "erkennbar",
+          "etwas verwaschen",
+          "fließend",
+          "geneigt",
+          "gezackt",
+          "regelmäßig",
+          "scharf",
+          "sehr deutlich",
+          "undeutlich",
+          "uneben",
+          "unklar",
+          "unregelmäßig",
+          "verwaschen",
+          "wellig"
+        ]
+      },
+      "isIllegal": {
+        "inputType": "boolean"
+      }
+    }
   }
 }

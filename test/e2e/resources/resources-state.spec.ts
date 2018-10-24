@@ -456,7 +456,7 @@ describe('resources/state --', function() {
         ResourcesPage.performCreateResource('i1', 'inscription');
         ResourcesPage.performCreateRelation('i1', 'testf1', 0);
 
-        RelationsViewPage.clickRelation(0);
+        RelationsViewPage.clickRelation(2);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('testf1')), delays.ECWaitTime);
         ResourcesPage.getSelectedListItemIdentifierText().then(text => expect(text).toEqual('testf1'));
         ResourcesPage.getNavigationButtons().then(navigationButtons => {

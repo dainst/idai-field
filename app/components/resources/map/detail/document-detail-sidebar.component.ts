@@ -21,7 +21,7 @@ export class DocumentViewSidebarComponent {
 
     @ViewChild('tabs') tabs: NgbTabset;
 
-    public relationsToHide = ['liesWithin', 'isRecordedIn', 'includes'];
+    public relationsToHide: string[] = [];
 
 
     constructor(
@@ -51,7 +51,7 @@ export class DocumentViewSidebarComponent {
         return Object.keys(relations)
             .filter(name => {
                 return this.projectConfiguration.isVisibleRelation(name, selectedDoc.resource.type)
-                    && this.relationsToHide.indexOf(name) === -1
+                    && !this.relationsToHide.includes(name)
                     && relations[name].length > 0;
             })
             .length > 0;

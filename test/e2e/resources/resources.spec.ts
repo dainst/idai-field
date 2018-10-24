@@ -76,9 +76,15 @@ describe('resources --', () => {
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
         RelationsViewPage.getRelationName(0).then(value => {
-            expect(value).toBe('Zeitlich nach'); // with the correct relation label
+            expect(value).toBe('Aufgenommen in Maßnahme');
         });
         RelationsViewPage.getRelationValue(0).then(value => {
+            expect(value).toBe('S1');
+        });
+        RelationsViewPage.getRelationName(1).then(value => {
+            expect(value).toBe('Zeitlich nach');
+        });
+        RelationsViewPage.getRelationValue(1).then(value => {
             expect(value).toBe('2');
         });
     });
@@ -92,7 +98,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
         RelationsViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(1);
+            expect(relations.length).toBe(2);
         });
     });
 

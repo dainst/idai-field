@@ -135,7 +135,7 @@ describe('resources --', () => {
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    it('docview -- show no relations after cancelling edit', () => {
+    it('docview -- do not show new relations after cancelling edit', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-architecture');
@@ -150,7 +150,7 @@ describe('resources --', () => {
 
         browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar'))), delays.ECWaitTime);
         RelationsViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(0);
+            expect(relations.length).toBe(1);
         });
     });
 

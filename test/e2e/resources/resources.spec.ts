@@ -359,9 +359,9 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('2'));
-        RelationsViewPage.clickRelation(0);
-        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('1'));
+        RelationsViewPage.getRelationValue(1).then(relVal => expect(relVal).toEqual('2'));
+        RelationsViewPage.clickRelation(1);
+        RelationsViewPage.getRelationValue(1).then(relVal => expect(relVal).toEqual('1'));
     });
 
 
@@ -394,16 +394,16 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         ResourcesPage.clickSelectResource('2');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         DetailSidebarPage.performEditDocument();
         DoceditPage.clickRelationsTab();
         DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(9, 0);
         DoceditPage.clickSaveDocument();
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
     });
 
 
@@ -416,7 +416,7 @@ describe('resources --', () => {
         DoceditPage.clickConfirmDeleteInModal();
         browser.sleep(delays.shortRest);
         ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
     });
 
 

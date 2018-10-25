@@ -1,9 +1,10 @@
 import {Component, Input, ViewChild} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
-import {IdaiFieldImageDocumentReadDatastore} from "../../../core/datastore/field/idai-field-image-document-read-datastore";
+import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/field/idai-field-image-document-read-datastore';
 
 @Component({
     selector: 'docedit-image-tab',
@@ -24,11 +25,9 @@ export class DoceditImageTabComponent {
     public selected: IdaiFieldImageDocument[] = [];
 
 
-    constructor(
-        private datastore: IdaiFieldImageDocumentReadDatastore,
-        private modalService: NgbModal
-    ) {
-    }
+    constructor(private datastore: IdaiFieldImageDocumentReadDatastore,
+                private modalService: NgbModal,
+                private i18n: I18n) {}
 
 
     ngOnChanges() {
@@ -85,6 +84,14 @@ export class DoceditImageTabComponent {
         } else {
             this.loadImages();
         }
+    }
+
+
+    public getRemoveLinksTooltip(): string {
+
+        return this.selected.length === 1
+            ? this.i18n({ id: '@docedit.tabs.images.tooltips.removeLink', value: 'Verknüpfung löschen' })
+            : this.i18n({ id: '@docedit.tabs.images.tooltips.removeLinks', value: 'Verknüpfungen löschen' });
     }
 
 

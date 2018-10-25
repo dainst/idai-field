@@ -1395,7 +1395,7 @@
         <target state="final">Metadaten bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/document-detail-sidebar.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.editRelations" datatype="html">
@@ -1403,7 +1403,7 @@
         <target state="final">Relationen bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/document-detail-sidebar.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.editImageLinks" datatype="html">
@@ -1411,7 +1411,7 @@
         <target state="final">Bildverknüpfungen bearbeiten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/document-detail-sidebar.html</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.sidebarList.resourceLimitInfo" datatype="html">
@@ -1605,7 +1605,7 @@
         <target state="final"><x id="INTERPOLATION" equiv-text="{{selectedDocuments.length}}"/> Bilder verknüpfen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/widgets/image-picker.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.images.linkedImages" datatype="html">
@@ -2417,6 +2417,22 @@
         <target state="final">Georeferenz</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/docedit/tabs/docedit-conflicts-tab.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="@docedit.tabs.images.tooltips.removeLink" datatype="html">
+        <source>Verknüpfung löschen</source>
+        <target state="final">Verknüpfung löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/tabs/docedit-image-tab.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="@docedit.tabs.images.tooltips.removeLinks" datatype="html">
+        <source>Verknüpfungen löschen</source>
+        <target state="final">Verknüpfungen löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/docedit/tabs/docedit-image-tab.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

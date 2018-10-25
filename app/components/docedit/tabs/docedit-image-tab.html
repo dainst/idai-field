@@ -17,7 +17,7 @@
                 <span *ngIf="selected.length">
                     <div class="btn-group">
                         <button id="delete-images" type="button" class="btn btn-danger" (click)="removeLinks()"
-                                ngbTooltip="{{selected.length == 1 ? 'Verknüpfung löschen' : 'Verknüpfungen löschen'}}"
+                                ngbTooltip="{{getRemoveLinksTooltip()}}"
                                 placement="bottom" container="body">
                             <span class="mdi mdi-link-off"></span>
                         </button>

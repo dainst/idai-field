@@ -386,6 +386,205 @@
           "label": "Illegal excavation"
         }
       }
+    },
+    "BuildingFloor": {
+      "label": "Floor",
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "beginningDate": {
+          "label": "Beginning date",
+          "description": "Date on which the recording of the stratigraphical unit was started"
+        },
+        "endDate": {
+          "label": "End date",
+          "description": "Date on which the recording of the stratigraphical unit was finished"
+        },
+        "comparison": {
+          "label": "Comparison"
+        },
+        "diary": {
+          "label": "Diary"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "hasDisturbance": {
+          "label": "Disturbance"
+        },
+        "featureAmount": {
+          "label": "Feature amount"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "color": {
+          "label": "Color and intensity"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "featureBorders": {
+          "label": "Borders of the stratigraphical unit"
+        },
+        "featureForm": {
+          "label": "Form of the stratigraphical unit"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "condition": {
+          "label": "Condition"
+        },
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
+        },
+        "consistency": {
+          "label": "Consistency"
+        },
+        "distinguishingCriteria": {
+          "label": "Distinguishing criteria"
+        },
+        "floorClassification": {
+          "label": "Floor classification"
+        },
+        "layerClassification": {
+          "label": "Layer classification"
+        },
+        "mortarBinder": {
+          "label": "Mortar binder"
+        }
+      }
+    },
+    "SurveyBurial": {
+      "label": "Burial",
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "beginningDate": {
+          "label": "Beginning date",
+          "description": "Date on which the recording of the stratigraphical unit was started"
+        },
+        "endDate": {
+          "label": "End date",
+          "description": "Date on which the recording of the stratigraphical unit was finished"
+        },
+        "comparison": {
+          "label": "Comparison"
+        },
+        "diary": {
+          "label": "Diary"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "hasDisturbance": {
+          "label": "Disturbance"
+        },
+        "featureAmount": {
+          "label": "Feature amount"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "color": {
+          "label": "Color and intensity"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "featureBorders": {
+          "label": "Borders of the stratigraphical unit"
+        },
+        "featureForm": {
+          "label": "Form of the stratigraphical unit"
+        },
+        "ageDetermination": {
+          "label": "Age determination"
+        },
+        "ageDeterminationBasis": {
+          "label": "Basis of age determination"
+        },
+        "bodyHeightAndRobustness": {
+          "label": "Body height and robustness"
+        },
+        "burialRite": {
+          "label": "Burial rite or treatment of the deceased"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "dietReconstruction": {
+          "label": "Diet reconstruction"
+        },
+        "findingPlace": {
+          "label": "Finding place",
+          "description": "For entering multiple other resources as finding place, e. g. (PE07 So 04,002)"
+        },
+        "palaeopathologicalReport": {
+          "label": "Palaeopathological report"
+        },
+        "publicationDatingFinds": {
+          "label": "Dating (finds)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Dating (stratigraphy)"
+        },
+        "sexDetermination": {
+          "label": "Sex determination"
+        },
+        "sexDeterminationBasis": {
+          "label": "Basis of sex determination"
+        },
+        "amountIndividuals": {
+          "label": "Burial type"
+        },
+        "burialCharacteristic": {
+          "label": "Burial sequence (primary/secondary)"
+        },
+        "burialDocumentation": {
+          "label": "Documentation"
+        },
+        "graveFeature": {
+          "label": "Method of interment"
+        },
+        "positionArms": {
+          "label": "Position of arms"
+        },
+        "positionLegs": {
+          "label": "Position of legs"
+        },
+        "positioningIndividuals": {
+          "label": "Positioning of the deceased"
+        }
+      }
     }
   }
 }

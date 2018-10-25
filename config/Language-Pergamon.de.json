@@ -398,6 +398,237 @@
           "label": "Raubgrabung"
         }
       }
+    },
+    "BuildingFloor": {
+      "label": "Fußboden",
+      "fields": {
+        "area": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "beginningDate": {
+          "label": "Startdatum",
+          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit begann"
+        },
+        "endDate": {
+          "label": "Enddatum",
+          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit endete"
+        },
+        "comparison": {
+          "label": "Vergleich(e)",
+          "description": "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"
+        },
+        "diary": {
+          "label": "Tagebuch",
+          "description": "Verweis auf Grabungstagebuch"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasDisturbance": {
+          "label": "Störung",
+          "description": "Liegt eine Störung des Befundes vor?"
+        },
+        "featureAmount": {
+          "label": "Befundanteil",
+          "description": "Prozentuale Menge des Einschlusses im Vergleich zum Gesamtbefund; je nach Grabungsmethodik Einteilung prozentual ('5-10%') oder textuell ('wenig')"
+        },
+        "processor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der stratigraphischen Einheit"
+        },
+        "color": {
+          "label": "Farbe und Intensität",
+          "description": "Farbe, soweit erkennbar"
+        },
+        "period": {
+          "label": "Grobdatierung"
+        },
+        "dating": {
+          "label": "Datierung"
+        },
+        "dimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+        },
+        "dimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+        },
+        "featureBorders": {
+          "label": "Grenzen der stratigraphischen Einheit",
+          "description": "Bestimmung der Grenzen des Befundes"
+        },
+        "featureForm": {
+          "label": "Form der stratigraphischen Einheit",
+          "description": "Form der stratigraphischen Einheit im Planum bzw. Profil: Welche erkennbare Form kann identifiziert werden?"
+        },
+        "conditionComment": {
+          "label": "Kommentar zum Erhaltungszustand"
+        },
+        "condition": {
+          "label": "Erhaltungszustand",
+          "description": "Beschreibung des Erhaltungszustandes"
+        },
+        "conditionAmount": {
+          "label": "Erhaltener Anteil",
+          "description": "Erhaltener Anteil im Vergleich zum Original"
+        },
+        "consistency": {
+          "label": "Konsistenz"
+        },
+        "distinguishingCriteria": {
+          "label": "Unterscheidungskriterium",
+          "description": "Welches Kriterium wurde zur Abgrenzung der stratigraphischen Einheit gewählt?"
+        },
+        "floorClassification": {
+          "label": "Klassifikation Fußboden"
+        },
+        "layerClassification": {
+          "label": "Bezeichnung bzw. Klassifikation Schicht"
+        },
+        "mortarBinder": {
+          "label": "Mörtelzuschlag",
+          "description": "Wie hoch ist der Zuschlag von Fremdmaterial?"
+        }
+      }
+    },
+    "SurveyBurial": {
+      "label": "Bestattung",
+      "fields": {
+        "area": {
+          "label": "Fläche in m2",
+          "description": "Flächenangabe in Quadratmetern"
+        },
+        "beginningDate": {
+          "label": "Startdatum",
+          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit begann"
+        },
+        "endDate": {
+          "label": "Enddatum",
+          "description": "Datum, an dem die Aufnahme der stratigraphischen Einheit endete"
+        },
+        "comparison": {
+          "label": "Vergleich(e)",
+          "description": "Vergleich mit ähnlichen Befunden, Objekten, Inschriften etc. mit Angabe einer Referenz"
+        },
+        "diary": {
+          "label": "Tagebuch",
+          "description": "Verweis auf Grabungstagebuch"
+        },
+        "description": {
+          "label": "Beschreibung",
+          "description": "Freies Beschreibungsfeld"
+        },
+        "hasDisturbance": {
+          "label": "Störung",
+          "description": "Liegt eine Störung des Befundes vor?"
+        },
+        "featureAmount": {
+          "label": "Befundanteil",
+          "description": "Prozentuale Menge des Einschlusses im Vergleich zum Gesamtbefund; je nach Grabungsmethodik Einteilung prozentual ('5-10%') oder textuell ('wenig')"
+        },
+        "processor": {
+          "label": "Bearbeiter/Bearbeiterin",
+          "description": "Bearbeiter bzw. Bearbeiterin der stratigraphischen Einheit"
+        },
+        "color": {
+          "label": "Farbe und Intensität",
+          "description": "Farbe, soweit erkennbar"
+        },
+        "period": {
+          "label": "Grobdatierung"
+        },
+        "dating": {
+          "label": "Datierung"
+        },
+        "dimensionLength": {
+          "label": "Länge",
+          "description": "Angabe der Länge"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Niveau",
+          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
+        },
+        "dimensionWidth": {
+          "label": "Breite",
+          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
+        },
+        "featureBorders": {
+          "label": "Grenzen der stratigraphischen Einheit",
+          "description": "Bestimmung der Grenzen des Befundes"
+        },
+        "featureForm": {
+          "label": "Form der stratigraphischen Einheit",
+          "description": "Form der stratigraphischen Einheit im Planum bzw. Profil: Welche erkennbare Form kann identifiziert werden?"
+        },
+        "ageDetermination": {
+          "label": "Altersbestimmung"
+        },
+        "ageDeterminationBasis": {
+          "label": "Grundlage der Altersbestimmung"
+        },
+        "bodyHeightAndRobustness": {
+          "label": "Körperhöhe und Robustizität"
+        },
+        "burialRite": {
+          "label": "Behandlung der Toten"
+        },
+        "conditionComment": {
+          "label": "Kommentar zum Erhaltungszustands"
+        },
+        "dietReconstruction": {
+          "label": "Rekonstruktion der Ernährung"
+        },
+        "findingPlace": {
+          "label": "Fundort",
+          "description": "Zur Eingabe mehrerer anderer Ressourcen als Fundort, bspw. (PE07 So 04,002)"
+        },
+        "palaeopathologicalReport": {
+          "label": "Paläopathologischer Befund"
+        },
+        "publicationDatingFinds": {
+          "label": "Datierung (Funde)",
+          "description": "z. B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Datierung (Stratigraphie)",
+          "description": "z. B.: s. Grabbau 1: schneidet das C-14 (20 BC‐65 AD) datierte Grab 28"
+        },
+        "sexDetermination": {
+          "label": "Geschlechtsbestimmung"
+        },
+        "sexDeterminationBasis": {
+          "label": "Grundlage der Geschlechtsbestimmung"
+        },
+        "amountIndividuals": {
+          "label": "Bestattungsart - Anzahl"
+        },
+        "burialCharacteristic": {
+          "label": "Bestattungsfolge (primär/sekundär)"
+        },
+        "burialDocumentation": {
+          "label": "Dokumentation",
+          "description": "Welche Form(en) der Dokumentation kamen zum Einsatz?"
+        },
+        "graveFeature": {
+          "label": "Bestattungsform"
+        },
+        "positionArms": {
+          "label": "Position der Arme"
+        },
+        "positionLegs": {
+          "label": "Position der Beine"
+        },
+        "positioningIndividuals": {
+          "label": "Lage des/der Verstorbenen"
+        }
+      }
     }
   }
 }

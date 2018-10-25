@@ -90,8 +90,8 @@ export class DoceditImageTabComponent {
     public getRemoveLinksTooltip(): string {
 
         return this.selected.length === 1
-            ? this.i18n({ id: '@docedit.tabs.images.tooltips.removeLink', value: 'Verknüpfung löschen' })
-            : this.i18n({ id: '@docedit.tabs.images.tooltips.removeLinks', value: 'Verknüpfungen löschen' });
+            ? this.i18n({ id: 'docedit.tabs.images.tooltips.removeLink', value: 'Verknüpfung löschen' })
+            : this.i18n({ id: 'docedit.tabs.images.tooltips.removeLinks', value: 'Verknüpfungen löschen' });
     }
 
 

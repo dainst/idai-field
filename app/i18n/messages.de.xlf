@@ -1624,12 +1624,12 @@
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="docedit.tabs.images.deselect" datatype="html">
+      <trans-unit id="docedit.tabs.images.tooltips.deselect" datatype="html">
         <source>Auswahl aufheben</source>
         <target state="final">Auswahl aufheben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/tabs/docedit-image-tab.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.tabs.conflicts.header.allResolved" datatype="html">
@@ -2420,7 +2420,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="@docedit.tabs.images.tooltips.removeLink" datatype="html">
+      <trans-unit id="docedit.tabs.images.tooltips.removeLink" datatype="html">
         <source>Verknüpfung löschen</source>
         <target state="final">Verknüpfung löschen</target>
         <context-group purpose="location">
@@ -2428,7 +2428,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="@docedit.tabs.images.tooltips.removeLinks" datatype="html">
+      <trans-unit id="docedit.tabs.images.tooltips.removeLinks" datatype="html">
         <source>Verknüpfungen löschen</source>
         <target state="final">Verknüpfungen löschen</target>
         <context-group purpose="location">

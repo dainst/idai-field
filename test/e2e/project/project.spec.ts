@@ -1,12 +1,14 @@
-import {browser} from 'protractor';
+import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from '../resources/resources.page';
 import {ProjectPage} from '../project.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 
 const fs = require('fs');
+const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
 const common = require('../common');
+
 
 /**
  * @author Daniel de Oliveira
@@ -75,9 +77,8 @@ describe('project --', function() {
         NavbarPage.clickNavigateToExcavation();
         browser.sleep(delays.shortRest * 5);
         SearchBarPage.typeInSearchField('SE');
-        browser.sleep(delays.shortRest * 5);
 
-        ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('SE0'));
+        browser.wait(EC.visibilityOf(ResourcesPage.getListItemEl('SE0')), delays.ECWaitTime);
 
         ProjectPage.clickProjectsBadge();
         ProjectPage.getProjectNameOptionText(0).then(t => { expect(t).toContain('test') });

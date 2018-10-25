@@ -54,7 +54,7 @@
                             <ngb-tab id="docedit-fields-tab">
                                 <ng-template ngbTabTitle>
                                     <span class="mdi mdi-format-list-bulleted"></span>
-                                    <span i18n="@@docedit.tabs.metadata">Metadaten</span>
+                                    <span class="button-label" i18n="@@docedit.tabs.metadata">Metadaten</span>
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <edit-form *ngIf="projectConfiguration" [(document)]="documentHolder.clonedDocument"
@@ -67,7 +67,7 @@
                                      id="docedit-relations-tab">
                                 <ng-template ngbTabTitle>
                                     <span class="mdi mdi-sitemap"></span>
-                                    <span i18n="@@docedit.tabs.relations">Relationen</span>
+                                    <span class="button-label" i18n="@@docedit.tabs.relations">Relationen</span>
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <relations-form
@@ -82,7 +82,7 @@
                                      id="docedit-images-tab">
                                 <ng-template ngbTabTitle>
                                     <span class="mdi mdi-image"></span>
-                                    <span i18n="@@docedit.tabs.images">Bilder</span>
+                                    <span class="button-label" i18n="@@docedit.tabs.images">Bilder</span>
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <docedit-image-tab
@@ -94,7 +94,7 @@
                             <ngb-tab *ngIf="documentHolder.clonedDocument._conflicts" id="docedit-conflicts-tab">
                                 <ng-template ngbTabTitle>
                                     <span class="mdi mdi-alert-outline"></span>
-                                    <span i18n="@@docedit.tabs.conflicts">Konflikte</span>
+                                    <span class="button-label" i18n="@@docedit.tabs.conflicts">Konflikte</span>
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <docedit-conflicts-tab [(document)]="documentHolder.clonedDocument"

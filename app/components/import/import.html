@@ -6,8 +6,8 @@
                         class="btn btn-primary"
                         [ngClass]="{ 'disabled': !isReady() }"
                         (click)="!isReady() || startImport()">
-                    <span class="mdi mdi-file-import" style="color: white"></span>
-                    <span i18n="@@import.startImport">Import starten</span>
+                    <span class="mdi mdi-file-import"></span>
+                    <span class="button-label" i18n="@@import.startImport">Import starten</span>
                 </button>
             </div>
         </div>

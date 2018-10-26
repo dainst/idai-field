@@ -85,27 +85,6 @@
         }
       }
     },
-    "Drilling": {
-      "label": "Bohrung",
-      "fields": {
-        "dimensionDiameter": {
-          "label": "Durchmesser",
-          "description": "Angabe des Objektdurchmessers"
-        },
-        "dimensionHeight": {
-          "label": "Höhe",
-          "description": "Angabe der Objekthöhe"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "drillingEquipment": {
-          "label": "Bohrausrüstung",
-          "description": "Welche Art von Bohrer wurde verwendet?"
-        }
-      }
-    },
     "Mollusk": {
       "label": "Molluske",
       "fields": {}

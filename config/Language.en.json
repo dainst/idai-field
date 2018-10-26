@@ -68,23 +68,6 @@
         }
       }
     },
-    "Drilling": {
-      "label": "Drilling",
-      "fields": {
-        "dimensionDiameter": {
-          "label": "Diameter"
-        },
-        "dimensionHeight": {
-          "label": "Height"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Vertical extent"
-        },
-        "drillingEquipment": {
-          "label": "Drilling equipment"
-        }
-      }
-    },
     "Mollusk": {
       "label": "Mollusk",
       "fields": {}

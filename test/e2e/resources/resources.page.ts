@@ -29,6 +29,7 @@ export class ResourcesPage {
     public static clickSaveInModal() {
 
         common.click(element(by.id('overview-save-confirmation-modal-save-button')));
+        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
     }
 
 
@@ -41,6 +42,7 @@ export class ResourcesPage {
     public static clickDiscardInModal() {
 
         common.click(element(by.id('overview-save-confirmation-modal-discard-button')));
+        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
     }
 
 

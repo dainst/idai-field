@@ -317,7 +317,7 @@ describe('resources --', () => {
         ResourcesPage.clickSelectResource('1a');
         DetailSidebarPage.performEditDocument();
         DoceditPage.typeInInputField('identifier', '1b');
-        ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('1a')});
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => { expect(identifier).toBe('1a'); });
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
     });
@@ -331,7 +331,8 @@ describe('resources --', () => {
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
-        ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('2')});
+
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => { expect(identifier).toBe('2'); });
     });
 
 
@@ -343,7 +344,7 @@ describe('resources --', () => {
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
-        ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('1')});
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => { expect(identifier).toBe('1'); });
     });
 
 

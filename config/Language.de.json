@@ -236,7 +236,7 @@
           "label": "Behandlung der Toten"
         },
         "conditionComment": {
-          "label": "Kommentar zum Erhaltungszustands"
+          "label": "Kommentar zum Erhaltungszustand"
         },
         "dietReconstruction": {
           "label": "Rekonstruktion der Ernährung"
@@ -580,7 +580,7 @@
         },
         "modernIntervention": {
           "label": "Moderne Eingriffe",
-          "description": "Beschreibung, ob der Fundplatz rezent Beschädigungen ausgesetzt war. (z. B.: Steinbruch/Grube/Mine, Überbauung, Aufschüttung, Raubgrabung, Ackerbau, Wiederaufforstung, Abraumhalden)"
+          "description": "Beschreibung, ob der Fundplatz rezent Beschädigungen ausgesetzt war (z. B.: Steinbruch/Grube/Mine, Überbauung, Aufschüttung, Raubgrabung, Ackerbau, Wiederaufforstung, Abraumhalden)"
         },
         "findspotClassification": {
           "label": "Klassifikation Fundstelle"
@@ -754,7 +754,7 @@
         },
         "condition": {
           "label": "Erhaltungszustand",
-          "description": "Beschreibung des Erhaltungszustandss"
+          "description": "Beschreibung des Erhaltungszustands"
         },
         "conditionAmount": {
           "label": "Erhaltener Anteil",
@@ -984,7 +984,7 @@
         },
         "publicationDatingFinds": {
           "label": "Datierung (Funde)",
-          "description": "Z. B.: s. gestörte Bestattungreste: Beigaben (2./3. Jh. n. Chr.)"
+          "description": "Z. B.: s. gestörte Bestattungsreste: Beigaben (2./3. Jh. n. Chr.)"
         },
         "publicationDatingScientific": {
           "label": "Datierung (naturwissenschaftlich)",
@@ -1339,7 +1339,7 @@
         },
         "mint": {
           "label": "Münzstätte",
-          "description": "Ort, in dem Münze geprägt wurde"
+          "description": "Ort, in dem die Münze geprägt wurde"
         },
         "mintingRuler": {
           "label": "Prägeherr",

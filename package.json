@@ -58,6 +58,7 @@
     "@angular/platform-server": "6.1.4",
     "@angular/router": "6.1.4",
     "@mdi/font": "2.5.94",
+    "@ngx-translate/i18n-polyfill": "1.0.0",
     "@ng-bootstrap/ng-bootstrap": "3.0.0",
     "Leaflet.vector-markers": "0.0.6",
     "angular2-uuid": "1.1.0",
@@ -93,7 +94,6 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "6.1.9",
-    "@ngx-translate/i18n-polyfill": "1.0.0",
     "@types/geojson": "0.0.32",
     "@types/jasmine": "~2.5.41",
     "@types/leaflet": "1.0.69",

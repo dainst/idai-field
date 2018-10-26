@@ -3,12 +3,10 @@
     "Feature": {
       "fields": {
         "colorSoil": {
-          "label": "Soil color",
-          "description": "Farbe des Sediments"
+          "label": "Soil color"
         },
         "dimensionHeight": {
-          "label": "Height",
-          "description": "Angabe der Objekthöhe"
+          "label": "Height"
         }
       }
     },
@@ -58,7 +56,7 @@
           "label": "Condition"
         },
         "conditionAmount": {
-          "label": "Preservation assessmen",
+          "label": "Preservation assessment",
           "description": "Preserved amount in comparison to the original"
         },
         "constructionDetails": {
@@ -102,8 +100,7 @@
     "Inscription": {
       "fields": {
         "dimensionHeight": {
-          "label": "Height",
-          "description": "Angabe der Objekthöhe"
+          "label": "Height"
         }
       }
     },

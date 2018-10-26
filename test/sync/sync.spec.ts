@@ -130,7 +130,7 @@ xdescribe('sync from remote to local db', () => {
             modified: [{"user": "sample_data", "date": "2018-09-11T20:46:15.408Z"}],
             resource: { type: 'Trench', identifier: 'Elf', relations: {}}
         };
-        _documentHolder.setClonedDocument(docToPut);
+        _documentHolder.setDocument(docToPut);
         await _documentHolder.save(true);
     });
 });

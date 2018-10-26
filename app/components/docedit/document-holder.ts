@@ -66,7 +66,7 @@ export class DocumentHolder {
     }
 
 
-    public setClonedDocument(document: Document) {
+    public setDocument(document: Document) {
 
         this.oldVersion = clone(document);
         this.clonedDocument = clone(document);

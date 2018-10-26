@@ -76,7 +76,7 @@ export class DoceditComponent {
 
     public async setDocument(document: IdaiFieldDocument|IdaiFieldImageDocument) {
 
-        this.documentHolder.setClonedDocument(document);
+        this.documentHolder.setDocument(document);
 
         if (!document.resource.id) this.activeTabService.setActiveTab('fields');
 
@@ -264,7 +264,7 @@ export class DoceditComponent {
 
     private handleSaveConflict(documentAfterSave: Document) {
 
-        this.documentHolder.setClonedDocument(documentAfterSave);
+        this.documentHolder.setDocument(documentAfterSave);
         this.activeTabService.setActiveTab('conflicts');
         this.messages.add([M.DOCEDIT_WARNING_SAVE_CONFLICT]);
     }

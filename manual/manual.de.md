@@ -152,11 +152,6 @@ In der **Übersicht** und in den **Maßnahmenansichten** können Sie durch einen
 den erweiterten Suchmodus wechseln.
  
 <p align="center"><img src="images/de/search/extended_search_button.png" alt="Button zur Aktivierung des erweiterten Suchmodus"/></p>
- 
-Ein blauer Lupen-Button zeigt an, dass der erweiterte Suchmodus aktiviert ist.
-
-
-#### Besonderheiten
 
 Im erweiterten Suchmodus ist eine Suche über größere Datenmengen möglich:
 * In der **Übersicht** wird über alle im Projekt angelegten Ressourcen gesucht.

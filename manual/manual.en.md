@@ -9,8 +9,8 @@ In order to work with the client productively, you should first follow these ste
 
 1. The menu **Settings**, which you can open via the dropdown menu in the upper right corner of the screen, allows you
 to change some basic settings applied to all projects. As a first step, please enter your editor name. This
-name will be stored in the database along with every change you make. It is strongly recommended to set the
-name, especially if data is going to be synchronized with other clients.  
+name will be stored in the database along with every change you make. It is strongly recommended to fill in this field,
+especially if data is going to be synchronized with other clients.  
 
 2. In the menu **Settings** you can also change the path to the image directory. This may be necessary if you want to
 access an image directory located on a network device (NAS) used by several users simultaneously. Please note that
@@ -22,9 +22,9 @@ a new project by clicking the plus button. Allowed characters for the project na
 As soon as the new project has been loaded, you can enter basic project metadata by clicking the edit button in the
 project management menu.
 
-To start entering data, switch to the area **Overview** where you can add new operations (trenches,
+To start entering data, switch to the **Overview** where you can add new operations (trenches,
 buildings, survey areas). Subsequently, you can add resources (e. g. stratigraphical units, finds or building parts)
-inside these operations in the areas **Excavation**, **Building** and **Survey**. 
+inside these operations in the views **Excavation**, **Building** and **Survey**. 
 
 Use the menu **Create backup**, which is also accessible via the dropdown menu in the upper right screen corner, to
 create backup files of your project data regularly.
@@ -130,17 +130,13 @@ text input field.
 By clicking one of the resources, you can immediately switch to the corresponding context and select the
 resource.
 
+
 ### Extended search mode
 
 In the **overview** as well as in the **operation views**, you can switch to the extended search mode by clicking
 the magnifier button.
  
 <p align="center"><img src="images/en/search/extended_search_button.png" alt="Extended search mode button"/></p>
- 
-A blue magnifier button indicates that the extended search mode is activated.
-
-
-#### Particularities
 
 The extended search mode allows searching over larger amounts of data:
 * In the **overview**, the search is performed over all of the project's resources.
@@ -172,7 +168,7 @@ filter.
 In case of a text field, just enter the search term directly; for fields with value lists, choose the term from
 a list of all allowed values in a dropdown menu. 
 
-**Important**: In contrast to the the search filter, no prefix search is performed in this case. The chosen search
+**Important**: In contrast to the search filter, no prefix search is performed in this case. The chosen search
 term must match the content of the resource field exactly for the resource to appear in the list of search
 results. 
 

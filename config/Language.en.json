@@ -412,7 +412,7 @@
           "description": "Preserved amount in comparison to the original"
         },
         "construction": {
-          "label": "Contruction"
+          "label": "Construction"
         },
         "mark": {
           "label": "Masonry seal(s)"
@@ -513,7 +513,7 @@
       "fields": {
         "appearance": {
           "label": "Formation",
-          "description": "Description of the formation of the layer, e.g. 'Collapsed mudbrick wall of building xy'"
+          "description": "Description of the formation of the layer, e. g. 'Collapsed mudbrick wall of building xy'"
         },
         "isNatural": {
           "label": "Natural"
@@ -779,7 +779,7 @@
           "label": "Coat (outside)"
         },
         "coatOutsideType": {
-          "label": "Treatement (outside)"
+          "label": "Treatment (outside)"
         },
         "decorationTechnique": {
           "label": "Surface treatment or decoration technique"
@@ -1323,7 +1323,7 @@
           "label": "Form description"
         },
         "manufacturingMethod": {
-          "label": "Manufacturing methid"
+          "label": "Manufacturing method"
         },
         "objectType": {
           "label": "Designation or type of the object"

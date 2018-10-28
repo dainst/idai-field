@@ -8,6 +8,8 @@
     background-color: white;
 
     div {
+      position: relative;
+      top: 2px;
       font-size: 14px;
       display: inline-block;
     }
@@ -42,6 +44,8 @@
   }
 
   input {
+    position: relative;
+    top: 1px;
     border: 0;
   }
 }

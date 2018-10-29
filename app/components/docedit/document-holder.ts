@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {flow, includedIn, isEmpty, isNot, equal} from 'tsfun';
+import {flow, includedIn, isEmpty, isNot, jsonEqual} from 'tsfun';
 import {DatastoreErrors, Document, ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../../core/model/validator';
 import {PersistenceManager} from '../../core/model/persistence-manager';
@@ -50,7 +50,7 @@ export class DocumentHolder {
 
         if (!this.clonedDocument) return false;
 
-        return (this.inspectedRevisions.length > 0 || !equal(this.clonedDocument.resource)(this.oldVersion.resource));
+        return (this.inspectedRevisions.length > 0 || !jsonEqual(this.clonedDocument.resource)(this.oldVersion.resource));
     }
 
 

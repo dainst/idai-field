@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {isNot, empty} from 'tsfun';
 import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
@@ -51,7 +51,7 @@ export class ImportComponent {
         private datastore: DocumentDatastore,
         private remoteChangesStream: RemoteChangesStream,
         private validator: Validator,
-        private http: Http,
+        private http: HttpClient,
         private usernameProvider: UsernameProvider,
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
@@ -155,7 +155,7 @@ export class ImportComponent {
     }
 
 
-    private static createReader(sourceType: string, file: File, url: string, http: Http): Reader|undefined {
+    private static createReader(sourceType: string, file: File, url: string, http: HttpClient): Reader|undefined {
 
         return sourceType === 'file'
             ? new FileSystemReader(file)

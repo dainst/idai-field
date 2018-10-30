@@ -1,5 +1,5 @@
 import {DomSanitizer} from '@angular/platform-browser';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {Converter} from 'showdown';
 import {HttpReader} from '../../core/import/http-reader';
 
@@ -10,7 +10,7 @@ export type Chapter = { id: string, label: string };
  */
 export module HelpLoader {
 
-    export async function load(filePath: string, http: Http, domSanitizer: DomSanitizer) {
+    export async function load(filePath: string, http: HttpClient, domSanitizer: DomSanitizer) {
 
         const markdown: string = await getMarkdown(filePath, http);
         const htmlString: string = createMarkdownConverter().makeHtml(markdown);
@@ -45,8 +45,8 @@ export module HelpLoader {
 
         for (let i = 0; i < elements.length; i++) {
             chapters.push({
-                id: elements.item(i).id,
-                label: elements.item(i).textContent as string
+                id: (elements.item(i) as Element).id,
+                label: (elements.item(i) as Element).textContent as string
             });
         }
 
@@ -54,7 +54,7 @@ export module HelpLoader {
     }
 
 
-    async function getMarkdown(filePath: string, http: Http): Promise<string> {
+    async function getMarkdown(filePath: string, http: HttpClient): Promise<string> {
 
         const reader = new HttpReader(filePath, http);
         const markdown: string = await reader.go();

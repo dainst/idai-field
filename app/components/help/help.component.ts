@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {Chapter, HelpLoader} from './help-loader';
 import {SettingsService} from '../../core/settings/settings-service';
 
@@ -26,7 +26,7 @@ export class HelpComponent implements OnInit {
 
 
     constructor(private domSanitizer: DomSanitizer,
-                private http: Http,
+                private http: HttpClient,
                 private settingsService: SettingsService) {}
 
 

@@ -22,7 +22,7 @@ export module GraphManipulation {
         rootElement.removeChild(rootElement.getElementsByTagName('title')[0]);
 
         for (let i = 0; i < rootElement.children.length; i++) {
-            const titleElements: NodeListOf<HTMLTitleElement>
+            const titleElements: HTMLCollectionOf<HTMLTitleElement>
                 = rootElement.children[i].getElementsByTagName('title');
             if (titleElements.length == 1) rootElement.children[i].removeChild(titleElements[0]);
         }
@@ -32,7 +32,7 @@ export module GraphManipulation {
     export function addClusterSubgraphLabelBoxes(svg: SVGSVGElement, htmlDocument: Document) {
 
         const graphElement = svg.getElementsByClassName('graph')[0];
-        const clusterElements: NodeListOf<Element> = svg.getElementsByClassName('cluster');
+        const clusterElements: HTMLCollectionOf<Element> = svg.getElementsByClassName('cluster');
         const clusterLabelGroupElement: Element = createSVGElement('g', htmlDocument);
 
         for (let i = 0; i < clusterElements.length; i++) {

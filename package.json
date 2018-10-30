@@ -49,14 +49,14 @@
     "url": "https://github.com/dainst/idai-field.git"
   },
   "dependencies": {
-    "@angular/common": "6.1.4",
-    "@angular/core": "6.1.4",
-    "@angular/http": "6.1.4",
-    "@angular/forms": "6.1.4",
-    "@angular/platform-browser": "6.1.4",
-    "@angular/platform-browser-dynamic": "6.1.4",
-    "@angular/platform-server": "6.1.4",
-    "@angular/router": "6.1.4",
+    "@angular/common": "7.0.1",
+    "@angular/core": "7.0.1",
+    "@angular/http": "7.0.1",
+    "@angular/forms": "7.0.1",
+    "@angular/platform-browser": "7.0.1",
+    "@angular/platform-browser-dynamic": "7.0.1",
+    "@angular/platform-server": "7.0.1",
+    "@angular/router": "7.0.1",
     "@mdi/font": "2.5.94",
     "@ngx-translate/i18n-polyfill": "1.0.0",
     "@ng-bootstrap/ng-bootstrap": "3.0.0",
@@ -68,7 +68,7 @@
     "es6-shim": "0.35.0",
     "express": "4.15.0",
     "express-pouchdb": "4.1.0",
-    "idai-components-2": "1.26.27",
+    "idai-components-2": "1.26.28",
     "ip": "1.1.5",
     "leaflet": "1.2.0",
     "leaflet-imageoverlay-rotated": "0.1.1",
@@ -122,7 +122,7 @@
     "protractor-fail-fast": "2.0.0",
     "rimraf": "2.5.4",
     "spectron": "^3.7.2",
-    "typescript": "2.9.1",
+    "typescript": "3.1.4",
     "yargs": "5.0.0"
   }
 }

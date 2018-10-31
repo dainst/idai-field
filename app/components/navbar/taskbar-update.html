@@ -1,5 +1,5 @@
 <div id="taskbar-update">
-    <a *ngIf="progressPercent > -1 && !downloadComplete"
+    <a *ngIf="progressPercent > -1 && !downloadComplete && !downloadInterrupted"
        ngbTooltip="Version {{version}} wird heruntergeladen..."
        i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloading"
        placement="bottom" container="body">
@@ -16,6 +16,16 @@
         <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
         <span class="badge-pill badge-success taskbar-badge">
             ✓
+        </span>
+    </a>
+
+    <a *ngIf="downloadInterrupted && !downloadComplete"
+       ngbTooltip="Der Download von Version {{version}} wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen."
+       i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloadInterrupted"
+       placement="bottom" container="body">
+        <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
+        <span class="badge-pill badge-danger taskbar-badge">
+            X
         </span>
     </a>
 

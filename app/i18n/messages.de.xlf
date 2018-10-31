@@ -734,12 +734,20 @@
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="navbar.taskbar.update.tooltips.downloadInterrupted" datatype="html">
+        <source>Der Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen.</source>
+        <target state="final">Der Download von Version <x id="INTERPOLATION" equiv-text="{{version}}"/> wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.taskbar.update.tooltips.deactivated" datatype="html">
         <source>Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field.</source>
         <target state="final">Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar-update.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="docedit.conflictDeletedModal.header" datatype="html">

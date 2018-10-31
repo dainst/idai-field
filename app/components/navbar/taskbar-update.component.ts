@@ -17,6 +17,7 @@ export class TaskbarUpdateComponent {
     public version: string;
     public progressPercent: number = -1;
     public downloadComplete: boolean = false;
+    public downloadInterrupted: boolean = false;
 
 
     constructor(private settingsService: SettingsService,
@@ -31,6 +32,13 @@ export class TaskbarUpdateComponent {
         ipcRenderer.on('updateDownloaded', () => {
             this.downloadComplete = true;
             changeDetectorRef.detectChanges();
+        });
+
+        ipcRenderer.on('downloadInterrupted', () => {
+            if (this.progressPercent > -1) {
+                this.downloadInterrupted = true;
+                changeDetectorRef.detectChanges();
+            }
         });
     }
 

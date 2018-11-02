@@ -306,12 +306,20 @@
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.detailSidebar.geometryView.multipoint" datatype="html">
+        <source>Multipunkt</source>
+        <target state="final">Multipunkt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.none" datatype="html">
         <source>Keine</source>
         <target state="final">Keine</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.detailSidebar.geometryView.coordinates" datatype="html">
@@ -319,7 +327,7 @@
         <target state="final">Koordinaten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/detail/geometry-view.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.documentPicker.noSearchCriteria" datatype="html">
@@ -885,7 +893,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>
@@ -2007,7 +2015,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/map/map/editable-map.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/dating.html</context>

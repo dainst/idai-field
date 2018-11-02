@@ -9,21 +9,25 @@
     <div *ngIf="mousePositionCoordinates" id="mouse-position-coordinates-y" class="badge badge-secondary">
         <b>Y:</b> {{mousePositionCoordinates[1]}}
     </div>
-    <div *ngIf="selectedPolygon || selectedPolyline || editableMarker" id="map-editor-button-delete"
+    <div *ngIf="selectedPolygon || selectedPolyline || selectedMarker" id="map-editor-button-delete"
          class="btn btn-danger" (click)="deleteGeometry()">
         <span class="mdi mdi-delete mdi-24px"></span>
     </div>
-    <div *ngIf="!selectedPolygon && !selectedPolyline && !editableMarker" id="map-editor-button-delete-disabled"
+    <div *ngIf="!selectedPolygon && !selectedPolyline && !selectedMarker" id="map-editor-button-delete-disabled"
          class="btn btn-danger disabled">
         <span class="mdi mdi-delete mdi-24px"></span>
     </div>
-    <div *ngIf="getEditorType() == 'polygon'" id="map-editor-button-add-polygon"
+    <div *ngIf="getEditorType() === 'polygon'" id="map-editor-button-add-polygon"
          class="btn btn-success" (click)="addPolygon()">
         <span class="mdi mdi-shape-polygon-plus mdi-24px"></span>
     </div>
-    <div *ngIf="getEditorType() == 'polyline'" id="map-editor-button-add-polyline"
+    <div *ngIf="getEditorType() === 'polyline'" id="map-editor-button-add-polyline"
          class="btn btn-success" (click)="addPolyline()">
         <span class="mdi mdi-vector-polyline mdi-24px"></span>
+    </div>
+    <div *ngIf="getEditorType() === 'point'" id="map-editor-button-add-point"
+         class="btn btn-success" (click)="addMarker()">
+        <span class="mdi mdi-map-marker-plus mdi-24px"></span>
     </div>
     <div id="map-editor-button-ok" class="btn btn-primary" (click)="finishEditing()">
         <span i18n="@@buttons.ok">OK</span>

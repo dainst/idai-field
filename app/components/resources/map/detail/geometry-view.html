@@ -1,16 +1,18 @@
 <div class="document-view-field" id="document-view-field-geometry">
     <div class="fieldname" i18n="@@resources.detailSidebar.geometryView.geometry">Geometrie</div>
     <div *ngIf="document.resource.geometry">
-        <span *ngIf="document.resource.geometry.type == 'Polygon'" class="fieldvalue"
+        <span *ngIf="document.resource.geometry.type === 'Polygon'" class="fieldvalue"
               i18n="@@resources.detailSidebar.geometryView.polygon">Polygon</span>
-        <span *ngIf="document.resource.geometry.type == 'MultiPolygon'" class="fieldvalue"
+        <span *ngIf="document.resource.geometry.type === 'MultiPolygon'" class="fieldvalue"
               i18n="@@resources.detailSidebar.geometryView.multipolygon">Multipolygon</span>
-        <span *ngIf="document.resource.geometry.type == 'LineString'" class="fieldvalue"
+        <span *ngIf="document.resource.geometry.type === 'LineString'" class="fieldvalue"
               i18n="@@resources.detailSidebar.geometryView.polyline">Polyline</span>
-        <span *ngIf="document.resource.geometry.type == 'MultiLineString'" class="fieldvalue"
+        <span *ngIf="document.resource.geometry.type === 'MultiLineString'" class="fieldvalue"
               i18n="@@resources.detailSidebar.geometryView.multipolyline">Multipolyline</span>
-        <span *ngIf="document.resource.geometry.type == 'Point'" class="fieldvalue"
+        <span *ngIf="document.resource.geometry.type === 'Point'" class="fieldvalue"
               i18n="@@resources.detailSidebar.geometryView.point">Punkt</span>
+        <span *ngIf="document.resource.geometry.type === 'MultiPoint'" class="fieldvalue"
+              i18n="@@resources.detailSidebar.geometryView.multipoint">Multipunkt</span>
         <button class="btn btn-link btn-sm" id="document-view-button-edit-geometry"
                (click)="onEditGeometry.emit(document)" >
             <span class="mdi mdi-pencil mdi-18px"></span>

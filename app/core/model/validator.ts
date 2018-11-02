@@ -152,8 +152,13 @@ export class Validator {
                     return [ValidationErrors.INVALID_COORDINATES, 'Point'];
                 }
                 break;
+            case 'MultiPoint':
+                if (!Validations.validatePolylineOrMultiPointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPoint'];
+                }
+                break;
             case 'LineString':
-                if (!Validations.validatePolylineCoordinates(geometry.coordinates)) {
+                if (!Validations.validatePolylineOrMultiPointCoordinates(geometry.coordinates)) {
                     return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
                 }
                 break;

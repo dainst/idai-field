@@ -143,7 +143,7 @@ export module Validations {
     }
 
 
-    export function validatePolylineCoordinates(coordinates: number[][]): boolean {
+    export function validatePolylineOrMultiPointCoordinates(coordinates: number[][]): boolean {
 
         return coordinates.length >= 2
             && coordinates.every(validatePointCoordinates);
@@ -153,7 +153,7 @@ export module Validations {
     export function validateMultiPolylineCoordinates(coordinates: number[][][]): boolean {
 
         return coordinates.length !== 0
-            && coordinates.every(validatePolylineCoordinates);
+            && coordinates.every(validatePolylineOrMultiPointCoordinates);
     }
 
 

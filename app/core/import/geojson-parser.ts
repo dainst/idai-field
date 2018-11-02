@@ -1,8 +1,7 @@
-import {Observable} from 'rxjs';
+import {Observable, Observer} from 'rxjs';
+import {duplicates} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {AbstractParser} from './abstract-parser';
-import {Observer} from 'rxjs';
-import {duplicates} from 'tsfun';
 import {M} from '../../components/m';
 import {ImportErrors} from './import-errors';
 
@@ -64,11 +63,15 @@ export class GeojsonParser extends AbstractParser {
 
     private static validate(content: Geojson) {
 
-        const supportedGeometryTypes = ['Point', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'];
+        const supportedGeometryTypes = [
+            'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'
+        ];
 
         function structErr(text: any) {
+
             return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, text];
         }
+
         if (content.type != 'FeatureCollection') {
             return structErr('"type": "FeatureCollection" not found at top level.');
         }

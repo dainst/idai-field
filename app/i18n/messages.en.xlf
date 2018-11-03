@@ -1331,7 +1331,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.2dMap" datatype="html">
-        <source>2D-Kartendarstellung der Ressourcen</source>
+        <source>2D-Kartendarstellung</source>
         <target state="final">2D map view</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/resources.html</context>
@@ -1339,7 +1339,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="resources.tooltips.mode.3dMap" datatype="html">
-        <source>3D-Kartendarstellung der Ressourcen</source>
+        <source>3D-Kartendarstellung</source>
         <target state="final">3D map view</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/resources.html</context>

@@ -12,7 +12,7 @@ import {MeshLoadingProgress} from './mesh-loading-progress';
  */
 export class MeshLoadingProgressBarComponent {
 
-    private progress: number = -1;
+    public progress: number = -1;
 
 
     constructor(meshLoadingProgress: MeshLoadingProgress) {

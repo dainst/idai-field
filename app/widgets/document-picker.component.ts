@@ -48,7 +48,7 @@ export class DocumentPickerComponent implements OnChanges {
     }
 
 
-    public async setQueryTypes(types: string[]) {
+    public async setTypeFilters(types: string[]) {
 
         if (types && types.length > 0) {
             this.query.types = types;

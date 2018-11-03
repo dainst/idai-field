@@ -95,7 +95,7 @@ export class ImageUploader extends Uploader {
             reader.onerror = () => {
                 return (error: any) => {
                     console.error(error);
-                    reject([M.UPLOAD_ERROR_FILEREADER, file.name]);
+                    reject([M.UPLOAD_ERROR_FILE_READER, file.name]);
                 }
             };
             reader.readAsArrayBuffer(file);

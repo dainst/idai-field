@@ -19,7 +19,7 @@ import {isEmpty} from 'tsfun';
  */
 export class View3DComponent implements OnInit {
 
-    private document: IdaiField3DDocument;
+    public document: IdaiField3DDocument;
 
     private activeTab: string;
     private comingFrom: Array<any>|undefined = undefined;

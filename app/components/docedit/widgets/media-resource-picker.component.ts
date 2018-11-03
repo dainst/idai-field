@@ -64,6 +64,13 @@ export class MediaResourcePickerComponent implements OnInit {
     }
 
 
+    public async setQueryTypes(types: string[]|undefined) {
+
+        this.query.types = types;
+        await this.fetchDocuments(this.query);
+    }
+
+
     public onResize() {
 
         this.imageGrid.calcGrid();

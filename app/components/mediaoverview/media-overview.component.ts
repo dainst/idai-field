@@ -14,11 +14,6 @@ import {M} from '../m';
     templateUrl: './media-overview.html'
 })
 /**
-<<<<<<< HEAD:app/components/mediaoverview/media-overview.component.ts
- * Displays thumbnails of media resources as a grid of tiles.
- *
-=======
->>>>>>> upstream/master:app/components/imageoverview/image-overview.component.ts
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
  * @author Jan G. Wieners
@@ -32,12 +27,11 @@ export class MediaOverviewComponent implements OnInit {
     public minGridSize: number = 2;
 
 
-    constructor(
-        public viewFacade: ViewFacade,
-        private mediaOverviewFacade: MediaOverviewFacade,
-        private routingService: RoutingService,
-        private messages: Messages
-    ) {
+    constructor(public viewFacade: ViewFacade,
+                private mediaOverviewFacade: MediaOverviewFacade,
+                private routingService: RoutingService,
+                private messages: Messages) {
+
         this.mediaOverviewFacade.initialize();
     }
 
@@ -77,9 +71,9 @@ export class MediaOverviewComponent implements OnInit {
     }
 
 
-    public async setGridSize(size: string) {
+    public async setGridSize(size: string|number) {
 
-        const _size = parseInt(size);
+        const _size: number = typeof size === 'string' ? parseInt(size): size;
 
         if (_size >= this.minGridSize && _size <= this.maxGridSize) {
             this.mediaOverviewFacade.setGridSize(_size);

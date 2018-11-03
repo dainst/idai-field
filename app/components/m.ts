@@ -97,6 +97,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Images Package
     public static IMAGES_SUCCESS_WORLDFILE_UPLOADED = 'images.success.worldfileUploaded';
     public static IMAGES_SUCCESS_GEOREFERENCE_DELETED = 'images.success.georeferenceDeleted';
+    public static IMAGES_ERROR_NOT_FOUND_SINGLE = 'images.error.notFound.single';
+    public static IMAGES_ERROR_NOT_FOUND_MULTIPLE = 'images.error.notFound.multiple';
 
     // Imagestore Package
     public static IMAGESTORE_ERROR_INVALID_PATH = 'imagestore.error.invalidPath';
@@ -564,7 +566,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.MEDIA_SUCCESS_FILES_UPLOADED] = {
             content: i18n({
                 id: 'messages.media.success.filesUploaded',
-                value: '{0} Dateien wurden erfolgreich importiert.'
+                value: '[0] Dateien wurden erfolgreich importiert.'
             }),
             level: 'success',
             params: [],
@@ -768,6 +770,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.IMAGES_ERROR_NOT_FOUND_SINGLE] = {
+            content: i18n({
+                id: 'messages.images.error.notFound.single',
+                value: 'Das Bild konnte nicht gefunden werden.',
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMAGES_ERROR_NOT_FOUND_MULTIPLE] = {
+            content: i18n({
+                id: 'messages.images.error.notFound.multiple',
+                value: 'Einige Bilder konnten nicht gefunden werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMAGESTORE_ERROR_INVALID_PATH] = {
             content: i18n({
                 id: 'messages.imagestore.error.invalidPath',
@@ -843,7 +863,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.RESOURCES_SUCCESS_FILE_UPLOADED] = {
             content: i18n({
                 id: 'messages.resources.success.fileUploaded',
-                value: 'Die Datei wurde erfolgreich importiert und mit der Ressource {0} verknüpft.'
+                value: 'Die Datei wurde erfolgreich importiert und mit der Ressource [0] verknüpft.'
             }),
             level: 'success',
             params: [],
@@ -852,7 +872,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.RESOURCES_SUCCESS_FILES_UPLOADED] = {
             content: i18n({
                 id: 'messages.resources.success.filesUploaded',
-                value: '{0} Dateien wurden erfolgreich importiert und mit der Ressource {1} verknüpft.'
+                value: '[0] Dateien wurden erfolgreich importiert und mit der Ressource [1] verknüpft.'
             }),
             level: 'success',
             params: [],
@@ -924,7 +944,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.UPLOAD_ERROR_UNSUPPORTED_EXTENSIONS] = {
             content: i18n({
                 id: 'messages.upload.error.unsupportedExtensions',
-                value: 'Diese Auswahl ein oder mehrerer Dateien enthält ungültige Dateiformate ({0}). Die entsprechenden Dateien werden ignoriert.'
+                value: 'Diese Auswahl ein oder mehrerer Dateien enthält ungültige Dateiformate ([0]). Die entsprechenden Dateien werden ignoriert.'
             }),
             level: 'danger',
             params: [],
@@ -933,7 +953,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.UPLOAD_ERROR_FILE_READER] = {
             content: i18n({
                 id: 'messages.upload.error.fileReader',
-                value: 'Die Datei \'{0}\' konnte nicht vom lokalen Dateisystem gelesen werden.'
+                value: 'Die Datei \'[0]\' konnte nicht vom lokalen Dateisystem gelesen werden.'
             }),
             level: 'danger',
             params: [],
@@ -942,7 +962,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.UPLOAD_ERROR_DUPLICATE_FILENAME] = {
             content: i18n({
                 id: 'messages.upload.error.duplicateFilename',
-                value: 'Die Datei \'{0}\' konnte nicht hinzugefügt werden. Eine Ressource mit dem gleichen Dateinamen existiert bereits.'
+                value: 'Die Datei \'[0]\' konnte nicht hinzugefügt werden. Eine Ressource mit dem gleichen Dateinamen existiert bereits.'
             }),
             level: 'danger',
             params: [],
@@ -951,7 +971,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.UPLOAD_ERROR_DUPLICATE_FILENAMES] = {
             content: i18n({
                 id: 'messages.upload.error.duplicateFilenames',
-                value: 'Die folgenden Dateien konnten nicht hinzugefügt werden, da Ressourcen mit identischen Dateinamen bereits existieren: {0}'
+                value: 'Die folgenden Dateien konnten nicht hinzugefügt werden, da Ressourcen mit identischen Dateinamen bereits existieren: [0]'
             }),
             level: 'danger',
             params: [],

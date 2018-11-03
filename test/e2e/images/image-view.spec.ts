@@ -1,12 +1,12 @@
 import {ImageViewPage} from './image-view.page';
-import {ImageOverviewPage} from './image-overview.page';
+import {MediaOverviewPage} from '../media/media-overview.page';
 
 
 describe('image view --', function() {
 
-    it('navigate to image overview if the image document could not be found', () => {
+    it('navigate to media overview if the image document could not be found', () => {
 
         ImageViewPage.get('non-existing-document', 'show');
-        ImageOverviewPage.waitForCells();
+        MediaOverviewPage.waitForCells();
     });
 });

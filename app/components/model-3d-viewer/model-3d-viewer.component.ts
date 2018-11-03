@@ -23,12 +23,12 @@ export class Model3DViewerComponent implements OnChanges, OnDestroy {
 
     @ViewChild('container') container: ElementRef;
 
+    public mesh: THREE.Mesh;
+
     private viewer: Viewer3D;
     private controls: Model3DViewerControls;
     private cameraManager: Model3DViewerCameraManager = new Model3DViewerCameraManager();
     private sceneManager: SceneManager = new SceneManager();
-
-    private mesh: THREE.Mesh;
 
     private removeMouseMoveEventListener: Function;
     private removeMouseUpEventListener: Function;

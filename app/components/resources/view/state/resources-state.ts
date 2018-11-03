@@ -12,7 +12,7 @@ export interface ResourcesState { // 'the' resources state
 
     readonly viewStates: { [viewName: string]: ViewState };
     readonly view: string;
-    readonly mode: 'map' | 'list';
+    readonly mode: 'map' | '3dMap' | 'list';
     readonly activeDocumentViewTab: string|undefined;
 }
 

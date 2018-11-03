@@ -27,7 +27,7 @@ export class Model3DStore {
         try {
             directoryPath = await this.createDirectory(document);
         } catch(err) {
-            return Promise.reject([M.MODEL3DSTORE_ERROR_WRITE]);
+            return Promise.reject([M.MODEL_3D_STORE_ERROR_WRITE]);
         }
 
         await this.copyFile(file.path, directoryPath + '/' + document.resource.id);
@@ -65,10 +65,10 @@ export class Model3DStore {
         return new Promise<any>((resolve, reject) => {
 
             const readStream = fs.createReadStream(sourcePath);
-            readStream.on('error', () => reject([M.UPLOAD_ERROR_FILEREADER, sourcePath]));
+            readStream.on('error', () => reject([M.UPLOAD_ERROR_FILE_READER, sourcePath]));
 
             const writeStream = fs.createWriteStream(targetPath);
-            writeStream.on('error', () => reject([M.MODEL3DSTORE_ERROR_WRITE]));
+            writeStream.on('error', () => reject([M.MODEL_3D_STORE_ERROR_WRITE]));
             writeStream.on('close', () => resolve());
 
             readStream.pipe(writeStream);

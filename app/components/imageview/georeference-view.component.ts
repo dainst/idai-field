@@ -64,7 +64,7 @@ export class GeoreferenceViewComponent {
         })(this);
         reader.onerror = (that => {
             return () => {
-                that.messages.add([M.UPLOAD_ERROR_FILEREADER, file.name]);
+                that.messages.add([M.UPLOAD_ERROR_FILE_READER, file.name]);
             }
         })(this);
         reader.readAsText(file);

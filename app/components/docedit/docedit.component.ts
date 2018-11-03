@@ -34,7 +34,7 @@ import {Loading} from '../../widgets/loading';
 export class DoceditComponent {
 
     private parentLabel: string|undefined = undefined;
-    private showDoceditImagesTab: boolean = false;
+    private showDoceditMediaTab: boolean = false;
     private operationInProgress: 'save'|'delete'|'none' = 'none';
 
 
@@ -80,9 +80,7 @@ export class DoceditComponent {
 
         if (!document.resource.id) this.activeTabService.setActiveTab('fields');
 
-        this.showDoceditImagesTab = (!
-            (this.typeUtility.getSubtypes('Image'))[document.resource.type]
-        );
+        this.showDoceditMediaTab = !this.typeUtility.getMediaTypeNames().includes(document.resource.type);
 
         this.getFieldDefinitionLabel = (fieldName: string) =>
             this.projectConfiguration.getFieldDefinitionLabel(document.resource.type, fieldName);

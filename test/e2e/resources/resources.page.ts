@@ -29,6 +29,7 @@ export class ResourcesPage {
     public static clickSaveInModal() {
 
         common.click(element(by.id('overview-save-confirmation-modal-save-button')));
+        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
     }
 
 
@@ -41,6 +42,7 @@ export class ResourcesPage {
     public static clickDiscardInModal() {
 
         common.click(element(by.id('overview-save-confirmation-modal-discard-button')));
+        browser.wait(EC.stalenessOf(element(by.id('document-edit-wrapper'))));
     }
 
 
@@ -61,9 +63,9 @@ export class ResourcesPage {
     }
 
 
-    public static clickMoveIntoButton(identifier) {
+    public static clickHierarchyButton(identifier) {
 
-        return common.click(element(by.css('#resource-' + identifier + ' .move-into-button')));
+        return common.click(element(by.css('#resource-' + identifier + ' .hierarchy-button')));
     }
 
 
@@ -278,7 +280,7 @@ export class ResourcesPage {
 
         NavbarPage.clickNavigateToProject();
         this.performCreateResource(identifier, 'trench');
-        this.clickMoveIntoButton(identifier);
+        this.clickHierarchyButton(identifier);
     }
 
 

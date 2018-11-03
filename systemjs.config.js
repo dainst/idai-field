@@ -60,6 +60,7 @@
         'app': 'app',
         '@angular': 'node_modules/@angular',
         '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.umd.js',
+        '@ngx-translate/i18n-polyfill': 'node_modules/@ngx-translate/i18n-polyfill/bundles/ngx-translate-i18n-polyfill.umd.js',
         'json': 'app/util/systemjs-json-plugin',
         'rxjs': 'node_modules/rxjs',
         'rxjs-compat': 'node_modules/rxjs-compat',

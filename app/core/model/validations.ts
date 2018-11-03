@@ -1,7 +1,6 @@
-import {FieldDefinition, ProjectConfiguration, RelationDefinition} from 'idai-components-2';
-import {Resource, NewResource} from 'idai-components-2';
-import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../core/util/number-util';
 import {on} from 'tsfun';
+import {FieldDefinition, ProjectConfiguration, RelationDefinition, Resource, NewResource} from 'idai-components-2';
+import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../core/util/number-util';
 
 export module Validations {
 
@@ -11,8 +10,8 @@ export module Validations {
         const fieldDefinitions: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
 
         for (let fieldDefinition of fieldDefinitions) {
-            if (projectConfiguration.isMandatory(resource.type,fieldDefinition.name)) {
-                if (resource[fieldDefinition.name] == undefined || resource[fieldDefinition.name] == '') {
+            if (projectConfiguration.isMandatory(resource.type, fieldDefinition.name)) {
+                if (resource[fieldDefinition.name] === undefined || resource[fieldDefinition.name] === '') {
                     missingFields.push(fieldDefinition.name);
                 }
             }
@@ -49,7 +48,7 @@ export module Validations {
             if (resource.hasOwnProperty(resourceField)) {
                 let fieldFound: boolean = false;
                 for (let i in fields) {
-                    if (fields[i].name == resourceField) {
+                    if (fields[i].name === resourceField) {
                         fieldFound = true;
                         break;
                     }
@@ -82,7 +81,7 @@ export module Validations {
             if (resource.relations.hasOwnProperty(relationField)) {
                 let fieldFound: boolean = false;
                 for (let i in fields) {
-                    if (fields[i].name == relationField) {
+                    if (fields[i].name === relationField) {
                         fieldFound = true;
                         break;
                     }
@@ -109,8 +108,8 @@ export module Validations {
             let value = resource[fieldDefinition.name];
 
             if (value && numericInputTypes.includes(fieldDefinition.inputType as string)
-                && !validateNumber(value, fieldDefinition.inputType as string)) {
-                invalidFields.push(fieldDefinition.label as any);
+                    && !validateNumber(value, fieldDefinition.inputType as string)) {
+                invalidFields.push(fieldDefinition.name);
             }
         });
 
@@ -138,13 +137,13 @@ export module Validations {
         if (coordinates.length < 2 || coordinates.length > 3) return false;
         if (isNaN(coordinates[0])) return false;
         if (isNaN(coordinates[1])) return false;
-        if (coordinates.length == 3 && isNaN(coordinates[2])) return false;
+        if (coordinates.length === 3 && isNaN(coordinates[2])) return false;
 
         return true;
     }
 
 
-    export function validatePolylineCoordinates(coordinates: number[][]): boolean {
+    export function validatePolylineOrMultiPointCoordinates(coordinates: number[][]): boolean {
 
         return coordinates.length >= 2
             && coordinates.every(validatePointCoordinates);
@@ -154,13 +153,13 @@ export module Validations {
     export function validateMultiPolylineCoordinates(coordinates: number[][][]): boolean {
 
         return coordinates.length !== 0
-            && coordinates.every(validatePolylineCoordinates);
+            && coordinates.every(validatePolylineOrMultiPointCoordinates);
     }
 
 
     export function validatePolygonCoordinates(coordinates: number[][][]): boolean {
 
-        if (coordinates.length == 0) return false;
+        if (coordinates.length === 0) return false;
 
         for (let i in coordinates) {
             if (coordinates[i].length < 3) return false;

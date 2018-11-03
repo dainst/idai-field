@@ -4,8 +4,8 @@ import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {BackupCreationComponent} from './backup-creation.component';
 import {BackupLoadingComponent} from './backup-loading.component';
-import {DumpModalComponent} from './dump-modal.component';
-import {ReadDumpModalComponent} from './read-dump-modal.component';
+import {BackupCreationModalComponent} from './backup-creation-modal.component';
+import {BackupLoadingModalComponent} from './backup-loading-modal.component';
 import {DialogProvider} from './dialog-provider';
 import {ConcreteDialogProvider} from './concrete-dialog-provider';
 import {BackupProvider} from './backup-provider';
@@ -19,8 +19,8 @@ import {BackupProvider} from './backup-provider';
     declarations: [
         BackupCreationComponent,
         BackupLoadingComponent,
-        DumpModalComponent,
-        ReadDumpModalComponent
+        BackupCreationModalComponent,
+        BackupLoadingModalComponent
     ],
     exports: [
         BackupCreationComponent,
@@ -31,8 +31,8 @@ import {BackupProvider} from './backup-provider';
         BackupProvider
     ],
     entryComponents: [
-        DumpModalComponent,
-        ReadDumpModalComponent
+        BackupCreationModalComponent,
+        BackupLoadingModalComponent
     ]
 })
 

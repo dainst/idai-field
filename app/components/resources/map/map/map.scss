@@ -29,7 +29,8 @@
 #map-editor-button-delete,
 #map-editor-button-delete-disabled,
 #map-editor-button-add-polygon,
-#map-editor-button-add-polyline {
+#map-editor-button-add-polyline,
+#map-editor-button-add-point {
   position: absolute;
   z-index: 1000;
 }
@@ -74,7 +75,8 @@
   }
 
   #map-editor-button-add-polygon,
-  #map-editor-button-add-polyline {
+  #map-editor-button-add-polyline,
+  #map-editor-button-add-point {
     left: 56px;
     bottom: 8px;
     height: 38px;

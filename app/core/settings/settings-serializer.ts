@@ -12,12 +12,12 @@ export class SettingsSerializer {
 
     public load(): Promise<Settings> {
 
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve, reject) => {
             fs.readFile(remote.getGlobal('configPath'), 'utf-8', (err: any, content: any) => {
                 if (err) {
                     reject(err);
                 } else {
-                    let settings = JSON.parse(content);
+                    const settings = JSON.parse(content);
                     resolve(remote.getGlobal('setConfigDefaults')(settings));
                 }
             });
@@ -31,6 +31,7 @@ export class SettingsSerializer {
 
         let configToWrite: any = {};
 
+        configToWrite['locale'] = settings.locale;
         configToWrite['isAutoUpdateActive'] = settings.isAutoUpdateActive;
         configToWrite['isSyncActive'] = settings.isSyncActive;
 

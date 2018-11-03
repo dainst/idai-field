@@ -1,7 +1,5 @@
 <div id="document-detail-sidebar" class="detail-sidebar">
-
     <div *ngIf="viewFacade.getSelectedDocument()" class="card-block">
-
         <button *ngIf="viewFacade.getSelectedDocument()._conflicts"
                 class="btn btn-link btn-xs solve-button"
                 id="document-view-button-solve-conflicts"
@@ -25,7 +23,8 @@
                 <ng-template ngbTabContent>
                     <div class="btn btn-light btn-block edit-button"
                             (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'fields')">
-                        <span>Metadaten bearbeiten</span>
+                        <span class="button-label"
+                              i18n="@@resources.detailSidebar.editMetadata">Metadaten bearbeiten</span>
                     </div>
 
                     <div class="tab-view-container">
@@ -57,7 +56,8 @@
                 <ng-template ngbTabContent>
                     <div class="btn btn-light btn-block edit-button"
                             (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'relations')">
-                        <span>Relationen bearbeiten</span>
+                        <span class="button-label"
+                              i18n="@@resources.detailSidebar.editRelations">Relationen bearbeiten</span>
                     </div>
 
                     <div class="tab-view-container">
@@ -78,7 +78,8 @@
                 <ng-template ngbTabContent>
                     <div class="btn btn-light btn-block edit-button"
                             (click)="resourcesComponent.editDocument(viewFacade.getSelectedDocument(), 'media')">
-                        <span>Medienverknüpfungen bearbeiten</span>
+                        <span class="button-label"
+                              i18n="@@resources.detailSidebar.editMediaLinks">Medienverknüpfungen bearbeiten</span>
                     </div>
 
                     <div class="tab-view-container">
@@ -89,6 +90,5 @@
                 </ng-template>
             </ngb-tab>
         </ngb-tabset>
-
     </div>
 </div>

@@ -1,4 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ProjectConfiguration, FieldDefinition} from 'idai-components-2';
 import {ViewFacade} from '../view/view-facade';
 import {ResourcesSearchBarComponent} from './resources-search-bar.component';
@@ -41,7 +42,8 @@ export class SearchConstraintsComponent implements OnChanges {
 
     constructor(public resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 private projectConfiguration: ProjectConfiguration,
-                private viewFacade: ViewFacade) {
+                private viewFacade: ViewFacade,
+                private i18n: I18n) {
 
         this.viewFacade.navigationPathNotifications().subscribe(() => {
             if (this.type) this.reset();
@@ -58,8 +60,14 @@ export class SearchConstraintsComponent implements OnChanges {
     public getTooltip() {
 
         return this.constraintListItems.length === 0
-            ? 'Weitere Suchkriterien einstellen'
-            : 'Aktive Suchkriterien';
+            ? this.i18n({
+                id: 'resources.searchBar.constraints.tooltips.setupAdditionalSearchCriteria',
+                value: 'Weitere Suchkriterien einstellen'
+            })
+            : this.i18n({
+                id: 'resources.searchBar.constraints.tooltips.activeSearchCriteria',
+                value: 'Aktive Suchkriterien'
+            });
     }
 
 
@@ -113,10 +121,34 @@ export class SearchConstraintsComponent implements OnChanges {
     public getSearchTermLabel(constraintListItem: ConstraintListItem): string {
 
         if (constraintListItem.searchInputType === 'boolean') {
-            return (constraintListItem.searchTerm === 'true') ? 'Ja' : 'Nein';
+            return (constraintListItem.searchTerm === 'true')
+                ? this.i18n({
+                    id: 'boolean.yes',
+                    value: 'Ja'
+                })
+                : this.i18n({
+                    id: 'boolean.no',
+                    value: 'Nein'
+                });
         } else {
             return constraintListItem.searchTerm;
         }
+    }
+
+
+    public handleClick(event: Event) {
+
+        if (!this.showConstraintsMenu) return;
+
+        let target: any = event.target;
+
+        do {
+            if (target.id && target.id.startsWith('constraints-menu')) return;
+            target = target.parentNode;
+        } while (target);
+
+        this.showConstraintsMenu = false;
+        this.reset();
     }
 
 
@@ -177,22 +209,6 @@ export class SearchConstraintsComponent implements OnChanges {
             .find((field: FieldDefinition) => {
                 return field.name === SearchConstraintsComponent.getFieldName(constraintName);
             }).label;
-    }
-
-
-    private handleClick(event: Event) {
-
-        if (!this.showConstraintsMenu) return;
-
-        let target: any = event.target;
-
-        do {
-            if (target.id && target.id.startsWith('constraints-menu')) return;
-            target = target.parentNode;
-        } while (target);
-
-        this.showConstraintsMenu = false;
-        this.reset();
     }
 
 

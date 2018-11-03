@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {isNot, empty} from 'tsfun';
 import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
 import {ImportReport} from '../../core/import/import';
 import {Reader} from '../../core/import/reader';
@@ -17,7 +18,6 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../m';
 import {ImportFacade, ImportFormat} from '../../core/import/import-facade';
-import {isNot, empty} from 'tsfun';
 
 
 @Component({
@@ -51,12 +51,12 @@ export class ImportComponent {
         private datastore: DocumentDatastore,
         private remoteChangesStream: RemoteChangesStream,
         private validator: Validator,
-        private http: Http,
+        private http: HttpClient,
         private usernameProvider: UsernameProvider,
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
         private modalService: NgbModal,
-        private settingsService: SettingsService // TODO remove
+        private settingsService: SettingsService
     ) {
         this.viewFacade.getAllOperations().then(
             documents => this.mainTypeDocuments = documents,
@@ -64,12 +64,15 @@ export class ImportComponent {
         );
     }
 
+
+    public getProject = () => this.settingsService.getSelectedProject();
+
     
     public async startImport() {
 
         const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.file as any,
             this.url as any, this.http);
-        if (!reader) return this.messages.add([M.IMPORT_GENERIC_START_ERROR]);
+        if (!reader) return this.messages.add([M.IMPORT_ERROR_GENERIC_START_ERROR]);
 
         let uploadModalRef: any = undefined;
         let uploadReady = false;
@@ -152,7 +155,7 @@ export class ImportComponent {
     }
 
 
-    private static createReader(sourceType: string, file: File, url: string, http: Http): Reader|undefined {
+    private static createReader(sourceType: string, file: File, url: string, http: HttpClient): Reader|undefined {
 
         return sourceType === 'file'
             ? new FileSystemReader(file)

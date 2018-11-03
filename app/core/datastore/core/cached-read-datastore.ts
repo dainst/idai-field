@@ -1,11 +1,9 @@
-import {Injectable} from '@angular/core';
-import {FindResult, Query, ReadDatastore, DatastoreErrors} from 'idai-components-2';
-import {Document} from 'idai-components-2';
+import {jsonClone} from 'tsfun';
+import {FindResult, Query, ReadDatastore, DatastoreErrors, Document} from 'idai-components-2';
 import {PouchdbDatastore} from './pouchdb-datastore';
 import {DocumentCache} from './document-cache';
 import {TypeConverter} from './type-converter';
 import {IndexFacade} from '../index/index-facade';
-import {jsonClone} from 'tsfun';
 
 
 export interface IdaiFieldFindResult<T extends Document> extends FindResult {
@@ -14,7 +12,6 @@ export interface IdaiFieldFindResult<T extends Document> extends FindResult {
 }
 
 
-@Injectable()
 /**
  * This datastore provides everything necessary
  * to power a idai-field application:
@@ -37,12 +34,11 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
     public suppressWait = false;
 
-    constructor(
-        protected datastore: PouchdbDatastore,
-        protected indexFacade: IndexFacade,
-        protected documentCache: DocumentCache<T>,
-        protected typeConverter: TypeConverter<T>,
-        protected typeClass: string) { }
+    constructor(protected datastore: PouchdbDatastore,
+                protected indexFacade: IndexFacade,
+                protected documentCache: DocumentCache<T>,
+                protected typeConverter: TypeConverter<T>,
+                protected typeClass: string) { }
 
 
     /**
@@ -89,7 +85,13 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
             clonedQuery.types = this.typeConverter.getTypesForClass(this.typeClass);
         }
 
-        return this.getDocumentsForIds(this.findIds(clonedQuery), clonedQuery.limit);
+        const {documents, totalCount} = await this.getDocumentsForIds(this.findIds(clonedQuery), clonedQuery.limit);
+
+        return {
+            documents: documents,
+            totalCount: totalCount,
+            queryId: query.id
+        }
     }
 
 
@@ -124,8 +126,8 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     }
 
 
-    private async getDocumentsForIds(ids: string[], limit?: number):
-        Promise<{documents:Array<T>, totalCount: number}> {
+    private async getDocumentsForIds(ids: string[],
+                                     limit?: number): Promise<{documents: Array<T>, totalCount: number}> {
 
         const docs: Array<T> = [];
         let failures = 0;

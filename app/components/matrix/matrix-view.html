@@ -24,6 +24,7 @@
                  class="btn btn-primary"
                  [class.active]="getSelectionMode() === 'none'"
                  ngbTooltip="Bearbeitungsmodus"
+                 i18n-ngbTooltip="@@matrix.view.tooltips.editMode"
                  placement="bottom"
                  container="body"
                  triggers="manual"
@@ -37,6 +38,7 @@
                  class="btn btn-primary"
                  [class.active]="getSelectionMode() === 'single'"
                  ngbTooltip="Einzelauswahlmodus"
+                 i18n-ngbTooltip="@@matrix.view.tooltips.singleSelectionMode"
                  placement="bottom"
                  container="body"
                  triggers="manual"
@@ -50,6 +52,7 @@
                  class="btn btn-primary"
                  [class.active]="getSelectionMode() === 'rect'"
                  ngbTooltip="Gruppenauswahlmodus"
+                 i18n-ngbTooltip="@@matrix.view.tooltips.groupSelectionMode"
                  placement="bottom"
                  container="body"
                  triggers="manual"
@@ -66,6 +69,7 @@
                  class="btn btn-primary"
                  [class.disabled]="!documentsSelected()"
                  ngbTooltip="Auswahl aufheben"
+                 i18n-ngbTooltip="@@matrix.view.tooltips.deselect"
                  placement="bottom"
                  container="body"
                  triggers="manual"
@@ -80,6 +84,7 @@
                  class="btn btn-primary"
                  [class.disabled]="!documentsSelected()"
                  ngbTooltip="Matrix aus Auswahl erstellen"
+                 i18n-ngbTooltip="@@matrix.view.tooltips.createMatrixFromSelection"
                  placement="left"
                  container="body"
                  triggers="manual"
@@ -94,6 +99,7 @@
                  class="btn btn-primary"
                  [class.disabled]="!graphFromSelection"
                  ngbTooltip="Matrix neu laden"
+                 i18n-ngbTooltip="@@matrix.view.tooltips.reloadMatrix"
                  placement="left"
                  container="body"
                  triggers="manual"
@@ -113,14 +119,17 @@
 
     <div *ngIf="showNoTrenchesWarning()"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
-        <em>Legen Sie eine Ressource vom Typ 'Schnitt' in der
-            <a href="#" routerLink="/resources/project">Übersicht</a> an, um hier mit ihr arbeiten zu können.
+        <em i18n="@@matrix.view.noTrenchesWarning">
+            Legen Sie eine Ressource vom Typ 'Schnitt' in der <a href="#" routerLink="/resources/project">Übersicht</a>
+            an, um hier mit ihr arbeiten zu können.
         </em>
     </div>
 
     <div *ngIf="showNoResourcesWarning()"
          class="col-8 text-center alert alert-warning no-main-type-resource-alert">
-        <em>Legen Sie für den ausgewählten Schnitt Ressourcen vom Typ 'Stratigrafische Einheit' in der Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen Relationen.
+        <em i18n="@@matrix.view.noResourcesWarning">
+            Legen Sie für den ausgewählten Schnitt Ressourcen vom Typ 'Stratigraphische Einheit' in der
+            Ausgrabungsansicht an und verknüpfen Sie sie mit zeitlichen oder räumlichen Relationen.
         </em>
     </div>
 

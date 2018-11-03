@@ -6,8 +6,8 @@
     <div class="card-body">
         <form>
             <fieldset class="form-group">
-                <label class="pre-label">Relationen:</label>
-                <div class="form-check form-check-inline form-radiobuttons">
+                <label class="pre-label" i18n="@@matrix.optionsMenu.relations.label">Relationen:</label>
+                <div id="form-check-relations-temporal" class="form-check form-check-inline form-radiobuttons">
                     <input id="relations-radio-temporal"
                            class="form-check-input"
                            name="relations-mode-radios"
@@ -16,11 +16,12 @@
                            (change)="setRelationsMode('temporal')">
                     <label id="relations-radio-temporal-label"
                            class="form-check-label"
-                           for="relations-radio-temporal">
+                           for="relations-radio-temporal"
+                           i18n="@@matrix.optionsMenu.relations.temporal">
                         Zeitlich
                     </label>
                 </div>
-                <div class="form-check form-check-inline form-radiobuttons">
+                <div id="form-check-relations-spatial" class="form-check form-check-inline form-radiobuttons">
                     <input id="relations-radio-spatial"
                            class="form-check-input"
                            name="relations-mode-radios"
@@ -29,15 +30,16 @@
                            (change)="setRelationsMode('spatial')">
                     <label id="relations-radio-spatial-label"
                            class="form-check-label"
-                           for="relations-radio-spatial">
+                           for="relations-radio-spatial"
+                           i18n="@@matrix.optionsMenu.relations.spatial">
                         Räumlich
                     </label>
                 </div>
             </fieldset>
 
             <fieldset class="form-group">
-                <label class="pre-label">Kanten:</label>
-                <div class="form-check form-check-inline form-radiobuttons">
+                <label class="pre-label" i18n="@@matrix.optionsMenu.edges.label">Kanten:</label>
+                <div id="form-check-edges-ortho" class="form-check form-check-inline form-radiobuttons">
                     <input id="line-radio-ortho"
                            class="form-check-input"
                            name="line-mode-radios"
@@ -46,11 +48,12 @@
                            (change)="setLineMode('ortho')">
                     <label id="line-radio-ortho-label"
                            class="form-check-label"
-                           for="line-radio-ortho">
+                           for="line-radio-ortho"
+                           i18n="@@matrix.optionsMenu.edges.straight">
                         Gerade
                     </label>
                 </div>
-                <div class="form-check form-check-inline form-radiobuttons">
+                <div id="form-check-edges-curved" class="form-check form-check-inline form-radiobuttons">
                     <input id="line-radio-curved"
                            class="form-check-input"
                            name="line-mode-radios"
@@ -59,7 +62,8 @@
                            (change)="setLineMode('curved')">
                     <label id="line-radio-curved-label"
                            class="form-check-label"
-                           for="line-radio-curved">
+                           for="line-radio-curved"
+                           i18n="@@matrix.optionsMenu.edges.curved">
                         Gebogen
                     </label>
                 </div>
@@ -75,7 +79,8 @@
                            (change)="toggleClusterMode()">
                     <label id="period-check-label"
                            class="form-check-label"
-                           for="period-check">
+                           for="period-check"
+                           i18n="@@matrix.optionsMenu.clusterOption">
                         Gruppierung nach Grobdatierung
                     </label>
                 </div>

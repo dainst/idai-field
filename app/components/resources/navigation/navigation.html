@@ -1,7 +1,5 @@
-<div id="navigation" class="row">
-
-    <div *ngIf="showSwitchHierarchyModeButton()"
-         id="hierarchy-mode-switch"
+<div *ngIf="showNavigation()" id="navigation" class="row">
+    <div id="hierarchy-mode-switch"
          class="btn {{getBypassHierarchy() ? 'btn-primary' : 'btn-outline-primary'}} mr-2"
          ngbTooltip="{{getTooltip()}}"
          placement="right"
@@ -15,16 +13,15 @@
             <span *ngIf="getBypassHierarchy()" class="mdi mdi-magnify"></span>
     </div>
 
-    <div *ngIf="showNavigation()"
-         class="btn-group">
-
-        <div class="btn-group operation-document-selector" ngbDropdown placement="bottom-left" role="group">
+    <div class="btn-group">
+        <div *ngIf="!viewFacade.isInOverview()" class="btn-group operation-document-selector"
+             ngbDropdown placement="bottom-left" role="group">
             <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
 
             <div class="dropdown-menu" ngbDropdownMenu>
                 <button *ngIf="showSelectAllOperationsOption()" class="dropdown-item"
                         (click)="activateBypassOperationTypeSelection()">
-                    <em>Alle</em>
+                    <em i18n="@@resources.navigation.all">Alle</em>
                 </button>
                 <hr *ngIf="showSelectAllOperationsOption()">
 
@@ -46,7 +43,14 @@
              id="selected-all-operation-type-documents" type="button" class="btn btn-outline-primary navigation-button"
              [class.root-document]="!navigationPath.selectedSegmentId"
              (click)="moveInto(undefined)">
-            <em>Alle</em>
+            <em i18n="@@resources.navigation.all">Alle</em>
+        </div>
+
+        <div *ngIf="viewFacade.isInOverview()"
+             id="selected-project-document" type="button" class="btn btn-outline-primary navigation-button"
+             [class.root-document]="!navigationPath.selectedSegmentId"
+             (click)="moveInto(undefined)">
+            <span i18n="@@resources.navigation.project">Projekt</span>
         </div>
 
         <div *ngFor="let document of getSegments()" class="btn btn-outline-primary navigation-button"

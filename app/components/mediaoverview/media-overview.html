@@ -2,7 +2,7 @@
     <div class="col-sm-12" (dragover)="false" (dragleave)="false" (drop)="false">
         <div class="row bg-light media-overview-nav">
             <div *ngIf="!getSelected().length" class="col-sm-7 media-overview-nav-content">
-                <search-bar *ngIf="getQuery()" [q]="getQuery().q"
+                <search-bar [q]="getQuery().q"
                             [types]="getQuery().types" [relationName]="'depicts'"
                             [relationRangeType]="'Trench'" [hidden]="getSelected().length"
                             (onQueryStringChanged)="setQueryString($event)" (onTypesChanged)="setTypeFilters($event)">
@@ -13,9 +13,9 @@
                 <select id="main-type-document-filter-select" class="form-control"
                         [ngModel]="getMainTypeDocumentFilterOption()"
                         (ngModelChange)="chooseMainTypeDocumentFilterOption($event)">
-                    <option value="ALL"><em>Alle Medienressourcen</em></option>
-                    <option value="UNLINKED"><em>Unverknüpfte Medienressourcen</em></option>
-                    <option value="LINKED"><em>Verknüpfte Medienressourcen</em></option>
+                    <option value="ALL"><em i18n="@@mediaOverview.filter.all">Alle Medienressourcen</em></option>
+                    <option value="UNLINKED"><em i18n="@@mediaOverview.filter.unlinked">Unverknüpfte Medienressourcen</em></option>
+                    <option value="LINKED"><em i18n="@@mediaOverview.filter.linked">Verknüpfte Medienressourcen</em></option>
                 </select>
             </div>
 
@@ -25,17 +25,17 @@
 
             <div class="col-sm-2 text-right slider-container">
                 <span id="decrease-grid-size-button" class="mdi mdi-view-grid align-middle"
-                      (click)="setGridSize(getGridSize()-1)"></span>
+                      (click)="setGridSize(getGridSize() - 1)"></span>
                 <input id="grid-size-slider" #gridSize type="range" min="{{minGridSize}}"
                        max="{{maxGridSize}}" value="{{getGridSize()}}"
                        class="slider align-middle"
                        (change)="setGridSize(gridSize.value)">
                 <span id="increase-grid-size-button" class="mdi mdi-apps align-middle"
-                      (click)="setGridSize(getGridSize()+1)"></span>
+                      (click)="setGridSize(getGridSize() + 1)"></span>
             </div>
         </div>
 
-        <div (window:resize)="onResize($event)" class="image-grid-container">
+        <div (window:resize)="onResize()" class="image-grid-container">
             <image-grid #imageGrid
                     [nrOfColumns]="getGridSize()"
                     [documents]="getDocuments()"

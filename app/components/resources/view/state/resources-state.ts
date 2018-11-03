@@ -19,12 +19,11 @@ export interface ResourcesState { // 'the' resources state
 
 export module ResourcesState {
 
-
     export function getQueryString(state: ResourcesState) {
 
         return viewState(state).bypassHierarchy
             ? viewState(state).searchContext.q
-            : NavigationPath.getQueryString(getNavigationPath(state), getBypassHierarchy(state));
+            : NavigationPath.getQueryString(getNavigationPath(state));
     }
 
 
@@ -32,7 +31,7 @@ export module ResourcesState {
 
         return viewState(state).bypassHierarchy
             ? viewState(state).searchContext.types
-            : NavigationPath.getTypeFilters(getNavigationPath(state), getBypassHierarchy(state));
+            : NavigationPath.getTypeFilters(getNavigationPath(state));
     }
 
 
@@ -48,7 +47,7 @@ export module ResourcesState {
 
         return viewState(state).bypassHierarchy
             ? viewState(state).searchContext.selected
-            : NavigationPath.getSelectedDocument(getNavigationPath(state), getBypassHierarchy(state));
+            : NavigationPath.getSelectedDocument(getNavigationPath(state));
     }
 
 
@@ -147,8 +146,7 @@ export module ResourcesState {
 
         } else {
 
-            return updateNavigationPath(state, NavigationPath.setQueryString(getNavigationPath(state),
-                getBypassHierarchy(state), q));
+            return updateNavigationPath(state, NavigationPath.setQueryString(getNavigationPath(state), q));
         }
     }
 
@@ -163,8 +161,7 @@ export module ResourcesState {
 
         } else {
 
-            return updateNavigationPath(state, NavigationPath.setTypeFilters(getNavigationPath(state),
-                getBypassHierarchy(state), types));
+            return updateNavigationPath(state, NavigationPath.setTypeFilters(getNavigationPath(state), types));
         }
     }
 
@@ -189,8 +186,7 @@ export module ResourcesState {
 
         } else {
 
-            return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state),
-                viewState(state).bypassHierarchy, document));
+            return updateNavigationPath(state, NavigationPath.setSelectedDocument(getNavigationPath(state), document));
         }
     }
 
@@ -265,7 +261,7 @@ export module ResourcesState {
         return {
             viewStates: {
                 project: {
-                    layerIds: {'project': ['o25']},
+                    layerIds: { 'project': ['o25'] },
                     layer3DIds: {},
                     bypassHierarchy: false,
                     selectAllOperationsOnBypassHierarchy: false,
@@ -279,7 +275,7 @@ export module ResourcesState {
                     navigationPaths: {
                         't1': NavigationPath.empty()
                     },
-                    layerIds: {'t1': ['o25']},
+                    layerIds: { 't1': ['o25'] },
                     layer3DIds: {},
                     searchContext: ViewContext.empty(),
                     customConstraints: {}

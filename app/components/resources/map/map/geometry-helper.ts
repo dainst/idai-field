@@ -5,11 +5,11 @@ export class GeometryHelper {
 
     public static getCoordinatesFromPolygons(polygons: Array<L.Polygon>): number[][][][] {
 
-        let coordinates = [] as any;
+        const coordinates: number[][][][] = [];
 
-        for (let polygon of polygons) {
-            coordinates.push(GeometryHelper.getCoordinatesFromPolygon(polygon) as never);
-        }
+        polygons.forEach(polygon => {
+            coordinates.push(this.getCoordinatesFromPolygon(polygon));
+        });
 
         return coordinates;
     }
@@ -17,15 +17,16 @@ export class GeometryHelper {
 
     public static getCoordinatesFromPolygon(polygon: L.Polygon): number[][][] {
 
-        let coordinates = [] as any;
-        let latLngs = polygon.getLatLngs();
+        const coordinates: number[][][] = [];
+        const latLngs = polygon.getLatLngs();
 
         for (let i in latLngs) {
-            coordinates.push([] as never);
+            coordinates.push([]);
             for (let j in latLngs[i]) {
                 coordinates[i].push([
-                    (latLngs[i] as any)[j].lng as any,
-                    (latLngs[i] as any)[j].lat as any] as never);
+                    (latLngs[i] as any)[j].lng,
+                    (latLngs[i] as any)[j].lat
+                ]);
             }
         }
 
@@ -35,11 +36,11 @@ export class GeometryHelper {
 
     public static getCoordinatesFromPolylines(polylines: Array<L.Polyline>): number[][][] {
 
-        let coordinates = [] as any;
+        const coordinates: number[][][] = [];
 
-        for (let polyline of polylines) {
-            coordinates.push(GeometryHelper.getCoordinatesFromPolyline(polyline) as never);
-        }
+        polylines.forEach(polyline => {
+            coordinates.push(this.getCoordinatesFromPolyline(polyline));
+        });
 
         return coordinates;
     }
@@ -47,13 +48,32 @@ export class GeometryHelper {
 
     public static getCoordinatesFromPolyline(polyline: L.Polyline): number[][] {
 
-        let coordinates = [] as any;
-        let latLngs = polyline.getLatLngs();
+        const coordinates: number[][] = [];
+        const latLngs = polyline.getLatLngs();
 
-        for (let i in latLngs) {
-            coordinates.push([ latLngs[i].lng , latLngs[i].lat ] as never);
-        }
+        latLngs.forEach(latLng => {
+            coordinates.push([latLng.lng, latLng.lat]);
+        });
 
         return coordinates;
+    }
+
+
+    public static getCoordinatesFromMarkers(markers: Array<L.Marker>): number[][] {
+
+        const coordinates: number[][] = [];
+
+        markers.forEach(marker => {
+            coordinates.push(this.getCoordinatesFromMarker(marker));
+        });
+
+        return coordinates;
+    }
+
+
+    public static getCoordinatesFromMarker(marker: L.Marker): number[] {
+
+        const latLng = marker.getLatLng();
+        return [latLng.lng, latLng.lat];
     }
 }

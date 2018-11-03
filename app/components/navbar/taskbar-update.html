@@ -1,6 +1,7 @@
 <div id="taskbar-update">
-    <a *ngIf="progressPercent > -1 && !downloadComplete"
+    <a *ngIf="progressPercent > -1 && !downloadComplete && !downloadInterrupted"
        ngbTooltip="Version {{version}} wird heruntergeladen..."
+       i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloading"
        placement="bottom" container="body">
         <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
         <span class="badge-pill badge-info taskbar-badge">
@@ -10,6 +11,7 @@
 
     <a *ngIf="downloadComplete"
        ngbTooltip="Version {{version}} wurde heruntergeladen und wird beim Neustart installiert"
+       i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloadComplete"
        placement="bottom" container="body">
         <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
         <span class="badge-pill badge-success taskbar-badge">
@@ -17,8 +19,19 @@
         </span>
     </a>
 
+    <a *ngIf="downloadInterrupted && !downloadComplete"
+       ngbTooltip="Der Download von Version {{version}} wurde unterbrochen. Bitte starten Sie die Anwendung neu, um es erneut zu versuchen."
+       i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.downloadInterrupted"
+       placement="bottom" container="body">
+        <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
+        <span class="badge-pill badge-danger taskbar-badge">
+            X
+        </span>
+    </a>
+
     <a *ngIf="!isAutoUpdateActive() && !downloadComplete && progressPercent === -1"
        ngbTooltip="Die automatische Prüfung auf Updates wurde deaktiviert. Sie verwenden möglicherweise nicht die neueste Version von iDAI.field."
+       i18n-ngbTooltip="@@navbar.taskbar.update.tooltips.deactivated"
        placement="bottom" container="body">
         <span class="mdi mdi-arrow-down-bold mdi-18px"></span>
         <span class="badge-pill badge-warning taskbar-badge">

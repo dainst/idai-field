@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
+import {Document, NewDocument, ProjectConfiguration, IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
 import {Validations} from './validations';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
 import {TypeUtility} from './type-utility';
@@ -40,12 +39,8 @@ export class Validator {
      * @throws [INVALID_FIELDS]
      * @throws [INVALID_NUMERICAL_VALUE]
      */
-    public async validate(
-        document: Document|NewDocument,
-        suppressFieldsAndRelationsCheck = false,
-        suppressIdentifierCheck = false,
-        suppressIsRecordedInCheck = false,
-    ): Promise<void> {
+    public async validate(document: Document|NewDocument, suppressFieldsAndRelationsCheck = false,
+                          suppressIdentifierCheck = false, suppressIsRecordedInCheck = false): Promise<void> {
 
         if (!Validations.validateType(document.resource, this.projectConfiguration)) {
             throw [ValidationErrors.INVALID_TYPE, document.resource.type];
@@ -57,11 +52,17 @@ export class Validator {
 
         const missingProperties = Validations.getMissingProperties(document.resource, this.projectConfiguration);
         if (missingProperties.length > 0) {
-            throw [ValidationErrors.MISSING_PROPERTY, document.resource.type]
-                .concat(missingProperties.join((', ')));
+            throw [
+                ValidationErrors.MISSING_PROPERTY,
+                document.resource.type,
+                missingProperties.join(', ')
+            ];
         }
 
-        if (!suppressFieldsAndRelationsCheck) Validator.validateFieldsAndRelations(document as Document, this.projectConfiguration);
+        if (!suppressFieldsAndRelationsCheck) {
+            Validator.validateFieldsAndRelations(document as Document, this.projectConfiguration);
+        }
+        
         Validator.validateNumericalValues(document as Document, this.projectConfiguration);
 
         const msgWithParams = Validator.validateGeometry(document.resource.geometry as any);
@@ -69,8 +70,13 @@ export class Validator {
 
 
         if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) {
-            const invalidRelationTarget = await this.validateRelationTargets(document as Document, 'isRecordedIn');
-            if (invalidRelationTarget) throw [ValidationErrors.NO_ISRECORDEDIN_TARGET, invalidRelationTarget.join(', ')];
+            const invalidRelationTargets = await this.validateRelationTargets(document as Document, 'isRecordedIn');
+            if (invalidRelationTargets) {
+                throw [
+                    ValidationErrors.NO_ISRECORDEDIN_TARGET,
+                    invalidRelationTargets.join(', ')
+                ];
+            }
         }
 
         if (!suppressIdentifierCheck) await this.validateIdentifier(document as any);
@@ -111,7 +117,7 @@ export class Validator {
 
     private async isExistingRelationTarget(targetId: string): Promise<boolean> {
 
-        return (await this.datastore.find({constraints: {'id:match': targetId}})).documents.length === 1;
+        return (await this.datastore.find({ constraints: { 'id:match': targetId } })).documents.length === 1;
     }
 
 
@@ -124,7 +130,7 @@ export class Validator {
                 constraints: { 'identifier:match': doc.resource.identifier }
             });
         } catch (e) {
-            throw ([M.ALL_FIND_ERROR]); // TODO make generic or unknown error or something
+            throw ([M.ALL_ERROR_FIND]); // TODO make generic or unknown error or something
         }
 
         if (result.totalCount > 0 && Validator.isDuplicate(result.documents[0], doc)) {
@@ -137,37 +143,42 @@ export class Validator {
 
         if (!geometry) return null;
 
-        if (!geometry.type) return [ ValidationErrors.MISSING_GEOMETRY_TYPE ];
-        if (!geometry.coordinates) return [ ValidationErrors.MISSING_COORDINATES ];
+        if (!geometry.type) return [ValidationErrors.MISSING_GEOMETRY_TYPE];
+        if (!geometry.coordinates) return [ValidationErrors.MISSING_COORDINATES];
 
         switch(geometry.type) {
             case 'Point':
                 if (!Validations.validatePointCoordinates(geometry.coordinates)) {
-                    return [ ValidationErrors.INVALID_COORDINATES, 'Point' ];
+                    return [ValidationErrors.INVALID_COORDINATES, 'Point'];
+                }
+                break;
+            case 'MultiPoint':
+                if (!Validations.validatePolylineOrMultiPointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPoint'];
                 }
                 break;
             case 'LineString':
-                if (!Validations.validatePolylineCoordinates(geometry.coordinates)) {
-                    return [ ValidationErrors.INVALID_COORDINATES, 'LineString' ];
+                if (!Validations.validatePolylineOrMultiPointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
                 }
                 break;
             case 'MultiLineString':
                 if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
-                    return [ ValidationErrors.INVALID_COORDINATES, 'MultiLineString' ];
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiLineString'];
                 }
                 break;
             case 'Polygon':
                 if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
-                    return [ ValidationErrors.INVALID_COORDINATES, 'Polygon' ];
+                    return [ValidationErrors.INVALID_COORDINATES, 'Polygon'];
                 }
                 break;
             case 'MultiPolygon':
                 if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
-                    return [ ValidationErrors.INVALID_COORDINATES, 'MultiPolygon' ];
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPolygon'];
                 }
                 break;
             default:
-                return [ ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type ];
+                return [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type];
         }
 
         return null;
@@ -178,16 +189,20 @@ export class Validator {
 
         const invalidFields = Validations.validateFields(document.resource, projectConfiguration);
         if (invalidFields.length > 0) {
-            throw [ValidationErrors.INVALID_FIELDS]
-                .concat([document.resource.type])
-                .concat(invalidFields.join(', '));
+            throw [
+                ValidationErrors.INVALID_FIELDS,
+                document.resource.type,
+                invalidFields.join(', ')
+            ];
         }
 
         const invalidRelationFields = Validations.validateRelations(document.resource, projectConfiguration);
         if (invalidRelationFields.length > 0) {
-            throw [ValidationErrors.INVALID_RELATIONS]
-                .concat([document.resource.type])
-                .concat([invalidRelationFields.join(', ')]);
+            throw [
+                ValidationErrors.INVALID_RELATIONS,
+                document.resource.type,
+                invalidRelationFields.join(', ')
+            ];
         }
     }
 
@@ -196,9 +211,11 @@ export class Validator {
 
         const invalidNumericValues = Validations.validateNumericValues(document.resource, projectConfiguration);
         if (invalidNumericValues ) {
-            throw [ValidationErrors.INVALID_NUMERICAL_VALUES]
-                .concat([document.resource.type])
-                .concat([invalidNumericValues.join(', ')]);
+            throw [
+                ValidationErrors.INVALID_NUMERICAL_VALUES,
+                document.resource.type,
+                invalidNumericValues.join(', ')
+            ];
         }
     }
 

@@ -1,7 +1,9 @@
 <div *ngIf="isSuggestionBoxVisible()" id="search-suggestions">
-    <h6>Suchergebnisse in anderen Kontexten</h6>
+    <h6 i18n="@@resources.searchBar.suggestions.resultsInOtherContexts">Suchergebnisse in anderen Kontexten</h6>
 
-    <div *ngIf="suggestedDocuments.length == 0" id="no-results-info">Keine Ressourcen gefunden.</div>
+    <div *ngIf="suggestedDocuments.length == 0" id="no-results-info">
+        <span i18n="@@resources.searchBar.suggestions.noResourcesFound">Keine Ressourcen gefunden.</span>
+    </div>
     <div *ngFor="let document of suggestedDocuments" class="suggestion-container" (click)="jumpToDocument(document)">
         <document-teaser [document]="document"></document-teaser>
     </div>

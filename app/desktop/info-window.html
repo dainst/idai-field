@@ -6,14 +6,14 @@
     <body>
         <div class="info-window">
             <div id="header-block">
-                <h4 id="about-heading">iDAI.<strong>field</strong> 2</h4>
+                <h4 id="about-heading">iDAI.<strong>field</strong></h4>
             </div>
             <img id="about-logo" src="../../img/favicon.png"
                  class="m-x-auto d-block"
                  alt="idai-field-client logo">
             <p id="about-version"></p>
             <p class="centered">
-                <button id="close-button" class="btn btn-secondary">Schlie&szlig;en</button>
+                <button id="close-button" class="btn btn-secondary"></button>
             </p>
         </div>
         <script>
@@ -21,6 +21,10 @@
             const remote = electron.remote;
 
             document.getElementById('about-version').textContent = 'Version: ' + remote.app.getVersion();
+
+            document.getElementById('close-button').textContent = remote.getGlobal('config')['locale'] === 'de'
+                ? 'Schließen'
+                : 'Close';
 
             document.getElementById('close-button').addEventListener('click', function() {
                 remote.getCurrentWindow().close();

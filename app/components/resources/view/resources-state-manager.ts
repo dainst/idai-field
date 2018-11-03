@@ -1,6 +1,4 @@
-import {Injectable} from '@angular/core';
-import {Observer} from 'rxjs';
-import {Observable} from 'rxjs'
+import {Observer, Observable} from 'rxjs';
 import {IdaiFieldDocument} from 'idai-components-2';
 import {ResourcesState} from './state/resources-state';
 import {StateSerializer} from '../../../common/state-serializer';
@@ -12,7 +10,6 @@ import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai
 import {clone} from '../../../core/util/object-util';
 
 
-@Injectable()
 /**
  * Holds the reference to the current ResourcesState and replaces it by a modified
  * version on write access. Serializes parts of it on certain events.

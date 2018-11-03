@@ -26,7 +26,6 @@ import {CheckboxesComponent} from './core/forms/checkboxes.component';
 import {DropdownComponent} from './core/forms/dropdown.component';
 import {InputComponent} from './core/forms/input.component';
 import {DimensionComponent} from './core/forms/dimension.component';
-import {InputsComponent} from './core/forms/inputs.component';
 import {RadioComponent} from './core/forms/radio.component';
 import {TextComponent} from './core/forms/text.component';
 import {DatingComponent} from './core/forms/dating.component';
@@ -71,7 +70,6 @@ import {DropdownRangeComponent} from './core/forms/dropdown-range.component';
         BooleanComponent,
         DropdownComponent,
         InputComponent,
-        InputsComponent,
         RadioComponent,
         TextComponent,
         DatingComponent,

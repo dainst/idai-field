@@ -6,21 +6,38 @@
                 <button id="save-settings-button" class="btn btn-primary"
                         [ngClass]="{ 'disabled': saving }"
                         (click)="saving || save()">
-                    <span class="mdi mdi-settings" style="color: white"></span>
-                    Einstellungen übernehmen
+                    <span class="mdi mdi-settings"></span>
+                    <span class="button-label" i18n="@@settings.applySettings">Einstellungen übernehmen</span>
                 </button>
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col default-container">
-
                 <div class="col-lg-6 mx-lg-auto py-4">
+                    <h5 i18n="@@settings.general">Allgemeine Einstellungen</h5>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="control-label col-form-label"
+                               for="language-select"
+                               i18n="@@settings.general.language">
+                            Sprache
+                        </label>
+                        <select id="language-select"
+                               [ngModel]="settings.locale"
+                               (ngModelChange)="settings.locale = $event"
+                               class="form-control">
+                            <option value="de">Deutsch</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
 
                     <div class="form-group" style="margin-bottom: 0;">
 
                         <label class="control-label col-form-label"
-                               for="username-input">Name des Bearbeiters
+                               for="username-input"
+                               i18n="@@settings.userName">
+                            Name des Bearbeiters
                         </label>
                         <input id="username-input"
                                [ngModel]="settings.username"
@@ -28,7 +45,7 @@
                                class="form-control">
                     </div>
 
-                    <div class="settings-info" style="margin-top: 13px;">
+                    <div class="settings-info" style="margin-top: 13px;" i18n="@@settings.userName.info">
                         Dieser Name wird in der Bearbeitungshistorie gespeichert,
                         damit Änderungen an Datensätzen einer Person zugeordnet werden können.
                         Diese Einstellung ist sehr <b>wichtig</b> bei der Datenbanksynchronisation,
@@ -41,11 +58,11 @@
                     <hr>
 
 
-                    <h5 style="margin-top: 32px;">Synchronisation</h5>
+                    <h5 style="margin-top: 32px;" i18n="@@settings.synchronization">Synchronisation</h5>
 
                     <div class="row" style="margin: 15px 0 0;">
                         <div class="col-auto mr-auto">
-                            Synchronisation aktivieren
+                            <span i18n="@@settings.synchronization.activate">Synchronisation aktivieren</span>
                         </div>
                         <div class="col-auto">
                             <label class="switch" style="margin-bottom: 0;">
@@ -59,29 +76,32 @@
                     <div class="form-group">
 
                         <label for="sync-target-address-input"
-                               class="control-label col-form-label">Adresse</label>
+                               class="control-label col-form-label"
+                               i18n="@@settings.synchronization.address">Adresse</label>
                         <input id="sync-target-address-input" [ngModel]="settings.syncTarget.address"
                                (ngModelChange)="settings.syncTarget.address = $event"
                                class="form-control">
 
                         <label for="sync-target-username-input"
-                               class="control-label col-form-label">Benutzer</label>
+                               class="control-label col-form-label"
+                               i18n="@@settings.synchronization.user">Benutzer</label>
                         <input id="sync-target-username-input" [ngModel]="settings.syncTarget.username"
                                (ngModelChange)="settings.syncTarget.username = $event"
                                class="form-control">
 
                         <label for="sync-target-password-input"
-                               class="control-label col-form-label">Passwort</label>
+                               class="control-label col-form-label"
+                               i18n="@@settings.synchronization.password">Passwort</label>
                         <input id="sync-target-password-input"
                                type="password"
                                [ngModel]="settings.syncTarget.password"
                                (ngModelChange)="settings.syncTarget.password = $event"
                                class="form-control">
 
-                        <label class="control-label col-form-label">
+                        <label class="control-label col-form-label" i18n="@@settings.synchronization.ownAddress">
                             Eigene Adresse: http://{{ipAddress}}:3000
                         </label>
-                        <div class="settings-info">
+                        <div class="settings-info" i18n="@@settings.synchronization.ownAddress.info">
                             Diese Adresse kann in anderen iDAI.field-Clients eingetragen werden, um
                             eine Synchronisationsverbindung zu diesem Client herzustellen.
                         </div>
@@ -90,37 +110,34 @@
 
                     <hr>
 
-                    <h5 style="margin-top: 32px;">Medienressourcen</h5>
+                    <h5 style="margin-top: 32px;" i18n="@@settings.mediaResources">Medienressourcen</h5>
 
                     <div class="form-group" style="margin-bottom: 0;">
 
                         <label class="control-label col-form-label"
-                               for="imagestorepath-input">Pfad zum Bilderverzeichnis
+                               for="imagestorepath-input"
+                               i18n="@@settings.mediaResources.imageDirectoryPath">Pfad zum Bilderverzeichnis
                         </label>
                         <div class="input-group">
                             <input id="imagestorepath-input"
                                    [ngModel]="settings.imagestorePath"
                                    (ngModelChange)="settings.imagestorePath = $event"
                                    class="form-control">
-                            <span class="input-group-btn">
-                                <input id="imagestorepath-file" type="file" webkitdirectory directory
-                                       (change)="settings.imagestorePath = $event.target.files[0].path + '/'"
-                                       style="display: none">
-                                <label for="imagestorepath-file" class="btn btn-secondary">
-                                    <span class="mdi mdi-folder"></span>
-                                </label>
-                            </span>
+                            <input id="imagestorepath-file" class="file-input" type="file" webkitdirectory directory
+                                   (change)="settings.imagestorePath = $event.target.files[0].path + '/'">
+                            <label for="imagestorepath-file" class="btn btn-secondary file-input-label">
+                                <span class="mdi mdi-folder"></span>
+                            </label>
                         </div>
 
-                        <div class="settings-info" style="margin-top: 13px;">
-                            Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Er kann
-                            verändert werden, wenn das von iDAI.field genutzte Bilderverzeichnis auf einem
+                        <div class="settings-info" style="margin-top: 13px;" i18n="@@settings.mediaResources.imageDirectoryPath.info">
+                            Dieser Pfad kann normalerweise auf seiner Grundeinstellung belassen werden. Es kann nötig
+                            sein, ihn zu verändern, wenn das von iDAI.field genutzte Bilderverzeichnis auf einem
                             Netzwerk-Gerät (NAS) liegt, das von verschiedenen Nutzern geteilt wird.
-                            iDAI.field legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an.
-                            Die in Verzeichnissen abgelegten Bilddateien werden vollständig durch iDAI.field
-                            verwaltet. Bilddateien sollten vom Nutzer nicht per Hand dort abgelegt werden, sondern
-                            per Drag & Drop in die Bilderübersicht (oder in das Bilder-Tab der Einzeldatenansicht)
-                            gezogen bzw. dort gelöscht werden.
+                            Die Anwendung legt unterhalb dieses Pfades für jedes Projekt ein Unterverzeichnis an.
+                            Die in diesen Verzeichnissen abgelegten Bilddateien werden vollständig durch iDAI.field
+                            verwaltet. Bilddateien sollten nicht per Hand dort abgelegt werden, sondern in der
+                            Bilderübersicht oder dem Bilder-Tab der Ressourcenansicht importiert werden.
                         </div>
                     </div>
 
@@ -128,7 +145,8 @@
                     <div class="form-group" style="margin-bottom: 0;">
 
                         <label class="control-label col-form-label"
-                               for="model3dstorepath-input">Pfad zum 3D-Modell-Verzeichnis
+                               for="model3dstorepath-input"
+                               i18n="@@settings.mediaResources.model3DDirectoryPath">Pfad zum 3D-Modell-Verzeichnis
                         </label>
                         <div class="input-group">
                             <input id="model3dstorepath-input"
@@ -149,11 +167,11 @@
 
                     <hr>
 
-                    <h5 style="margin-top: 32px;">Update</h5>
+                    <h5 style="margin-top: 32px;" i18n="@@settings.update">Update</h5>
 
                     <div class="row" style="margin: 15px 0 0;">
                         <div class="col-auto mr-auto">
-                            Automatische Prüfung auf Updates aktivieren
+                            <span i18n="@@settings.update.activate">Automatische Prüfung auf Updates aktivieren</span>
                         </div>
                         <div class="col-auto">
                             <label class="switch" style="margin-bottom: 0;">

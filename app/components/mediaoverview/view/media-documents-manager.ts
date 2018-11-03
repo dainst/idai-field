@@ -13,20 +13,18 @@ import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-docum
  */
 export class MediaDocumentsManager {
 
+    public selected: Array<IdaiFieldMediaDocument> = [];
+
     private documents: Array<IdaiFieldMediaDocument>;
     private totalDocumentCount: number;
 
-    public selected: Array<IdaiFieldMediaDocument>  = [];
-
     private depictsRelationsSelected: boolean = false;
+    private currentQueryId: string;
 
 
-    constructor(
-        public viewFacade: ViewFacade,
-        private mediaState: MediaState,
-        private mediaDatastore: IdaiFieldMediaDocumentReadDatastore
-    ) {
-    }
+    constructor(public viewFacade: ViewFacade,
+                private mediaState: MediaState,
+                private mediaDatastore: IdaiFieldMediaDocumentReadDatastore) {}
 
 
     public getSelected = (): Array<IdaiFieldMediaDocument> => this.selected;
@@ -79,11 +77,16 @@ export class MediaDocumentsManager {
      */
     public async fetchDocuments(limit: number) {
 
+        this.currentQueryId = new Date().toISOString();
+
         const query: Query = JSON.parse(JSON.stringify(this.mediaState.getQuery()));
         query.limit = limit;
+        query.id = this.currentQueryId;
 
         try {
-            const {documents, totalCount} = await this.mediaDatastore.find(query);
+            const {documents, totalCount, queryId} = await this.mediaDatastore.find(query);
+            if (queryId !== this.currentQueryId) return;
+
             this.documents = documents;
             this.totalDocumentCount = totalCount;
         } catch (errWithParams) {

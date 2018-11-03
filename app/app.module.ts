@@ -1,10 +1,10 @@
-import {APP_INITIALIZER, NgModule} from '@angular/core';
-import {HttpModule} from '@angular/http';
+import {APP_INITIALIZER, LOCALE_ID, NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {HashLocationStrategy, LocationStrategy, registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import {FormsModule} from '@angular/forms';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ConfigLoader, ConfigReader, IdaiDocumentsModule, IdaiMessagesModule, MD, Messages,
     ProjectConfiguration, IdaiWidgetsModule, IdaiFieldAppConfigurator} from 'idai-components-2';
@@ -45,6 +45,8 @@ import {TaskbarUpdateComponent} from './components/navbar/taskbar-update.compone
 import {M} from './components/m';
 import {SettingsSerializer} from './core/settings/settings-serializer';
 import {IndexerConfiguration} from './indexer-configuration';
+import {SynchronizationStatus} from './core/settings/synchronization-status';
+import {Translations} from './translations';
 
 
 const remote = require('electron').remote;
@@ -67,7 +69,6 @@ registerLocaleData(localeDe, 'de');
         SettingsModule,
         BrowserModule,
         FormsModule,
-        HttpModule,
         HttpClientModule,
         NgbModule.forRoot(),
         IdaiDocumentsModule,
@@ -90,6 +91,10 @@ registerLocaleData(localeDe, 'de');
         HelpComponent
     ],
     providers: [
+        { provide: LOCALE_ID, useValue: remote.getGlobal('config').locale },
+        { provide: TRANSLATIONS, useValue: Translations.getTranslations() },
+        { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
+        I18n,
         ConfigReader,
         ConfigLoader,
         IdaiFieldAppConfigurator,
@@ -185,7 +190,8 @@ registerLocaleData(localeDe, 'de');
         PersistenceManager,
         Validator,
         { provide: MD, useClass: M},
-        DoceditActiveTabService
+        DoceditActiveTabService,
+        SynchronizationStatus
     ],
     bootstrap: [ AppComponent ]
 })

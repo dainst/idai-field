@@ -39,11 +39,16 @@ export async function setupSettingsService(pouchdbmanager, projectName = 'testdb
             undefined, undefined, pouchdbmanager.getDbProxy()) as Imagestore,
         pouchdbmanager,
         undefined,
-        new IdaiFieldAppConfigurator(new ConfigLoader(new FsConfigReader() as ConfigReader)),
+        new IdaiFieldAppConfigurator(
+            new ConfigLoader(new FsConfigReader() as ConfigReader, () => ''),
+            () => ''
+        ),
+        undefined,
         undefined
     );
 
     await settingsService.bootProjectDb({
+        locale: 'de',
         isAutoUpdateActive: false,
         isSyncActive: startSync,
         remoteSites: [],
@@ -53,8 +58,8 @@ export async function setupSettingsService(pouchdbmanager, projectName = 'testdb
             username: string;
         },
         dbs: [projectName],
-        imagestorePath: '/tmp/abc',
-        model3DStorePath: '/tmp/def',
+        imagestorePath: process.cwd() + '/test/test-temp/imagestore',
+        model3DStorePath: process.cwd() + '/test/test-temp/model3dstore',
         username: 'synctestuser'
     });
 
@@ -103,7 +108,8 @@ export async function createApp(projectName = 'testdb', startSync = false) {
         idaiFieldDocumentDatastore,
         new StandardStateSerializer(settingsService),
         'synctest',
-        true
+        true,
+        'de'
     );
 
     const viewFacade = new ViewFacade(

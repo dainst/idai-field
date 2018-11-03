@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
-import {DumpModalComponent} from './dump-modal.component';
+import {BackupCreationModalComponent} from './backup-creation-modal.component';
 import {DialogProvider} from './dialog-provider';
 import {BackupProvider} from './backup-provider';
 import {M} from '../m';
@@ -18,7 +18,8 @@ import {M} from '../m';
  */
 export class BackupCreationComponent {
 
-    private running: boolean = false;
+    public running: boolean = false;
+
     private modalRef: NgbModalRef|undefined;
 
     private static TIMEOUT: number = 200;
@@ -54,9 +55,9 @@ export class BackupCreationComponent {
 
         try {
             await this.backupProvider.dump(filePath, this.settingsService.getSelectedProject());
-            this.messages.add([M.BACKUP_DUMP_SUCCESS]);
+            this.messages.add([M.BACKUP_WRITE_SUCCESS]);
         } catch (err) {
-            this.messages.add([M.BACKUP_DUMP_ERROR]);
+            this.messages.add([M.BACKUP_WRITE_ERROR_GENERIC]);
             console.error('Error while writing backup file', err);
         }
     }
@@ -67,7 +68,7 @@ export class BackupCreationComponent {
         setTimeout(() => {
             if (this.running) {
                 this.modalRef = this.modalService.open(
-                    DumpModalComponent,
+                    BackupCreationModalComponent,
                     { backdrop: 'static', keyboard: false }
                 );
             }

@@ -1,5 +1,4 @@
-import {IdaiFieldDocument} from 'idai-components-2';
-import {Query} from 'idai-components-2';
+import {IdaiFieldDocument, Query} from 'idai-components-2';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {ResourcesStateManager} from './resources-state-manager';
 import {ResourcesState} from './state/resources-state';
@@ -45,7 +44,8 @@ export class OperationsManager {
         const operationTypeDocument = OperationsManager.getMainTypeDocumentForDocument(
             selectedDocument, this.documents);
 
-        if (operationTypeDocument && operationTypeDocument.resource.id !== ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get())) {
+        if (operationTypeDocument && operationTypeDocument.resource.id
+                !== ResourcesState.getMainTypeDocumentResourceId(this.resourcesStateManager.get())) {
             this.resourcesStateManager.setMainTypeDocument(operationTypeDocument.resource.id);
         }
     }

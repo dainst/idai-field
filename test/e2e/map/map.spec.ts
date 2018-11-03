@@ -109,6 +109,17 @@ describe('map --', function() {
     }
 
 
+    function setMultiPoint() {
+
+        return Promise.resolve()
+            .then(() => {
+                browser.sleep(1000);
+                return MapPage.clickMap(100,100);
+            }).then(() => { return MapPage.clickMapOption('add-point') as any; })
+            .then(() => { return MapPage.clickMap(200,200); });
+    }
+
+
     function beginCreateDocWithGeometry(geometry, mapClickCallback) {
 
         ResourcesPage.clickCreateResource();
@@ -176,6 +187,15 @@ describe('map --', function() {
         createDoc('doc','point', function() { return MapPage.setMarker(100, 100); });
         GeometryViewPage.getSelectedGeometryTypeText().then(text => {
             expect(text).toEqual('Punkt');
+        });
+    });
+
+
+    it('create a new item with multipoint geometry', () => {
+
+        createDoc('doc','point', setMultiPoint);
+        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
+            expect(text).toEqual('Multipunkt');
         });
     });
 
@@ -281,6 +301,24 @@ describe('map --', function() {
     });
 
 
+    it('delete single points of a multipoint', () => {
+
+        createDocThenReedit('doc', 'point', setMultiPoint);
+        MapPage.clickMapOption('delete');
+        MapPage.clickMapOption('ok');
+        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
+            expect(text).toEqual('Punkt');
+        });
+
+        GeometryViewPage.clickReeditGeometry();
+        MapPage.clickMapOption('delete');
+        MapPage.clickMapOption('ok');
+        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
+            expect(text).toEqual('Keine');
+        });
+    });
+
+
     it('create a point geometry later', () => {
 
         ResourcesPage.performCreateResource('doc');
@@ -289,6 +327,17 @@ describe('map --', function() {
         MapPage.clickMapOption('ok');
         GeometryViewPage.getSelectedGeometryTypeText().then(text => {
             expect(text).toEqual('Punkt');
+        });
+    });
+
+
+    it('create a multipoint geometry later', () => {
+
+        ResourcesPage.performCreateResource('doc');
+        GeometryViewPage.clickCreateGeometry('point').then(setMultiPoint);
+        MapPage.clickMapOption('ok');
+        GeometryViewPage.getSelectedGeometryTypeText().then(text => {
+            expect(text).toEqual('Multipunkt');
         });
     });
 

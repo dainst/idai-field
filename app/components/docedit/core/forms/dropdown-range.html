@@ -1,8 +1,7 @@
 <div class="dating-component">
-
     <div class="input-group">
         <label *ngIf="showEndElements()">
-            von&nbsp;
+            <span i18n="@@docedit.forms.dropdownRange.from">von</span>&nbsp;
         </label>
 
 
@@ -27,7 +26,7 @@
 
 
         <label *ngIf="showEndElements()">
-            &nbsp;&nbsp;bis&nbsp;
+            &nbsp;&nbsp;<span i18n="@@docedit.forms.dropdownRange.to">bis</span>&nbsp;
         </label>
         <select *ngIf="showEndElements()" [disabled]="!resource[field.name] || resource[field.name] === ''"
                 [(ngModel)]="resource[field.name + 'End']" (change)="setEndValue($event.target.value)"
@@ -36,7 +35,8 @@
             <option *ngFor="let item of field.valuelist" value="{{item}}">{{item}}</option>
         </select>
         <button *ngIf="!showEndElements()"
-                ngbTooltip="Grobdatierung als Zeitraum angeben"
+                ngbTooltip="Start- und Endzeitraum angeben"
+                i18n-ngbTooltip="@@docedit.forms.dropdownRange.tooltip"
                 placement="left"
                 class="btn btn-outline-primary"
                 type="button"

@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2';
-import {IdaiType, Messages} from 'idai-components-2';
+import {IdaiFieldDocument, IdaiType, Messages} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {ViewFacade} from '../view/view-facade';
 import {PersistenceManager} from '../../../core/model/persistence-manager';
@@ -54,7 +53,11 @@ export class RowComponent implements AfterViewInit {
 
     public showMoveIntoOption = () => this.navigationService.showMoveIntoOption(this.document);
 
+    public showJumpToViewOption = () => this.navigationService.showJumpToViewOption(this.document);
+
     public moveInto = () => this.navigationService.moveInto(this.document);
+
+    public jumpToView = () => this.navigationService.jumpToView(this.document);
 
     public getLabel = () => this.typesMap[this.document.resource.type].label;
 
@@ -103,7 +106,7 @@ export class RowComponent implements AfterViewInit {
                 await this.datastore.get(document.resource.id as any, {skip_cache: true})
             );
         } catch(_) {
-            this.messages.add([M.DATASTORE_NOT_FOUND]);
+            this.messages.add([M.DATASTORE_ERROR_NOT_FOUND]);
         }
     }
 

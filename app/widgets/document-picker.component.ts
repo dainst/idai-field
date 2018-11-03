@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {Query} from 'idai-components-2';
-import {IdaiFieldDocument} from 'idai-components-2';
-import {ProjectConfiguration} from 'idai-components-2';
+import {Query, IdaiFieldDocument, ProjectConfiguration} from 'idai-components-2';
 import {IdaiFieldDocumentDatastore} from '../core/datastore/field/idai-field-document-datastore';
 import {Loading} from './loading';
+import {clone} from '../core/util/object-util';
 
 @Component({
     selector: 'document-picker',
@@ -24,7 +23,8 @@ export class DocumentPickerComponent implements OnChanges {
 
     public documents: Array<IdaiFieldDocument>;
 
-    protected query: Query = { limit: 50 };
+    private query: Query = { limit: 50 };
+    private currentQueryId: string;
 
 
     constructor(private datastore: IdaiFieldDocumentDatastore,
@@ -77,9 +77,14 @@ export class DocumentPickerComponent implements OnChanges {
 
         this.loading.start();
 
+        this.currentQueryId = new Date().toISOString();
+        this.query.id = this.currentQueryId;
+
         try {
-            const result = await this.datastore.find(this.query);
-            this.documents = this.filterNotAllowedRelationDomainTypes(result.documents);
+            const result = await this.datastore.find(clone(this.query));
+            if (result.queryId === this.currentQueryId) {
+                this.documents = this.filterNotAllowedRelationDomainTypes(result.documents);
+            }
         } catch (err) {
             console.error(err);
         } finally {

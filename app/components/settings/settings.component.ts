@@ -5,6 +5,8 @@ import {Settings} from '../../core/settings/settings';
 import {M} from '../m';
 
 const ip = require('ip');
+const remote = require('electron').remote;
+
 
 @Component({
     moduleId: module.id,
@@ -13,6 +15,7 @@ const ip = require('ip');
 /**
  * @author Daniel de Oliveira
  * @author Sebastian Cuy
+ * @author Thomas Kleinke
  */
 export class SettingsComponent implements OnInit {
 
@@ -44,24 +47,38 @@ export class SettingsComponent implements OnInit {
     }
 
 
-    public save() {
+    public async save() {
 
         this.saving = true;
+        const localeChanged: boolean = this.settings.locale !== this.settingsService.getSettings().locale;
 
-        this.settingsService.updateSettings(this.settings).then(() => {
-            this.settingsService.restartSync().then(
-                () => {
-                    this.saving = false;
-                    this.messages.add([M.SETTINGS_ACTIVATED]);
-                },
-                err => {
-                    this.saving = false;
-                    console.error(err);
-                }
-            );
-        }).catch(() => {
+        try {
+            await this.settingsService.updateSettings(this.settings);
+        } catch (err) {
             this.saving = false;
-            this.messages.add([M.SETTINGS_MALFORMED_ADDRESS]);
-        });
+            this.messages.add([M.SETTINGS_ERROR_MALFORMED_ADDRESS]);
+            return;
+        }
+
+        await this.handleSaveSuccess(localeChanged);
+    }
+
+
+    private async handleSaveSuccess(localeChanged: boolean) {
+
+        remote.getGlobal('updateConfig')(this.settings);
+
+        if (localeChanged) {
+            window.location.reload();
+        } else {
+            try {
+                await this.settingsService.restartSync();
+                this.messages.add([M.SETTINGS_SUCCESS]);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                this.saving = false;
+            }
+        }
     }
 }

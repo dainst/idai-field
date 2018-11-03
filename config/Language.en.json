@@ -1,0 +1,1379 @@
+{
+  "types": {
+    "Trench": {
+      "label": "Trench",
+      "fields": {
+        "diary": {
+          "label": "Diary",
+          "description": "Reference to excavation diary"
+        },
+        "researchQuestion": {
+          "label": "Research question"
+        },
+        "spatialLocation": {
+          "label": "Spatial location"
+        },
+        "trenchComment": {
+          "label": "Trench comment"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "excavationType": {
+          "label": "Excavation type"
+        },
+        "orientation": {
+          "label": "Orientation"
+        }
+      }
+    },
+    "Glass": {
+      "label": "Glass",
+      "fields": {
+        "decorationDescription": {
+          "label": "Decoration description"
+        },
+        "color": {
+          "label": "Color and intensity"
+        },
+        "decorationTechnique": {
+          "label": "Surface treatment or decoration technique"
+        },
+        "formDescription": {
+          "label": "Form description"
+        },
+        "manufacturingMethod": {
+          "label": "Manufacturing method"
+        },
+        "objectType": {
+          "label": "Designation or type of the object"
+        },
+        "provenance": {
+          "label": "Provenance"
+        },
+        "transparency": {
+          "label": "Transparency"
+        },
+        "vesselForm": {
+          "label": "Basic vessel form"
+        },
+        "vesselFormSpecific": {
+          "label": "Specific vessel form"
+        }
+      }
+    },
+    "Mollusk": {
+      "label": "Mollusk",
+      "fields": {}
+    },
+    "Planum": {
+      "label": "Planum",
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "horizontalLocation": {
+          "label": "Horizontal location"
+        },
+        "orientation": {
+          "label": "Orientation"
+        },
+        "planumForm": {
+          "label": "Planum form"
+        }
+      }
+    },
+    "Brick": {
+      "label": "Brick",
+      "fields": {
+        "featureText": {
+          "label": "Stamp text(s)",
+          "description": "Transcript of the stamp text"
+        },
+        "brickForm": {
+          "label": "Brick form"
+        },
+        "brickUsage": {
+          "label": "Placement of the brick(s) as part of the architecture"
+        },
+        "clayColorOutside": {
+          "label": "Outside: Clay color and intensity"
+        },
+        "coatColorInside": {
+          "label": "Coat (inside): Color and intensity"
+        },
+        "coatColorOutside": {
+          "label": "Coat (outside): Color and intensity"
+        },
+        "decorationTechnique": {
+          "label": "Surface treatment or decoration technique"
+        },
+        "formDescription": {
+          "label": "Form description"
+        },
+        "manufacturing": {
+          "label": "Manufacturing"
+        },
+        "manufacturingMethod": {
+          "label": "Manufacturing method"
+        },
+        "provenance": {
+          "label": "Provenance"
+        },
+        "specificType": {
+          "label": "Format"
+        },
+        "temper": {
+          "label": "Temper"
+        }
+      }
+    },
+    "Project": {
+      "label": "Project",
+      "fields": {
+        "contactMail": {
+          "label": "Mail address of the contact person",
+          "description": "Mail address of the project or a contact person"
+        },
+        "contactPerson": {
+          "label": "Contact person"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "epsgId": {
+          "label": "EPSG Code",
+          "description": "Specification of the EPSG code (see http://spatialreference.org/, e. g. 3004)"
+        },
+        "externalReference": {
+          "label": "Project homepage",
+          "description": "External reference(s) of the project"
+        },
+        "gazId": {
+          "label": "Gazetteer ID"
+        },
+        "institution": {
+          "label": "Institution",
+          "description": "Institution responsible for the project"
+        },
+        "latitude": {
+          "label": "Latitude"
+        },
+        "longitude": {
+          "label": "Longitude"
+        },
+        "projectURI": {
+          "label": "Project URL"
+        },
+        "supervisor": {
+          "label": "Supervisor",
+          "description": "Person in charge of the campaign"
+        }
+      }
+    },
+    "Burial": {
+      "label": "Burial",
+      "fields": {
+        "ageDetermination": {
+          "label": "Age determination"
+        },
+        "ageDeterminationBasis": {
+          "label": "Basis of age determination"
+        },
+        "bodyHeightAndRobustness": {
+          "label": "Body height and robustness"
+        },
+        "burialRite": {
+          "label": "Burial rite or treatment of the deceased"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "dietReconstruction": {
+          "label": "Diet reconstruction"
+        },
+        "findingPlace": {
+          "label": "Finding place",
+          "description": "For entering multiple other resources as finding place, e. g. (PE07 So 04,002)"
+        },
+        "palaeopathologicalReport": {
+          "label": "Palaeopathological report"
+        },
+        "publicationDatingFinds": {
+          "label": "Dating (finds)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Dating (stratigraphy)"
+        },
+        "sexDetermination": {
+          "label": "Sex determination"
+        },
+        "sexDeterminationBasis": {
+          "label": "Basis of sex determination"
+        },
+        "amountIndividuals": {
+          "label": "Burial type"
+        },
+        "burialCharacteristic": {
+          "label": "Burial sequence (primary/secondary)"
+        },
+        "burialDocumentation": {
+          "label": "Documentation"
+        },
+        "graveFeature": {
+          "label": "Method of interment"
+        },
+        "positionArms": {
+          "label": "Position of arms"
+        },
+        "positionLegs": {
+          "label": "Position of legs"
+        },
+        "positioningIndividuals": {
+          "label": "Positioning of the deceased"
+        }
+      }
+    },
+    "Building": {
+      "label": "Building",
+      "fields": {
+        "buildingHistory": {
+          "label": "Building history"
+        },
+        "buildingResearchHistory": {
+          "label": "Research history"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "excavationHistory": {
+          "label": "Excavation history"
+        },
+        "history": {
+          "label": "History"
+        },
+        "hasRestoration": {
+          "label": "Restoration"
+        },
+        "architecturalOrders": {
+          "label": "Architectural orders"
+        },
+        "buildingCategory": {
+          "label": "Building category"
+        },
+        "buildingCategorySpecific": {
+          "label": "Building category (specific)"
+        },
+        "buildingTechnique": {
+          "label": "Building technique"
+        },
+        "buildingType": {
+          "label": "Building type"
+        },
+        "condition": {
+          "label": "Condition"
+        },
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
+        },
+        "context": {
+          "label": "Context"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "material": {
+          "label": "Material"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        }
+      }
+    },
+    "SurveyUnit": {
+      "label": "Survey unit",
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        }
+      }
+    },
+    "Wood": {
+      "label": "Wood",
+      "fields": {
+        "color": {
+          "label": "Color"
+        },
+        "objectType": {
+          "label": "Designation or type of the object"
+        },
+        "typeOfWood": {
+          "label": "Type of wood"
+        }
+      }
+    },
+    "Architecture": {
+      "label": "Architecture",
+      "fields": {
+        "bibliography": {
+          "label": "Bibliography"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "constructionDetailsDescription": {
+          "label": "Description of construction details"
+        },
+        "descriptionOfBuildingTechnique": {
+          "label": "Description of building technique"
+        },
+        "findingPlace": {
+          "label": "Finding place",
+          "description": "For entering multiple other resources as finding place, e. g. (PE07 So 04,002)"
+        },
+        "hasGrouting": {
+          "label": "Grouting"
+        },
+        "layerAmount": {
+          "label": "Number of layers"
+        },
+        "layerHeight": {
+          "label": "Layer height"
+        },
+        "markDescription": {
+          "label": "Description of mark"
+        },
+        "materialCharacteristic": {
+          "label": "Material characteristic"
+        },
+        "materialForm": {
+          "label": "Material form"
+        },
+        "muralCrown": {
+          "label": "Mural crown"
+        },
+        "publicationDatingFinds": {
+          "label": "Dating (finds)"
+        },
+        "publicationDatingScientific": {
+          "label": "Dating (scientific)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Dating (stratigraphy)"
+        },
+        "publicationRemark": {
+          "label": "Publication remark"
+        },
+        "spatialLocation": {
+          "label": "Spatial location"
+        },
+        "blockProcessing": {
+          "label": "Block processing"
+        },
+        "blockTreatment": {
+          "label": "Block treatment"
+        },
+        "brickwork": {
+          "label": "Brickwork"
+        },
+        "condition": {
+          "label": "Condition"
+        },
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
+        },
+        "construction": {
+          "label": "Construction"
+        },
+        "mark": {
+          "label": "Masonry seal(s)"
+        },
+        "mortarBinder": {
+          "label": "Mortar binder"
+        },
+        "mortarColor": {
+          "label": "Mortar color"
+        },
+        "mortarConsistency": {
+          "label": "Mortar consistency"
+        },
+        "orientation": {
+          "label": "Orientation"
+        },
+        "wallClassification": {
+          "label": "Wall classification"
+        },
+        "wallType": {
+          "label": "Wall type"
+        }
+      }
+    },
+    "Operation": {
+      "label": "Operation",
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "beginningDate": {
+          "label": "Beginning date",
+          "description": "Date on which the recording of the operation was started"
+        },
+        "endDate": {
+          "label": "End date",
+          "description": "Date on which the recording of the operation was finished"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "diaryAbstract": {
+          "label": "Diary abstract"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "supervisor": {
+          "label": "Supervisor",
+          "description": "Person in charge of the operation"
+        },
+        "campaign": {
+          "label": "Campaign"
+        }
+      }
+    },
+    "Place": {
+      "label": "Place",
+      "fields": {
+        "gazId": {
+          "label": "Gazetteer ID"
+        },
+        "placeName": {
+          "label": "Place name"
+        },
+        "buildingHistory": {
+          "label": "Building research history"
+        },
+        "buildingResearchHistory": {
+          "label": "Research history"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "excavationHistory": {
+          "label": "Excavation history"
+        },
+        "findSituation": {
+          "label": "Find situation",
+          "description": "Description of the circumstances of the finding place discovery and the persons involved"
+        },
+        "modernIntervention": {
+          "label": "Modern intervention"
+        },
+        "findspotClassification": {
+          "label": "Findspot classification"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "siteClassification": {
+          "label": "Site classification"
+        }
+      }
+    },
+    "Layer": {
+      "label": "Layer",
+      "fields": {
+        "appearance": {
+          "label": "Formation",
+          "description": "Description of the formation of the layer, e. g. 'Collapsed mudbrick wall of building xy'"
+        },
+        "isNatural": {
+          "label": "Natural"
+        },
+        "consistency": {
+          "label": "Consistency"
+        },
+        "dimensionThickness": {
+          "label": "Thickness"
+        },
+        "distinguishingCriteria": {
+          "label": "Distinguishing criteria"
+        },
+        "layerClassification": {
+          "label": "Designation or classification of the layer"
+        },
+        "soilType": {
+          "label": "Soil type"
+        }
+      }
+    },
+    "Feature": {
+      "label": "Stratigraphical unit",
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "beginningDate": {
+          "label": "Beginning date",
+          "description": "Date on which the recording of the stratigraphical unit was started"
+        },
+        "endDate": {
+          "label": "End date",
+          "description": "Date on which the recording of the stratigraphical unit was finished"
+        },
+        "comparison": {
+          "label": "Comparison"
+        },
+        "diary": {
+          "label": "Diary"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "hasDisturbance": {
+          "label": "Disturbance"
+        },
+        "featureAmount": {
+          "label": "Feature amount"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "color": {
+          "label": "Color and intensity"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "featureBorders": {
+          "label": "Borders of the stratigraphical unit"
+        },
+        "featureForm": {
+          "label": "Form of the stratigraphical unit"
+        }
+      }
+    },
+    "Floor": {
+      "label": "Floor",
+      "fields": {
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "condition": {
+          "label": "Condition"
+        },
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
+        },
+        "consistency": {
+          "label": "Consistency"
+        },
+        "distinguishingCriteria": {
+          "label": "Distinguishing criteria"
+        },
+        "floorClassification": {
+          "label": "Floor classification"
+        },
+        "layerClassification": {
+          "label": "Layer classification"
+        },
+        "mortarBinder": {
+          "label": "Mortar binder"
+        }
+      }
+    },
+    "Inscription": {
+      "label": "Inscription",
+      "fields": {
+        "comparison": {
+          "label": "Comparison"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "content": {
+          "label": "Transcription"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "language": {
+          "label": "Language"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "condition": {
+          "label": "Condition"
+        },
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "objectType": {
+          "label": "Designation or type of inscription"
+        }
+      }
+    },
+    "Image": {
+      "label": "Image",
+      "fields": {
+        "description": {
+          "label": "Description"
+        },
+        "draughtsmen": {
+          "label": "Creator",
+          "description": "Creator of the image, photographer respectively draughtsman"
+        },
+        "processor": {
+          "label": "Processor",
+          "description": "Processor of the image in case of changes after the creation of the image"
+        }
+      }
+    },
+    "Pottery": {
+      "label": "Pottery",
+      "fields": {
+        "amountSherdsWall": {
+         "label": "Number of wall sherds"
+       },
+       "amountSherdsRim": {
+         "label": "Number of rim sherds"
+       },
+        "amountSherdsBase": {
+          "label": "Number of base sherds"
+        },
+        "amountSherdsHandles": {
+          "label": "Number of handles"
+        },
+        "amountSherdsLip": {
+          "label": "Number of lips"
+        },
+        "amountSherdsPedestal": {
+          "label": "Number of pedestal sherds"
+        },
+        "amountSherdsRimBase": {
+          "label": "Number of rim base sherds"
+        },
+        "amountSherdsRimShoulder": {
+          "label": "Number of rim shoulder sherds"
+        },
+        "amountSherdsShoulder": {
+          "label": "Number of shoulder sherds"
+        },
+        "amountSherdsOther": {
+          "label": "Number of other sherds"
+        },
+        "amountSherdsPercent": {
+          "label": "Quantification in percent"
+        },
+        "amountSherdsLid": {
+          "label": "Number of lids"
+        },
+        "clayColorBreakMunsell": {
+          "label": "Color of break (Munsell)"
+        },
+        "clayColorInsideMunsell": {
+          "label": "Color inside (Munsell)"
+        },
+        "clayColorOutsideMunsell": {
+          "label": "Color outside (Munsell)"
+        },
+        "hasCoat": {
+          "label": "Coat"
+        },
+        "decorationDescription": {
+          "label": "Decoration description"
+        },
+        "breakStructure": {
+          "label": "Notes about the break (Structure, porousness etc.)"
+        },
+        "residueAnalysis": {
+          "label": "Residue analysis"
+        },
+        "sample": {
+          "label": "Sample"
+        },
+        "purpose": {
+          "label": "Purpose"
+        },
+        "typeNumber": {
+          "label": "Type number",
+          "description": "Type catalogue number"
+        },
+        "clayColorBreak": {
+          "label": "Break: Clay color and intensity"
+        },
+        "clayColorInside": {
+          "label": "Inside: Clay color and intensity"
+        },
+        "clayColorOutside": {
+          "label": "Outside: Clay color and intensity"
+        },
+        "clayHardness": {
+          "label": "Clay hardness (Mohs scale)"
+        },
+        "coatColorInside": {
+          "label": "Coat (inside): Color and intensity"
+        },
+        "coatColorOutside": {
+          "label": "Coat (outside): Color and intensity"
+        },
+        "coatInside": {
+          "label": "Coat (inside)"
+        },
+        "coatInsideType": {
+          "label": "Treatment (inside)"
+        },
+        "coatOutside": {
+          "label": "Coat (outside)"
+        },
+        "coatOutsideType": {
+          "label": "Treatment (outside)"
+        },
+        "decorationTechnique": {
+          "label": "Surface treatment or decoration technique"
+        },
+        "formDescription": {
+          "label": "Form description"
+        },
+        "manufacturing": {
+          "label": "Manufacturing"
+        },
+        "manufacturingMethod": {
+          "label": "Manufacturing method"
+        },
+        "materialType": {
+          "label": "Material type"
+        },
+        "objectType": {
+          "label": "Object type"
+        },
+        "specificType": {
+          "label": "Pottery type, ware"
+        },
+        "provenance": {
+          "label": "Provenance"
+        },
+        "temper": {
+          "label": "Temper"
+        },
+        "temperAmount": {
+          "label": "Number of inclusions"
+        },
+        "temperParticles": {
+          "label": "Temper particles"
+        },
+        "temperTypeClay": {
+          "label": "Clay type"
+        },
+        "vesselForm": {
+          "label": "Basic vessel form"
+        },
+        "vesselFormSpecific": {
+          "label": "Specific vessel form"
+        }
+      }
+    },
+    "DrillCoreLayer": {
+      "label": "Drill core layer",
+      "fields": {
+        "hasFinds": {
+          "label": "Finds"
+        },
+        "dimensionThickness": {
+          "label": "Thickness"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "soilType": {
+          "label": "Soil type"
+        }
+      }
+    },
+    "Grave": {
+      "label": "Grave",
+      "fields": {
+        "bibliography": {
+          "label": "Bibliography"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "findingPlace": {
+          "label": "Finding place",
+          "description": "For entering multiple other resources as finding place, e. g. (PE07 So 04,002)"
+        },
+        "publicationDatingFinds": {
+          "label": "Dating (finds)"
+        },
+        "publicationDatingScientific": {
+          "label": "Dating (scientific)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Dating (stratigraphy)"
+        },
+        "publication": {
+          "label": "Publication remark"
+        },
+        "spatialLocation": {
+          "label": "Spatial location"
+        },
+        "condition": {
+          "label": "Condition"
+        },
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
+        },
+        "distinguishingCriteria": {
+          "label": "Distinguishing criteria"
+        },
+        "graveType": {
+          "label": "Grave type"
+        },
+        "specificType": {
+          "label": "Specific grave type"
+        },
+        "soilType": {
+          "label": "Soil type"
+        },
+        "tombBuilding": {
+          "label": "Tomb building"
+        }
+      }
+    },
+    "Bone": {
+      "label": "Bone",
+      "fields": {
+        "biologicalAge": {
+          "label": "Biological age",
+          "description": "Age of the human or animal at the time of death (e. g. Infans I)"
+        },
+        "boneClassification": {
+          "label": "Bone classification"
+        },
+        "boneType": {
+          "label": "Coarse classification of the bones"
+        },
+        "burningGrade": {
+          "label": "Burning grade of the bones (according to Wahl 1982)"
+        },
+        "sex": {
+          "label": "Sex"
+        },
+        "objectType": {
+          "label": "Designation or type of the object"
+        },
+        "species": {
+          "label": "Species"
+        }
+      }
+    },
+    "Room": {
+      "label": "Room",
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "campaign": {
+          "label": "Campaign"
+        },
+        "condition": {
+          "label": "Condition"
+        },
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "dimensionHeight": {
+          "label": "Height"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        }
+      }
+    },
+    "ProcessUnit": {
+      "label": "Process unit",
+      "fields": {
+        "date": {
+          "label": "Date"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "operationClassification": {
+          "label": "Operation classification"
+        }
+      }
+    },
+    "Terracotta": {
+      "label": "Terracotta",
+      "fields": {
+        "clayColorBreak": {
+          "label": "Break: Clay color and intensity"
+        },
+        "clayColorInside": {
+          "label": "Inside: Clay color and intensity"
+        },
+        "clayColorOutside": {
+          "label": "Outside: Clay color and intensity"
+        },
+        "clayStructure": {
+          "label": "Structure"
+        },
+        "coatColorInside": {
+          "label": "Coat (inside): Color and intensity"
+        },
+        "coatColorOutside": {
+          "label": "Coat (outside): Color and intensity"
+        },
+        "decorationTechnique": {
+          "label": "Surface treatment or decoration technique"
+        },
+        "formDescription": {
+          "label": "Form description"
+        },
+        "manufacturingMethod": {
+          "label": "Manufacturing method"
+        },
+        "provenance": {
+          "label": "Provenance"
+        },
+        "surfaceCondition": {
+          "label": "Surface condition"
+        },
+        "temper": {
+          "label": "Temper"
+        },
+        "temperAmount": {
+          "label": "Number of inclusions"
+        },
+        "temperParticles": {
+          "label": "Temper particles"
+        },
+        "terracottaType": {
+          "label": "Terracotta type"
+        },
+        "vesselForm": {
+          "label": "Basic vessel form"
+        },
+        "vesselFormSpecific": {
+          "label": "Specific vessel form"
+        }
+      }
+    },
+    "Other": {
+      "label": "Other",
+      "fields": {
+        "isNatural": {
+          "label": "Natural"
+        },
+        "consistency": {
+          "label": "Consistency"
+        },
+        "distinguishingCriteria": {
+          "label": "Distinguishing criteria"
+        },
+        "otherClassification": {
+          "label": "Classification Other"
+        },
+        "soilType": {
+          "label": "Soil type"
+        }
+      }
+    },
+    "Sample": {
+      "label": "Sample",
+      "fields": {
+        "labNumber": {
+          "label": "Laboratory number"
+        },
+        "weight": {
+          "label": "Weight (g)"
+        },
+        "sampleType": {
+          "label": "Sample type"
+        },
+        "soilType": {
+          "label": "Soil type"
+        }
+      }
+    },
+    "Drawing": {
+      "label": "Drawing",
+      "fields": {
+        "drawingMaterial": {
+          "label": "Drawing material",
+          "description": "Material/application used for creating the drawing"
+        },
+        "drawingTool": {
+          "label": "Drawing tool"
+        },
+        "drawingType": {
+          "label": "Drawing type"
+        },
+        "scale": {
+          "label": "Scale"
+        }
+      }
+    },
+    "Survey": {
+      "label": "Survey area",
+      "fields": {
+        "researchMethod": {
+          "label": "Research method"
+        }
+      }
+    },
+    "Stone": {
+      "label": "Stone",
+      "fields": {
+        "purpose": {
+          "label": "Purpose"
+        },
+        "treatment": {
+          "label": "Treatment"
+        },
+        "workmanship": {
+          "label": "Workmanship"
+        },
+        "architectureElement": {
+          "label": "Architectural element"
+        },
+        "color": {
+          "label": "Color and intensity"
+        },
+        "formDescription": {
+          "label": "Form description"
+        },
+        "material": {
+          "label": "Material"
+        },
+        "objectType": {
+          "label": "Object type"
+        },
+        "origin": {
+          "label": "Origin of material"
+        },
+        "provenance": {
+          "label": "Provenance"
+        },
+        "temperAmount": {
+          "label": "Number of inclusions"
+        }
+      }
+    },
+    "Coin": {
+      "label": "Coin",
+      "fields": {
+        "frontSideDescription": {
+          "label": "Front side description"
+        },
+        "preservedDiameter": {
+          "label": "Preserved diameter",
+          "description": "Diameter of the coin in millimeters"
+        },
+        "reverseSideDescription": {
+          "label": "Reverse side description"
+        },
+        "denomination": {
+          "label": "Denomination"
+        },
+        "manufacturingMethod": {
+          "label": "Manufacturing method"
+        },
+        "metalMaterial": {
+          "label": "Material"
+        },
+        "mint": {
+          "label": "Mint",
+          "description": "Place where the coin was minted"
+        },
+        "mintingRuler": {
+          "label": "Minting ruler",
+          "description": "Person or corporate body responsible for the coinage"
+        },
+        "provenance": {
+          "label": "Provenance"
+        },
+        "stampPositioning": {
+          "label": "Stamp positioning",
+          "description": "Rotation of the stamp on the reverse side in comparison to the front side; specification in 1-12h analogous to the clock face (e. g. '12' for equal rotation)"
+        }
+      }
+    },
+    "Find": {
+      "label": "Find",
+      "fields": {
+        "amount": {
+          "label": "Total number"
+        },
+        "bibliography": {
+          "label": "Bibliography"
+        },
+        "catalogueNumber": {
+          "label": "Catalogue number"
+        },
+        "comparison": {
+          "label": "Comparison"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "conditionPercent": {
+          "label": "Condition in percent"
+        },
+        "date": {
+          "label": "Find date"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "publicationMaterialSummary": {
+          "label": "Material summary"
+        },
+        "publicationRemark": {
+          "label": "Publication remark"
+        },
+        "hasRestoration": {
+          "label": "Restoration"
+        },
+        "storageInventoryNumber": {
+          "label": "Inventory number"
+        },
+        "weight": {
+          "label": "Weight (g)"
+        },
+        "condition": {
+          "label": "Condition"
+        },
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "dimensionDiameter": {
+          "label": "Diameter"
+        },
+        "dimensionHeight": {
+          "label": "Height"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionPerimeter": {
+          "label": "Perimeter"
+        },
+        "dimensionThickness": {
+          "label": "Thickness"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "dimensionOther": {
+          "label": "Other dimensions",
+          "description": "Other dimensions can be entered here; please comment"
+        },
+        "storagePlace": {
+          "label": "Storage place"
+        }
+      }
+    },
+    "PlasterFragment": {
+      "label": "Plaster fragment",
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "composition": {
+          "label": "Composition"
+        },
+        "hasDecoration": {
+          "label": "Decoration"
+        },
+        "color": {
+          "label": "Color and intensity"
+        },
+        "plasterComponents": {
+          "label": "Plaster components"
+        }
+      }
+    },
+    "Photo": {
+      "label": "Photo",
+      "fields": {
+        "originalType": {
+          "label": "Original type",
+          "description": "Original format of the image; in case of digitalized images the original analogous format"
+        }
+      }
+    },
+    "Profile": {
+      "label": "Profile",
+      "fields": {
+        "dimensionHeight": {
+          "label": "Height"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "orientation": {
+          "label": "Orientation"
+        }
+      }
+    },
+    "Metal": {
+      "label": "Metal",
+      "fields": {
+        "materialDescription": {
+          "label": "Material description"
+        },
+        "decorationTechnique": {
+          "label": "Surface treatment or decoration technique"
+        },
+        "formDescription": {
+          "label": "Form description"
+        },
+        "manufacturingMethod": {
+          "label": "Manufacturing method"
+        },
+        "objectType": {
+          "label": "Designation or type of the object"
+        },
+        "provenance": {
+          "label": "Provenance"
+        },
+        "vesselForm": {
+          "label": "Basic vessel form"
+        },
+        "vesselFormSpecific": {
+          "label": "Specific vessel form"
+        }
+      }
+    },
+    "BuildingPart": {
+      "label": "Building part",
+      "fields": {}
+    }
+  },
+  "relations": {
+    "isRecordedIn": {
+      "label": "Recorded in operation"
+    },
+    "liesWithin": {
+      "label": "Lies within"
+    },
+    "includes": {
+      "label": "Includes"
+    },
+    "isAbove": {
+      "label": "Above"
+    },
+    "isBelow": {
+      "label": "Below"
+    },
+    "cuts": {
+      "label": "Cuts"
+    },
+    "isCutBy": {
+      "label": "Cut by"
+    },
+    "bears": {
+      "label": "Bears"
+    },
+    "isFoundOn": {
+      "label": "Found on"
+    },
+    "borders": {
+      "label": "Borders"
+    }
+  }
+}

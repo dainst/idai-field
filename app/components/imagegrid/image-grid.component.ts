@@ -38,8 +38,8 @@ export class ImageGridComponent implements OnChanges {
     @Output() onDoubleClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() onFilesUploaded: EventEmitter<UploadResult> = new EventEmitter<UploadResult>();
 
+    public rows = [];
     public resourceIdentifiers: {[id: string]: string} = {};
-    public moreRowsMsg: string|undefined = undefined;
 
     // parallel running calls to calcGrid are painfully slow, so we use this to prevent it
     private calcGridRunning = false;
@@ -53,16 +53,13 @@ export class ImageGridComponent implements OnChanges {
     // the message would be displayed again.
     private imagesNotFoundMessageDisplayed = false;
 
-    private rows = [];
-
 
     constructor(
         private el: ElementRef,
         private messages: Messages,
         private imagestore: Imagestore,
         private datastore: IdaiFieldDocumentReadDatastore
-    ) {
-    }
+    ) {}
 
 
     ngOnChanges(changes: SimpleChanges) {
@@ -97,9 +94,15 @@ export class ImageGridComponent implements OnChanges {
             this.calcGridRunning = true;
             await this._calcGrid();
             this.calcGridRunning = false;
-
-            this.updateSearchResultsInfoMessage();
         }, 500);
+    }
+
+
+    public showMoreRowsMessage(): boolean {
+
+        return this.documents
+            && this.totalDocumentCount > 0
+            && this.totalDocumentCount > this.documents.length;
     }
 
 
@@ -112,7 +115,6 @@ export class ImageGridComponent implements OnChanges {
             this.paddingRight
         );
 
-        this.moreRowsMsg = undefined;
         await this.loadImages(rows);
         this.rows = rows;
     }
@@ -145,22 +147,9 @@ export class ImageGridComponent implements OnChanges {
             result.errsWithParams.length > 0 &&
             !this.imagesNotFoundMessageDisplayed) {
 
-            this.messages.add([M.IMAGES_N_NOT_FOUND]);
+            this.messages.add([M.IMAGES_ERROR_NOT_FOUND_MULTIPLE]);
             this.imagesNotFoundMessageDisplayed = true;
         }
-    }
-
-
-    private updateSearchResultsInfoMessage() {
-
-        if (!this.documents || !this.totalDocumentCount) return;
-        if (this.totalDocumentCount <= (this.documents.length - 1)) return;
-
-        this.moreRowsMsg = 'Es werden die ersten ' + (this.documents.length - 1)
-            + ' von insgesamt ' + this.totalDocumentCount + ' Suchtreffern angezeigt. '
-            + 'Schränken Sie die Suche weiter ein, um alle Ergebnisse auf einen Blick zu sehen'
-            + (this.nrOfColumns < 12 ? ' oder erhöhen Sie den Zoomlevel, um mehr Bilder gleichzeitig zu sehen.'
-                : '.');
     }
 
 

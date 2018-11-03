@@ -5,9 +5,6 @@
     "../subsystem/**/*.spec.js"
   ],
   "helpers": [
-    "../../node_modules/reflect-metadata/Reflect.js",
-    "../../node_modules/pouchdb/dist/pouchdb.js",
-    "../../node_modules/pouchdb-replication-stream/dist/pouchdb.replication-stream.js",
     "helpers/**/*.js"
   ],
   "stopSpecOnExpectationFailure": false,

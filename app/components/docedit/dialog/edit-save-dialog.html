@@ -1,15 +1,15 @@
 <div class="modal-header">
-    <h4 class="modal-title">Speichern?</h4>
+    <h4 class="modal-title" i18n="@@docedit.saveModal.header">Speichern?</h4>
 </div>
 <div class="modal-body">
-    Das Objekt wurde geändert. Möchten Sie die Änderungen speichern?
+    <span i18n="@@docedit.saveModal.question">Die Ressource wurde geändert. Möchten Sie die Änderungen speichern?</span>
 </div>
 <div class="modal-footer">
     <button id="overview-save-confirmation-modal-save-button" type="button" class="btn btn-primary"
-            (click)="activeModal.close('save')">Speichern</button>
+            (click)="activeModal.close('save')" i18n="@@buttons.save">Speichern</button>
     <button id="overview-save-confirmation-modal-discard-button" type="button" class="btn btn-secondary"
-            (click)="activeModal.dismiss('discard')">Änderungen verwerfen</button>
+            (click)="activeModal.dismiss('discard')" i18n="@@buttons.discardChanges">Änderungen verwerfen</button>
     <button id="overview-save-confirmation-modal-cancel-button" type="button" class="btn btn-secondary"
-            (click)="activeModal.close('cancel')">Abbrechen
+            (click)="activeModal.close('cancel')" i18n="@@buttons.cancel">Abbrechen
     </button>
 </div>

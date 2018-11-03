@@ -3,7 +3,6 @@
 const electron = require('electron');
 const fs = require('fs');
 const os = require('os');
-const menuTemplate = require('./menu.js');
 const autoUpdate = require('./auto-update.js');
 
 // needed to fix notifications in win 10
@@ -27,9 +26,18 @@ global.setConfigDefaults = config => {
     if (!config.syncTarget) config.syncTarget = {};
     if (!config.remoteSites) config.remoteSites = [];
     if (config.isAutoUpdateActive === undefined) config.isAutoUpdateActive = true;
+    if (!config.locale) config.locale = electron.app.getLocale().includes('de') || global.mode === 'test' ? 'de' : 'en';
     if (os.type() === 'Linux') config.isAutoUpdateActive = false;
 
     return config;
+};
+
+
+global.updateConfig = config => {
+
+    const oldLocale = global.config.locale;
+    global.config = config;
+    if (global.config.locale !== oldLocale) createMenu();
 };
 
 
@@ -39,43 +47,36 @@ let env = undefined;
 if (process.argv && process.argv.length > 2) {
     env = process.argv[2];
 }
+
 if (env) { // is environment 'dev' (npm start) or 'test' (npm run e2e)
     global.configurationDirPath = 'config';
-    global.mode = 'development';
-} else {
-    global.mode = 'production';
 }
 
-const isInTestEnvironment = () => {
+if (!env) {
+    // Packaged app
+    global.mode = 'production';
+} else if (env === 'test') {
+    // npm run e2e
+    global.mode = 'test';
+} else {
+    // npm start
+    global.mode = 'development';
+}
 
-    return env && env.indexOf('test') !== -1;
-};
 
-
-if (!env || // is environment 'production' (packaged app)
-    env.indexOf('dev') !== -1) { // is environment 'development' (npm start)
-
+if (['production', 'development'].includes(global.mode)) {
     global.appDataPath = electron.app.getPath('appData') + '/' + electron.app.getName();
     copyConfigFile(global.appDataPath + '/config.json', global.appDataPath);
     global.configPath = global.appDataPath + '/config.json';
 
-    if (!env) { // is environment 'production' (packaged app)
-        global.configurationDirPath = '../config';
-    }
-
-} else { // is environment 'test' (npm run e2e)
-
+    if (global.mode === 'production') global.configurationDirPath = '../config';
+} else {
     global.configPath = 'config/config.test.json';
     global.appDataPath = 'test/test-temp';
 }
 
-console.log('Using config file: ' + global.configPath);
-global.config = global.setConfigDefaults(
-    JSON.parse(fs.readFileSync(global.configPath, 'utf-8'))
-);
-
-
 // -- CONFIGURATION
+
 
 // OTHER GLOBALS --
 
@@ -87,7 +88,7 @@ global.switches = {
     provide_reset: false
 };
 
-if (isInTestEnvironment()) {
+if (global.mode === 'test') {
     global.switches.messages_timeout = undefined;
     global.switches.prevent_reload = true;
     global.switches.destroy_before_create = true;
@@ -104,6 +105,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
+
 const createWindow = () => {
 
     const screenWidth = electron.screen.getPrimaryDisplay().workAreaSize.width;
@@ -116,13 +118,10 @@ const createWindow = () => {
         minHeight: 600,
         webPreferences: {
             nodeIntegration: true,
-            webSecurity: !isInTestEnvironment()
+            webSecurity: global.mode !== 'test'
         },
         titleBarStyle: 'hiddenInset'
     });
-
-    const menu = electron.Menu.buildFromTemplate(menuTemplate);
-    electron.Menu.setApplicationMenu(menu);
 
     // and load the index.html of the app.
     mainWindow.loadURL('file://' + __dirname + '/index.html');
@@ -141,10 +140,29 @@ const createWindow = () => {
     return mainWindow;
 };
 
+
+const loadConfig = () => {
+
+    global.config = global.setConfigDefaults(
+        JSON.parse(fs.readFileSync(global.configPath, 'utf-8'))
+    );
+};
+
+
+const createMenu = () => {
+
+    const menu = electron.Menu.buildFromTemplate(require('./menu.js')());
+    electron.Menu.setApplicationMenu(menu);
+};
+
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 electron.app.on('ready', () => {
     const mainWindow = createWindow();
+    loadConfig();
+    createMenu();
+
     if (global.config.isAutoUpdateActive) autoUpdate.setUp(mainWindow);
 
     electron.ipcMain.on('settingsChanged', (event, settings) => {

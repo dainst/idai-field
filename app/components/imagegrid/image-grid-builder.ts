@@ -18,11 +18,8 @@ export module ImageGridConstruction {
      * @returns an object with rows containing the rows of the calculated grid
      *   and msgsWithParams containing one or more msgWithParams.
      */
-    export function calcGrid(
-        documents: Array<IdaiFieldMediaDocument>,
-        nrOfColumns: number,
-        gridWidth: number,
-        paddingRight: number): any {
+    export function calcGrid(documents: Array<IdaiFieldMediaDocument>, nrOfColumns: number, gridWidth: number,
+                             paddingRight: number): any {
 
         if (!Number.isInteger(nrOfColumns)) throw ('nrOfColumns must be an integer');
 
@@ -48,7 +45,6 @@ export module ImageGridConstruction {
         const row = [] as any;
 
         for (let i = 0; i < nrOfColumns; i++) {
-
             const document = documents[rowIndex * nrOfColumns + i];
             if (!document) break;
 
@@ -62,9 +58,8 @@ export module ImageGridConstruction {
     }
 
 
-    function calculatedHeight(
-        documents: Array<IdaiFieldMediaDocument>,
-        rowIndex: any, nrOfColumns: any, gridWidth: any, paddingRight: number) {
+    function calculatedHeight(documents: Array<IdaiFieldMediaDocument>, rowIndex: any, nrOfColumns: any, gridWidth: any,
+                              paddingRight: number) {
 
         const rowWidth = Math.ceil(gridWidth - paddingRight);
         return rowWidth / calcNaturalRowWidth(documents, nrOfColumns, rowIndex);

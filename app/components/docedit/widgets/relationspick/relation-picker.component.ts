@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, OnChanges} from '@angular/core';
-import {Document, ReadDatastore} from 'idai-components-2';
 import {isNot, undefinedOrEmpty} from 'tsfun';
+import {Document, ReadDatastore} from 'idai-components-2';
 import {RelationPickerSuggestions} from './relation-picker-suggestions';
 
 
@@ -22,13 +22,12 @@ export class RelationPickerComponent implements OnChanges {
     @Input() relationIndex: number;
     @Input() primary: string;
 
-    private suggestions: Document[];
-    private selectedSuggestionIndex = -1;
-    private selectedTarget: Document|undefined;
-    private idSearchString: string;
-    private suggestionsVisible: boolean;
-
-    private disabled: boolean = false;
+    public disabled: boolean = false;
+    public suggestions: Array<Document>;
+    public selectedSuggestionIndex: number = -1;
+    public selectedTarget: Document|undefined;
+    public idSearchString: string;
+    public suggestionsVisible: boolean;
 
     // This is to compensate for an issue where it is possible
     // to call updateSuggestions repeatedly in short time.

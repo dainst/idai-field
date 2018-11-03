@@ -7,9 +7,9 @@
            type="text"
            class="form-control"
            id="object-search"
-           placeholder="Suchen...">
+           placeholder="Suchen..." i18n-placeholder="@@widgets.searchBar.placeholder">
 
-    <span *ngIf="showFiltersMenu" id="filter-button" class="input-group-btn">
+    <span *ngIf="showFiltersMenu" id="filter-button">
         <button id="searchfilter"
                 class="btn btn-primary"
                 type="button"
@@ -25,7 +25,9 @@
 
         <ng-template #filterMenu>
             <div class="filtermenu">
-                <div class="popover-custom-title">Nach Ressourcentyp filtern:</div>
+                <div class="popover-custom-title">
+                    <span i18n="@@widgets.searchBar.resourceTypeFilter">Nach Ressourcentyp filtern:</span>
+                </div>
                 <type-picker [typesTreeList]="filterOptions" [allTypesOptionVisible]="!parentType"
                              [selectedTypes]="types" [allowPickingAbstractTypes]="true"
                              (onTypePicked)="chooseTypeFilter($event); p.close();">

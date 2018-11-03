@@ -1,6 +1,5 @@
 import {Component, SimpleChanges, Input, Output, EventEmitter, HostListener} from '@angular/core';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
-import {IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from 'idai-components-2';
+import {IdaiFieldDocument, IdaiFieldGeometry, IdaiFieldPolyline, IdaiFieldMarker, IdaiFieldPolygon} from 'idai-components-2';
 import {LayerMapComponent} from './layer-map.component';
 import {GeometryHelper} from './geometry-helper';
 
@@ -27,7 +26,8 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public mousePositionCoordinates: string[]|undefined;
 
-    private editableMarker: L.Marker|undefined;
+    private editableMarkers: Array<L.Marker>;
+    private selectedMarker: L.Marker;
 
     private editablePolylines: Array<L.Polyline>;
     private selectedPolyline: L.Polyline;
@@ -36,19 +36,6 @@ export class EditableMapComponent extends LayerMapComponent {
     private selectedPolygon: L.Polygon;
 
     private drawMode: string = 'None';
-
-
-    private startPointEditing() {
-
-        this.editableMarker = this.markers[this.selectedDocument.resource.id];
-        if (!this.editableMarker) return;
-
-        this.editableMarker.unbindTooltip();
-        const color = this.typeColors[this.selectedDocument.resource.type];
-        this.editableMarker.setIcon(EditableMapComponent.generateMarkerIcon(color, 'active'));
-        (this.editableMarker.dragging as any).enable();
-        this.editableMarker.setZIndexOffset(1000);
-    }
 
 
     private addPolyLayer(drawMode: string) {
@@ -71,25 +58,28 @@ export class EditableMapComponent extends LayerMapComponent {
 
     public finishEditing() {
 
-        if (this.drawMode != 'None') this.finishDrawing();
+        if (this.drawMode !== 'None') this.finishDrawing();
 
         let geometry: IdaiFieldGeometry|undefined|null = { type: '', coordinates: [] };
 
-        if (this.editablePolygons.length == 1) {
+        if (this.editablePolygons.length === 1) {
             geometry.type = 'Polygon';
             geometry.coordinates = GeometryHelper.getCoordinatesFromPolygon(this.editablePolygons[0]);
         } else if (this.editablePolygons.length > 1) {
             geometry.type = 'MultiPolygon';
             geometry.coordinates = GeometryHelper.getCoordinatesFromPolygons(this.editablePolygons);
-        } else if (this.editablePolylines.length == 1) {
+        } else if (this.editablePolylines.length === 1) {
             geometry.type = 'LineString';
             geometry.coordinates = GeometryHelper.getCoordinatesFromPolyline(this.editablePolylines[0]);
         } else if (this.editablePolylines.length > 1) {
             geometry.type = 'MultiLineString';
             geometry.coordinates = GeometryHelper.getCoordinatesFromPolylines(this.editablePolylines);
-        } else if (this.editableMarker) {
+        } else if (this.editableMarkers.length === 1) {
             geometry.type = 'Point';
-            geometry.coordinates = [this.editableMarker.getLatLng().lng, this.editableMarker.getLatLng().lat];
+            geometry.coordinates = GeometryHelper.getCoordinatesFromMarker(this.editableMarkers[0]);
+        } else if (this.editableMarkers.length > 1) {
+            geometry.type = 'MultiPoint';
+            geometry.coordinates = GeometryHelper.getCoordinatesFromMarkers(this.editableMarkers);
         } else {
             geometry = null;
         }
@@ -113,25 +103,25 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private createEditableMarker(position: L.LatLng) {
+    private createEditableMarker(position: L.LatLng): L.Marker {
 
-        const color = this.typeColors[this.selectedDocument.resource.type];
-        this.editableMarker = L.marker(position, {
+        const color: string = this.typeColors[this.selectedDocument.resource.type];
+        const editableMarker: L.Marker = L.marker(position, {
             icon: EditableMapComponent.generateMarkerIcon(color, 'active'),
             draggable: true,
             zIndexOffset: 1000
         });
-        this.editableMarker.addTo(this.map);
+        this.setupMarkerEvents(editableMarker);
+        editableMarker.addTo(this.map);
+        this.editableMarkers.push(editableMarker);
+
+        return editableMarker;
     }
 
 
-    private setEditableMarkerPosition(position: L.LatLng) {
+    private setSelectedMarkerPosition(position: L.LatLng) {
 
-        if (!this.editableMarker) {
-            this.createEditableMarker(position);
-        } else {
-            this.editableMarker.setLatLng(position);
-        }
+        if (this.selectedMarker) this.selectedMarker.setLatLng(position);
     }
 
 
@@ -147,6 +137,13 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
+    public addMarker() {
+
+        const marker: L.Marker = this.createEditableMarker(this.map.getCenter());
+        this.setSelectedMarker(marker);
+    }
+
+
     public getEditorType(): string|undefined {
 
         if (!this.isEditing || !this.selectedDocument || !this.selectedDocument.resource
@@ -154,25 +151,25 @@ export class EditableMapComponent extends LayerMapComponent {
             return 'none';
         }
 
-        if (this.selectedDocument.resource.geometry.type == 'Polygon'
-            || this.selectedDocument.resource.geometry.type == 'MultiPolygon') {
-            return 'polygon';
-        }
+        switch(this.selectedDocument.resource.geometry.type) {
+            case 'Polygon':
+            case 'MultiPolygon':
+                return 'polygon';
 
-        if (this.selectedDocument.resource.geometry.type == 'LineString'
-            || this.selectedDocument.resource.geometry.type == 'MultiLineString') {
-            return 'polyline';
-        }
+            case 'LineString':
+            case 'MultiLineString':
+                return 'polyline';
 
-        if (this.selectedDocument.resource.geometry.type == 'Point') {
-            return 'point';
+            case 'Point':
+            case 'MultiPoint':
+                return 'point';
         }
     }
 
 
     public deleteGeometry() {
 
-        if (this.getEditorType() == 'polygon' && this.selectedPolygon) {
+        if (this.getEditorType() === 'polygon' && this.selectedPolygon) {
             this.removePolygon(this.selectedPolygon);
             if (this.editablePolygons.length > 0) {
                 this.setSelectedPolygon(this.editablePolygons[0]);
@@ -180,7 +177,7 @@ export class EditableMapComponent extends LayerMapComponent {
                 this.selectedPolygon = undefined as any;
                 this.addPolygon();
             }
-        } else if (this.getEditorType() == 'polyline' && this.selectedPolyline) {
+        } else if (this.getEditorType() === 'polyline' && this.selectedPolyline) {
             this.removePolyline(this.selectedPolyline);
             if (this.editablePolylines.length > 0) {
                 this.setSelectedPolyline(this.editablePolylines[0]);
@@ -188,8 +185,13 @@ export class EditableMapComponent extends LayerMapComponent {
                 this.selectedPolyline = undefined as any;
                 this.addPolyline();
             }
-        } else if (this.getEditorType() == 'point' && this.editableMarker) {
-            this.resetEditing();
+        } else if (this.getEditorType() === 'point' && this.selectedMarker) {
+            this.removeMarker(this.selectedMarker);
+            if (this.editableMarkers.length > 0) {
+                this.setSelectedMarker(this.editableMarkers[0]);
+            } else {
+                this.selectedMarker = undefined as any;
+            }
         }
     }
 
@@ -197,26 +199,26 @@ export class EditableMapComponent extends LayerMapComponent {
     private resetEditing() {
 
         if (this.editablePolygons) {
-            for (let polygon of this.editablePolygons) {
+            this.editablePolygons.forEach(polygon => {
                 polygon.pm.disable();
                 this.map.removeLayer(polygon);
-            }
+            });
         }
 
         if (this.editablePolylines) {
-            for (let polyline of this.editablePolylines) {
+            this.editablePolylines.forEach(polyline => {
                 polyline.pm.disable();
                 this.map.removeLayer(polyline);
-            }
+            });
         }
 
-        if (this.editableMarker) {
-            this.map.removeLayer(this.editableMarker);
+        if (this.editableMarkers) {
+            this.editableMarkers.forEach(marker => this.map.removeLayer(marker));
         }
 
         this.editablePolygons = [];
         this.editablePolylines = [];
-        this.editableMarker = undefined;
+        this.editableMarkers = [];
 
         if (this.drawMode != 'None') this.map.pm.disableDraw(this.drawMode);
         this.drawMode = 'None';
@@ -231,10 +233,10 @@ export class EditableMapComponent extends LayerMapComponent {
         if (!this.selectedDocument) return;
 
         Object.values(this.polygons || []).forEach(
-            this.forUnselected(this.applyStyle({opacity: 0.25, fillOpacity: 0.1})));
+            this.forUnselected(this.applyStyle({ opacity: 0.25, fillOpacity: 0.1 })));
 
         Object.values(this.polylines || []).forEach(
-            this.forUnselected(this.applyStyle({opacity: 0.25})));
+            this.forUnselected(this.applyStyle({ opacity: 0.25 })));
 
         if (this.markers) {
             this.forUnselected(this.applyOpacity(0.5))(
@@ -247,10 +249,10 @@ export class EditableMapComponent extends LayerMapComponent {
     private fadeInMapElements() {
 
         Object.values(this.polygons || []).forEach(
-            this.forAll(this.applyStyle({opacity: 0.5, fillOpacity: 0.2})));
+            this.forAll(this.applyStyle({ opacity: 0.5, fillOpacity: 0.2 })));
 
         Object.values(this.polylines || []).forEach(
-            this.forAll(this.applyStyle({opacity: 0.5})));
+            this.forAll(this.applyStyle({ opacity: 0.5 })));
 
         if (this.markers) {
             this.forAll(this.applyOpacity(1))(
@@ -260,12 +262,12 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private applyStyle = (style: {opacity: number, fillOpacity?: number}) =>
-        (elem: IdaiFieldPolygon|IdaiFieldPolyline) => elem.setStyle(style);
+    private applyStyle = (style: { opacity: number, fillOpacity?: number }) =>
+        (geometry: IdaiFieldPolygon|IdaiFieldPolyline) => geometry.setStyle(style);
 
 
     private applyOpacity = (style: number) =>
-        (elem: IdaiFieldMarker) => elem.setOpacity(style);
+        (markers: Array<IdaiFieldMarker>) => markers.forEach(marker => marker.setOpacity(style));
 
 
 
@@ -275,8 +277,8 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
-    private notSelected = (elem: any) =>
-        elem.document && elem.document.resource.id != this.selectedDocument.resource.id;
+    private notSelected = (element: any) =>
+        element.document && element.document.resource.id != this.selectedDocument.resource.id;
 
 
     /**
@@ -510,9 +512,55 @@ export class EditableMapComponent extends LayerMapComponent {
     }
 
 
+    private startPointEditing() {
+
+        this.editableMarkers = this.markers[this.selectedDocument.resource.id];
+        const color: string = this.typeColors[this.selectedDocument.resource.type];
+
+        for (let editableMarker of this.editableMarkers) {
+            editableMarker.setIcon(EditableMapComponent.generateMarkerIcon(color, ''));
+            editableMarker.unbindTooltip();
+            (editableMarker.dragging as any).enable();
+            editableMarker.setZIndexOffset(1000);
+            this.setupMarkerEvents(editableMarker);
+        }
+
+        if (this.editableMarkers.length > 0) {
+            this.setSelectedMarker(this.editableMarkers[0]);
+        }
+    }
+
+
+    private setupMarkerEvents(editableMarker: L.Marker) {
+
+        editableMarker.on('mouseup', event => this.setSelectedMarker(event.target));
+        editableMarker.on('dragend', event => this.setSelectedMarker(event.target));
+    }
+
+
+    private setSelectedMarker(marker: L.Marker) {
+
+        const color: string = this.typeColors[this.selectedDocument.resource.type];
+
+        if (this.selectedMarker) {
+            this.selectedMarker.setIcon(EditableMapComponent.generateMarkerIcon(color, ''));
+        }
+
+        marker.setIcon(EditableMapComponent.generateMarkerIcon(color, 'active'));
+        this.selectedMarker = marker;
+    }
+
+
     private startPointCreation() {
 
-        this.createEditableMarker(this.map.getCenter());
+        this.addMarker();
+    }
+
+
+    private removeMarker(marker: L.Marker) {
+
+        this.map.removeLayer(marker);
+        EditableMapComponent.removeElement(marker, this.editableMarkers);
     }
 
 
@@ -531,7 +579,7 @@ export class EditableMapComponent extends LayerMapComponent {
 
         switch(this.getEditorType()) {
             case 'point':
-                this.setEditableMarkerPosition(clickPosition);
+                this.setSelectedMarkerPosition(clickPosition);
                 break;
             case 'none':
                 this.deselect();
@@ -583,7 +631,7 @@ export class EditableMapComponent extends LayerMapComponent {
     private static removeElement(element: any, list: Array<any>) {
 
         for (let listElement of list) {
-            if (element == listElement) {
+            if (element === listElement) {
                 list.splice(list.indexOf(element), 1);
             }
         }

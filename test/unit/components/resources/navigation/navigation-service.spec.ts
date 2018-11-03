@@ -10,62 +10,87 @@ describe('NavigationService', () => {
 
     beforeEach(() => {
 
-        viewFacade = jasmine.createSpyObj('vf', ['isInOverview', 'moveInto', 'getBypassHierarchy']);
-        projectConfiguration = jasmine.createSpyObj('pc', ['getRelationDefinitions']);
+        viewFacade = jasmine.createSpyObj(
+            'vf',
+            ['isInOverview', 'moveInto', 'getBypassHierarchy']
+        );
 
-        navigationService = new NavigationService(
-            projectConfiguration, undefined, viewFacade);
+        projectConfiguration = jasmine.createSpyObj(
+            'pc',
+            ['getRelationDefinitions', 'getTypesMap']
+        );
+
+        navigationService = new NavigationService(projectConfiguration, undefined, viewFacade);
 
         viewFacade.isInOverview.and.returnValue(false);
         viewFacade.getBypassHierarchy.and.returnValue(false);
     });
 
 
-    it('in overview', () => {
+    it('show jump to view buttons in overview for operation subtypes ', () => {
 
         viewFacade.isInOverview.and.returnValue(true);
-        expect(navigationService.showMoveIntoOption(Static.ifDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(true);
+        projectConfiguration.getTypesMap.and.returnValue({
+            Operation: { children: [ { name: 'operationSubtype' } ] }
+        });
+
+        expect(navigationService.showJumpToViewOption(
+            Static.ifDoc('abc', 'def', 'operationSubtype', 'jkl'))
+        ).toEqual(true);
     });
 
 
-    it('does not display hierarchy', () => {
-
-        viewFacade.isInOverview.and.returnValue(false);
-        viewFacade.getBypassHierarchy.and.returnValue(true);
-        expect(navigationService.showMoveIntoOption(Static.ifDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(false);
-    });
-
-
-    it('has lies within as target', () => {
+    it('show move into buttons for resources that can be a liesWithin target', () => {
 
         projectConfiguration.getRelationDefinitions.and.returnValue(
             [{name: 'liesWithin'}]
         );
-        expect(navigationService.showMoveIntoOption(Static.ifDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(true);
+
+        expect(navigationService.showMoveIntoOption(
+            Static.ifDoc('abc', 'def', 'ghi', 'jkl'))
+        ).toEqual(true);
     });
 
 
-    it('is new doc', () => {
-
-        projectConfiguration.getRelationDefinitions.and.returnValue(
-            [{name: 'liesWithin'}]
-        );
-        expect(navigationService.showMoveIntoOption(Static.ifDoc('abc', 'def', 'ghi'))).toEqual(false);
-    });
-
-
-    it('does not have lies within as target', () => {
+    it('do not show move into buttons for resources that cannot be a liesWithin target', () => {
 
         projectConfiguration.getRelationDefinitions.and.returnValue(
             [{name: 'abc'}]
         );
-        expect(navigationService.showMoveIntoOption(Static.ifDoc('abc', 'def', 'ghi', 'jkl'))).toEqual(false);
+
+        expect(navigationService.showMoveIntoOption(
+            Static.ifDoc('abc', 'def', 'ghi', 'jkl'))
+        ).toEqual(false);
     });
 
 
-    it('is place', () => {
+    it('do not show move into buttons for newly created resources without id', () => {
+
+        projectConfiguration.getRelationDefinitions.and.returnValue(
+            [{name: 'liesWithin'}]
+        );
 
         expect(navigationService.showMoveIntoOption(
-            Static.ifDoc('abc','cde','Place'))).toEqual(false);
+            Static.ifDoc('abc', 'def', 'ghi'))
+        ).toEqual(false);
+    });
+
+
+    it('do not show hierarchy buttons in extended search mode', () => {
+
+        viewFacade.isInOverview.and.returnValue(true);
+        viewFacade.getBypassHierarchy.and.returnValue(true);
+
+        projectConfiguration.getTypesMap.and.returnValue({
+            Operation: { children: [ { name: 'operationSubtype' } ] }
+        });
+
+        expect(navigationService.showMoveIntoOption(
+            Static.ifDoc('abc', 'def', 'ghi', 'jkl'))
+        ).toEqual(false);
+
+        expect(navigationService.showJumpToViewOption(
+            Static.ifDoc('abc', 'def', 'operationSubtype', 'jkl'))
+        ).toEqual(false);
     });
 });

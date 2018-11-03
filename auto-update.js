@@ -3,11 +3,13 @@
 const {autoUpdater} = require('electron-updater');
 const log = require('electron-log');
 const {dialog} = require('electron');
+const messages = require('./messages');
 
 autoUpdater.logger = log;
 
 let updateVersion;
 let initialized = false;
+
 
 const setUp = (mainWindow) => {
 
@@ -18,10 +20,12 @@ const setUp = (mainWindow) => {
 
         dialog.showMessageBox({
             type: 'info',
-            title: 'Update verfügbar',
-            message: 'Eine neue Version von iDAI.field (' + updateInfo.version + ') ist verfügbar. '
-                + 'Möchten Sie sie herunterladen und installieren?',
-            buttons: ['Ja', 'Nein']
+            title: messages.get('autoUpdate.available.title'),
+            message: messages.get('autoUpdate.available.message.1')
+                + updateInfo.version
+                + messages.get('autoUpdate.available.message.2'),
+            buttons: [messages.get('autoUpdate.available.yes'), messages.get('autoUpdate.available.no')],
+            noLink: true
         }, (buttonIndex) => {
             if (buttonIndex === 0) {
                 autoUpdater.downloadUpdate();
@@ -40,10 +44,16 @@ const setUp = (mainWindow) => {
         mainWindow.webContents.send('updateDownloaded');
 
         dialog.showMessageBox({
-            title: 'Update installieren',
-            message: 'Version ' + updateInfo.version + ' von iDAI.field wurde geladen. '
-                + 'Starten Sie die Anwendung neu, um sie zu installieren.'
+            title: messages.get('autoUpdate.downloaded.title'),
+            message: messages.get('autoUpdate.downloaded.message.1')
+                + updateInfo.version
+                + messages.get('autoUpdate.downloaded.message.2'),
+            noLink: true
         });
+    });
+
+    process.on('uncaughtException', () => {
+       mainWindow.webContents.send('downloadInterrupted');
     });
 
     autoUpdater.checkForUpdates();

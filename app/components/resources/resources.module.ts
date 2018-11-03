@@ -2,9 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {IdaiDocumentsModule} from 'idai-components-2';
-import {IdaiWidgetsModule} from 'idai-components-2';
-import {ProjectConfiguration} from 'idai-components-2';
+import {IdaiDocumentsModule, IdaiWidgetsModule, ProjectConfiguration} from 'idai-components-2';
 import {ResourcesComponent} from './resources.component';
 import {GeometryViewComponent} from './map/detail/geometry-view.component';
 import {EditableMapComponent} from './map/map/editable-map.component';
@@ -50,6 +48,7 @@ import {ResourcesStateManager} from './view/resources-state-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {SearchConstraintsComponent} from './searchbar/search-constraints.component';
 import {ResourcesStateManagerConfiguration} from './view/resources-state-manager-configuration';
+import {LayerMapComponent} from './map/map/layer-map.component';
 
 const remote = require('electron').remote;
 
@@ -69,6 +68,7 @@ const remote = require('electron').remote;
     declarations: [
         ResourcesComponent,
         GeometryViewComponent,
+        LayerMapComponent,
         EditableMapComponent,
         ResourcesMapComponent,
         ImageLayerMenuComponent,
@@ -93,7 +93,6 @@ const remote = require('electron').remote;
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },
         NavigationService,
-        ResourcesStateManager,
         RoutingService,
         DoceditLauncher,
         ImageLayerManager,
@@ -117,7 +116,8 @@ const remote = require('electron').remote;
                     datastore,
                     stateSerializer,
                     projectName,
-                    remote.getGlobal('switches').suppress_map_load_for_test
+                    remote.getGlobal('switches').suppress_map_load_for_test,
+                    settingsService.getSettings().locale
                 );
             },
             deps: [IdaiFieldDocumentReadDatastore, StateSerializer, ProjectConfiguration, SettingsService]
@@ -131,7 +131,6 @@ const remote = require('electron').remote;
                 resourcesStateManager: ResourcesStateManager,
                 loading: Loading
             ) {
-
                 return new ViewFacade(
                     projectConfiguration,
                     datastore,

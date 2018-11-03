@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {IdaiFieldDocument} from 'idai-components-2';
-import {ProjectConfiguration, FieldDefinition} from 'idai-components-2';
+import {IdaiFieldDocument, ProjectConfiguration, FieldDefinition} from 'idai-components-2';
 
 
 @Component({
@@ -17,7 +16,8 @@ export class DescriptionViewComponent {
 
     @Input() document: IdaiFieldDocument;
 
-    private typeLabel: string;
+    public typeLabel: string;
+
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
 
@@ -33,7 +33,8 @@ export class DescriptionViewComponent {
 
     public getLabel(fieldName: string): string {
 
-        return this.projectConfiguration.getTypesMap()[this.document.resource.type]
-            .fields.find((field: FieldDefinition) => field.name == fieldName).label;
+        return this.projectConfiguration
+            .getTypesMap()[this.document.resource.type].fields
+            .find((field: FieldDefinition) => field.name == fieldName).label;
     }
 }

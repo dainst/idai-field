@@ -3,18 +3,19 @@
         <button id="add-media-resource" *ngIf="selectedDocuments.length == 0"
                 class="btn btn-primary disabled" disabled>
             <span class="mdi mdi-link"></span>
-            Medienressource verknüpfen
+            <span class="button-label" i18n="@@docedit.mediaResourcePicker.linkMediaResource">Medienressource verknüpfen</span>
         </button>
         <button id="add-media-resource" *ngIf="selectedDocuments.length == 1"
                 (click)="activeModal.close(selectedDocuments)"
                 class="btn btn-primary">
             <span class="mdi mdi-link"></span>
-            Medienressource verknüpfen
+            <span class="button-label" i18n="@@docedit.mediaResourcePicker.linkMediaResource">Medienressource verknüpfen</span>
         </button>
         <button id="add-media-resources" *ngIf="selectedDocuments.length > 1"
                 (click)="activeModal.close(selectedDocuments)" class="btn btn-primary">
             <span class="mdi mdi-link"></span>
-            {{selectedDocuments.length}} Medienressourcen verknüpfen
+            <span class="button-label"
+                  i18n="@@docedit.mediaResourcePicker.linkMediaResources">{{selectedDocuments.length}} Medienressourcen verknüpfen</span>
         </button>
         <button type="button" class="btn btn-secondary"
                 (click)="activeModal.dismiss('dismissedByCancel')">
@@ -33,8 +34,8 @@
                 </search-bar>
             </div>
         </div>
-        <div class="image-grid" (window:resize)="onResize($event)">
 
+        <div class="image-grid" (window:resize)="onResize($event)">
             <image-grid #imageGrid
                     [nrOfColumns]="3"
                     [documents]="documents"
@@ -42,9 +43,7 @@
                     [showLinkBadges]="false"
                     [showShortDescription]="false"
                     [paddingRight]="12"
-                    (onClick)="select($event)"
-                    (onFilesUploaded)="refreshGrid()"
-                    (onUploadError)="showUploadErrorMsg($event)">
+                    (onClick)="select($event)">
             </image-grid>
         </div>
     </div>

@@ -1,0 +1,510 @@
+{
+  "types": {
+    "Find": {
+      "amount": {
+        "label": "Total number"
+      }
+    },
+    "Pottery": {
+      "label": "Pottery",
+      "fields": {
+        "isImport": {
+          "label": "Import"
+        },
+        "isMisfired": {
+          "label": "Misfired"
+        }
+      }
+    },
+    "ProcessUnit": {
+      "label": "Process unit",
+      "fields": {
+        "date": {
+          "label": "Date"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "operationClassification": {
+          "label": "Operation classification"
+        }
+      }
+    },
+    "Planum": {
+      "label": "Planum",
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "horizontalLocation": {
+          "label": "Horizontal location"
+        },
+        "orientation": {
+          "label": "Orientation"
+        },
+        "planumForm": {
+          "label": "Planum form"
+        }
+      }
+    },
+    "Sample": {
+      "label": "Sample",
+      "fields": {
+        "labNumber": {
+          "label": "Laboratory number"
+        },
+        "weight": {
+          "label": "Weight (g)"
+        },
+        "sampleType": {
+          "label": "Sample type"
+        },
+        "soilType": {
+          "label": "Soil type"
+        }
+      }
+    },
+    "Profile": {
+      "label": "Profile",
+      "fields": {
+        "dimensionHeight": {
+          "label": "Height"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "orientation": {
+          "label": "Orientation"
+        }
+      }
+    },
+    "SurveyUnit": {
+      "fields": {
+        "hasFinds": {
+          "label": "Finds"
+        },
+        "date": {
+          "label": "Date"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "processor": {
+          "label": "Processor"
+        }
+      }
+    },
+    "BuildingPart": {
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "beginningDate": {
+          "label": "Beginning date"
+        },
+        "endDate": {
+          "label": "End date"
+        },
+        "comparison": {
+          "label": "Comparison"
+        },
+        "diary": {
+          "label": "Diary"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "hasDisturbance": {
+          "label": "Disturbance"
+        },
+        "featureAmount": {
+          "label": "Feature amount"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "color": {
+          "label": "Color and intensity"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "featureBorders": {
+          "label": "Borders of the stratigraphical unit"
+        },
+        "featureForm": {
+          "label": "Form of the stratigraphical unit"
+        },
+        "bibliography": {
+          "label": "Bibliography"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "constructionDetailsDescription": {
+          "label": "Description of construction details"
+        },
+        "descriptionOfBuildingTechnique": {
+          "label": "Description of building technique"
+        },
+        "findingPlace": {
+          "label": "Finding place"
+        },
+        "hasGrouting": {
+          "label": "Grouting"
+        },
+        "layerAmount": {
+          "label": "Number of layers"
+        },
+        "layerHeight": {
+          "label": "Layer height"
+        },
+        "markDescription": {
+          "label": "Description of mark"
+        },
+        "materialCharacteristic": {
+          "label": "Material characteristic"
+        },
+        "materialForm": {
+          "label": "Material form"
+        },
+        "muralCrown": {
+          "label": "Mural crown"
+        },
+        "publicationDatingFinds": {
+          "label": "Dating (finds)"
+        },
+        "publicationDatingScientific": {
+          "label": "Dating (scientific)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Dating (stratigraphy)"
+        },
+        "publicationRemark": {
+          "label": "Publication remark"
+        },
+        "spatialLocation": {
+          "label": "Spatial location"
+        },
+        "blockProcessing": {
+          "label": "Block processing"
+        },
+        "blockTreatment": {
+          "label": "Block treatment"
+        },
+        "brickwork": {
+          "label": "Brickwork"
+        },
+        "condition": {
+          "label": "Condition"
+        },
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
+        },
+        "construction": {
+          "label": "Contruction"
+        },
+        "mark": {
+          "label": "Masonry seal(s)"
+        },
+        "mortarBinder": {
+          "label": "Mortar binder"
+        },
+        "mortarColor": {
+          "label": "Mortar color"
+        },
+        "mortarConsistency": {
+          "label": "Mortar consistency"
+        },
+        "orientation": {
+          "label": "Orientation"
+        },
+        "wallClassification": {
+          "label": "Wall classification"
+        },
+        "wallType": {
+          "label": "Wall type"
+        }
+      }
+    },
+    "Area": {
+      "label": "Area",
+      "fields": {
+        "description": {
+          "label": "Description"
+        }
+      }
+    },
+    "Excavation": {
+      "label": "Excavation",
+      "fields": {
+        "beginningDate": {
+          "label": "Beginning date"
+        },
+        "endDate": {
+          "label": "End date"
+        },
+        "diary": {
+          "label": "Diary"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "hasDisturbance": {
+          "label": "Disturbance"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "color": {
+          "label": "Color and intensity"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "featureBorders": {
+          "label": "Borders"
+        },
+        "isIllegal": {
+          "label": "Illegal excavation"
+        }
+      }
+    },
+    "BuildingFloor": {
+      "label": "Floor",
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "beginningDate": {
+          "label": "Beginning date",
+          "description": "Date on which the recording of the stratigraphical unit was started"
+        },
+        "endDate": {
+          "label": "End date",
+          "description": "Date on which the recording of the stratigraphical unit was finished"
+        },
+        "comparison": {
+          "label": "Comparison"
+        },
+        "diary": {
+          "label": "Diary"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "hasDisturbance": {
+          "label": "Disturbance"
+        },
+        "featureAmount": {
+          "label": "Feature amount"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "color": {
+          "label": "Color and intensity"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "featureBorders": {
+          "label": "Borders of the stratigraphical unit"
+        },
+        "featureForm": {
+          "label": "Form of the stratigraphical unit"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "condition": {
+          "label": "Condition"
+        },
+        "conditionAmount": {
+          "label": "Preservation assessment",
+          "description": "Preserved amount in comparison to the original"
+        },
+        "consistency": {
+          "label": "Consistency"
+        },
+        "distinguishingCriteria": {
+          "label": "Distinguishing criteria"
+        },
+        "floorClassification": {
+          "label": "Floor classification"
+        },
+        "layerClassification": {
+          "label": "Layer classification"
+        },
+        "mortarBinder": {
+          "label": "Mortar binder"
+        }
+      }
+    },
+    "SurveyBurial": {
+      "label": "Burial",
+      "fields": {
+        "area": {
+          "label": "Area in m2"
+        },
+        "beginningDate": {
+          "label": "Beginning date",
+          "description": "Date on which the recording of the stratigraphical unit was started"
+        },
+        "endDate": {
+          "label": "End date",
+          "description": "Date on which the recording of the stratigraphical unit was finished"
+        },
+        "comparison": {
+          "label": "Comparison"
+        },
+        "diary": {
+          "label": "Diary"
+        },
+        "description": {
+          "label": "Description"
+        },
+        "hasDisturbance": {
+          "label": "Disturbance"
+        },
+        "featureAmount": {
+          "label": "Feature amount"
+        },
+        "processor": {
+          "label": "Processor"
+        },
+        "color": {
+          "label": "Color and intensity"
+        },
+        "period": {
+          "label": "Period"
+        },
+        "dating": {
+          "label": "Dating"
+        },
+        "dimensionLength": {
+          "label": "Length"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        },
+        "dimensionWidth": {
+          "label": "Width"
+        },
+        "featureBorders": {
+          "label": "Borders of the stratigraphical unit"
+        },
+        "featureForm": {
+          "label": "Form of the stratigraphical unit"
+        },
+        "ageDetermination": {
+          "label": "Age determination"
+        },
+        "ageDeterminationBasis": {
+          "label": "Basis of age determination"
+        },
+        "bodyHeightAndRobustness": {
+          "label": "Body height and robustness"
+        },
+        "burialRite": {
+          "label": "Burial rite or treatment of the deceased"
+        },
+        "conditionComment": {
+          "label": "Condition comment"
+        },
+        "dietReconstruction": {
+          "label": "Diet reconstruction"
+        },
+        "findingPlace": {
+          "label": "Finding place",
+          "description": "For entering multiple other resources as finding place, e. g. (PE07 So 04,002)"
+        },
+        "palaeopathologicalReport": {
+          "label": "Palaeopathological report"
+        },
+        "publicationDatingFinds": {
+          "label": "Dating (finds)"
+        },
+        "publicationDatingStratigraphy": {
+          "label": "Dating (stratigraphy)"
+        },
+        "sexDetermination": {
+          "label": "Sex determination"
+        },
+        "sexDeterminationBasis": {
+          "label": "Basis of sex determination"
+        },
+        "amountIndividuals": {
+          "label": "Burial type"
+        },
+        "burialCharacteristic": {
+          "label": "Burial sequence (primary/secondary)"
+        },
+        "burialDocumentation": {
+          "label": "Documentation"
+        },
+        "graveFeature": {
+          "label": "Method of interment"
+        },
+        "positionArms": {
+          "label": "Position of arms"
+        },
+        "positionLegs": {
+          "label": "Position of legs"
+        },
+        "positioningIndividuals": {
+          "label": "Positioning of the deceased"
+        }
+      }
+    }
+  }
+}

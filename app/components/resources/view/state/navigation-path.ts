@@ -1,9 +1,8 @@
-import {Document} from 'idai-components-2';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {takeUntil, takeWhile, on} from 'tsfun';
+import {Document, IdaiFieldDocument} from 'idai-components-2';
 import {clone} from '../../../../core/util/object-util';
 import {ViewContext} from './view-context';
 import {differentFrom, NavigationPathSegment, toResourceId} from './navigation-path-segment';
-import {takeUntil, takeWhile, on} from 'tsfun';
 import {ModelUtil} from '../../../../core/model/model-util';
 
 
@@ -71,67 +70,67 @@ export module NavigationPath {
      * (NO SELECTED SEGMENT)
      * SEGMENT1, SEGMENT2, SEGMENT4, SEGMENT5
      *
-     * @param navPath
-     * @param newSelectedSegmentDoc
      * @return a new path object with updated state
      */
-    export function setNewSelectedSegmentDoc(
-        navPath: NavigationPath,
-        newSelectedSegmentDoc: IdaiFieldDocument|undefined): NavigationPath {
+    export function setNewSelectedSegmentDoc(navigationPath: NavigationPath,
+                                             newSelectedSegmentDoc: IdaiFieldDocument|undefined): NavigationPath {
 
-        const updatedNavigationPath = clone(navPath);
+        const updatedNavigationPath = clone(navigationPath);
 
         if (newSelectedSegmentDoc) {
             (updatedNavigationPath as any).segments = rebuildElements(
-                navPath.segments,
-                navPath.selectedSegmentId,
+                navigationPath.segments,
+                navigationPath.selectedSegmentId,
                 newSelectedSegmentDoc);
         }
-        (updatedNavigationPath as any).selectedSegmentId = newSelectedSegmentDoc ? newSelectedSegmentDoc.resource.id : undefined;
+
+        (updatedNavigationPath as any).selectedSegmentId = newSelectedSegmentDoc
+            ? newSelectedSegmentDoc.resource.id
+            : undefined;
 
         return updatedNavigationPath;
     }
 
 
-    export function setSelectedDocument(navPath: NavigationPath, displayHierarchy: boolean, document: IdaiFieldDocument|undefined) {
+    export function setSelectedDocument(navPath: NavigationPath, document: IdaiFieldDocument|undefined) {
 
         const _clone = clone(navPath);
-        (getViewContext(_clone, displayHierarchy) as any).selected = document;
+        (getViewContext(_clone) as any).selected = document;
         return _clone;
     }
 
 
-    export function getSelectedDocument(navPath: NavigationPath, bypassHierarchy: boolean): IdaiFieldDocument|undefined {
+    export function getSelectedDocument(navPath: NavigationPath): IdaiFieldDocument|undefined {
 
-        return getViewContext(navPath, bypassHierarchy).selected;
+        return getViewContext(navPath).selected;
     }
 
 
-    export function setQueryString(navPath: NavigationPath, bypassHierarchy: boolean, q: string) {
+    export function setQueryString(navPath: NavigationPath, q: string) {
 
         const _clone = clone(navPath);
-        (getViewContext(_clone, bypassHierarchy) as any).q = q;
+        (getViewContext(_clone) as any).q = q;
         return _clone;
     }
 
 
-    export function getQueryString(navPath: NavigationPath, bypassHierarchy: boolean): string {
+    export function getQueryString(navPath: NavigationPath): string {
 
-        return getViewContext(navPath, bypassHierarchy).q;
+        return getViewContext(navPath).q;
     }
 
 
-    export function setTypeFilters(navPath: NavigationPath, displayHierarchy: boolean, types: string[]) {
+    export function setTypeFilters(navPath: NavigationPath, types: string[]) {
 
         const _clone = clone(navPath);
-        (getViewContext(_clone, displayHierarchy) as any).types = types;
+        (getViewContext(_clone) as any).types = types;
         return _clone;
     }
 
 
-    export function getTypeFilters(navPath: NavigationPath, displayHierarchy: boolean): string[] {
+    export function getTypeFilters(navPath: NavigationPath): string[] {
 
-        return getViewContext(navPath, displayHierarchy).types;
+        return getViewContext(navPath).types;
     }
 
 
@@ -160,10 +159,8 @@ export module NavigationPath {
     }
 
 
-    export async function findInvalidSegment(
-        mainTypeDocumentResourceId: string|undefined,
-        navPath: NavigationPath,
-        exists: (_: string) => Promise<boolean>): Promise<NavigationPathSegment|undefined> {
+    export async function findInvalidSegment(mainTypeDocumentResourceId: string|undefined, navPath: NavigationPath,
+                                             exists: (_: string) => Promise<boolean>): Promise<NavigationPathSegment|undefined> {
 
         for (let segment of navPath.segments) {
             if (!await NavigationPathSegment.isValid(
@@ -180,10 +177,8 @@ export module NavigationPath {
     }
 
 
-    export function isPartOfNavigationPath(
-        document: IdaiFieldDocument,
-        navPath: NavigationPath,
-        mainTypeDocumentResourceId: string|undefined): boolean {
+    export function isPartOfNavigationPath(document: IdaiFieldDocument, navPath: NavigationPath,
+                                           mainTypeDocumentResourceId: string|undefined): boolean {
 
         if (navPath.selectedSegmentId && Document.hasRelationTarget(document, 'liesWithin',
                 navPath.selectedSegmentId)) {
@@ -213,13 +208,14 @@ export module NavigationPath {
     }
 
 
-    export function replaceSegmentsIfNecessary(navPath:NavigationPath,
-        newSegments: NavigationPathSegment[],
-        newSelectedSegmentId: string): NavigationPath {
+    export function replaceSegmentsIfNecessary(navPath:NavigationPath, newSegments: NavigationPathSegment[],
+                                               newSelectedSegmentId: string): NavigationPath {
 
         const updatedNavigationPath = clone(navPath);
 
-        if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) (updatedNavigationPath as any).segments = newSegments;
+        if (!NavigationPath.segmentNotPresent(navPath, newSelectedSegmentId)) {
+            (updatedNavigationPath as any).segments = newSegments;
+        }
 
         (updatedNavigationPath as any).selectedSegmentId = newSelectedSegmentId;
         return updatedNavigationPath;
@@ -227,7 +223,7 @@ export module NavigationPath {
 
 
 
-    function getViewContext(navPath: NavigationPath, bypassHierarchy: boolean): ViewContext {
+    function getViewContext(navPath: NavigationPath): ViewContext {
 
         return navPath.selectedSegmentId
                 ? getSelectedSegment(navPath)

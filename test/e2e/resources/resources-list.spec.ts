@@ -58,7 +58,7 @@ describe('resources/list --', () => {
     it('navigate to child item view in list mode and create a new child object', () => {
 
         ResourcesPage.performCreateResourceInList('5', 'feature-architecture');
-        ResourcesPage.clickMoveIntoButton('5');
+        ResourcesPage.clickHierarchyButton('5');
         ResourcesPage.performCreateResourceInList('child1', 'find');
         NavbarPage.clickNavigateToProject();
         NavbarPage.clickNavigateToExcavation();

@@ -445,5 +445,554 @@
         ]
       }
     }
+  },
+  "Area": {
+    "fields": {
+      "description": {
+        "inputType": "text"
+      }
+    }
+  },
+  "Excavation": {
+    "fields": {
+      "beginningDate": {
+        "inputType": "date"
+      },
+      "endDate": {
+        "inputType": "date"
+      },
+      "dating": {
+        "inputType": "dating"
+      },
+      "diary": {
+        "inputType": "input"
+      },
+      "description": {
+        "inputType": "text"
+      },
+      "hasDisturbance": {
+        "inputType": "boolean"
+      },
+      "processor": {
+        "inputType": "input"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "beige",
+          "blass-",
+          "blau",
+          "braun",
+          "cremefarben",
+          "dunkel-",
+          "gelb",
+          "grau",
+          "grün",
+          "hell-",
+          "leuchtend-",
+          "ocker",
+          "orange",
+          "rosa",
+          "rot",
+          "schwarz",
+          "türkis",
+          "violett",
+          "weiß"
+        ]
+      },
+      "dimensionLength": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "dimensionVerticalExtent": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Oberkante",
+          "Unterkante"]
+      },
+      "dimensionWidth": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "featureBorders": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "deutlich",
+          "diffus",
+          "eben",
+          "erahnbar",
+          "erkennbar",
+          "etwas verwaschen",
+          "fließend",
+          "geneigt",
+          "gezackt",
+          "regelmäßig",
+          "scharf",
+          "sehr deutlich",
+          "undeutlich",
+          "uneben",
+          "unklar",
+          "unregelmäßig",
+          "verwaschen",
+          "wellig"
+        ]
+      },
+      "isIllegal": {
+        "inputType": "boolean"
+      }
+    }
+  },
+  "BuildingFloor": {
+    "fields": {
+      "area": {
+        "inputType": "unsignedFloat"
+      },
+      "beginningDate": {
+        "inputType": "date"
+      },
+      "endDate": {
+        "inputType": "date"
+      },
+      "dating": {
+        "inputType": "dating"
+      },
+      "comparison": {
+        "inputType": "text"
+      },
+      "diary": {
+        "inputType": "input"
+      },
+      "description": {
+        "inputType": "text"
+      },
+      "hasDisturbance": {
+        "inputType": "boolean"
+      },
+      "featureAmount": {
+        "inputType": "input"
+      },
+      "processor": {
+        "inputType": "input"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "beige",
+          "blass-",
+          "blau",
+          "braun",
+          "cremefarben",
+          "dunkel-",
+          "gelb",
+          "grau",
+          "grün",
+          "hell-",
+          "leuchtend-",
+          "ocker",
+          "orange",
+          "rosa",
+          "rot",
+          "schwarz",
+          "türkis",
+          "violett",
+          "weiß"
+        ]
+      },
+      "dimensionLength": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"
+        ]
+      },
+      "dimensionVerticalExtent": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Oberkante",
+          "Unterkante"
+        ]
+      },
+      "dimensionWidth": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"
+        ]
+      },
+      "featureBorders": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "deutlich",
+          "diffus",
+          "eben",
+          "erahnbar",
+          "erkennbar",
+          "etwas verwaschen",
+          "fließend",
+          "geneigt",
+          "gezackt",
+          "regelmäßig",
+          "scharf",
+          "sehr deutlich",
+          "undeutlich",
+          "uneben",
+          "unklar",
+          "unregelmäßig",
+          "verwaschen",
+          "wellig"
+        ]
+      },
+      "featureForm": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Befundrest",
+          "U-förmig",
+          "V-förmig",
+          "annähernd",
+          "formlos",
+          "halbmondförmig",
+          "kesselförmig",
+          "langgezogen",
+          "oval",
+          "rechteckig",
+          "regelmäßig",
+          "rund",
+          "sanduhrförmig",
+          "trapezförmig",
+          "trichterförmig",
+          "unregelmäßig",
+          "wannenförmig"
+        ]
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "condition": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "gut",
+          "schlecht",
+          "sehr gut",
+          "sehr schlecht"
+        ]
+      },
+      "conditionAmount": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Fragmentarisch",
+          "Vollständig",
+          "Vollständig zerstört"
+        ]
+      },
+      "consistency": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Durch Brand versiegelt",
+          "Oberfläche abgewaschen",
+          "Oberfläche verhärtet",
+          "fest",
+          "flüssig",
+          "gut formbar",
+          "hart",
+          "lehmig",
+          "locker",
+          "mittel bindend",
+          "mittel formbar",
+          "nicht bindend",
+          "nicht formbar",
+          "porös",
+          "sandig",
+          "schwach bindend",
+          "schwach formbar",
+          "sehr gut formbar",
+          "sehr hart",
+          "sehr schwach formbar",
+          "sehr weich",
+          "stark bindend",
+          "steif",
+          "weich"
+        ]
+      },
+      "distinguishingCriteria": {
+        "inputType": "radio",
+        "valuelist": [
+          "Farbe",
+          "Form",
+          "Grenzen",
+          "Konsistenz",
+          "Komposition"
+        ]
+      },
+      "floorClassification": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Bastmatten",
+          "Korkboden",
+          "Mosaik",
+          "Opus sectile",
+          "Opus signinum",
+          "Pflaster",
+          "Stampflehm",
+          "Terrazzo",
+          "Webmatten",
+          "Ziegel"
+        ]
+      },
+      "layerClassification": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Brandschicht",
+          "Kulturschicht",
+          "Laufhorizont",
+          "Planierschicht"
+        ]
+      },
+      "mortarBinder": {
+        "inputType": "radio",
+        "valuelist": [
+          "dominant",
+          "gering",
+          "hoch",
+          "mittel"
+        ]
+      }
+    }
+  },
+  "SurveyBurial": {
+    "fields": {
+      "area": {
+        "inputType": "unsignedFloat"
+      },
+      "beginningDate": {
+        "inputType": "date"
+      },
+      "endDate": {
+        "inputType": "date"
+      },
+      "dating": {
+        "inputType": "dating"
+      },
+      "comparison": {
+        "inputType": "text"
+      },
+      "diary": {
+        "inputType": "input"
+      },
+      "description": {
+        "inputType": "text"
+      },
+      "hasDisturbance": {
+        "inputType": "boolean"
+      },
+      "featureAmount": {
+        "inputType": "input"
+      },
+      "processor": {
+        "inputType": "input"
+      },
+      "color": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "beige",
+          "blass-",
+          "blau",
+          "braun",
+          "cremefarben",
+          "dunkel-",
+          "gelb",
+          "grau",
+          "grün",
+          "hell-",
+          "leuchtend-",
+          "ocker",
+          "orange",
+          "rosa",
+          "rot",
+          "schwarz",
+          "türkis",
+          "violett",
+          "weiß"
+        ]
+      },
+      "dimensionLength": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "dimensionVerticalExtent": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Oberkante",
+          "Unterkante"]
+      },
+      "dimensionWidth": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      },
+      "featureBorders": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "deutlich",
+          "diffus",
+          "eben",
+          "erahnbar",
+          "erkennbar",
+          "etwas verwaschen",
+          "fließend",
+          "geneigt",
+          "gezackt",
+          "regelmäßig",
+          "scharf",
+          "sehr deutlich",
+          "undeutlich",
+          "uneben",
+          "unklar",
+          "unregelmäßig",
+          "verwaschen",
+          "wellig"
+        ]
+      },
+      "featureForm": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Befundrest",
+          "U-förmig",
+          "V-förmig",
+          "annähernd",
+          "formlos",
+          "halbmondförmig",
+          "kesselförmig",
+          "langgezogen",
+          "oval",
+          "rechteckig",
+          "regelmäßig",
+          "rund",
+          "sanduhrförmig",
+          "trapezförmig",
+          "trichterförmig",
+          "unregelmäßig",
+          "wannenförmig"
+        ]
+      },
+      "ageDetermination": {
+        "inputType": "input"
+      },
+      "ageDeterminationBasis": {
+        "inputType": "input"
+      },
+      "bodyHeightAndRobustness": {
+        "inputType": "input"
+      },
+      "burialRite": {
+        "inputType": "input"
+      },
+      "conditionComment": {
+        "inputType": "input"
+      },
+      "dietReconstruction": {
+        "inputType": "input"
+      },
+      "findingPlace": {
+        "inputType": "input"
+      },
+      "palaeopathologicalReport": {
+        "inputType": "input"
+      },
+      "publicationDatingFinds": {
+        "inputType": "text"
+      },
+      "publicationDatingStratigraphy": {
+        "inputType": "text"
+      },
+      "sexDetermination": {
+        "inputType": "input"
+      },
+      "sexDeterminationBasis": {
+        "inputType": "input"
+      },
+      "amountIndividuals": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Doppelbestattung",
+          "Dreifachbestattung",
+          "Einzelbestattung",
+          "Grabdeponat",
+          "Kollektivbestattung",
+          "Massengrab",
+          "Mehrfachbestattung",
+          "Unsicher bzw. unbestimmbar",
+          "Wiedergängerbestattung"
+        ]
+      },
+      "burialCharacteristic": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Primäre Bestattung",
+          "Sekundäre Bestattung",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      },
+      "burialDocumentation": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Endoskopie",
+          "Foto",
+          "Histologie",
+          "LM",
+          "REM",
+          "Röntgen"
+        ]
+      },
+      "graveFeature": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Brandbestattung",
+          "Kenotaph",
+          "Körperbestattung",
+          "Ossuar",
+          "Teil-Körperbestattung"
+        ]
+      },
+      "positionArms": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Unsicher bzw. unbestimmbar",
+          "am Kinn",
+          "an den Seiten",
+          "auf dem Bauch",
+          "auf dem Becken",
+          "auf der Brust",
+          "ungleichmäßig"
+        ]
+      },
+      "positionLegs": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Beine angewinkelt",
+          "Beinhocker",
+          "Extremhocker",
+          "Hocker",
+          "Unsicher bzw. unbestimmbar",
+          "gestreckt"
+        ]
+      },
+      "positioningIndividuals": {
+        "inputType": "checkboxes",
+        "valuelist": [
+          "Bauchlage",
+          "Rückenlage",
+          "Seitenlage, links",
+          "Seitenlage, rechts",
+          "Unsicher bzw. unbestimmbar"
+        ]
+      }
+    }
   }
 }

@@ -35,32 +35,36 @@
 <ng-template #newObjectMenu>
     <div>
         <div *ngIf="!selectedType" id="new-object-menu">
-            <div class="popover-custom-title">Bitte wählen Sie einen Typ aus.</div>
+            <div class="popover-custom-title">
+                <span i18n="@@resources.plusButton.selectType">Bitte wählen Sie einen Typ aus.</span>
+            </div>
             <type-picker [typesTreeList]="typesTreeList" (onTypePicked)="chooseType($event)"></type-picker>
         </div>
 
         <div *ngIf="selectedType" id="geometry-type-selection">
-            <div class="popover-custom-title">Bitte wählen Sie einen Geometrietyp aus.</div>
+            <div class="popover-custom-title">
+                <span i18n="@@resources.plusButton.selectGeometryType">Bitte wählen Sie einen Geometrietyp aus.</span>
+            </div>
             <ul class="list-group">
                 <li id="choose-geometry-option-polygon" class="list-group-item popover-item"
                     (click)="startDocumentCreation('Polygon');">
                     <span class="mdi mdi-shape-polygon-plus mdi-18px choose-geometry-icon"></span>
-                    Polygon
+                    <span i18n="@@resources.plusButton.selectGeometryType.polygon">Polygon</span>
                 </li>
                 <li id="choose-geometry-option-polyline" class="list-group-item popover-item"
                     (click)="startDocumentCreation('LineString');">
                     <span class="mdi mdi-vector-polyline mdi-18px choose-geometry-icon"></span>
-                    Polyline
+                    <span i18n="@@resources.plusButton.selectGeometryType.polyline">Polyline</span>
                 </li>
                 <li id="choose-geometry-option-point" class="list-group-item popover-item"
                     (click)="startDocumentCreation('Point');">
                     <span class="mdi mdi-map-marker-plus mdi-18px choose-geometry-icon"></span>
-                    Punkt
+                    <span i18n="@@resources.plusButton.selectGeometryType.point">Punkt</span>
                 </li>
                 <li id="choose-geometry-option-none" class="list-group-item popover-item"
                     (click)="startDocumentCreation('none');">
                     <span class="mdi mdi-close-circle-outline mdi-18px choose-geometry-icon"></span>
-                    Keine Geometriedaten
+                    <span i18n="@@resources.plusButton.selectGeometryType.noGeometryData">Keine Geometriedaten</span>
                 </li>
             </ul>
         </div>

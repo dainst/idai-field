@@ -1,4 +1,0 @@
-<div *ngFor="let item of resource[this.fieldName]; let i=index; trackBy:customTrackBy">
-    <input [(ngModel)]="resource[this.fieldName][i]" class="form-control"><button type="button" (click)="removeInputArrayItemAtIndex(i)">Remove</button>
-</div>
-<button type="button" (click)="toggleBox()">Add</button>

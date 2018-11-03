@@ -1,9 +1,9 @@
-/**
- * @author Daniel de Oliveira
- */
 import {DoceditComponent} from '../../../../app/components/docedit/docedit.component';
 import {DoceditActiveTabService} from '../../../../app/components/docedit/docedit-active-tab-service';
 
+/**
+ * @author Daniel de Oliveira
+ */
 describe('DoceditComponent', () => {
 
     let activeTabService: any;
@@ -14,20 +14,21 @@ describe('DoceditComponent', () => {
 
         const typeUtility = jasmine.createSpyObj('typeUtility', ['getSubtypes']);
         typeUtility.getSubtypes.and.returnValue({'Object':[]});
-        const documentHolder = jasmine.createSpyObj('documentHolder', ['setClonedDocument', 'getClonedDocument']);
+        const documentHolder = jasmine.createSpyObj('documentHolder', ['setDocument']);
         const projectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getFieldDefinitionLabel']);
         activeTabService = new DoceditActiveTabService();
 
         docedit = new DoceditComponent(
             undefined,
-            undefined,
             documentHolder,
+            undefined,
             undefined,
             undefined,
             typeUtility,
             activeTabService,
             projectConfiguration,
-            undefined
+            undefined,
+            (() => 'Projekt') as any
         );
     });
 

@@ -10,9 +10,15 @@
         [id]="'resource-' + document.resource.identifier">
 
         <div *ngIf="showMoveIntoOption(document)"
-              class="move-into-button btn float-right"
+              class="hierarchy-button btn float-right"
               (click)="moveInto(document); $event.stopPropagation();">
             <span class="mdi mdi-subdirectory-arrow-right mdi-18px"></span>
+        </div>
+
+        <div *ngIf="showJumpToViewOption(document)"
+             class="hierarchy-button btn float-right"
+             (click)="jumpToView(document); $event.stopPropagation();">
+            <span class="mdi mdi-arrow-top-right mdi-18px"></span>
         </div>
 
         <div class="document-teaser-container">
@@ -20,7 +26,7 @@
         </div>
     </li>
 
-    <li *ngIf="isDocumentLimitExceeded()" id="document-limit-info">
+    <li *ngIf="isDocumentLimitExceeded()" id="document-limit-info" i18n="@@resources.sidebarList.resourceLimitInfo">
         Es werden die ersten {{viewFacade.getDocuments().length}} von {{viewFacade.getTotalDocumentCount()}}
         Ressourcen angezeigt. Schränken Sie die Suche weiter ein oder verlassen Sie den erweiterten Suchmodus,
         um auf die übrigen Ressourcen zuzugreifen.

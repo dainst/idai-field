@@ -1,4 +1,5 @@
 import {Component, Input, ViewChild} from '@angular/core';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {IdaiFieldDocument} from 'idai-components-2';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
@@ -19,18 +20,16 @@ import {MediaResourcePickerComponent} from '../widgets/media-resource-picker.com
 export class DoceditMediaTabComponent {
 
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
-    public documents: Array<IdaiFieldMediaDocument>;
-
-    public selected: Array<IdaiFieldMediaDocument> = [];
 
     @Input() document: IdaiFieldDocument;
 
+    public documents: Array<IdaiFieldMediaDocument>;
+    public selected: Array<IdaiFieldMediaDocument> = [];
 
-    constructor(
-        private datastore: IdaiFieldMediaDocumentReadDatastore,
-        private modalService: NgbModal
-    ) {
-    }
+
+    constructor(private datastore: IdaiFieldMediaDocumentReadDatastore,
+                private modalService: NgbModal,
+                private i18n: I18n) {}
 
 
     ngOnChanges() {
@@ -87,6 +86,14 @@ export class DoceditMediaTabComponent {
         } else {
             this.loadMediaResources();
         }
+    }
+
+
+    public getRemoveLinksTooltip(): string {
+
+        return this.selected.length === 1
+            ? this.i18n({ id: 'docedit.tabs.images.tooltips.removeLink', value: 'Verknüpfung löschen' })
+            : this.i18n({ id: 'docedit.tabs.images.tooltips.removeLinks', value: 'Verknüpfungen löschen' });
     }
 
 

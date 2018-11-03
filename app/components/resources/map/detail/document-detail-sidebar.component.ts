@@ -1,11 +1,10 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
-import {ProjectConfiguration} from 'idai-components-2';
-import {IdaiFieldDocument} from 'idai-components-2';
+import {isEmpty} from 'tsfun';
+import {ProjectConfiguration, IdaiFieldDocument} from 'idai-components-2';
 import {ResourcesComponent} from '../../resources.component';
 import {RoutingService} from '../../../routing-service';
 import {ViewFacade} from '../../view/view-facade';
-import {isEmpty} from 'tsfun';
 
 
 @Component({
@@ -24,15 +23,15 @@ export class DocumentViewSidebarComponent {
 
     @ViewChild('tabs') tabs: NgbTabset;
 
-    public relationsToHide = ['liesWithin', 'isRecordedIn', 'includes'];
+    public relationsToHide: string[] = [];
 
 
     constructor(
         public resourcesComponent: ResourcesComponent,
+        public viewFacade: ViewFacade,
         private routingService: RoutingService,
-        private projectConfiguration: ProjectConfiguration,
-        private viewFacade: ViewFacade
-    ) { }
+        private projectConfiguration: ProjectConfiguration
+    ) {}
 
 
     public onTabChange(event: any) {
@@ -54,7 +53,7 @@ export class DocumentViewSidebarComponent {
         return Object.keys(relations)
             .filter(name => {
                 return this.projectConfiguration.isVisibleRelation(name, selectedDoc.resource.type)
-                    && this.relationsToHide.indexOf(name) === -1
+                    && !this.relationsToHide.includes(name)
                     && relations[name].length > 0;
             })
             .length > 0;

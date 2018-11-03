@@ -32,7 +32,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
 
 
     constructor(route: ActivatedRoute,
-                private viewFacade: ViewFacade,
+                public viewFacade: ViewFacade,
                 private routingService: RoutingService,
                 private doceditLauncher: DoceditLauncher,
                 private renderer: Renderer2,
@@ -167,7 +167,7 @@ export class ResourcesComponent implements AfterViewChecked, OnDestroy {
                 await this.viewFacade.setActiveDocumentViewTab(tab)
             }
         } catch (e) {
-            this.messages.add([M.DATASTORE_NOT_FOUND]);
+            this.messages.add([M.DATASTORE_ERROR_NOT_FOUND]);
         }
     }
 

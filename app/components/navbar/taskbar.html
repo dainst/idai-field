@@ -9,16 +9,19 @@
 
     <li class="nav-item navbar-hover-element pr-2">
         <a href="#" routerLink="/settings">
-            <span class="mdi mdi-cloud" *ngIf="connected && !receivingRemoteChanges"
+            <span class="mdi mdi-cloud" *ngIf="isConnected() && !receivingRemoteChanges"
                   ngbTooltip="Synchronisation ist aktiv"
+                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.active"
                   placement="bottom" container="body">
             </span>
-            <span class="mdi mdi-cloud-off-outline" *ngIf="!connected && !receivingRemoteChanges"
+            <span class="mdi mdi-cloud-off-outline" *ngIf="!isConnected() && !receivingRemoteChanges"
                   ngbTooltip="Synchronisation ist deaktiviert"
+                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.deactivated"
                   placement="bottom" container="body">
             </span>
             <span class="mdi mdi-cloud-download" *ngIf="receivingRemoteChanges"
                   ngbTooltip="Daten werden empfangen..."
+                  i18n-ngbTooltip="@@navbar.taskbar.synchronization.receivingData"
                   placement="bottom" container="body">
             </span>
         </a>
@@ -35,23 +38,23 @@
         <div ngbDropdownMenu>
             <a id="help-button" href="#" routerLink="/help" class="dropdown-item">
                 <span class="mdi mdi-help" placement="bottom" container="body"></span>
-                <span class="dropdown-entry-label">Hilfe</span>
+                <span class="dropdown-entry-label" i18n="@@navbar.taskbar.dropdown.help">Hilfe</span>
             </a>
             <a id="import-button" href="#" routerLink="/import" class="dropdown-item">
                 <span class="mdi mdi-file-import" placement="bottom" container="body"></span>
-                <span class="dropdown-entry-label">Import</span>
+                <span class="dropdown-entry-label" i18n="@@navbar.taskbar.dropdown.import">Import</span>
             </a>
             <a id="backup-creation-button" href="#" routerLink="/backup-creation" class="dropdown-item">
                 <span class="mdi mdi-database-export" placement="bottom" container="body"></span>
-                <span class="dropdown-entry-label">Backup erstellen</span>
+                <span class="dropdown-entry-label" i18n="@@navbar.taskbar.dropdown.createBackup">Backup erstellen</span>
             </a>
             <a id="backup-loading-button" href="#" routerLink="/backup-loading" class="dropdown-item">
                 <span class="mdi mdi-database-import" placement="bottom" container="body"></span>
-                <span class="dropdown-entry-label">Backup einlesen</span>
+                <span class="dropdown-entry-label" i18n="@@navbar.taskbar.dropdown.restoreBackup">Backup einlesen</span>
             </a>
             <a id="settings-button" href="#" routerLink="/settings" class="dropdown-item">
                 <span class="mdi mdi-settings" placement="bottom" container="body"></span>
-                <span class="dropdown-entry-label">Einstellungen</span>
+                <span class="dropdown-entry-label" i18n="@@navbar.taskbar.dropdown.settings">Einstellungen</span>
             </a>
         </div>
     </div>

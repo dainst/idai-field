@@ -16,23 +16,24 @@ export module ResourcesStateManagerConfiguration {
         datastore: IdaiFieldDocumentReadDatastore,
         stateSerializer: StateSerializer,
         projectName: string,
-        suppressMapLoadForTest: boolean) {
+        suppressMapLoadForTest: boolean,
+        locale: string) {
 
         const views: ViewDefinition[] = [
             {
-                "label": "Ausgrabung",
-                "name": "excavation",
-                "operationSubtype": "Trench"
+                'label': locale === 'de' ? 'Ausgrabung' : 'Excavation',
+                'name': 'excavation',
+                'operationSubtype': 'Trench'
             },
             {
-                "label": "Bauaufnahme",
-                "name": "Building",
-                "operationSubtype": "Building"
+                'label': locale === 'de' ? 'Bauaufnahme' : 'Building',
+                'name': 'Building',
+                'operationSubtype': 'Building'
             },
             {
-                "label": "Survey",
-                "name": "survey",
-                "operationSubtype": "Survey"
+                'label': 'Survey',
+                'name': 'survey',
+                'operationSubtype': 'Survey'
             }
         ];
         for (let view of views) {

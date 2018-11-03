@@ -21,7 +21,7 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
 
     @ViewChild('searchInput') fulltextSearchInput: ElementRef;
 
-    private suggestionsVisible: boolean = false;
+    public suggestionsVisible: boolean = false;
 
 
     constructor(private elementRef: ElementRef,

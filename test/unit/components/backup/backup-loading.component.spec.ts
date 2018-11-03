@@ -48,7 +48,7 @@ describe('BackupLoadingComponent', () => {
         c.path = './store/backup_test_file.txt';
         await c.loadBackup();
 
-        expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_DUMP_ERROR_NO_PROJECT_NAME]);
+        expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_ERROR_NO_PROJECT_NAME]);
         done();
     });
 
@@ -61,7 +61,7 @@ describe('BackupLoadingComponent', () => {
         backupProvider.readDump.and.returnValue(Promise.reject(Backup.FILE_NOT_EXIST));
         await c.loadBackup();
 
-        expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_DUMP_ERROR_FILE_NOT_EXIST]);
+        expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_ERROR_FILE_NOT_FOUND]);
         done();
     });
 
@@ -76,7 +76,7 @@ describe('BackupLoadingComponent', () => {
         backupProvider.readDump.and.returnValue(Promise.reject('reason'));
         await c.loadBackup();
 
-        expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_DUMP_ERROR]);
+        expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_ERROR_GENERIC]);
         done();
     });
 
@@ -87,7 +87,7 @@ describe('BackupLoadingComponent', () => {
         c.path = './package.json';
         await c.loadBackup();
 
-        expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_DUMP_SUCCESS]);
+        expect(messages.add).toHaveBeenCalledWith([M.BACKUP_READ_SUCCESS]);
         done();
     });
 

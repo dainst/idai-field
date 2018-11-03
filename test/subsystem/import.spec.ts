@@ -1,5 +1,5 @@
-import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-helper';
 import {to} from 'tsfun';
+import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-helper';
 import {ImportFacade} from '../../app/core/import/import-facade';
 import {Validator} from '../../app/core/model/validator';
 import {TypeUtility} from '../../app/core/model/type-utility';
@@ -47,7 +47,6 @@ describe('Import/Subsystem', () => {
     });
 
 
-
     it('produce validation error', async done => {
 
         const trench = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
@@ -87,7 +86,6 @@ describe('Import/Subsystem', () => {
         expect(report.errors[0]).toEqual([ValidationErrors.INVALID_COORDINATES, "Polygon"]);
         done();
     });
-
 
 
     it('create one find, connect to existing operation ', async done => {
@@ -134,7 +132,7 @@ describe('Import/Subsystem', () => {
         const id = (await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}})).resource.id;
 
         const importReport = await createRollbackTestImportFunction(false, id);
-        expect(importReport.errors[0]).toEqual([M.IMPORT_VALIDATION_ERROR_INVALIDTYPE, "InvalidType"]); // TODO should be validation error
+        expect(importReport.errors[0]).toEqual([M.IMPORT_VALIDATION_ERROR_INVALID_TYPE, 'InvalidType']); // TODO should be validation error
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
         done();
@@ -144,10 +142,10 @@ describe('Import/Subsystem', () => {
     it('no rollback, because after merge we will not perform it', async done => {
 
         const id = (await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}})).resource.id;
-        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'f1', relations: { isRecordedIn: ["t1"]}}});
+        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'f1', relations: { isRecordedIn: ['t1']}}});
 
         const importReport = await createRollbackTestImportFunction(true, id);
-        expect(importReport.errors[0]).toEqual([ValidationErrors.INVALID_TYPE, "InvalidType"]);
+        expect(importReport.errors[0]).toEqual([ValidationErrors.INVALID_TYPE, 'InvalidType']);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(2);

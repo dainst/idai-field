@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {I18n} from '@ngx-translate/i18n-polyfill';
 import {includedIn, isNot} from 'tsfun';
 import {DatastoreErrors, Document, IdaiFieldDocument, IdaiFieldImageDocument, Messages,
     ProjectConfiguration} from 'idai-components-2';
@@ -39,14 +40,15 @@ export class DoceditComponent {
 
     constructor(
         public activeModal: NgbActiveModal,
+        public documentHolder: DocumentHolder,
         private messages: Messages,
-        private documentHolder: DocumentHolder,
         private modalService: NgbModal,
         private datastore: DocumentDatastore,
         private typeUtility: TypeUtility,
         private activeTabService: DoceditActiveTabService,
         private projectConfiguration: ProjectConfiguration,
-        private loading: Loading) {
+        private loading: Loading,
+        private i18n: I18n) {
     }
 
     public isChanged = () => this.documentHolder.isChanged();
@@ -57,7 +59,7 @@ export class DoceditComponent {
 
 
     public getRelationDefinitions = () => this.projectConfiguration.getRelationDefinitions(
-        this.documentHolder.getClonedDocument().resource.type, false, 'editable');
+        this.documentHolder.clonedDocument.resource.type, false, 'editable');
 
 
     public getActiveTab() {
@@ -74,7 +76,7 @@ export class DoceditComponent {
 
     public async setDocument(document: IdaiFieldDocument|IdaiFieldImageDocument) {
 
-        this.documentHolder.setClonedDocument(document);
+        this.documentHolder.setDocument(document);
 
         if (!document.resource.id) this.activeTabService.setActiveTab('fields');
 
@@ -110,8 +112,8 @@ export class DoceditComponent {
     public async openDeleteModal() {
 
         const ref = this.modalService.open(DeleteModalComponent);
-        ref.componentInstance.setDocument(this.documentHolder.getClonedDocument());
-        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.getClonedDocument()));
+        ref.componentInstance.setDocument(this.documentHolder.clonedDocument);
+        ref.componentInstance.setCount(await this.fetchIsRecordedInCount(this.documentHolder.clonedDocument));
         const decision = await ref.result;
         if (decision === 'delete') await this.deleteDocument();
     }
@@ -126,7 +128,7 @@ export class DoceditComponent {
         this.operationInProgress = 'save';
         this.loading.start('docedit');
 
-        const documentBeforeSave: Document = clone(this.documentHolder.getClonedDocument());
+        const documentBeforeSave: Document = clone(this.documentHolder.clonedDocument);
 
         try {
             const documentAfterSave: Document = await this.documentHolder.save();
@@ -162,9 +164,11 @@ export class DoceditComponent {
             return undefined;
         }
 
-        if (errorWithParams.length > 0) this.messages.add(MessagesConversion.convertMessage(errorWithParams));
-        else return [M.DOCEDIT_SAVE_ERROR];
-
+        if (errorWithParams.length > 0) {
+            this.messages.add(MessagesConversion.convertMessage(errorWithParams, this.projectConfiguration));
+        } else {
+            this.messages.add([M.DOCEDIT_ERROR_SAVE]);
+        }
     }
 
 
@@ -172,7 +176,7 @@ export class DoceditComponent {
 
         return !document.resource.relations.isRecordedIn
                 || document.resource.relations.isRecordedIn.length === 0
-            ? 'Projekt'
+            ? this.i18n({ id: 'docedit.parentLabel.project', value: 'Projekt' })
             : document.resource.id
                 ? undefined
                 : (await this.datastore.get(
@@ -208,7 +212,7 @@ export class DoceditComponent {
 
         if (invalidFields.length > 0) {
             this.messages.add([
-                M.DOCEDIT_TYPE_CHANGE_FIELDS_WARNING,
+                M.DOCEDIT_WARNING_TYPE_CHANGE_FIELDS,
                 invalidFields
                     .map(this.getFieldDefinitionLabel)
                     .reduce((acc, fieldLabel) => acc + ', ' + fieldLabel)
@@ -221,7 +225,7 @@ export class DoceditComponent {
 
         if (invalidRelations.length > 0) {
             this.messages.add([
-                M.DOCEDIT_TYPE_CHANGE_RELATIONS_WARNING,
+                M.DOCEDIT_WARNING_TYPE_CHANGE_RELATIONS,
                 invalidRelations
                     .map((relationName: string) => this.projectConfiguration.getRelationDefinitionLabel(relationName))
                     .reduce((acc, relationLabel) => acc + ', ' + relationLabel)
@@ -236,7 +240,7 @@ export class DoceditComponent {
             document: (await this.datastore.get(resourceId)),
             viaSaveButton: viaSaveButton
         });
-        this.messages.add([M.DOCEDIT_SAVE_SUCCESS]);
+        this.messages.add([M.DOCEDIT_SUCCESS_SAVE]);
     }
 
 
@@ -248,7 +252,7 @@ export class DoceditComponent {
         try {
             await this.documentHolder.remove();
             this.activeModal.dismiss('deleted');
-            this.messages.add([M.DOCEDIT_DELETE_SUCCESS]);
+            this.messages.add([M.DOCEDIT_SUCCESS_DELETE]);
         } catch(err) {
             this.messages.add(err);
         }
@@ -260,9 +264,9 @@ export class DoceditComponent {
 
     private handleSaveConflict(documentAfterSave: Document) {
 
-        this.documentHolder.setClonedDocument(documentAfterSave);
+        this.documentHolder.setDocument(documentAfterSave);
         this.activeTabService.setActiveTab('conflicts');
-        this.messages.add([M.DOCEDIT_SAVE_CONFLICT]);
+        this.messages.add([M.DOCEDIT_WARNING_SAVE_CONFLICT]);
     }
 
 

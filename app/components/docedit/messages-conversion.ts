@@ -1,3 +1,4 @@
+import {ProjectConfiguration} from 'idai-components-2';
 import {ValidationErrors} from '../../core/model/validation-errors';
 import {M} from '../m';
 
@@ -6,26 +7,48 @@ import {M} from '../m';
  * * Converts messages of Validator to messages of M for DoceditComponent.
  *
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export module MessagesConversion {
 
-    export function convertMessage(msgWithParams: string[]): string[] {
+    export function convertMessage(msgWithParams: string[], projectConfiguration: ProjectConfiguration): string[] {
 
         if (msgWithParams.length === 0) return [];
-        let replacement = undefined;
+
         const msg = msgWithParams[0];
 
+        if (msg === ValidationErrors.NO_ISRECORDEDIN) msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN;
+        if (msg === ValidationErrors.NO_ISRECORDEDIN_TARGET) msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET;
+        if (msg === ValidationErrors.IDENTIFIER_EXISTS) msgWithParams[0] = M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS;
 
-        if (msg === ValidationErrors.IDENTIFIER_EXISTS) replacement = M.MODEL_VALIDATION_ERROR_IDEXISTS;
-        // TODO this gets thrown if missing identifier, probably because this is detected first
-        if (msg === ValidationErrors.MISSING_PROPERTY) replacement = M.IMPORT_VALIDATION_ERROR_MISSINGPROPERTY;
-        // if (errorWithParams[0] === ImportErrors.MISSING_IDENTIFIER) replacement = M.IMPORT_FAILURE_MISSING_IDENTIFIER;
+        if (msg === ValidationErrors.MISSING_PROPERTY) {
+            msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_MISSING_PROPERTY;
+            msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration);
+            msgWithParams[1] = projectConfiguration.getLabelForType(msgWithParams[1]);
+        }
 
-        // TODO replace M msg by a msg specific to docedit component
-        if (msg === ValidationErrors.NO_ISRECORDEDIN) replacement = M.IMPORT_VALIDATION_ERROR_NORECORDEDIN;
+        if (msg === ValidationErrors.INVALID_NUMERICAL_VALUES) {
+            if (msgWithParams.length > 2 && msgWithParams[2].includes(',')) {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES;
+                msgWithParams[2] = replaceFieldNamesWithLabels(msgWithParams[2], msgWithParams[1], projectConfiguration);
+                msgWithParams[1] = projectConfiguration.getLabelForType(msgWithParams[1]);
+            } else {
+                msgWithParams[0] = M.DOCEDIT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE;
+                msgWithParams[2] = projectConfiguration.getFieldDefinitionLabel(msgWithParams[1], msgWithParams[2]);
+                msgWithParams[1] = projectConfiguration.getLabelForType(msgWithParams[1]);
+            }
+        }
 
-
-        if (replacement) (msgWithParams as any)[0] = replacement;
         return msgWithParams;
+    }
+
+
+    function replaceFieldNamesWithLabels(fieldNames: string, typeName: string,
+                                         projectConfiguration: ProjectConfiguration): string {
+
+        return fieldNames
+            .split(', ')
+            .map(fieldName => projectConfiguration.getFieldDefinitionLabel(typeName, fieldName))
+            .join(', ');
     }
 }

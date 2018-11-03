@@ -9,7 +9,8 @@
         </ul>
     </ng-template>
 
-    <a [ngbPopover]="popContent" [autoClose]="false" popoverTitle="Konflikte"
+    <a [ngbPopover]="popContent" [autoClose]="false"
+       popoverTitle="Konflikte" i18n-popoverTitle="@@navbar.taskbar.conflicts"
        #popover="ngbPopover" placement="bottom" id="taskbar-conflicts-button"
        triggers="manual" (click)="togglePopover()"
        placement="bottom" class="navbar-hover-element">

@@ -5,6 +5,7 @@ import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {M} from '../../m';
 import {IdaiFieldMediaDocumentReadDatastore} from '../../../core/datastore/idai-field-media-document-read-datastore';
 import {IdaiFieldMediaDocument} from '../../../core/model/idai-field-media-document';
+import {clone} from '../../../core/util/object-util';
 
 
 @Component({
@@ -21,11 +22,11 @@ export class MediaResourcePickerComponent implements OnInit {
     @ViewChild('imageGrid') public imageGrid: ImageGridComponent;
 
     public documents: Array<IdaiFieldMediaDocument>;
-
     public document: IdaiFieldDocument;
     public selectedDocuments: Array<IdaiFieldMediaDocument> = [];
 
     private query: Query = { q: '' };
+    private currentQueryId: string;
 
     private static documentLimit: number = 24;
 
@@ -44,7 +45,7 @@ export class MediaResourcePickerComponent implements OnInit {
         // resizing and invoke recalculation of imageGrid
         let modalEl = this.el.nativeElement.parentElement.parentElement;
         modalEl.addEventListener('transitionend', (event: any) => {
-            if (event.propertyName == 'transform') this.onResize();
+            if (event.propertyName === 'transform') this.onResize();
         });
     }
 
@@ -63,13 +64,6 @@ export class MediaResourcePickerComponent implements OnInit {
     }
 
 
-    public async setQueryTypes(types: string[]|undefined) {
-
-        this.query.types = types;
-        await this.fetchDocuments(this.query);
-    }
-
-
     public onResize() {
 
         this.imageGrid.calcGrid();
@@ -81,8 +75,11 @@ export class MediaResourcePickerComponent implements OnInit {
      */
     public select(document: IdaiFieldMediaDocument) {
 
-        if (this.selectedDocuments.indexOf(document) == -1) this.selectedDocuments.push(document);
-        else this.selectedDocuments.splice(this.selectedDocuments.indexOf(document), 1);
+        if (!this.selectedDocuments.includes(document)) {
+            this.selectedDocuments.push(document);
+        } else {
+            this.selectedDocuments.splice(this.selectedDocuments.indexOf(document), 1);
+        }
     }
 
 
@@ -101,15 +98,19 @@ export class MediaResourcePickerComponent implements OnInit {
         };
         this.query.limit = MediaResourcePickerComponent.documentLimit;
 
-        return this.datastore.find(this.query)
-            // .catch(msgWithParams => this.messages.add(msgWithParams)
-            .then(result => this.documents = result.documents)
+        this.currentQueryId = new Date().toISOString();
+        this.query.id = this.currentQueryId;
+
+        return this.datastore.find(clone(this.query))
+            .then(result => {
+                if (result.queryId === this.currentQueryId) this.documents = result.documents
+            })
             .catch(errWithParams => {
-                console.error('error in find with query', this.query);
-                if (errWithParams.length == 2) {
-                    console.error('error in find, cause', errWithParams[1]);
+                console.error('Error in find with query', this.query);
+                if (errWithParams.length === 2) {
+                    console.error('Error in find', errWithParams[1]);
                 }
-                this.messages.add([M.ALL_FIND_ERROR]);
+                this.messages.add([M.ALL_ERROR_FIND]);
             });
     }
 }

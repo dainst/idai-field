@@ -3,7 +3,6 @@ import {Resource} from 'idai-components-2';
 import {Helper} from './helper';
 
 
-
 @Component({
     moduleId: module.id,
     selector: 'dai-dropdown',

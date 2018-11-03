@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Document, Messages} from 'idai-components-2';
-import {IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
+import {Document, Messages, IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
 import {ResourcesComponent} from '../resources.component';
 import {Loading} from '../../../widgets/loading';
 import {ViewFacade} from '../view/view-facade';
@@ -43,6 +42,9 @@ export class ResourcesMapComponent {
             this.parentDocuments = this.getParentDocuments(path);
         });
     }
+
+
+    public getProjectDocument = () => this.settingsService.getProjectDocument();
 
 
     // note that we make no distinction for 'all'-selection if getSelectedOperations.length is 1.

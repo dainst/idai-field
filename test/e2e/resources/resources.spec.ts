@@ -76,9 +76,15 @@ describe('resources --', () => {
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
         RelationsViewPage.getRelationName(0).then(value => {
-            expect(value).toBe('Zeitlich nach'); // with the correct relation label
+            expect(value).toBe('Aufgenommen in Maßnahme');
         });
         RelationsViewPage.getRelationValue(0).then(value => {
+            expect(value).toBe('S1');
+        });
+        RelationsViewPage.getRelationName(1).then(value => {
+            expect(value).toBe('Zeitlich nach');
+        });
+        RelationsViewPage.getRelationValue(1).then(value => {
             expect(value).toBe('2');
         });
     });
@@ -92,7 +98,7 @@ describe('resources --', () => {
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
         RelationsViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(1);
+            expect(relations.length).toBe(2);
         });
     });
 
@@ -129,7 +135,7 @@ describe('resources --', () => {
      * Addresses an issue where relations were still shown after cancelling edit and discarding changes
      * (they were not saved though).
      */
-    it('docview -- show no relations after cancelling edit', () => {
+    it('docview -- do not show new relations after cancelling edit', () => {
 
         ResourcesPage.performCreateResource('1', 'feature-architecture');
         ResourcesPage.performCreateResource('2', 'feature-architecture');
@@ -144,7 +150,7 @@ describe('resources --', () => {
 
         browser.wait(EC.visibilityOf(element(by.css('.detail-sidebar'))), delays.ECWaitTime);
         RelationsViewPage.getRelations().then(function(relations) {
-            expect(relations.length).toBe(0);
+            expect(relations.length).toBe(1);
         });
     });
 
@@ -177,7 +183,7 @@ describe('resources --', () => {
             'shortDescription', 'Text', undefined,
             false, false);
 
-        NavbarPage.awaitAlert('identifier', false);
+        NavbarPage.awaitAlert('Bezeichner', false);
         NavbarPage.clickCloseAllMessages();
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
@@ -311,7 +317,7 @@ describe('resources --', () => {
         ResourcesPage.clickSelectResource('1a');
         DetailSidebarPage.performEditDocument();
         DoceditPage.typeInInputField('identifier', '1b');
-        ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('1a')});
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => { expect(identifier).toBe('1a'); });
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
     });
@@ -325,7 +331,8 @@ describe('resources --', () => {
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickSaveInModal();
-        ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('2')});
+
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => { expect(identifier).toBe('2'); });
     });
 
 
@@ -337,7 +344,7 @@ describe('resources --', () => {
         DoceditPage.typeInInputField('identifier', '2');
         DoceditPage.clickCloseEdit();
         ResourcesPage.clickDiscardInModal();
-        ResourcesPage.getSelectedListItemIdentifierText().then(x=>{expect(x).toBe('1')});
+        ResourcesPage.getSelectedListItemIdentifierText().then(identifier => { expect(identifier).toBe('1'); });
     });
 
 
@@ -359,9 +366,9 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('2'));
-        RelationsViewPage.clickRelation(0);
-        RelationsViewPage.getRelationValue(0).then(relVal => expect(relVal).toEqual('1'));
+        RelationsViewPage.getRelationValue(1).then(relVal => expect(relVal).toEqual('2'));
+        RelationsViewPage.clickRelation(1);
+        RelationsViewPage.getRelationValue(1).then(relVal => expect(relVal).toEqual('1'));
     });
 
 
@@ -394,16 +401,16 @@ describe('resources --', () => {
 
         ResourcesPage.performCreateLink();
         ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         ResourcesPage.clickSelectResource('2');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(2));
         DetailSidebarPage.performEditDocument();
         DoceditPage.clickRelationsTab();
         DoceditRelationsTabPage.clickRelationDeleteButtonByIndices(9, 0);
         DoceditPage.clickSaveDocument();
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
         ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
     });
 
 
@@ -416,7 +423,7 @@ describe('resources --', () => {
         DoceditPage.clickConfirmDeleteInModal();
         browser.sleep(delays.shortRest);
         ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
+        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
     });
 
 

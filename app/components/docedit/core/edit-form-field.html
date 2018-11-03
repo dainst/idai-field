@@ -1,10 +1,7 @@
 <dai-input *ngIf="field.inputType === 'input' || field.inputType === 'unsignedInt'
                             || field.inputType === 'float' || field.inputType == 'unsignedFloat'
-                            || (field.inputType === undefined && field.inner == undefined)"
+                            || field.inputType === undefined"
            [resource]="resource" [fieldName]="field.name"></dai-input>
-
-<dai-inputs *ngIf="field.inputType === 'inputs'" [resource]="resource"
-            [fieldName]="field.name"></dai-inputs>
 
 <dai-text *ngIf="field.inputType === 'text'" [resource]="resource"
           [fieldName]="field.name"></dai-text>

@@ -44,17 +44,17 @@
       }
     }
 
-    .move-into-button {
+    .hierarchy-button {
       position: relative;
       top: 3px;
       right: 7px;
       color: #868e96;
-    }
 
-    .move-into-button:hover {
-      color: darken(#868e96, 10%);
-      background-color: darken($list-item-hover-color, 10%);
-      transition: background-color .65s ease;
+      &:hover {
+        color: darken(#868e96, 10%);
+        background-color: darken($list-item-hover-color, 10%);
+        transition: background-color .65s ease;
+      }
     }
   }
 

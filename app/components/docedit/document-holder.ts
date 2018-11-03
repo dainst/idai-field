@@ -48,15 +48,11 @@ export class DocumentHolder {
     }
 
 
-    public getClonedDocument = () => this.clonedDocument;
-
-
     public isChanged(): boolean {
 
         if (!this.clonedDocument) return false;
 
-        return (this.inspectedRevisions.length > 0
-            || !jsonEqual(this.clonedDocument.resource)(this.oldVersion.resource));
+        return (this.inspectedRevisions.length > 0 || !jsonEqual(this.clonedDocument.resource)(this.oldVersion.resource));
     }
 
 
@@ -71,7 +67,7 @@ export class DocumentHolder {
     }
 
 
-    public setClonedDocument(document: Document) {
+    public setDocument(document: Document) {
 
         this.oldVersion = clone(document);
         this.clonedDocument = clone(document);
@@ -127,7 +123,7 @@ export class DocumentHolder {
         try {
             return await this.datastore.get(id, { skip_cache: true });
         } catch (e) {
-            throw [M.DATASTORE_NOT_FOUND];
+            throw [M.DATASTORE_ERROR_NOT_FOUND];
         }
     }
 
@@ -155,7 +151,7 @@ export class DocumentHolder {
             await this.persistenceManager.remove(this.clonedDocument, this.usernameProvider.getUsername())
         } catch (removeError) {
             console.error('removeWithPersistenceManager', removeError);
-            if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) throw [M.DOCEDIT_DELETE_ERROR];
+            if (removeError !== DatastoreErrors.DOCUMENT_NOT_FOUND) throw [M.DOCEDIT_ERROR_DELETE];
         }
     }
 

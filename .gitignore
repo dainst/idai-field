@@ -60,6 +60,7 @@ app/app.css
 fonts
 app/**/*.js
 app/**/*.js.map
+app/messages.xlf
 
 config.json
 idai-field-documents

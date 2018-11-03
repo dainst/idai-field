@@ -1,11 +1,21 @@
 <ng-template #deleteModal let-c="close">
     <div class="modal-body">
-        <p *ngIf="getSelected().length > 1">Möchten Sie die {{getSelected().length}} markierten Medienressourcen wirklich löschen?</p>
-        <p *ngIf="getSelected().length == 1">Möchten Sie die markierte Medienressource wirklich löschen?</p>
+        <p *ngIf="getSelected().length > 1" i18n="@@mediaOverview.taskbar.deleteModal.question.multiple">
+            Möchten Sie die {{getSelected().length}} markierten Medienressourcen wirklich löschen?
+        </p>
+        <p *ngIf="getSelected().length === 1" i18n="@@mediaOverview.taskbar.deleteModal.question.single">
+            Möchten Sie die markierte Medienressource wirklich löschen?
+        </p>
     </div>
     <div class="modal-footer">
-        <button type="button" id="delete-media-resources-confirm" class="btn btn-danger" (click)="c('delete')">Löschen</button>
-        <button type="button" id="delete-media-resources-cancel" class="btn btn-secondary" (click)="c('cancel')">Abbrechen</button>
+        <button type="button" id="delete-media-resources--confirm" class="btn btn-danger" (click)="c('delete')"
+                i18n="@@buttons.delete">
+            Löschen
+        </button>
+        <button type="button" id="delete-media-resources-cancel" class="btn btn-secondary" (click)="c('cancel')"
+                i18n="@@buttons.cancel">
+            Abbrechen
+        </button>
     </div>
 </ng-template>
 
@@ -15,7 +25,7 @@
         <button type="button" id="delete-media-resources" class="btn btn-danger"
                 (click)="openDeleteModal(deleteModal)"
                 placement="bottom" container="body"
-                ngbTooltip="Löschen">
+                ngbTooltip="Löschen" i18n-ngbTooltip="@@mediaOverview.taskbar.tooltips.delete">
             <span class="mdi mdi-delete"></span>
         </button>
     </div>
@@ -23,19 +33,20 @@
         <button *ngIf="getDepictsRelationsSelected()" type="button" id="remove-link-btn"
                 class="btn btn-danger" (click)="openRemoveLinkModal()"
                 placement="bottom" container="body"
-                ngbTooltip="Verknüpfungen entfernen">
+                ngbTooltip="Verknüpfungen entfernen" i18n-ngbTooltip="@@mediaOverview.taskbar.tooltips.removeLinks">
             <span class="mdi mdi-link-off"></span>
         </button>
         <button type="button" id="create-link-btn" class="btn btn-primary"
-                (click)="openLinkModal(linkModal)"
+                (click)="openLinkModal()"
                 placement="bottom" container="body"
-                ngbTooltip="Verknüpfen">
+                ngbTooltip="Verknüpfen" i18n-ngbTooltip="@@mediaOverview.taskbar.tooltips.createLink">
             <span class="mdi mdi-link"></span>
         </button>
     </div>
     <div class="btn-group">
         <button id="deselect-media-resources" type="button" class="btn btn-secondary" (click)="clearSelection()"
-            placement="bottom" container="body" ngbTooltip="Auswahl aufheben">
+                placement="bottom" container="body" ngbTooltip="Auswahl aufheben"
+                i18n-ngbTooltip="@@mediaOverview.taskbar.tooltips.deselect">
             <span class="mdi mdi-selection-off"></span>
         </button>
     </div>

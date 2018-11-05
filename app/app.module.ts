@@ -46,6 +46,7 @@ import {SettingsSerializer} from './core/settings/settings-serializer';
 import {IndexerConfiguration} from './indexer-configuration';
 import {SynchronizationStatus} from './core/settings/synchronization-status';
 import {Translations} from './translations';
+import {ExportModule} from './components/export/export.module';
 
 
 const remote = require('electron').remote;
@@ -75,6 +76,7 @@ registerLocaleData(localeDe, 'de');
         IdaiWidgetsModule,
         WidgetsModule,
         ImportModule,
+        ExportModule,
         BackupModule,
         DatastoreModule,
         MatrixModule

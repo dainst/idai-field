@@ -1,0 +1,22 @@
+<div class="row" (dragover)="false" (dragleave)="false" (drop)="false">
+    <div class="col">
+        <div class="row">
+            <div class="col default-nav bg-light text-right">
+                <button id="exportStartButton"
+                        class="btn btn-primary"
+                        (click)="startExport()">
+                    <span class="mdi mdi-file-export"></span>
+                    <span class="button-label" i18n="@@export.startExport">Export starten</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col default-container">
+                <div class="col-lg-6 mx-lg-auto py-4">
+                    <div *ngIf="!javaInstalled">Java 1.8 oder höher muss installiert sein.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

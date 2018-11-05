@@ -87,7 +87,8 @@
         'pouchdb-replication-stream': 'node_modules/pouchdb-replication-stream/dist/pouchdb.replication-stream.js',
         'showdown': 'node_modules/showdown/dist/showdown.js',
         'angular2-uuid': 'node_modules/angular2-uuid/index.js',
-        'papaparse': '@node/papaparse'
+        'papaparse': '@node/papaparse',
+        'child_process': '@node/child_process'
     };
 
     config.meta = {

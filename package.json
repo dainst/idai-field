@@ -41,6 +41,7 @@
     "npmRebuild": false,
     "extraResources": [
       "config",
+      "tools",
       "test/test-data/imagestore-samples"
     ]
   },

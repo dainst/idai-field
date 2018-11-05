@@ -516,6 +516,14 @@
           <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.startExport" datatype="html">
+        <source>Export starten</source>
+        <target state="final">Export starten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
         <source>Datenbank wird gesichert.</source>
         <target state="final">Datenbank wird gesichert.</target>
@@ -694,12 +702,20 @@
           <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="navbar.taskbar.dropdown.export" datatype="html">
+        <source>Export</source>
+        <target state="final">Export</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/navbar/taskbar.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="navbar.taskbar.dropdown.createBackup" datatype="html">
         <source>Backup erstellen</source>
         <target state="final">Backup erstellen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.dropdown.restoreBackup" datatype="html">
@@ -707,7 +723,7 @@
         <target state="final">Backup einlesen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.dropdown.settings" datatype="html">
@@ -715,7 +731,7 @@
         <target state="final">Einstellungen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/navbar/taskbar.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="navbar.taskbar.conflicts" datatype="html">

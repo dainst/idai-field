@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 const exec = require('child_process').exec;
+const remote = require('electron').remote;
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ExportComponent implements OnInit {
 
     public startExport() {
 
-        exec('java -jar tools/idai-field-shapefile-utility.jar',
+        exec('java -jar ' + ExportComponent.getJarPath(),
                 (error: string, stdout: string, stderr: string) => {
             console.log('error', error);
             console.log('stdout', stdout);
@@ -50,5 +51,11 @@ export class ExportComponent implements OnInit {
                 resolve(javaVersion);
             });
        });
+    }
+
+
+    private static getJarPath(): string {
+
+        return remote.getGlobal('toolsPath') + '/idai-field-shapefile-utility.jar';
     }
 }

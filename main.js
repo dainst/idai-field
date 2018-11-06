@@ -96,6 +96,10 @@ if (global.mode === 'test') {
     global.switches.provide_reset = true;
 }
 
+global.toolsPath = global.mode === 'production' ?
+    electron.app.getAppPath().replace('app.asar', '') + 'tools'
+    : 'tools';
+
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
 
 

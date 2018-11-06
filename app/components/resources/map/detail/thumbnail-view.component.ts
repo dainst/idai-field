@@ -6,6 +6,7 @@ import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/fi
 import {ImageUploadResult} from '../../../imageupload/image-uploader';
 import {M} from '../../../m';
 import {ViewFacade} from '../../view/view-facade';
+import {SortUtil} from '../../../../core/util/sort-util';
 
 @Component({
     selector: 'thumbnail-view',
@@ -59,7 +60,7 @@ export class ThumbnailViewComponent implements OnChanges {
         }
         //
 
-        this.updateGrid();
+        await this.updateGrid();
         this.showUploadResultMessage(uploadResult);
     }
 
@@ -70,7 +71,7 @@ export class ThumbnailViewComponent implements OnChanges {
     }
 
 
-    private updateGrid() {
+    private async updateGrid() {
 
         this.documents = [];
 
@@ -84,7 +85,12 @@ export class ThumbnailViewComponent implements OnChanges {
                 });
         }
 
-        promise.then(() => this.imageGrid.calcGrid());
+        await promise;
+
+        this.documents.sort((a: IdaiFieldImageDocument, b: IdaiFieldImageDocument) => {
+           return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
+        });
+        this.imageGrid.calcGrid();
     }
     
     

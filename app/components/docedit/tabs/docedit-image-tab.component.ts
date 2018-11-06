@@ -5,6 +5,7 @@ import {IdaiFieldDocument, IdaiFieldImageDocument} from 'idai-components-2';
 import {ImagePickerComponent} from '../widgets/image-picker.component';
 import {ImageGridComponent} from '../../imagegrid/image-grid.component';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/field/idai-field-image-document-read-datastore';
+import {SortUtil} from '../../../core/util/sort-util';
 
 @Component({
     selector: 'docedit-image-tab',
@@ -21,8 +22,8 @@ export class DoceditImageTabComponent {
 
     @Input() document: IdaiFieldDocument;
 
-    public documents: IdaiFieldImageDocument[];
-    public selected: IdaiFieldImageDocument[] = [];
+    public documents: Array<IdaiFieldImageDocument>;
+    public selected: Array<IdaiFieldImageDocument> = [];
 
 
     constructor(private datastore: IdaiFieldImageDocumentReadDatastore,
@@ -105,6 +106,9 @@ export class DoceditImageTabComponent {
 
         Promise.all(imageDocPromises as any).then(docs => {
             this.documents = docs as any;
+            this.documents.sort((a: IdaiFieldImageDocument, b: IdaiFieldImageDocument) => {
+                return SortUtil.alnumCompare(a.resource.identifier, b.resource.identifier);
+            });
             this.clearSelection();
         });
     }

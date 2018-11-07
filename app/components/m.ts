@@ -43,11 +43,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_ERROR_SAME_PROJECT_NAME = 'backup.read.error.sameProjectName';
 
     // Import Package
-    public static IMPORT_SUCCESS_SINGLE= 'importer.success.single';
-    public static IMPORT_SUCCESS_MULTIPLE= 'importer.success.multiple';
-    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER= 'importer.warning.geojsonDuplicateIdentifier';
-    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS= 'importer.warning.geojsonDuplicateIdentifiers';
-    public static IMPORT_ERROR_GENERIC_START_ERROR= 'importer.error.genericStartError';
+    public static IMPORT_SUCCESS_SINGLE = 'importer.success.single';
+    public static IMPORT_SUCCESS_MULTIPLE = 'importer.success.multiple';
+    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER = 'importer.warning.geojsonDuplicateIdentifier';
+    public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS = 'importer.warning.geojsonDuplicateIdentifiers';
+    public static IMPORT_ERROR_GENERIC_START_ERROR = 'importer.error.genericStartError';
     public static IMPORT_ERROR_FILE_UNREADABLE = 'importer.error.fileUnreadable';
     public static IMPORT_ERROR_INVALID_JSON = 'importer.error.invalidJson';
     public static IMPORT_ERROR_INVALID_JSONL = 'importer.error.invalidJsonl';
@@ -76,6 +76,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELDS = 'import.validation.error.invalidRelationFields';
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'import.validation.error.invalidNumericValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'import.validation.error.invalidNumericValues';
+
+    // Export Package
+    public static EXPORT_SUCCESS = 'export.success';
+    public static EXPORT_ERROR_GENERIC = 'export.error.generic';
 
     // Datastore Package
     public static DATASTORE_ERROR_NOT_FOUND = 'datastore.error.notFound';
@@ -603,6 +607,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 value: 'Fehlendes Ziel einer Relation vom Typ \'Aufgenommen in Maßnahme\'. Ziel-ID: [0].'
             }),
             level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_SUCCESS] = {
+            content: i18n({
+                id: 'messages.export.success',
+                value: 'Die Exportdatei wurde erfolgreich erstellt.'
+            }),
+            level: 'success',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_ERROR_GENERIC] = {
+            content: i18n({
+                id: 'messages.export.error.generic',
+                value: 'Beim Erstellen der Exportdatei ist ein Fehler aufgetreten.'
+            }),
+            level: 'success',
             params: [],
             hidden: false
         };

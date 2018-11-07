@@ -516,12 +516,50 @@
           <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.modal.info" datatype="html">
+        <source>Daten werden exportiert...</source>
+        <target state="final">Daten werden exportiert...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export-modal.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.startExport" datatype="html">
         <source>Export starten</source>
         <target state="final">Export starten</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
           <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.format" datatype="html">
+        <source>Format</source>
+        <target state="final">Format</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.formats.shapefile" datatype="html">
+        <source>Shapefile</source>
+        <target state="final">Shapefile</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.shapefile.javaWarning" datatype="html">
+        <source>
+                        Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher
+                        erforderlich.
+                    </source>
+        <target state="final">
+                        Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher
+                        erforderlich.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
@@ -2492,6 +2530,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.dialog.filter.zip" datatype="html">
+        <source>ZIP-Archiv</source>
+        <target state="final">ZIP-Archiv</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/export/export.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.messages.error.unknownMessage" datatype="html">
         <source>Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</source>
         <target state="final">Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</target>
@@ -2911,6 +2957,22 @@
       <trans-unit id="messages.import.validation.error.noRecordedInTarget" datatype="html">
         <source>Fehlendes Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel-ID: [0].</source>
         <target state="final">Fehlendes Ziel einer Relation vom Typ 'Aufgenommen in Maßnahme'. Ziel-ID: [0].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.success" datatype="html">
+        <source>Die Exportdatei wurde erfolgreich erstellt.</source>
+        <target state="final">Die Exportdatei wurde erfolgreich erstellt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.error.generic" datatype="html">
+        <source>Beim Erstellen der Exportdatei ist ein Fehler aufgetreten.</source>
+        <target state="final">Beim Erstellen der Exportdatei ist ein Fehler aufgetreten.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

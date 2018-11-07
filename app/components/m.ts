@@ -624,7 +624,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
                 id: 'messages.export.error.generic',
                 value: 'Beim Erstellen der Exportdatei ist ein Fehler aufgetreten.'
             }),
-            level: 'success',
+            level: 'danger',
             params: [],
             hidden: false
         };

@@ -341,6 +341,7 @@ describe('resources/state --', function() {
     it('search/suggestions -- show suggestion for resource from different context', done => {
 
         SearchBarPage.typeInSearchField('SE0');
+        browser.sleep(delays.shortRest);
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.getSuggestions().then(suggestions => {
             expect(suggestions.length).toBe(1);
@@ -351,9 +352,10 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/suggestion -- do not show suggestions if any resources in current context are found', done => {
+    it('search/suggestions -- do not show suggestions if any resources in current context are found', done => {
 
         SearchBarPage.typeInSearchField('S');
+        browser.sleep(delays.shortRest);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
         browser.wait(EC.invisibilityOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
@@ -365,6 +367,7 @@ describe('resources/state --', function() {
     it('search/suggestions -- do not suggest project document', done => {
 
         SearchBarPage.typeInSearchField('te');
+        browser.sleep(delays.shortRest);
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.getSuggestions().then(suggestions => {
             expect(suggestions.length).toBe(1);
@@ -378,6 +381,7 @@ describe('resources/state --', function() {
     it('search/suggestions -- delete query string after following suggestion link', async done => {
 
         SearchBarPage.typeInSearchField('SE0');
+        browser.sleep(delays.shortRest);
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.clickFirstSuggestion();
 

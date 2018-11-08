@@ -53,10 +53,11 @@ export class ExportComponent implements OnInit {
         this.openModal();
 
         try {
-            await ShapefileExporter.performExport(filePath, this.settingsService.getSelectedProject());
+            await ShapefileExporter.performExport(filePath, this.settingsService.getProjectDocument());
             this.messages.add([M.EXPORT_SUCCESS]);
         } catch(err) {
             this.messages.add([M.EXPORT_ERROR_GENERIC]);
+            console.error(err);
         }
 
         this.running = false;

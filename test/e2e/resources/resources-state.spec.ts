@@ -340,7 +340,7 @@ describe('resources/state --', function() {
     it('search/suggestions -- show suggestion for resource from different context', done => {
 
         SearchBarPage.typeInSearchField('SE0');
-        browser.sleep(delays.shortRest);
+        browser.sleep(delays.shortRest * 10);
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.getSuggestions().then(suggestions => {
             expect(suggestions.length).toBe(1);

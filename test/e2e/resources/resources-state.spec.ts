@@ -75,11 +75,57 @@ describe('resources/state --', function() {
     }
 
 
-    it('switch from image to map view after click on depicts relation link', () => {
+    it('search/suggestions -- show suggestion for resource from different context', done => {
 
-        createDepictsRelation();
-        clickDepictsRelationLink();
+        SearchBarPage.typeInSearchField('SE0');
+        browser.sleep(delays.shortRest * 10);
+        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesSearchBarPage.getSuggestions().then(suggestions => {
+            expect(suggestions.length).toBe(1);
+            expect(suggestions[0].getText()).toEqual('SE0');
+        });
+
+        done();
+    });
+
+
+    it('search/suggestions -- do not show suggestions if any resources in current context are found', done => {
+
+        SearchBarPage.typeInSearchField('S');
+        browser.sleep(delays.shortRest);
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
+        browser.wait(EC.invisibilityOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesSearchBarPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
+
+        done();
+    });
+
+
+    it('search/suggestions -- do not suggest project document', done => {
+
+        SearchBarPage.typeInSearchField('te');
+        browser.sleep(delays.shortRest);
+        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesSearchBarPage.getSuggestions().then(suggestions => {
+            expect(suggestions.length).toBe(1);
+            expect(suggestions[0].getText()).toEqual('testf1');
+        });
+
+        done();
+    });
+
+
+    it('search/suggestions -- delete query string after following suggestion link', async done => {
+
+        SearchBarPage.typeInSearchField('SE0');
+        browser.sleep(delays.shortRest);
+        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
+        ResourcesSearchBarPage.clickFirstSuggestion();
+
+        NavbarPage.clickNavigateToOverview();
+        expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');
+
+        done();
     });
 
 
@@ -337,57 +383,11 @@ describe('resources/state --', function() {
     });
 
 
-    it('search/suggestions -- show suggestion for resource from different context', done => {
+    it('switch from image to map view after click on depicts relation link', () => {
 
-        SearchBarPage.typeInSearchField('SE0');
-        browser.sleep(delays.shortRest * 10);
-        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesSearchBarPage.getSuggestions().then(suggestions => {
-            expect(suggestions.length).toBe(1);
-            expect(suggestions[0].getText()).toEqual('SE0');
-        });
-
-        done();
-    });
-
-
-    it('search/suggestions -- do not show suggestions if any resources in current context are found', done => {
-
-        SearchBarPage.typeInSearchField('S');
-        browser.sleep(delays.shortRest);
+        createDepictsRelation();
+        clickDepictsRelationLink();
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')), delays.ECWaitTime);
-        browser.wait(EC.invisibilityOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesSearchBarPage.getSuggestions().then(suggestions => expect(suggestions.length).toBe(0));
-
-        done();
-    });
-
-
-    it('search/suggestions -- do not suggest project document', done => {
-
-        SearchBarPage.typeInSearchField('te');
-        browser.sleep(delays.shortRest);
-        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesSearchBarPage.getSuggestions().then(suggestions => {
-            expect(suggestions.length).toBe(1);
-            expect(suggestions[0].getText()).toEqual('testf1');
-        });
-
-        done();
-    });
-
-
-    it('search/suggestions -- delete query string after following suggestion link', async done => {
-
-        SearchBarPage.typeInSearchField('SE0');
-        browser.sleep(delays.shortRest);
-        browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
-        ResourcesSearchBarPage.clickFirstSuggestion();
-
-        NavbarPage.clickNavigateToOverview();
-        expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');
-
-        done();
     });
 
 

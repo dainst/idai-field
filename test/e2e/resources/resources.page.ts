@@ -12,9 +12,9 @@ const delays = require('../config/delays');
 
 export class ResourcesPage {
 
-    public static get() {
+    public static get(view: string = 'excavation') {
 
-        return browser.get('#/resources/excavation');
+        return browser.get('#/resources/' + view);
     }
 
 

@@ -1,7 +1,7 @@
 import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {ResourcesPage} from '../resources/resources.page';
-import {ProjectPage} from '../project.page';
+import {ProjectPage} from './project.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 
 const fs = require('fs');
@@ -20,12 +20,14 @@ describe('project --', function() {
 
 
     beforeAll(() => {
+
        removeResourcesStateFile();
     });
 
 
     beforeEach(() => {
-        return ProjectPage.get();
+
+        return ResourcesPage.get('project');
     });
 
 

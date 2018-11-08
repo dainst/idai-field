@@ -1,17 +1,11 @@
-import {browser, element, by} from 'protractor';
+import {element, by} from 'protractor';
 
-const common = require('./common');
+const common = require('../common');
 
 /**
  * @author Daniel de Oliveira
  */
 export class ProjectPage {
-
-    public static get() {
-
-        return browser.get('#/resources/project');
-    }
-
 
     // click
 

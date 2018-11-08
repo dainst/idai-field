@@ -2,7 +2,6 @@ import {browser, protractor} from 'protractor';
 import {NavbarPage} from '../navbar.page';
 import {SearchBarPage} from '../widgets/search-bar.page';
 import {ResourcesPage} from './resources.page';
-import {ProjectPage} from '../project.page';
 import {ImageOverviewPage} from '../images/image-overview.page';
 import {DoceditPage} from '../docedit/docedit.page';
 import {DoceditRelationsTabPage} from '../docedit/docedit-relations-tab.page';
@@ -27,7 +26,7 @@ describe('resources/state --', function() {
     let index = 0;
 
 
-    beforeAll(() => ProjectPage.get());
+    beforeAll(() => ResourcesPage.get('project'));
 
     beforeAll(() => removeResourcesStateFile());
 

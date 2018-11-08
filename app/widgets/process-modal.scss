@@ -1,7 +1,8 @@
-#image-upload-modal {
+.process-modal {
+  text-align: center;
 
-  .image-upload-modal-container {
-    margin-left: 115px;
+  .process-modal-container {
+    display: inline-block;
 
     .spinner {
       display: inline-block;
@@ -9,10 +10,9 @@
       margin-right: 10px;
     }
 
-    .upload-info {
+    .process-info-message {
       display: inline-block;
       position: relative; top: -14px;
     }
   }
-
 }

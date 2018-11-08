@@ -5,6 +5,7 @@ import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {M} from '../m';
 import {ExportModalComponent} from './export-modal.component';
+import {ShapefileExporter} from './shapefile-exporter';
 
 const exec = require('child_process').exec;
 const remote = require('electron').remote;
@@ -52,7 +53,7 @@ export class ExportComponent implements OnInit {
         this.openModal();
 
         try {
-            await this.performExport(filePath);
+            await ShapefileExporter.performExport(filePath, this.settingsService.getSelectedProject());
             this.messages.add([M.EXPORT_SUCCESS]);
         } catch(err) {
             this.messages.add([M.EXPORT_ERROR_GENERIC]);
@@ -74,24 +75,6 @@ export class ExportComponent implements OnInit {
                     }]
             });
             resolve(filePath);
-        });
-    }
-
-
-    private performExport(filePath: string): Promise<any> {
-
-        return new Promise<any>((resolve, reject) => {
-            exec('java -jar ' + ExportComponent.getJarPath() + ' '
-                    + ExportComponent.getArguments(this.settingsService.getSelectedProject(), filePath),
-                    (error: string, stdout: string, stderr: string) => {
-                if (error) {
-                    reject(error);
-                } else if (stderr !== '') {
-                    reject(stderr);
-                } else {
-                    resolve();
-                }
-            });
         });
     }
 
@@ -134,18 +117,5 @@ export class ExportComponent implements OnInit {
                 resolve(javaVersion);
             });
        });
-    }
-
-
-    private static getJarPath(): string {
-
-        return remote.getGlobal('toolsPath') + '/shapefile-tool.jar';
-    }
-
-
-    private static getArguments(projectName: string, outputFilepath: string): string {
-
-        return '\"' + projectName + '\" \"' + outputFilepath + '\" \"'
-            + remote.getGlobal('appDataPath') + '/temp\"';
     }
 }

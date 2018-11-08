@@ -17,11 +17,11 @@
                     <div class="form-group">
                         <label class="control-label col-form-label"
                                for="operationSelect"
-                               i18n="@@export.operationSelect.label">Zu exportierende Daten wählen</label>
+                               i18n="@@export.operationSelect.label">Maßnahme</label>
                         <select id="operationSelect" class="form-control"
                                 [(ngModel)]="selectedOperationId">
                             <option value="project"
-                                    i18n="@@export.operationSelect.project">Gesamtes Projekt</option>
+                                    i18n="@@export.operationSelect.all">Alle Maßnahmen</option>
                             <option *ngFor="let operation of operations" value="{{operation.resource.id}}">
                                 {{getOperationLabel(operation)}}
                             </option>

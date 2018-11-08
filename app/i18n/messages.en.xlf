@@ -532,16 +532,16 @@
         </context-group>
       </trans-unit>
       <trans-unit id="export.operationSelect.label" datatype="html">
-        <source>Zu exportierende Daten wählen</source>
-        <target state="final">Select data to export</target>
+        <source>Maßnahme</source>
+        <target state="final">Operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="export.operationSelect.project" datatype="html">
-        <source>Gesamtes Projekt</source>
-        <target state="final">Whole project</target>
+      <trans-unit id="export.operationSelect.all" datatype="html">
+        <source>Alle Maßnahmen</source>
+        <target state="final">All operations</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
           <context context-type="linenumber">24</context>

@@ -16,13 +16,28 @@
                 <div class="col-lg-6 mx-lg-auto py-4">
                     <div class="form-group">
                         <label class="control-label col-form-label"
+                               for="operationSelect"
+                               i18n="@@export.operationSelect.label">Zu exportierende Daten wählen</label>
+                        <select id="operationSelect" class="form-control"
+                                [(ngModel)]="selectedOperationId">
+                            <option value="project"
+                                    i18n="@@export.operationSelect.project">Gesamtes Projekt</option>
+                            <option *ngFor="let operation of operations" value="{{operation.resource.id}}">
+                                {{getOperationLabel(operation)}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-form-label"
                                for="ExportFormatSelect" i18n="@@export.format">Format</label>
                         <select id="ExportFormatSelect" class="form-control" [(ngModel)]="format">
                             <option value="shapefile" i18n="@@export.formats.shapefile">Shapefile</option>
                         </select>
                     </div>
 
-                    <div *ngIf="isJavaInstallationMissing()" class="text-danger" i18n="@@export.shapefile.javaWarning">
+                    <div *ngIf="isJavaInstallationMissing()" class="text-danger"
+                         i18n="@@export.shapefile.javaWarning">
                         Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher
                         erforderlich.
                     </div>

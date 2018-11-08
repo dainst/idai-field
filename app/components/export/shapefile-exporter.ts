@@ -9,10 +9,11 @@ const remote = require('electron').remote;
  */
 export module ShapefileExporter {
 
-    export function performExport(filePath: string, projectDocument: Document): Promise<any> {
+    export function performExport(projectDocument: Document, outputFilePath: string,
+                                  operationId: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
-            exec('java -jar ' + getJarPath() + ' ' + getArguments(projectDocument, filePath),
+            exec(getCommand(projectDocument, outputFilePath, operationId),
                 (error: string, stdout: string, stderr: string) => {
                     if (error) {
                         reject(error);
@@ -26,20 +27,27 @@ export module ShapefileExporter {
     }
 
 
+    function getCommand(projectDocument: Document, outputFilepath: string, operationId: string): string {
+
+        return 'java -jar ' + getJarPath() + ' ' + getArguments(projectDocument, outputFilepath, operationId);
+    }
+
+
     function getJarPath(): string {
 
         return remote.getGlobal('toolsPath') + '/shapefile-tool.jar';
     }
 
 
-    function getArguments(projectDocument: Document, outputFilepath: string): string {
+    function getArguments(projectDocument: Document, outputFilepath: string, operationId: string): string {
 
         const epsg: string|undefined = getEPSGCode(projectDocument);
 
         return '\"' + projectDocument.resource.identifier + '\" '
             + '\"' + outputFilepath + '\" '
             + '\"' + remote.getGlobal('appDataPath') + '/temp\" '
-            + (epsg ? '\"' + epsg + '\"' : '');
+            + '\"' + operationId + '\"'
+            + (epsg ? ' \"' + epsg + '\"' : '');
     }
 
 

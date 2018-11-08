@@ -38,7 +38,7 @@ describe('resources --', () => {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToProject();
+            NavbarPage.clickNavigateToOverview();
             browser.sleep(delays.shortRest * 3);
             NavbarPage.clickNavigateToExcavation();
         }
@@ -266,7 +266,7 @@ describe('resources --', () => {
 
     it('should delete a main type resource', () => {
 
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
 
         function del(what: any) {
 
@@ -439,7 +439,7 @@ describe('resources --', () => {
 
     it('maintype -- should edit a main type resource', () => {
 
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
         ResourcesPage.openEditByDoubleClickResource('S1');
         DoceditPage.typeInInputField('identifier', 'newIdentifier');
         DoceditPage.clickSaveDocument();

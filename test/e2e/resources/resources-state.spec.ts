@@ -38,7 +38,7 @@ describe('resources/state --', function() {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToProject();
+            NavbarPage.clickNavigateToOverview();
             browser.sleep(delays.shortRest * 3);
         }
 
@@ -385,7 +385,7 @@ describe('resources/state --', function() {
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
         ResourcesSearchBarPage.clickFirstSuggestion();
 
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
         expect(await SearchBarPage.getSearchBarInputFieldValue()).toEqual('');
 
         done();
@@ -405,7 +405,7 @@ describe('resources/state --', function() {
         OperationBarPage.performSelectOperation(0); // trench2
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('befund1'));
 
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
         ResourcesPage.getListItemIdentifierText(0).then(text => expect(text).toEqual('A1'));
         ResourcesPage.getListItemIdentifierText(1).then(text => expect(text).toEqual('B1'));
         ResourcesPage.getListItemIdentifierText(2).then(text => expect(text).toEqual('S1'));
@@ -443,7 +443,7 @@ describe('resources/state --', function() {
 
         NavbarPage.clickNavigateToExcavation();
 
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
         ResourcesPage.performCreateResource('t2', 'trench');
         ResourcesPage.clickHierarchyButton('t2');
         NavbarPage.getActiveNavLinkLabel().then(navLinkLabel => expect(navLinkLabel).toEqual('Ausgrabung'));

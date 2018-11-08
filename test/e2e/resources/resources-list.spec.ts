@@ -25,7 +25,7 @@ describe('resources/list --', () => {
             NavbarPage.performNavigateToSettings();
             await common.resetApp();
             browser.sleep(delays.shortRest);
-            NavbarPage.clickNavigateToProject();
+            NavbarPage.clickNavigateToOverview();
             browser.sleep(delays.shortRest * 2);
             NavbarPage.clickNavigateToExcavation();
             browser.sleep(delays.shortRest);
@@ -60,7 +60,7 @@ describe('resources/list --', () => {
         ResourcesPage.performCreateResourceInList('5', 'feature-architecture');
         ResourcesPage.clickHierarchyButton('5');
         ResourcesPage.performCreateResourceInList('child1', 'find');
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
         NavbarPage.clickNavigateToExcavation();
 
         ResourcesPage.getListModeInputFieldValue('child1', 0).then(inputValue => expect(inputValue).toEqual('child1'));

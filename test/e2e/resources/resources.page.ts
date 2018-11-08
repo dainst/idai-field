@@ -278,7 +278,7 @@ export class ResourcesPage {
 
     public static performCreateMainTypeResource(identifier: string) {
 
-        NavbarPage.clickNavigateToProject();
+        NavbarPage.clickNavigateToOverview();
         this.performCreateResource(identifier, 'trench');
         this.clickHierarchyButton(identifier);
     }

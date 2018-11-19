@@ -13,6 +13,11 @@ public class ShapefileTool {
 
     public static void main(String[] arguments) {
 
+        if (arguments.length == 0) {
+            printUsageInformation();
+            return;
+        }
+
         try {
             switch(arguments[0]) {
                 case "import":

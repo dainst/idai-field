@@ -38,7 +38,7 @@ public class JsonlSerializerTest extends TestCase {
         assertEquals("{ \"id\": \"id\", \"identifier\": \"identifier\", "
                         + "\"shortDescription\": \"short description\", \"type\": \"type\", "
                         + "\"geometry\": { \"coordinates\": [1.0, 1.0], "
-                        + "\"type\": \"Point\" } } }\n",
+                        + "\"type\": \"Point\" } }\n",
                 JsonlSerializer.getJsonl(resources)
         );
     }

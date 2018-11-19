@@ -3,7 +3,6 @@ package org.dainst.idaifield.datastore;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -39,35 +38,6 @@ public class Datastore {
         query += " } }";
 
         return getResourcesMap(extractResources(getJsonData(projectName, query)));
-    }
-
-
-    public static JSONObject getJSONDocument(String projectName, String resourceId) throws Exception {
-
-        String query = "{ \"selector\": { \"resource.id\": \"" + resourceId + "\" } }";
-
-        JSONArray json = getJsonData(projectName, query);
-        if (json.length() == 0) {
-            throw new Exception("RESOURCE_NOT_FOUND " + resourceId);
-        } else {
-            return json.getJSONObject(0);
-        }
-    }
-
-
-    public static void update(String projectName, JSONObject document) throws Exception {
-
-        System.out.println(document.get("_id"));
-
-        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-            HttpPut httpPut = new HttpPut("http://localhost:3000/" + projectName + "/"
-                    + document.get("_id"));
-            httpPut.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-            httpPut.setHeader(HttpHeaders.ACCEPT, "application/json");
-            httpPut.setEntity(new StringEntity(document.toString()));
-
-            httpClient.execute(httpPut);
-        }
     }
 
 

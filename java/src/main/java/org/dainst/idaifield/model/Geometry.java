@@ -1,5 +1,6 @@
 package org.dainst.idaifield.model;
 
+import java.util.Arrays;
 
 /**
  * @author Thomas Kleinke
@@ -31,6 +32,25 @@ public class Geometry {
     public void setCoordinates(double[][][][] coordinates) {
 
         this.coordinates = coordinates;
+    }
+
+
+    public String getGeojsonCoordinates() {
+
+        switch (getGeojsonType()) {
+            case "Point":
+                return Arrays.toString(getCoordinates()[0][0][0]);
+            case "MultiPoint":
+            case "LineString":
+                return Arrays.deepToString(getCoordinates()[0][0]);
+            case "MultiLineString":
+            case "Polygon":
+                return Arrays.deepToString(getCoordinates()[0]);
+            case "MultiPolygon":
+                return Arrays.deepToString(getCoordinates());
+            default:
+                return null;
+        }
     }
 
 

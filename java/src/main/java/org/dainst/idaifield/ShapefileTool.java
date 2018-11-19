@@ -37,12 +37,12 @@ public class ShapefileTool {
 
     private static void runImporter(String[] arguments) throws Exception {
 
-        if (arguments.length != 4) {
+        if (arguments.length != 3) {
             printUsageInformation();
             return;
         }
 
-        ShapefileImporter.run(arguments[1], arguments[2], arguments[3]);
+        ShapefileImporter.run(arguments[1], arguments[2]);
     }
 
 
@@ -60,7 +60,7 @@ public class ShapefileTool {
 
     private static void printUsageInformation() {
 
-        System.err.println("java -jar shapefile-tool.jar import [projectName] [userName] [shapefilePath]");
+        System.err.println("java -jar shapefile-tool.jar import [shapefilePath] [outputFilePath]");
         System.err.println("java -jar shapefile-tool.jar export [projectName] [outputFilePath] "
                 + "[tempFolderPath] [operation] [epsg]");
     }

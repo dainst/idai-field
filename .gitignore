@@ -50,7 +50,6 @@ synctestremotedb
 ########
 *iml
 node_modules
-src
 dist
 release
 cache
@@ -58,6 +57,7 @@ typings
 css
 app/app.css
 fonts
+tools
 app/**/*.js
 app/**/*.js.map
 app/messages.xlf

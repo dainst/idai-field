@@ -7,7 +7,9 @@
   "author": "German Archaeological Institute",
   "scripts": {
     "prebuild": "rimraf css/* && rimraf src/* && rimraf fonts/*",
-    "build": "gulp copy-fonts-convert-sass && tsc -p app/tsconfig.json && tsc -p test/tsconfig.json",
+    "build-app": "gulp copy-fonts-convert-sass && tsc -p app/tsconfig.json && tsc -p test/tsconfig.json",
+    "build-shapefile-tool": "mvn -f java/pom.xml clean package && gulp copy-shapefile-tool",
+    "build": "npm run build-app && npm run build-shapefile-tool",
     "clean": "git clean -xdf app test",
     "convert-sass": "gulp convert-sass",
     "start": "electron . dev",
@@ -110,6 +112,7 @@
     "file-url": "2.0.2",
     "gulp": "3.9.1",
     "gulp-concat": "2.6.1",
+    "gulp-rename": "1.4.0",
     "gulp-sass": "4.0.2",
     "gulp-webserver": "0.9.1",
     "jasmine": "2.5.2",

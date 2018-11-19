@@ -2,10 +2,9 @@ import {RelationsCompleter} from './relations-completer';
 import {RelationsStrategy} from './relations-strategy';
 
 /**
- *@author Thomas Kleinke
+ * @author Thomas Kleinke
  */
 export class DefaultRelationsStrategy implements RelationsStrategy {
-
 
     constructor(private relationsCompleter: RelationsCompleter) { }
 

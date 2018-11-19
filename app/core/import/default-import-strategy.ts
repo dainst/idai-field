@@ -1,6 +1,6 @@
 import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {ImportStrategy} from './import-strategy';
-import {DocumentDatastore} from "../datastore/document-datastore";
+import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validator} from '../model/validator';
 import {DocumentMerge} from './document-merge';
 import {TypeUtility} from '../model/type-utility';
@@ -13,7 +13,6 @@ import {ImportErrors} from './import-errors';
  * @author Thomas Kleinke
  */
 export class DefaultImportStrategy implements ImportStrategy {
-
 
     constructor(private typeUtility: TypeUtility,
                 private validator: Validator,

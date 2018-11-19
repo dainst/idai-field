@@ -1,11 +1,10 @@
 import {RollbackStrategy} from './rollback-strategy'
-import {DocumentDatastore} from "../datastore/document-datastore";
+import {DocumentDatastore} from '../datastore/document-datastore';
 
 /**
  * @author Thomas Kleinke
  */
 export class DefaultRollbackStrategy implements RollbackStrategy {
-
 
     constructor(private datastore: DocumentDatastore) { }
 

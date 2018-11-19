@@ -1,7 +1,6 @@
-import {Observable} from 'rxjs';
+import {Observable, Observer} from 'rxjs';
 import {NewDocument, Document} from 'idai-components-2';
 import {AbstractParser} from './abstract-parser';
-import {Observer} from 'rxjs';
 import {ImportErrors} from './import-errors';
 
 /**
@@ -9,7 +8,6 @@ import {ImportErrors} from './import-errors';
  * @author Jan G. Wieners
  */
 export class NativeJsonlParser extends AbstractParser {
-
 
     public parse(content: string): Observable<Document> {
         

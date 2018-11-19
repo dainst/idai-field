@@ -18,7 +18,6 @@ export interface Geojson {
  */
 export class GeojsonParser extends AbstractParser {
 
-
     /**
      * The content json must be of a certain structure to
      * get accepted. Any deviance of this structure will lead

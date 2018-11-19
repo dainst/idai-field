@@ -1,8 +1,6 @@
+import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
-import {Observable} from 'rxjs';
-import {Observer} from 'rxjs';
 import {AbstractParser} from './abstract-parser';
-import {M} from '../../components/m';
 import {ImportErrors} from './import-errors';
 // import * as Papa from 'papaparse'; TODO this does not work in production, fixes only unit test
 

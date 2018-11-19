@@ -1,5 +1,4 @@
 import {Reader} from './reader';
-import {M} from '../../components/m';
 import {ImportErrors} from './import-errors';
 
 /**
@@ -10,7 +9,6 @@ import {ImportErrors} from './import-errors';
  * @author Jan G. Wieners
  */
 export class FileSystemReader implements Reader {
-
 
     constructor(private file: File) {}
 

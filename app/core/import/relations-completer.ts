@@ -1,5 +1,5 @@
 import {Document, ProjectConfiguration, Resource} from 'idai-components-2';
-import {DocumentDatastore} from "../datastore/document-datastore";
+import {DocumentDatastore} from '../datastore/document-datastore';
 import {UsernameProvider} from '../settings/username-provider';
 import {ImportErrors} from './import-errors';
 

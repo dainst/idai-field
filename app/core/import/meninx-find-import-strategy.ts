@@ -18,7 +18,6 @@ const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {
  */
 export class MeninxFindImportStrategy implements ImportStrategy {
 
-
     constructor(private validator: Validator,
                 private datastore: DocumentDatastore,
                 private projectConfiguration: ProjectConfiguration,

@@ -1,8 +1,6 @@
-import {Observable} from 'rxjs';
-import {IdaiFieldGeometry} from 'idai-components-2';
-import {NewDocument, Document} from 'idai-components-2';
+import {Observable, Observer} from 'rxjs';
+import {IdaiFieldGeometry, NewDocument, Document} from 'idai-components-2';
 import {AbstractParser} from './abstract-parser';
-import {Observer} from 'rxjs';
 import {M} from '../../components/m';
 import {ImportErrors} from './import-errors';
 
@@ -12,7 +10,6 @@ import {ImportErrors} from './import-errors';
  * @author Thomas Kleinke
  */
 export class IdigCsvParser extends AbstractParser {
-
 
     private static MANDATORY_FIELDS: string[] = ['IdentifierUUID', 'Type'];
     private static MANUALLY_MAPPED_FIELDS: string[] = ['Identifier', 'Title'];

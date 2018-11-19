@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * @author Thomas Kleinke
  */
-public class JsonlSerializerTests extends TestCase {
+public class JsonlSerializerTest extends TestCase {
 
-    public JsonlSerializerTests(String testName) {
+    public JsonlSerializerTest(String testName) {
 
         super(testName);
     }

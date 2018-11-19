@@ -43,7 +43,8 @@ export module ShapefileExporter {
 
         const epsg: string|undefined = getEPSGCode(projectDocument);
 
-        return '\"' + projectDocument.resource.identifier + '\" '
+        return '\"export\" '
+            + '\"' + projectDocument.resource.identifier + '\" '
             + '\"' + outputFilepath + '\" '
             + '\"' + remote.getGlobal('appDataPath') + '/temp\" '
             + '\"' + operationId + '\"'

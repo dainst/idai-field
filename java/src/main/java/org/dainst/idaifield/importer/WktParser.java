@@ -98,7 +98,7 @@ class WktParser {
 
         double[][][][] coordinates = new double[multiPolygon.getNumGeometries()][][][];
 
-        for (int i = 0; i < multiPolygon.getLength(); i++) {
+        for (int i = 0; i < multiPolygon.getNumGeometries(); i++) {
             Polygon polygon = (Polygon) multiPolygon.getGeometryN(i);
             coordinates[i] = getPolygonCoordinates(polygon);
         }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {isNot, empty} from 'tsfun';
@@ -19,6 +19,7 @@ import {MessagesConversion} from './messages-conversion';
 import {M} from '../m';
 import {ImportFacade, ImportFormat} from '../../core/import/import-facade';
 import {ShapefileFileSystemReader} from '../../core/import/shapefile-filesystem-reader';
+import {JavaToolExecutor} from '../../widgets/java-tool-executor';
 
 
 @Component({
@@ -34,7 +35,7 @@ import {ShapefileFileSystemReader} from '../../core/import/shapefile-filesystem-
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-export class ImportComponent {
+export class ImportComponent implements OnInit {
 
     public sourceType: string = 'file';
     public format: ImportFormat = 'native';
@@ -43,6 +44,7 @@ export class ImportComponent {
     public mainTypeDocuments: Array<Document> = [];
     public mainTypeDocumentId?: string;
     public allowMergingExistingResources = false;
+    public javaInstalled: boolean = true;
 
 
     constructor(
@@ -66,10 +68,17 @@ export class ImportComponent {
 
     public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
 
-
     public getProject = () => this.settingsService.getSelectedProject();
 
-    
+    public isJavaInstallationMissing = () => this.format === 'shapefile' && !this.javaInstalled;
+
+
+    async ngOnInit() {
+
+        this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
+    }
+
+
     public async startImport() {
 
         const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.format,

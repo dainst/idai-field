@@ -524,6 +524,20 @@
           <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="import.shapefile.javaWarning" datatype="html">
+        <source>
+                        Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher
+                        erforderlich.
+                    </source>
+        <target state="final">
+                        Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher
+                        erforderlich.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">
         <source>Daten werden exportiert...</source>
         <target state="final">Daten werden exportiert...</target>

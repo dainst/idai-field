@@ -7,6 +7,9 @@ const remote = require('electron').remote;
  */
 export module JavaToolExecutor {
 
+    const REQUIRED_JAVA_VERSION: number = 8;
+
+
     export function executeJavaTool(jarName: string, jarArguments: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
@@ -40,7 +43,9 @@ export module JavaToolExecutor {
     export async function isJavaInstalled(): Promise<boolean> {
 
         const javaVersion = await getJavaVersion();
-        return javaVersion !== undefined && parseInt(javaVersion.split('.')[1]) >= 8;
+
+        return javaVersion !== undefined
+            && parseInt(javaVersion.split('.')[1]) >= REQUIRED_JAVA_VERSION;
     }
 
 

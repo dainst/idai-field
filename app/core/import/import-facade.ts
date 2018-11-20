@@ -1,7 +1,7 @@
+import {ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../model/validator';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {UsernameProvider} from '../settings/username-provider';
-import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
 import {Reader} from './reader';
 import {Import} from './import';
 import {RelationsCompleter} from './relations-completer';
@@ -21,9 +21,10 @@ import {RollbackStrategy} from './rollback-strategy';
 import {NoRollbackStrategy} from './no-rollback-strategy';
 import {DefaultRollbackStrategy} from './default-rollback-strategy';
 import {TypeUtility} from '../model/type-utility';
+import {ShapefileParser} from './shapefile-parser';
 
 
-export type ImportFormat = 'native' | 'idig' | 'geojson' | 'meninxfind';
+export type ImportFormat = 'native' | 'idig' | 'geojson' | 'shapefile' | 'meninxfind';
 
 
 /**
@@ -46,30 +47,8 @@ export module ImportFacade {
      *
      * @returns ImportReport
      *
-     * .errors:
-     *   [FILE_UNREADABLE]
-     *   [INVALID_JSON]
-     *   [INVALID_JSONL]
-     *   [INVALID_GEOJSON_IMPORT_STRUCT]
-     *   [MISSING_IDENTIFIER]
-     *   [WRONG_IDENTIFIER_FORMAT]
-     *   [INVALID_CSV]
-     *   [GENERIC_CSV_ERROR]
-     *   [MANDATORY_CSV_FIELD_MISSING]
-     *   [GENERIC_DATASTORE_ERROR]
-     *   [INVALID_GEOMETRY]
-     *   [ROLLBACK_ERROR]
-     *   [MISSING_RESOURCE]
-     *   [MISSING_RELATION_TARGET]
-     *   [INVALID_MAIN_TYPE_DOCUMENT]
-     *   [OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION]
-     *   [NO_OPERATION_ASSIGNABLE]
-     *   [NO_FEATURE_ASSIGNABLE]
-     *
-     *   or: Any error of module ValidationErrors
-     *
+     * .errors: Any error of module ImportErrors or ValidationErrors
      * .warnings
-     *
      *
      */
     export function doImport(format: ImportFormat,
@@ -115,7 +94,9 @@ export module ImportFacade {
                 return new IdigCsvParser();
             case 'geojson':
                 return new GeojsonParser();
-            default: // 'native'
+            case 'shapefile':
+                return new ShapefileParser();
+            case 'native':
                 return new NativeJsonlParser() as any;
         }
     }
@@ -128,7 +109,7 @@ export module ImportFacade {
                                   projectConfiguration: ProjectConfiguration,
                                   typeUtility: TypeUtility,
                                   mainTypeDocumentId?: string,
-                                  allowMergingExistingResources = false): ImportStrategy {
+                                  allowMergingExistingResources: boolean = false): ImportStrategy {
 
         switch (format) {
             case 'meninxfind':
@@ -138,8 +119,9 @@ export module ImportFacade {
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername());
             case 'geojson':
+            case 'shapefile':
                 return new MergeGeometriesImportStrategy(validator, datastore, usernameProvider.getUsername());
-            default: // 'native'
+            case 'native':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
                     allowMergingExistingResources, mainTypeDocumentId);
@@ -151,12 +133,11 @@ export module ImportFacade {
 
         switch (format) {
             case 'meninxfind':
+            case 'geojson':
+            case 'shapefile':
                 return new NoRelationsStrategy();
             case 'idig':
-                return new DefaultRelationsStrategy(relationsCompleter);
-            case 'geojson':
-                return new NoRelationsStrategy();
-            default: // 'native'
+            case 'native':
                 return new DefaultRelationsStrategy(relationsCompleter);
         }
     }
@@ -168,12 +149,12 @@ export module ImportFacade {
 
         switch (format) {
             case 'meninxfind':
-                return new NoRollbackStrategy();
             case 'geojson':
+            case 'shapefile':
                 return new NoRollbackStrategy();
             case 'idig':
                 return new DefaultRollbackStrategy(datastore);
-            default: // 'native'
+            case 'native':
                 return allowMergeExistingResources
                     // no restore to previous versions of resources once modified.
                     // we keep the use cases of merge and of creation strictly separated.

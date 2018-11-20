@@ -92,7 +92,8 @@ export module Import {
     }
 
 
-    async function parseFileContent(parser: Parser, fileContent: string): Promise<[Document[],string[][]]> {
+    async function parseFileContent(parser: Parser,
+                                    fileContent: string): Promise<[Array<Document>, string[][]]> {
 
         const docsToUpdate: Document[] = [];
         await parser
@@ -103,7 +104,7 @@ export module Import {
     }
 
 
-    async function update(docsToUpdate: Document[], importReport: ImportReport,
+    async function update(docsToUpdate: Array<Document>, importReport: ImportReport,
                           importStrategy: ImportStrategy): Promise<void> {
 
         for (let docToUpdate of docsToUpdate) {

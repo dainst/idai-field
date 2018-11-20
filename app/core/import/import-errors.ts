@@ -1,5 +1,6 @@
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 export module ImportErrors {
 
@@ -21,4 +22,8 @@ export module ImportErrors {
     export const OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION = 'importerrrors/operationsnotallowedonimportoperation';
     export const NO_OPERATION_ASSIGNABLE = 'importerrrors/nooperationassignable';
     export const NO_FEATURE_ASSIGNABLE = 'importerrrors/nofeatureassignable';
+    export const SHAPEFILE_READ_ERROR = 'importerrors/shapefilereaderror';
+    export const SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'importerrors/shapefileunsupportedgeometrytype';
+    export const SHAPEFILE_JSONL_WRITE_ERROR = 'importerrors/shapefilejsonlwriteerror';
+    export const SHAPEFILE_GENERIC_ERROR = 'importerrors/shapefilegenericerror';
 }

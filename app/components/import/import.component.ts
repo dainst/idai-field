@@ -18,6 +18,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../m';
 import {ImportFacade, ImportFormat} from '../../core/import/import-facade';
+import {ShapefileFileSystemReader} from '../../core/import/shapefile-filesystem-reader';
 
 
 @Component({
@@ -43,8 +44,6 @@ export class ImportComponent {
     public mainTypeDocumentId?: string;
     public allowMergingExistingResources = false;
 
-    public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
-
 
     constructor(
         private messages: Messages,
@@ -65,13 +64,16 @@ export class ImportComponent {
     }
 
 
+    public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
+
+
     public getProject = () => this.settingsService.getSelectedProject();
 
     
     public async startImport() {
 
-        const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.file as any,
-            this.url as any, this.http);
+        const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.format,
+            this.file as any, this.url as any, this.http);
         if (!reader) return this.messages.add([M.IMPORT_ERROR_GENERIC_START_ERROR]);
 
         let uploadModalRef: any = undefined;
@@ -155,10 +157,11 @@ export class ImportComponent {
     }
 
 
-    private static createReader(sourceType: string, file: File, url: string, http: HttpClient): Reader|undefined {
+    private static createReader(sourceType: string, format: string, file: File, url: string,
+                                http: HttpClient): Reader|undefined {
 
         return sourceType === 'file'
-            ? new FileSystemReader(file)
+            ? format === 'shapefile' ? new ShapefileFileSystemReader(file) : new FileSystemReader(file)
             : new HttpReader(url, http);
     }
 }

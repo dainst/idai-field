@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2';
+import {JavaToolExecutor} from '../../widgets/java-tool-executor';
 
-const exec = require('child_process').exec;
 const remote = require('electron').remote;
 
 
@@ -12,30 +12,10 @@ export module ShapefileExporter {
     export function performExport(projectDocument: Document, outputFilePath: string,
                                   operationId: string): Promise<any> {
 
-        return new Promise<any>((resolve, reject) => {
-            exec(getCommand(projectDocument, outputFilePath, operationId),
-                (error: string, stdout: string, stderr: string) => {
-                    if (error) {
-                        reject(error);
-                    } else if (stderr !== '') {
-                        reject(stderr);
-                    } else {
-                        resolve();
-                    }
-                });
-        });
-    }
-
-
-    function getCommand(projectDocument: Document, outputFilepath: string, operationId: string): string {
-
-        return 'java -jar ' + getJarPath() + ' ' + getArguments(projectDocument, outputFilepath, operationId);
-    }
-
-
-    function getJarPath(): string {
-
-        return remote.getGlobal('toolsPath') + '/shapefile-tool.jar';
+        return JavaToolExecutor.executeJavaTool(
+            'shapefile-tool.jar',
+            getArguments(projectDocument, outputFilePath, operationId)
+        )
     }
 
 
@@ -43,12 +23,12 @@ export module ShapefileExporter {
 
         const epsg: string|undefined = getEPSGCode(projectDocument);
 
-        return '\"export\" '
-            + '\"' + projectDocument.resource.identifier + '\" '
-            + '\"' + outputFilepath + '\" '
-            + '\"' + remote.getGlobal('appDataPath') + '/temp\" '
-            + '\"' + operationId + '\"'
-            + (epsg ? ' \"' + epsg + '\"' : '');
+        return '"export" '
+            + '"' + projectDocument.resource.identifier + '" '
+            + '"' + outputFilepath + '" '
+            + '"' + remote.getGlobal('appDataPath') + '/temp" '
+            + '"' + operationId + '"'
+            + (epsg ? ' "' + epsg + '"' : '');
     }
 
 

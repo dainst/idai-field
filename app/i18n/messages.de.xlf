@@ -435,11 +435,19 @@
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.geoJson" datatype="html">
-        <source>GeoJSON – JSONL</source>
-        <target state="final">GeoJSON – JSONL</target>
+        <source>GeoJSON</source>
+        <target state="final">GeoJSON</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
           <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="import.formats.shapefile" datatype="html">
+        <source>Shapefile</source>
+        <target state="final">Shapefile</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/import/import.html</context>
+          <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.formats.meninx" datatype="html">
@@ -447,7 +455,7 @@
         <target state="final">Meninx/Funde (experimentell) – CSV</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.label" datatype="html">
@@ -459,7 +467,7 @@
                         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.mergeOption.info" datatype="html">
@@ -481,7 +489,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.label" datatype="html">
@@ -489,7 +497,7 @@
         <target state="final">Daten einer Maßnahme zuordnen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -497,7 +505,7 @@
         <target state="final">Keine Zuordnung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.geoJson.info" datatype="html">
@@ -513,7 +521,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">

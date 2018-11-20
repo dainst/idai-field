@@ -8,8 +8,8 @@ import {ExportModalComponent} from './export-modal.component';
 import {ShapefileExporter} from './shapefile-exporter';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
+import {JavaToolExecutor} from '../../widgets/java-tool-executor';
 
-const exec = require('child_process').exec;
 const remote = require('electron').remote;
 
 
@@ -48,7 +48,7 @@ export class ExportComponent implements OnInit {
     async ngOnInit() {
 
         await this.fetchOperations();
-        this.javaInstalled = await this.isJavaInstalled();
+        this.javaInstalled = await JavaToolExecutor.isJavaInstalled();
     }
 
 
@@ -64,7 +64,7 @@ export class ExportComponent implements OnInit {
             await ShapefileExporter.performExport(this.settingsService.getProjectDocument(), filePath,
                 this.selectedOperationId);
             this.messages.add([M.EXPORT_SUCCESS]);
-        } catch(err) {
+        } catch (err) {
             this.messages.add(ExportComponent.getErrorMsgWithParams(err));
         }
 
@@ -112,30 +112,9 @@ export class ExportComponent implements OnInit {
 
         try {
             this.operations = await this.viewFacade.getAllOperations();
-        } catch(msgWithParams) {
+        } catch (msgWithParams) {
             this.messages.add(msgWithParams);
         }
-    }
-
-
-    private async isJavaInstalled(): Promise<boolean> {
-
-        const javaVersion = await this.getJavaVersion();
-
-        return javaVersion !== undefined && parseInt(javaVersion.split('.')[1]) >= 8;
-    }
-
-
-    private getJavaVersion(): Promise<string> {
-
-        return new Promise(resolve => {
-            exec('java -version', (error: string, stdout: string, stderr: string) => {
-                const javaVersion = new RegExp('java version').test(stderr)
-                    ? stderr.split(' ')[2].replace(/"/g, '')
-                    : undefined;
-                resolve(javaVersion);
-            });
-       });
     }
 
 
@@ -144,12 +123,12 @@ export class ExportComponent implements OnInit {
         if (error.includes('EXPORTER_TEMP_FOLDER_CREATION_ERROR')) {
             return [
                 M.EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION,
-                this.getParameter(error)
+                JavaToolExecutor.getParameterFromErrorMessage(error)
             ];
         } else if (error.includes('EXPORTER_ZIP_FILE_WRITE_ERROR')) {
             return [
                 M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION,
-                this.getParameter(error)
+                JavaToolExecutor.getParameterFromErrorMessage(error)
             ];
         } else if (error.includes('EXPORTER_SHAPEFILE_WRITE_ERROR')) {
             return [M.EXPORT_SHAPEFILE_ERROR_WRITE];
@@ -158,18 +137,6 @@ export class ExportComponent implements OnInit {
         } else {
             console.error(error);
             return [M.EXPORT_ERROR_GENERIC];
-        }
-    }
-    
-    
-    private static getParameter(error: string): string {
-
-        const separatorPosition: number = error.indexOf(' ');
-
-        if (separatorPosition === -1 || separatorPosition === error.length - 1) {
-            return '';
-        } else {
-            return error.substring(separatorPosition + 1);
         }
     }
 }

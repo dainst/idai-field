@@ -47,9 +47,8 @@ class ShapefileReader {
         String typeName = dataStore.getTypeNames()[0];
 
         FeatureSource<SimpleFeatureType, SimpleFeature> source = dataStore.getFeatureSource(typeName);
-        Filter filter = Filter.INCLUDE;
 
-        return source.getFeatures(filter);
+        return source.getFeatures(Filter.INCLUDE);
     }
 
 

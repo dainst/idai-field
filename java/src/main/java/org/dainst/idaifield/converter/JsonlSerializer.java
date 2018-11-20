@@ -57,7 +57,6 @@ class JsonlSerializer {
     }
 
 
-
     private static boolean hasValue(String fieldContent) {
 
         return fieldContent != null && !fieldContent.equals("");

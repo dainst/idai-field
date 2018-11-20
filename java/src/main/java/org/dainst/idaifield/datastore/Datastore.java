@@ -7,6 +7,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.dainst.idaifield.ErrorMessage;
 import org.dainst.idaifield.model.Geometry;
 import org.dainst.idaifield.model.GeometryType;
 import org.dainst.idaifield.model.Resource;
@@ -37,7 +38,11 @@ public class Datastore {
 
         query += " } }";
 
-        return getResourcesMap(extractResources(getJsonData(projectName, query)));
+        try {
+            return getResourcesMap(extractResources(getJsonData(projectName, query)));
+        } catch (Exception e) {
+            throw new Exception(ErrorMessage.DATASTORE_GET_RESOURCES_ERROR.name());
+        }
     }
 
 

@@ -1,5 +1,7 @@
 package org.dainst.idaifield.exporter;
 
+import org.dainst.idaifield.ErrorMessage;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -45,6 +47,8 @@ class ZipArchiveBuilder {
                     }
                 }
             }
+        } catch (Exception e) {
+            throw new Exception(ErrorMessage.EXPORTER_ZIP_FILE_WRITE_ERROR.name() + " " + outputFilePath);
         } finally {
             zipOutputStream.close();
         }

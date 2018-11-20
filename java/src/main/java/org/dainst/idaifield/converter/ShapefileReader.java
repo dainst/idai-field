@@ -1,5 +1,6 @@
 package org.dainst.idaifield.converter;
 
+import org.dainst.idaifield.ErrorMessage;
 import org.dainst.idaifield.model.Geometry;
 import org.dainst.idaifield.model.Resource;
 import org.geotools.data.DataStore;
@@ -39,16 +40,20 @@ class ShapefileReader {
     private static FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatureCollection(
             String shapefilePath) throws Exception {
 
-        File file = new File(shapefilePath);
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("url", file.toURI().toURL());
+        try {
+            File file = new File(shapefilePath);
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("url", file.toURI().toURL());
 
-        DataStore dataStore = DataStoreFinder.getDataStore(parameters);
-        String typeName = dataStore.getTypeNames()[0];
+            DataStore dataStore = DataStoreFinder.getDataStore(parameters);
+            String typeName = dataStore.getTypeNames()[0];
 
-        FeatureSource<SimpleFeatureType, SimpleFeature> source = dataStore.getFeatureSource(typeName);
+            FeatureSource<SimpleFeatureType, SimpleFeature> source = dataStore.getFeatureSource(typeName);
 
-        return source.getFeatures(Filter.INCLUDE);
+            return source.getFeatures(Filter.INCLUDE);
+        } catch (Exception e) {
+            throw new Exception(ErrorMessage.CONVERTER_SHAPEFILE_READ_ERROR.name() + " " + shapefilePath);
+        }
     }
 
 
@@ -93,7 +98,7 @@ class ShapefileReader {
         } else if (wkt.startsWith("MULTIPOLYGON")) {
             return WktParser.getMultiPolygonGeometry(wkt);
         } else {
-            throw new Exception("Unsupported geometry type for geometry: " + wkt);
+            throw new Exception(ErrorMessage.CONVERTER_UNSUPPORTED_GEOMETRY_TYPE.name() + " " + wkt);
         }
     }
 }

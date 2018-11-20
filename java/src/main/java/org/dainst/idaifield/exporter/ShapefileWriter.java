@@ -1,5 +1,6 @@
 package org.dainst.idaifield.exporter;
 
+import org.dainst.idaifield.ErrorMessage;
 import org.dainst.idaifield.model.GeometryType;
 import org.dainst.idaifield.model.Resource;
 import org.geotools.data.DataUtilities;
@@ -40,8 +41,12 @@ class ShapefileWriter {
     static void write(File shapefileFolder, Map<GeometryType, List<Resource>> resources,
                       String epsg) throws Exception {
 
-        for (GeometryType geometryType : resources.keySet()) {
-            createFiles(resources.get(geometryType), shapefileFolder, geometryType, epsg);
+        try {
+            for (GeometryType geometryType : resources.keySet()) {
+                createFiles(resources.get(geometryType), shapefileFolder, geometryType, epsg);
+            }
+        } catch (Exception e) {
+            throw new Exception(ErrorMessage.EXPORTER_SHAPEFILE_WRITE_ERROR.name());
         }
     }
 

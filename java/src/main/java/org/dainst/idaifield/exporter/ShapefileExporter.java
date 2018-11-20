@@ -1,6 +1,7 @@
 package org.dainst.idaifield.exporter;
 
 import org.apache.commons.io.FileUtils;
+import org.dainst.idaifield.ErrorMessage;
 import org.dainst.idaifield.datastore.Datastore;
 import org.dainst.idaifield.model.GeometryType;
 import org.dainst.idaifield.model.Resource;
@@ -25,8 +26,8 @@ public class ShapefileExporter {
 
         File shapefileFolder = createShapefileFolder(tempFolderPath, outputFileName);
         if (shapefileFolder == null) {
-            System.err.println("Failed to create shapefile folder");
-            return;
+            throw new Exception(ErrorMessage.EXPORTER_TEMP_FOLDER_CREATION_ERROR.name() + " "
+                    + tempFolderPath);
         }
 
         try {

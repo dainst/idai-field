@@ -2979,8 +2979,40 @@
         </context-group>
       </trans-unit>
       <trans-unit id="messages.export.error.generic" datatype="html">
-        <source>Beim Erstellen der Exportdatei ist ein Fehler aufgetreten.</source>
+        <source>Beim Export ist ein Fehler aufgetreten.</source>
         <target state="final">An error has occurred while creating the export file.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.error.shapefile.tempFolderCreation" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.</source>
+        <target state="final">An error has occurred during export: Failed to create the temporary directory [0].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.error.shapefile.zipFileCreation" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.</source>
+        <target state="final">An error has occurred during export: Failed to create the ZIP file [0].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.error.shapefile.write" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.</source>
+        <target state="final">An error has occurred during export: Failed to write the shapefile.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.error.shapefile.getResources" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.</source>
+        <target state="final">An error has occurred during export: Failed to read the resources from the database.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

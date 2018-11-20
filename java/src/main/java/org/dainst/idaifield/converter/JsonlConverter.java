@@ -1,4 +1,4 @@
-package org.dainst.idaifield.importer;
+package org.dainst.idaifield.converter;
 
 import org.apache.commons.io.FileUtils;
 import org.dainst.idaifield.model.Resource;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Thomas Kleinke
  */
-public class ShapefileImporter {
+public class JsonlConverter {
 
     public static void run(String shapefilePath, String outputFilePath) throws Exception {
 

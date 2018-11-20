@@ -1,7 +1,7 @@
 package org.dainst.idaifield;
 
 import org.dainst.idaifield.exporter.ShapefileExporter;
-import org.dainst.idaifield.importer.ShapefileImporter;
+import org.dainst.idaifield.converter.JsonlConverter;
 
 import java.io.File;
 
@@ -20,8 +20,8 @@ public class ShapefileTool {
 
         try {
             switch(arguments[0]) {
-                case "import":
-                    runImporter(arguments);
+                case "convert":
+                    runJsonlConverter(arguments);
                     break;
                 case "export":
                     runExporter(arguments);
@@ -35,14 +35,14 @@ public class ShapefileTool {
     }
 
 
-    private static void runImporter(String[] arguments) throws Exception {
+    private static void runJsonlConverter(String[] arguments) throws Exception {
 
         if (arguments.length != 3) {
             printUsageInformation();
             return;
         }
 
-        ShapefileImporter.run(arguments[1], arguments[2]);
+        JsonlConverter.run(arguments[1], arguments[2]);
     }
 
 
@@ -60,7 +60,7 @@ public class ShapefileTool {
 
     private static void printUsageInformation() {
 
-        System.err.println("java -jar shapefile-tool.jar import [shapefilePath] [outputFilePath]");
+        System.err.println("java -jar shapefile-tool.jar convert [shapefilePath] [outputFilePath]");
         System.err.println("java -jar shapefile-tool.jar export [projectName] [outputFilePath] "
                 + "[tempFolderPath] [operation] [epsg]");
     }

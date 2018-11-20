@@ -1,4 +1,4 @@
-package org.dainst.idaifield.importer;
+package org.dainst.idaifield.converter;
 
 import junit.framework.TestCase;
 import org.dainst.idaifield.model.Geometry;

@@ -30,7 +30,7 @@ public class ShapefileTool {
                     printUsageInformation();
             }
         } catch(Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 

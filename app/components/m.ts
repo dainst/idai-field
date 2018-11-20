@@ -80,6 +80,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
     public static EXPORT_ERROR_GENERIC = 'export.error.generic';
+    public static EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION = 'export.shapefile.error.tempFolderCreation';
+    public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
+    public static EXPORT_SHAPEFILE_ERROR_WRITE = 'export.shapefile.error.write';
+    public static EXPORT_SHAPEFILE_ERROR_GET_RESOURCES = 'export.shapefile.error.getResources';
 
     // Datastore Package
     public static DATASTORE_ERROR_NOT_FOUND = 'datastore.error.notFound';
@@ -622,7 +626,43 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         this.msgs[M.EXPORT_ERROR_GENERIC] = {
             content: i18n({
                 id: 'messages.export.error.generic',
-                value: 'Beim Erstellen der Exportdatei ist ein Fehler aufgetreten.'
+                value: 'Beim Export ist ein Fehler aufgetreten.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION] = {
+            content: i18n({
+                id: 'messages.export.error.shapefile.tempFolderCreation',
+                value: 'Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION] = {
+            content: i18n({
+                id: 'messages.export.error.shapefile.zipFileCreation',
+                value: 'Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_SHAPEFILE_ERROR_WRITE] = {
+            content: i18n({
+                id: 'messages.export.error.shapefile.write',
+                value: 'Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.EXPORT_SHAPEFILE_ERROR_GET_RESOURCES] = {
+            content: i18n({
+                id: 'messages.export.error.shapefile.getResources',
+                value: 'Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.'
             }),
             level: 'danger',
             params: [],

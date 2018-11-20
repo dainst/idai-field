@@ -65,8 +65,7 @@ export class ExportComponent implements OnInit {
                 this.selectedOperationId);
             this.messages.add([M.EXPORT_SUCCESS]);
         } catch(err) {
-            this.messages.add([M.EXPORT_ERROR_GENERIC]);
-            console.error(err);
+            this.messages.add(ExportComponent.getErrorMsgWithParams(err));
         }
 
         this.running = false;
@@ -137,5 +136,40 @@ export class ExportComponent implements OnInit {
                 resolve(javaVersion);
             });
        });
+    }
+
+
+    private static getErrorMsgWithParams(error: string): string[] {
+
+        if (error.includes('EXPORTER_TEMP_FOLDER_CREATION_ERROR')) {
+            return [
+                M.EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION,
+                this.getParameter(error)
+            ];
+        } else if (error.includes('EXPORTER_ZIP_FILE_WRITE_ERROR')) {
+            return [
+                M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION,
+                this.getParameter(error)
+            ];
+        } else if (error.includes('EXPORTER_SHAPEFILE_WRITE_ERROR')) {
+            return [M.EXPORT_SHAPEFILE_ERROR_WRITE];
+        } else if (error.includes('DATASTORE_GET_RESOURCES_ERROR')) {
+            return [M.EXPORT_SHAPEFILE_ERROR_GET_RESOURCES];
+        } else {
+            console.error(error);
+            return [M.EXPORT_ERROR_GENERIC];
+        }
+    }
+    
+    
+    private static getParameter(error: string): string {
+
+        const separatorPosition: number = error.indexOf(' ');
+
+        if (separatorPosition === -1 || separatorPosition === error.length - 1) {
+            return '';
+        } else {
+            return error.substring(separatorPosition + 1);
+        }
     }
 }

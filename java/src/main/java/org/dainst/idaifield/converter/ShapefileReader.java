@@ -14,6 +14,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.filter.Filter;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +45,7 @@ class ShapefileReader {
             File file = new File(shapefilePath);
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("url", file.toURI().toURL());
+            parameters.put("charset", Charset.forName("UTF-8"));
 
             DataStore dataStore = DataStoreFinder.getDataStore(parameters);
             String typeName = dataStore.getTypeNames()[0];

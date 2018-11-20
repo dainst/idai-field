@@ -53,6 +53,11 @@ export module MessagesConversion {
         if (msg === ImportErrors.NO_OPERATION_ASSIGNABLE) replacement = M.IMPORT_ERROR_NO_OPERATION_ASSIGNABLE;
         if (msg === ImportErrors.NO_FEATURE_ASSIGNABLE) replacement = M.IMPORT_ERROR_NO_FEATURE_ASSIGNABLE;
 
+        if (msg === ImportErrors.SHAPEFILE_READ_ERROR) replacement = M.IMPORT_ERROR_SHAPEFILE_READ_ERROR;
+        if (msg === ImportErrors.SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE) replacement = M.IMPORT_ERROR_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE;
+        if (msg === ImportErrors.SHAPEFILE_JSONL_WRITE_ERROR) replacement = M.IMPORT_ERROR_SHAPEFILE_JSONL_WRITE_ERROR;
+        if (msg === ImportErrors.SHAPEFILE_GENERIC_ERROR) replacement = M.IMPORT_ERROR_SHAPEFILE_GENERIC_ERROR;
+
         if (msg === ValidationErrors.INVALID_FIELDS) {
             replacement = msgWithParams.length > 2 && msgWithParams[2].indexOf(',') !== -1
                 ? M.IMPORT_VALIDATION_ERROR_INVALID_FIELDS

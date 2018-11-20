@@ -2898,6 +2898,38 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.shapefile.readError" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.</source>
+        <target state="final">An error has occurred during import: Failed to read the file. Please choose a valid shapefile (.shp).</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.shapefile.unsupportedGeometryType" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.</source>
+        <target state="final">An error has occurred during import: The geometry type [0] is not supported.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.shapefile.jsonlWriteError" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.</source>
+        <target state="final">An error has occurred during import: Failed to create the temporary file [0].</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.shapefile.generic" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.</source>
+        <target state="final">An error has occurred during import: Failed to import the shapefile.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.validation.error.invalidType" datatype="html">
         <source>Ungültige Typdefinition: '[0]'</source>
         <target state="final">Invalid type definition: '[0]'</target>

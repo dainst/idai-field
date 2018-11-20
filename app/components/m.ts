@@ -66,6 +66,10 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_OPERATIONS_NOT_ALLOWED = 'importer.error.operationsNotAllowed';
     public static IMPORT_ERROR_NO_OPERATION_ASSIGNABLE = 'importer.error.noOperationAssignable';
     public static IMPORT_ERROR_NO_FEATURE_ASSIGNABLE = 'importer.error.noFeatureAssignable';
+    public static IMPORT_ERROR_SHAPEFILE_READ_ERROR = 'import.error.shapefile.readError';
+    public static IMPORT_ERROR_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'import.error.shapefile.unsupportedGeometryType';
+    public static IMPORT_ERROR_SHAPEFILE_JSONL_WRITE_ERROR = 'import.error.shapefile.jsonlWriteError';
+    public static IMPORT_ERROR_SHAPEFILE_GENERIC_ERROR = 'import.error.shapefile.generic';
     public static IMPORT_VALIDATION_ERROR_MISSING_PROPERTY = 'import.validation.error.missingProperty';
     public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN = 'import.validation.error.noRecordedin';
     public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'import.validation.error.noRecordedinTarget';
@@ -522,6 +526,42 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'danger',
             params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_SHAPEFILE_READ_ERROR] = {
+            content: i18n({
+                id: 'messages.import.error.shapefile.readError',
+                value: 'Beim Import ist ein Fehler aufgetreten: Die Datei konnte nicht gelesen werden. Bitte wählen Sie ein gültiges Shapefile (.shp) aus.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE] = {
+            content: i18n({
+                id: 'messages.import.error.shapefile.unsupportedGeometryType',
+                value: 'Beim Import ist ein Fehler aufgetreten: Der Geometrietyp [0] wird nicht unterstützt.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_SHAPEFILE_JSONL_WRITE_ERROR] = {
+            content: i18n({
+                id: 'messages.import.error.shapefile.jsonlWriteError',
+                value: 'Beim Import ist ein Fehler aufgetreten: Die temporäre Datei [0] konnte nicht angelegt werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_SHAPEFILE_GENERIC_ERROR] = {
+            content: i18n({
+                id: 'messages.import.error.shapefile.generic',
+                value: 'Beim Import ist ein Fehler aufgetreten: Das Shapefile konnte nicht importiert werden.'
+            }),
+            level: 'danger',
+            params: [],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_TYPE] = {

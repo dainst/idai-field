@@ -66,10 +66,7 @@ export class ShapefileFileSystemReader implements Reader {
                 JavaToolExecutor.getParameterFromErrorMessage(error)
             ];
         } else if (error.includes('CONVERTER_SHAPEFILE_READ_ERROR')) {
-            return [
-                ImportErrors.SHAPEFILE_READ_ERROR,
-                JavaToolExecutor.getParameterFromErrorMessage(error)
-            ];
+            return [ImportErrors.SHAPEFILE_READ_ERROR];
         } else if (error.includes('CONVERTER_JSONL_WRITE_ERROR')) {
             return [
                 ImportErrors.SHAPEFILE_JSONL_WRITE_ERROR,

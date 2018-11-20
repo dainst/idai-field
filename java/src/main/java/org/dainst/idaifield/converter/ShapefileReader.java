@@ -52,7 +52,7 @@ class ShapefileReader {
 
             return source.getFeatures(Filter.INCLUDE);
         } catch (Exception e) {
-            throw new Exception(ErrorMessage.CONVERTER_SHAPEFILE_READ_ERROR.name() + " " + shapefilePath);
+            throw new Exception(ErrorMessage.CONVERTER_SHAPEFILE_READ_ERROR.name());
         }
     }
 

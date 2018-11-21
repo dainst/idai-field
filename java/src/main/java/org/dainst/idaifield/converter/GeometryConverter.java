@@ -3,10 +3,7 @@ package org.dainst.idaifield.converter;
 import org.dainst.idaifield.ErrorMessage;
 import org.dainst.idaifield.model.Geometry;
 import org.dainst.idaifield.model.GeometryType;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.MultiLineString;
-import org.locationtech.jts.geom.MultiPolygon;
-import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.*;
 
 
 /**
@@ -20,21 +17,34 @@ class GeometryConverter {
 
         String type = shapefileGeometry.getGeometryType();
 
-        // TODO Support Point, LineString, Polygon
-
         switch(type) {
+            case "Point":
+                geometry.setCoordinates(new double[][][][]{{{
+                    getPointCoordinates(shapefileGeometry.getCoordinate())
+                }}});
+                geometry.setType(GeometryType.MULTIPOINT);
             case "MultiPoint":
                 geometry.setCoordinates(new double[][][][]{{
                     getMultiPointOrPolylineCoordinates(shapefileGeometry)
                 }});
                 geometry.setType(GeometryType.MULTIPOINT);
                 break;
+            case "LineString":
+                geometry.setCoordinates(new double[][][][]{{
+                    getMultiPointOrPolylineCoordinates(shapefileGeometry)
+                }});
+                geometry.setType(GeometryType.MULTIPOLYLINE);
             case "MultiLineString":
                 geometry.setCoordinates(new double[][][][]{
-                        getMultiPolylineCoordinates((MultiLineString) shapefileGeometry)
+                    getMultiPolylineCoordinates((MultiLineString) shapefileGeometry)
                 });
                 geometry.setType(GeometryType.MULTIPOLYLINE);
                 break;
+            case "Polygon":
+                geometry.setCoordinates(new double[][][][]{
+                        getPolygonCoordinates((Polygon) shapefileGeometry)
+                });
+                geometry.setType(GeometryType.MULTIPOLYGON);
             case "MultiPolygon":
                 geometry.setCoordinates(getMultipolygonCoordinates((MultiPolygon) shapefileGeometry));
                 geometry.setType(GeometryType.MULTIPOLYGON);
@@ -47,16 +57,23 @@ class GeometryConverter {
     }
 
 
+    private static double[] getPointCoordinates(Coordinate point) {
+
+        double[] coordinates = new double[Double.isNaN(point.getZ()) ? 2 : 3];
+        coordinates[0] = point.getX();
+        coordinates[1] = point.getY();
+        if (!Double.isNaN(point.getZ())) coordinates[2] = point.getZ();
+
+        return coordinates;
+    }
+
+
     private static double[][] getMultiPointOrPolylineCoordinates(org.locationtech.jts.geom.Geometry geometry) {
 
         double[][] coordinates = new double[geometry.getCoordinates().length][];
 
         for (int i = 0; i < geometry.getCoordinates().length; i++) {
-            Coordinate coordinate = geometry.getCoordinates()[i];
-            coordinates[i] = new double[Double.isNaN(coordinate.getZ()) ? 2 : 3];
-            coordinates[i][0] = geometry.getCoordinates()[i].getX();
-            coordinates[i][1] = geometry.getCoordinates()[i].getY();
-            if (!Double.isNaN(coordinate.getZ())) coordinates[i][2] = coordinate.getZ();
+            coordinates[i] = getPointCoordinates(geometry.getCoordinates()[i]);
         }
 
         return coordinates;

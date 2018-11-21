@@ -37,13 +37,15 @@ class ShapefileReader {
     private static FeatureCollection<SimpleFeatureType, SimpleFeature> getFeatureCollection(
             String shapefilePath) throws Exception {
 
+        DataStore dataStore = null;
+
         try {
             File file = new File(shapefilePath);
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("url", file.toURI().toURL());
             parameters.put("charset", Charset.forName("UTF-8"));
 
-            DataStore dataStore = DataStoreFinder.getDataStore(parameters);
+            dataStore = DataStoreFinder.getDataStore(parameters);
             String typeName = dataStore.getTypeNames()[0];
 
             FeatureSource<SimpleFeatureType, SimpleFeature> source = dataStore.getFeatureSource(typeName);
@@ -51,6 +53,8 @@ class ShapefileReader {
             return source.getFeatures(Filter.INCLUDE);
         } catch (Exception e) {
             throw new Exception(ErrorMessage.CONVERTER_SHAPEFILE_READ_ERROR.name());
+        } finally {
+            if (dataStore != null) dataStore.dispose();
         }
     }
 

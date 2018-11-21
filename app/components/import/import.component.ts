@@ -79,6 +79,12 @@ export class ImportComponent implements OnInit {
     }
 
 
+    public onFormatChange() {
+
+        if (this.format === 'shapefile' && this.sourceType === 'http') this.sourceType = 'file';
+    }
+
+
     public async startImport() {
 
         const reader: Reader|undefined = ImportComponent.createReader(this.sourceType, this.format,

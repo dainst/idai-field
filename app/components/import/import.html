@@ -51,6 +51,7 @@
                                    i18n-placeholder="@@import.chooseFile"
                                    disabled>
                             <input id="import-file-input" class="file-input" type="file"
+                                   accept="{{getFileInputExtensions()}}"
                                    (change)="selectFile($event)">
                             <label for="import-file-input" class="btn btn-secondary file-input-label">
                                 <span class="mdi mdi-folder"></span>

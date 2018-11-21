@@ -142,6 +142,22 @@ export class ImportComponent implements OnInit {
     }
 
 
+    public getFileInputExtensions(): string {
+
+        switch (this.format) {
+            case 'native':
+                return '.jsonl';
+            case 'idig':
+            case 'meninxfind':
+                return '.csv';
+            case 'geojson':
+                return '.geojson,.json';
+            case 'shapefile':
+                return '.shp';
+        }
+    }
+
+
     private showImportResult(importReport: ImportReport) {
 
         if (importReport.errors.length > 0) {

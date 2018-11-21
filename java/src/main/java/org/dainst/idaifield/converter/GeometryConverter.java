@@ -1,51 +1,47 @@
 package org.dainst.idaifield.converter;
 
+import org.dainst.idaifield.ErrorMessage;
 import org.dainst.idaifield.model.Geometry;
 import org.dainst.idaifield.model.GeometryType;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.MultiLineString;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.io.WKTReader;
 
 
 /**
  * @author Thomas Kleinke
  */
-class WktParser {
+class GeometryConverter {
 
-    static Geometry getMultiPointGeometry(String wkt) throws Exception {
-
-        Geometry geometry = new Geometry();
-
-        geometry.setCoordinates(new double[][][][]{{getMultiPointOrPolylineCoordinates(
-                new WKTReader().read(wkt)
-        )}});
-        geometry.setType(GeometryType.MULTIPOINT);
-
-        return geometry;
-    }
-
-
-    static Geometry getMultiPolylineGeometry(String wkt) throws Exception {
+    static Geometry convert(org.locationtech.jts.geom.Geometry shapefileGeometry) throws Exception {
 
         Geometry geometry = new Geometry();
 
-        geometry.setCoordinates(new double[][][][]{getMultiPolylineCoordinates(
-                (MultiLineString) new WKTReader().read(wkt)
-        )});
-        geometry.setType(GeometryType.MULTIPOLYLINE);
+        String type = shapefileGeometry.getGeometryType();
 
-        return geometry;
-    }
+        // TODO Support Point, LineString, Polygon
 
-
-    static Geometry getMultiPolygonGeometry(String wkt) throws Exception {
-
-        Geometry geometry = new Geometry();
-
-        geometry.setCoordinates(getMultipolygonCoordinates((MultiPolygon) new WKTReader().read(wkt)));
-        geometry.setType(GeometryType.MULTIPOLYGON);
+        switch(type) {
+            case "MultiPoint":
+                geometry.setCoordinates(new double[][][][]{{
+                    getMultiPointOrPolylineCoordinates(shapefileGeometry)
+                }});
+                geometry.setType(GeometryType.MULTIPOINT);
+                break;
+            case "MultiLineString":
+                geometry.setCoordinates(new double[][][][]{
+                        getMultiPolylineCoordinates((MultiLineString) shapefileGeometry)
+                });
+                geometry.setType(GeometryType.MULTIPOLYLINE);
+                break;
+            case "MultiPolygon":
+                geometry.setCoordinates(getMultipolygonCoordinates((MultiPolygon) shapefileGeometry));
+                geometry.setType(GeometryType.MULTIPOLYGON);
+                break;
+            default:
+                throw new Exception(ErrorMessage.CONVERTER_UNSUPPORTED_GEOMETRY_TYPE.name() + " " + type);
+        }
 
         return geometry;
     }
@@ -60,7 +56,7 @@ class WktParser {
             coordinates[i] = new double[Double.isNaN(coordinate.getZ()) ? 2 : 3];
             coordinates[i][0] = geometry.getCoordinates()[i].getX();
             coordinates[i][1] = geometry.getCoordinates()[i].getY();
-            if (!Double.isNaN(coordinate.getZ())) coordinates[i][1] = coordinate.getZ();
+            if (!Double.isNaN(coordinate.getZ())) coordinates[i][2] = coordinate.getZ();
         }
 
         return coordinates;

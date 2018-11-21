@@ -1,7 +1,6 @@
 package org.dainst.idaifield.converter;
 
 import org.dainst.idaifield.ErrorMessage;
-import org.dainst.idaifield.model.Geometry;
 import org.dainst.idaifield.model.Resource;
 import org.geotools.data.DataStore;
 import org.geotools.data.DataStoreFinder;
@@ -15,10 +14,7 @@ import org.opengis.filter.Filter;
 
 import java.io.File;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -63,7 +59,7 @@ class ShapefileReader {
 
         Resource resource = new Resource();
         setResourceFields(resource, feature);
-        resource.setGeometry(getGeometry(feature));
+        setGeometry(resource, feature);
 
         return resource;
     }
@@ -89,18 +85,10 @@ class ShapefileReader {
     }
 
 
-    private static Geometry getGeometry(SimpleFeature feature) throws Exception {
+    private static void setGeometry(Resource resource, SimpleFeature feature) throws Exception {
 
-        String wkt = feature.getDefaultGeometryProperty().getValue().toString();
-
-        if (wkt.startsWith("MULTIPOINT")) {
-            return WktParser.getMultiPointGeometry(wkt);
-        } else if (wkt.startsWith("MULTILINESTRING")) {
-            return WktParser.getMultiPolylineGeometry(wkt);
-        } else if (wkt.startsWith("MULTIPOLYGON")) {
-            return WktParser.getMultiPolygonGeometry(wkt);
-        } else {
-            throw new Exception(ErrorMessage.CONVERTER_UNSUPPORTED_GEOMETRY_TYPE.name() + " " + wkt);
-        }
+        resource.setGeometry(
+                GeometryConverter.convert((org.locationtech.jts.geom.Geometry) feature.getDefaultGeometry())
+        );
     }
 }

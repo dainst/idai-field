@@ -139,7 +139,7 @@ export class ImportComponent implements OnInit {
         this.file = !files || files.length === 0
             ? undefined
             : files[0];
-    }
+     }
 
 
     public getFileInputExtensions(): string {

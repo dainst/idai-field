@@ -64,7 +64,7 @@ export module JavaToolExecutor {
 
     function getCommand(jarName: string, jarArguments: string): string {
 
-        return 'java -jar ' + getJarPath(jarName) + ' ' + jarArguments;
+        return 'java -Djava.awt.headless=true -jar ' + getJarPath(jarName) + ' ' + jarArguments;
     }
 
 

@@ -8,7 +8,7 @@ import {ExportModalComponent} from './export-modal.component';
 import {ShapefileExporter} from './shapefile-exporter';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
-import {JavaToolExecutor} from '../../widgets/java-tool-executor';
+import {JavaToolExecutor} from '../../common/java-tool-executor';
 
 const remote = require('electron').remote;
 

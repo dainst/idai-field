@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import {Reader} from './reader';
 import {ImportErrors} from './import-errors';
-import {JavaToolExecutor} from '../../widgets/java-tool-executor';
+import {JavaToolExecutor} from '../../common/java-tool-executor';
 
 const remote = require('electron').remote;
 

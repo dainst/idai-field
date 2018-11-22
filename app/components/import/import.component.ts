@@ -19,7 +19,7 @@ import {MessagesConversion} from './messages-conversion';
 import {M} from '../m';
 import {ImportFacade, ImportFormat} from '../../core/import/import-facade';
 import {ShapefileFileSystemReader} from '../../core/import/shapefile-filesystem-reader';
-import {JavaToolExecutor} from '../../widgets/java-tool-executor';
+import {JavaToolExecutor} from '../../common/java-tool-executor';
 
 
 @Component({
@@ -139,7 +139,7 @@ export class ImportComponent implements OnInit {
         this.file = !files || files.length === 0
             ? undefined
             : files[0];
-     }
+    }
 
 
     public getFileInputExtensions(): string {

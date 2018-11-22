@@ -34,9 +34,9 @@ import {StateSerializer} from '../../common/state-serializer';
 import {Loading} from '../../widgets/loading';
 import {ResourcesStateManager} from './view/resources-state-manager';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
-import {SearchConstraintsComponent} from './searchbar/search-constraints.component';
 import {ResourcesStateManagerConfiguration} from './view/resources-state-manager-configuration';
 import {LayerMapComponent} from './map/map/layer-map.component';
+import {ResourcesSearchConstraintsComponent} from './searchbar/resources-search-constraints.component';
 
 const remote = require('electron').remote;
 
@@ -66,8 +66,8 @@ const remote = require('electron').remote;
         SidebarListComponent,
         NavigationComponent,
         ResourcesSearchBarComponent,
-        SearchSuggestionsComponent,
-        SearchConstraintsComponent
+        ResourcesSearchConstraintsComponent,
+        SearchSuggestionsComponent
     ],
     providers: [
         { provide: StateSerializer, useClass: StandardStateSerializer },

@@ -1,9 +1,8 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ProjectConfiguration, FieldDefinition} from 'idai-components-2';
-import {ViewFacade} from '../view/view-facade';
-import {ResourcesSearchBarComponent} from './resources-search-bar.component';
-import {ConstraintIndexer} from '../../../core/datastore/index/constraint-indexer';
+import {ResourcesSearchBarComponent} from '../components/resources/searchbar/resources-search-bar.component';
+import {ConstraintIndexer} from '../core/datastore/index/constraint-indexer';
 
 
 type ConstraintListItem = {
@@ -26,7 +25,7 @@ type ConstraintListItem = {
 /**
  * @author Thomas Kleinke
  */
-export class SearchConstraintsComponent implements OnChanges {
+export abstract class SearchConstraintsComponent implements OnChanges {
 
     @Input() type: string;
 
@@ -42,13 +41,7 @@ export class SearchConstraintsComponent implements OnChanges {
 
     constructor(public resourcesSearchBarComponent: ResourcesSearchBarComponent,
                 private projectConfiguration: ProjectConfiguration,
-                private viewFacade: ViewFacade,
-                private i18n: I18n) {
-
-        this.viewFacade.navigationPathNotifications().subscribe(() => {
-            if (this.type) this.reset();
-        });
-    }
+                private i18n: I18n) {}
 
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -98,11 +91,11 @@ export class SearchConstraintsComponent implements OnChanges {
 
         if (!this.selectedField || this.searchTerm.length == 0) return;
 
-        const constraints: { [name: string]: string } = this.viewFacade.getCustomConstraints();
+        const constraints: { [name: string]: string } = this.getCustomConstraints();
         const constraintName: string = this.selectedField.name
             + ':' + ConstraintIndexer.getIndexType(this.selectedField);
         constraints[constraintName] = this.searchTerm;
-        await this.viewFacade.setCustomConstraints(constraints);
+        await this.setCustomConstraints(constraints);
 
         this.reset();
     }
@@ -110,9 +103,9 @@ export class SearchConstraintsComponent implements OnChanges {
 
     public async removeConstraint(constraintName: string) {
 
-        const constraints: { [name: string]: string } = this.viewFacade.getCustomConstraints();
+        const constraints: { [name: string]: string } = this.getCustomConstraints();
         delete constraints[constraintName];
-        await this.viewFacade.setCustomConstraints(constraints);
+        await this.setCustomConstraints(constraints);
 
         this.reset();
     }
@@ -152,7 +145,13 @@ export class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private reset() {
+    protected abstract getCustomConstraints(): { [name: string]: string };
+
+
+    protected abstract async setCustomConstraints(constraints: { [name: string]: string }): Promise<void>;
+
+
+    protected reset() {
 
         this.updateConstraintListItems();
         this.updateFields();
@@ -162,7 +161,7 @@ export class SearchConstraintsComponent implements OnChanges {
 
     private updateConstraintListItems() {
 
-        const constraints: { [name: string]: string } = this.viewFacade.getCustomConstraints();
+        const constraints: { [name: string]: string } = this.getCustomConstraints();
         this.constraintListItems = Object.keys(constraints)
             .map(constraintName => {
                 const fieldName: string = SearchConstraintsComponent.getFieldName(constraintName);

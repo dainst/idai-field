@@ -28,7 +28,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     public showConstraintsMenu: boolean = false;
 
     private static textFieldInputTypes: string[] = ['input', 'text', 'unsignedInt', 'float', 'unsignedFloat'];
-    private static dropdownInputTypes: string[] = ['dropdown', 'checkboxes'];
+    private static dropdownInputTypes: string[] = ['dropdown', 'checkboxes', 'radio'];
 
 
     constructor(public searchBarComponent: SearchBarComponent,

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Query, IdaiFieldImageDocument} from 'idai-components-2';
-import {ImagesState} from './images-state';
+import {ImageFilterOption, ImagesState} from './images-state';
 import {ImageDocumentsManager} from './image-documents-manager';
 import {TypeUtility} from '../../../core/model/type-utility';
 
@@ -49,7 +49,7 @@ export class ImageOverviewFacade {
     }
 
 
-    public getMainTypeDocumentFilterOption() {
+    public getMainTypeDocumentFilterOption(): ImageFilterOption {
 
         return this.imagesState.getMainTypeDocumentFilterOption();
     }
@@ -81,7 +81,7 @@ export class ImageOverviewFacade {
     }
 
 
-    public chooseMainTypeDocumentFilterOption(filterOption: string) {
+    public chooseMainTypeDocumentFilterOption(filterOption: ImageFilterOption) {
 
         this.imagesState.setMainTypeDocumentFilterOption(filterOption);
         this.setQueryConstraints();
@@ -146,17 +146,13 @@ export class ImageOverviewFacade {
         const query: Query = this.imagesState.getQuery();
 
         switch(this.imagesState.getMainTypeDocumentFilterOption()) {
-
             case 'UNLINKED':
                 this.imagesState.getQuery().constraints = { 'depicts:exist': 'UNKNOWN' };
                 break;
-
             case 'LINKED':
                 this.imagesState.getQuery().constraints = { 'depicts:exist': 'KNOWN' };
                 break;
-
-            // case 'ALL':
-            default:
+            case 'ALL':
                 delete query.constraints;
         }
     }

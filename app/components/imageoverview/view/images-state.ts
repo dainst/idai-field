@@ -1,6 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Query} from 'idai-components-2';
 
+
+export type ImageFilterOption = 'ALL'|'LINKED'|'UNLINKED';
+
+
 @Injectable()
 /**
  * @author Thomas Kleinke
@@ -8,7 +12,7 @@ import {Query} from 'idai-components-2';
 export class ImagesState {
 
     private query: Query;
-    private mainTypeDocumentFilterOption: string = '';
+    private mainTypeDocumentFilterOption: ImageFilterOption  = 'ALL';
     private gridSize: number = 4;
 
     private initialized: boolean = false;
@@ -42,7 +46,7 @@ export class ImagesState {
     }
 
 
-    public getMainTypeDocumentFilterOption(): string {
+    public getMainTypeDocumentFilterOption(): ImageFilterOption {
 
         if (!this.mainTypeDocumentFilterOption) return 'ALL';
 
@@ -54,7 +58,7 @@ export class ImagesState {
     }
 
 
-    public setMainTypeDocumentFilterOption(mainTypeDocumentFilterOption: string) {
+    public setMainTypeDocumentFilterOption(mainTypeDocumentFilterOption: ImageFilterOption) {
 
         this.mainTypeDocumentFilterOption = mainTypeDocumentFilterOption;
     }

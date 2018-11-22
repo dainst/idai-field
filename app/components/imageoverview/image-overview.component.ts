@@ -7,6 +7,7 @@ import {ImageOverviewFacade} from './view/imageoverview-facade';
 import {RoutingService} from '../routing-service';
 import {ImageUploadResult} from '../imageupload/image-uploader';
 import {M} from '../m';
+import {ImageFilterOption} from './view/images-state';
 
 @Component({
     moduleId: module.id,
@@ -82,7 +83,7 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public chooseMainTypeDocumentFilterOption(filterOption: string) {
+    public chooseMainTypeDocumentFilterOption(filterOption: ImageFilterOption) {
 
         this.imageOverviewFacade.chooseMainTypeDocumentFilterOption(filterOption);
     }

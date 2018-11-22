@@ -17,7 +17,7 @@
     </span>
 
     <resources-search-constraints *ngIf="extendedSearch"
-                                  [type]="isTypeSelected() ? types[0] : undefined">
+                                  [type]="getSelectedType()">
     </resources-search-constraints>
 
     <div *ngIf="showFiltersMenu" id="filter-button">

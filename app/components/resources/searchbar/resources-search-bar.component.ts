@@ -40,6 +40,12 @@ export class ResourcesSearchBarComponent extends SearchBarComponent {
     }
 
 
+    public getSelectedType(): string|undefined {
+
+        return this.types !== undefined && this.types.length > 0 ? this.types[0] : undefined
+    }
+
+
     public showSuggestions() {
 
         this.suggestionsVisible = true;

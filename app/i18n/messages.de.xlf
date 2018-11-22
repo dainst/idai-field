@@ -1211,7 +1211,7 @@
         <target state="final">Alle Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.filter.unlinked" datatype="html">
@@ -1219,7 +1219,7 @@
         <target state="final">Unverknüpfte Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.filter.linked" datatype="html">
@@ -1227,7 +1227,7 @@
         <target state="final">Verknüpfte Bilder</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageOverview.linkModal.chooseResourcesToLink" datatype="html">
@@ -1312,6 +1312,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/image-overview-taskbar.html</context>
           <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="widgets.searchBar.imageTypeFilter" datatype="html">
+        <source>Nach Bildtyp filtern:</source>
+        <target state="final">Nach Bildtyp filtern:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/searchbar/image-overview-search-bar.html</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageGrid.dropArea.tooltip" datatype="html">
@@ -1592,6 +1600,10 @@
           <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/imageoverview/searchbar/image-overview-search-bar.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/resources/searchbar/resources-search-bar.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
@@ -1636,7 +1648,11 @@
         <source>Suchkriterien</source>
         <target state="final">Suchkriterien</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
@@ -1648,7 +1664,11 @@
         Wählen Sie zunächst einen Typfilter aus, um die Suche anschließend weiter verfeinern zu können.
     </target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
@@ -1656,7 +1676,11 @@
         <source>Feld wählen</source>
         <target state="final">Feld wählen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
@@ -1664,7 +1688,11 @@
         <source>Suchbegriff eingeben</source>
         <target state="final">Suchbegriff eingeben</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
@@ -1672,11 +1700,19 @@
         <source>Suchbegriff wählen</source>
         <target state="final">Suchbegriff wählen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
           <context context-type="linenumber">50</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
           <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
@@ -1688,7 +1724,11 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
           <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
@@ -1704,7 +1744,11 @@
           <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/resources/searchbar/search-constraints.html</context>
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
           <context context-type="linenumber">62</context>
         </context-group>
         <context-group purpose="location">
@@ -3420,7 +3464,7 @@
         <source>Weitere Suchkriterien einstellen</source>
         <target state="final">Weitere Suchkriterien einstellen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/resources/searchbar/search-constraints.component.ts</context>
+          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
@@ -3428,7 +3472,7 @@
         <source>Aktive Suchkriterien</source>
         <target state="final">Aktive Suchkriterien</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/components/resources/searchbar/search-constraints.component.ts</context>
+          <context context-type="sourcefile">app/widgets/search-constraints.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>

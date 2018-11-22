@@ -9,7 +9,7 @@
            placeholder="Suchen..."
            i18n-placeholder="@@widgets.searchBar.placeholder">
 
-    <image-overview-search-constraints [type]="isTypeSelected() ? types[0] : undefined">
+    <image-overview-search-constraints [type]="getSelectedType()">
     </image-overview-search-constraints>
 
     <div *ngIf="showFiltersMenu" id="filter-button">

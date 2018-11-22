@@ -49,9 +49,9 @@ export class ImageOverviewFacade {
     }
 
 
-    public getMainTypeDocumentFilterOption(): ImageFilterOption {
+    public getLinkFilter(): ImageFilterOption {
 
-        return this.imagesState.getMainTypeDocumentFilterOption();
+        return this.imagesState.getLinkFilter();
     }
 
 
@@ -81,9 +81,9 @@ export class ImageOverviewFacade {
     }
 
 
-    public chooseMainTypeDocumentFilterOption(filterOption: ImageFilterOption) {
+    public setLinkFilter(filterOption: ImageFilterOption) {
 
-        this.imagesState.setMainTypeDocumentFilterOption(filterOption);
+        this.imagesState.setLinkFilter(filterOption);
         this.setQueryConstraints();
 
         this.fetchDocuments();
@@ -145,7 +145,7 @@ export class ImageOverviewFacade {
 
         const query: Query = this.imagesState.getQuery();
 
-        switch(this.imagesState.getMainTypeDocumentFilterOption()) {
+        switch(this.imagesState.getLinkFilter()) {
             case 'UNLINKED':
                 this.imagesState.getQuery().constraints = { 'depicts:exist': 'UNKNOWN' };
                 break;

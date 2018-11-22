@@ -54,7 +54,7 @@ export class ImageOverviewComponent implements OnInit {
 
     public getQuery = () => this.imageOverviewFacade.getQuery();
 
-    public getMainTypeDocumentFilterOption = () => this.imageOverviewFacade.getMainTypeDocumentFilterOption();
+    public getLinkFilter = () => this.imageOverviewFacade.getLinkFilter();
 
     public setQueryString = (q: string) => this.imageOverviewFacade.setQueryString(q);
 
@@ -83,9 +83,9 @@ export class ImageOverviewComponent implements OnInit {
     }
 
 
-    public chooseMainTypeDocumentFilterOption(filterOption: ImageFilterOption) {
+    public setLinkFilter(filterOption: ImageFilterOption) {
 
-        this.imageOverviewFacade.chooseMainTypeDocumentFilterOption(filterOption);
+        this.imageOverviewFacade.setLinkFilter(filterOption);
     }
 
 

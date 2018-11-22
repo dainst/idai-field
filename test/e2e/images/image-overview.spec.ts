@@ -208,19 +208,19 @@ describe('images --', function() {
 
         ImageOverviewPage.createDepictsRelation('testf1');
 
-        ImageOverviewPage.clickSelectMainTypeDocumentFilterOption(1);
+        ImageOverviewPage.clickSelectLinkFilterOption(1);
         browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
             delays.ECWaitTime);
         browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
             delays.ECWaitTime);
 
-        ImageOverviewPage.clickSelectMainTypeDocumentFilterOption(2);
+        ImageOverviewPage.clickSelectLinkFilterOption(2);
         browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
             delays.ECWaitTime);
         browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
             delays.ECWaitTime);
 
-        ImageOverviewPage.clickSelectMainTypeDocumentFilterOption(0);
+        ImageOverviewPage.clickSelectLinkFilterOption(0);
         browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
             delays.ECWaitTime);
         browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),

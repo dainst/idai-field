@@ -88,10 +88,11 @@ export module ImageOverviewPage {
         return common.click(element(by.id('delete-images-cancel')));
     }
 
-    export function clickSelectMainTypeDocumentFilterOption(optionIndex: number) {
 
-        browser.wait(EC.presenceOf(element(by.id('main-type-document-filter-select'))), delays.ECWaitTime);
-        element.all(by.css('#main-type-document-filter-select option')).get(optionIndex).click();
+    export function clickSelectLinkFilterOption(optionIndex: number) {
+
+        browser.wait(EC.presenceOf(element(by.id('link-filter-select'))), delays.ECWaitTime);
+        element.all(by.css('#link-filter-select option')).get(optionIndex).click();
     }
 
 

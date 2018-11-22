@@ -12,7 +12,7 @@ export type ImageFilterOption = 'ALL'|'LINKED'|'UNLINKED';
 export class ImagesState {
 
     private query: Query;
-    private mainTypeDocumentFilterOption: ImageFilterOption  = 'ALL';
+    private linkFilter: ImageFilterOption  = 'ALL';
     private gridSize: number = 4;
 
     private initialized: boolean = false;
@@ -46,21 +46,21 @@ export class ImagesState {
     }
 
 
-    public getMainTypeDocumentFilterOption(): ImageFilterOption {
+    public getLinkFilter(): ImageFilterOption {
 
-        if (!this.mainTypeDocumentFilterOption) return 'ALL';
+        if (!this.linkFilter) return 'ALL';
 
-        const result = this.mainTypeDocumentFilterOption;
-        if (['LINKED','UNLINKED'].indexOf(this.mainTypeDocumentFilterOption) !== -1) {
+        const result = this.linkFilter;
+        if (['LINKED','UNLINKED'].indexOf(this.linkFilter) !== -1) {
             return result;
         }
         return 'ALL';
     }
 
 
-    public setMainTypeDocumentFilterOption(mainTypeDocumentFilterOption: ImageFilterOption) {
+    public setLinkFilter(linkFilter: ImageFilterOption) {
 
-        this.mainTypeDocumentFilterOption = mainTypeDocumentFilterOption;
+        this.linkFilter = linkFilter;
     }
 
 

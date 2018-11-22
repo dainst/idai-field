@@ -12,6 +12,8 @@ import {ImagesState} from './view/images-state';
 import {ImageGridModule} from '../imagegrid/image-grid.module';
 import {RemoveLinkModalComponent} from './remove-link-modal.component';
 import {ImageOverviewTaskbarComponent} from "./image-overview-taskbar.component";
+import {ImageOverviewSearchBarComponent} from './searchbar/image-overview-search-bar.component';
+import {ImageOverviewSearchConstraintsComponent} from './searchbar/image-overview-search-constraints.component';
 
 @NgModule({
     imports: [
@@ -27,6 +29,8 @@ import {ImageOverviewTaskbarComponent} from "./image-overview-taskbar.component"
     declarations: [
         ImageOverviewComponent,
         ImageOverviewTaskbarComponent,
+        ImageOverviewSearchBarComponent,
+        ImageOverviewSearchConstraintsComponent,
         LinkModalComponent,
         RemoveLinkModalComponent
     ],

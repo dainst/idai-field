@@ -1,8 +1,8 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Input, OnChanges, SimpleChanges} from '@angular/core';
 import {I18n} from '@ngx-translate/i18n-polyfill';
 import {ProjectConfiguration, FieldDefinition} from 'idai-components-2';
-import {ResourcesSearchBarComponent} from '../components/resources/searchbar/resources-search-bar.component';
 import {ConstraintIndexer} from '../core/datastore/index/constraint-indexer';
+import {SearchBarComponent} from './search-bar.component';
 
 
 type ConstraintListItem = {
@@ -14,14 +14,6 @@ type ConstraintListItem = {
 };
 
 
-@Component({
-    moduleId: module.id,
-    selector: 'search-constraints',
-    templateUrl: './search-constraints.html',
-    host: {
-        '(document:click)': 'handleClick($event)',
-    }
-})
 /**
  * @author Thomas Kleinke
  */
@@ -39,7 +31,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     private static dropdownInputTypes: string[] = ['dropdown', 'checkboxes'];
 
 
-    constructor(public resourcesSearchBarComponent: ResourcesSearchBarComponent,
+    constructor(public searchBarComponent: SearchBarComponent,
                 private projectConfiguration: ProjectConfiguration,
                 private i18n: I18n) {}
 

@@ -12,7 +12,8 @@ export type ImageFilterOption = 'ALL'|'LINKED'|'UNLINKED';
 export class ImagesState {
 
     private query: Query;
-    private linkFilter: ImageFilterOption  = 'ALL';
+    private customConstraints: { [name: string]: string } = {};
+    private linkFilter: ImageFilterOption = 'ALL';
     private gridSize: number = 4;
 
     private initialized: boolean = false;
@@ -43,6 +44,18 @@ export class ImagesState {
     public setQuery(query: Query) {
 
         this.query = query;
+    }
+
+
+    public getCustomConstraints(): { [name: string]: string } {
+
+        return this.customConstraints;
+    }
+
+
+    public setCustomConstraints(customConstraints: { [name: string]: string }) {
+
+        this.customConstraints = customConstraints;
     }
 
 

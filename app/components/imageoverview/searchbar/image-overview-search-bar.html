@@ -1,0 +1,41 @@
+<form id="search-bar" class="form-inline">
+    <input #searchInput
+           id="object-search"
+           class="form-control"
+           [(ngModel)]="q"
+           (keyup)="onKeyUp()"
+           name="searchInput"
+           type="text"
+           placeholder="Suchen..."
+           i18n-placeholder="@@widgets.searchBar.placeholder">
+
+    <image-overview-search-constraints [type]="isTypeSelected() ? types[0] : undefined">
+    </image-overview-search-constraints>
+
+    <div *ngIf="showFiltersMenu" id="filter-button">
+        <button id="searchfilter"
+                class="btn btn-primary"
+                type="button"
+                [ngbPopover]="filterMenu"
+                [autoClose]="false"
+                #p="ngbPopover"
+                placement="bottom">
+            <span *ngIf="!isTypeSelected()" class="mdi mdi-filter"></span>
+            <span *ngIf="isTypeSelected()">
+                <type-icon [type]="types[0]" size="30"></type-icon>
+            </span>
+        </button>
+
+        <ng-template #filterMenu>
+            <div class="filtermenu">
+                <div class="popover-custom-title">
+                    <span i18n="@@widgets.searchBar.imageTypeFilter">Nach Bildtyp filtern:</span>
+                </div>
+                <type-picker [typesTreeList]="filterOptions" [allTypesOptionVisible]="!parentType"
+                             [selectedTypes]="types" [allowPickingAbstractTypes]="true"
+                             (onTypePicked)="chooseTypeFilter($event); p.close();">
+                </type-picker>
+            </div>
+        </ng-template>
+    </div>
+</form>

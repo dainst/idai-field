@@ -49,6 +49,21 @@ export class ImageOverviewFacade {
     }
 
 
+    public getCustomConstraints(): { [name: string]: string } {
+
+        return this.imagesState.getCustomConstraints();
+    }
+
+
+    public setCustomConstraints(customConstraints: { [name: string]: string }) {
+
+        this.imagesState.setCustomConstraints(customConstraints);
+        this.setQueryConstraints();
+
+        this.fetchDocuments();
+    }
+
+
     public getLinkFilter(): ImageFilterOption {
 
         return this.imagesState.getLinkFilter();
@@ -145,15 +160,17 @@ export class ImageOverviewFacade {
 
         const query: Query = this.imagesState.getQuery();
 
+        query.constraints = this.getCustomConstraints();
+
         switch(this.imagesState.getLinkFilter()) {
             case 'UNLINKED':
-                this.imagesState.getQuery().constraints = { 'depicts:exist': 'UNKNOWN' };
+                query.constraints['depicts:exist'] = 'UNKNOWN';
                 break;
             case 'LINKED':
-                this.imagesState.getQuery().constraints = { 'depicts:exist': 'KNOWN' };
+                query.constraints['depicts:exist'] = 'KNOWN';
                 break;
             case 'ALL':
-                delete query.constraints;
+                delete query.constraints['depicts:exist'];
         }
     }
 }

@@ -97,5 +97,14 @@
   },
   "Metal": {
     "constraint": ["decorationTechnique", "formDescription", "manufacturingMethod", "metalMaterial", "objectType", "provenance", "vesselForm", "vesselFormSpecific"]
+  },
+  "Image": {
+    "constraint": ["draughtsmen", "processor"]
+  },
+  "Drawing": {
+    "constraint": ["drawingMaterial", "drawingTool", "drawingType", "scale"]
+  },
+  "Photo": {
+    "constraint": ["originalType"]
   }
 }

@@ -58,8 +58,6 @@ export class ImageOverviewComponent implements OnInit {
 
     public setQueryString = (q: string) => this.imageOverviewFacade.setQueryString(q);
 
-    public setTypeFilters = (types: string[]) => this.imageOverviewFacade.setTypeFilters(types);
-
     public onResize = () => this.imageGrid.calcGrid();
 
     public refreshGrid = () => this.imageOverviewFacade.fetchDocuments();
@@ -68,6 +66,13 @@ export class ImageOverviewComponent implements OnInit {
     public ngOnInit() {
 
         this.imageGrid.nrOfColumns = this.imageOverviewFacade.getGridSize();
+    }
+
+
+    public setTypeFilters(types: string[]) {
+
+        this.imageOverviewFacade.setTypeFilters(types);
+        this.imageOverviewFacade.setCustomConstraints({});
     }
 
 

@@ -77,6 +77,12 @@ export module ImageOverviewPage {
     }
 
 
+    export function clickCancelLinkModalButton() {
+
+        return common.click(element(by.id('link-modal-cancel-button')));
+    }
+
+
     export function clickConfirmDeleteButton() {
 
         return common.click(element(by.id('delete-images-confirm')));
@@ -144,13 +150,6 @@ export module ImageOverviewPage {
 
     // elements
 
-    export function getLinkModalListEntries() {
-
-        browser.wait(EC.presenceOf(element(by.css('#document-picker ul'))), delays.ECWaitTime);
-        return element.all(by.css('#document-picker ul li'));
-    }
-
-
     export function getAllCells() {
 
         return element.all(by.css('.cell'));
@@ -181,15 +180,24 @@ export module ImageOverviewPage {
     }
 
 
-    export function typeInIdentifierInLinkModal(identifier) {
+    export function getLinkModalListEntries() {
 
-        return common.typeIn(ImageOverviewPage.getLinkModal().element(by.id('object-search')), identifier);
+        browser.wait(EC.presenceOf(element(by.css('#document-picker ul'))), delays.ECWaitTime);
+        return element.all(by.css('#document-picker ul li'));
     }
 
 
     export function getSuggestedResourcesInLinkModalByIdentifier(identifier) {
 
-        return ImageOverviewPage.getLinkModal().element(by.id('resource-'+identifier))
+        return ImageOverviewPage.getLinkModal().element(by.id('resource-' + identifier))
+    }
+
+
+    // type in
+
+    export function typeInIdentifierInLinkModal(identifier) {
+
+        return common.typeIn(ImageOverviewPage.getLinkModal().element(by.id('object-search')), identifier);
     }
 
 

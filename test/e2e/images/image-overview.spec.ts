@@ -230,7 +230,7 @@ describe('images --', function() {
     });
 
 
-    it('link -- filter types in overview', async done => {
+    it('link -- filter types in overview', done => {
 
         ImageOverviewPage.clickCell(0);
         ImageOverviewPage.clickLinkButton();
@@ -240,6 +240,8 @@ describe('images --', function() {
         SearchBarPage.clickChooseTypeFilter('operation-trench');
         ImageOverviewPage.getLinkModalListEntries()
             .then(esAfter => expect(esAfter.length).toBe(2));
+        ImageOverviewPage.clickCancelLinkModalButton();
+
         done();
     });
 
@@ -250,6 +252,7 @@ describe('images --', function() {
         DetailSidebarPage.performEditDocument();
         DoceditPage.typeInInputField('processor', 'testvalue');
         DoceditPage.clickSaveDocument();
+        DetailSidebarPage.clickBackToGridButton();
 
         SearchConstraintsPage.clickConstraintsMenuButton();
         SearchConstraintsPage.clickSelectConstraintField('processor');

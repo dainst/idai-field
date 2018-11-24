@@ -4,6 +4,8 @@ import {NavbarPage} from "../navbar.page";
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {FieldsViewPage} from '../widgets/fields-view-page';
 import {SearchBarPage} from '../widgets/search-bar.page';
+import {DoceditPage} from '../docedit/docedit.page';
+import {SearchConstraintsPage} from '../widgets/search-constraints.page';
 
 const EC = protractor.ExpectedConditions;
 const delays = require('../config/delays');
@@ -239,5 +241,24 @@ describe('images --', function() {
         ImageOverviewPage.getLinkModalListEntries()
             .then(esAfter => expect(esAfter.length).toBe(2));
         done();
+    });
+
+
+    it('perform constraint search', () => {
+
+        ImageOverviewPage.doubleClickCell(0);
+        DetailSidebarPage.performEditDocument();
+        DoceditPage.typeInInputField('processor', 'testvalue');
+        DoceditPage.clickSaveDocument();
+
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        SearchConstraintsPage.clickSelectConstraintField('processor');
+        SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
+        SearchConstraintsPage.clickAddConstraintButton();
+
+        browser.wait(EC.stalenessOf(ImageOverviewPage.getCellByIdentifier('PE07-So-07_Z001.jpg')),
+            delays.ECWaitTime);
+        browser.wait(EC.presenceOf(ImageOverviewPage.getCellByIdentifier('mapLayerTest2.png')),
+            delays.ECWaitTime);
     });
 });

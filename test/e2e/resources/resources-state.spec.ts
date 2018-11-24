@@ -9,6 +9,7 @@ import {RelationsViewPage} from '../widgets/relations-view.page';
 import {DetailSidebarPage} from '../widgets/detail-sidebar.page';
 import {OperationBarPage} from '../operation-bar.page';
 import {ResourcesSearchBarPage} from './resources-search-bar.page';
+import {SearchConstraintsPage} from '../widgets/search-constraints.page';
 
 const fs = require('fs');
 const delays = require('../config/delays');
@@ -274,10 +275,10 @@ describe('resources/state --', function() {
         OperationBarPage.clickSwitchHierarchyMode();
 
         SearchBarPage.clickChooseTypeFilter('feature-layer');
-        ResourcesSearchBarPage.clickConstraintsMenuButton();
-        ResourcesSearchBarPage.clickSelectConstraintField('layerClassification');
-        ResourcesSearchBarPage.clickSelectDropdownValue(1);
-        ResourcesSearchBarPage.clickAddConstraintButton();
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        SearchConstraintsPage.clickSelectConstraintField('layerClassification');
+        SearchConstraintsPage.clickSelectDropdownValue(1);
+        SearchConstraintsPage.clickAddConstraintButton();
         SearchBarPage.clickSearchBarInputField();
 
         browser.wait(EC.presenceOf(ResourcesSearchBarPage.getSuggestionsBox()), delays.ECWaitTime);
@@ -299,10 +300,10 @@ describe('resources/state --', function() {
         DoceditPage.clickSaveDocument();
 
         SearchBarPage.clickChooseTypeFilter('operation');
-        ResourcesSearchBarPage.clickConstraintsMenuButton();
-        ResourcesSearchBarPage.clickSelectConstraintField('processor');
-        ResourcesSearchBarPage.typeInConstraintSearchTerm('testvalue');
-        ResourcesSearchBarPage.clickAddConstraintButton();
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        SearchConstraintsPage.clickSelectConstraintField('processor');
+        SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
+        SearchConstraintsPage.clickAddConstraintButton();
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('S1')));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('S2')));
@@ -318,10 +319,10 @@ describe('resources/state --', function() {
         DoceditPage.clickSaveDocument();
 
         SearchBarPage.clickChooseTypeFilter('feature-layer');
-        ResourcesSearchBarPage.clickConstraintsMenuButton();
-        ResourcesSearchBarPage.clickSelectConstraintField('layerClassification');
-        ResourcesSearchBarPage.clickSelectDropdownValue(1);
-        ResourcesSearchBarPage.clickAddConstraintButton();
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        SearchConstraintsPage.clickSelectConstraintField('layerClassification');
+        SearchConstraintsPage.clickSelectDropdownValue(1);
+        SearchConstraintsPage.clickAddConstraintButton();
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE2')));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE5')));
@@ -340,22 +341,22 @@ describe('resources/state --', function() {
         DoceditPage.clickSaveDocument();
 
         SearchBarPage.clickChooseTypeFilter('feature');
-        ResourcesSearchBarPage.clickConstraintsMenuButton();
-        ResourcesSearchBarPage.clickSelectConstraintField('hasDisturbance');
-        ResourcesSearchBarPage.clickSelectBooleanValue(true);
-        ResourcesSearchBarPage.clickAddConstraintButton();
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
+        SearchConstraintsPage.clickSelectBooleanValue(true);
+        SearchConstraintsPage.clickAddConstraintButton();
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')));
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE1')));
 
-        ResourcesSearchBarPage.clickRemoveConstraintButton('hasDisturbance');
+        SearchConstraintsPage.clickRemoveConstraintButton('hasDisturbance');
 
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE0')));
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE1')));
 
-        ResourcesSearchBarPage.clickSelectConstraintField('hasDisturbance');
-        ResourcesSearchBarPage.clickSelectBooleanValue(false);
-        ResourcesSearchBarPage.clickAddConstraintButton();
+        SearchConstraintsPage.clickSelectConstraintField('hasDisturbance');
+        SearchConstraintsPage.clickSelectBooleanValue(false);
+        SearchConstraintsPage.clickAddConstraintButton();
 
         browser.wait(EC.stalenessOf(ResourcesPage.getListItemEl('SE0')));
         browser.wait(EC.presenceOf(ResourcesPage.getListItemEl('SE1')));
@@ -367,14 +368,14 @@ describe('resources/state --', function() {
         OperationBarPage.clickSwitchHierarchyMode();
 
         SearchBarPage.clickChooseTypeFilter('operation');
-        ResourcesSearchBarPage.clickConstraintsMenuButton();
-        ResourcesSearchBarPage.clickSelectConstraintField('processor');
+        SearchConstraintsPage.clickConstraintsMenuButton();
+        SearchConstraintsPage.clickSelectConstraintField('processor');
 
-        ResourcesSearchBarPage.typeInConstraintSearchTerm('testvalue');
-        ResourcesSearchBarPage.clickAddConstraintButton();
+        SearchConstraintsPage.typeInConstraintSearchTerm('testvalue');
+        SearchConstraintsPage.clickAddConstraintButton();
 
         browser.wait(EC.stalenessOf(
-            ResourcesSearchBarPage.getConstraintFieldOption('processor')
+            SearchConstraintsPage.getConstraintFieldOption('processor')
         ));
     });
 

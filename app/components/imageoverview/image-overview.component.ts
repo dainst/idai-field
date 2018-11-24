@@ -26,10 +26,6 @@ export class ImageOverviewComponent implements OnInit {
     public maxGridSize: number = 12;
     public minGridSize: number = 2;
 
-    public jumpToRelationTarget
-        = (documentToSelect: IdaiFieldImageDocument) => this.routingService.jumpToRelationTarget(documentToSelect,
-            undefined, true);
-
 
     constructor(public viewFacade: ViewFacade,
                 private imageOverviewFacade: ImageOverviewFacade,
@@ -48,7 +44,8 @@ export class ImageOverviewComponent implements OnInit {
 
     public getTotalDocumentCount = () => this.imageOverviewFacade.getTotalDocumentCount();
 
-    public select = (document: Document) => this.imageOverviewFacade.select(document as IdaiFieldImageDocument);
+    public toggleSelected =
+        (document: Document) => this.imageOverviewFacade.toggleSelected(document as IdaiFieldImageDocument);
 
     public getGridSize = () => this.imageOverviewFacade.getGridSize();
 
@@ -66,6 +63,13 @@ export class ImageOverviewComponent implements OnInit {
     public ngOnInit() {
 
         this.imageGrid.nrOfColumns = this.imageOverviewFacade.getGridSize();
+    }
+
+
+    public jumpToRelationTarget(document: IdaiFieldImageDocument) {
+
+        this.imageOverviewFacade.select(document);
+        this.routingService.jumpToRelationTarget(document, undefined, true);
     }
 
 

@@ -46,9 +46,9 @@
                     [showGeoIcon]="true"
                     [showTooltips]="true"
                     [paddingRight]="20"
-                    (onClick)="select($event)"
+                    (onClick)="toggleSelected($event)"
                     (onDoubleClick)="jumpToRelationTarget($event)"
-                    (onImagesUploaded)="onImagesUploaded($event);">
+                    (onImagesUploaded)="onImagesUploaded($event)">
             </image-grid>
         </div>
     </div>

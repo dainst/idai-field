@@ -107,7 +107,13 @@ export class ImageOverviewFacade {
 
     public select(document: IdaiFieldImageDocument) {
 
-        return this.imageDocumentsManager.select(document);
+        this.imageDocumentsManager.select(document);
+    }
+
+
+    public toggleSelected(document: IdaiFieldImageDocument) {
+
+        this.imageDocumentsManager.toggleSelected(document);
     }
 
 

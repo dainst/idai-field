@@ -12,7 +12,7 @@ import {IdaiFieldImageDocumentReadDatastore} from '../../../core/datastore/field
  */
 export class ImageDocumentsManager {
 
-    public selected: Array<IdaiFieldImageDocument>  = [];
+    public selected: Array<IdaiFieldImageDocument> = [];
 
     private documents: Array<IdaiFieldImageDocument>;
     private totalDocumentCount: number;
@@ -43,10 +43,14 @@ export class ImageDocumentsManager {
     }
 
 
-    /**
-     * @param document the object that should be selected
-     */
     public select(document: IdaiFieldImageDocument) {
+
+        if (this.selected.indexOf(document) == -1) this.selected.push(document);
+        this.depictsRelationsSelected = this.doSelectedDocumentsContainDepictsRelations();
+    }
+
+
+    public toggleSelected(document: IdaiFieldImageDocument) {
 
         if (this.selected.indexOf(document) == -1) {
             this.selected.push(document);

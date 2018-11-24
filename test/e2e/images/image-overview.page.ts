@@ -112,7 +112,8 @@ export module ImageOverviewPage {
 
     export function doubleClickCell(index) {
 
-        return browser.actions().doubleClick(ImageOverviewPage.getCell(index)).perform();
+        common.click(ImageOverviewPage.getCell(index)); // Perform an additional click to prevent cell selection
+        browser.actions().doubleClick(ImageOverviewPage.getCell(index)).perform();
     }
 
 

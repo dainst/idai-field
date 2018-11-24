@@ -206,7 +206,7 @@ describe('images --', function() {
     });
 
 
-    it('link -- use main type document filter', () => {
+    it('link -- use link filter', () => {
 
         ImageOverviewPage.createDepictsRelation('testf1');
 

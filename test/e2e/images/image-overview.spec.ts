@@ -253,6 +253,7 @@ describe('images --', function() {
         DoceditPage.typeInInputField('processor', 'testvalue');
         DoceditPage.clickSaveDocument();
         DetailSidebarPage.clickBackToGridButton();
+        ImageOverviewPage.clickDeselectButton();
 
         SearchConstraintsPage.clickConstraintsMenuButton();
         SearchConstraintsPage.clickSelectConstraintField('processor');

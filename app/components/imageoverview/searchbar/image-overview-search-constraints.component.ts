@@ -19,12 +19,12 @@ import {ImageOverviewFacade} from '../view/imageoverview-facade';
  */
 export class ImageOverviewSearchConstraintsComponent extends SearchConstraintsComponent {
 
-    constructor(resourcesSearchBarComponent: ImageOverviewSearchBarComponent,
+    constructor(imageOverviewSearchBarComponent: ImageOverviewSearchBarComponent,
                 projectConfiguration: ProjectConfiguration,
                 i18n: I18n,
                 private imageOverviewFacade: ImageOverviewFacade) {
 
-        super(resourcesSearchBarComponent, projectConfiguration, i18n);
+        super(imageOverviewSearchBarComponent, projectConfiguration, i18n);
     }
 
 

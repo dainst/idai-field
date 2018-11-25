@@ -42,6 +42,7 @@ export class SearchBarComponent implements OnChanges {
     protected filterOptions: Array<IdaiType> = [];
 
     private emitQueryTimeout: any = undefined;
+    private focused: boolean = false;
 
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
@@ -87,8 +88,7 @@ export class SearchBarComponent implements OnChanges {
 
     public isFocused(): boolean {
 
-        return this.fulltextSearchInput.nativeElement.ownerDocument.activeElement
-            === this.fulltextSearchInput.nativeElement;
+        return this.focused;
     }
 
 

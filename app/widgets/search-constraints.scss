@@ -18,6 +18,10 @@ image-overview-search-constraints {
     &.focused {
       border-color: #7998cb !important;
     }
+
+    &:active {
+      border-color: #ced4da !important;
+    }
   }
 
   #constraints-menu {

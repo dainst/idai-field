@@ -3,6 +3,8 @@
            id="object-search"
            class="form-control"
            [(ngModel)]="q"
+           (focus)="focused = true"
+           (blur)="focused = false"
            (keyup)="onKeyUp()"
            name="searchInput"
            type="text"

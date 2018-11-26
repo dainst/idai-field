@@ -840,9 +840,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -1048,9 +1049,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -1477,9 +1479,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -1588,9 +1591,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -2259,9 +2263,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -2490,9 +2495,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },
@@ -3664,9 +3670,10 @@
       "condition": {
         "inputType": "dropdown",
         "valuelist": [
-          "gut",
-          "schlecht",
           "sehr gut",
+          "gut",
+          "mittel",
+          "schlecht",
           "sehr schlecht"
         ]
       },

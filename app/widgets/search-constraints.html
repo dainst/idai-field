@@ -39,15 +39,35 @@
             </option>
         </select>
 
-        <input *ngIf="getSearchInputType(selectedField) === 'input'"
-               id="constraint-search-term-input" type="text" placeholder="Suchbegriff eingeben"
-               i18n-placeholder="@@resources.searchBar.constraints.enterSearchTerm"
+        <input *ngIf="getSearchInputType(selectedField) === 'input' && !existIndexForTextField"
+               id="constraint-search-term-input" type="text" placeholder="Suchbegriff"
+               i18n-placeholder="@@resources.searchBar.constraints.searchTerm"
                [(ngModel)]="searchTerm" class="form-control">
+        <input *ngIf="getSearchInputType(selectedField) === 'input' && existIndexForTextField"
+               type="text" [ngModel]="getExistIndexSearchTermLabel(searchTerm)"
+               class="form-control" disabled>
+        <div *ngIf="getSearchInputType(selectedField) === 'input'"
+             id="constraint-search-search-term-input-dropdown" class="dropdown"
+             ngbDropdown placement="bottom-right">
+            <button class="btn btn-outline-primary dropdown-toggle-split" ngbDropdownToggle></button>
+
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <button class="dropdown-item" (click)="setExistIndexSearchTermForTextField('KNOWN')">
+                    <span i18n="@@resources.searchBar.constraints.anyValue">- Beliebiger Wert -</span>
+                </button>
+                <button class="dropdown-item" (click)="setExistIndexSearchTermForTextField('UNKNOWN')">
+                    <span i18n="@@resources.searchBar.constraints.noValue">- Kein Wert -</span>
+                </button>
+                <button class="dropdown-item" (click)="removeExistIndexSearchTermForTextField()">
+                    <span i18n="@@resources.searchBar.constraints.enterSearchTerm">Suchbegriff eingeben</span>
+                </button>
+            </div>
+        </div>
 
         <select *ngIf="getSearchInputType(selectedField) === 'dropdown'"
                 id="constraint-search-term-select" [(ngModel)]="searchTerm" class="form-control">
             <option value="" hidden [selected]="searchTerm.length === 0"
-                    i18n="@@resources.searchBar.constraints.selectSearchTerm">Suchbegriff wählen</option>
+                    i18n="@@resources.searchBar.constraints.searchTerm">Suchbegriff</option>
             <option value=""></option>
             <option id="constraint-search-term-dropdown-option-any-value" value="KNOWN"
                     i18n="@@resources.searchBar.constraints.anyValue">- Beliebiger Wert -</option>
@@ -59,7 +79,7 @@
         <select *ngIf="getSearchInputType(selectedField) === 'boolean'"
                 id="constraint-search-term-boolean-select" [(ngModel)]="searchTerm" class="form-control">
             <option value="" hidden [selected]="searchTerm.length === 0"
-                    i18n="@@resources.searchBar.constraints.selectSearchTerm">Suchbegriff wählen</option>
+                    i18n="@@resources.searchBar.constraints.searchTerm">Suchbegriff</option>
             <option value=""></option>
             <option id="constraint-search-term-boolean-select-option-any-value" value="KNOWN"
                     i18n="@@resources.searchBar.constraints.anyValue">- Beliebiger Wert -</option>
@@ -73,7 +93,7 @@
 
         <div *ngIf="searchTerm.length > 0" id="add-constraint-button" class="btn btn-primary"
              (click)="addConstraint(); $event.stopPropagation();">
-            ✓
+            <span>✓</span>
         </div>
     </div>
 </div>

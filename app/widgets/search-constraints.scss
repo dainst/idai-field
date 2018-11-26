@@ -66,6 +66,7 @@ image-overview-search-constraints {
         width: calc(100% - 36px);
         overflow: hidden;
         word-wrap: break-word;
+        font-size: 14px;
       }
 
       .mdi-close-circle {
@@ -83,15 +84,57 @@ image-overview-search-constraints {
 
       select,
       input {
-        width: calc(50% - 31px);
         height: 39px;
+        font-size: 14px;
+      }
+
+      select {
+        padding-top: 7px;
+        width: calc(50% - 31px);
+      }
+
+      input {
+        width: calc(50% - 57px);
+
+        &:focus {
+          z-index: 1;
+        }
       }
 
       #constraint-field-select,
       #constraint-search-term-select,
       #constraint-search-term-boolean-select,
-      #constraint-search-term-input {
+      #constraint-search-search-term-input-dropdown {
         margin-right: 10px;
+      }
+
+      #constraint-search-search-term-input-dropdown {
+        left: -1px;
+
+        button {
+          height: 39px;
+          color: #6c757d;
+          border-color: #ced4da;
+          font-size: 14px;
+
+          &:focus {
+            z-index: 1;
+            border-color: #7998cb !important;
+          }
+        }
+
+        .dropdown-item {
+          color: black;
+        }
+      }
+
+      #add-constraint-button {
+        height: 39px;
+
+        span {
+          position: relative;
+          top: 1px;
+        }
       }
     }
   }

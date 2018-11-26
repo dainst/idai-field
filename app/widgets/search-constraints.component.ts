@@ -26,6 +26,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     public searchTerm: string = '';
     public constraintListItems: Array<ConstraintListItem> = [];
     public showConstraintsMenu: boolean = false;
+    public existIndexForTextField: boolean = false;
 
     private static textFieldInputTypes: string[] = ['input', 'text', 'unsignedInt', 'float', 'unsignedFloat'];
     private static dropdownInputTypes: string[] = ['dropdown', 'checkboxes', 'radio'];
@@ -76,6 +77,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         this.selectedField = this.fields.find(field => field.name === fieldName);
         this.searchTerm = '';
+        this.existIndexForTextField = false;
     }
 
 
@@ -85,7 +87,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         const constraints: { [name: string]: string } = this.getCustomConstraints();
         const constraintName: string = this.selectedField.name
-            + ':' + SearchConstraintsComponent.getIndexType(this.selectedField, this.searchTerm);
+            + ':' + this.getIndexType(this.selectedField, this.searchTerm);
         constraints[constraintName] = this.searchTerm;
         await this.setCustomConstraints(constraints);
 
@@ -105,26 +107,10 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     public getSearchTermLabel(constraintListItem: ConstraintListItem): string {
 
-        if (constraintListItem.searchTerm === 'KNOWN') {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.anyValue',
-                value: '- Beliebiger Wert -'
-            });
-        } else if (constraintListItem.searchTerm === 'UNKNOWN') {
-            return this.i18n({
-                id: 'resources.searchBar.constraints.noValue',
-                value: '- Kein Wert -'
-            });
+        if (this.isExistIndexSearch(constraintListItem.searchTerm, constraintListItem.searchInputType)) {
+            return this.getExistIndexSearchTermLabel(constraintListItem.searchTerm);
         } else if (constraintListItem.searchInputType === 'boolean') {
-            return (constraintListItem.searchTerm === 'true')
-                ? this.i18n({
-                    id: 'boolean.yes',
-                    value: 'Ja'
-                })
-                : this.i18n({
-                    id: 'boolean.no',
-                    value: 'Nein'
-                });
+            return this.getBooleanSearchTermLabel(constraintListItem.searchTerm);
         } else {
             return constraintListItem.searchTerm;
         }
@@ -144,6 +130,20 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         this.showConstraintsMenu = false;
         this.reset();
+    }
+
+
+    public setExistIndexSearchTermForTextField(searchTerm: 'KNOWN'|'UNKNOWN') {
+
+        this.existIndexForTextField = true;
+        this.searchTerm = searchTerm;
+    }
+
+
+    public removeExistIndexSearchTermForTextField() {
+
+        this.existIndexForTextField = false;
+        this.searchTerm = '';
     }
 
 
@@ -197,6 +197,43 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
+    private isExistIndexSearch(searchTerm: string, searchInputType: string|undefined) {
+
+        return (searchTerm === 'KNOWN' || searchTerm === 'UNKNOWN')
+            && (searchInputType !== 'input' || this.existIndexForTextField);
+    }
+
+
+    private getExistIndexSearchTermLabel(searchTerm: string): string {
+
+        if (searchTerm === 'KNOWN') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.anyValue',
+                value: '- Beliebiger Wert -'
+            });
+        } else {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.noValue',
+                value: '- Kein Wert -'
+            });
+        }
+    }
+
+
+    private getBooleanSearchTermLabel(searchTerm: string): string {
+
+        return (searchTerm === 'true')
+            ? this.i18n({
+                id: 'boolean.yes',
+                value: 'Ja'
+            })
+            : this.i18n({
+                id: 'boolean.no',
+                value: 'Nein'
+            });
+    }
+
+
     private getField(fieldName: string): FieldDefinition {
 
         return this.projectConfiguration.getFieldDefinitions(this.type)
@@ -213,16 +250,16 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
-    private static getFieldName(constraintName: string): string {
+    private getIndexType(field: FieldDefinition, searchTerm: string) {
 
-        return constraintName.substring(0, constraintName.indexOf(':'));
+        return this.isExistIndexSearch(searchTerm, this.getSearchInputType(field))
+            ? 'exist'
+            : ConstraintIndexer.getIndexType(field);
     }
 
 
-    private static getIndexType(field: FieldDefinition, searchTerm: string) {
+    private static getFieldName(constraintName: string): string {
 
-        return searchTerm === 'KNOWN' || searchTerm === 'UNKNOWN'
-            ? 'exist'
-            : ConstraintIndexer.getIndexType(field);
+        return constraintName.substring(0, constraintName.indexOf(':'));
     }
 }

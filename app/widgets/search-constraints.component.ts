@@ -117,6 +117,20 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     }
 
 
+    public getBooleanSearchTermLabel(searchTerm: string): string {
+
+        return (searchTerm === 'true')
+            ? this.i18n({
+                id: 'boolean.yes',
+                value: 'Ja'
+            })
+            : this.i18n({
+                id: 'boolean.no',
+                value: 'Nein'
+            });
+    }
+
+
     public handleClick(event: Event) {
 
         if (!this.showConstraintsMenu) return;
@@ -209,28 +223,14 @@ export abstract class SearchConstraintsComponent implements OnChanges {
         if (searchTerm === 'KNOWN') {
             return this.i18n({
                 id: 'resources.searchBar.constraints.anyValue',
-                value: '- Beliebiger Wert -'
+                value: 'Beliebiger Wert'
             });
         } else {
             return this.i18n({
                 id: 'resources.searchBar.constraints.noValue',
-                value: '- Kein Wert -'
+                value: 'Kein Wert'
             });
         }
-    }
-
-
-    private getBooleanSearchTermLabel(searchTerm: string): string {
-
-        return (searchTerm === 'true')
-            ? this.i18n({
-                id: 'boolean.yes',
-                value: 'Ja'
-            })
-            : this.i18n({
-                id: 'boolean.no',
-                value: 'Nein'
-            });
     }
 
 

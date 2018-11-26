@@ -386,6 +386,9 @@ describe('ConstraintIndexer', () => {
         expect(ci.get('customField1:match', 'testValue')).toEqual([indexItem('1')]);
         expect(ci.get('customField2:match', 'false')).toEqual([indexItem('1')]);
         expect(ci.get('customField3:contain', 'testValue1')).toEqual([indexItem('1')]);
+        expect(ci.get('customField1:exist', 'KNOWN')).toEqual([indexItem('1')]);
+        expect(ci.get('customField2:exist', 'KNOWN')).toEqual([indexItem('1')]);
+        expect(ci.get('customField3:exist', 'KNOWN')).toEqual([indexItem('1')]);
     });
 
 
@@ -415,5 +418,7 @@ describe('ConstraintIndexer', () => {
 
         expect(ci.get('field:match', 'value')).toEqual([indexItem('1')]);
         expect(ci.get('field:contain', 'value')).toEqual([indexItem('2')]);
+        expect(ci.get('field:exist', 'KNOWN'))
+            .toEqual([indexItem('1'),indexItem('2')]);
     });
 });

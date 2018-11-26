@@ -106,7 +106,8 @@ export class ConstraintIndexer {
 
         switch(indexDefinition.type) {
             case 'exist':
-                if (!elForPath || (elForPath instanceof Array && (!elForPath.length || elForPath.length === 0))) {
+                if ((!elForPath && elForPath !== false)
+                        || (elForPath instanceof Array && (!elForPath.length || elForPath.length === 0))) {
                     return ConstraintIndexer.addToIndex(
                         this.existIndex,
                         doc,
@@ -207,7 +208,11 @@ export class ConstraintIndexer {
 
         const definitionsFromConfiguration: Array<{ name: string, indexDefinition: IndexDefinition }> =
             this.getFieldsToIndex(types)
-                .map((field: FieldDefinition) => ConstraintIndexer.makeIndexDefinition(field));
+                .map((field: FieldDefinition) => ConstraintIndexer.makeIndexDefinitions(field))
+                .reduce((result: any, definitions) => {
+                    definitions.forEach(definition => result.push(definition));
+                    return result;
+                }, []);
 
         return this.combine(definitionsFromConfiguration, defaultIndexDefinitions);
     }
@@ -244,10 +249,18 @@ export class ConstraintIndexer {
     }
 
 
-    private static makeIndexDefinition(field: FieldDefinition)
-            : { name: string, indexDefinition: IndexDefinition } {
+    private static makeIndexDefinitions(field: FieldDefinition)
+            : Array<{ name: string, indexDefinition: IndexDefinition }> {
 
-        const indexType: string = this.getIndexType(field);
+        return [
+            this.makeIndexDefinition(field, this.getIndexType(field)),
+            this.makeIndexDefinition(field, 'exist')
+        ];
+    }
+
+
+    private static makeIndexDefinition(field: FieldDefinition, indexType: string)
+            : { name: string, indexDefinition: IndexDefinition } {
 
         return {
             name: field.name + ':' + indexType,

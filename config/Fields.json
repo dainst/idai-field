@@ -284,7 +284,17 @@
   "Mollusk": {
     "color": "#ff99ff",
     "parent": "Find",
-    "fields": {}
+    "fields": {
+      "classification": {
+        "inputType": "radio",
+        "valuelist": [
+          "Schuppe",
+          "Coxa",
+          "Muschelschale (Bivalvia)",
+          "Schneckenhaus (Gastropoda)"
+        ]
+      }
+    }
   },
   "Brick": {
     "color": "#CC0000",

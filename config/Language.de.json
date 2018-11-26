@@ -86,8 +86,12 @@
       }
     },
     "Mollusk": {
-      "label": "Molluske",
-      "fields": {}
+      "label": "Mollusk",
+      "fields": {
+        "classification": {
+          "label": "Molluske-Klassification"
+        }
+      }
     },
     "Planum": {
       "label": "Planum",

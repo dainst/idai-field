@@ -70,7 +70,11 @@
     },
     "Mollusk": {
       "label": "Mollusk",
-      "fields": {}
+      "fields": {
+        "classification": {
+          "label": "Mollusk classification"
+        }
+      }
     },
     "Planum": {
       "label": "Planum",

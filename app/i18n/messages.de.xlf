@@ -969,7 +969,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/link-modal.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/remove-link-modal.html</context>
@@ -1319,7 +1319,7 @@
         <target state="final">Nach Bildtyp filtern:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/searchbar/image-overview-search-bar.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="imageGrid.dropArea.tooltip" datatype="html">
@@ -1601,11 +1601,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/imageoverview/searchbar/image-overview-search-bar.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/searchbar/resources-search-bar.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.searchBar.resourceTypeFilter" datatype="html">
@@ -1617,7 +1617,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/searchbar/resources-search-bar.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.typePicker.allTypes" datatype="html">
@@ -1684,36 +1684,100 @@
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.searchTerm" datatype="html">
+        <source>Suchbegriff</source>
+        <target state="final">Suchbegriff</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.anyValue" datatype="html">
+        <source>- Beliebiger Wert -</source>
+        <target state="final">- Beliebiger Wert -</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="resources.searchBar.constraints.noValue" datatype="html">
+        <source>- Kein Wert -</source>
+        <target state="final">- Kein Wert -</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">widgets/search-constraints.html</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="resources.searchBar.constraints.enterSearchTerm" datatype="html">
         <source>Suchbegriff eingeben</source>
         <target state="final">Suchbegriff eingeben</target>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="resources.searchBar.constraints.selectSearchTerm" datatype="html">
-        <source>Suchbegriff wählen</source>
-        <target state="final">Suchbegriff wählen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="boolean.yes" datatype="html">
@@ -1725,11 +1789,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">89</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">89</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>
@@ -1745,11 +1809,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">91</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">widgets/search-constraints.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">91</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/core/forms/boolean.html</context>

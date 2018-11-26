@@ -49,6 +49,10 @@
             <option value="" hidden [selected]="searchTerm.length === 0"
                     i18n="@@resources.searchBar.constraints.selectSearchTerm">Suchbegriff wählen</option>
             <option value=""></option>
+            <option id="constraint-search-term-dropdown-option-any-value" value="KNOWN"
+                    i18n="@@resources.searchBar.constraints.anyValue">- Beliebiger Wert -</option>
+            <option id="constraint-search-term-dropdown-option-no-value" value="UNKNOWN"
+                    i18n="@@resources.searchBar.constraints.noValue">- Kein Wert -</option>
             <option *ngFor="let value of selectedField.valuelist" value="{{value}}">{{value}}</option>
         </select>
 
@@ -57,7 +61,12 @@
             <option value="" hidden [selected]="searchTerm.length === 0"
                     i18n="@@resources.searchBar.constraints.selectSearchTerm">Suchbegriff wählen</option>
             <option value=""></option>
-            <option id="constraint-search-term-boolean-select-option-true" value="true" i18n="@@boolean.yes">Ja</option>
+            <option id="constraint-search-term-boolean-select-option-any-value" value="KNOWN"
+                    i18n="@@resources.searchBar.constraints.anyValue">- Beliebiger Wert -</option>
+            <option id="constraint-search-term-boolean-select-option-no-value" value="UNKNOWN"
+                    i18n="@@resources.searchBar.constraints.noValue">- Kein Wert -</option>
+            <option id="constraint-search-term-boolean-select-option-true" value="true"
+                    i18n="@@boolean.yes">Ja</option>
             <option id="constraint-search-term-boolean-select-option-false" value="false"
                     i18n="@@boolean.no">Nein</option>
         </select>

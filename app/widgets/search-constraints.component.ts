@@ -85,7 +85,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
         const constraints: { [name: string]: string } = this.getCustomConstraints();
         const constraintName: string = this.selectedField.name
-            + ':' + ConstraintIndexer.getIndexType(this.selectedField);
+            + ':' + SearchConstraintsComponent.getIndexType(this.selectedField, this.searchTerm);
         constraints[constraintName] = this.searchTerm;
         await this.setCustomConstraints(constraints);
 
@@ -105,7 +105,17 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     public getSearchTermLabel(constraintListItem: ConstraintListItem): string {
 
-        if (constraintListItem.searchInputType === 'boolean') {
+        if (constraintListItem.searchTerm === 'KNOWN') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.anyValue',
+                value: '- Beliebiger Wert -'
+            });
+        } else if (constraintListItem.searchTerm === 'UNKNOWN') {
+            return this.i18n({
+                id: 'resources.searchBar.constraints.noValue',
+                value: '- Kein Wert -'
+            });
+        } else if (constraintListItem.searchInputType === 'boolean') {
             return (constraintListItem.searchTerm === 'true')
                 ? this.i18n({
                     id: 'boolean.yes',
@@ -206,5 +216,13 @@ export abstract class SearchConstraintsComponent implements OnChanges {
     private static getFieldName(constraintName: string): string {
 
         return constraintName.substring(0, constraintName.indexOf(':'));
+    }
+
+
+    private static getIndexType(field: FieldDefinition, searchTerm: string) {
+
+        return searchTerm === 'KNOWN' || searchTerm === 'UNKNOWN'
+            ? 'exist'
+            : ConstraintIndexer.getIndexType(field);
     }
 }

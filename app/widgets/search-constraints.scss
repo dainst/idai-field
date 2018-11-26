@@ -123,8 +123,13 @@ image-overview-search-constraints {
           }
         }
 
-        .dropdown-item {
-          color: black;
+        .dropdown-menu {
+          top: 36px !important;
+
+          .dropdown-item {
+            height: 30px;
+            color: black;
+          }
         }
       }
 

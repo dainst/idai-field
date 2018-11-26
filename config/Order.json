@@ -28,7 +28,7 @@
     "Wood": ["color", "typeOfWood", "objectType"],
     "Coin": ["metalMaterial", "manufacturingMethod", "preservedDiameter", "frontSideDescription", "reverseSideDescription", "provenance", "stampPositioning", "denomination", "mint", "mintingRuler"],
     "PlasterFragment": ["plasterComponents", "area", "color", "composition", "hasDecoration"],
-    "Mollusk": [],
+    "Mollusk": ["classification"],
     "Inscription": ["processor", "description", "dimensionWidth", "dimensionHeight", "objectType", "condition", "conditionAmount", "conditionComment", "language", "content", "period", "dating", "comparison"],
     "ProcessUnit": ["processor", "date", "description", "operationClassification"],
     "Profile": ["orientation", "dimensionHeight", "dimensionVerticalExtent"],

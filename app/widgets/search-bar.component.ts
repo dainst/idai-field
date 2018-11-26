@@ -39,10 +39,11 @@ export class SearchBarComponent implements OnChanges {
     @ViewChild('p') protected popover: any;
     @ViewChild('searchInput') fulltextSearchInput: ElementRef;
 
+    public focused: boolean = false;
+
     protected filterOptions: Array<IdaiType> = [];
 
     private emitQueryTimeout: any = undefined;
-    private focused: boolean = false;
 
 
     constructor(private projectConfiguration: ProjectConfiguration) {}
@@ -83,12 +84,6 @@ export class SearchBarComponent implements OnChanges {
             this.emitQueryTimeout = undefined;
             this.onQueryStringChanged.emit(this.q);
         }, 200);
-    }
-
-
-    public isFocused(): boolean {
-
-        return this.focused;
     }
 
 

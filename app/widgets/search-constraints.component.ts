@@ -107,7 +107,7 @@ export abstract class SearchConstraintsComponent implements OnChanges {
 
     public getSearchTermLabel(constraintListItem: ConstraintListItem): string {
 
-        if (this.isExistIndexSearch(constraintListItem.searchTerm, constraintListItem.searchInputType)) {
+        if (constraintListItem.name.includes(':exist')) {
             return this.getExistIndexSearchTermLabel(constraintListItem.searchTerm);
         } else if (constraintListItem.searchInputType === 'boolean') {
             return this.getBooleanSearchTermLabel(constraintListItem.searchTerm);

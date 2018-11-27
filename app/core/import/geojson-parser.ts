@@ -25,6 +25,11 @@ export class GeojsonParser extends AbstractParser {
      *
      * @param content
      * @returns {any}
+     * @throws [WRONG_IDENTIFIER_FORMAT]
+     * @throws [MISSING_IDENTIFIER]
+     * @throws [INVALID_GEOJSON_IMPORT_STRUCT]
+     * @throws [FILE_INVALID_JSON]
+     * @throws [IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS]
      */
     public parse(content: string): Observable<Document> {
 

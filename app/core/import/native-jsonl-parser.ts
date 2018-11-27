@@ -9,6 +9,9 @@ import {ImportErrors} from './import-errors';
  */
 export class NativeJsonlParser extends AbstractParser {
 
+    /**
+     * @throws [FILE_INVALID_JSONL]
+     */
     public parse(content: string): Observable<Document> {
         
         this.warnings = [];

@@ -27,6 +27,7 @@ export class DefaultImportStrategy implements ImportStrategy {
     /**
      * @returns {Document} the stored document if it has been imported, undefined otherwise
      * @throws errorWithParams
+     * @throws [MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS] if resource already exist and !mergeIfExists
      */
     public async importDoc(document: NewDocument): Promise<Document|undefined> {
 

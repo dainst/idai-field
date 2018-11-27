@@ -13,7 +13,6 @@ import {NativeJsonlParser} from './native-jsonl-parser';
 import {ImportStrategy} from './import-strategy';
 import {MeninxFindImportStrategy} from './meninx-find-import-strategy';
 import {DefaultImportStrategy} from './default-import-strategy';
-import {MergeGeometriesImportStrategy} from './merge-geometries-import-strategy';
 import {RelationsStrategy} from './relations-strategy';
 import {NoRelationsStrategy} from './no-relations-strategy';
 import {DefaultRelationsStrategy} from './default-relations-strategy';
@@ -115,15 +114,18 @@ export module ImportFacade {
             case 'meninxfind':
                 return new MeninxFindImportStrategy(validator, datastore,
                     projectConfiguration, usernameProvider.getUsername());
+
             case 'idig':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername());
             case 'geojson':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername(), true);
+                    projectConfiguration, usernameProvider.getUsername(),
+                    true);
             case 'shapefile':
-                return new MergeGeometriesImportStrategy(
-                    validator, datastore, usernameProvider.getUsername());
+                return new DefaultImportStrategy(typeUtility, validator, datastore,
+                    projectConfiguration, usernameProvider.getUsername(),
+                    true);
             case 'native':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),

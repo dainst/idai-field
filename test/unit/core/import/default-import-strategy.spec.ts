@@ -111,4 +111,38 @@ describe('DefaultImportStrategy', () => {
         }
         done();
     });
+
+
+    it('should merge geometry', async done => {
+
+        const originalDoc = { resource: { id: '1', identifier: 'i1', shortDescription: 'sd1', relations: {}}};
+        const docToMerge = { resource: { geometry: { a: 'b' }}};
+
+        mockValidator = jasmine.createSpyObj('validator', ['validate']);
+        mockValidator.validate.and.callFake(function() { return Promise.resolve(); });
+
+        mockDatastore = jasmine.createSpyObj('datastore', ['find','update']);
+        mockDatastore.find.and.callFake(
+            () => Promise.resolve({ documents: [originalDoc], totalCount: 1 }));
+        mockDatastore.update.and.callFake(() => Promise.resolve(undefined));
+
+        importStrategy = new DefaultImportStrategy(
+            mockTypeUtility,
+            mockValidator,
+            mockDatastore,
+            null,
+            'user1',
+            true);
+        await importStrategy.importDoc(docToMerge as any);
+
+        const importedDoc = mockDatastore.update.calls.mostRecent().args[0];
+        expect(importedDoc.resource).toEqual({
+            id: '1',
+            identifier: 'i1',
+            shortDescription: 'sd1',
+            geometry: { a: 'b' }, // merged from docToMerge
+            relations: {}
+        });
+        done();
+    })
 });

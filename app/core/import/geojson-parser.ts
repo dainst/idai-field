@@ -83,20 +83,20 @@ export class GeojsonParser extends AbstractParser {
             return structErr('Property "features" not found at top level.');
         }
         for (let feature of content.features) {
-            if (feature.properties == undefined
-                || feature.properties['identifier'] == undefined)  {
+            if (feature.properties === undefined
+                || feature.properties['identifier'] === undefined)  {
                 return [ImportErrors.MISSING_IDENTIFIER];
             }
             if (typeof feature.properties['identifier'] != 'string')  {
                 return [ImportErrors.WRONG_IDENTIFIER_FORMAT];
             }
-            if (feature.type == undefined) {
+            if (feature.type === undefined) {
                 return structErr('Property "type" not found for at least one feature.');
             }
-            if (feature.type != 'Feature') {
+            if (feature.type !== 'Feature') {
                 return structErr('Second level elements must be of type "Feature".');
             }
-            if (supportedGeometryTypes.indexOf(feature.geometry.type) == -1) {
+            if (supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
                 return structErr('geometry type "' + feature.geometry.type + '" not supported.');
             }
         }
@@ -106,7 +106,7 @@ export class GeojsonParser extends AbstractParser {
     private addDuplicateIdentifierWarnings(identifiers: string[]) {
 
         const duplicateIdentifiers: string[] = duplicates(identifiers);
-        if (duplicateIdentifiers.length == 1) {
+        if (duplicateIdentifiers.length === 1) {
             this.warnings.push([M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER, duplicateIdentifiers[0]]);
         } else if (duplicateIdentifiers.length > 1) {
             this.warnings.push([M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS, duplicateIdentifiers.join(', ')]);

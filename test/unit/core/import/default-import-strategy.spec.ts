@@ -119,12 +119,11 @@ describe('DefaultImportStrategy', () => {
         const docToMerge = { resource: { geometry: { a: 'b' }}};
 
         mockValidator = jasmine.createSpyObj('validator', ['validate']);
-        mockValidator.validate.and.callFake(function() { return Promise.resolve(); });
+        mockValidator.validate.and.returnValues(Promise.resolve());
 
         mockDatastore = jasmine.createSpyObj('datastore', ['find','update']);
-        mockDatastore.find.and.callFake(
-            () => Promise.resolve({ documents: [originalDoc], totalCount: 1 }));
-        mockDatastore.update.and.callFake(() => Promise.resolve(undefined));
+        mockDatastore.find.and.returnValues(Promise.resolve({ documents: [originalDoc], totalCount: 1 }));
+        mockDatastore.update.and.returnValues(Promise.resolve());
 
         importStrategy = new DefaultImportStrategy(
             mockTypeUtility,

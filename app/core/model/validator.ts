@@ -39,8 +39,10 @@ export class Validator {
      * @throws [INVALID_FIELDS]
      * @throws [INVALID_NUMERICAL_VALUE]
      */
-    public async validate(document: Document|NewDocument, suppressFieldsAndRelationsCheck = false,
-                          suppressIdentifierCheck = false, suppressIsRecordedInCheck = false): Promise<void> {
+    public async validate(document: Document|NewDocument,
+                          suppressFieldsAndRelationsCheck = false,
+                          suppressIdentifierCheck = false,
+                          suppressIsRecordedInCheck = false): Promise<void> {
 
         if (!Validations.validateType(document.resource, this.projectConfiguration)) {
             throw [ValidationErrors.INVALID_TYPE, document.resource.type];

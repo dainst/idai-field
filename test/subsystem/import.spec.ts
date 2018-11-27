@@ -111,48 +111,60 @@ describe('Import/Subsystem', () => {
     });
 
 
-    function createRollbackTestImportFunction(allowMergingExistingResources: boolean, resourceId: string) {
+    it('rollback', async done => {
 
-        return ImportFacade.doImport(
+        const resourceId = (await datastore.create(
+            { resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}}
+            )).resource.id;
+
+        const importReport = await ImportFacade.doImport(
             'native',
             new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
             resourceId,
-            allowMergingExistingResources,
+            false,
             { go: () => Promise.resolve(
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
                     + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}')});
-    }
 
-
-    it('rollback', async done => {
-
-        const id = (await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}})).resource.id;
-
-        const importReport = await createRollbackTestImportFunction(false, id);
-        expect(importReport.errors[0]).toEqual([M.IMPORT_VALIDATION_ERROR_INVALID_TYPE, 'InvalidType']); // TODO should be validation error
+        expect(importReport.errors[0]).toEqual([M.IMPORT_VALIDATION_ERROR_INVALID_TYPE, 'InvalidType']);
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(1);
+        expect(result.documents.length).toBe(1); // only the trench
         done();
     });
 
 
     it('no rollback, because after merge we will not perform it', async done => {
 
-        const id = (await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}})).resource.id;
-        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'f1', relations: { isRecordedIn: ['t1']}}});
+        await datastore.create(
+            { resource: { id: 't1', identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
+        await datastore.create(
+            { resource: { identifier: 'f1', type: 'Feature', shortDescription: 'f1', relations: { isRecordedIn: ['t1']}}});
+        await datastore.create(
+            { resource: { identifier: 'f2', type: 'Feature', shortDescription: 'f2', relations: { isRecordedIn: ['t2']}}});
 
-        const importReport = await createRollbackTestImportFunction(true, id);
+        const importReport = await ImportFacade.doImport(
+            'native',
+            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            datastore,
+            { getUsername: () => 'testuser'},
+            _projectConfiguration,
+            undefined,
+            true,
+            { go: () => Promise.resolve(
+                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
+                    + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}')}); // change type to provoke error
+
         expect(importReport.errors[0]).toEqual([ValidationErrors.INVALID_TYPE, 'InvalidType']);
 
         const result = await datastore.find({});
-        expect(result.documents.length).toBe(2);
+        expect(result.documents.length).toBe(3);
         expect(result.documents.map(to('resource.identifier'))).toContain('f1');
-        expect(result.documents.map(to('resource.identifier'))).toContain('t1');
+        expect(result.documents.map(to('resource.identifier'))).toContain('f2');
         expect(result.documents.map(to('resource.shortDescription'))).toContain('feature1'); // updated
-        expect(result.documents.map(to('resource.shortDescription'))).toContain('Our Trench 1');
+        expect(result.documents.map(to('resource.shortDescription'))).toContain('f2'); // not updated
         done();
     });
 

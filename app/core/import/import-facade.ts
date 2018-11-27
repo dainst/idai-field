@@ -119,8 +119,11 @@ export module ImportFacade {
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername());
             case 'geojson':
+                return new DefaultImportStrategy(typeUtility, validator, datastore,
+                    projectConfiguration, usernameProvider.getUsername(), true);
             case 'shapefile':
-                return new MergeGeometriesImportStrategy(validator, datastore, usernameProvider.getUsername());
+                return new MergeGeometriesImportStrategy(
+                    validator, datastore, usernameProvider.getUsername());
             case 'native':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),

@@ -41,26 +41,26 @@ export class DefaultImportStrategy implements ImportStrategy {
             await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
         }
 
+        const existingDocument = await this.findByIdentifier(document.resource.identifier);
+        let _document: Document = document as Document;
+        if (this.mergeIfExists) {
+            if (existingDocument) _document = DocumentMerge.merge(existingDocument, _document);
+            else return undefined;
+        } else {
+            if (existingDocument) {
+                throw [M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS, existingDocument.resource.identifier];
+            }
+        }
+
         await this.validator.validate(
-            document as Document,
+            _document,
             false,
             true,
             this.mergeIfExists);
 
-        const existingDocument = await this.findByIdentifier(document.resource.identifier);
-        if (this.mergeIfExists) {
-
-            if (!existingDocument) return undefined;
-
-            const updatedDocument = DocumentMerge.merge(existingDocument, document as Document);
-            return await this.datastore.update(updatedDocument as Document, this.username);
-
-        } else {
-            if (existingDocument) throw [M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS, existingDocument.resource.identifier];
-
-            // throws if !mergeIfExists and exists
-            return await this.datastore.create(document, this.username);
-        }
+        return this.mergeIfExists
+            ? await this.datastore.update(_document, this.username)
+            : await this.datastore.create(document, this.username); // throws if exists
     }
 
 

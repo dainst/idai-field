@@ -664,6 +664,9 @@
         "dimensionWidth": {
           "label": "Width"
         },
+        "dimensionHeight": {
+          "label": "Height"
+        },
         "objectType": {
           "label": "Designation or type of inscription"
         }
@@ -868,7 +871,7 @@
         "publicationDatingStratigraphy": {
           "label": "Dating (stratigraphy)"
         },
-        "publication": {
+        "publicationRemark": {
           "label": "Publication remark"
         },
         "spatialLocation": {
@@ -1328,6 +1331,9 @@
         },
         "manufacturingMethod": {
           "label": "Manufacturing method"
+        },
+        "metalMaterial": {
+          "label": "Material"
         },
         "objectType": {
           "label": "Designation or type of the object"

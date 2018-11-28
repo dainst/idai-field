@@ -774,6 +774,10 @@
           "label": "Breite",
           "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
         },
+        "dimensionHeight": {
+          "label": "Höhe",
+          "description": "Angabe der Höhe an der maximalen/minimalen Ausdehnung"
+        },
         "objectType": {
           "label": "Ansprache bzw. Art der Inschrift"
         }
@@ -1534,6 +1538,9 @@
         },
         "manufacturingMethod": {
           "label": "Herstellungstechnik"
+        },
+        "metalMaterial": {
+          "label": "Material"
         },
         "objectType": {
           "label": "Ansprache bzw. Art des Objekts"

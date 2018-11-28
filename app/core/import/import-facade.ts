@@ -84,6 +84,7 @@ export module ImportFacade {
     }
 
 
+    // TODO do that outside of facade and give parse as param. Sometimes one wants to give extra options. Also there is no dependency between the parsers and other items and every format has its own parser anyway.
     function createParser(format: ImportFormat): Parser {
 
         switch (format) {
@@ -117,7 +118,8 @@ export module ImportFacade {
             case 'idig':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername());
-            case 'shapefile':
+
+            case 'shapefile': // TODO move that also to the default group (and make it behave like the other items)
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
                     true);

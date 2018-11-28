@@ -481,7 +481,7 @@
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
                         zugeordnet werden können, werden ignoriert.
                     </source>
-        <target state="translated">
+        <target state="final">
                         If this option is active, already existing resources will be merged with the data of the import
                         file. Fields of the import record will overwrite correspondent fields of the existing record.
                         Geometries of the import record will overwrite those of the existing record. Fields existing in the

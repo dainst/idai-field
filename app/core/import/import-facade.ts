@@ -151,7 +151,7 @@ export module ImportFacade {
 
         switch (format) {
             case 'meninxfind':
-            case 'shapefile':
+            case 'shapefile': // TODO put to default group
                 return new NoRollbackStrategy();
             case 'idig':
                 return new DefaultRollbackStrategy(datastore);

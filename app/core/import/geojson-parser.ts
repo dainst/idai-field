@@ -120,7 +120,8 @@ export class GeojsonParser extends AbstractParser {
             resource: {
                 identifier: feature.properties['identifier'],
                 geometry: feature.geometry,
-                relations: {}
+                relations: {},
+                type: 'Place'
             }
         }
     }

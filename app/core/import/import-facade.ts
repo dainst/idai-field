@@ -114,19 +114,14 @@ export module ImportFacade {
             case 'meninxfind':
                 return new MeninxFindImportStrategy(validator, datastore,
                     projectConfiguration, usernameProvider.getUsername());
-
             case 'idig':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername());
-            case 'geojson':
-                return new DefaultImportStrategy(typeUtility, validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername(),
-                    true);
             case 'shapefile':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
                     true);
-            case 'native':
+            default: // native | geojson
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
                     allowMergingExistingResources, mainTypeDocumentId);

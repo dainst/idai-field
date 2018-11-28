@@ -1195,10 +1195,7 @@
         "inputType": "input"
       },
       "campaign": {
-        "inputType": "input",
-        "valuelist": [
-          "Campaign"
-        ]
+        "inputType": "input"
       }
     }
   },

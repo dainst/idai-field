@@ -144,17 +144,17 @@ export module ImportFacade {
 
 
     function createRollbackStrategy(format: ImportFormat,
-        datastore: DocumentDatastore,
-        allowMergeExistingResources: boolean): RollbackStrategy {
+                                    datastore: DocumentDatastore,
+                                    allowMergeExistingResources: boolean): RollbackStrategy {
 
         switch (format) {
             case 'meninxfind':
-            case 'geojson':
             case 'shapefile':
                 return new NoRollbackStrategy();
             case 'idig':
                 return new DefaultRollbackStrategy(datastore);
-            case 'native':
+
+            default: // native | geojson
                 return allowMergeExistingResources
                     // no restore to previous versions of resources once modified.
                     // we keep the use cases of merge and of creation strictly separated.

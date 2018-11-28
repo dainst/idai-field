@@ -18,6 +18,10 @@ export interface Geojson {
  */
 export class GeojsonParser extends AbstractParser {
 
+    private static supportedGeometryTypes = [
+        'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon', 'GeometryCollection'
+    ]
+
     /**
      * The content json must be of a certain structure to
      * get accepted. Any deviance of this structure will lead
@@ -65,11 +69,7 @@ export class GeojsonParser extends AbstractParser {
     }
 
 
-    private static validate(content: Geojson) {
-
-        const supportedGeometryTypes = [
-            'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'
-        ];
+    private static validate(content: Geojson) {;
 
         function structErr(text: any) {
 
@@ -82,22 +82,35 @@ export class GeojsonParser extends AbstractParser {
         if (content.features == undefined) {
             return structErr('Property "features" not found at top level.');
         }
+
         for (let feature of content.features) {
             if (feature.properties === undefined
                 || feature.properties['identifier'] === undefined)  {
                 return [ImportErrors.MISSING_IDENTIFIER];
             }
-            if (typeof feature.properties['identifier'] != 'string')  {
-                return [ImportErrors.WRONG_IDENTIFIER_FORMAT];
-            }
-            if (feature.type === undefined) {
-                return structErr('Property "type" not found for at least one feature.');
-            }
-            if (feature.type !== 'Feature') {
-                return structErr('Second level elements must be of type "Feature".');
-            }
-            if (supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
+            if (typeof feature.properties['identifier'] !== 'string')  return [ImportErrors.WRONG_IDENTIFIER_FORMAT];
+
+            if (feature.type === undefined) return structErr('Property "type" not found for at least one feature.');
+            if (feature.type !== 'Feature') return structErr('Second level elements must be of type "Feature".');
+
+            if (GeojsonParser.supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
                 return structErr('geometry type "' + feature.geometry.type + '" not supported.');
+            }
+
+            if (feature.geometry.type === 'GeometryCollection') {
+                const nrPoints = ((feature.geometry as any)['geometries']).filter((_: any) => _.type === 'Point').length;
+                const nrGeometries = ((feature.geometry as any)['geometries']).length;
+
+                if (nrGeometries > 0) {
+
+                    feature.geometry = nrGeometries > nrPoints
+                        ? (feature.geometry as any)['geometries'].find(((_: any) => _.type !== 'Point'))
+                        : (feature.geometry as any)[0];
+
+                } else {
+
+                    delete feature.geometry;
+                }
             }
         }
     }

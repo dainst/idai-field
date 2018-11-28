@@ -73,7 +73,7 @@ describe('GeojsonParser', () => {
     it('should emit an error on unsupported type', done => {
 
         expectErr('{ "type": "FeatureCollection", "features": [' +
-            '{ "type": "Feature", "geometry": { "type": "GeometryCollection", "coordinates": [102.0, 0.5] }, ' +
+            '{ "type": "Feature", "geometry": { "type": "GeometryCollection?", "coordinates": [102.0, 0.5] }, ' +
             '"properties": { "identifier": "122" } } ] }'
             , ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, done);
     });

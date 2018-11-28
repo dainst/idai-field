@@ -134,11 +134,10 @@ export module ImportFacade {
 
         switch (format) {
             case 'meninxfind':
-            case 'geojson':
             case 'shapefile':
                 return new NoRelationsStrategy();
-            case 'idig':
-            case 'native':
+
+            default: // native | default | geojson
                 return new DefaultRelationsStrategy(relationsCompleter);
         }
     }

@@ -474,17 +474,21 @@
         <source>
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
-                        dabei gleichnamige Felder im existierenden Datensatz, die übrigen Felder bleiben
-                        jedoch erhalten. Relationen werden nicht verändert. Die Zuordnung von Datensätzen
+                        dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
+                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
+                        die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
+                        Relationen werden generell nicht verändert. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
                         zugeordnet werden können, werden ignoriert.
                     </source>
-        <target state="final">
+        <target state="translated">
                         If this option is active, already existing resources will be merged with the data of the import
-                        file. Fields of the import dataset will overwrite correspondent fields of the existing dataset
-                        while all other fields will be preserved. Relations will not be changed. The assignment of
-                        datasets is performed based on the field <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>.
-                        Datasets of the import file that cannot be assigned will be ignored.
+                        file. Fields of the import record will overwrite correspondent fields of the existing record.
+                        Geometries of the import record will overwrite those of the existing record. Fields existing in the
+                        original record which are undefined in the import record will remain untouched.
+                        Relations will never get changed. The assignment of
+                        records is performed based on the field <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>.
+                        Records of the import file that cannot be assigned will be ignored.
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
@@ -496,7 +500,7 @@
         <target state="final">Assign data to an operation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -504,23 +508,7 @@
         <target state="final">No assignment</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">92</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="import.geoJson.info" datatype="html">
-        <source>
-                        Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
-                        Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
-                        Geometrien dabei überschrieben werden.
-                    </source>
-        <target state="final">
-                        During GeoJSON import, no new resources will be created. Instead, the geometry data will be
-                        added to existing resources. Please note that already existing geometries will be overwritten
-                        in this process.
-                    </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -534,7 +522,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">

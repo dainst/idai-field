@@ -120,8 +120,8 @@ export class ImportComponent implements OnInit {
     public isReady(): boolean|undefined {
 
         return this.sourceType === 'file'
-            ? this.file != undefined
-            : this.url != undefined;
+            ? this.file !== undefined
+            : this.url !== undefined;
     }
     
 
@@ -192,7 +192,9 @@ export class ImportComponent implements OnInit {
                                 http: HttpClient): Reader|undefined {
 
         return sourceType === 'file'
-            ? format === 'shapefile' ? new ShapefileFileSystemReader(file) : new FileSystemReader(file)
+            ? format === 'shapefile'
+                ? new ShapefileFileSystemReader(file)
+                : new FileSystemReader(file)
             : new HttpReader(url, http);
     }
 }

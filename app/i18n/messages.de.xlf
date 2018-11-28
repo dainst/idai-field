@@ -474,16 +474,20 @@
         <source>
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
-                        dabei gleichnamige Felder im existierenden Datensatz, die übrigen Felder bleiben
-                        jedoch erhalten. Relationen werden nicht verändert. Die Zuordnung von Datensätzen
+                        dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
+                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
+                        die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
+                        Relationen werden generell nicht verändert. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
                         zugeordnet werden können, werden ignoriert.
                     </source>
         <target state="final">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
-                        dabei gleichnamige Felder im existierenden Datensatz, die übrigen Felder bleiben
-                        jedoch erhalten. Relationen werden nicht verändert. Die Zuordnung von Datensätzen
+                        dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
+                        überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
+                        die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
+                        Relationen werden generell nicht verändert. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
                         zugeordnet werden können, werden ignoriert.
                     </target>
@@ -497,7 +501,7 @@
         <target state="final">Daten einer Maßnahme zuordnen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.assignToOperation.noAssignment" datatype="html">
@@ -505,23 +509,7 @@
         <target state="final">Keine Zuordnung</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">92</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="import.geoJson.info" datatype="html">
-        <source>
-                        Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
-                        Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
-                        Geometrien dabei überschrieben werden.
-                    </source>
-        <target state="final">
-                        Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
-                        Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
-                        Geometrien dabei überschrieben werden.
-                    </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="import.shapefile.javaWarning" datatype="html">
@@ -535,7 +523,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/import/import.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.modal.info" datatype="html">

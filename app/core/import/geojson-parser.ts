@@ -145,11 +145,16 @@ export class GeojsonParser extends AbstractParser {
         if (properties.prefName && properties.prefName.title) identifier = properties.prefName.title;
 
         let nr = 1;
-        while (identifiersOnGazetteerImport.includes(identifier)) { identifier += ' (' + nr + ')'; nr += 1 }
+        let suffixedIdentifier = identifier;
+        while (identifiersOnGazetteerImport.includes(suffixedIdentifier)) {
+            suffixedIdentifier = identifier + ' (' + nr + ')';
+            nr += 1;
+        }
+        identifier = suffixedIdentifier;
         identifiersOnGazetteerImport.push(identifier);
         properties.identifier = identifier;
 
-        properties.id = properties.gazId;
+        properties.id = properties.gazId; // TODO prefix it
 
         properties.type = 'Place';
 

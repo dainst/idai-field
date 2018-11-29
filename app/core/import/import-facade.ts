@@ -93,6 +93,7 @@ export module ImportFacade {
             case 'idig':
                 return new IdigCsvParser();
             case 'geojson-gazetteer':
+                return new GeojsonParser(true);
             case 'geojson':
                 return new GeojsonParser();
             case 'shapefile':
@@ -138,9 +139,10 @@ export module ImportFacade {
         switch (format) {
             case 'meninxfind':
             case 'shapefile':
+            case 'geojson-gazetteer':
                 return new NoRelationsStrategy();
 
-            default: // native | default | geojson | geojson-gazetteer
+            default: // native | default | geojson
                 return new DefaultRelationsStrategy(relationsCompleter);
         }
     }

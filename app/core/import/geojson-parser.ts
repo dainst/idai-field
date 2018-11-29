@@ -21,8 +21,14 @@ export interface Geojson {
 export class GeojsonParser extends AbstractParser {
 
     private static supportedGeometryTypes = [
-        'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon', 'GeometryCollection'
+        'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'
     ];
+
+    private static placePath = 'https://gazetteer.dainst.org/place/';
+
+
+    constructor(private gazetteerMode = false) {super()}
+
 
     /**
      * The content json must be of a certain structure to
@@ -47,7 +53,7 @@ export class GeojsonParser extends AbstractParser {
                 return observer.error([ImportErrors.FILE_INVALID_JSON, e.toString()]);
             }
 
-            const msgWithParams = GeojsonParser.validateAndTransform(geojson);
+            const msgWithParams = GeojsonParser.validateAndTransform(geojson, this.gazetteerMode);
             if (msgWithParams !== undefined) return observer.error(msgWithParams);
 
             this.iterateDocs(geojson, observer);
@@ -73,7 +79,7 @@ export class GeojsonParser extends AbstractParser {
     /**
      * Validate and transform (modify in place) in one pass to reduce runtime.
      */
-    private static validateAndTransform(geojson: Geojson) {
+    private static validateAndTransform(geojson: Geojson, gazetteerMode: boolean) {
 
         if (geojson.type !== 'FeatureCollection') {
             return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, '"type": "FeatureCollection" not found at top level.'];
@@ -83,8 +89,15 @@ export class GeojsonParser extends AbstractParser {
         }
 
         for (let feature of geojson.features) {
+
             if (!feature.properties) return [ImportErrors.MISSING_IDENTIFIER];
             feature.properties.relations = {};
+
+            if (gazetteerMode) {
+                const msgWithParams = this.validateAndtransformFeatureGazetteer(feature);
+                if (msgWithParams) return msgWithParams;
+            }
+
             const msgWithParams = this.validateAndTransformFeature(feature);
             if (msgWithParams) return msgWithParams;
         }
@@ -102,11 +115,21 @@ export class GeojsonParser extends AbstractParser {
         if (GeojsonParser.supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
             return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'geometry type "' + feature.geometry.type + '" not supported.'];
         }
+    }
 
-        // TODO do that externally
-        if (feature.properties.parent) {
-            feature.properties.relations['liesWithin'] = [feature.properties.parent];
-        }
+
+    private static validateAndtransformFeatureGazetteer(feature: any) {
+
+        const properties = feature.properties;
+
+        if (!properties['gazId']) return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "properties.gazId" not found for at least one feature.'];
+        properties['identifier'] = properties['gazId'];
+        properties['id'] = properties['gazId'];
+
+        properties['type'] = 'Place';
+
+        if (properties.parent) properties.relations['liesWithin'] = [
+            (feature.properties.parent as any).replace(GeojsonParser.placePath, '')];
 
         if (feature.geometry.type === 'GeometryCollection') this.transformGeometryCollection(feature);
     }
@@ -147,11 +170,11 @@ export class GeojsonParser extends AbstractParser {
 
         return {
             resource: {
-                id: feature.id, // TODO, will we do that one here?
+                id: feature.properties['id'], // TODO, will we do that one here?
                 identifier: feature.properties['identifier'],
                 geometry: feature.geometry,
                 relations: feature.properties.relations,
-                type: 'Place'
+                type: feature.properties['type']
             }
         }
     }

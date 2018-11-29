@@ -68,7 +68,7 @@
                                [(ngModel)]="url">
                     </div>
 
-                    <div *ngIf="format === 'native' || format === 'geojson'" class="form-group form-check-inline">
+                    <div *ngIf="format === 'native' || format === 'geojson' || format === 'geojson-gazetteer'" class="form-group form-check-inline">
                         <input type="checkbox" id="merging-checkbox" class="form-check-input"
                                [(ngModel)]="allowMergingExistingResources">
                         <label for="merging-checkbox" class="form-check-label" i18n="@@import.mergeOption.label">
@@ -76,7 +76,7 @@
                         </label>
                     </div>
 
-                    <div *ngIf="format === 'native' || format === 'geojson'" class="import-info" i18n="@@import.mergeOption.info">
+                    <div *ngIf="format === 'native' || format === 'geojson' || format === 'geojson-gazetteer'" class="import-info" i18n="@@import.mergeOption.info">
                         Ist diese Option aktiviert, so werden bereits existierende Datensätze mit
                         den Daten aus der Importdatei ergänzt. Felder des Importdatensatzes überschreiben
                         dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
@@ -87,7 +87,7 @@
                         zugeordnet werden können, werden ignoriert.
                     </div>
 
-                    <div class="form-group" *ngIf="(format === 'native' || format === 'geojson') && !allowMergingExistingResources">
+                    <div class="form-group" *ngIf="(format === 'native' || format === 'geojson' || format === 'geojson-gazetteer') && !allowMergingExistingResources">
                         <label class="control-label col-form-label"
                                for="mainTypeDocumentSelect"
                                i18n="@@import.assignToOperation.label">Daten einer Maßnahme zuordnen</label>

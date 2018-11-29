@@ -10,9 +10,9 @@ import {ImportErrors} from '../../../../app/core/import/import-errors';
  */
 describe('GeojsonParser', () => {
 
-    function expectErr(fileContent, which, done) {
+    function expectErr(fileContent, which, done, gazetteerMode = false) {
 
-        const parser = new GeojsonParser();
+        const parser = new GeojsonParser(gazetteerMode);
         parser.parse(fileContent).subscribe(() => {
             fail('should not emit next');
         }, err => {
@@ -125,5 +125,42 @@ describe('GeojsonParser', () => {
             expect(warnings[0][1]).toEqual('id1');
             done();
         });
+    });
+
+
+    it('should import gazetteer geojson', done => {
+
+        const fileContent  = '{ "type" : "FeatureCollection", "features" : [ { "type": "Feature", "geometry": {' +
+            '"type": "Point", "coordinates": [6.71875,-6.96875] }, "properties": { "gazId": "2312125", "identifier": "https://gazetteer.dainst.org/place/2312125" } }' +
+            '] }';
+
+        const parser = new GeojsonParser(true);
+        const docs: Document[] = [];
+        parser.parse(fileContent).subscribe(resultDocument => {
+            expect(resultDocument).not.toBe(undefined);
+            docs.push(resultDocument);
+        }, err => {
+            fail(err);
+            done();
+        }, () => {
+
+            expect(docs[0].resource['id']).toEqual('2312125');
+            expect(docs[0].resource['identifier']).toEqual('2312125');
+            expect(docs[0].resource['geometry']['type']).toEqual('Point');
+
+            expect(docs.length).toEqual(1);
+            done();
+        });
+    });
+
+
+    it('should not import gazetteer geojson - no gaz id', done => {
+
+        const fileContent  = '{ "type" : "FeatureCollection", "features" : [ { "type": "Feature", "geometry": {' +
+            '"type": "Point", "coordinates": [6.71875,-6.96875] }, "properties": { "identifier": "https://gazetteer.dainst.org/place/2312125" } }' +
+            '] }';
+
+        expectErr(fileContent
+            , ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, done, true);
     });
 });

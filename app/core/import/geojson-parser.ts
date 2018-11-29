@@ -126,7 +126,9 @@ export class GeojsonParser extends AbstractParser {
         if (feature.type === undefined) return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "type" not found for at least one feature.'];
         if (feature.type !== 'Feature') return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Second level elements must be of type "Feature".'];
 
-        if (GeojsonParser.supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
+        if (feature.geometry && feature.geometry.type
+            && GeojsonParser.supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
+
             return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'geometry type "' + feature.geometry.type + '" not supported.'];
         }
     }

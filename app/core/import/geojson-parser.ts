@@ -98,18 +98,21 @@ export class GeojsonParser extends AbstractParser {
         if (geojson.type !== 'FeatureCollection') {
             return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, '"type": "FeatureCollection" not found at top level.'];
         }
-        if (geojson.features == undefined) {
+        if (geojson.features === undefined) {
             return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "features" not found at top level.'];
         }
 
+        let identifiersOnGazetterImport: string[] = [];
         for (let feature of geojson.features) {
 
             if (!feature.properties) return [ImportErrors.MISSING_IDENTIFIER];
             feature.properties.relations = {};
 
             if (gazetteerMode) {
-                const msgWithParams = this.validateAndtransformFeatureGazetteer(feature);
+                const msgWithParams = this.validateAndtransformFeatureGazetteer(
+                    feature.properties as GazetteerProperties, identifiersOnGazetterImport);
                 if (msgWithParams) return msgWithParams;
+                if (feature.geometry.type === 'GeometryCollection') this.transformGeometryCollection(feature);
             }
 
             const msgWithParams = this.validateAndTransformFeature(feature);
@@ -134,25 +137,24 @@ export class GeojsonParser extends AbstractParser {
     }
 
 
-    private static validateAndtransformFeatureGazetteer(feature: any) {
-
-        const properties: GazetteerProperties = feature.properties as GazetteerProperties;
+    private static validateAndtransformFeatureGazetteer(properties: GazetteerProperties, identifiersOnGazetteerImport: string[]) {
 
         if (!properties.gazId) return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "properties.gazId" not found for at least one feature.'];
-        properties.identifier = properties.gazId;
-        if (properties.prefName && properties.prefName.title) {
-            properties.identifier = properties.identifier = properties.prefName.title + '(' + properties.gazId + ')';
-        }
 
+        let identifier = properties.gazId;
+        if (properties.prefName && properties.prefName.title) identifier = properties.prefName.title;
+
+        let nr = 1;
+        while (identifiersOnGazetteerImport.includes(identifier)) { identifier += ' (' + nr + ')'; nr += 1 }
+        identifiersOnGazetteerImport.push(identifier);
+        properties.identifier = identifier;
 
         properties.id = properties.gazId;
 
         properties.type = 'Place';
 
         if (properties.parent) properties.relations['liesWithin'] = [
-            (feature.properties.parent as any).replace(GeojsonParser.placePath, '')];
-
-        if (feature.geometry.type === 'GeometryCollection') this.transformGeometryCollection(feature);
+            (properties.parent as any).replace(GeojsonParser.placePath, '')];
     }
 
 
@@ -160,19 +162,14 @@ export class GeojsonParser extends AbstractParser {
 
         const geometries = (feature.geometry as any)['geometries'];
 
-        const nrPoints = geometries.filter((_: any) => _.type === 'Point').length;
         const nrGeometries = geometries.length;
+        if (nrGeometries === 0) return delete feature.geometry;
 
-        if (nrGeometries > 0) {
+        const nrPoints = geometries.filter((_: any) => _.type === 'Point').length;
 
-            feature.geometry = nrGeometries > nrPoints
-                ? geometries.find(((_: any) => _.type !== 'Point'))
-                : geometries[0];
-
-        } else {
-
-            delete feature.geometry;
-        }
+        feature.geometry = nrGeometries > nrPoints
+            ? geometries.find(((_: any) => _.type !== 'Point'))
+            : geometries[0];
     }
 
 
@@ -189,14 +186,15 @@ export class GeojsonParser extends AbstractParser {
 
     private static makeDoc(feature: any) {
 
-        return {
-            resource: {
-                id: feature.properties['id'], // TODO, will we do that one here?
-                identifier: feature.properties['identifier'],
-                geometry: feature.geometry,
-                relations: feature.properties.relations,
-                type: feature.properties['type']
-            }
-        }
+        const resource = {
+            identifier: feature.properties['identifier'],
+            geometry: feature.geometry,
+            relations: feature.properties.relations,
+            type: feature.properties['type']
+        };
+        if (feature.properties['gazId']) (resource as any)['gazId'] = feature.properties['gazId'];
+        if (feature.properties['id']) (resource as any)['id'] = feature.properties['id'];
+
+        return {resource: resource}
     }
 }

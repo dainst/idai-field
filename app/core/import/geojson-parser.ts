@@ -12,6 +12,20 @@ export interface Geojson {
     geometry: { type: string };
 }
 
+export interface GazetteerProperties {
+    prefName: {
+        title: string;
+    };
+    identifier: string;
+    id: string;
+    gazId: string;
+    type: string;
+    geometry: { type: string };
+    parent: string;
+    relations: any;
+}
+
+
 /**
  * This parser is in part optimized to handle the iDAI.welt specific geojson format well.
  *
@@ -120,13 +134,18 @@ export class GeojsonParser extends AbstractParser {
 
     private static validateAndtransformFeatureGazetteer(feature: any) {
 
-        const properties = feature.properties;
+        const properties: GazetteerProperties = feature.properties as GazetteerProperties;
 
-        if (!properties['gazId']) return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "properties.gazId" not found for at least one feature.'];
-        properties['identifier'] = properties['gazId'];
-        properties['id'] = properties['gazId'];
+        if (!properties.gazId) return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "properties.gazId" not found for at least one feature.'];
+        properties.identifier = properties.gazId;
+        if (properties.prefName && properties.prefName.title) {
+            properties.identifier = properties.identifier = properties.prefName.title + '(' + properties.gazId + ')';
+        }
 
-        properties['type'] = 'Place';
+
+        properties.id = properties.gazId;
+
+        properties.type = 'Place';
 
         if (properties.parent) properties.relations['liesWithin'] = [
             (feature.properties.parent as any).replace(GeojsonParser.placePath, '')];

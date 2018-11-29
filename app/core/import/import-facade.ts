@@ -23,7 +23,7 @@ import {TypeUtility} from '../model/type-utility';
 import {ShapefileParser} from './shapefile-parser';
 
 
-export type ImportFormat = 'native' | 'idig' | 'geojson' | 'shapefile' | 'meninxfind';
+export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind';
 
 
 /**
@@ -92,6 +92,7 @@ export module ImportFacade {
                 return new MeninxFindCsvParser();
             case 'idig':
                 return new IdigCsvParser();
+            case 'geojson-gazetteer':
             case 'geojson':
                 return new GeojsonParser();
             case 'shapefile':
@@ -123,7 +124,7 @@ export module ImportFacade {
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
                     true);
-            default: // native | geojson
+            default: // native | geojson | geojson-gazetteer
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
                     allowMergingExistingResources, mainTypeDocumentId);
@@ -139,7 +140,7 @@ export module ImportFacade {
             case 'shapefile':
                 return new NoRelationsStrategy();
 
-            default: // native | default | geojson
+            default: // native | default | geojson | geojson-gazetteer
                 return new DefaultRelationsStrategy(relationsCompleter);
         }
     }
@@ -156,7 +157,7 @@ export module ImportFacade {
             case 'idig':
                 return new DefaultRollbackStrategy(datastore);
 
-            default: // native | geojson
+            default: // native | geojson | geojson-gazetteer
                 return allowMergeExistingResources
                     // no restore to previous versions of resources once modified.
                     // we keep the use cases of merge and of creation strictly separated.

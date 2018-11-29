@@ -150,6 +150,7 @@ export class ImportComponent implements OnInit {
             case 'idig':
             case 'meninxfind':
                 return '.csv';
+            case 'geojson-gazetteer':
             case 'geojson':
                 return '.geojson,.json';
             case 'shapefile':

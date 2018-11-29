@@ -13,6 +13,8 @@ export interface Geojson {
 }
 
 /**
+ * This parser is in part optimized to handle the iDAI.welt specific geojson format well.
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
@@ -20,7 +22,7 @@ export class GeojsonParser extends AbstractParser {
 
     private static supportedGeometryTypes = [
         'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon', 'GeometryCollection'
-    ]
+    ];
 
     /**
      * The content json must be of a certain structure to
@@ -28,7 +30,6 @@ export class GeojsonParser extends AbstractParser {
      * to a msgWithParams emitted and no document created at all.
      *
      * @param content
-     * @returns {any}
      * @throws [WRONG_IDENTIFIER_FORMAT]
      * @throws [MISSING_IDENTIFIER]
      * @throws [INVALID_GEOJSON_IMPORT_STRUCT]
@@ -39,17 +40,17 @@ export class GeojsonParser extends AbstractParser {
 
         this.warnings = [];
         return Observable.create((observer: Observer<any>) => {
-            let content_: Geojson;
+            let geojson: Geojson;
             try {
-                content_ = JSON.parse(content) as Geojson;
+                geojson = JSON.parse(content) as Geojson;
             } catch (e) {
                 return observer.error([ImportErrors.FILE_INVALID_JSON, e.toString()]);
             }
 
-            const msgWithParams = GeojsonParser.validate(content_);
-            if (msgWithParams != undefined) return observer.error(msgWithParams);
+            const msgWithParams = GeojsonParser.validateAndTransform(geojson);
+            if (msgWithParams !== undefined) return observer.error(msgWithParams);
 
-            this.iterateDocs(content_, observer);
+            this.iterateDocs(geojson, observer);
             observer.complete();
         });
     }
@@ -69,49 +70,64 @@ export class GeojsonParser extends AbstractParser {
     }
 
 
-    private static validate(content: Geojson) {;
+    /**
+     * Validate and transform (modify in place) in one pass to reduce runtime.
+     */
+    private static validateAndTransform(geojson: Geojson) {
 
-        function structErr(text: any) {
-
-            return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, text];
+        if (geojson.type !== 'FeatureCollection') {
+            return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, '"type": "FeatureCollection" not found at top level.'];
+        }
+        if (geojson.features == undefined) {
+            return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "features" not found at top level.'];
         }
 
-        if (content.type != 'FeatureCollection') {
-            return structErr('"type": "FeatureCollection" not found at top level.');
+        for (let feature of geojson.features) {
+            if (!feature.properties) return [ImportErrors.MISSING_IDENTIFIER];
+            feature.properties.relations = {};
+            const msgWithParams = this.validateAndTransformFeature(feature);
+            if (msgWithParams) return msgWithParams;
         }
-        if (content.features == undefined) {
-            return structErr('Property "features" not found at top level.');
+    }
+
+
+    private static validateAndTransformFeature(feature: any) {
+
+        if (!feature.properties['identifier']) return [ImportErrors.MISSING_IDENTIFIER];
+        if (typeof feature.properties['identifier'] !== 'string') return [ImportErrors.WRONG_IDENTIFIER_FORMAT];
+
+        if (feature.type === undefined) return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "type" not found for at least one feature.'];
+        if (feature.type !== 'Feature') return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Second level elements must be of type "Feature".'];
+
+        if (GeojsonParser.supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
+            return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'geometry type "' + feature.geometry.type + '" not supported.'];
         }
 
-        for (let feature of content.features) {
-            if (feature.properties === undefined
-                || feature.properties['identifier'] === undefined)  {
-                return [ImportErrors.MISSING_IDENTIFIER];
-            }
-            if (typeof feature.properties['identifier'] !== 'string')  return [ImportErrors.WRONG_IDENTIFIER_FORMAT];
+        // TODO do that externally
+        if (feature.properties.parent) {
+            feature.properties.relations['liesWithin'] = [feature.properties.parent];
+        }
 
-            if (feature.type === undefined) return structErr('Property "type" not found for at least one feature.');
-            if (feature.type !== 'Feature') return structErr('Second level elements must be of type "Feature".');
+        if (feature.geometry.type === 'GeometryCollection') this.transformGeometryCollection(feature);
+    }
 
-            if (GeojsonParser.supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
-                return structErr('geometry type "' + feature.geometry.type + '" not supported.');
-            }
 
-            if (feature.geometry.type === 'GeometryCollection') {
-                const nrPoints = ((feature.geometry as any)['geometries']).filter((_: any) => _.type === 'Point').length;
-                const nrGeometries = ((feature.geometry as any)['geometries']).length;
+    private static transformGeometryCollection(feature: any) {
 
-                if (nrGeometries > 0) {
+        const geometries = (feature.geometry as any)['geometries'];
 
-                    feature.geometry = nrGeometries > nrPoints
-                        ? (feature.geometry as any)['geometries'].find(((_: any) => _.type !== 'Point'))
-                        : (feature.geometry as any)[0];
+        const nrPoints = geometries.filter((_: any) => _.type === 'Point').length;
+        const nrGeometries = geometries.length;
 
-                } else {
+        if (nrGeometries > 0) {
 
-                    delete feature.geometry;
-                }
-            }
+            feature.geometry = nrGeometries > nrPoints
+                ? geometries.find(((_: any) => _.type !== 'Point'))
+                : geometries[0];
+
+        } else {
+
+            delete feature.geometry;
         }
     }
 
@@ -131,9 +147,10 @@ export class GeojsonParser extends AbstractParser {
 
         return {
             resource: {
+                id: feature.id, // TODO, will we do that one here?
                 identifier: feature.properties['identifier'],
                 geometry: feature.geometry,
-                relations: {},
+                relations: feature.properties.relations,
                 type: 'Place'
             }
         }

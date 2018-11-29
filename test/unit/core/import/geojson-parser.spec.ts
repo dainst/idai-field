@@ -95,6 +95,7 @@ describe('GeojsonParser', () => {
             , ImportErrors.MISSING_IDENTIFIER, done);
     });
 
+
     it('should emit on numerical identifier', done => {
 
         expectErr('{ "type": "FeatureCollection", "features": [' +
@@ -102,6 +103,7 @@ describe('GeojsonParser', () => {
             '"properties": { "identifier": 122 } } ] }'
             , ImportErrors.WRONG_IDENTIFIER_FORMAT, done);
     });
+
 
     it('should produce a warning on duplicate identifiers', done => {
 
@@ -124,5 +126,4 @@ describe('GeojsonParser', () => {
             done();
         });
     });
-
 });

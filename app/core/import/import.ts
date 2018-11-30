@@ -50,7 +50,7 @@ export module Import {
 
                 await update(docsToUpdate, importReport, importStrategy);
 
-            } catch (msgWithParams) {
+            } catch (msgWithParams) { // catching from parseFileContent
 
                 importReport.errors.push(msgWithParams as never);
             }

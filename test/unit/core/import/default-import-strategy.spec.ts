@@ -1,6 +1,5 @@
 import {DefaultImportStrategy} from '../../../../app/core/import/default-import-strategy';
 import {ImportErrors} from '../../../../app/core/import/import-errors';
-import {M} from '../../../../app/components/m';
 
 /**
  * @author Daniel de Oliveira

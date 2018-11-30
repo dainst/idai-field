@@ -63,6 +63,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_MISSING_RESOURCE = 'importer.error.missingResource';
     public static IMPORT_ERROR_MISSING_RELATION_TARGET = 'importer.error.missingRelationTarget';
     public static IMPORT_ERROR_INVALID_OPERATION_RESOURCE = 'importer.error.invalidOperationResource';
+    public static IMPORT_ERROR_ONLYPLACEANDOPERATIONWITHOUTRECORDEDINALLOWED = 'importer.error.onlyplaceandoperationwithoutrecordedinallowed';
     public static IMPORT_ERROR_OPERATIONS_NOT_ALLOWED = 'importer.error.operationsNotAllowed';
     public static IMPORT_ERROR_NO_OPERATION_ASSIGNABLE = 'importer.error.noOperationAssignable';
     public static IMPORT_ERROR_NO_FEATURE_ASSIGNABLE = 'importer.error.noFeatureAssignable';
@@ -460,6 +461,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             content: i18n({
                 id: 'messages.import.error.operationsNotAllowed',
                 value: 'Wenn die Option \'Daten einer Maßnahme zuordnen\' gewählt ist, darf die Import-Datei keine Maßnahmen enthalten.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_ONLYPLACEANDOPERATIONWITHOUTRECORDEDINALLOWED] = {
+            content: i18n({
+                id: 'messages.import.error.onlyplaceandoperationwithoutrecordedinallowed',
+                value: 'Wenn \'Keine Zuordnung\' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte \'isRecordedIn\'-Zuordnungen haben.'
             }),
             level: 'danger',
             params: [],

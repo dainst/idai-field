@@ -30,6 +30,9 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
+    /**
+     * Some quick checks which do not query the db
+     */
     public async validateStructurally(docs: Array<Document>): Promise<any[]> {
 
         if (this.mergeIfExists) return [];
@@ -68,13 +71,12 @@ export class DefaultImportStrategy implements ImportStrategy {
 
         const existingDocument = await this.findByIdentifier(document.resource.identifier);
         let _document: Document = document as Document;
+        if (!this.mergeIfExists && existingDocument) {
+            throw [M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS, existingDocument.resource.identifier]; // TODO should not be of M
+        }
         if (this.mergeIfExists) {
             if (existingDocument) _document = DocumentMerge.merge(existingDocument, _document);
             else return undefined;
-        } else {
-            if (existingDocument) {
-                throw [M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS, existingDocument.resource.identifier]; // TODO should not be of M
-            }
         }
 
         await this.validator.validate(

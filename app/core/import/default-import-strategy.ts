@@ -50,7 +50,7 @@ export class DefaultImportStrategy implements ImportStrategy {
             } else {
                 if (doc.resource.type !== 'Place' && !this.typeUtility.isSubtype(doc.resource.type, 'Operation')) {
                     if (!doc.resource.relations || !doc.resource.relations['isRecordedIn']) {
-                        return [[ImportErrors.ONLYPLACEANDOPERATIONWITHOUTRECORDEDINALLOWED]]; // TODO translations
+                        return [[ImportErrors.ONLYPLACEANDOPERATIONWITHOUTRECORDEDINALLOWED]];
                     }
                 }
             }

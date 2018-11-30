@@ -158,13 +158,14 @@ export module ImportFacade {
                                     allowMergeExistingResources: boolean): RollbackStrategy {
 
         switch (format) {
+            case 'geojson':
             case 'meninxfind':
-            case 'shapefile': // TODO put to default group
+            case 'shapefile':
                 return new NoRollbackStrategy();
             case 'idig':
                 return new DefaultRollbackStrategy(datastore);
 
-            default: // native | geojson | geojson-gazetteer
+            default: // native | geojson-gazetteer
                 return allowMergeExistingResources
                     // no restore to previous versions of resources once modified.
                     // we keep the use cases of merge and of creation strictly separated.

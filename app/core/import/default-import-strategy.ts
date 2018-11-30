@@ -21,7 +21,7 @@ export class DefaultImportStrategy implements ImportStrategy {
                 private projectConfiguration: ProjectConfiguration,
                 private username: string,
                 private mainTypeDocumentId: string, /* '' => no assignment */
-                private mergeIfExists = false
+                private mergeIfExists: boolean
                 ) {
 
         if (mainTypeDocumentId && mergeIfExists) {

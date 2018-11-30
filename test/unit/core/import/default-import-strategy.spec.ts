@@ -32,7 +32,9 @@ describe('DefaultImportStrategy', () => {
             mockValidator,
             mockDatastore,
             mockProjectConfiguration,
-            'user1', '');
+            'user1',
+            '',
+            false);
     });
 
 

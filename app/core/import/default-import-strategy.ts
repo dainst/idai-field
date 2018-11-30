@@ -33,6 +33,7 @@ export class DefaultImportStrategy implements ImportStrategy {
     /**
      * Some quick checks which do not query the db
      * TODO make category import_struct_errors
+     * TODO check case if import file per se has duplicate identifiers
      */
     public async validateStructurally(docs: Array<Document>): Promise<any[]> {
 

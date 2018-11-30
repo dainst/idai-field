@@ -14,11 +14,14 @@ describe('Importer', () => {
     let mockRollbackStrategy;
 
     beforeEach(() => {
+
         mockReader = jasmine.createSpyObj('reader', ['go']);
         mockReader.go.and.callFake(function() {return Promise.resolve();});
         mockParser = jasmine.createSpyObj('parser', ['parse','getWarnings']);
 
-        mockImportStrategy = jasmine.createSpyObj('importStrategy', ['importDoc']);
+        mockImportStrategy = jasmine.createSpyObj('importStrategy', ['validateStructurally', 'importDoc']);
+        mockImportStrategy.validateStructurally.and.returnValue(Promise.resolve([]));
+
         mockRelationsStrategy = jasmine.createSpyObj('relationsStrategy',
             ['completeInverseRelations', 'resetInverseRelations']);
         mockRollbackStrategy = jasmine.createSpyObj('rollbackStrategy', ['rollback']);

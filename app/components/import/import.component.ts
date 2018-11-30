@@ -42,7 +42,7 @@ export class ImportComponent implements OnInit {
     public file: File|undefined;
     public url: string|undefined;
     public mainTypeDocuments: Array<Document> = [];
-    public mainTypeDocumentId?: string;
+    public mainTypeDocumentId: string = ''; // no assignment to a mainType
     public allowMergingExistingResources = false;
     public javaInstalled: boolean = true;
 

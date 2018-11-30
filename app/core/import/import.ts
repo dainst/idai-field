@@ -37,23 +37,12 @@ export module Import {
 
         return new Promise<ImportReport>(async resolve => {
 
-            const importReport = {
-                errors: [],
-                warnings: [],
-                importedResourcesIds: []
-            };
+            const [docsToUpdate, importReport] = await parseFileContent(parser, await reader.go());
 
-            try {
-                const [docsToUpdate, warnings] = await parseFileContent(
-                    parser, await reader.go());
-                importReport.warnings = warnings as never[];
+            const errors = await importStrategy.validateStructurally(docsToUpdate);
+            if (errors.length > 0) importReport.errors = errors as never[];
+            else await update(docsToUpdate, importStrategy, importReport);
 
-                await update(docsToUpdate, importReport, importStrategy);
-
-            } catch (msgWithParams) { // catching from parseFileContent
-
-                importReport.errors.push(msgWithParams as never);
-            }
             resolve(await finishImport(importReport, relationsStrategy, rollbackStrategy));
         });
     }
@@ -93,19 +82,34 @@ export module Import {
 
 
     async function parseFileContent(parser: Parser,
-                                    fileContent: string): Promise<[Array<Document>, string[][]]> {
+                                    fileContent: string): Promise<[Array<Document>, ImportReport]> {
+
+        const importReport = {
+            errors: [],
+            warnings: [],
+            importedResourcesIds: []
+        };
 
         const docsToUpdate: Document[] = [];
-        await parser
-            .parse(fileContent)
-            .forEach((resultDocument: Document) => docsToUpdate.push(resultDocument));
+        try {
 
-        return [docsToUpdate, parser.getWarnings()];
+            await parser
+                .parse(fileContent)
+                .forEach((resultDocument: Document) => docsToUpdate.push(resultDocument));
+
+            importReport.warnings = parser.getWarnings() as never[];
+
+        } catch (msgWithParams) {
+
+            importReport.errors.push(msgWithParams as never);
+        }
+        return [docsToUpdate, importReport];
     }
 
 
-    async function update(docsToUpdate: Array<Document>, importReport: ImportReport,
-                          importStrategy: ImportStrategy): Promise<void> {
+    async function update(docsToUpdate: Array<Document>,
+                          importStrategy: ImportStrategy,
+                          importReport: ImportReport): Promise<void> {
 
         for (let docToUpdate of docsToUpdate) {
             if (importReport.errors.length !== 0) return;

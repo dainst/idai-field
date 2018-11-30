@@ -5,5 +5,8 @@ import {Document} from 'idai-components-2'
  */
 export interface ImportStrategy {
 
+    validateStructurally(docs: Array<Document>): Promise<any[] /* Array<msgWithParams> */>;
+
+
     importDoc(doc: Document): Promise<Document|undefined>;
 }

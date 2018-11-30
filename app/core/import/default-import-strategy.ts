@@ -7,6 +7,8 @@ import {TypeUtility} from '../model/type-utility';
 import {Validations} from '../model/validations';
 import {M} from '../../components/m';
 import {ImportErrors} from './import-errors';
+import {to} from 'tsfun';
+
 
 /**
  * @author Daniel de Oliveira
@@ -19,8 +21,27 @@ export class DefaultImportStrategy implements ImportStrategy {
                 private datastore: DocumentDatastore,
                 private projectConfiguration: ProjectConfiguration,
                 private username: string,
-                private mergeIfExists = false,
-                private mainTypeDocumentId?: string) {
+                private mainTypeDocumentId: string, /* '' => no assignment */
+                private mergeIfExists = false
+                ) {
+    }
+
+
+    public async validateStructurally(docs: Array<Document>): Promise<any[]> {
+
+        if (this.mainTypeDocumentId) {
+            for (let doc of docs) {
+
+                if (!Validations.validateType(doc.resource, this.projectConfiguration)) {
+                    return [[M.IMPORT_VALIDATION_ERROR_INVALID_TYPE, doc.resource.type]];
+                }
+                if (this.typeUtility.isSubtype(doc.resource.type, 'Operation')) {
+                    return [[ImportErrors.OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION]];
+                }
+            }
+        }
+
+        return [];
     }
 
 
@@ -31,15 +52,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      */
     public async importDoc(document: NewDocument): Promise<Document|undefined> {
 
-        if (this.mainTypeDocumentId) {
-            if (!Validations.validateType(document.resource, this.projectConfiguration)) {
-                throw [M.IMPORT_VALIDATION_ERROR_INVALID_TYPE, document.resource.type];
-            }
-            if (this.typeUtility.isSubtype(document.resource.type, 'Operation')) {
-                throw [ImportErrors.OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION];
-            }
-            await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
-        }
+        if (this.mainTypeDocumentId) await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
 
         const existingDocument = await this.findByIdentifier(document.resource.identifier);
         let _document: Document = document as Document;

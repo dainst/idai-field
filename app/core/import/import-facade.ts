@@ -55,7 +55,7 @@ export module ImportFacade {
                              datastore: DocumentDatastore,
                              usernameProvider: UsernameProvider,
                              projectConfiguration: ProjectConfiguration,
-                             mainTypeDocumentId: string|undefined,
+                             mainTypeDocumentId: string,
                              allowMergingExistingResources: boolean,
                              reader: Reader) {
 
@@ -69,7 +69,7 @@ export module ImportFacade {
                 usernameProvider,
                 projectConfiguration,
                 new TypeUtility(projectConfiguration),
-                !allowMergingExistingResources ? mainTypeDocumentId : undefined,
+                !allowMergingExistingResources ? mainTypeDocumentId : '',
                 allowMergingExistingResources),
             createRelationsStrategy(
                 format,
@@ -110,7 +110,7 @@ export module ImportFacade {
                                   usernameProvider: UsernameProvider,
                                   projectConfiguration: ProjectConfiguration,
                                   typeUtility: TypeUtility,
-                                  mainTypeDocumentId?: string,
+                                  mainTypeDocumentId: string,
                                   allowMergingExistingResources: boolean = false): ImportStrategy {
 
         switch (format) {
@@ -119,16 +119,16 @@ export module ImportFacade {
                     projectConfiguration, usernameProvider.getUsername());
             case 'idig':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername());
+                    projectConfiguration, usernameProvider.getUsername(), '');
 
             case 'shapefile': // TODO move that also to the default group (and make it behave like the other items)
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    true);
+                    '', true);
             default: // native | geojson | geojson-gazetteer
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    allowMergingExistingResources, mainTypeDocumentId);
+                    mainTypeDocumentId, allowMergingExistingResources);
         }
     }
 

@@ -111,7 +111,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('rollback', async done => {
+    it('invalid structure - dont import', async done => {
 
         const resourceId = (await datastore.create(
             { resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}}

@@ -26,7 +26,7 @@ describe('DefaultImportStrategy', () => {
             mockValidator,
             mockDatastore,
             null,
-            'user1');
+            'user1', '');
     });
 
 
@@ -54,7 +54,7 @@ describe('DefaultImportStrategy', () => {
             mockDatastore,
             null,
             'user1',
-            true).importDoc(
+            '', true).importDoc(
             { resource: {type: undefined, id: '1', relations: undefined } });
 
         expect(mockDatastore.create).not.toHaveBeenCalled();
@@ -73,7 +73,7 @@ describe('DefaultImportStrategy', () => {
             mockDatastore,
             null,
             'user1',
-            false).importDoc(
+            '', false).importDoc(
             { resource: {type: undefined, id: undefined, relations: undefined } });
 
         expect(mockDatastore.create).toHaveBeenCalled();
@@ -131,7 +131,7 @@ describe('DefaultImportStrategy', () => {
             mockDatastore,
             null,
             'user1',
-            true);
+            '', true);
         await importStrategy.importDoc(docToMerge as any);
 
         const importedDoc = mockDatastore.update.calls.mostRecent().args[0];

@@ -20,6 +20,7 @@ export module ImportErrors {
     export const MISSING_RELATION_TARGET = 'importerrors/missingrelationtarget';
     export const INVALID_MAIN_TYPE_DOCUMENT = 'importerrors/invalidmaintypedocument';
     export const OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION = 'importerrrors/operationsnotallowedonimportoperation';
+    export const ONLYPLACEANDOPERATIONWITHOUTRECORDEDINALLOWED = 'importerrors/onlyplaceandoperationswithoutrecordedinallowed';
     export const NO_OPERATION_ASSIGNABLE = 'importerrrors/nooperationassignable';
     export const NO_FEATURE_ASSIGNABLE = 'importerrrors/nofeatureassignable';
     export const SHAPEFILE_READ_ERROR = 'importerrors/shapefilereaderror';

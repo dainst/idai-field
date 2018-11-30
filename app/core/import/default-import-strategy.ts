@@ -7,7 +7,6 @@ import {TypeUtility} from '../model/type-utility';
 import {Validations} from '../model/validations';
 import {M} from '../../components/m';
 import {ImportErrors} from './import-errors';
-import {to} from 'tsfun';
 
 
 /**
@@ -24,19 +23,32 @@ export class DefaultImportStrategy implements ImportStrategy {
                 private mainTypeDocumentId: string, /* '' => no assignment */
                 private mergeIfExists = false
                 ) {
+
+        if (mainTypeDocumentId && mergeIfExists) {
+            throw 'FATAL ERROR mainTypeDocumentId and mergeIfExists must not be both truthy';
+        }
     }
 
 
     public async validateStructurally(docs: Array<Document>): Promise<any[]> {
 
-        if (this.mainTypeDocumentId) {
-            for (let doc of docs) {
+        if (this.mergeIfExists) return [];
 
-                if (!Validations.validateType(doc.resource, this.projectConfiguration)) {
-                    return [[M.IMPORT_VALIDATION_ERROR_INVALID_TYPE, doc.resource.type]];
-                }
+        for (let doc of docs) {
+
+            if (!Validations.validateType(doc.resource, this.projectConfiguration)) {
+                return [[M.IMPORT_VALIDATION_ERROR_INVALID_TYPE, doc.resource.type]]; // TODO should not be of M
+            }
+
+            if (this.mainTypeDocumentId) {
                 if (this.typeUtility.isSubtype(doc.resource.type, 'Operation')) {
                     return [[ImportErrors.OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION]];
+                }
+            } else {
+                if (doc.resource.type !== 'Place' && !this.typeUtility.isSubtype(doc.resource.type, 'Operation')) {
+                    if (!doc.resource.relations || !doc.resource.relations['isRecordedIn']) {
+                        return [[ImportErrors.ONLYPLACEANDOPERATIONWITHOUTRECORDEDINALLOWED]]; // TODO translations
+                    }
                 }
             }
         }
@@ -80,8 +92,9 @@ export class DefaultImportStrategy implements ImportStrategy {
     private async findByIdentifier(identifier: string) {
 
         const result = await this.datastore.find({ constraints: { 'identifier:match': identifier }});
-        if (result.totalCount === 1) return Promise.resolve(result.documents[0]);
-        else return undefined;
+        return result.totalCount === 1
+            ? result.documents[0]
+            : undefined;
     }
 
 

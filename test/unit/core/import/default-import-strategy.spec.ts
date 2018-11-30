@@ -1,4 +1,6 @@
 import {DefaultImportStrategy} from '../../../../app/core/import/default-import-strategy';
+import {ImportErrors} from '../../../../app/core/import/import-errors';
+import {M} from '../../../../app/components/m';
 
 /**
  * @author Daniel de Oliveira
@@ -7,6 +9,7 @@ describe('DefaultImportStrategy', () => {
 
     let mockDatastore;
     let mockValidator;
+    let mockProjectConfiguration;
     let mockTypeUtility;
     let importStrategy: DefaultImportStrategy;
 
@@ -16,16 +19,19 @@ describe('DefaultImportStrategy', () => {
         mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', ['validate']);
         mockTypeUtility = jasmine.createSpyObj('typeUtility', ['isSubtype']);
+        mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getTypesList']);
 
         mockValidator.validate.and.returnValue(Promise.resolve());
         mockDatastore.create.and.callFake((a) => Promise.resolve(a));
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
+        mockProjectConfiguration.getTypesList.and.returnValue(
+            [{name: 'Find'}, {name: 'Place'}, {name: 'Trench'}]);
 
         importStrategy = new DefaultImportStrategy(
             mockTypeUtility,
             mockValidator,
             mockDatastore,
-            null,
+            mockProjectConfiguration,
             'user1', '');
     });
 
@@ -143,5 +149,45 @@ describe('DefaultImportStrategy', () => {
             relations: {}
         });
         done();
-    })
+    });
+
+
+    it('validate structure - nonexisting type ', async done => {
+
+        const msgsWithParams = await importStrategy.validateStructurally([
+            { resource: { type: 'Nonexisting', id: undefined, relations: undefined } } as any
+        ]);
+
+        expect(msgsWithParams.length).toBe(1);
+        expect(msgsWithParams[0][0]).toEqual(M.IMPORT_VALIDATION_ERROR_INVALID_TYPE);
+        done();
+    });
+
+
+    it('validate structure - missing recorded in ', async done => {
+
+        mockTypeUtility.isSubtype.and.returnValue(false); // when asked if subtype of operation
+
+        const msgsWithParams = await importStrategy.validateStructurally([
+            { resource: { type: 'Find', id: undefined, relations: undefined } } as any
+        ]);
+
+        expect(msgsWithParams.length).toBe(1);
+        expect(msgsWithParams[0][0]).toEqual(ImportErrors.ONLYPLACEANDOPERATIONWITHOUTRECORDEDINALLOWED);
+        done();
+    });
+
+
+    it('validate structure - no missing recorded in for place and operation ', async done => {
+
+        mockTypeUtility.isSubtype.and.returnValue(true); // when asked if subtype of operation
+
+        const msgsWithParams = await importStrategy.validateStructurally([
+            { resource: { type: 'Place', id: undefined, relations: undefined } } as any,
+            { resource: { type: 'Trench', id: undefined, relations: undefined } } as any
+        ]);
+
+        expect(msgsWithParams.length).toBe(0);
+        done();
+    });
 });

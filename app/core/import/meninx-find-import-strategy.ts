@@ -24,9 +24,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
                 private username: string) { }
 
 
-    public async validateStructurally(docs: Array<Document>): Promise<any[]> {
-        return [];
-    }
+    public async validateStructurally(docs: Array<Document>): Promise<any[]> { return [] }
 
 
     /**

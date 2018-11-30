@@ -163,9 +163,9 @@ export module ImportFacade {
             case 'shapefile':
                 return new NoRollbackStrategy();
             case 'idig':
+            case 'geojson-gazetteer':
                 return new DefaultRollbackStrategy(datastore);
-
-            default: // native | geojson-gazetteer
+            default: // native
                 return allowMergeExistingResources
                     // no restore to previous versions of resources once modified.
                     // we keep the use cases of merge and of creation strictly separated.

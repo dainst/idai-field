@@ -161,7 +161,7 @@ describe('DefaultImportStrategy', () => {
         ]);
 
         expect(msgsWithParams.length).toBe(1);
-        expect(msgsWithParams[0][0]).toEqual(M.IMPORT_VALIDATION_ERROR_INVALID_TYPE);
+        expect(msgsWithParams[0][0]).toEqual(ImportErrors.PREVALIDATION_INVALID_TYPE);
         done();
     });
 

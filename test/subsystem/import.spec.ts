@@ -129,7 +129,7 @@ describe('Import/Subsystem', () => {
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
                     + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}')});
 
-        expect(importReport.errors[0]).toEqual([M.IMPORT_VALIDATION_ERROR_INVALID_TYPE, 'InvalidType']);
+        expect(importReport.errors[0]).toEqual([ImportErrors.PREVALIDATION_INVALID_TYPE, 'InvalidType']);
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1); // only the trench
         done();

@@ -73,7 +73,7 @@ export class DefaultImportStrategy implements ImportStrategy {
             else return undefined;
         } else {
             if (existingDocument) {
-                throw [M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS, existingDocument.resource.identifier];
+                throw [M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS, existingDocument.resource.identifier]; // TODO should not be of M
             }
         }
 

@@ -173,7 +173,7 @@ describe('DefaultImportStrategy', () => {
         ]);
 
         expect(msgsWithParams.length).toBe(1);
-        expect(msgsWithParams[0][0]).toEqual(ImportErrors.ONLYPLACEANDOPERATIONWITHOUTRECORDEDINALLOWED);
+        expect(msgsWithParams[0][0]).toEqual(ImportErrors.NO_OPERATION_ASSIGNED);
         done();
     });
 

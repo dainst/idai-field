@@ -47,12 +47,12 @@ export class DefaultImportStrategy implements ImportStrategy {
 
             if (this.mainTypeDocumentId) {
                 if (this.typeUtility.isSubtype(doc.resource.type, 'Operation')) {
-                    return [[ImportErrors.OPERATIONS_NOT_ALLOWED_ON_IMPORT_TO_OPERATION]];
+                    return [[ImportErrors.OPERATIONS_NOT_ALLOWED]];
                 }
             } else {
                 if (doc.resource.type !== 'Place' && !this.typeUtility.isSubtype(doc.resource.type, 'Operation')) {
                     if (!doc.resource.relations || !doc.resource.relations['isRecordedIn']) {
-                        return [[ImportErrors.ONLYPLACEANDOPERATIONWITHOUTRECORDEDINALLOWED]];
+                        return [[ImportErrors.NO_OPERATION_ASSIGNED]];
                     }
                 }
             }

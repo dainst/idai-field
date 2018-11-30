@@ -65,7 +65,7 @@ export class DefaultImportStrategy implements ImportStrategy {
     /**
      * @returns {Document} the stored document if it has been imported, undefined otherwise
      * @throws errorWithParams
-     * @throws [MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS] if resource already exist and !mergeIfExists
+     * @throws [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
      */
     public async importDoc(document: NewDocument): Promise<Document|undefined> {
 
@@ -73,7 +73,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
         const existingDocument = await this.findByIdentifier(document.resource.identifier);
         if (!this.mergeIfExists && existingDocument) {
-            throw [M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS, existingDocument.resource.identifier]; // TODO should not be of M
+            throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
         }
         let documentForUpdate: Document = document as Document;
         if (this.mergeIfExists) {

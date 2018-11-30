@@ -18,11 +18,9 @@ export module ImportErrors {
     export const SHAPEFILE_GENERIC_ERROR = 'importerrors/shapefilegenericerror';
     export const INVALID_GEOMETRY = 'importerrors/invalidgeometry';
 
-    // structure of resoures
+    // structure of resources
     export const WRONG_IDENTIFIER_FORMAT = 'importerrors/wrongidentifierformat';
     export const MISSING_RESOURCE = 'importerrors/missingresource';
-    export const INVALID_MAIN_TYPE_DOCUMENT = 'importerrors/invalidmaintypedocument';
-    export const MISSING_RELATION_TARGET = 'importerrors/missingrelationtarget';
 
     // content, structure of whole import
     export const MISSING_IDENTIFIER = 'importerrors/missingidentifier';
@@ -32,6 +30,9 @@ export module ImportErrors {
     export const NO_FEATURE_ASSIGNABLE = 'importerrrors/nofeatureassignable';
 
     // other, execution of import
+    export const INVALID_MAIN_TYPE_DOCUMENT = 'importerrors/invalidmaintypedocument';
+    export const MISSING_RELATION_TARGET = 'importerrors/missingrelationtarget';
     export const GENERIC_DATASTORE_ERROR = 'importerrors/genericdatastoreerror'; // TODO seems to be unused
     export const ROLLBACK_ERROR = 'importerrors/rollbackerror';
+    export const RESOURCE_EXISTS = 'importerrors/resourceexists'; // M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS
 }

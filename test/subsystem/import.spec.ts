@@ -4,7 +4,6 @@ import {ImportFacade} from '../../app/core/import/import-facade';
 import {Validator} from '../../app/core/model/validator';
 import {TypeUtility} from '../../app/core/model/type-utility';
 import {ValidationErrors} from '../../app/core/model/validation-errors';
-import {M} from '../../app/components/m';
 import {ImportErrors} from '../../app/core/import/import-errors';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
 

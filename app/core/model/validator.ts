@@ -26,7 +26,7 @@ export class Validator {
      * @param suppressIdentifierCheck
      * @param suppressIsRecordedInCheck
      * @returns resolves with () if validation passed
-     * @throws [INVALID_TYPE] if type is not configured in projectConfiguration
+     * @throws [PREVALIDATION_INVALID_TYPE] if type is not configured in projectConfiguration
      * @throws [NO_ISRECORDEDIN] if type should have a isRecordedIn but doesn't have one
      * @throws [NO_ISRECORDEDIN_TARGET]
      * @throws [IDENTIFIER_EXISTS]

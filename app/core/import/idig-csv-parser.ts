@@ -47,7 +47,7 @@ export class IdigCsvParser extends AbstractParser {
 
         return Observable.create((observer: Observer<any>) => {
 
-            let errorCallback = (e: any) => observer.error([ImportErrors.INVALID_CSV, e.row]);
+            let errorCallback = (e: any) => observer.error([ImportErrors.CSV_INVALID, e.row]);
 
             let completeCallback = (result: any) => {
                 result.errors.forEach( (e: any) => errorCallback(e) );
@@ -75,7 +75,7 @@ export class IdigCsvParser extends AbstractParser {
                     complete: completeCallback
                 });
             } catch (e) {
-                observer.error([ImportErrors.GENERIC_CSV_ERROR]);
+                observer.error([ImportErrors.CSV_GENERIC]);
             }
         });
 

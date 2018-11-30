@@ -30,7 +30,7 @@ export class ShapefileFileSystemReader implements Reader {
                 fs.unlinkSync(ShapefileFileSystemReader.getTempFilePath());
 
                 if (err) {
-                    reject([ImportErrors.SHAPEFILE_GENERIC_ERROR]);
+                    reject([ImportErrors.SHAPEFILE_GENERIC]);
                 } else {
                     resolve(data);
                 }
@@ -66,15 +66,15 @@ export class ShapefileFileSystemReader implements Reader {
                 JavaToolExecutor.getParameterFromErrorMessage(error)
             ];
         } else if (error.includes('CONVERTER_SHAPEFILE_READ_ERROR')) {
-            return [ImportErrors.SHAPEFILE_READ_ERROR];
+            return [ImportErrors.SHAPEFILE_READ];
         } else if (error.includes('CONVERTER_JSONL_WRITE_ERROR')) {
             return [
-                ImportErrors.SHAPEFILE_JSONL_WRITE_ERROR,
+                ImportErrors.SHAPEFILE_JSONL_WRITE,
                 JavaToolExecutor.getParameterFromErrorMessage(error)
             ];
         } else {
             console.error(error);
-            return [ImportErrors.SHAPEFILE_GENERIC_ERROR];
+            return [ImportErrors.SHAPEFILE_GENERIC];
         }
     }
 

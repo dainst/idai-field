@@ -79,7 +79,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
                 types: ['Trench']});
             return trench.documents[0].resource.id;
         } catch (err) {
-            throw [ImportErrors.NO_OPERATION_ASSIGNABLE, trenchIdentifier];
+            throw [ImportErrors.EXEC_MENINX_NO_OPERATION_ASSIGNABLE, trenchIdentifier];
         }
     }
 
@@ -103,17 +103,17 @@ export class MeninxFindImportStrategy implements ImportStrategy {
                     'Room',
                     'Burial']});
         } catch (err) {
-            throw [ImportErrors.NO_FEATURE_ASSIGNABLE, liesWithinIdentifier];
+            throw [ImportErrors.EXEC_MENINX_FIND_NO_FEATURE_ASSIGNABLE, liesWithinIdentifier];
         }
 
         if (liesWithinTargetFindResult.documents.length > 1) {
             console.error('cannot get liesWithinId for identifier', liesWithinIdentifier);
-            throw [ImportErrors.NO_FEATURE_ASSIGNABLE, 'More than one SU found for identifier ' +
+            throw [ImportErrors.EXEC_MENINX_FIND_NO_FEATURE_ASSIGNABLE, 'More than one SU found for identifier ' +
                 liesWithinTargetFindResult.documents.map(_ => _.resource.identifier).join(' -- ')];
         }
 
         if (liesWithinTargetFindResult.documents.length === 0) {
-            throw [ImportErrors.NO_FEATURE_ASSIGNABLE, 'No target SU found for identifier ' + liesWithinIdentifier];
+            throw [ImportErrors.EXEC_MENINX_FIND_NO_FEATURE_ASSIGNABLE, 'No target SU found for identifier ' + liesWithinIdentifier];
         }
 
         return liesWithinTargetFindResult.documents[0].resource.id;

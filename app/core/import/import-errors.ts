@@ -9,30 +9,29 @@ export module ImportErrors {
     export const FILE_INVALID_JSON = 'importerrors/invalidjson';
     export const FILE_INVALID_JSONL = 'importerrors/invalidjsonl';
     export const INVALID_GEOJSON_IMPORT_STRUCT = 'importerrors/invalidgeojsonimportstruct';
-    export const INVALID_CSV = 'importerrors/invalidcsv';
-    export const GENERIC_CSV_ERROR = 'importerrors/genericcsverror';
+    export const CSV_INVALID = 'importerrors/csv/invalid';
+    export const CSV_GENERIC = 'importerrors/csv/genericerror';
     export const MANDATORY_CSV_FIELD_MISSING = 'importerrors/mandatorycsvfieldmissing';
-    export const SHAPEFILE_READ_ERROR = 'importerrors/shapefilereaderror';
-    export const SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'importerrors/shapefileunsupportedgeometrytype';
-    export const SHAPEFILE_JSONL_WRITE_ERROR = 'importerrors/shapefilejsonlwriteerror';
-    export const SHAPEFILE_GENERIC_ERROR = 'importerrors/shapefilegenericerror';
     export const INVALID_GEOMETRY = 'importerrors/invalidgeometry';
-
-    // structure of resources
-    export const WRONG_IDENTIFIER_FORMAT = 'importerrors/wrongidentifierformat';
-    export const MISSING_RESOURCE = 'importerrors/missingresource';
-
-    // content, structure of whole import
+    export const SHAPEFILE_READ = 'importerrors/shapefile/read';
+    export const SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'importerrors/shapefile/unsupportedgeometrytype';
+    export const SHAPEFILE_JSONL_WRITE = 'importerrors/shapefile/jsonlwrite';
+    export const SHAPEFILE_GENERIC = 'importerrors/shapefile/generic';
     export const MISSING_IDENTIFIER = 'importerrors/missingidentifier';
-    export const OPERATIONS_NOT_ALLOWED = 'importerrrors/operationsnotallowedonimportoperation';
-    export const NO_OPERATION_ASSIGNED = 'importerrors/onlyplaceandoperationswithoutrecordedinallowed';
-    export const NO_OPERATION_ASSIGNABLE = 'importerrrors/nooperationassignable';
-    export const NO_FEATURE_ASSIGNABLE = 'importerrrors/nofeatureassignable';
+    export const MISSING_RESOURCE = 'importerrors/missingresource';
+    export const WRONG_IDENTIFIER_FORMAT = 'importerrors/wrongidentifierformat';
 
-    // other, execution of import
+    // prevalidation
+    export const PREVALIDATION_INVALID_TYPE = 'importerrors/prevalidation/invalidtype';
+    export const PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'importerrrors/prevalidation/operationsnotallowed';
+    export const PREVALIDATION_NO_OPERATION_ASSIGNED = 'importerrors/prevalidation/nooperationassigned';
+
+    // execution
+    export const EXEC_MENINX_FIND_NO_FEATURE_ASSIGNABLE = 'importerrrors/exec/meninxfind/nofeatureassignable';
+    export const EXEC_MENINX_NO_OPERATION_ASSIGNABLE = 'importerrrors/exec/meninxfind/nooperationassignable';
+    export const EXEC_MISSING_RELATION_TARGET = 'importerrors/exec/missingrelationtarget';
+    export const EXEC_GENERIC_DATASTORE = 'importerrors/exec/genericdatastore'; // TODO seems to be unused
+    export const EXEC_ROLLBACK = 'importerrors/exec/rollback';
     export const INVALID_MAIN_TYPE_DOCUMENT = 'importerrors/invalidmaintypedocument';
-    export const MISSING_RELATION_TARGET = 'importerrors/missingrelationtarget';
-    export const GENERIC_DATASTORE_ERROR = 'importerrors/genericdatastoreerror'; // TODO seems to be unused
-    export const ROLLBACK_ERROR = 'importerrors/rollbackerror';
     export const RESOURCE_EXISTS = 'importerrors/resourceexists'; // M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS
 }

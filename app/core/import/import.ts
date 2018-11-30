@@ -74,7 +74,7 @@ export module Import {
                 await rollbackStrategy.rollback(importReport.importedResourcesIds);
             } catch (err) {
                 console.error('Rollback error', err);
-                importReport.errors.push([ImportErrors.ROLLBACK_ERROR]);
+                importReport.errors.push([ImportErrors.EXEC_ROLLBACK]);
             }
         }
         return importReport;

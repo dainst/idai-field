@@ -5,7 +5,6 @@ import {Validator} from '../model/validator';
 import {DocumentMerge} from './document-merge';
 import {TypeUtility} from '../model/type-utility';
 import {Validations} from '../model/validations';
-import {M} from '../../components/m';
 import {ImportErrors} from './import-errors';
 
 
@@ -32,8 +31,12 @@ export class DefaultImportStrategy implements ImportStrategy {
 
     /**
      * Some quick checks which do not query the db
-     * TODO make category import_struct_errors
+     *
      * TODO check case if import file per se has duplicate identifiers
+     *
+     * @returns [[ImportErrors.INVALID_TYPE, doc.resource.type]]
+     * @returns [[ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]]
+     * @returns [[ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]]
      */
     public async validateStructurally(docs: Array<Document>): Promise<any[]> {
 
@@ -42,17 +45,17 @@ export class DefaultImportStrategy implements ImportStrategy {
         for (let doc of docs) {
 
             if (!Validations.validateType(doc.resource, this.projectConfiguration)) {
-                return [[M.IMPORT_VALIDATION_ERROR_INVALID_TYPE, doc.resource.type]]; // TODO should not be of M
+                return [[ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]];
             }
 
             if (this.mainTypeDocumentId) {
                 if (this.typeUtility.isSubtype(doc.resource.type, 'Operation')) {
-                    return [[ImportErrors.OPERATIONS_NOT_ALLOWED]];
+                    return [[ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]];
                 }
             } else {
                 if (doc.resource.type !== 'Place' && !this.typeUtility.isSubtype(doc.resource.type, 'Operation')) {
                     if (!doc.resource.relations || !doc.resource.relations['isRecordedIn']) {
-                        return [[ImportErrors.NO_OPERATION_ASSIGNED]];
+                        return [[ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]];
                     }
                 }
             }
@@ -66,6 +69,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      * @returns {Document} the stored document if it has been imported, undefined otherwise
      * @throws errorWithParams
      * @throws [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
+     * @throws [INVALID_MAIN_TYPE_DOCUMENT]
      */
     public async importDoc(document: NewDocument): Promise<Document|undefined> {
 

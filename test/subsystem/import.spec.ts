@@ -228,7 +228,7 @@ describe('Import/Subsystem', () => {
             { go: () => Promise.resolve(
                     '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}')});
 
-        expect(importReport.errors[0]).toEqual([ImportErrors.OPERATIONS_NOT_ALLOWED]);
+        expect(importReport.errors[0]).toEqual([ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]);
 
         const result = await datastore.find({});
         expect(result.documents[0].resource.identifier).toBe('t1');

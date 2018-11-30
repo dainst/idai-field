@@ -19,7 +19,7 @@ export class ShapefileParser extends AbstractParser {
                     .parse(content)
                     .forEach((document: Document) => observer.next(document));
             } catch (err) {
-                observer.error([ImportErrors.SHAPEFILE_GENERIC_ERROR]);
+                observer.error([ImportErrors.SHAPEFILE_GENERIC]);
             }
             observer.complete();
         });

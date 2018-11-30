@@ -132,7 +132,7 @@ export class RelationsCompleter {
                 }, () => {
                     switch (mode) {
                         case 'create':
-                            reject([ImportErrors.MISSING_RELATION_TARGET, targetId]);
+                            reject([ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId]);
                             break;
                         case 'remove':
                             resolve();

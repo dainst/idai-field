@@ -47,7 +47,6 @@ export module ImportFacade {
      * @returns ImportReport
      *   importReport.errors: Any error of module ImportErrors or ValidationErrors
      *   importReport.warnings
-     *
      */
     export function doImport(format: ImportFormat,
                              validator: Validator,

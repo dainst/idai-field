@@ -109,7 +109,7 @@ export module ImportFacade {
                                   projectConfiguration: ProjectConfiguration,
                                   typeUtility: TypeUtility,
                                   mainTypeDocumentId: string,
-                                  allowMergingExistingResources: boolean = false): ImportStrategy {
+                                  allowMergingExistingResources = false): ImportStrategy {
 
         switch (format) {
             case 'meninxfind':
@@ -118,12 +118,15 @@ export module ImportFacade {
             case 'idig':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(), '');
-
-            case 'shapefile': // TODO move that also to the default group (and make it behave like the other items)
+            case 'shapefile':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
                     '', true);
-            default: // native | geojson | geojson-gazetteer
+            case 'geojson':
+                return new DefaultImportStrategy(typeUtility, validator, datastore,
+                    projectConfiguration, usernameProvider.getUsername(),
+                    '', true);
+            default: // native | geojson-gazetteer
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
                     mainTypeDocumentId, allowMergingExistingResources);

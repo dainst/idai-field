@@ -131,7 +131,7 @@ export module ImportFacade {
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
                     '', false);
-            default: // native | geojson-gazetteer
+            default: // native
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
                     mainTypeDocumentId, allowMergingExistingResources);

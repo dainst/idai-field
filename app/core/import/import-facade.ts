@@ -146,9 +146,9 @@ export module ImportFacade {
             case 'meninxfind':
             case 'shapefile':
             case 'geojson-gazetteer':
-                return new NoRelationsStrategy();
+                return new NoRelationsStrategy(); // TODO see if we need a relstrategy here or if we don't set inverse relations for liesWithin anyway
 
-            default: // native | default | geojson
+            default: // native | default | geojson // TODO geojson does not need relation strategy anymore
                 return new DefaultRelationsStrategy(relationsCompleter);
         }
     }

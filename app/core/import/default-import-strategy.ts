@@ -24,7 +24,7 @@ export class DefaultImportStrategy implements ImportStrategy {
                 ) {
 
         if (mainTypeDocumentId && mergeIfExists) {
-            throw 'FATAL ERROR mainTypeDocumentId and mergeIfExists must not be both truthy';
+            throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
         }
     }
 

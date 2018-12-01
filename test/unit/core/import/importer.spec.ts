@@ -19,8 +19,8 @@ describe('Importer', () => {
         mockReader.go.and.callFake(function() {return Promise.resolve();});
         mockParser = jasmine.createSpyObj('parser', ['parse','getWarnings']);
 
-        mockImportStrategy = jasmine.createSpyObj('importStrategy', ['validateStructurally', 'importDoc']);
-        mockImportStrategy.validateStructurally.and.returnValue(Promise.resolve([]));
+        mockImportStrategy = jasmine.createSpyObj('importStrategy', ['preValidate', 'importDoc']);
+        mockImportStrategy.preValidate.and.returnValue(Promise.resolve([]));
 
         mockRelationsStrategy = jasmine.createSpyObj('relationsStrategy',
             ['completeInverseRelations', 'resetInverseRelations']);

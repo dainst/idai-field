@@ -38,7 +38,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      * @returns [[ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]]
      * @returns [[ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]]
      */
-    public async validateStructurally(docs: Array<Document>): Promise<any[]> {
+    public async preValidate(docs: Array<Document>): Promise<any[]> {
 
         if (this.mergeIfExists) return [];
 

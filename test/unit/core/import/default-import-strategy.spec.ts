@@ -155,7 +155,7 @@ describe('DefaultImportStrategy', () => {
 
     it('validate structure - nonexisting type ', async done => {
 
-        const msgsWithParams = await importStrategy.validateStructurally([
+        const msgsWithParams = await importStrategy.preValidate([
             { resource: { type: 'Nonexisting', id: undefined, relations: undefined } } as any
         ]);
 
@@ -169,7 +169,7 @@ describe('DefaultImportStrategy', () => {
 
         mockTypeUtility.isSubtype.and.returnValue(false); // when asked if subtype of operation
 
-        const msgsWithParams = await importStrategy.validateStructurally([
+        const msgsWithParams = await importStrategy.preValidate([
             { resource: { type: 'Find', id: undefined, relations: undefined } } as any
         ]);
 
@@ -183,7 +183,7 @@ describe('DefaultImportStrategy', () => {
 
         mockTypeUtility.isSubtype.and.returnValue(true); // when asked if subtype of operation
 
-        const msgsWithParams = await importStrategy.validateStructurally([
+        const msgsWithParams = await importStrategy.preValidate([
             { resource: { type: 'Place', id: undefined, relations: undefined } } as any,
             { resource: { type: 'Trench', id: undefined, relations: undefined } } as any
         ]);

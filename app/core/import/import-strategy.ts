@@ -10,7 +10,7 @@ export interface ImportStrategy {
      * To determine if importDoc can succeed
      * @param docs
      */
-    validateStructurally(docs: Array<Document>): Promise<any[] /* Array<msgWithParams> */>;
+    preValidate(docs: Array<Document>): Promise<any[] /* Array<msgWithParams> */>;
 
 
     importDoc(doc: Document): Promise<Document|undefined>;

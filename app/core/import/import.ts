@@ -39,7 +39,7 @@ export module Import {
 
             const [docsToUpdate, importReport] = await parseFileContent(parser, await reader.go());
 
-            const errors = await importStrategy.validateStructurally(docsToUpdate);
+            const errors = await importStrategy.preValidate(docsToUpdate);
             if (errors.length > 0) importReport.errors = errors as never[];
             else await update(docsToUpdate, importStrategy, importReport);
 

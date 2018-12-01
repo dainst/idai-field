@@ -25,6 +25,7 @@ export module ImportErrors {
     export const PREVALIDATION_INVALID_TYPE = 'importerrors/prevalidation/invalidtype';
     export const PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'importerrrors/prevalidation/operationsnotallowed';
     export const PREVALIDATION_NO_OPERATION_ASSIGNED = 'importerrors/prevalidation/nooperationassigned';
+    export const PREVALIDATION_DUPLICATE_IDENTIFIER = 'importerrors/prevalidation/duplicaeidentifier';
 
     // execution
     export const EXEC_MENINX_FIND_NO_FEATURE_ASSIGNABLE = 'importerrrors/exec/meninxfind/nofeatureassignable';

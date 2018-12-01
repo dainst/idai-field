@@ -2976,6 +2976,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.duplicateidentifier" datatype="html">
+        <source>Mehrfach vorhandener Identifier in Importdatei: '[0]'.</source>
+        <target state="final">Multiple occurences of identifier in import file: '[0]'.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.genericDatastoreError" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die Ressource [0] konnte nicht gespeichert werden.</source>
         <target state="final">An error has occurred during import: Failed to save resource [0].</target>

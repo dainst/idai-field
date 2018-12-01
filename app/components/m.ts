@@ -63,18 +63,24 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_MISSING_RESOURCE = 'importer.error.missingResource';
     public static IMPORT_ERROR_MISSING_RELATION_TARGET = 'importer.error.missingRelationTarget';
     public static IMPORT_ERROR_INVALID_OPERATION_RESOURCE = 'importer.error.invalidOperationResource';
-    public static IMPORT_ERROR_ONLYPLACEANDOPERATIONWITHOUTRECORDEDINALLOWED = 'importer.error.onlyplaceandoperationwithoutrecordedinallowed';
-    public static IMPORT_ERROR_OPERATIONS_NOT_ALLOWED = 'importer.error.operationsNotAllowed';
+
     public static IMPORT_ERROR_NO_OPERATION_ASSIGNABLE = 'importer.error.noOperationAssignable';
     public static IMPORT_ERROR_NO_FEATURE_ASSIGNABLE = 'importer.error.noFeatureAssignable';
     public static IMPORT_ERROR_SHAPEFILE_READ_ERROR = 'import.error.shapefile.readError';
     public static IMPORT_ERROR_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'import.error.shapefile.unsupportedGeometryType';
     public static IMPORT_ERROR_SHAPEFILE_JSONL_WRITE_ERROR = 'import.error.shapefile.jsonlWriteError';
     public static IMPORT_ERROR_SHAPEFILE_GENERIC_ERROR = 'import.error.shapefile.generic';
+
+    // ImportPackage - ImportErrors - prevalidation
+    public static IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED = 'importer.error.onlyplaceandoperationwithoutrecordedinallowed';
+    public static IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'importer.error.operationsNotAllowed';
+    public static IMPORT_PREVALIDATION_INVALID_TYPE = 'import.validation.error.invalidType';
+    public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'import.pvalidation.error.duplicateType';
+
+    // Import Package - ValidationErrors
     public static IMPORT_VALIDATION_ERROR_MISSING_PROPERTY = 'import.validation.error.missingProperty';
     public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN = 'import.validation.error.noRecordedin';
     public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'import.validation.error.noRecordedinTarget';
-    public static IMPORT_VALIDATION_ERROR_INVALID_TYPE = 'import.validation.error.invalidType';
     public static IMPORT_VALIDATION_ERROR_INVALID_FIELD = 'import.validation.error.invalidField';
     public static IMPORT_VALIDATION_ERROR_INVALID_FIELDS = 'import.validation.error.invalidFields';
     public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELD = 'import.validation.error.invalidRelationField';
@@ -457,7 +463,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?', '?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_OPERATIONS_NOT_ALLOWED] = {
+        this.msgs[M.IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED] = {
             content: i18n({
                 id: 'messages.import.error.operationsNotAllowed',
                 value: 'Wenn die Option \'Daten einer Maßnahme zuordnen\' gewählt ist, darf die Import-Datei keine Maßnahmen enthalten.'
@@ -466,13 +472,22 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_ONLYPLACEANDOPERATIONWITHOUTRECORDEDINALLOWED] = {
+        this.msgs[M.IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED] = {
             content: i18n({
                 id: 'messages.import.error.onlyplaceandoperationwithoutrecordedinallowed',
                 value: 'Wenn \'Keine Zuordnung\' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte \'isRecordedIn\'-Zuordnungen haben.'
             }),
             level: 'danger',
             params: [],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER] = {
+            content: i18n({
+                id: 'messages.import.error.duplicateidentifier',
+                value: 'Mehrfach vorhandener Identifier in Importdatei: \'[0]\'.'
+            }),
+            level: 'danger',
+            params: [ '?' ],
             hidden: false
         };
         this.msgs[M.IMPORT_ERROR_GENERIC_DATASTORE_ERROR] = {
@@ -574,7 +589,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
-        this.msgs[M.IMPORT_VALIDATION_ERROR_INVALID_TYPE] = {
+        this.msgs[M.IMPORT_PREVALIDATION_INVALID_TYPE] = {
             content: i18n({
                 id: 'messages.import.validation.error.invalidType',
                 value: 'Ungültige Typdefinition: \'[0]\''

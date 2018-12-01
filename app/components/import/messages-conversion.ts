@@ -23,7 +23,7 @@ export module MessagesConversion {
         const msg = msgWithParams[0];
 
         // validation errors
-        if (msg === ValidationErrors.INVALID_TYPE) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_TYPE;
+        if (msg === ValidationErrors.INVALID_TYPE) replacement = M.IMPORT_PREVALIDATION_INVALID_TYPE;
         if (msg === ValidationErrors.NO_ISRECORDEDIN) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN;
         if (msg === ValidationErrors.NO_ISRECORDEDIN_TARGET) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET;
         if (msg === ValidationErrors.IDENTIFIER_EXISTS) replacement = M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS;
@@ -54,9 +54,10 @@ export module MessagesConversion {
         if (msg === ImportErrors.INVALID_GEOMETRY) replacement = M.IMPORT_ERROR_INVALID_GEOMETRY;
 
         // import errors - prevalidation
-        if (msg === ImportErrors.PREVALIDATION_INVALID_TYPE) replacement = M.IMPORT_VALIDATION_ERROR_INVALID_TYPE;
-        if (msg === ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_ERROR_OPERATIONS_NOT_ALLOWED;
-        if (msg === ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED) replacement = M.IMPORT_ERROR_ONLYPLACEANDOPERATIONWITHOUTRECORDEDINALLOWED;
+        if (msg === ImportErrors.PREVALIDATION_INVALID_TYPE) replacement = M.IMPORT_PREVALIDATION_INVALID_TYPE;
+        if (msg === ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED;
+        if (msg === ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED) replacement = M.IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED;
+        if (msg === ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER) replacement = M.IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER;
 
         // import errors - execution
         if (msg === ImportErrors.EXEC_MENINX_NO_OPERATION_ASSIGNABLE) replacement = M.IMPORT_ERROR_NO_OPERATION_ASSIGNABLE;

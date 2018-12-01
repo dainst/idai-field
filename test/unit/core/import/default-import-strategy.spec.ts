@@ -153,10 +153,10 @@ describe('DefaultImportStrategy', () => {
     });
 
 
-    it('validate structure - nonexisting type ', async done => {
+    it('preValidate - nonexisting type ', async done => {
 
         const msgsWithParams = await importStrategy.preValidate([
-            { resource: { type: 'Nonexisting', id: undefined, relations: undefined } } as any
+            { resource: { type: 'Nonexisting', identifier: '1a', relations: undefined } } as any
         ]);
 
         expect(msgsWithParams.length).toBe(1);
@@ -165,12 +165,12 @@ describe('DefaultImportStrategy', () => {
     });
 
 
-    it('validate structure - missing recorded in ', async done => {
+    it('preValidate - missing recorded in ', async done => {
 
         mockTypeUtility.isSubtype.and.returnValue(false); // when asked if subtype of operation
 
         const msgsWithParams = await importStrategy.preValidate([
-            { resource: { type: 'Find', id: undefined, relations: undefined } } as any
+            { resource: { type: 'Find', identifier: '1a', relations: undefined } } as any
         ]);
 
         expect(msgsWithParams.length).toBe(1);
@@ -179,16 +179,33 @@ describe('DefaultImportStrategy', () => {
     });
 
 
-    it('validate structure - no missing recorded in for place and operation ', async done => {
+    it('preValidate - no missing recorded in for place and operation ', async done => {
 
         mockTypeUtility.isSubtype.and.returnValue(true); // when asked if subtype of operation
 
         const msgsWithParams = await importStrategy.preValidate([
-            { resource: { type: 'Place', id: undefined, relations: undefined } } as any,
-            { resource: { type: 'Trench', id: undefined, relations: undefined } } as any
+            { resource: { type: 'Place', identifier: '1a', relations: undefined } } as any,
+            { resource: { type: 'Trench', identifier: '2a', relations: undefined } } as any
         ]);
 
         expect(msgsWithParams.length).toBe(0);
+        done();
+    });
+
+
+    it('preValidate - duplicate identifiers in import file', async done => {
+
+        mockTypeUtility.isSubtype.and.returnValue(true); // when asked if subtype of operation
+        mockDatastore.find.and.returnValues(Promise.resolve({ documents: [], totalCount: 0 }));
+
+        const msgsWithParams = await importStrategy.preValidate([
+            { resource: { type: 'Place', identifier: '1a' } } as any,
+            { resource: { type: 'Trench', identifier: '1a' } } as any
+        ]);
+
+        expect(msgsWithParams.length).toBe(1);
+        expect(msgsWithParams[0][0]).toEqual(ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER);
+        expect(msgsWithParams[0][1]).toEqual('1a');
         done();
     });
 });

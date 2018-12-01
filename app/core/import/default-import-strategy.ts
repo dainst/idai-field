@@ -32,22 +32,29 @@ export class DefaultImportStrategy implements ImportStrategy {
     /**
      * Some quick checks which do not query the db (much)
      *
-     * TODO check case if import file per se has duplicate identifiers
-     *
+     * @param docsToImport with resource.identifier set
      * @returns [[ImportErrors.INVALID_TYPE, doc.resource.type]]
      * @returns [[ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]]
      * @returns [[ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]]
      */
-    public async preValidate(docs: Array<Document>): Promise<any[]> {
+    public async preValidate(docsToImport: Array<Document>): Promise<any[]> {
 
         if (this.mergeIfExists) return [];
 
-        for (let doc of docs) {
+        const identifiersInDocsToImport: string[] = [];
+        for (let doc of docsToImport) {
+
+            if (!doc.resource.identifier) throw 'FATAL ERROR - illegal argument - document without identifier';
+            if (identifiersInDocsToImport.includes(doc.resource.identifier)) {
+                return [[ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier]];
+            }
+            identifiersInDocsToImport.push(doc.resource.identifier);
+
 
             // TODO write test
             // should not take long since it accesses indexer and should return undefined normally
             const existingDocument = await this.findByIdentifier(doc.resource.identifier);
-            if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
+            if (existingDocument) return [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
 
             if (!Validations.validateType(doc.resource, this.projectConfiguration)) {
                 return [[ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]];

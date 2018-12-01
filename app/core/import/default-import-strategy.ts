@@ -30,7 +30,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
-     * Some quick checks which do not query the db
+     * Some quick checks which do not query the db (much)
      *
      * TODO check case if import file per se has duplicate identifiers
      *
@@ -43,6 +43,11 @@ export class DefaultImportStrategy implements ImportStrategy {
         if (this.mergeIfExists) return [];
 
         for (let doc of docs) {
+
+            // TODO write test
+            // should not take long since it accesses indexer and should return undefined normally
+            const existingDocument = await this.findByIdentifier(doc.resource.identifier);
+            if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
 
             if (!Validations.validateType(doc.resource, this.projectConfiguration)) {
                 return [[ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]];
@@ -75,12 +80,9 @@ export class DefaultImportStrategy implements ImportStrategy {
 
         if (this.mainTypeDocumentId) await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
 
-        const existingDocument = await this.findByIdentifier(document.resource.identifier);
-        if (!this.mergeIfExists && existingDocument) {
-            throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
-        }
         let documentForUpdate: Document = document as Document;
         if (this.mergeIfExists) {
+            const existingDocument = await this.findByIdentifier(document.resource.identifier);
             if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate);
             else return undefined;
         }

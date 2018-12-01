@@ -208,4 +208,21 @@ describe('DefaultImportStrategy', () => {
         expect(msgsWithParams[0][1]).toEqual('1a');
         done();
     });
+
+
+    it('preValidate - existing identifier', async done => {
+
+        mockTypeUtility.isSubtype.and.returnValue(true); // when asked if subtype of operation
+        mockDatastore.find.and.returnValues(Promise.resolve(
+            { documents: [{ resource: { type: 'Place', identifier: '1a' } }], totalCount: 1 }));
+
+        const msgsWithParams = await importStrategy.preValidate([
+            { resource: { type: 'Place', identifier: '1a' } } as any
+        ]);
+
+        expect(msgsWithParams.length).toBe(1);
+        expect(msgsWithParams[0][0]).toEqual(ImportErrors.RESOURCE_EXISTS);
+        expect(msgsWithParams[0][1]).toEqual('1a');
+        done();
+    });
 });

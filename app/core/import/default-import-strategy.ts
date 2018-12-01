@@ -50,11 +50,9 @@ export class DefaultImportStrategy implements ImportStrategy {
             }
             identifiersInDocsToImport.push(doc.resource.identifier);
 
-
-            // TODO write test
             // should not take long since it accesses indexer and should return undefined normally
             const existingDocument = await this.findByIdentifier(doc.resource.identifier);
-            if (existingDocument) return [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
+            if (existingDocument) return [[ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier]];
 
             if (!Validations.validateType(doc.resource, this.projectConfiguration)) {
                 return [[ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]];

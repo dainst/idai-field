@@ -67,44 +67,27 @@ export module RelationsCompleter {
      * @param username
      * @param mode: Can be either 'create' or 'remove'
      * @param resourceId
+     * @throws errWithParams
      */
-    function alterInverseRelationsForResource(datastore: DocumentDatastore,
+    async function alterInverseRelationsForResource(datastore: DocumentDatastore,
                                              projectConfiguration: ProjectConfiguration,
                                              username: string,
                                              mode: string, resourceId: string): Promise<any> {
 
-        return new Promise<any>((resolve, reject) => {
+            const document = await datastore.get(resourceId);
 
-            datastore.get(resourceId).then(
-                document => {
+            for (let relationName in document.resource.relations) {
+                if (relationName == 'isRecordedIn') continue;
 
-                        let promise: Promise<any> = new Promise<any>((res) => res());
-
-                        for (let relationName in document.resource.relations) {
-                            if (relationName == 'isRecordedIn') continue;
-
-                            if (projectConfiguration.isRelationProperty(relationName)) {
-                                for (let targetId of document.resource.relations[relationName]) {
-                                    promise = promise.then(
-                                        () => alterRelation(
-                                            datastore, projectConfiguration, username,
-                                            mode, document.resource, targetId,
-                                            projectConfiguration.getInverseRelations(relationName) as any),
-                                        err => reject(err)
-                                    );
-                                }
-                            }
-                        }
-
-                        promise.then(
-                            () => resolve(),
-                            err => reject(err)
-                        );
+                if (projectConfiguration.isRelationProperty(relationName)) {
+                    for (let targetId of document.resource.relations[relationName]) {
+                        await alterRelation(
+                            datastore, projectConfiguration, username,
+                            mode, document.resource, targetId,
+                            projectConfiguration.getInverseRelations(relationName) as any);
                     }
-                ,
-                err => reject(err)
-            );
-        });
+                }
+            }
     }
 
 

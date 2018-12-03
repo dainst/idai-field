@@ -1,47 +1,68 @@
 import {Document, ProjectConfiguration, Resource} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {UsernameProvider} from '../settings/username-provider';
 import {ImportErrors} from './import-errors';
 
 /**
  * @author Thomas Kleinke
  */
-export class RelationsCompleter {
-
-    constructor(
-        private datastore: DocumentDatastore,
-        private projectConfiguration: ProjectConfiguration,
-        private usernameProvider: UsernameProvider) {}
+export module RelationsCompleter {
 
 
     /**
      * Iterates over all relations of the given resources and adds missing inverse relations to the relation targets.
+     *
+     * @param datastore
+     * @param projectConfiguration
+     * @param username
      * @param resourceIds The ids of the resources whose relations are to be considered
      */
-    public completeInverseRelations(resourceIds: string[]): Promise<any> {
+    export function completeInverseRelations(datastore: DocumentDatastore,
+                                             projectConfiguration: ProjectConfiguration,
+                                             username: string,
+                                             resourceIds: string[]): Promise<any> {
 
-        return this.alterInverseRelations('create', resourceIds);
+        return alterInverseRelations(
+            datastore, projectConfiguration,
+            username,
+            'create', resourceIds);
     }
 
 
     /**
      * Iterates over all relations of the given resources and removes the corresponding inverse relations of the
      * relation targets.
+     *
+     * @param datastore
+     * @param projectConfiguration
+     * @param username
      * @param resourceIds The ids of the resources whose relations are to be considered
      */
-    public resetInverseRelations(resourceIds: string[]): Promise<any> {
+    export function resetInverseRelations(datastore: DocumentDatastore,
+                                          projectConfiguration: ProjectConfiguration,
+                                          username: string,
+                                          resourceIds: string[]): Promise<any> {
 
-        return this.alterInverseRelations('remove', resourceIds);
+        return alterInverseRelations(
+            datastore, projectConfiguration,
+            username,
+            'remove', resourceIds);
     }
 
 
     /**
      * Iterates over all relations of the given resources and either creates or removes the corresponding inverse
      * relations of the relation targets.
+     *
+     * @param datastore
+     * @param projectConfiguration
+     * @param username
      * @param mode: Can be either 'create' or 'remove'
      * @param resourceIds
      */
-    private alterInverseRelations(mode: string, resourceIds: string[]): Promise<any> {
+    function alterInverseRelations(datastore: DocumentDatastore,
+                                  projectConfiguration: ProjectConfiguration,
+                                  username: string,
+                                  mode: string, resourceIds: string[]): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
@@ -49,7 +70,9 @@ export class RelationsCompleter {
 
             for (let resourceId of resourceIds) {
                 promise = promise.then(
-                    () => this.alterInverseRelationsForResource(mode, resourceId),
+                    () => alterInverseRelationsForResource(
+                        datastore, projectConfiguration,
+                        username, mode, resourceId),
                     err => reject(err)
                 );
             }
@@ -64,14 +87,21 @@ export class RelationsCompleter {
 
     /**
      * Creates/removes inverse relations for a single resource.
+
+     * @param datastore
+     * @param projectConfiguration
+     * @param username
      * @param mode: Can be either 'create' or 'remove'
      * @param resourceId
      */
-    private alterInverseRelationsForResource(mode: string, resourceId: string): Promise<any> {
+    function alterInverseRelationsForResource(datastore: DocumentDatastore,
+                                             projectConfiguration: ProjectConfiguration,
+                                             username: string,
+                                             mode: string, resourceId: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
-            this.datastore.get(resourceId).then(
+            datastore.get(resourceId).then(
                 document => {
 
                         let promise: Promise<any> = new Promise<any>((res) => res());
@@ -79,11 +109,13 @@ export class RelationsCompleter {
                         for (let relationName in document.resource.relations) {
                             if (relationName == 'isRecordedIn') continue;
 
-                            if (this.projectConfiguration.isRelationProperty(relationName)) {
+                            if (projectConfiguration.isRelationProperty(relationName)) {
                                 for (let targetId of document.resource.relations[relationName]) {
                                     promise = promise.then(
-                                        () => this.alterRelation(mode, document.resource, targetId,
-                                            this.projectConfiguration.getInverseRelations(relationName) as any),
+                                        () => alterRelation(
+                                            datastore, projectConfiguration, username,
+                                            mode, document.resource, targetId,
+                                            projectConfiguration.getInverseRelations(relationName) as any),
                                         err => reject(err)
                                     );
                                 }
@@ -104,25 +136,31 @@ export class RelationsCompleter {
 
     /**
      * Either adds (in mode 'create') oder removes (in mode 'remove') an relation.
+     * @param datastore
+     * @param projectConfiguration
+     * @param username
      * @param mode Can be either 'create' or 'remove'
      * @param resource
      * @param targetId
      * @param relationName
      */
-    private alterRelation(mode: string, resource: Resource, targetId: string,
-                                 relationName: string): Promise<any> {
+    function alterRelation(datastore: DocumentDatastore,
+                          projectConfiguration: ProjectConfiguration,
+                          username: string,
+                          mode: string, resource: Resource, targetId: string,
+                          relationName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
-            this.datastore.get(targetId).then(
+            datastore.get(targetId).then(
                 targetDocument => {
                     let promise;
                     switch (mode) {
                         case 'create':
-                            promise = this.createRelation(resource, targetDocument, relationName);
+                            promise = createRelation(datastore, username, resource, targetDocument, relationName);
                             break;
                         case 'remove':
-                            promise = this.removeRelation(resource, targetDocument, relationName);
+                            promise = removeRelation(datastore, username, resource, targetDocument, relationName);
                             break;
                     }
                     (promise as any).then(
@@ -144,7 +182,9 @@ export class RelationsCompleter {
     }
 
 
-    private createRelation(resource: Resource, targetDocument: Document, relationName: string): Promise<any> {
+    function createRelation(datastore: DocumentDatastore,
+                           username: string,
+                           resource: Resource, targetDocument: Document, relationName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
@@ -153,7 +193,7 @@ export class RelationsCompleter {
             if (relations.indexOf(resource.id as any) == -1) {
                 relations.push(resource.id as any);
                 targetDocument.resource.relations[relationName] = relations;
-                this.datastore.update(targetDocument, this.usernameProvider.getUsername()).then(
+                datastore.update(targetDocument, username).then(
                     doc => resolve(),
                     err => reject(err)
                 );
@@ -162,7 +202,9 @@ export class RelationsCompleter {
     }
 
 
-    private removeRelation(resource: Resource, targetDocument: Document, relationName: string): Promise<any> {
+    function removeRelation(datastore: DocumentDatastore,
+                           username: string,
+                           resource: Resource, targetDocument: Document, relationName: string): Promise<any> {
 
         return new Promise<any>((resolve, reject) => {
 
@@ -172,7 +214,7 @@ export class RelationsCompleter {
             } else {
                 relations.splice(relations.indexOf(resource.id as any), 1);
                 targetDocument.resource.relations[relationName] = relations;
-                this.datastore.update(targetDocument, this.usernameProvider.getUsername()).then(
+                datastore.update(targetDocument, username).then(
                     doc => resolve(),
                     err => reject(err)
                 );

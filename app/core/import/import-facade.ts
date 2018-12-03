@@ -4,7 +4,6 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {UsernameProvider} from '../settings/username-provider';
 import {Reader} from './reader';
 import {Import} from './import';
-import {RelationsCompleter} from './relations-completer';
 import {Parser} from './parser';
 import {MeninxFindCsvParser} from './meninx-find-csv-parser';
 import {IdigCsvParser} from './idig-csv-parser';
@@ -71,10 +70,9 @@ export module ImportFacade {
                 allowMergingExistingResources),
             createRelationsStrategy(
                 format,
-                new RelationsCompleter(
-                    datastore,
-                    projectConfiguration,
-                    usernameProvider)),
+                datastore,
+                projectConfiguration,
+                usernameProvider),
             createRollbackStrategy(
                 format,
                 datastore,
@@ -139,16 +137,18 @@ export module ImportFacade {
 
 
     function createRelationsStrategy(format: ImportFormat,
-                                     relationsCompleter: RelationsCompleter): RelationsStrategy {
+                                     datastore: DocumentDatastore,
+                                     projectConfiguration: ProjectConfiguration,
+                                     usernameProvider: UsernameProvider): RelationsStrategy {
 
         switch (format) {
             case 'meninxfind':
             case 'shapefile':
             case 'geojson':
-            case 'geojson-gazetteer': // TODO see if we need a relstrategy here or if we don't set inverse relations for liesWithin anyway
+            // case 'geojson-gazetteer': // TODO see if we need a relstrategy here or if we don't set inverse relations for liesWithin anyway
                 return new NoRelationsStrategy();
-            default: // native
-                return new DefaultRelationsStrategy(relationsCompleter);
+            default: // native | geojson-gazetteer
+                return new DefaultRelationsStrategy(datastore, projectConfiguration, usernameProvider.getUsername());
         }
     }
 

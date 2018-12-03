@@ -16,15 +16,20 @@ export module RelationsCompleter {
      * @param username
      * @param resourceIds The ids of the resources whose relations are to be considered
      */
-    export function completeInverseRelations(datastore: DocumentDatastore,
+    export async function completeInverseRelations(datastore: DocumentDatastore,
                                              projectConfiguration: ProjectConfiguration,
                                              username: string,
                                              resourceIds: string[]): Promise<any> {
 
-        return alterInverseRelations(
-            datastore, projectConfiguration,
-            username,
-            'create', resourceIds);
+        for (let resourceId of resourceIds) {
+            try {
+                await alterInverseRelationsForResource(
+                    datastore, projectConfiguration,
+                    username, 'create', resourceId)
+            } catch (errWithParams) {
+                throw errWithParams;
+            }
+        }
     }
 
 
@@ -37,51 +42,20 @@ export module RelationsCompleter {
      * @param username
      * @param resourceIds The ids of the resources whose relations are to be considered
      */
-    export function resetInverseRelations(datastore: DocumentDatastore,
+    export async function resetInverseRelations(datastore: DocumentDatastore,
                                           projectConfiguration: ProjectConfiguration,
                                           username: string,
                                           resourceIds: string[]): Promise<any> {
 
-        return alterInverseRelations(
-            datastore, projectConfiguration,
-            username,
-            'remove', resourceIds);
-    }
-
-
-    /**
-     * Iterates over all relations of the given resources and either creates or removes the corresponding inverse
-     * relations of the relation targets.
-     *
-     * @param datastore
-     * @param projectConfiguration
-     * @param username
-     * @param mode: Can be either 'create' or 'remove'
-     * @param resourceIds
-     */
-    function alterInverseRelations(datastore: DocumentDatastore,
-                                  projectConfiguration: ProjectConfiguration,
-                                  username: string,
-                                  mode: string, resourceIds: string[]): Promise<any> {
-
-        return new Promise<any>((resolve, reject) => {
-
-            let promise: Promise<any> = new Promise<any>((res) => res());
-
-            for (let resourceId of resourceIds) {
-                promise = promise.then(
-                    () => alterInverseRelationsForResource(
-                        datastore, projectConfiguration,
-                        username, mode, resourceId),
-                    err => reject(err)
-                );
+        for (let resourceId of resourceIds) {
+            try {
+                await alterInverseRelationsForResource(
+                    datastore, projectConfiguration,
+                    username, 'remove', resourceId)
+            } catch (errWithParams) {
+                throw errWithParams;
             }
-
-            promise.then(
-                () => resolve(),
-                err => reject(err)
-            );
-        });
+        }
     }
 
 

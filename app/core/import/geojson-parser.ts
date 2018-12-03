@@ -38,10 +38,9 @@ export class GeojsonParser extends AbstractParser {
         'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon'
     ];
 
-    private static placePath = 'https://gazetteer.dainst.org/place/';
 
-
-    constructor(private gazetteerMode = false) {super()}
+    constructor(private preValidateAndTransform: Function|undefined,
+                private postProcess: Function|undefined) {super()}
 
 
     /**
@@ -67,8 +66,10 @@ export class GeojsonParser extends AbstractParser {
                 return observer.error([ImportErrors.FILE_INVALID_JSON, e.toString()]);
             }
 
-            const msgWithParams = GeojsonParser.validateAndTransform(geojson, this.gazetteerMode);
+            const msgWithParams = GeojsonParser.validateAndTransform(geojson, this.preValidateAndTransform);
             if (msgWithParams !== undefined) return observer.error(msgWithParams);
+
+            if (this.postProcess) this.postProcess(geojson); // TODO use it to actually validate the input. for now it only logs results
 
             this.iterateDocs(geojson, observer);
             observer.complete();
@@ -86,33 +87,30 @@ export class GeojsonParser extends AbstractParser {
             observer.next(document);
         }
 
-        this.addDuplicateIdentifierWarnings(identifiers);
+        this.addDuplicateIdentifierWarnings(identifiers); // TODO remove
     }
 
 
     /**
      * Validate and transform (modify in place) in one pass to reduce runtime.
      */
-    private static validateAndTransform(geojson: Geojson, gazetteerMode: boolean) {
+    private static validateAndTransform(geojson: Geojson, preValidateAndTransformFeature: Function|undefined) {
 
-        if (geojson.type !== 'FeatureCollection') {
-            return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, '"type": "FeatureCollection" not found at top level.'];
-        }
-        if (geojson.features === undefined) {
-            return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "features" not found at top level.'];
-        }
+        if (geojson.type !== 'FeatureCollection') return [
+            ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, '"type": "FeatureCollection" not found at top level.'];
 
-        let identifiersOnGazetterImport: string[] = [];
+        if (geojson.features === undefined) return [
+            ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "features" not found at top level.'];
+
+        let identifiers: string[] = [];
         for (let feature of geojson.features) {
 
             if (!feature.properties) return [ImportErrors.MISSING_IDENTIFIER];
             feature.properties.relations = {};
 
-            if (gazetteerMode) {
-                const msgWithParams = this.validateAndtransformFeatureGazetteer(
-                    feature.properties as GazetteerProperties, identifiersOnGazetterImport);
+            if (preValidateAndTransformFeature) {
+                const msgWithParams = preValidateAndTransformFeature(feature, identifiers);
                 if (msgWithParams) return msgWithParams;
-                if (feature.geometry.type === 'GeometryCollection') this.transformGeometryCollection(feature);
             }
 
             const msgWithParams = this.validateAndTransformFeature(feature);
@@ -137,47 +135,6 @@ export class GeojsonParser extends AbstractParser {
     }
 
 
-    private static validateAndtransformFeatureGazetteer(properties: GazetteerProperties, identifiersOnGazetteerImport: string[]) {
-
-        if (!properties.gazId) return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "properties.gazId" not found for at least one feature.'];
-
-        let identifier = properties.gazId;
-        if (properties.prefName && properties.prefName.title) identifier = properties.prefName.title;
-
-        let nr = 1;
-        let suffixedIdentifier = identifier;
-        while (identifiersOnGazetteerImport.includes(suffixedIdentifier)) {
-            suffixedIdentifier = identifier + ' (' + nr + ')';
-            nr += 1;
-        }
-        identifier = suffixedIdentifier;
-        identifiersOnGazetteerImport.push(identifier);
-        properties.identifier = identifier;
-
-        properties.id = properties.gazId; // TODO prefix it
-
-        properties.type = 'Place';
-
-        if (properties.parent) properties.relations['liesWithin'] = [
-            (properties.parent as any).replace(GeojsonParser.placePath, '')];
-    }
-
-
-    private static transformGeometryCollection(feature: any) {
-
-        const geometries = (feature.geometry as any)['geometries'];
-
-        const nrGeometries = geometries.length;
-        if (nrGeometries === 0) return delete feature.geometry;
-
-        const nrPoints = geometries.filter((_: any) => _.type === 'Point').length;
-
-        feature.geometry = nrGeometries > nrPoints
-            ? geometries.find(((_: any) => _.type !== 'Point'))
-            : geometries[0];
-    }
-
-
     private addDuplicateIdentifierWarnings(identifiers: string[]) {
 
         const duplicateIdentifiers: string[] = duplicates(identifiers);
@@ -195,7 +152,8 @@ export class GeojsonParser extends AbstractParser {
             identifier: feature.properties['identifier'],
             geometry: feature.geometry,
             relations: feature.properties.relations,
-            type: feature.properties['type']
+            type: feature.properties['type'],
+            shortDescription: feature.properties['shortDescription']
         };
         if (feature.properties['gazId']) (resource as any)['gazId'] = feature.properties['gazId'];
         if (feature.properties['id']) (resource as any)['id'] = feature.properties['id'];

@@ -10,9 +10,10 @@ import {ImportErrors} from '../../../../app/core/import/import-errors';
  */
 describe('GeojsonParser', () => {
 
-    function expectErr(fileContent, which, done, gazetteerMode = false) {
 
-        const parser = new GeojsonParser(gazetteerMode);
+    function expectErr(fileContent, which, done) {
+
+        const parser = new GeojsonParser(undefined, undefined);
         parser.parse(fileContent).subscribe(() => {
             fail('should not emit next');
         }, err => {
@@ -20,6 +21,7 @@ describe('GeojsonParser', () => {
             done();
         }, () => fail('should not complete'));
     }
+
 
     it('should take a feature collection and make documents', done => {
 
@@ -30,7 +32,7 @@ describe('GeojsonParser', () => {
             '"coordinates": [ [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0] ] }, ' +
             '"properties" : {"identifier":"123"} } ] }';
 
-        const parser = new GeojsonParser();
+        const parser = new GeojsonParser(undefined, undefined);
         const docs: Document[] = [];
         parser.parse(fileContent).subscribe(resultDocument => {
             expect(resultDocument).not.toBe(undefined);
@@ -50,6 +52,7 @@ describe('GeojsonParser', () => {
         });
     });
 
+
     it('should emit an error on invalid json', done => {
 
         expectErr('{ "type": "FeatureCollection", "features": [' +
@@ -61,6 +64,7 @@ describe('GeojsonParser', () => {
             '] ' // missing closing brace
             , ImportErrors.FILE_INVALID_JSON, done);
     });
+
 
     it('should emit an error on invalid structure', done => {
 
@@ -112,7 +116,7 @@ describe('GeojsonParser', () => {
             '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [16.71875,-16.96875] },' +
             '"properties": { "identifier": "id1" } } ] }';
 
-        const parser = new GeojsonParser();
+        const parser = new GeojsonParser(undefined, undefined);
         parser.parse(fileContent).subscribe(resultDocument => {
             expect(resultDocument).not.toBe(undefined);
         }, err => {
@@ -125,42 +129,5 @@ describe('GeojsonParser', () => {
             expect(warnings[0][1]).toEqual('id1');
             done();
         });
-    });
-
-
-    it('should import gazetteer geojson', done => {
-
-        const fileContent  = '{ "type" : "FeatureCollection", "features" : [ { "type": "Feature", "geometry": {' +
-            '"type": "Point", "coordinates": [6.71875,-6.96875] }, "properties": { "gazId": "2312125", "identifier": "https://gazetteer.dainst.org/place/2312125" } }' +
-            '] }';
-
-        const parser = new GeojsonParser(true);
-        const docs: Document[] = [];
-        parser.parse(fileContent).subscribe(resultDocument => {
-            expect(resultDocument).not.toBe(undefined);
-            docs.push(resultDocument);
-        }, err => {
-            fail(err);
-            done();
-        }, () => {
-
-            expect(docs[0].resource['id']).toEqual('2312125');
-            expect(docs[0].resource['identifier']).toEqual('2312125');
-            expect(docs[0].resource['geometry']['type']).toEqual('Point');
-
-            expect(docs.length).toEqual(1);
-            done();
-        });
-    });
-
-
-    it('should not import gazetteer geojson - no gaz id', done => {
-
-        const fileContent  = '{ "type" : "FeatureCollection", "features" : [ { "type": "Feature", "geometry": {' +
-            '"type": "Point", "coordinates": [6.71875,-6.96875] }, "properties": { "identifier": "https://gazetteer.dainst.org/place/2312125" } }' +
-            '] }';
-
-        expectErr(fileContent
-            , ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, done, true);
     });
 });

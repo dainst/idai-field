@@ -20,6 +20,7 @@ import {NoRollbackStrategy} from './no-rollback-strategy';
 import {DefaultRollbackStrategy} from './default-rollback-strategy';
 import {TypeUtility} from '../model/type-utility';
 import {ShapefileParser} from './shapefile-parser';
+import {GazGeojsonParserAddOn} from './gaz-geojson-parser-add-on';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind';
@@ -88,9 +89,13 @@ export module ImportFacade {
             case 'idig':
                 return new IdigCsvParser();
             case 'geojson-gazetteer':
-                return new GeojsonParser(true);
+                return new GeojsonParser(
+                    GazGeojsonParserAddOn.preValidateAndTransformFeature,
+                    GazGeojsonParserAddOn.postProcess);
             case 'geojson':
-                return new GeojsonParser();
+                return new GeojsonParser(
+                    undefined,
+                    undefined);
             case 'shapefile':
                 return new ShapefileParser();
             case 'native':

@@ -1,9 +1,11 @@
+import * as fs from 'fs';
 import {Component, Input, SimpleChanges} from '@angular/core';
 import {MapComponent, Messages, ProjectConfiguration, IdaiFieldImageDocument,
     IdaiFieldGeoreference} from 'idai-components-2';
 import {ImageContainer} from '../../../../core/imagestore/image-container';
 import {LayerManager, ListDiffResult} from './layer-manager';
 import {LayerImageProvider} from './layer-image-provider';
+import {SettingsService} from '../../../../core/settings/settings-service';
 
 
 @Component({
@@ -25,11 +27,14 @@ export class LayerMapComponent extends MapComponent {
     private imageOverlays: { [resourceId: string]: L.ImageOverlay } = {};
     private layersUpdate: boolean = true;
 
+    private tileLayer: L.TileLayer;
+
 
     constructor(private layerManager: LayerManager,
                 private layerImageProvider: LayerImageProvider,
                 protected messages: Messages,
-                projectConfiguration: ProjectConfiguration) {
+                projectConfiguration: ProjectConfiguration,
+                private settingsService: SettingsService) {
 
         super(projectConfiguration);
 
@@ -78,6 +83,8 @@ export class LayerMapComponent extends MapComponent {
         if (!this.update) return Promise.resolve();
 
         await super.updateMap(changes);
+
+        if (this.settingsService.getSelectedProject().toLowerCase().startsWith('sudan-digital')) this.updateSudanTileLayer();
 
         if (this.layersUpdate) {
             this.layersUpdate = false;
@@ -149,6 +156,28 @@ export class LayerMapComponent extends MapComponent {
         }
 
         this.map.removeLayer(imageOverlay);
+    }
+
+
+    private updateSudanTileLayer() {
+
+        if (!this.tileLayer) {
+            const tilesPath: string = this.settingsService.getSettings().imagestorePath + ''
+                + this.settingsService.getSelectedProject() + '/tiles/Sudan';
+            if (!fs.existsSync(tilesPath)) return;
+
+            const southWest = L.latLng(3.2, 21.7);
+            const northEast = L.latLng(22.1, 39.2);
+            const bounds = L.latLngBounds(southWest, northEast);
+            this.tileLayer = L.tileLayer(tilesPath + '/{z}/{x}/{y}.png', {
+                bounds: bounds,
+                minNativeZoom: 5,
+                minZoom: -20,
+                maxNativeZoom: 14,
+                maxZoom: 30
+            });
+            this.tileLayer.addTo(this.map);
+        }
     }
 
 

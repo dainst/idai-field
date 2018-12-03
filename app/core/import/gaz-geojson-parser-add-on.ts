@@ -22,9 +22,9 @@ export module GazGeojsonParserAddOn {
         for (let feature of content.features) {
             if (!feature.properties.relations['liesWithin']) continue;
             const parent = feature.properties.relations['liesWithin'][0];
-            if (!foundIds.includes(parent) && !parentsNotFound.includes(parent)) {
+            if (!foundIds.includes(parent)) {
                 feature.properties.relations = {};
-                parentsNotFound.push(parent);
+                if (!parentsNotFound.includes(parent)) parentsNotFound.push(parent);
             }
         }
 

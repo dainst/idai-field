@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
+import {unique, subtract} from 'tsfun';
 import {IdaiFieldImageDocument} from 'idai-components-2';
 import {IdaiFieldImageDocumentReadDatastore} from '../../../../core/datastore/field/idai-field-image-document-read-datastore';
 import {ViewFacade} from '../../view/view-facade';
-import {unique, subtract} from 'tsfun';
 
 
 export interface LayersInitializationResult {
@@ -25,11 +25,11 @@ export interface ListDiffResult {
  */
 export class LayerManager {
 
-    private activeLayerIds: Array<string> = [];
+    private activeLayerIds: string[] = [];
 
-    constructor(
-        private datastore: IdaiFieldImageDocumentReadDatastore,
-        private viewFacade: ViewFacade) {}
+
+    constructor(private datastore: IdaiFieldImageDocumentReadDatastore,
+                private viewFacade: ViewFacade) {}
 
 
     public reset = () => this.activeLayerIds = [];
@@ -37,8 +37,7 @@ export class LayerManager {
     public isActiveLayer = (resourceId: string) => this.activeLayerIds.includes(resourceId);
 
 
-    public async initializeLayers(skipRemoval = false)
-    : Promise<LayersInitializationResult> {
+    public async initializeLayers(skipRemoval: boolean = false): Promise<LayersInitializationResult> {
 
         if (!skipRemoval) await this.removeNonExistingLayers();
 
@@ -94,9 +93,8 @@ export class LayerManager {
     }
 
 
-    private static computeActiveLayersChange(
-        newActiveLayerIds: Array<string>,
-        oldActiveLayerIds: Array<string>): ListDiffResult {
+    private static computeActiveLayersChange(newActiveLayerIds: string[],
+                                             oldActiveLayerIds: string[]): ListDiffResult {
 
         return {
             removed: subtract(newActiveLayerIds)(oldActiveLayerIds),

@@ -66,7 +66,7 @@ describe('import --', function() {
     });
 
 
-    it('perform unsuccessful import with rollback', () => {
+    xit('perform unsuccessful import with rollback', () => {
 
         importIt('./test/test-data/importer-test-constraint-violation.jsonl');
 

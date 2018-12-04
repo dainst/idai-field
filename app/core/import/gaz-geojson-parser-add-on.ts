@@ -49,9 +49,18 @@ export module GazGeojsonParserAddOn {
         if (properties.parent) properties.relations['liesWithin'] =
             ['gazetteer' + (properties.parent as any).replace(placePath, '')];
 
-        if ((properties as any)['comments'] && (properties as any)['comments']['text']) {
-            (properties as any)['shortDescription'] = (properties as any)['comments']['text'];
+        (properties as any)['shortDescription'] = extractShortDescription(properties);
+    }
+
+
+    function extractShortDescription(properties: any) {
+
+        if ((properties as any)['comments']
+            && (properties as any)['comments'].length > 0
+            && (properties as any)['comments'][0]['text']) {
+             return (properties as any)['comments'][0]['text'];
         }
+        return undefined;
     }
 
 

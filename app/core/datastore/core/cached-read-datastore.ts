@@ -131,43 +131,31 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
 
         let idsToFetch: string[] = ids;
         if (limit && limit < idsToFetch.length) idsToFetch = idsToFetch.slice(0, limit);
+        let totalCount = ids.length;
 
-        const {documents, notCachedIds} = await this.getFromCache(idsToFetch);
+        const {documentsFromCache, notCachedIds} = await this.getDocumentsFromCache(idsToFetch);
+        let documents: Array<T> = documentsFromCache;
 
-        try {
-            let failures: number = 0;
-
-            if (notCachedIds.length > 0) {
-                const result: any = await this.datastore.fetchMultiple(notCachedIds);
-
-                for (let row of result.rows) {
-                    if (row.error) {
-                        failures ++;
-                        continue;
-                    }
-                    this.typeConverter.validateTypeToBeOfClass(row.doc.resource.type, this.typeClass);
-                    documents.push(this.documentCache.set(this.typeConverter.convert(row.doc)));
-                }
-
-                documents.sort((a: T, b: T) => {
-                    return idsToFetch.indexOf(a.resource.id) < idsToFetch.indexOf(b.resource.id)
-                        ? -1
-                        : 1;
-                });
+        if (notCachedIds.length > 0) {
+            try {
+                const {documentsFromDatastore, notFound} = await this.getDocumentsFromDatastore(notCachedIds);
+                totalCount -= notFound;
+                documents = this.mergeDocuments(documentsFromCache, documentsFromDatastore, idsToFetch);
+            } catch (e) {
+                console.error('Error while fetching documents from datastore', e);
+                return { documents: [], totalCount: 0 };
             }
-
-            return {
-                documents: documents,
-                totalCount: ids.length - failures
-            };
-        } catch (e) {
-            console.error('error while fetching documents', e);
-            return { documents: [], totalCount: 0 };
         }
+
+        return {
+            documents: documents,
+            totalCount: totalCount
+        };
     }
 
 
-    private async getFromCache(ids: string[]): Promise<{ documents: Array<T>, notCachedIds: string[] }> {
+    private async getDocumentsFromCache(ids: string[])
+            : Promise<{ documentsFromCache: Array<T>, notCachedIds: string[] }> {
 
         const documents: Array<T> = [];
         const notCachedIds: string[] = [];
@@ -182,8 +170,47 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         }
 
         return {
-            documents: documents,
+            documentsFromCache: documents,
             notCachedIds: notCachedIds
         };
+    }
+
+
+    private async getDocumentsFromDatastore(ids: string[])
+            : Promise<{ documentsFromDatastore: Array<T>, notFound: number }> {
+
+        const documents: Array<T> = [];
+        let notFound: number = 0;
+
+        const result: any = await this.datastore.fetchMultiple(ids);
+
+        for (let row of result.rows) {
+            if (row.error) {
+                notFound++;
+                continue;
+            }
+            this.typeConverter.validateTypeToBeOfClass(row.doc.resource.type, this.typeClass);
+            documents.push(this.documentCache.set(this.typeConverter.convert(row.doc)));
+        }
+
+        return {
+            documentsFromDatastore: documents,
+            notFound: notFound
+        };
+    }
+
+
+    private mergeDocuments(documentsFromCache: Array<T>, documentsFromDatastore: Array<T>,
+                           idsInOrder: string[]): Array<T> {
+
+        const documents: Array<T> = documentsFromCache.concat(documentsFromDatastore);
+
+        documents.sort((a: T, b: T) => {
+            return idsInOrder.indexOf(a.resource.id) < idsInOrder.indexOf(b.resource.id)
+                ? -1
+                : 1;
+        });
+
+        return documents;
     }
 }

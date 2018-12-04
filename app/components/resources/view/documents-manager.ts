@@ -126,15 +126,15 @@ export class DocumentsManager {
     }
 
 
-    public async setSelected(resourceId: string): Promise<any> {
+    public async setSelected(resourceId: string, adjustListIfNecessary: boolean = true): Promise<any> {
 
         this.documents = this.documents.filter(hasId);
 
         try {
-            const documentToSelect = await this.datastore.get(resourceId);
+            const documentToSelect: IdaiFieldDocument = await this.datastore.get(resourceId);
             this.newDocumentsFromRemote = subtract([documentToSelect.resource.id])(this.newDocumentsFromRemote);
 
-            if (!(await this.createUpdatedDocumentList()).documents.find(hasEqualId(documentToSelect))) {
+            if (adjustListIfNecessary && !(await this.isDocumentInList(documentToSelect))) {
                 await this.makeSureSelectedDocumentAppearsInList(documentToSelect);
                 await this.populateDocumentList();
             }
@@ -193,6 +193,12 @@ export class DocumentsManager {
                 )
             )
         );
+    }
+
+
+    private async isDocumentInList(document: IdaiFieldDocument): Promise<boolean> {
+
+        return (await this.createUpdatedDocumentList()).documents.find(hasEqualId(document)) !== undefined;
     }
 
 

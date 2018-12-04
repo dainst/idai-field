@@ -48,7 +48,7 @@ export class SidebarListComponent extends BaseList {
         if (!document) {
             this.viewFacade.deselect();
         } else {
-            await this.viewFacade.setSelectedDocument(document.resource.id);
+            await this.viewFacade.setSelectedDocument(document.resource.id, false);
         }
 
         if (autoScroll) this.resourcesComponent.setScrollTarget(document);

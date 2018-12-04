@@ -57,7 +57,7 @@ export class ResourcesMapComponent {
         this.resourcesComponent.setScrollTarget(document);
 
         if (document) {
-            await this.viewFacade.setSelectedDocument(document.resource.id);
+            await this.viewFacade.setSelectedDocument(document.resource.id, false);
         } else {
             this.viewFacade.deselect();
         }

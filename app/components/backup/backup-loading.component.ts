@@ -6,6 +6,7 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {BackupLoadingModalComponent} from './backup-loading-modal.component';
 import {BackupProvider} from './backup-provider';
 import {M} from '../m';
+import {ProjectNameValidator} from '../../common/project-name-validator';
 
 
 @Component({
@@ -39,8 +40,8 @@ export class BackupLoadingComponent {
 
         if (this.running) return;
 
-        const errorMessage: string|undefined = this.validateInputs();
-        if (errorMessage) return this.messages.add([errorMessage]);
+        const errorMessage: string[]|undefined = this.validateInputs();
+        if (errorMessage) return this.messages.add(errorMessage);
 
         this.running = true;
         this.openModal();
@@ -52,13 +53,15 @@ export class BackupLoadingComponent {
     }
 
 
-    private validateInputs(): string|undefined {
+    private validateInputs(): string[]|undefined {
 
-        if (!this.projectName) return M.BACKUP_READ_ERROR_NO_PROJECT_NAME;
+        if (!this.path) return [M.BACKUP_READ_ERROR_FILE_NOT_FOUND];
+        if (!this.projectName) return [M.BACKUP_READ_ERROR_NO_PROJECT_NAME];
         if (this.projectName === this.settingsService.getSelectedProject()) {
-            return M.BACKUP_READ_ERROR_SAME_PROJECT_NAME;
+            return [M.BACKUP_READ_ERROR_SAME_PROJECT_NAME];
         }
-        if (!this.path) return M.BACKUP_READ_ERROR_FILE_NOT_FOUND;
+
+        return ProjectNameValidator.validate(this.projectName);
     }
 
 

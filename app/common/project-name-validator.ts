@@ -12,11 +12,11 @@ export module ProjectNameValidator {
     /**
      * @returns msgWithParams if invalid, otherwise undefined
      */
-    export function validate(newProjectName: string, existingProjectNames: string[]): string[]|undefined {
+    export function validate(newProjectName: string, existingProjectNames?: string[]): string[]|undefined {
 
         if (newProjectName === '') return [M.RESOURCES_ERROR_NO_PROJECT_NAME];
 
-        if (existingProjectNames.includes(newProjectName)) {
+        if (existingProjectNames && existingProjectNames.includes(newProjectName)) {
             return [M.RESOURCES_ERROR_PROJECT_NAME_EXISTS, newProjectName];
         }
 

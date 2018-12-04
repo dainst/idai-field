@@ -158,6 +158,15 @@ export class PouchdbDatastore {
     }
 
 
+    public fetchMultiple(resourceIds: string[], options: any = { conflicts: true }): Promise<any> {
+
+        options.keys = resourceIds;
+        options.include_docs = true;
+
+        return this.db.allDocs(options);
+    }
+
+
     /**
      * @throws [DOCUMENT_NOT_FOUND]
      * @throws [INVALID_DOCUMENT]

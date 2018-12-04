@@ -43,6 +43,12 @@ export class PouchdbProxy {
     }
 
 
+    public allDocs(options = {}): Promise<any> {
+
+        return this.rdy.then(db => db.allDocs(options));
+    }
+
+
     public changes(options: any): Promise<any> {
 
         return this.rdy.then(db => db.changes(options));

@@ -129,23 +129,61 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     private async getDocumentsForIds(ids: string[],
                                      limit?: number): Promise<{documents: Array<T>, totalCount: number}> {
 
-        const docs: Array<T> = [];
-        let failures = 0;
-        let i = 0;
+        let idsToFetch: string[] = ids;
+        if (limit && limit < idsToFetch.length) idsToFetch = idsToFetch.slice(0, limit);
+
+        const {documents, notCachedIds} = await this.getFromCache(idsToFetch);
+
+        try {
+            let failures: number = 0;
+
+            if (notCachedIds.length > 0) {
+                const result: any = await this.datastore.fetchMultiple(notCachedIds);
+
+                for (let row of result.rows) {
+                    if (row.error) {
+                        failures ++;
+                        continue;
+                    }
+                    this.typeConverter.validateTypeToBeOfClass(row.doc.resource.type, this.typeClass);
+                    documents.push(this.documentCache.set(this.typeConverter.convert(row.doc)));
+                }
+
+                documents.sort((a: T, b: T) => {
+                    return idsToFetch.indexOf(a.resource.id) < idsToFetch.indexOf(b.resource.id)
+                        ? -1
+                        : 1;
+                });
+            }
+
+            return {
+                documents: documents,
+                totalCount: ids.length - failures
+            };
+        } catch (e) {
+            console.error('error while fetching documents', e);
+            return { documents: [], totalCount: 0 };
+        }
+    }
+
+
+    private async getFromCache(ids: string[]): Promise<{ documents: Array<T>, notCachedIds: string[] }> {
+
+        const documents: Array<T> = [];
+        const notCachedIds: string[] = [];
+
         for (let id of ids) {
-            try {
-                docs.push(await this.get(id));
-                i++;
-                if ((limit) && (limit == i)) break;
-            } catch (e) {
-                failures++;
-                console.error('tried to fetch indexed document, ' +
-                    'but document is either non existent or invalid. id: '+id);
+            const document: T = this.documentCache.get(id);
+            if (document) {
+                documents.push(document);
+            } else {
+                notCachedIds.push(id);
             }
         }
+
         return {
-            documents: docs,
-            totalCount: ids.length - failures
+            documents: documents,
+            notCachedIds: notCachedIds
         };
     }
 }

@@ -45,7 +45,7 @@ describe('CachedDatastore', () => {
     beforeEach(() => {
 
         mockdb = jasmine.createSpyObj('mockdb',
-                ['create', 'update', 'fetch', 'fetchRevision']);
+                ['create', 'update', 'fetch', 'fetchMultiple', 'fetchRevision']);
         mockIndexFacade = jasmine.createSpyObj('mockIndexFacade',
             ['perform', 'put', 'remove']);
 
@@ -113,11 +113,15 @@ describe('CachedDatastore', () => {
     it('should add missing fields on find, bypassing cache', async done => {
 
         mockIndexFacade.perform.and.returnValues(['1']);
-        mockdb.fetch.and.returnValues(Promise.resolve({
-            resource: {
-                id: '1',
-                relations: {}
-            }
+        mockdb.fetchMultiple.and.returnValues(Promise.resolve({
+            rows: [{
+                doc: {
+                    resource: {
+                        id: '1',
+                        relations: {}
+                    }
+                }
+            }]
         }));
 
         const documents = (await ds.find({})).documents; // fetch from mockdb
@@ -167,7 +171,11 @@ describe('CachedDatastore', () => {
     it('cant find one and only document', async done => {
 
         mockIndexFacade.perform.and.returnValues(['1']);
-        mockdb.fetch.and.returnValue(Promise.reject("e"));
+        mockdb.fetchMultiple.and.returnValues(Promise.resolve({
+            rows: [{
+                error: 'not_found'
+            }]
+        }));
 
         const { documents, totalCount } = await ds.find({});
         expect(documents.length).toBe(0);
@@ -179,14 +187,19 @@ describe('CachedDatastore', () => {
     it('cant find second document', async done => {
 
         mockIndexFacade.perform.and.returnValues(['1', '2']);
-        mockdb.fetch.and.returnValues(
-            Promise.resolve({
-                resource: {
-                    id: '1',
-                    relations: {}
+
+        mockdb.fetchMultiple.and.returnValues(Promise.resolve({
+            rows: [{
+                doc: {
+                    resource: {
+                        id: '1',
+                        relations: {}
+                    }
                 }
-            }),
-            Promise.reject("e"));
+            }, {
+                error: 'not_found'
+            }]
+        }));
 
         const { documents, totalCount } = await ds.find({});
         expect(documents.length).toBe(1);

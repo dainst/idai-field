@@ -4,6 +4,7 @@ import {Messages} from 'idai-components-2';
 import {SettingsService} from '../../core/settings/settings-service';
 import {DoceditComponent} from "../docedit/docedit.component";
 import {M} from '../m';
+import {ProjectNameValidator} from '../../common/project-name-validator';
 
 const remote = require('electron').remote;
 
@@ -17,8 +18,6 @@ const remote = require('electron').remote;
  * @author Daniel de Oliveira
  */
 export class ProjectsComponent implements OnInit {
-
-    private static PROJECT_NAME_MAX_LENGTH = 18;
 
     public selectedProject: string;
     public newProject: string = '';
@@ -68,18 +67,10 @@ export class ProjectsComponent implements OnInit {
 
     public async createProject() {
 
-        if (this.newProject === '') return this.messages.add([M.RESOURCES_ERROR_NO_PROJECT_NAME]);
-        if (this.getProjects().includes(this.newProject)) {
-            return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_EXISTS, this.newProject]);
-        }
-
-        const lengthDiff = this.newProject.length - ProjectsComponent.PROJECT_NAME_MAX_LENGTH;
-        if (lengthDiff > 0) {
-            return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_LENGTH, lengthDiff.toString()]);
-        }
-
-        const allowed = /^[0-9a-z\-_]+$/.test(this.newProject);
-        if (!allowed) return this.messages.add([M.RESOURCES_ERROR_PROJECT_NAME_SYMBOLS]);
+        const validationErrorMessage: string[]|undefined = ProjectNameValidator.validate(
+            this.newProject, this.getProjects()
+        );
+        if (validationErrorMessage) return this.messages.add(validationErrorMessage);
 
         this.settingsService.stopSync();
 

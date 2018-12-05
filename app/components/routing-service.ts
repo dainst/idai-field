@@ -51,7 +51,7 @@ export class RoutingService {
 
 
     // Currently used from DocumentViewSidebar and ImageViewComponent
-    public jumpToRelationTarget(documentToSelect: Document, tab?: string,
+    public async jumpToRelationTarget(documentToSelect: Document, tab?: string,
                                 comingFromOutsideResourcesComponent: boolean = false) {
 
         if (comingFromOutsideResourcesComponent) this.currentRoute = undefined;
@@ -59,7 +59,7 @@ export class RoutingService {
         if (this.typeUtility.isSubtype(documentToSelect.resource.type, 'Image')) {
             this.jumpToImageTypeRelationTarget(documentToSelect, comingFromOutsideResourcesComponent);
         } else {
-            this.jumpToResourceTypeRelationTarget(documentToSelect, tab, comingFromOutsideResourcesComponent);
+            await this.jumpToResourceTypeRelationTarget(documentToSelect, tab, comingFromOutsideResourcesComponent);
         }
     }
 
@@ -123,11 +123,11 @@ export class RoutingService {
         const viewName = await this.viewFacade.getMainTypeHomeViewName(mainTypeName);
 
         if (comingFromOutsideResourcesComponent || viewName != this.viewFacade.getView()) {
-            this.router.navigate(tab ?
-                ['resources', viewName, documentToSelect.resource.id, 'view', tab] :
-                ['resources', viewName, documentToSelect.resource.id]);
+            await this.router.navigate(tab
+                ? ['resources', viewName, documentToSelect.resource.id, 'view', tab]
+                : ['resources', viewName, documentToSelect.resource.id]);
         } else {
-            this.viewFacade.setSelectedDocument(documentToSelect.resource.id)
+            await this.viewFacade.setSelectedDocument(documentToSelect.resource.id);
         }
     }
 

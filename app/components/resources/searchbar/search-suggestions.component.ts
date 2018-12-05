@@ -3,6 +3,7 @@ import {Query, IdaiFieldDocument} from 'idai-components-2';
 import {IdaiFieldDocumentReadDatastore} from '../../../core/datastore/field/idai-field-document-read-datastore';
 import {RoutingService} from '../../routing-service';
 import {ViewFacade} from '../view/view-facade';
+import {ResourcesComponent} from '../resources.component';
 
 @Component({
     moduleId: module.id,
@@ -24,7 +25,8 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     constructor(private routingService: RoutingService,
                 private datastore: IdaiFieldDocumentReadDatastore,
-                private viewFacade: ViewFacade) {
+                private viewFacade: ViewFacade,
+                private resourcesComponent: ResourcesComponent) {
 
         this.viewFacade.populateDocumentNotifications().subscribe(async documents => {
             this.documentsFound = documents.length > 0;
@@ -42,7 +44,8 @@ export class SearchSuggestionsComponent implements OnChanges {
     public async jumpToDocument(document: IdaiFieldDocument) {
 
         await this.viewFacade.setSearchString('', false);
-        this.routingService.jumpToRelationTarget(document);
+        await this.routingService.jumpToRelationTarget(document);
+        this.resourcesComponent.setScrollTarget(document);
     }
 
 

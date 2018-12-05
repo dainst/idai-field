@@ -145,13 +145,8 @@ export class NavigationComponent {
         const totalCharacters: number = this.getTotalLabelCharacterCount(labels);
 
         if (totalCharacters > this.maxTotalLabelCharacters) {
-            let maxSingleLabelCharacters: number = this.maxTotalLabelCharacters
-                - (selectedSegmentId ? labels[selectedSegmentId].length : 0);
-            if (Object.keys(labels).length > 1) {
-                maxSingleLabelCharacters /= selectedSegmentId
-                    ? Object.keys(labels).length - 1
-                    : Object.keys(labels).length;
-            }
+            const maxSingleLabelCharacters: number
+                = this.computeMaxSingleLabelCharacters(labels, selectedSegmentId);
 
             Object.keys(labels).forEach(id => {
                 if (labels[id].length > maxSingleLabelCharacters && id !== selectedSegmentId) {
@@ -169,5 +164,18 @@ export class NavigationComponent {
         Object.values(labels).forEach(label => result += label.length);
 
         return result;
+    }
+
+
+    private static computeMaxSingleLabelCharacters(labels: { [id: string]: string },
+                                                   selectedSegmentId: string|undefined): number {
+
+        let maxSingleLabelCharacters: number
+            = this.maxTotalLabelCharacters - (selectedSegmentId ? labels[selectedSegmentId].length : 0);
+
+        const labelCount: number = Object.keys(labels).length;
+        if (labelCount > 1) maxSingleLabelCharacters /= selectedSegmentId ? labelCount - 1 : labelCount;
+
+        return maxSingleLabelCharacters;
     }
 }

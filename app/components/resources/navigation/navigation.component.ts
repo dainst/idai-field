@@ -19,6 +19,9 @@ import {Loading} from '../../../widgets/loading';
 export class NavigationComponent {
 
     public navigationPath: NavigationPath = NavigationPath.empty();
+    public labels: { [id: string]: string } = {};
+
+    private static maxTotalLabelCharacters: number = 40;
 
 
     constructor(
@@ -29,15 +32,20 @@ export class NavigationComponent {
 
         this.viewFacade.navigationPathNotifications().subscribe(path => {
             this.navigationPath = path;
+            this.labels = NavigationComponent.getLabels(this.navigationPath);
         });
     }
 
 
-    public getDocumentLabel = (document: any) => ModelUtil.getDocumentLabel(document);
+    public getOperationButtonLabel = (document: IdaiFieldDocument) => ModelUtil.getDocumentLabel(document);
+
+    public getNavigationButtonLabel = (id: string) => this.labels[id];
 
     public getBypassHierarchy = () => this.viewFacade.getBypassHierarchy();
 
     public moveInto = (document: IdaiFieldDocument|undefined) => this.viewFacade.moveInto(document);
+
+    public isSelectedSegment = (id: string) => id === this.navigationPath.selectedSegmentId;
 
 
     public getTypeName() {
@@ -114,5 +122,52 @@ export class NavigationComponent {
         if (!this.viewFacade.getSelectedDocument()) { // if deselection happened during selectMainTypeDocument
             this.viewFacade.setActiveDocumentViewTab(undefined);
         }
+    }
+
+
+    private static getLabels(navigationPath: NavigationPath): { [id: string]: string } {
+
+        const labels: { [id: string]: string } = {};
+
+        navigationPath.segments.forEach(segment => {
+            labels[segment.document.resource.id] = segment.document.resource.identifier;
+        });
+
+        NavigationComponent.shortenLabelsIfNecessary(labels, navigationPath.selectedSegmentId);
+
+        return labels;
+    }
+
+
+    private static shortenLabelsIfNecessary(labels: { [id: string]: string },
+                                            selectedSegmentId: string|undefined) {
+
+        const totalCharacters: number = this.getTotalLabelCharacterCount(labels);
+
+        if (totalCharacters > this.maxTotalLabelCharacters) {
+            let maxSingleLabelCharacters: number = this.maxTotalLabelCharacters
+                - (selectedSegmentId ? labels[selectedSegmentId].length : 0);
+            if (Object.keys(labels).length > 1) {
+                maxSingleLabelCharacters /= selectedSegmentId
+                    ? Object.keys(labels).length - 1
+                    : Object.keys(labels).length;
+            }
+
+            Object.keys(labels).forEach(id => {
+                if (labels[id].length > maxSingleLabelCharacters && id !== selectedSegmentId) {
+                    labels[id] = labels[id].substring(0, Math.max(0, maxSingleLabelCharacters - 3))
+                        + '...';
+                }
+            })
+        }
+    }
+
+
+    private static getTotalLabelCharacterCount(labels: { [id: string]: string }): number {
+
+        let result: number = 0;
+        Object.values(labels).forEach(label => result += label.length);
+
+        return result;
     }
 }

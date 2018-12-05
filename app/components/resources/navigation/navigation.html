@@ -27,7 +27,7 @@
 
                 <button *ngFor="let document of viewFacade.getOperations()" class="dropdown-item"
                         (click)="chooseOperationTypeDocumentOption(document)">
-                    {{getDocumentLabel(document)}}
+                    {{getOperationButtonLabel(document)}}
                 </button>
             </div>
         </div>
@@ -54,9 +54,9 @@
         </div>
 
         <div *ngFor="let document of getSegments()" class="btn btn-outline-primary navigation-button"
-             [class.root-document]="document.resource.id === navigationPath.selectedSegmentId"
+             [class.root-document]="isSelectedSegment(document.resource.id)"
              (click)="moveInto(document)">
-            {{document.resource.identifier}}
+            {{getNavigationButtonLabel(document.resource.id)}}
         </div>
     </div>
 </div>

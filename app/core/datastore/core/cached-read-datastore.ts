@@ -62,6 +62,12 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     }
 
 
+    public async getMultiple(ids: string[]): Promise<Array<T>> {
+
+        return (await this.getDocumentsForIds(ids)).documents;
+    }
+
+
     /**
      * Implements {@link ReadDatastore#find}
      *

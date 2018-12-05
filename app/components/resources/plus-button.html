@@ -49,22 +49,26 @@
                 <li id="choose-geometry-option-polygon" class="list-group-item popover-item"
                     (click)="startDocumentCreation('Polygon');">
                     <span class="mdi mdi-shape-polygon-plus mdi-18px choose-geometry-icon"></span>
-                    <span i18n="@@resources.plusButton.selectGeometryType.polygon">Polygon</span>
+                    <span class="button-label"
+                          i18n="@@resources.plusButton.selectGeometryType.polygon">Polygon</span>
                 </li>
                 <li id="choose-geometry-option-polyline" class="list-group-item popover-item"
                     (click)="startDocumentCreation('LineString');">
                     <span class="mdi mdi-vector-polyline mdi-18px choose-geometry-icon"></span>
-                    <span i18n="@@resources.plusButton.selectGeometryType.polyline">Polyline</span>
+                    <span class="button-label"
+                          i18n="@@resources.plusButton.selectGeometryType.polyline">Polyline</span>
                 </li>
                 <li id="choose-geometry-option-point" class="list-group-item popover-item"
                     (click)="startDocumentCreation('Point');">
                     <span class="mdi mdi-map-marker-plus mdi-18px choose-geometry-icon"></span>
-                    <span i18n="@@resources.plusButton.selectGeometryType.point">Punkt</span>
+                    <span class="button-label"
+                          i18n="@@resources.plusButton.selectGeometryType.point">Punkt</span>
                 </li>
                 <li id="choose-geometry-option-none" class="list-group-item popover-item"
                     (click)="startDocumentCreation('none');">
                     <span class="mdi mdi-close-circle-outline mdi-18px choose-geometry-icon"></span>
-                    <span i18n="@@resources.plusButton.selectGeometryType.noGeometryData">Keine Geometriedaten</span>
+                    <span class="button-label"
+                          i18n="@@resources.plusButton.selectGeometryType.noGeometryData">Keine Geometriedaten</span>
                 </li>
             </ul>
         </div>

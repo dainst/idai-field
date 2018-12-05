@@ -1,6 +1,6 @@
 import {Document, RelationDefinition} from 'idai-components-2';
 import {Static} from '../../../static';
-import {RelationPickerSuggestions} from '../../../../../app/components/docedit/widgets/relationspick/relation-picker-suggestions';
+import {RelationPickerSuggestions} from '../../../../../app/components/docedit/widgets/relationpicker/relation-picker-suggestions';
 
 
 /**

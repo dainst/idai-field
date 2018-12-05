@@ -121,15 +121,11 @@ export class DoceditConflictsTabComponent implements OnChanges {
     }
 
 
-    private fetchRelationTargetsOfField(resource: Resource, fieldName: string) {
+    private async fetchRelationTargetsOfField(resource: Resource, fieldName: string) {
 
         if (resource.relations[fieldName]) {
-            for (let targetId of resource.relations[fieldName]) {
-                this.datastore.get(targetId).then(
-                    doc => { this.relationTargets[targetId] = doc; },
-                    (err) => { console.error(err); this.relationTargets[targetId] = undefined; }
-                );
-            }
+            const targets: Array<Document> = await this.datastore.getMultiple(resource.relations[fieldName]);
+            targets.forEach(target => this.relationTargets[target.resource.id] = target);
         }
     }
 

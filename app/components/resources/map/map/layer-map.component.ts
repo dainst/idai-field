@@ -174,11 +174,12 @@ export class LayerMapComponent extends MapComponent {
             this.tileLayer = L.tileLayer(tilesPath + '/{z}/{x}/{y}.png', {
                 bounds: bounds,
                 minNativeZoom: 5,
-                minZoom: -20,
+                minZoom: 2,
                 maxNativeZoom: 14,
                 maxZoom: 30
             });
             this.tileLayer.addTo(this.map);
+            this.map.setMinZoom(2);
         }
     }
 

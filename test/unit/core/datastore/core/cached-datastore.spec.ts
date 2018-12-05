@@ -8,6 +8,7 @@ import {Static} from '../../../static';
 
 /**
  * @author Daniel de Oliveira
+ * @author Thomas Kleinke
  */
 describe('CachedDatastore', () => {
 
@@ -87,6 +88,75 @@ describe('CachedDatastore', () => {
 
         const document = await ds.get('1'); // fetch from mockdb
         verifyIsIdaiFieldDocument(document);
+        done();
+    });
+
+
+    // get multiple
+
+    it('should add missing fields on getMultiple, bypassing cache', async done => {
+
+        mockdb.fetchMultiple.and.returnValues(Promise.resolve({
+            rows: [{
+                doc: {
+                    resource: {
+                        id: '1',
+                        relations: {}
+                    }
+                }
+            }, {
+                doc: {
+                    resource: {
+                        id: '2',
+                        relations: {}
+                    }
+                }
+            }]
+        }));
+
+        const documents: Array<IdaiFieldDocument> = await ds.getMultiple(['1', '2']);
+        expect(documents.length).toBe(2);
+        verifyIsIdaiFieldDocument(documents[0]);
+        verifyIsIdaiFieldDocument(documents[1]);
+        done();
+    });
+
+
+    it('should retain order when fetching documents from both cache and datastore on getMultiple',
+            async done => {
+
+        mockdb.fetch.and.returnValues(Promise.resolve({
+            resource: {
+                id: '2',
+                relations: {}
+            }
+        }));
+
+        mockdb.fetchMultiple.and.returnValues(Promise.resolve({
+            rows: [{
+                doc: {
+                    resource: {
+                        id: '1',
+                        relations: {}
+                    }
+                }
+            }, {
+                doc: {
+                    resource: {
+                        id: '3',
+                        relations: {}
+                    }
+                }
+            }]
+        }));
+
+        await ds.get('2');  // Save in cache
+
+        const documents: Array<IdaiFieldDocument> = await ds.getMultiple(['1', '2', '3']);
+        expect(documents.length).toBe(3);
+        expect(documents[0].resource.id).toEqual('1');
+        expect(documents[1].resource.id).toEqual('2');
+        expect(documents[2].resource.id).toEqual('3');
         done();
     });
 
@@ -272,8 +342,6 @@ describe('CachedDatastore', () => {
         done();
     });
 
-
-    // xitted
 
     it('should return cached instance on update', async done => {
 

@@ -41,7 +41,6 @@ export class DefaultImportStrategy implements ImportStrategy {
      */
     public async preValidate(docsToImport: Array<Document>): Promise<any[]> {
 
-
         if (this.mergeIfExists) return [];
 
         const identifiersInDocsToImport: string[] = [];

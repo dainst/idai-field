@@ -8,7 +8,8 @@
          #tooltip="ngbTooltip"
          (mouseover)="tooltip.open()"
          (mouseleave)="tooltip.close()"
-         (click)="tooltip.close(); toggleDisplayHierarchy();">
+         (mousedown)="tooltip.close()"
+         (click)="toggleDisplayHierarchy()">
             <span *ngIf="!getBypassHierarchy()" class="mdi mdi-magnify"></span>
             <span *ngIf="getBypassHierarchy()" class="mdi mdi-magnify"></span>
     </div>
@@ -64,7 +65,8 @@
              #tooltip="ngbTooltip"
              (mouseover)="getNavigationButtonLabel(document.resource.id).shortened && tooltip.open()"
              (mouseleave)="tooltip.close()"
-             (click)="tooltip.close(); moveInto(document)">
+             (mousedown)="tooltip.close()"
+             (click)="moveInto(document)">
             {{getNavigationButtonLabel(document.resource.id).text}}
         </div>
     </div>

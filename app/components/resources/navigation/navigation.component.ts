@@ -7,6 +7,9 @@ import {NavigationPath} from '../view/state/navigation-path';
 import {Loading} from '../../../widgets/loading';
 
 
+type NavigationButtonLabelMap = { [id: string]: { text: string, fullText: string, shortened: boolean } };
+
+
 @Component({
     moduleId: module.id,
     selector: 'navigation',
@@ -19,7 +22,7 @@ import {Loading} from '../../../widgets/loading';
 export class NavigationComponent {
 
     public navigationPath: NavigationPath = NavigationPath.empty();
-    public labels: { [id: string]: string } = {};
+    public labels: NavigationButtonLabelMap = {};
 
     private static maxTotalLabelCharacters: number = 40;
 
@@ -125,12 +128,16 @@ export class NavigationComponent {
     }
 
 
-    private static getLabels(navigationPath: NavigationPath): { [id: string]: string } {
+    private static getLabels(navigationPath: NavigationPath): NavigationButtonLabelMap {
 
-        const labels: { [id: string]: string } = {};
+        const labels: NavigationButtonLabelMap = {};
 
         navigationPath.segments.forEach(segment => {
-            labels[segment.document.resource.id] = segment.document.resource.identifier;
+            labels[segment.document.resource.id] = {
+                text: segment.document.resource.identifier,
+                fullText: segment.document.resource.identifier,
+                shortened: false
+            };
         });
 
         NavigationComponent.shortenLabelsIfNecessary(labels, navigationPath.selectedSegmentId);
@@ -139,7 +146,7 @@ export class NavigationComponent {
     }
 
 
-    private static shortenLabelsIfNecessary(labels: { [id: string]: string },
+    private static shortenLabelsIfNecessary(labels: NavigationButtonLabelMap,
                                             selectedSegmentId: string|undefined) {
 
         const totalCharacters: number = this.getTotalLabelCharacterCount(labels);
@@ -149,29 +156,31 @@ export class NavigationComponent {
                 = this.computeMaxSingleLabelCharacters(labels, selectedSegmentId);
 
             Object.keys(labels).forEach(id => {
-                if (labels[id].length > maxSingleLabelCharacters && id !== selectedSegmentId) {
-                    labels[id] = labels[id].substring(0, Math.max(0, maxSingleLabelCharacters - 3))
-                        + '...';
+                if (labels[id].text.length > maxSingleLabelCharacters && id !== selectedSegmentId) {
+                    labels[id].text = labels[id].text.substring(
+                        0, Math.max(0, maxSingleLabelCharacters - 3)
+                    ) + '...';
+                    labels[id].shortened = true;
                 }
             })
         }
     }
 
 
-    private static getTotalLabelCharacterCount(labels: { [id: string]: string }): number {
+    private static getTotalLabelCharacterCount(labels: NavigationButtonLabelMap): number {
 
         let result: number = 0;
-        Object.values(labels).forEach(label => result += label.length);
+        Object.values(labels).forEach(label => result += label.text.length);
 
         return result;
     }
 
 
-    private static computeMaxSingleLabelCharacters(labels: { [id: string]: string },
+    private static computeMaxSingleLabelCharacters(labels: NavigationButtonLabelMap,
                                                    selectedSegmentId: string|undefined): number {
 
         let maxSingleLabelCharacters: number
-            = this.maxTotalLabelCharacters - (selectedSegmentId ? labels[selectedSegmentId].length : 0);
+            = this.maxTotalLabelCharacters - (selectedSegmentId ? labels[selectedSegmentId].text.length : 0);
 
         const labelCount: number = Object.keys(labels).length;
         if (labelCount > 1) maxSingleLabelCharacters /= selectedSegmentId ? labelCount - 1 : labelCount;

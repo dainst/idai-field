@@ -1,7 +1,6 @@
 import {Document, ProjectConfiguration} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ImportErrors} from './import-errors';
-import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 
 /**
  * @author Thomas Kleinke

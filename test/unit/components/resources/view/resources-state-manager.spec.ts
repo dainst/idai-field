@@ -1,8 +1,8 @@
+import {IdaiFieldDocument} from 'idai-components-2';
+import {Query} from 'idai-components-2';
 import {OperationViews} from '../../../../../app/components/resources/view/state/operation-views';
 import {Static} from '../../../static';
 import {ResourcesStateManager} from '../../../../../app/components/resources/view/resources-state-manager';
-import {IdaiFieldDocument} from 'idai-components-2';
-import {Query} from 'idai-components-2';
 import {ResourcesState} from '../../../../../app/components/resources/view/state/resources-state';
 
 /**
@@ -20,7 +20,6 @@ describe('ResourcesStateManager', () => {
     ];
 
     let mockDatastore: any;
-
 
     const find = (query: Query) => {
         return {
@@ -58,7 +57,7 @@ describe('ResourcesStateManager', () => {
 
     it('repair navigation path if a relation is changed', async done => {
 
-        resourcesStateManager.initialize('excavation');
+        await resourcesStateManager.initialize('excavation');
         resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
@@ -88,7 +87,7 @@ describe('ResourcesStateManager', () => {
 
     it('updateNavigationPathForDocument', async done => {
 
-        resourcesStateManager.initialize('excavation');
+        await resourcesStateManager.initialize('excavation');
         resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
@@ -122,7 +121,7 @@ describe('ResourcesStateManager', () => {
 
     it('updateNavigationPathForDocument - is correct navigation path', async done => {
 
-        resourcesStateManager.initialize('excavation');
+        await resourcesStateManager.initialize('excavation');
         resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
@@ -151,7 +150,7 @@ describe('ResourcesStateManager', () => {
 
     it('step into', async done => {
 
-        resourcesStateManager.initialize('excavation');
+        await resourcesStateManager.initialize('excavation');
         resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
@@ -171,7 +170,7 @@ describe('ResourcesStateManager', () => {
 
     it('step out', async done => {
 
-        resourcesStateManager.initialize('excavation');
+        await resourcesStateManager.initialize('excavation');
         resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
@@ -192,7 +191,7 @@ describe('ResourcesStateManager', () => {
 
     it('repair navigation path if a document is deleted', async done => {
 
-        resourcesStateManager.initialize('excavation');
+        await resourcesStateManager.initialize('excavation');
         resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
 
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
@@ -219,54 +218,58 @@ describe('ResourcesStateManager', () => {
     });
 
 
-    it('set type filters and q', () => {
+    it('set type filters and q', async done => {
 
         const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
         const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
         featureDocument1.resource.relations['isRecordedIn'] = [trenchDocument1.resource.id];
 
-        resourcesStateManager.initialize('excavation');
+        await resourcesStateManager.initialize('excavation');
         resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
 
         resourcesStateManager.setTypeFilters(['Find']);
         resourcesStateManager.setQueryString('abc');
 
-        resourcesStateManager.initialize('survey');
+        await resourcesStateManager.initialize('survey');
         expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual([]);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
-        resourcesStateManager.initialize('excavation');
+        await resourcesStateManager.initialize('excavation');
 
         expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(['Find']);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('abc');
+
+        done();
     });
 
 
-    it('delete type filter and q of segment', () => {
+    it('delete type filter and q of segment', async done => {
 
         const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
-        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
 
-        resourcesStateManager.initialize('excavation');
+        await resourcesStateManager.initialize('excavation');
         resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
 
         resourcesStateManager.setTypeFilters(undefined);
         resourcesStateManager.setQueryString('');
         expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(undefined);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
+
+        done();
     });
 
 
-    it('delete type filter and q of non segment', () => {
+    it('delete type filter and q of non segment', async done => {
 
         const trenchDocument1 = Static.ifDoc('trench1', 'trench1', 'Trench', 't1');
-        const featureDocument1 = Static.ifDoc('Feature 1', 'feature1', 'Feature', 'feature1');
 
-        resourcesStateManager.initialize('excavation');
+        await resourcesStateManager.initialize('excavation');
         resourcesStateManager.setMainTypeDocument(trenchDocument1.resource.id);
 
         resourcesStateManager.setTypeFilters(undefined);
         resourcesStateManager.setQueryString('');
         expect(ResourcesState.getTypeFilters(resourcesStateManager.get())).toEqual(undefined);
         expect(ResourcesState.getQueryString(resourcesStateManager.get())).toEqual('');
+
+        done();
     });
 });

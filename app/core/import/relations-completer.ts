@@ -68,6 +68,7 @@ export module RelationsCompleter {
                                              mode: string, resourceId: string): Promise<any> {
 
             const document = await datastore.get(resourceId);
+            if (!document) throw "FATAL - DOCUMENT NOT FOUND, RESOURCEID: " + resourceId;
 
             for (let relationName in document.resource.relations) {
                 if (relationName === 'isRecordedIn') continue;

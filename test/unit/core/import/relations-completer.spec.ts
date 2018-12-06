@@ -56,7 +56,7 @@ describe('RelationsCompleter', () => {
 
         doc1.resource.relations['liesWithin'][0] = '2';
         await RelationsCompleter.completeInverseRelations(mockDatastore, mockProjectConfiguration,
-            'test', ['1'], false);
+            'test', ['1']);
 
         expect(mockDatastore.update).toHaveBeenCalledWith(doc2, 'test');
         expect(doc2.resource.relations['includes'][0]).toBe('1');

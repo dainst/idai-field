@@ -51,10 +51,10 @@ export class DefaultImportStrategy implements ImportStrategy {
                 return [[ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier]];
             }
 
+            identifiersInDocsToImport.push(doc.resource.identifier);
+
             const existingDocument = await this.findByIdentifier(doc.resource.identifier);
             if (existingDocument) return [[ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier]];
-
-            identifiersInDocsToImport.push(doc.resource.identifier);
 
             const errWithParams = this.preValidateType(doc, this.mainTypeDocumentId);
             if (errWithParams) return [errWithParams];

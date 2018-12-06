@@ -64,7 +64,7 @@
              #tooltip="ngbTooltip"
              (mouseover)="getNavigationButtonLabel(document.resource.id).shortened && tooltip.open()"
              (mouseleave)="tooltip.close()"
-             (click)="moveInto(document)">
+             (click)="tooltip.close(); moveInto(document)">
             {{getNavigationButtonLabel(document.resource.id).text}}
         </div>
     </div>

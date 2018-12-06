@@ -172,7 +172,12 @@ export class ResourcesStateManager {
             : ResourcesState.getNavigationPath(this.resourcesState);
 
         const updatedNavigationPath = NavigationPath.setNewSelectedSegmentDoc(validatedNavigationPath, document);
-        this.resourcesState = ResourcesState.updateNavigationPath(this.resourcesState, updatedNavigationPath);
+
+        this.resourcesState = ResourcesState.updateNavigationPath(
+            this.resourcesState,
+            await this.updateSelectedDocument(updatedNavigationPath)
+        );
+
         this.notifyNavigationPathObservers();
     }
 
@@ -246,6 +251,20 @@ export class ResourcesStateManager {
         }
 
         return resourcesState;
+    }
+
+
+    private async updateSelectedDocument(navigationPath: NavigationPath): Promise<NavigationPath> {
+
+        const selectedDocument: IdaiFieldDocument|undefined
+            = NavigationPath.getSelectedDocument(navigationPath);
+
+        if (!selectedDocument) return navigationPath;
+
+        return NavigationPath.setSelectedDocument(
+            navigationPath,
+            await this.datastore.get(selectedDocument.resource.id)
+        );
     }
 
 

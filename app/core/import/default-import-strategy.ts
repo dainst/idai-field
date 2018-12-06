@@ -30,7 +30,9 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
-     * Some quick checks which do not query the db (much)
+     * Some quick checks which do not query the db (much).
+     *
+     * Implementation not: usage of find should not take long since it accesses indexer and should return undefined normally
      *
      * @param docsToImport with resource.identifier set
      * @returns [[ImportErrors.INVALID_TYPE, doc.resource.type]]
@@ -39,36 +41,23 @@ export class DefaultImportStrategy implements ImportStrategy {
      */
     public async preValidate(docsToImport: Array<Document>): Promise<any[]> {
 
+
         if (this.mergeIfExists) return [];
 
         const identifiersInDocsToImport: string[] = [];
         for (let doc of docsToImport) {
-
             if (!doc.resource.identifier) throw 'FATAL ERROR - illegal argument - document without identifier';
             if (identifiersInDocsToImport.includes(doc.resource.identifier)) {
                 return [[ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier]];
             }
-            identifiersInDocsToImport.push(doc.resource.identifier);
 
-            // should not take long since it accesses indexer and should return undefined normally
             const existingDocument = await this.findByIdentifier(doc.resource.identifier);
             if (existingDocument) return [[ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier]];
 
-            if (!Validations.validateType(doc.resource, this.projectConfiguration)) {
-                return [[ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]];
-            }
+            identifiersInDocsToImport.push(doc.resource.identifier);
 
-            if (this.mainTypeDocumentId) {
-                if (this.typeUtility.isSubtype(doc.resource.type, 'Operation')) {
-                    return [[ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]];
-                }
-            } else {
-                if (doc.resource.type !== 'Place' && !this.typeUtility.isSubtype(doc.resource.type, 'Operation')) {
-                    if (!doc.resource.relations || !doc.resource.relations['isRecordedIn']) {
-                        return [[ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]];
-                    }
-                }
-            }
+            const errWithParams = this.preValidateType(doc, this.mainTypeDocumentId);
+            if (errWithParams) return [errWithParams];
         }
 
         return [];
@@ -128,6 +117,22 @@ export class DefaultImportStrategy implements ImportStrategy {
         if (!relations['isRecordedIn']) relations['isRecordedIn'] = [];
         if (!relations['isRecordedIn'].includes(mainTypeDocumentId)) {
             relations['isRecordedIn'].push(mainTypeDocumentId);
+        }
+    }
+
+
+    private preValidateType(doc: Document, mainTypeDocumentId: string) {
+
+        if (!Validations.validateType(doc.resource, this.projectConfiguration)) {
+            return [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type];
+        }
+
+        if (this.typeUtility.isSubtype(doc.resource.type, 'Operation') || doc.resource.type === 'Place') {
+            if (mainTypeDocumentId) return [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED];
+        } else {
+            if (!mainTypeDocumentId && (!doc.resource.relations || !doc.resource.relations['isRecordedIn'])) {
+                return [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED];
+            }
         }
     }
 }

@@ -43,7 +43,7 @@ export class TypeUtility {
     }
 
 
-    public getOverviewTypes(): Array<IdaiType> {
+    public getOverviewTypes(): Array<IdaiType> { // TODO fix, it should return for subtypes of Operation, not for Operation itself
 
         return this.projectConfiguration.getTypesList()
             .filter(type => type.name === 'Operation' || type.name === 'Place');

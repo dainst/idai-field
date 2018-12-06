@@ -17,8 +17,10 @@ describe('DefaultImportStrategy', () => {
 
         mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', ['validate']);
-        mockTypeUtility = jasmine.createSpyObj('typeUtility', ['isSubtype']);
+        // mockTypeUtility = jasmine.createSpyObj('typeUtility', ['isSubtype']);
         mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getTypesList']);
+
+        mockTypeUtility = { isSubtype: (t: string) => t === 'Trench' };
 
         mockValidator.validate.and.returnValue(Promise.resolve());
         mockDatastore.create.and.callFake((a) => Promise.resolve(a));
@@ -167,8 +169,6 @@ describe('DefaultImportStrategy', () => {
 
     it('preValidate - missing recorded in ', async done => {
 
-        mockTypeUtility.isSubtype.and.returnValue(false); // when asked if subtype of operation
-
         const msgsWithParams = await importStrategy.preValidate([
             { resource: { type: 'Find', identifier: '1a', relations: undefined } } as any
         ]);
@@ -180,8 +180,6 @@ describe('DefaultImportStrategy', () => {
 
 
     it('preValidate - no missing recorded in for place and operation ', async done => {
-
-        mockTypeUtility.isSubtype.and.returnValue(true); // when asked if subtype of operation
 
         const msgsWithParams = await importStrategy.preValidate([
             { resource: { type: 'Place', identifier: '1a', relations: undefined } } as any,
@@ -195,7 +193,6 @@ describe('DefaultImportStrategy', () => {
 
     it('preValidate - duplicate identifiers in import file', async done => {
 
-        mockTypeUtility.isSubtype.and.returnValue(true); // when asked if subtype of operation
         mockDatastore.find.and.returnValues(Promise.resolve({ documents: [], totalCount: 0 }));
 
         const msgsWithParams = await importStrategy.preValidate([
@@ -212,7 +209,6 @@ describe('DefaultImportStrategy', () => {
 
     it('preValidate - existing identifier', async done => {
 
-        mockTypeUtility.isSubtype.and.returnValue(true); // when asked if subtype of operation
         mockDatastore.find.and.returnValues(Promise.resolve(
             { documents: [{ resource: { type: 'Place', identifier: '1a' } }], totalCount: 1 }));
 

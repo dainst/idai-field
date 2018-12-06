@@ -51,7 +51,8 @@ export class SearchSuggestionsComponent implements OnChanges {
 
     public isSuggestionBoxVisible(): boolean {
 
-        return this.visible && !this.documentsFound;
+        return this.visible && !this.documentsFound
+            && (this.viewFacade.getSearchString().length > 0 || this.viewFacade.getFilterTypes().length > 0);
     }
 
 

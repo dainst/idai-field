@@ -31,19 +31,17 @@ export module Import {
      * containing the number of resources imported successfully as well as information on errors that occurred,
      * if any.
      */
-    export function go(reader: Reader, parser: Parser, importStrategy: ImportStrategy,
+    export function go(reader: Reader, parser: Parser,
+                       importStrategy: ImportStrategy,
                        relationsStrategy: RelationsStrategy,
                        rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
 
         return new Promise<ImportReport>(async resolve => {
 
             const [docsToUpdate, importReport] = await parseFileContent(parser, await reader.go());
-
-            const errors = await importStrategy.preValidate(docsToUpdate);
-            if (errors.length > 0) importReport.errors = errors as never[];
-            else await update(docsToUpdate, importStrategy, importReport);
-
-            resolve(await finishImport(importReport, relationsStrategy, rollbackStrategy));
+            resolve(await finishImport(
+                await importStrategy.import(docsToUpdate, importReport),
+                relationsStrategy, rollbackStrategy));
         });
     }
 
@@ -104,23 +102,5 @@ export module Import {
             importReport.errors.push(msgWithParams as never);
         }
         return [docsToUpdate, importReport];
-    }
-
-
-    async function update(docsToUpdate: Array<Document>,
-                          importStrategy: ImportStrategy,
-                          importReport: ImportReport): Promise<void> {
-
-        for (let docToUpdate of docsToUpdate) {
-            if (importReport.errors.length !== 0) return;
-
-            try {
-                const importedDoc = await importStrategy.importDoc(docToUpdate);
-                if (importedDoc) importReport.importedResourcesIds.push(importedDoc.resource.id);
-
-            } catch (msgWithParams) {
-                importReport.errors.push(msgWithParams);
-            }
-        }
     }
 }

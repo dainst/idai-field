@@ -6,6 +6,7 @@ import {DocumentMerge} from './document-merge';
 import {TypeUtility} from '../model/type-utility';
 import {Validations} from '../model/validations';
 import {ImportErrors} from './import-errors';
+import {ImportReport} from './import';
 
 
 /**
@@ -29,8 +30,32 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
+    public async import(docsToUpdate: Array<Document>, importReport: ImportReport): Promise<ImportReport> {
+
+        const errors = await this.preValidate(docsToUpdate);
+        if (errors.length > 0) {
+            importReport.errors = errors as never[];
+            return importReport;
+        }
+
+        for (let docToUpdate of docsToUpdate) {
+
+            try {
+                const importedDoc = await this.importDoc(docToUpdate);
+                if (importedDoc) importReport.importedResourcesIds.push(importedDoc.resource.id);
+
+            } catch (msgWithParams) {
+                importReport.errors.push(msgWithParams);
+                return importReport;
+            }
+        }
+
+        return importReport;
+    }
+
+
     /**
-     * Some quick checks which do not query the db (much).
+     * Some quick checks which do not query the db (much), to determine if import can succeed
      *
      * Implementation not: usage of find should not take long since it accesses indexer and should return undefined normally
      *
@@ -39,7 +64,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      * @returns [[ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]]
      * @returns [[ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]]
      */
-    public async preValidate(docsToImport: Array<Document>): Promise<any[]> {
+    private async preValidate(docsToImport: Array<Document>): Promise<any[]> {
 
         if (this.mergeIfExists) return [];
 
@@ -68,7 +93,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      * @throws [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
      * @throws [INVALID_MAIN_TYPE_DOCUMENT]
      */
-    public async importDoc(document: NewDocument): Promise<Document|undefined> {
+    private async importDoc(document: NewDocument): Promise<Document|undefined> {
 
         if (this.mainTypeDocumentId) await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
 

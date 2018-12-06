@@ -19,7 +19,7 @@ describe('Importer', () => {
         mockReader.go.and.callFake(function() {return Promise.resolve();});
         mockParser = jasmine.createSpyObj('parser', ['parse','getWarnings']);
 
-        mockImportStrategy = jasmine.createSpyObj('importStrategy', ['preValidate', 'importDoc']);
+        mockImportStrategy = jasmine.createSpyObj('importStrategy', ['preValidate', 'import']);
         mockImportStrategy.preValidate.and.returnValue(Promise.resolve([]));
 
         mockRelationsStrategy = jasmine.createSpyObj('relationsStrategy',
@@ -35,7 +35,7 @@ describe('Importer', () => {
             observer.complete();
         })});
 
-        mockImportStrategy.importDoc.and.returnValue(Promise.reject(['constraintviolation']));
+        mockImportStrategy.import.and.returnValue(Promise.resolve({errors: [['constraintviolation']]}));
         mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
 
         const importReport = await Import.go(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
@@ -54,8 +54,9 @@ describe('Importer', () => {
                 observer.complete();
             })});
 
-            mockImportStrategy.importDoc.and.returnValues(Promise.resolve({resource: {type: 'Find', id: 'abc1', relations: {} }}),
-                Promise.reject(['constraintviolation']));
+
+            mockImportStrategy.import.and.returnValue(Promise.resolve({errors: [['constraintviolation']], importedResourcesIds: ['abc1']}));
+
             mockRelationsStrategy.completeInverseRelations.and.returnValue(Promise.resolve(undefined));
             mockRelationsStrategy.resetInverseRelations.and.returnValue(Promise.resolve(undefined));
             mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
@@ -67,7 +68,7 @@ describe('Importer', () => {
                 mockRelationsStrategy,
                 mockRollbackStrategy);
 
-            expect(mockImportStrategy.importDoc).toHaveBeenCalledTimes(2);
+            // expect(mockImportStrategy.importDoc).toHaveBeenCalledTimes(2); // TODO replace with something else
             expect(importReport.importedResourcesIds.length).toBe(1);
             expect(importReport.importedResourcesIds[0]).toEqual('abc1');
             done();

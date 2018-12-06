@@ -5,6 +5,7 @@ import {Validator} from '../model/validator';
 import {IdaiFieldFindResult} from '../datastore/core/cached-read-datastore';
 import {clone} from '../util/object-util';
 import {ImportErrors} from './import-errors';
+import {ImportReport} from './import';
 
 
 const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {
@@ -24,13 +25,28 @@ export class MeninxFindImportStrategy implements ImportStrategy {
                 private username: string) { }
 
 
-    public async preValidate(docs: Array<Document>): Promise<any[]> { return [] }
+    public async import(docsToUpdate: Array<Document>, importReport: ImportReport): Promise<ImportReport> {
+
+        for (let docToUpdate of docsToUpdate) {
+
+            try {
+                const importedDoc = await this.importDoc(docToUpdate);
+                if (importedDoc) importReport.importedResourcesIds.push(importedDoc.resource.id);
+
+            } catch (msgWithParams) {
+                importReport.errors.push(msgWithParams);
+                return importReport;
+            }
+        }
+
+        return importReport;
+    }
 
 
     /**
      * @throws errorWithParams
      */
-    public async importDoc(importDoc: NewDocument): Promise<Document> {
+    private async importDoc(importDoc: NewDocument): Promise<Document> {
 
         const existingDoc: Document|undefined = await this.getExistingDoc(importDoc.resource.identifier);
 

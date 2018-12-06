@@ -151,8 +151,12 @@ export module ImportFacade {
             case 'shapefile':
             case 'geojson':
                 return new NoRelationsStrategy();
-            default: // native | geojson-gazetteer
-                return new DefaultRelationsStrategy(datastore, projectConfiguration, usernameProvider.getUsername());
+            case 'geojson-gazetteer':
+                return new DefaultRelationsStrategy(datastore, projectConfiguration,
+                    usernameProvider.getUsername(), false);
+            default: // native
+                return new DefaultRelationsStrategy(datastore, projectConfiguration,
+                    usernameProvider.getUsername(), true);
         }
     }
 

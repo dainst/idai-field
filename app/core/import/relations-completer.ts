@@ -1,6 +1,7 @@
 import {Document, ProjectConfiguration} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ImportErrors} from './import-errors';
+import {DocumentReadDatastore} from '../datastore/document-read-datastore';
 
 /**
  * @author Thomas Kleinke
@@ -20,9 +21,9 @@ export module RelationsCompleter {
      * @throws DatastoreErrors.*
      */
     export async function completeInverseRelations(datastore: DocumentDatastore,
-                                             projectConfiguration: ProjectConfiguration,
-                                             username: string,
-                                             resourceIds: string[]): Promise<any> {
+                                                   projectConfiguration: ProjectConfiguration,
+                                                   username: string,
+                                                   resourceIds: string[]): Promise<void> {
 
         for (let resourceId of resourceIds) await alterInverseRelationsForResource(
                 datastore, projectConfiguration,
@@ -42,9 +43,9 @@ export module RelationsCompleter {
      * @throws DatastoreErrors.*
      */
     export async function resetInverseRelations(datastore: DocumentDatastore,
-                                          projectConfiguration: ProjectConfiguration,
-                                          username: string,
-                                          resourceIds: string[]): Promise<any> {
+                                                projectConfiguration: ProjectConfiguration,
+                                                username: string,
+                                                resourceIds: string[]): Promise<void> {
 
         for (let resourceId of resourceIds) await alterInverseRelationsForResource(
                 datastore, projectConfiguration,
@@ -58,30 +59,32 @@ export module RelationsCompleter {
      * @param datastore
      * @param projectConfiguration
      * @param username
-     * @param mode: Can be either 'create' or 'remove'
+     * @param mode
      * @param resourceId
      * @throws errWithParams
      */
     async function alterInverseRelationsForResource(datastore: DocumentDatastore,
-                                             projectConfiguration: ProjectConfiguration,
-                                             username: string,
-                                             mode: string, resourceId: string): Promise<any> {
+                                                    projectConfiguration: ProjectConfiguration,
+                                                    username: string,
+                                                    mode: 'create' | 'remove',
+                                                    resourceId: string): Promise<void> {
 
             const document = await datastore.get(resourceId);
             if (!document) throw "FATAL - DOCUMENT NOT FOUND, RESOURCEID: " + resourceId;
 
-            for (let relationName in document.resource.relations) {
-                if (relationName === 'isRecordedIn') continue;
-                if (!projectConfiguration.isRelationProperty(relationName)) continue;
+            for (let relationName of Object
+                    .keys(document.resource.relations)
+                    .filter(relationName => relationName !== 'isRecordedIn')
+                    .filter(relationName => projectConfiguration.isRelationProperty(relationName))) {
 
-                for (let targetId of document.resource.relations[relationName]) {
+                for (let targetIdOrIdentifier of document.resource.relations[relationName]) {
 
-                    let targetDocument = undefined;
+                    let targetDocument;
                     try {
-                        targetDocument = await datastore.get(targetId);
+                        targetDocument = await datastore.get(targetIdOrIdentifier);
                     } catch (_) {
-                        if (mode === 'remove') continue;
-                        else throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId];
+                        if (mode === 'create') throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetIdOrIdentifier];
+                        else continue;
                     }
 
                     const inverseRelation = projectConfiguration.getInverseRelations(relationName) as any;
@@ -100,10 +103,11 @@ export module RelationsCompleter {
                                   targetDocument: Document,
                                   relationName: string): Promise<any> {
 
-            let relations = targetDocument.resource.relations[relationName];
-            if (!relations) relations = [];
-            if (relations.indexOf(resourceId) === -1) {
-                relations.push(resourceId);
+        let relations = targetDocument.resource.relations[relationName];
+
+        if (!relations) relations = [];
+        if (!relations.includes(resourceId)) {
+            relations.push(resourceId);
                 targetDocument.resource.relations[relationName] = relations;
                 await datastore.update(targetDocument, username);
             }

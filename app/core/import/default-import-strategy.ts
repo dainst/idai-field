@@ -50,7 +50,6 @@ export class DefaultImportStrategy implements ImportStrategy {
             if (identifiersInDocsToImport.includes(doc.resource.identifier)) {
                 return [[ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier]];
             }
-
             identifiersInDocsToImport.push(doc.resource.identifier);
 
             const existingDocument = await this.findByIdentifier(doc.resource.identifier);

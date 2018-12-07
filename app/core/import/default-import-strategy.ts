@@ -8,6 +8,7 @@ import {Validations} from '../model/validations';
 import {ImportErrors} from './import-errors';
 import {ImportReport} from './import';
 import {duplicates} from 'tsfun';
+import {RelationsCompleter} from './relations-completer';
 
 
 /**
@@ -23,7 +24,8 @@ export class DefaultImportStrategy implements ImportStrategy {
                 private username: string,
                 private mainTypeDocumentId: string, /* '' => no assignment */
                 private mergeIfExists: boolean,
-                private useIdentifiersInRelations: boolean
+                private useIdentifiersInRelations: boolean,
+                private setInverseRelations: boolean
                 ) {
 
         if (mainTypeDocumentId && mergeIfExists) {
@@ -33,6 +35,8 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
+     * TODO implement rollback, throw exec rollback error if it goes wrong
+     *
      * @param documents
      * @param importReport
      *   .errors
@@ -75,8 +79,25 @@ export class DefaultImportStrategy implements ImportStrategy {
             }
         } catch (errWithParams) {
 
-            // TODO do rollback, throw exec rollback error if it goes wrong
             importReport.errors.push(errWithParams);
+            return importReport;
+        }
+
+        if (!this.setInverseRelations || this.mergeIfExists) return importReport;
+        try {
+
+            await RelationsCompleter.completeInverseRelations(
+                this.datastore, this.projectConfiguration, this.username, importReport.importedResourcesIds);
+
+        } catch (msgWithParams) {
+
+            importReport.errors.push(msgWithParams);
+            try {
+                await RelationsCompleter.resetInverseRelations(
+                    this.datastore, this.projectConfiguration, this.username, importReport.importedResourcesIds);
+            } catch (e) {
+                importReport.errors.push(msgWithParams);
+            }
         }
 
         return importReport;

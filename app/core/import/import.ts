@@ -2,7 +2,6 @@ import {Document} from 'idai-components-2';
 import {Reader} from './reader';
 import {Parser} from './parser';
 import {ImportStrategy} from './import-strategy';
-import {RelationsStrategy} from './relations-strategy';
 
 
 export interface ImportReport {
@@ -30,39 +29,14 @@ export module Import {
      * if any.
      */
     export function go(reader: Reader, parser: Parser,
-                       importStrategy: ImportStrategy,
-                       relationsStrategy: RelationsStrategy): Promise<ImportReport> {
+                       importStrategy: ImportStrategy): Promise<ImportReport> {
 
         return new Promise<ImportReport>(async resolve => {
 
             const [docsToUpdate, importReport] = await parseFileContent(parser, await reader.go());
-            resolve(await finishImport(
-                await importStrategy.import(docsToUpdate, importReport),
-                relationsStrategy));
+            resolve(
+                await importStrategy.import(docsToUpdate, importReport));
         });
-    }
-
-
-    async function finishImport(importReport: ImportReport, relationsStrategy: RelationsStrategy): Promise<ImportReport> {
-
-        if (importReport.errors.length === 0) {
-
-            try {
-
-                await relationsStrategy.completeInverseRelations(importReport.importedResourcesIds);
-
-            } catch (msgWithParams) {
-
-                importReport.errors.push(msgWithParams);
-                try {
-                    await relationsStrategy.resetInverseRelations(importReport.importedResourcesIds)
-                } catch (e) {
-                    importReport.errors.push(msgWithParams);
-                }
-            }
-        }
-
-        return importReport;
     }
 
 

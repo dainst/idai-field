@@ -12,9 +12,6 @@ import {NativeJsonlParser} from './native-jsonl-parser';
 import {ImportStrategy} from './import-strategy';
 import {MeninxFindImportStrategy} from './meninx-find-import-strategy';
 import {DefaultImportStrategy} from './default-import-strategy';
-import {RelationsStrategy} from './relations-strategy';
-import {NoRelationsStrategy} from './no-relations-strategy';
-import {DefaultRelationsStrategy} from './default-relations-strategy';
 import {TypeUtility} from '../model/type-utility';
 import {ShapefileParser} from './shapefile-parser';
 import {GazGeojsonParserAddOn} from './gaz-geojson-parser-add-on';
@@ -65,12 +62,7 @@ export module ImportFacade {
                 projectConfiguration,
                 new TypeUtility(projectConfiguration),
                 !allowMergingExistingResources ? mainTypeDocumentId : '',
-                allowMergingExistingResources),
-            createRelationsStrategy(
-                format,
-                datastore,
-                projectConfiguration,
-                usernameProvider))
+                allowMergingExistingResources));
     }
 
 
@@ -113,39 +105,23 @@ export module ImportFacade {
             case 'idig':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    '', false, false);
+                    '', false, false, false);
             case 'shapefile':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    '', true, false);
+                    '', true, false, false);
             case 'geojson':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    '', true, false);
+                    '', true, false, false);
             case 'geojson-gazetteer':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    '', false, false);
+                    '', false, false, true);
             default: // native
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    mainTypeDocumentId, allowMergingExistingResources, true);
-        }
-    }
-
-
-    function createRelationsStrategy(format: ImportFormat,
-                                     datastore: DocumentDatastore,
-                                     projectConfiguration: ProjectConfiguration,
-                                     usernameProvider: UsernameProvider): RelationsStrategy {
-
-        switch (format) {
-            case 'meninxfind':
-            case 'shapefile':
-            case 'geojson':
-                return new NoRelationsStrategy();
-            default: // native | 'geojson-gazetteer'
-                return new DefaultRelationsStrategy(datastore, projectConfiguration, usernameProvider.getUsername());
+                    mainTypeDocumentId, allowMergingExistingResources, true, true);
         }
     }
 }

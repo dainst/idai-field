@@ -28,26 +28,15 @@ export module Import {
      * containing the number of resources imported successfully as well as information on errors that occurred,
      * if any.
      */
-    export function go(reader: Reader, parser: Parser,
-                       importStrategy: ImportStrategy): Promise<ImportReport> {
-
-        return new Promise<ImportReport>(async resolve => {
-
-            const [docsToUpdate, importReport] = await parseFileContent(parser, await reader.go());
-            resolve(
-                await importStrategy.import(docsToUpdate, importReport));
-        });
-    }
-
-
-    async function parseFileContent(parser: Parser,
-                                    fileContent: string): Promise<[Array<Document>, ImportReport]> {
+    export async function go(reader: Reader, parser: Parser, importStrategy: ImportStrategy): Promise<ImportReport> {
 
         const importReport = {
             errors: [],
             warnings: [],
             importedResourcesIds: []
         };
+
+        const fileContent = await reader.go();
 
         const docsToUpdate: Document[] = [];
         try {
@@ -62,6 +51,7 @@ export module Import {
 
             importReport.errors.push(msgWithParams as never);
         }
-        return [docsToUpdate, importReport];
+
+        return await importStrategy.import(docsToUpdate, importReport);
     }
 }

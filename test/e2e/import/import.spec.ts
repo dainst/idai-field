@@ -52,7 +52,7 @@ describe('import --', function() {
     };
 
 
-    fit('perform successful import', () => {
+    it('perform successful import', () => {
 
         importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(delays.shortRest * 4);
@@ -66,7 +66,7 @@ describe('import --', function() {
     });
 
 
-    fit('err case', () => {
+    it('err case', () => {
 
         importIt('./test/test-data/importer-test-constraint-violation.jsonl');
 

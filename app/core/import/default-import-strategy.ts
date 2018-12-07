@@ -179,6 +179,7 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
+    // TODO make static
     private async setMainTypeDocumentRelation(document: NewDocument, mainTypeDocumentId: string): Promise<void> {
 
         const mainTypeDocument = await this.datastore.get(mainTypeDocumentId);

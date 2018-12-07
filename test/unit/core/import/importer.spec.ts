@@ -11,7 +11,6 @@ describe('Importer', () => {
     let mockParser;
     let mockImportStrategy;
     let mockRelationsStrategy;
-    let mockRollbackStrategy;
 
     beforeEach(() => {
 
@@ -24,7 +23,6 @@ describe('Importer', () => {
 
         mockRelationsStrategy = jasmine.createSpyObj('relationsStrategy',
             ['completeInverseRelations', 'resetInverseRelations']);
-        mockRollbackStrategy = jasmine.createSpyObj('rollbackStrategy', ['rollback']);
     });
 
 
@@ -36,10 +34,8 @@ describe('Importer', () => {
         })});
 
         mockImportStrategy.import.and.returnValue(Promise.resolve({errors: [['constraintviolation']]}));
-        mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
 
-        const importReport = await Import.go(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy,
-                mockRollbackStrategy);
+        const importReport = await Import.go(mockReader, mockParser, mockImportStrategy, mockRelationsStrategy);
         expect(importReport['errors'][0][0]).toBe('constraintviolation');
         done();
     });
@@ -59,14 +55,12 @@ describe('Importer', () => {
 
             mockRelationsStrategy.completeInverseRelations.and.returnValue(Promise.resolve(undefined));
             mockRelationsStrategy.resetInverseRelations.and.returnValue(Promise.resolve(undefined));
-            mockRollbackStrategy.rollback.and.returnValue(Promise.resolve(undefined));
 
             const importReport = await Import.go(
                 mockReader,
                 mockParser,
                 mockImportStrategy,
-                mockRelationsStrategy,
-                mockRollbackStrategy);
+                mockRelationsStrategy);
 
             // expect(mockImportStrategy.importDoc).toHaveBeenCalledTimes(2); // TODO replace with something else
             expect(importReport.importedResourcesIds.length).toBe(1);

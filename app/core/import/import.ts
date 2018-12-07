@@ -3,8 +3,6 @@ import {Reader} from './reader';
 import {Parser} from './parser';
 import {ImportStrategy} from './import-strategy';
 import {RelationsStrategy} from './relations-strategy';
-import {RollbackStrategy} from './rollback-strategy';
-import {ImportErrors} from './import-errors';
 
 
 export interface ImportReport {
@@ -33,21 +31,19 @@ export module Import {
      */
     export function go(reader: Reader, parser: Parser,
                        importStrategy: ImportStrategy,
-                       relationsStrategy: RelationsStrategy,
-                       rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
+                       relationsStrategy: RelationsStrategy): Promise<ImportReport> {
 
         return new Promise<ImportReport>(async resolve => {
 
             const [docsToUpdate, importReport] = await parseFileContent(parser, await reader.go());
             resolve(await finishImport(
                 await importStrategy.import(docsToUpdate, importReport),
-                relationsStrategy, rollbackStrategy));
+                relationsStrategy));
         });
     }
 
 
-    async function finishImport(importReport: ImportReport, relationsStrategy: RelationsStrategy,
-                                rollbackStrategy: RollbackStrategy): Promise<ImportReport> {
+    async function finishImport(importReport: ImportReport, relationsStrategy: RelationsStrategy): Promise<ImportReport> {
 
         if (importReport.errors.length === 0) {
 
@@ -66,15 +62,6 @@ export module Import {
             }
         }
 
-        if (importReport.errors.length !== 0) {
-
-            try {
-                await rollbackStrategy.rollback(importReport.importedResourcesIds);
-            } catch (err) {
-                console.error('Rollback error', err);
-                importReport.errors.push([ImportErrors.EXEC_ROLLBACK]);
-            }
-        }
         return importReport;
     }
 

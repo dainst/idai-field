@@ -60,7 +60,12 @@ export class DefaultImportStrategy implements ImportStrategy {
                 const docForWrite = await this.prepareForUpdate(document);
                 if (docForWrite) documentsForUpdate.push(docForWrite);
             }
+        } catch (errWithParams) {
+            importReport.errors.push(errWithParams);
+            return importReport;
+        }
 
+        try {
             for (let documentForUpdate of documentsForUpdate) { // TODO perform batch updaes
 
                 const updatedDocument = this.mergeIfExists
@@ -68,10 +73,10 @@ export class DefaultImportStrategy implements ImportStrategy {
                     : await this.datastore.create(documentForUpdate as Document, this.username); // throws if exists
                 importReport.importedResourcesIds.push(updatedDocument.resource.id);
             }
+        } catch (errWithParams) {
 
-        } catch (msgWithParams) {
-            importReport.errors.push(msgWithParams);
-            return importReport;
+            // TODO do rollback, throw exec rollback error if it goes wrong
+            importReport.errors.push(errWithParams);
         }
 
         return importReport;

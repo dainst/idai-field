@@ -74,13 +74,13 @@ export class DefaultImportStrategy implements ImportStrategy {
         if (importReport.errors.length > 0) return importReport;
 
         if (!this.setInverseRelations || this.mergeIfExists) return importReport;
-        await this.performRelationsUpdats(importReport.importedResourcesIds, importReport);
+        await this.performRelationsUpdates(importReport.importedResourcesIds, importReport);
 
         return importReport;
     }
 
 
-    private async performRelationsUpdats(importedResourcesIds: string[], importReport: ImportReport) {
+    private async performRelationsUpdates(importedResourcesIds: string[], importReport: ImportReport) {
 
         try {
 

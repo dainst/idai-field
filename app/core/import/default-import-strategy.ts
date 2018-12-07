@@ -110,7 +110,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
                 const updatedDocument = mergeIfExists
                     ? await this.datastore.update(documentForUpdate as Document, username)
-            : await this.datastore.create(documentForUpdate as Document, username); // throws if exists
+                    : await this.datastore.create(documentForUpdate as Document, username); // throws if exists
                 importReport.importedResourcesIds.push(updatedDocument.resource.id);
             }
         } catch (errWithParams) {

@@ -37,7 +37,7 @@ describe('DefaultImportStrategy', () => {
             mockProjectConfiguration,
             'user1',
             '',
-            false);
+            false, false);
 
         importReport = {errors: [], warnings: [], importedResourcesIds: []};
     });
@@ -69,7 +69,7 @@ describe('DefaultImportStrategy', () => {
             mockDatastore,
             null,
             'user1',
-            '', true).import(
+            '', true, false).import(
             [{ resource: {id: '1', relations: undefined } } as any], importReport);
 
         expect(mockDatastore.create).not.toHaveBeenCalled();
@@ -88,7 +88,7 @@ describe('DefaultImportStrategy', () => {
             mockDatastore,
             mockProjectConfiguration,
             'user1',
-            '', false).import([
+            '', false, false).import([
             { resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: []} } } as any], importReport);
 
         expect(mockDatastore.create).toHaveBeenCalled();
@@ -139,7 +139,7 @@ describe('DefaultImportStrategy', () => {
             mockDatastore,
             null,
             'user1',
-            '', true);
+            '', true, false);
         await importStrategy.import([docToMerge as any], {errors: [], warnings: [], importedResourcesIds: []});
 
         const importedDoc = mockDatastore.update.calls.mostRecent().args[0];

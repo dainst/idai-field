@@ -23,7 +23,7 @@ export class DefaultImportStrategy implements ImportStrategy {
                 private username: string,
                 private mainTypeDocumentId: string, /* '' => no assignment */
                 private mergeIfExists: boolean,
-                private useIdentifiersInRelations = false
+                private useIdentifiersInRelations: boolean
                 ) {
 
         if (mainTypeDocumentId && mergeIfExists) {

@@ -113,19 +113,19 @@ export module ImportFacade {
             case 'idig':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    '', false);
+                    '', false, false);
             case 'shapefile':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    '', true);
+                    '', true, false);
             case 'geojson':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    '', true);
+                    '', true, false);
             case 'geojson-gazetteer':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    '', false);
+                    '', false, false);
             default: // native
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),

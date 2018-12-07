@@ -146,6 +146,7 @@ export class PouchdbDatastore {
     }
 
 
+    // TODO make sure all the guarantees given for fetch, especially the date conversion, also hold here, so that the cacheddatastore (and indexers) can consume the docs properly
     public fetchMultiple(resourceIds: string[], options: any = { conflicts: true }): Promise<any> {
 
         options.keys = resourceIds;

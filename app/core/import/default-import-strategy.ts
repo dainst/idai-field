@@ -46,7 +46,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      * TODO throw error if user specifies id
      * TODO we could remove the datastore feature of predefining ids entirely
      *
-     * @param documents
+     * @param documents documents with the field resource.identifier set to a non empty string
      * @param importReport
      *   .errors
      *      [ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier] if duplicate identifier is found in import file. only first occurence is listed // TODO return all and let importer do the rest
@@ -58,21 +58,14 @@ export class DefaultImportStrategy implements ImportStrategy {
     public async import(documents: Array<Document>,
                         importReport: ImportReport): Promise<ImportReport> {
 
-        if (!this.mergeIfExists) { // if (!doc.resource.identifier) throw 'FATAL ERROR - illegal argument - document without identifier'; not strictly necessary since responsibility of parser
+        if (!this.mergeIfExists) {
             const duplicates_ = duplicates(documents.map(doc => doc.resource.identifier));
             if (duplicates_.length > 0) {
                 importReport.errors = [[ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, duplicates_[0]]];
                 return importReport;
             }
         }
-
-        this.identifierMap = {};
-        if (!this.mergeIfExists) for (let document of documents) {
-
-            const uuid = this.idGenerator.generateId();
-            document.resource.id = uuid;
-            this.identifierMap[document.resource.identifier] = uuid;
-        }
+        this.identifierMap = this.mergeIfExists ? {} : this.assignIds(documents);
 
 
         const documentsForUpdate: Array<NewDocument> = [];
@@ -119,6 +112,18 @@ export class DefaultImportStrategy implements ImportStrategy {
         }
 
         return importReport;
+    }
+
+
+    private assignIds(documents: Array<Document>) {
+
+        const identifierMap: { [identifier: string]: string } = {};
+        for (let document of documents) {
+            const uuid = this.idGenerator.generateId();
+            document.resource.id = uuid;
+            identifierMap[document.resource.identifier] = uuid;
+        }
+        return identifierMap;
     }
 
 

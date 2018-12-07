@@ -67,51 +67,53 @@ export class DefaultImportStrategy implements ImportStrategy {
         }
         this.identifierMap = this.mergeIfExists ? {} : this.assignIds(documents);
 
+        const documentsForUpdate = await this.prepareDocumentsForUpdate(documents, importReport);
+        if (importReport.errors.length > 0) return importReport;
 
-        const documentsForUpdate: Array<NewDocument> = [];
-        try {
-            for (let document of documents) {
-
-                const docForWrite = await this.prepareForUpdate(document);
-                if (docForWrite) documentsForUpdate.push(docForWrite);
-            }
-        } catch (errWithParams) {
-            importReport.errors.push(errWithParams);
-            return importReport;
-        }
-
-        try {
-            for (let documentForUpdate of documentsForUpdate) { // TODO perform batch updaes
-
-                const updatedDocument = this.mergeIfExists
-                    ? await this.datastore.update(documentForUpdate as Document, this.username)
-                    : await this.datastore.create(documentForUpdate as Document, this.username); // throws if exists
-                importReport.importedResourcesIds.push(updatedDocument.resource.id);
-            }
-        } catch (errWithParams) {
-
-            importReport.errors.push(errWithParams);
-            return importReport;
-        }
+        await this.performDocumentsUpdates(documentsForUpdate, importReport);
+        if (importReport.errors.length > 0) return importReport;
 
         if (!this.setInverseRelations || this.mergeIfExists) return importReport;
+        await this.performRelationsUpdats(importReport.importedResourcesIds, importReport);
+
+        return importReport;
+    }
+
+
+    private async performRelationsUpdats(importedResourcesIds: string[], importReport: ImportReport) {
+
         try {
 
             await RelationsCompleter.completeInverseRelations(
-                this.datastore, this.projectConfiguration, this.username, importReport.importedResourcesIds);
+                this.datastore, this.projectConfiguration, this.username, importedResourcesIds);
 
         } catch (msgWithParams) {
 
             importReport.errors.push(msgWithParams);
             try {
                 await RelationsCompleter.resetInverseRelations(
-                    this.datastore, this.projectConfiguration, this.username, importReport.importedResourcesIds);
+                    this.datastore, this.projectConfiguration, this.username, importedResourcesIds);
             } catch (e) {
                 importReport.errors.push(msgWithParams);
             }
         }
+    }
 
-        return importReport;
+
+    private async performDocumentsUpdates(documentsForUpdate: Array<NewDocument>, importReport: ImportReport) {
+
+        try {
+            for (let documentForUpdate of documentsForUpdate) { // TODO perform batch updates
+
+                const updatedDocument = this.mergeIfExists
+                    ? await this.datastore.update(documentForUpdate as Document, this.username)
+            : await this.datastore.create(documentForUpdate as Document, this.username); // throws if exists
+                importReport.importedResourcesIds.push(updatedDocument.resource.id);
+            }
+        } catch (errWithParams) {
+
+            importReport.errors.push(errWithParams);
+        }
     }
 
 
@@ -127,13 +129,29 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
+    private async prepareDocumentsForUpdate(documents: Array<Document>, importReport: ImportReport): Promise<Array<NewDocument>> {
+
+        const documentsForUpdate: Array<NewDocument> = [];
+        try {
+            for (let document of documents) {
+
+                const documentForUpdate = await this.prepareDocumentForUpdate(document);
+                if (documentForUpdate) documentsForUpdate.push(documentForUpdate);
+            }
+        } catch (errWithParams) {
+            importReport.errors.push(errWithParams);
+        }
+        return documentsForUpdate;
+    }
+
+
     /**
      * @returns {Document} the stored document if it has been imported, undefined otherwise
      * @throws errorWithParams
      * @throws [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
      * @throws [INVALID_MAIN_TYPE_DOCUMENT]
      */
-    private async prepareForUpdate(document: NewDocument): Promise<Document|undefined> {
+    private async prepareDocumentForUpdate(document: NewDocument): Promise<Document|undefined> {
 
         await this.validateType(document as Document, this.mainTypeDocumentId, this.mergeIfExists);
 

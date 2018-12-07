@@ -30,6 +30,15 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
+    /**
+     *
+     * @param docsToUpdate
+     * @param importReport
+     *   .errors
+     *      [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]
+     *      [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]
+     *      [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]
+     */
     public async import(docsToUpdate: Array<Document>, importReport: ImportReport): Promise<ImportReport> {
 
         const errors = await this.preValidate(docsToUpdate);
@@ -59,8 +68,10 @@ export class DefaultImportStrategy implements ImportStrategy {
      *
      * Implementation not: usage of find should not take long since it accesses indexer and should return undefined normally
      *
+     * TODO if in mode 'identifiersInsteadId', validate that all relation identifiers exist, either in import or as existing
+     *
      * @param docsToImport with resource.identifier set
-     * @returns [[ImportErrors.INVALID_TYPE, doc.resource.type]]
+     * @returns [[ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]]
      * @returns [[ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]]
      * @returns [[ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]]
      */
@@ -69,6 +80,7 @@ export class DefaultImportStrategy implements ImportStrategy {
         if (this.mergeIfExists) return [];
 
         const identifiersInDocsToImport: string[] = [];
+
         for (let doc of docsToImport) {
             if (!doc.resource.identifier) throw 'FATAL ERROR - illegal argument - document without identifier';
             if (identifiersInDocsToImport.includes(doc.resource.identifier)) {

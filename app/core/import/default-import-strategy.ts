@@ -7,7 +7,7 @@ import {TypeUtility} from '../model/type-utility';
 import {Validations} from '../model/validations';
 import {ImportErrors} from './import-errors';
 import {ImportReport} from './import-facade';
-import {duplicates} from 'tsfun';
+import {duplicates, to} from 'tsfun';
 import {RelationsCompleter} from './relations-completer';
 import {IdGenerator} from '../datastore/core/id-generator';
 
@@ -72,6 +72,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
         await this.performDocumentsUpdates(documentsForUpdate, importReport, this.username, this.mergeIfExists);
         if (importReport.errors.length > 0) return importReport;
+        importReport.importedResourcesIds = documentsForUpdate.map(to('resource.id'));
 
         if (!this.setInverseRelations || this.mergeIfExists) return importReport;
         await this.performRelationsUpdates(importReport.importedResourcesIds, importReport);
@@ -111,7 +112,6 @@ export class DefaultImportStrategy implements ImportStrategy {
                 const updatedDocument = updateExisting
                     ? await this.datastore.update(documentForUpdate as Document, username)
                     : await this.datastore.create(documentForUpdate as Document, username); // throws if exists
-                importReport.importedResourcesIds.push(updatedDocument.resource.id);
             }
         } catch (errWithParams) {
 

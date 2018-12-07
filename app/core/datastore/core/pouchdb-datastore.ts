@@ -121,8 +121,12 @@ export class PouchdbDatastore {
 
 
     /**
+     * @param resourceId
+     * @param options
+     * @param skipValidationAncDateConversion
      * @throws [DOCUMENT_NOT_FOUND]
-     * @throws [INVALID_DOCUMENT]
+     * @throws [INVALID_DOCUMENT] if not Document.isValid
+     * @returns Document. It is made sure that it isValid and the dates are converted to type Date.
      */
     public fetch(resourceId: string,
                  options: any = { conflicts: true }, skipValidationAncDateConversion = false): Promise<Document> {

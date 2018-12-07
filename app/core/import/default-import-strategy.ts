@@ -109,7 +109,7 @@ export class DefaultImportStrategy implements ImportStrategy {
         try {
             for (let documentForUpdate of documentsForUpdate) { // TODO perform batch updates
 
-                const updatedDocument = updateExisting
+                updateExisting
                     ? await this.datastore.update(documentForUpdate as Document, username)
                     : await this.datastore.create(documentForUpdate as Document, username); // throws if exists
             }

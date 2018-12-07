@@ -25,6 +25,7 @@ export class Validator {
      * @param suppressFieldsAndRelationsCheck
      * @param suppressIdentifierCheck
      * @param suppressIsRecordedInCheck
+     * @param suppressRecordedInTargetCheck
      * @returns resolves with () if validation passed
      * @throws [PREVALIDATION_INVALID_TYPE] if type is not configured in projectConfiguration
      * @throws [NO_ISRECORDEDIN] if type should have a isRecordedIn but doesn't have one
@@ -42,7 +43,8 @@ export class Validator {
     public async validate(document: Document|NewDocument,
                           suppressFieldsAndRelationsCheck = false,
                           suppressIdentifierCheck = false,
-                          suppressIsRecordedInCheck = false): Promise<void> {
+                          suppressIsRecordedInCheck = false,
+                          suppressRecordedInTargetCheck = false): Promise<void> {
 
         if (!Validations.validateType(document.resource, this.projectConfiguration)) {
             throw [ValidationErrors.INVALID_TYPE, document.resource.type];
@@ -70,8 +72,7 @@ export class Validator {
         const msgWithParams = Validator.validateGeometry(document.resource.geometry as any);
         if (msgWithParams) throw msgWithParams;
 
-
-        if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) {
+        if (!suppressRecordedInTargetCheck && document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) {
             const invalidRelationTargets = await this.validateRelationTargets(document as Document, 'isRecordedIn');
             if (invalidRelationTargets) {
                 throw [

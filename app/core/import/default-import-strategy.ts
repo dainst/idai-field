@@ -9,6 +9,7 @@ import {ImportErrors} from './import-errors';
 import {ImportReport} from './import';
 import {duplicates} from 'tsfun';
 import {RelationsCompleter} from './relations-completer';
+import {IdGenerator} from '../datastore/core/id-generator';
 
 
 /**
@@ -16,6 +17,12 @@ import {RelationsCompleter} from './relations-completer';
  * @author Thomas Kleinke
  */
 export class DefaultImportStrategy implements ImportStrategy {
+
+
+    private idGenerator = new IdGenerator();
+
+    private identifierMap: { [identifier: string]: string } = {};
+
 
     constructor(private typeUtility: TypeUtility,
                 private validator: Validator,
@@ -36,6 +43,8 @@ export class DefaultImportStrategy implements ImportStrategy {
 
     /**
      * TODO implement rollback, throw exec rollback error if it goes wrong
+     * TODO throw error if user specifies id
+     * TODO we could remove the datastore feature of predefining ids entirely
      *
      * @param documents
      * @param importReport
@@ -56,6 +65,15 @@ export class DefaultImportStrategy implements ImportStrategy {
                 return importReport;
             }
         }
+
+        this.identifierMap = {};
+        if (!this.mergeIfExists) for (let document of documents) {
+
+            const uuid = this.idGenerator.generateId();
+            document.resource.id = uuid;
+            this.identifierMap[document.resource.identifier] = uuid;
+        }
+
 
         const documentsForUpdate: Array<NewDocument> = [];
         try {
@@ -127,12 +145,12 @@ export class DefaultImportStrategy implements ImportStrategy {
             if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
         }
 
-
-        await this.validator.validate(
+        await this.validator.validate( // TODO with so many suppressions, we should think about if we make more public methods and call them directly
             documentForUpdate,
             false,
             true,
-            this.mergeIfExists);
+            this.mergeIfExists,
+            !this.mergeIfExists);
 
         return documentForUpdate;
     }
@@ -143,9 +161,11 @@ export class DefaultImportStrategy implements ImportStrategy {
         for (let relation of Object.keys(document.resource.relations)) {
             let i = 0;
             for (let identifier of document.resource.relations[relation]) {
-                const targetDoc = await this.findByIdentifier(identifier);
-                if (!targetDoc) throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, identifier]; // TODO use other message or do it in conversion. this one talks about ID instead identifier
-                document.resource.relations[relation][i] = targetDoc.resource.id;
+
+                const targetDocFromDB = await this.findByIdentifier(identifier);
+                if (!targetDocFromDB && !this.identifierMap[identifier]) throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, identifier]; // TODO use other message or do it in conversion. this one talks about ID instead identifier
+
+                document.resource.relations[relation][i] = targetDocFromDB ? targetDocFromDB.resource.id : this.identifierMap[identifier];
                 i++;
             }
         }

@@ -12,7 +12,7 @@ const EC = protractor.ExpectedConditions;
  * @author Thomas Kleinke
  * @author Daniel de Oliveira
  */
-xdescribe('import --', function() {
+describe('import --', function() {
 
     let index = 0;
 
@@ -52,7 +52,7 @@ xdescribe('import --', function() {
     };
 
 
-    it('perform successful import', () => {
+    fit('perform successful import', () => {
 
         importIt('./test/test-data/importer-test-ok.jsonl');
         browser.sleep(delays.shortRest * 4);
@@ -66,7 +66,7 @@ xdescribe('import --', function() {
     });
 
 
-    it('perform unsuccessful import with rollback', () => {
+    fit('err case', () => {
 
         importIt('./test/test-data/importer-test-constraint-violation.jsonl');
 

@@ -121,6 +121,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
         const identifierMap: { [identifier: string]: string } = {};
         for (let document of documents) {
+            if (document.resource.id) continue;
             const uuid = this.idGenerator.generateId();
             document.resource.id = uuid;
             identifierMap[document.resource.identifier] = uuid;

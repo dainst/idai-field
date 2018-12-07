@@ -48,22 +48,11 @@ export class PouchdbDatastore {
     public async create(document: NewDocument, username: string): Promise<Document> {
 
         if (!Document.isValid(document as Document, true)) throw [DatastoreErrors.INVALID_DOCUMENT];
-
-        let exists = false;
-        if (document.resource.id) try {
-            await this.db.get(document.resource.id);
-            exists = true;
-        } catch (_) {}
-        if (exists) throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
-
-        const clonedDocument = clone(document);
-        if (!clonedDocument.resource.id) clonedDocument.resource.id = this.idGenerator.generateId();
-        (clonedDocument as any)['_id'] = clonedDocument.resource.id;
-        (clonedDocument as any)['created'] = { user: username, date: new Date() };
-        (clonedDocument as any)['modified'] = [];
+        if (document.resource.id) await this.assertNotExists(document.resource.id);
 
         try {
-            return await this.performPut(clonedDocument);
+            return await this.performPut(
+                PouchdbDatastore.initalizeDocument(document, username, this.idGenerator.generateId()));
         } catch (err) {
             throw [DatastoreErrors.GENERIC_ERROR, err];
         }
@@ -83,16 +72,11 @@ export class PouchdbDatastore {
         if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
         if (!Document.isValid(document)) throw [DatastoreErrors.INVALID_DOCUMENT];
 
-        let existingDoc;
-        try {
-            existingDoc = await this.fetch(document.resource.id);
-        } catch (e) {
-            throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
-        }
+        const fetchedDocument = await this.assertExists(document.resource.id);
 
         const clonedDocument = clone(document);
-        clonedDocument.created = existingDoc.created;
-        clonedDocument.modified = existingDoc.modified;
+        clonedDocument.created = fetchedDocument.created;
+        clonedDocument.modified = fetchedDocument.modified;
         if (squashRevisionsIds) {
             await this.mergeModifiedDates(clonedDocument, squashRevisionsIds);
             await this.removeRevisions(clonedDocument.resource.id, squashRevisionsIds);
@@ -113,18 +97,13 @@ export class PouchdbDatastore {
     /**
      * @throws [DOCUMENT_NOT_FOUND]
      */
-    public async remove(doc: Document): Promise<void> {
+    public async remove(document: Document): Promise<void> {
 
-        if (!doc.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
+        if (!document.resource.id) throw [DatastoreErrors.DOCUMENT_NO_RESOURCE_ID];
 
-        this.deletedOnes.push(doc.resource.id as never);
+        this.deletedOnes.push(document.resource.id as never);
 
-        let fetchedDocument: any;
-        try {
-            fetchedDocument = await this.fetch(doc.resource.id);
-        } catch (e) {
-            throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
-        }
+        const fetchedDocument = await this.assertExists(document.resource.id) as any;
 
         if (fetchedDocument['_conflicts'] && fetchedDocument['_conflicts'].length > 0) {
             await this.removeRevisions(fetchedDocument.resource.id, fetchedDocument['_conflicts']);
@@ -251,10 +230,42 @@ export class PouchdbDatastore {
     }
 
 
+    private async assertNotExists(resourceId: string) {
+
+        let exists = false;
+        try {
+            await this.db.get(resourceId);
+            exists = true;
+        } catch (_) {}
+        if (exists) throw [DatastoreErrors.DOCUMENT_RESOURCE_ID_EXISTS];
+    }
+
+
+    private async assertExists(resourceId: string): Promise<Document> {
+
+        try {
+            return await this.fetch(resourceId);
+        } catch (e) {
+            throw [DatastoreErrors.DOCUMENT_NOT_FOUND];
+        }
+    }
+
+
     private static convertDates(result: any): Document {
 
         result.created.date = new Date(result.created.date);
         for (let modified of result.modified) modified.date = new Date(modified.date);
         return result;
+    }
+
+
+    private static initalizeDocument(document: NewDocument, username: string, generatedId: string) {
+
+        const clonedDocument = clone(document);
+        if (!clonedDocument.resource.id) clonedDocument.resource.id = generatedId;
+        (clonedDocument as any)['_id'] = clonedDocument.resource.id;
+        (clonedDocument as any)['created'] = { user: username, date: new Date() };
+        (clonedDocument as any)['modified'] = [];
+        return clonedDocument;
     }
 }

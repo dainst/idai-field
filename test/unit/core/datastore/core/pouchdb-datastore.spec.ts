@@ -79,7 +79,7 @@ describe('PouchdbDatastore', () => {
     });
 
 
-    it('create: should not create a document with the resource.id of an alredy existing doc', async done => {
+    it('create: should not create a document with the resource.id of an already existing doc', async done => {
 
         const docToCreate1: Document = Static.doc('sd1');
         docToCreate1.resource.id = 'a1';

@@ -7,6 +7,7 @@ import {TypeUtility} from '../model/type-utility';
 import {Validations} from '../model/validations';
 import {ImportErrors} from './import-errors';
 import {ImportReport} from './import';
+import {duplicates} from 'tsfun';
 
 
 /**
@@ -35,6 +36,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      * @param documents
      * @param importReport
      *   .errors
+     *      [ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier] if duplicate identifier is found in import file. only first occurence is listed // TODO return all and let importer do the rest
      *      [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]
      *      [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]
      *      [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]
@@ -43,10 +45,12 @@ export class DefaultImportStrategy implements ImportStrategy {
     public async import(documents: Array<Document>,
                         importReport: ImportReport): Promise<ImportReport> {
 
-        const errors = await this.validateIdentifiers(documents);
-        if (errors.length > 0) {
-            importReport.errors = errors as never[];
-            return importReport;
+        if (!this.mergeIfExists) { // if (!doc.resource.identifier) throw 'FATAL ERROR - illegal argument - document without identifier'; not strictly necessary since responsibility of parser
+            const duplicates_ = duplicates(documents.map(doc => doc.resource.identifier));
+            if (duplicates_.length > 0) {
+                importReport.errors = [[ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, duplicates_[0]]];
+                return importReport;
+            }
         }
 
         const documentsForUpdate: Array<NewDocument> = [];
@@ -71,36 +75,6 @@ export class DefaultImportStrategy implements ImportStrategy {
         }
 
         return importReport;
-    }
-
-
-    /**
-     * Some quick checks which do not query the db (much), to determine if import can succeed
-     *
-     * Implementation not: usage of find should not take long since it accesses indexer and should return undefined normally
-     *
-     * TODO if in mode 'identifiersInsteadId', validate that all relation identifiers exist, either in import or as existing
-     *
-     * @param docsToImport with resource.identifier set
-     * @returns [[ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]]
-     * @returns [[ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]]
-     * @returns [[ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]]
-     */
-    private async validateIdentifiers(docsToImport: Array<Document>): Promise<any[]> {
-
-        if (this.mergeIfExists) return [];
-
-        const identifiersInDocsToImport: string[] = [];
-
-        for (let doc of docsToImport) {
-            if (!doc.resource.identifier) throw 'FATAL ERROR - illegal argument - document without identifier';
-            if (identifiersInDocsToImport.includes(doc.resource.identifier)) {
-                return [[ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier]];
-            }
-            identifiersInDocsToImport.push(doc.resource.identifier);
-        }
-
-        return [];
     }
 
 

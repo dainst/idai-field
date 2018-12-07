@@ -103,12 +103,12 @@ export class DefaultImportStrategy implements ImportStrategy {
     private async performDocumentsUpdates(documentsForUpdate: Array<NewDocument>,
                                           importReport: ImportReport,
                                           username: string,
-                                          mergeIfExists: boolean) {
+                                          updateExisting: boolean /* else new docs */) {
 
         try {
             for (let documentForUpdate of documentsForUpdate) { // TODO perform batch updates
 
-                const updatedDocument = mergeIfExists
+                const updatedDocument = updateExisting
                     ? await this.datastore.update(documentForUpdate as Document, username)
                     : await this.datastore.create(documentForUpdate as Document, username); // throws if exists
                 importReport.importedResourcesIds.push(updatedDocument.resource.id);

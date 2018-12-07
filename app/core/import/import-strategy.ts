@@ -6,5 +6,5 @@ import {ImportReport} from './import';
  */
 export interface ImportStrategy {
 
-    import(docsToUpdate: Array<Document>, importReport: ImportReport): Promise<ImportReport>;
+    import(documents: Array<Document>, importReport: ImportReport): Promise<ImportReport>;
 }

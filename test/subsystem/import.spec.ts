@@ -135,7 +135,7 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('no rollback, because after merge we will not perform it', async done => {
+    xit('no rollback, because after merge we will not perform it', async done => { // TODO status of rollback is totally now, since we do batch updates
 
         await datastore.create(
             { resource: { id: 't1', identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
@@ -156,7 +156,7 @@ describe('Import/Subsystem', () => {
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
                     + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}')}); // change type to provoke error
 
-        expect(importReport.errors[0]).toEqual([ValidationErrors.INVALID_TYPE, 'InvalidType']);
+        expect(importReport.errors[0]).toEqual([ImportErrors.PREVALIDATION_INVALID_TYPE, 'InvalidType']);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(3);

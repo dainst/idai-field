@@ -25,9 +25,9 @@ export class MeninxFindImportStrategy implements ImportStrategy {
                 private username: string) { }
 
 
-    public async import(docsToUpdate: Array<Document>, importReport: ImportReport): Promise<ImportReport> {
+    public async import(documents: Array<Document>, importReport: ImportReport): Promise<ImportReport> {
 
-        for (let docToUpdate of docsToUpdate) {
+        for (let docToUpdate of documents) {
 
             try {
                 const importedDoc = await this.importDoc(docToUpdate);

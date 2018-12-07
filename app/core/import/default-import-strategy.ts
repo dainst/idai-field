@@ -32,7 +32,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
-     * @param docsToUpdate
+     * @param documents
      * @param importReport
      *   .errors
      *      [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]
@@ -40,25 +40,34 @@ export class DefaultImportStrategy implements ImportStrategy {
      *      [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]
      *      [ImportErrors.EXEC_MISSING_RELATION_TARGET]
      */
-    public async import(docsToUpdate: Array<Document>,
+    public async import(documents: Array<Document>,
                         importReport: ImportReport): Promise<ImportReport> {
 
-        const errors = await this.preValidate(docsToUpdate);
+        const errors = await this.validateIdentifiers(documents);
         if (errors.length > 0) {
             importReport.errors = errors as never[];
             return importReport;
         }
 
-        for (let docToUpdate of docsToUpdate) {
+        const documentsForUpdate: Array<NewDocument> = [];
+        try {
+            for (let document of documents) {
 
-            try {
-                const importedDoc = await this.importDoc(docToUpdate);
-                if (importedDoc) importReport.importedResourcesIds.push(importedDoc.resource.id);
-
-            } catch (msgWithParams) {
-                importReport.errors.push(msgWithParams);
-                return importReport;
+                const docForWrite = await this.prepareForUpdate(document);
+                if (docForWrite) documentsForUpdate.push(docForWrite);
             }
+
+            for (let documentForUpdate of documentsForUpdate) { // TODO perform batch updaes
+
+                const updatedDocument = this.mergeIfExists
+                    ? await this.datastore.update(documentForUpdate as Document, this.username)
+                    : await this.datastore.create(documentForUpdate as Document, this.username); // throws if exists
+                importReport.importedResourcesIds.push(updatedDocument.resource.id);
+            }
+
+        } catch (msgWithParams) {
+            importReport.errors.push(msgWithParams);
+            return importReport;
         }
 
         return importReport;
@@ -77,7 +86,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      * @returns [[ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]]
      * @returns [[ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]]
      */
-    private async preValidate(docsToImport: Array<Document>): Promise<any[]> {
+    private async validateIdentifiers(docsToImport: Array<Document>): Promise<any[]> {
 
         if (this.mergeIfExists) return [];
 
@@ -89,12 +98,6 @@ export class DefaultImportStrategy implements ImportStrategy {
                 return [[ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier]];
             }
             identifiersInDocsToImport.push(doc.resource.identifier);
-
-            const existingDocument = await this.findByIdentifier(doc.resource.identifier);
-            if (existingDocument) return [[ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier]];
-
-            const errWithParams = this.preValidateType(doc, this.mainTypeDocumentId);
-            if (errWithParams) return [errWithParams];
         }
 
         return [];
@@ -107,17 +110,23 @@ export class DefaultImportStrategy implements ImportStrategy {
      * @throws [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
      * @throws [INVALID_MAIN_TYPE_DOCUMENT]
      */
-    private async importDoc(document: NewDocument): Promise<Document|undefined> {
+    private async prepareForUpdate(document: NewDocument): Promise<Document|undefined> {
+
+        await this.validateType(document as Document, this.mainTypeDocumentId, this.mergeIfExists);
 
         if (this.useIdentifiersInRelations) await this.rewriteRelations(document);
         if (this.mainTypeDocumentId) await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
 
+
         let documentForUpdate: Document = document as Document;
+        const existingDocument = await this.findByIdentifier(document.resource.identifier);
         if (this.mergeIfExists) {
-            const existingDocument = await this.findByIdentifier(document.resource.identifier);
             if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate);
             else return undefined;
+        } else {
+            if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
         }
+
 
         await this.validator.validate(
             documentForUpdate,
@@ -125,9 +134,7 @@ export class DefaultImportStrategy implements ImportStrategy {
             true,
             this.mergeIfExists);
 
-        return this.mergeIfExists
-            ? await this.datastore.update(documentForUpdate, this.username)
-            : await this.datastore.create(documentForUpdate, this.username); // throws if exists
+        return documentForUpdate;
     }
 
 
@@ -173,17 +180,17 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
-    private preValidateType(doc: Document, mainTypeDocumentId: string) {
+    private validateType(doc: NewDocument, mainTypeDocumentId: string, mergeIfExists: boolean) {
 
-        if (!Validations.validateType(doc.resource, this.projectConfiguration)) {
-            return [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type];
+        if ((!mergeIfExists || doc.resource.type) && !Validations.validateType(doc.resource, this.projectConfiguration)) {
+            throw [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type];
         }
 
         if (this.typeUtility.isSubtype(doc.resource.type, 'Operation') || doc.resource.type === 'Place') {
-            if (mainTypeDocumentId) return [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED];
+            if (mainTypeDocumentId) throw [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED];
         } else {
-            if (!mainTypeDocumentId && (!doc.resource.relations || !doc.resource.relations['isRecordedIn'])) {
-                return [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]; // TODO also return if no target
+            if (!mergeIfExists && !mainTypeDocumentId && (!doc.resource.relations || !doc.resource.relations['isRecordedIn'])) {
+                throw [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]; // TODO also return if no target
             }
         }
     }

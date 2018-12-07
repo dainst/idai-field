@@ -25,6 +25,7 @@ describe('DefaultImportStrategy', () => {
 
         mockValidator.validate.and.returnValue(Promise.resolve());
         mockDatastore.create.and.callFake((a) => Promise.resolve(a));
+        mockDatastore.update.and.callFake((a) => Promise.resolve(a));
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
         mockProjectConfiguration.getTypesList.and.returnValue(
             [{name: 'Find'}, {name: 'Place'}, {name: 'Trench'}]);
@@ -69,7 +70,7 @@ describe('DefaultImportStrategy', () => {
             null,
             'user1',
             '', true).import(
-            [{ resource: {type: undefined, id: '1', relations: undefined } } as any], importReport);
+            [{ resource: {id: '1', relations: undefined } } as any], importReport);
 
         expect(mockDatastore.create).not.toHaveBeenCalled();
         expect(mockDatastore.update).toHaveBeenCalled();
@@ -168,8 +169,7 @@ describe('DefaultImportStrategy', () => {
         const docToImport = { resource: { type: 'Find', identifier: '1a',
                 relations: { isRecordedIn: ['three'] } } };
 
-        mockDatastore.find.and.returnValues(
-            Promise.resolve({ totalCount: 0 }),
+        mockDatastore.find.and.returnValue(
             Promise.resolve({ documents: [{ resource: { id: '3' }}], totalCount: 1 }));
         importReport = await importStrategy.import([ docToImport as any ], importReport);
 
@@ -194,7 +194,6 @@ describe('DefaultImportStrategy', () => {
                 relations: { isRecordedIn: ['three'] } } };
 
         mockDatastore.find.and.returnValues(
-            Promise.resolve({ totalCount: 0 }),
             Promise.resolve({ totalCount: 0 }));
         importReport = await importStrategy.import([ docToImport as any ], importReport);
 

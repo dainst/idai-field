@@ -36,8 +36,7 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             undefined,
             undefined,
-            { go: () => Promise.resolve(
-                '{ "type": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}')});
+                '{ "type": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}');
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
@@ -58,8 +57,7 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             trench.resource.id,
             undefined,
-            { go: () => Promise.resolve(
-                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "UnsupportedGeometryType", "coordinates": [1, 2] } }')});
+                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "UnsupportedGeometryType", "coordinates": [1, 2] } }');
 
         expect(report.errors[0]).toEqual([ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, "UnsupportedGeometryType"]);
         done();
@@ -79,8 +77,7 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             trench.resource.id,
             undefined,
-            { go: () => Promise.resolve(
-                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "Polygon", "coordinates": [[1, 2, 3]] } }')});
+                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "Polygon", "coordinates": [[1, 2, 3]] } }');
 
         expect(report.errors[0]).toEqual([ValidationErrors.INVALID_COORDINATES, "Polygon"]);
         done();
@@ -99,8 +96,7 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             stored.resource.id,
             false,
-            { go: () => Promise.resolve(
-                    '{ "type": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}')});
+                    '{ "type": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}');
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(2);
@@ -124,9 +120,8 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             resourceId,
             false,
-            { go: () => Promise.resolve(
-                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
-                    + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}')});
+            '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
+                    + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}');
 
         expect(importReport.errors[0]).toEqual([ImportErrors.PREVALIDATION_INVALID_TYPE, 'InvalidType']);
         const result = await datastore.find({});
@@ -152,9 +147,9 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             undefined,
             true,
-            { go: () => Promise.resolve(
+
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
-                    + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}')}); // change type to provoke error
+                    + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}'); // change type to provoke error
 
         expect(importReport.errors[0]).toEqual([ImportErrors.PREVALIDATION_INVALID_TYPE, 'InvalidType']);
 
@@ -180,8 +175,7 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             undefined,
             true,
-            { go: () => Promise.resolve(
-                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}')});
+                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}');
 
         const result = await datastore.find({});
         expect(result.documents[0].resource.shortDescription).toBe('feature_1');
@@ -201,9 +195,8 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             undefined,
             true,
-            { go: () => Promise.resolve(
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}' + "\n"
-                + '{ "type": "Feature", "identifier" : "f2", "shortDescription" : "feature_2"}')});
+                + '{ "type": "Feature", "identifier" : "f2", "shortDescription" : "feature_2"}');
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
@@ -224,8 +217,7 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             'f1',
             false,
-            { go: () => Promise.resolve(
-                    '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}')});
+                    '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}');
 
         expect(importReport.errors[0]).toEqual([ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]);
 

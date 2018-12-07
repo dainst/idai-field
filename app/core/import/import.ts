@@ -1,5 +1,4 @@
 import {Document} from 'idai-components-2';
-import {Reader} from './reader';
 import {Parser} from './parser';
 import {ImportStrategy} from './import-strategy';
 
@@ -28,15 +27,13 @@ export module Import {
      * containing the number of resources imported successfully as well as information on errors that occurred,
      * if any.
      */
-    export async function go(reader: Reader, parser: Parser, importStrategy: ImportStrategy): Promise<ImportReport> {
+    export async function go(fileContent: string, parser: Parser, importStrategy: ImportStrategy): Promise<ImportReport> {
 
         const importReport = {
             errors: [],
             warnings: [],
             importedResourcesIds: []
         };
-
-        const fileContent = await reader.go();
 
         const docsToUpdate: Document[] = [];
         try {

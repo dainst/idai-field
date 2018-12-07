@@ -49,10 +49,10 @@ export module ImportFacade {
                              projectConfiguration: ProjectConfiguration,
                              mainTypeDocumentId: string,
                              allowMergingExistingResources: boolean,
-                             reader: Reader) {
+                             fileContent: string) {
 
         return Import.go(
-            reader,
+            fileContent,
             createParser(format),
             createImportStrategy(
                 format,

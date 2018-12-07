@@ -107,7 +107,7 @@ export class ImportComponent implements OnInit {
             this.projectConfiguration,
             this.mainTypeDocumentId,
             this.allowMergingExistingResources,
-            reader
+            await reader.go()
         );
         this.remoteChangesStream.setAutoCacheUpdate(true);
 

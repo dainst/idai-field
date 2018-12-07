@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {isNot, empty} from 'tsfun';
 import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
-import {ImportReport} from '../../core/import/import';
+import {ImportReport} from '../../core/import/import-facade';
 import {Reader} from '../../core/import/reader';
 import {FileSystemReader} from '../../core/import/file-system-reader';
 import {HttpReader} from '../../core/import/http-reader';

@@ -5,7 +5,7 @@ import {Validator} from '../model/validator';
 import {IdaiFieldFindResult} from '../datastore/core/cached-read-datastore';
 import {clone} from '../util/object-util';
 import {ImportErrors} from './import-errors';
-import {ImportReport} from './import';
+import {ImportReport} from './import-facade';
 
 
 const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {

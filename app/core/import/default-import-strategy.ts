@@ -6,7 +6,7 @@ import {DocumentMerge} from './document-merge';
 import {TypeUtility} from '../model/type-utility';
 import {Validations} from '../model/validations';
 import {ImportErrors} from './import-errors';
-import {ImportReport} from './import';
+import {ImportReport} from './import-facade';
 import {duplicates} from 'tsfun';
 import {RelationsCompleter} from './relations-completer';
 import {IdGenerator} from '../datastore/core/id-generator';

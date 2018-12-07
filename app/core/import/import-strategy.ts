@@ -1,5 +1,5 @@
 import {Document} from 'idai-components-2'
-import {ImportReport} from './import';
+import {ImportReport} from './import-facade';
 
 /**
  * @author Daniel de Oliveira

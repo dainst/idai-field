@@ -21,7 +21,8 @@ export class DefaultImportStrategy implements ImportStrategy {
                 private projectConfiguration: ProjectConfiguration,
                 private username: string,
                 private mainTypeDocumentId: string, /* '' => no assignment */
-                private mergeIfExists: boolean
+                private mergeIfExists: boolean,
+                private useIdentifiersInRelations = false
                 ) {
 
         if (mainTypeDocumentId && mergeIfExists) {
@@ -31,15 +32,16 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
-     *
      * @param docsToUpdate
      * @param importReport
      *   .errors
      *      [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]
      *      [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]
      *      [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]
+     *      [ImportErrors.EXEC_MISSING_RELATION_TARGET]
      */
-    public async import(docsToUpdate: Array<Document>, importReport: ImportReport): Promise<ImportReport> {
+    public async import(docsToUpdate: Array<Document>,
+                        importReport: ImportReport): Promise<ImportReport> {
 
         const errors = await this.preValidate(docsToUpdate);
         if (errors.length > 0) {
@@ -107,6 +109,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      */
     private async importDoc(document: NewDocument): Promise<Document|undefined> {
 
+        if (this.useIdentifiersInRelations) await this.rewriteRelations(document);
         if (this.mainTypeDocumentId) await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
 
         let documentForUpdate: Document = document as Document;
@@ -125,6 +128,20 @@ export class DefaultImportStrategy implements ImportStrategy {
         return this.mergeIfExists
             ? await this.datastore.update(documentForUpdate, this.username)
             : await this.datastore.create(documentForUpdate, this.username); // throws if exists
+    }
+
+
+    private async rewriteRelations(document: NewDocument) {
+
+        for (let relation of Object.keys(document.resource.relations)) {
+            let i = 0;
+            for (let identifier of document.resource.relations[relation]) {
+                const targetDoc = await this.findByIdentifier(identifier);
+                if (!targetDoc) throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, identifier]; // TODO use other message or do it in conversion. this one talks about ID instead identifier
+                document.resource.relations[relation][i] = targetDoc.resource.id;
+                i++;
+            }
+        }
     }
 
 
@@ -166,7 +183,7 @@ export class DefaultImportStrategy implements ImportStrategy {
             if (mainTypeDocumentId) return [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED];
         } else {
             if (!mainTypeDocumentId && (!doc.resource.relations || !doc.resource.relations['isRecordedIn'])) {
-                return [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED];
+                return [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]; // TODO also return if no target
             }
         }
     }

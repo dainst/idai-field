@@ -136,7 +136,7 @@ export module ImportFacade {
             default: // native
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
                     projectConfiguration, usernameProvider.getUsername(),
-                    mainTypeDocumentId, allowMergingExistingResources);
+                    mainTypeDocumentId, allowMergingExistingResources, true);
         }
     }
 

@@ -120,7 +120,7 @@ describe('DefaultImportStrategy', () => {
     });
 
 
-    it('should merge geometry', async done => {
+    it('merge geometry', async done => {
 
         const originalDoc = { resource: { id: '1', identifier: 'i1', shortDescription: 'sd1', relations: {}}};
         const docToMerge = { resource: { geometry: { a: 'b' }}};
@@ -149,6 +149,56 @@ describe('DefaultImportStrategy', () => {
             geometry: { a: 'b' }, // merged from docToMerge
             relations: {}
         });
+        done();
+    });
+
+
+    it('rewrite identifiers to ids in relations', async done => {
+
+        importStrategy = new DefaultImportStrategy(
+            mockTypeUtility,
+            mockValidator,
+            mockDatastore,
+            mockProjectConfiguration,
+            'user1',
+            '',
+            false,
+            true);
+
+        const docToImport = { resource: { type: 'Find', identifier: '1a',
+                relations: { isRecordedIn: ['three'] } } };
+
+        mockDatastore.find.and.returnValues(
+            Promise.resolve({ totalCount: 0 }),
+            Promise.resolve({ documents: [{ resource: { id: '3' }}], totalCount: 1 }));
+        importReport = await importStrategy.import([ docToImport as any ], importReport);
+
+        expect(docToImport.resource.relations.isRecordedIn[0]).toEqual('3');
+        done();
+    });
+
+
+    it('rewrite identifiers to ids in relations - relation target not found', async done => { // TODO replace later with preValidation
+
+        importStrategy = new DefaultImportStrategy(
+            mockTypeUtility,
+            mockValidator,
+            mockDatastore,
+            mockProjectConfiguration,
+            'user1',
+            '',
+            false,
+            true);
+
+        const docToImport = { resource: { type: 'Find', identifier: '1a',
+                relations: { isRecordedIn: ['three'] } } };
+
+        mockDatastore.find.and.returnValues(
+            Promise.resolve({ totalCount: 0 }),
+            Promise.resolve({ totalCount: 0 }));
+        importReport = await importStrategy.import([ docToImport as any ], importReport);
+
+        expect(importReport.errors[0][0]).toEqual(ImportErrors.EXEC_MISSING_RELATION_TARGET);
         done();
     });
 

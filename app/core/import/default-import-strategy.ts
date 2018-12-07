@@ -65,12 +65,12 @@ export class DefaultImportStrategy implements ImportStrategy {
                 return importReport;
             }
         }
-        this.identifierMap = this.mergeIfExists ? {} : this.assignIds(documents);
+        this.identifierMap = this.mergeIfExists ? {} : DefaultImportStrategy.assignIds(documents, this.idGenerator.generateId.bind(this));
 
         const documentsForUpdate = await this.prepareDocumentsForUpdate(documents, importReport);
         if (importReport.errors.length > 0) return importReport;
 
-        await this.performDocumentsUpdates(documentsForUpdate, importReport);
+        await this.performDocumentsUpdates(documentsForUpdate, importReport, this.username, this.mergeIfExists);
         if (importReport.errors.length > 0) return importReport;
 
         if (!this.setInverseRelations || this.mergeIfExists) return importReport;
@@ -100,33 +100,23 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
-    private async performDocumentsUpdates(documentsForUpdate: Array<NewDocument>, importReport: ImportReport) {
+    private async performDocumentsUpdates(documentsForUpdate: Array<NewDocument>,
+                                          importReport: ImportReport,
+                                          username: string,
+                                          mergeIfExists: boolean) {
 
         try {
             for (let documentForUpdate of documentsForUpdate) { // TODO perform batch updates
 
-                const updatedDocument = this.mergeIfExists
-                    ? await this.datastore.update(documentForUpdate as Document, this.username)
-            : await this.datastore.create(documentForUpdate as Document, this.username); // throws if exists
+                const updatedDocument = mergeIfExists
+                    ? await this.datastore.update(documentForUpdate as Document, username)
+            : await this.datastore.create(documentForUpdate as Document, username); // throws if exists
                 importReport.importedResourcesIds.push(updatedDocument.resource.id);
             }
         } catch (errWithParams) {
 
             importReport.errors.push(errWithParams);
         }
-    }
-
-
-    private assignIds(documents: Array<Document>) {
-
-        const identifierMap: { [identifier: string]: string } = {};
-        for (let document of documents) {
-            if (document.resource.id) continue;
-            const uuid = this.idGenerator.generateId();
-            document.resource.id = uuid;
-            identifierMap[document.resource.identifier] = uuid;
-        }
-        return identifierMap;
     }
 
 
@@ -154,9 +144,9 @@ export class DefaultImportStrategy implements ImportStrategy {
      */
     private async prepareDocumentForUpdate(document: NewDocument): Promise<Document|undefined> {
 
-        await this.validateType(document as Document, this.mainTypeDocumentId, this.mergeIfExists);
+        await DefaultImportStrategy.validateType(document as Document, this.mainTypeDocumentId, this.mergeIfExists, this.projectConfiguration, this.typeUtility.isSubtype.bind(this));
 
-        if (this.useIdentifiersInRelations) await this.rewriteRelations(document);
+        if (this.useIdentifiersInRelations) await DefaultImportStrategy.rewriteRelations(document, this.identifierMap, this.findByIdentifier.bind(this));
         if (this.mainTypeDocumentId) await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
 
 
@@ -177,22 +167,6 @@ export class DefaultImportStrategy implements ImportStrategy {
             !this.mergeIfExists);
 
         return documentForUpdate;
-    }
-
-
-    private async rewriteRelations(document: NewDocument) {
-
-        for (let relation of Object.keys(document.resource.relations)) {
-            let i = 0;
-            for (let identifier of document.resource.relations[relation]) {
-
-                const targetDocFromDB = await this.findByIdentifier(identifier);
-                if (!targetDocFromDB && !this.identifierMap[identifier]) throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, identifier]; // TODO use other message or do it in conversion. this one talks about ID instead identifier
-
-                document.resource.relations[relation][i] = targetDocFromDB ? targetDocFromDB.resource.id : this.identifierMap[identifier];
-                i++;
-            }
-        }
     }
 
 
@@ -224,17 +198,57 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
-    private validateType(doc: NewDocument, mainTypeDocumentId: string, mergeIfExists: boolean) {
 
-        if ((!mergeIfExists || doc.resource.type) && !Validations.validateType(doc.resource, this.projectConfiguration)) {
+    private static assignIds(documents: Array<Document>, generateId: Function) {
+
+        const identifierMap: { [identifier: string]: string } = {};
+        for (let document of documents) {
+            if (document.resource.id) continue;
+            const uuid = generateId();
+            document.resource.id = uuid;
+            identifierMap[document.resource.identifier] = uuid;
+        }
+        return identifierMap;
+    }
+
+
+
+    private static validateType(doc: NewDocument,
+                                mainTypeDocumentId: string,
+                                mergeIfExists: boolean,
+                                projectConfiguration: ProjectConfiguration,
+                                isSubtype: Function) {
+
+        if ((!mergeIfExists || doc.resource.type) && !Validations.validateType(doc.resource, projectConfiguration)) {
             throw [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type];
         }
 
-        if (this.typeUtility.isSubtype(doc.resource.type, 'Operation') || doc.resource.type === 'Place') {
+        if (isSubtype(doc.resource.type, 'Operation') || doc.resource.type === 'Place') {
             if (mainTypeDocumentId) throw [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED];
         } else {
             if (!mergeIfExists && !mainTypeDocumentId && (!doc.resource.relations || !doc.resource.relations['isRecordedIn'])) {
                 throw [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]; // TODO also return if no target
+            }
+        }
+    }
+
+
+    /**
+     * Rewrites the relations of document in place
+     */
+    private static async rewriteRelations(document: NewDocument,
+                                          identifierMap: { [identifier: string]: string },
+                                          findByIdentifier: Function) {
+
+        for (let relation of Object.keys(document.resource.relations)) {
+            let i = 0;
+            for (let identifier of document.resource.relations[relation]) {
+
+                const targetDocFromDB = await findByIdentifier(identifier);
+                if (!targetDocFromDB && !identifierMap[identifier]) throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, identifier]; // TODO use other message or do it in conversion. this one talks about ID instead identifier
+
+                document.resource.relations[relation][i] = targetDocFromDB ? targetDocFromDB.resource.id : identifierMap[identifier];
+                i++;
             }
         }
     }

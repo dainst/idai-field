@@ -46,10 +46,9 @@ describe('CachedDatastore', () => {
     beforeEach(() => {
 
         mockdb = jasmine.createSpyObj('mockdb',
-                ['create', 'update', 'fetch', 'fetchMultiple', 'fetchRevision']);
+                ['create', 'update', 'fetch', 'bulkFetch', 'fetchRevision']);
         mockIndexFacade = jasmine.createSpyObj('mockIndexFacade',
             ['perform', 'put', 'remove']);
-
 
         mockdb.update.and.callFake(function(dd) {
             // working with the current assumption that the inner pouchdbdatastore datastore return the same instance
@@ -96,7 +95,7 @@ describe('CachedDatastore', () => {
 
     it('should add missing fields on getMultiple, bypassing cache', async done => {
 
-        mockdb.fetchMultiple.and.returnValues(Promise.resolve({
+        mockdb.bulkFetch.and.returnValues(Promise.resolve({
             rows: [{
                 doc: {
                     resource: {
@@ -132,7 +131,7 @@ describe('CachedDatastore', () => {
             }
         }));
 
-        mockdb.fetchMultiple.and.returnValues(Promise.resolve({
+        mockdb.bulkFetch.and.returnValues(Promise.resolve({
             rows: [{
                 doc: {
                     resource: {
@@ -183,7 +182,7 @@ describe('CachedDatastore', () => {
     it('should add missing fields on find, bypassing cache', async done => {
 
         mockIndexFacade.perform.and.returnValues(['1']);
-        mockdb.fetchMultiple.and.returnValues(Promise.resolve({
+        mockdb.bulkFetch.and.returnValues(Promise.resolve({
             rows: [{
                 doc: {
                     resource: {
@@ -241,7 +240,7 @@ describe('CachedDatastore', () => {
     it('cant find one and only document', async done => {
 
         mockIndexFacade.perform.and.returnValues(['1']);
-        mockdb.fetchMultiple.and.returnValues(Promise.resolve({
+        mockdb.bulkFetch.and.returnValues(Promise.resolve({
             rows: [{
                 error: 'not_found'
             }]
@@ -258,7 +257,7 @@ describe('CachedDatastore', () => {
 
         mockIndexFacade.perform.and.returnValues(['1', '2']);
 
-        mockdb.fetchMultiple.and.returnValues(Promise.resolve({
+        mockdb.bulkFetch.and.returnValues(Promise.resolve({
             rows: [{
                 doc: {
                     resource: {

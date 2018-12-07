@@ -188,7 +188,7 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
         const documents: Array<T> = [];
         let notFound: number = 0;
 
-        const result: any = await this.datastore.fetchMultiple(ids);
+        const result: any = await this.datastore.bulkFetch(ids);
 
         for (let row of result.rows) {
             if (!row.doc) {

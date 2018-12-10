@@ -57,7 +57,7 @@ describe('Validator', () => {
             }
         };
         await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-            .validate(doc,  true).then(() => done(), msgWithParams => fail(msgWithParams));
+            .assertIsRecordedInTargetsExists(doc).then(() => done(), msgWithParams => fail(msgWithParams));
         done();
     });
 
@@ -71,7 +71,7 @@ describe('Validator', () => {
 
         try {
             await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-                .validate(doc, false);
+                .assertIsRecordedInTargetsExists(doc);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.NO_ISRECORDEDIN_TARGET, 'notexisting']);
@@ -102,7 +102,7 @@ describe('Validator', () => {
 
 
 
-    it('should report nothing when omitting optional property', async done => {
+    it('should report nothing when omitting optional property', () => {
 
         const datastore = jasmine.createSpyObj('datastore',['find']);
         datastore.find.and.returnValues(Promise.resolve({totalCount: 0, documents: []}));
@@ -112,16 +112,25 @@ describe('Validator', () => {
                 id: '1',
                 type: 'T',
                 mandatory: 'm',
-                relations: {},
+                relations: {isRecordedIn: ['0']},
             }
         };
 
-        new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-            .validate(doc,   true).then(() => done(), msgWithParams => fail(msgWithParams));
+
+        try {
+            new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration)).assertNoFieldsMissing(doc);
+        } catch (errWithParams) {
+            fail(errWithParams);
+        }
+        try {
+            new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration)).assertIsWellformed(doc);
+        } catch (errWithParams) {
+            fail(errWithParams);
+        }
     });
 
 
-    it('should report error when omitting mandatory property', async done => {
+    it('should report error when omitting mandatory property', () => {
 
         const doc = {
             resource: {
@@ -139,16 +148,15 @@ describe('Validator', () => {
         }
 
         try {
-            await new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration)).assertIsWellformed(doc);
+            new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration)).assertIsWellformed(doc);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
         }
-        done();
     });
 
 
-    it('should report error when leaving mandatory property empty', async done => {
+    it('should report error when leaving mandatory property empty', () => {
 
         const doc = {
             resource: {
@@ -167,12 +175,11 @@ describe('Validator', () => {
         }
 
         try {
-            await new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration)).assertIsWellformed(doc);
+            new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration)).assertIsWellformed(doc);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
         }
-        done();
     });
 
 
@@ -272,7 +279,7 @@ describe('Validator', () => {
     });
 
 
-    it('should report invalid numeric field', done => {
+    it('should report invalid numeric field', async done => {
 
         const doc = {
             resource: {
@@ -280,21 +287,29 @@ describe('Validator', () => {
                 type: 'T',
                 mandatory: 'm',
                 number1: 'ABC',
-                relations: {}
+                relations: {isRecordedIn: ['0']}
             }
         };
 
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc,   true).then(
-            () => fail(),
-            msgWithParams => {
-                expect(msgWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
-                done();
-            });
+        try {
+            new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+                .assertCorrectnessOfNumericalValues(doc);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1'])
+        }
+        try {
+            await new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+                .assertIsWellformed(doc);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1'])
+        }
+        done();
     });
 
 
-    it('should report invalid numeric fields', done => {
+    it('should report invalid numeric fields', async done => {
 
         const doc = {
             resource: {
@@ -303,16 +318,24 @@ describe('Validator', () => {
                 mandatory: 'm',
                 number1: 'ABC',
                 number2: 'DEF',
-                relations: {}
+                relations: {isRecordedIn: ['0']}
             }
         };
 
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc,  true).then(
-            () => fail(),
-            msgWithParams => {
-                expect(msgWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);
-                done();
-            });
+        try {
+            new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+                .assertCorrectnessOfNumericalValues(doc);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2'])
+        }
+        try {
+            await new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+                .assertIsWellformed(doc);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2'])
+        }
+        done();
     });
 });

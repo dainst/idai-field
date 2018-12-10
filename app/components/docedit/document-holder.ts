@@ -76,9 +76,10 @@ export class DocumentHolder {
     public async save(): Promise<Document> {
 
         await this.validator.assertIdentifierIsUnique(this.clonedDocument);
-        await this.validator.validate(this.clonedDocument, false);
+        await this.validator.assertIsRecordedInTargetsExists(this.clonedDocument);
         this.validator.assertHasIsRecordedIn(this.clonedDocument);
         this.validator.assertNoFieldsMissing(this.clonedDocument);
+        this.validator.assertCorrectnessOfNumericalValues(this.clonedDocument);
 
         const savedDocument: Document = await this.persistenceManager.persist(
             this.cleanup(this.clonedDocument),

@@ -165,8 +165,6 @@ export class DefaultImportStrategy implements ImportStrategy {
         }
 
         this.validator.assertIsWellformed(documentForUpdate);
-        await this.validator.validate(documentForUpdate, true);
-
         return documentForUpdate;
     }
 

@@ -20,22 +20,15 @@ export class Validator {
                 private datastore: IdaiFieldDocumentDatastore,
                 private typeUtility: TypeUtility) {}
 
-    /**
-     * @param suppressRecordedInTargetCheck
-     * // @throws [PREVALIDATION_INVALID_TYPE] if type is not configured in projectConfiguration
-     *
+    // TODO what about this leftover? @throws [PREVALIDATION_INVALID_TYPE] if type is not configured in projectConfiguration
+
+
+    /** TODO make use of it in default import strat
      * @throws [NO_ISRECORDEDIN_TARGET]
-     * @throws [MISSING_GEOMETRYTYPE]
-     * @throws [MISSING_COORDINATES]
-     * @throws [INVALID_COORDINATES]
-     * @throws [UNSUPPORTED_GEOMETRY_TYPE]
-     * @throws [INVALID_NUMERICAL_VALUE]
      */
-    public async validate(document: Document|NewDocument, suppressRecordedInTargetCheck): Promise<void> {
+    public async assertIsRecordedInTargetsExists(document: Document|NewDocument): Promise<void> {
 
-        Validator.validateNumericalValues(document as Document, this.projectConfiguration);
-
-        if (!suppressRecordedInTargetCheck && document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) {
+        if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) {
             const invalidRelationTargets = await this.validateRelationTargets(document as Document, 'isRecordedIn');
             if (invalidRelationTargets) {
                 throw [
@@ -74,17 +67,24 @@ export class Validator {
      *   * that the type is known and
      *   * the fields and relations defined in a given document are actually configured
      *     fields and relations for the type of resource defined.
-     *   * that the geometry is structurally valid
+     *   * that the geometries are structurally valid
      *   * that it has the isRecordedIn if the type requires it
      *   * there are no mandatory fields missing
+     *   * the numerical values are correct
      *
-     * Does not assert validity of any of the fields or relations contents.
+     * Does not do anything database consistency related,
+     *   e.g. checking identifier uniqueness or relation target existence.
      *
      * @throws [INVALID_TYPE]
      * @throws [INVALID_RELATIONS]
      * @throws [INVALID_FIELDS]
      * @throws [NO_ISRECORDEDIN]
      * @throws [MISSING_PROPERTY]
+     * @throws [MISSING_GEOMETRYTYPE]
+     * @throws [MISSING_COORDINATES]
+     * @throws [UNSUPPORTED_GEOMETRY_TYPE]
+     * @throws [INVALID_COORDINATES]
+     * @throws [INVALID_NUMERICAL_VALUE]
      */
     public assertIsWellformed(document: Document|NewDocument): void {
 
@@ -111,11 +111,27 @@ export class Validator {
         }
 
         this.assertNoFieldsMissing(document);
-
-        const msgWithParams = Validator.validateGeometry(document.resource.geometry as any);
-        if (msgWithParams) throw msgWithParams;
-
         this.assertHasIsRecordedIn(document);
+        this.assertCorrectnessOfNumericalValues(document);
+
+        const errWithParams = Validator.assertStructuralValidityOfGeometries(document.resource.geometry as any);
+        if (errWithParams) throw errWithParams;
+    }
+
+
+    /**
+     * @throws [INVALID_NUMERICAL_VALUE]
+     */
+    public assertCorrectnessOfNumericalValues(document: Document|NewDocument) {
+
+        const invalidNumericValues = Validations.validateNumericValues(document.resource, this.projectConfiguration);
+        if (invalidNumericValues ) {
+            throw [
+                ValidationErrors.INVALID_NUMERICAL_VALUES,
+                document.resource.type,
+                invalidNumericValues.join(', ')
+            ];
+        }
     }
 
 
@@ -135,6 +151,9 @@ export class Validator {
     }
 
 
+    /**
+     * @throws [NO_ISRECORDEDIN]
+     */
     public assertHasIsRecordedIn(document: Document|NewDocument): void {
 
         if (this.isExpectedToHaveIsRecordedInRelation(document)
@@ -176,7 +195,7 @@ export class Validator {
     }
 
 
-    private static validateGeometry(geometry: IdaiFieldGeometry): Array<string>|null {
+    private static assertStructuralValidityOfGeometries(geometry: IdaiFieldGeometry): Array<string>|null {
 
         if (!geometry) return null;
 
@@ -219,19 +238,6 @@ export class Validator {
         }
 
         return null;
-    }
-
-
-    private static validateNumericalValues(document: Document, projectConfiguration: ProjectConfiguration) {
-
-        const invalidNumericValues = Validations.validateNumericValues(document.resource, projectConfiguration);
-        if (invalidNumericValues ) {
-            throw [
-                ValidationErrors.INVALID_NUMERICAL_VALUES,
-                document.resource.type,
-                invalidNumericValues.join(', ')
-            ];
-        }
     }
 
 

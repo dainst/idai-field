@@ -17,13 +17,13 @@ describe('DefaultImportStrategy', () => {
     beforeEach(() => {
 
         mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get', 'find']);
-        mockValidator = jasmine.createSpyObj('validator', ['validate', 'assertIsWellformed']);
-        // mockTypeUtility = jasmine.createSpyObj('typeUtility', ['isSubtype']);
+        mockValidator = jasmine.createSpyObj('validator', ['assertIsRecordedInTargetsExists', 'assertIsWellformed']);
+
         mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getTypesList']);
 
         mockTypeUtility = { isSubtype: (t: string) => t === 'Trench' };
 
-        mockValidator.validate.and.returnValue(Promise.resolve());
+        mockValidator.assertIsRecordedInTargetsExists.and.returnValue(Promise.resolve());
         mockDatastore.create.and.callFake((a) => Promise.resolve(a));
         mockDatastore.update.and.callFake((a) => Promise.resolve(a));
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
@@ -55,7 +55,7 @@ describe('DefaultImportStrategy', () => {
 
     it('merge if exists', async done => {
 
-        mockValidator.validate.and.returnValue(Promise.resolve(undefined));
+        mockValidator.assertIsRecordedInTargetsExists.and.returnValue(Promise.resolve(undefined));
         mockDatastore.find.and.returnValue(Promise.resolve({
             totalCount: 1,
             documents: [{resource: {identifier: '123', id: '1'}}]
@@ -100,7 +100,7 @@ describe('DefaultImportStrategy', () => {
 
     it('should reject on err in validator', async done => {
 
-        mockValidator.validate.and.returnValue(Promise.reject(['abc']));
+        mockValidator.assertIsWellformed.and.callFake(() => {throw ['abc']});
 
         importReport = await importStrategy.import([
             {resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: []}}} as any], importReport);
@@ -126,8 +126,7 @@ describe('DefaultImportStrategy', () => {
         const originalDoc = { resource: { id: '1', identifier: 'i1', shortDescription: 'sd1', relations: {}}};
         const docToMerge = { resource: { geometry: { a: 'b' }}};
 
-        mockValidator = jasmine.createSpyObj('validator', ['validate', 'assertIsWellformed']);
-        mockValidator.validate.and.returnValues(Promise.resolve());
+        mockValidator = jasmine.createSpyObj('validator', ['assertIsWellformed']);
 
         mockDatastore = jasmine.createSpyObj('datastore', ['find','update']);
         mockDatastore.find.and.returnValues(Promise.resolve({ documents: [originalDoc], totalCount: 1 }));

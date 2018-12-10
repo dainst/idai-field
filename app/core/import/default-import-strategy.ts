@@ -183,7 +183,6 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
-    // TODO make static
     private async setMainTypeDocumentRelation(document: NewDocument,
                                               mainTypeDocumentId: string): Promise<void> {
 

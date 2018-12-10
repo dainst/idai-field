@@ -175,7 +175,7 @@ export class DefaultImportStrategy implements ImportStrategy {
         } else {
             await this.assertSettingIsRecordedInIsPermissibleForType(document);
             await this.isRecordedInTargetAllowedRelationDomainType(document);
-            this.initRecordedIn(document, mainTypeDocumentId);
+            DefaultImportStrategy.initRecordedIn(document, mainTypeDocumentId);
         }
     }
 
@@ -218,7 +218,19 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
-    private initRecordedIn(document: NewDocument, mainTypeDocumentId: string) {
+    private async findByIdentifier(identifier: string): Promise<Document|undefined> {
+
+        const result = await this.datastore.find({ constraints: { 'identifier:match': identifier }});
+        return result.totalCount === 1
+            ? result.documents[0]
+            : undefined;
+    }
+
+
+    /**
+     * Sets the isRecordedIn to mainTypeDocumentId, operates in place
+     */
+    private static initRecordedIn(document: NewDocument, mainTypeDocumentId: string) {
 
         const relations = document.resource.relations;
         if (!relations['isRecordedIn']) relations['isRecordedIn'] = [];
@@ -228,15 +240,9 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
-    private async findByIdentifier(identifier: string) {
-
-        const result = await this.datastore.find({ constraints: { 'identifier:match': identifier }});
-        return result.totalCount === 1
-            ? result.documents[0]
-            : undefined;
-    }
-
-
+    /**
+     * Generates resource ids of documents in place, for those documents that have none yet
+     */
     private static assignIds(documents: Array<Document>, generateId: Function) {
 
         const identifierMap: { [identifier: string]: string } = {};

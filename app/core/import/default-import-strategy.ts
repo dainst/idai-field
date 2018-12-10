@@ -48,7 +48,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      * @param importReport
      *   .errors
      *      [ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier]
-     *        if duplicate identifier is found in import file. only first occurence is listed // TODO return all and let importer do the rest
+     *        if duplicate identifier is found in import file.
      *      [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]
      *      [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]
      *      [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]
@@ -63,6 +63,7 @@ export class DefaultImportStrategy implements ImportStrategy {
         if (!this.mergeIfExists) {
             const duplicates_ = duplicates(documents.map(doc => doc.resource.identifier));
             if (duplicates_.length > 0) {
+                // TODO return all, now that we return all the errors anyways
                 importReport.errors = [[ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]]];
                 return importReport;
             }

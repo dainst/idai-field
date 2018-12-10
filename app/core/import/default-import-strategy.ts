@@ -164,9 +164,9 @@ export class DefaultImportStrategy implements ImportStrategy {
             if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
         }
 
+        this.validator.assertIsWellformed(documentForUpdate);
         await this.validator.validate( // TODO with so many suppressions, we should think about if we make more public methods and call them directly
             documentForUpdate,
-            false,
             true,
             this.mergeIfExists,
             !this.mergeIfExists);

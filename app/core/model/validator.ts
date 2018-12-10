@@ -22,7 +22,6 @@ export class Validator {
 
     /**
      * @param document
-     * @param suppressFieldsAndRelationsCheck
      * @param suppressIdentifierCheck
      * @param suppressIsRecordedInCheck
      * @param suppressRecordedInTargetCheck
@@ -36,19 +35,14 @@ export class Validator {
      * @throws [MISSING_COORDINATES]
      * @throws [INVALID_COORDINATES]
      * @throws [UNSUPPORTED_GEOMETRY_TYPE]
-     * @throws [INVALID_RELATIONS]
-     * @throws [INVALID_FIELDS]
      * @throws [INVALID_NUMERICAL_VALUE]
+     * @throws INVALID_RELATIONS
+     * @throws INVALID_FIELDS
      */
     public async validate(document: Document|NewDocument,
-                          suppressFieldsAndRelationsCheck = false,
                           suppressIdentifierCheck = false,
                           suppressIsRecordedInCheck = false,
                           suppressRecordedInTargetCheck = false): Promise<void> {
-
-        if (!Validations.validateType(document.resource, this.projectConfiguration)) {
-            throw [ValidationErrors.INVALID_TYPE, document.resource.type];
-        }
 
         if (!suppressIsRecordedInCheck && this.isIsRecordedInRelationMissing(document as Document)) {
             throw [ValidationErrors.NO_ISRECORDEDIN]; // TODO test in validator
@@ -63,14 +57,7 @@ export class Validator {
             ];
         }
 
-        if (!suppressFieldsAndRelationsCheck) {
-            Validator.validateFieldsAndRelations(document as Document, this.projectConfiguration);
-        }
-        
         Validator.validateNumericalValues(document as Document, this.projectConfiguration);
-
-        const msgWithParams = Validator.validateGeometry(document.resource.geometry as any);
-        if (msgWithParams) throw msgWithParams;
 
         if (!suppressRecordedInTargetCheck && document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) {
             const invalidRelationTargets = await this.validateRelationTargets(document as Document, 'isRecordedIn');
@@ -83,6 +70,49 @@ export class Validator {
         }
 
         if (!suppressIdentifierCheck) await this.validateIdentifier(document as any);
+    }
+
+
+    /**
+     * Asserts
+     *   * that the type is known and
+     *   * the fields and relations defined in a given document are actually configured
+     *     fields and relations for the type of resource defined.
+     *   * the necessary isRecordedIn relations are there (can be skipped)
+     *   * that the geometry is structurally valid
+     *
+     * @throws INVALID_RELATIONS
+     * @throws INVALID_FIELDS
+     * @throws INVALID_TYPE
+     *
+     * TODO do validation of numerical values also here
+     */
+    public assertIsWellformed(document: Document|NewDocument): void {
+
+        if (!Validations.validateType(document.resource, this.projectConfiguration)) {
+            throw [ValidationErrors.INVALID_TYPE, document.resource.type];
+        }
+
+        const invalidFields = Validations.validateFields(document.resource, this.projectConfiguration);
+        if (invalidFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_FIELDS,
+                document.resource.type,
+                invalidFields.join(', ')
+            ];
+        }
+
+        const invalidRelationFields = Validations.validateRelations(document.resource, this.projectConfiguration);
+        if (invalidRelationFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_RELATIONS,
+                document.resource.type,
+                invalidRelationFields.join(', ')
+            ];
+        }
+
+        const msgWithParams = Validator.validateGeometry(document.resource.geometry as any);
+        if (msgWithParams) throw msgWithParams;
     }
 
 
@@ -185,28 +215,6 @@ export class Validator {
         }
 
         return null;
-    }
-
-
-    private static validateFieldsAndRelations(document: Document, projectConfiguration: ProjectConfiguration) {
-
-        const invalidFields = Validations.validateFields(document.resource, projectConfiguration);
-        if (invalidFields.length > 0) {
-            throw [
-                ValidationErrors.INVALID_FIELDS,
-                document.resource.type,
-                invalidFields.join(', ')
-            ];
-        }
-
-        const invalidRelationFields = Validations.validateRelations(document.resource, projectConfiguration);
-        if (invalidRelationFields.length > 0) {
-            throw [
-                ValidationErrors.INVALID_RELATIONS,
-                document.resource.type,
-                invalidRelationFields.join(', ')
-            ];
-        }
     }
 
 

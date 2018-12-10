@@ -57,7 +57,7 @@ describe('Validator', () => {
             }
         };
         await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(() => done(), msgWithParams => fail(msgWithParams));
+            .validate(doc, false, true).then(() => done(), msgWithParams => fail(msgWithParams));
         done();
     });
 
@@ -71,7 +71,7 @@ describe('Validator', () => {
 
         try {
             await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-                .validate(doc, false, false, true);
+                .validate(doc,  false, true);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.NO_ISRECORDEDIN_TARGET, 'notexisting']);
@@ -93,7 +93,7 @@ describe('Validator', () => {
 
         try {
             await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-                .validate(doc, false, false, true);
+                .validate(doc,  false, true);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.IDENTIFIER_EXISTS, 'eins']);
@@ -118,7 +118,7 @@ describe('Validator', () => {
         };
 
         new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(() => done(), msgWithParams => fail(msgWithParams));
+            .validate(doc,  false, true).then(() => done(), msgWithParams => fail(msgWithParams));
     });
 
 
@@ -133,7 +133,7 @@ describe('Validator', () => {
         };
 
         new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
+            .validate(doc,  false, true).then(() => fail(), msgWithParams => {
             expect(msgWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
             done();
         });
@@ -152,14 +152,14 @@ describe('Validator', () => {
         };
 
         new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
+            .validate(doc,  false, true).then(() => fail(), msgWithParams => {
                 expect(msgWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
                 done();
             });
     });
 
 
-    it('should report a missing field definition', done => {
+    it('should report a missing field definition', () => {
 
         const doc = {
             resource: {
@@ -171,15 +171,18 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
-            expect(msgWithParams).toEqual([ValidationErrors.INVALID_FIELDS, 'T', 'a']);
-            done();
-        });
+        try {
+            new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+                .assertIsWellformed(doc);
+            fail();
+        } catch (errWithParams) {
+
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_FIELDS, 'T', 'a']);
+        }
     });
 
 
-    it('should report missing field definitions', done => {
+    it('should report missing field definitions', () => {
 
         const doc = {
             resource: {
@@ -192,15 +195,18 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(() => fail(), msgWithParams => {
-            expect(msgWithParams).toEqual([ValidationErrors.INVALID_FIELDS, 'T', 'a, b']);
-            done();
-        });
+        try {
+            new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+                .assertIsWellformed(doc);
+            fail();
+        } catch (errWithParams) {
+
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_FIELDS, 'T', 'a, b']);
+        }
     });
 
 
-    it('should report a missing relation field definition', done => {
+    it('should report a missing relation field definition', () => {
 
         const doc = {
             resource: {
@@ -212,18 +218,19 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(
-            () => fail(),
-            msgWithParams => {
-                expect(msgWithParams).toEqual([ValidationErrors.INVALID_RELATIONS, 'T2',
-                    'isRelatedTo']);
-                done();
-            });
+        try {
+            new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+                .assertIsWellformed(doc);
+            fail();
+        } catch (errWithParams) {
+
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_RELATIONS, 'T2',
+                'isRelatedTo']);
+        }
     });
 
 
-    it('should report missing relation field definitions', done => {
+    it('should report missing relation field definitions', () => {
 
         const doc = {
             resource: {
@@ -236,14 +243,15 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(
-            () => fail(),
-            msgWithParams => {
-                expect(msgWithParams).toEqual([ValidationErrors.INVALID_RELATIONS, 'T2',
-                    'isRelatedTo, isDepictedIn']);
-                done();
-            });
+        try {
+            new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
+                .assertIsWellformed(doc);
+            fail();
+        } catch (errWithParams) {
+
+            expect(errWithParams).toEqual([ValidationErrors.INVALID_RELATIONS, 'T2',
+                'isRelatedTo, isDepictedIn']);
+        }
     });
 
 
@@ -260,7 +268,7 @@ describe('Validator', () => {
         };
 
         new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(
+            .validate(doc,  false, true).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
@@ -283,7 +291,7 @@ describe('Validator', () => {
         };
 
         new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc, false, false, true).then(
+            .validate(doc,  false, true).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);

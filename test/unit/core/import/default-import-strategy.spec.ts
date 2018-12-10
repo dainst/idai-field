@@ -17,7 +17,7 @@ describe('DefaultImportStrategy', () => {
     beforeEach(() => {
 
         mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get', 'find']);
-        mockValidator = jasmine.createSpyObj('validator', ['validate']);
+        mockValidator = jasmine.createSpyObj('validator', ['validate', 'assertIsWellformed']);
         // mockTypeUtility = jasmine.createSpyObj('typeUtility', ['isSubtype']);
         mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getTypesList']);
 
@@ -126,7 +126,7 @@ describe('DefaultImportStrategy', () => {
         const originalDoc = { resource: { id: '1', identifier: 'i1', shortDescription: 'sd1', relations: {}}};
         const docToMerge = { resource: { geometry: { a: 'b' }}};
 
-        mockValidator = jasmine.createSpyObj('validator', ['validate']);
+        mockValidator = jasmine.createSpyObj('validator', ['validate', 'assertIsWellformed']);
         mockValidator.validate.and.returnValues(Promise.resolve());
 
         mockDatastore = jasmine.createSpyObj('datastore', ['find','update']);

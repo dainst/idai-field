@@ -75,7 +75,7 @@ export class DocumentHolder {
 
     public async save(): Promise<Document> {
 
-        await this.validator.validate(this.clonedDocument, true);
+        await this.validator.validate(this.clonedDocument);
 
         const savedDocument: Document = await this.persistenceManager.persist(
             this.cleanup(this.clonedDocument),

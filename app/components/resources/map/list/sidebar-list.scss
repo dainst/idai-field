@@ -34,6 +34,15 @@
         align-items: center;
         height: 66px;
 
+        .title {
+          display: -webkit-box;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          font-size: 14px;
+        }
+
         .subtitle {
           display: -webkit-box;
           overflow: hidden;

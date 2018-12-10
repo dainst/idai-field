@@ -143,15 +143,12 @@ export class DefaultImportStrategy implements ImportStrategy {
     /**
      * TODO throw error if recordedIn target is empty array
      *
-     * @returns {Document} the stored document if it has been imported, undefined otherwise
-     * @throws errorWithParams
      * @throws [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
      * @throws [INVALID_MAIN_TYPE_DOCUMENT]
      * @throws [OPERATIONS_NOT_ALLOWED]
+     * @returns undefined if should be ignored, document if should be updated
      */
     private async prepareDocumentForUpdate(document: NewDocument): Promise<Document|undefined> {
-
-        // prepare
 
         if (this.useIdentifiersInRelations) await DefaultImportStrategy.rewriteRelations(
             document, this.identifierMap, this.findByIdentifier.bind(this));
@@ -162,16 +159,24 @@ export class DefaultImportStrategy implements ImportStrategy {
             this.initRecordedIn(document);
         }
 
+        const documentForUpdate: Document|undefined = await this.mergeOrUseAsIs(document, this.mergeIfExists);
+        if (!documentForUpdate) return undefined;
+
+        this.validator.assertIsWellformed(documentForUpdate);
+        return documentForUpdate;
+    }
+
+
+    private async mergeOrUseAsIs(document: NewDocument|Document, mergeIfExists: boolean) {
+
         let documentForUpdate: Document = document as Document;
         const existingDocument = await this.findByIdentifier(document.resource.identifier);
-        if (this.mergeIfExists) {
+        if (mergeIfExists) {
             if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate);
             else return undefined;
         } else {
             if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
         }
-
-        this.validator.assertIsWellformed(documentForUpdate);
         return documentForUpdate;
     }
 

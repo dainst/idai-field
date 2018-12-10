@@ -169,7 +169,7 @@ export class DefaultImportStrategy implements ImportStrategy {
         if (!this.mainTypeDocumentId) {
             try {
                 this.validator.assertHasIsRecordedIn(document);
-            } catch (_) {
+            } catch {
                 throw [ImportErrors.NO_OPERATION_ASSIGNED];
             }
         } else {

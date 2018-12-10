@@ -152,7 +152,14 @@ export class PouchdbDatastore {
         options.include_docs = true;
 
         return (await this.db.allDocs(options)).rows.map((row: any) => {
-            if (!row.doc || !Document.isValid(row.doc)) return undefined;
+            if (!row.doc) {
+                console.warn('Document not found: ' + row.key);
+                return undefined;
+            }
+            if (!Document.isValid(row.doc)) {
+                console.warn('Invalid document', row.doc);
+                return undefined;
+            }
             PouchdbDatastore.convertDates(row.doc);
             return row.doc;
         }).filter((document: Document) => document !== undefined);

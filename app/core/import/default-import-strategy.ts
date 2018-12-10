@@ -128,14 +128,14 @@ export class DefaultImportStrategy implements ImportStrategy {
                                             importReport: ImportReport): Promise<Array<NewDocument>> {
 
         const documentsForUpdate: Array<NewDocument> = [];
-        try {
-            for (let document of documents) {
+        for (let document of documents) {
 
+            try {
                 const documentForUpdate = await this.prepareDocumentForUpdate(document);
                 if (documentForUpdate) documentsForUpdate.push(documentForUpdate);
+            } catch (errWithParams) {
+                importReport.errors.push(errWithParams);
             }
-        } catch (errWithParams) {
-            importReport.errors.push(errWithParams);
         }
         return documentsForUpdate;
     }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {isNot, empty} from 'tsfun';
+import {flow, filter, map, isNot, empty, take} from 'tsfun';
 import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
 import {ImportReport} from '../../core/import/import-facade';
 import {Reader} from '../../core/import/reader';
@@ -182,10 +182,11 @@ export class ImportComponent implements OnInit {
 
     private showMessages(messages: string[][]) {
 
-        messages
-            .map(MessagesConversion.convertMessage)
-            .filter(isNot(empty))
-            .forEach(msgWithParams => this.messages.add(msgWithParams));
+        flow(messages,
+            map(MessagesConversion.convertMessage),
+            filter(isNot(empty)),
+            take(1))
+            .forEach((msgWithParams: any) => this.messages.add(msgWithParams));
     }
 
 

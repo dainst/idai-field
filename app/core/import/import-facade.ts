@@ -29,7 +29,7 @@ export type ImportReport = { errors: any[], warnings: any[], importedResourcesId
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-export module ImportFacade {
+export module ImportFacade { // TODO repair importer tests
 
     /**
      * The importer uses the reader and parser, to get documents, which

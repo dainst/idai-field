@@ -260,7 +260,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
                 const targetDocFromDB = await findByIdentifier(identifier);
                 if (!targetDocFromDB && !identifierMap[identifier]) {
-                    throw [ImportErrors.PREVALIDATION_MISSING_RELATION_TARGET, identifier]; // TODO use other message or do it in conversion. this one talks about ID instead identifier
+                    throw [ImportErrors.PREVALIDATION_MISSING_RELATION_TARGET, identifier];
                 }
 
                 document.resource.relations[relation][i] = targetDocFromDB

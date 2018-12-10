@@ -81,7 +81,7 @@ export class RowComponent implements AfterViewInit {
 
         try {
             await this.validator.assertIdentifierDoesNotExist(this.document);
-            await this.validator.validate(this.document);
+            await this.validator.validate(this.document, false);
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);
             this.restoreIdentifier(this.document);

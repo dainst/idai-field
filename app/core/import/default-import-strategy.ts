@@ -147,7 +147,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      */
     private async prepareDocumentForUpdate(document: NewDocument): Promise<Document|undefined> {
 
-        await DefaultImportStrategy.validateType(document as Document, this.mainTypeDocumentId,
+        await DefaultImportStrategy.validateType(document as Document, this.mainTypeDocumentId, // TODO do with validator
             this.mergeIfExists, this.projectConfiguration, this.typeUtility.isSubtype.bind(this));
 
         if (this.useIdentifiersInRelations) await DefaultImportStrategy.rewriteRelations(
@@ -165,10 +165,7 @@ export class DefaultImportStrategy implements ImportStrategy {
         }
 
         this.validator.assertIsWellformed(documentForUpdate);
-        await this.validator.validate(
-            documentForUpdate,
-            this.mergeIfExists,
-            !this.mergeIfExists);
+        await this.validator.validate(documentForUpdate, true);
 
         return documentForUpdate;
     }

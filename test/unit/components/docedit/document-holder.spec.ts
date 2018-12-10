@@ -63,7 +63,7 @@ describe('DocumentHolder', () => {
             created: { user: 'a', date: new Date() }
         };
 
-        const validator = jasmine.createSpyObj('Validator', ['validate', 'assertIdentifierDoesNotExist']);
+        const validator = jasmine.createSpyObj('Validator', ['validate', 'assertIdentifierDoesNotExist', 'assertHasIsRecordedIn']);
 
         const persistenceManager = jasmine.createSpyObj('PersistenceManager', ['persist']);
         persistenceManager.persist.and.callFake((doc, b, c, d) => {

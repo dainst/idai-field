@@ -71,7 +71,7 @@ describe('Validator', () => {
 
         try {
             await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-                .validate(doc, true);
+                .validate(doc, false);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.NO_ISRECORDEDIN_TARGET, 'notexisting']);

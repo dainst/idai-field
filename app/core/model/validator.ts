@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Document, NewDocument, ProjectConfiguration, IdaiFieldDocument, IdaiFieldGeometry} from 'idai-components-2';
+import {Document, NewDocument, ProjectConfiguration, IdaiFieldGeometry} from 'idai-components-2';
 import {Validations} from './validations';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
 import {TypeUtility} from './type-utility';
@@ -21,10 +21,9 @@ export class Validator {
                 private typeUtility: TypeUtility) {}
 
     /**
-     * @param suppressIsRecordedInCheck
      * @param suppressRecordedInTargetCheck
-     * @throws [PREVALIDATION_INVALID_TYPE] if type is not configured in projectConfiguration
-     * @throws [NO_ISRECORDEDIN] if type should have a isRecordedIn but doesn't have one
+     * // @throws [PREVALIDATION_INVALID_TYPE] if type is not configured in projectConfiguration
+     *
      * @throws [NO_ISRECORDEDIN_TARGET]
      * @throws [MISSING_PROPERTY]
      * @throws [MISSING_GEOMETRYTYPE]
@@ -33,13 +32,7 @@ export class Validator {
      * @throws [UNSUPPORTED_GEOMETRY_TYPE]
      * @throws [INVALID_NUMERICAL_VALUE]
      */
-    public async validate(document: Document|NewDocument,
-                          suppressIsRecordedInCheck = false,
-                          suppressRecordedInTargetCheck = false): Promise<void> {
-
-        if (!suppressIsRecordedInCheck && this.isIsRecordedInRelationMissing(document as Document)) {
-            throw [ValidationErrors.NO_ISRECORDEDIN]; // TODO test in validator
-        }
+    public async validate(document: Document|NewDocument, suppressRecordedInTargetCheck): Promise<void> {
 
         const missingProperties = Validations.getMissingProperties(document.resource, this.projectConfiguration);
         if (missingProperties.length > 0) {
@@ -67,7 +60,7 @@ export class Validator {
     /**
      * @throws [IDENTIFIER_EXISTS]
      */
-    public async assertIdentifierDoesNotExist(document: Document|NewDocument): Promise<void> {
+    public async assertIdentifierDoesNotExist(document: Document|NewDocument): Promise<void> { // TODO rename
 
         let result;
 
@@ -92,14 +85,16 @@ export class Validator {
      *   * the fields and relations defined in a given document are actually configured
      *     fields and relations for the type of resource defined.
      *   * that the geometry is structurally valid
+     *   * that it has the isRecordedIn if the type requires it
      *
      * Does not assert validity of any of the fields or relations contents.
      *
      * @throws [INVALID_TYPE]
      * @throws [INVALID_RELATIONS]
      * @throws [INVALID_FIELDS]
+     * @throws [NO_ISRECORDEDIN]
      */
-    public assertIsWellformed(document: Document|NewDocument): void {
+    public assertIsWellformed(document: Document|NewDocument): void { // TODO do missing property check
 
         if (!Validations.validateType(document.resource, this.projectConfiguration)) {
             throw [ValidationErrors.INVALID_TYPE, document.resource.type];
@@ -125,17 +120,22 @@ export class Validator {
 
         const msgWithParams = Validator.validateGeometry(document.resource.geometry as any);
         if (msgWithParams) throw msgWithParams;
+
+        this.assertHasIsRecordedIn(document);
     }
 
 
-    private isIsRecordedInRelationMissing(document: Document): boolean {
+    public assertHasIsRecordedIn(document: Document|NewDocument): void {
 
-        return this.isExpectedToHaveIsRecordedInRelation(document)
-            && !Document.hasRelations(document, 'isRecordedIn');
+        if (this.isExpectedToHaveIsRecordedInRelation(document)
+            && !Document.hasRelations(document as Document, 'isRecordedIn')) {
+
+            throw [ValidationErrors.NO_ISRECORDEDIN];
+        }
     }
 
 
-    private isExpectedToHaveIsRecordedInRelation(document: Document): boolean {
+    private isExpectedToHaveIsRecordedInRelation(document: Document|NewDocument): boolean {
 
         return !this.typeUtility
             ? false

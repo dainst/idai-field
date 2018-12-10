@@ -165,7 +165,7 @@ describe('Import/Subsystem', () => {
 
     it('update shortDescription', async done => {
 
-        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: {}}});
+        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
 
         await ImportFacade.doImport(
             'native',
@@ -185,7 +185,7 @@ describe('Import/Subsystem', () => {
 
     it('unmatched items get ignored on merge', async done => {
 
-        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: {}}});
+        await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
 
         await ImportFacade.doImport(
             'native',

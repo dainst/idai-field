@@ -123,7 +123,7 @@ describe('Import/Subsystem', () => {
             '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
                     + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}');
 
-        expect(importReport.errors[0]).toEqual([ImportErrors.PREVALIDATION_INVALID_TYPE, 'InvalidType']);
+        expect(importReport.errors[0]).toEqual([ValidationErrors.INVALID_TYPE, 'InvalidType']);
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1); // only the trench
         done();
@@ -151,7 +151,7 @@ describe('Import/Subsystem', () => {
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
                     + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}'); // change type to provoke error
 
-        expect(importReport.errors[0]).toEqual([ImportErrors.PREVALIDATION_INVALID_TYPE, 'InvalidType']);
+        expect(importReport.errors[0]).toEqual([ValidationErrors.INVALID_TYPE, 'InvalidType']);
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(3);
@@ -219,7 +219,7 @@ describe('Import/Subsystem', () => {
             false,
                     '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}');
 
-        expect(importReport.errors[0]).toEqual([ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]);
+        expect(importReport.errors[0][0]).toEqual(ImportErrors.OPERATIONS_NOT_ALLOWED);
 
         const result = await datastore.find({});
         expect(result.documents[0].resource.identifier).toBe('t1');

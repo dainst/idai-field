@@ -56,6 +56,6 @@ describe('GazGeojsonParserAddOn', () => {
             '"type": "Point", "coordinates": [6.71875,-6.96875] }, "properties": { "identifier": "https://gazetteer.dainst.org/place/2312125" } }' +
             '] }';
 
-        expectErr(fileContent, ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, done);
+        expectErr(fileContent, ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, done);
     });
 });

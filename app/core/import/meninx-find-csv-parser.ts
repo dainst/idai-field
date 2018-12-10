@@ -13,7 +13,7 @@ export class MeninxFindCsvParser extends AbstractParser {
 
         return Observable.create((observer: Observer<Document>) => {
 
-            let errorCallback = (e: any) => observer.error([ImportErrors.CSV_INVALID, e.row]);
+            let errorCallback = (e: any) => observer.error([ImportErrors.PARSER_CSV_INVALID, e.row]);
 
             let completeCallback = (result: any) => {
                 result.errors.forEach( (e: any) => errorCallback(e) );
@@ -59,7 +59,7 @@ export class MeninxFindCsvParser extends AbstractParser {
                     complete: completeCallback
                 });
             } catch (e) {
-                observer.error([ImportErrors.CSV_GENERIC]);
+                observer.error([ImportErrors.PARSER_CSV_GENERIC]);
             }
         });
     }

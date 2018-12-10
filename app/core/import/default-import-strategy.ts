@@ -4,7 +4,6 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validator} from '../model/validator';
 import {DocumentMerge} from './document-merge';
 import {TypeUtility} from '../model/type-utility';
-import {Validations} from '../model/validations';
 import {ImportErrors} from './import-errors';
 import {ImportReport} from './import-facade';
 import {duplicates, to} from 'tsfun';
@@ -53,8 +52,9 @@ export class DefaultImportStrategy implements ImportStrategy {
      *      [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]
      *      [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]
      *      [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]
-     *      [IMportErrors.PREVALIDATION_MISSING_RELATION_TARGET] if useIdentifiersInRelations and target of relation not found in db or in importfile
+     *      [ImportErrors.PREVALIDATION_MISSING_RELATION_TARGET] if useIdentifiersInRelations and target of relation not found in db or in importfile
      *      [ImportErrors.EXEC_MISSING_RELATION_TARGET]
+     *      [ImportErrors.INVALID_MAIN_TYPE_DOCUMENT]
      */
     public async import(documents: Array<Document>,
                         importReport: ImportReport): Promise<ImportReport> {
@@ -62,12 +62,13 @@ export class DefaultImportStrategy implements ImportStrategy {
         if (!this.mergeIfExists) {
             const duplicates_ = duplicates(documents.map(doc => doc.resource.identifier));
             if (duplicates_.length > 0) {
-                importReport.errors = [[ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, duplicates_[0]]];
+                importReport.errors = [[ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]]];
                 return importReport;
             }
         }
         this.identifierMap = this.mergeIfExists ? {} : DefaultImportStrategy.assignIds(
             documents, this.idGenerator.generateId.bind(this)); // TODO make idGeneratorProvider
+
 
         const documentsForUpdate = await this.prepareDocumentsForUpdate(documents, importReport);
         if (importReport.errors.length > 0) return importReport;
@@ -140,20 +141,26 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
+     * TODO throw error if recordedIn target is empty array
+     *
      * @returns {Document} the stored document if it has been imported, undefined otherwise
      * @throws errorWithParams
      * @throws [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
      * @throws [INVALID_MAIN_TYPE_DOCUMENT]
+     * @throws [OPERATIONS_NOT_ALLOWED]
      */
     private async prepareDocumentForUpdate(document: NewDocument): Promise<Document|undefined> {
 
-        await DefaultImportStrategy.validateType(document as Document, this.mainTypeDocumentId, // TODO do with validator
-            this.mergeIfExists, this.projectConfiguration, this.typeUtility.isSubtype.bind(this));
+        // prepare
 
         if (this.useIdentifiersInRelations) await DefaultImportStrategy.rewriteRelations(
             document, this.identifierMap, this.findByIdentifier.bind(this));
 
-        if (this.mainTypeDocumentId) await this.setMainTypeDocumentRelation(document, this.mainTypeDocumentId);
+        if (!this.mergeIfExists && this.mainTypeDocumentId) {
+            await this.assertSettingIsRecordedInIsPermissibleForType(document);
+            await this.isRecordedInTargetAllowedRelationDomainType(document);
+            this.initRecordedIn(document);
+        }
 
         let documentForUpdate: Document = document as Document;
         const existingDocument = await this.findByIdentifier(document.resource.identifier);
@@ -169,6 +176,40 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
+    private async assertSettingIsRecordedInIsPermissibleForType(document: Document|NewDocument) {
+
+        this.validator.assertIsKnownType(document);
+
+        if (this.typeUtility.isSubtype(document.resource.type, 'Operation')
+            || document.resource.type === 'Place') {
+
+            throw [ImportErrors.OPERATIONS_NOT_ALLOWED];
+        }
+    }
+
+
+    private async isRecordedInTargetAllowedRelationDomainType(document: NewDocument) {
+
+        const mainTypeDocument = await this.datastore.get(this.mainTypeDocumentId);
+        if (!this.projectConfiguration.isAllowedRelationDomainType(document.resource.type,
+            mainTypeDocument.resource.type, 'isRecordedIn')) {
+
+            throw [ImportErrors.INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
+                mainTypeDocument.resource.type];
+        }
+    }
+
+
+    private initRecordedIn(document: NewDocument) {
+
+        const relations = document.resource.relations;
+        if (!relations['isRecordedIn']) relations['isRecordedIn'] = [];
+        if (!relations['isRecordedIn'].includes(this.mainTypeDocumentId)) {
+            relations['isRecordedIn'].push(this.mainTypeDocumentId);
+        }
+    }
+
+
     private async findByIdentifier(identifier: string) {
 
         const result = await this.datastore.find({ constraints: { 'identifier:match': identifier }});
@@ -176,27 +217,6 @@ export class DefaultImportStrategy implements ImportStrategy {
             ? result.documents[0]
             : undefined;
     }
-
-
-    private async setMainTypeDocumentRelation(document: NewDocument,
-                                              mainTypeDocumentId: string): Promise<void> {
-
-        const mainTypeDocument = await this.datastore.get(mainTypeDocumentId);
-
-        if (!this.projectConfiguration.isAllowedRelationDomainType(document.resource.type,
-                mainTypeDocument.resource.type, 'isRecordedIn')) {
-
-            throw [ImportErrors.INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
-                mainTypeDocument.resource.type];
-        }
-
-        const relations = document.resource.relations;
-        if (!relations['isRecordedIn']) relations['isRecordedIn'] = [];
-        if (!relations['isRecordedIn'].includes(mainTypeDocumentId)) {
-            relations['isRecordedIn'].push(mainTypeDocumentId);
-        }
-    }
-
 
 
     private static assignIds(documents: Array<Document>, generateId: Function) {
@@ -209,34 +229,6 @@ export class DefaultImportStrategy implements ImportStrategy {
             identifierMap[document.resource.identifier] = uuid;
         }
         return identifierMap;
-    }
-
-
-
-    private static validateType(doc: NewDocument,
-                                mainTypeDocumentId: string,
-                                mergeIfExists: boolean,
-                                projectConfiguration: ProjectConfiguration,
-                                isSubtype: Function) {
-
-        if ((!mergeIfExists || doc.resource.type)
-            && !Validations.validateType(doc.resource, projectConfiguration)) {
-
-            throw [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type];
-        }
-
-        if (isSubtype(doc.resource.type, 'Operation') || doc.resource.type === 'Place') {
-
-            if (mainTypeDocumentId) throw [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED];
-
-        } else {
-
-            if (!mergeIfExists && !mainTypeDocumentId
-                && (!doc.resource.relations || !doc.resource.relations['isRecordedIn'])) {
-
-                throw [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]; // TODO also return if no target
-            }
-        }
     }
 
 
@@ -254,7 +246,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
                 const targetDocFromDB = await findByIdentifier(identifier);
                 if (!targetDocFromDB && !identifierMap[identifier]) {
-                    throw [ImportErrors.PREVALIDATION_MISSING_RELATION_TARGET, identifier];
+                    throw [ImportErrors.MISSING_RELATION_TARGET, identifier];
                 }
 
                 document.resource.relations[relation][i] = targetDocFromDB

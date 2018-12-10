@@ -12,7 +12,7 @@ import {ImportErrors} from './import-errors';
 export class NativeJsonlParser extends AbstractParser {
 
     /**
-     * @throws [FILE_INVALID_JSONL]
+     * @throws [PARSER_FILE_INVALID_JSONL]
      * @throws [PARSER_ID_MUST_NOT_BE_SET]
      */
     public parse(content: string): Observable<Document> {
@@ -35,7 +35,7 @@ export class NativeJsonlParser extends AbstractParser {
                 document = NativeJsonlParser.makeDoc(lines[i]);
             } catch (e) {
                 console.error('parse content error. reason: ', e);
-                observer.error([ImportErrors.FILE_INVALID_JSONL, i + 1]);
+                observer.error([ImportErrors.PARSER_FILE_INVALID_JSONL, i + 1]);
                 break;
             }
             NativeJsonlParser.assertIsValid(document);

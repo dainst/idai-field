@@ -18,7 +18,7 @@ export class HttpReader implements Reader {
                     data => resolve(data),
                     err => {
                         console.error(err);
-                        reject([M.IMPORT_ERROR_FILE_UNREADABLE, this.url])
+                        reject([M.IMPORT_FILE_UNREADABLE, this.url])
                     }
                 );
         });

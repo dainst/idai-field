@@ -1,5 +1,6 @@
 import {DefaultImportStrategy} from '../../../../app/core/import/default-import-strategy';
 import {ImportErrors} from '../../../../app/core/import/import-errors';
+import {ValidationErrors} from '../../../../app/core/model/validation-errors';
 
 /**
  * @author Daniel de Oliveira
@@ -196,46 +197,24 @@ describe('DefaultImportStrategy', () => {
             Promise.resolve({ totalCount: 0 }));
         importReport = await importStrategy.import([ docToImport as any ], importReport);
 
-        expect(importReport.errors[0][0]).toEqual(ImportErrors.PREVALIDATION_MISSING_RELATION_TARGET);
+        expect(importReport.errors[0][0]).toEqual(ImportErrors.MISSING_RELATION_TARGET);
         done();
     });
 
 
-    it('preValidate - nonexisting type ', async done => {
+    it('preValidate - not well formed ', async done => {
 
+        mockValidator.assertIsWellformed.and.callFake(() => { throw [ValidationErrors.INVALID_TYPE]});
 
         importReport = await importStrategy.import([
-            { resource: { type: 'Nonexisting', identifier: '1a', relations: undefined } } as any
+            { resource: { type: 'Nonexisting', identifier: '1a', relations: { isRecordedIn: ['0'] } } } as any
         ], importReport);
 
         expect(importReport.errors.length).toBe(1);
-        expect(importReport.errors[0][0]).toEqual(ImportErrors.PREVALIDATION_INVALID_TYPE);
+        expect(importReport.errors[0][0]).toEqual(ValidationErrors.INVALID_TYPE);
         done();
     });
 
-
-    it('preValidate - missing recorded in ', async done => {
-
-        importReport = await importStrategy.import([
-            { resource: { type: 'Find', identifier: '1a', relations: undefined } } as any
-        ], importReport);
-
-        expect(importReport.errors.length).toBe(1);
-        expect(importReport.errors[0][0]).toEqual(ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED);
-        done();
-    });
-
-
-    it('preValidate - no missing recorded in for place and operation ', async done => {
-
-        importReport = await importStrategy.import([
-            { resource: { type: 'Place', identifier: '1a', relations: undefined } } as any,
-            { resource: { type: 'Trench', identifier: '2a', relations: undefined } } as any
-        ], importReport);
-
-        expect(importReport.errors.length).toBe(0);
-        done();
-    });
 
 
     it('preValidate - duplicate identifiers in import file', async done => {
@@ -248,7 +227,7 @@ describe('DefaultImportStrategy', () => {
         ], importReport);
 
         expect(importReport.errors.length).toBe(1);
-        expect(importReport.errors[0][0]).toEqual(ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER);
+        expect(importReport.errors[0][0]).toEqual(ImportErrors.DUPLICATE_IDENTIFIER);
         expect(importReport.errors[0][1]).toEqual('1a');
         done();
     });

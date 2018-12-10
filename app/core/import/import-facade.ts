@@ -93,6 +93,7 @@ export module ImportFacade {
             !allowMergingExistingResources ? mainTypeDocumentId : '',
             allowMergingExistingResources);
 
+
         return await importStrategy.import(docsToUpdate, importReport);
     }
 

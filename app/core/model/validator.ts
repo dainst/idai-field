@@ -41,7 +41,7 @@ export class Validator {
 
 
     /**
-     * @throws [IDENTIFIER_EXISTS]
+     * @throws [IDENTIFIER_ALREADY_EXISTS]
      */
     public async assertIdentifierIsUnique(document: Document|NewDocument): Promise<void> {
 
@@ -56,7 +56,7 @@ export class Validator {
         }
 
         if (result.totalCount > 0 && Validator.isNotSameDocument(result.documents[0], document)) {
-            throw[ValidationErrors.IDENTIFIER_EXISTS, document.resource.identifier];
+            throw[ValidationErrors.IDENTIFIER_ALREADY_EXISTS, document.resource.identifier];
         }
     }
 
@@ -88,9 +88,7 @@ export class Validator {
      */
     public assertIsWellformed(document: Document|NewDocument): void {
 
-        if (!Validations.validateType(document.resource, this.projectConfiguration)) {
-            throw [ValidationErrors.INVALID_TYPE, document.resource.type];
-        }
+        this.assertIsKnownType(document);
 
         const invalidFields = Validations.assertDefinedFieldsAreAllowed(document.resource, this.projectConfiguration);
         if (invalidFields.length > 0) {
@@ -116,6 +114,17 @@ export class Validator {
 
         const errWithParams = Validator.assertStructuralValidityOfGeometries(document.resource.geometry as any);
         if (errWithParams) throw errWithParams;
+    }
+
+
+    /**
+     * @throws [INVALID_TYPE]
+     */
+    public assertIsKnownType(document: Document|NewDocument) {
+
+        if (!Validations.validateType(document.resource, this.projectConfiguration)) {
+            throw [ValidationErrors.INVALID_TYPE, document.resource.type];
+        }
     }
 
 

@@ -36,7 +36,7 @@ export module GazGeojsonParserAddOn {
     export function preValidateAndTransformFeature(feature: any, identifiers: string[]) {
 
         const properties = feature.properties as GazetteerProperties;
-        if (!properties.gazId) return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "properties.gazId" not found for at least one feature.'];
+        if (!properties.gazId) return [ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, 'Property "properties.gazId" not found for at least one feature.'];
 
         transformGeometryCollection(feature);
 

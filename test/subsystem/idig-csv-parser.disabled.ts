@@ -57,7 +57,7 @@ describe('IdigCsvParser', () => {
         }, (msgWithParams) => {
             expect(documents.length).toBe(1);
             expect(documents[0].resource.id).toEqual('1');
-            expect(msgWithParams).toEqual([ImportErrors.MANDATORY_CSV_FIELD_MISSING, 2, 'IdentifierUUID']);
+            expect(msgWithParams).toEqual([ImportErrors.PARSER_MANDATORY_CSV_FIELD_MISSING, 2, 'IdentifierUUID']);
             done();
         });
 
@@ -111,7 +111,7 @@ describe('IdigCsvParser', () => {
         }, (err) => {
             expect(documents.length).toBe(1);
             expect(documents[0].resource.id).toEqual('1');
-            expect(err).toEqual([ImportErrors.INVALID_GEOMETRY, 2]);
+            expect(err).toEqual([ImportErrors.PARSER_INVALID_GEOMETRY, 2]);
             done();
         });
 

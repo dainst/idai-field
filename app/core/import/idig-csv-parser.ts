@@ -47,7 +47,7 @@ export class IdigCsvParser extends AbstractParser {
 
         return Observable.create((observer: Observer<any>) => {
 
-            let errorCallback = (e: any) => observer.error([ImportErrors.CSV_INVALID, e.row]);
+            let errorCallback = (e: any) => observer.error([ImportErrors.PARSER_CSV_INVALID, e.row]);
 
             let completeCallback = (result: any) => {
                 result.errors.forEach( (e: any) => errorCallback(e) );
@@ -75,7 +75,7 @@ export class IdigCsvParser extends AbstractParser {
                     complete: completeCallback
                 });
             } catch (e) {
-                observer.error([ImportErrors.CSV_GENERIC]);
+                observer.error([ImportErrors.PARSER_CSV_GENERIC]);
             }
         });
 
@@ -91,7 +91,7 @@ export class IdigCsvParser extends AbstractParser {
         let msgWithParams: any = undefined;
         IdigCsvParser.MANDATORY_FIELDS.forEach( mandatoryField => {
             if (!object[mandatoryField] || 0 === object[mandatoryField].length) {
-                if (!msgWithParams) msgWithParams = [ImportErrors.MANDATORY_CSV_FIELD_MISSING,lineNumber,mandatoryField];
+                if (!msgWithParams) msgWithParams = [ImportErrors.PARSER_MANDATORY_CSV_FIELD_MISSING,lineNumber,mandatoryField];
             }
         });
         return msgWithParams;
@@ -257,13 +257,13 @@ export class IdigCsvParser extends AbstractParser {
 
         let coordinates: Array<string> = coordinatesString.split(' ');
         if (coordinates.length != 2) {
-            throw [ImportErrors.INVALID_GEOMETRY, lineNumber];
+            throw [ImportErrors.PARSER_INVALID_GEOMETRY, lineNumber];
         }
 
         point[0] = parseFloat(coordinates[0].replace(',', '.'));
         point[1] = parseFloat(coordinates[1].replace(',', '.'));
         if (isNaN(point[0]) || isNaN(point[1])) {
-            throw [M.IMPORT_ERROR_INVALID_GEOMETRY, lineNumber];
+            throw [M.IMPORT_INVALID_GEOMETRY, lineNumber];
         }
 
         return point;
@@ -276,7 +276,7 @@ export class IdigCsvParser extends AbstractParser {
 
         let coordinates: Array<string> = coordinatesString.split(', ');
         if (coordinates.length < 3) {
-            throw [ImportErrors.INVALID_GEOMETRY, lineNumber];
+            throw [ImportErrors.PARSER_INVALID_GEOMETRY, lineNumber];
         }
 
         for (let pointCoordinates of coordinates) {

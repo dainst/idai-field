@@ -22,53 +22,47 @@ export module MessagesConversion {
         let replacement = undefined;
         const msg = msgWithParams[0];
 
-        // validation errors
-        if (msg === ValidationErrors.INVALID_TYPE) replacement = M.IMPORT_PREVALIDATION_INVALID_TYPE;
+        // validation errors - done during import but coming from model package (validator/validations)
+        if (msg === ValidationErrors.INVALID_TYPE) replacement = M.IMPORT_VALIDATION_INVALID_TYPE;
         if (msg === ValidationErrors.NO_ISRECORDEDIN) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN;
         if (msg === ValidationErrors.NO_ISRECORDEDIN_TARGET) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET;
-        if (msg === ValidationErrors.IDENTIFIER_EXISTS) replacement = M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS;
-        if (msg === ValidationErrors.MISSING_PROPERTY) replacement = M.IMPORT_VALIDATION_ERROR_MISSING_PROPERTY;
-        if (msg === ValidationErrors.MISSING_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_ERROR_MISSING_GEOMETRYTYPE;
-        if (msg === ValidationErrors.MISSING_COORDINATES) replacement = M.MODEL_VALIDATION_ERROR_MISSING_COORDINATES;
-        if (msg === ValidationErrors.INVALID_COORDINATES) replacement = M.MODEL_VALIDATION_ERROR_INVALID_COORDINATES;
-        if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE;
-        if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_ERROR_UNSUPPORTED_GEOMETRYTYPE;
-
-        // import errors - uncategorized
-        if (msg === ImportErrors.WRONG_IDENTIFIER_FORMAT) replacement = M.IMPORT_ERROR_IDENTIFIER_FORMAT;
-        if (msg === ImportErrors.MISSING_RESOURCE) replacement = M.IMPORT_ERROR_MISSING_RESOURCE; // TODO remove if unused
+        if (msg === ValidationErrors.IDENTIFIER_ALREADY_EXISTS) replacement = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
+        if (msg === ValidationErrors.MISSING_PROPERTY) replacement = M.IMPORT_VALIDATION_MISSING_PROPERTY;
+        if (msg === ValidationErrors.MISSING_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_MISSING_GEOMETRYTYPE;
+        if (msg === ValidationErrors.MISSING_COORDINATES) replacement = M.MODEL_VALIDATION_MISSING_COORDINATES;
+        if (msg === ValidationErrors.INVALID_COORDINATES) replacement = M.MODEL_VALIDATION_INVALID_COORDINATES;
+        if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
 
         // import errors - IO, parsing
-        if (msg === ImportErrors.FILE_UNREADABLE) replacement = M.IMPORT_ERROR_FILE_UNREADABLE;
-        if (msg === ImportErrors.FILE_INVALID_JSON) replacement = M.IMPORT_ERROR_INVALID_JSON;
-        if (msg === ImportErrors.FILE_INVALID_JSONL) replacement = M.IMPORT_ERROR_INVALID_JSONL;
-        if (msg === ImportErrors.SHAPEFILE_READ) replacement = M.IMPORT_ERROR_SHAPEFILE_READ_ERROR;
-        if (msg === ImportErrors.SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE) replacement = M.IMPORT_ERROR_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE;
-        if (msg === ImportErrors.SHAPEFILE_JSONL_WRITE) replacement = M.IMPORT_ERROR_SHAPEFILE_JSONL_WRITE_ERROR;
-        if (msg === ImportErrors.SHAPEFILE_GENERIC) replacement = M.IMPORT_ERROR_SHAPEFILE_GENERIC_ERROR;
-        if (msg === ImportErrors.CSV_INVALID) replacement = M.IMPORT_ERROR_INVALID_CSV;
-        if (msg === ImportErrors.CSV_GENERIC) replacement = M.IMPORT_ERROR_GENERIC_CSV_ERROR;
-        if (msg === ImportErrors.MANDATORY_CSV_FIELD_MISSING) replacement = M.IMPORT_ERROR_MANDATORY_CSV_FIELD_MISSING;
-        if (msg === ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT) replacement = M.IMPORT_ERROR_INVALID_GEOJSON_IMPORT_STRUCT;
-        if (msg === ImportErrors.INVALID_GEOMETRY) replacement = M.IMPORT_ERROR_INVALID_GEOMETRY;
-        if (msg === ImportErrors.PARSER_MISSING_IDENTIFIER) replacement = M.IMPORT_ERROR_MISSING_IDENTIFIER;
-        if (msg === ImportErrors.PARSER_ID_MUST_NOT_BE_SET) replacement = M.IMPORT_ERROR_PARSING_ID_MUST_NOT_BE_SET;
+        if (msg === ImportErrors.PARSER_FILE_UNREADABLE) replacement = M.IMPORT_FILE_UNREADABLE;
+        if (msg === ImportErrors.PARSER_FILE_INVALID_JSON) replacement = M.IMPORT_INVALID_JSON;
+        if (msg === ImportErrors.PARSER_FILE_INVALID_JSONL) replacement = M.IMPORT_INVALID_JSONL;
+        if (msg === ImportErrors.PARSER_SHAPEFILE_READ) replacement = M.IMPORT_SHAPEFILE_READ_ERROR;
+        if (msg === ImportErrors.PARSER_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE) replacement = M.IMPORT_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE;
+        if (msg === ImportErrors.PARSER_SHAPEFILE_JSONL_WRITE) replacement = M.IMPORT_SHAPEFILE_JSONL_WRITE;
+        if (msg === ImportErrors.PARSER_SHAPEFILE_GENERIC) replacement = M.IMPORT_SHAPEFILE_GENERIC;
+        if (msg === ImportErrors.PARSER_CSV_INVALID) replacement = M.IMPORT_INVALID_CSV;
+        if (msg === ImportErrors.PARSER_CSV_GENERIC) replacement = M.IMPORT_GENERIC_CSV_ERROR;
+        if (msg === ImportErrors.PARSER_MANDATORY_CSV_FIELD_MISSING) replacement = M.IMPORT_MANDATORY_CSV_FIELD_MISSING;
+        if (msg === ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT) replacement = M.IMPORT_INVALID_GEOJSON_IMPORT_STRUCT;
+        if (msg === ImportErrors.PARSER_INVALID_GEOMETRY) replacement = M.IMPORT_INVALID_GEOMETRY;
+        if (msg === ImportErrors.PARSER_MISSING_IDENTIFIER) replacement = M.IMPORT_MISSING_IDENTIFIER;
+        if (msg === ImportErrors.PARSER_ID_MUST_NOT_BE_SET) replacement = M.IMPORT_PARSING_ID_MUST_NOT_BE_SET;
 
-        // import errors - prevalidation
-        if (msg === ImportErrors.PREVALIDATION_INVALID_TYPE) replacement = M.IMPORT_PREVALIDATION_INVALID_TYPE;
-        if (msg === ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED;
-        if (msg === ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED) replacement = M.IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED;
-        if (msg === ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER) replacement = M.IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER;
-        if (msg === ImportErrors.PREVALIDATION_MISSING_RELATION_TARGET) replacement = M.IMPORT_ERROR_PREVALIDATION_MISSING_RELATION_TARGET;
-
-        // import errors - execution
-        if (msg === ImportErrors.EXEC_MENINX_NO_OPERATION_ASSIGNABLE) replacement = M.IMPORT_ERROR_NO_OPERATION_ASSIGNABLE;
-        if (msg === ImportErrors.EXEC_MENINX_FIND_NO_FEATURE_ASSIGNABLE) replacement = M.IMPORT_ERROR_NO_FEATURE_ASSIGNABLE;
-        if (msg === ImportErrors.RESOURCE_EXISTS) replacement = M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS;
-        if (msg === ImportErrors.EXEC_MISSING_RELATION_TARGET) replacement = M.IMPORT_ERROR_EXEC_MISSING_RELATION_TARGET;
-        if (msg === ImportErrors.INVALID_MAIN_TYPE_DOCUMENT) replacement = M.IMPORT_ERROR_INVALID_OPERATION_RESOURCE;
-        if (msg === ImportErrors.EXEC_ROLLBACK) replacement = M.IMPORT_ERROR_ROLLBACK_ERROR;
-        if (msg === ImportErrors.EXEC_GENERIC_DATASTORE) replacement = M.IMPORT_ERROR_GENERIC_DATASTORE_ERROR;
+        // import errors - validation not done by validator, execution of import
+        if (msg === ImportErrors.WRONG_IDENTIFIER_FORMAT) replacement = M.IMPORT_IDENTIFIER_FORMAT;
+        if (msg === ImportErrors.MISSING_RESOURCE) replacement = M.IMPORT_MISSING_RESOURCE; // TODO remove if unused
+        if (msg === ImportErrors.OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED;
+        if (msg === ImportErrors.NO_OPERATION_ASSIGNED) replacement = M.IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED;
+        if (msg === ImportErrors.DUPLICATE_IDENTIFIER) replacement = M.IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER;
+        if (msg === ImportErrors.MISSING_RELATION_TARGET) replacement = M.IMPORT_PREVALIDATION_MISSING_RELATION_TARGET;
+        if (msg === ImportErrors.MENINX_NO_OPERATION_ASSIGNABLE) replacement = M.IMPORT_NO_OPERATION_ASSIGNABLE;
+        if (msg === ImportErrors.MENINX_FIND_NO_FEATURE_ASSIGNABLE) replacement = M.IMPORT_NO_FEATURE_ASSIGNABLE;
+        if (msg === ImportErrors.RESOURCE_EXISTS) replacement = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
+        if (msg === ImportErrors.EXEC_MISSING_RELATION_TARGET) replacement = M.IMPORT_EXEC_MISSING_RELATION_TARGET;
+        if (msg === ImportErrors.INVALID_MAIN_TYPE_DOCUMENT) replacement = M.IMPORT_INVALID_OPERATION_RESOURCE;
+        if (msg === ImportErrors.ROLLBACK) replacement = M.IMPORT_ROLLBACK;
+        if (msg === ImportErrors.GENERIC_DATASTORE) replacement = M.IMPORT_GENERIC_DATASTORE;
 
 
         if (msg === ValidationErrors.INVALID_FIELDS) {

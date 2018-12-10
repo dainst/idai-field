@@ -51,8 +51,8 @@ export class GeojsonParser extends AbstractParser {
      * @param content
      * @throws [WRONG_IDENTIFIER_FORMAT]
      * @throws [PARSER_MISSING_IDENTIFIER]
-     * @throws [INVALID_GEOJSON_IMPORT_STRUCT]
-     * @throws [FILE_INVALID_JSON]
+     * @throws [PARSER_INVALID_GEOJSON_IMPORT_STRUCT]
+     * @throws [PARSER_FILE_INVALID_JSON]
      * @throws [IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS]
      */
     public parse(content: string): Observable<Document> {
@@ -63,7 +63,7 @@ export class GeojsonParser extends AbstractParser {
             try {
                 geojson = JSON.parse(content) as Geojson;
             } catch (e) {
-                return observer.error([ImportErrors.FILE_INVALID_JSON, e.toString()]);
+                return observer.error([ImportErrors.PARSER_FILE_INVALID_JSON, e.toString()]);
             }
 
             const msgWithParams = GeojsonParser.validateAndTransform(geojson, this.preValidateAndTransform);
@@ -97,10 +97,10 @@ export class GeojsonParser extends AbstractParser {
     private static validateAndTransform(geojson: Geojson, preValidateAndTransformFeature: Function|undefined) {
 
         if (geojson.type !== 'FeatureCollection') return [
-            ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, '"type": "FeatureCollection" not found at top level.'];
+            ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, '"type": "FeatureCollection" not found at top level.'];
 
         if (geojson.features === undefined) return [
-            ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "features" not found at top level.'];
+            ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, 'Property "features" not found at top level.'];
 
         let identifiers: string[] = [];
         for (let feature of geojson.features) {
@@ -124,13 +124,13 @@ export class GeojsonParser extends AbstractParser {
         if (!feature.properties['identifier']) return [ImportErrors.PARSER_MISSING_IDENTIFIER];
         if (typeof feature.properties['identifier'] !== 'string') return [ImportErrors.WRONG_IDENTIFIER_FORMAT];
 
-        if (feature.type === undefined) return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "type" not found for at least one feature.'];
-        if (feature.type !== 'Feature') return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Second level elements must be of type "Feature".'];
+        if (feature.type === undefined) return [ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, 'Property "type" not found for at least one feature.'];
+        if (feature.type !== 'Feature') return [ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, 'Second level elements must be of type "Feature".'];
 
         if (feature.geometry && feature.geometry.type
             && GeojsonParser.supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
 
-            return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'geometry type "' + feature.geometry.type + '" not supported.'];
+            return [ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, 'geometry type "' + feature.geometry.type + '" not supported.'];
         }
     }
 

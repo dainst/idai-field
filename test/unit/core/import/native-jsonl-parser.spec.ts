@@ -50,7 +50,7 @@ describe('NativeJsonlParser', () => {
             objects.push(resultDocument);
         }, (error) => {
             expect(objects.length).toEqual(1);
-            expect(error).toEqual([ImportErrors.FILE_INVALID_JSONL,2]);
+            expect(error).toEqual([ImportErrors.PARSER_FILE_INVALID_JSONL,2]);
             done();
         });
     });

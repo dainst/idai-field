@@ -53,6 +53,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      *      [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]
      *      [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]
      *      [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]
+     *      [IMportErrors.PREVALIDATION_MISSING_RELATION_TARGET] if useIdentifiersInRelations and target of relation not found in db or in importfile
      *      [ImportErrors.EXEC_MISSING_RELATION_TARGET]
      */
     public async import(documents: Array<Document>,
@@ -259,7 +260,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
                 const targetDocFromDB = await findByIdentifier(identifier);
                 if (!targetDocFromDB && !identifierMap[identifier]) {
-                    throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, identifier]; // TODO use other message or do it in conversion. this one talks about ID instead identifier
+                    throw [ImportErrors.PREVALIDATION_MISSING_RELATION_TARGET, identifier]; // TODO use other message or do it in conversion. this one talks about ID instead identifier
                 }
 
                 document.resource.relations[relation][i] = targetDocFromDB

@@ -93,7 +93,7 @@ export class Validator {
             throw [ValidationErrors.INVALID_TYPE, document.resource.type];
         }
 
-        const invalidFields = Validations.validateFields(document.resource, this.projectConfiguration);
+        const invalidFields = Validations.assertDefinedFieldsAreAllowed(document.resource, this.projectConfiguration);
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_FIELDS,
@@ -102,7 +102,7 @@ export class Validator {
             ];
         }
 
-        const invalidRelationFields = Validations.validateRelations(document.resource, this.projectConfiguration);
+        const invalidRelationFields = Validations.assertDefinedRelationsAreAllowed(document.resource, this.projectConfiguration);
         if (invalidRelationFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_RELATIONS,

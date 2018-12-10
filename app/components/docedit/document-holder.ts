@@ -152,13 +152,13 @@ export class DocumentHolder {
 
     private validateFields(): Array<string> {
 
-        return this.validateButKeepInvalidOldVersionFields(Validations.validateFields);
+        return this.validateButKeepInvalidOldVersionFields(Validations.assertDefinedFieldsAreAllowed);
     }
 
 
     private validateRelationFields(): Array<string> {
 
-        return this.validateButKeepInvalidOldVersionFields(Validations.validateRelations);
+        return this.validateButKeepInvalidOldVersionFields(Validations.assertDefinedRelationsAreAllowed);
     }
 
 

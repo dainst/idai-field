@@ -86,7 +86,7 @@ export class Validator {
      * @throws [NO_ISRECORDEDIN]
      * @throws [MISSING_PROPERTY]
      */
-    public assertIsWellformed(document: Document|NewDocument): void { // TODO do missing property check
+    public assertIsWellformed(document: Document|NewDocument): void {
 
         if (!Validations.validateType(document.resource, this.projectConfiguration)) {
             throw [ValidationErrors.INVALID_TYPE, document.resource.type];

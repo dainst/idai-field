@@ -42,9 +42,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static BACKUP_READ_ERROR_NO_PROJECT_NAME = 'backup.read.error.noProjectName';
     public static BACKUP_READ_ERROR_SAME_PROJECT_NAME = 'backup.read.error.sameProjectName';
 
-    // Import Package
-    public static IMPORT_SUCCESS_SINGLE = 'importer.success.single';
-    public static IMPORT_SUCCESS_MULTIPLE = 'importer.success.multiple';
+    // Import Package - IO, parsing
     public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER = 'importer.warning.geojsonDuplicateIdentifier';
     public static IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS = 'importer.warning.geojsonDuplicateIdentifiers';
     public static IMPORT_ERROR_GENERIC_START_ERROR = 'importer.error.genericStartError';
@@ -52,7 +50,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_INVALID_JSON = 'importer.error.invalidJson';
     public static IMPORT_ERROR_INVALID_JSONL = 'importer.error.invalidJsonl';
     public static IMPORT_ERROR_INVALID_GEOJSON_IMPORT_STRUCT = 'importer.error.invalidGeojsonImportStruct';
-    public static IMPORT_ERROR_MISSING_IDENTIFIER = 'importer.error.missingIdentifier';
     public static IMPORT_ERROR_IDENTIFIER_FORMAT = 'importer.error.identifierFormat';
     public static IMPORT_ERROR_INVALID_CSV = 'importer.error.invalidCsv';
     public static IMPORT_ERROR_GENERIC_CSV_ERROR = 'importer.error.genericCsvError';
@@ -61,21 +58,22 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_ERROR_INVALID_GEOMETRY = 'importer.error.invalidGeometry';
     public static IMPORT_ERROR_ROLLBACK_ERROR = 'importer.error.rollbackError';
     public static IMPORT_ERROR_MISSING_RESOURCE = 'importer.error.missingResource';
-    public static IMPORT_ERROR_MISSING_RELATION_TARGET = 'importer.error.missingRelationTarget';
     public static IMPORT_ERROR_INVALID_OPERATION_RESOURCE = 'importer.error.invalidOperationResource';
-
-    public static IMPORT_ERROR_NO_OPERATION_ASSIGNABLE = 'importer.error.noOperationAssignable';
-    public static IMPORT_ERROR_NO_FEATURE_ASSIGNABLE = 'importer.error.noFeatureAssignable';
     public static IMPORT_ERROR_SHAPEFILE_READ_ERROR = 'import.error.shapefile.readError';
     public static IMPORT_ERROR_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'import.error.shapefile.unsupportedGeometryType';
     public static IMPORT_ERROR_SHAPEFILE_JSONL_WRITE_ERROR = 'import.error.shapefile.jsonlWriteError';
     public static IMPORT_ERROR_SHAPEFILE_GENERIC_ERROR = 'import.error.shapefile.generic';
+    public static IMPORT_ERROR_MISSING_IDENTIFIER = 'importer.error.missingIdentifier';
+    public static IMPORT_ERROR_PARSING_ID_MUST_NOT_BE_SET = 'import.importerrors.parsing.idnottobeset';
 
     // ImportPackage - ImportErrors - prevalidation
+    public static IMPORT_ERROR_NO_OPERATION_ASSIGNABLE = 'importer.error.noOperationAssignable';
+    public static IMPORT_ERROR_NO_FEATURE_ASSIGNABLE = 'importer.error.noFeatureAssignable';
     public static IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED = 'importer.error.onlyplaceandoperationwithoutrecordedinallowed';
     public static IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED = 'importer.error.operationsNotAllowed';
     public static IMPORT_PREVALIDATION_INVALID_TYPE = 'import.validation.error.invalidType';
-    public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'import.pvalidation.error.duplicateType';
+    public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'import.error.prevalidation.duplicateidentifier';
+    public static IMPORT_ERROR_PREVALIDATION_MISSING_RELATION_TARGET = 'importer.error.prevalidation.missingRelationTarget';
 
     // Import Package - ValidationErrors
     public static IMPORT_VALIDATION_ERROR_MISSING_PROPERTY = 'import.validation.error.missingProperty';
@@ -87,6 +85,11 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_ERROR_INVALID_RELATION_FIELDS = 'import.validation.error.invalidRelationFields';
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUE = 'import.validation.error.invalidNumericValue';
     public static IMPORT_VALIDATION_ERROR_INVALID_NUMERIC_VALUES = 'import.validation.error.invalidNumericValues';
+
+    // ImportPackage - Exec
+    public static IMPORT_SUCCESS_SINGLE = 'importer.success.single';
+    public static IMPORT_SUCCESS_MULTIPLE = 'importer.success.multiple';
+    public static IMPORT_ERROR_EXEC_MISSING_RELATION_TARGET = 'importer.error.missingRelationTarget';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -418,6 +421,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
+        this.msgs[M.IMPORT_ERROR_PARSING_ID_MUST_NOT_BE_SET] = {
+            content: i18n({
+                id: 'messages.import.error.parser.idnottobeset',
+                value: 'Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.IMPORT_ERROR_IDENTIFIER_FORMAT] = {
             content: i18n({
                 id: 'messages.import.error.identifierFormat',
@@ -526,10 +538,19 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: ['?'],
             hidden: false
         };
-        this.msgs[M.IMPORT_ERROR_MISSING_RELATION_TARGET] = {
+        this.msgs[M.IMPORT_ERROR_EXEC_MISSING_RELATION_TARGET] = {
             content: i18n({
                 id: 'messages.import.error.missingRelationTarget',
                 value: 'Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.'
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_PREVALIDATION_MISSING_RELATION_TARGET] = {
+            content: i18n({
+                id: 'messages.import.error.prevalidation.missingRelationTarget',
+                value: 'Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner \'[0]\' konnte nicht gefunden werden.'
             }),
             level: 'danger',
             params: ['?'],

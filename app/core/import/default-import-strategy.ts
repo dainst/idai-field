@@ -43,10 +43,9 @@ export class DefaultImportStrategy implements ImportStrategy {
 
     /**
      * TODO implement rollback, throw exec rollback error if it goes wrong
-     * TODO throw error if user specifies id
-     * TODO we could remove the datastore feature of predefining ids entirely
      *
      * @param documents documents with the field resource.identifier set to a non empty string
+     *   if resource.id is set, it will be taken as document.id on creation
      * @param importReport
      *   .errors
      *      [ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier]
@@ -54,6 +53,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      *      [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]
      *      [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]
      *      [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]
+     *      [IMportErrors.PREVALIDATION_MISSING_RELATION_TARGET] if useIdentifiersInRelations and target of relation not found in db or in importfile
      *      [ImportErrors.EXEC_MISSING_RELATION_TARGET]
      */
     public async import(documents: Array<Document>,
@@ -184,7 +184,6 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
-    // TODO make static
     private async setMainTypeDocumentRelation(document: NewDocument,
                                               mainTypeDocumentId: string): Promise<void> {
 
@@ -261,7 +260,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
                 const targetDocFromDB = await findByIdentifier(identifier);
                 if (!targetDocFromDB && !identifierMap[identifier]) {
-                    throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, identifier]; // TODO use other message or do it in conversion. this one talks about ID instead identifier
+                    throw [ImportErrors.PREVALIDATION_MISSING_RELATION_TARGET, identifier];
                 }
 
                 document.resource.relations[relation][i] = targetDocFromDB

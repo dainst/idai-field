@@ -1453,7 +1453,7 @@
         <target state="final">Polygon</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.polyline" datatype="html">
@@ -1461,7 +1461,7 @@
         <target state="final">Polyline</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.point" datatype="html">
@@ -1469,7 +1469,7 @@
         <target state="final">Point</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.plusButton.selectGeometryType.noGeometryData" datatype="html">
@@ -1477,7 +1477,7 @@
         <target state="final">No geometry data</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/plus-button.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.list.headers.type" datatype="html">
@@ -1568,11 +1568,11 @@
         <target state="final">All</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="resources.navigation.project" datatype="html">
@@ -1580,7 +1580,7 @@
         <target state="final">Project</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/resources/navigation/navigation.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="widgets.searchBar.placeholder" datatype="html">
@@ -1940,6 +1940,10 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/docedit/tabs/docedit-conflicts-tab.html</context>
           <context context-type="linenumber">93</context>
         </context-group>
         <context-group purpose="location">
@@ -2015,7 +2019,7 @@
         <source>Keine Ziele gefunden</source>
         <target state="final">No targets found</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/docedit/widgets/relationspick/relation-picker.html</context>
+          <context context-type="sourcefile">components/docedit/widgets/relationpicker/relation-picker.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
@@ -2920,6 +2924,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.parser.idnottobeset" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Ein oder mehrere Ressourcen enthielten unerlaubte Einträge für resource.id.</source>
+        <target state="final">An error has occured during import: one or more resources with unpermitted entries for resource.id found.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.identifierFormat" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: properties.identifier muss eine Zeichenkette sein, keine Zahl.</source>
         <target state="final">An error has occurred during import: properties.identifier must be a string instead of a number.</target>
@@ -3018,7 +3030,15 @@
       </trans-unit>
       <trans-unit id="messages.import.error.missingRelationTarget" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit der ID [0] konnte nicht gefunden werden.</source>
-        <target state="final">An error has occurred during import: The relation target resource with the identifier [0] could not be found.</target>
+        <target state="final">An error has occurred during import: The relation target resource with resource.id [0] could not be found.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.import.error.prevalidation.missingRelationTarget" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner '[0]' konnte nicht gefunden werden.</source>
+        <target state="final">An error has occured during import: The relation with resource.identifier '[0]' could not be found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

@@ -197,7 +197,7 @@ describe('DefaultImportStrategy', () => {
             Promise.resolve({ totalCount: 0 }));
         importReport = await importStrategy.import([ docToImport as any ], importReport);
 
-        expect(importReport.errors[0][0]).toEqual(ImportErrors.EXEC_MISSING_RELATION_TARGET);
+        expect(importReport.errors[0][0]).toEqual(ImportErrors.PREVALIDATION_MISSING_RELATION_TARGET);
         done();
     });
 

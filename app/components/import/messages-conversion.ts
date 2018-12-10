@@ -50,20 +50,22 @@ export module MessagesConversion {
         if (msg === ImportErrors.CSV_GENERIC) replacement = M.IMPORT_ERROR_GENERIC_CSV_ERROR;
         if (msg === ImportErrors.MANDATORY_CSV_FIELD_MISSING) replacement = M.IMPORT_ERROR_MANDATORY_CSV_FIELD_MISSING;
         if (msg === ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT) replacement = M.IMPORT_ERROR_INVALID_GEOJSON_IMPORT_STRUCT;
-        if (msg === ImportErrors.MISSING_IDENTIFIER) replacement = M.IMPORT_ERROR_MISSING_IDENTIFIER;
         if (msg === ImportErrors.INVALID_GEOMETRY) replacement = M.IMPORT_ERROR_INVALID_GEOMETRY;
+        if (msg === ImportErrors.PARSER_MISSING_IDENTIFIER) replacement = M.IMPORT_ERROR_MISSING_IDENTIFIER;
+        if (msg === ImportErrors.PARSER_ID_MUST_NOT_BE_SET) replacement = M.IMPORT_ERROR_PARSING_ID_MUST_NOT_BE_SET;
 
         // import errors - prevalidation
         if (msg === ImportErrors.PREVALIDATION_INVALID_TYPE) replacement = M.IMPORT_PREVALIDATION_INVALID_TYPE;
         if (msg === ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED;
         if (msg === ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED) replacement = M.IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED;
         if (msg === ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER) replacement = M.IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER;
+        if (msg === ImportErrors.PREVALIDATION_MISSING_RELATION_TARGET) replacement = M.IMPORT_ERROR_PREVALIDATION_MISSING_RELATION_TARGET;
 
         // import errors - execution
         if (msg === ImportErrors.EXEC_MENINX_NO_OPERATION_ASSIGNABLE) replacement = M.IMPORT_ERROR_NO_OPERATION_ASSIGNABLE;
         if (msg === ImportErrors.EXEC_MENINX_FIND_NO_FEATURE_ASSIGNABLE) replacement = M.IMPORT_ERROR_NO_FEATURE_ASSIGNABLE;
         if (msg === ImportErrors.RESOURCE_EXISTS) replacement = M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS;
-        if (msg === ImportErrors.EXEC_MISSING_RELATION_TARGET) replacement = M.IMPORT_ERROR_MISSING_RELATION_TARGET;
+        if (msg === ImportErrors.EXEC_MISSING_RELATION_TARGET) replacement = M.IMPORT_ERROR_EXEC_MISSING_RELATION_TARGET;
         if (msg === ImportErrors.INVALID_MAIN_TYPE_DOCUMENT) replacement = M.IMPORT_ERROR_INVALID_OPERATION_RESOURCE;
         if (msg === ImportErrors.EXEC_ROLLBACK) replacement = M.IMPORT_ERROR_ROLLBACK_ERROR;
         if (msg === ImportErrors.EXEC_GENERIC_DATASTORE) replacement = M.IMPORT_ERROR_GENERIC_DATASTORE_ERROR;

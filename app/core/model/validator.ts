@@ -85,7 +85,7 @@ export class Validator {
      * @throws [INVALID_COORDINATES]
      * @throws [INVALID_NUMERICAL_VALUE]
      */
-    public assertIsWellformed(document: Document|NewDocument): void {
+    public assertIsWellformed(document: Document|NewDocument): void { // TODO extract this and make a custom validator in package import
 
         const invalidFields = Validations.validateDefinedFields(document.resource, this.projectConfiguration);
         if (invalidFields.length > 0) {

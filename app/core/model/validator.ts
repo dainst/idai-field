@@ -21,26 +21,19 @@ export class Validator {
                 private typeUtility: TypeUtility) {}
 
     /**
-     * @param document
-     * @param suppressIdentifierCheck
      * @param suppressIsRecordedInCheck
      * @param suppressRecordedInTargetCheck
-     * @returns resolves with () if validation passed
      * @throws [PREVALIDATION_INVALID_TYPE] if type is not configured in projectConfiguration
      * @throws [NO_ISRECORDEDIN] if type should have a isRecordedIn but doesn't have one
      * @throws [NO_ISRECORDEDIN_TARGET]
-     * @throws [IDENTIFIER_EXISTS]
      * @throws [MISSING_PROPERTY]
      * @throws [MISSING_GEOMETRYTYPE]
      * @throws [MISSING_COORDINATES]
      * @throws [INVALID_COORDINATES]
      * @throws [UNSUPPORTED_GEOMETRY_TYPE]
      * @throws [INVALID_NUMERICAL_VALUE]
-     * @throws INVALID_RELATIONS
-     * @throws INVALID_FIELDS
      */
     public async validate(document: Document|NewDocument,
-                          suppressIdentifierCheck = false,
                           suppressIsRecordedInCheck = false,
                           suppressRecordedInTargetCheck = false): Promise<void> {
 
@@ -68,9 +61,29 @@ export class Validator {
                 ];
             }
         }
-
-        if (!suppressIdentifierCheck) await this.validateIdentifier(document as any);
     }
+
+
+    /**
+     * @throws [IDENTIFIER_EXISTS]
+     */
+    public async assertIdentifierDoesNotExist(document: Document|NewDocument): Promise<void> {
+
+        let result;
+
+        try {
+            result = await this.datastore.find({
+                constraints: { 'identifier:match': document.resource.identifier }
+            });
+        } catch (e) {
+            throw ([M.ALL_ERROR_FIND]); // TODO make generic or unknown error or something
+        }
+
+        if (result.totalCount > 0 && Validator.isNotSameDocument(result.documents[0], document)) {
+            throw[ValidationErrors.IDENTIFIER_EXISTS, document.resource.identifier];
+        }
+    }
+
 
 
     /**
@@ -78,14 +91,13 @@ export class Validator {
      *   * that the type is known and
      *   * the fields and relations defined in a given document are actually configured
      *     fields and relations for the type of resource defined.
-     *   * the necessary isRecordedIn relations are there (can be skipped)
      *   * that the geometry is structurally valid
      *
-     * @throws INVALID_RELATIONS
-     * @throws INVALID_FIELDS
-     * @throws INVALID_TYPE
+     * Does not assert validity of any of the fields or relations contents.
      *
-     * TODO do validation of numerical values also here
+     * @throws [INVALID_TYPE]
+     * @throws [INVALID_RELATIONS]
+     * @throws [INVALID_FIELDS]
      */
     public assertIsWellformed(document: Document|NewDocument): void {
 
@@ -154,24 +166,6 @@ export class Validator {
     }
 
 
-    private async validateIdentifier(doc: IdaiFieldDocument): Promise<any> {
-
-        let result;
-
-        try {
-            result = await this.datastore.find({
-                constraints: { 'identifier:match': doc.resource.identifier }
-            });
-        } catch (e) {
-            throw ([M.ALL_ERROR_FIND]); // TODO make generic or unknown error or something
-        }
-
-        if (result.totalCount > 0 && Validator.isDuplicate(result.documents[0], doc)) {
-            return Promise.reject([ValidationErrors.IDENTIFIER_EXISTS, doc.resource.identifier]);
-        }
-    }
-
-
     private static validateGeometry(geometry: IdaiFieldGeometry): Array<string>|null {
 
         if (!geometry) return null;
@@ -231,7 +225,7 @@ export class Validator {
     }
 
 
-    private static isDuplicate(result: any, doc: any) {
+    private static isNotSameDocument(result: any, doc: any) {
 
         return result.resource.id !== doc.resource.id;
     }

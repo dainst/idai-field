@@ -57,7 +57,7 @@ describe('Validator', () => {
             }
         };
         await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-            .validate(doc, false, true).then(() => done(), msgWithParams => fail(msgWithParams));
+            .validate(doc,  true).then(() => done(), msgWithParams => fail(msgWithParams));
         done();
     });
 
@@ -71,7 +71,7 @@ describe('Validator', () => {
 
         try {
             await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-                .validate(doc,  false, true);
+                .validate(doc, true);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.NO_ISRECORDEDIN_TARGET, 'notexisting']);
@@ -80,7 +80,7 @@ describe('Validator', () => {
     });
 
 
-    it('should report duplicate id', async done => {
+    it('should report duplicate identifier', async done => {
 
         const datastore = jasmine.createSpyObj('datastore',['find']);
         datastore.find.and.returnValues(
@@ -92,8 +92,7 @@ describe('Validator', () => {
         };
 
         try {
-            await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-                .validate(doc,  false, true);
+            await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)).assertIdentifierDoesNotExist(doc);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.IDENTIFIER_EXISTS, 'eins']);
@@ -118,7 +117,7 @@ describe('Validator', () => {
         };
 
         new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-            .validate(doc,  false, true).then(() => done(), msgWithParams => fail(msgWithParams));
+            .validate(doc,   true).then(() => done(), msgWithParams => fail(msgWithParams));
     });
 
 
@@ -133,7 +132,7 @@ describe('Validator', () => {
         };
 
         new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc,  false, true).then(() => fail(), msgWithParams => {
+            .validate(doc,   true).then(() => fail(), msgWithParams => {
             expect(msgWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
             done();
         });
@@ -152,7 +151,7 @@ describe('Validator', () => {
         };
 
         new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc,  false, true).then(() => fail(), msgWithParams => {
+            .validate(doc,   true).then(() => fail(), msgWithParams => {
                 expect(msgWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
                 done();
             });
@@ -268,7 +267,7 @@ describe('Validator', () => {
         };
 
         new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc,  false, true).then(
+            .validate(doc,   true).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1']);
@@ -291,7 +290,7 @@ describe('Validator', () => {
         };
 
         new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc,  false, true).then(
+            .validate(doc,  true).then(
             () => fail(),
             msgWithParams => {
                 expect(msgWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2']);

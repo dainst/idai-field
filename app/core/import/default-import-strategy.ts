@@ -167,7 +167,6 @@ export class DefaultImportStrategy implements ImportStrategy {
         this.validator.assertIsWellformed(documentForUpdate);
         await this.validator.validate( // TODO with so many suppressions, we should think about if we make more public methods and call them directly
             documentForUpdate,
-            true,
             this.mergeIfExists,
             !this.mergeIfExists);
 

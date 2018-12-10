@@ -80,6 +80,7 @@ export class RowComponent implements AfterViewInit {
     private async save() {
 
         try {
+            await this.validator.assertIdentifierDoesNotExist(this.document);
             await this.validator.validate(this.document);
         } catch(msgWithParams) {
             this.messages.add(msgWithParams);

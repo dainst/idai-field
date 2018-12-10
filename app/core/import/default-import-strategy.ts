@@ -153,7 +153,10 @@ export class DefaultImportStrategy implements ImportStrategy {
                 this.identifierMap, this.findByIdentifier.bind(this));
         }
 
-        if (!this.mergeIfExists) await this.prepareIsRecordedInRelation(document);
+        if (!this.mergeIfExists) {
+            this.validator.assertIsKnownType(document);
+            await this.prepareIsRecordedInRelation(document, this.mainTypeDocumentId);
+        }
 
         const documentForUpdate: Document|undefined = await this.mergeOrUseAsIs(document, this.mergeIfExists);
         if (!documentForUpdate) return undefined;
@@ -163,10 +166,9 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
-    private async prepareIsRecordedInRelation(document: NewDocument) {
+    private async prepareIsRecordedInRelation(document: NewDocument, mainTypeDocumentId: string) {
 
-        this.validator.assertIsKnownType(document);
-        if (!this.mainTypeDocumentId) {
+        if (!mainTypeDocumentId) {
             try {
                 this.validator.assertHasIsRecordedIn(document);
             } catch {
@@ -175,7 +177,7 @@ export class DefaultImportStrategy implements ImportStrategy {
         } else {
             await this.assertSettingIsRecordedInIsPermissibleForType(document);
             await this.isRecordedInTargetAllowedRelationDomainType(document);
-            this.initRecordedIn(document, this.mainTypeDocumentId);
+            this.initRecordedIn(document, mainTypeDocumentId);
         }
     }
 

@@ -43,10 +43,9 @@ export class DefaultImportStrategy implements ImportStrategy {
 
     /**
      * TODO implement rollback, throw exec rollback error if it goes wrong
-     * TODO throw error if user specifies id
-     * TODO we could remove the datastore feature of predefining ids entirely
      *
      * @param documents documents with the field resource.identifier set to a non empty string
+     *   if resource.id is set, it will be taken as document.id on creation
      * @param importReport
      *   .errors
      *      [ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier]

@@ -13,42 +13,55 @@ export class NativeJsonlParser extends AbstractParser {
 
     /**
      * @throws [FILE_INVALID_JSONL]
+     * @throws [PARSER_ID_MUST_NOT_BE_SET]
      */
     public parse(content: string): Observable<Document> {
-        
+
         this.warnings = [];
         return Observable.create((observer: Observer<NewDocument>) => {
-            NativeJsonlParser.parseContent(content, observer);
+            NativeJsonlParser.parseContent(NativeJsonlParser.makeLines(content), observer);
             observer.complete();
         });
     }
 
 
-    private static parseContent(content: string, observer: Observer<NewDocument>) {
+    private static parseContent(lines: string[], observer: Observer<NewDocument>) {
 
-        const lines = content
-            .replace(/\r\n|\n\r|\n|\r/g,'\n') // accept unix and windows line endings
-            .split('\n');
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].length === 0) continue;
 
-        const len = lines.length;
-
-        for (let i = 0; i < len; i++) {
-
+            let document: NewDocument;
             try {
-                if (lines[i].length > 0) observer.next(NativeJsonlParser.makeDoc(lines[i]));
+                document = NativeJsonlParser.makeDoc(lines[i]);
             } catch (e) {
                 console.error('parse content error. reason: ', e);
                 observer.error([ImportErrors.FILE_INVALID_JSONL, i + 1]);
                 break;
             }
+            NativeJsonlParser.assertIsValid(document);
+            observer.next(document);
         }
+    }
+
+
+    private static makeLines(content: string) {
+
+        return content
+            .replace(/\r\n|\n\r|\n|\r/g,'\n') // accept unix and windows line endings
+            .split('\n');
+    }
+
+
+    private static assertIsValid(document: NewDocument) {
+
+        if (document.resource.id) throw [ImportErrors.PARSER_ID_MUST_NOT_BE_SET];
     }
 
 
     private static makeDoc(line: string): NewDocument {
 
         const resource = JSON.parse(line);
-        if (!resource.relations) resource.relations = {};
+        if (!resource.relations) resource.relations = {}; // TODO in defaultmiportstrategy, assume relation is set
 
         return { resource: resource };
     }

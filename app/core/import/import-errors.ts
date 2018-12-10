@@ -17,7 +17,8 @@ export module ImportErrors {
     export const SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'importerrors/shapefile/unsupportedgeometrytype';
     export const SHAPEFILE_JSONL_WRITE = 'importerrors/shapefile/jsonlwrite';
     export const SHAPEFILE_GENERIC = 'importerrors/shapefile/generic';
-    export const MISSING_IDENTIFIER = 'importerrors/missingidentifier';
+    export const PARSER_MISSING_IDENTIFIER = 'importerrors/parser/missingidentifier';
+    export const PARSER_ID_MUST_NOT_BE_SET = 'importerrors/parser/idnottobeset';
     export const MISSING_RESOURCE = 'importerrors/missingresource';
     export const WRONG_IDENTIFIER_FORMAT = 'importerrors/wrongidentifierformat';
 

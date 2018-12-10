@@ -50,8 +50,9 @@ export module MessagesConversion {
         if (msg === ImportErrors.CSV_GENERIC) replacement = M.IMPORT_ERROR_GENERIC_CSV_ERROR;
         if (msg === ImportErrors.MANDATORY_CSV_FIELD_MISSING) replacement = M.IMPORT_ERROR_MANDATORY_CSV_FIELD_MISSING;
         if (msg === ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT) replacement = M.IMPORT_ERROR_INVALID_GEOJSON_IMPORT_STRUCT;
-        if (msg === ImportErrors.MISSING_IDENTIFIER) replacement = M.IMPORT_ERROR_MISSING_IDENTIFIER;
         if (msg === ImportErrors.INVALID_GEOMETRY) replacement = M.IMPORT_ERROR_INVALID_GEOMETRY;
+        if (msg === ImportErrors.PARSER_MISSING_IDENTIFIER) replacement = M.IMPORT_ERROR_MISSING_IDENTIFIER;
+        if (msg === ImportErrors.PARSER_ID_MUST_NOT_BE_SET) replacement = M.IMPORT_ERROR_PARSING_ID_MUST_NOT_BE_SET;
 
         // import errors - prevalidation
         if (msg === ImportErrors.PREVALIDATION_INVALID_TYPE) replacement = M.IMPORT_PREVALIDATION_INVALID_TYPE;

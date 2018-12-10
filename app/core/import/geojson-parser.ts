@@ -50,7 +50,7 @@ export class GeojsonParser extends AbstractParser {
      *
      * @param content
      * @throws [WRONG_IDENTIFIER_FORMAT]
-     * @throws [MISSING_IDENTIFIER]
+     * @throws [PARSER_MISSING_IDENTIFIER]
      * @throws [INVALID_GEOJSON_IMPORT_STRUCT]
      * @throws [FILE_INVALID_JSON]
      * @throws [IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS]
@@ -105,7 +105,7 @@ export class GeojsonParser extends AbstractParser {
         let identifiers: string[] = [];
         for (let feature of geojson.features) {
 
-            if (!feature.properties) return [ImportErrors.MISSING_IDENTIFIER];
+            if (!feature.properties) return [ImportErrors.PARSER_MISSING_IDENTIFIER];
             feature.properties.relations = {};
 
             if (preValidateAndTransformFeature) {
@@ -121,7 +121,7 @@ export class GeojsonParser extends AbstractParser {
 
     private static validateAndTransformFeature(feature: any) {
 
-        if (!feature.properties['identifier']) return [ImportErrors.MISSING_IDENTIFIER];
+        if (!feature.properties['identifier']) return [ImportErrors.PARSER_MISSING_IDENTIFIER];
         if (typeof feature.properties['identifier'] !== 'string') return [ImportErrors.WRONG_IDENTIFIER_FORMAT];
 
         if (feature.type === undefined) return [ImportErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "type" not found for at least one feature.'];

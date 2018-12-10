@@ -92,7 +92,7 @@ describe('Validator', () => {
         };
 
         try {
-            await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)).assertIdentifierDoesNotExist(doc);
+            await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration)).assertIdentifierIsUnique(doc);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.IDENTIFIER_EXISTS, 'eins']);

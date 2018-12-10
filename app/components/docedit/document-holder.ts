@@ -75,7 +75,7 @@ export class DocumentHolder {
 
     public async save(): Promise<Document> {
 
-        await this.validator.assertIdentifierDoesNotExist(this.clonedDocument);
+        await this.validator.assertIdentifierIsUnique(this.clonedDocument);
         await this.validator.validate(this.clonedDocument, false);
         this.validator.assertHasIsRecordedIn(this.clonedDocument);
 

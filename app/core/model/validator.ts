@@ -60,7 +60,7 @@ export class Validator {
     /**
      * @throws [IDENTIFIER_EXISTS]
      */
-    public async assertIdentifierDoesNotExist(document: Document|NewDocument): Promise<void> { // TODO rename
+    public async assertIdentifierIsUnique(document: Document|NewDocument): Promise<void> {
 
         let result;
 

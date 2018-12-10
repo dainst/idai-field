@@ -78,6 +78,7 @@ export class DocumentHolder {
         await this.validator.assertIdentifierIsUnique(this.clonedDocument);
         await this.validator.validate(this.clonedDocument, false);
         this.validator.assertHasIsRecordedIn(this.clonedDocument);
+        this.validator.assertNoFieldsMissing(this.clonedDocument);
 
         const savedDocument: Document = await this.persistenceManager.persist(
             this.cleanup(this.clonedDocument),

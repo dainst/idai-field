@@ -121,7 +121,7 @@ describe('Validator', () => {
     });
 
 
-    it('should report error when omitting mandatory property', done => {
+    it('should report error when omitting mandatory property', async done => {
 
         const doc = {
             resource: {
@@ -131,15 +131,24 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc,   true).then(() => fail(), msgWithParams => {
-            expect(msgWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
-            done();
-        });
+        try {
+            new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration)).assertNoFieldsMissing(doc);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
+        }
+
+        try {
+            await new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration)).assertIsWellformed(doc);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
+        }
+        done();
     });
 
 
-    it('should report error when leaving mandatory property empty', done => {
+    it('should report error when leaving mandatory property empty', async done => {
 
         const doc = {
             resource: {
@@ -150,11 +159,20 @@ describe('Validator', () => {
             }
         };
 
-        new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration))
-            .validate(doc,   true).then(() => fail(), msgWithParams => {
-                expect(msgWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
-                done();
-            });
+        try {
+            new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration)).assertNoFieldsMissing(doc);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
+        }
+
+        try {
+            await new Validator(projectConfiguration, undefined, new TypeUtility(projectConfiguration)).assertIsWellformed(doc);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
+        }
+        done();
     });
 
 

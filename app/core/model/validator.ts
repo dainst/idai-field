@@ -25,7 +25,6 @@ export class Validator {
      * // @throws [PREVALIDATION_INVALID_TYPE] if type is not configured in projectConfiguration
      *
      * @throws [NO_ISRECORDEDIN_TARGET]
-     * @throws [MISSING_PROPERTY]
      * @throws [MISSING_GEOMETRYTYPE]
      * @throws [MISSING_COORDINATES]
      * @throws [INVALID_COORDINATES]
@@ -33,15 +32,6 @@ export class Validator {
      * @throws [INVALID_NUMERICAL_VALUE]
      */
     public async validate(document: Document|NewDocument, suppressRecordedInTargetCheck): Promise<void> {
-
-        const missingProperties = Validations.getMissingProperties(document.resource, this.projectConfiguration);
-        if (missingProperties.length > 0) {
-            throw [
-                ValidationErrors.MISSING_PROPERTY,
-                document.resource.type,
-                missingProperties.join(', ')
-            ];
-        }
 
         Validator.validateNumericalValues(document as Document, this.projectConfiguration);
 
@@ -86,6 +76,7 @@ export class Validator {
      *     fields and relations for the type of resource defined.
      *   * that the geometry is structurally valid
      *   * that it has the isRecordedIn if the type requires it
+     *   * there are no mandatory fields missing
      *
      * Does not assert validity of any of the fields or relations contents.
      *
@@ -93,6 +84,7 @@ export class Validator {
      * @throws [INVALID_RELATIONS]
      * @throws [INVALID_FIELDS]
      * @throws [NO_ISRECORDEDIN]
+     * @throws [MISSING_PROPERTY]
      */
     public assertIsWellformed(document: Document|NewDocument): void { // TODO do missing property check
 
@@ -118,10 +110,28 @@ export class Validator {
             ];
         }
 
+        this.assertNoFieldsMissing(document);
+
         const msgWithParams = Validator.validateGeometry(document.resource.geometry as any);
         if (msgWithParams) throw msgWithParams;
 
         this.assertHasIsRecordedIn(document);
+    }
+
+
+    /**
+     * @throws [MISSING_PROPERTY]
+     */
+    public assertNoFieldsMissing(document: Document|NewDocument): void {
+
+        const missingProperties = Validations.getMissingProperties(document.resource, this.projectConfiguration);
+        if (missingProperties.length > 0) {
+            throw [
+                ValidationErrors.MISSING_PROPERTY,
+                document.resource.type,
+                missingProperties.join(', ')
+            ];
+        }
     }
 
 

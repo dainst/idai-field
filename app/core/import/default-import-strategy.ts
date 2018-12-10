@@ -67,7 +67,7 @@ export class DefaultImportStrategy implements ImportStrategy {
             }
         }
         this.identifierMap = this.mergeIfExists ? {} : DefaultImportStrategy.assignIds(
-            documents, this.idGenerator.generateId.bind(this));
+            documents, this.idGenerator.generateId.bind(this)); // TODO make idGeneratorProvider
 
         const documentsForUpdate = await this.prepareDocumentsForUpdate(documents, importReport);
         if (importReport.errors.length > 0) return importReport;
@@ -165,7 +165,7 @@ export class DefaultImportStrategy implements ImportStrategy {
         }
 
         this.validator.assertIsWellformed(documentForUpdate);
-        await this.validator.validate( // TODO with so many suppressions, we should think about if we make more public methods and call them directly
+        await this.validator.validate(
             documentForUpdate,
             this.mergeIfExists,
             !this.mergeIfExists);

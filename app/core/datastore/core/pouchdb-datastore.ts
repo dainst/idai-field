@@ -146,13 +146,16 @@ export class PouchdbDatastore {
     }
 
 
-    // TODO make sure all the guarantees given for fetch, especially the date conversion, also hold here, so that the cacheddatastore (and indexers) can consume the docs properly
-    public bulkFetch(resourceIds: string[], options: any = { conflicts: true }): Promise<any> {
+    public async bulkFetch(resourceIds: string[], options: any = { conflicts: true }): Promise<Array<Document>> {
 
         options.keys = resourceIds;
         options.include_docs = true;
 
-        return this.db.allDocs(options);
+        return (await this.db.allDocs(options)).rows.map((row: any) => {
+            if (!row.doc || !Document.isValid(row.doc)) return undefined;
+            PouchdbDatastore.convertDates(row.doc);
+            return row.doc;
+        }).filter((document: Document) => document !== undefined);
     }
 
 

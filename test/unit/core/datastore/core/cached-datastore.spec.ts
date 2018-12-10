@@ -95,23 +95,19 @@ describe('CachedDatastore', () => {
 
     it('should add missing fields on getMultiple, bypassing cache', async done => {
 
-        mockdb.bulkFetch.and.returnValues(Promise.resolve({
-            rows: [{
-                doc: {
-                    resource: {
-                        id: '1',
-                        relations: {}
-                    }
+        mockdb.bulkFetch.and.returnValues(Promise.resolve([
+            {
+                resource: {
+                    id: '1',
+                    relations: {}
                 }
             }, {
-                doc: {
-                    resource: {
-                        id: '2',
-                        relations: {}
-                    }
+                resource: {
+                    id: '2',
+                    relations: {}
                 }
-            }]
-        }));
+            }
+        ]));
 
         const documents: Array<IdaiFieldDocument> = await ds.getMultiple(['1', '2']);
         expect(documents.length).toBe(2);
@@ -131,23 +127,19 @@ describe('CachedDatastore', () => {
             }
         }));
 
-        mockdb.bulkFetch.and.returnValues(Promise.resolve({
-            rows: [{
-                doc: {
-                    resource: {
-                        id: '1',
-                        relations: {}
-                    }
+        mockdb.bulkFetch.and.returnValues(Promise.resolve([
+            {
+                resource: {
+                    id: '1',
+                    relations: {}
                 }
             }, {
-                doc: {
-                    resource: {
-                        id: '3',
-                        relations: {}
-                    }
+                resource: {
+                    id: '3',
+                    relations: {}
                 }
-            }]
-        }));
+            }
+        ]));
 
         await ds.get('2');  // Save in cache
 
@@ -182,16 +174,14 @@ describe('CachedDatastore', () => {
     it('should add missing fields on find, bypassing cache', async done => {
 
         mockIndexFacade.perform.and.returnValues(['1']);
-        mockdb.bulkFetch.and.returnValues(Promise.resolve({
-            rows: [{
-                doc: {
-                    resource: {
-                        id: '1',
-                        relations: {}
-                    }
+        mockdb.bulkFetch.and.returnValues(Promise.resolve([
+             {
+                resource: {
+                    id: '1',
+                    relations: {}
                 }
-            }]
-        }));
+            }
+        ]));
 
         const documents = (await ds.find({})).documents; // fetch from mockdb
         expect(documents.length).toBe(1);
@@ -240,11 +230,7 @@ describe('CachedDatastore', () => {
     it('cant find one and only document', async done => {
 
         mockIndexFacade.perform.and.returnValues(['1']);
-        mockdb.bulkFetch.and.returnValues(Promise.resolve({
-            rows: [{
-                error: 'not_found'
-            }]
-        }));
+        mockdb.bulkFetch.and.returnValues(Promise.resolve([]));
 
         const { documents, totalCount } = await ds.find({});
         expect(documents.length).toBe(0);
@@ -257,18 +243,14 @@ describe('CachedDatastore', () => {
 
         mockIndexFacade.perform.and.returnValues(['1', '2']);
 
-        mockdb.bulkFetch.and.returnValues(Promise.resolve({
-            rows: [{
-                doc: {
-                    resource: {
-                        id: '1',
-                        relations: {}
-                    }
+        mockdb.bulkFetch.and.returnValues(Promise.resolve([
+            {
+                resource: {
+                    id: '1',
+                    relations: {}
                 }
-            }, {
-                error: 'not_found'
-            }]
-        }));
+            }
+        ]));
 
         const { documents, totalCount } = await ds.find({});
         expect(documents.length).toBe(1);

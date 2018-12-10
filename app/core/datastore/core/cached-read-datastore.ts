@@ -135,18 +135,18 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     private async getDocumentsForIds(ids: string[],
                                      limit?: number): Promise<{documents: Array<T>, totalCount: number}> {
 
+        let totalCount: number = ids.length;
         let idsToFetch: string[] = ids;
         if (limit && limit < idsToFetch.length) idsToFetch = idsToFetch.slice(0, limit);
-        let totalCount = ids.length;
 
         const {documentsFromCache, notCachedIds} = await this.getDocumentsFromCache(idsToFetch);
         let documents: Array<T> = documentsFromCache;
 
         if (notCachedIds.length > 0) {
             try {
-                const {documentsFromDatastore, notFound} = await this.getDocumentsFromDatastore(notCachedIds);
-                totalCount -= notFound;
+                const documentsFromDatastore = await this.getDocumentsFromDatastore(notCachedIds);
                 documents = this.mergeDocuments(documentsFromCache, documentsFromDatastore, idsToFetch);
+                totalCount -= (idsToFetch.length - documents.length);
             } catch (e) {
                 console.error('Error while fetching documents from datastore', e);
                 return { documents: [], totalCount: 0 };
@@ -182,27 +182,17 @@ export abstract class CachedReadDatastore<T extends Document> implements ReadDat
     }
 
 
-    private async getDocumentsFromDatastore(ids: string[])
-            : Promise<{ documentsFromDatastore: Array<T>, notFound: number }> {
+    private async getDocumentsFromDatastore(ids: string[]): Promise<Array<T>> {
 
         const documents: Array<T> = [];
-        let notFound: number = 0;
+        const result: Array<Document> = await this.datastore.bulkFetch(ids);
 
-        const result: any = await this.datastore.bulkFetch(ids);
+        result.forEach(document => {
+            this.typeConverter.validateTypeToBeOfClass(document.resource.type, this.typeClass);
+            documents.push(this.documentCache.set(this.typeConverter.convert(document)));
+        });
 
-        for (let row of result.rows) {
-            if (!row.doc) {
-                notFound++;
-                continue;
-            }
-            this.typeConverter.validateTypeToBeOfClass(row.doc.resource.type, this.typeClass);
-            documents.push(this.documentCache.set(this.typeConverter.convert(row.doc)));
-        }
-
-        return {
-            documentsFromDatastore: documents,
-            notFound: notFound
-        };
+        return documents;
     }
 
 

@@ -55,6 +55,7 @@ export class DefaultImportStrategy implements ImportStrategy {
      *      [ImportErrors.PREVALIDATION_MISSING_RELATION_TARGET] if useIdentifiersInRelations and target of relation not found in db or in importfile
      *      [ImportErrors.EXEC_MISSING_RELATION_TARGET]
      *      [ImportErrors.INVALID_MAIN_TYPE_DOCUMENT]
+     *      [ImportErrors.RESOURCE_EXISTS] if resource already exist and !mergeIfExists
      */
     public async import(documents: Array<Document>,
                         importReport: ImportReport): Promise<ImportReport> {
@@ -141,9 +142,6 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
-     * @throws [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
-     * @throws [INVALID_MAIN_TYPE_DOCUMENT]
-     * @throws [OPERATIONS_NOT_ALLOWED]
      * @returns undefined if should be ignored, document if should be updated
      */
     private async prepareDocumentForUpdate(document: NewDocument): Promise<Document|undefined> {

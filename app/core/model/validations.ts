@@ -35,7 +35,7 @@ export module Validations {
     }
 
 
-    export function assertDefinedFieldsAreAllowed(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): Array<string> {
+    export function validateDefinedFields(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): Array<string> {
 
         const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
         const defaultFields: Array<FieldDefinition> = [{ name: 'relations' }];
@@ -72,7 +72,7 @@ export module Validations {
      * @returns {string[]} the names of invalid relation fields if one or more of the fields are invalid, otherwise
      * <code>undefined</code>
      */
-    export function assertDefinedRelationsAreAllowed(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[] {
+    export function validateDefinedRelations(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[] {
 
         const fields: Array<RelationDefinition> = projectConfiguration.getRelationDefinitions(resource.type) as any;
         const invalidFields: Array<any> = [];

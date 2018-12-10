@@ -25,7 +25,7 @@ export module ImportErrors {
     // prevalidation - prevalidation are all the tests done before the actual db updates, except the ones done by the Validator / Validations
     export const OPERATIONS_NOT_ALLOWED = 'importerrrors/prevalidation/operationsnotallowed';
     export const NO_OPERATION_ASSIGNED = 'importerrors/prevalidation/nooperationassigned';
-    export const DUPLICATE_IDENTIFIER = 'importerrors/prevalidation/duplicaeidentifier';
+    export const DUPLICATE_IDENTIFIER = 'importerrors/prevalidation/duplicateidentifier';
     export const MISSING_RELATION_TARGET = 'importerrors/prevalidation/missingrelationtarget'; // by identifier
 
     // execution

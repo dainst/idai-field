@@ -18,11 +18,13 @@ describe('DefaultImportStrategy', () => {
     beforeEach(() => {
 
         mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get', 'find']);
-        mockValidator = jasmine.createSpyObj('validator', ['assertIsRecordedInTargetsExists', 'assertIsWellformed']);
+        mockValidator = jasmine.createSpyObj('validator', [
+            'assertIsRecordedInTargetsExists', 'assertIsWellformed', 'assertIsKnownType', 'assertHasIsRecordedIn']);
 
         mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getTypesList']);
 
         mockTypeUtility = { isSubtype: (t: string) => t === 'Trench' };
+        mockValidator.assertHasIsRecordedIn.and.returnValue();
 
         mockValidator.assertIsRecordedInTargetsExists.and.returnValue(Promise.resolve());
         mockDatastore.create.and.callFake((a) => Promise.resolve(a));
@@ -47,7 +49,7 @@ describe('DefaultImportStrategy', () => {
     it('should resolve on success', async done => {
 
         importReport = await importStrategy.import([
-            { resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: []} } } as any], importReport);
+            { resource: {type: 'Find', identifier: 'one', relations: { isRecordedIn: ['0']} } } as any], importReport);
 
         expect(mockDatastore.create).toHaveBeenCalled();
         done();
@@ -90,7 +92,7 @@ describe('DefaultImportStrategy', () => {
             mockProjectConfiguration,
             'user1',
             '', false, false, false).import([
-            { resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: []} } } as any], importReport);
+            { resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']} } } as any], importReport);
 
         expect(mockDatastore.create).toHaveBeenCalled();
         expect(mockDatastore.update).not.toHaveBeenCalled();
@@ -104,7 +106,7 @@ describe('DefaultImportStrategy', () => {
         mockValidator.assertIsWellformed.and.callFake(() => {throw ['abc']});
 
         importReport = await importStrategy.import([
-            {resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: []}}} as any], importReport);
+            {resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']}}} as any], importReport);
         expect(importReport.errors[0][0]).toBe('abc');
         done();
     });
@@ -115,7 +117,7 @@ describe('DefaultImportStrategy', () => {
         mockDatastore.create.and.returnValue(Promise.reject(['abc']));
 
         importReport = await importStrategy.import(
-            [{resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: []}}} as any], importReport);
+            [{resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']}}} as any], importReport);
 
         expect(importReport.errors[0][0]).toBe('abc');
         done();
@@ -236,10 +238,10 @@ describe('DefaultImportStrategy', () => {
     it('preValidate - existing identifier', async done => {
 
         mockDatastore.find.and.returnValues(Promise.resolve(
-            { documents: [{ resource: { type: 'Place', identifier: '1a' } }], totalCount: 1 }));
+            { documents: [{ resource: { type: 'Place', identifier: '1a'} }], totalCount: 1 }));
 
         importReport = await importStrategy.import([
-            { resource: { type: 'Place', identifier: '1a' } } as any
+            { resource: { type: 'Place', identifier: '1a', relations: { isRecordedIn: {}}} } as any
         ], importReport);
 
         expect(importReport.errors.length).toBe(1);

@@ -28,7 +28,7 @@ describe('Import/Subsystem', () => {
 
     it('create one operation', async done => {
 
-        await ImportFacade.doImport(
+       await ImportFacade.doImport(
             'native',
             new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,

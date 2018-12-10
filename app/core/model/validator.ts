@@ -63,22 +63,21 @@ export class Validator {
 
 
     /**
+     * Assumes
+     *   * that the type of the document is a valid type from the active ProjectConfiguration
+     *
      * Asserts
-     *   * that the type is known and
      *   * the fields and relations defined in a given document are actually configured
      *     fields and relations for the type of resource defined.
      *   * that the geometries are structurally valid
-     *   * that it has the isRecordedIn if the type requires it
      *   * there are no mandatory fields missing
      *   * the numerical values are correct
      *
      * Does not do anything database consistency related,
      *   e.g. checking identifier uniqueness or relation target existence.
      *
-     * @throws [INVALID_TYPE]
      * @throws [INVALID_RELATIONS]
      * @throws [INVALID_FIELDS]
-     * @throws [NO_ISRECORDEDIN]
      * @throws [MISSING_PROPERTY]
      * @throws [MISSING_GEOMETRYTYPE]
      * @throws [MISSING_COORDINATES]
@@ -88,9 +87,7 @@ export class Validator {
      */
     public assertIsWellformed(document: Document|NewDocument): void {
 
-        this.assertIsKnownType(document);
-
-        const invalidFields = Validations.assertDefinedFieldsAreAllowed(document.resource, this.projectConfiguration);
+        const invalidFields = Validations.validateDefinedFields(document.resource, this.projectConfiguration);
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_FIELDS,
@@ -99,7 +96,7 @@ export class Validator {
             ];
         }
 
-        const invalidRelationFields = Validations.assertDefinedRelationsAreAllowed(document.resource, this.projectConfiguration);
+        const invalidRelationFields = Validations.validateDefinedRelations(document.resource, this.projectConfiguration);
         if (invalidRelationFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_RELATIONS,
@@ -109,10 +106,9 @@ export class Validator {
         }
 
         this.assertNoFieldsMissing(document);
-        this.assertHasIsRecordedIn(document);
         this.assertCorrectnessOfNumericalValues(document);
 
-        const errWithParams = Validator.assertStructuralValidityOfGeometries(document.resource.geometry as any);
+        const errWithParams = Validator.validateStructureOfGeometries(document.resource.geometry as any);
         if (errWithParams) throw errWithParams;
     }
 
@@ -204,7 +200,7 @@ export class Validator {
     }
 
 
-    private static assertStructuralValidityOfGeometries(geometry: IdaiFieldGeometry): Array<string>|null {
+    private static validateStructureOfGeometries(geometry: IdaiFieldGeometry): Array<string>|null {
 
         if (!geometry) return null;
 

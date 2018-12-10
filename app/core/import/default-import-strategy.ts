@@ -141,8 +141,6 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
-     * TODO throw error if recordedIn target is empty array
-     *
      * @throws [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
      * @throws [INVALID_MAIN_TYPE_DOCUMENT]
      * @throws [OPERATIONS_NOT_ALLOWED]
@@ -150,20 +148,35 @@ export class DefaultImportStrategy implements ImportStrategy {
      */
     private async prepareDocumentForUpdate(document: NewDocument): Promise<Document|undefined> {
 
-        if (this.useIdentifiersInRelations) await DefaultImportStrategy.rewriteRelations(
-            document, this.identifierMap, this.findByIdentifier.bind(this));
-
-        if (!this.mergeIfExists && this.mainTypeDocumentId) {
-            await this.assertSettingIsRecordedInIsPermissibleForType(document);
-            await this.isRecordedInTargetAllowedRelationDomainType(document);
-            this.initRecordedIn(document);
+        if (this.useIdentifiersInRelations) {
+            await DefaultImportStrategy.rewriteRelations(document,
+                this.identifierMap, this.findByIdentifier.bind(this));
         }
+
+        if (!this.mergeIfExists) await this.prepareIsRecordedInRelation(document);
 
         const documentForUpdate: Document|undefined = await this.mergeOrUseAsIs(document, this.mergeIfExists);
         if (!documentForUpdate) return undefined;
 
         this.validator.assertIsWellformed(documentForUpdate);
         return documentForUpdate;
+    }
+
+
+    private async prepareIsRecordedInRelation(document: NewDocument) {
+
+        this.validator.assertIsKnownType(document);
+        if (!this.mainTypeDocumentId) {
+            try {
+                this.validator.assertHasIsRecordedIn(document);
+            } catch (_) {
+                throw [ImportErrors.NO_OPERATION_ASSIGNED];
+            }
+        } else {
+            await this.assertSettingIsRecordedInIsPermissibleForType(document);
+            await this.isRecordedInTargetAllowedRelationDomainType(document);
+            this.initRecordedIn(document, this.mainTypeDocumentId);
+        }
     }
 
 
@@ -205,12 +218,12 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
-    private initRecordedIn(document: NewDocument) {
+    private initRecordedIn(document: NewDocument, mainTypeDocumentId: string) {
 
         const relations = document.resource.relations;
         if (!relations['isRecordedIn']) relations['isRecordedIn'] = [];
-        if (!relations['isRecordedIn'].includes(this.mainTypeDocumentId)) {
-            relations['isRecordedIn'].push(this.mainTypeDocumentId);
+        if (!relations['isRecordedIn'].includes(mainTypeDocumentId)) {
+            relations['isRecordedIn'].push(mainTypeDocumentId);
         }
     }
 

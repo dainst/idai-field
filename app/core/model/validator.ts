@@ -63,6 +63,8 @@ export class Validator {
 
 
     /**
+     * Wellformedness test specifically written for use in import package.
+     *
      * Assumes
      *   * that the type of the document is a valid type from the active ProjectConfiguration
      *
@@ -76,6 +78,7 @@ export class Validator {
      * Does not do anything database consistency related,
      *   e.g. checking identifier uniqueness or relation target existence.
      *
+     * @throws ValidationErrors.*
      * @throws [INVALID_RELATIONS]
      * @throws [INVALID_FIELDS]
      * @throws [MISSING_PROPERTY]

@@ -63,17 +63,14 @@ export module DefaultImport {
                                                    mainTypeDocumentId: string,
                                                    useIdentifiersInRelations: boolean,
                                                    mergeIfExists: boolean,
-                                                   identifierMap: { [identifier: string]: string }
-        ): Promise<Document|undefined> {
+                                                   identifierMap: { [identifier: string]: string }): Promise<Document|undefined> {
 
-            if (useIdentifiersInRelations) {
-                await rewriteRelations(document, identifierMap, datastore);
-            }
+        if (useIdentifiersInRelations) await rewriteRelations(document, identifierMap, datastore);
 
-            if (!mergeIfExists) {
-            validator.assertIsKnownType(document);
-            await prepareIsRecordedInRelation(
-                document, mainTypeDocumentId, datastore, validator, typeUtility, projectConfiguration);
+        if (!mergeIfExists) {
+        validator.assertIsKnownType(document);
+        await prepareIsRecordedInRelation(
+            document, mainTypeDocumentId, datastore, validator, typeUtility, projectConfiguration);
         }
 
         const documentForUpdate: Document|undefined = await mergeOrUseAsIs(document, datastore, mergeIfExists);

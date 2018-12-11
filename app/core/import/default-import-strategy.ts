@@ -132,7 +132,8 @@ export class DefaultImportStrategy implements ImportStrategy {
     /**
      * @returns undefined if should be ignored, document if should be updated
      */
-    private async prepareDocumentForUpdate(document: NewDocument, datastore: DocumentDatastore): Promise<Document|undefined> {
+    private async prepareDocumentForUpdate(document: NewDocument,
+                                           datastore: DocumentDatastore): Promise<Document|undefined> {
 
         if (this.useIdentifiersInRelations) {
             await DefaultImportStrategy.rewriteRelations(document, this.identifierMap, datastore);
@@ -143,7 +144,7 @@ export class DefaultImportStrategy implements ImportStrategy {
             await this.prepareIsRecordedInRelation(document, this.mainTypeDocumentId, datastore);
         }
 
-        const documentForUpdate: Document|undefined = await this.mergeOrUseAsIs(document, datastore, this.mergeIfExists);
+        const documentForUpdate: Document|undefined = await DefaultImportStrategy.mergeOrUseAsIs(document, datastore, this.mergeIfExists);
         if (!documentForUpdate) return undefined;
 
         this.validator.assertIsWellformed(documentForUpdate);
@@ -164,20 +165,6 @@ export class DefaultImportStrategy implements ImportStrategy {
             await this.isRecordedInTargetAllowedRelationDomainType(document, datastore);
             DefaultImportStrategy.initRecordedIn(document, mainTypeDocumentId);
         }
-    }
-
-
-    private async mergeOrUseAsIs(document: NewDocument|Document, datastore: DocumentDatastore, mergeIfExists: boolean) {
-
-        let documentForUpdate: Document = document as Document;
-        const existingDocument = await DefaultImportStrategy.findByIdentifier(document.resource.identifier, datastore);
-        if (mergeIfExists) {
-            if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate);
-            else return undefined;
-        } else {
-            if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
-        }
-        return documentForUpdate;
     }
 
 
@@ -203,6 +190,20 @@ export class DefaultImportStrategy implements ImportStrategy {
             throw [ImportErrors.INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
                 mainTypeDocument.resource.type];
         }
+    }
+
+
+    private static async mergeOrUseAsIs(document: NewDocument|Document, datastore: DocumentDatastore, mergeIfExists: boolean) {
+
+        let documentForUpdate: Document = document as Document;
+        const existingDocument = await DefaultImportStrategy.findByIdentifier(document.resource.identifier, datastore);
+        if (mergeIfExists) {
+            if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate);
+            else return undefined;
+        } else {
+            if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
+        }
+        return documentForUpdate;
     }
 
 

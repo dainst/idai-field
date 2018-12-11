@@ -1624,6 +1624,9 @@
       "fields": {
         "dimensionHeight": {
           "label": "Höhe"
+        },
+        "sondageType": {
+          "label": "Typ der Sondage"
         }
       }
     }

@@ -4104,6 +4104,15 @@
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"
         ]
+      },
+      "sondageType": {
+        "inputType": "dropdown",
+        "valuelist": [
+          "Bohrung",
+          "Sondage",
+          "Suchschnitt",
+          "Oberbodenabtrag"
+        ]
       }
     }
   },

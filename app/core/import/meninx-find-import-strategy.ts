@@ -2,7 +2,7 @@ import {Document} from 'idai-components-2';
 import {ImportStrategy} from './import-strategy';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {ImportReport} from './import-facade';
-import {MeninxFindImporter} from './meninx-find-importer';
+import {MeninxFindImport} from './meninx-find-import';
 
 
 /**
@@ -19,7 +19,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         for (let docToUpdate of documents) {
 
             try {
-                const importedDoc = await MeninxFindImporter.importDoc(docToUpdate, datastore, username);
+                const importedDoc = await MeninxFindImport.importDoc(docToUpdate, datastore, username);
                 if (importedDoc) importReport.importedResourcesIds.push(importedDoc.resource.id);
 
             } catch (msgWithParams) {

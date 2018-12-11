@@ -15,7 +15,7 @@ const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {
  * @author Daniel de Oliveira
  * @author Juliane Watson
  */
-export module MeninxFindImporter {
+export module MeninxFindImport {
 
     /**
      * @throws errorWithParams

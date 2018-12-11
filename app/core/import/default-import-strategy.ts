@@ -46,31 +46,29 @@ export class DefaultImportStrategy implements ImportStrategy {
      * @param documents documents with the field resource.identifier set to a non empty string
      *   if resource.id is set, it will be taken as document.id on creation
      * @param importReport
-     *   .errors
-     *      [ImportErrors.PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier]
-     *        if duplicate identifier is found in import file.
-     *      [ImportErrors.PREVALIDATION_INVALID_TYPE, doc.resource.type]
-     *      [ImportErrors.PREVALIDATION_OPERATIONS_NOT_ALLOWED]
-     *      [ImportErrors.PREVALIDATION_NO_OPERATION_ASSIGNED]
-     *      [ImportErrors.PREVALIDATION_MISSING_RELATION_TARGET] if useIdentifiersInRelations and target of relation not found in db or in importfile
-     *      [ImportErrors.EXEC_MISSING_RELATION_TARGET]
-     *      [ImportErrors.INVALID_MAIN_TYPE_DOCUMENT]
-     *      [ImportErrors.RESOURCE_EXISTS] if resource already exist and !mergeIfExists
+     *   .errors {ImportError.*}
+     *      [PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier] if duplicate identifier is found in import file.
+     *      [PREVALIDATION_INVALID_TYPE, doc.resource.type]
+     *      [PREVALIDATION_OPERATIONS_NOT_ALLOWED]
+     *      [PREVALIDATION_NO_OPERATION_ASSIGNED]
+     *      [PREVALIDATION_MISSING_RELATION_TARGET] if useIdentifiersInRelations and target of relation not found in db or in importfile
+     *      [EXEC_MISSING_RELATION_TARGET]
+     *      [INVALID_MAIN_TYPE_DOCUMENT]
+     *      [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
      */
     public async import(documents: Array<Document>,
                         importReport: ImportReport): Promise<ImportReport> {
 
         if (!this.mergeIfExists) {
-            const duplicates_ = duplicates(documents.map(doc => doc.resource.identifier));
+            const duplicates_ = duplicates(documents.map(to('resource.identifier')));
             if (duplicates_.length > 0) {
-                // TODO return all, now that we return all the errors anyways
-                importReport.errors = [[ImportErrors.DUPLICATE_IDENTIFIER, duplicates_[0]]];
+                for (let duplicate of duplicates_) importReport.errors.push(
+                    [ImportErrors.DUPLICATE_IDENTIFIER, duplicate]);
                 return importReport;
             }
         }
         this.identifierMap = this.mergeIfExists ? {} : DefaultImportStrategy.assignIds(
             documents, this.idGenerator.generateId.bind(this)); // TODO make idGeneratorProvider
-
 
         const documentsForUpdate = await this.prepareDocumentsForUpdate(documents, importReport);
         if (importReport.errors.length > 0) return importReport;

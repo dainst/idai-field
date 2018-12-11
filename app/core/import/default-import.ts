@@ -68,9 +68,9 @@ export module DefaultImport {
         if (useIdentifiersInRelations) await rewriteRelations(document, identifierMap, datastore);
 
         if (!mergeIfExists) {
-        validator.assertIsKnownType(document);
-        await prepareIsRecordedInRelation(
-            document, mainTypeDocumentId, datastore, validator, typeUtility, projectConfiguration);
+            validator.assertIsKnownType(document);
+            await prepareIsRecordedInRelation(
+                document, mainTypeDocumentId, datastore, validator, typeUtility, projectConfiguration);
         }
 
         const documentForUpdate: Document|undefined = await mergeOrUseAsIs(document, datastore, mergeIfExists);

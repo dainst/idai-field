@@ -6,7 +6,7 @@ import {ImportErrors} from './import-errors';
 import {ImportReport} from './import-facade';
 import {ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../model/validator';
-import {TypeUtility} from '../model/type-utility';
+import {RelationsCompleter} from './relations-completer';
 
 
 /**
@@ -14,6 +14,30 @@ import {TypeUtility} from '../model/type-utility';
  * @author Thomas Kleinke
  */
 export module DefaultImport {
+
+
+    export async function performRelationsUpdates(importedResourcesIds: string[],
+                                                  importReport: ImportReport,
+                                                  projectConfiguration: ProjectConfiguration,
+                                                  datastore: DocumentDatastore,
+                                                  username: string) {
+
+        try {
+
+            await RelationsCompleter.completeInverseRelations(
+                datastore, projectConfiguration, username, importedResourcesIds);
+
+        } catch (msgWithParams) {
+
+            importReport.errors.push(msgWithParams);
+            try {
+                await RelationsCompleter.resetInverseRelations(
+                    datastore, projectConfiguration, username, importedResourcesIds);
+            } catch (e) {
+                importReport.errors.push(msgWithParams);
+            }
+        }
+    }
 
 
     export async function performDocumentsUpdates(documentsForUpdate: Array<NewDocument>,

@@ -2,11 +2,9 @@ import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {ImportStrategy} from './import-strategy';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {Validator} from '../model/validator';
-import {TypeUtility} from '../model/type-utility';
 import {ImportErrors} from './import-errors';
 import {ImportReport} from './import-facade';
 import {duplicates, to} from 'tsfun';
-import {RelationsCompleter} from './relations-completer';
 import {IdGenerator} from '../datastore/core/id-generator';
 import {DefaultImport} from './default-import';
 
@@ -38,8 +36,6 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
-     * TODO implement rollback, throw exec rollback error if it goes wrong
-     *
      * @param datastore
      * @param username
      * @param documents documents with the field resource.identifier set to a non empty string
@@ -80,33 +76,10 @@ export class DefaultImportStrategy implements ImportStrategy {
         importReport.importedResourcesIds = documentsForUpdate.map(to('resource.id'));
 
         if (!this.setInverseRelations || this.mergeIfExists) return importReport;
-        await this.performRelationsUpdates(
-            importReport.importedResourcesIds, importReport, datastore, username);
+        await DefaultImport.performRelationsUpdates(
+            importReport.importedResourcesIds, importReport, this.projectConfiguration, datastore, username);
 
         return importReport;
-    }
-
-
-    private async performRelationsUpdates(importedResourcesIds: string[],
-                                          importReport: ImportReport,
-                                          datastore: DocumentDatastore,
-                                          username: string) {
-
-        try {
-
-            await RelationsCompleter.completeInverseRelations(
-                datastore, this.projectConfiguration, username, importedResourcesIds);
-
-        } catch (msgWithParams) {
-
-            importReport.errors.push(msgWithParams);
-            try {
-                await RelationsCompleter.resetInverseRelations(
-                    datastore, this.projectConfiguration, username, importedResourcesIds);
-            } catch (e) {
-                importReport.errors.push(msgWithParams);
-            }
-        }
     }
 
 

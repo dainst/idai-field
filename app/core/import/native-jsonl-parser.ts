@@ -4,8 +4,6 @@ import {AbstractParser} from './abstract-parser';
 import {ImportErrors} from './import-errors';
 
 /**
- * TODO throw if id is assigned on resources
- *
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */

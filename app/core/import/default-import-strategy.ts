@@ -193,7 +193,7 @@ export class DefaultImportStrategy implements ImportStrategy {
     }
 
 
-    private async assertSettingIsRecordedInIsPermissibleForType(document: Document|NewDocument) { // TODO extract to custom validator for import package, remove dependency to typeUtility then
+    private async assertSettingIsRecordedInIsPermissibleForType(document: Document|NewDocument) {
 
         this.validator.assertIsKnownType(document); // TODO this seems to be duplicated now, remove it
 

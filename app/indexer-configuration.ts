@@ -19,6 +19,7 @@ export module IndexerConfiguration {
             'depicts:exist': { path: 'resource.relations.depicts', type: 'exist' },
             'identifier:match': { path: 'resource.identifier', type: 'match' },
             'id:match': { path: 'resource.id', type: 'match' },
+            'geometry:exist': { path: 'resource.geometry', type: 'exist' },
             'georeference:exist': { path: 'resource.georeference', type: 'exist' },
             'conflicts:exist': { path: '_conflicts', type: 'exist' }
         }, projectConfiguration, true);

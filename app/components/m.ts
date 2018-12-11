@@ -94,6 +94,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
     public static EXPORT_ERROR_GENERIC = 'export.error.generic';
+    public static EXPORT_GEOJSON_ERROR_WRITE = 'export.geojson.error.write';
     public static EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION = 'export.shapefile.error.tempFolderCreation';
     public static EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION = 'export.shapefile.error.zipFileCreation';
     public static EXPORT_SHAPEFILE_ERROR_WRITE = 'export.shapefile.error.write';
@@ -718,9 +719,18 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.EXPORT_GEOJSON_ERROR_WRITE] = {
+            content: i18n({
+                id: 'messages.export.geojson.error.write',
+                value: 'Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.'
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION] = {
             content: i18n({
-                id: 'messages.export.error.shapefile.tempFolderCreation',
+                id: 'messages.export.shapefile.error.tempFolderCreation',
                 value: 'Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.'
             }),
             level: 'danger',
@@ -729,7 +739,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION] = {
             content: i18n({
-                id: 'messages.export.error.shapefile.zipFileCreation',
+                id: 'messages.export.shapefile.error.zipFileCreation',
                 value: 'Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.'
             }),
             level: 'danger',
@@ -738,7 +748,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.EXPORT_SHAPEFILE_ERROR_WRITE] = {
             content: i18n({
-                id: 'messages.export.error.shapefile.write',
+                id: 'messages.export.shapefile.error.write',
                 value: 'Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.'
             }),
             level: 'danger',
@@ -747,7 +757,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
         };
         this.msgs[M.EXPORT_SHAPEFILE_ERROR_GET_RESOURCES] = {
             content: i18n({
-                id: 'messages.export.error.shapefile.getResources',
+                id: 'messages.export.shapefile.error.getResources',
                 value: 'Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.'
             }),
             level: 'danger',

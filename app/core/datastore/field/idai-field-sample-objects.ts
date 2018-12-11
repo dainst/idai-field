@@ -15,9 +15,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 't1',
             'identifier': locale === 'de' ? 'S1' : 'T1',
             'shortDescription': locale === 'de' ? 'Schnitt 1' : 'Trench 1',
-            'relations': {
-                'isRecordedIn': []
-            },
+            'relations': {},
             'geometry': {
                 'type': 'Polygon',
                 'coordinates': [[
@@ -35,9 +33,7 @@ export const getSampleDocuments = (locale: string): NewDocument[] => [
             'id': 't2',
             'identifier': locale === 'de' ? 'S2' : 'T2',
             'shortDescription': locale === 'de' ? 'Schnitt 2' : 'Trench 2',
-            'relations': {
-                'isRecordedIn': []
-            },
+            'relations': {},
             'geometry' : {
                 'type': 'Polygon',
                 'coordinates' : [[

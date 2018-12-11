@@ -1,17 +1,11 @@
 import {on} from 'tsfun';
-import {
-    FieldDefinition,
-    IdaiFieldGeometry,
-    NewResource,
-    ProjectConfiguration,
-    RelationDefinition,
-    Resource
-} from 'idai-components-2';
+import {FieldDefinition, IdaiFieldGeometry, NewResource, ProjectConfiguration, RelationDefinition,
+    Resource} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
 
-export module Validations {
 
+export module Validations {
 
     export function validateStructureOfGeometries(geometry: IdaiFieldGeometry): Array<string>|null {
 

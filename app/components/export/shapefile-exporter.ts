@@ -1,5 +1,6 @@
 import {Document} from 'idai-components-2';
 import {JavaToolExecutor} from '../../common/java-tool-executor';
+import {M} from '../m';
 
 const remote = require('electron').remote;
 
@@ -9,13 +10,17 @@ const remote = require('electron').remote;
  */
 export module ShapefileExporter {
 
-    export function performExport(projectDocument: Document, outputFilePath: string,
+    export async function performExport(projectDocument: Document, outputFilePath: string,
                                   operationId: string): Promise<any> {
 
-        return JavaToolExecutor.executeJavaTool(
-            'shapefile-tool.jar',
-            getArguments(projectDocument, outputFilePath, operationId)
-        )
+        try {
+            await JavaToolExecutor.executeJavaTool(
+                'shapefile-tool.jar',
+                getArguments(projectDocument, outputFilePath, operationId)
+            );
+        } catch (err) {
+            return Promise.reject(getErrorMsgWithParams(err));
+        }
     }
 
 
@@ -40,5 +45,28 @@ export module ShapefileExporter {
             return projectDocument.resource.coordinateReferenceSystem
                 && projectDocument.resource.coordinateReferenceSystem.includes(epsg);
         });
+    }
+
+
+    function getErrorMsgWithParams(error: string): string[] {
+
+        if (error.includes('EXPORTER_TEMP_FOLDER_CREATION_ERROR')) {
+            return [
+                M.EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION,
+                JavaToolExecutor.getParameterFromErrorMessage(error)
+            ];
+        } else if (error.includes('EXPORTER_ZIP_FILE_WRITE_ERROR')) {
+            return [
+                M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION,
+                JavaToolExecutor.getParameterFromErrorMessage(error)
+            ];
+        } else if (error.includes('EXPORTER_SHAPEFILE_WRITE_ERROR')) {
+            return [M.EXPORT_SHAPEFILE_ERROR_WRITE];
+        } else if (error.includes('DATASTORE_GET_RESOURCES_ERROR')) {
+            return [M.EXPORT_SHAPEFILE_ERROR_GET_RESOURCES];
+        } else {
+            console.error(error);
+            return [M.EXPORT_ERROR_GENERIC];
+        }
     }
 }

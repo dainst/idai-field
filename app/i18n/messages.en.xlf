@@ -485,7 +485,7 @@
                         dabei gleichnamige Felder im existierenden Datensatz. Geometrien des Importdatensatzes
                         überschreiben bestehende im existierenden Datensatz. Im existierenden Datensatz vorhandene Felder,
                         die nicht im Importdatensatz vorhanden sind, bleiben unverändert bestehen.
-                        Relationen werden generell nicht verändert. Die Zuordnung von Datensätzen
+                        Relationen und der Ressourcentyp werden generell nicht verändert. Die Zuordnung von Datensätzen
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
                         zugeordnet werden können, werden ignoriert.
                     </source>
@@ -494,7 +494,7 @@
                         file. Fields of the import record will overwrite correspondent fields of the existing record.
                         Geometries of the import record will overwrite those of the existing record. Fields existing in the
                         original record which are undefined in the import record will remain untouched.
-                        Relations will never get changed. The assignment of
+                        Relations and the resource type will never get changed. The assignment of
                         records is performed based on the field <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>.
                         Records of the import file that cannot be assigned will be ignored.
                     </target>
@@ -573,12 +573,20 @@
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.formats.geojson" datatype="html">
+        <source>GeoJSON</source>
+        <target state="final">GeoJSON</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.formats.shapefile" datatype="html">
         <source>Shapefile</source>
         <target state="final">Shapefile</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
@@ -592,7 +600,7 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">
@@ -2676,6 +2684,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.dialog.filter.geojson" datatype="html">
+        <source>GeoJSON-Datei</source>
+        <target state="final">GeoJSON file</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/export/export.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.dialog.filter.zip" datatype="html">
         <source>ZIP-Archiv</source>
         <target state="final">ZIP archive</target>
@@ -3188,7 +3204,15 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.export.error.shapefile.tempFolderCreation" datatype="html">
+      <trans-unit id="messages.export.geojson.error.write" datatype="html">
+        <source>Beim Export ist ein Fehler aufgetreten: Die GeoJSON-Datei konnte nicht geschrieben werden.</source>
+        <target state="final">An error has occurred during export: Failed to write the GeoJSON file.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="messages.export.shapefile.error.tempFolderCreation" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Das temporäre Verzeichnis [0] konnte nicht angelegt werden.</source>
         <target state="final">An error has occurred during export: Failed to create the temporary directory [0].</target>
         <context-group purpose="location">
@@ -3196,7 +3220,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.export.error.shapefile.zipFileCreation" datatype="html">
+      <trans-unit id="messages.export.shapefile.error.zipFileCreation" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Die ZIP-Datei [0] konnte nicht erstellt werden.</source>
         <target state="final">An error has occurred during export: Failed to create the ZIP file [0].</target>
         <context-group purpose="location">
@@ -3204,7 +3228,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.export.error.shapefile.write" datatype="html">
+      <trans-unit id="messages.export.shapefile.error.write" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Das Shapefile konnte nicht geschrieben werden.</source>
         <target state="final">An error has occurred during export: Failed to write the shapefile.</target>
         <context-group purpose="location">
@@ -3212,7 +3236,7 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="messages.export.error.shapefile.getResources" datatype="html">
+      <trans-unit id="messages.export.shapefile.error.getResources" datatype="html">
         <source>Beim Export ist ein Fehler aufgetreten: Die Ressourcen konnten nicht aus der Datenbank gelesen werden.</source>
         <target state="final">An error has occurred during export: Failed to read the resources from the database.</target>
         <context-group purpose="location">

@@ -32,6 +32,7 @@
                         <label class="control-label col-form-label"
                                for="ExportFormatSelect" i18n="@@export.format">Format</label>
                         <select id="ExportFormatSelect" class="form-control" [(ngModel)]="format">
+                            <option value="geojson" i18n="@@export.formats.geojson">GeoJSON</option>
                             <option value="shapefile" i18n="@@export.formats.shapefile">Shapefile</option>
                         </select>
                     </div>

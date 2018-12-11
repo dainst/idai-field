@@ -9,6 +9,8 @@ import {ShapefileExporter} from './shapefile-exporter';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {JavaToolExecutor} from '../../common/java-tool-executor';
+import {GeoJsonExporter} from './geojson-exporter';
+import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 
 const remote = require('electron').remote;
 
@@ -22,7 +24,7 @@ const remote = require('electron').remote;
  */
 export class ExportComponent implements OnInit {
 
-    public format: 'shapefile' = 'shapefile';
+    public format: 'geojson'|'shapefile' = 'geojson';
     public running: boolean = false;
     public javaInstalled: boolean = true;
     public operations: Array<IdaiFieldDocument> = [];
@@ -37,7 +39,8 @@ export class ExportComponent implements OnInit {
                 private modalService: NgbModal,
                 private messages: Messages,
                 private i18n: I18n,
-                private viewFacade: ViewFacade) {}
+                private viewFacade: ViewFacade,
+                private datastore: IdaiFieldDocumentReadDatastore) {}
 
 
     public getOperationLabel = (operation: IdaiFieldDocument) => ModelUtil.getDocumentLabel(operation);
@@ -61,11 +64,18 @@ export class ExportComponent implements OnInit {
         this.openModal();
 
         try {
-            await ShapefileExporter.performExport(this.settingsService.getProjectDocument(), filePath,
-                this.selectedOperationId);
+            switch (this.format) {
+                case 'geojson':
+                    await GeoJsonExporter.performExport(this.datastore, filePath, this.selectedOperationId);
+                    break;
+                case 'shapefile':
+                    await ShapefileExporter.performExport(this.settingsService.getProjectDocument(), filePath,
+                        this.selectedOperationId);
+                    break;
+            }
             this.messages.add([M.EXPORT_SUCCESS]);
-        } catch (err) {
-            this.messages.add(ExportComponent.getErrorMsgWithParams(err));
+        } catch (msgWithParams) {
+            this.messages.add(msgWithParams);
         }
 
         this.running = false;
@@ -78,13 +88,27 @@ export class ExportComponent implements OnInit {
         return new Promise<string>(async resolve => {
 
             const filePath = await remote.dialog.showSaveDialog({
-                filters: [{
-                        name: this.i18n({ id: 'export.dialog.filter.zip', value: 'ZIP-Archiv' }),
-                        extensions: ['zip']
-                    }]
+                filters: [this.getFileFilter()]
             });
             resolve(filePath);
         });
+    }
+
+
+    private getFileFilter(): any {
+
+        switch (this.format) {
+            case 'geojson':
+                return {
+                    name: this.i18n({ id: 'export.dialog.filter.geojson', value: 'GeoJSON-Datei' }),
+                    extensions: ['geojson', 'json']
+                };
+            case 'shapefile':
+                return {
+                    name: this.i18n({ id: 'export.dialog.filter.zip', value: 'ZIP-Archiv' }),
+                        extensions: ['zip']
+                };
+        }
     }
 
 
@@ -114,29 +138,6 @@ export class ExportComponent implements OnInit {
             this.operations = await this.viewFacade.getAllOperations();
         } catch (msgWithParams) {
             this.messages.add(msgWithParams);
-        }
-    }
-
-
-    private static getErrorMsgWithParams(error: string): string[] {
-
-        if (error.includes('EXPORTER_TEMP_FOLDER_CREATION_ERROR')) {
-            return [
-                M.EXPORT_SHAPEFILE_ERROR_TEMP_FOLDER_CREATION,
-                JavaToolExecutor.getParameterFromErrorMessage(error)
-            ];
-        } else if (error.includes('EXPORTER_ZIP_FILE_WRITE_ERROR')) {
-            return [
-                M.EXPORT_SHAPEFILE_ERROR_ZIP_FILE_CREATION,
-                JavaToolExecutor.getParameterFromErrorMessage(error)
-            ];
-        } else if (error.includes('EXPORTER_SHAPEFILE_WRITE_ERROR')) {
-            return [M.EXPORT_SHAPEFILE_ERROR_WRITE];
-        } else if (error.includes('DATASTORE_GET_RESOURCES_ERROR')) {
-            return [M.EXPORT_SHAPEFILE_ERROR_GET_RESOURCES];
-        } else {
-            console.error(error);
-            return [M.EXPORT_ERROR_GENERIC];
         }
     }
 }

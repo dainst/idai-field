@@ -57,9 +57,6 @@ export class DoceditLauncher {
 
     private async handleClosed(closeReason: string) {
 
-        // this.documentEditChangeMonitor.reset();
-        // TODO reset
-
         if (closeReason === 'deleted') {
             this.viewFacade.deselect();
             await this.viewFacade.rebuildNavigationPath();

@@ -142,29 +142,6 @@
           "label": "Dekorationsmuster"
         }
       }
-    },
-    "Drilling": {
-      "label": "Bohrung",
-      "fields": {
-        "date": {
-          "label": "Datum"
-        },
-        "description": {
-          "label": "Beschreibung"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin"
-        },
-        "dimensionDiameter": {
-          "label": "Durchmesser"
-        },
-        "dimensionHeight": {
-          "label": "Höhe"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau"
-        }
-      }
     }
   }
 }

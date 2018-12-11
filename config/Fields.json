@@ -4043,9 +4043,30 @@
       }
     }
   },
-  "SurveyUnit": {
-    "color": "#6baed6",
+  "BuildingPart": {
+    "color": "#707070",
+    "fields": {}
+  },
+  "Area": {
     "fields": {
+      "beginningDate": {
+        "inputType": "date"
+      },
+      "endDate": {
+        "inputType": "date"
+      },
+      "dating": {
+        "inputType": "dating"
+      },
+      "diary": {
+        "inputType": "input"
+      },
+      "description": {
+        "inputType": "text"
+      },
+      "processor": {
+        "inputType": "input"
+      },
       "area": {
         "inputType": "unsignedFloat"
       },
@@ -4055,7 +4076,29 @@
           "Maximale Ausdehnung",
           "Minimale Ausdehnung"]
       },
+      "dimensionVerticalExtent": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Oberkante",
+          "Unterkante"]
+      },
       "dimensionWidth": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"]
+      }
+    }
+  },
+  "SurveyUnit": {
+    "color": "#6baed6",
+    "parent": "Area",
+    "fields": {}
+  },
+  "Sondage": {
+    "parent": "Area",
+    "fields": {
+      "dimensionHeight": {
         "inputType": "dimension",
         "positionValues": [
           "Maximale Ausdehnung",
@@ -4064,9 +4107,15 @@
       }
     }
   },
-  "BuildingPart": {
-    "color": "#707070",
-    "fields": {}
+  "Excavation": {
+    "parent": "Area",
+    "fields": {
+      "isIllegal": {
+        "inputType": "boolean"
+      },
+      "hasDisturbance": {
+        "inputType": "boolean"
+      }
+    }
   }
-
 }

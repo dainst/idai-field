@@ -113,18 +113,6 @@
         "hasFinds": {
           "label": "Fundmaterial",
           "description": "Ist Fundmaterial vorhanden?"
-        },
-        "date": {
-          "label": "Datum",
-          "description": "Datum der Durchführung"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin des Arbeitsgangs"
         }
       }
     },
@@ -311,70 +299,16 @@
         }
       }
     },
-    "Area": {
-      "label": "Bereich",
-      "fields": {
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        }
-      }
-    },
     "Excavation": {
       "label": "Ausgrabung",
       "fields": {
-        "beginningDate": {
-          "label": "Startdatum",
-          "description": "Datum, an dem die Aufnahme begann"
-        },
-        "endDate": {
-          "label": "Enddatum",
-          "description": "Datum, an dem die Aufnahme endete"
-        },
-        "diary": {
-          "label": "Tagebuch",
-          "description": "Verweis auf Grabungstagebuch"
-        },
-        "description": {
-          "label": "Beschreibung",
-          "description": "Freies Beschreibungsfeld"
-        },
-        "hasDisturbance": {
-          "label": "Störung",
-          "description": "Liegt eine Störung des Befundes vor?"
-        },
-        "processor": {
-          "label": "Bearbeiter/Bearbeiterin",
-          "description": "Bearbeiter bzw. Bearbeiterin der stratigraphischen Einheit"
-        },
         "color": {
           "label": "Farbe und Intensität",
           "description": "Farbe, soweit erkennbar"
         },
-        "period": {
-          "label": "Grobdatierung"
-        },
-        "dating": {
-          "label": "Datierung"
-        },
-        "dimensionLength": {
-          "label": "Länge",
-          "description": "Angabe der Länge"
-        },
-        "dimensionVerticalExtent": {
-          "label": "Niveau",
-          "description": "Niveau Oberkante/Unterkante bzw. Laufniveau"
-        },
-        "dimensionWidth": {
-          "label": "Breite",
-          "description": "Angabe der Breite an der maximalen/minimalen Ausdehnung"
-        },
         "featureBorders": {
           "label": "Grenzen",
           "description": "Bestimmung der Grenzen des Befundes"
-        },
-        "isIllegal": {
-          "label": "Raubgrabung"
         }
       }
     },

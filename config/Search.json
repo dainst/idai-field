@@ -17,9 +17,6 @@
   "Burial": {
     "constraint": ["amountIndividuals", "burialCharacteristic", "burialDocumentation", "graveFeature", "positionArms", "positionLegs", "positioningIndividuals", "material"]
   },
-  "SurveyUnit": {
-    "constraint": ["hasFinds"]
-  },
   "Building": {
     "constraint": ["hasRestoration", "architecturalOrders", "buildingCategory", "buildingCategorySpecific", "buildingTechnique", "buildingType", "condition", "conditionAmount", "context"]
   },
@@ -97,6 +94,12 @@
   },
   "Metal": {
     "constraint": ["decorationTechnique", "formDescription", "manufacturingMethod", "metalMaterial", "objectType", "provenance", "vesselForm", "vesselFormSpecific"]
+  },
+  "Area": {
+    "constraint": ["diary", "processor", "area"]
+  },
+  "Excavation": {
+    "constraint": ["isIllegal", "hasDisturbance"]
   },
   "Image": {
     "constraint": ["draughtsmen", "processor"]

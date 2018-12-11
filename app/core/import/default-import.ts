@@ -56,14 +56,14 @@ export module DefaultImport {
      * @returns undefined if should be ignored, document if should be updated
      */
     export async function prepareDocumentForUpdate(document: NewDocument,
-                datastore: DocumentDatastore,
-                validator: Validator,
-                typeUtility: TypeUtility,
-                projectConfiguration: ProjectConfiguration,
-                mainTypeDocumentId: string,
-                useIdentifiersInRelations: boolean,
-                mergeIfExists: boolean,
-                identifierMap: { [identifier: string]: string }
+                                                   datastore: DocumentDatastore,
+                                                   validator: Validator,
+                                                   typeUtility: TypeUtility,
+                                                   projectConfiguration: ProjectConfiguration,
+                                                   mainTypeDocumentId: string,
+                                                   useIdentifiersInRelations: boolean,
+                                                   mergeIfExists: boolean,
+                                                   identifierMap: { [identifier: string]: string }
         ): Promise<Document|undefined> {
 
             if (useIdentifiersInRelations) {
@@ -85,11 +85,11 @@ export module DefaultImport {
 
 
     async function prepareIsRecordedInRelation(document: NewDocument,
-        mainTypeDocumentId: string,
-        datastore: DocumentDatastore,
-        validator: Validator,
-        typeUtility: TypeUtility,
-        projectConfiguration: ProjectConfiguration) {
+                                               mainTypeDocumentId: string,
+                                               datastore: DocumentDatastore,
+                                               validator: Validator,
+                                               typeUtility: TypeUtility,
+                                               projectConfiguration: ProjectConfiguration) {
 
         if (!mainTypeDocumentId) {
             try {
@@ -107,9 +107,9 @@ export module DefaultImport {
 
 
     async function isRecordedInTargetAllowedRelationDomainType(document: NewDocument,
-        datastore: DocumentDatastore,
-        projectConfiguration: ProjectConfiguration,
-        mainTypeDocumentId: string) {
+                                                               datastore: DocumentDatastore,
+                                                               projectConfiguration: ProjectConfiguration,
+                                                               mainTypeDocumentId: string) {
 
         const mainTypeDocument = await datastore.get(mainTypeDocumentId);
         if (!projectConfiguration.isAllowedRelationDomainType(document.resource.type,
@@ -122,7 +122,7 @@ export module DefaultImport {
 
 
     async function assertSettingIsRecordedInIsPermissibleForType(document: Document|NewDocument,
-        typeUtility: TypeUtility) {
+                                                                 typeUtility: TypeUtility) {
 
         if (typeUtility.isSubtype(document.resource.type, 'Operation')
             || document.resource.type === 'Place') {
@@ -133,7 +133,9 @@ export module DefaultImport {
 
 
 
-    async function mergeOrUseAsIs(document: NewDocument|Document, datastore: DocumentDatastore, mergeIfExists: boolean) {
+    async function mergeOrUseAsIs(document: NewDocument|Document,
+                                  datastore: DocumentDatastore,
+                                  mergeIfExists: boolean) {
 
         let documentForUpdate: Document = document as Document;
         const existingDocument = await findByIdentifier(document.resource.identifier, datastore);
@@ -151,8 +153,8 @@ export module DefaultImport {
      * Rewrites the relations of document in place
      */
     async function rewriteRelations(document: NewDocument,
-                                           identifierMap: { [identifier: string]: string },
-                                           datastore: DocumentDatastore) {
+                                    identifierMap: { [identifier: string]: string },
+                                    datastore: DocumentDatastore) {
 
         for (let relation of Object.keys(document.resource.relations)) {
 

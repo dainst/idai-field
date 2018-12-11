@@ -5,6 +5,7 @@ import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document
 import {TypeUtility} from './type-utility';
 import {ValidationErrors} from './validation-errors';
 import {M} from '../../components/m';
+import {ImportErrors} from '../import/import-errors';
 
 
 @Injectable()
@@ -113,6 +114,17 @@ export class Validator {
 
         const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);
         if (errWithParams) throw errWithParams;
+    }
+
+
+    // TODO written specifically for import, see if we rename this
+    public async assertSettingIsRecordedInIsPermissibleForType(document: Document|NewDocument) {
+
+        if (this.typeUtility.isSubtype(document.resource.type, 'Operation')
+            || document.resource.type === 'Place') {
+
+            throw [ImportErrors.OPERATIONS_NOT_ALLOWED];
+        }
     }
 
 

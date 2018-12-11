@@ -10,7 +10,6 @@ describe('DefaultImportStrategy', () => {
     let mockDatastore;
     let mockValidator;
     let mockProjectConfiguration;
-    let mockTypeUtility;
     let importStrategy: DefaultImportStrategy;
     let importReport;
 
@@ -19,11 +18,10 @@ describe('DefaultImportStrategy', () => {
 
         mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', [
-            'assertIsRecordedInTargetsExists', 'assertIsWellformed', 'assertIsKnownType', 'assertHasIsRecordedIn']);
+            'assertIsRecordedInTargetsExists', 'assertIsWellformed', 'assertIsKnownType', 'assertHasIsRecordedIn', 'assertSettingIsRecordedInIsPermissibleForType']);
 
         mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getTypesList']);
 
-        mockTypeUtility = { isSubtype: (t: string) => t === 'Trench' };
         mockValidator.assertHasIsRecordedIn.and.returnValue();
 
         mockValidator.assertIsRecordedInTargetsExists.and.returnValue(Promise.resolve());
@@ -34,7 +32,6 @@ describe('DefaultImportStrategy', () => {
             [{name: 'Find'}, {name: 'Place'}, {name: 'Trench'}]);
 
         importStrategy = new DefaultImportStrategy(
-            mockTypeUtility,
             mockValidator,
             mockProjectConfiguration,
 
@@ -66,7 +63,6 @@ describe('DefaultImportStrategy', () => {
         const importReport = {errors: [], warnings: [], importedResourcesIds: []};
 
         await new DefaultImportStrategy(
-            mockTypeUtility,
             mockValidator,
             null,
              true, false, false).import(
@@ -83,7 +79,6 @@ describe('DefaultImportStrategy', () => {
         mockDatastore.get.and.returnValue(Promise.resolve({}));
 
         await new DefaultImportStrategy(
-            mockTypeUtility,
             mockValidator,
             mockProjectConfiguration,
              false, false, false)
@@ -135,7 +130,6 @@ describe('DefaultImportStrategy', () => {
         mockDatastore.update.and.returnValues(Promise.resolve());
 
         importStrategy = new DefaultImportStrategy(
-            mockTypeUtility,
             mockValidator,
             null,
             true, false, false);
@@ -158,7 +152,6 @@ describe('DefaultImportStrategy', () => {
     it('rewrite identifiers to ids in relations', async done => {
 
         importStrategy = new DefaultImportStrategy(
-            mockTypeUtility,
             mockValidator,
             mockProjectConfiguration,
 
@@ -181,7 +174,6 @@ describe('DefaultImportStrategy', () => {
     it('rewrite identifiers to ids in relations - relation target not found', async done => { // TODO replace later with preValidation
 
         importStrategy = new DefaultImportStrategy(
-            mockTypeUtility,
             mockValidator,
             mockProjectConfiguration,
             false,

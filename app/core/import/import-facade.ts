@@ -87,7 +87,6 @@ export module ImportFacade {
             format,
             validator,
             projectConfiguration,
-            new TypeUtility(projectConfiguration),
             !allowMergingExistingResources ? mainTypeDocumentId : '',
             allowMergingExistingResources);
 
@@ -124,7 +123,6 @@ export module ImportFacade {
     function createImportStrategy(format: ImportFormat,
                                   validator: Validator,
                                   projectConfiguration: ProjectConfiguration,
-                                  typeUtility: TypeUtility,
                                   mainTypeDocumentId: string,
                                   allowMergingExistingResources = false): ImportStrategy {
 
@@ -132,23 +130,23 @@ export module ImportFacade {
             case 'meninxfind':
                 return new MeninxFindImportStrategy();
             case 'idig':
-                return new DefaultImportStrategy(typeUtility, validator,
+                return new DefaultImportStrategy(validator,
                     projectConfiguration,
                     false, false, false);
             case 'shapefile':
-                return new DefaultImportStrategy(typeUtility, validator,
+                return new DefaultImportStrategy(validator,
                     projectConfiguration,
                      true, false, false);
             case 'geojson':
-                return new DefaultImportStrategy(typeUtility, validator,
+                return new DefaultImportStrategy(validator,
                     projectConfiguration,
                      true, false, false);
             case 'geojson-gazetteer':
-                return new DefaultImportStrategy(typeUtility, validator,
+                return new DefaultImportStrategy(validator,
                     projectConfiguration,
                     false, false, true);
             default: // native
-                return new DefaultImportStrategy(typeUtility, validator,
+                return new DefaultImportStrategy(validator,
                     projectConfiguration,
                     allowMergingExistingResources, true, true, mainTypeDocumentId);
         }

@@ -23,8 +23,7 @@ export class DefaultImportStrategy implements ImportStrategy {
     private identifierMap: { [identifier: string]: string } = {};
 
 
-    constructor(private typeUtility: TypeUtility,
-                private validator: Validator,
+    constructor(private validator: Validator,
                 private projectConfiguration: ProjectConfiguration,
                 private mergeIfExists: boolean,
                 private useIdentifiersInRelations: boolean,
@@ -121,7 +120,7 @@ export class DefaultImportStrategy implements ImportStrategy {
             try {
                 const documentForUpdate = await DefaultImport.prepareDocumentForUpdate(
                     document, datastore, this.validator,
-                    this.typeUtility, this.projectConfiguration, this.mainTypeDocumentId,
+                    this.projectConfiguration, this.mainTypeDocumentId,
                     this.useIdentifiersInRelations, this.mergeIfExists, this.identifierMap);
                 if (documentForUpdate) documentsForUpdate.push(documentForUpdate);
             } catch (errWithParams) {

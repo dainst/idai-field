@@ -58,7 +58,6 @@ export module DefaultImport {
     export async function prepareDocumentForUpdate(document: NewDocument,
                                                    datastore: DocumentDatastore,
                                                    validator: Validator,
-                                                   typeUtility: TypeUtility,
                                                    projectConfiguration: ProjectConfiguration,
                                                    mainTypeDocumentId: string,
                                                    useIdentifiersInRelations: boolean,
@@ -70,7 +69,7 @@ export module DefaultImport {
         if (!mergeIfExists) {
             validator.assertIsKnownType(document);
             await prepareIsRecordedInRelation(
-                document, mainTypeDocumentId, datastore, validator, typeUtility, projectConfiguration);
+                document, mainTypeDocumentId, datastore, validator, projectConfiguration);
         }
 
         const documentForUpdate: Document|undefined = await mergeOrUseAsIs(document, datastore, mergeIfExists);
@@ -85,7 +84,6 @@ export module DefaultImport {
                                                mainTypeDocumentId: string,
                                                datastore: DocumentDatastore,
                                                validator: Validator,
-                                               typeUtility: TypeUtility,
                                                projectConfiguration: ProjectConfiguration) {
 
         if (!mainTypeDocumentId) {
@@ -95,7 +93,7 @@ export module DefaultImport {
                 throw [ImportErrors.NO_OPERATION_ASSIGNED];
             }
         } else {
-            await assertSettingIsRecordedInIsPermissibleForType(document, typeUtility);
+            await validator.assertSettingIsRecordedInIsPermissibleForType(document);
             await isRecordedInTargetAllowedRelationDomainType(
                 document, datastore, projectConfiguration, mainTypeDocumentId);
             initRecordedIn(document, mainTypeDocumentId);
@@ -114,17 +112,6 @@ export module DefaultImport {
 
             throw [ImportErrors.INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
                 mainTypeDocument.resource.type];
-        }
-    }
-
-
-    async function assertSettingIsRecordedInIsPermissibleForType(document: Document|NewDocument,
-                                                                 typeUtility: TypeUtility) {
-
-        if (typeUtility.isSubtype(document.resource.type, 'Operation')
-            || document.resource.type === 'Place') {
-
-            throw [ImportErrors.OPERATIONS_NOT_ALLOWED];
         }
     }
 

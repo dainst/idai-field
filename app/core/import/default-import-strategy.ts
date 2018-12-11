@@ -38,8 +38,6 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
-     * TODO implement rollback, throw exec rollback error if it goes wrong
-     *
      * @param datastore
      * @param username
      * @param documents documents with the field resource.identifier set to a non empty string

@@ -79,9 +79,6 @@ export class ImageViewComponent implements OnInit {
             if (result.document) this.image.document = result.document;
             this.setNextDocumentViewActiveTab();
         } catch (closeReason) {
-
-            // this.documentEditChangeMonitor.reset();
-            // TODO reset document
             if (closeReason === 'deleted') await this.deselect();
         }
     }

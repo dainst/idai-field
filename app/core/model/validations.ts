@@ -1,8 +1,63 @@
 import {on} from 'tsfun';
-import {FieldDefinition, ProjectConfiguration, RelationDefinition, Resource, NewResource} from 'idai-components-2';
-import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../../core/util/number-util';
+import {
+    FieldDefinition,
+    IdaiFieldGeometry,
+    NewResource,
+    ProjectConfiguration,
+    RelationDefinition,
+    Resource
+} from 'idai-components-2';
+import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
+import {ValidationErrors} from './validation-errors';
 
 export module Validations {
+
+
+    export function validateStructureOfGeometries(geometry: IdaiFieldGeometry): Array<string>|null {
+
+        if (!geometry) return null;
+
+        if (!geometry.type) return [ValidationErrors.MISSING_GEOMETRY_TYPE];
+        if (!geometry.coordinates) return [ValidationErrors.MISSING_COORDINATES];
+
+        switch(geometry.type) {
+            case 'Point':
+                if (!Validations.validatePointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'Point'];
+                }
+                break;
+            case 'MultiPoint':
+                if (!Validations.validatePolylineOrMultiPointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPoint'];
+                }
+                break;
+            case 'LineString':
+                if (!Validations.validatePolylineOrMultiPointCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
+                }
+                break;
+            case 'MultiLineString':
+                if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiLineString'];
+                }
+                break;
+            case 'Polygon':
+                if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'Polygon'];
+                }
+                break;
+            case 'MultiPolygon':
+                if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
+                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPolygon'];
+                }
+                break;
+            default:
+                return [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type];
+        }
+
+        return null;
+    }
+
 
     export function getMissingProperties(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration) {
 

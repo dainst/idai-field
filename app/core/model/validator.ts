@@ -111,7 +111,7 @@ export class Validator {
         this.assertNoFieldsMissing(document);
         this.assertCorrectnessOfNumericalValues(document);
 
-        const errWithParams = Validator.validateStructureOfGeometries(document.resource.geometry as any);
+        const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);
         if (errWithParams) throw errWithParams;
     }
 
@@ -200,52 +200,6 @@ export class Validator {
     private async isExistingRelationTarget(targetId: string): Promise<boolean> {
 
         return (await this.datastore.find({ constraints: { 'id:match': targetId } })).documents.length === 1;
-    }
-
-
-    private static validateStructureOfGeometries(geometry: IdaiFieldGeometry): Array<string>|null {
-
-        if (!geometry) return null;
-
-        if (!geometry.type) return [ValidationErrors.MISSING_GEOMETRY_TYPE];
-        if (!geometry.coordinates) return [ValidationErrors.MISSING_COORDINATES];
-
-        switch(geometry.type) {
-            case 'Point':
-                if (!Validations.validatePointCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'Point'];
-                }
-                break;
-            case 'MultiPoint':
-                if (!Validations.validatePolylineOrMultiPointCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPoint'];
-                }
-                break;
-            case 'LineString':
-                if (!Validations.validatePolylineOrMultiPointCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'LineString'];
-                }
-                break;
-            case 'MultiLineString':
-                if (!Validations.validateMultiPolylineCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'MultiLineString'];
-                }
-                break;
-            case 'Polygon':
-                if (!Validations.validatePolygonCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'Polygon'];
-                }
-                break;
-            case 'MultiPolygon':
-                if (!Validations.validateMultiPolygonCoordinates(geometry.coordinates)) {
-                    return [ValidationErrors.INVALID_COORDINATES, 'MultiPolygon'];
-                }
-                break;
-            default:
-                return [ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, geometry.type];
-        }
-
-        return null;
     }
 
 

@@ -37,7 +37,7 @@ describe('DefaultImportStrategy', () => {
             mockTypeUtility,
             mockValidator,
             mockProjectConfiguration,
-            '',
+
             false, false, false);
 
         importReport = {errors: [], warnings: [], importedResourcesIds: []};
@@ -69,7 +69,7 @@ describe('DefaultImportStrategy', () => {
             mockTypeUtility,
             mockValidator,
             null,
-            '', true, false, false).import(
+             true, false, false).import(
             [{ resource: {id: '1', relations: undefined } } as any], importReport, mockDatastore,'user1');
 
         expect(mockDatastore.create).not.toHaveBeenCalled();
@@ -86,7 +86,7 @@ describe('DefaultImportStrategy', () => {
             mockTypeUtility,
             mockValidator,
             mockProjectConfiguration,
-            '', false, false, false)
+             false, false, false)
             .import([
                 { resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']} } } as any],
                 importReport, mockDatastore,'user1');
@@ -138,7 +138,7 @@ describe('DefaultImportStrategy', () => {
             mockTypeUtility,
             mockValidator,
             null,
-            '', true, false, false);
+            true, false, false);
         await importStrategy
             .import([docToMerge as any],
                 {errors: [], warnings: [], importedResourcesIds: []}, mockDatastore, 'user1');
@@ -161,7 +161,7 @@ describe('DefaultImportStrategy', () => {
             mockTypeUtility,
             mockValidator,
             mockProjectConfiguration,
-            '',
+
             false,
             true, false);
 
@@ -184,7 +184,6 @@ describe('DefaultImportStrategy', () => {
             mockTypeUtility,
             mockValidator,
             mockProjectConfiguration,
-            '',
             false,
             true, false);
 

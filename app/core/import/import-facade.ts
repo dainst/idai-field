@@ -29,7 +29,7 @@ export type ImportReport = { errors: any[], warnings: any[], importedResourcesId
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-export module ImportFacade { // TODO repair importer tests
+export module ImportFacade {
 
     /**
      * The importer uses the reader and parser, to get documents, which
@@ -134,23 +134,23 @@ export module ImportFacade { // TODO repair importer tests
             case 'idig':
                 return new DefaultImportStrategy(typeUtility, validator,
                     projectConfiguration,
-                    '', false, false, false);
+                    false, false, false);
             case 'shapefile':
                 return new DefaultImportStrategy(typeUtility, validator,
                     projectConfiguration,
-                    '', true, false, false);
+                     true, false, false);
             case 'geojson':
                 return new DefaultImportStrategy(typeUtility, validator,
                     projectConfiguration,
-                    '', true, false, false);
+                     true, false, false);
             case 'geojson-gazetteer':
                 return new DefaultImportStrategy(typeUtility, validator,
                     projectConfiguration,
-                    '', false, false, true);
+                    false, false, true);
             default: // native
                 return new DefaultImportStrategy(typeUtility, validator,
                     projectConfiguration,
-                    mainTypeDocumentId, allowMergingExistingResources, true, true);
+                    allowMergingExistingResources, true, true, mainTypeDocumentId);
         }
     }
 }

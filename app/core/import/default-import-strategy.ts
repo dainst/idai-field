@@ -26,10 +26,10 @@ export class DefaultImportStrategy implements ImportStrategy {
     constructor(private typeUtility: TypeUtility,
                 private validator: Validator,
                 private projectConfiguration: ProjectConfiguration,
-                private mainTypeDocumentId: string, /* '' => no assignment */
                 private mergeIfExists: boolean,
                 private useIdentifiersInRelations: boolean,
-                private setInverseRelations: boolean
+                private setInverseRelations: boolean,
+                private mainTypeDocumentId: string = '' /* '' => no assignment */
                 ) {
 
         if (mainTypeDocumentId && mergeIfExists) {

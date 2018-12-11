@@ -1,7 +1,6 @@
-import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
+import {Document, NewDocument} from 'idai-components-2';
 import {ImportStrategy} from './import-strategy';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {Validator} from '../model/validator';
 import {IdaiFieldFindResult} from '../datastore/core/cached-read-datastore';
 import {clone} from '../util/object-util';
 import {ImportErrors} from './import-errors';
@@ -19,19 +18,18 @@ const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {
  */
 export class MeninxFindImportStrategy implements ImportStrategy {
 
-    constructor(private validator: Validator,
-                private datastore: DocumentDatastore,
-                private projectConfiguration: ProjectConfiguration) { }
+    constructor() { }
 
 
     public async import(documents: Array<Document>,
                         importReport: ImportReport,
+                        datastore: DocumentDatastore,
                         username: string): Promise<ImportReport> {
 
         for (let docToUpdate of documents) {
 
             try {
-                const importedDoc = await this.importDoc(docToUpdate, username);
+                const importedDoc = await this.importDoc(docToUpdate, datastore, username);
                 if (importedDoc) importReport.importedResourcesIds.push(importedDoc.resource.id);
 
             } catch (msgWithParams) {
@@ -47,9 +45,11 @@ export class MeninxFindImportStrategy implements ImportStrategy {
     /**
      * @throws errorWithParams
      */
-    private async importDoc(importDoc: NewDocument, username: string): Promise<Document> {
+    private async importDoc(importDoc: NewDocument,
+                            datastore: DocumentDatastore,
+                            username: string): Promise<Document> {
 
-        const existingDoc: Document|undefined = await this.getExistingDoc(importDoc.resource.identifier);
+        const existingDoc: Document|undefined = await this.getExistingDoc(importDoc.resource.identifier, datastore);
 
         const updateDoc: NewDocument|Document = existingDoc
             ? MeninxFindImportStrategy.mergeInto(existingDoc, importDoc)
@@ -61,23 +61,23 @@ export class MeninxFindImportStrategy implements ImportStrategy {
 
         updateDoc.resource = removeEmptyStrings(updateDoc.resource);
         updateDoc.resource.relations['isRecordedIn'] =
-            [await this.getIsRecordedInId(importDoc.resource.identifier[0] + '000')];
+            [await this.getIsRecordedInId(importDoc.resource.identifier[0] + '000', datastore)];
         updateDoc.resource.relations['liesWithin'] =
-            [await this.getLiesWithinId(importDoc.resource.relations['liesWithin'][0])];
+            [await this.getLiesWithinId(importDoc.resource.relations['liesWithin'][0], datastore)];
 
         console.log(existingDoc ? 'update' : 'create', updateDoc);
 
         return existingDoc
-            ? await this.datastore.update(updateDoc as Document, username)
-            : await this.datastore.create(updateDoc, username);
+            ? await datastore.update(updateDoc as Document, username)
+            : await datastore.create(updateDoc, username);
     }
 
 
-    private async getExistingDoc(resourceIdentifier: string) {
+    private async getExistingDoc(resourceIdentifier: string, datastore: DocumentDatastore) {
 
         let importDocExistenceFindResult: IdaiFieldFindResult<Document>;
         try {
-            importDocExistenceFindResult = await this.datastore.find(
+            importDocExistenceFindResult = await datastore.find(
                 { constraints: { 'identifier:match': resourceIdentifier } });
         } catch (err) { throw 'no find result obtained' }
         if (importDocExistenceFindResult.documents.length > 1) throw ['More than one doc found for identifier ', resourceIdentifier];
@@ -88,10 +88,10 @@ export class MeninxFindImportStrategy implements ImportStrategy {
     }
 
 
-    private async getIsRecordedInId(trenchIdentifier: string) {
+    private async getIsRecordedInId(trenchIdentifier: string, datastore: DocumentDatastore) {
 
         try {
-            const trench = await this.datastore.find({
+            const trench = await datastore.find({
                 constraints: { 'identifier:match': trenchIdentifier},
                 types: ['Trench']});
             return trench.documents[0].resource.id;
@@ -101,11 +101,11 @@ export class MeninxFindImportStrategy implements ImportStrategy {
     }
 
 
-    private async getLiesWithinId(liesWithinIdentifier: string) {
+    private async getLiesWithinId(liesWithinIdentifier: string, datastore: DocumentDatastore) {
 
         let liesWithinTargetFindResult: IdaiFieldFindResult<Document>;
         try {
-            liesWithinTargetFindResult = await this.datastore.find({
+            liesWithinTargetFindResult = await datastore.find({
                 constraints: { 'identifier:match': liesWithinIdentifier},
                 types: [
                     'Feature',

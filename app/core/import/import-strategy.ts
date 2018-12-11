@@ -6,5 +6,5 @@ import {ImportReport} from './import-facade';
  */
 export interface ImportStrategy {
 
-    import(documents: Array<Document>, importReport: ImportReport): Promise<ImportReport>;
+    import(documents: Array<Document>, importReport: ImportReport, username: string): Promise<ImportReport>;
 }

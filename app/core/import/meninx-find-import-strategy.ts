@@ -21,16 +21,17 @@ export class MeninxFindImportStrategy implements ImportStrategy {
 
     constructor(private validator: Validator,
                 private datastore: DocumentDatastore,
-                private projectConfiguration: ProjectConfiguration,
-                private username: string) { }
+                private projectConfiguration: ProjectConfiguration) { }
 
 
-    public async import(documents: Array<Document>, importReport: ImportReport): Promise<ImportReport> {
+    public async import(documents: Array<Document>,
+                        importReport: ImportReport,
+                        username: string): Promise<ImportReport> {
 
         for (let docToUpdate of documents) {
 
             try {
-                const importedDoc = await this.importDoc(docToUpdate);
+                const importedDoc = await this.importDoc(docToUpdate, username);
                 if (importedDoc) importReport.importedResourcesIds.push(importedDoc.resource.id);
 
             } catch (msgWithParams) {
@@ -46,7 +47,7 @@ export class MeninxFindImportStrategy implements ImportStrategy {
     /**
      * @throws errorWithParams
      */
-    private async importDoc(importDoc: NewDocument): Promise<Document> {
+    private async importDoc(importDoc: NewDocument, username: string): Promise<Document> {
 
         const existingDoc: Document|undefined = await this.getExistingDoc(importDoc.resource.identifier);
 
@@ -67,8 +68,8 @@ export class MeninxFindImportStrategy implements ImportStrategy {
         console.log(existingDoc ? 'update' : 'create', updateDoc);
 
         return existingDoc
-            ? await this.datastore.update(updateDoc as Document, this.username)
-            : await this.datastore.create(updateDoc, this.username);
+            ? await this.datastore.update(updateDoc as Document, username)
+            : await this.datastore.create(updateDoc, username);
     }
 
 

@@ -27,7 +27,6 @@ export class DefaultImportStrategy implements ImportStrategy {
                 private validator: Validator,
                 private datastore: DocumentDatastore,
                 private projectConfiguration: ProjectConfiguration,
-                private username: string,
                 private mainTypeDocumentId: string, /* '' => no assignment */
                 private mergeIfExists: boolean,
                 private useIdentifiersInRelations: boolean,
@@ -43,6 +42,7 @@ export class DefaultImportStrategy implements ImportStrategy {
     /**
      * TODO implement rollback, throw exec rollback error if it goes wrong
      *
+     * @param username
      * @param documents documents with the field resource.identifier set to a non empty string
      *   if resource.id is set, it will be taken as document.id on creation
      * @param importReport
@@ -57,7 +57,8 @@ export class DefaultImportStrategy implements ImportStrategy {
      *      [RESOURCE_EXISTS] if resource already exist and !mergeIfExists
      */
     public async import(documents: Array<Document>,
-                        importReport: ImportReport): Promise<ImportReport> {
+                        importReport: ImportReport,
+                        username: string): Promise<ImportReport> {
 
         if (!this.mergeIfExists) {
             const duplicates_ = duplicates(documents.map(to('resource.identifier')));
@@ -73,30 +74,32 @@ export class DefaultImportStrategy implements ImportStrategy {
         const documentsForUpdate = await this.prepareDocumentsForUpdate(documents, importReport);
         if (importReport.errors.length > 0) return importReport;
 
-        await this.performDocumentsUpdates(documentsForUpdate, importReport, this.username, this.mergeIfExists);
+        await this.performDocumentsUpdates(documentsForUpdate, importReport, username, this.mergeIfExists);
         if (importReport.errors.length > 0) return importReport;
         importReport.importedResourcesIds = documentsForUpdate.map(to('resource.id'));
 
         if (!this.setInverseRelations || this.mergeIfExists) return importReport;
-        await this.performRelationsUpdates(importReport.importedResourcesIds, importReport);
+        await this.performRelationsUpdates(importReport.importedResourcesIds, importReport, username);
 
         return importReport;
     }
 
 
-    private async performRelationsUpdates(importedResourcesIds: string[], importReport: ImportReport) {
+    private async performRelationsUpdates(importedResourcesIds: string[],
+                                          importReport: ImportReport,
+                                          username: string) {
 
         try {
 
             await RelationsCompleter.completeInverseRelations(
-                this.datastore, this.projectConfiguration, this.username, importedResourcesIds);
+                this.datastore, this.projectConfiguration, username, importedResourcesIds);
 
         } catch (msgWithParams) {
 
             importReport.errors.push(msgWithParams);
             try {
                 await RelationsCompleter.resetInverseRelations(
-                    this.datastore, this.projectConfiguration, this.username, importedResourcesIds);
+                    this.datastore, this.projectConfiguration, username, importedResourcesIds);
             } catch (e) {
                 importReport.errors.push(msgWithParams);
             }

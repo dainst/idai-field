@@ -87,14 +87,13 @@ export module ImportFacade { // TODO repair importer tests
             format,
             validator,
             datastore,
-            usernameProvider,
             projectConfiguration,
             new TypeUtility(projectConfiguration),
             !allowMergingExistingResources ? mainTypeDocumentId : '',
             allowMergingExistingResources);
 
 
-        return await importStrategy.import(docsToUpdate, importReport);
+        return await importStrategy.import(docsToUpdate, importReport, usernameProvider.getUsername());
     }
 
 
@@ -125,7 +124,6 @@ export module ImportFacade { // TODO repair importer tests
     function createImportStrategy(format: ImportFormat,
                                   validator: Validator,
                                   datastore: DocumentDatastore,
-                                  usernameProvider: UsernameProvider,
                                   projectConfiguration: ProjectConfiguration,
                                   typeUtility: TypeUtility,
                                   mainTypeDocumentId: string,
@@ -134,26 +132,26 @@ export module ImportFacade { // TODO repair importer tests
         switch (format) {
             case 'meninxfind':
                 return new MeninxFindImportStrategy(validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername());
+                    projectConfiguration);
             case 'idig':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername(),
+                    projectConfiguration,
                     '', false, false, false);
             case 'shapefile':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername(),
+                    projectConfiguration,
                     '', true, false, false);
             case 'geojson':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername(),
+                    projectConfiguration,
                     '', true, false, false);
             case 'geojson-gazetteer':
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername(),
+                    projectConfiguration,
                     '', false, false, true);
             default: // native
                 return new DefaultImportStrategy(typeUtility, validator, datastore,
-                    projectConfiguration, usernameProvider.getUsername(),
+                    projectConfiguration,
                     mainTypeDocumentId, allowMergingExistingResources, true, true);
         }
     }

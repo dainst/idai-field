@@ -64,26 +64,6 @@ describe('Import/Subsystem', () => {
     });
 
 
-    // TODO this test has to be removed since 'produce validation error' already shows that validation error works
-    it('produce validation error 2', async done => {
-
-        const trench = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
-
-        const report = await ImportFacade.doImport(
-            'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
-            datastore,
-            { getUsername: () => 'testuser'},
-            _projectConfiguration,
-            trench.resource.id,
-            undefined,
-                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "Polygon", "coordinates": [[1, 2, 3]] } }');
-
-        expect(report.errors[0]).toEqual([ValidationErrors.INVALID_COORDINATES, "Polygon"]);
-        done();
-    });
-
-
     it('create one find, connect to existing operation ', async done => {
 
         const stored = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});

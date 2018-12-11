@@ -171,7 +171,7 @@ describe('DefaultImportStrategy', () => {
     });
 
 
-    it('rewrite identifiers to ids in relations - relation target not found', async done => { // TODO replace later with preValidation
+    it('rewrite identifiers to ids in relations - relation target not found', async done => {
 
         importStrategy = new DefaultImportStrategy(
             mockValidator,

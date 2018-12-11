@@ -5,9 +5,6 @@
   "Glass": {
     "constraint": ["color", "decorationTechnique", "formDescription", "manufacturingMethod", "objectType", "provenance", "transparency", "vesselForm", "vesselFormSpecific"]
   },
-  "Drilling": {
-    "constraint": ["drillingEquipment"]
-  },
   "Planum": {
     "constraint": ["horizontalLocation", "orientation", "planumForm"]
   },

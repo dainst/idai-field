@@ -20,9 +20,6 @@ export class Validator {
                 private datastore: IdaiFieldDocumentDatastore,
                 private typeUtility: TypeUtility) {}
 
-    // TODO what about this leftover? @throws [PREVALIDATION_INVALID_TYPE] if type is not configured in projectConfiguration
-
-
     /**
      * @throws [NO_ISRECORDEDIN_TARGET]
      */

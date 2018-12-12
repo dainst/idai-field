@@ -37,10 +37,24 @@
                         </select>
                     </div>
 
+                    <div *ngIf="format === 'geojson'" class="export-info"
+                         i18n="@@export.geojson.info">
+                        Exportiert werden Geometrien und die Felder <em>Bezeichner</em> (identifier),
+                        <em>Kurzbeschreibung</em> (shortDescription) und <em>Typ</em> (type) der jeweiligen
+                        Ressource.
+                    </div>
+
                     <div *ngIf="isJavaInstallationMissing()" class="text-danger"
                          i18n="@@export.shapefile.javaWarning">
                         Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher
                         erforderlich.
+                    </div>
+
+                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing()" class="export-info"
+                         i18n="@@export.shapefile.info">
+                        Exportiert werden Geometrien und die Felder <em>Bezeichner</em> (identifier),
+                        <em>Kurzbeschreibung</em> (shortdesc) und <em>Typ</em> (type) der jeweiligen
+                        Ressource.
                     </div>
                 </div>
             </div>

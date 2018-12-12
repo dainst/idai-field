@@ -619,6 +619,22 @@
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="export.geojson.info" datatype="html">
+        <source>
+                        Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Typ<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (type) der jeweiligen
+                        Ressource.
+                    </source>
+        <target state="final">
+                        The exported data includes geometries and the fields <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>,
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>short description<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortDescription) and <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>type<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> of the corresponding
+                        resource.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="export.shapefile.javaWarning" datatype="html">
         <source>
                         Zur Durchführung eines Shapefile-Exports ist die Installation von Java 8 oder höher
@@ -630,7 +646,23 @@
                     </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/export/export.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="export.shapefile.info" datatype="html">
+        <source>
+                        Exportiert werden Geometrien und die Felder <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Bezeichner<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (identifier),
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Kurzbeschreibung<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) und <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>Typ<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (type) der jeweiligen
+                        Ressource.
+                    </source>
+        <target state="final">
+                        The exported data includes geometries and the fields <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>,
+                        <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>short description<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> (shortdesc) and <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>type<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/> of the corresponding
+                        resource.
+                    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/export/export.html</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="backup.creation.modal.info" datatype="html">

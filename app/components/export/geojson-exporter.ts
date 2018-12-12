@@ -77,8 +77,10 @@ export module GeoJsonExporter {
     function writeFile(outputFilePath: string,
                        featureCollection: FeatureCollection<GeometryObject>): Promise<void> {
 
+        const json: string = JSON.stringify(featureCollection, null, 2);
+
         return new Promise((resolve, reject) => {
-            fs.writeFile(outputFilePath, JSON.stringify(featureCollection), (err: any) => {
+            fs.writeFile(outputFilePath, json, (err: any) => {
                 if (err) {
                     console.error(err);
                     reject([M.EXPORT_GEOJSON_ERROR_WRITE]);

@@ -62,61 +62,6 @@ export class Validator {
     }
 
 
-
-    /**
-     * Wellformedness test specifically written for use in import package.
-     *
-     * Assumes
-     *   * that the type of the document is a valid type from the active ProjectConfiguration
-     *
-     * Asserts
-     *   * the fields and relations defined in a given document are actually configured
-     *     fields and relations for the type of resource defined.
-     *   * that the geometries are structurally valid
-     *   * there are no mandatory fields missing
-     *   * the numerical values are correct
-     *
-     * Does not do anything database consistency related,
-     *   e.g. checking identifier uniqueness or relation target existence.
-     *
-     * @throws ValidationErrors.*
-     * @throws [INVALID_RELATIONS]
-     * @throws [INVALID_FIELDS]
-     * @throws [MISSING_PROPERTY]
-     * @throws [MISSING_GEOMETRYTYPE]
-     * @throws [MISSING_COORDINATES]
-     * @throws [UNSUPPORTED_GEOMETRY_TYPE]
-     * @throws [INVALID_COORDINATES]
-     * @throws [INVALID_NUMERICAL_VALUE]
-     */
-    public assertIsWellformed(document: Document|NewDocument): void {
-
-        const invalidFields = Validations.validateDefinedFields(document.resource, this.projectConfiguration);
-        if (invalidFields.length > 0) {
-            throw [
-                ValidationErrors.INVALID_FIELDS,
-                document.resource.type,
-                invalidFields.join(', ')
-            ];
-        }
-
-        const invalidRelationFields = Validations.validateDefinedRelations(document.resource, this.projectConfiguration);
-        if (invalidRelationFields.length > 0) {
-            throw [
-                ValidationErrors.INVALID_RELATIONS,
-                document.resource.type,
-                invalidRelationFields.join(', ')
-            ];
-        }
-
-        this.assertNoFieldsMissing(document);
-        this.assertCorrectnessOfNumericalValues(document);
-
-        const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);
-        if (errWithParams) throw errWithParams;
-    }
-
-
     // TODO written specifically for import, see if we rename this
     public async assertSettingIsRecordedInIsPermissibleForType(document: Document|NewDocument) {
 
@@ -124,49 +69,6 @@ export class Validator {
             || document.resource.type === 'Place') {
 
             throw [ImportErrors.OPERATIONS_NOT_ALLOWED];
-        }
-    }
-
-
-    /**
-     * @throws [INVALID_TYPE]
-     */
-    public assertIsKnownType(document: Document|NewDocument) {
-
-        if (!Validations.validateType(document.resource, this.projectConfiguration)) {
-            throw [ValidationErrors.INVALID_TYPE, document.resource.type];
-        }
-    }
-
-
-    /**
-     * @throws [INVALID_NUMERICAL_VALUE]
-     */
-    public assertCorrectnessOfNumericalValues(document: Document|NewDocument) {
-
-        const invalidNumericValues = Validations.validateNumericValues(document.resource, this.projectConfiguration);
-        if (invalidNumericValues ) {
-            throw [
-                ValidationErrors.INVALID_NUMERICAL_VALUES,
-                document.resource.type,
-                invalidNumericValues.join(', ')
-            ];
-        }
-    }
-
-
-    /**
-     * @throws [MISSING_PROPERTY]
-     */
-    public assertNoFieldsMissing(document: Document|NewDocument): void {
-
-        const missingProperties = Validations.getMissingProperties(document.resource, this.projectConfiguration);
-        if (missingProperties.length > 0) {
-            throw [
-                ValidationErrors.MISSING_PROPERTY,
-                document.resource.type,
-                missingProperties.join(', ')
-            ];
         }
     }
 

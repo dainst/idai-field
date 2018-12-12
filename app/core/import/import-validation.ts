@@ -1,0 +1,64 @@
+import {Validations} from '../model/validations';
+import {ValidationErrors} from '../model/validation-errors';
+import {NewDocument, Document, ProjectConfiguration} from 'idai-components-2';
+
+
+/**
+ * @author Daniel de Oliveira
+ * @author Thomas Kleinke
+ */
+export module ImportValidation {
+
+    /**
+     * Wellformedness test specifically written for use in import package.
+     *
+     * Assumes
+     *   * that the type of the document is a valid type from the active ProjectConfiguration
+     *
+     * Asserts
+     *   * the fields and relations defined in a given document are actually configured
+     *     fields and relations for the type of resource defined.
+     *   * that the geometries are structurally valid
+     *   * there are no mandatory fields missing
+     *   * the numerical values are correct
+     *
+     * Does not do anything database consistency related,
+     *   e.g. checking identifier uniqueness or relation target existence.
+     *
+     * @throws ValidationErrors.*
+     * @throws [INVALID_RELATIONS]
+     * @throws [INVALID_FIELDS]
+     * @throws [MISSING_PROPERTY]
+     * @throws [MISSING_GEOMETRYTYPE]
+     * @throws [MISSING_COORDINATES]
+     * @throws [UNSUPPORTED_GEOMETRY_TYPE]
+     * @throws [INVALID_COORDINATES]
+     * @throws [INVALID_NUMERICAL_VALUE]
+     */
+    export function assertIsWellformed(document: Document|NewDocument, projectConfiguration: ProjectConfiguration): void {
+
+        const invalidFields = Validations.validateDefinedFields(document.resource, projectConfiguration);
+        if (invalidFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_FIELDS,
+                document.resource.type,
+                invalidFields.join(', ')
+            ];
+        }
+
+        const invalidRelationFields = Validations.validateDefinedRelations(document.resource, projectConfiguration);
+        if (invalidRelationFields.length > 0) {
+            throw [
+                ValidationErrors.INVALID_RELATIONS,
+                document.resource.type,
+                invalidRelationFields.join(', ')
+            ];
+        }
+
+        Validations.assertNoFieldsMissing(document, projectConfiguration);
+        Validations.assertCorrectnessOfNumericalValues(document, projectConfiguration);
+
+        const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);
+        if (errWithParams) throw errWithParams;
+    }
+}

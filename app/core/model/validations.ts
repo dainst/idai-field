@@ -1,11 +1,44 @@
 import {on} from 'tsfun';
 import {FieldDefinition, IdaiFieldGeometry, NewResource, ProjectConfiguration, RelationDefinition,
-    Resource} from 'idai-components-2';
+    Resource, NewDocument, Document} from 'idai-components-2';
 import {validateFloat, validateUnsignedFloat, validateUnsignedInt} from '../util/number-util';
 import {ValidationErrors} from './validation-errors';
 
 
 export module Validations {
+
+
+    /**
+     * @throws [INVALID_NUMERICAL_VALUE]
+     */
+    export function assertCorrectnessOfNumericalValues(document: Document|NewDocument, projectConfiguration: ProjectConfiguration) {
+
+        const invalidNumericValues = Validations.validateNumericValues(document.resource, projectConfiguration);
+        if (invalidNumericValues ) {
+            throw [
+                ValidationErrors.INVALID_NUMERICAL_VALUES,
+                document.resource.type,
+                invalidNumericValues.join(', ')
+            ];
+        }
+    }
+
+
+    /**
+     * @throws [MISSING_PROPERTY]
+     */
+    export function assertNoFieldsMissing(document: Document|NewDocument, projectConfiguration: ProjectConfiguration): void {
+
+            const missingProperties = Validations.getMissingProperties(document.resource, projectConfiguration);
+        if (missingProperties.length > 0) {
+            throw [
+                ValidationErrors.MISSING_PROPERTY,
+                document.resource.type,
+                missingProperties.join(', ')
+            ];
+        }
+    }
+
 
     export function validateStructureOfGeometries(geometry: IdaiFieldGeometry): Array<string>|null {
 

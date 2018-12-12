@@ -7,6 +7,9 @@ import {ImportReport} from './import-facade';
 import {ProjectConfiguration} from 'idai-components-2';
 import {Validator} from '../model/validator';
 import {RelationsCompleter} from './relations-completer';
+import {Validations} from '../model/validations';
+import {ValidationErrors} from '../model/validation-errors';
+import {ImportValidation} from './import-validation';
 
 
 /**
@@ -91,7 +94,7 @@ export module DefaultImport {
         if (useIdentifiersInRelations) await rewriteRelations(document, identifierMap, datastore);
 
         if (!mergeIfExists) {
-            validator.assertIsKnownType(document);
+            assertIsKnownType(document, projectConfiguration);
             await prepareIsRecordedInRelation(
                 document, mainTypeDocumentId, datastore, validator, projectConfiguration);
         }
@@ -99,7 +102,7 @@ export module DefaultImport {
         const documentForUpdate: Document|undefined = await mergeOrUseAsIs(document, datastore, mergeIfExists);
         if (!documentForUpdate) return undefined;
 
-        validator.assertIsWellformed(documentForUpdate);
+        ImportValidation.assertIsWellformed(documentForUpdate, projectConfiguration);
         return documentForUpdate;
     }
 
@@ -201,6 +204,17 @@ export module DefaultImport {
         if (!relations['isRecordedIn']) relations['isRecordedIn'] = [];
         if (!relations['isRecordedIn'].includes(mainTypeDocumentId)) {
             relations['isRecordedIn'].push(mainTypeDocumentId);
+        }
+    }
+
+
+    /**
+     * @throws [INVALID_TYPE]
+     */
+    function assertIsKnownType(document: Document|NewDocument, projectConfiguration: ProjectConfiguration) {
+
+        if (!Validations.validateType(document.resource, projectConfiguration)) {
+            throw [ValidationErrors.INVALID_TYPE, document.resource.type];
         }
     }
 }

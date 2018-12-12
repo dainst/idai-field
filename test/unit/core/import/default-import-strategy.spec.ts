@@ -20,7 +20,10 @@ describe('DefaultImportStrategy', () => {
         mockValidator = jasmine.createSpyObj('validator', [
             'assertIsRecordedInTargetsExists', 'assertIsWellformed', 'assertIsKnownType', 'assertHasIsRecordedIn', 'assertSettingIsRecordedInIsPermissibleForType']);
 
-        mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration', ['getTypesList']);
+        mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration',
+            ['getTypesList', 'getFieldDefinitions', 'getRelationDefinitions', 'isMandatory']);
+        mockProjectConfiguration.getFieldDefinitions.and.returnValue([{name: 'id'}, {name: 'type'}, {name: 'identifier'}, {name: 'geometry'}, {name: 'shortDescription'}]);
+        mockProjectConfiguration.getRelationDefinitions.and.returnValue([{name: 'isRecordedIn'}]);
 
         mockValidator.assertHasIsRecordedIn.and.returnValue();
 
@@ -64,7 +67,7 @@ describe('DefaultImportStrategy', () => {
 
         await new DefaultImportStrategy(
             mockValidator,
-            null,
+            mockProjectConfiguration,
              true, false, false).import(
             [{ resource: {id: '1', relations: undefined } } as any], importReport, mockDatastore,'user1');
 
@@ -93,18 +96,6 @@ describe('DefaultImportStrategy', () => {
 
 
 
-    it('should reject on err in validator', async done => {
-
-        mockValidator.assertIsWellformed.and.callFake(() => {throw ['abc']});
-
-        importReport = await importStrategy.import([
-            {resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']}}} as any],
-            importReport, mockDatastore, 'user1');
-        expect(importReport.errors[0][0]).toBe('abc');
-        done();
-    });
-
-
     it('should reject on err in datastore', async done => {
 
         mockDatastore.create.and.returnValue(Promise.reject(['abc']));
@@ -121,7 +112,9 @@ describe('DefaultImportStrategy', () => {
     it('merge geometry', async done => {
 
         const originalDoc = { resource: { id: '1', identifier: 'i1', shortDescription: 'sd1', relations: {}}};
-        const docToMerge = { resource: { geometry: { a: 'b' }}};
+        const docToMerge = { resource: { geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625]}}};
+
+
 
         mockValidator = jasmine.createSpyObj('validator', ['assertIsWellformed']);
 
@@ -131,18 +124,18 @@ describe('DefaultImportStrategy', () => {
 
         importStrategy = new DefaultImportStrategy(
             mockValidator,
-            null,
+            mockProjectConfiguration,
             true, false, false);
         await importStrategy
             .import([docToMerge as any],
-                {errors: [], warnings: [], importedResourcesIds: []}, mockDatastore, 'user1');
+                importReport, mockDatastore, 'user1');
 
         const importedDoc = mockDatastore.update.calls.mostRecent().args[0];
         expect(importedDoc.resource).toEqual({
             id: '1',
             identifier: 'i1',
             shortDescription: 'sd1',
-            geometry: { a: 'b' }, // merged from docToMerge
+            geometry: { type: 'Point', coordinates: [ 27.189335972070694, 39.14122423529625] }, // merged from docToMerge
             relations: {}
         });
         done();

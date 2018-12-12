@@ -36,7 +36,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
-     * TODO check what happens if one tries to import project or operation types
+     * TODO check what happens if one tries to import project or operation, image types
      *
      * @param datastore
      * @param username

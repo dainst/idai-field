@@ -46,7 +46,10 @@ export module ImportValidation {
             ];
         }
 
-        const invalidRelationFields = Validations.validateDefinedRelations(document.resource, projectConfiguration);
+        const invalidRelationFields = Validations
+            .validateDefinedRelations(document.resource, projectConfiguration)
+            // operations have empty isRecordedIn which however is not defined. image types must not be imported. regular types all have isRecordedIn
+            .filter(item => item !== 'isRecordedIn');
         if (invalidRelationFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_RELATIONS,

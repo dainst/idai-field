@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import {Feature, FeatureCollection, GeometryObject} from 'geojson';
-import {IdaiFieldDocument, Query} from 'idai-components-2';
+import {jsonClone} from 'tsfun';
+import {IdaiFieldDocument, IdaiFieldGeometry, Query} from 'idai-components-2';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {M} from '../m';
 
@@ -55,7 +56,10 @@ export module GeoJsonExporter {
 
         return {
             type: 'Feature',
-            geometry: document.resource.geometry as GeometryObject,
+            geometry: {
+                type: (document.resource.geometry as IdaiFieldGeometry).type,
+                coordinates: getCoordinates(document.resource.geometry as IdaiFieldGeometry)
+            },
             properties: {
                 identifier: document.resource.identifier
             }
@@ -75,6 +79,30 @@ export module GeoJsonExporter {
                     resolve();
                 }
             });
+        });
+    }
+
+
+    function getCoordinates(geometry: IdaiFieldGeometry): any {
+
+        const coordinates: any = jsonClone(geometry.coordinates);
+
+        if (geometry.type === 'Polygon') {
+            closeRings(coordinates);
+        } else if (geometry.type === 'MultiPolygon') {
+            coordinates.forEach(closeRings);
+        }
+
+        return coordinates;
+    }
+
+
+    function closeRings(polygonCoordinates: number[][][]) {
+
+        polygonCoordinates.forEach(ring => {
+           if (ring[0][0] !== ring[ring.length - 1][0] || ring[0][1] !== ring[ring.length - 1][1]) {
+               ring.push([ring[0][0], ring[0][1]]);
+           }
         });
     }
 }

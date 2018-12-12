@@ -63,13 +63,8 @@ export module GeoJsonExporter {
 
         return {
             type: 'Feature',
-            geometry: {
-                type: (document.resource.geometry as IdaiFieldGeometry).type,
-                coordinates: getCoordinates(document.resource.geometry as IdaiFieldGeometry)
-            },
-            properties: {
-                identifier: document.resource.identifier
-            }
+            geometry: getGeometry(document),
+            properties: getProperties(document)
         };
     }
 
@@ -89,6 +84,15 @@ export module GeoJsonExporter {
                 }
             });
         });
+    }
+
+
+    function getGeometry(document: IdaiFieldDocument): GeometryObject {
+
+        return {
+            type: (document.resource.geometry as IdaiFieldGeometry).type,
+            coordinates: getCoordinates(document.resource.geometry as IdaiFieldGeometry)
+        };
     }
 
 
@@ -113,5 +117,19 @@ export module GeoJsonExporter {
                ring.push([ring[0][0], ring[0][1]]);
            }
         });
+    }
+
+
+    function getProperties(document: IdaiFieldDocument): any {
+
+        const properties: any = {
+            identifier: document.resource.identifier,
+            shortDescription: document.resource.shortDescription,
+            type: document.resource.type
+        };
+
+        if (!properties.shortDescription) delete properties.shortDescription;
+
+        return properties;
     }
 }

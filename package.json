@@ -96,6 +96,7 @@
   },
   "devDependencies": {
     "@angular/compiler-cli": "7.0.1",
+    "@mapbox/geojsonhint": "2.1.0",
     "@types/geojson": "0.0.32",
     "@types/jasmine": "~2.5.41",
     "@types/leaflet": "1.0.69",

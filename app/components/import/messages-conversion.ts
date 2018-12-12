@@ -32,6 +32,7 @@ export module MessagesConversion {
         if (msg === ValidationErrors.MISSING_COORDINATES) replacement = M.MODEL_VALIDATION_MISSING_COORDINATES;
         if (msg === ValidationErrors.INVALID_COORDINATES) replacement = M.MODEL_VALIDATION_INVALID_COORDINATES;
         if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
+        if (msg === ValidationErrors.GENERIC_DATASTORE) replacement = M.IMPORT_GENERIC_DATASTORE;
 
         // import errors - IO, parsing
         if (msg === ImportErrors.PARSER_FILE_UNREADABLE) replacement = M.IMPORT_FILE_UNREADABLE;
@@ -61,7 +62,6 @@ export module MessagesConversion {
         if (msg === ImportErrors.EXEC_MISSING_RELATION_TARGET) replacement = M.IMPORT_EXEC_MISSING_RELATION_TARGET;
         if (msg === ImportErrors.INVALID_MAIN_TYPE_DOCUMENT) replacement = M.IMPORT_INVALID_OPERATION_RESOURCE;
         if (msg === ImportErrors.ROLLBACK) replacement = M.IMPORT_ROLLBACK;
-        if (msg === ImportErrors.GENERIC_DATASTORE) replacement = M.IMPORT_GENERIC_DATASTORE;
 
 
         if (msg === ValidationErrors.INVALID_FIELDS) {

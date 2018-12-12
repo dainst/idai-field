@@ -12,4 +12,6 @@ export module ValidationErrors {
     export const INVALID_RELATIONS = 'validationerror/invalidrelations';
     export const INVALID_FIELDS = 'validationerror/invalidfields';
     export const INVALID_NUMERICAL_VALUES = 'validationerror/invalidnumericalvalues';
+    export const GENERIC_DATASTORE = 'importerrors/exec/genericdatastore';
+
 }

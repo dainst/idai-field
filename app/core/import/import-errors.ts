@@ -30,7 +30,6 @@ export module ImportErrors {
     // execution
     export const MENINX_FIND_NO_FEATURE_ASSIGNABLE = 'importerrrors/exec/meninxfind/nofeatureassignable';
     export const MENINX_NO_OPERATION_ASSIGNABLE = 'importerrrors/exec/meninxfind/nooperationassignable';
-    export const GENERIC_DATASTORE = 'importerrors/exec/genericdatastore'; // TODO seems to be unused
     export const ROLLBACK = 'importerrors/exec/rollback';
     export const INVALID_MAIN_TYPE_DOCUMENT = 'importerrors/invalidmaintypedocument';
     export const RESOURCE_EXISTS = 'importerrors/resourceexists'; // M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS

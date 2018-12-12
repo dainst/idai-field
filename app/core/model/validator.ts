@@ -3,7 +3,6 @@ import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
 import {TypeUtility} from './type-utility';
 import {ValidationErrors} from './validation-errors';
-import {M} from '../../components/m';
 import {ImportErrors} from '../import/import-errors';
 
 
@@ -49,7 +48,7 @@ export class Validator {
                 constraints: { 'identifier:match': document.resource.identifier }
             });
         } catch (e) {
-            throw ([M.ALL_ERROR_FIND]);
+            throw ([ValidationErrors.GENERIC_DATASTORE]);
         }
 
         if (result.totalCount > 0 && Validator.isNotSameDocument(result.documents[0], document)) {

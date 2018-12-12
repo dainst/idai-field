@@ -172,10 +172,4 @@ describe('Import/Subsystem', () => {
         expect(result.documents[0].resource.identifier).toBe('t1');
         done();
     });
-
-
-
-
-
-    // TODO test: merge mode, but isRecordedIn is set. decide how we deal with it.
 });

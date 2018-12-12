@@ -18,7 +18,7 @@ describe('DefaultImportStrategy', () => {
 
         mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', [
-            'assertIsRecordedInTargetsExists', 'assertIsWellformed', 'assertIsKnownType', 'assertHasIsRecordedIn', 'assertSettingIsRecordedInIsPermissibleForType']);
+            'assertIsRecordedInTargetsExist', 'assertIsWellformed', 'assertIsKnownType', 'assertHasIsRecordedIn', 'assertSettingIsRecordedInIsPermissibleForType']);
 
         mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration',
             ['getTypesList', 'getFieldDefinitions', 'getRelationDefinitions', 'isMandatory']);
@@ -27,7 +27,7 @@ describe('DefaultImportStrategy', () => {
 
         mockValidator.assertHasIsRecordedIn.and.returnValue();
 
-        mockValidator.assertIsRecordedInTargetsExists.and.returnValue(Promise.resolve());
+        mockValidator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve());
         mockDatastore.create.and.callFake((a) => Promise.resolve(a));
         mockDatastore.update.and.callFake((a) => Promise.resolve(a));
         mockDatastore.find.and.returnValue(Promise.resolve({ totalCount: 0 }));
@@ -57,7 +57,7 @@ describe('DefaultImportStrategy', () => {
 
     it('merge if exists', async done => {
 
-        mockValidator.assertIsRecordedInTargetsExists.and.returnValue(Promise.resolve(undefined));
+        mockValidator.assertIsRecordedInTargetsExist.and.returnValue(Promise.resolve(undefined));
         mockDatastore.find.and.returnValue(Promise.resolve({
             totalCount: 1,
             documents: [{resource: {identifier: '123', id: '1'}}]

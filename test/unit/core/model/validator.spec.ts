@@ -57,7 +57,7 @@ describe('Validator', () => {
             }
         };
         await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-            .assertIsRecordedInTargetsExists(doc).then(() => done(), msgWithParams => fail(msgWithParams));
+            .assertIsRecordedInTargetsExist(doc).then(() => done(), msgWithParams => fail(msgWithParams));
         done();
     });
 
@@ -71,7 +71,7 @@ describe('Validator', () => {
 
         try {
             await new Validator(projectConfiguration, datastore, new TypeUtility(projectConfiguration))
-                .assertIsRecordedInTargetsExists(doc);
+                .assertIsRecordedInTargetsExist(doc);
             fail();
         } catch (expected) {
             expect(expected).toEqual([ValidationErrors.NO_ISRECORDEDIN_TARGET, 'notexisting']);

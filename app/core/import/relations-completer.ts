@@ -68,31 +68,31 @@ export module RelationsCompleter {
                                                     mode: 'create' | 'remove',
                                                     resourceId: string): Promise<void> {
 
-            const document = await datastore.get(resourceId);
-            if (!document) throw "FATAL - DOCUMENT NOT FOUND, RESOURCEID: " + resourceId;
+        const document = await datastore.get(resourceId);
+        if (!document) throw "FATAL - DOCUMENT NOT FOUND, RESOURCEID: " + resourceId;
 
-            for (let relationName of Object
-                    .keys(document.resource.relations)
-                    .filter(relationName => relationName !== 'isRecordedIn')
-                    .filter(relationName => projectConfiguration.isRelationProperty(relationName))) {
+        for (let relationName of Object
+                .keys(document.resource.relations)
+                .filter(relationName => relationName !== 'isRecordedIn')
+                .filter(relationName => projectConfiguration.isRelationProperty(relationName))) {
 
-                for (let targetIdOrIdentifier of document.resource.relations[relationName]) {
+            for (let targetIdOrIdentifier of document.resource.relations[relationName]) {
 
-                    let targetDocument;
-                    try {
-                        targetDocument = await datastore.get(targetIdOrIdentifier);
-                    } catch (_) {
-                        if (mode === 'create') throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetIdOrIdentifier];
-                        else continue;
-                    }
-
-                    const inverseRelation = projectConfiguration.getInverseRelations(relationName) as any;
-                    mode === 'create'
-                        ? await createRelation(datastore, username, resourceId, targetDocument, inverseRelation)
-                        : await removeRelation(datastore, username, resourceId, targetDocument, inverseRelation);
+                let targetDocument;
+                try {
+                    targetDocument = await datastore.get(targetIdOrIdentifier);
+                } catch (_) {
+                    if (mode === 'create') throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetIdOrIdentifier];
+                    else continue;
                 }
 
+                const inverseRelation = projectConfiguration.getInverseRelations(relationName) as any;
+                mode === 'create'
+                    ? await createRelation(datastore, username, resourceId, targetDocument, inverseRelation)
+                    : await removeRelation(datastore, username, resourceId, targetDocument, inverseRelation);
             }
+
+        }
     }
 
 

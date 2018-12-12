@@ -484,34 +484,6 @@ describe('resources --', () => {
     });
 
 
-    // TODO Check if this test can be removed completely. Currently there are no sibling types with differing relations.
-    xit('typechange -- should delete invalid relations when changing the type of a resource to a sibling type', () => {
-
-        ResourcesPage.performCreateResource('1', 'feature-architecture');
-        ResourcesPage.performCreateResource('2', 'wall_surface');
-        ResourcesPage.performCreateRelation('1', '2',
-            10); // Trägt
-        ResourcesPage.clickSelectResource('2');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        RelationsViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('1'));
-        ResourcesPage.clickSelectResource('1');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(1));
-        RelationsViewPage.getRelationValue(0).then(relationValue => expect(relationValue).toEqual('2'));
-
-        DetailSidebarPage.performEditDocument();
-        DoceditPage.clickTypeSwitcherButton();
-        DoceditPage.clickTypeSwitcherOption('feature-layer');
-        NavbarPage.awaitAlert('Bitte beachten Sie, dass die Relationen der folgenden Relationstypen beim Speichern '
-            + 'verloren gehen: Trägt');
-        NavbarPage.clickCloseAllMessages();
-        DoceditPage.clickSaveDocument();
-        DetailSidebarPage.getTypeFromDocView().then(typeLabel => expect(typeLabel).toEqual('Erdbefund'));
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
-        ResourcesPage.clickSelectResource('2');
-        RelationsViewPage.getRelations().then(relations => expect(relations.length).toBe(0));
-    });
-
-
     it('hide the new resource button while creating a new resource', () => {
 
         ResourcesPage.clickCreateResource();

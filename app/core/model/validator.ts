@@ -23,10 +23,10 @@ export class Validator {
     // TODO what about this leftover? @throws [PREVALIDATION_INVALID_TYPE] if type is not configured in projectConfiguration
 
 
-    /** TODO make use of it in default import strat
+    /**
      * @throws [NO_ISRECORDEDIN_TARGET]
      */
-    public async assertIsRecordedInTargetsExists(document: Document|NewDocument): Promise<void> {
+    public async assertIsRecordedInTargetsExist(document: Document|NewDocument): Promise<void> {
 
         if (document.resource.relations['isRecordedIn'] && document.resource.relations['isRecordedIn'].length > 0) {
             const invalidRelationTargets = await this.validateRelationTargets(document as Document, 'isRecordedIn');
@@ -52,12 +52,18 @@ export class Validator {
                 constraints: { 'identifier:match': document.resource.identifier }
             });
         } catch (e) {
-            throw ([M.ALL_ERROR_FIND]); // TODO make generic or unknown error or something
+            throw ([M.ALL_ERROR_FIND]);
         }
 
         if (result.totalCount > 0 && Validator.isNotSameDocument(result.documents[0], document)) {
             throw[ValidationErrors.IDENTIFIER_ALREADY_EXISTS, document.resource.identifier];
         }
+    }
+
+
+    async isExistingRelationTarget(targetId: string): Promise<boolean> {
+
+        return (await this.datastore.find({ constraints: { 'id:match': targetId } })).documents.length === 1;
     }
 
 
@@ -105,12 +111,6 @@ export class Validator {
         }
 
         return invalidRelationTargetIds.length > 0 ? invalidRelationTargetIds : undefined;
-    }
-
-
-    private async isExistingRelationTarget(targetId: string): Promise<boolean> {
-
-        return (await this.datastore.find({ constraints: { 'id:match': targetId } })).documents.length === 1;
     }
 
 

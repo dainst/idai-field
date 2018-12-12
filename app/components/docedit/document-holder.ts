@@ -79,7 +79,7 @@ export class DocumentHolder {
         this.validator.assertHasIsRecordedIn(this.clonedDocument);
         Validations.assertNoFieldsMissing(this.clonedDocument, this.projectConfiguration);
         Validations.assertCorrectnessOfNumericalValues(this.clonedDocument, this.projectConfiguration);
-        await this.validator.assertIsRecordedInTargetsExists(this.clonedDocument);
+        await this.validator.assertIsRecordedInTargetsExist(this.clonedDocument);
 
         const savedDocument: Document = await this.persistenceManager.persist(
             this.cleanup(this.clonedDocument),

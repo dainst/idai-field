@@ -91,9 +91,9 @@ export module DefaultImport {
                                                    mergeIfExists: boolean,
                                                    identifierMap: { [identifier: string]: string }): Promise<Document|undefined> {
 
-        if (useIdentifiersInRelations) await rewriteRelations(document, identifierMap, datastore);
-
         if (!mergeIfExists) {
+            if (useIdentifiersInRelations) await rewriteRelations(document, identifierMap, datastore);
+
             assertIsKnownType(document, projectConfiguration);
             await prepareIsRecordedInRelation(
                 document, mainTypeDocumentId, datastore, validator, projectConfiguration);

@@ -64,7 +64,7 @@ describe('DocumentHolder', () => {
         };
 
         const validator = jasmine.createSpyObj('Validator', [
-            'assertIsRecordedInTargetsExists', 'assertIdentifierIsUnique',
+            'assertIsRecordedInTargetsExist', 'assertIdentifierIsUnique',
             'assertHasIsRecordedIn', 'assertNoFieldsMissing',
             'assertCorrectnessOfNumericalValues']);
 

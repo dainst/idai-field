@@ -99,10 +99,27 @@
                         </select>
                     </div>
 
+                    <div *ngIf="format === 'geojson'" class="import-info" i18n="@@import.geojson.info">
+                        Beim GeoJSON-Import werden keine neuen Ressourcen angelegt, sondern existierenden
+                        Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
+                        Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per
+                        Bezeichner (Feld <em>identifier</em> im Objekt <em>properties</em>). Datensätze in der
+                        Importdatei, die nicht zugeordnet werden können, werden ignoriert.
+                    </div>
+
                     <div *ngIf="isJavaInstallationMissing()" class="text-danger"
                          i18n="@@import.shapefile.javaWarning">
                         Zur Durchführung eines Shapefile-Imports ist die Installation von Java 8 oder höher
                         erforderlich.
+                    </div>
+
+                    <div *ngIf="format === 'shapefile' && !isJavaInstallationMissing()" class="import-info"
+                         i18n="@@import.shapefile.info">
+                        Beim Shapefile-Import werden keine neuen Ressourcen angelegt, sondern existierenden
+                        Ressourcen Geometrien hinzugefügt. Bitte beachten Sie, dass bereits vorhandene
+                        Geometrien dabei überschrieben werden. Die Zuordnung von Datensätzen geschieht per
+                        Bezeichner (Feld <em>identifier</em>). Datensätze im Shapefile, die nicht zugeordnet
+                        werden können, werden ignoriert.
                     </div>
                 </div>
             </div>

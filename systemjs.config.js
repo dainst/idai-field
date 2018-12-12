@@ -88,7 +88,10 @@
         'showdown': 'node_modules/showdown/dist/showdown.js',
         'angular2-uuid': 'node_modules/angular2-uuid/index.js',
         'papaparse': '@node/papaparse',
-        'child_process': '@node/child_process'
+        'child_process': '@node/child_process',
+        'geojson-rewind': 'node_modules/geojson-rewind/index.js',
+        '@mapbox/geojson-area': 'node_modules/@mapbox/geojson-area/index.js',
+        'wgs84': 'node_modules/wgs84/index.js'
     };
 
     config.meta = {

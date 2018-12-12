@@ -5,6 +5,9 @@ import {IdaiFieldDocument, IdaiFieldGeometry, Query} from 'idai-components-2';
 import {IdaiFieldDocumentReadDatastore} from '../../core/datastore/field/idai-field-document-read-datastore';
 import {M} from '../m';
 
+const geojsonRewind = require('geojson-rewind');
+
+
 /**
  * @author Thomas Kleinke
  */
@@ -45,10 +48,14 @@ export module GeoJsonExporter {
 
     function createFeatureCollection(documents: Array<IdaiFieldDocument>): FeatureCollection<GeometryObject> {
 
-        return {
+        const featureCollection: FeatureCollection<GeometryObject> = {
             type: 'FeatureCollection',
             features: documents.map(createFeature)
         };
+
+        geojsonRewind(featureCollection);
+
+        return featureCollection;
     }
 
 

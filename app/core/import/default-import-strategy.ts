@@ -38,8 +38,10 @@ export class DefaultImportStrategy implements ImportStrategy {
     /**
      * @param datastore
      * @param username
-     * @param documents documents with the field resource.identifier set to a non empty string
-     *   if resource.id is set, it will be taken as document.id on creation
+     * @param documents documents with the field resource.identifier set to a non empty string.
+     *   If resource.id is set, it will be taken as document.id on creation.
+     *   The relations map is assumed to be at least existent, but can be empty.
+     *   The resource.type field may be empty.
      * @param importReport
      *   .errors {ImportError.*}
      *      [PREVALIDATION_DUPLICATE_IDENTIFIER, doc.resource.identifier] if duplicate identifier is found in import file.

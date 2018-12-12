@@ -59,7 +59,7 @@ export class NativeJsonlParser extends AbstractParser {
     private static makeDoc(line: string): NewDocument {
 
         const resource = JSON.parse(line);
-        if (!resource.relations) resource.relations = {}; // TODO in defaultmiportstrategy, assume relation is set
+        if (!resource.relations) resource.relations = {};
 
         return { resource: resource };
     }

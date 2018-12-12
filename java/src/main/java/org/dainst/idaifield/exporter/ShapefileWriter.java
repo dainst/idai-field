@@ -32,8 +32,7 @@ import java.util.*;
 class ShapefileWriter {
 
     private static final String dataSchema =
-            "id:String,"
-            + "identifier:String,"
+            "identifier:String,"
             + "shortdesc:String,"
             + "type:String";
 
@@ -160,7 +159,6 @@ class ShapefileWriter {
 
     private static void fillFeatureFields(Resource resource, SimpleFeatureBuilder featureBuilder) {
 
-        featureBuilder.add(resource.getId());
         featureBuilder.add(resource.getIdentifier());
 
         if (resource.getShortDescription() != null) {

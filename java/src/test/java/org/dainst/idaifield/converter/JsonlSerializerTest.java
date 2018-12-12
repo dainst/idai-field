@@ -26,7 +26,6 @@ public class JsonlSerializerTest extends TestCase {
         geometry.setType(GeometryType.MULTIPOINT);
 
         Resource resource = new Resource();
-        resource.setId("id");
         resource.setIdentifier("identifier");
         resource.setShortDescription("short description");
         resource.setType("type");
@@ -35,7 +34,7 @@ public class JsonlSerializerTest extends TestCase {
         List<Resource> resources = new ArrayList<>();
         resources.add(resource);
 
-        assertEquals("{ \"id\": \"id\", \"identifier\": \"identifier\", "
+        assertEquals("{ \"identifier\": \"identifier\", "
                         + "\"shortDescription\": \"short description\", \"type\": \"type\", "
                         + "\"geometry\": { \"coordinates\": [1.0, 1.0], "
                         + "\"type\": \"Point\" } }\n",

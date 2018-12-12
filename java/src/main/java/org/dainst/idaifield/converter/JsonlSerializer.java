@@ -27,10 +27,6 @@ class JsonlSerializer {
 
         StringBuilder jsonl = new StringBuilder("{");
 
-        if (hasValue(resource.getId())) {
-            jsonl.append(" \"id\": \"").append(resource.getId()).append("\",");
-        }
-
         if (hasValue(resource.getIdentifier())) {
             jsonl.append(" \"identifier\": \"").append(resource.getIdentifier()).append("\",");
         }

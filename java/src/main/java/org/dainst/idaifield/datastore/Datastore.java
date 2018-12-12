@@ -79,7 +79,6 @@ public class Datastore {
     private static Resource createResource(JSONObject jsonResource) throws Exception {
 
         Resource resource = new Resource();
-        resource.setId(jsonResource.getString("id"));
         resource.setIdentifier(jsonResource.getString("identifier"));
         resource.setType(jsonResource.getString("type"));
         if (jsonResource.has("shortDescription")) {

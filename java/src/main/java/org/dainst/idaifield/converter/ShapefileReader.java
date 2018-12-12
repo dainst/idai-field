@@ -73,9 +73,6 @@ class ShapefileReader {
 
         for (Property attribute : feature.getProperties()) {
             switch(attribute.getName().toString()) {
-                case "id":
-                    resource.setId(attribute.getValue().toString());
-                    break;
                 case "identifier":
                     resource.setIdentifier(attribute.getValue().toString());
                     break;

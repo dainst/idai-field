@@ -6,23 +6,10 @@ package org.dainst.idaifield.model;
  */
 public class Resource {
 
-    private String id;
     private String identifier;
     private String shortDescription;
     private String type;
     private Geometry geometry;
-
-
-    public String getId() {
-
-        return id;
-    }
-
-
-    public void setId(String id) {
-
-        this.id = id;
-    }
 
 
     public String getIdentifier() {

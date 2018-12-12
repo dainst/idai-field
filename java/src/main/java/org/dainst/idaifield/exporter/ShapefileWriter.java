@@ -149,7 +149,7 @@ class ShapefileWriter {
         } catch (Exception e) {
             transaction.rollback();
             transaction.close();
-            throw new Exception("Could not write feature for resource " + resource.getId()
+            throw new Exception("Could not write feature for resource " + resource.getIdentifier()
                     + " and featureType " + featureType.getTypeName(), e);
         }
 

@@ -51,7 +51,6 @@ export module MessagesConversion {
 
         // import errors - validation not done by validator, execution of import
         if (msg === ImportErrors.WRONG_IDENTIFIER_FORMAT) replacement = M.IMPORT_IDENTIFIER_FORMAT;
-        if (msg === ImportErrors.MISSING_RESOURCE) replacement = M.IMPORT_MISSING_RESOURCE; // TODO remove if unused
         if (msg === ImportErrors.OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED;
         if (msg === ImportErrors.NO_OPERATION_ASSIGNED) replacement = M.IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED;
         if (msg === ImportErrors.DUPLICATE_IDENTIFIER) replacement = M.IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER;

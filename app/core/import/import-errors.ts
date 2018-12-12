@@ -19,7 +19,6 @@ export module ImportErrors {
     export const PARSER_SHAPEFILE_GENERIC = 'importerrors/shapefile/generic';
     export const PARSER_MISSING_IDENTIFIER = 'importerrors/parser/missingidentifier';
     export const PARSER_ID_MUST_NOT_BE_SET = 'importerrors/parser/idnottobeset';
-    export const MISSING_RESOURCE = 'importerrors/missingresource';
     export const WRONG_IDENTIFIER_FORMAT = 'importerrors/wrongidentifierformat';
 
     // prevalidation - prevalidation are all the tests done before the actual db updates, except the ones done by the Validator / Validations

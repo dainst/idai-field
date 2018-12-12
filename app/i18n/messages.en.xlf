@@ -489,7 +489,7 @@
                         geschieht per Bezeichner (Feld <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em>"/>identifier<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em>"/>). Datensätze in der Importdatei, die nicht
                         zugeordnet werden können, werden ignoriert.
                     </source>
-        <target state="final">
+        <target state="translated">
                         If this option is active, already existing resources will be merged with the data of the import
                         file. Fields of the import record will overwrite correspondent fields of the existing record.
                         Geometries of the import record will overwrite those of the existing record. Fields existing in the
@@ -3031,14 +3031,6 @@
       <trans-unit id="messages.import.error.rollbackError" datatype="html">
         <source>Beim Versuch, die bereits importierten Daten zu löschen, ist ein Fehler aufgetreten.</source>
         <target state="final">An error has occurred while attempting to delete already imported data.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/components/m.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="messages.import.error.missingResource" datatype="html">
-        <source>Die Zuordnung zu einer Ressource mit dem Bezeichner [0] ist fehlgeschlagen. Die Ressource wurde nicht gefunden.</source>
-        <target state="final">An assignment to a resource with the identifier [0] has failed. The resource could not be found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/m.ts</context>
           <context context-type="linenumber">1</context>

@@ -57,7 +57,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_GENERIC_DATASTORE = 'importer.error.genericDatastoreError';
     public static IMPORT_INVALID_GEOMETRY = 'importer.error.invalidGeometry';
     public static IMPORT_ROLLBACK = 'importer.error.rollbackError';
-    public static IMPORT_MISSING_RESOURCE = 'importer.error.missingResource';
     public static IMPORT_INVALID_OPERATION_RESOURCE = 'importer.error.invalidOperationResource';
     public static IMPORT_SHAPEFILE_READ_ERROR = 'import.error.shapefile.readError';
     public static IMPORT_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE = 'import.error.shapefile.unsupportedGeometryType';
@@ -528,15 +527,6 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'danger',
             params: [],
-            hidden: false
-        };
-        this.msgs[M.IMPORT_MISSING_RESOURCE] = {
-            content: i18n({
-                id: 'messages.import.error.missingResource',
-                value: 'Die Zuordnung zu einer Ressource mit dem Bezeichner [0] ist fehlgeschlagen. Die Ressource wurde nicht gefunden.'
-            }),
-            level: 'danger',
-            params: ['?'],
             hidden: false
         };
         this.msgs[M.IMPORT_EXEC_MISSING_RELATION_TARGET] = {

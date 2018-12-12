@@ -10,7 +10,6 @@ import {NativeJsonlParser} from './native-jsonl-parser';
 import {ImportStrategy} from './import-strategy';
 import {MeninxFindImportStrategy} from './meninx-find-import-strategy';
 import {DefaultImportStrategy} from './default-import-strategy';
-import {TypeUtility} from '../model/type-utility';
 import {ShapefileParser} from './shapefile-parser';
 import {GazGeojsonParserAddOn} from './gaz-geojson-parser-add-on';
 

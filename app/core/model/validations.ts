@@ -14,7 +14,7 @@ export module Validations {
     export function assertCorrectnessOfNumericalValues(document: Document|NewDocument, projectConfiguration: ProjectConfiguration) {
 
         const invalidNumericValues = Validations.validateNumericValues(document.resource, projectConfiguration);
-        if (invalidNumericValues ) {
+        if (invalidNumericValues.length > 0) {
             throw [
                 ValidationErrors.INVALID_NUMERICAL_VALUES,
                 document.resource.type,
@@ -117,7 +117,10 @@ export module Validations {
     }
 
 
-    export function validateDefinedFields(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): Array<string> {
+    /**
+     * @returns the names of invalid fields if one or more of the fields are invalid
+     */
+    export function validateDefinedFields(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[] {
 
         const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
         const defaultFields: Array<FieldDefinition> = [{ name: 'relations' }];
@@ -141,7 +144,7 @@ export module Validations {
             }
         }
 
-        if (projectConfiguration.getFieldDefinitions(resource.type) // TODO unit test this
+        if (projectConfiguration.getFieldDefinitions(resource.type)
                 .find(fd => fd.name === 'dating')) {
             invalidFields = invalidFields
                 .filter(_ => _ !== 'period' && _!== 'periodEnd');
@@ -151,8 +154,7 @@ export module Validations {
 
 
     /**
-     * @returns {string[]} the names of invalid relation fields if one or more of the fields are invalid, otherwise
-     * <code>undefined</code>
+     * @returns the names of invalid relation fields if one or more of the fields are invalid
      */
     export function validateDefinedRelations(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[] {
 
@@ -178,7 +180,7 @@ export module Validations {
     }
 
 
-    export function validateNumericValues(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[]|undefined {
+    export function validateNumericValues(resource: Resource|NewResource, projectConfiguration: ProjectConfiguration): string[] {
 
         const projectFields: Array<FieldDefinition> = projectConfiguration.getFieldDefinitions(resource.type);
         const numericInputTypes: string[] = ['unsignedInt', 'float', 'unsignedFloat'];
@@ -195,7 +197,7 @@ export module Validations {
             }
         });
 
-        return (invalidFields.length > 0) ? invalidFields : undefined;
+        return invalidFields;
     }
 
 

@@ -26,8 +26,16 @@ describe('Validations', () => {
                 {
                     type: 'T2',
                     fields: [
-                        {name: 'id',},
-                        {name: 'type',}
+                        {name: 'id'},
+                        {name: 'type'}
+                    ]
+                },
+                {
+                    type: 'T3',
+                    fields: [
+                        {name: 'id'},
+                        {name: 'type'},
+                        {name: 'dating'}
                     ]
                 },
             ],
@@ -38,6 +46,47 @@ describe('Validations', () => {
             ]
         }
     );
+
+
+    it('validate defined fields', () => {
+
+        const datastore = jasmine.createSpyObj('datastore',['find']);
+        datastore.find.and.returnValues(Promise.resolve({totalCount: 0, documents: []}));
+
+        const doc = {
+            resource: {
+                id: '1',
+                type: 'T',
+                mandatory: 'm',
+                undef: 'abc',
+                relations: {isRecordedIn: ['0']},
+            }
+        };
+
+        const undefinedFields = Validations.validateDefinedFields(doc.resource, projectConfiguration);
+        expect(undefinedFields).toContain('undef');
+    });
+
+
+    it('validate defined fields - exclude period, periodEnd if dating defined for type', () => {
+
+        const datastore = jasmine.createSpyObj('datastore',['find']);
+        datastore.find.and.returnValues(Promise.resolve({totalCount: 0, documents: []}));
+
+        const doc = {
+            resource: {
+                id: '1',
+                type: 'T3',
+                dating: 'abc',
+                period: 'abc',
+                periodEnd: 'abc',
+                relations: {isRecordedIn: ['0']},
+            }
+        };
+
+        const undefinedFields = Validations.validateDefinedFields(doc.resource, projectConfiguration);
+        expect(undefinedFields.length).toBe(0);
+    });
 
 
     it('should report nothing when omitting optional property', () => {

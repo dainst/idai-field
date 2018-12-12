@@ -88,6 +88,16 @@ export class TypeUtility {
     }
 
 
+    public getOverviewTypeNames(): string[] {
+
+        return this.projectConfiguration
+            .getTypesList()
+            .map(to('name'))
+            .filter(typename => this.isSubtype(typename, 'Operation'))
+            .concat('Place');
+    }
+
+
     private static isProjectType(typeName: string): boolean {
 
         return typeName === 'Project';

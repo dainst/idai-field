@@ -120,7 +120,7 @@ export module DefaultImport {
                 throw [ImportErrors.NO_OPERATION_ASSIGNED];
             }
         } else {
-            await validator.assertSettingIsRecordedInIsPermissibleForType(document);
+            await validator.assertIsNotOverviewType(document);
             await isRecordedInTargetAllowedRelationDomainType(
                 document, datastore, projectConfiguration, mainTypeDocumentId);
             initRecordedIn(document, mainTypeDocumentId);

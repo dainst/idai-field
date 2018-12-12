@@ -61,11 +61,9 @@ export class Validator {
     }
 
 
-    // TODO written specifically for import, see if we rename this
-    public async assertSettingIsRecordedInIsPermissibleForType(document: Document|NewDocument) {
+    public async assertIsNotOverviewType(document: Document|NewDocument) {
 
-        if (this.typeUtility.isSubtype(document.resource.type, 'Operation')
-            || document.resource.type === 'Place') {
+        if (this.typeUtility.getOverviewTypeNames().includes(document.resource.type)) {
 
             throw [ImportErrors.OPERATIONS_NOT_ALLOWED];
         }

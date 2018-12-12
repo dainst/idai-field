@@ -91,6 +91,17 @@ export class GeojsonParser extends AbstractParser {
     }
 
 
+    private addDuplicateIdentifierWarnings(identifiers: string[]) {
+
+        const duplicateIdentifiers: string[] = duplicates(identifiers);
+        if (duplicateIdentifiers.length === 1) {
+            this.warnings.push([M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER, duplicateIdentifiers[0]]);
+        } else if (duplicateIdentifiers.length > 1) {
+            this.warnings.push([M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS, duplicateIdentifiers.join(', ')]);
+        }
+    }
+
+
     /**
      * Validate and transform (modify in place) in one pass to reduce runtime.
      */
@@ -131,17 +142,6 @@ export class GeojsonParser extends AbstractParser {
             && GeojsonParser.supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
 
             return [ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, 'geometry type "' + feature.geometry.type + '" not supported.'];
-        }
-    }
-
-
-    private addDuplicateIdentifierWarnings(identifiers: string[]) {
-
-        const duplicateIdentifiers: string[] = duplicates(identifiers);
-        if (duplicateIdentifiers.length === 1) {
-            this.warnings.push([M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIER, duplicateIdentifiers[0]]);
-        } else if (duplicateIdentifiers.length > 1) {
-            this.warnings.push([M.IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS, duplicateIdentifiers.join(', ')]);
         }
     }
 

@@ -84,7 +84,7 @@ export class TypeUtility {
             .filter(typename => typename !== 'Place')
             .filter(typename => typename !== 'Project')
             .filter(typename => !this.isSubtype(typename, 'Operation'))
-            .filter(typename => !this.isSubtype(typename, 'Image'));
+            .filter(typename => !this.isSubtype(typename, 'Image')); // TODO add to tsfun: isNot <- if param no function than is compared directly (via triple equal)
     }
 
 

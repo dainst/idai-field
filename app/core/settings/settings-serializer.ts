@@ -53,7 +53,7 @@ export class SettingsSerializer {
         }
 
         if (remote) return this.writeConfigFile(configToWrite);
-        else return Promise.resolve(); // only for synctest TODO remove
+        else return Promise.resolve(); // only for synctest
     }
 
 

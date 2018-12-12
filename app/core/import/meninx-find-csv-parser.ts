@@ -2,7 +2,7 @@ import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
 import {AbstractParser} from './abstract-parser';
 import {ImportErrors} from './import-errors';
-// import * as Papa from 'papaparse'; TODO this does not work in production, fixes only unit test
+// import * as Papa from 'papaparse'; this does not work in production, fixes only unit test
 
 /**
  * @author Daniel de Oliveira

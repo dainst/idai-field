@@ -36,6 +36,8 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     /**
+     * TODO check what happens if one tries to import project or operation types
+     *
      * @param datastore
      * @param username
      * @param documents documents with the field resource.identifier set to a non empty string.

@@ -73,11 +73,6 @@ export class DoceditImageTabComponent {
             isDepictedIn.splice(isDepictedIn.indexOf(targetToRemove), 1);
         }
 
-        if (targetsToRemove.length > 0) {
-            // TODO adjust
-            // this.documentEditChangeMonitor.setChanged();
-        }
-
         if (isDepictedIn.length == 0) {
             this.document.resource.relations['isDepictedIn'] = [];
             this.documents = [];
@@ -146,9 +141,6 @@ export class DoceditImageTabComponent {
         imagePickerModal.result.then(
             (selectedImages: Array<IdaiFieldImageDocument>) => {
                 this.addIsDepictedInRelations(selectedImages);
-
-                // this.documentEditChangeMonitor.setChanged();
-                // TODO adjust
             }
         ).catch(() => {
             // Cancel

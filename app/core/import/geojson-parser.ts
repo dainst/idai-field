@@ -69,7 +69,7 @@ export class GeojsonParser extends AbstractParser {
             const msgWithParams = GeojsonParser.validateAndTransform(geojson, this.preValidateAndTransform);
             if (msgWithParams !== undefined) return observer.error(msgWithParams);
 
-            if (this.postProcess) this.postProcess(geojson); // TODO use it to actually validate the input. for now it only logs results
+            if (this.postProcess) this.postProcess(geojson);
 
             this.iterateDocs(geojson, observer);
             observer.complete();

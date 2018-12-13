@@ -71,7 +71,7 @@ export module DefaultImport {
             const documentsForUpdate = await prepareDocumentsForUpdate(
                 documents,
                 importReport,
-                (identifier: string) => findByIdentifier(identifier, datastore),
+                findByIdentifier(datastore),
                 identifierMap,
                 mergeMode,
                 validator,
@@ -136,13 +136,15 @@ export module DefaultImport {
     }
 
 
-    async function findByIdentifier(identifier: string,
-                                    datastore: DocumentDatastore): Promise<Document|undefined> {
+    function findByIdentifier(datastore: DocumentDatastore) {
 
-        const result = await datastore.find({ constraints: { 'identifier:match': identifier }});
-        return result.totalCount === 1
-            ? result.documents[0]
-            : undefined;
+        return async (identifier: string): Promise<Document|undefined> => {
+
+            const result = await datastore.find({ constraints: { 'identifier:match': identifier }});
+            return result.totalCount === 1
+                ? result.documents[0]
+                : undefined;
+        }
     }
 
 

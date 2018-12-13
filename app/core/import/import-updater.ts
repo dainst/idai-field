@@ -8,10 +8,9 @@ import {Document} from 'idai-components-2/src/model/core/document';
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export module ImportUpdater {
+export module ImportUpdater { // TODO change to batch updates and rename to BatchUpdater
 
 
-    // TODO perform batch updates
     export async function performUpdates(documents: Array<Document>,
                                   targetDocuments: Array<Document>|undefined,
                                   update: (document: Document, username: string) => Promise<Document>,

@@ -36,7 +36,7 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             undefined,
             undefined,
-                '{ "type": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}');
+                '{ "type": "Trench", "identifier" : "t1", "shortDescription" : "Our Trench 1"}', () => '101');
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
@@ -57,7 +57,8 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             trench.resource.id,
             undefined,
-                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "UnsupportedGeometryType", "coordinates": [1, 2] } }');
+                    '{ "type": "Find", "identifier" : "obob1", "shortDescription" : "O.B. One", "geometry": { "type": "UnsupportedGeometryType", "coordinates": [1, 2] } }',
+            () => '101');
 
         expect(report.errors[0]).toEqual([ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE, "UnsupportedGeometryType"]);
         done();
@@ -76,7 +77,8 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             stored.resource.id,
             false,
-                    '{ "type": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}');
+                    '{ "type": "Find", "identifier" : "f1", "shortDescription" : "Our Find 1"}',
+            () => '101');
 
         const result = await datastore.find({});
         expect(result.documents.length).toBe(2);
@@ -101,7 +103,8 @@ describe('Import/Subsystem', () => {
             resourceId,
             false,
             '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature1"}'+ "\n"
-                    + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}');
+                    + '{ "type": "InvalidType", "identifier" : "f2", "shortDescription" : "feature2"}',
+            () => '101');
 
         expect(importReport.errors[0]).toEqual([ValidationErrors.INVALID_TYPE, 'InvalidType']);
         const result = await datastore.find({});
@@ -122,7 +125,8 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             undefined,
             true,
-                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}');
+                    '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}',
+            () => '101');
 
         const result = await datastore.find({});
         expect(result.documents[0].resource.shortDescription).toBe('feature_1');
@@ -143,7 +147,8 @@ describe('Import/Subsystem', () => {
             undefined,
             true,
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}' + "\n"
-                + '{ "type": "Feature", "identifier" : "notexisting", "shortDescription" : "feature_2"}');
+                + '{ "type": "Feature", "identifier" : "notexisting", "shortDescription" : "feature_2"}',
+            () => '101');
 
         expect(importReport.errors.length).toBe(1);
         expect(importReport.errors[0][0]).toEqual(ImportErrors.UPDATE_TARGET_NOT_FOUND);
@@ -166,7 +171,8 @@ describe('Import/Subsystem', () => {
             _projectConfiguration,
             'f1',
             false,
-                    '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}');
+                    '{ "type": "Trench", "identifier" : "t2", "shortDescription" : "Our Trench 2"}',
+            () => '101');
 
         expect(importReport.errors[0][0]).toEqual(ImportErrors.OPERATIONS_NOT_ALLOWED);
 

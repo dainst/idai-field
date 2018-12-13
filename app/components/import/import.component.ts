@@ -20,6 +20,7 @@ import {ImportFacade, ImportFormat} from '../../core/import/import-facade';
 import {ShapefileFileSystemReader} from '../../core/import/shapefile-filesystem-reader';
 import {JavaToolExecutor} from '../../common/java-tool-executor';
 import {ImportValidator} from '../../core/import/import-validator';
+import {IdGenerator} from '../../core/datastore/core/id-generator';
 
 
 @Component({
@@ -36,6 +37,8 @@ import {ImportValidator} from '../../core/import/import-validator';
  * @author Daniel de Oliveira
  */
 export class ImportComponent implements OnInit {
+
+    private idGenerator = new IdGenerator(); // TODO make idGenerator provider and inject here as well as into pouchdbdatastore
 
     public sourceType: string = 'file';
     public format: ImportFormat = 'native';
@@ -107,7 +110,8 @@ export class ImportComponent implements OnInit {
             this.projectConfiguration,
             this.mainTypeDocumentId,
             this.allowMergingExistingResources,
-            await reader.go()
+            await reader.go(),
+            () => this.idGenerator.generateId()
         );
         this.remoteChangesStream.setAutoCacheUpdate(true);
 

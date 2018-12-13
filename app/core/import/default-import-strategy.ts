@@ -4,7 +4,6 @@ import {DocumentDatastore} from '../datastore/document-datastore';
 import {ImportErrors} from './import-errors';
 import {ImportReport} from './import-facade';
 import {duplicates, to} from 'tsfun';
-import {IdGenerator} from '../datastore/core/id-generator';
 import {DefaultImport} from './default-import';
 import {DocumentMerge} from './document-merge';
 import {RelationsCompleter} from './relations-completer';
@@ -19,8 +18,6 @@ import {ImportUpdater} from './import-updater';
 export class DefaultImportStrategy implements ImportStrategy {
 
 
-    private idGenerator = new IdGenerator();
-
     private identifierMap: { [identifier: string]: string } = {};
 
 
@@ -29,6 +26,7 @@ export class DefaultImportStrategy implements ImportStrategy {
                 private mergeIfExists: boolean,
                 private useIdentifiersInRelations: boolean,
                 private setInverseRelations: boolean, // TODO check if we can get rid of this
+                private generateId: () => string,
                 private mainTypeDocumentId: string = '' /* '' => no assignment */
                 ) {
 
@@ -72,7 +70,7 @@ export class DefaultImportStrategy implements ImportStrategy {
             }
         }
         this.identifierMap = this.mergeIfExists ? {} : DefaultImportStrategy.assignIds(
-            documents, this.idGenerator.generateId.bind(this)); // TODO make idGeneratorProvider
+            documents, this.generateId);
 
         const documentsForUpdate = await this.prepareDocumentsForUpdate(documents, importReport, datastore);
         if (importReport.errors.length > 0) return importReport;

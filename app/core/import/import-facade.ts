@@ -47,6 +47,7 @@ export module ImportFacade {
      * @param allowMergingExistingResources
      * @param fileContent
      *
+     * @param generateId
      * @returns ImportReport
      *   importReport.errors: Any error of module ImportErrors or ValidationErrors
      *   importReport.warnings
@@ -58,7 +59,8 @@ export module ImportFacade {
                                    projectConfiguration: ProjectConfiguration,
                                    mainTypeDocumentId: string,
                                    allowMergingExistingResources: boolean,
-                                   fileContent: string) {
+                                   fileContent: string,
+                                   generateId: () => string) {
 
 
         const importReport = {
@@ -87,7 +89,8 @@ export module ImportFacade {
             validator,
             projectConfiguration,
             !allowMergingExistingResources ? mainTypeDocumentId : '',
-            allowMergingExistingResources);
+            allowMergingExistingResources,
+            generateId);
 
 
         return await importStrategy
@@ -123,7 +126,8 @@ export module ImportFacade {
                                   validator: ImportValidator,
                                   projectConfiguration: ProjectConfiguration,
                                   mainTypeDocumentId: string,
-                                  allowMergingExistingResources = false): ImportStrategy {
+                                  allowMergingExistingResources = false,
+                                  generateId: () => string): ImportStrategy {
 
         switch (format) {
             case 'meninxfind':
@@ -131,23 +135,23 @@ export module ImportFacade {
             case 'idig':
                 return new DefaultImportStrategy(validator,
                     projectConfiguration,
-                    false, false, false);
+                    false, false, false, generateId);
             case 'shapefile':
                 return new DefaultImportStrategy(validator,
                     projectConfiguration,
-                     true, false, false);
+                     true, false, false, generateId);
             case 'geojson':
                 return new DefaultImportStrategy(validator,
                     projectConfiguration,
-                     true, false, false);
+                     true, false, false, generateId);
             case 'geojson-gazetteer':
                 return new DefaultImportStrategy(validator,
                     projectConfiguration,
-                    false, false, true);
+                    false, false, true, generateId);
             default: // native
                 return new DefaultImportStrategy(validator,
                     projectConfiguration,
-                    allowMergingExistingResources, true, true, mainTypeDocumentId);
+                    allowMergingExistingResources, true, true, generateId, mainTypeDocumentId);
         }
     }
 }

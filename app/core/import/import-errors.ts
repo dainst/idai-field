@@ -21,11 +21,13 @@ export module ImportErrors {
     export const PARSER_ID_MUST_NOT_BE_SET = 'importerrors/parser/idnottobeset';
     export const WRONG_IDENTIFIER_FORMAT = 'importerrors/wrongidentifierformat';
 
-    // prevalidation - prevalidation are all the tests done before the actual db updates, except the ones done by the Validator / Validations
+    // import validation
     export const OPERATIONS_NOT_ALLOWED = 'importerrrors/prevalidation/operationsnotallowed';
     export const NO_OPERATION_ASSIGNED = 'importerrors/prevalidation/nooperationassigned';
     export const DUPLICATE_IDENTIFIER = 'importerrors/prevalidation/duplicateidentifier';
     export const MISSING_RELATION_TARGET = 'importerrors/prevalidation/missingrelationtarget'; // by identifier
+    export const TYPE_NOT_ALLOWED = 'importerrors/prevalidation/typenotallowed';
+    export const TYPE_ONLY_ALLOWED_ON_UPDATE = 'importerrors/prevalidation/typeonlyallowedonupdate';
 
     // execution
     export const MENINX_FIND_NO_FEATURE_ASSIGNABLE = 'importerrrors/exec/meninxfind/nofeatureassignable';

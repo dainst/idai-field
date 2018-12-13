@@ -18,6 +18,7 @@ export module DefaultImport {
 
         if (!mergeIfExists) {
             validator.assertIsKnownType(document);
+            validator.assertIsAllowedType(document, mergeIfExists);
             await prepareIsRecordedInRelation(document, mainTypeDocumentId, validator);
         }
 

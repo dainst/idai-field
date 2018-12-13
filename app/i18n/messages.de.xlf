@@ -3068,6 +3068,9 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+
+
+
       <trans-unit id="messages.import.error.onlyplaceandoperationwithoutrecordedinallowed" datatype="html">
         <source>Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'isRecordedIn'-Zuordnungen haben.</source>
         <target state="final">Wenn 'Keine Zuordnung' gewählt ist, müssen alle Ressourcen außer Maßnahmen oder Orte 'isRecordedIn'-Zuordnungen haben.</target>
@@ -3076,6 +3079,25 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+
+      <trans-unit id="messages.import.error.typeNotAllowed" datatype="html">
+              <source>Ressourcen von folgendem Typ sind beim Import nicht erlaubt: '[0]'</source>
+              <target state="final">Ressourcen von folgendem Typ sind beim Import nicht erlaubt: '[0]'</target>
+              <context-group purpose="location">
+                <context context-type="sourcefile">app/components/m.ts</context>
+                <context context-type="linenumber">1</context>
+              </context-group>
+            </trans-unit>
+
+    <trans-unit id="messages.import.error.typeOnlyAllowedOnUpdate" datatype="html">
+              <source>Ressourcen von folgendem Typ sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</source>
+              <target state="final">Ressourcen von folgendem Typ sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</target>
+              <context-group purpose="location">
+                <context context-type="sourcefile">app/components/m.ts</context>
+                <context context-type="linenumber">1</context>
+              </context-group>
+            </trans-unit>
+
       <trans-unit id="messages.import.error.duplicateidentifier" datatype="html">
         <source>Mehrfach vorhandener Identifier in Importdatei: '[0]'.</source>
         <target state="final">Mehrfach vorhandener Identifier in Importdatei: '[0]'.</target>

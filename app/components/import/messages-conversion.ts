@@ -22,17 +22,6 @@ export module MessagesConversion {
         let replacement = undefined;
         const msg = msgWithParams[0];
 
-        // validation errors - done during import but coming from model package (validator/validations)
-        if (msg === ValidationErrors.INVALID_TYPE) replacement = M.IMPORT_VALIDATION_INVALID_TYPE;
-        if (msg === ValidationErrors.NO_ISRECORDEDIN) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN;
-        if (msg === ValidationErrors.NO_ISRECORDEDIN_TARGET) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET;
-        if (msg === ValidationErrors.IDENTIFIER_ALREADY_EXISTS) replacement = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
-        if (msg === ValidationErrors.MISSING_PROPERTY) replacement = M.IMPORT_VALIDATION_MISSING_PROPERTY;
-        if (msg === ValidationErrors.MISSING_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_MISSING_GEOMETRYTYPE;
-        if (msg === ValidationErrors.MISSING_COORDINATES) replacement = M.MODEL_VALIDATION_MISSING_COORDINATES;
-        if (msg === ValidationErrors.INVALID_COORDINATES) replacement = M.MODEL_VALIDATION_INVALID_COORDINATES;
-        if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
-        if (msg === ValidationErrors.GENERIC_DATASTORE) replacement = M.IMPORT_GENERIC_DATASTORE;
 
         // import errors - IO, parsing
         if (msg === ImportErrors.PARSER_FILE_UNREADABLE) replacement = M.IMPORT_FILE_UNREADABLE;
@@ -50,7 +39,21 @@ export module MessagesConversion {
         if (msg === ImportErrors.PARSER_MISSING_IDENTIFIER) replacement = M.IMPORT_MISSING_IDENTIFIER;
         if (msg === ImportErrors.PARSER_ID_MUST_NOT_BE_SET) replacement = M.IMPORT_PARSING_ID_MUST_NOT_BE_SET;
 
-        // import errors - validation not done by validator, execution of import
+        // validation errors
+        if (msg === ValidationErrors.INVALID_TYPE) replacement = M.IMPORT_VALIDATION_INVALID_TYPE;
+        if (msg === ValidationErrors.NO_ISRECORDEDIN) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN;
+        if (msg === ValidationErrors.NO_ISRECORDEDIN_TARGET) replacement = M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET;
+        if (msg === ValidationErrors.IDENTIFIER_ALREADY_EXISTS) replacement = M.MODEL_VALIDATION_IDENTIFIER_ALREADY_EXISTS;
+        if (msg === ValidationErrors.MISSING_PROPERTY) replacement = M.IMPORT_VALIDATION_MISSING_PROPERTY;
+        if (msg === ValidationErrors.MISSING_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_MISSING_GEOMETRYTYPE;
+        if (msg === ValidationErrors.MISSING_COORDINATES) replacement = M.MODEL_VALIDATION_MISSING_COORDINATES;
+        if (msg === ValidationErrors.INVALID_COORDINATES) replacement = M.MODEL_VALIDATION_INVALID_COORDINATES;
+        if (msg === ValidationErrors.UNSUPPORTED_GEOMETRY_TYPE) replacement = M.MODEL_VALIDATION_UNSUPPORTED_GEOMETRY_TYPE;
+        if (msg === ValidationErrors.GENERIC_DATASTORE) replacement = M.IMPORT_GENERIC_DATASTORE;
+
+        // import errors
+        if (msg === ImportErrors.TYPE_NOT_ALLOWED) replacement = M.IMPORT_ERROR_TYPE_NOT_ALLOWED;
+        if (msg === ImportErrors.TYPE_ONLY_ALLOWED_ON_UPDATE) replacement = M.IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE;
         if (msg === ImportErrors.WRONG_IDENTIFIER_FORMAT) replacement = M.IMPORT_IDENTIFIER_FORMAT;
         if (msg === ImportErrors.OPERATIONS_NOT_ALLOWED) replacement = M.IMPORT_PREVALIDATION_OPERATIONS_NOT_ALLOWED;
         if (msg === ImportErrors.NO_OPERATION_ASSIGNED) replacement = M.IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED;

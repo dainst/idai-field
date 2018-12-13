@@ -18,7 +18,9 @@ describe('DefaultImportStrategy', () => {
 
         mockDatastore = jasmine.createSpyObj('datastore', ['create', 'update', 'get', 'find']);
         mockValidator = jasmine.createSpyObj('validator', [
-            'assertIsRecordedInTargetsExist', 'assertIsWellformed', 'assertIsKnownType', 'assertHasIsRecordedIn', 'assertSettingIsRecordedInIsPermissibleForType']);
+            'assertIsRecordedInTargetsExist', 'assertIsWellformed',
+            'assertIsKnownType', 'assertHasIsRecordedIn', 'assertIsAllowedType',
+            'assertSettingIsRecordedInIsPermissibleForType']);
 
         mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration',
             ['getTypesList', 'getFieldDefinitions', 'getRelationDefinitions', 'isMandatory']);

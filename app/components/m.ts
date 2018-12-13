@@ -65,7 +65,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_MISSING_IDENTIFIER = 'importer.error.missingIdentifier';
     public static IMPORT_PARSING_ID_MUST_NOT_BE_SET = 'import.importerrors.parsing.idnottobeset';
 
-    // ImportPackage - ImportErrors - prevalidation
+    // ImportPackage - ImportErrors - ValidationErrors
     public static IMPORT_NO_OPERATION_ASSIGNABLE = 'importer.error.noOperationAssignable';
     public static IMPORT_NO_FEATURE_ASSIGNABLE = 'importer.error.noFeatureAssignable';
     public static IMPORT_PREVALIDATION_NO_OPERATION_ASSIGNED = 'importer.error.onlyplaceandoperationwithoutrecordedinallowed';
@@ -73,8 +73,8 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_VALIDATION_INVALID_TYPE = 'import.validation.error.invalidType';
     public static IMPORT_PREVALIDATION_DUPLICATE_IDENTIFIER = 'import.error.prevalidation.duplicateidentifier';
     public static IMPORT_PREVALIDATION_MISSING_RELATION_TARGET = 'importer.error.prevalidation.missingRelationTarget';
-
-    // Import Package - ValidationErrors
+    public static IMPORT_ERROR_TYPE_NOT_ALLOWED = 'import.error.typeNotAllowed';
+    public static IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE = 'import.error.typeOnlyAllowedOnUpdate';
     public static IMPORT_VALIDATION_MISSING_PROPERTY = 'import.validation.error.missingProperty';
     public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN = 'import.validation.error.noRecordedin';
     public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'import.validation.error.noRecordedinTarget';
@@ -673,13 +673,31 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             params: [],
             hidden: false
         };
+        this.msgs[M.IMPORT_ERROR_TYPE_NOT_ALLOWED] = {
+            content: i18n({
+                id: 'messages.import.error.typeNotAllowed',
+                value: 'Ressourcen von folgendem Typ sind beim Import nicht erlaubt: \'[0]\''
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE] = {
+            content: i18n({
+                id: 'messages.import.error.typeOnlyAllowedOnUpdate',
+                value: 'Ressourcen von folgendem Typ sind beim Import nur im Ergänzungsmodus erlaubt: \'[0]\''
+            }),
+            level: 'danger',
+            params: ['?'],
+            hidden: false
+        };
         this.msgs[M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN] = {
             content: i18n({
                 id: 'messages.import.validation.error.noRecordedIn',
                 value: 'Fehlende Definition von \'Aufgenommen in Maßnahme\'. Eine Zuordnung muss vorgenommen werden.'
             }),
             level: 'danger',
-            params: [],
+            params: ['?'],
             hidden: false
         };
         this.msgs[M.IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET] = {

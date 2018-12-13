@@ -36,6 +36,22 @@ export class ImportValidator extends Validator {
     }
 
 
+    public assertIsAllowedType(document: Document|NewDocument, mergeMode: boolean) {
+
+        if (document.resource.type === 'Operation'
+            || document.resource.type === 'Project') {
+
+            throw [ImportErrors.TYPE_NOT_ALLOWED, document.resource.type];
+        }
+
+        if (!mergeMode && (document.resource.type === 'Image'
+            || this.typeUtility.isSubtype(document.resource.type, 'Image'))) {
+
+            throw [ImportErrors.TYPE_ONLY_ALLOWED_ON_UPDATE, document.resource.type];
+        }
+    }
+
+
     /**
      * Wellformedness test specifically written for use in import package.
      *

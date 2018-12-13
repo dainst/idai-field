@@ -1,6 +1,6 @@
 import {Document} from 'idai-components-2'
-import {ImportReport} from './import-facade';
-import {DocumentDatastore} from '../datastore/document-datastore';
+import {ImportReport} from '../import-facade';
+import {DocumentDatastore} from '../../datastore/document-datastore';
 
 /**
  * @author Daniel de Oliveira

@@ -4,8 +4,8 @@ import {Document} from 'idai-components-2/src/model/core/document';
 import {IdaiFieldFindResult} from '../../datastore/core/cached-read-datastore';
 import {ImportErrors} from '../import-errors';
 import {clone} from '../../util/object-util';
-import {ImportFunction} from '../import-function';
 import {ImportReport} from '../import-facade';
+import {ImportFunction} from './import-function';
 
 
 const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {

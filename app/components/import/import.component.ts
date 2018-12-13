@@ -38,8 +38,6 @@ import {IdGenerator} from '../../core/datastore/core/id-generator';
  */
 export class ImportComponent implements OnInit {
 
-    private idGenerator = new IdGenerator(); // TODO make idGenerator provider and inject here as well as into pouchdbdatastore
-
     public sourceType: string = 'file';
     public format: ImportFormat = 'native';
     public file: File|undefined;
@@ -60,7 +58,8 @@ export class ImportComponent implements OnInit {
         private projectConfiguration: ProjectConfiguration,
         private viewFacade: ViewFacade,
         private modalService: NgbModal,
-        private settingsService: SettingsService
+        private settingsService: SettingsService,
+        private idGenerator: IdGenerator
     ) {
         this.viewFacade.getAllOperations().then(
             documents => this.mainTypeDocuments = documents,

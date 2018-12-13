@@ -1,6 +1,6 @@
 import {ValidationErrors} from '../../../../app/core/model/validation-errors';
 import {ProjectConfiguration} from 'idai-components-2/src/configuration/project-configuration';
-import {ImportValidation} from '../../../../app/core/import/import-validation';
+import {ImportValidator} from '../../../../app/core/import/import-validator';
 
 
 /**
@@ -52,7 +52,7 @@ describe('ImportValidation', () => {
         };
 
         try {
-            ImportValidation.assertIsWellformed(doc, projectConfiguration);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
@@ -72,7 +72,7 @@ describe('ImportValidation', () => {
         };
 
         try {
-            ImportValidation.assertIsWellformed(doc, projectConfiguration);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.MISSING_PROPERTY, 'T', 'mandatory']);
@@ -93,7 +93,7 @@ describe('ImportValidation', () => {
         };
 
         try {
-            ImportValidation.assertIsWellformed(doc, projectConfiguration);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
             fail();
         } catch (errWithParams) {
 
@@ -116,7 +116,7 @@ describe('ImportValidation', () => {
         };
 
         try {
-            ImportValidation.assertIsWellformed(doc, projectConfiguration);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
             fail();
         } catch (errWithParams) {
 
@@ -138,7 +138,7 @@ describe('ImportValidation', () => {
         };
 
         try {
-            ImportValidation.assertIsWellformed(doc, projectConfiguration);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
             fail();
         } catch (errWithParams) {
 
@@ -162,7 +162,7 @@ describe('ImportValidation', () => {
         };
 
         try {
-            ImportValidation.assertIsWellformed(doc, projectConfiguration);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
             fail();
         } catch (errWithParams) {
 
@@ -185,7 +185,7 @@ describe('ImportValidation', () => {
         };
 
         try {
-            ImportValidation.assertIsWellformed(doc, projectConfiguration);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1'])
@@ -208,7 +208,7 @@ describe('ImportValidation', () => {
         };
 
         try {
-            ImportValidation.assertIsWellformed(doc, projectConfiguration);
+            new ImportValidator(projectConfiguration, undefined, undefined).assertIsWellformed(doc);
             fail();
         } catch (errWithParams) {
             expect(errWithParams).toEqual([ValidationErrors.INVALID_NUMERICAL_VALUES, 'T', 'number1, number2'])

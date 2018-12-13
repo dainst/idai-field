@@ -1,11 +1,11 @@
 import {to} from 'tsfun';
 import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-helper';
 import {ImportFacade} from '../../app/core/import/import-facade';
-import {Validator} from '../../app/core/model/validator';
 import {TypeUtility} from '../../app/core/model/type-utility';
 import {ValidationErrors} from '../../app/core/model/validation-errors';
 import {ImportErrors} from '../../app/core/import/import-errors';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
+import {ImportValidator} from '../../app/core/import/import-validator';
 
 /**
  * @author Daniel de Oliveira
@@ -30,7 +30,7 @@ describe('Import/Subsystem', () => {
 
        await ImportFacade.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -51,7 +51,7 @@ describe('Import/Subsystem', () => {
 
         const report = await ImportFacade.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -70,7 +70,7 @@ describe('Import/Subsystem', () => {
 
         await ImportFacade.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -94,7 +94,7 @@ describe('Import/Subsystem', () => {
 
         const importReport = await ImportFacade.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -116,7 +116,7 @@ describe('Import/Subsystem', () => {
 
         await ImportFacade.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -136,7 +136,7 @@ describe('Import/Subsystem', () => {
 
         await ImportFacade.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,
@@ -158,7 +158,7 @@ describe('Import/Subsystem', () => {
 
         const importReport = await ImportFacade.doImport(
             'native',
-            new Validator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
+            new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
             { getUsername: () => 'testuser'},
             _projectConfiguration,

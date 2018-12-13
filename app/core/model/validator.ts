@@ -15,9 +15,9 @@ import {ImportErrors} from '../import/import-errors';
  */
 export class Validator {
 
-    constructor(private projectConfiguration: ProjectConfiguration,
-                private datastore: IdaiFieldDocumentDatastore,
-                private typeUtility: TypeUtility) {}
+    constructor(protected projectConfiguration: ProjectConfiguration,
+                protected datastore: IdaiFieldDocumentDatastore,
+                protected typeUtility: TypeUtility) {}
 
     /**
      * @throws [NO_ISRECORDEDIN_TARGET]

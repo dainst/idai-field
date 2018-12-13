@@ -31,6 +31,7 @@ import {AppController} from './app-controller';
 import {DatastoreModule} from './core/datastore/datastore.module';
 import {PersistenceManager} from './core/model/persistence-manager';
 import {Validator} from './core/model/validator';
+import {ImportValidator} from './core/import/import-validator';
 import {MatrixModule} from './components/matrix/matrix.module';
 import {PouchdbManager} from './core/datastore/core/pouchdb-manager';
 import {TaskbarConflictsComponent} from './components/navbar/taskbar-conflicts.component';
@@ -189,6 +190,7 @@ registerLocaleData(localeDe, 'de');
         },
         PersistenceManager,
         Validator,
+        ImportValidator,
         { provide: MD, useClass: M},
         DoceditActiveTabService,
         SynchronizationStatus

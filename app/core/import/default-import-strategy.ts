@@ -1,7 +1,6 @@
 import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {ImportStrategy} from './import-strategy';
 import {DocumentDatastore} from '../datastore/document-datastore';
-import {Validator} from '../model/validator';
 import {ImportErrors} from './import-errors';
 import {ImportReport} from './import-facade';
 import {duplicates, to} from 'tsfun';
@@ -9,6 +8,7 @@ import {IdGenerator} from '../datastore/core/id-generator';
 import {DefaultImport} from './default-import';
 import {DocumentMerge} from './document-merge';
 import {RelationsCompleter} from './relations-completer';
+import {ImportValidator} from './import-validator';
 
 
 /**
@@ -23,7 +23,7 @@ export class DefaultImportStrategy implements ImportStrategy {
     private identifierMap: { [identifier: string]: string } = {};
 
 
-    constructor(private validator: Validator,
+    constructor(private validator: ImportValidator,
                 private projectConfiguration: ProjectConfiguration,
                 private mergeIfExists: boolean,
                 private useIdentifiersInRelations: boolean,
@@ -104,7 +104,7 @@ export class DefaultImportStrategy implements ImportStrategy {
                 if (!documentForUpdate) continue;
 
                 await DefaultImport.prepareDocumentForUpdate(
-                    document, datastore, this.validator, this.projectConfiguration, this.mainTypeDocumentId, this.mergeIfExists);
+                    document, this.validator, this.mainTypeDocumentId, this.mergeIfExists);
 
                 if (documentForUpdate) documentsForUpdate.push(documentForUpdate);
             } catch (errWithParams) {

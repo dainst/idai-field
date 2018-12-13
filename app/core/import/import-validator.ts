@@ -1,13 +1,40 @@
+import {Injectable} from '@angular/core';
+import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
+import {IdaiFieldDocumentDatastore} from '../datastore/field/idai-field-document-datastore';
+import {TypeUtility} from '../model/type-utility';
+import {Validator} from '../model/validator';
 import {Validations} from '../model/validations';
 import {ValidationErrors} from '../model/validation-errors';
-import {NewDocument, Document, ProjectConfiguration} from 'idai-components-2';
+import {ImportErrors} from './import-errors';
 
 
+@Injectable()
 /**
+ * Validates against data model of ProjectConfiguration and TypeUtility and contents of Database
+ *
  * @author Daniel de Oliveira
  * @author Thomas Kleinke
  */
-export module ImportValidation {
+export class ImportValidator extends Validator {
+
+    constructor(projectConfiguration: ProjectConfiguration,
+                datastore: IdaiFieldDocumentDatastore,
+                typeUtility: TypeUtility) {
+
+        super(projectConfiguration, datastore, typeUtility);
+    }
+
+
+    /**
+     * @throws [INVALID_TYPE]
+     */
+    public assertIsKnownType(document: Document|NewDocument) {
+
+        if (!Validations.validateType(document.resource, this.projectConfiguration)) {
+            throw [ValidationErrors.INVALID_TYPE, document.resource.type];
+        }
+    }
+
 
     /**
      * Wellformedness test specifically written for use in import package.
@@ -35,9 +62,9 @@ export module ImportValidation {
      * @throws [INVALID_COORDINATES]
      * @throws [INVALID_NUMERICAL_VALUE]
      */
-    export function assertIsWellformed(document: Document|NewDocument, projectConfiguration: ProjectConfiguration): void {
+    public assertIsWellformed(document: Document|NewDocument): void {
 
-        const invalidFields = Validations.validateDefinedFields(document.resource, projectConfiguration);
+        const invalidFields = Validations.validateDefinedFields(document.resource, this.projectConfiguration);
         if (invalidFields.length > 0) {
             throw [
                 ValidationErrors.INVALID_FIELDS,
@@ -47,7 +74,7 @@ export module ImportValidation {
         }
 
         const invalidRelationFields = Validations
-            .validateDefinedRelations(document.resource, projectConfiguration)
+            .validateDefinedRelations(document.resource, this.projectConfiguration)
             // operations have empty isRecordedIn which however is not defined. image types must not be imported. regular types all have isRecordedIn
             .filter(item => item !== 'isRecordedIn');
         if (invalidRelationFields.length > 0) {
@@ -58,10 +85,22 @@ export module ImportValidation {
             ];
         }
 
-        Validations.assertNoFieldsMissing(document, projectConfiguration);
-        Validations.assertCorrectnessOfNumericalValues(document, projectConfiguration);
+        Validations.assertNoFieldsMissing(document, this.projectConfiguration);
+        Validations.assertCorrectnessOfNumericalValues(document, this.projectConfiguration);
 
         const errWithParams = Validations.validateStructureOfGeometries(document.resource.geometry as any);
         if (errWithParams) throw errWithParams;
+    }
+
+
+    public async isRecordedInTargetAllowedRelationDomainType(document: NewDocument, mainTypeDocumentId: string) {
+
+        const mainTypeDocument = await this.datastore.get(mainTypeDocumentId);
+        if (!this.projectConfiguration.isAllowedRelationDomainType(document.resource.type,
+            mainTypeDocument.resource.type, 'isRecordedIn')) {
+
+            throw [ImportErrors.INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
+                mainTypeDocument.resource.type];
+        }
     }
 }

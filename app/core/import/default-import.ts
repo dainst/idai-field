@@ -1,12 +1,7 @@
-import {DocumentDatastore} from '../datastore/document-datastore';
 import {Document} from 'idai-components-2/src/model/core/document';
 import {NewDocument} from 'idai-components-2/src/model/core/new-document';
 import {ImportErrors} from './import-errors';
-import {ProjectConfiguration} from 'idai-components-2';
-import {Validator} from '../model/validator';
-import {Validations} from '../model/validations';
-import {ValidationErrors} from '../model/validation-errors';
-import {ImportValidation} from './import-validation';
+import {ImportValidator} from './import-validator';
 
 
 /**
@@ -17,28 +12,21 @@ export module DefaultImport {
 
 
     export async function prepareDocumentForUpdate(document: NewDocument,
-                                                   datastore: DocumentDatastore,
-                                                   validator: Validator,
-                                                   projectConfiguration: ProjectConfiguration,
+                                                   validator: ImportValidator,
                                                    mainTypeDocumentId: string,
                                                    mergeIfExists: boolean): Promise<Document|NewDocument> {
 
         if (!mergeIfExists) {
-            assertIsKnownType(document, projectConfiguration);
-            await prepareIsRecordedInRelation(
-                document, mainTypeDocumentId, datastore, validator, projectConfiguration);
+            validator.assertIsKnownType(document);
+            await prepareIsRecordedInRelation(document, mainTypeDocumentId, validator);
         }
 
-        ImportValidation.assertIsWellformed(document, projectConfiguration);
+        validator.assertIsWellformed(document);
         return document;
     }
 
 
-    async function prepareIsRecordedInRelation(document: NewDocument,
-                                               mainTypeDocumentId: string,
-                                               datastore: DocumentDatastore,
-                                               validator: Validator,
-                                               projectConfiguration: ProjectConfiguration) {
+    async function prepareIsRecordedInRelation(document: NewDocument, mainTypeDocumentId: string, validator: ImportValidator) {
 
         if (!mainTypeDocumentId) {
             try {
@@ -48,24 +36,8 @@ export module DefaultImport {
             }
         } else {
             await validator.assertIsNotOverviewType(document);
-            await isRecordedInTargetAllowedRelationDomainType(
-                document, datastore, projectConfiguration, mainTypeDocumentId);
+            await validator.isRecordedInTargetAllowedRelationDomainType(document, mainTypeDocumentId);
             initRecordedIn(document, mainTypeDocumentId);
-        }
-    }
-
-
-    async function isRecordedInTargetAllowedRelationDomainType(document: NewDocument,
-                                                               datastore: DocumentDatastore,
-                                                               projectConfiguration: ProjectConfiguration,
-                                                               mainTypeDocumentId: string) {
-
-        const mainTypeDocument = await datastore.get(mainTypeDocumentId);
-        if (!projectConfiguration.isAllowedRelationDomainType(document.resource.type,
-            mainTypeDocument.resource.type, 'isRecordedIn')) {
-
-            throw [ImportErrors.INVALID_MAIN_TYPE_DOCUMENT, document.resource.type,
-                mainTypeDocument.resource.type];
         }
     }
 
@@ -79,17 +51,6 @@ export module DefaultImport {
         if (!relations['isRecordedIn']) relations['isRecordedIn'] = [];
         if (!relations['isRecordedIn'].includes(mainTypeDocumentId)) {
             relations['isRecordedIn'].push(mainTypeDocumentId);
-        }
-    }
-
-
-    /**
-     * @throws [INVALID_TYPE]
-     */
-    function assertIsKnownType(document: Document|NewDocument, projectConfiguration: ProjectConfiguration) {
-
-        if (!Validations.validateType(document.resource, projectConfiguration)) {
-            throw [ValidationErrors.INVALID_TYPE, document.resource.type];
         }
     }
 }

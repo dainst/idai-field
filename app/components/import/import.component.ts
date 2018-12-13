@@ -20,6 +20,7 @@ import {M} from '../m';
 import {ImportFacade, ImportFormat} from '../../core/import/import-facade';
 import {ShapefileFileSystemReader} from '../../core/import/shapefile-filesystem-reader';
 import {JavaToolExecutor} from '../../common/java-tool-executor';
+import {ImportValidator} from '../../core/import/import-validator';
 
 
 @Component({
@@ -51,7 +52,7 @@ export class ImportComponent implements OnInit {
         private messages: Messages,
         private datastore: DocumentDatastore,
         private remoteChangesStream: RemoteChangesStream,
-        private validator: Validator,
+        private importValidator: ImportValidator,
         private http: HttpClient,
         private usernameProvider: UsernameProvider,
         private projectConfiguration: ProjectConfiguration,
@@ -101,7 +102,7 @@ export class ImportComponent implements OnInit {
         this.remoteChangesStream.setAutoCacheUpdate(false);
         const importReport = await ImportFacade.doImport(
             this.format,
-            this.validator,
+            this.importValidator,
             this.datastore,
             this.usernameProvider,
             this.projectConfiguration,

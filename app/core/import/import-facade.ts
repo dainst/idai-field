@@ -12,6 +12,7 @@ import {MeninxFindImportStrategy} from './meninx-find-import-strategy';
 import {DefaultImportStrategy} from './default-import-strategy';
 import {ShapefileParser} from './shapefile-parser';
 import {GazGeojsonParserAddOn} from './gaz-geojson-parser-add-on';
+import {ImportValidator} from './import-validator';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind';
@@ -40,6 +41,7 @@ export module ImportFacade {
      *
      * @param format
      * @param validator
+     * @param importValidator
      * @param datastore
      * @param usernameProvider
      * @param projectConfiguration
@@ -52,7 +54,7 @@ export module ImportFacade {
      *   importReport.warnings
      */
     export async function doImport(format: ImportFormat,
-                                   validator: Validator,
+                                   importValidator: ImportValidator,
                                    datastore: DocumentDatastore,
                                    usernameProvider: UsernameProvider,
                                    projectConfiguration: ProjectConfiguration,
@@ -84,7 +86,7 @@ export module ImportFacade {
 
         const importStrategy = createImportStrategy(
             format,
-            validator,
+            importValidator,
             projectConfiguration,
             !allowMergingExistingResources ? mainTypeDocumentId : '',
             allowMergingExistingResources);
@@ -120,7 +122,7 @@ export module ImportFacade {
 
 
     function createImportStrategy(format: ImportFormat,
-                                  validator: Validator,
+                                  validator: ImportValidator,
                                   projectConfiguration: ProjectConfiguration,
                                   mainTypeDocumentId: string,
                                   allowMergingExistingResources = false): ImportStrategy {

@@ -33,7 +33,7 @@
     "ProcessUnit": ["processor", "date", "description", "operationClassification"],
     "Profile": ["orientation", "dimensionHeight", "dimensionVerticalExtent"],
     "Planum": ["area", "horizontalLocation", "orientation", "planumForm", "dimensionLength", "dimensionWidth", "dimensionVerticalExtent"],
-    "Drilling": ["drillingEquipment", "dimensionDiameter", "dimensionHeight", "dimensionVerticalExtent"],
+    "Drilling": ["description", "drillingEquipment", "dimensionDiameter", "dimensionHeight", "dimensionVerticalExtent"],
     "Sample": ["soilType", "sampleType", "weight", "labNumber"],
     "Image": ["description", "draughtsmen", "processor"],
     "Drawing": ["drawingMaterial", "drawingTool", "drawingType", "scale"],

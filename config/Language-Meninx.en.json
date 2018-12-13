@@ -117,6 +117,23 @@
           "label": "Decoration pattern"
         }
       }
+    },
+    "Drilling": {
+      "label": "Drilling",
+      "fields": {
+        "description": {
+          "label": "Description"
+        },
+        "dimensionDiameter": {
+          "label": "Diameter"
+        },
+        "dimensionHeight": {
+          "label": "Height"
+        },
+        "dimensionVerticalExtent": {
+          "label": "Vertical extent"
+        }
+      }
     }
   }
 }

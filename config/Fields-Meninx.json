@@ -551,5 +551,33 @@
         ]
       }
     }
+  },
+  "Drilling": {
+    "fields": {
+      "description": {
+        "inputType": "text"
+      },
+      "dimensionDiameter": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"
+        ]
+      },
+      "dimensionHeight": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Maximale Ausdehnung",
+          "Minimale Ausdehnung"
+        ]
+      },
+      "dimensionVerticalExtent": {
+        "inputType": "dimension",
+        "positionValues": [
+          "Oberkante",
+          "Unterkante"
+        ]
+      }
+    }
   }
 }

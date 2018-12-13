@@ -4095,27 +4095,6 @@
     "parent": "Area",
     "fields": {}
   },
-  "Sondage": {
-    "parent": "Area",
-    "fields": {
-      "dimensionHeight": {
-        "inputType": "dimension",
-        "positionValues": [
-          "Maximale Ausdehnung",
-          "Minimale Ausdehnung"
-        ]
-      },
-      "sondageType": {
-        "inputType": "dropdown",
-        "valuelist": [
-          "Bohrung",
-          "Sondage",
-          "Suchschnitt",
-          "Oberbodenabtrag"
-        ]
-      }
-    }
-  },
   "Excavation": {
     "parent": "Area",
     "fields": {

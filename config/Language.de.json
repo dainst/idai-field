@@ -1618,17 +1618,6 @@
           "label": "Raubgrabung"
         }
       }
-    },
-    "Sondage": {
-      "label": "Sondage",
-      "fields": {
-        "dimensionHeight": {
-          "label": "Höhe"
-        },
-        "sondageType": {
-          "label": "Typ der Sondage"
-        }
-      }
     }
   },
   "relations": {

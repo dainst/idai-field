@@ -95,9 +95,6 @@
   "Area": {
     "constraint": ["diary", "processor", "area"]
   },
-  "Sondage": {
-    "constraint": ["sondageType"]
-  },
   "Excavation": {
     "constraint": ["isIllegal", "hasDisturbance"]
   },

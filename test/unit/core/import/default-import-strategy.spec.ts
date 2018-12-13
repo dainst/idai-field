@@ -52,6 +52,8 @@ describe('DefaultImportStrategy', () => {
             { resource: {type: 'Find', identifier: 'one', relations: { isRecordedIn: ['0']} } } as any],
             importReport, mockDatastore, 'user1');
 
+        console.log(importReport)
+
         expect(mockDatastore.create).toHaveBeenCalled();
         done();
     });
@@ -115,7 +117,6 @@ describe('DefaultImportStrategy', () => {
 
         const originalDoc = { resource: { id: '1', identifier: 'i1', shortDescription: 'sd1', relations: {}}};
         const docToMerge = { resource: { geometry: { type: 'Point',  coordinates: [ 27.189335972070694, 39.14122423529625]}}};
-
 
 
         mockValidator = jasmine.createSpyObj('validator', ['assertIsWellformed']);

@@ -9,6 +9,7 @@ import {DefaultImport} from './default-import';
 import {DocumentMerge} from './document-merge';
 import {RelationsCompleter} from './relations-completer';
 import {ImportValidator} from './import-validator';
+import {ImportUpdater} from './import-updater';
 
 
 /**
@@ -27,7 +28,7 @@ export class DefaultImportStrategy implements ImportStrategy {
                 private projectConfiguration: ProjectConfiguration,
                 private mergeIfExists: boolean,
                 private useIdentifiersInRelations: boolean,
-                private setInverseRelations: boolean,
+                private setInverseRelations: boolean, // TODO check if we can get rid of this
                 private mainTypeDocumentId: string = '' /* '' => no assignment */
                 ) {
 
@@ -76,14 +77,20 @@ export class DefaultImportStrategy implements ImportStrategy {
         const documentsForUpdate = await this.prepareDocumentsForUpdate(documents, importReport, datastore);
         if (importReport.errors.length > 0) return importReport;
 
-        await DefaultImportStrategy.performDocumentsUpdates(
-            documentsForUpdate, importReport, datastore, username, this.mergeIfExists);
-        if (importReport.errors.length > 0) return importReport;
-        importReport.importedResourcesIds = documentsForUpdate.map(to('resource.id'));
+        let targetDocuments;
+        if (this.setInverseRelations && !this.mergeIfExists) targetDocuments = await RelationsCompleter.completeInverseRelations(
+            (resourceId: string) => datastore.get(resourceId),
+            this.projectConfiguration,
+            documents);
 
-        if (!this.setInverseRelations || this.mergeIfExists) return importReport;
-        await DefaultImportStrategy.performRelationsUpdates(
-            importReport.importedResourcesIds, importReport, this.projectConfiguration, datastore, username);
+        await ImportUpdater.performUpdates(
+            documentsForUpdate as any,
+            targetDocuments,
+            (d: Document, u: string) => datastore.update(d, u),
+            (d: Document, u: string) => datastore.create(d, u),
+            username,
+            this.mergeIfExists,
+            importReport);
 
         return importReport;
     }
@@ -179,51 +186,5 @@ export class DefaultImportStrategy implements ImportStrategy {
             identifierMap[document.resource.identifier] = uuid;
         }
         return identifierMap;
-    }
-
-
-    private static async performDocumentsUpdates(documentsForUpdate: Array<NewDocument>,
-                                                  importReport: ImportReport,
-                                                  datastore: DocumentDatastore,
-                                                  username: string,
-                                                  updateExisting: boolean /* else new docs */) {
-
-        try {
-            for (let documentForUpdate of documentsForUpdate) { // TODO perform batch updates
-
-                updateExisting
-                    ? await datastore.update(documentForUpdate as Document, username)
-            : await datastore.create(documentForUpdate as Document, username); // throws if exists
-            }
-        } catch (errWithParams) {
-
-            importReport.errors.push(errWithParams);
-        }
-    }
-
-
-   private static async performRelationsUpdates(importedResourcesIds: string[],
-                                                importReport: ImportReport,
-                                                projectConfiguration: ProjectConfiguration,
-                                                datastore: DocumentDatastore,
-                                                username: string) {
-
-        const targetDocuments = await RelationsCompleter.completeInverseRelations(
-            (resourceId: string) => datastore.get(resourceId), projectConfiguration, importedResourcesIds);
-
-        try {
-
-            for (let targetDocument of targetDocuments) await datastore.update(targetDocument, username);
-
-        } catch (msgWithParams) {
-
-            importReport.errors.push(msgWithParams);
-            try {
-                await RelationsCompleter.resetInverseRelations(
-                    datastore, projectConfiguration, username, importedResourcesIds);
-            } catch (e) {
-                importReport.errors.push(msgWithParams);
-            }
-        }
     }
 }

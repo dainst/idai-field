@@ -1,17 +1,17 @@
 import {Document, ProjectConfiguration} from 'idai-components-2';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {UsernameProvider} from '../settings/username-provider';
-import {Parser} from './parser';
-import {MeninxFindCsvParser} from './meninx-find-csv-parser';
-import {IdigCsvParser} from './idig-csv-parser';
-import {GeojsonParser} from './geojson-parser';
-import {NativeJsonlParser} from './native-jsonl-parser';
-import {ImportStrategy} from './import-strategy';
-import {MeninxFindImportStrategy} from './meninx-find-import-strategy';
-import {DefaultImportStrategy} from './default-import-strategy';
-import {ShapefileParser} from './shapefile-parser';
-import {GazGeojsonParserAddOn} from './gaz-geojson-parser-add-on';
-import {ImportValidator} from './import-validator';
+import {Parser} from './parser/parser';
+import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';
+import {IdigCsvParser} from './parser/idig-csv-parser';
+import {GeojsonParser} from './parser/geojson-parser';
+import {NativeJsonlParser} from './parser/native-jsonl-parser';
+import {ImportStrategy} from './exec/import-strategy';
+import {MeninxFindImportStrategy} from './exec/meninx-find-import-strategy';
+import {DefaultImportStrategy} from './exec/default-import-strategy';
+import {ShapefileParser} from './parser/shapefile-parser';
+import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
+import {ImportValidator} from './exec/import-validator';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind';

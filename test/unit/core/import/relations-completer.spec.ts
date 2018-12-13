@@ -1,4 +1,4 @@
-import {RelationsCompleter} from '../../../../app/core/import/relations-completer';
+import {RelationsCompleter} from '../../../../app/core/import/exec/relations-completer';
 
 
 describe('RelationsCompleter', () => {

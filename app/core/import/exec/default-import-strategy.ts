@@ -1,8 +1,8 @@
 import {Document, NewDocument, ProjectConfiguration} from 'idai-components-2';
 import {ImportStrategy} from './import-strategy';
-import {DocumentDatastore} from '../datastore/document-datastore';
-import {ImportErrors} from './import-errors';
-import {ImportReport} from './import-facade';
+import {DocumentDatastore} from '../../datastore/document-datastore';
+import {ImportErrors} from '../import-errors';
+import {ImportReport} from '../import-facade';
 import {duplicates, to} from 'tsfun';
 import {DefaultImport} from './default-import';
 import {RelationsCompleter} from './relations-completer';

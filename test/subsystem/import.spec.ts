@@ -5,7 +5,7 @@ import {TypeUtility} from '../../app/core/model/type-utility';
 import {ValidationErrors} from '../../app/core/model/validation-errors';
 import {ImportErrors} from '../../app/core/import/import-errors';
 import {PouchdbManager} from '../../app/core/datastore/core/pouchdb-manager';
-import {ImportValidator} from '../../app/core/import/import-validator';
+import {ImportValidator} from '../../app/core/import/exec/import-validator';
 
 /**
  * @author Daniel de Oliveira

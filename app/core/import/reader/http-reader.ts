@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Reader} from './reader';
-import {M} from '../../components/m';
+import {M} from '../../../components/m';
 
 /**
  * @author Daniel de Oliveira

@@ -4,9 +4,9 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {flow, filter, map, isNot, empty, take} from 'tsfun';
 import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
 import {ImportReport} from '../../core/import/import-facade';
-import {Reader} from '../../core/import/reader';
-import {FileSystemReader} from '../../core/import/file-system-reader';
-import {HttpReader} from '../../core/import/http-reader';
+import {Reader} from '../../core/import/reader/reader';
+import {FileSystemReader} from '../../core/import/reader/file-system-reader';
+import {HttpReader} from '../../core/import/reader/http-reader';
 import {UploadModalComponent} from './upload-modal.component';
 import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
@@ -17,9 +17,9 @@ import {SettingsService} from '../../core/settings/settings-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../m';
 import {ImportFacade, ImportFormat} from '../../core/import/import-facade';
-import {ShapefileFileSystemReader} from '../../core/import/shapefile-filesystem-reader';
+import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-filesystem-reader';
 import {JavaToolExecutor} from '../../common/java-tool-executor';
-import {ImportValidator} from '../../core/import/import-validator';
+import {ImportValidator} from '../../core/import/exec/import-validator';
 import {IdGenerator} from '../../core/datastore/core/id-generator';
 
 

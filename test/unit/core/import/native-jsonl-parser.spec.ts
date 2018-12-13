@@ -1,4 +1,4 @@
-import {NativeJsonlParser} from '../../../../app/core/import/native-jsonl-parser';
+import {NativeJsonlParser} from '../../../../app/core/import/parser/native-jsonl-parser';
 import {ImportErrors} from '../../../../app/core/import/import-errors';
 
 /**

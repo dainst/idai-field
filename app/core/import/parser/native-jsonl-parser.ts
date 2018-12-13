@@ -1,7 +1,7 @@
 import {Observable, Observer} from 'rxjs';
 import {NewDocument, Document} from 'idai-components-2';
 import {AbstractParser} from './abstract-parser';
-import {ImportErrors} from './import-errors';
+import {ImportErrors} from '../import-errors';
 
 /**
  * @author Sebastian Cuy

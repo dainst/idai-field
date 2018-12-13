@@ -1,7 +1,7 @@
 import {Document} from 'idai-components-2';
 import {ImportStrategy} from './import-strategy';
-import {DocumentDatastore} from '../datastore/document-datastore';
-import {ImportReport} from './import-facade';
+import {DocumentDatastore} from '../../datastore/document-datastore';
+import {ImportReport} from '../import-facade';
 import {MeninxFindImport} from './meninx-find-import';
 
 

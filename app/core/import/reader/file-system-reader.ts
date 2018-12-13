@@ -1,5 +1,5 @@
 import {Reader} from './reader';
-import {ImportErrors} from './import-errors';
+import {ImportErrors} from '../import-errors';
 
 /**
  * Reads contents of a file.

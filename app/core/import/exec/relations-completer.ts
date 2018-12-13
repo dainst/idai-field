@@ -1,5 +1,5 @@
 import {Document, ProjectConfiguration} from 'idai-components-2';
-import {ImportErrors} from './import-errors';
+import {ImportErrors} from '../import-errors';
 
 /**
  * @author Thomas Kleinke

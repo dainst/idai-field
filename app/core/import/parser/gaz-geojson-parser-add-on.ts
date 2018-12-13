@@ -1,4 +1,4 @@
-import {ImportErrors} from './import-errors';
+import {ImportErrors} from '../import-errors';
 import {GazetteerProperties, Geojson} from './geojson-parser';
 
 /**

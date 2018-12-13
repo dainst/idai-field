@@ -2,7 +2,7 @@
  * @author Daniel de Oliveira
  */
 import {Document} from 'idai-components-2';
-import {DocumentMerge} from '../../../../app/core/import/document-merge';
+import {DocumentMerge} from '../../../../app/core/import/exec/document-merge';
 
 
 describe('DocumentMerge', () => {

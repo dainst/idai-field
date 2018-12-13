@@ -1,4 +1,4 @@
-import {DefaultImportStrategy} from '../../../../app/core/import/default-import-strategy';
+import {DefaultImportStrategy} from '../../../../app/core/import/exec/default-import-strategy';
 import {ImportErrors} from '../../../../app/core/import/import-errors';
 import {ValidationErrors} from '../../../../app/core/model/validation-errors';
 

@@ -1,16 +1,16 @@
-import {DefaultImportStrategy} from '../../../../app/core/import/exec/default-import-strategy';
 import {ImportErrors} from '../../../../app/core/import/import-errors';
 import {ValidationErrors} from '../../../../app/core/model/validation-errors';
+import {DefaultImport} from '../../../../app/core/import/exec/default-import';
 
 /**
  * @author Daniel de Oliveira
  */
-describe('DefaultImportStrategy', () => {
+describe('DefaultImport', () => {
 
     let mockDatastore;
     let mockValidator;
     let mockProjectConfiguration;
-    let importStrategy: DefaultImportStrategy;
+    let importFunction;
     let importReport;
 
 
@@ -36,10 +36,9 @@ describe('DefaultImportStrategy', () => {
         mockProjectConfiguration.getTypesList.and.returnValue(
             [{name: 'Find'}, {name: 'Place'}, {name: 'Trench'}]);
 
-        importStrategy = new DefaultImportStrategy(
+        importFunction = DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
-
             false, () => '101');
 
         importReport = {errors: [], warnings: [], importedResourcesIds: []};
@@ -48,7 +47,7 @@ describe('DefaultImportStrategy', () => {
 
     it('should resolve on success', async done => {
 
-        importReport = await importStrategy.import([
+        importReport = await importFunction([
             { resource: {type: 'Find', identifier: 'one', relations: { isRecordedIn: ['0']} } } as any],
             importReport, mockDatastore, 'user1');
 
@@ -67,10 +66,10 @@ describe('DefaultImportStrategy', () => {
 
         const importReport = {errors: [], warnings: [], importedResourcesIds: []};
 
-        await new DefaultImportStrategy(
+        await (DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
-             true, () => '101').import(
+             true, () => '101') as any)(
             [{ resource: {id: '1', relations: undefined } } as any], importReport, mockDatastore,'user1');
 
         expect(mockDatastore.create).not.toHaveBeenCalled();
@@ -83,11 +82,10 @@ describe('DefaultImportStrategy', () => {
 
         mockDatastore.get.and.returnValue(Promise.resolve({}));
 
-        await new DefaultImportStrategy(
+        await (DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
-             false, () => '101')
-            .import([
+             false, () => '101') as any)([
                 { resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']} } } as any],
                 importReport, mockDatastore,'user1');
 
@@ -102,7 +100,7 @@ describe('DefaultImportStrategy', () => {
 
         mockDatastore.create.and.returnValue(Promise.reject(['abc']));
 
-        importReport = await importStrategy.import(
+        importReport = await importFunction(
             [{resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']}}} as any],
             importReport, mockDatastore,'user1');
 
@@ -123,12 +121,12 @@ describe('DefaultImportStrategy', () => {
         mockDatastore.find.and.returnValues(Promise.resolve({ documents: [originalDoc], totalCount: 1 }));
         mockDatastore.update.and.returnValues(Promise.resolve());
 
-        importStrategy = new DefaultImportStrategy(
+        importFunction = DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
             true,  () => '101');
-        await importStrategy
-            .import([docToMerge as any],
+
+        await importFunction([docToMerge as any],
                 importReport, mockDatastore, 'user1');
 
         const importedDoc = mockDatastore.update.calls.mostRecent().args[0];
@@ -145,10 +143,9 @@ describe('DefaultImportStrategy', () => {
 
     it('rewrite identifiers to ids in relations', async done => {
 
-        importStrategy = new DefaultImportStrategy(
+        importFunction = DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
-
             false,
              () => '101', '', true);
 
@@ -157,7 +154,7 @@ describe('DefaultImportStrategy', () => {
 
         mockDatastore.find.and.returnValue(
             Promise.resolve({ documents: [{ resource: { id: '3' }}], totalCount: 1 }));
-        importReport = await importStrategy.import([ docToImport as any ],
+        importReport = await importFunction([ docToImport as any ],
             importReport, mockDatastore,'user1');
 
         expect(docToImport.resource.relations.isRecordedIn[0]).toEqual('3');
@@ -167,7 +164,7 @@ describe('DefaultImportStrategy', () => {
 
     it('rewrite identifiers to ids in relations - relation target not found', async done => {
 
-        importStrategy = new DefaultImportStrategy(
+        importFunction = DefaultImport.build(
             mockValidator,
             mockProjectConfiguration,
             false,
@@ -178,8 +175,7 @@ describe('DefaultImportStrategy', () => {
 
         mockDatastore.find.and.returnValues(
             Promise.resolve({ totalCount: 0 }));
-        importReport = await importStrategy
-            .import([ docToImport as any ], importReport, mockDatastore,'user1');
+        importReport = await importFunction([ docToImport as any ], importReport, mockDatastore,'user1');
 
         expect(importReport.errors[0][0]).toEqual(ImportErrors.MISSING_RELATION_TARGET);
         done();
@@ -190,7 +186,7 @@ describe('DefaultImportStrategy', () => {
 
         mockValidator.assertIsWellformed.and.callFake(() => { throw [ValidationErrors.INVALID_TYPE]});
 
-        importReport = await importStrategy.import([
+        importReport = await importFunction([
             { resource: { type: 'Nonexisting', identifier: '1a', relations: { isRecordedIn: ['0'] } } } as any
         ], importReport, mockDatastore, 'user1');
 
@@ -205,7 +201,7 @@ describe('DefaultImportStrategy', () => {
 
         mockDatastore.find.and.returnValues(Promise.resolve({ documents: [], totalCount: 0 }));
 
-        importReport = await importStrategy.import([
+        importReport = await importFunction([
             { resource: { type: 'Place', identifier: '1a' } } as any,
             { resource: { type: 'Trench', identifier: '1a' } } as any
         ], importReport, mockDatastore, 'user1');
@@ -222,7 +218,7 @@ describe('DefaultImportStrategy', () => {
         mockDatastore.find.and.returnValues(Promise.resolve(
             { documents: [{ resource: { type: 'Place', identifier: '1a'} }], totalCount: 1 }));
 
-        importReport = await importStrategy.import([
+        importReport = await importFunction([
             { resource: { type: 'Place', identifier: '1a', relations: { isRecordedIn: {}}} } as any
         ], importReport, mockDatastore, 'user1');
 

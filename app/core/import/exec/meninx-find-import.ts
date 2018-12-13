@@ -4,6 +4,8 @@ import {Document} from 'idai-components-2/src/model/core/document';
 import {IdaiFieldFindResult} from '../../datastore/core/cached-read-datastore';
 import {ImportErrors} from '../import-errors';
 import {clone} from '../../util/object-util';
+import {ImportFunction} from '../import-function';
+import {ImportReport} from '../import-facade';
 
 
 const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {
@@ -16,6 +18,30 @@ const removeEmptyStrings = (obj: any) => { Object.keys(obj).forEach((prop) => {
  * @author Juliane Watson
  */
 export module MeninxFindImport {
+
+
+    export function build(): ImportFunction {
+
+        return async (documents: Array<Document>,
+                      importReport: ImportReport,
+                      datastore: DocumentDatastore,
+                      username: string): Promise<ImportReport> => {
+
+            for (let docToUpdate of documents) {
+
+                try {
+                    const importedDoc = await MeninxFindImport.importDoc(docToUpdate, datastore, username);
+                    if (importedDoc) importReport.importedResourcesIds.push(importedDoc.resource.id);
+
+                } catch (msgWithParams) {
+                    importReport.errors.push(msgWithParams);
+                    return importReport;
+                }
+            }
+
+            return importReport;
+        }
+    }
 
     /**
      * @throws errorWithParams

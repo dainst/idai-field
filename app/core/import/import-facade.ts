@@ -6,12 +6,11 @@ import {MeninxFindCsvParser} from './parser/meninx-find-csv-parser';
 import {IdigCsvParser} from './parser/idig-csv-parser';
 import {GeojsonParser} from './parser/geojson-parser';
 import {NativeJsonlParser} from './parser/native-jsonl-parser';
-import {ImportStrategy} from './exec/import-strategy';
-import {MeninxFindImportStrategy} from './exec/meninx-find-import-strategy';
-import {DefaultImportStrategy} from './exec/default-import-strategy';
 import {ShapefileParser} from './parser/shapefile-parser';
 import {GazGeojsonParserAddOn} from './parser/gaz-geojson-parser-add-on';
 import {ImportValidator} from './exec/import-validator';
+import {DefaultImport} from './exec/default-import';
+import {MeninxFindImport} from './exec/meninx-find-import';
 
 
 export type ImportFormat = 'native' | 'idig' | 'geojson' | 'geojson-gazetteer' | 'shapefile' | 'meninxfind';
@@ -84,7 +83,7 @@ export module ImportFacade {
             importReport.errors.push(msgWithParams as never);
         }
 
-        const importStrategy = createImportStrategy(
+        const importFunction = buildImportFunction(
             format,
             validator,
             projectConfiguration,
@@ -92,9 +91,7 @@ export module ImportFacade {
             allowMergingExistingResources,
             generateId);
 
-
-        return await importStrategy
-            .import(docsToUpdate, importReport, datastore, usernameProvider.getUsername());
+        return await importFunction(docsToUpdate, importReport, datastore, usernameProvider.getUsername());
     }
 
 
@@ -120,30 +117,30 @@ export module ImportFacade {
     }
 
 
-    function createImportStrategy(format: ImportFormat,
-                                  validator: ImportValidator,
-                                  projectConfiguration: ProjectConfiguration,
-                                  mainTypeDocumentId: string,
-                                  mergeMode = false,
-                                  generateId: () => string): ImportStrategy {
+    function buildImportFunction(format: ImportFormat,
+                                 validator: ImportValidator,
+                                 projectConfiguration: ProjectConfiguration,
+                                 mainTypeDocumentId: string,
+                                 mergeMode = false,
+                                 generateId: () => string) {
 
         switch (format) {
             case 'meninxfind':
-                return new MeninxFindImportStrategy();
+                return MeninxFindImport.build();
             case 'idig':
-                return new DefaultImportStrategy(validator,
+                return DefaultImport.build(validator,
                     projectConfiguration, false,  generateId);
             case 'shapefile':
-                return new DefaultImportStrategy(validator,
+                return DefaultImport.build(validator,
                     projectConfiguration, true,  generateId);
             case 'geojson':
-                return new DefaultImportStrategy(validator,
+                return DefaultImport.build(validator,
                     projectConfiguration, true,  generateId);
             case 'geojson-gazetteer':
-                return new DefaultImportStrategy(validator,
+                return DefaultImport.build(validator,
                     projectConfiguration, false,  generateId);
             default: // native
-                return new DefaultImportStrategy(validator,
+                return DefaultImport.build(validator,
                     projectConfiguration, mergeMode, generateId, mainTypeDocumentId, true);
         }
     }

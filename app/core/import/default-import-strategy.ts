@@ -100,8 +100,8 @@ export class DefaultImportStrategy implements ImportStrategy {
                 if (!this.mergeIfExists && this.useIdentifiersInRelations) {
                     await DefaultImportStrategy.rewriteRelations(document, this.identifierMap, datastore);
                 }
-                const documentForUpdate: Document|undefined = await DefaultImportStrategy.mergeOrUseAsIs(document, datastore, this.mergeIfExists);
-                if (!documentForUpdate) continue;
+                const documentForUpdate: Document|undefined =
+                    await DefaultImportStrategy.mergeOrUseAsIs(document, datastore, this.mergeIfExists);
 
                 await DefaultImport.prepareDocumentForUpdate(
                     document, this.validator, this.mainTypeDocumentId, this.mergeIfExists);
@@ -116,14 +116,14 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
     private static async mergeOrUseAsIs(document: NewDocument|Document,
-                                  datastore: DocumentDatastore,
-                                  mergeIfExists: boolean) {
+                                        datastore: DocumentDatastore,
+                                        mergeIfExists: boolean) {
 
         let documentForUpdate: Document = document as Document;
         const existingDocument = await DefaultImportStrategy.findByIdentifier(document.resource.identifier, datastore);
         if (mergeIfExists) {
             if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate);
-            else return undefined;
+            else throw [ImportErrors.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
         } else {
             if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
         }

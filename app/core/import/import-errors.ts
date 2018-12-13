@@ -28,6 +28,7 @@ export module ImportErrors {
     export const MISSING_RELATION_TARGET = 'importerrors/prevalidation/missingrelationtarget'; // by identifier
     export const TYPE_NOT_ALLOWED = 'importerrors/prevalidation/typenotallowed';
     export const TYPE_ONLY_ALLOWED_ON_UPDATE = 'importerrors/prevalidation/typeonlyallowedonupdate';
+    export const UPDATE_TARGET_NOT_FOUND = 'importwarnings/updatetargetnotfound';
 
     // execution
     export const MENINX_FIND_NO_FEATURE_ASSIGNABLE = 'importerrrors/exec/meninxfind/nofeatureassignable';

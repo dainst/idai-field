@@ -1,5 +1,4 @@
 import {Document, ProjectConfiguration} from 'idai-components-2';
-import {Validator} from '../model/validator';
 import {DocumentDatastore} from '../datastore/document-datastore';
 import {UsernameProvider} from '../settings/username-provider';
 import {Parser} from './parser';
@@ -41,7 +40,6 @@ export module ImportFacade {
      *
      * @param format
      * @param validator
-     * @param importValidator
      * @param datastore
      * @param usernameProvider
      * @param projectConfiguration
@@ -54,7 +52,7 @@ export module ImportFacade {
      *   importReport.warnings
      */
     export async function doImport(format: ImportFormat,
-                                   importValidator: ImportValidator,
+                                   validator: ImportValidator,
                                    datastore: DocumentDatastore,
                                    usernameProvider: UsernameProvider,
                                    projectConfiguration: ProjectConfiguration,
@@ -86,7 +84,7 @@ export module ImportFacade {
 
         const importStrategy = createImportStrategy(
             format,
-            importValidator,
+            validator,
             projectConfiguration,
             !allowMergingExistingResources ? mainTypeDocumentId : '',
             allowMergingExistingResources);

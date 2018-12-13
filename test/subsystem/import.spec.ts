@@ -130,11 +130,11 @@ describe('Import/Subsystem', () => {
     });
 
 
-    it('unmatched items get ignored on merge', async done => {
+    it('unmatched items on merge', async done => {
 
         await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
 
-        await ImportFacade.doImport(
+        const importReport = await ImportFacade.doImport(
             'native',
             new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
@@ -143,11 +143,13 @@ describe('Import/Subsystem', () => {
             undefined,
             true,
                     '{ "type": "Feature", "identifier" : "f1", "shortDescription" : "feature_1"}' + "\n"
-                + '{ "type": "Feature", "identifier" : "f2", "shortDescription" : "feature_2"}');
+                + '{ "type": "Feature", "identifier" : "notexisting", "shortDescription" : "feature_2"}');
 
+        expect(importReport.errors.length).toBe(1);
+        expect(importReport.errors[0][0]).toEqual(ImportErrors.UPDATE_TARGET_NOT_FOUND);
         const result = await datastore.find({});
         expect(result.documents.length).toBe(1);
-        expect(result.documents[0].resource.shortDescription).toBe('feature_1');
+        expect(result.documents[0].resource.shortDescription).toBe('feature1'); // nothing gets updated at all
         done();
     });
 

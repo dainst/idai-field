@@ -75,6 +75,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_PREVALIDATION_MISSING_RELATION_TARGET = 'importer.error.prevalidation.missingRelationTarget';
     public static IMPORT_ERROR_TYPE_NOT_ALLOWED = 'import.error.typeNotAllowed';
     public static IMPORT_ERROR_TYPE_ONLY_ALLOWED_ON_UPDATE = 'import.error.typeOnlyAllowedOnUpdate';
+    public static IMPORT_ERROR_NOT_UPDATED = 'importer.error.notupdated';
     public static IMPORT_VALIDATION_MISSING_PROPERTY = 'import.validation.error.missingProperty';
     public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN = 'import.validation.error.noRecordedin';
     public static IMPORT_VALIDATION_ERROR_NO_RECORDEDIN_TARGET = 'import.validation.error.noRecordedinTarget';
@@ -155,7 +156,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     constructor(private i18n: I18n) {
 
         super();
-
+        this.msgs[M.IMPORT_ERROR_NOT_UPDATED] = {
+            content: i18n({
+                id: 'messages.import.error.notupdated',
+                value: 'Fehlgeschlagene Zuordnung per Bezeichner \'[0]\'. Ressource nicht vorhanden.',
+            }),
+            level: 'danger',
+            params: [],
+            hidden: false
+        };
         this.msgs[M.MESSAGES_ERROR_UNKNOWN_MESSAGE] = {
             content: i18n({
                 id: 'messages.messages.error.unknownMessage',

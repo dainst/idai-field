@@ -12,7 +12,6 @@ import {ViewFacade} from '../resources/view/view-facade';
 import {ModelUtil} from '../../core/model/model-util';
 import {DocumentDatastore} from '../../core/datastore/document-datastore';
 import {RemoteChangesStream} from '../../core/datastore/core/remote-changes-stream';
-import {Validator} from '../../core/model/validator';
 import {UsernameProvider} from '../../core/settings/username-provider';
 import {SettingsService} from '../../core/settings/settings-service';
 import {MessagesConversion} from './messages-conversion';
@@ -162,12 +161,10 @@ export class ImportComponent implements OnInit {
 
     private showImportResult(importReport: ImportReport) {
 
-        if (importReport.errors.length > 0) {
-            this.showMessages(importReport.errors);
-        } else {
-            this.showMessages(importReport.warnings);
-            this.showSuccessMessage(importReport.importedResourcesIds);
-        }
+        if (importReport.errors.length > 0) return this.showMessages(importReport.errors);
+
+        this.showMessages(importReport.warnings);
+        this.showSuccessMessage(importReport.importedResourcesIds);
     }
 
 

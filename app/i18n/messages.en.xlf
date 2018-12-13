@@ -2762,6 +2762,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.notupdated" datatype="html">
+        <source>Fehlgeschlagene Zuordnung per Bezeichner '[0]'. Ressource nicht vorhanden.</source>
+        <target state="final">Assignment by identifier '[0]' failed. Resource does not exist.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.messages.error.unknownMessage" datatype="html">
         <source>Ein unbekannter Fehler ist aufgetreten. Details können in der Developer Console eingesehen werden.</source>
         <target state="final">An unknown error has occurred. Details can be found in the developer console.</target>
@@ -3234,7 +3242,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-
       <trans-unit id="messages.import.error.typeOnlyAllowedOnUpdate" datatype="html">
         <source>Ressourcen von folgendem Typ sind beim Import nur im Ergänzungsmodus erlaubt: '[0]'</source>
         <target state="final">Importing resources of the following type is allowed only in update mode: '[0]'</target>
@@ -3243,7 +3250,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
-
       <trans-unit id="messages.import.validation.error.noRecordedIn" datatype="html">
         <source>Fehlende Definition von 'Aufgenommen in Maßnahme'. Eine Zuordnung muss vorgenommen werden.</source>
         <target state="final">Missing definition for 'Recorded in operation'. This assignment is mandatory.</target>

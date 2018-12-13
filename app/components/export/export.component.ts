@@ -69,8 +69,8 @@ export class ExportComponent implements OnInit {
                     await GeoJsonExporter.performExport(this.datastore, filePath, this.selectedOperationId);
                     break;
                 case 'shapefile':
-                    await ShapefileExporter.performExport(this.settingsService.getProjectDocument(), filePath,
-                        this.selectedOperationId);
+                    await ShapefileExporter.performExport(this.settingsService.getSelectedProject(),
+                        this.settingsService.getProjectDocument(), filePath, this.selectedOperationId);
                     break;
             }
             this.messages.add([M.EXPORT_SUCCESS]);

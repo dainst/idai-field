@@ -11,9 +11,6 @@ export module RelationsCompleter {
     /**
      * Iterates over all relations of the given resources and adds missing inverse relations to the relation targets.
      *
-     * @param get
-     * @param projectConfiguration
-     * @param documents
      * @throws [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId]
      * @throws DatastoreErrors.*
      */
@@ -32,11 +29,6 @@ export module RelationsCompleter {
 
     /**
      * Creates/removes inverse relations for a single resource.
-
-     * @param get
-     * @param projectConfiguration
-     * @param resourceId
-     * @throws errWithParams
      */
     async function setInverseRelationsForResource(get: (_: string) => Promise<Document>,
                                                   projectConfiguration: ProjectConfiguration,

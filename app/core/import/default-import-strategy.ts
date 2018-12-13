@@ -5,7 +5,6 @@ import {ImportErrors} from './import-errors';
 import {ImportReport} from './import-facade';
 import {duplicates, to} from 'tsfun';
 import {DefaultImport} from './default-import';
-import {DocumentMerge} from './document-merge';
 import {RelationsCompleter} from './relations-completer';
 import {ImportValidator} from './import-validator';
 import {ImportUpdater} from './import-updater';
@@ -66,9 +65,14 @@ export class DefaultImportStrategy implements ImportStrategy {
         }
         const identifierMap: { [identifier: string]: string } = this.mergeMode ?
             {}
-            : DefaultImportStrategy.assignIds(documents, this.generateId);
+            : DefaultImport.assignIds(documents, this.generateId);
 
-        const documentsForUpdate = await this.prepareDocumentsForUpdate(documents, importReport, datastore, identifierMap);
+        const documentsForUpdate = await this.prepareDocumentsForUpdate(
+            documents,
+            importReport,
+            (identifier: string) => DefaultImport.findByIdentifier(identifier, datastore),
+            identifierMap);
+
         if (importReport.errors.length > 0) return importReport;
 
         let targetDocuments;
@@ -97,7 +101,7 @@ export class DefaultImportStrategy implements ImportStrategy {
 
     private async prepareDocumentsForUpdate(documents: Array<Document>,
                                             importReport: ImportReport,
-                                            datastore: DocumentDatastore,
+                                            find: (identifier: string) => Promise<Document|undefined>,
                                             identifierMap: { [identifier: string]: string }): Promise<Array<NewDocument>> {
 
         const documentsForUpdate: Array<NewDocument> = [];
@@ -105,10 +109,10 @@ export class DefaultImportStrategy implements ImportStrategy {
 
             try {
                 if (!this.mergeMode && this.useIdentifiersInRelations) {
-                    await DefaultImportStrategy.rewriteRelations(document, identifierMap, datastore);
+                    await DefaultImport.rewriteRelations(document, find, identifierMap);
                 }
                 const documentForUpdate: Document|undefined =
-                    await DefaultImportStrategy.mergeOrUseAsIs(document, datastore, this.mergeMode);
+                    await DefaultImport.mergeOrUseAsIs(document, find, this.mergeMode);
 
                 await DefaultImport.prepareDocumentForUpdate(
                     document, this.validator, this.mainTypeDocumentId, this.mergeMode);
@@ -119,72 +123,5 @@ export class DefaultImportStrategy implements ImportStrategy {
             }
         }
         return documentsForUpdate;
-    }
-
-
-    private static async mergeOrUseAsIs(document: NewDocument|Document,
-                                        datastore: DocumentDatastore,
-                                        mergeIfExists: boolean) {
-
-        let documentForUpdate: Document = document as Document;
-        const existingDocument = await DefaultImportStrategy.findByIdentifier(document.resource.identifier, datastore);
-        if (mergeIfExists) {
-            if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate);
-            else throw [ImportErrors.UPDATE_TARGET_NOT_FOUND, document.resource.identifier];
-        } else {
-            if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
-        }
-        return documentForUpdate;
-    }
-
-
-    /**
-     * Rewrites the relations of document in place
-     */
-    private static async rewriteRelations(document: NewDocument,
-                                          identifierMap: { [identifier: string]: string },
-                                          datastore: DocumentDatastore) {
-
-        for (let relation of Object.keys(document.resource.relations)) {
-
-            let i = 0;
-            for (let identifier of document.resource.relations[relation]) {
-
-                const targetDocFromDB = await DefaultImportStrategy.findByIdentifier(identifier, datastore);
-                if (!targetDocFromDB && !identifierMap[identifier]) {
-                    throw [ImportErrors.MISSING_RELATION_TARGET, identifier];
-                }
-
-                document.resource.relations[relation][i] = targetDocFromDB
-                    ? targetDocFromDB.resource.id
-                    : identifierMap[identifier];
-                i++;
-            }
-        }
-    }
-
-
-    private static async findByIdentifier(identifier: string, datastore: DocumentDatastore): Promise<Document|undefined> {
-
-        const result = await datastore.find({ constraints: { 'identifier:match': identifier }});
-        return result.totalCount === 1
-            ? result.documents[0]
-            : undefined;
-    }
-
-
-    /**
-     * Generates resource ids of documents in place, for those documents that have none yet
-     */
-    private static assignIds(documents: Array<Document>, generateId: Function) {
-
-        const identifierMap: { [identifier: string]: string } = {};
-        for (let document of documents) {
-            if (document.resource.id) continue;
-            const uuid = generateId();
-            document.resource.id = uuid;
-            identifierMap[document.resource.identifier] = uuid;
-        }
-        return identifierMap;
     }
 }

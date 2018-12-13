@@ -7,6 +7,8 @@ import {ImportReport} from './import-facade';
 import {duplicates, to} from 'tsfun';
 import {IdGenerator} from '../datastore/core/id-generator';
 import {DefaultImport} from './default-import';
+import {DocumentMerge} from './document-merge';
+import {RelationsCompleter} from './relations-completer';
 
 
 /**
@@ -68,19 +70,19 @@ export class DefaultImportStrategy implements ImportStrategy {
                 return importReport;
             }
         }
-        this.identifierMap = this.mergeIfExists ? {} : DefaultImport.assignIds(
+        this.identifierMap = this.mergeIfExists ? {} : DefaultImportStrategy.assignIds(
             documents, this.idGenerator.generateId.bind(this)); // TODO make idGeneratorProvider
 
         const documentsForUpdate = await this.prepareDocumentsForUpdate(documents, importReport, datastore);
         if (importReport.errors.length > 0) return importReport;
 
-        await DefaultImport.performDocumentsUpdates(
+        await DefaultImportStrategy.performDocumentsUpdates(
             documentsForUpdate, importReport, datastore, username, this.mergeIfExists);
         if (importReport.errors.length > 0) return importReport;
         importReport.importedResourcesIds = documentsForUpdate.map(to('resource.id'));
 
         if (!this.setInverseRelations || this.mergeIfExists) return importReport;
-        await DefaultImport.performRelationsUpdates(
+        await DefaultImportStrategy.performRelationsUpdates(
             importReport.importedResourcesIds, importReport, this.projectConfiguration, datastore, username);
 
         return importReport;
@@ -95,15 +97,131 @@ export class DefaultImportStrategy implements ImportStrategy {
         for (let document of documents) {
 
             try {
-                const documentForUpdate = await DefaultImport.prepareDocumentForUpdate(
-                    document, datastore, this.validator,
-                    this.projectConfiguration, this.mainTypeDocumentId,
-                    this.useIdentifiersInRelations, this.mergeIfExists, this.identifierMap);
+                if (!this.mergeIfExists && this.useIdentifiersInRelations) {
+                    await DefaultImportStrategy.rewriteRelations(document, this.identifierMap, datastore);
+                }
+                const documentForUpdate: Document|undefined = await DefaultImportStrategy.mergeOrUseAsIs(document, datastore, this.mergeIfExists);
+                if (!documentForUpdate) continue;
+
+                await DefaultImport.prepareDocumentForUpdate(
+                    document, datastore, this.validator, this.projectConfiguration, this.mainTypeDocumentId, this.mergeIfExists);
+
                 if (documentForUpdate) documentsForUpdate.push(documentForUpdate);
             } catch (errWithParams) {
                 importReport.errors.push(errWithParams);
             }
         }
         return documentsForUpdate;
+    }
+
+
+    private static async mergeOrUseAsIs(document: NewDocument|Document,
+                                  datastore: DocumentDatastore,
+                                  mergeIfExists: boolean) {
+
+        let documentForUpdate: Document = document as Document;
+        const existingDocument = await DefaultImportStrategy.findByIdentifier(document.resource.identifier, datastore);
+        if (mergeIfExists) {
+            if (existingDocument) documentForUpdate = DocumentMerge.merge(existingDocument, documentForUpdate);
+            else return undefined;
+        } else {
+            if (existingDocument) throw [ImportErrors.RESOURCE_EXISTS, existingDocument.resource.identifier];
+        }
+        return documentForUpdate;
+    }
+
+
+    /**
+     * Rewrites the relations of document in place
+     */
+    private static async rewriteRelations(document: NewDocument,
+                                    identifierMap: { [identifier: string]: string },
+                                    datastore: DocumentDatastore) {
+
+        for (let relation of Object.keys(document.resource.relations)) {
+
+            let i = 0;
+            for (let identifier of document.resource.relations[relation]) {
+
+                const targetDocFromDB = await DefaultImportStrategy.findByIdentifier(identifier, datastore);
+                if (!targetDocFromDB && !identifierMap[identifier]) {
+                    throw [ImportErrors.MISSING_RELATION_TARGET, identifier];
+                }
+
+                document.resource.relations[relation][i] = targetDocFromDB
+                    ? targetDocFromDB.resource.id
+                    : identifierMap[identifier];
+                i++;
+            }
+        }
+    }
+
+
+    private static async findByIdentifier(identifier: string, datastore: DocumentDatastore): Promise<Document|undefined> {
+
+        const result = await datastore.find({ constraints: { 'identifier:match': identifier }});
+        return result.totalCount === 1
+            ? result.documents[0]
+            : undefined;
+    }
+
+
+    /**
+     * Generates resource ids of documents in place, for those documents that have none yet
+     */
+    private static assignIds(documents: Array<Document>, generateId: Function) {
+
+        const identifierMap: { [identifier: string]: string } = {};
+        for (let document of documents) {
+            if (document.resource.id) continue;
+            const uuid = generateId();
+            document.resource.id = uuid;
+            identifierMap[document.resource.identifier] = uuid;
+        }
+        return identifierMap;
+    }
+
+
+    private static async performDocumentsUpdates(documentsForUpdate: Array<NewDocument>,
+                                                  importReport: ImportReport,
+                                                  datastore: DocumentDatastore,
+                                                  username: string,
+                                                  updateExisting: boolean /* else new docs */) {
+
+        try {
+            for (let documentForUpdate of documentsForUpdate) { // TODO perform batch updates
+
+                updateExisting
+                    ? await datastore.update(documentForUpdate as Document, username)
+            : await datastore.create(documentForUpdate as Document, username); // throws if exists
+            }
+        } catch (errWithParams) {
+
+            importReport.errors.push(errWithParams);
+        }
+    }
+
+
+   private static async performRelationsUpdates(importedResourcesIds: string[],
+                                                  importReport: ImportReport,
+                                                  projectConfiguration: ProjectConfiguration,
+                                                  datastore: DocumentDatastore,
+                                                  username: string) {
+
+        try {
+
+            await RelationsCompleter.completeInverseRelations(
+                datastore, projectConfiguration, username, importedResourcesIds);
+
+        } catch (msgWithParams) {
+
+            importReport.errors.push(msgWithParams);
+            try {
+                await RelationsCompleter.resetInverseRelations(
+                    datastore, projectConfiguration, username, importedResourcesIds);
+            } catch (e) {
+                importReport.errors.push(msgWithParams);
+            }
+        }
     }
 }

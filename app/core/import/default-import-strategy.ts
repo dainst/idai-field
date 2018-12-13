@@ -18,19 +18,14 @@ import {ImportUpdater} from './import-updater';
 export class DefaultImportStrategy implements ImportStrategy {
 
 
-    private identifierMap: { [identifier: string]: string } = {};
-
-
     constructor(private validator: ImportValidator,
                 private projectConfiguration: ProjectConfiguration,
-                private mergeIfExists: boolean,
-                private useIdentifiersInRelations: boolean,
-                private setInverseRelations: boolean, // TODO check if we can get rid of this
+                private mergeMode: boolean,
                 private generateId: () => string,
-                private mainTypeDocumentId: string = '' /* '' => no assignment */
-                ) {
+                private mainTypeDocumentId: string = '' /* '' => no assignment */,
+                private useIdentifiersInRelations: boolean = false) {
 
-        if (mainTypeDocumentId && mergeIfExists) {
+        if (mainTypeDocumentId && mergeMode) {
             throw 'FATAL ERROR - illegal argument combination - mainTypeDocumentId and mergeIfExists must not be both truthy';
         }
     }
@@ -59,7 +54,7 @@ export class DefaultImportStrategy implements ImportStrategy {
                         datastore: DocumentDatastore,
                         username: string): Promise<ImportReport> {
 
-        if (!this.mergeIfExists) {
+        if (!this.mergeMode) {
             const duplicates_ = duplicates(documents.map(to('resource.identifier')));
             if (duplicates_.length > 0) {
                 for (let duplicate of duplicates_) importReport.errors.push(
@@ -67,14 +62,15 @@ export class DefaultImportStrategy implements ImportStrategy {
                 return importReport;
             }
         }
-        this.identifierMap = this.mergeIfExists ? {} : DefaultImportStrategy.assignIds(
-            documents, this.generateId);
+        const identifierMap: { [identifier: string]: string } = this.mergeMode ?
+            {}
+            : DefaultImportStrategy.assignIds(documents, this.generateId);
 
-        const documentsForUpdate = await this.prepareDocumentsForUpdate(documents, importReport, datastore);
+        const documentsForUpdate = await this.prepareDocumentsForUpdate(documents, importReport, datastore, identifierMap);
         if (importReport.errors.length > 0) return importReport;
 
         let targetDocuments;
-        if (this.setInverseRelations && !this.mergeIfExists) targetDocuments = await RelationsCompleter.completeInverseRelations(
+        if (!this.mergeMode) targetDocuments = await RelationsCompleter.completeInverseRelations(
             (resourceId: string) => datastore.get(resourceId),
             this.projectConfiguration,
             documents);
@@ -86,32 +82,34 @@ export class DefaultImportStrategy implements ImportStrategy {
                 (d: Document, u: string) => datastore.update(d, u),
                 (d: Document, u: string) => datastore.create(d, u),
                 username,
-                this.mergeIfExists);
+                this.mergeMode);
 
         } catch (errWithParams) {
             importReport.errors.push(errWithParams);
         }
 
+        importReport.importedResourcesIds = documents.map(to('resource.id'));
         return importReport;
     }
 
 
     private async prepareDocumentsForUpdate(documents: Array<Document>,
                                             importReport: ImportReport,
-                                            datastore: DocumentDatastore): Promise<Array<NewDocument>> {
+                                            datastore: DocumentDatastore,
+                                            identifierMap: { [identifier: string]: string }): Promise<Array<NewDocument>> {
 
         const documentsForUpdate: Array<NewDocument> = [];
         for (let document of documents) {
 
             try {
-                if (!this.mergeIfExists && this.useIdentifiersInRelations) {
-                    await DefaultImportStrategy.rewriteRelations(document, this.identifierMap, datastore);
+                if (!this.mergeMode && this.useIdentifiersInRelations) {
+                    await DefaultImportStrategy.rewriteRelations(document, identifierMap, datastore);
                 }
                 const documentForUpdate: Document|undefined =
-                    await DefaultImportStrategy.mergeOrUseAsIs(document, datastore, this.mergeIfExists);
+                    await DefaultImportStrategy.mergeOrUseAsIs(document, datastore, this.mergeMode);
 
                 await DefaultImport.prepareDocumentForUpdate(
-                    document, this.validator, this.mainTypeDocumentId, this.mergeIfExists);
+                    document, this.validator, this.mainTypeDocumentId, this.mergeMode);
 
                 if (documentForUpdate) documentsForUpdate.push(documentForUpdate);
             } catch (errWithParams) {
@@ -142,8 +140,8 @@ export class DefaultImportStrategy implements ImportStrategy {
      * Rewrites the relations of document in place
      */
     private static async rewriteRelations(document: NewDocument,
-                                    identifierMap: { [identifier: string]: string },
-                                    datastore: DocumentDatastore) {
+                                          identifierMap: { [identifier: string]: string },
+                                          datastore: DocumentDatastore) {
 
         for (let relation of Object.keys(document.resource.relations)) {
 

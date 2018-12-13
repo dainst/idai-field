@@ -111,9 +111,7 @@ export module ImportFacade {
                     GazGeojsonParserAddOn.preValidateAndTransformFeature,
                     GazGeojsonParserAddOn.postProcess);
             case 'geojson':
-                return new GeojsonParser(
-                    undefined,
-                    undefined);
+                return new GeojsonParser(undefined, undefined);
             case 'shapefile':
                 return new ShapefileParser();
             case 'native':
@@ -126,7 +124,7 @@ export module ImportFacade {
                                   validator: ImportValidator,
                                   projectConfiguration: ProjectConfiguration,
                                   mainTypeDocumentId: string,
-                                  allowMergingExistingResources = false,
+                                  mergeMode = false,
                                   generateId: () => string): ImportStrategy {
 
         switch (format) {
@@ -134,24 +132,19 @@ export module ImportFacade {
                 return new MeninxFindImportStrategy();
             case 'idig':
                 return new DefaultImportStrategy(validator,
-                    projectConfiguration,
-                    false, false, false, generateId);
+                    projectConfiguration, false,  generateId);
             case 'shapefile':
                 return new DefaultImportStrategy(validator,
-                    projectConfiguration,
-                     true, false, false, generateId);
+                    projectConfiguration, true,  generateId);
             case 'geojson':
                 return new DefaultImportStrategy(validator,
-                    projectConfiguration,
-                     true, false, false, generateId);
+                    projectConfiguration, true,  generateId);
             case 'geojson-gazetteer':
                 return new DefaultImportStrategy(validator,
-                    projectConfiguration,
-                    false, false, true, generateId);
+                    projectConfiguration, false,  generateId);
             default: // native
                 return new DefaultImportStrategy(validator,
-                    projectConfiguration,
-                    allowMergingExistingResources, true, true, generateId, mainTypeDocumentId);
+                    projectConfiguration, mergeMode, generateId, mainTypeDocumentId, true);
         }
     }
 }

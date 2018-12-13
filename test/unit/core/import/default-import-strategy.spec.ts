@@ -40,7 +40,7 @@ describe('DefaultImportStrategy', () => {
             mockValidator,
             mockProjectConfiguration,
 
-            false, false, false, () => '101');
+            false, () => '101');
 
         importReport = {errors: [], warnings: [], importedResourcesIds: []};
     });
@@ -51,8 +51,6 @@ describe('DefaultImportStrategy', () => {
         importReport = await importStrategy.import([
             { resource: {type: 'Find', identifier: 'one', relations: { isRecordedIn: ['0']} } } as any],
             importReport, mockDatastore, 'user1');
-
-        console.log(importReport)
 
         expect(mockDatastore.create).toHaveBeenCalled();
         done();
@@ -72,7 +70,7 @@ describe('DefaultImportStrategy', () => {
         await new DefaultImportStrategy(
             mockValidator,
             mockProjectConfiguration,
-             true, false, false, () => '101').import(
+             true, () => '101').import(
             [{ resource: {id: '1', relations: undefined } } as any], importReport, mockDatastore,'user1');
 
         expect(mockDatastore.create).not.toHaveBeenCalled();
@@ -88,7 +86,7 @@ describe('DefaultImportStrategy', () => {
         await new DefaultImportStrategy(
             mockValidator,
             mockProjectConfiguration,
-             false, false, false, () => '101')
+             false, () => '101')
             .import([
                 { resource: {type: 'Find', identifier: 'one', relations: {isRecordedIn: ['0']} } } as any],
                 importReport, mockDatastore,'user1');
@@ -128,7 +126,7 @@ describe('DefaultImportStrategy', () => {
         importStrategy = new DefaultImportStrategy(
             mockValidator,
             mockProjectConfiguration,
-            true, false, false, () => '101');
+            true,  () => '101');
         await importStrategy
             .import([docToMerge as any],
                 importReport, mockDatastore, 'user1');
@@ -152,7 +150,7 @@ describe('DefaultImportStrategy', () => {
             mockProjectConfiguration,
 
             false,
-            true, false, () => '101');
+             () => '101', '', true);
 
         const docToImport = { resource: { type: 'Find', identifier: '1a',
                 relations: { isRecordedIn: ['three'] } } };
@@ -173,7 +171,7 @@ describe('DefaultImportStrategy', () => {
             mockValidator,
             mockProjectConfiguration,
             false,
-            true, false, () => '101');
+             () => '101', '', true);
 
         const docToImport = { resource: { type: 'Find', identifier: '1a',
                 relations: { isRecordedIn: ['three'] } } };

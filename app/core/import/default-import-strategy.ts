@@ -81,14 +81,18 @@ export class DefaultImportStrategy implements ImportStrategy {
             this.projectConfiguration,
             documents);
 
-        await ImportUpdater.go(
-            documentsForUpdate as any,
-            targetDocuments,
-            (d: Document, u: string) => datastore.update(d, u),
-            (d: Document, u: string) => datastore.create(d, u),
-            username,
-            this.mergeIfExists,
-            importReport);
+        try {
+            await ImportUpdater.go(
+                documentsForUpdate as any,
+                targetDocuments,
+                (d: Document, u: string) => datastore.update(d, u),
+                (d: Document, u: string) => datastore.create(d, u),
+                username,
+                this.mergeIfExists);
+
+        } catch (errWithParams) {
+            importReport.errors.push(errWithParams);
+        }
 
         return importReport;
     }

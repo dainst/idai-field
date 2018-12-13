@@ -93,10 +93,10 @@
     "constraint": ["decorationTechnique", "formDescription", "manufacturingMethod", "metalMaterial", "objectType", "provenance", "vesselForm", "vesselFormSpecific"]
   },
   "Area": {
-    "constraint": ["diary", "processor", "area"]
+    "constraint": ["area"]
   },
   "Excavation": {
-    "constraint": ["isIllegal", "hasDisturbance"]
+    "constraint": ["isIllegal"]
   },
   "Image": {
     "constraint": ["draughtsmen", "processor"]

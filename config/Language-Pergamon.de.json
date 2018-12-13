@@ -302,6 +302,27 @@
     "Excavation": {
       "label": "Ausgrabung",
       "fields": {
+        "beginningDate": {
+          "label": "Startdatum",
+          "description": "Datum, an dem die Aufnahme begann"
+        },
+        "endDate": {
+          "label": "Enddatum",
+          "description": "Datum, an dem die Aufnahme endete"
+        },
+        "diary": {
+          "label": "Tagebuch",
+          "description": "Verweis auf Grabungstagebuch"
+        },
+        "processor": {
+          "label": "Bearbeiter/Bearbeiterin"
+        },
+        "period": {
+          "label": "Grobdatierung"
+        },
+        "dating": {
+          "label": "Datierung"
+        },
         "color": {
           "label": "Farbe und Intensität",
           "description": "Farbe, soweit erkennbar"
@@ -309,6 +330,9 @@
         "featureBorders": {
           "label": "Grenzen",
           "description": "Bestimmung der Grenzen des Befundes"
+        },
+        "hasDisturbance": {
+          "label": "Störung"
         }
       }
     },

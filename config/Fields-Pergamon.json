@@ -439,6 +439,21 @@
   },
   "Excavation": {
     "fields": {
+      "beginningDate": {
+        "inputType": "date"
+      },
+      "endDate": {
+        "inputType": "date"
+      },
+      "dating": {
+        "inputType": "dating"
+      },
+      "diary": {
+        "inputType": "input"
+      },
+      "processor": {
+        "inputType": "input"
+      },
       "color": {
         "inputType": "checkboxes",
         "valuelist": [
@@ -486,6 +501,9 @@
           "wellig"
         ]
       }
+    },
+    "hasDisturbance": {
+      "inputType": "boolean"
     }
   },
   "BuildingFloor": {

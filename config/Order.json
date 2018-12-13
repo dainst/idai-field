@@ -39,7 +39,7 @@
     "Drawing": ["drawingMaterial", "drawingTool", "drawingType", "scale"],
     "Photo": ["originalType"],
     "BuildingPart": ["diary", "description", "processor", "beginningDate", "endDate", "period", "dating", "area", "color", "hasDisturbance", "featureForm", "featureBorders", "comparison", "featureAmount", "dimensionLength", "dimensionVerticalExtent", "dimensionWidth", "orientation", "spatialLocation", "condition", "conditionAmount", "conditionComment", "layerAmount", "layerHeight", "muralCrown", "mortarBinder", "mortarColor", "mortarConsistency", "materialForm", "materialCharacteristic", "construction", "constructionDetailsDescription", "descriptionOfBuildingTechnique", "brickwork", "blockTreatment", "blockProcessing", "mark", "markDescription", "bibliography", "findingPlace", "publicationDatingFinds", "publicationDatingStratigraphy", "publicationDatingScientific", "publicationRemark"],
-    "Area": ["diary", "description", "processor", "beginningDate", "endDate", "period", "dating", "area", "dimensionLength", "dimensionVerticalExtent", "dimensionWidth"],
-    "Excavation": ["isIllegal", "hasDisturbance"]
+    "Area": ["description", "area", "dimensionLength", "dimensionVerticalExtent", "dimensionWidth"],
+    "Excavation": ["isIllegal"]
   }
 }

@@ -4049,23 +4049,8 @@
   },
   "Area": {
     "fields": {
-      "beginningDate": {
-        "inputType": "date"
-      },
-      "endDate": {
-        "inputType": "date"
-      },
-      "dating": {
-        "inputType": "dating"
-      },
-      "diary": {
-        "inputType": "input"
-      },
       "description": {
         "inputType": "text"
-      },
-      "processor": {
-        "inputType": "input"
       },
       "area": {
         "inputType": "unsignedFloat"
@@ -4099,9 +4084,6 @@
     "parent": "Area",
     "fields": {
       "isIllegal": {
-        "inputType": "boolean"
-      },
-      "hasDisturbance": {
         "inputType": "boolean"
       }
     }

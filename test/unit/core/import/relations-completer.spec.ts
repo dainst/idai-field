@@ -6,6 +6,7 @@ describe('RelationsCompleter', () => {
 
     let mockDatastore;
     let mockProjectConfiguration;
+    let get;
 
     let doc1 = {
         resource: {
@@ -39,11 +40,11 @@ describe('RelationsCompleter', () => {
         mockProjectConfiguration.isRelationProperty.and.returnValue(true);
         mockProjectConfiguration.getInverseRelations.and.returnValue('includes');
 
-        mockDatastore.get.and.callFake(async (resourceId: string) => {
+        get = async (resourceId: string) => {
 
             if (resourceId === '1') return doc1;
             if (resourceId === '2') return doc2;
-        });
+        };
 
         mockDatastore.find.and.callFake(async () => {
 
@@ -55,12 +56,11 @@ describe('RelationsCompleter', () => {
     it('set inverse relation', async done => {
 
         doc1.resource.relations['liesWithin'][0] = '2';
-        await RelationsCompleter.completeInverseRelations(mockDatastore, mockProjectConfiguration,
-            'test', ['1']);
+        const documents = await RelationsCompleter.completeInverseRelations(get, mockProjectConfiguration, ['1']);
 
-        expect(mockDatastore.update).toHaveBeenCalledWith(doc2, 'test');
+        expect(documents.length).toBe(1);
+        expect(documents[0].resource.id).toBe('2');
         expect(doc2.resource.relations['includes'][0]).toBe('1');
-
         done();
     });
 });

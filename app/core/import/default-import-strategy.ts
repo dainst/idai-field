@@ -203,15 +203,17 @@ export class DefaultImportStrategy implements ImportStrategy {
 
 
    private static async performRelationsUpdates(importedResourcesIds: string[],
-                                                  importReport: ImportReport,
-                                                  projectConfiguration: ProjectConfiguration,
-                                                  datastore: DocumentDatastore,
-                                                  username: string) {
+                                                importReport: ImportReport,
+                                                projectConfiguration: ProjectConfiguration,
+                                                datastore: DocumentDatastore,
+                                                username: string) {
+
+        const targetDocuments = await RelationsCompleter.completeInverseRelations(
+            (resourceId: string) => datastore.get(resourceId), projectConfiguration, importedResourcesIds);
 
         try {
 
-            await RelationsCompleter.completeInverseRelations(
-                datastore, projectConfiguration, username, importedResourcesIds);
+            for (let targetDocument of targetDocuments) await datastore.update(targetDocument, username);
 
         } catch (msgWithParams) {
 

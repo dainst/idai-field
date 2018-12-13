@@ -12,26 +12,28 @@ export module RelationsCompleter {
     /**
      * Iterates over all relations of the given resources and adds missing inverse relations to the relation targets.
      *
-     * @param datastore
+     * @param get
      * @param projectConfiguration
-     * @param username
      * @param resourceIds The ids of the resources whose relations are to be considered
      * @throws [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId]
      * @throws DatastoreErrors.*
      */
-    export async function completeInverseRelations(datastore: DocumentDatastore,
+    export async function completeInverseRelations(get: (_: string) => Promise<Document>,
                                                    projectConfiguration: ProjectConfiguration,
-                                                   username: string,
-                                                   resourceIds: string[]): Promise<void> {
+                                                   resourceIds: string[]): Promise<Array<Document>> {
 
-        for (let resourceId of resourceIds) await alterInverseRelationsForResource(
-                datastore, projectConfiguration,
-                username, 'create', resourceId);
 
+        let targetDocuments: Array<Document> = [];
+        for (let resourceId of resourceIds) {
+           targetDocuments = targetDocuments.concat(await alterInverseRelationsForResource(get, projectConfiguration, resourceId));
+        }
+        return targetDocuments;
     }
 
 
     /**
+     * TODO remove this altogether
+     *
      * Iterates over all relations of the given resources and removes the corresponding inverse relations of the
      * relation targets.
      *
@@ -46,9 +48,49 @@ export module RelationsCompleter {
                                                 username: string,
                                                 resourceIds: string[]): Promise<void> {
 
-        for (let resourceId of resourceIds) await alterInverseRelationsForResource(
+        for (let resourceId of resourceIds) await removeInverseRelationsForResource(
                 datastore, projectConfiguration,
-                username, 'remove', resourceId);
+                username, resourceId);
+    }
+
+
+    /**
+     * Creates/removes inverse relations for a single resource.
+
+     * @param get
+     * @param projectConfiguration
+     * @param resourceId
+     * @throws errWithParams
+     */
+    async function alterInverseRelationsForResource(get: (_: string) => Promise<Document>,
+                                                    projectConfiguration: ProjectConfiguration,
+                                                    resourceId: string): Promise<Array<Document>> {
+
+        const document = await get(resourceId);
+        if (!document) throw "FATAL - DOCUMENT NOT FOUND, RESOURCEID: " + resourceId;
+
+        const targetDocuments: Array<Document> = [];
+
+        for (let relationName of Object
+            .keys(document.resource.relations)
+            .filter(relationName => relationName !== 'isRecordedIn')
+            .filter(relationName => projectConfiguration.isRelationProperty(relationName))) {
+
+            for (let targetId of document.resource.relations[relationName]) {
+
+                let targetDocument;
+                try {
+                    targetDocument = await get(targetId);
+                } catch {
+                    throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId];
+                }
+
+                targetDocuments.push(await createRelation(resourceId, targetDocument,
+                    projectConfiguration.getInverseRelations(relationName) as any));
+            }
+        }
+
+        return targetDocuments;
     }
 
 
@@ -58,47 +100,44 @@ export module RelationsCompleter {
      * @param datastore
      * @param projectConfiguration
      * @param username
-     * @param mode
      * @param resourceId
      * @throws errWithParams
      */
-    async function alterInverseRelationsForResource(datastore: DocumentDatastore,
-                                                    projectConfiguration: ProjectConfiguration,
-                                                    username: string,
-                                                    mode: 'create' | 'remove',
-                                                    resourceId: string): Promise<void> {
+    async function removeInverseRelationsForResource(datastore: DocumentDatastore,
+                                                     projectConfiguration: ProjectConfiguration,
+                                                     username: string,
+                                                     resourceId: string): Promise<void> {
+
+        // here we have a document with outgoing relations
 
         const document = await datastore.get(resourceId);
         if (!document) throw "FATAL - DOCUMENT NOT FOUND, RESOURCEID: " + resourceId;
 
         for (let relationName of Object
-                .keys(document.resource.relations)
-                .filter(relationName => relationName !== 'isRecordedIn')
-                .filter(relationName => projectConfiguration.isRelationProperty(relationName))) {
+            .keys(document.resource.relations)
+            .filter(relationName => relationName !== 'isRecordedIn')
+            .filter(relationName => projectConfiguration.isRelationProperty(relationName))) {
+
+            // here we have one range relation
 
             for (let targetIdOrIdentifier of document.resource.relations[relationName]) {
+
+                // here we have on range relation document
 
                 let targetDocument;
                 try {
                     targetDocument = await datastore.get(targetIdOrIdentifier);
-                } catch (_) {
-                    if (mode === 'create') throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetIdOrIdentifier];
-                    else continue;
-                }
+                } catch { continue }
 
                 const inverseRelation = projectConfiguration.getInverseRelations(relationName) as any;
-                mode === 'create'
-                    ? await createRelation(datastore, username, resourceId, targetDocument, inverseRelation)
-                    : await removeRelation(datastore, username, resourceId, targetDocument, inverseRelation);
+                await removeRelation(datastore, username, resourceId, targetDocument, inverseRelation);
             }
 
         }
     }
 
 
-    async function createRelation(datastore: DocumentDatastore,
-                                  username: string,
-                                  resourceId: string,
+    async function createRelation(resourceId: string,
                                   targetDocument: Document,
                                   relationName: string): Promise<any> {
 
@@ -108,7 +147,7 @@ export module RelationsCompleter {
         if (!relations.includes(resourceId)) {
             relations.push(resourceId);
             targetDocument.resource.relations[relationName] = relations;
-            await datastore.update(targetDocument, username);
+            return targetDocument;
         }
     }
 

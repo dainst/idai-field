@@ -11,13 +11,13 @@ import {Document} from 'idai-components-2/src/model/core/document';
 export module ImportUpdater { // TODO change to batch updates and rename to BatchUpdater
 
 
-    export async function performUpdates(documents: Array<Document>,
-                                  targetDocuments: Array<Document>|undefined,
-                                  update: (document: Document, username: string) => Promise<Document>,
-                                  create: (document: Document, username: string) => Promise<Document>,
-                                  username: string,
-                                  useUpdateMethod: boolean /* else new doc, then use create */,
-                                  importReport: ImportReport /* TODO remove from this interface */) {
+    export async function go(documents: Array<Document>,
+                             targetDocuments: Array<Document>|undefined,
+                             update: (document: Document, username: string) => Promise<Document>,
+                             create: (document: Document, username: string) => Promise<Document>,
+                             username: string,
+                             useUpdateMethod: boolean /* else new doc, then use create */,
+                             importReport: ImportReport /* TODO remove from this interface */) {
 
         await performDocumentsUpdates(documents, update, create, username, useUpdateMethod, importReport);
 

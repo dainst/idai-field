@@ -81,7 +81,7 @@ export class DefaultImportStrategy implements ImportStrategy {
             this.projectConfiguration,
             documents);
 
-        await ImportUpdater.performUpdates(
+        await ImportUpdater.go(
             documentsForUpdate as any,
             targetDocuments,
             (d: Document, u: string) => datastore.update(d, u),

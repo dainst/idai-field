@@ -207,9 +207,9 @@ export module DefaultImport {
 
 
     async function prepareDocumentForUpdate(document: NewDocument,
-                                                   validator: ImportValidator,
-                                                   mainTypeDocumentId: string,
-                                                   mergeIfExists: boolean): Promise<Document|NewDocument> {
+                                            validator: ImportValidator,
+                                            mainTypeDocumentId: string,
+                                            mergeIfExists: boolean): Promise<Document|NewDocument> {
 
         if (!mergeIfExists) {
             validator.assertIsKnownType(document);
@@ -222,7 +222,9 @@ export module DefaultImport {
     }
 
 
-    async function prepareIsRecordedInRelation(document: NewDocument, mainTypeDocumentId: string, validator: ImportValidator) {
+    async function prepareIsRecordedInRelation(document: NewDocument,
+                                               mainTypeDocumentId: string,
+                                               validator: ImportValidator) {
 
         if (!mainTypeDocumentId) {
             try {

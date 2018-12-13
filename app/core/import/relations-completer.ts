@@ -107,9 +107,9 @@ export module RelationsCompleter {
         if (!relations) relations = [];
         if (!relations.includes(resourceId)) {
             relations.push(resourceId);
-                targetDocument.resource.relations[relationName] = relations;
-                await datastore.update(targetDocument, username);
-            }
+            targetDocument.resource.relations[relationName] = relations;
+            await datastore.update(targetDocument, username);
+        }
     }
 
 

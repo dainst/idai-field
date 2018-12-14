@@ -79,10 +79,14 @@ export module DefaultImport {
             if (errors.length > 0) return { errors: errors, successfulImports: 0 };
 
             let targetDocuments;
-            if (!mergeMode) targetDocuments = await RelationsCompleter.completeInverseRelations(
-                documents,
-                (resourceId: string) => datastore.get(resourceId),
-                projectConfiguration);
+            try {
+                if (!mergeMode) targetDocuments = await RelationsCompleter.completeInverseRelations(
+                    documents,
+                    (resourceId: string) => datastore.get(resourceId),
+                    projectConfiguration);
+            } catch (errWithParams) {
+                return { errors: [errWithParams], successfulImports: 0 };
+            }
 
             const updateErrors = [];
             try {

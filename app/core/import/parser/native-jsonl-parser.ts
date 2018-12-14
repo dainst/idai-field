@@ -1,7 +1,7 @@
 import {Observable, Observer} from 'rxjs';
 import {NewDocument, Document} from 'idai-components-2';
 import {AbstractParser} from './abstract-parser';
-import {ImportErrors} from '../import-errors';
+import {ParserErrors} from './parser-errors';
 
 /**
  * @author Sebastian Cuy
@@ -10,8 +10,8 @@ import {ImportErrors} from '../import-errors';
 export class NativeJsonlParser extends AbstractParser {
 
     /**
-     * @throws [PARSER_FILE_INVALID_JSONL]
-     * @throws [PARSER_ID_MUST_NOT_BE_SET]
+     * @throws [FILE_INVALID_JSONL]
+     * @throws [ID_MUST_NOT_BE_SET]
      */
     public parse(content: string): Observable<Document> {
 
@@ -33,7 +33,7 @@ export class NativeJsonlParser extends AbstractParser {
                 document = NativeJsonlParser.makeDoc(lines[i]);
             } catch (e) {
                 console.error('parse content error. reason: ', e);
-                observer.error([ImportErrors.PARSER_FILE_INVALID_JSONL, i + 1]);
+                observer.error([ParserErrors.FILE_INVALID_JSONL, i + 1]);
                 break;
             }
             NativeJsonlParser.assertIsValid(document);
@@ -52,7 +52,7 @@ export class NativeJsonlParser extends AbstractParser {
 
     private static assertIsValid(document: NewDocument) {
 
-        if (document.resource.id) throw [ImportErrors.PARSER_ID_MUST_NOT_BE_SET];
+        if (document.resource.id) throw [ParserErrors.ID_MUST_NOT_BE_SET];
     }
 
 

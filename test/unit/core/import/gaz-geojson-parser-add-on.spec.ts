@@ -1,7 +1,7 @@
 import {GeojsonParser} from '../../../../app/core/import/parser/geojson-parser';
 import {Document} from 'idai-components-2';
-import {ImportErrors} from '../../../../app/core/import/import-errors';
 import {GazGeojsonParserAddOn} from '../../../../app/core/import/parser/gaz-geojson-parser-add-on';
+import {ParserErrors} from '../../../../app/core/import/parser/parser-errors';
 
 
 /**
@@ -56,6 +56,6 @@ describe('GazGeojsonParserAddOn', () => {
             '"type": "Point", "coordinates": [6.71875,-6.96875] }, "properties": { "identifier": "https://gazetteer.dainst.org/place/2312125" } }' +
             '] }';
 
-        expectErr(fileContent, ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, done);
+        expectErr(fileContent, ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, done);
     });
 });

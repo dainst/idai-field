@@ -1,7 +1,7 @@
 import {Observable, Observer} from 'rxjs';
 import {Document} from 'idai-components-2';
 import {AbstractParser} from './abstract-parser';
-import {ImportErrors} from '../import-errors';
+import {ParserErrors} from './parser-errors';
 // import * as Papa from 'papaparse'; this does not work in production, fixes only unit test
 
 /**
@@ -13,7 +13,7 @@ export class MeninxFindCsvParser extends AbstractParser {
 
         return Observable.create((observer: Observer<Document>) => {
 
-            let errorCallback = (e: any) => observer.error([ImportErrors.PARSER_CSV_INVALID, e.row]);
+            let errorCallback = (e: any) => observer.error([ParserErrors.CSV_INVALID, e.row]);
 
             let completeCallback = (result: any) => {
                 result.errors.forEach( (e: any) => errorCallback(e) );
@@ -59,7 +59,7 @@ export class MeninxFindCsvParser extends AbstractParser {
                     complete: completeCallback
                 });
             } catch (e) {
-                observer.error([ImportErrors.PARSER_CSV_GENERIC]);
+                observer.error([ParserErrors.CSV_GENERIC]);
             }
         });
     }

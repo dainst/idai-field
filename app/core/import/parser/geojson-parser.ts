@@ -3,7 +3,7 @@ import {duplicates} from 'tsfun';
 import {Document} from 'idai-components-2';
 import {AbstractParser} from './abstract-parser';
 import {M} from '../../../components/m';
-import {ImportErrors} from '../import-errors';
+import {ParserErrors} from './parser-errors';
 
 export interface Geojson {
     type: string,
@@ -50,9 +50,9 @@ export class GeojsonParser extends AbstractParser {
      *
      * @param content
      * @throws [WRONG_IDENTIFIER_FORMAT]
-     * @throws [PARSER_MISSING_IDENTIFIER]
-     * @throws [PARSER_INVALID_GEOJSON_IMPORT_STRUCT]
-     * @throws [PARSER_FILE_INVALID_JSON]
+     * @throws [MISSING_IDENTIFIER]
+     * @throws [INVALID_GEOJSON_IMPORT_STRUCT]
+     * @throws [FILE_INVALID_JSON]
      * @throws [IMPORT_WARNING_GEOJSON_DUPLICATE_IDENTIFIERS]
      */
     public parse(content: string): Observable<Document> {
@@ -63,7 +63,7 @@ export class GeojsonParser extends AbstractParser {
             try {
                 geojson = JSON.parse(content) as Geojson;
             } catch (e) {
-                return observer.error([ImportErrors.PARSER_FILE_INVALID_JSON, e.toString()]);
+                return observer.error([ParserErrors.FILE_INVALID_JSON, e.toString()]);
             }
 
             const msgWithParams = GeojsonParser.validateAndTransform(geojson, this.preValidateAndTransform);
@@ -108,15 +108,15 @@ export class GeojsonParser extends AbstractParser {
     private static validateAndTransform(geojson: Geojson, preValidateAndTransformFeature: Function|undefined) {
 
         if (geojson.type !== 'FeatureCollection') return [
-            ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, '"type": "FeatureCollection" not found at top level.'];
+            ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, '"type": "FeatureCollection" not found at top level.'];
 
         if (geojson.features === undefined) return [
-            ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, 'Property "features" not found at top level.'];
+            ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "features" not found at top level.'];
 
         let identifiers: string[] = [];
         for (let feature of geojson.features) {
 
-            if (!feature.properties) return [ImportErrors.PARSER_MISSING_IDENTIFIER];
+            if (!feature.properties) return [ParserErrors.MISSING_IDENTIFIER];
             feature.properties.relations = {};
 
             if (preValidateAndTransformFeature) {
@@ -132,16 +132,16 @@ export class GeojsonParser extends AbstractParser {
 
     private static validateAndTransformFeature(feature: any) {
 
-        if (!feature.properties['identifier']) return [ImportErrors.PARSER_MISSING_IDENTIFIER];
-        if (typeof feature.properties['identifier'] !== 'string') return [ImportErrors.WRONG_IDENTIFIER_FORMAT];
+        if (!feature.properties['identifier']) return [ParserErrors.MISSING_IDENTIFIER];
+        if (typeof feature.properties['identifier'] !== 'string') return [ParserErrors.WRONG_IDENTIFIER_FORMAT];
 
-        if (feature.type === undefined) return [ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, 'Property "type" not found for at least one feature.'];
-        if (feature.type !== 'Feature') return [ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, 'Second level elements must be of type "Feature".'];
+        if (feature.type === undefined) return [ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Property "type" not found for at least one feature.'];
+        if (feature.type !== 'Feature') return [ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'Second level elements must be of type "Feature".'];
 
         if (feature.geometry && feature.geometry.type
             && GeojsonParser.supportedGeometryTypes.indexOf(feature.geometry.type) === -1) {
 
-            return [ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, 'geometry type "' + feature.geometry.type + '" not supported.'];
+            return [ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, 'geometry type "' + feature.geometry.type + '" not supported.'];
         }
     }
 

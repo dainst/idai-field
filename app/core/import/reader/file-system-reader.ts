@@ -1,5 +1,5 @@
 import {Reader} from './reader';
-import {ImportErrors} from '../import-errors';
+import {ReaderErrors} from './reader-errors';
 
 /**
  * Reads contents of a file.
@@ -30,7 +30,7 @@ export class FileSystemReader implements Reader {
 
             reader.onerror = (event: any) => {
                 console.error(event.target.error);
-                reject([ImportErrors.PARSER_FILE_UNREADABLE, this.file.name]);
+                reject([ReaderErrors.FILE_UNREADABLE, this.file.name]);
             };
 
             reader.readAsText(this.file);

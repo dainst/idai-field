@@ -1,7 +1,7 @@
 import {GeojsonParser} from '../../../../app/core/import/parser/geojson-parser';
 import {Document} from 'idai-components-2';
 import {M} from '../../../../app/components/m';
-import {ImportErrors} from '../../../../app/core/import/import-errors';
+import {ParserErrors} from '../../../../app/core/import/parser/parser-errors';
 
 
 /**
@@ -62,7 +62,7 @@ describe('GeojsonParser', () => {
             '"coordinates": [ [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0] ] }, ' +
             '"properties" : {"identifier":"123"} }' +
             '] ' // missing closing brace
-            , ImportErrors.PARSER_FILE_INVALID_JSON, done);
+            , ParserErrors.FILE_INVALID_JSON, done);
     });
 
 
@@ -70,7 +70,7 @@ describe('GeojsonParser', () => {
 
         expectErr('{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, ' +
             '"properties": { "identifier": "122" } } '
-            , ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, done);
+            , ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, done);
     });
 
 
@@ -79,7 +79,7 @@ describe('GeojsonParser', () => {
         expectErr('{ "type": "FeatureCollection", "features": [' +
             '{ "type": "Feature", "geometry": { "type": "GeometryCollection?", "coordinates": [102.0, 0.5] }, ' +
             '"properties": { "identifier": "122" } } ] }'
-            , ImportErrors.PARSER_INVALID_GEOJSON_IMPORT_STRUCT, done);
+            , ParserErrors.INVALID_GEOJSON_IMPORT_STRUCT, done);
     });
 
 
@@ -88,7 +88,7 @@ describe('GeojsonParser', () => {
         expectErr('{ "type": "FeatureCollection", "features": [' +
             '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, ' +
             '"properties": { } } ] }'
-            , ImportErrors.PARSER_MISSING_IDENTIFIER, done);
+            , ParserErrors.MISSING_IDENTIFIER, done);
     });
 
 
@@ -96,7 +96,7 @@ describe('GeojsonParser', () => {
 
         expectErr('{ "type": "FeatureCollection", "features": [' +
             '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }} ] }'
-            , ImportErrors.PARSER_MISSING_IDENTIFIER, done);
+            , ParserErrors.MISSING_IDENTIFIER, done);
     });
 
 
@@ -105,7 +105,7 @@ describe('GeojsonParser', () => {
         expectErr('{ "type": "FeatureCollection", "features": [' +
             '{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [102.0, 0.5] }, ' +
             '"properties": { "identifier": 122 } } ] }'
-            , ImportErrors.WRONG_IDENTIFIER_FORMAT, done);
+            , ParserErrors.WRONG_IDENTIFIER_FORMAT, done);
     });
 
 

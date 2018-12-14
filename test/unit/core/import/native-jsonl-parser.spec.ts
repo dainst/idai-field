@@ -1,5 +1,5 @@
 import {NativeJsonlParser} from '../../../../app/core/import/parser/native-jsonl-parser';
-import {ImportErrors} from '../../../../app/core/import/import-errors';
+import {ParserErrors} from '../../../../app/core/import/parser/parser-errors';
 
 /**
  * @author Sebastian Cuy
@@ -50,7 +50,7 @@ describe('NativeJsonlParser', () => {
             objects.push(resultDocument);
         }, (error) => {
             expect(objects.length).toEqual(1);
-            expect(error).toEqual([ImportErrors.PARSER_FILE_INVALID_JSONL,2]);
+            expect(error).toEqual([ParserErrors.FILE_INVALID_JSONL,2]);
             done();
         });
     });
@@ -68,7 +68,7 @@ describe('NativeJsonlParser', () => {
             objects.push(resultDocument);
         }, (error) => {
             expect(objects.length).toEqual(1);
-            expect(error).toEqual([ImportErrors.PARSER_ID_MUST_NOT_BE_SET]);
+            expect(error).toEqual([ParserErrors.ID_MUST_NOT_BE_SET]);
             done();
         });
     });

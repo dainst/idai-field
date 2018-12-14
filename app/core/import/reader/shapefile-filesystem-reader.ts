@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import {Reader} from './reader';
-import {ImportErrors} from '../import-errors';
 import {JavaToolExecutor} from '../../../common/java-tool-executor';
+import {ReaderErrors} from './reader-errors';
 
 const remote = require('electron').remote;
 
@@ -30,7 +30,7 @@ export class ShapefileFileSystemReader implements Reader {
                 fs.unlinkSync(ShapefileFileSystemReader.getTempFilePath());
 
                 if (err) {
-                    reject([ImportErrors.PARSER_SHAPEFILE_GENERIC]);
+                    reject([ReaderErrors.SHAPEFILE_GENERIC]);
                 } else {
                     resolve(data);
                 }
@@ -62,19 +62,19 @@ export class ShapefileFileSystemReader implements Reader {
 
         if (error.includes('CONVERTER_UNSUPPORTED_GEOMETRY_TYPE')) {
             return [
-                ImportErrors.PARSER_SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE,
+                ReaderErrors.SHAPEFILE_UNSUPPORTED_GEOMETRY_TYPE,
                 JavaToolExecutor.getParameterFromErrorMessage(error)
             ];
         } else if (error.includes('CONVERTER_SHAPEFILE_READ_ERROR')) {
-            return [ImportErrors.PARSER_SHAPEFILE_READ];
+            return [ReaderErrors.SHAPEFILE_READ];
         } else if (error.includes('CONVERTER_JSONL_WRITE_ERROR')) {
             return [
-                ImportErrors.PARSER_SHAPEFILE_JSONL_WRITE,
+                ReaderErrors.SHAPEFILE_JSONL_WRITE,
                 JavaToolExecutor.getParameterFromErrorMessage(error)
             ];
         } else {
             console.error(error);
-            return [ImportErrors.PARSER_SHAPEFILE_GENERIC];
+            return [ReaderErrors.SHAPEFILE_GENERIC];
         }
     }
 

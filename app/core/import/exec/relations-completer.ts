@@ -1,4 +1,4 @@
-import {Document, ProjectConfiguration} from 'idai-components-2';
+import {Document, ProjectConfiguration, Relations} from 'idai-components-2';
 import {ImportErrors} from '../import-errors';
 
 /**
@@ -21,7 +21,8 @@ export module RelationsCompleter {
 
         let targetDocuments: Array<Document> = [];
         for (let document of documents) {
-           targetDocuments = targetDocuments.concat(await setInverseRelationsForResource(get, projectConfiguration, document));
+           targetDocuments = targetDocuments.concat(await setInverseRelationsForResource(
+               get, projectConfiguration, document.resource.relations, document.resource.id));
         }
         return targetDocuments;
     }
@@ -32,25 +33,28 @@ export module RelationsCompleter {
      */
     async function setInverseRelationsForResource(get: (_: string) => Promise<Document>,
                                                   projectConfiguration: ProjectConfiguration,
-                                                  document: Document): Promise<Array<Document>> {
+                                                  relations: Relations,
+                                                  resourceId: string): Promise<Array<Document>> {
 
         const targetDocuments: Array<Document> = [];
 
         for (let relationName of Object
-            .keys(document.resource.relations)
+            .keys(relations)
             .filter(relationName => relationName !== 'isRecordedIn')
             .filter(relationName => projectConfiguration.isRelationProperty(relationName))) {
 
-            for (let targetId of document.resource.relations[relationName]) {
+            for (let targetId of relations[relationName]) {
 
                 let targetDocument;
                 try {
                     targetDocument = await get(targetId);
                 } catch {
+
+                    // TODO this could also be a reference within the import itself
                     throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId];
                 }
 
-                targetDocuments.push(await createRelation(document.resource.id, targetDocument,
+                targetDocuments.push(await createRelation(resourceId, targetDocument,
                     projectConfiguration.getInverseRelations(relationName) as any));
             }
         }

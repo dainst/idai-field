@@ -3114,6 +3114,14 @@
           <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="messages.import.error.notInterrelated" datatype="html">
+        <source>Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen '[0]' und '[1]' fehlerhaft.</source>
+        <target state="new">An error has occured during import: Relation between '[0]' and '[1]' erroneous.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/m.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="messages.import.error.prevalidation.missingRelationTarget" datatype="html">
         <source>Beim Import ist ein Fehler aufgetreten: Die als Ziel einer Relation angegebene Ressource mit dem Bezeichner '[0]' konnte nicht gefunden werden.</source>
         <target state="final">An error has occured during import: The relation with resource.identifier '[0]' could not be found.</target>

@@ -37,4 +37,5 @@ export module ImportErrors {
     export const INVALID_MAIN_TYPE_DOCUMENT = 'importerrors/invalidmaintypedocument';
     export const RESOURCE_EXISTS = 'importerrors/resourceexists'; // M.MODEL_VALIDATION_ERROR_IDENTIFIER_EXISTS
     export const EXEC_MISSING_RELATION_TARGET = 'importerrors/exec/missingrelationtarget';
+    export const NOT_INTERRELATED = 'importerrors/exec/notinterrelated';
 }

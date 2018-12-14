@@ -83,7 +83,8 @@ export module DefaultImport {
                 if (!mergeMode) targetDocuments = await RelationsCompleter.completeInverseRelations(
                     documents,
                     (resourceId: string) => datastore.get(resourceId),
-                    projectConfiguration);
+                    (propertyName: string) => projectConfiguration.isRelationProperty(propertyName),
+                    (propertyName: string) => projectConfiguration.getInverseRelations(propertyName));
             } catch (errWithParams) {
                 return { errors: [errWithParams], successfulImports: 0 };
             }

@@ -1,6 +1,6 @@
-import {Document, ProjectConfiguration, Relations} from 'idai-components-2';
+import {Document} from 'idai-components-2';
 import {ImportErrors} from '../import-errors';
-import {on} from 'tsfun';
+import {isUndefinedOrEmpty, on} from 'tsfun';
 
 
 /**
@@ -16,7 +16,8 @@ export module RelationsCompleter {
      * @param documents If one of these references another from the import file, the validity of the relations gets checked
      *   for contradictory relations and missing inverses are added.
      * @param get
-     * @param projectConfiguration
+     * @param isRelationProperty
+     * @param getInverseRelation
      *
      * @returns the target documents which should be updated. Only those fetched from the db are included. If a target document comes from
      *   the import file itself, <code>documents</code> gets modified in place accordingly.
@@ -26,11 +27,11 @@ export module RelationsCompleter {
      *
      * @throws ImportErrors.*
      * @throws [EXEC_MISSING_RELATION_TARGET, targetId]
-     * @throws DatastoreErrors.* TODO ?
      */
     export async function completeInverseRelations(documents: Array<Document>,
                                                    get: (_: string) => Promise<Document>,
-                                                   projectConfiguration: ProjectConfiguration): Promise<Array<Document>> {
+                                                   isRelationProperty: (_: string) => boolean,
+                                                   getInverseRelation: (_: string) => string|undefined): Promise<Array<Document>> {
 
 
         let allDBDocumentsToUpdate: Array<Document> = [];
@@ -38,7 +39,10 @@ export module RelationsCompleter {
 
             const dbDocumentsToUpdate = await setInverseRelationsForResource(
                 documents.filter(doc => doc.resource.id !== document.resource.id),
-                get, projectConfiguration, document.resource.relations, document.resource.id);
+                get,
+                isRelationProperty,
+                getInverseRelation,
+                document);
 
             allDBDocumentsToUpdate = allDBDocumentsToUpdate.concat(dbDocumentsToUpdate);
         }
@@ -48,62 +52,51 @@ export module RelationsCompleter {
 
     async function setInverseRelationsForResource(otherDocumentsFromImport: Array<Document>,
                                                   get: (_: string) => Promise<Document>,
-                                                  projectConfiguration: ProjectConfiguration,
-                                                  relations: Relations,
-                                                  resourceId: string): Promise<Array<Document>> {
+                                                  isRelationProperty: (_: string) => boolean,
+                                                  getInverseRelation: (_: string) => string|undefined,
+                                                  document: Document): Promise<Array<Document>> {
 
         const targetDocumentsForUpdate: Array<Document> = [];
 
         const relationNamesExceptRecordeIn = Object
-            .keys(relations)
+            .keys(document.resource.relations)
             .filter(relationName => relationName !== 'isRecordedIn')
-            .filter(relationName => projectConfiguration.isRelationProperty(relationName));
+            .filter(relationName => isRelationProperty(relationName));
 
 
         for (let relationName of relationNamesExceptRecordeIn) {
+            const inverseRelationName = getInverseRelation(relationName);
+            if (!inverseRelationName) continue;
 
-            for (let targetId of relations[relationName]) {
-
+            for (let targetId of document.resource.relations[relationName]) {
                 let targetDocument = otherDocumentsFromImport.find(on('resource.id:')(targetId));
 
                 if (targetDocument /* from import file */) {
 
-                    // TODO validate and augment inverse if necessary
+                    if (isUndefinedOrEmpty(targetDocument.resource.relations[inverseRelationName])) {
+                        throw [ImportErrors.NOT_INTERRELATED, document.resource.identifier, targetDocument.resource.identifier];
+                    }
+                    if (!targetDocument.resource.relations[inverseRelationName].includes(document.resource.id)) {
+                        throw [ImportErrors.NOT_INTERRELATED, document.resource.identifier, targetDocument.resource.identifier];
+                    }
+
+                    // TODO also validate that they interrelate not mutually, for example both have isAfter as well as isBefore pointing to each other
+                    // TODO throw on empty but defined relations
 
                 } else /* from db */ {
 
                     try {
 
                         targetDocument = await get(targetId);
+                        if (!targetDocument.resource.relations[inverseRelationName]) targetDocument.resource.relations[inverseRelationName] = [];
+                        targetDocument.resource.relations[inverseRelationName].push(document.resource.id);
+                        targetDocumentsForUpdate.push(targetDocument);
 
-                        const targetDocumentForUpdate = await createRelation(resourceId, targetDocument,
-                            projectConfiguration.getInverseRelations(relationName) as any);
-                        if (targetDocumentForUpdate) targetDocumentsForUpdate.push(targetDocumentForUpdate);
-
-                    } catch {
-
-                        // TODO this could also be a reference within the import itself
-                        throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId];
-                    }
+                    } catch { throw [ImportErrors.EXEC_MISSING_RELATION_TARGET, targetId] }
                 }
             }
         }
 
         return targetDocumentsForUpdate;
-    }
-
-
-    async function createRelation(resourceId: string,
-                                  targetDocument: Document,
-                                  relationName: string): Promise<Document|undefined> {
-
-        let relations = targetDocument.resource.relations[relationName];
-
-        if (!relations) relations = [];
-        if (!relations.includes(resourceId)) { // TODO this should not be necessary
-            relations.push(resourceId);
-            targetDocument.resource.relations[relationName] = relations;
-            return targetDocument;
-        }
     }
 }

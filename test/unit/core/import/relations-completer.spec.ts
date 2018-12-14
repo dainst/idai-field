@@ -1,24 +1,26 @@
 import {RelationsCompleter} from '../../../../app/core/import/exec/relations-completer';
+import {ImportErrors} from '../../../../app/core/import/import-errors';
 
 
 describe('RelationsCompleter', () => {
 
 
-    let mockDatastore;
-    let mockProjectConfiguration;
     let get;
+    let isRelationProperty;
+    let getInverseRelation;
 
-    let doc1 = {
+    let doc1: any = {
         resource: {
             id: '1',
-            identfier: 'one',
+            identifier: 'one',
             type: 'Object',
             relations: {liesWithin: [], isRecordedIn: []}
         }
     };
 
 
-    let doc2;
+    let doc2: any;
+
 
 
     beforeEach(() => {
@@ -26,41 +28,100 @@ describe('RelationsCompleter', () => {
         doc2 = {
             resource: {
                 id: '2',
-                identfier: 'two',
+                identifier: 'two',
                 type: 'Object',
                 relations: {}
             }
         };
-
-        mockDatastore = jasmine.createSpyObj('datastore',
-            ['create', 'update', 'get', 'find']);
-        mockProjectConfiguration = jasmine.createSpyObj('projectConfiguration',
-            ['isRelationProperty', 'getInverseRelations']);
-
-        mockProjectConfiguration.isRelationProperty.and.returnValue(true);
-        mockProjectConfiguration.getInverseRelations.and.returnValue('includes');
 
         get = async (resourceId: string) => {
 
             if (resourceId === '1') return doc1;
             if (resourceId === '2') return doc2;
         };
-
-        mockDatastore.find.and.callFake(async () => {
-
-            return { documents: [doc2]}
-        });
+        isRelationProperty = (_: any) => true;
+        getInverseRelation = (_: string) => _ === 'includes' ? 'liesWithin' : 'includes';
     });
 
 
-    it('set inverse relation', async done => {
+    it('set inverse relation within import itself', async done => {
+
+        doc2.resource.relations['includes'] =  ['1'];
+        doc1.resource.relations['liesWithin'] = ['2'];
+        const documents = await RelationsCompleter.completeInverseRelations([doc1, doc2], get, isRelationProperty, getInverseRelation);
+
+        expect(documents.length).toBe(0);
+        done();
+    });
+
+
+    it('set inverse relation within import itself - inverse not there', async done => {
+
+        doc1.resource.relations['liesWithin'] = ['2'];
+        try {
+            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, isRelationProperty, getInverseRelation);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams[0]).toEqual(ImportErrors.NOT_INTERRELATED);
+            expect(errWithParams[1]).toEqual('one');
+            expect(errWithParams[2]).toEqual('two');
+        }
+        done();
+    });
+
+
+    it('set inverse relation within import itself - inverse there but not pointing back', async done => {
+
+        doc2.resource.relations['includes'] = ['3', '7'];
+        doc1.resource.relations['liesWithin'] = ['2'];
+        try {
+            await RelationsCompleter.completeInverseRelations([doc1, doc2], get, isRelationProperty, getInverseRelation);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams[0]).toEqual(ImportErrors.NOT_INTERRELATED);
+            expect(errWithParams[1]).toEqual('one');
+            expect(errWithParams[2]).toEqual('two');
+        }
+        done();
+    });
+
+
+    it('set inverse relation with database resource', async done => {
 
         doc1.resource.relations['liesWithin'][0] = '2';
-        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any], get, mockProjectConfiguration);
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
 
         expect(documents.length).toBe(1);
         expect(documents[0].resource.id).toBe('2');
         expect(doc2.resource.relations['includes'][0]).toBe('1');
+        done();
+    });
+
+
+    it('set inverse relation with database resource - add to already existing relation array', async done => {
+
+        doc2.resource.relations['includes'] = ['3'];
+        doc1.resource.relations['liesWithin'][0] = '2';
+        const documents = await RelationsCompleter.completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
+
+        expect(documents.length).toBe(1);
+        expect(documents[0].resource.id).toBe('2');
+        expect(doc2.resource.relations['includes'][0]).toBe('3');
+        expect(doc2.resource.relations['includes'][1]).toBe('1');
+        done();
+    });
+
+
+    it('inverse relation not found', async done => {
+
+        doc1.resource.relations['liesWithin'][0] = '3';
+        try {
+
+            await RelationsCompleter.completeInverseRelations([doc1 as any], get, isRelationProperty, getInverseRelation);
+            fail();
+        } catch (errWithParams) {
+            expect(errWithParams[0]).toEqual(ImportErrors.EXEC_MISSING_RELATION_TARGET)
+        }
         done();
     });
 });

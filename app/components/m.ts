@@ -90,6 +90,7 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
     public static IMPORT_SUCCESS_SINGLE = 'importer.success.single';
     public static IMPORT_SUCCESS_MULTIPLE = 'importer.success.multiple';
     public static IMPORT_EXEC_MISSING_RELATION_TARGET = 'importer.error.missingRelationTarget';
+    public static IMPORT_EXEC_NOT_INTERRELATED = 'importer.error.notInterrelated';
 
     // Export Package
     public static EXPORT_SUCCESS = 'export.success';
@@ -545,6 +546,15 @@ export class M extends MD { // = Messages Dictionary. For reasons of brevity of 
             }),
             level: 'danger',
             params: ['?'],
+            hidden: false
+        };
+        this.msgs[M.IMPORT_EXEC_NOT_INTERRELATED] = {
+            content: i18n({
+                id: 'messages.import.error.notInterrelated',
+                value: 'Beim Import ist ein Fehler aufgetreten: Verknüpfung zwischen \'[0]\' und \'[1]\' fehlerhaft.'
+            }),
+            level: 'danger',
+            params: ['?', '?'],
             hidden: false
         };
         this.msgs[M.IMPORT_PREVALIDATION_MISSING_RELATION_TARGET] = {

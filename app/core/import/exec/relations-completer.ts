@@ -55,7 +55,7 @@ export module RelationsCompleter {
 
     /**
      * Implementation note:
-     * Runtime of O(2) could lead to problems.
+     * Runtime of O(n**2) could lead to problems.
      * The for loops over the different relations and relations targets are no problem.
      * The critical places are marked with '!', together with the for loop in the call.
      */

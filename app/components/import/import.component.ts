@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {flow, filter, map, isNot, empty, take} from 'tsfun';
+import {empty, filter, flow, isNot, map, take} from 'tsfun';
 import {Document, Messages, ProjectConfiguration} from 'idai-components-2';
-import {ImportReport} from '../../core/import/import-facade';
+import {Importer, ImportFormat, ImportReport} from '../../core/import/importer';
 import {Reader} from '../../core/import/reader/reader';
 import {FileSystemReader} from '../../core/import/reader/file-system-reader';
 import {HttpReader} from '../../core/import/reader/http-reader';
@@ -16,7 +16,6 @@ import {UsernameProvider} from '../../core/settings/username-provider';
 import {SettingsService} from '../../core/settings/settings-service';
 import {MessagesConversion} from './messages-conversion';
 import {M} from '../m';
-import {ImportFacade, ImportFormat} from '../../core/import/import-facade';
 import {ShapefileFileSystemReader} from '../../core/import/reader/shapefile-filesystem-reader';
 import {JavaToolExecutor} from '../../common/java-tool-executor';
 import {ImportValidator} from '../../core/import/exec/import-validator';
@@ -101,7 +100,7 @@ export class ImportComponent implements OnInit {
         }, 200);
 
         this.remoteChangesStream.setAutoCacheUpdate(false);
-        const importReport = await ImportFacade.doImport(
+        const importReport = await Importer.doImport(
             this.format,
             this.importValidator,
             this.datastore,

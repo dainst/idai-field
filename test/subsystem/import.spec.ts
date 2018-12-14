@@ -1,6 +1,6 @@
 import {to} from 'tsfun';
 import {createApp, setupSettingsService, setupSyncTestDb} from './subsystem-helper';
-import {ImportFacade} from '../../app/core/import/import-facade';
+import {Importer} from '../../app/core/import/importer';
 import {TypeUtility} from '../../app/core/model/type-utility';
 import {ValidationErrors} from '../../app/core/model/validation-errors';
 import {ImportErrors} from '../../app/core/import/import-errors';
@@ -28,7 +28,7 @@ describe('Import/Subsystem', () => {
 
     it('create one operation', async done => {
 
-       await ImportFacade.doImport(
+       await Importer.doImport(
             'native',
             new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
@@ -49,7 +49,7 @@ describe('Import/Subsystem', () => {
 
         const trench = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
 
-        const report = await ImportFacade.doImport(
+        const report = await Importer.doImport(
             'native',
             new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
@@ -69,7 +69,7 @@ describe('Import/Subsystem', () => {
 
         const stored = await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}});
 
-        await ImportFacade.doImport(
+        await Importer.doImport(
             'native',
             new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
@@ -94,7 +94,7 @@ describe('Import/Subsystem', () => {
             { resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our Trench 1', relations: {}}}
             )).resource.id;
 
-        const importReport = await ImportFacade.doImport(
+        const importReport = await Importer.doImport(
             'native',
             new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
@@ -117,7 +117,7 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
 
-        await ImportFacade.doImport(
+        await Importer.doImport(
             'native',
             new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
@@ -138,7 +138,7 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { identifier: 'f1', type: 'Feature', shortDescription: 'feature1', relations: { isRecordedIn: ['a']}}});
 
-        const importReport = await ImportFacade.doImport(
+        const importReport = await Importer.doImport(
             'native',
             new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,
@@ -163,7 +163,7 @@ describe('Import/Subsystem', () => {
 
         await datastore.create({ resource: { identifier: 't1', type: 'Trench', shortDescription: 'Our trench 1', relations: {}}});
 
-        const importReport = await ImportFacade.doImport(
+        const importReport = await Importer.doImport(
             'native',
             new ImportValidator(_projectConfiguration, datastore, new TypeUtility(_projectConfiguration)),
             datastore,

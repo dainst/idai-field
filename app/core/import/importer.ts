@@ -27,7 +27,7 @@ export type ImportReport = { errors: any[], warnings: any[], successfulImports: 
  * @author Sebastian Cuy
  * @author Jan G. Wieners
  */
-export module ImportFacade {
+export module Importer {
 
     /**
      * The importer uses the reader and parser, to get documents, which

@@ -4,7 +4,7 @@
  */
 export module ImportErrors {
 
-    // IO, parsing
+    // IO, parsing // TODO make ParserErrors and move to parser package
     export const PARSER_FILE_UNREADABLE = 'importerrors/fileunreadable';
     export const PARSER_FILE_INVALID_JSON = 'importerrors/invalidjson';
     export const PARSER_FILE_INVALID_JSONL = 'importerrors/invalidjsonl';
